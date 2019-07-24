@@ -976,11 +976,6 @@ export class ExamplesHelper {
       type: 'abColDefString',
       resizable: true,
       tooltipComponent: 'percentBarTooltip',
-      //  tooltipField: 'counterparty',
-      //   cellEditor: 'agSelectCellEditor',
-      //  cellEditorParams: {
-      //    values: ['English', 'Spanish', 'French', 'Portuguese', '(other)'],
-      //  },
     });
 
     schema.push({
@@ -1003,10 +998,6 @@ export class ExamplesHelper {
       filter: 'agTextColumnFilter',
       type: 'abColDefString',
       resizable: true,
-      cellEditor: 'agPopupSelectCellEditor',
-      cellEditorParams: {
-        values: ['English', 'Spanish', 'French', 'Portuguese', '(other)'],
-      },
     });
     schema.push({
       headerName: 'Status',
@@ -1017,10 +1008,6 @@ export class ExamplesHelper {
       enableRowGroup: true,
       type: 'abColDefString',
       resizable: true,
-      cellEditor: 'agRichSelectCellEditor',
-      cellEditorParams: {
-        values: ['English', 'Spanish', 'French', 'Portuguese', '(other)'],
-      },
     });
     schema.push({
       headerName: 'B/O Spread',

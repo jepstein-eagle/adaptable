@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+import { Flex } from 'rebass';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -25,9 +25,10 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import EmptyContent from '../../components/EmptyContent';
+import SimpleButton from '../../components/SimpleButton';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
@@ -57,7 +58,6 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
   }
   render() {
     let cssClassName: string = this.props.cssClassName + '__Alert';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__Alert';
 
     let infoBody: any[] = [
       'Alert Definitions define which changes to the source data will trigger an Alert.',
@@ -97,68 +97,57 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.createAlertDefinition()}
-        overrideTooltip="Create Alert"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Alert"
         AccessLevel={this.props.AccessLevel}
       />
     );
 
-    return (
-      <div className={cssClassName}>
-        <PanelWithButton
-          headerText={StrategyConstants.AlertStrategyName}
-          bsStyle="primary"
-          cssClassName={cssClassName}
-          button={newButton}
-          glyphicon={StrategyConstants.AlertGlyph}
-          infoBody={infoBody}
-        >
-          {alertEntities.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={alertEntities}
-            />
-          ) : (
-            <div>
-              <HelpBlock>You have no Alert Definitions.</HelpBlock>
-              {this.props.AccessLevel != AccessLevel.ReadOnly && (
-                <div>
-                  <HelpBlock>Click 'New' to start creating alert definitions.</HelpBlock>
-                  <HelpBlock>
-                    An alert will be triggered whenever an edit - or external data change - matches
-                    the condition in the alert definition.
-                  </HelpBlock>
-                </div>
-              )}
-            </div>
-          )}
+    let startWizardText =
+      this.props.AccessLevel == AccessLevel.ReadOnly
+        ? 'You have no Alert Definitions.'
+        : "Click 'New' to start creating Alert Definitions.  An alert will be triggered whenever an edit - or external data change - matches the condition in the Alert Definition.";
 
-          {this.state.WizardStatus != WizardStatus.None && (
-            <AlertWizard
-              cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as AlertDefinition
-              }
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
-              Blotter={this.props.Blotter}
-              WizardStartIndex={this.state.WizardStartIndex}
-              onCloseWizard={() => this.onCloseWizard()}
-              onFinishWizard={() => this.onFinishWizard()}
-              canFinishWizard={() => this.canFinishWizard()}
-            />
-          )}
-        </PanelWithButton>
-      </div>
+    return (
+      <PanelWithButton
+        bodyProps={{ padding: 0 }}
+        headerText={StrategyConstants.AlertStrategyName}
+        cssClassName={cssClassName}
+        button={newButton}
+        glyphicon={StrategyConstants.AlertGlyph}
+        infoBody={infoBody}
+      >
+        {alertEntities.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={alertEntities}
+          />
+        ) : (
+          <EmptyContent>{startWizardText}</EmptyContent>
+        )}
+
+        {this.state.WizardStatus != WizardStatus.None && (
+          <AlertWizard
+            EditedAdaptableBlotterObject={
+              this.state.EditedAdaptableBlotterObject as AlertDefinition
+            }
+            ConfigEntities={null}
+            ModalContainer={this.props.ModalContainer}
+            Columns={this.props.Columns}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
+            ColumnCategories={this.props.ColumnCategories}
+            Blotter={this.props.Blotter}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+          />
+        )}
+      </PanelWithButton>
     );
   }
 

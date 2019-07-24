@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { PanelProps, Panel, Row, Col, Radio } from 'react-bootstrap';
+
 import { ColumnMenuTab } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
+
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import { Flex } from 'rebass';
+import Panel, { PanelProps } from '../../../components/Panel';
+import Radio from '../../../components/Radio';
 
 export interface FilterFormPanelProps extends PanelProps {
   clearFilterButton?: React.ReactElement<any>;
@@ -34,61 +37,51 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
     }
     className += ' ' + 'ab_panel-with-button-reduce-header-padding';
     let header = (
-      <AdaptableBlotterForm inline>
-        <Row style={{ display: 'flex', alignItems: 'center' }}>
-          {this.props.IsAlwaysFilter ? (
-            <Col xs={6}>
-              <span>Filter</span>
-            </Col>
-          ) : (
-            <Col xs={6}>
-              <Row>
-                <Col xs={3} />
-                <Col xs={9}>
-                  <Radio
-                    inline
-                    value="Menu"
-                    checked={this.props.ColumnMenuTab == ColumnMenuTab.Menu}
-                    onChange={e => this.onSelectMenu()}
-                  >
-                    Menu
-                  </Radio>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={3} />
-                <Col xs={9}>
-                  <Radio
-                    inline
-                    value="Filter"
-                    checked={this.props.ColumnMenuTab == ColumnMenuTab.Filter}
-                    onChange={e => this.onSelectFilter()}
-                  >
-                    Filter
-                  </Radio>
-                </Col>
-              </Row>
-            </Col>
-          )}
+      <Flex alignItems="center" flexDirection="row" style={{ width: '100%' }}>
+        {this.props.IsAlwaysFilter ? (
+          <Flex flex={6} marginRight={2}>
+            Filter
+          </Flex>
+        ) : (
+          <Flex flex={6} flexDirection="column">
+            <Flex>
+              <Flex flex={3} />
+              <Flex flex={9}>
+                <Radio
+                  value="Menu"
+                  checked={this.props.ColumnMenuTab == ColumnMenuTab.Menu}
+                  onChange={() => this.onSelectMenu()}
+                >
+                  Menu
+                </Radio>
+              </Flex>
+            </Flex>
+            <Flex>
+              <Flex flex={3} />
+              <Flex flex={9}>
+                <Radio
+                  value="Filter"
+                  checked={this.props.ColumnMenuTab == ColumnMenuTab.Filter}
+                  onChange={() => this.onSelectFilter()}
+                >
+                  Filter
+                </Radio>
+              </Flex>
+            </Flex>
+          </Flex>
+        )}
 
-          <Col xs={2}>
-            {this.props.clearFilterButton &&
-              this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
-              React.cloneElement(this.props.clearFilterButton, { style: { float: 'right' } })}
-          </Col>
-          <Col xs={2}>
-            {this.props.saveButton &&
-              this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
-              React.cloneElement(this.props.saveButton, { style: { float: 'right' } })}
-          </Col>
-          {this.props.showCloseButton && (
-            <Col xs={2}>
-              {this.props.closeButton &&
-                React.cloneElement(this.props.closeButton, { style: { float: 'right' } })}
-            </Col>
-          )}
-        </Row>
-      </AdaptableBlotterForm>
+        <Flex flex={2}>
+          {this.props.clearFilterButton &&
+            this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
+            this.props.clearFilterButton}
+        </Flex>
+        <Flex flex={2}>
+          {this.props.saveButton &&
+            this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
+            this.props.saveButton}
+        </Flex>
+      </Flex>
     );
     return (
       <div className={cssClassName}>
@@ -96,7 +89,9 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
           header={header}
           className={className}
           style={this.props.style}
-          bsStyle={this.props.bsStyle}
+          bodyProps={{ padding: 1, style: { maxHeight: '50vh' } }}
+          bodyScroll
+          border="none"
         >
           {this.props.children}
         </Panel>

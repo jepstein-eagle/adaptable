@@ -3,7 +3,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ReminderSummaryWizard } from './ReminderSummaryWizard';
-import { ReminderAlertWizard } from './RemindeAlertWizard';
+import { ReminderMessageWizard } from './ReminderMessageWizard';
 import { ReminderScheduleWizard } from './ReminderScheduleWizard';
 
 export interface ReminderWizardProps
@@ -21,9 +21,9 @@ export class ReminderWizard extends React.Component<ReminderWizardProps, {}> {
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Alert',
+              StepName: 'Message',
               Index: 0,
-              Element: <ReminderAlertWizard />,
+              Element: <ReminderMessageWizard />,
             },
             {
               StepName: 'Schedule',

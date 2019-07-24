@@ -1,7 +1,8 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { Glyphicon, Label, Button } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import SimpleButton from '../../components/SimpleButton';
 
 // Keep this simple - it just takes a list of step names and the active step name
 
@@ -28,28 +29,28 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
 
       let lastStep: boolean = index == count;
       return (
-        <span key={index}>
-          <Button
-            bsStyle={style}
-            bsSize={'small'}
+        <div key={index} style={{ display: 'inline-block' }}>
+          <SimpleButton
+            variant={isActiveStep ? 'raised' : 'outlined'}
+            tone={isActiveStep ? 'success' : 'neutral'}
             disabled={isDisabled}
             onClick={() => this.onStepButtonClicked(s)}
           >
             {s}
-          </Button>
+          </SimpleButton>
           {lastStep == false && (
             <Glyphicon
               style={{ verticalAlign: 'middle', margin: '5px', padding: '5px' }}
               glyph="resize-horizontal"
             />
           )}
-        </span>
+        </div>
       );
     });
 
     return (
       <div className={StyleConstants.WIZARD_LEGEND}>
-        {this.props.FriendlyName} : {stepButtons}
+        {this.props.FriendlyName}: {stepButtons}
       </div>
     );
   }

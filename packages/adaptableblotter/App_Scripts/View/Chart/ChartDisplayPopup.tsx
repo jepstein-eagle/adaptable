@@ -76,7 +76,6 @@ class ChartDisplayPopupComponent extends React.Component<
         cssClassName={cssClassName}
         onClick={() => this.props.onClose()}
         bsStyle={PRIMARY_BSSTYLE}
-        size={'small'}
         DisplayMode="Glyph"
         hideToolTip={true}
       />
@@ -89,7 +88,6 @@ class ChartDisplayPopupComponent extends React.Component<
           style={{ marginRight: '5px' }}
           onClick={() => this.onEditChart()}
           bsStyle={PRIMARY_BSSTYLE}
-          size={'small'}
           DisplayMode="Glyph+Text"
           overrideText="Edit Chart"
           hideToolTip={true}
@@ -102,19 +100,11 @@ class ChartDisplayPopupComponent extends React.Component<
         cssClassName={cssClassName}
         onClick={() => this.onChartMaximised()}
         bsStyle={PRIMARY_BSSTYLE}
-        size={'small'}
         DisplayMode="Glyph"
         hideToolTip={true}
       />
     ) : (
-      <ButtonMinimise
-        cssClassName={cssClassName}
-        onClick={() => this.onChartMinimised()}
-        bsStyle={PRIMARY_BSSTYLE}
-        size={'small'}
-        DisplayMode="Glyph"
-        hideToolTip={true}
-      />
+      <ButtonMinimise className={cssClassName} onClick={() => this.onChartMinimised()} />
     );
 
     return (

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -42,24 +41,22 @@ export class LayoutColumnWizard
     let cssClassName: string = this.props.cssClassName + '-column';
 
     return (
-      <div className={cssClassName}>
-        <PanelWithInfo
+      <PanelWithInfo
+        cssClassName={cssClassName}
+        header={'Choose columns for the Layout'}
+        bsStyle="primary"
+        infoBody={infoBody}
+      >
+        <DualListBoxEditor
+          AvailableValues={this.props.Columns.map(x => x.FriendlyName)}
           cssClassName={cssClassName}
-          header={'Choose columns for the Layout'}
-          bsStyle="primary"
-          infoBody={infoBody}
-        >
-          <DualListBoxEditor
-            AvailableValues={this.props.Columns.map(x => x.FriendlyName)}
-            cssClassName={cssClassName}
-            SelectedValues={this.state.SelectedColumns}
-            HeaderAvailable="Available Columns"
-            HeaderSelected="Columns in Layout"
-            onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
-            DisplaySize={DisplaySize.Small}
-          />
-        </PanelWithInfo>
-      </div>
+          SelectedValues={this.state.SelectedColumns}
+          HeaderAvailable="Available Columns"
+          HeaderSelected="Columns in Layout"
+          onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
+          DisplaySize={DisplaySize.Small}
+        />
+      </PanelWithInfo>
     );
   }
   OnSelectedValuesChange(newValues: Array<string>) {

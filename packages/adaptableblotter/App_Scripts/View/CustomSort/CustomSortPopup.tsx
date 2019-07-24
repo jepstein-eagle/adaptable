@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -29,6 +28,8 @@ import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterO
 import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
   onAddCustomSort: (customSort: CustomSort) => CustomSortRedux.CustomSortAddAction;
@@ -104,24 +105,21 @@ class CustomSortPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Custom Sort"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Custom Sort"
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.CustomSortStrategyName}
-          className="ab_main_popup"
           infoBody={infoBody}
           button={newButton}
-          bsStyle="primary"
+          bodyProps={{ padding: 0 }}
           glyphicon={StrategyConstants.CustomSortGlyph}
         >
           {customSorts.length > 0 ? (
@@ -131,7 +129,9 @@ class CustomSortPopupComponent extends React.Component<
               items={customSorts}
             />
           ) : (
-            <HelpBlock>Click 'New' to create a bespoke sort order for a selected column.</HelpBlock>
+            <EmptyContent>
+              Click 'New' to create a bespoke sort order for a selected column.
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject && (
@@ -153,7 +153,7 @@ class CustomSortPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

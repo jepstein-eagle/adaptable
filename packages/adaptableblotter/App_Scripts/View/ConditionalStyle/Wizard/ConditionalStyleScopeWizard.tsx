@@ -1,22 +1,23 @@
 import * as React from 'react';
-import { Radio, Col, Panel, FormControl } from 'react-bootstrap';
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import {
-  ConditionalStyleScope,
-  SelectionMode,
-  MessageType,
-} from '../../../PredefinedConfig/Common/Enums';
+import { ConditionalStyleScope, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { Box } from 'rebass';
+import Radio from '../../../components/Radio';
+import Dropdown from '../../../components/Dropdown';
+
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface ConditionalStyleScopeWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
@@ -47,56 +48,52 @@ export class ConditionalStyleScopeWizard
     let cssClassName: string = this.props.cssClassName + '-scope';
 
     let optionColumnCategorys = this.props.ColumnCategories.map(cc => {
-      return (
-        <option value={cc.ColumnCategoryId} key={cc.ColumnCategoryId}>
-          {cc.ColumnCategoryId}
-        </option>
-      );
+      return {
+        value: cc.ColumnCategoryId,
+        label: cc.ColumnCategoryId,
+      };
     });
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Select Where the Conditional Style is Applied" bsStyle="primary">
-          <AdaptableBlotterForm inline>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                className={cssClassName + '__radiobutton'}
-                inline
-                value="Row"
-                checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row}
-                onChange={e => this.onScopeSelectChanged(e)}
-              >
-                Whole Row
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Conditional Style: Whole Row'}
-                bodyText={[
-                  'The conditional style will be applied to alls cells in each matching row.',
-                ]}
-              />
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                className={cssClassName + '__radiobutton'}
-                inline
-                value="Column"
-                checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column}
-                onChange={e => this.onScopeSelectChanged(e)}
-              >
-                Column
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Conditional Style: Single Column'}
-                bodyText={[
-                  'Pick the column from the list below which will have conditional style applied.',
-                ]}
-              />
-            </Col>
-          </AdaptableBlotterForm>
+      <div className={cssClassName} style={{ height: '100%' }}>
+        <WizardPanel header="Select Where the Conditional Style is Applied">
+          <Box className="ab_large_margin">
+            <Radio
+              className={cssClassName + '__radiobutton'}
+              value="Row"
+              checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row}
+              onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
+            >
+              Whole Row
+            </Radio>{' '}
+            <AdaptablePopover
+              cssClassName={cssClassName}
+              headerText={'Conditional Style: Whole Row'}
+              bodyText={[
+                'The conditional style will be applied to alls cells in each matching row.',
+              ]}
+            />
+          </Box>
+          <Box className="ab_large_margin">
+            <Radio
+              className={cssClassName + '__radiobutton'}
+              value="Column"
+              checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column}
+              onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
+            >
+              Column
+            </Radio>{' '}
+            <AdaptablePopover
+              cssClassName={cssClassName}
+              headerText={'Conditional Style: Single Column'}
+              bodyText={[
+                'Pick the column from the list below which will have conditional style applied.',
+              ]}
+            />
+          </Box>
+
           {this.state.ConditionalStyleScope == ConditionalStyleScope.Column && (
-            <Col xs={12} className="ab_large_margin">
+            <Box className="ab_large_margin">
               <ColumnSelector
                 cssClassName={cssClassName}
                 SelectedColumnIds={[this.state.ColumnId]}
@@ -104,16 +101,17 @@ export class ConditionalStyleScopeWizard
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single}
               />
-            </Col>
+            </Box>
           )}
           {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && (
-            <Col xs={12} className="ab_large_margin">
+            <Box className="ab_large_margin">
               <Radio
                 className={cssClassName + '__radiobutton'}
-                inline
                 value="ColumnCategory"
                 checked={this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory}
-                onChange={e => this.onScopeSelectChanged(e)}
+                onChange={(checked: boolean, e: React.SyntheticEvent) =>
+                  this.onScopeSelectChanged(e)
+                }
               >
                 Column Category
               </Radio>{' '}
@@ -124,25 +122,26 @@ export class ConditionalStyleScopeWizard
                   'Pick the Column Category from the list below to apply the conditional style to all Column Categorys.',
                 ]}
               />
-            </Col>
+            </Box>
           )}
           {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) &&
             this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && (
-              <Col xs={12} className="ab_large_margin">
-                <FormControl
-                  componentClass="select"
+              <Box className="ab_large_margin">
+                <Dropdown
                   placeholder="select"
                   value={this.state.ColumnCategoryId}
-                  onChange={x => this.onColumnCategorySelectedChanged(x)}
-                >
-                  <option value="select" key="select">
-                    Select a Column Category
-                  </option>
-                  {optionColumnCategorys}
-                </FormControl>
-              </Col>
+                  onChange={(value: any) => this.onColumnCategorySelectedChanged(value)}
+                  options={[
+                    {
+                      label: 'Select',
+                      value: 'select',
+                    },
+                    ...optionColumnCategorys,
+                  ]}
+                />
+              </Box>
             )}
-        </Panel>
+        </WizardPanel>
       </div>
     );
   }
@@ -156,9 +155,8 @@ export class ConditionalStyleScopeWizard
     );
   }
 
-  private onColumnCategorySelectedChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ ColumnCategoryId: e.value } as ConditionalStyleScopeWizardState, () =>
+  private onColumnCategorySelectedChanged(value: any) {
+    this.setState({ ColumnCategoryId: value } as ConditionalStyleScopeWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }

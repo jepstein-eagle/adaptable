@@ -1,0 +1,11 @@
+.ab-Dashboard {
+  flex-wrap: wrap;
+  flex-direction: row;
+   &>ul {
+     flex: 0 0 auto;
+   }
+}
+
+.ab-Dashboard__container > * {
+  height: 100%;
+}

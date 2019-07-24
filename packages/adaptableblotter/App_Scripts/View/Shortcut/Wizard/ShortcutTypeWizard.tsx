@@ -1,13 +1,17 @@
 import { Shortcut } from '../../../PredefinedConfig/RunTimeState/ShortcutState';
 /// <reference path="../../typings/index.d.ts" />
 import * as React from 'react';
-import { Radio, Panel, Col, HelpBlock } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataType, MathOperation } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
+import WizardPanel from '../../../components/WizardPanel';
+import Radio from '../../../components/Radio';
+import HelpBlock from '../../../components/HelpBlock';
+import { Flex } from 'rebass';
 
 export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<Shortcut> {}
 export interface ShortcutTypeWizardState {
@@ -25,45 +29,38 @@ export class ShortcutTypeWizard
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '-type';
-
     return (
-      <div className={cssClassName}>
-        <Panel header="Select Where Shortcut is Applied" bsStyle="primary">
-          <AdaptableBlotterForm inline>
-            <Col xs={12}>
-              <HelpBlock>
-                Numeric column shortuts perform a mathematical operation on the current contents of
-                the cell.
-              </HelpBlock>
-            </Col>
-            <Col xs={12}>
-              <HelpBlock>Date shortcuts replace the cell contents with a new Date value.</HelpBlock>
-            </Col>
-            <Col xs={12} className="ab_medium_margin">
-              <Radio
-                inline
-                value="Number"
-                checked={this.state.ColumnType == DataType.Number}
-                onChange={e => this.onColumTypeChanged(e)}
-              >
-                Numeric Columns
-              </Radio>
-            </Col>
-            <Col xs={12} className="ab_medium_margin">
-              <Radio
-                inline
-                value="Date"
-                checked={this.state.ColumnType == DataType.Date}
-                onChange={e => this.onColumTypeChanged(e)}
-              >
-                Date Columns
-              </Radio>
-            </Col>
-            <Col xs={12} className="ab_medium_margin" />
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Select Where Shortcut is Applied">
+        <Flex flexDirection="column" padding={2}>
+          <HelpBlock marginBottom={2}>
+            Numeric column shortuts perform a mathematical operation based on the{' '}
+            <b>current contents</b> of the cell.
+          </HelpBlock>
+          <Radio
+            marginBottom={2}
+            value="Number"
+            checked={this.state.ColumnType == DataType.Number}
+            onChange={(_, e: any) => this.onColumTypeChanged(e)}
+          >
+            Numeric Columns
+          </Radio>
+
+          <HelpBlock marginBottom={2}>
+            <p>
+              Date shortcuts <b>replace the cell contents</b> with a new Date value.
+            </p>
+          </HelpBlock>
+
+          <Radio
+            marginBottom={2}
+            value="Date"
+            checked={this.state.ColumnType == DataType.Date}
+            onChange={(_, e: any) => this.onColumTypeChanged(e)}
+          >
+            Date Columns
+          </Radio>
+        </Flex>
+      </WizardPanel>
     );
   }
 

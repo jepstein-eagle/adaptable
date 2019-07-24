@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -18,6 +16,13 @@ import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterFor
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
+import Radio from '../../../components/Radio';
+import Panel from '../../../components/Panel';
+import HelpBlock from '../../../components/HelpBlock';
+import { Box, Flex } from 'rebass';
+import Dropdown from '../../../components/Dropdown';
+import Input from '../../../components/Input';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSettingsWizardState {
@@ -40,14 +45,13 @@ export class AlertRulesWizard
 
   render(): any {
     let operatorTypes = this.getAvailableOperators().map((operator: LeafExpressionOperator) => {
-      return (
-        <option key={operator} value={operator.toString()}>
-          {ExpressionHelper.OperatorToLongFriendlyString(
-            operator,
-            this.getColumnDataTypeFromState()
-          )}
-        </option>
-      );
+      return {
+        value: operator.toString(),
+        label: ExpressionHelper.OperatorToLongFriendlyString(
+          operator,
+          this.getColumnDataTypeFromState()
+        ),
+      };
     });
 
     let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
@@ -57,64 +61,53 @@ export class AlertRulesWizard
 
     let alertHeader: string = 'Alert for Column: ' + columnFriendlyName;
 
-    let helpText: string =
-      'Choose whether to show alerts for all changes to this column, or only when the change matches a rule (to be set by you).';
-    let cssClassName: string = this.props.cssClassName + '-rules';
-
     return (
-      <div className={cssClassName}>
-        <Panel header={alertHeader} bsStyle="primary">
-          <AdaptableBlotterForm>
-            <Col xs={12}>
-              <HelpBlock>{helpText}</HelpBlock>
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                inline
-                value="None"
-                checked={this.state.Operator == LeafExpressionOperator.None}
-                onChange={e => this.onDisallowEditChanged(e)}
-              >
-                Show Alert for ALL changes
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Alert: All Changes'}
-                bodyText={['An alert will fire for any change.']}
-              />
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                inline
-                value="others"
-                checked={this.state.Operator != LeafExpressionOperator.None}
-                onChange={e => this.onDisallowEditChanged(e)}
-              >
-                Show Alert when new cell value matches rule:
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Alert: Custom'}
-                bodyText={['Only show alerts that match the rule defined in the dropdown below.']}
-              />
-            </Col>
-          </AdaptableBlotterForm>
-
-          {/* if not None operator then show operator dropdown */}
-          <FormGroup className="ab_large_margin">
-            <Col xs={1} />
-            <Col xs={6}>
-              <FormControl
+      <WizardPanel header={alertHeader}>
+        <AdaptableBlotterForm>
+          <Box>
+            <HelpBlock>
+              {'Show alerts for any data change to the' + columnFriendlyName + ' column.'}
+            </HelpBlock>
+            <Radio
+              value="None"
+              name="alert"
+              checked={this.state.Operator == LeafExpressionOperator.None}
+              onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
+            >
+              Show Alert for ALL changes
+            </Radio>{' '}
+          </Box>
+          <Box>
+            <HelpBlock>
+              {
+                'Only show an Alert when the change to the column matches a rule (to be set by you).'
+              }
+            </HelpBlock>
+            <Radio
+              value="others"
+              name="alert"
+              checked={this.state.Operator != LeafExpressionOperator.None}
+              onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
+            >
+              Show Alert when new cell value matches rule:
+            </Radio>{' '}
+          </Box>
+        </AdaptableBlotterForm>
+        {/* if not None operator then show operator dropdown */}
+        <Flex flexDirection="column">
+          {this.state.Operator != LeafExpressionOperator.None ? (
+            <Box marginBottom={2} style={{ flex: 1, width: '100%' }}>
+              <Dropdown
                 disabled={this.checkOperator(LeafExpressionOperator.None)}
-                componentClass="select"
                 placeholder="select"
                 value={this.state.Operator.toString()}
-                onChange={x => this.onOperatorChanged(x)}
-              >
-                {operatorTypes}
-              </FormControl>
-            </Col>
-
+                onChange={(operator: any) => this.onOperatorChanged(operator)}
+                options={operatorTypes}
+                style={{ maxWidth: 'inherit' }}
+              ></Dropdown>
+            </Box>
+          ) : null}
+          <Flex flexDirection="row" flex={1}>
             {/* if  numeric then show a numeric control */}
             {!this.checkOperator(LeafExpressionOperator.None) &&
               !this.checkOperator(LeafExpressionOperator.Unknown) &&
@@ -122,69 +115,74 @@ export class AlertRulesWizard
               !this.checkOperator(LeafExpressionOperator.IsNegative) &&
               !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
               this.getColumnDataTypeFromState() == DataType.Number && (
-                <Col xs={5}>
-                  <FormControl
+                <>
+                  <Input
+                    style={{ flex: 1 }}
                     value={this.state.Operand1}
                     type="number"
                     placeholder="Enter Number"
-                    onChange={x => this.onOperand1ValueChanged(x)}
+                    onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
                   />
-                  {this.isBetweenOperator() && (
-                    <FormControl
+                  {this.isBetweenOperator() ? (
+                    <Input
+                      style={{ flex: 1 }}
+                      marginLeft={2}
                       value={this.state.Operand2}
                       type="number"
                       placeholder="Enter Number"
-                      onChange={x => this.onOperand2ValueChanged(x)}
+                      onChange={(x: React.SyntheticEvent) => this.onOperand2ValueChanged(x)}
                     />
-                  )}
-                </Col>
+                  ) : null}
+                </>
               )}
 
             {/* if  date then show a date control */}
             {!this.checkOperator(LeafExpressionOperator.None) &&
               !this.checkOperator(LeafExpressionOperator.Unknown) &&
               this.getColumnDataTypeFromState() == DataType.Date && (
-                <Col xs={5}>
-                  <FormControl
+                <>
+                  <Input
                     type="date"
+                    style={{ flex: 1 }}
                     placeholder="Enter Date"
                     value={this.state.Operand1}
-                    onChange={x => this.onOperand1ValueChanged(x)}
+                    onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
                   />
                   {this.isBetweenOperator() && (
-                    <FormControl
+                    <Input
+                      style={{ flex: 1 }}
+                      marginLeft={2}
                       value={this.state.Operand2}
                       type="date"
                       placeholder="Enter Date"
-                      onChange={x => this.onOperand2ValueChanged(x)}
+                      onChange={(x: React.SyntheticEvent) => this.onOperand2ValueChanged(x)}
                     />
                   )}
-                </Col>
+                </>
               )}
 
             {/* if string then show a text control  */}
             {!this.checkOperator(LeafExpressionOperator.None) &&
               !this.checkOperator(LeafExpressionOperator.Unknown) &&
               this.getColumnDataTypeFromState() == DataType.String && (
-                <Col xs={5}>
-                  <FormControl
-                    value={this.state.Operand1}
-                    type="string"
-                    placeholder="Enter a Value"
-                    onChange={x => this.onOperand1ValueChanged(x)}
-                  />
-                </Col>
+                <Input
+                  style={{ flex: 1 }}
+                  value={this.state.Operand1}
+                  type="text"
+                  placeholder="Enter a Value"
+                  onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
+                />
               )}
-          </FormGroup>
-        </Panel>
-      </div>
+          </Flex>
+        </Flex>
+      </WizardPanel>
     );
   }
 
-  private onOperatorChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onOperatorChanged(operator: string) {
+    operator = operator || '';
     this.setState(
-      { Operator: e.value, Operand1: '', Operand2: '' } as AlertSettingsWizardState,
+      { Operator: operator, Operand1: '', Operand2: '' } as AlertSettingsWizardState,
       () => this.props.UpdateGoBackState()
     );
   }

@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
 
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
@@ -14,7 +13,6 @@ import { ColorPicker } from '../ColorPicker';
 
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 
 import {
   QUICK_SEARCH_DEFAULT_BACK_COLOR,
@@ -23,6 +21,12 @@ import {
 import { DisplayAction, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import { AdaptablePopover } from '../AdaptablePopover';
+
+import WizardPanel from '../../components/WizardPanel';
+import Dropdown from '../../components/Dropdown';
+import Checkbox from '../../components/CheckBox';
+import { Text, Flex } from 'rebass';
+import Panel from '../../components/Panel';
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
@@ -67,15 +71,13 @@ class QuickSearchPopupComponent extends React.Component<
     this.debouncedRunQuickSearch();
   }
 
-  onDisplayTypeChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.props.onSetSearchDisplayType(e.value as DisplayAction);
+  onDisplayTypeChange(value: any) {
+    this.props.onSetSearchDisplayType(value as DisplayAction);
   }
 
-  private onUseBackColorCheckChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onUseBackColorCheckChange(checked: boolean) {
     let style: IStyle = this.state.EditedStyle;
-    style.BackColor = e.checked
+    style.BackColor = checked
       ? this.props.QuickSearchStyle.BackColor
         ? this.props.QuickSearchStyle.BackColor
         : QUICK_SEARCH_DEFAULT_BACK_COLOR
@@ -84,10 +86,9 @@ class QuickSearchPopupComponent extends React.Component<
     this.props.onSetStyle(style);
   }
 
-  private onUseForeColorCheckChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onUseForeColorCheckChange(checked: boolean) {
     let style: IStyle = this.state.EditedStyle;
-    style.ForeColor = e.checked
+    style.ForeColor = checked
       ? this.props.QuickSearchStyle.ForeColor
         ? this.props.QuickSearchStyle.ForeColor
         : QUICK_SEARCH_DEFAULT_FORE_COLOR
@@ -131,130 +132,118 @@ class QuickSearchPopupComponent extends React.Component<
       LeafExpressionOperator.Contains,
       LeafExpressionOperator.StartsWith,
     ];
-
-    let optionOperators = EnumExtensions.getNames(LeafExpressionOperator)
-      .filter(name => stringOperators.find(s => s == name) != null)
-      .map(stringOperatorName => {
-        return (
-          <option key={stringOperatorName} value={stringOperatorName}>
-            {ExpressionHelper.OperatorToShortFriendlyString(
-              stringOperatorName as LeafExpressionOperator
-            )}
-          </option>
-        );
-      });
-
     let DisplayActions = EnumExtensions.getNames(DisplayAction).map(enumName => {
-      return (
-        <option key={enumName} value={enumName}>
-          {this.getTextForDisplayAction(enumName as DisplayAction)}
-        </option>
-      );
+      return {
+        label: this.getTextForDisplayAction(enumName as DisplayAction),
+        value: enumName,
+      };
     });
 
     return (
-      <div className={cssClassName}>
-        <PanelWithImage
-          cssClassName={cssClassName}
-          header={StrategyConstants.QuickSearchStrategyName}
-          bsStyle="primary"
-          glyphicon={StrategyConstants.QuickSearchGlyph}
-          infoBody={infoBody}
+      <PanelWithImage
+        cssClassName={cssClassName}
+        variant="primary"
+        header={StrategyConstants.QuickSearchStrategyName}
+        glyphicon={StrategyConstants.QuickSearchGlyph}
+        infoBody={infoBody}
+        bodyProps={{ padding: 2 }}
+      >
+        <Flex flexDirection="row" alignItems="center" px={2} marginBottom={2}>
+          <Text style={{ flex: 2, whiteSpace: 'nowrap' }} textAlign="end" marginRight={2}>
+            Search For:
+          </Text>
+
+          <AdaptableBlotterFormControlTextClear
+            cssClassName={cssClassName}
+            type="text"
+            placeholder="Quick Search Text"
+            value={this.state.EditedQuickSearchText}
+            OnTextChange={x => this.handleQuickSearchTextChange(x)}
+          />
+        </Flex>
+
+        <Panel
+          header="Quick Search Options"
+          style={{ height: 'auto' }}
+          variant="default"
+          borderRadius="none"
         >
-          <AdaptableBlotterForm inline>
-            <Panel header={'Search For'} bsStyle="info">
-              <AdaptableBlotterFormControlTextClear
-                cssClassName={cssClassName}
-                type="text"
-                placeholder="Quick Search Text"
-                value={this.state.EditedQuickSearchText}
-                OnTextChange={x => this.handleQuickSearchTextChange(x)}
+          <Flex flexDirection="row" alignItems="center">
+            <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+              Behaviour:
+            </Text>
+            <Flex flex={7} alignItems="center" flexDirection="row">
+              <Dropdown
+                placeholder="select"
+                style={{ width: '100%', maxWidth: 'none' }}
+                value={this.props.DisplayAction.toString()}
+                onChange={(x: any) => this.onDisplayTypeChange(x)}
+                options={DisplayActions}
+                marginRight={3}
               />
-            </Panel>
-          </AdaptableBlotterForm>
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Quick Search: Behaviour'}
+                bodyText={[
+                  <b>Highlight Cells Only:</b>,
+                  ' Changes back colour of cells matching search text',
+                  <br />,
+                  <br />,
+                  <b>Show Matching Rows Only:</b>,
+                  ' Only shows rows containing cells matching search text',
+                  <br />,
+                  <br />,
+                  <b>Highlight Cells and Show Matching Rows:</b>,
+                  ' Only shows rows containing cells (which are also coloured) matching search text',
+                ]}
+              />
+            </Flex>
+          </Flex>
 
-          <AdaptableBlotterForm horizontal>
-            <Panel header="Quick Search Options" eventKey="1" bsStyle="info">
-              <FormGroup controlId="formInlineSearchDisplay">
-                <Col xs={3}>
-                  <ControlLabel>Behaviour:</ControlLabel>
-                </Col>
-                <Col xs={7}>
-                  <FormControl
-                    componentClass="select"
-                    placeholder="select"
-                    value={this.props.DisplayAction.toString()}
-                    onChange={x => this.onDisplayTypeChange(x)}
-                  >
-                    {DisplayActions}
-                  </FormControl>
-                </Col>
-                <Col xs={1}>
-                  <AdaptablePopover
-                    cssClassName={cssClassName}
-                    headerText={'Quick Search: Behaviour'}
-                    bodyText={[
-                      <b>Highlight Cells Only:</b>,
-                      ' Changes back colour of cells matching search text',
-                      <br />,
-                      <br />,
-                      <b>Show Matching Rows Only:</b>,
-                      ' Only shows rows containing cells matching search text',
-                      <br />,
-                      <br />,
-                      <b>Highlight Cells and Show Matching Rows:</b>,
-                      ' Only shows rows containing cells (which are also coloured) matching search text',
-                    ]}
-                  />
-                </Col>
-              </FormGroup>
-
-              <FormGroup controlId="colorBackStyle">
-                <Col xs={3}>
-                  <ControlLabel>Set Back Colour:</ControlLabel>
-                </Col>
-                <Col xs={1}>
-                  <Checkbox
-                    value="existing"
-                    checked={this.props.QuickSearchStyle.BackColor ? true : false}
-                    onChange={e => this.onUseBackColorCheckChange(e)}
-                  />
-                </Col>
-                <Col xs={3}>
-                  {this.props.QuickSearchStyle.BackColor != null && (
-                    <ColorPicker
-                      ColorPalette={this.props.ColorPalette}
-                      value={this.props.QuickSearchStyle.BackColor}
-                      onChange={x => this.onBackColorSelectChange(x)}
-                    />
-                  )}
-                </Col>
-              </FormGroup>
-              <FormGroup controlId="colorForeStyle">
-                <Col xs={3}>
-                  <ControlLabel>Set Fore Colour:</ControlLabel>
-                </Col>
-                <Col xs={1}>
-                  <Checkbox
-                    value="existing"
-                    checked={this.props.QuickSearchStyle.ForeColor ? true : false}
-                    onChange={e => this.onUseForeColorCheckChange(e)}
-                  />
-                </Col>
-                <Col xs={3}>
-                  {this.props.QuickSearchStyle.ForeColor != null && (
-                    <ColorPicker
-                      ColorPalette={this.props.ColorPalette}
-                      value={this.props.QuickSearchStyle.ForeColor}
-                      onChange={x => this.onForeColorSelectChange(x)}
-                    />
-                  )}
-                </Col>
-              </FormGroup>
-            </Panel>
-          </AdaptableBlotterForm>
-        </PanelWithImage>
-      </div>
+          <Flex flexDirection="row" alignItems="center">
+            <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+              Set Back Colour:
+            </Text>
+            <Flex flex={7} alignItems="center" flexDirection="row">
+              <Checkbox
+                value="existing"
+                checked={this.props.QuickSearchStyle.BackColor ? true : false}
+                onChange={(checked: boolean) => this.onUseBackColorCheckChange(checked)}
+                marginRight={3}
+                marginLeft={2}
+              />
+              {this.props.QuickSearchStyle.BackColor != null && (
+                <ColorPicker
+                  ColorPalette={this.props.ColorPalette}
+                  value={this.props.QuickSearchStyle.BackColor}
+                  onChange={x => this.onBackColorSelectChange(x)}
+                />
+              )}
+            </Flex>
+          </Flex>
+          <Flex flexDirection="row" alignItems="center">
+            <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+              Set Fore Colour:
+            </Text>
+            <Flex flex={7} alignItems="center" flexDirection="row">
+              <Checkbox
+                marginRight={3}
+                marginLeft={2}
+                value="existing"
+                checked={this.props.QuickSearchStyle.ForeColor ? true : false}
+                onChange={(checked: boolean) => this.onUseForeColorCheckChange(checked)}
+              />
+              {this.props.QuickSearchStyle.ForeColor != null && (
+                <ColorPicker
+                  ColorPalette={this.props.ColorPalette}
+                  value={this.props.QuickSearchStyle.ForeColor}
+                  onChange={x => this.onForeColorSelectChange(x)}
+                />
+              )}
+            </Flex>
+          </Flex>
+        </Panel>
+      </PanelWithImage>
     );
   }
 

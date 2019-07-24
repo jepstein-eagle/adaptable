@@ -1,14 +1,19 @@
 import * as React from 'react';
-import { Radio, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType, ActionMode } from '../../../PredefinedConfig/Common/Enums';
+import { ActionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
+
+import { Flex, Box } from 'rebass';
+import WizardPanel from '../../../components/WizardPanel';
+import Radio from '../../../components/Radio';
+import { SyntheticEvent } from 'react';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface CellValidationActionWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -30,62 +35,53 @@ export class CellValidationActionWizard
     let cssClassName: string = this.props.cssClassName + '-action';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Action When Validation Fails" bsStyle="primary">
-          <AdaptableBlotterForm inline>
-            <Col xs={12}>
-              <HelpBlock>
-                Choose what should happen to an edit when cell validation fails.
-              </HelpBlock>
-            </Col>
-            <Col xs={12}>
-              <HelpBlock>
-                <i>Prevent cell edit</i> ensures that no edits which fail validation will occur.
-              </HelpBlock>
-            </Col>
-            <Col xs={12}>
-              <HelpBlock>
-                <i>Show a warning</i> gives you the option to allow the edit after providing a
-                reason (which will be audited).
-              </HelpBlock>
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                inline
-                value={ActionMode.StopEdit}
-                checked={this.state.ActionMode == ActionMode.StopEdit}
-                onChange={e => this.onActionModeChanged(e)}
-              >
-                Prevent the cell edit
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Cell Validation Action: Prevent'}
-                bodyText={[
-                  'Disallows all cell edits that break the validation rule with no override available.',
-                ]}
-              />
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                inline
-                value={ActionMode.WarnUser}
-                checked={this.state.ActionMode == ActionMode.WarnUser}
-                onChange={e => this.onActionModeChanged(e)}
-              >
-                Show a warning
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Cell Validation Action: Warning'}
-                bodyText={[
-                  'Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed.',
-                ]}
-              />
-            </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Action When Validation Fails">
+        <HelpBlock>
+          <p>Choose what should happen to an edit when cell validation fails.</p>
+          <p>
+            <i>Prevent cell edit</i> ensures that no edits which fail validation will occur.
+          </p>
+          <p>
+            <i>Show a warning</i> gives you the option to allow the edit after providing a reason
+            (which will be audited).
+          </p>
+        </HelpBlock>
+
+        <Flex marginTop={3} flexDirection="row" alignItems="center" marginLeft={2}>
+          <Radio
+            value={ActionMode.StopEdit}
+            marginRight={3}
+            checked={this.state.ActionMode == ActionMode.StopEdit}
+            onChange={(_: boolean, e: SyntheticEvent) => this.onActionModeChanged(e)}
+          >
+            Prevent the cell edit
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Cell Validation Action: Prevent'}
+            bodyText={[
+              'Disallows all cell edits that break the validation rule with no override available.',
+            ]}
+          />
+        </Flex>
+        <Flex marginTop={3} flexDirection="row" alignItems="center" marginLeft={2}>
+          <Radio
+            marginRight={3}
+            value={ActionMode.WarnUser}
+            checked={this.state.ActionMode == ActionMode.WarnUser}
+            onChange={(_: boolean, e: SyntheticEvent) => this.onActionModeChanged(e)}
+          >
+            Show a warning
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Cell Validation Action: Warning'}
+            bodyText={[
+              'Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed.',
+            ]}
+          />
+        </Flex>
+      </WizardPanel>
     );
   }
 

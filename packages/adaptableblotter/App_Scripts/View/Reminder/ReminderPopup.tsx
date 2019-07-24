@@ -6,7 +6,7 @@ import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { HelpBlock } from 'react-bootstrap';
+
 import { ReminderEntityRow } from './ReminderEntityRow';
 import { ReminderWizard } from './Wizard/ReminderWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -24,6 +24,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupComponent> {
   Reminders: Reminder[];
@@ -76,17 +78,15 @@ class ReminderPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Reminder"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Reminder"
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.ReminderStrategyName}
           button={newButton}
@@ -96,10 +96,10 @@ class ReminderPopupComponent extends React.Component<
           infoBody={infoBody}
         >
           {this.props.Reminders.length == 0 ? (
-            <HelpBlock>
+            <EmptyContent>
               Click 'New' to create a new Reminder that will trigger an alert according to a
               schedule set by you.
-            </HelpBlock>
+            </EmptyContent>
           ) : (
             <AdaptableObjectCollection
               cssClassName={cssClassName}
@@ -127,7 +127,7 @@ class ReminderPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

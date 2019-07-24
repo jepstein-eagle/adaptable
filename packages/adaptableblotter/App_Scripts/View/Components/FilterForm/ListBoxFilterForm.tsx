@@ -131,13 +131,11 @@ export class ListBoxFilterForm extends React.Component<
 
     let textClear = (
       <AdaptableBlotterFormControlTextClear
-        cssClassName={this.props.cssClassName}
         autoFocus={true}
         style={searchFilterStyle}
         type="text"
         placeholder="Search Filters"
         value={this.state.FilterValue}
-        bsSize={'small'}
         OnTextChange={x => this.onUpdateFilterSearch(x)}
       />
     );
@@ -499,14 +497,14 @@ export class ListBoxFilterForm extends React.Component<
 let divStyle: React.CSSProperties = {
   overflowY: 'auto',
   overflowX: 'hidden',
-  height: '450px',
+  // maxHeight: '40vh',
   marginBottom: '0',
 };
 
 let listGroupStyle: React.CSSProperties = {
   overflowY: 'auto',
   overflowX: 'hidden',
-  height: '335px',
+  // maxHeight: '50vh',
   marginBottom: '0',
 };
 

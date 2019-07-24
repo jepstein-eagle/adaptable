@@ -1,0 +1,15 @@
+.ab-ObjectCollection {
+}
+.ab-ObjectCollection__list { 
+  & > * {
+    background: var(--ab-cmp-listgroupitem__background);
+    color: var(--ab-cmp-listgroupitem__color);
+    
+  }
+
+  & > *:nth-child(2n + 1) {
+    background: var(--ab-cmp-listgroupitem--odd__background);
+    color: var(--ab-cmp-listgroupitem--odd__color);
+  }
+
+}

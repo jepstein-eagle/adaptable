@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Panel } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -9,6 +8,7 @@ import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PlusMinusRule } from '../../../PredefinedConfig/RunTimeState/PlusMinusState';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {
   NumericColumns: Array<IColumn>;
@@ -28,17 +28,15 @@ export class PlusMinusColumnWizard
   render(): any {
     let cssClassName: string = this.props.cssClassName + '-column';
     return (
-      <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
-          <ColumnSelector
-            cssClassName={cssClassName}
-            SelectedColumnIds={[this.state.SelectedColumnId]}
-            ColumnList={this.props.NumericColumns}
-            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-            SelectionMode={SelectionMode.Single}
-          />
-        </Panel>
-      </div>
+      <WizardPanel header="Select a Column">
+        <ColumnSelector
+          cssClassName={cssClassName}
+          SelectedColumnIds={[this.state.SelectedColumnId]}
+          ColumnList={this.props.NumericColumns}
+          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+          SelectionMode={SelectionMode.Single}
+        />
+      </WizardPanel>
     );
   }
 

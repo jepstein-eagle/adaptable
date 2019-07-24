@@ -6,13 +6,16 @@ import {
 import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
-import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
-import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
+
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
+import { Flex, Box, Text } from 'rebass';
+import WizardPanel from '../../../../components/WizardPanel';
+import Radio from '../../../../components/Radio';
+import HelpBlock from '../../../../components/HelpBlock';
 
 export interface CategoryChartXAxisWizardProps
   extends AdaptableWizardStepProps<CategoryChartDefinition> {}
@@ -41,63 +44,49 @@ export class CategoryChartXAxisWizard
     let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Chart: X (Horizontal) Axis Column" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="xAxisColumn">
-              <Row>
-                <Col xs={1} />
-                <Col xs={10}>
-                  <HelpBlock>
-                    Select a column for the X Axis.
-                    <br />
-                    Choose whether to show all values for this column or to filter them (performed
-                    in next step)
-                  </HelpBlock>
-                </Col>
-                <Col xs={1} />
-              </Row>
-              <Row>
-                <Col xs={4} componentClass={ControlLabel}>
-                  X Axis Column:{' '}
-                </Col>
-                <Col xs={6}>
-                  <ColumnSelector
-                    cssClassName={cssClassName}
-                    SelectedColumnIds={[this.state.XAxisColumnId]}
-                    ColumnList={this.props.Columns}
-                    onColumnChange={columns => this.onXAxisColumnChanged(columns)}
-                    SelectionMode={SelectionMode.Single}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={4} componentClass={ControlLabel}>
-                  X Axis Column Values:
-                </Col>
-                <Col xs={6}>
-                  <Radio
-                    inline
-                    value="All"
-                    checked={this.state.UseAllXAsisColumnValues == true}
-                    onChange={e => this.onUseAllColumnValuesChanged(e)}
-                  >
-                    All
-                  </Radio>
-                  <Radio
-                    inline
-                    value="Filtered"
-                    checked={this.state.UseAllXAsisColumnValues == false}
-                    onChange={e => this.onUseAllColumnValuesChanged(e)}
-                  >
-                    Filtered
-                  </Radio>
-                </Col>
-              </Row>
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Chart: X (Horizontal) Axis Column">
+        <HelpBlock>
+          <p>Select a column for the X Axis.</p>
+
+          <p>
+            Choose whether to show all values for this column or to filter them (performed in next
+            step)
+          </p>
+        </HelpBlock>
+
+        <Flex paddingLeft={2} marginTop={3} flexDirection="row" alignItems="center">
+          <Text style={{ flex: 2 }}>X Axis Column: </Text>
+          <Box style={{ flex: 6 }}>
+            <ColumnSelector
+              cssClassName={cssClassName}
+              SelectedColumnIds={[this.state.XAxisColumnId]}
+              ColumnList={this.props.Columns}
+              onColumnChange={columns => this.onXAxisColumnChanged(columns)}
+              SelectionMode={SelectionMode.Single}
+            />
+          </Box>
+        </Flex>
+        <Flex paddingLeft={2} marginTop={3} flexDirection="row" alignItems="center">
+          <Text style={{ flex: 2 }}>X Axis Column Values:</Text>
+          <Flex flex={6} flexDirection="row" alignItems="center">
+            <Radio
+              value="All"
+              marginRight={2}
+              checked={this.state.UseAllXAsisColumnValues == true}
+              onChange={(_, e: any) => this.onUseAllColumnValuesChanged(e)}
+            >
+              All
+            </Radio>
+            <Radio
+              value="Filtered"
+              checked={this.state.UseAllXAsisColumnValues == false}
+              onChange={(_, e: any) => this.onUseAllColumnValuesChanged(e)}
+            >
+              Filtered
+            </Radio>
+          </Flex>
+        </Flex>
+      </WizardPanel>
     );
   }
 

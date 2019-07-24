@@ -1,24 +1,17 @@
 import * as React from 'react';
-import { ButtonBase, ButtonProps } from './ButtonBase';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
 
-export class ButtonClear extends React.Component<ButtonProps, {}> {
+export class ButtonClear extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <ButtonBase
-        ToolTipAndText="Clear"
-        bsStyle={this.props.bsStyle}
-        bsSize={this.props.size}
-        glyph="remove"
-        onClick={() => this.props.onClick()}
-        overrideDisableButton={this.props.overrideDisableButton}
-        overrideTooltip={this.props.overrideTooltip}
-        style={this.props.style}
-        DisplayMode={this.props.DisplayMode}
-        overrideText={this.props.overrideText}
-        cssClassName={this.props.cssClassName + StyleConstants.CLEAR_BUTTON}
-        hideToolTip={this.props.hideToolTip}
-        showDefaultStyle={this.props.showDefaultStyle}
+      <SimpleButton
+        px={2}
+        py={1}
+        tooltip="Clear"
+        iconSize={20}
+        icon="clear"
+        {...this.props}
+        variant="text"
       />
     );
   }

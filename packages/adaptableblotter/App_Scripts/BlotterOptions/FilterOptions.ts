@@ -82,5 +82,5 @@ export interface FilterActionOnDataChange {
   /**
    * The delay used (when Filter is set to Throttle)
    */
-  ThrottleDelay: number;
+  ThrottleDelay?: number;
 }

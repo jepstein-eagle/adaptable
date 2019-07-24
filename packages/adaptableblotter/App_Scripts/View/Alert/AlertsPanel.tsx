@@ -1,13 +1,19 @@
 import * as React from 'react';
-import { Glyphicon, Label, ListGroupItem, ListGroup, InputGroup } from 'react-bootstrap';
+
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
+import ButtonPreviewDelete from '../Components/Buttons/ButtonPreviewDelete';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { Flex, Text } from 'rebass';
+import icons from '../../components/icons';
+import { ReactComponentLike } from 'prop-types';
+import ListGroupItem from '../../components/List/ListGroupItem';
+import ListGroup from '../../components/List/ListGroup';
+import SimpleButton from '../../components/SimpleButton';
 
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
   Alerts: IAdaptableAlert[];
@@ -26,45 +32,40 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
 
   render(): any {
     let cssClassName: string = this.props.cssClassName + StyleConstants.ALERTS;
-    let panelHeader: string = this.props.ShowHeader && this.props.Alerts != null ? 'Alerts: ' : '';
 
     let alerts = this.props.Alerts.map((alert: IAdaptableAlert, index: number) => {
       let alertHasheader: boolean = StringExtensions.IsNotNullOrEmpty(alert.Header);
 
+      const textColor = UIHelper.getColorByMessageType(alert.MessageType);
+      const textStyle = {
+        color: textColor,
+        fill: textColor,
+      };
+      const iconName = UIHelper.getGlyphByMessageType(alert.MessageType);
+      const IconCmp = icons[iconName] as ReactComponentLike;
+      const icon = IconCmp ? <IconCmp /> : null;
+
       let alertText = (
-        <div style={{ maxWidth: '600px' }}>
-          <div>
-            <InputGroup>
-              <span>
-                <Label
-                  bsSize="xsmall"
-                  bsStyle={UIHelper.getStyleNameByMessageType(alert.MessageType)}
-                  className="ab_medium_padding"
-                >
-                  <Glyphicon glyph={UIHelper.getGlyphByMessageType(alert.MessageType)} />
-                </Label>{' '}
-                {alertHasheader ? (
-                  <b>{alert.Header}</b>
-                ) : (
-                  <span style={{ fontSize: 'xsmall' }}>{alert.Msg}</span>
-                )}
-              </span>
-              <InputGroup.Button>
-                <ButtonPreviewDelete
-                  cssClassName={this.props.cssClassName}
-                  onClick={() => this.props.onClearAlert(index)}
-                  overrideTooltip="Clear Alert"
-                  bsStyle={'default'}
-                  DisplayMode="Glyph"
-                  size={'xsmall'}
-                  overrideDisableButton={false}
-                  style={{ float: 'left' }}
-                  AccessLevel={AccessLevel.Full}
-                />
-              </InputGroup.Button>
-            </InputGroup>
-          </div>
-          <div>{alertHasheader && <span style={{ fontSize: 'xsmall' }}>{alert.Msg}</span>}</div>
+        <div style={{ maxWidth: '600px', width: '100%' }}>
+          <Flex alignItems="center" width="100%">
+            <Text style={textStyle}>{icon}</Text>
+
+            {alertHasheader ? (
+              <b style={{ flex: 1 }}>{alert.Header}</b>
+            ) : (
+              <div style={{ fontSize: 10, flex: 1, display: 'inline-block' }}>{alert.Msg}</div>
+            )}
+
+            <ButtonPreviewDelete
+              onClick={() => this.props.onClearAlert(index)}
+              tooltip="Clear Alert"
+              disabled={false}
+              style={{ float: 'left' }}
+              AccessLevel={AccessLevel.Full}
+            />
+          </Flex>
+
+          <div>{alertHasheader && <span style={{ fontSize: 10 }}>{alert.Msg}</span>}</div>
         </div>
       );
 
@@ -72,28 +73,25 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
     });
 
     let clearAllButton = (
-      <ButtonClear
-        cssClassName={this.props.cssClassName + ' pull-right '}
+      <SimpleButton
         onClick={() => this.props.onClearAllAlerts()}
-        bsStyle={'default'}
-        style={{ margin: '5px' }}
-        size={'xsmall'}
-        overrideText={'Clear All'}
-        DisplayMode="Text"
-        hideToolTip={true}
+        variant="raised"
+        tone="neutral"
         AccessLevel={AccessLevel.Full}
-      />
+      >
+        Clear All
+      </SimpleButton>
     );
 
     return (
       <PanelWithButton
+        variant="default"
+        bodyProps={{ padding: 0 }}
         cssClassName={cssClassName}
         headerText={'Alerts'}
-        className="ab_no-padding-except-top-panel ab_small-padding-panel"
-        bsStyle="default"
         button={clearAllButton}
       >
-        <ListGroup style={{ overflowY: 'hidden' }}>{alerts}</ListGroup>
+        <ListGroup>{alerts}</ListGroup>
       </PanelWithButton>
     );
   }

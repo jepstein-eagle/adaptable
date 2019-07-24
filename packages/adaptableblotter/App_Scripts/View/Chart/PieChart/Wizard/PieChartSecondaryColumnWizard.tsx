@@ -4,8 +4,7 @@ import {
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
 import { PieChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
-import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
-import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
+
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode, DataType } from '../../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../../Utilities/Interface/IColumn';
@@ -13,6 +12,10 @@ import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtension
 import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
+import { Flex, Text, Box } from 'rebass';
+import WizardPanel from '../../../../components/WizardPanel';
+import HelpBlock from '../../../../components/HelpBlock';
+import Radio from '../../../../components/Radio';
 
 export interface PieChartSecondaryColumnWizardProps
   extends AdaptableWizardStepProps<PieChartDefinition> {}
@@ -42,80 +45,53 @@ export class PieChartSecondaryColumnWizard
       : DataType.Unknown;
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Secondary Column" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="secondaryColumn">
-              <Row>
-                <Col xs={1} />
-                <Col xs={10}>
-                  <HelpBlock>
-                    Select a Secondary Column for the Pie Chart (Note: this is optional).
-                  </HelpBlock>
-                </Col>
-                <Col xs={1} />
-              </Row>
-              <Row>
-                <Col xs={4} componentClass={ControlLabel}>
-                  Secondary Column:{' '}
-                </Col>
-                <Col xs={6}>
-                  <ColumnSelector
-                    cssClassName={cssClassName}
-                    placeHolder={'Choose a column (optional)'}
-                    SelectedColumnIds={[this.state.SecondaryColumnId]}
-                    ColumnList={this.props.Columns}
-                    onColumnChange={columns => this.onSecondaryColumnChanged(columns)}
-                    SelectionMode={SelectionMode.Single}
-                  />
-                </Col>
-              </Row>
-              {StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId) &&
-                secondaryColumnDataType == DataType.Number && (
-                  <div>
-                    <br />
-                    <Row>
-                      <Col xs={1} />
-                      <Col xs={10}>
-                        <HelpBlock>
-                          Choose whether to show a count for these values or to sum them
-                        </HelpBlock>
-                      </Col>
-                      <Col xs={1} />
-                    </Row>
-                    <Row>
-                      <Col xs={4} componentClass={ControlLabel}>
-                        Summary Type:
-                      </Col>
-                      <Col xs={6}>
-                        <Radio
-                          inline
-                          value="Count"
-                          checked={
-                            this.state.SecondaryColumnOperation == SecondaryColumnOperation.Count
-                          }
-                          onChange={e => this.onSecondaryColumnOperationChanged(e)}
-                        >
-                          Count
-                        </Radio>
-                        <Radio
-                          inline
-                          value="Sum"
-                          checked={
-                            this.state.SecondaryColumnOperation == SecondaryColumnOperation.Sum
-                          }
-                          onChange={e => this.onSecondaryColumnOperationChanged(e)}
-                        >
-                          Sum
-                        </Radio>
-                      </Col>
-                    </Row>
-                  </div>
-                )}
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Secondary Column">
+        <HelpBlock>
+          <p>Select a Secondary Column for the Pie Chart (Note: this is optional).</p>
+        </HelpBlock>
+
+        <Flex paddingLeft={2} marginTop={3} flexDirection="row" alignItems="center">
+          <Text style={{ flex: 2 }}>Secondary Column: </Text>
+
+          <Flex flex={7}>
+            <ColumnSelector
+              cssClassName={cssClassName}
+              placeHolder={'Choose a column (optional)'}
+              SelectedColumnIds={[this.state.SecondaryColumnId]}
+              ColumnList={this.props.Columns}
+              onColumnChange={columns => this.onSecondaryColumnChanged(columns)}
+              SelectionMode={SelectionMode.Single}
+            />
+          </Flex>
+        </Flex>
+        {StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId) &&
+          secondaryColumnDataType == DataType.Number && (
+            <Flex marginTop={3} flexDirection="column">
+              <HelpBlock>Choose whether to show a count for these values or to sum them</HelpBlock>
+
+              <Flex alignItems="center" flexDirection="row" marginTop={3} paddingLeft={2}>
+                <Text style={{ flex: 2 }}>Summary Type:</Text>
+                <Flex flex={7} flexDirection="row" alignItems="center">
+                  <Radio
+                    marginRight={3}
+                    value="Count"
+                    checked={this.state.SecondaryColumnOperation == SecondaryColumnOperation.Count}
+                    onChange={(_, e: any) => this.onSecondaryColumnOperationChanged(e)}
+                  >
+                    Count
+                  </Radio>
+                  <Radio
+                    value="Sum"
+                    checked={this.state.SecondaryColumnOperation == SecondaryColumnOperation.Sum}
+                    onChange={(_, e: any) => this.onSecondaryColumnOperationChanged(e)}
+                  >
+                    Sum
+                  </Radio>
+                </Flex>
+              </Flex>
+            </Flex>
+          )}
+      </WizardPanel>
     );
   }
 

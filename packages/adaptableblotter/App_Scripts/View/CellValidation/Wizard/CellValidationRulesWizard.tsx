@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
+import { FormGroup, FormControl, Col } from 'react-bootstrap';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -8,7 +8,6 @@ import {
 import {
   DataType,
   LeafExpressionOperator,
-  MessageType,
   RangeOperandType,
 } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
@@ -18,6 +17,13 @@ import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterFor
 import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
+import { Box, Flex } from 'rebass';
+import Dropdown from '../../../components/Dropdown';
+import Panel from '../../../components/Panel';
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
+import Radio from '../../../components/Radio';
+import Input from '../../../components/Input';
 
 export interface CellValidationRulesWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -40,7 +46,8 @@ export class CellValidationRulesWizard
   }
 
   render(): any {
-    let operatorTypes = this.getAvailableOperators().map((operator: LeafExpressionOperator) => {
+    const availableOperators = this.getAvailableOperators();
+    let operatorTypes = availableOperators.map((operator: LeafExpressionOperator) => {
       return (
         <option key={operator} value={operator.toString()}>
           {ExpressionHelper.OperatorToLongFriendlyString(
@@ -49,6 +56,15 @@ export class CellValidationRulesWizard
           )}
         </option>
       );
+    });
+    let operatorOptions = availableOperators.map((operator: LeafExpressionOperator) => {
+      return {
+        value: operator.toString(),
+        label: ExpressionHelper.OperatorToLongFriendlyString(
+          operator,
+          ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+        ),
+      };
     });
 
     let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
@@ -63,140 +79,138 @@ export class CellValidationRulesWizard
     let cssClassName: string = this.props.cssClassName + '-rules';
 
     return (
-      <div className={cssClassName}>
-        <Panel header={validationRuleHeader} bsStyle="primary">
-          <AdaptableBlotterForm>
-            <Col xs={12}>
-              <HelpBlock>{helpText}</HelpBlock>
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                inline
-                value="None"
-                checked={this.state.Operator == LeafExpressionOperator.None}
-                onChange={e => this.onDisallowEditChanged(e)}
-              >
-                Disallow ALL edits
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Validation Rule: No Edits Allowed'}
-                bodyText={['Any edit is invalid - effectively makes the column read-only.']}
-              />
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                inline
-                value="others"
-                checked={this.state.Operator != LeafExpressionOperator.None}
-                onChange={e => this.onDisallowEditChanged(e)}
-              >
-                Disallow edits where the new cell value matches rule:
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Validation Rule: Custom'}
-                bodyText={['Disallow edits that match the rule defined in the dropdown below.']}
-              />
-            </Col>
-          </AdaptableBlotterForm>
+      <WizardPanel header={validationRuleHeader}>
+        <HelpBlock>
+          <p>{helpText}</p>
+        </HelpBlock>
+        <Flex flexDirection="row" alignItems="center" marginTop={3} marginLeft={2}>
+          <Radio
+            marginRight={2}
+            value="None"
+            checked={this.state.Operator == LeafExpressionOperator.None}
+            onChange={(_, e: any) => this.onDisallowEditChanged(e)}
+          >
+            Disallow ALL edits
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Validation Rule: No Edits Allowed'}
+            bodyText={['Any edit is invalid - effectively makes the column read-only.']}
+          />
+        </Flex>
+        <Flex flexDirection="row" alignItems="center" marginTop={3} marginLeft={2}>
+          <Radio
+            marginRight={2}
+            value="others"
+            checked={this.state.Operator != LeafExpressionOperator.None}
+            onChange={(_, e: any) => this.onDisallowEditChanged(e)}
+          >
+            Disallow edits where the new cell value matches rule:
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Validation Rule: Custom'}
+            bodyText={['Disallow edits that match the rule defined in the dropdown below.']}
+          />
+        </Flex>
 
-          {/* if not None operator then show operator dropdown */}
-          <FormGroup className="ab_large_margin">
-            <Col xs={1} />
-            <Col xs={6}>
-              <FormControl
-                disabled={this.checkOperator(LeafExpressionOperator.None)}
-                componentClass="select"
-                placeholder="select"
-                value={this.state.Operator.toString()}
-                onChange={x => this.onOperatorChanged(x)}
-              >
-                {operatorTypes}
-              </FormControl>
-            </Col>
-
-            {/* if  numeric then show a numeric control */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              !this.checkOperator(LeafExpressionOperator.IsPositive) &&
-              !this.checkOperator(LeafExpressionOperator.IsNegative) &&
-              !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
-              ColumnHelper.getColumnDataTypeFromColumnId(
-                this.props.Data.ColumnId,
-                this.props.Columns
-              ) == DataType.Number && (
-                <Col xs={5}>
-                  <FormControl
-                    value={this.state.Operand1}
+        {/* if not None operator then show operator dropdown */}
+        <Flex flexDirection="column" marginTop={3} marginLeft={2} marginRight={2}>
+          {this.state.Operator != LeafExpressionOperator.None ? (
+            <Dropdown
+              style={{ maxWidth: 'inherit', width: '100%' }}
+              marginBottom={2}
+              options={operatorOptions}
+              disabled={this.checkOperator(LeafExpressionOperator.None)}
+              placeholder="select"
+              value={this.state.Operator ? this.state.Operator.toString() : ''}
+              onChange={(x: any) => this.onOperatorChanged(x)}
+            />
+          ) : null}
+          {/* if  numeric then show a numeric control */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            !this.checkOperator(LeafExpressionOperator.IsPositive) &&
+            !this.checkOperator(LeafExpressionOperator.IsNegative) &&
+            !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
+            ColumnHelper.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId,
+              this.props.Columns
+            ) == DataType.Number && (
+              <Flex flex={5} alignItems="center">
+                <Input
+                  value={this.state.Operand1}
+                  type="number"
+                  placeholder="Enter Number"
+                  style={{ flex: 1 }}
+                  onChange={(x: any) => this.onOperand1ValueChanged(x)}
+                />
+                {this.isBetweenOperator() && (
+                  <Input
+                    marginLeft={2}
+                    value={this.state.Operand2}
+                    style={{ flex: 1 }}
                     type="number"
                     placeholder="Enter Number"
-                    onChange={x => this.onOperand1ValueChanged(x)}
+                    onChange={(x: any) => this.onOperand2ValueChanged(x)}
                   />
-                  {this.isBetweenOperator() && (
-                    <FormControl
-                      value={this.state.Operand2}
-                      type="number"
-                      placeholder="Enter Number"
-                      onChange={x => this.onOperand2ValueChanged(x)}
-                    />
-                  )}
-                </Col>
-              )}
-
-            {/* if  date then show a date control */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              ColumnHelper.getColumnDataTypeFromColumnId(
-                this.props.Data.ColumnId,
-                this.props.Columns
-              ) == DataType.Date && (
-                <Col xs={5}>
-                  <FormControl
+                )}
+              </Flex>
+            )}
+          {/* if  date then show a date control */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            ColumnHelper.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId,
+              this.props.Columns
+            ) == DataType.Date && (
+              <Flex flex={5} alignItems="center">
+                <Input
+                  type="date"
+                  style={{ width: '100%' }}
+                  placeholder="Enter Date"
+                  value={this.state.Operand1}
+                  onChange={(x: any) => this.onOperand1ValueChanged(x)}
+                />
+                {this.isBetweenOperator() && (
+                  <Input
+                    value={this.state.Operand2}
+                    marginLeft={2}
                     type="date"
+                    style={{ width: '100%' }}
                     placeholder="Enter Date"
-                    value={this.state.Operand1}
-                    onChange={x => this.onOperand1ValueChanged(x)}
+                    onChange={(x: any) => this.onOperand2ValueChanged(x)}
                   />
-                  {this.isBetweenOperator() && (
-                    <FormControl
-                      value={this.state.Operand2}
-                      type="date"
-                      placeholder="Enter Date"
-                      onChange={x => this.onOperand2ValueChanged(x)}
-                    />
-                  )}
-                </Col>
-              )}
-
-            {/* if string then show a text control  */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
-              !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
-              ColumnHelper.getColumnDataTypeFromColumnId(
-                this.props.Data.ColumnId,
-                this.props.Columns
-              ) == DataType.String && (
-                <Col xs={5}>
-                  <FormControl
-                    value={this.state.Operand1}
-                    type="string"
-                    placeholder="Enter a Value"
-                    onChange={x => this.onOperand1ValueChanged(x)}
-                  />
-                </Col>
-              )}
-          </FormGroup>
-        </Panel>
-      </div>
+                )}
+              </Flex>
+            )}
+          {/* if string then show a text control  */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
+            !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
+            ColumnHelper.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId,
+              this.props.Columns
+            ) == DataType.String && (
+              <Flex flex={5} alignItems="center">
+                <Input
+                  value={this.state.Operand1}
+                  type="string"
+                  style={{ width: '100%' }}
+                  placeholder="Enter a Value"
+                  onChange={(x: any) => this.onOperand1ValueChanged(x)}
+                />
+              </Flex>
+            )}
+        </Flex>
+      </WizardPanel>
     );
   }
 
-  private onOperatorChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onOperatorChanged(value: any) {
     this.setState(
-      { Operator: e.value, Operand1: '', Operand2: '' } as CellValidationSettingsWizardState,
+      { Operator: value, Operand1: '', Operand2: '' } as CellValidationSettingsWizardState,
       () => this.props.UpdateGoBackState()
     );
   }

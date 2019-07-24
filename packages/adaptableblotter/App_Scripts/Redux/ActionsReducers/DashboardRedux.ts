@@ -249,7 +249,7 @@ const initialDashboardState: DashboardState = {
     StrategyConstants.ConditionalStyleStrategyId,
     StrategyConstants.TeamSharingStrategyId,
   ],
-  Zoom: 0.9,
+  Zoom: 1,
   DashboardVisibility: Visibility.Visible,
   ShowSystemStatusButton: true,
   ShowAboutButton: true,

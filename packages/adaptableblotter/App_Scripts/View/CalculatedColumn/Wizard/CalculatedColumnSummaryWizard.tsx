@@ -33,14 +33,13 @@ export class CalculatedColumnSummaryWizard
       },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.CalculatedColumnStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

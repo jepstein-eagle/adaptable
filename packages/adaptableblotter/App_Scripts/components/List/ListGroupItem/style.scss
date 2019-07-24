@@ -1,0 +1,28 @@
+.ab-ListGroupItem {
+  width: var(--ab-cmp-listgroupitem__width);
+  vertical-align: middle;
+  text-align: start;
+  border: none;
+  padding: var(--ab-space-2);
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+
+  background: var(--ab-cmp-listgroupitem__background);
+  color: var(--ab-cmp-listgroupitem__color);
+  border-radius: var(--ab-cmp-listgroupitem__border-radius);
+
+  &:nth-child(2n+1) {
+    background: var(--ab-cmp-listgroupitem--odd__background);
+    color: var(--ab-cmp-listgroupitem--odd__color);
+  }
+
+  &--active.ab-ListGroupItem {
+    background: var(--ab-cmp-listgroupitem--active__background);
+    color: var(--ab-cmp-listgroupitem--active__color);
+  }
+
+  &:focus {
+    z-index: 1;
+  }
+}

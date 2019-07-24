@@ -1,12 +1,16 @@
 import * as React from 'react';
-import { Panel, FormGroup, FormControl, HelpBlock, Button } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import Panel from '../../../components/Panel';
+import ErrorBox from '../../../components/ErrorBox';
+import Textarea from '../../../components/Textarea';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -33,27 +37,19 @@ export class CalculatedColumnExpressionWizard
     )
       ? null
       : 'error';
-    let cssClassName: string = this.props.cssClassName + '-expression';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Calculated Column Expression" bsStyle="primary">
-          <AdaptableBlotterForm>
-            <FormGroup controlId="formInlineName" validationState={validationState}>
-              <FormControl
-                value={this.state.ColumnExpression}
-                componentClass="textarea"
-                placeholder="Enter expression"
-                onChange={e => this.handleExpressionChange(e)}
-              >
-                <Button>Hello</Button>>
-              </FormControl>
-              <FormControl.Feedback />
-              <HelpBlock>{this.props.GetErrorMessage()}</HelpBlock>
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Calculated Column Expression" borderRadius="none" border="none">
+        <Textarea
+          value={this.state.ColumnExpression}
+          placeholder="Enter expression"
+          autoFocus
+          onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
+          style={{ width: '100%' }}
+        ></Textarea>
+
+        {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}
+      </WizardPanel>
     );
   }
 

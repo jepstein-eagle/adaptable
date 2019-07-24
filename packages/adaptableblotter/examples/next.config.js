@@ -63,6 +63,12 @@ const withTypescript = (nextConfig = {}) => {
         }),
       ];
 
+      // needed in order to avoid 2 copies of react being included, which makes hooks not work
+      config.resolve = config.resolve || {};
+      config.resolve.alias = config.resolve.alias || {};
+      config.resolve.alias.react = path.resolve('../node_modules/react');
+      config.resolve.alias['react-dom'] = path.resolve('../node_modules/react-dom');
+
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options);
       }

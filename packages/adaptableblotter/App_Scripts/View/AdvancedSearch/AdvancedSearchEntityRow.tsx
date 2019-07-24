@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Radio } from 'react-bootstrap';
+
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
@@ -8,6 +8,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from '../UIInterfaces';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import Radio from '../../components/Radio';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>
   extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
@@ -26,7 +27,6 @@ export class AdvancedSearchEntityRow extends React.Component<
 
     colItems[0].Content = (
       <Radio
-        style={{ padding: '0px', margin: '0px' }}
         onChange={() => this.props.onSelect(advancedSearch)}
         checked={this.props.IsCurrentAdvancedSearch}
       />
@@ -55,6 +55,13 @@ export class AdvancedSearchEntityRow extends React.Component<
 
     colItems[3].Content = buttons;
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return (
+      <AdaptableObjectRow
+        cssClassName={this.props.cssClassName}
+        colItems={colItems}
+        onClick={() => this.props.onSelect(advancedSearch)}
+        style={{ cursor: 'pointer' }}
+      />
+    );
   }
 }

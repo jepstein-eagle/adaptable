@@ -8,10 +8,10 @@ import { IColItem } from '../UIInterfaces';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ColorPicker } from '../ColorPicker';
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
-import { FormControl } from 'react-bootstrap';
+
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import Input from '../../components/Input';
 
 export interface PercentBarEntityRowProps
   extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
@@ -38,11 +38,11 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       <EntityRowItem
         Content={
           StringExtensions.IsNullOrEmpty(PercentBar.MinValueColumnId) ? (
-            <FormControl
-              bsSize={'small'}
+            <Input
               type={'number'}
+              style={{ width: '100%' }}
               placeholder="Min Value"
-              onChange={e => this.onMinimumValueChanged(e)}
+              onChange={(e: any) => this.onMinimumValueChanged(e)}
               value={PercentBar.MinValue}
             />
           ) : (
@@ -60,11 +60,11 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       <EntityRowItem
         Content={
           StringExtensions.IsNullOrEmpty(PercentBar.MaxValueColumnId) ? (
-            <FormControl
-              bsSize={'small'}
+            <Input
               type={'number'}
+              style={{ width: '100%' }}
               placeholder="Max Value"
-              onChange={e => this.onMaximumValueChanged(e)}
+              onChange={(e: React.SyntheticEvent) => this.onMaximumValueChanged(e)}
               value={PercentBar.MaxValue}
             />
           ) : (
@@ -82,6 +82,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       <EntityRowItem
         Content={
           <ColorPicker
+            style={{ width: '100%' }}
             ColorPalette={this.props.ColorPalette}
             value={PercentBar.PositiveColor}
             onChange={x => this.onPositiveColorChanged(x)}
@@ -93,6 +94,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       <EntityRowItem
         Content={
           <ColorPicker
+            style={{ width: '100%' }}
             ColorPalette={this.props.ColorPalette}
             value={PercentBar.NegativeColor}
             onChange={x => this.onNegativeColorChanged(x)}

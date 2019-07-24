@@ -1,17 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import {
-  FormControl,
-  Panel,
-  FormGroup,
-  DropdownButton,
-  Button,
-  Table,
-  MenuItem,
-  InputGroup,
-  Glyphicon,
-} from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
@@ -32,7 +22,13 @@ import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
+import Input from '../../components/Input';
+import { Flex } from 'rebass';
+import DropdownButton from '../../components/DropdownButton';
+import SimpleButton from '../../components/SimpleButton';
+import { SyntheticEvent } from 'react';
 
+const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
   SmartEditValue: string;
   MathOperation: MathOperation;
@@ -89,6 +85,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
+        style={{ flex: '1 1 100%', overflow: 'initial' }}
         cssClassName={cssClassName}
         UpdateValue={this.props.SmartEditValue}
         PreviewInfo={this.props.PreviewInfo}
@@ -103,92 +100,88 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     let operationMenuItems = EnumExtensions.getNames(MathOperation)
       .filter(e => e != MathOperation.Replace)
       .map((mathOperation: MathOperation, index) => {
-        return (
-          <MenuItem
-            key={index}
-            eventKey="index"
-            onClick={() => this.props.onSmartEditOperationChange(mathOperation)}
-          >
-            {mathOperation as MathOperation}
-          </MenuItem>
-        );
+        return {
+          label: mathOperation,
+          onClick: () => {
+            this.props.onSmartEditOperationChange(mathOperation);
+          },
+        };
       });
 
     return (
-      <div className={cssClassName}>
-        <PanelWithImage
-          cssClassName={cssClassName}
-          header={StrategyConstants.SmartEditStrategyName}
-          bsStyle="primary"
-          glyphicon={StrategyConstants.SmartEditGlyph}
-          infoBody={infoBody}
-        >
-          <AdaptableBlotterForm
-            inline
-            onSubmit={() =>
-              this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning
-                ? this.onConfirmWarningCellValidation()
-                : this.onApplySmartEdit()
-            }
+      <PanelWithImage
+        cssClassName={cssClassName}
+        variant="primary"
+        header={StrategyConstants.SmartEditStrategyName}
+        glyphicon={StrategyConstants.SmartEditGlyph}
+        infoBody={infoBody}
+        bodyScroll={true}
+        onKeyDown={(e: SyntheticEvent) => {
+          if ((e as any).key === 'Enter') {
+            this.submit();
+          }
+        }}
+      >
+        <Flex flexDirection="row" padding={2}>
+          <DropdownButton
+            items={operationMenuItems}
+            columns={['label']}
+            onMouseDown={preventDefault}
           >
-            <FormGroup controlId="formInlineName">
-              <InputGroup>
-                <DropdownButton
-                  title={MathOperation[this.props.MathOperation]}
-                  id="SmartEdit_Operation"
-                  componentClass={InputGroup.Button}
-                >
-                  {operationMenuItems}
-                </DropdownButton>
-                <FormControl
-                  value={this.props.SmartEditValue.toString()}
-                  type="number"
-                  placeholder="Enter a Number"
-                  step="any"
-                  onChange={e => this.onSmartEditValueChange(e)}
-                />
-              </InputGroup>
-            </FormGroup>{' '}
-            <Button
-              bsStyle={this.getButtonStyle()}
-              disabled={
-                StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) ||
-                (this.props.PreviewInfo &&
-                  this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
-              }
-              onClick={() => {
-                this.props.PreviewInfo &&
-                this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning
-                  ? this.onConfirmWarningCellValidation()
-                  : this.onApplySmartEdit();
-              }}
-            >
-              Apply to Grid
-            </Button>{' '}
-            {this.props.PreviewInfo &&
-              this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && (
-                <AdaptablePopover
-                  cssClassName={cssClassName}
-                  headerText={'Validation Error'}
-                  bodyText={[globalValidationMessage]}
-                  MessageType={MessageType.Warning}
-                />
-              )}
-            {this.props.PreviewInfo &&
-              !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning &&
-              this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent && (
-                <AdaptablePopover
-                  cssClassName={cssClassName}
-                  headerText={'Validation Error'}
-                  bodyText={[globalValidationMessage]}
-                  MessageType={MessageType.Error}
-                />
-              )}
-          </AdaptableBlotterForm>
-        </PanelWithImage>
+            {MathOperation[this.props.MathOperation]}
+          </DropdownButton>
+          <Input
+            value={this.props.SmartEditValue.toString()}
+            marginLeft={2}
+            marginRight={2}
+            type="number"
+            placeholder="Enter a Number"
+            onChange={(e: React.SyntheticEvent) => this.onSmartEditValueChange(e)}
+          />
+          <SimpleButton
+            tone={this.getButtonStyle() as 'neutral' | 'error' | 'success'}
+            variant="raised"
+            disabled={
+              StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) ||
+              (this.props.PreviewInfo &&
+                this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
+            }
+            onClick={() => {
+              this.submit();
+            }}
+            marginRight={2}
+          >
+            Apply to Grid
+          </SimpleButton>{' '}
+          {this.props.PreviewInfo &&
+            this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && (
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Validation Error'}
+                bodyText={[globalValidationMessage]}
+                MessageType={MessageType.Warning}
+              />
+            )}
+          {this.props.PreviewInfo &&
+            !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning &&
+            this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent && (
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Validation Error'}
+                bodyText={[globalValidationMessage]}
+                MessageType={MessageType.Error}
+              />
+            )}
+        </Flex>
         {previewPanel}
-      </div>
+      </PanelWithImage>
     );
+  }
+
+  private submit() {
+    this.props.PreviewInfo && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning
+      ? this.onConfirmWarningCellValidation()
+      : this.onApplySmartEdit();
   }
 
   private onSmartEditValueChange(event: React.FormEvent<any>) {
@@ -213,13 +206,13 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
   private getButtonStyle(): string {
     if (this.props.PreviewInfo) {
       if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-        return DEFAULT_BSSTYLE;
+        return 'neutral';
       }
       if (
         this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ||
         this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent
       ) {
-        return WARNING_BSSTYLE;
+        return 'error';
       }
     }
     return 'success';

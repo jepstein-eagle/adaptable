@@ -7,7 +7,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 import { CellSummaryDetails } from './CellSummaryDetails';
 
@@ -25,27 +24,20 @@ class CellSummaryPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__CellSummary';
-
     let infoBody: any[] = [
       'Provides summary information about the (numeric) cells which have been selected.',
     ];
 
     return (
-      <div className={cssClassName}>
-        <PanelWithButton
-          cssClassName={cssClassName}
-          headerText={StrategyConstants.CellSummaryStrategyName}
-          className="ab_main_popup"
-          bsStyle="primary"
-          glyphicon={StrategyConstants.CellSummaryGlyph}
-          infoBody={infoBody}
-        >
-          <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>
-            <CellSummaryDetails cssClassName={cssClassName} CellSummary={this.props.CellSummary} />
-          </div>
-        </PanelWithButton>
-      </div>
+      <PanelWithButton
+        headerText={StrategyConstants.CellSummaryStrategyName}
+        glyphicon={StrategyConstants.CellSummaryGlyph}
+        infoBody={infoBody}
+        border="none"
+        bodyProps={{ padding: 0 }}
+      >
+        <CellSummaryDetails CellSummary={this.props.CellSummary} />
+      </PanelWithButton>
     );
   }
 }

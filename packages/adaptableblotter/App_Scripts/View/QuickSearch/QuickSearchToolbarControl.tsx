@@ -7,13 +7,11 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 
 interface QuickSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
@@ -45,41 +43,20 @@ class QuickSearchToolbarControlComponent extends React.Component<
   );
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__quicksearch';
-
-    let content = (
-      <span>
-        <AdaptableBlotterFormControlTextClear
-          cssClassName={cssClassName}
-          style={{ width: '135px' }}
-          bsSize={this.props.DashboardSize}
-          type="text"
-          placeholder="Search Text"
-          value={this.state.EditedQuickSearchText}
-          OnTextChange={x => this.onUpdateQuickSearchText(x)}
-        />{' '}
-        {/*
-            // taking this out as we dont really need it come to think of it as you can use the configure above
-            <span className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
-                <ButtonEdit cssClassName={cssClassName} onClick={() => this.props.onShowQuickSearchPopup()}
-                    size={this.props.DashboardSize}
-                    overrideTooltip="Edit Quick Search"
-                    DisplayMode="Glyph"
-                    AccessLevel={this.props.AccessLevel} />
-            </span>
-             */}
-      </span>
-    );
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.QuickSearchStrategyName}
         glyphicon={StrategyConstants.QuickSearchGlyph}
         onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
-        {content}
+        <AdaptableBlotterFormControlTextClear
+          type="text"
+          placeholder="Search Text"
+          value={this.state.EditedQuickSearchText}
+          OnTextChange={x => this.onUpdateQuickSearchText(x)}
+        />
       </PanelDashboard>
     );
   }

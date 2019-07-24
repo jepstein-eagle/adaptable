@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategoryRedux';
@@ -25,6 +25,7 @@ import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCatego
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow';
 import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard';
+import EmptyContent from '../../components/EmptyContent';
 
 interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategoryPopupComponent> {
   ColumnCategorys: ColumnCategory[];
@@ -88,57 +89,56 @@ class ColumnCategoryPopupComponent extends React.Component<
 
     let newSearchButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create New Advanced Search"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tone="success"
+        tooltip="Create New Advanced Search"
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <div className={cssClassName}>
-        <PanelWithButton
-          cssClassName={cssClassName}
-          bsStyle="primary"
-          headerText={StrategyConstants.ColumnCategoryStrategyName}
-          infoBody={infoBody}
-          button={newSearchButton}
-          glyphicon={StrategyConstants.ColumnCategoryGlyph}
-          className="ab_main_popup"
-        >
-          {ColumnCategoryRows.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={ColumnCategoryRows}
-            />
-          ) : (
-            <HelpBlock>Click 'New' to start creating Column Categories.</HelpBlock>
-          )}
+      <PanelWithButton
+        cssClassName={cssClassName}
+        headerText={StrategyConstants.ColumnCategoryStrategyName}
+        infoBody={infoBody}
+        button={newSearchButton}
+        glyphicon={StrategyConstants.ColumnCategoryGlyph}
+        className="ab_main_popup"
+        bodyProps={{ padding: 0 }}
+      >
+        {ColumnCategoryRows.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={ColumnCategoryRows}
+          />
+        ) : (
+          <EmptyContent>
+            <p>Click 'New' to start creating Column Categories.</p>
+          </EmptyContent>
+        )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
-            <ColumnCategoryWizard
-              cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
-              ConfigEntities={this.props.ColumnCategorys}
-              ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
-              ColumnCategorys={this.props.ColumnCategorys}
-              Blotter={this.props.Blotter}
-              WizardStartIndex={this.state.WizardStartIndex}
-              onCloseWizard={() => this.onCloseWizard()}
-              onFinishWizard={() => this.onFinishWizard()}
-              canFinishWizard={() => this.canFinishWizard()}
-            />
-          )}
-        </PanelWithButton>
-      </div>
+        {this.state.EditedAdaptableBlotterObject != null && (
+          <ColumnCategoryWizard
+            cssClassName={cssWizardClassName}
+            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
+            ConfigEntities={this.props.ColumnCategorys}
+            ModalContainer={this.props.ModalContainer}
+            Columns={this.props.Columns}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
+            ColumnCategories={this.props.ColumnCategories}
+            ColumnCategorys={this.props.ColumnCategorys}
+            Blotter={this.props.Blotter}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+          />
+        )}
+      </PanelWithButton>
     );
   }
 

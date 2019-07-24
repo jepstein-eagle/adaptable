@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import { ButtonToolbar, Sizes } from 'react-bootstrap';
+import { Sizes } from 'react-bootstrap';
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
+import { Flex } from 'rebass';
 
 export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {
@@ -25,10 +26,14 @@ export interface EntityListActionButtonsProps
   EntityType: string;
   cssClassName: string;
   AccessLevel: AccessLevel;
-  editSize: Sizes;
-  deleteSize: Sizes;
-  shareSize: Sizes;
+  editSize: any;
+  deleteSize: any;
+  shareSize: any;
 }
+
+const stopPropagation = (e: React.SyntheticEvent) => {
+  e.stopPropagation();
+};
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
   public static defaultProps: EntityListActionButtonsProps = {
@@ -48,34 +53,49 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
   };
   render() {
     return (
-      <ButtonToolbar
+      <Flex
         className={this.props.cssClassName + StyleConstants.BUTTON_TOOLBAR}
-        bsSize={'small'}
-        style={{ margin: '0px', padding: '0px' }}
+        justifyContent="center"
+        style={{ margin: '0px', padding: '0px', cursor: 'auto' }}
+        onClick={stopPropagation}
       >
         {this.props.showEdit && (
           <ButtonEdit
             onClick={() => this.props.editClick()}
-            cssClassName={this.props.cssClassName}
-            style={{ marginLeft: '0px', marginTop: '2px', marginBottom: '2px', marginRight: '2px' }}
-            overrideDisableButton={this.props.overrideDisableEdit}
-            overrideTooltip={this.props.overrideTooltipEdit}
-            DisplayMode="Glyph"
-            size={this.props.editSize}
+            // cssClassName={this.props.cssClassName}
+            style={{
+              marginLeft: '0px',
+              marginTop: '2px',
+              marginBottom: '2px',
+              marginRight: '2px',
+              color: 'var(--ab-color-accent)',
+              background: 'var(--ab-color-accentlight)',
+            }}
+            disabled={this.props.overrideDisableEdit}
+            tooltip={this.props.overrideTooltipEdit}
+            //  DisplayMode="Glyph"
+            //  size={this.props.editSize}
             AccessLevel={this.props.AccessLevel}
           />
         )}
         {this.props.showDelete && (
           <ButtonDelete
-            cssClassName={this.props.cssClassName}
-            style={{ marginLeft: '1px', marginTop: '2px', marginBottom: '2px', marginRight: '1px' }}
-            overrideDisableButton={this.props.overrideDisableDelete}
-            overrideTooltip={this.props.overrideTooltipDelete}
-            DisplayMode="Glyph"
+            //  cssClassName={this.props.cssClassName}
+            style={{
+              marginLeft: '1px',
+              marginTop: '2px',
+              marginBottom: '2px',
+              marginRight: '1px',
+              color: 'var(--ab-color-error)',
+              background: 'var(--ab-color-errorlight)',
+            }}
+            disabled={this.props.overrideDisableDelete}
+            tooltip={this.props.overrideTooltipDelete}
+            //   DisplayMode="Glyph"
             ConfirmAction={this.props.ConfirmDeleteAction}
             ConfirmationMsg={'Are you sure you want to delete this ' + this.props.EntityType + '?'}
             ConfirmationTitle={'Delete ' + this.props.EntityType}
-            size={this.props.deleteSize}
+            //   size={this.props.deleteSize}
             AccessLevel={this.props.AccessLevel}
           />
         )}
@@ -91,7 +111,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
             AccessLevel={this.props.AccessLevel}
           />
         )}
-      </ButtonToolbar>
+      </Flex>
     );
   }
 }

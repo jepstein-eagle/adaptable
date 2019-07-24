@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';

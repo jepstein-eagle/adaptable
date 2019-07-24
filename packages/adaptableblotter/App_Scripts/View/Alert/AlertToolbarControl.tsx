@@ -1,9 +1,8 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { Label, Overlay, Fade, FormControl } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
-import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux';
+
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -16,6 +15,8 @@ import { MessageType, AccessLevel, DashboardSize } from '../../PredefinedConfig/
 import { AlertsPanel } from './AlertsPanel';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { Text, Flex } from 'rebass';
+import Input from '../../components/Input';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
@@ -74,20 +75,24 @@ class AlertToolbarControlComponent extends React.Component<
     let formControlStyle: any =
       this.props.DashboardSize == 'xsmall' ? smallFormControlStyle : standardFormControlStyle;
 
-    let labelStyle = this.props.UseSingleColourForButtons ? 'default' : 'success';
-
     let content = (
-      <span>
-        <FormControl
-          bsSize={this.props.DashboardSize}
-          style={formControlStyle}
-          value={collapsedText}
-          disabled={true}
-          type="string"
-        />{' '}
-        {this.state.ShowMessage && <Label bsStyle={labelStyle}>New</Label>}{' '}
+      <Flex alignItems="stretch">
+        <Input style={formControlStyle} value={collapsedText} disabled={true} marginRight={2} />
+        {this.state.ShowMessage && (
+          <Flex
+            style={{ borderRadius: 'var(--ab__border-radius)' }}
+            marginRight={2}
+            padding={2}
+            color="white"
+            backgroundColor="darkgray"
+            fontSize={'10px'}
+            alignItems="center"
+          >
+            New
+          </Flex>
+        )}
         {this.props.Alerts.length > 0 && (
-          <span style={{ marginLeft: '3px' }}>
+          <Flex alignItems="center">
             <AdaptablePopover
               showDefaultStyle={this.props.UseSingleColourForButtons}
               size={this.props.DashboardSize}
@@ -99,9 +104,9 @@ class AlertToolbarControlComponent extends React.Component<
               useButton={true}
               triggerAction={'click'}
             />
-          </span>
+          </Flex>
         )}
-      </span>
+      </Flex>
     );
 
     return (

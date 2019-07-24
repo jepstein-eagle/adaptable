@@ -46,7 +46,7 @@ export interface AdaptableWizardProps<View> extends React.ClassAttributes<View> 
   onCloseWizard: () => void;
   onFinishWizard: () => void;
   ModalContainer: HTMLElement;
-  cssClassName: string;
+  cssClassName?: string;
   canFinishWizard: Function;
 }
 

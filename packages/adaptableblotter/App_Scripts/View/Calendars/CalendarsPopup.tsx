@@ -6,13 +6,17 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { IColItem } from '../UIInterfaces';
-import { ListGroup, Modal } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+
 import { CalendarsEntryRow } from './CalendarsEntryRow';
 import { CalendarEntryItem } from './CalendarEntryItem';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Calendar, CalendarEntry } from '../../PredefinedConfig/RunTimeState/CalendarState';
+import ListGroup from '../../components/List/ListGroup';
+import SimpleButton from '../../components/SimpleButton';
+import { Flex } from 'rebass';
+import Panel from '../../components/Panel';
+import Dialog from '../../components/Dialog';
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
   CurrentCalendar: string;
@@ -47,7 +51,7 @@ class CalendarsPopupComponent extends React.Component<
     let allCalenderColItems: IColItem[] = [
       { Content: 'Current', Size: 3 },
       { Content: 'Calendar', Size: 5 },
-      { Content: 'Details', Size: 4 },
+      { Content: 'Details', Size: 3 },
     ];
 
     let allCalendars = this.props.AvailableCalendars.map((calendar: Calendar) => {
@@ -85,7 +89,7 @@ class CalendarsPopupComponent extends React.Component<
       <PanelWithImage
         cssClassName={cssClassName}
         header={StrategyConstants.CalendarStrategyName}
-        bsStyle="primary"
+        variant="primary"
         glyphicon={StrategyConstants.CalendarGlyph}
         infoBody={infoBody}
       >
@@ -93,36 +97,50 @@ class CalendarsPopupComponent extends React.Component<
           cssClassName={cssClassName}
           colItems={allCalenderColItems}
           bsStyle="info"
+          borderRadius="none"
+          border="none"
           className="ab_preview_panel"
         />
         <ListGroup>{allCalendars}</ListGroup>
 
         {this.state.DisplayedCalendar && (
-          <Modal
-            show={this.state.DisplayedCalendar != null}
-            onHide={() => this.closeInformationModal()}
+          <Dialog
+            modal
+            isOpen={this.state.DisplayedCalendar != null}
+            onDismiss={() => this.closeInformationModal()}
             className={cssClassName}
           >
-            <Modal.Header closeButton>
-              <Modal.Title>Calendar Details: {this.state.DisplayedCalendar.Name}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <PanelWithRow
-                cssClassName={cssClassName}
-                colItems={calenderEntryColItems}
-                bsStyle="info"
-              />
-              {displayedCalendarModalBody}
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                className="ab_right_modal_button"
-                onClick={() => this.closeInformationModal()}
-              >
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal>
+            <Panel
+              bodyProps={{ padding: 0 }}
+              bodyScroll
+              border="none"
+              borderRadius="none"
+              header={<div>Calendar Details: {this.state.DisplayedCalendar.Name}</div>}
+            >
+              <Flex flexDirection="column" flex={1} style={{ overflow: 'auto', maxHeight: '60vh' }}>
+                <PanelWithRow
+                  style={{ flex: 1 }}
+                  bodyProps={{ padding: 0 }}
+                  bodyScroll
+                  border="none"
+                  borderRadius="none"
+                  cssClassName={cssClassName}
+                  colItems={calenderEntryColItems}
+                  variant="primary"
+                />
+                {displayedCalendarModalBody}
+              </Flex>
+              <Flex flexDirection="row" padding={2}>
+                <div style={{ flex: 1 }} />
+                <SimpleButton
+                  className="ab_right_modal_button"
+                  onClick={() => this.closeInformationModal()}
+                >
+                  Close
+                </SimpleButton>
+              </Flex>
+            </Panel>
+          </Dialog>
         )}
       </PanelWithImage>
     );

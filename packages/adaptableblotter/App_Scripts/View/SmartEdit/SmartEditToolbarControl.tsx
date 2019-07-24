@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { InputGroup, DropdownButton, FormControl, MenuItem } from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
@@ -13,16 +13,10 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
-import {
-  StatusColour,
-  MathOperation,
-  AccessLevel,
-  MessageType,
-  DashboardSize,
-} from '../../PredefinedConfig/Common/Enums';
+import { StatusColour, MathOperation, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
@@ -31,6 +25,9 @@ import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
+import DropdownButton from '../../components/DropdownButton';
+import { Flex } from 'rebass';
+import Input from '../../components/Input';
 
 interface SmartEditToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
@@ -100,85 +97,67 @@ class SmartEditToolbarControlComponent extends React.Component<
     let operationMenuItems = EnumExtensions.getNames(MathOperation)
       .filter(e => e != MathOperation.Replace)
       .map((mathOperation: MathOperation, index) => {
-        return (
-          <MenuItem
-            key={index}
-            eventKey="index"
-            onClick={() => this.props.onSmartEditOperationChange(mathOperation)}
-          >
-            {mathOperation as MathOperation}
-          </MenuItem>
-        );
+        return {
+          onClick: () => this.props.onSmartEditOperationChange(mathOperation),
+          label: mathOperation as MathOperation,
+        };
       });
 
+    const applyButtonStyle = {
+      color: statusColour,
+      fill: 'currentColor',
+    };
+
     let content = (
-      <span>
-        <div
-          className={
-            this.props.AccessLevel == AccessLevel.ReadOnly || !this.props.IsValidSelection
-              ? GeneralConstants.READ_ONLY_STYLE
-              : ''
-          }
-        >
-          <InputGroup>
-            <DropdownButton
-              style={{ marginRight: '3px', width: '75px' }}
-              title={this.props.MathOperation}
-              id="SmartEdit_Operation"
-              bsSize={this.props.DashboardSize}
-              componentClass={InputGroup.Button}
-            >
-              {operationMenuItems}
-            </DropdownButton>
+      <Flex
+        alignItems="stretch"
+        className={
+          this.props.AccessLevel == AccessLevel.ReadOnly || !this.props.IsValidSelection
+            ? GeneralConstants.READ_ONLY_STYLE
+            : ''
+        }
+      >
+        <DropdownButton marginRight={2} items={operationMenuItems}>
+          {this.props.MathOperation}
+        </DropdownButton>
 
-            <FormControl
-              value={this.props.SmartEditValue.toString()}
-              style={formControlStyle}
-              type="number"
-              placeholder="Enter a Number"
-              bsSize={this.props.DashboardSize}
-              step="any"
-              onChange={e => this.onSmartEditValueChange(e)}
-            />
-          </InputGroup>
+        <Input
+          value={this.props.SmartEditValue.toString()}
+          style={formControlStyle}
+          type="number"
+          placeholder="Enter a Number"
+          step="any"
+          onChange={(e: React.SyntheticEvent) => this.onSmartEditValueChange(e)}
+        />
 
-          {this.props.IsValidSelection && (
-            <ButtonApply
-              cssClassName={cssClassName}
-              style={{ marginLeft: '3px' }}
-              onClick={() => this.onApplyClick()}
-              size={this.props.DashboardSize}
-              glyph={'ok'}
-              bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
-              overrideTooltip="Apply Smart Edit"
-              overrideDisableButton={
-                StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) ||
-                (this.props.PreviewInfo != null &&
-                  this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
-              }
-              DisplayMode="Glyph"
-              AccessLevel={this.props.AccessLevel}
-              showDefaultStyle={this.props.UseSingleColourForButtons}
-            />
-          )}
+        {this.props.IsValidSelection && (
+          <ButtonApply
+            marginLeft={2}
+            onClick={() => this.onApplyClick()}
+            style={applyButtonStyle}
+            tooltip="Apply Smart Edit"
+            disabled={
+              StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) ||
+              (this.props.PreviewInfo != null &&
+                this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
+            }
+            AccessLevel={this.props.AccessLevel}
+          />
+        )}
 
-          {this.props.IsValidSelection && (
-            <span style={{ marginLeft: '3px' }}>
-              <AdaptablePopover
-                showDefaultStyle={this.props.UseSingleColourForButtons}
-                size={this.props.DashboardSize}
-                cssClassName={cssClassName}
-                headerText="Preview Results"
-                tooltipText="Preview Results"
-                bodyText={[previewPanel]}
-                MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
-                useButton={true}
-                triggerAction={'click'}
-              />
-            </span>
-          )}
-        </div>
-      </span>
+        {this.props.IsValidSelection && (
+          <AdaptablePopover
+            size={this.props.DashboardSize}
+            cssClassName={cssClassName}
+            headerText="Preview Results"
+            tooltipText="Preview Results"
+            bodyText={[previewPanel]}
+            MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
+            useButton={true}
+            triggerAction={'click'}
+          />
+        )}
+      </Flex>
     );
 
     return (

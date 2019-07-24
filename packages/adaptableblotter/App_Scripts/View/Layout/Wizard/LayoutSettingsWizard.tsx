@@ -1,13 +1,17 @@
 import * as React from 'react';
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { Layout } from '../../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
+import WizardPanel from '../../../components/WizardPanel';
+import { Flex, Text } from 'rebass';
+import Input from '../../../components/Input';
+
+import ErrorBox from '../../../components/ErrorBox';
 
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<Layout> {
   Layouts: Layout[];
@@ -35,30 +39,22 @@ export class LayoutSettingsWizard
     let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Layout Settings" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="layouthName">
-              <Col xs={3} componentClass={ControlLabel}>
-                Layout Name:{' '}
-              </Col>
-              <Col xs={8}>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                  <FormControl
-                    value={this.state.LayoutName}
-                    type="string"
-                    placeholder="Enter layout name"
-                    onChange={e => this.onLayoutNameChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                </FormGroup>
-              </Col>
-            </FormGroup>
-            <Col xs={1}> </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Layout Settings">
+        <Flex alignItems="center">
+          <Text marginRight={2}>Layout Name: </Text>
+
+          <Input
+            style={{ flex: 1 }}
+            value={this.state.LayoutName}
+            type="string"
+            placeholder="Enter layout name"
+            onChange={(e: any) => this.onLayoutNameChange(e)}
+          />
+        </Flex>
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
+      </WizardPanel>
     );
   }
 

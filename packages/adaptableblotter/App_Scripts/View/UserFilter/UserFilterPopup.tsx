@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -26,6 +25,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
   onAddUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
@@ -116,20 +117,19 @@ class UserFilterPopupComponent extends React.Component<
         onClick={() => this.onNew()}
         overrideTooltip="Create User Filter"
         DisplayMode="Glyph+Text"
-        size={'small'}
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.UserFilterStrategyName}
-          bsStyle="primary"
           cssClassName={cssClassName}
           infoBody={infoBody}
           button={newButton}
           glyphicon={StrategyConstants.UserFilterGlyph}
+          bodyProps={{ padding: 0 }}
         >
           {UserFilterItems.length > 0 ? (
             <AdaptableObjectCollection
@@ -138,12 +138,14 @@ class UserFilterPopupComponent extends React.Component<
               items={UserFilterItems}
             />
           ) : (
-            <HelpBlock>
-              Click 'New' to start creating user filters.
+            <EmptyContent>
+              <p>Click 'New' to start creating user filters.</p>
               <p />
-              Once created, user filters are accessible both when filtering columns and creating
-              queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).
-            </HelpBlock>
+              <p>
+                Once created, user filters are accessible both when filtering columns and creating
+                queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).
+              </p>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -166,7 +168,7 @@ class UserFilterPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

@@ -23,7 +23,7 @@ export enum AccessLevel {
 
 export enum LeafExpressionOperator {
   Unknown = 'Unknown',
-  //Numeric and Date
+  // Numeric and Date
   GreaterThan = 'GreaterThan',
   LessThan = 'LessThan',
   Equals = 'Equals',
@@ -31,7 +31,7 @@ export enum LeafExpressionOperator {
   GreaterThanOrEqual = 'GreaterThanOrEqual',
   LessThanOrEqual = 'LessThanOrEqual',
   Between = 'Between',
-  //String
+  // String
   Contains = 'Contains',
   NotContains = 'NotContains',
   StartsWith = 'StartsWith',
@@ -123,7 +123,7 @@ export enum SelectionMode {
   Single = 'Single',
 }
 
-//make sure enum items match IRawValueDisplayValuePair
+// make sure enum items match IRawValueDisplayValuePair
 export enum DistinctCriteriaPairValue {
   RawValue = 'RawValue',
   DisplayValue = 'DisplayValue',
@@ -219,10 +219,10 @@ export enum ColumnMenuTab {
 }
 
 export enum StatusColour {
-  Red = 'Red',
-  Amber = 'Amber',
-  Green = 'Green',
-  Blue = 'Blue',
+  Red = 'var(--ab-color-error)',
+  Amber = 'var(--ab-color-warn)',
+  Green = 'var(--ab-color-success)',
+  Blue = 'var(--ab-color-info)',
 }
 
 export enum MessageType {

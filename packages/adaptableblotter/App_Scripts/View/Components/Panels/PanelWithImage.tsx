@@ -1,61 +1,84 @@
 import * as React from 'react';
-import { PanelProps, Panel, Row, Col, Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
+import { withTheme } from 'styled-components';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType } from '../../../PredefinedConfig/Common/Enums';
+
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import NewPanel, { PanelProps } from '../../../components/Panel';
+import { Box, Flex, BoxProps } from 'rebass';
+
+import icons from '../../../components/icons';
+import { ReactComponentLike } from 'prop-types';
 
 export interface PanelWithImageProps extends PanelProps {
   glyphicon?: string;
+  icon?: string;
   infoBody?: any[];
-  cssClassName: string;
+  cssClassName?: string;
+  borderRadius?: string;
+  bodyProps?: BoxProps;
+  theme: any;
+  headerColor?: string;
   button?: React.ReactElement<any>;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you
 //need to transfer props individually as a consequence
 //let { buttonContent, ...other } = this.props
-export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
+class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE;
+    let cssClassName = this.props.cssClassName
+      ? this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE
+      : '';
+
+    const IconCmp = icons[this.props.icon || this.props.glyphicon] as ReactComponentLike;
+    const headerStyle: any = {};
+
+    if (this.props.headerColor) {
+      headerStyle.color = this.props.headerColor;
+      headerStyle.fill = this.props.headerColor;
+    }
 
     let headerRow = (
-      <AdaptableBlotterForm inline>
-        <Row style={{ display: 'flex', alignItems: 'center' }}>
-          <Col xs={9}>
-            {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
-            {this.props.header}{' '}
+      <AdaptableBlotterForm style={{ flex: 1 }}>
+        <Flex alignItems="center">
+          <Flex alignItems="center" style={headerStyle}>
+            {IconCmp ? <IconCmp /> : <Glyphicon glyph={this.props.glyphicon} />}
+            <Box marginRight={2} />
+            {this.props.header}
+            <Box marginRight={3} />
             {this.props.infoBody != null && (
-              <span>
-                <label> </label>
-                <span>
-                  {' '}
-                  <AdaptablePopover
-                    cssClassName={cssClassName}
-                    headerText=""
-                    bodyText={this.props.infoBody}
-                  />
-                </span>
-              </span>
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText=""
+                bodyText={this.props.infoBody}
+              />
             )}
-          </Col>
-          <Col xs={3}>
-            {this.props.button &&
-              React.cloneElement(this.props.button, { style: { float: 'right' } })}
-          </Col>
-        </Row>
+          </Flex>
+          <Box flex={1} />
+          {this.props.button && React.cloneElement(this.props.button)}
+        </Flex>
       </AdaptableBlotterForm>
     );
     return (
-      <Panel
+      <NewPanel
         header={headerRow}
         className={cssClassName}
+        variant={this.props.variant}
         style={this.props.style}
-        bsStyle={this.props.bsStyle}
-        bsSize={this.props.bsSize}
+        bodyScroll={this.props.bodyScroll !== undefined ? this.props.bodyScroll : true}
+        border="none"
+        borderRadius={this.props.borderRadius || 'none'}
+        bodyProps={{
+          padding: 0,
+          ...this.props.bodyProps,
+        }}
       >
         {this.props.children}
-      </Panel>
+      </NewPanel>
     );
   }
 }
+
+export const PanelWithImage = withTheme(PanelWithImageCmp);

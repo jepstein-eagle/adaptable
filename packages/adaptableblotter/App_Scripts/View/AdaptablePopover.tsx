@@ -1,11 +1,15 @@
 import * as React from 'react';
-import { Label, OverlayTrigger, Glyphicon, Popover, Button } from 'react-bootstrap';
+import { OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { MessageType } from '../PredefinedConfig/Common/Enums';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
-import { ButtonApply } from './Components/Buttons/ButtonApply';
+
 import { ButtonInfo } from './Components/Buttons/ButtonInfo';
 import { UIHelper } from './UIHelper';
+import icons from '../components/icons';
+
+import { ReactComponentLike } from 'prop-types';
+import { Flex, Box } from 'rebass';
 
 /*
 Very basic - for now! - info box that allows us to show Error where required.
@@ -17,10 +21,10 @@ Very basic - for now! - info box that allows us to show Error where required.
 */
 
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
-  headerText: string;
+  headerText?: string;
   bodyText: any[];
   MessageType?: MessageType;
-  cssClassName: string;
+  cssClassName?: string;
   triggerAction?: string;
   useButton?: boolean;
   tooltipText?: string;
@@ -31,7 +35,7 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
 
 export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON;
+    let cssClassName = (this.props.cssClassName || '') + StyleConstants.INFO_BUTTON;
 
     let messageType: MessageType =
       this.props.MessageType != null ? this.props.MessageType : MessageType.Info;
@@ -46,19 +50,30 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     const popoverClickRootClose = (
       <Popover
         style={{ margin: '0px', padding: '0px', minWidth: popoverMinWidth }}
-        id={'ab_popover'}
         title={
           StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ''
         }
       >
-        {this.props.bodyText.map((textOrHTML: any, index: any) => (
-          <span key={index}>{textOrHTML}</span>
-        ))}
+        <Box padding={2}>
+          {this.props.bodyText.map((textOrHTML: any, index: any) => (
+            <span key={index}>{textOrHTML}</span>
+          ))}
+        </Box>
       </Popover>
     );
 
+    const icon = UIHelper.getGlyphByMessageType(messageType);
+    const color = UIHelper.getColorByMessageType(messageType);
+    const IconCmp = icons[icon] as ReactComponentLike;
+
+    const iconStyle = {
+      color,
+      fill: 'currentColor',
+    };
+
     return (
-      <span className={cssClassName}>
+      <Flex alignItems="center" className={cssClassName}>
+        {icons.check}
         <OverlayTrigger
           rootClose
           trigger={triggerAction}
@@ -67,26 +82,18 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
         >
           {useButton ? (
             <ButtonInfo
-              cssClassName={cssClassName}
+              style={iconStyle}
               onClick={() => null}
-              size={size}
-              glyph={UIHelper.getGlyphByMessageType(messageType)}
-              bsStyle={UIHelper.getStyleNameByMessageType(messageType)}
-              DisplayMode="Glyph"
-              tooltipText={this.props.tooltipText}
-              showDefaultStyle={this.props.showDefaultStyle}
+              glyph={icon}
+              tooltip={this.props.tooltipText}
             />
           ) : (
-            <Label
-              bsSize="large"
-              bsStyle={UIHelper.getStyleNameByMessageType(messageType)}
-              className="ab_medium_padding"
-            >
-              <Glyphicon glyph={UIHelper.getGlyphByMessageType(messageType)} />
-            </Label>
+            <div style={{ cursor: 'pointer', display: 'inline-block' }}>
+              {IconCmp ? <IconCmp style={iconStyle} /> : <Glyphicon glyph={icon} />}
+            </div>
           )}
         </OverlayTrigger>
-      </span>
+      </Flex>
     );
   }
 }

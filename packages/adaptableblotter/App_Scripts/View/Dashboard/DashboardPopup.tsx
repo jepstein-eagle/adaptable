@@ -9,19 +9,12 @@ import { MenuState } from '../../PredefinedConfig/InternalState/MenuState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { DualListBoxEditor, DisplaySize } from '../Components/ListBox/DualListBoxEditor';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import {
-  FormGroup,
-  Col,
-  Checkbox,
-  Row,
-  Radio,
-  ControlLabel,
-  FormControl,
-  Panel,
-  Form,
-} from 'react-bootstrap';
+import Checkbox from '../../components/CheckBox';
+import Radio from '../../components/Radio';
+import Input from '../../components/Input';
+
 import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Box, Flex, Text } from 'rebass';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
@@ -103,88 +96,67 @@ class DashboardPopupComponent extends React.Component<
     ).map(x => x.Label);
 
     let individualHomeToolbarOptions = (
-      <div>
-        <FormGroup controlId="formInlineName">
-          <Col xs={12}>
-            <Checkbox
-              onChange={e => this.onShowFunctionsDropdownChanged(e)}
-              checked={this.props.DashboardState.ShowFunctionsDropdown}
-            >
-              {' '}
-              Show Functions Dropdown{' '}
-            </Checkbox>
-          </Col>
-          <Col xs={12}>
-            <Checkbox
-              onChange={e => this.onShowColumnsDropdownChanged(e)}
-              checked={this.props.DashboardState.ShowColumnsDropdown}
-            >
-              {' '}
-              Show Columns Dropdown
-            </Checkbox>
-          </Col>
-          <Col xs={12}>
-            <Checkbox
-              onChange={e => this.onShowToolbarsDropdownChanged(e)}
-              checked={this.props.DashboardState.ShowToolbarsDropdown}
-            >
-              {' '}
-              Show Toolbars Dropdown{' '}
-            </Checkbox>
-          </Col>
-          <Col xs={12}>
-            <Checkbox
-              onChange={e => this.onShowSystemStatusButtonChanged(e)}
-              checked={this.props.DashboardState.ShowSystemStatusButton}
-            >
-              {' '}
-              Show System Status Button{' '}
-            </Checkbox>
-          </Col>
-          <Col xs={12}>
-            <Checkbox
-              onChange={e => this.onShowAboutButtonChanged(e)}
-              checked={this.props.DashboardState.ShowAboutButton}
-            >
-              {' '}
-              Show About Button{' '}
-            </Checkbox>
-          </Col>
-          <Col xs={12}>
-            <Checkbox
-              onChange={e => this.onUseSingleColourForButtonsChanged(e)}
-              checked={this.props.DashboardState.UseSingleColourForButtons}
-            >
-              {' '}
-              Use Single Colour for All Dashboard Buttons{' '}
-            </Checkbox>
-          </Col>
-          <Col xs={12}>
-            <Checkbox
-              onChange={e => this.onUseExtraSmallButtonsChanged(e)}
-              checked={this.props.DashboardState.UseExtraSmallButtons}
-            >
-              {' '}
-              Use Small Size Buttons{' '}
-            </Checkbox>
-          </Col>
-          <Col xs={12}>
-            <Form inline>
-              Dashboard Zoom Factor:{' '}
-              <FormControl
-                value={this.state.EditedZoomFactor.toString()}
-                bsSize={'small'}
-                type="number"
-                min="0.5"
-                step="0.05"
-                max="1"
-                placeholder="Enter a Number"
-                onChange={e => this.onSetFactorChange(e)}
-              />
-            </Form>
-          </Col>
-        </FormGroup>
-      </div>
+      <Flex margin={3} flexDirection="column">
+        <Checkbox
+          onChange={checked => this.onShowFunctionsDropdownChanged(checked)}
+          checked={this.props.DashboardState.ShowFunctionsDropdown}
+        >
+          Show Functions Dropdown
+        </Checkbox>
+        <Checkbox
+          onChange={checked => this.onShowColumnsDropdownChanged(checked)}
+          checked={this.props.DashboardState.ShowColumnsDropdown}
+        >
+          Show Columns Dropdown
+        </Checkbox>
+        <Checkbox
+          onChange={checked => this.onShowToolbarsDropdownChanged(checked)}
+          checked={this.props.DashboardState.ShowToolbarsDropdown}
+        >
+          Show Toolbars Dropdown
+        </Checkbox>
+
+        <Checkbox
+          onChange={checked => this.onShowSystemStatusButtonChanged(checked)}
+          checked={this.props.DashboardState.ShowSystemStatusButton}
+        >
+          Show System Status Button
+        </Checkbox>
+
+        <Checkbox
+          onChange={checked => this.onShowAboutButtonChanged(checked)}
+          checked={this.props.DashboardState.ShowAboutButton}
+        >
+          Show About Button
+        </Checkbox>
+
+        <Checkbox
+          onChange={checked => this.onUseSingleColourForButtonsChanged(checked)}
+          checked={this.props.DashboardState.UseSingleColourForButtons}
+        >
+          Use Single Colour for All Dashboard Buttons
+        </Checkbox>
+
+        <Checkbox
+          onChange={(checked: boolean) => this.onUseExtraSmallButtonsChanged(checked)}
+          checked={this.props.DashboardState.UseExtraSmallButtons}
+        >
+          Use Small Size Buttons
+        </Checkbox>
+
+        <Flex flexDirection="row" alignItems="center" marginTop={2}>
+          <Text marginRight={2}>Dashboard Zoom Factor:</Text>
+          <Input
+            value={this.state.EditedZoomFactor.toString()}
+            type="number"
+            min="0.5"
+            step="0.05"
+            max="1"
+            placeholder="Enter a Number"
+            onChange={e => this.onSetFactorChange(e)}
+          />
+        </Flex>
+      </Flex>
     );
 
     return (
@@ -192,44 +164,43 @@ class DashboardPopupComponent extends React.Component<
         <PanelWithButton
           cssClassName={cssClassName}
           headerText="Dashboard Configuration"
-          bsStyle="primary"
+          bodyProps={{ padding: 0, style: { display: 'flex', flexDirection: 'column' } }}
           glyphicon={StrategyConstants.DashboardGlyph}
-          className="ab_main_popup"
         >
-          <Row style={{ marginBottom: '10px' }}>
-            <Col xs={12}>
-              <Radio
-                inline
-                value={DashboardConfigView.General}
-                checked={this.state.DashboardConfigView == DashboardConfigView.General}
-                onChange={e => this.onShowGridPropertiesChanged(e)}
-              >
-                General Options
-              </Radio>
-              <Radio
-                inline
-                value={DashboardConfigView.Buttons}
-                checked={this.state.DashboardConfigView == DashboardConfigView.Buttons}
-                onChange={e => this.onShowGridPropertiesChanged(e)}
-              >
-                Function Buttons
-              </Radio>
-              <Radio
-                inline
-                value={DashboardConfigView.Toolbars}
-                checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
-                onChange={e => this.onShowGridPropertiesChanged(e)}
-              >
-                Function Toolbars
-              </Radio>
-            </Col>
-          </Row>
+          <Flex
+            flexDirection="row"
+            padding={2}
+            style={{ borderBottom: '1px solid var(--ab-color-lightgray)' }}
+          >
+            <Radio
+              value={DashboardConfigView.General}
+              checked={this.state.DashboardConfigView == DashboardConfigView.General}
+              onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+            >
+              General Options
+            </Radio>
+            <Radio
+              marginLeft={3}
+              value={DashboardConfigView.Buttons}
+              checked={this.state.DashboardConfigView == DashboardConfigView.Buttons}
+              onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+            >
+              Function Buttons
+            </Radio>
+            <Radio
+              marginLeft={3}
+              value={DashboardConfigView.Toolbars}
+              checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
+              onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+            >
+              Function Toolbars
+            </Radio>
+          </Flex>
 
-          {this.state.DashboardConfigView == DashboardConfigView.General && (
-            <div>{individualHomeToolbarOptions}</div>
-          )}
-          {this.state.DashboardConfigView == DashboardConfigView.Buttons && (
-            <div>
+          <Box style={{ overflow: 'auto', flex: 1, display: 'flex' }} padding={2}>
+            {this.state.DashboardConfigView == DashboardConfigView.General &&
+              individualHomeToolbarOptions}
+            {this.state.DashboardConfigView == DashboardConfigView.Buttons && (
               <DualListBoxEditor
                 AvailableValues={availableValues}
                 cssClassName={cssClassName}
@@ -239,19 +210,19 @@ class DashboardPopupComponent extends React.Component<
                 onChange={SelectedValues => this.onDashboardButtonsChanged(SelectedValues)}
                 DisplaySize={DisplaySize.Large}
               />
-            </div>
-          )}
-          {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
-            <DualListBoxEditor
-              AvailableValues={availableToolbarNames}
-              cssClassName={cssClassName}
-              SelectedValues={visibleToolbarNames}
-              HeaderAvailable="Available Toolbars"
-              HeaderSelected="Visible Toolbars"
-              onChange={SelectedValues => this.onDashboardToolbarsChanged(SelectedValues)}
-              DisplaySize={DisplaySize.Small}
-            />
-          )}
+            )}
+            {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
+              <DualListBoxEditor
+                AvailableValues={availableToolbarNames}
+                cssClassName={cssClassName}
+                SelectedValues={visibleToolbarNames}
+                HeaderAvailable="Available Toolbars"
+                HeaderSelected="Visible Toolbars"
+                onChange={SelectedValues => this.onDashboardToolbarsChanged(SelectedValues)}
+                DisplaySize={DisplaySize.Small}
+              />
+            )}
+          </Box>
         </PanelWithButton>
       </div>
     );
@@ -263,63 +234,56 @@ class DashboardPopupComponent extends React.Component<
     this.setState({ DashboardConfigView: dashboardConfigView } as DashboardPopupState);
   }
 
-  onShowFunctionsDropdownChanged(event: React.FormEvent<any>): void {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  onShowFunctionsDropdownChanged(checked: boolean): void {
+    if (checked) {
       this.props.onDashboardShowFunctionsDropdown();
     } else {
       this.props.onDashboardHideFunctionsDropdown();
     }
   }
 
-  onShowColumnsDropdownChanged(event: React.FormEvent<any>): void {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  onShowColumnsDropdownChanged(checked: boolean): void {
+    if (checked) {
       this.props.onDashboardShowColumnsDropdown();
     } else {
       this.props.onDashboardHideColumnsDropdown();
     }
   }
 
-  onShowToolbarsDropdownChanged(event: React.FormEvent<any>): void {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  onShowToolbarsDropdownChanged(checked: boolean): void {
+    if (checked) {
       this.props.onDashboardShowToolbarsDropdown();
     } else {
       this.props.onDashboardHideToolbarsDropdown();
     }
   }
 
-  onShowSystemStatusButtonChanged(event: React.FormEvent<any>): void {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  onShowSystemStatusButtonChanged(checked: boolean): void {
+    if (checked) {
       this.props.onDashboardShowSystemStatusButton();
     } else {
       this.props.onDashboardHideSystemStatusButton();
     }
   }
 
-  onShowAboutButtonChanged(event: React.FormEvent<any>): void {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  onShowAboutButtonChanged(checked: boolean): void {
+    if (checked) {
       this.props.onDashboardShowAboutButton();
     } else {
       this.props.onDashboardHideAboutButton();
     }
   }
 
-  onUseSingleColourForButtonsChanged(event: React.FormEvent<any>): void {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  onUseSingleColourForButtonsChanged(checked: boolean): void {
+    if (checked) {
       this.props.onDashboardUseSingleColourForButtons();
     } else {
       this.props.onDashboardUseMultipleColourForButtons();
     }
   }
 
-  onUseExtraSmallButtonsChanged(event: React.FormEvent<any>): void {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  onUseExtraSmallButtonsChanged(checked: boolean): void {
+    if (checked) {
       this.props.onDashboardUseExtraSmallSizeButtons();
     } else {
       this.props.onDashboardUseDefaultSizeButtons();

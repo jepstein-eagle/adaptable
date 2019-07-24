@@ -1,32 +1,26 @@
 import * as React from 'react';
+import { Flex, FlexProps } from 'rebass';
 /// <reference path="../../typings/.d.ts" />
-import { Glyphicon, Col, Row } from 'react-bootstrap';
 
-export interface WaitingProps extends React.ClassAttributes<Waiting> {
+export type WaitingProps = React.ClassAttributes<Waiting> & {
   WaitingMessage: string;
-}
+} & FlexProps;
+
+import IconRefresh from '../../../components/icons/refresh';
 
 export class Waiting extends React.Component<WaitingProps, {}> {
   render(): any {
+    const { WaitingMessage, ...props } = this.props;
     return (
-      <div>
-        <Row>
-          <Col xs={4} />
-          <Col xs={6}>
-            <h1>
-              <Glyphicon glyph={'refresh'} />
-            </h1>
-          </Col>
-          <Col xs={2} />
-        </Row>
+      <Flex flexDirection="column" marginTop={2} marginBottom={2} {...props}>
+        <Flex flexDirection="row" justifyContent="center">
+          <IconRefresh />
+        </Flex>
 
-        <Row>
-          <Col xs={1} />
-          <Col xs={11}>
-            <h5> {this.props.WaitingMessage}</h5>
-          </Col>
-        </Row>
-      </div>
+        <Flex flexDirection="row" justifyContent="center">
+          <h5>{WaitingMessage}</h5>
+        </Flex>
+      </Flex>
     );
   }
 }

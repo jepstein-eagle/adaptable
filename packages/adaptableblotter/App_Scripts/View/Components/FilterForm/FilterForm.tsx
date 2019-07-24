@@ -33,14 +33,16 @@ import { ButtonClear } from '../Buttons/ButtonClear';
 import { Waiting } from './Waiting';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxMenu } from './ListBoxMenu';
-import { HelpBlock } from 'react-bootstrap';
+
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { FilterFormPanel } from '../Panels/FilterFormPanel';
 import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/AdaptableBlotterMenu';
+import HelpBlock from '../../../components/HelpBlock';
 import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: IColumn;
@@ -186,6 +188,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           this.props.SystemFilters
         ).map(sf => sf)
       ); //.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
+
     let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map(uf => {
       return { RawValue: uf, DisplayValue: uf };
     });
@@ -235,45 +238,28 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     let closeButton = (
       <ButtonClose
-        cssClassName={cssClassName}
         onClick={() => this.onCloseForm()}
-        bsStyle={'default'}
-        size={'xsmall'}
-        DisplayMode="Glyph"
-        hideToolTip={true}
+        tooltip={null}
         AccessLevel={AccessLevel.Full}
       />
     );
 
     let clearFilterButton = (
       <ButtonClear
-        cssClassName={this.props.cssClassName + ' pull-right '}
         onClick={() => this.onClearFilter()}
-        bsStyle={'default'}
-        style={{ margin: '5px' }}
-        size={'xsmall'}
-        overrideDisableButton={isEmptyFilter}
-        overrideText={'Clear'}
-        DisplayMode="Text"
-        hideToolTip={true}
+        disabled={isEmptyFilter}
+        tooltip={null}
         AccessLevel={AccessLevel.Full}
-      />
+      ></ButtonClear>
     );
 
     let saveButton = (
       <ButtonSave
-        cssClassName={this.props.cssClassName + ' pull-right '}
         onClick={() => this.onSaveFilter()}
-        bsStyle={'default'}
-        style={{ margin: '5px' }}
-        size={'xsmall'}
-        overrideDisableButton={isEmptyFilter || hasUserFilter}
-        overrideText={'Save as User Filter'}
-        DisplayMode="Glyph"
-        hideToolTip={true}
-        overrideTooltip={'Save as User Filter'}
+        disabled={isEmptyFilter || hasUserFilter}
+        tooltip={'Save as User Filter'}
         AccessLevel={AccessLevel.Full}
-      />
+      ></ButtonSave>
     );
 
     return (

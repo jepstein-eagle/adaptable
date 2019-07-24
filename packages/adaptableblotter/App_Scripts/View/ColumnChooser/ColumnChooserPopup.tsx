@@ -12,6 +12,7 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IMasterChildren } from '../../Utilities/Interface/IMasterChildren';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { Flex } from 'rebass';
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
   onNewColumnListOrder: (VisibleColumnList: IColumn[]) => SystemRedux.SetNewColumnListOrderAction;
@@ -52,14 +53,17 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
     ];
 
     return (
-      <div className={cssClassName}>
-        <PanelWithImage
-          cssClassName={cssClassName}
-          header={StrategyConstants.ColumnChooserStrategyName}
-          bsStyle="primary"
-          glyphicon={StrategyConstants.ColumnChooserGlyph}
-          infoBody={infoBody}
-        >
+      <PanelWithImage
+        variant="primary"
+        cssClassName={cssClassName}
+        header={StrategyConstants.ColumnChooserStrategyName}
+        glyphicon={StrategyConstants.ColumnChooserGlyph}
+        infoBody={infoBody}
+        bodyProps={{
+          style: { display: 'flex' },
+        }}
+      >
+        <Flex padding={2} style={{ width: '100%' }}>
           <DualListBoxEditor
             AvailableValues={availableValues}
             cssClassName={cssClassName}
@@ -69,8 +73,8 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
             MasterChildren={masterChildren}
             onChange={SelectedValues => this.ColumnListChange(SelectedValues)}
           />
-        </PanelWithImage>
-      </div>
+        </Flex>
+      </PanelWithImage>
     );
   }
 

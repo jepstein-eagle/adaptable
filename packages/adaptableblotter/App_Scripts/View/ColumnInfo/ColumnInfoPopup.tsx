@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
+import { Flex, Box } from 'rebass';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -19,9 +20,7 @@ import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSum
 import { DataType, SelectionMode, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
-import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategorySummary } from '../ColumnCategory/ColumnCategorySummary';
@@ -363,47 +362,41 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
 
     return (
-      <div className={cssClassName}>
-        <PanelWithImage
-          cssClassName={cssClassName}
-          header={headerText}
-          bsStyle="primary"
-          glyphicon={StrategyConstants.ColumnInfoGlyph}
-          infoBody={infoBody}
-        >
-          {this.state.ShowSelector && (
-            <AdaptableBlotterForm horizontal>
-              <FormGroup controlId="searchName">
-                <Row>
-                  <Col xs={2} componentClass={ControlLabel}>
-                    Column:{' '}
-                  </Col>
+      <PanelWithImage
+        cssClassName={cssClassName}
+        header={headerText}
+        variant="primary"
+        glyphicon={StrategyConstants.ColumnInfoGlyph}
+        infoBody={infoBody}
+        bodyProps={{ padding: 2 }}
+      >
+        {this.state.ShowSelector && (
+          <Flex flexDirection="row" alignItems="center" marginBottom={2}>
+            <Box>Column: </Box>
+            <Box flex={1} marginLeft={2}>
+              <ColumnSelector
+                cssClassName={cssClassName}
+                SelectedColumnIds={[selectedColumnId]}
+                ColumnList={this.props.Columns}
+                onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                SelectionMode={SelectionMode.Single}
+              />
+            </Box>
+          </Flex>
+        )}
 
-                  <Col xs={8}>
-                    <ColumnSelector
-                      cssClassName={cssClassName}
-                      SelectedColumnIds={[selectedColumnId]}
-                      ColumnList={this.props.Columns}
-                      onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-                      SelectionMode={SelectionMode.Single}
-                    />
-                  </Col>
-                  <Col xs={2}> </Col>
-                </Row>
-              </FormGroup>
-            </AdaptableBlotterForm>
-          )}
-
+        <Flex flex={1} style={{ overflow: 'auto', width: '100%' }}>
           {this.state.SelectedColumn && (
             <AdaptableObjectCollection
+              style={{ width: '100%' }}
               cssClassName={cssClassName}
               colItems={colItems}
               items={summaries}
               reducedPanel={this.state.ShowSelector}
             />
           )}
-        </PanelWithImage>
-      </div>
+        </Flex>
+      </PanelWithImage>
     );
   }
 

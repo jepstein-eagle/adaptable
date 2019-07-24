@@ -55,14 +55,13 @@ export class CellValidationSummaryWizard
       },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.CellValidationStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

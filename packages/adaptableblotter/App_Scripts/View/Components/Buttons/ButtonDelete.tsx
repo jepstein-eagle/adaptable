@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { ButtonBase, ButtonProps } from './ButtonBase';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+
 import { IUIConfirmation } from '../../../Utilities/Interface/IMessage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
+import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
 
-export interface DeleteButtonProps extends ButtonProps {
+export interface DeleteButtonProps extends SimpleButtonProps {
   onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
   ConfirmAction: Redux.Action;
   ConfirmationMsg: string;
@@ -19,19 +20,15 @@ export interface DeleteButtonProps extends ButtonProps {
 class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
   render() {
     return (
-      <ButtonBase
-        ToolTipAndText="Delete"
-        bsStyle={StyleConstants.DANGER_BSSTYLE}
-        bsSize={this.props.size}
-        glyph="trash"
+      <SimpleButton
+        tooltip="Delete"
+        px={2}
+        py={1}
+        variant="text"
+        icon="trash"
+        iconSize={20}
+        {...this.props}
         onClick={() => this.onClick()}
-        overrideDisableButton={this.props.overrideDisableButton}
-        overrideTooltip={this.props.overrideTooltip}
-        style={this.props.style}
-        DisplayMode={this.props.DisplayMode}
-        overrideText={this.props.overrideText}
-        cssClassName={this.props.cssClassName + StyleConstants.DELETE_BUTTON}
-        showDefaultStyle={this.props.showDefaultStyle}
       />
     );
   }

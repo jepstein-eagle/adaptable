@@ -1,26 +1,21 @@
 import * as React from 'react';
-import {
-  FormGroup,
-  FormControl,
-  Col,
-  Panel,
-  ControlLabel,
-  Row,
-  Checkbox,
-  Radio,
-} from 'react-bootstrap';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import WizardPanel from '../../../components/WizardPanel';
+import Panel from '../../../components/Panel';
+import Radio from '../../../components/Radio';
+import { Flex, Text, Box } from 'rebass';
+import Input from '../../../components/Input';
 
 export interface PercentBarValuesWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 
@@ -52,137 +47,121 @@ export class PercentBarValuesWizard
     let cssClassName: string = this.props.cssClassName + '-s';
 
     return (
-      <div className={cssClassName}>
-        <Panel header={'Minimum Value'} bsStyle="primary">
-          <AdaptableBlotterForm>
-            <FormGroup controlId="formMinimumValueSelect">
-              <Row>
-                <Col xs={3}>
-                  <ControlLabel>Use:</ControlLabel>
-                </Col>
-                <Col xs={6}>
-                  <Radio
-                    inline
-                    value="value"
-                    checked={this.state.UseMinColumn == false}
-                    onChange={e => this.onUseMinColumnSelectChanged(e)}
-                  >
-                    Static Value
-                  </Radio>{' '}
-                  <Radio
-                    inline
-                    value="column"
-                    checked={this.state.UseMinColumn == true}
-                    onChange={e => this.onUseMinColumnSelectChanged(e)}
-                  >
-                    Another Column Value
-                  </Radio>
-                  <span style={{ marginLeft: '10px' }}>
-                    <AdaptablePopover
-                      cssClassName={cssClassName}
-                      headerText={'Percent Bar: Minimum Value'}
-                      bodyText={[
-                        'The minimum value of the column (can be minus).  Defaults to the currenty smallest value in the column.  If the column only contains positive numbers use 0.  Additionally, you can set the value to be that in another column.',
-                      ]}
-                    />
-                  </span>
-                </Col>
-              </Row>
+      <WizardPanel header="Values">
+        <Panel header={'Minimum Value'} marginTop={2}>
+          <Flex flexDirection="row" alignItems="center">
+            <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+              Use:
+            </Text>
+            <Flex flex={7} alignItems="center">
+              <Radio
+                marginRight={2}
+                value="value"
+                checked={this.state.UseMinColumn == false}
+                onChange={(_, e: any) => this.onUseMinColumnSelectChanged(e)}
+              >
+                Static Value
+              </Radio>{' '}
+              <Radio
+                marginRight={2}
+                value="column"
+                checked={this.state.UseMinColumn == true}
+                onChange={(_, e: any) => this.onUseMinColumnSelectChanged(e)}
+              >
+                Another Column Value
+              </Radio>
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Percent Bar: Minimum Value'}
+                bodyText={[
+                  'The minimum value of the column (can be minus).  Defaults to the currenty smallest value in the column.  If the column only contains positive numbers use 0.  Additionally, you can set the value to be that in another column.',
+                ]}
+              />
+            </Flex>
+          </Flex>
 
-              <Row style={{ marginTop: '10px' }}>
-                <Col xs={3}>
-                  <ControlLabel>
-                    {this.state.UseMinColumn == false ? 'Value' : 'Column'}
-                  </ControlLabel>
-                </Col>
-                <Col xs={5}>
-                  {this.state.UseMinColumn == false ? (
-                    <FormControl
-                      type="number"
-                      placeholder="Enter Number"
-                      onChange={this.onMinValueChanged}
-                      value={this.state.MinValue}
-                    />
-                  ) : (
-                    <ColumnSelector
-                      cssClassName={cssClassName}
-                      SelectedColumnIds={[this.state.MinValueColumnId]}
-                      ColumnList={this.props.Columns}
-                      onColumnChange={columns => this.onColumnMinValueSelectedChanged(columns)}
-                      SelectionMode={SelectionMode.Single}
-                    />
-                  )}
-                </Col>
-              </Row>
-            </FormGroup>
-          </AdaptableBlotterForm>
+          <Flex flexDirection="row" alignItems="center">
+            <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+              {this.state.UseMinColumn == false ? 'Value' : 'Column'}
+            </Text>
+            <Flex flex={7} alignItems="center">
+              {this.state.UseMinColumn == false ? (
+                <Input
+                  type="number"
+                  placeholder="Enter Number"
+                  onChange={this.onMinValueChanged}
+                  value={this.state.MinValue}
+                />
+              ) : (
+                <ColumnSelector
+                  cssClassName={cssClassName}
+                  SelectedColumnIds={[this.state.MinValueColumnId]}
+                  ColumnList={this.props.Columns}
+                  onColumnChange={columns => this.onColumnMinValueSelectedChanged(columns)}
+                  SelectionMode={SelectionMode.Single}
+                />
+              )}
+            </Flex>
+          </Flex>
         </Panel>
+        <Panel header="Maximum Value" marginTop={2}>
+          <Flex flexDirection="row" alignItems="center">
+            <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+              Use:
+            </Text>
+            <Flex flex={7} alignItems="center">
+              <Radio
+                marginRight={2}
+                value="value"
+                checked={this.state.UseMaxColumn == false}
+                onChange={e => this.onUseMaxColumnSelectChanged(e)}
+              >
+                Static Value
+              </Radio>{' '}
+              <Radio
+                marginRight={2}
+                value="column"
+                checked={this.state.UseMaxColumn == true}
+                onChange={e => this.onUseMaxColumnSelectChanged(e)}
+              >
+                Another Column Value
+              </Radio>
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Percent Bar: Maximum Value'}
+                bodyText={[
+                  'The maximum value of the bar.  Defaults to the currently largest value in the column.  Additionally, you can set the value to be that in another column.',
+                ]}
+              />
+            </Flex>
+          </Flex>
 
-        <Panel header={'Maximum Value'} bsStyle="primary">
-          <AdaptableBlotterForm>
-            <FormGroup controlId="formMaximumValueSelect">
-              <Row>
-                <Col xs={3}>
-                  <ControlLabel>Use:</ControlLabel>
-                </Col>
-                <Col xs={6}>
-                  <Radio
-                    inline
-                    value="value"
-                    checked={this.state.UseMaxColumn == false}
-                    onChange={e => this.onUseMaxColumnSelectChanged(e)}
-                  >
-                    Static Value
-                  </Radio>{' '}
-                  <Radio
-                    inline
-                    value="column"
-                    checked={this.state.UseMaxColumn == true}
-                    onChange={e => this.onUseMaxColumnSelectChanged(e)}
-                  >
-                    Another Column Value
-                  </Radio>
-                  <span style={{ marginLeft: '10px' }}>
-                    <AdaptablePopover
-                      cssClassName={cssClassName}
-                      headerText={'Percent Bar: Maximum Value'}
-                      bodyText={[
-                        'The maximum value of the bar.  Defaults to the currently largest value in the column.  Additionally, you can set the value to be that in another column.',
-                      ]}
-                    />
-                  </span>
-                </Col>
-              </Row>
+          <Flex flexDirection="row" alignItems="center" marginTop={2}>
+            <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+              {this.state.UseMaxColumn == false ? 'Value' : 'Column'}
+            </Text>
 
-              <Row style={{ marginTop: '10px' }}>
-                <Col xs={3}>
-                  <ControlLabel>
-                    {this.state.UseMaxColumn == false ? 'Value' : 'Column'}
-                  </ControlLabel>
-                </Col>
-                <Col xs={5}>
-                  {this.state.UseMaxColumn == false ? (
-                    <FormControl
-                      type="number"
-                      placeholder="Enter Number"
-                      onChange={this.onMaxValueChanged}
-                      value={this.state.MaxValue}
-                    />
-                  ) : (
-                    <ColumnSelector
-                      cssClassName={cssClassName}
-                      SelectedColumnIds={[this.state.MaxValueColumnId]}
-                      ColumnList={this.props.Columns}
-                      onColumnChange={columns => this.onColumnMaxValueSelectedChanged(columns)}
-                      SelectionMode={SelectionMode.Single}
-                    />
-                  )}
-                </Col>
-              </Row>
-            </FormGroup>
-          </AdaptableBlotterForm>
+            <Flex flex={7} alignItems="center">
+              {this.state.UseMaxColumn == false ? (
+                <Input
+                  type="number"
+                  placeholder="Enter Number"
+                  onChange={this.onMaxValueChanged}
+                  value={this.state.MaxValue}
+                />
+              ) : (
+                <ColumnSelector
+                  cssClassName={cssClassName}
+                  SelectedColumnIds={[this.state.MaxValueColumnId]}
+                  ColumnList={this.props.Columns}
+                  onColumnChange={columns => this.onColumnMaxValueSelectedChanged(columns)}
+                  SelectionMode={SelectionMode.Single}
+                />
+              )}
+            </Flex>
+          </Flex>
         </Panel>
-      </div>
+      </WizardPanel>
     );
   }
 

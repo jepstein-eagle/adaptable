@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DropdownButton, MenuItem, Col, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
+
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
@@ -13,6 +13,11 @@ import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
+import icons from '../../components/icons';
+import { ReactComponentLike } from 'prop-types';
+import DropdownButton from '../../components/DropdownButton';
+
+const ExportIcon = icons.export as ReactComponentLike;
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
   LiveReports: ILiveReport[];
   onExport: (exportDestination: ExportDestination) => void;
@@ -24,55 +29,40 @@ export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<Rep
 export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
   render(): any {
     let report: Report = this.props.AdaptableBlotterObject as Report;
-    let csvMenuItem: any = (
-      <MenuItem onClick={() => this.props.onExport(ExportDestination.CSV)} key={'csv'}>
-        {'Export to CSV'}
-      </MenuItem>
-    );
-    let clipboardMenuItem: any = (
-      <MenuItem onClick={() => this.props.onExport(ExportDestination.Clipboard)} key={'clipboard'}>
-        {' '}
-        {'Export to Clipboard'}
-      </MenuItem>
-    );
-    let openfinExcelMenuItem = this.props.LiveReports.find(x => x.Report.Uuid == report.Uuid) ? (
-      <MenuItem
-        onClick={() => this.props.onReportStopLive(ExportDestination.OpenfinExcel)}
-        key={'OpenfinExcel'}
-      >
-        {' '}
-        {'Stop Live Openfin Excel'}
-      </MenuItem>
-    ) : (
-      <MenuItem
-        onClick={() => this.props.onExport(ExportDestination.OpenfinExcel)}
-        key={'OpenfinExcel'}
-      >
-        {' '}
-        {'Start Live Openfin Excel'}
-      </MenuItem>
-    );
+    let csvMenuItem: any = {
+      onClick: () => this.props.onExport(ExportDestination.CSV),
+      label: 'Export to CSV',
+    };
+    let clipboardMenuItem: any = {
+      onClick: () => this.props.onExport(ExportDestination.Clipboard),
+      label: 'Export to Clipboard',
+    };
+    let openfinExcelMenuItem = this.props.LiveReports.find(x => x.Report.Uuid == report.Uuid)
+      ? {
+          onClick: () => this.props.onReportStopLive(ExportDestination.OpenfinExcel),
+          label: 'Stop Live Openfin Excel',
+        }
+      : {
+          onClick: () => this.props.onExport(ExportDestination.OpenfinExcel),
+          label: 'Start Live Openfin Excel',
+        };
 
     let iPushPullExcelMenuItem = this.props.LiveReports.find(
       x => x.Report.Uuid == report.Uuid && x.ExportDestination == ExportDestination.iPushPull
-    ) ? (
-      <MenuItem
-        onClick={() => this.props.onReportStopLive(ExportDestination.iPushPull)}
-        key={'IPPExcel'}
-      >
-        {' '}
-        {'Stop Sync with iPushPull'}
-      </MenuItem>
-    ) : (
-      <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={'IPPExcel'}>
-        {' '}
-        {'Start Sync with iPushPull'}
-      </MenuItem>
-    );
+    )
+      ? {
+          onClick: () => this.props.onReportStopLive(ExportDestination.iPushPull),
+          label: 'Stop Sync with iPushPull',
+        }
+      : {
+          onClick: () => this.props.onExport(ExportDestination.iPushPull),
+          label: 'Start Sync with iPushPull',
+        };
 
-    let exportGlyph: any = <Glyphicon glyph={StrategyConstants.ExportGlyph} />;
     // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
     let isSystemReport: boolean = ReportHelper.IsSystemReport(report);
+    console.log(report);
+    console.log(isSystemReport);
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -88,23 +78,19 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       />
     );
 
+    const exportItems = [
+      csvMenuItem,
+      clipboardMenuItem,
+      OpenfinHelper.isRunningInOpenfin() &&
+        OpenfinHelper.isExcelOpenfinLoaded() &&
+        openfinExcelMenuItem,
+      iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem,
+    ].filter(x => !!x);
+
     let exportButton = (
-      <OverlayTrigger overlay={<Tooltip id="tooltipButton"> {'Export Report'}</Tooltip>}>
-        <DropdownButton
-          bsSize={'xsmall'}
-          bsStyle={'default'}
-          title={exportGlyph}
-          key={report.Name}
-          id={report.Name}
-        >
-          {csvMenuItem}
-          {clipboardMenuItem}
-          {OpenfinHelper.isRunningInOpenfin() &&
-            OpenfinHelper.isExcelOpenfinLoaded() &&
-            openfinExcelMenuItem}
-          {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
-        </DropdownButton>
-      </OverlayTrigger>
+      <DropdownButton tooltip="Export Report" variant="text" items={exportItems}>
+        <ExportIcon />
+      </DropdownButton>
     );
 
     colItems[3].Content = exportButton;

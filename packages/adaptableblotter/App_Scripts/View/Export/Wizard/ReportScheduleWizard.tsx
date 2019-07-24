@@ -1,15 +1,10 @@
 import { Report, AutoExport } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import * as React from 'react';
-import {
-  Panel,
-  FormControl,
-  Checkbox,
-  FormGroup,
-  Radio,
-  Col,
-  ControlLabel,
-  Row,
-} from 'react-bootstrap';
+import Panel from '../../../components/Panel';
+import WizardPanel from '../../../components/WizardPanel';
+import Radio from '../../../components/Radio';
+import Checkbox from '../../../components/CheckBox';
+import Dropdown from '../../../components/Dropdown';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -23,6 +18,9 @@ import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
+
+import { Flex, Box, Text } from 'rebass';
+import Input from '../../../components/Input';
 
 export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<Report> {}
 
@@ -60,247 +58,235 @@ export class ReportScheduleWizard
     let cssClassName: string = this.props.cssClassName + '-Schedule';
 
     let destinations = EnumExtensions.getNames(ExportDestination).map(type => {
-      return (
-        <option key={type} value={type}>
-          {type}
-        </option>
-      );
+      return {
+        label: type,
+        value: type,
+      };
     });
 
     let hours: any[] = [];
     let i: number;
     for (i = 0; i < 24; i++) {
-      hours.push(
-        <option key={i} value={i}>
-          {i}
-        </option>
-      );
+      hours.push({
+        value: i,
+        label: i,
+      });
     }
 
     let minutes: any[] = [];
     let j: number;
     for (j = 0; j < 60; j++) {
-      minutes.push(
-        <option key={j} value={j}>
-          {j}
-        </option>
-      );
+      minutes.push({
+        value: j,
+        label: j,
+      });
     }
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Schedule Report" bsStyle="primary">
-          <Checkbox
-            className={cssClassName + '__checkbox'}
-            inline
-            checked={this.state.HasAutoExport == true}
-            onChange={e => this.onHasAutoExportChanged(e)}
-          >
-            Create a Schedule
-          </Checkbox>
+      <WizardPanel header="Schedule Report">
+        <Checkbox
+          marginLeft={2}
+          className={cssClassName + '__checkbox'}
+          checked={this.state.HasAutoExport == true}
+          onChange={(checked: boolean) => this.onHasAutoExportChanged(checked)}
+        >
+          Create a Schedule
+        </Checkbox>
 
-          {this.state.HasAutoExport == true && (
-            <div style={{ marginTop: '30px' }}>
-              <FormGroup controlId="frmDestination">
-                <Row>
-                  <Col xs={3}>
-                    <ControlLabel>Export To:</ControlLabel>
-                  </Col>
-                  <Col xs={6}>
-                    <FormControl
-                      componentClass="select"
-                      placeholder="select"
-                      value={this.state.ExportDestination}
-                      onChange={x => this.onExportDestinationChanged(x)}
-                    >
-                      {destinations}
-                    </FormControl>
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup controlId="frmHour">
-                <Row>
-                  <Col xs={3}>
-                    <ControlLabel>Hour</ControlLabel>
-                  </Col>
-                  <Col xs={6}>
-                    <FormControl
-                      componentClass="select"
-                      placeholder="select"
-                      value={this.state.Hour}
-                      onChange={x => this.onHourChanged(x)}
-                    >
-                      {hours}
-                    </FormControl>
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup controlId="frmMinute">
-                <Row>
-                  <Col xs={3}>
-                    <ControlLabel>Minute:</ControlLabel>
-                  </Col>
-                  <Col xs={6}>
-                    <FormControl
-                      componentClass="select"
-                      placeholder="select"
-                      value={this.state.Minute}
-                      onChange={x => this.onMinuteChanged(x)}
-                    >
-                      {minutes}
-                    </FormControl>
-                  </Col>
-                </Row>
-              </FormGroup>
-              <FormGroup controlId="formInlineDateType">
-                <Row>
-                  <Col xs={3}>
-                    <ControlLabel>Date:</ControlLabel>
-                  </Col>
-                  <Col xs={6}>
-                    <Radio
-                      inline
-                      value="recurring"
-                      checked={this.state.IsRecurringDate == true}
-                      onChange={e => this.onRecurringDateChanged(e)}
-                    >
-                      Recurring Days
-                    </Radio>
-                    <Radio
-                      inline
-                      value="oneoff"
-                      checked={this.state.IsRecurringDate == false}
-                      onChange={e => this.onRecurringDateChanged(e)}
-                    >
-                      One Off Date
-                    </Radio>
-                  </Col>
-                </Row>
-              </FormGroup>
+        {this.state.HasAutoExport == true && (
+          <Box marginTop={3}>
+            <Flex flexDirection="row" alignItems="center" marginTop={3}>
+              <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                Export To:
+              </Text>
 
-              {this.state.IsRecurringDate ? (
-                <Row>
-                  <Col xs={3} />
-                  <Col xs={6}>
-                    <Panel>
-                      <Checkbox
-                        className={cssClassName + '__checkbox'}
-                        inline
-                        value={DayOfWeek.Monday}
-                        checked={ArrayExtensions.ContainsItem(
-                          this.state.DaysOfWeek,
-                          DayOfWeek.Monday
-                        )}
-                        onChange={e => this.onDayChecked(e)}
-                      >
-                        Monday
-                      </Checkbox>
-                      <br />
-                      <Checkbox
-                        className={cssClassName + '__checkbox'}
-                        inline
-                        value={DayOfWeek.Tuesday}
-                        checked={ArrayExtensions.ContainsItem(
-                          this.state.DaysOfWeek,
-                          DayOfWeek.Tuesday
-                        )}
-                        onChange={e => this.onDayChecked(e)}
-                      >
-                        Tuesday
-                      </Checkbox>
-                      <br />
-                      <Checkbox
-                        className={cssClassName + '__checkbox'}
-                        inline
-                        value={DayOfWeek.Wednesday}
-                        checked={ArrayExtensions.ContainsItem(
-                          this.state.DaysOfWeek,
-                          DayOfWeek.Wednesday
-                        )}
-                        onChange={e => this.onDayChecked(e)}
-                      >
-                        Wednesday
-                      </Checkbox>
-                      <br />
-                      <Checkbox
-                        className={cssClassName + '__checkbox'}
-                        inline
-                        value={DayOfWeek.Thursday}
-                        checked={ArrayExtensions.ContainsItem(
-                          this.state.DaysOfWeek,
-                          DayOfWeek.Thursday
-                        )}
-                        onChange={e => this.onDayChecked(e)}
-                      >
-                        Thursday
-                      </Checkbox>
-                      <br />
-                      <Checkbox
-                        className={cssClassName + '__checkbox'}
-                        inline
-                        value={DayOfWeek.Friday}
-                        checked={ArrayExtensions.ContainsItem(
-                          this.state.DaysOfWeek,
-                          DayOfWeek.Friday
-                        )}
-                        onChange={e => this.onDayChecked(e)}
-                      >
-                        Friday
-                      </Checkbox>
-                      <br />
-                      <Checkbox
-                        className={cssClassName + '__checkbox'}
-                        inline
-                        value={DayOfWeek.Saturday}
-                        checked={ArrayExtensions.ContainsItem(
-                          this.state.DaysOfWeek,
-                          DayOfWeek.Saturday
-                        )}
-                        onChange={e => this.onDayChecked(e)}
-                      >
-                        Saturday
-                      </Checkbox>
-                      <br />
-                      <Checkbox
-                        className={cssClassName + '__checkbox'}
-                        inline
-                        value={DayOfWeek.Sunday}
-                        checked={ArrayExtensions.ContainsItem(
-                          this.state.DaysOfWeek,
-                          DayOfWeek.Sunday
-                        )}
-                        onChange={e => this.onDayChecked(e)}
-                      >
-                        Sunday
-                      </Checkbox>
-                    </Panel>
-                  </Col>
-                </Row>
-              ) : (
-                <FormGroup controlId="frmOneOffDate">
-                  <Row>
-                    <Col xs={3} />
-                    <Col xs={6}>
-                      <FormControl
-                        type="date"
-                        placeholder="Date"
-                        onChange={x => this.onOneOffDateChanged(x)}
-                        value={this.state.OneOffDate}
-                      />
-                    </Col>
-                  </Row>
-                </FormGroup>
-              )}
-            </div>
-          )}
-        </Panel>
-      </div>
+              <Flex flex={7}>
+                <Dropdown
+                  placeholder="select"
+                  showClearButton={false}
+                  value={this.state.ExportDestination}
+                  onChange={(x: any) => this.onExportDestinationChanged(x)}
+                  options={destinations}
+                ></Dropdown>
+              </Flex>
+            </Flex>
+            <Flex flexDirection="row" alignItems="center" marginTop={3}>
+              <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                Hour:
+              </Text>
+              <Flex flex={7}>
+                <Dropdown
+                  placeholder="select"
+                  showClearButton={false}
+                  value={this.state.Hour}
+                  onChange={(x: any) => this.onHourChanged(x)}
+                  options={hours}
+                ></Dropdown>
+              </Flex>
+            </Flex>
+            <Flex flexDirection="row" alignItems="center" marginTop={3}>
+              <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                Minute:
+              </Text>
+              <Flex flex={7}>
+                <Dropdown
+                  showClearButton={false}
+                  placeholder="select"
+                  value={this.state.Minute}
+                  onChange={(x: any) => this.onMinuteChanged(x)}
+                  options={minutes}
+                />
+              </Flex>
+            </Flex>
+            <Flex flexDirection="row" alignItems="center" marginTop={3}>
+              <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                Date:
+              </Text>
+              <Flex flex={7} flexDirection="row" alignItems="center">
+                <Radio
+                  marginRight={3}
+                  value="recurring"
+                  checked={this.state.IsRecurringDate == true}
+                  onChange={(_, e: any) => this.onRecurringDateChanged(e)}
+                >
+                  Recurring Days
+                </Radio>
+                <Radio
+                  value="oneoff"
+                  checked={this.state.IsRecurringDate == false}
+                  onChange={(_, e: any) => this.onRecurringDateChanged(e)}
+                >
+                  One Off Date
+                </Radio>
+              </Flex>
+            </Flex>
+
+            {this.state.IsRecurringDate ? (
+              <Flex flexDirection="row" alignItems="center" marginTop={3}>
+                <Flex flex={3} />
+                <Flex flex={7}>
+                  <Flex flexDirection="column">
+                    <Checkbox
+                      marginLeft={2}
+                      className={cssClassName + '__checkbox'}
+                      value={DayOfWeek.Monday}
+                      checked={ArrayExtensions.ContainsItem(
+                        this.state.DaysOfWeek,
+                        DayOfWeek.Monday
+                      )}
+                      onChange={(_, e: any) => this.onDayChecked(e)}
+                    >
+                      Monday
+                    </Checkbox>
+
+                    <Checkbox
+                      marginLeft={2}
+                      className={cssClassName + '__checkbox'}
+                      marginTop={2}
+                      value={DayOfWeek.Tuesday}
+                      checked={ArrayExtensions.ContainsItem(
+                        this.state.DaysOfWeek,
+                        DayOfWeek.Tuesday
+                      )}
+                      onChange={(_, e: any) => this.onDayChecked(e)}
+                    >
+                      Tuesday
+                    </Checkbox>
+
+                    <Checkbox
+                      marginLeft={2}
+                      className={cssClassName + '__checkbox'}
+                      marginTop={2}
+                      value={DayOfWeek.Wednesday}
+                      checked={ArrayExtensions.ContainsItem(
+                        this.state.DaysOfWeek,
+                        DayOfWeek.Wednesday
+                      )}
+                      onChange={(_, e: any) => this.onDayChecked(e)}
+                    >
+                      Wednesday
+                    </Checkbox>
+
+                    <Checkbox
+                      marginLeft={2}
+                      className={cssClassName + '__checkbox'}
+                      marginTop={2}
+                      value={DayOfWeek.Thursday}
+                      checked={ArrayExtensions.ContainsItem(
+                        this.state.DaysOfWeek,
+                        DayOfWeek.Thursday
+                      )}
+                      onChange={(_, e: any) => this.onDayChecked(e)}
+                    >
+                      Thursday
+                    </Checkbox>
+
+                    <Checkbox
+                      marginLeft={2}
+                      className={cssClassName + '__checkbox'}
+                      value={DayOfWeek.Friday}
+                      checked={ArrayExtensions.ContainsItem(
+                        this.state.DaysOfWeek,
+                        DayOfWeek.Friday
+                      )}
+                      marginTop={2}
+                      onChange={(_, e: any) => this.onDayChecked(e)}
+                    >
+                      Friday
+                    </Checkbox>
+
+                    <Checkbox
+                      marginLeft={2}
+                      className={cssClassName + '__checkbox'}
+                      marginTop={2}
+                      value={DayOfWeek.Saturday}
+                      checked={ArrayExtensions.ContainsItem(
+                        this.state.DaysOfWeek,
+                        DayOfWeek.Saturday
+                      )}
+                      onChange={(_, e: any) => this.onDayChecked(e)}
+                    >
+                      Saturday
+                    </Checkbox>
+
+                    <Checkbox
+                      marginLeft={2}
+                      className={cssClassName + '__checkbox'}
+                      marginTop={2}
+                      value={DayOfWeek.Sunday}
+                      checked={ArrayExtensions.ContainsItem(
+                        this.state.DaysOfWeek,
+                        DayOfWeek.Sunday
+                      )}
+                      onChange={(_, e: any) => this.onDayChecked(e)}
+                    >
+                      Sunday
+                    </Checkbox>
+                  </Flex>
+                </Flex>
+              </Flex>
+            ) : (
+              <Flex flexDirection="row" alignItems="center" marginTop={3}>
+                <Flex flex={3} />
+
+                <Flex flex={7}>
+                  <Input
+                    type="date"
+                    placeholder="Date"
+                    onChange={(x: any) => this.onOneOffDateChanged(x)}
+                    value={this.state.OneOffDate}
+                  />
+                </Flex>
+              </Flex>
+            )}
+          </Box>
+        )}
+      </WizardPanel>
     );
   }
 
-  private onHasAutoExportChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  private onHasAutoExportChanged(checked: boolean) {
+    if (checked) {
       this.setState({ HasAutoExport: true } as ReportScheduleWizardState, () =>
         this.props.UpdateGoBackState()
       );
@@ -341,24 +327,21 @@ export class ReportScheduleWizard
     );
   }
 
-  private onHourChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ Hour: Number(e.value) } as ReportScheduleWizardState, () =>
+  private onHourChanged(value: any) {
+    this.setState({ Hour: Number(value) } as ReportScheduleWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
-  private onMinuteChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ Minute: Number(e.value) } as ReportScheduleWizardState, () =>
+  private onMinuteChanged(value: any) {
+    this.setState({ Minute: Number(value) } as ReportScheduleWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
-  private onExportDestinationChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onExportDestinationChanged(value: any) {
     this.setState(
-      { ExportDestination: e.value as ExportDestination } as ReportScheduleWizardState,
+      { ExportDestination: value as ExportDestination } as ReportScheduleWizardState,
       () => this.props.UpdateGoBackState()
     );
   }

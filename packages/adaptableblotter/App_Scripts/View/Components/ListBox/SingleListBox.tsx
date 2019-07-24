@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { Helper } from '../../../Utilities/Helpers/Helper';
+
 import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
-import { ListGroupItem, ListGroup, ListGroupProps } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
-export interface SingleListBoxProps extends ListGroupProps {
+import ListGroupItem from '../../../components/List/ListGroupItem';
+import ListGroup from '../../../components/List/ListGroup';
+import { Flex } from 'rebass';
+
+export interface SingleListBoxProps {
   Values: Array<any>;
   UiSelectedValues: Array<any>;
   onSelectedChange: (SelectedValues: Array<any>) => void;
@@ -16,7 +19,9 @@ export interface SingleListBoxProps extends ListGroupProps {
   ValueMember?: string;
   SortMember?: string;
   SelectionMode: SelectionMode;
-  cssClassName: string;
+  cssClassName?: string;
+  style?: React.CSSProperties;
+  listStyle?: React.CSSProperties;
 }
 
 export interface SingleListBoxState extends React.ClassAttributes<SingleListBox> {
@@ -25,6 +30,8 @@ export interface SingleListBoxState extends React.ClassAttributes<SingleListBox>
   FilterValue: string;
   SortOrder: SortOrder;
 }
+
+const baseClassName = 'ab-SingleListBox';
 
 export class SingleListBox extends React.Component<SingleListBoxProps, SingleListBoxState> {
   constructor(props: SingleListBoxProps) {
@@ -53,7 +60,8 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     });
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.SINGLE_LIST_BOX;
+    let cssClassName: string =
+      (this.props.cssClassName || '') + StyleConstants.SINGLE_LIST_BOX + ` ${baseClassName}`;
     let itemsElements = this.state.Values.map(x => {
       let isActive: boolean;
       if (this.props.ValueMember) {
@@ -73,7 +81,6 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         return (
           <ListGroupItem
             key={value}
-            style={listGroupItemStyle}
             onClick={() => this.onClickItem(x)}
             active={isActive}
             value={value}
@@ -95,10 +102,12 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex flex={1} flexDirection="column" style={{ width: '100%' }}>
         {header}
-        <ListGroup style={this.props.style}>{itemsElements}</ListGroup>
-      </div>
+        <ListGroup marginTop={2} style={{ overflow: 'auto', flex: 1, ...this.props.listStyle }}>
+          {itemsElements}
+        </ListGroup>
+      </Flex>
     );
   }
 
@@ -163,8 +172,3 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     }
   }
 }
-
-var listGroupItemStyle = {
-  fontSize: 'small',
-  padding: '5px',
-};

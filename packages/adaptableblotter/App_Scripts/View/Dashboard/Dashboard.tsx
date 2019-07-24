@@ -1,15 +1,6 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
-import {
-  Navbar,
-  Nav,
-  Button,
-  Glyphicon,
-  OverlayTrigger,
-  ButtonToolbar,
-  Tooltip,
-} from 'react-bootstrap';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
 
@@ -31,6 +22,8 @@ import {
   IEntitlement,
 } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import SimpleButton from '../../components/SimpleButton';
+import { Box, Flex } from 'rebass';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -90,12 +83,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons,
           });
           return (
-            <Nav
-              key={control}
-              style={{ marginRight: '5px', marginTop: '3px', marginBottom: '3px' }}
-            >
+            <Box key={control} my={1} marginRight={1} className="ab-Dashboard__container">
               {dashboardElememt}
-            </Nav>
+            </Box>
           );
         } else {
           LoggingHelper.LogAdaptableBlotterError('Cannot find Dashboard Control for ' + control);
@@ -107,13 +97,13 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       StrategyConstants.HomeStrategyId
     );
     let homeToolbarElement = (
-      <Nav key={'home'} style={{ marginRight: '5px', marginTop: '3px', marginBottom: '3px' }}>
+      <Box key={'home'} my={1} marginRight={1} className="ab-Dashboard__container">
         {React.createElement(homeToolbar, {
           cssClassName: cssClassName,
           Blotter: this.props.Blotter,
           UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons,
         })}
-      </Nav>
+      </Box>
     );
 
     return (
@@ -121,6 +111,19 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         {this.props.DashboardState.DashboardVisibility != Visibility.Hidden && (
           <div className="ab_no_margin">
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
+              <SimpleButton
+                variant="outlined"
+                m={1}
+                px={1}
+                py={1}
+                icon="arrow-down"
+                tooltip={showBlotterName}
+                onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}
+              >
+                {blotterName}
+              </SimpleButton>
+            ) : (
+              /*
               <ButtonToolbar bsSize={'small'} bsStyle={style} className="ab_no_padding_no_margin">
                 <OverlayTrigger
                   overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}
@@ -133,14 +136,15 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                     {blotterName} <Glyphicon glyph={'chevron-down'} />
                   </Button>
                 </OverlayTrigger>
-              </ButtonToolbar>
-            ) : (
-              <Navbar key={'mainnavbar'} fluid style={{ zoom: this.props.DashboardState.Zoom }}>
-                <div className="ab_no_margin">
-                  {homeToolbarElement}
-                  {visibleDashboardElements}
-                </div>
-              </Navbar>
+              </ButtonToolbar>*/
+              <Flex
+                className="ab-Dashboard"
+                alignItems="stretch"
+                style={{ zoom: this.props.DashboardState.Zoom }}
+              >
+                {homeToolbarElement}
+                {visibleDashboardElements}
+              </Flex>
             )}
           </div>
         )}

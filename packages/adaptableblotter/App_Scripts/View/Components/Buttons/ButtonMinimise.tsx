@@ -1,24 +1,18 @@
 import * as React from 'react';
-import { ButtonBase, ButtonProps } from './ButtonBase';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
-export class ButtonMinimise extends React.Component<ButtonProps, {}> {
+import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
+
+export class ButtonMinimise extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <ButtonBase
-        ToolTipAndText="Minimise"
-        bsStyle={this.props.bsStyle}
-        bsSize={this.props.size}
-        glyph="chevron-up"
-        onClick={() => this.props.onClick()}
-        overrideDisableButton={this.props.overrideDisableButton}
-        overrideTooltip={this.props.overrideTooltip}
-        style={this.props.style}
-        DisplayMode={this.props.DisplayMode}
-        overrideText={this.props.overrideText}
-        cssClassName={this.props.cssClassName + StyleConstants.MINIMISE_BUTTON}
-        hideToolTip={this.props.hideToolTip}
-        showDefaultStyle={this.props.showDefaultStyle}
+      <SimpleButton
+        px={2}
+        py={1}
+        iconSize={20}
+        tooltip="Minimise"
+        {...this.props}
+        variant="text"
+        icon="arrow-up"
       />
     );
   }

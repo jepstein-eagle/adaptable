@@ -1,7 +1,6 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { InputGroup, MenuItem, DropdownButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
@@ -15,11 +14,11 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
+import Dropdown from '../../components/Dropdown';
+import { Flex } from 'rebass';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
@@ -39,110 +38,89 @@ class LayoutToolbarControlComponent extends React.Component<
     let nonDefaultLayouts = this.props.Layouts.filter(
       l => l.Name != GeneralConstants.DEFAULT_LAYOUT
     );
-    let layoutEntity = nonDefaultLayouts.find(x => x.Name == this.props.CurrentLayout);
+    let layoutEntity = nonDefaultLayouts.find(
+      x => x.Name == this.props.CurrentLayout || x.Uuid == this.props.CurrentLayout
+    );
     let currentLayoutTitle = layoutEntity ? layoutEntity.Name : 'Select a Layout';
 
-    let availableLayouts: any = nonDefaultLayouts
-      .filter(l => l.Name != currentLayoutTitle)
-      .map((layout, index) => {
-        return (
-          <MenuItem key={index} eventKey={index} onClick={() => this.onLayoutChanged(layout.Name)}>
-            {layout.Name}
-          </MenuItem>
-        );
-      });
+    let availableLayouts: any = nonDefaultLayouts.filter(l => l.Name != currentLayoutTitle);
+
+    let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
+      return {
+        ...layout,
+        label: layout.Name,
+        value: layout.Name,
+      };
+    });
 
     if (this.isLayoutModified(layoutEntity)) {
       currentLayoutTitle += ' (Modified)';
     }
 
     let content = (
-      <span>
-        <InputGroup>
-          <DropdownButton
-            disabled={availableLayouts.length == 0}
-            style={{ minWidth: '120px' }}
-            className={cssClassName}
-            bsSize={this.props.DashboardSize}
-            bsStyle={'default'}
-            title={currentLayoutTitle}
-            id="layout"
-          >
-            {availableLayouts}
-          </DropdownButton>
+      <Flex flexDirection="row">
+        <Dropdown
+          disabled={availableLayouts.length == 0}
+          style={{ minWidth: 200 }}
+          marginRight={2}
+          placeholder="Select Layout"
+          value={layoutEntity ? layoutEntity.Name : null}
+          options={availableLayoutOptions}
+          onChange={(layoutName: any) => {
+            if (layoutName) {
+              this.onLayoutChanged(layoutName as string);
+              return;
+            }
 
-          {this.props.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT && (
-            <InputGroup.Button>
-              <ButtonClear
-                bsStyle={'default'}
-                cssClassName={cssClassName}
-                onClick={() => this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT)}
-                size={this.props.DashboardSize}
-                overrideTooltip="Clear layout"
-                overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-                DisplayMode="Glyph"
-                AccessLevel={this.props.AccessLevel}
-                showDefaultStyle={this.props.UseSingleColourForButtons}
-              />
-            </InputGroup.Button>
-          )}
-        </InputGroup>
+            this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT);
+          }}
+          clearButtonProps={{
+            tooltip: 'Clear layout',
+            disabled: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT,
+            AccessLevel: this.props.AccessLevel,
+          }}
+          showClearButton={this.props.CurrentLayout !== GeneralConstants.DEFAULT_LAYOUT}
+        />
 
-        <span
+        <Flex
+          flexDirection="row"
           className={
             this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
           }
         >
           <ButtonSave
-            style={{ marginLeft: '5px' }}
-            cssClassName={cssClassName}
             onClick={() => this.onSave()}
-            size={this.props.DashboardSize}
-            overrideTooltip="Save Changes to Current Layout"
-            overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-            DisplayMode="Glyph"
+            tooltip="Save Changes to Current Layout"
+            disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
 
           <ButtonNew
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
+            children={null}
+            tone="none"
+            variant="text"
             onClick={() => this.props.onNewLayout()}
-            size={this.props.DashboardSize}
-            overrideTooltip="Create a new Layout"
-            DisplayMode="Glyph"
+            tooltip="Create a new Layout"
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
 
           <ButtonUndo
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
             onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
-            size={this.props.DashboardSize}
-            overrideTooltip="Undo Layout Changes"
-            overrideDisableButton={!currentLayoutTitle.endsWith('(Modified)')}
-            DisplayMode="Glyph"
+            tooltip="Undo Layout Changes"
+            disabled={!currentLayoutTitle.endsWith('(Modified)')}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
 
           <ButtonDelete
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
-            size={this.props.DashboardSize}
-            overrideTooltip="Delete Layout"
-            overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-            DisplayMode="Glyph"
+            tooltip="Delete Layout"
+            disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
             ConfirmAction={LayoutRedux.LayoutDelete(layoutEntity)}
             ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
             ConfirmationTitle={'Delete Layout'}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
-        </span>
-      </span>
+        </Flex>
+      </Flex>
     );
 
     return (

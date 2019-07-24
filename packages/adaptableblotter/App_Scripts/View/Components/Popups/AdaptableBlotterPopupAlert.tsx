@@ -1,10 +1,13 @@
 import * as React from 'react';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { Modal, Button, Row, Col, ControlLabel } from 'react-bootstrap';
+import { Modal, Button, ControlLabel } from 'react-bootstrap';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { Flex, Text, Box } from 'rebass';
+import Dialog from '../../../components/Dialog';
+import SimpleButton from '../../../components/SimpleButton';
 
 /**
  * The most simple of the alert type popups - just shows a message with a close button.  No user action required.
@@ -12,7 +15,7 @@ import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotte
 export interface AdaptableBlotterPopupAlertProps
   extends React.ClassAttributes<AdaptableBlotterPopupAlert> {
   ShowPopup: boolean;
-  onClose: Function;
+  onClose: () => void;
   Msg: string;
   Header: string;
   MessageType: MessageType;
@@ -24,72 +27,50 @@ export class AdaptableBlotterPopupAlert extends React.Component<
   {}
 > {
   render() {
-    let headerContainsMessage: boolean = this.props.Header.indexOf(this.props.MessageType) != -1;
+    const messageType = this.props.MessageType || MessageType.Error;
+    let headerContainsMessage: boolean = this.props.Header.indexOf(messageType) != -1;
 
-    let style: string = UIHelper.getStyleNameByMessageType(this.props.MessageType);
-    let header: string = headerContainsMessage
-      ? this.props.Header
-      : this.props.MessageType.toUpperCase();
-    let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
-
-    let modalContainer: HTMLElement = UIHelper.getModalContainer(
-      this.props.AdaptableBlotter.blotterOptions,
-      document
-    );
-    let cssClassName: string = StyleConstants.POPUP_ALERT;
+    const headerColor = UIHelper.getColorByMessageType(messageType);
+    let header: string = headerContainsMessage ? this.props.Header : messageType.toUpperCase();
+    let glyph: string = UIHelper.getGlyphByMessageType(messageType);
 
     return (
       this.props.ShowPopup && (
-        <div className={StyleConstants.POPUP_ALERT}>
-          <Modal
-            show={this.props.ShowPopup}
-            onHide={this.props.onClose}
-            className={cssClassName}
-            container={modalContainer}
-            bsSize={'small'}
+        <Dialog
+          isOpen={this.props.ShowPopup}
+          onDismiss={this.props.onClose}
+          style={{
+            minHeight: 'auto',
+            minWidth: '20vw',
+          }}
+        >
+          <PanelWithImage
+            header={header}
+            headerColor={headerColor}
+            glyphicon={glyph}
+            bodyProps={{ padding: 2 }}
           >
-            <div className={cssClassName + StyleConstants.MODAL_BASE}>
-              <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
-                <div className={cssClassName}>
-                  <PanelWithImage
-                    cssClassName={cssClassName}
-                    header={header}
-                    bsStyle={style}
-                    glyphicon={glyph}
-                    bsSize={'small'}
-                  >
-                    <div>
-                      {headerContainsMessage == false && (
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <ControlLabel>{this.props.Header}</ControlLabel>
-                        </div>
-                      )}
-                      <div style={{ display: 'flex', alignItems: 'center' }}>{this.props.Msg}</div>
-                      <div style={{ marginTop: '20px' }}>
-                        <Row>
-                          <Col xs={4} />
-                          <Col xs={7}>
-                            <Button
-                              bsStyle={style}
-                              className={
-                                cssClassName +
-                                StyleConstants.MODAL_FOOTER +
-                                StyleConstants.CLOSE_BUTTON
-                              }
-                              onClick={() => this.props.onClose()}
-                            >
-                              OK
-                            </Button>
-                          </Col>
-                        </Row>
-                      </div>
-                    </div>
-                  </PanelWithImage>
+            <div>
+              {headerContainsMessage == false && (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Text my={2}>{this.props.Header}</Text>
                 </div>
-              </Modal.Body>
+              )}
+              <Flex alignItems="center" my={2}>
+                {this.props.Msg}
+              </Flex>
+              <Flex flexDirection="row" marginTop={2} alignItems="center" padding={2}>
+                <SimpleButton
+                  variant="raised"
+                  tone={messageType.toLowerCase() as any}
+                  onClick={() => this.props.onClose()}
+                >
+                  OK
+                </SimpleButton>
+              </Flex>
             </div>
-          </Modal>
-        </div>
+          </PanelWithImage>
+        </Dialog>
       )
     );
   }

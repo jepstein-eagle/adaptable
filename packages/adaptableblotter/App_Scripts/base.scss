@@ -2594,10 +2594,7 @@ legend {
   border-bottom: 1px solid #e5e5e5;
 }
 label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: 700;
+  
 }
 input[type='search'] {
   -webkit-box-sizing: border-box;
@@ -5470,21 +5467,9 @@ a.thumbnail:hover {
 }
 .list-group-item {
   position: relative;
-  display: block;
-  padding: 10px 15px;
-  margin-bottom: -1px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  display: block;  
 }
-.list-group-item:first-child {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-.list-group-item:last-child {
-  margin-bottom: 0;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
+
 a.list-group-item,
 button.list-group-item {
   color: #555;
@@ -6247,7 +6232,7 @@ button.close {
 }
 .modal-body {
   position: relative;
-  padding: 15px;
+  
 }
 .modal-footer {
   padding: 15px;
@@ -7180,18 +7165,18 @@ ADAPTABLE BLOTTER STYLES
 
   /*Styling for our main modal windows*/
   .ab_main_popup {
-    width: 700px;
-    height: 590px;
+    width: 70vw;
+    max-width: 800px;
+    // height: 590px;
+    // max-height: 80vh;
+    
   }
 
   .ab_main_chart {
     width: 900px;
+    max-width: 90vw;
     height: 650px;
-  }
-
-  .ab_main_wizard {
-    width: 700px;
-    height: 520px;
+    max-height: 80vh;
   }
 
   .ab_object_list_item {
@@ -7619,3 +7604,5 @@ End Searchable DropDown Styles
   height: 100%;
   width: 100%;
 }
+
+@import './base-new.scss';

@@ -53,27 +53,20 @@ export class CustomSortValuesWizard
     let cssClassName: string = this.props.cssClassName + '-values';
 
     return (
-      <div className={cssClassName}>
-        <PanelWithInfo
+      <PanelWithInfo header={'Sort Order for: ' + friendlyName} infoBody={infoBody}>
+        <DualListBoxEditor
+          AvailableValues={this.state.ColumnValues}
           cssClassName={cssClassName}
-          header={'Sort Order for: ' + friendlyName}
-          bsStyle="primary"
-          infoBody={infoBody}
-        >
-          <DualListBoxEditor
-            AvailableValues={this.state.ColumnValues}
-            cssClassName={cssClassName}
-            SelectedValues={this.state.SelectedValues}
-            HeaderAvailable="Column Values"
-            HeaderSelected="Custom Sort Order"
-            DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-            SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-            ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-            onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
-            DisplaySize={DisplaySize.Small}
-          />
-        </PanelWithInfo>
-      </div>
+          SelectedValues={this.state.SelectedValues}
+          HeaderAvailable="Column Values"
+          HeaderSelected="Custom Sort Order"
+          DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+          SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+          ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+          onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
+          DisplaySize={DisplaySize.Small}
+        />
+      </PanelWithInfo>
     );
   }
   OnSelectedValuesChange(newValues: Array<string>) {

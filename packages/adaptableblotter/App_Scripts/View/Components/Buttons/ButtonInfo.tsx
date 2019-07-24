@@ -1,29 +1,14 @@
 import * as React from 'react';
-import { ButtonBase, ButtonProps } from './ButtonBase';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
-export interface InfoButtonProps extends ButtonProps {
-  glyph: string;
-  tooltipText: string;
+import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
+
+export interface InfoButtonProps extends SimpleButtonProps {
+  glyph?: string;
+  tooltip?: string;
 }
 
 export class ButtonInfo extends React.Component<InfoButtonProps, {}> {
   render() {
-    return (
-      <ButtonBase
-        ToolTipAndText={this.props.tooltipText}
-        bsStyle={this.props.bsStyle}
-        bsSize={this.props.size}
-        glyph={this.props.glyph}
-        onClick={() => this.props.onClick()}
-        overrideDisableButton={this.props.overrideDisableButton}
-        overrideTooltip={this.props.overrideTooltip}
-        style={this.props.style}
-        DisplayMode={this.props.DisplayMode}
-        overrideText={this.props.overrideText}
-        cssClassName={this.props.cssClassName + StyleConstants.APPLY_BUTTON}
-        showDefaultStyle={this.props.showDefaultStyle}
-      />
-    );
+    return <SimpleButton px={2} py={1} iconSize={20} icon="info" variant="text" {...this.props} />;
   }
 }

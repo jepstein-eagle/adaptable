@@ -3,12 +3,13 @@ import { Modal } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { ButtonCancel } from '../Components/Buttons/ButtonCancel';
-import { ButtonWizardAction } from '../Components/Buttons/ButtonWizardAction';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { Flex, Box } from 'rebass';
+import Dialog from '../../components/Dialog';
+import SimpleButton from '../../components/SimpleButton';
 
 export interface IWizardStepInfo {
   StepName: string;
@@ -87,70 +88,82 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       })
     );
     return (
-      <Modal
-        show={true}
-        onHide={this.props.onHide}
+      <Dialog
+        modal
+        isOpen={true}
+        onDismiss={() => (this.props.onHide ? this.props.onHide() : null)}
         className={cssClassName + StyleConstants.BASE}
-        container={this.props.ModalContainer}
       >
-        <div className={cssClassName + StyleConstants.WIZARD_BASE}>
-          <Modal.Header closeButton className={cssClassName + StyleConstants.WIZARD_HEADER}>
-            <Modal.Title>
-              <WizardLegend
-                StepNames={wizardStepNames}
-                ActiveStepName={this.stepName}
-                FriendlyName={this.props.FriendlyName}
-                CanShowAllSteps={this.canFinishWizard()}
-                onStepButtonClicked={s => this.onStepButtonClicked(s)}
-              />
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className={cssClassName + StyleConstants.WIZARD_BODY}>
-            <div className="ab_main_wizard">{this.state.ActiveState}</div>
-          </Modal.Body>
-          <Modal.Footer className={cssClassName + StyleConstants.WIZARD_FOOTER}>
-            <ButtonCancel
-              cssClassName={cssClassName}
-              DisplayMode={'Glyph+Text'}
-              bsStyle={'default'}
-              style={{ float: 'left', marginRight: '5px' }}
+        <Flex
+          flexDirection="column"
+          style={{ height: '100%', width: '70vw', maxWidth: 800, maxHeight: '80vh' }}
+          className={cssClassName + StyleConstants.WIZARD_BASE}
+        >
+          <Box
+            style={{ fontWeight: 600 }}
+            padding={2}
+            className={cssClassName + StyleConstants.WIZARD_HEADER}
+          >
+            <WizardLegend
+              StepNames={wizardStepNames}
+              ActiveStepName={this.stepName}
+              FriendlyName={this.props.FriendlyName}
+              CanShowAllSteps={this.canFinishWizard()}
+              onStepButtonClicked={s => this.onStepButtonClicked(s)}
+            />
+          </Box>
+          <Flex
+            style={{ flex: 1 }}
+            flexDirection="column"
+            className={cssClassName + StyleConstants.WIZARD_BODY}
+          >
+            {this.state.ActiveState}
+          </Flex>
+          <Flex flexDirection="row" padding={2} backgroundColor="lightgray">
+            <SimpleButton
+              tone="neutral"
+              variant="text"
               onClick={() => this.props.onHide()}
-              hideToolTip={true}
+              tooltip="Close wizard"
               AccessLevel={AccessLevel.Full}
-            />
-            <ButtonWizardAction
-              cssClassName={cssClassName}
-              DisplayMode={'Glyph+Text'}
-              bsStyle="default"
-              overrideDisableButton={!this.ActiveStep.canBack() || this.isFirstStep()}
+            >
+              CLOSE WIZARD
+            </SimpleButton>
+            <div style={{ flex: 1 }} />
+            <SimpleButton
+              variant="outlined"
+              disabled={!this.ActiveStep.canBack() || this.isFirstStep()}
               onClick={() => this.handleClickBack()}
-              glyph="chevron-left"
-              overrideText="Back"
+              icon="arrow-left"
               AccessLevel={AccessLevel.Full}
-            />
-            <ButtonWizardAction
-              cssClassName={cssClassName}
-              DisplayMode={'Glyph+Text'}
-              bsStyle="info"
-              overrideDisableButton={!this.ActiveStep.canNext() || this.isLastStep()}
+            >
+              Back
+            </SimpleButton>
+            <SimpleButton
+              variant="outlined"
+              disabled={!this.ActiveStep.canNext() || this.isLastStep()}
               onClick={() => this.handleClickNext()}
-              overrideText="Next"
-              glyph={'chevron-right'}
+              icon="arrow-right"
+              iconPosition="end"
               AccessLevel={AccessLevel.Full}
-            />
-            <ButtonWizardAction
-              cssClassName={cssClassName}
-              DisplayMode={'Glyph+Text'}
-              bsStyle="primary"
-              overrideDisableButton={!this.canFinishWizard()}
+              marginLeft={2}
+              marginRight={2}
+            >
+              Next
+            </SimpleButton>
+            <SimpleButton
+              tone="success"
+              variant="raised"
+              disabled={!this.canFinishWizard()}
               onClick={() => this.handleClickFinish()}
-              overrideText="Finish"
-              glyph={'ok'}
+              icon={'check'}
               AccessLevel={AccessLevel.Full}
-            />
-          </Modal.Footer>
-        </div>
-      </Modal>
+            >
+              Finish
+            </SimpleButton>
+          </Flex>
+        </Flex>
+      </Dialog>
     );
   }
 

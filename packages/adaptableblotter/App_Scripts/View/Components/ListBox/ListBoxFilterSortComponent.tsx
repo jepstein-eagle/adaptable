@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { FormGroup, InputGroup, FormControl, Glyphicon, Button } from 'react-bootstrap';
 import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
+import SimpleButton from '../../../components/SimpleButton';
+import Input from '../../../components/Input';
+import FieldWrap from '../../../components/FieldWrap';
 
 export interface ListBoxFilterSortComponentProps
   extends React.ClassAttributes<ListBoxFilterSortComponent> {
@@ -18,46 +19,44 @@ export class ListBoxFilterSortComponent extends React.Component<
 > {
   render() {
     return (
-      <div>
-        <AdaptableBlotterForm horizontal>
-          <FormGroup style={{ margin: 0 }}>
-            <InputGroup>
-              <FormControl
-                type="text"
-                bsSize={'small'}
-                value={this.props.FilterValue}
-                placeholder="Search"
-                onChange={e => this.handleChangeFilterValue(e)}
-              />
-              <InputGroup.Button>
-                <Button onClick={() => this.clearFilter()} bsSize={'small'}>
-                  <Glyphicon glyph="remove" />
-                </Button>
-              </InputGroup.Button>
-              <InputGroup.Button>
-                {this.props.SortOrder == SortOrder.Ascending ? (
-                  <Button
-                    bsSize={'small'}
-                    disabled={this.props.DisableSort}
-                    onClick={() => this.props.sortColumnValues()}
-                  >
-                    <Glyphicon glyph="sort-by-alphabet" />
-                  </Button>
-                ) : (
-                  <Button
-                    bsSize={'small'}
-                    disabled={this.props.DisableSort}
-                    onClick={() => this.props.sortColumnValues()}
-                  >
-                    <Glyphicon glyph="sort-by-alphabet-alt" />
-                  </Button>
-                )}
-              </InputGroup.Button>
-            </InputGroup>
-            <InputGroup />
-          </FormGroup>
-        </AdaptableBlotterForm>
-      </div>
+      <FieldWrap
+        style={{
+          borderTop: 0,
+          borderRight: 0,
+          borderLeft: 0,
+          borderRadius: 0,
+          padding: 2 /* here just for the focus box-shadow to be visible*/,
+        }}
+      >
+        <Input
+          value={this.props.FilterValue}
+          placeholder="Search"
+          onChange={(e: any) => this.handleChangeFilterValue(e)}
+          style={{ width: 0 }}
+        />
+        <SimpleButton
+          disabled={!this.props.FilterValue}
+          onClick={() => this.clearFilter()}
+          icon="clear"
+          variant="text"
+        ></SimpleButton>
+
+        {this.props.SortOrder == SortOrder.Ascending ? (
+          <SimpleButton
+            disabled={this.props.DisableSort}
+            onClick={() => this.props.sortColumnValues()}
+            icon="sort-asc"
+            variant="text"
+          ></SimpleButton>
+        ) : (
+          <SimpleButton
+            disabled={this.props.DisableSort}
+            onClick={() => this.props.sortColumnValues()}
+            icon="sort-desc"
+            variant="text"
+          ></SimpleButton>
+        )}
+      </FieldWrap>
     );
   }
 

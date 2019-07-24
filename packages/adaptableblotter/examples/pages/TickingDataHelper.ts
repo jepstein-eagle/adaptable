@@ -1,4 +1,4 @@
-﻿import { GridOptions } from 'ag-grid-community';
+﻿import { GridOptions, RowNode } from 'ag-grid-community';
 import { ITrade } from './ExamplesHelper';
 
 export class TickingDataHelper {
@@ -6,7 +6,7 @@ export class TickingDataHelper {
     setInterval(() => {
       let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
       //pick a random trade in the first ten
-      let trade = this.getRandomItem(grid.behavior.getData(), 30);
+      let trade = this.getRandomItem(grid.behavior.getData(), 20);
       //pick a random colum in the numeric col
       let columnName = 'price'; // this.getRandomItem(this._numericCols);
       let initialNewValue = trade[columnName];
@@ -23,11 +23,32 @@ export class TickingDataHelper {
     }, 1000);
   }
 
+  startTickingDataagGridSetData(gridOptions: GridOptions) {
+    setInterval(() => {
+      let tradeId = this.generateRandomInt(0, 20);
+      if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
+        gridOptions.api.forEachNode((rowNode: RowNode) => {
+          if (rowNode.group) {
+            return;
+          }
+          let rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
+          if (rowTradeId != tradeId) {
+            return;
+          }
+
+          let test = rowNode.data;
+          test.notional = this.generateRandomInt(1, 200000);
+          rowNode.setData(test);
+        });
+      }
+    }, 5000);
+  }
+
   startTickingDataagGridSetDataValue(gridOptions: GridOptions) {
     setInterval(() => {
-      let tradeId = this.generateRandomInt(0, 25);
+      let tradeId = this.generateRandomInt(0, 20);
       if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
-        gridOptions.api.forEachNode((rowNode: any) => {
+        gridOptions.api.forEachNode((rowNode: RowNode) => {
           if (rowNode.group) {
             return;
           }
@@ -53,14 +74,14 @@ export class TickingDataHelper {
           trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - directionToAdd));
 
           let notional = gridOptions.api!.getValue('notional', trade);
-          if (notional == 4) {
-            trade.setDataValue('notional', 100);
-          } else {
+          if (notional == 340) {
             trade.setDataValue('notional', 4);
+          } else {
+            trade.setDataValue('notional', 340);
           }
         });
       }
-    }, 5000);
+    }, 2000);
   }
 
   startTickingDataagGridThroughRowData(gridOptions: GridOptions, rowData: any) {
@@ -71,7 +92,7 @@ export class TickingDataHelper {
       rowData != null
     ) {
       setInterval(() => {
-        let tradeId = 5; //this.generateRandomInt(0, 25);
+        let tradeId = this.generateRandomInt(0, 25);
         let trade: ITrade = rowData[tradeId];
         let randomInt = this.generateRandomInt(1, 2);
         let numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
