@@ -3,6 +3,7 @@ import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotte
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export interface AdaptableWizardStep {
   canNext(): boolean;
@@ -35,6 +36,7 @@ export interface AdaptableBlotterObjectExpressionAdaptableWizardProps<View>
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];
+  ColumnCategories: ColumnCategory[];
   Blotter: IAdaptableBlotter;
 }
 

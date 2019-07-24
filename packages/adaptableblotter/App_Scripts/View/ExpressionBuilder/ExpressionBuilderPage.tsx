@@ -22,10 +22,14 @@ import { Expression } from '../../PredefinedConfig/Common/Expression/Expression'
 import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
   UserFilters: Array<UserFilter>;
   SystemFilters: Array<string>;
+  NamedFilters: Array<NamedFilter>;
+  ColumnCategories: Array<ColumnCategory>;
   ExpressionMode?: ExpressionMode;
   // these all need to be ptional because of wizard compatibility - todo: fix...
   UpdateGoBackState?(finish?: boolean): void;
@@ -84,6 +88,7 @@ export class ExpressionBuilderPage
                 UserFilters={this.props.UserFilters}
                 SystemFilters={this.props.SystemFilters}
                 NamedFilters={this.props.NamedFilters}
+                ColumnCategories={this.props.ColumnCategories}
                 Expression={this.state.Expression}
                 ExpressionMode={
                   this.props.ExpressionMode != null

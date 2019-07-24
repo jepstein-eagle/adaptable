@@ -48,6 +48,7 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
                   UserFilters={this.props.UserFilters}
                   SystemFilters={this.props.SystemFilters}
                   NamedFilters={this.props.NamedFilters}
+                  ColumnCategories={this.props.ColumnCategories}
                   ExpressionMode={ExpressionMode.SingleColumn}
                 />
               ),

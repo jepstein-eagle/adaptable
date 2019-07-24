@@ -37,6 +37,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
                   UserFilters={this.props.UserFilters}
                   SystemFilters={this.props.SystemFilters}
                   NamedFilters={this.props.NamedFilters}
+                  ColumnCategories={this.props.ColumnCategories}
                   ExpressionMode={ExpressionMode.SingleColumn}
                 />
               ),

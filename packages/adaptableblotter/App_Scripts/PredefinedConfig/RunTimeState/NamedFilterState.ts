@@ -1,7 +1,7 @@
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 import { DataType } from '../Common/Enums';
 import { DesignTimeState } from '../DesignTimeState/DesignTimeState';
-import { IScope } from '../../Utilities/Interface/IScope';
+import { Scope } from '../Scope';
 
 export interface NamedFilterState extends DesignTimeState {
   NamedFilters?: NamedFilter[];
@@ -13,7 +13,7 @@ export interface NamedFilterState extends DesignTimeState {
 
 export interface NamedFilter extends AdaptableBlotterObject {
   Name: string;
-  Scope: IScope;
+  Scope: Scope;
   PredicateName: string;
 }
 /*

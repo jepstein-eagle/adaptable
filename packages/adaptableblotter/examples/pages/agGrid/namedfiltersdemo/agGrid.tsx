@@ -110,6 +110,14 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
+  ColumnCategory: {
+    ColumnCategories: [
+      {
+        ColumnCategoryId: 'MyCategory',
+        ColumnIds: ['currency', 'country'],
+      },
+    ],
+  },
 };
 
 export default () => {

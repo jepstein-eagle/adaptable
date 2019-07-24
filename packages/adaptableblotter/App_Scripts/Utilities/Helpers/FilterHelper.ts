@@ -4,6 +4,7 @@ import { Helper } from './Helper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 // String, Numeric and Date
 export const BLANKS_SYSTEM_FILTER = 'Blanks';
@@ -81,17 +82,30 @@ export function GetUserFiltersForColumn(column: IColumn, userFilters: UserFilter
 
 export function GetNamedFiltersForColumn(
   column: IColumn,
-  namedFilters: NamedFilter[]
+  namedFilters: NamedFilter[],
+  columnCategories: ColumnCategory[]
 ): NamedFilter[] {
   if (!column) return [];
-  return namedFilters.filter(f => {
-    if (f.Scope.DataType && f.Scope.DataType !== column.DataType) {
-      return false;
+  return namedFilters.filter(nf => {
+    if (nf.Scope.DataType && nf.Scope.DataType === column.DataType) {
+      return true;
     }
-    if (f.Scope.ColumnIds && f.Scope.ColumnIds.indexOf(column.ColumnId) === -1) {
-      return false;
+
+    if (nf.Scope.ColumnIds && nf.Scope.ColumnIds.includes(column.ColumnId)) {
+      return true;
     }
-    return true;
+
+    if (nf.Scope.ColumnCategoryIds) {
+      const categoryPredicate = (cc: ColumnCategory) =>
+        nf.Scope.ColumnCategoryIds.includes(cc.ColumnCategoryId) &&
+        cc.ColumnIds.includes(column.ColumnId);
+
+      if (columnCategories.some(categoryPredicate)) {
+        return true;
+      }
+    }
+
+    return false;
   });
 }
 

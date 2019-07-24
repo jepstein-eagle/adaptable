@@ -156,6 +156,7 @@ class UserFilterPopupComponent extends React.Component<
               UserFilters={this.props.UserFilters}
               SystemFilters={this.props.SystemFilters}
               NamedFilters={this.props.NamedFilters}
+              ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={selectedColumnId}
               Blotter={this.props.Blotter}

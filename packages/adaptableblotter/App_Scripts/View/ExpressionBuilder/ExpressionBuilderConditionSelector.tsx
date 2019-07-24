@@ -29,6 +29,7 @@ import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange'
 import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -40,6 +41,7 @@ export interface ExpressionBuilderConditionSelectorProps
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];
+  ColumnCategories: ColumnCategory[];
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
@@ -281,7 +283,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     // then named filters
     let availableNamedFilterNames: string[] = FilterHelper.GetNamedFiltersForColumn(
       selectedColumn,
-      this.props.NamedFilters
+      this.props.NamedFilters,
+      this.props.ColumnCategories
     ).map(uf => {
       return uf.Name;
     });

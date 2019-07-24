@@ -128,6 +128,7 @@ class ColumnCategoryPopupComponent extends React.Component<
               UserFilters={this.props.UserFilters}
               SystemFilters={this.props.SystemFilters}
               NamedFilters={this.props.NamedFilters}
+              ColumnCategories={this.props.ColumnCategories}
               ColumnCategorys={this.props.ColumnCategorys}
               Blotter={this.props.Blotter}
               WizardStartIndex={this.state.WizardStartIndex}

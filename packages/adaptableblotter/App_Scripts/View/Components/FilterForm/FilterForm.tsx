@@ -49,6 +49,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];
+  ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
   MenuItems: AdaptableBlotterMenuItem[];
   EmbedColumnMenu: boolean;
@@ -175,7 +176,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       .concat(
         FilterHelper.GetNamedFiltersForColumn(
           this.props.CurrentColumn,
-          this.props.NamedFilters
+          this.props.NamedFilters,
+          this.props.ColumnCategories
         ).map(nf => nf.Name)
       )
       .concat(
@@ -499,6 +501,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     Columns: state.Grid.Columns,
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     UserFilters: state.UserFilter.UserFilters,
+    ColumnCategories: state.ColumnCategory.ColumnCategories,
     SystemFilters: state.SystemFilter.SystemFilters,
     NamedFilters: state.NamedFilter.NamedFilters,
     ColumnMenuItems: state.Menu.ColumnMenu.MenuItems,

@@ -48,6 +48,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
                   UserFilters={this.props.UserFilters}
                   SystemFilters={this.props.SystemFilters}
                   NamedFilters={this.props.NamedFilters}
+                  ColumnCategories={this.props.ColumnCategories}
                 />
               ),
             },
