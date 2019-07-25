@@ -1,11 +1,11 @@
 import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
-import AdaptableBlotter from '../Hypergrid';
 
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
 import { ActionColumnEventArgs } from '../Api/Events/BlotterEvents';
+import AdaptableBlotter from '../../agGrid';
 
 export class ButtonCellRenderer implements ICellRendererComp {
   private eGui: any;

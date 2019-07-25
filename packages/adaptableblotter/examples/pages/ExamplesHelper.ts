@@ -1,6 +1,6 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter } from '../../App_Scripts/types';
-import { RowDataTransaction } from 'ag-grid-community/dist/lib/rowModels/clientSide/clientSideRowModel';
+import { StarsCellRenderer } from './StarsCellRenderer';
 
 export interface ITrade {
   tradeId: number;
@@ -10,6 +10,7 @@ export interface ITrade {
   currency: string;
   country: string;
   changeOnYear: number;
+  stars: number;
   amount: number;
   price: number;
   bid: number;
@@ -251,6 +252,7 @@ export class ExamplesHelper {
       currency: tradeCurrency,
       country: this.getRandomItem(this.getCountries()),
       changeOnYear: this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
+      stars: this.generateRandomInt(1, 5),
       amount: this.getRandomItem(this.getAmounts()),
       price: price,
       bid: bid,
@@ -929,6 +931,17 @@ export class ExamplesHelper {
       sortable: true,
       // valueFormatter: notionalFormatter,
       cellClass: 'number-cell',
+      type: 'abColDefNumber',
+      filter: true,
+      resizable: true,
+    });
+    schema.push({
+      headerName: 'Stars',
+      field: 'stars',
+      enableValue: true,
+      editable: true,
+      sortable: true,
+      cellRenderer: StarsCellRenderer,
       type: 'abColDefNumber',
       filter: true,
       resizable: true,
