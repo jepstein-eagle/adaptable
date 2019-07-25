@@ -25,8 +25,9 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import WizardPanel from '../../components/WizardPanel';
 import Dropdown from '../../components/Dropdown';
 import Checkbox from '../../components/CheckBox';
-import { Text, Flex } from 'rebass';
+import { Text, Flex, Box } from 'rebass';
 import Panel from '../../components/Panel';
+import FormLayout, { FormRow } from '../../components/FormLayout';
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
@@ -148,31 +149,27 @@ class QuickSearchPopupComponent extends React.Component<
         infoBody={infoBody}
         bodyProps={{ padding: 2 }}
       >
-        <Flex flexDirection="row" alignItems="center" px={2} marginBottom={2}>
-          <Text style={{ flex: 2, whiteSpace: 'nowrap' }} textAlign="end" marginRight={2}>
-            Search For:
-          </Text>
-
-          <AdaptableBlotterFormControlTextClear
-            cssClassName={cssClassName}
-            type="text"
-            placeholder="Quick Search Text"
-            value={this.state.EditedQuickSearchText}
-            OnTextChange={x => this.handleQuickSearchTextChange(x)}
-          />
-        </Flex>
+        <FormLayout>
+          <FormRow label={'Search For:'}>
+            <AdaptableBlotterFormControlTextClear
+              cssClassName={cssClassName}
+              type="text"
+              placeholder="Quick Search Text"
+              value={this.state.EditedQuickSearchText}
+              OnTextChange={x => this.handleQuickSearchTextChange(x)}
+            />
+          </FormRow>
+        </FormLayout>
 
         <Panel
           header="Quick Search Options"
           style={{ height: 'auto' }}
           variant="default"
           borderRadius="none"
+          marginTop={3}
         >
-          <Flex flexDirection="row" alignItems="center">
-            <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
-              Behaviour:
-            </Text>
-            <Flex flex={7} alignItems="center" flexDirection="row">
+          <FormLayout columns={['label', 2, 3]}>
+            <FormRow label={'Behaviour:'}>
               <Dropdown
                 placeholder="select"
                 style={{ width: '100%', maxWidth: 'none' }}
@@ -197,51 +194,44 @@ class QuickSearchPopupComponent extends React.Component<
                   ' Only shows rows containing cells (which are also coloured) matching search text',
                 ]}
               />
-            </Flex>
-          </Flex>
-
-          <Flex flexDirection="row" alignItems="center">
-            <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
-              Set Back Colour:
-            </Text>
-            <Flex flex={7} alignItems="center" flexDirection="row">
-              <Checkbox
-                value="existing"
-                checked={this.props.QuickSearchStyle.BackColor ? true : false}
-                onChange={(checked: boolean) => this.onUseBackColorCheckChange(checked)}
-                marginRight={3}
-                marginLeft={2}
-              />
-              {this.props.QuickSearchStyle.BackColor != null && (
-                <ColorPicker
-                  ColorPalette={this.props.ColorPalette}
-                  value={this.props.QuickSearchStyle.BackColor}
-                  onChange={x => this.onBackColorSelectChange(x)}
+            </FormRow>
+            <FormRow label="Set Back Colour:">
+              <Flex alignItems="center">
+                <Checkbox
+                  value="existing"
+                  checked={this.props.QuickSearchStyle.BackColor ? true : false}
+                  onChange={(checked: boolean) => this.onUseBackColorCheckChange(checked)}
+                  marginRight={3}
+                  marginLeft={2}
                 />
-              )}
-            </Flex>
-          </Flex>
-          <Flex flexDirection="row" alignItems="center">
-            <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
-              Set Fore Colour:
-            </Text>
-            <Flex flex={7} alignItems="center" flexDirection="row">
-              <Checkbox
-                marginRight={3}
-                marginLeft={2}
-                value="existing"
-                checked={this.props.QuickSearchStyle.ForeColor ? true : false}
-                onChange={(checked: boolean) => this.onUseForeColorCheckChange(checked)}
-              />
-              {this.props.QuickSearchStyle.ForeColor != null && (
-                <ColorPicker
-                  ColorPalette={this.props.ColorPalette}
-                  value={this.props.QuickSearchStyle.ForeColor}
-                  onChange={x => this.onForeColorSelectChange(x)}
+                {this.props.QuickSearchStyle.BackColor != null && (
+                  <ColorPicker
+                    ColorPalette={this.props.ColorPalette}
+                    value={this.props.QuickSearchStyle.BackColor}
+                    onChange={x => this.onBackColorSelectChange(x)}
+                  />
+                )}
+              </Flex>
+            </FormRow>
+            <FormRow label="Set Fore Colour:">
+              <Flex alignItems="center">
+                <Checkbox
+                  marginRight={3}
+                  marginLeft={2}
+                  value="existing"
+                  checked={this.props.QuickSearchStyle.ForeColor ? true : false}
+                  onChange={(checked: boolean) => this.onUseForeColorCheckChange(checked)}
                 />
-              )}
-            </Flex>
-          </Flex>
+                {this.props.QuickSearchStyle.ForeColor != null && (
+                  <ColorPicker
+                    ColorPalette={this.props.ColorPalette}
+                    value={this.props.QuickSearchStyle.ForeColor}
+                    onChange={x => this.onForeColorSelectChange(x)}
+                  />
+                )}
+              </Flex>
+            </FormRow>
+          </FormLayout>
         </Panel>
       </PanelWithImage>
     );

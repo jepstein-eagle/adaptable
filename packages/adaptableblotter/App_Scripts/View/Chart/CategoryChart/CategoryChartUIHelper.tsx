@@ -131,37 +131,32 @@ export function getChartTypeOptions(): { label: CategoryChartType; value: Catego
   });
 }
 
-export function getToolTipOptions(): JSX.Element[] {
+export function getToolTipOptions(): { label: string; value: string }[] {
   let optionToolTipTypes = EnumExtensions.getNames(ToolTipType).map(enumName => {
-    return (
-      <option key={enumName} value={enumName}>
-        {enumName as ToolTipType}
-      </option>
-    );
+    return {
+      label: enumName,
+      value: enumName,
+    };
   });
   return optionToolTipTypes;
 }
 
-export function getCrossHairModeOptions(): JSX.Element[] {
-  let optionCrossHairModeTypes = EnumExtensions.getNames(CrosshairDisplayMode).map(enumName => {
-    return (
-      <option key={enumName} value={enumName}>
-        {enumName as CrosshairDisplayMode}
-      </option>
-    );
+export function getCrossHairModeOptions(): { label: string; value: string }[] {
+  return EnumExtensions.getNames(CrosshairDisplayMode).map(enumName => {
+    return {
+      label: enumName,
+      value: enumName,
+    };
   });
-  return optionCrossHairModeTypes;
 }
 
-export function getAlignmentOptions(): JSX.Element[] {
-  let optionAligments = EnumExtensions.getNames(HorizontalAlignment).map(enumName => {
-    return (
-      <option key={enumName} value={enumName}>
-        {enumName as HorizontalAlignment}
-      </option>
-    );
+export function getAlignmentOptions(): { label: string; value: string }[] {
+  return EnumExtensions.getNames(HorizontalAlignment).map(enumName => {
+    return {
+      label: enumName,
+      value: enumName,
+    };
   });
-  return optionAligments;
 }
 
 export function getMarkerTypeOptions(): { label: string; value: string }[] {
@@ -204,15 +199,10 @@ export function getXAxisLabelsLocations(): JSX.Element[] {
   return options;
 }
 
-export function getAxisAngleOptions(): JSX.Element[] {
-  let options = EnumExtensions.getNames(AxisAngle).map(enumName => {
-    return (
-      <option key={enumName} value={enumName}>
-        {enumName as AxisAngle}
-      </option>
-    );
+export function getAxisAngleOptions(): { label: string; value: string }[] {
+  return EnumExtensions.getNames(AxisAngle).map(enumName => {
+    return { value: enumName, label: enumName };
   });
-  return options;
 }
 
 export function getAxisLabelScales(): { label: AxisScale; value: AxisScale }[] {
@@ -224,19 +214,12 @@ export function getAxisLabelScales(): { label: AxisScale; value: AxisScale }[] {
   });
 }
 
-export function getCalloutTypeOptions(): JSX.Element[] {
-  let options = EnumExtensions.getNames(CalloutsType).map(enumName => {
+export function getCalloutTypeOptions(): { label: string; value: string }[] {
+  return EnumExtensions.getNames(CalloutsType).map(enumName => {
     let name = enumName.toString();
     // adding known callouts as strings because we will add non-numeric properties from data source in future
-    return (
-      <option key={name} value={name}>
-        {name}
-      </option>
-    );
+    return { label: name, value: name };
   });
-  // TODO get non-numeric properties from data source and then add them to above options:
-  // <option key={PropName} value={PropName}>PropName</option>,
-  return options;
 }
 
 export function getAngleFromEnum(axisAngle: AxisAngle): number {

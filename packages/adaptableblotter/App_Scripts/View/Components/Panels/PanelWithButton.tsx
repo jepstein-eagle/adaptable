@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PanelProps, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType } from '../../../PredefinedConfig/Common/Enums';
+
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import useTheme from '../../../components/utils/useTheme';

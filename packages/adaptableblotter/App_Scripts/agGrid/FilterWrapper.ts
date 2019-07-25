@@ -57,5 +57,10 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
       blotter.hideFilterFormPopup = params ? params.hidePopup : null;
       ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
     }
+
+    destroy(): void {
+      ReactDOM.unmountComponentAtNode(this.filterContainer);
+      this.filterContainer = null;
+    }
   };
 };
