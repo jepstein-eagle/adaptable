@@ -14,14 +14,13 @@ import {
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ActionColumnEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
-import { GridCell } from '../../../../App_Scripts/Utilities/Interface/SelectedCell/GridCell';
 
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
 
-  const tradeData: any = examplesHelper.getTrades(3);
+  const tradeData: any = examplesHelper.getTrades(300);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating blotter options here so we can add audit
@@ -37,10 +36,16 @@ function InitAdaptableBlotter() {
     userFunctions: {
       actionColumnFunctions: [
         {
-          name: 'BundleColumn',
-          func: (_record, _cellValue) => {
-            alert('hello world');
-            return 'hello';
+          name: 'RenderActionFunc',
+          func: (params, blotter) => {
+            let data: number = params.data.notional;
+            if (params.data.counterparty == 'BNP') {
+              return '';
+            }
+
+            return data > 100
+              ? '<button class="doublebutton">Double</button>'
+              : '<button class="treblebutton">Treble</button>';
           },
         },
       ],
@@ -62,7 +67,8 @@ function onActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
   console.log(actionColumnEventArgs);
 
   let rowData = actionColumnEventArgs.rowData;
-  let newNotional = rowData.notional * 2;
+  let multiplier: number = rowData.notional > 100 ? 2 : 3;
+  let newNotional = rowData.notional * multiplier;
   adaptableblotter.api.gridApi.setValue(rowData.tradeId, 'notional', newNotional);
 }
 
@@ -72,7 +78,7 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'Action',
         ButtonText: 'Click',
-        //  RenderFunctionName: 'BundleColumn',
+        RenderFunctionName: 'RenderActionFunc',
       },
       {
         ColumnId: 'Plus',

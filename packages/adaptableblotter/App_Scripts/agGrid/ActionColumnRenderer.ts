@@ -7,7 +7,7 @@ import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
 import { ActionColumnEventArgs } from '../Api/Events/BlotterEvents';
 import AdaptableBlotter from '../../agGrid';
 
-export class ButtonCellRenderer implements ICellRendererComp {
+export class ActionColumnRenderer implements ICellRendererComp {
   private eGui: any;
   private eventListener: any;
 

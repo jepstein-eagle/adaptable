@@ -1,39 +1,45 @@
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { ApiBase } from './ApiBase';
-import { StatusColour } from '../PredefinedConfig/Common/Enums';
+import { MessageType } from '../PredefinedConfig/Common/Enums';
 import { ISystemStatusApi } from './Interface/ISystemStatusApi';
 import { ISystemStatus } from '../Utilities/Interface/ISystemStatus';
 
 export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
-  public setSystemStatus(statusMessage: string, statusColour: StatusColour): void {
-    let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour };
-    this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
-  }
-  public setRedSystemStatus(statusMessage: string): void {
+  public setSystemStatus(
+    statusMessage: string,
+    messageType: 'Error' | 'Warning' | 'Success' | 'Info'
+  ): void {
     let systemStatus: ISystemStatus = {
       StatusMessage: statusMessage,
-      StatusColour: StatusColour.Red,
+      StatusType: messageType as MessageType,
     };
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
   }
-  public setAmberSystemStatus(statusMessage: string): void {
+  public setErrorSystemStatus(statusMessage: string): void {
     let systemStatus: ISystemStatus = {
       StatusMessage: statusMessage,
-      StatusColour: StatusColour.Amber,
+      StatusType: MessageType.Error,
     };
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
   }
-  public setGreenSystemStatus(statusMessage: string): void {
+  public setWarningSystemStatus(statusMessage: string): void {
     let systemStatus: ISystemStatus = {
       StatusMessage: statusMessage,
-      StatusColour: StatusColour.Green,
+      StatusType: MessageType.Warning,
     };
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
   }
-  public setBlueSystemStatus(statusMessage: string): void {
+  public setSuccessSystemStatus(statusMessage: string): void {
     let systemStatus: ISystemStatus = {
       StatusMessage: statusMessage,
-      StatusColour: StatusColour.Blue,
+      StatusType: MessageType.Success,
+    };
+    this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
+  }
+  public setInfoSystemStatus(statusMessage: string): void {
+    let systemStatus: ISystemStatus = {
+      StatusMessage: statusMessage,
+      StatusType: MessageType.Info,
     };
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
   }
