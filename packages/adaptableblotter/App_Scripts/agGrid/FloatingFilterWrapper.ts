@@ -41,6 +41,7 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
     }
 
     destroy(): void {
+      ReactDOM.unmountComponentAtNode(this.filterContainer);
       this.filterContainer = null;
     }
   };
