@@ -18,16 +18,16 @@ import {
 import { PieChartUIHelper } from './PieChartUIHelper';
 import { PieChartComponentState } from './PieChartComponentState';
 import { ButtonMaximise } from '../../Components/Buttons/ButtonMaximise';
-import { DEFAULT_BSSTYLE, INFO_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
+
 import { ButtonMinimise } from '../../Components/Buttons/ButtonMinimise';
 import { ButtonClose } from '../../Components/Buttons/ButtonClose';
 import { ButtonGeneral } from '../../Components/Buttons/ButtonGeneral';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { DefaultPieChartProperties } from '../../../Utilities/Defaults/DefaultPieChartProperties';
-import { Row, Col, Table, HelpBlock, FormControl, Checkbox, Panel } from 'react-bootstrap';
+
 import { PanelWithTwoButtons } from '../../Components/Panels/PanelWithTwoButtons';
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import {
   PieChartLabelPosition,
   SliceLabelOption,
@@ -37,7 +37,17 @@ import {
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import FormLayout, { FormRow, FormLayoutColumn } from '../../../components/FormLayout';
+import Dropdown from '../../../components/Dropdown';
+import { Flex, Box, BoxProps } from 'rebass';
+import Input from '../../../components/Input';
+import HelpBlock from '../../../components/HelpBlock';
+import Panel from '../../../components/Panel';
+import Checkbox from '../../../components/CheckBox';
 
+import NotifyResize from '../../../components/NotifyResize';
+
+const COLS: FormLayoutColumn[] = [{ name: 'label', style: { textAlign: 'start' } }, { name: '2' }];
 /*
 This is really only going to be for Category Charts.
 As we add other chart types we will need to rethink this and some of the assumptions
@@ -49,6 +59,35 @@ interface PieChartComponentProps {
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }
 
+const defaultButtonProps = {
+  variant: 'text' as 'text',
+};
+
+interface ChartContainerProps extends Omit<BoxProps, 'children'> {
+  children: any;
+}
+
+const ChartContainer = (props: ChartContainerProps) => {
+  const { ...domProps } = props;
+  const [size, onResize] = React.useState<{ width: number; height: number } | null>(null);
+
+  const chart: any = React.Children.only(props.children);
+
+  return (
+    <Box {...domProps} style={{ flex: 1, ...domProps.style, position: 'relative' }}>
+      <Box
+        style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}
+        data-width={size ? size.width : null}
+        data-height={size ? size.height : null}
+      >
+        <NotifyResize onResize={onResize} />
+        {size && chart
+          ? React.cloneElement(chart, { height: `${size.height}px`, width: `${chart.width}px` })
+          : null}
+      </Box>
+    </Box>
+  );
+};
 export class PieChartComponent extends React.Component<
   PieChartComponentProps,
   PieChartComponentState
@@ -102,68 +141,46 @@ export class PieChartComponent extends React.Component<
 
     let showGeneralPropertiesButton = this.state.IsGeneralMinimised ? (
       <ButtonMaximise
-        cssClassName={cssClassName}
+        {...defaultButtonProps}
         onClick={() => this.onShowGeneralProperties()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Show GeneralProperties'}
+        tooltip={'Show GeneralProperties'}
       />
     ) : (
       <ButtonMinimise
-        cssClassName={cssClassName}
-        style={{ marginBottom: '10px' }}
+        {...defaultButtonProps}
         onClick={() => this.onHidePropertiesGroup()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Hide General Properties'}
+        tooltip={'Hide General Properties'}
       />
     );
 
     let closeChartSettingsButton = (
       <ButtonClose
-        cssClassName={cssClassName}
+        {...defaultButtonProps}
+        style={{ color: 'var(--ab-color-white' }}
         onClick={() => this.onHideChartSettings()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Close Chart Settings'}
+        tooltip={'Close Chart Settings'}
       />
     );
 
     let openChartSettingsButton = (
-      <ButtonGeneral
-        cssClassName={cssClassName}
-        style={{ marginRight: '20px' }}
-        onClick={() => this.onShowChartSettings()}
-        bsStyle={INFO_BSSTYLE}
-        size={'small'}
-        DisplayMode="Text"
-        hideToolTip={true}
-        overrideText={'Show Chart Settings'}
-      />
+      <ButtonGeneral style={{ alignSelf: 'flex-end' }} onClick={() => this.onShowChartSettings()}>
+        Show Chart Settings
+      </ButtonGeneral>
     );
 
     let setDefaultsButton = (
       <ButtonGeneral
-        cssClassName={cssClassName}
+        style={{ color: 'var(--ab-color-white' }}
         onClick={() => this.onSetPropertyDefaults()}
-        bsStyle={DEFAULT_BSSTYLE}
-        DisplayMode="Text"
-        size={'small'}
-        hideToolTip={true}
-        overrideText={'Reset Defaults'}
-      />
+      >
+        Reset
+      </ButtonGeneral>
     );
 
     let chart = this.state.ChartProperties.ShowAsDoughnut ? (
       <IgrDoughnutChart
-        width={'100%'}
-        height={'100%'}
+        width={'400px'}
+        height={'400px'}
         allowSliceSelection="true"
         allowSliceExplosion="true"
         sliceClick={(s, e) => this.onSliceClick(e)}
@@ -189,8 +206,8 @@ export class PieChartComponent extends React.Component<
         ref={this.onPieChartRef}
         dataSource={this.state.DataSource}
         labelsPosition={this.state.ChartProperties.PieChartLabelPosition}
-        width={'100%'}
-        height={'100%'}
+        width={'400px'}
+        height={'400px'}
         radiusFactor={0.8}
         labelMemberPath={this.state.ChartProperties.SliceLabelsMapping}
         valueMemberPath={this.state.ChartProperties.SliceValuesMapping}
@@ -215,170 +232,108 @@ export class PieChartComponent extends React.Component<
       );
 
     let legendPanel = (
-      <Panel bsSize={'xs'} header={'Legend'} style={{ marginTop: '2px' }}>
-        <div className="pieChartLegend">
-          <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-            <Row>
-              <Col xs={5}>
-                <HelpBlock>Sort by</HelpBlock>
-              </Col>
-              <Col xs={7}>
-                <FormControl
-                  bsSize={'small'}
-                  componentClass="select"
-                  placeholder="select"
-                  value={this.state.SliceSortOption}
-                  onChange={x => this.onSliceSortByColumnChanged(x)}
-                >
-                  {this.getOptionsForSliceSortOrders()}
-                </FormControl>
-              </Col>
-            </Row>
-          </AdaptableBlotterForm>
+      <Panel variant="default">
+        <FormLayout>
+          <FormRow label="Sort by">
+            <Dropdown
+              placeholder="Select"
+              value={this.state.SliceSortOption}
+              onChange={x => this.onSliceSortByColumnChanged(x)}
+              options={this.getOptionsForSliceSortOrders()}
+            />
+          </FormRow>
+        </FormLayout>
 
-          {this.state.ChartProperties.ShowAsDoughnut ? (
-            <div className="doughnutLegend">
-              <IgrItemLegend ref={this.onDoughnutLegendRef} />
-            </div>
-          ) : (
-            <div className="pieChartLegend">
-              <IgrItemLegend ref={this.onPieChartLegendRef} />
-            </div>
-          )}
-        </div>
+        {this.state.ChartProperties.ShowAsDoughnut ? (
+          <div className="doughnutLegend">
+            <IgrItemLegend ref={this.onDoughnutLegendRef} />
+          </div>
+        ) : (
+          <div className="pieChartLegend">
+            <IgrItemLegend ref={this.onPieChartLegendRef} />
+          </div>
+        )}
       </Panel>
     );
 
     let sidePanel = (
       <PanelWithTwoButtons
-        bsSize={'xs'}
-        bsStyle={INFO_BSSTYLE}
         headerText={'Chart Settings'}
-        cssClassName={cssClassName}
         firstButton={closeChartSettingsButton}
         secondButton={setDefaultsButton}
-        style={{
-          overflowY: 'auto',
-          overflowX: 'hidden',
-          maxHeight: '700px',
-          padding: '0px',
-          margin: '0px',
-          marginTop: '0px',
-          marginBottom: '0px',
-          marginRight: '0px',
-          fontSize: 'small',
-        }}
+        variant="primary"
       >
         <PanelWithButton
-          glyphicon={'wrench'}
-          bsSize={'xs'}
+          variant="default"
           headerText={'General'}
-          cssClassName={cssClassName}
           button={showGeneralPropertiesButton}
           style={{ marginTop: '2px' }}
         >
           {this.state.IsGeneralMinimised == false && (
-            <span>
-              <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                <Row>
-                  <Col xs={12}>
-                    <HelpBlock style={{ fontSize: 'small', margin: '0px' }}>
-                      <Checkbox
-                        style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
-                        onChange={e => this.onPieOrDoughnutViewChanged(e)}
-                        checked={this.state.ChartProperties.ShowAsDoughnut}
-                      >
-                        Show as 'Doughnut'
-                      </Checkbox>
-                    </HelpBlock>
-                  </Col>
-                </Row>
-              </AdaptableBlotterForm>
+            <FormLayout columns={COLS}>
+              <FormRow
+                label={
+                  <Checkbox
+                    style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
+                    onChange={(checked: boolean) => this.onPieOrDoughnutViewChanged(checked)}
+                    checked={this.state.ChartProperties.ShowAsDoughnut}
+                  >
+                    Show as 'Doughnut'
+                  </Checkbox>
+                }
+              ></FormRow>
 
-              <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                <Row>
-                  <Col xs={5}>
-                    <HelpBlock>Others Band</HelpBlock>
-                  </Col>
-                  <Col xs={5}>
-                    <FormControl
-                      bsSize={'small'}
-                      type="number"
-                      min="0"
-                      step="1"
-                      placeholder={'Input'}
-                      onChange={this.onOthersCategoryThresholdChanged}
-                      value={this.state.ChartProperties.OthersCategoryThreshold}
-                    />
-                  </Col>
-                  <Col xs={2}>
-                    <AdaptablePopover
-                      cssClassName={cssClassName}
-                      headerText={'Pie Chart: Others Threshold'}
-                      bodyText={[
-                        'Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value.',
-                      ]}
-                    />
-                  </Col>
-                </Row>
-              </AdaptableBlotterForm>
+              <FormRow label="Others Band">
+                <Flex alignItems="row">
+                  <Input
+                    type="number"
+                    min="0"
+                    step="1"
+                    placeholder={'Input'}
+                    onChange={this.onOthersCategoryThresholdChanged}
+                    value={this.state.ChartProperties.OthersCategoryThreshold}
+                  />
 
-              <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                <Row>
-                  <Col xs={12}>
-                    <HelpBlock>
-                      <Checkbox
-                        style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
-                        onChange={e => this.onThresholdAsPercentChanged(e)}
-                        checked={
-                          this.state.ChartProperties.OthersCategoryType ==
-                          OthersCategoryType.Percent
-                        }
-                      >
-                        Others Band As %
-                      </Checkbox>
-                    </HelpBlock>
-                  </Col>
-                </Row>
-              </AdaptableBlotterForm>
+                  <AdaptablePopover
+                    cssClassName={cssClassName}
+                    headerText={'Pie Chart: Others Threshold'}
+                    bodyText={[
+                      'Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value.',
+                    ]}
+                  />
+                </Flex>
+              </FormRow>
 
-              <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                <Row>
-                  <Col xs={5}>
-                    <HelpBlock>Labels Position</HelpBlock>
-                  </Col>
-                  <Col xs={7}>
-                    <FormControl
-                      bsSize={'small'}
-                      componentClass="select"
-                      placeholder="select"
-                      value={this.state.ChartProperties.PieChartLabelPosition}
-                      onChange={x => this.onSliceLabelsPositionChanged(x)}
-                    >
-                      {this.getOptionsForLabelsPosition()}
-                    </FormControl>
-                  </Col>
-                </Row>
-              </AdaptableBlotterForm>
-              <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                <Row>
-                  <Col xs={5}>
-                    <HelpBlock>Labels Content</HelpBlock>
-                  </Col>
-                  <Col xs={7}>
-                    <FormControl
-                      bsSize={'small'}
-                      componentClass="select"
-                      placeholder="select"
-                      value={this.state.ChartProperties.SliceLabelsMapping}
-                      onChange={x => this.onSliceLabelsMappingChanged(x)}
-                    >
-                      {this.getOptionsForSliceLabelsMapping()}
-                    </FormControl>
-                  </Col>
-                </Row>
-              </AdaptableBlotterForm>
-            </span>
+              <FormRow
+                label={
+                  <Checkbox
+                    onChange={(checked: boolean) => this.onThresholdAsPercentChanged(checked)}
+                    checked={
+                      this.state.ChartProperties.OthersCategoryType == OthersCategoryType.Percent
+                    }
+                  >
+                    Others Band As %
+                  </Checkbox>
+                }
+              />
+
+              <FormRow label="Labels Position">
+                <Dropdown
+                  placeholder="Select position"
+                  value={this.state.ChartProperties.PieChartLabelPosition}
+                  onChange={x => this.onSliceLabelsPositionChanged(x)}
+                  options={this.getOptionsForLabelsPosition()}
+                ></Dropdown>
+              </FormRow>
+              <FormRow label="Labels Content">
+                <Dropdown
+                  placeholder="Select"
+                  value={this.state.ChartProperties.SliceLabelsMapping}
+                  onChange={x => this.onSliceLabelsMappingChanged(x)}
+                  options={this.getOptionsForSliceLabelsMapping()}
+                ></Dropdown>
+              </FormRow>
+            </FormLayout>
           )}
         </PanelWithButton>
 
@@ -386,47 +341,17 @@ export class PieChartComponent extends React.Component<
       </PanelWithTwoButtons>
     );
 
-    return (
-      <span className={cssClassName}>
-        {this.props.ChartData != null && (
-          <div>
-            {this.state.IsChartSettingsVisible ? (
-              <Table style={{ height: '670px', border: 'none', borderCollapse: 'separate' }}>
-                <thead>
-                  <tr>
-                    <th>{chartTitle}</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{chartElement}</td>
-                    <td style={{ width: '340px', marginRight: '10px' }}>{sidePanel}</td>
-                  </tr>
-                </tbody>
-              </Table>
-            ) : (
-              <Table style={{ height: '670px', border: 'none', borderCollapse: 'separate' }}>
-                <thead>
-                  <tr>
-                    <th>{this.props.CurrentChartDefinition.Name}</th>
-                    <th>
-                      {' '}
-                      <div className="pull-right">{openChartSettingsButton}</div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td colSpan={2}>{chartElement}</td>
-                  </tr>
-                </tbody>
-              </Table>
-            )}
-          </div>
-        )}
-      </span>
-    );
+    return this.props.ChartData != null ? (
+      <Flex flexDirection="row">
+        <Flex flexDirection="column" flex={1} style={{ textAlign: 'center' }}>
+          {!this.state.IsChartSettingsVisible ? openChartSettingsButton : null}
+          {chartTitle}
+          <ChartContainer style={{ minHeight: '60vh' }}>{chartElement}</ChartContainer>
+        </Flex>
+
+        {this.state.IsChartSettingsVisible ? sidePanel : null}
+      </Flex>
+    ) : null;
   }
 
   public onDoughnutChartRef(doughnutChart: IgrDoughnutChart) {
@@ -485,10 +410,9 @@ export class PieChartComponent extends React.Component<
     this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Uuid, chartProperties);
   }
 
-  private onPieOrDoughnutViewChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onPieOrDoughnutViewChanged(checked: boolean) {
     let chartProperties: PieChartProperties = this.state.ChartProperties;
-    chartProperties.ShowAsDoughnut = e.checked;
+    chartProperties.ShowAsDoughnut = checked;
     this.updateChartProperties(chartProperties);
   }
 
@@ -498,38 +422,32 @@ export class PieChartComponent extends React.Component<
     this.updateChartProperties(chartProperties);
   };
 
-  private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onThresholdAsPercentChanged(checked: boolean) {
     let chartProperties: PieChartProperties = this.state.ChartProperties;
-    chartProperties.OthersCategoryType = e.checked
+    chartProperties.OthersCategoryType = checked
       ? OthersCategoryType.Percent
       : OthersCategoryType.Number;
     this.updateChartProperties(chartProperties);
   }
 
-  private onSliceLabelsPositionChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onSliceLabelsPositionChanged(value: PieChartLabelPosition) {
     let chartProperties: PieChartProperties = this.state.ChartProperties;
-    chartProperties.PieChartLabelPosition = e.value as PieChartLabelPosition;
+    chartProperties.PieChartLabelPosition = value;
     this.updateChartProperties(chartProperties);
   }
 
-  onSliceLabelsMappingChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let labelMapping = e.value;
+  onSliceLabelsMappingChanged(labelMapping: SliceLabelOption) {
     let legendMapping: SliceLabelOption = labelMapping.includes('Ratio')
       ? SliceLabelOption.RatioAndName
       : SliceLabelOption.ValueAndName;
 
     let chartProperties: PieChartProperties = this.state.ChartProperties;
-    chartProperties.SliceLabelsMapping = labelMapping as SliceLabelOption;
+    chartProperties.SliceLabelsMapping = labelMapping;
     chartProperties.SliceLegendMapping = legendMapping;
     this.updateChartProperties(chartProperties);
   }
 
-  onSliceSortByColumnChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let sliceSortOption = e.value as SliceSortOption;
+  onSliceSortByColumnChanged(sliceSortOption: SliceSortOption) {
     let oldData: PieChartDataItem[] = this.state.DataSource;
     let newData: PieChartDataItem[] = PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
     this.setState({
@@ -550,33 +468,21 @@ export class PieChartComponent extends React.Component<
   }
 
   // want to move to helper - not sure why i cannot
-  getOptionsForLabelsPosition(): JSX.Element[] {
+  getOptionsForLabelsPosition(): { label: string; value: string }[] {
     return EnumExtensions.getNames(PieChartLabelPosition).map(v => {
-      return (
-        <option key={v} value={v}>
-          {v as PieChartLabelPosition}
-        </option>
-      );
+      return { value: v, label: v };
     });
   }
 
-  getOptionsForSliceLabelsMapping(): JSX.Element[] {
+  getOptionsForSliceLabelsMapping(): { label: string; value: string }[] {
     return EnumExtensions.getNames(SliceLabelOption).map(v => {
-      return (
-        <option key={v} value={v}>
-          {v as SliceLabelOption}
-        </option>
-      );
+      return { value: v, label: v };
     });
   }
 
-  getOptionsForSliceSortOrders(): JSX.Element[] {
+  getOptionsForSliceSortOrders(): { label: string; value: string }[] {
     return EnumExtensions.getNames(SliceSortOption).map(v => {
-      return (
-        <option key={v} value={v}>
-          {v as SliceSortOption}
-        </option>
-      );
+      return { value: v, label: v };
     });
   }
 }
