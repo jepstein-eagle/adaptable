@@ -1,7 +1,5 @@
-import { DataType } from './Common/Enums';
-
 export interface Scope {
-  DataType?: DataType;
+  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
   ColumnIds?: string[];
   ColumnCategoryIds?: string[];
 }

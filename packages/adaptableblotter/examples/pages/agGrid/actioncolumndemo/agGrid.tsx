@@ -30,23 +30,24 @@ function InitAdaptableBlotter() {
     userName: 'demo user',
     blotterId: 'action column demo',
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
-    advancedOptions: {
-      userFunctions: {
-        actionColumnFunctions: [
-          {
-            name: 'ShowAlert',
-            func: () => {
-              alert('hello world');
-            },
-          },
-        ],
-      },
-    },
-    // userFunctions
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
+  (adaptableBlotterOptions.advancedOptions = {
+    userFunctions: {
+      actionColumnFunctions: [
+        {
+          name: 'BundleColumn',
+          func: (_record, _cellValue) => {
+            alert('hello world');
+            return 'hello';
+          },
+        },
+      ],
+    },
+  }),
+    // userFunctions
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+    (adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions));
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
@@ -66,9 +67,9 @@ let demoConfig: PredefinedConfig = {
   ActionColumn: {
     ActionColumns: [
       {
-        ColumnId: 'Action',
-        ButtonText: 'Click me',
-        TestFunctionName: 'ShowAlert',
+        ColumnId: 'Bundle',
+        ButtonText: 'Bundle',
+        RenderFunctionName: 'BundleColumn',
       },
       {
         ColumnId: 'Plus',

@@ -14,7 +14,6 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { DataType } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
@@ -74,7 +73,7 @@ let demoConfig: PredefinedConfig = {
       {
         Name: '$ Trades',
         Scope: {
-          DataType: DataType.String,
+          DataType: 'Number',
           ColumnIds: ['currency'],
         },
         PredicateName: 'USD Currency',
@@ -82,14 +81,14 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'High',
         Scope: {
-          DataType: DataType.Number,
+          DataType: 'Number',
         },
         PredicateName: 'Big Notional',
       },
       {
         Name: 'Biz Year',
         Scope: {
-          DataType: DataType.Date,
+          DataType: 'Date',
         },
         PredicateName: 'Business Year',
       },

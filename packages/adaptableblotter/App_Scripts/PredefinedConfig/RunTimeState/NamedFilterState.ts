@@ -1,5 +1,4 @@
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
-import { DataType } from '../Common/Enums';
 import { DesignTimeState } from '../DesignTimeState/DesignTimeState';
 import { Scope } from '../Scope';
 
