@@ -5,10 +5,7 @@ import { ISystemStatusApi } from './Interface/ISystemStatusApi';
 import { ISystemStatus } from '../Utilities/Interface/ISystemStatus';
 
 export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
-  public setSystemStatus(
-    statusMessage: string,
-    statusColour: 'Blue' | 'Red' | 'Amber' | 'Green'
-  ): void {
+  public setSystemStatus(statusMessage: string, statusColour: StatusColour): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour };
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
   }

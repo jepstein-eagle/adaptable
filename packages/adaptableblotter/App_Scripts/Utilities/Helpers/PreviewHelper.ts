@@ -1,7 +1,8 @@
 import { ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { ICellInfo } from '../Interface/ICellInfo';
+
 import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from '../Interface/IPreview';
+import { GridCell } from '../Interface/SelectedCell/GridCell';
 
 export function GetPreviewValidationSummary(
   previewResults: IPreviewResult[]
@@ -51,21 +52,25 @@ export function GetValidationMessage(previewInfo: IPreviewInfo, newValue: string
 export function GetCellInfosFromPreview(
   previewInfo: IPreviewInfo,
   bypassCellValidationWarnings: boolean
-): ICellInfo[] {
-  let newValues: ICellInfo[] = [];
+): GridCell[] {
+  let newValues: GridCell[] = [];
   if (bypassCellValidationWarnings) {
     for (let previewResult of previewInfo.PreviewResults) {
       if (previewResult.ValidationRules.filter(p => p.ActionMode == 'Stop Edit').length == 0) {
         newValues.push({
-          Id: previewResult.Id,
-          ColumnId: previewInfo.ColumnId,
-          Value: previewResult.ComputedValue,
+          primaryKeyValue: previewResult.Id,
+          columnId: previewInfo.ColumnId,
+          value: previewResult.ComputedValue,
         });
       }
     }
   } else {
     previewInfo.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
-      newValues.push({ Id: pr.Id, ColumnId: previewInfo.ColumnId, Value: pr.ComputedValue });
+      newValues.push({
+        primaryKeyValue: pr.Id,
+        columnId: previewInfo.ColumnId,
+        value: pr.ComputedValue,
+      });
     });
   }
 

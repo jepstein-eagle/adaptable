@@ -1782,7 +1782,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
               name: StrategyConstants.PlusMinusStrategyId,
               action: action.type,
               info: 'KeyPressed:',
-              data: actionTyped.CellInfos,
+              data: actionTyped.GridCells,
             };
 
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
@@ -2283,8 +2283,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             // This is for the very rare use case that a Plus Minus breaks validation and the user wants to continue
             // in which case we just need to apply the values to the Grid
             let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action;
-            if (ArrayExtensions.IsNotNullOrEmpty(actionTyped.CellInfos)) {
-              blotter.setValueBatch(actionTyped.CellInfos);
+            if (ArrayExtensions.IsNotNullOrEmpty(actionTyped.GridCells)) {
+              blotter.setValueBatch(actionTyped.GridCells);
             }
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             return next(action);
@@ -2681,7 +2681,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
           case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
             let actionTyped = <GridRedux.GridSetValueLikeEditAction>action;
-            blotter.setValue(actionTyped.CellInfo);
+            blotter.setValue(actionTyped.GridCell);
             return next(action);
           }
           case GridRedux.GRID_HIDE_COLUMN: {

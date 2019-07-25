@@ -15,7 +15,6 @@ import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
-import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
@@ -34,7 +33,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     );
   }
 
-  public ApplySmartEdit(newValues: ICellInfo[]): void {
+  public ApplySmartEdit(newValues: GridCell[]): void {
     if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
       // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
       let functionAppliedDetails: FunctionAppliedDetails = {

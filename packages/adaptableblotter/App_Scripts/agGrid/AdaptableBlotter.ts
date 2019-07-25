@@ -83,7 +83,6 @@ import {
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
-import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
@@ -697,7 +696,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return '';
   }
 
-  public getActiveCell(): ICellInfo {
+  public getActiveCell(): GridCell {
     const activeCell = this.gridOptions.api!.getFocusedCell();
     if (activeCell) {
       const rowNode = this.gridOptions.api!.getModel().getRow(activeCell.rowIndex);
@@ -705,9 +704,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // that's a design choice as this is used only when editing and you cant edit those cells
       if (rowNode && !rowNode.group) {
         return {
-          ColumnId: activeCell.column.getColId(),
-          Id: this.getPrimaryKeyValueFromRecord(rowNode),
-          Value: this.gridOptions.api!.getValue(activeCell.column, rowNode),
+          columnId: activeCell.column.getColId(),
+          primaryKeyValue: this.getPrimaryKeyValueFromRecord(rowNode),
+          value: this.gridOptions.api!.getValue(activeCell.column, rowNode),
         };
       }
     }
@@ -892,19 +891,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public setValue(cellInfo: ICellInfo): void {
+  public setValue(gridCell: GridCell): void {
     if (this.useRowNodeLookUp) {
-      const rowNode: RowNode = this.gridOptions.api!.getRowNode(cellInfo.Id);
+      const rowNode: RowNode = this.gridOptions.api!.getRowNode(gridCell.primaryKeyValue);
       if (rowNode != null) {
-        this.updateValue(cellInfo, rowNode);
+        this.updateValue(gridCell, rowNode);
       }
     } else {
       let isUpdated: boolean = false;
       // prefer not to use this method but if we do then at least we can prevent further lookups once we find
       this.gridOptions.api!.getModel().forEachNode(rowNode => {
         if (!isUpdated) {
-          if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
-            this.updateValue(cellInfo, rowNode);
+          if (gridCell.primaryKeyValue == this.getPrimaryKeyValueFromRecord(rowNode)) {
+            this.updateValue(gridCell, rowNode);
             isUpdated = true;
           }
         }
@@ -914,15 +913,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api!.clearRangeSelection();
   }
 
-  private updateValue(cellInfo: ICellInfo, rowNode: RowNode): void {
-    const oldValue = this.gridOptions.api!.getValue(cellInfo.ColumnId, rowNode);
-    rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value);
+  private updateValue(gridCell: GridCell, rowNode: RowNode): void {
+    const oldValue = this.gridOptions.api!.getValue(gridCell.columnId, rowNode);
+    rowNode.setDataValue(gridCell.columnId, gridCell.value);
 
     const dataChangedEvent: DataChangedInfo = {
       OldValue: oldValue,
-      NewValue: cellInfo.Value,
-      ColumnId: cellInfo.ColumnId,
-      IdentifierValue: cellInfo.Id,
+      NewValue: gridCell.value,
+      ColumnId: gridCell.columnId,
+      IdentifierValue: gridCell.primaryKeyValue,
       Record: rowNode,
     };
     if (this.AuditLogService.isAuditCellEditsEnabled) {
@@ -934,8 +933,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   // this is used by strategies to update the grid
   // not sure why do it this way and not just get it updated through the event
-  public setValueBatch(batchValues: ICellInfo[]): void {
-    if (ArrayExtensions.IsNullOrEmpty(batchValues)) {
+  public setValueBatch(gridCellBatch: GridCell[]): void {
+    if (ArrayExtensions.IsNullOrEmpty(gridCellBatch)) {
       return;
     }
 
@@ -946,11 +945,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // now two ways to do this - one using pk lookup and other using foreach on row node
     if (this.useRowNodeLookUp) {
-      batchValues.forEach((cellInfo: ICellInfo) => {
-        const rowNode: RowNode = this.gridOptions.api!.getRowNode(cellInfo.Id);
+      gridCellBatch.forEach((gridCell: GridCell) => {
+        const rowNode: RowNode = this.gridOptions.api!.getRowNode(gridCell.primaryKeyValue);
         if (rowNode) {
           this.updateBatchValue(
-            cellInfo,
+            gridCell,
             rowNode,
             nodesToRefresh,
             refreshColumnList,
@@ -961,12 +960,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       });
     } else {
       this.gridOptions.api!.getModel().forEachNode((rowNode: RowNode) => {
-        const cellInfo: ICellInfo = batchValues.find(
-          x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode)
+        const gridCell: GridCell = gridCellBatch.find(
+          x => x.primaryKeyValue == this.getPrimaryKeyValueFromRecord(rowNode)
         );
-        if (cellInfo) {
+        if (gridCell) {
           this.updateBatchValue(
-            cellInfo,
+            gridCell,
             rowNode,
             nodesToRefresh,
             refreshColumnList,
@@ -1005,14 +1004,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private updateBatchValue(
-    cellInfo: ICellInfo,
+    gridCell: GridCell,
     rowNode: RowNode,
     nodesToRefresh: RowNode[],
     refreshColumnList: string[],
     dataChangedEvents: DataChangedInfo[],
     percentBars: PercentBar[]
   ): void {
-    const colId: string = cellInfo.ColumnId;
+    const colId: string = gridCell.columnId;
     refreshColumnList.push(colId);
     nodesToRefresh.push(rowNode);
 
@@ -1021,13 +1020,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const oldValue = this.gridOptions.api!.getValue(colId, rowNode);
 
     var data: any = rowNode.data;
-    data[colId] = cellInfo.Value;
+    data[colId] = gridCell.value;
 
     const dataChangedEvent: DataChangedInfo = {
       OldValue: oldValue,
-      NewValue: cellInfo.Value,
+      NewValue: gridCell.value,
       ColumnId: colId,
-      IdentifierValue: cellInfo.Id,
+      IdentifierValue: gridCell.primaryKeyValue,
       Record: rowNode,
     };
     dataChangedEvents.push(dataChangedEvent);
@@ -1808,14 +1807,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             warningMessage = `${warningMessage +
               ObjectFactory.CreateCellValidationMessage(f, this)}\n`;
           });
-          const cellInfo: ICellInfo = {
-            Id: dataChangedInfo.IdentifierValue,
-            ColumnId: dataChangedInfo.ColumnId,
-            Value: dataChangedInfo.NewValue,
+          const gridCell: GridCell = {
+            primaryKeyValue: dataChangedInfo.IdentifierValue,
+            columnId: dataChangedInfo.ColumnId,
+            value: dataChangedInfo.NewValue,
           };
 
           const confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(
-            cellInfo,
+            gridCell,
             this.gridOptions.api!.getValue(params.column.getColId(), params.node)
           );
           const cancelAction: Redux.Action = null;

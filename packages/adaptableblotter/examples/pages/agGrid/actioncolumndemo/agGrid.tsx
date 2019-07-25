@@ -14,6 +14,7 @@ import {
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ActionColumnEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
+import { GridCell } from '../../../../App_Scripts/Utilities/Interface/SelectedCell/GridCell';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -53,16 +54,16 @@ function InitAdaptableBlotter() {
 
   adaptableblotter.api.eventApi
     .onActionColumnClicked()
-    .Subscribe((sender, actionColumnEventArgs) =>
-      listenToActionColumnClicked(actionColumnEventArgs)
-    );
+    .Subscribe((sender, actionColumnEventArgs) => onActionColumnClicked(actionColumnEventArgs));
 }
 
-function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
+function onActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
   console.log('alert fired event received');
   console.log(actionColumnEventArgs);
-  let notional = actionColumnEventArgs.rowData.notional;
-  alert(notional);
+
+  let rowData = actionColumnEventArgs.rowData;
+  let newNotional = rowData.notional * 2;
+  adaptableblotter.api.gridApi.setValue(rowData.tradeId, 'notional', newNotional);
 }
 
 let demoConfig: PredefinedConfig = {
@@ -80,6 +81,24 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'Minus',
         ButtonText: '-',
+      },
+    ],
+  },
+  Layout: {
+    Layouts: [
+      {
+        ColumnSorts: [],
+        Columns: ['tradeId', 'Triple Notional', 'notional', 'counterparty', 'Action'],
+        Name: 'With Button',
+      },
+    ],
+    CurrentLayout: 'With Button',
+  },
+  CalculatedColumn: {
+    CalculatedColumns: [
+      {
+        ColumnExpression: "Col('notional') * 3",
+        ColumnId: 'Triple Notional',
       },
     ],
   },

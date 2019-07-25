@@ -5,6 +5,7 @@ import { GridState } from '../PredefinedConfig/InternalState/GridState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
+import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {
@@ -35,8 +36,19 @@ export class GridApi extends ApiBase implements IGridApi {
     return this.getGridState().ColumnSorts;
   }
 
-  public setValue(): void {
-    //  let cellInfo: Cellinfo
-    //  this.blotter.setValue()
+  public setValue(id: any, columnId: string, newValue: any): void {
+    let gridCell: GridCell = {
+      primaryKeyValue: id,
+      columnId: columnId,
+      value: newValue,
+    };
+    this.setGridCell(gridCell);
+  }
+  public setGridCell(gridCell: GridCell): void {
+    this.blotter.setValue(gridCell);
+  }
+
+  public setGridCellBatch(gridCells: GridCell[]): void {
+    this.blotter.setValueBatch(gridCells);
   }
 }

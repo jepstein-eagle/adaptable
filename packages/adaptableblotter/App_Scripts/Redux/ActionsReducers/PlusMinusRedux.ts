@@ -1,8 +1,8 @@
 import { PlusMinusState, PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 import * as Redux from 'redux';
-import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
+import { GridCell } from '../../Utilities/Interface/SelectedCell/GridCell';
 
 export const PLUS_MINUS_APPLY = 'PLUS_MINUS_APPLY';
 export const PLUS_MINUS_RULE_ADD = 'PLUS_MINUS_RULE_ADD';
@@ -10,7 +10,7 @@ export const PLUS_MINUS_RULE_EDIT = 'PLUS_MINUS_RULE_EDIT';
 export const PLUS_MINUS_RULE_DELETE = 'PLUS_MINUS_RULE_DELETE';
 
 export interface PlusMinusApplyAction extends Redux.Action {
-  CellInfos: ICellInfo[];
+  GridCells: GridCell[];
 }
 
 export interface PlusMinusRuleAction extends Redux.Action {
@@ -23,9 +23,9 @@ export interface PlusMinusRuleEditAction extends PlusMinusRuleAction {}
 
 export interface PlusMinusRuleDeleteAction extends PlusMinusRuleAction {}
 
-export const PlusMinusApply = (CellInfos: ICellInfo[]): PlusMinusApplyAction => ({
+export const PlusMinusApply = (GridCells: GridCell[]): PlusMinusApplyAction => ({
   type: PLUS_MINUS_APPLY,
-  CellInfos,
+  GridCells,
 });
 
 export const PlusMinusRuleAdd = (plusMinusRule: PlusMinusRule): PlusMinusRuleAddAction => ({

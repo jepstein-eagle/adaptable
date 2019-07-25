@@ -10,7 +10,6 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
@@ -85,10 +84,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   ): boolean {
     let shouldApplyPlusMinus = false;
     let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
-    let successfulValues: ICellInfo[] = [];
+    let successfulValues: GridCell[] = [];
     let failedPreventEdits: CellValidationRule[] = [];
     let failedWarningEdits: CellValidationRule[] = [];
-    let warningValues: ICellInfo[] = [];
+    let warningValues: GridCell[] = [];
 
     cellsToUpdate.forEach((selectedCell: GridCell) => {
       let rulesForColumn: PlusMinusRule[] = plusMinusRules.filter(
@@ -102,7 +101,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
           if (typeof selectedCell.value != 'number') {
             selectedCell.value = parseFloat(selectedCell.value);
           }
-          let newValue: ICellInfo;
+          let newValue: GridCell;
           //we try to find a condition with an expression for that column that matches the record
           let columnNudgesWithExpression = rulesForColumn.filter(x => !x.IsDefaultNudge);
           for (let columnNudge of columnNudgesWithExpression) {
@@ -115,9 +114,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
               )
             ) {
               newValue = {
-                Id: selectedCell.primaryKeyValue,
-                ColumnId: selectedCell.columnId,
-                Value: selectedCell.value + columnNudge.NudgeValue * side,
+                primaryKeyValue: selectedCell.primaryKeyValue,
+                columnId: selectedCell.columnId,
+                value: selectedCell.value + columnNudge.NudgeValue * side,
               };
             }
           }
@@ -126,9 +125,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             let columnNudge = rulesForColumn.find(x => x.IsDefaultNudge);
             if (columnNudge) {
               newValue = {
-                Id: selectedCell.primaryKeyValue,
-                ColumnId: selectedCell.columnId,
-                Value: selectedCell.value + columnNudge.NudgeValue * side,
+                primaryKeyValue: selectedCell.primaryKeyValue,
+                columnId: selectedCell.columnId,
+                value: selectedCell.value + columnNudge.NudgeValue * side,
               };
             }
             //we havent found a condition so we return false - this will allow a minus to be entered into the column
@@ -141,11 +140,11 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             shouldApplyPlusMinus = true;
           }
           //avoid the 0.0000000000x
-          newValue.Value = parseFloat(newValue.Value.toFixed(12));
+          newValue.value = parseFloat(newValue.value.toFixed(12));
 
           let dataChangedEvent: DataChangedInfo = {
             OldValue: Number(selectedCell.value),
-            NewValue: newValue.Value,
+            NewValue: newValue.value,
             ColumnId: selectedCell.columnId,
             IdentifierValue: selectedCell.primaryKeyValue,
             Record: null,
@@ -203,8 +202,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
   private ShowWarningMessages(
     failedRules: CellValidationRule[],
-    warningValues: ICellInfo[],
-    successfulValues: ICellInfo[]
+    warningValues: GridCell[],
+    successfulValues: GridCell[]
   ): void {
     if (failedRules.length > 0) {
       let allValues = warningValues.concat(...successfulValues);

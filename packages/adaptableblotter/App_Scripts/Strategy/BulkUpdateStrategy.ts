@@ -5,8 +5,6 @@ import { DataType, MessageType, StateChangedTrigger } from '../PredefinedConfig/
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
-import { BulkUpdateState } from '../PredefinedConfig/RunTimeState/BulkUpdateState';
-import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
@@ -31,7 +29,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     );
   }
 
-  public ApplyBulkUpdate(newValues: ICellInfo[]): void {
+  public ApplyBulkUpdate(newValues: GridCell[]): void {
     if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
       // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
       let functionAppliedDetails: FunctionAppliedDetails = {
