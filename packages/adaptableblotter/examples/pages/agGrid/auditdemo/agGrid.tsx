@@ -28,12 +28,11 @@ function InitAdaptableBlotter() {
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
 
     auditOptions: {
-      auditUserStateChanges: {
-        auditToConsole: true,
-        auditAsEvent: false,
+      auditInternalStateChanges: {
+        //  auditAsEvent: true,
       },
-      auditFunctionEvents: {
-        auditToConsole: true,
+      auditUserStateChanges: {
+        //   auditAsEvent: true,
       },
       auditCellEdits: {
         auditToConsole: true,
@@ -43,11 +42,11 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
+  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
+
   adaptableblotter.api.auditEventApi
     .onAuditStateChanged()
-    .Subscribe((sender, columnChangedArgs) => listenToAuditLogEvent(columnChangedArgs));
-
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
+    .Subscribe((sender, auditLogEventArgs) => listenToAuditLogEvent(auditLogEventArgs));
 }
 
 function listenToAuditLogEvent(auditLogEventArgs: AuditLogEventArgs) {

@@ -61,15 +61,17 @@ function InitAdaptableBlotter() {
 function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
   console.log('alert fired event received');
   console.log(actionColumnEventArgs);
+  let notional = actionColumnEventArgs.rowData.notional;
+  alert(notional);
 }
 
 let demoConfig: PredefinedConfig = {
   ActionColumn: {
     ActionColumns: [
       {
-        ColumnId: 'Bundle',
-        ButtonText: 'Bundle',
-        RenderFunctionName: 'BundleColumn',
+        ColumnId: 'Action',
+        ButtonText: 'Click',
+        //  RenderFunctionName: 'BundleColumn',
       },
       {
         ColumnId: 'Plus',

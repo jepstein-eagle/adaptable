@@ -13,11 +13,12 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
-import { Box } from 'rebass';
+import { Box, Flex } from 'rebass';
 import Radio from '../../../components/Radio';
 import Dropdown from '../../../components/Dropdown';
 
 import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface ConditionalStyleScopeWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
@@ -55,42 +56,30 @@ export class ConditionalStyleScopeWizard
     });
 
     return (
-      <div className={cssClassName} style={{ height: '100%' }}>
-        <WizardPanel header="Select Where the Conditional Style is Applied">
-          <Box className="ab_large_margin">
-            <Radio
-              className={cssClassName + '__radiobutton'}
-              value="Row"
-              checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row}
-              onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
-            >
-              Whole Row
-            </Radio>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Conditional Style: Whole Row'}
-              bodyText={[
-                'The conditional style will be applied to alls cells in each matching row.',
-              ]}
-            />
-          </Box>
-          <Box className="ab_large_margin">
-            <Radio
-              className={cssClassName + '__radiobutton'}
-              value="Column"
-              checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column}
-              onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
-            >
-              Column
-            </Radio>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Conditional Style: Single Column'}
-              bodyText={[
-                'Pick the column from the list below which will have conditional style applied.',
-              ]}
-            />
-          </Box>
+      <WizardPanel header="Select where the Conditional Style will be applied">
+        <Flex flexDirection="column" padding={2}>
+          <HelpBlock marginBottom={1}>
+            Apply the Conditional Style to ALL cells in each matching row.
+          </HelpBlock>
+          <Radio
+            className={cssClassName + '__radiobutton'}
+            value="Row"
+            checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row}
+            onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
+          >
+            Whole Row
+          </Radio>
+
+          <HelpBlock marginBottom={1}>Apply the Conditional Style to a single Column</HelpBlock>
+
+          <Radio
+            className={cssClassName + '__radiobutton'}
+            value="Column"
+            checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column}
+            onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
+          >
+            Column
+          </Radio>
 
           {this.state.ConditionalStyleScope == ConditionalStyleScope.Column && (
             <Box className="ab_large_margin">
@@ -103,8 +92,13 @@ export class ConditionalStyleScopeWizard
               />
             </Box>
           )}
+
           {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && (
             <Box className="ab_large_margin">
+              <HelpBlock marginBottom={2}>
+                Apply the Conditional Style to all the columns in a Column Category
+              </HelpBlock>
+
               <Radio
                 className={cssClassName + '__radiobutton'}
                 value="ColumnCategory"
@@ -114,21 +108,15 @@ export class ConditionalStyleScopeWizard
                 }
               >
                 Column Category
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Conditional Style: Column Categorys'}
-                bodyText={[
-                  'Pick the Column Category from the list below to apply the conditional style to all Column Categorys.',
-                ]}
-              />
+              </Radio>
             </Box>
           )}
+
           {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) &&
             this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && (
               <Box className="ab_large_margin">
                 <Dropdown
-                  placeholder="select"
+                  placeholder="Select a Column Category"
                   value={this.state.ColumnCategoryId}
                   onChange={(value: any) => this.onColumnCategorySelectedChanged(value)}
                   options={[
@@ -141,8 +129,50 @@ export class ConditionalStyleScopeWizard
                 />
               </Box>
             )}
+        </Flex>
+      </WizardPanel>
+
+      /*
+      
+          </Box>
+          <Box className="ab_large_margin">
+          <HelpBlock marginBottom={2}>
+          Pick the column from the list below which will have conditional style applied.
+          </HelpBlock>
+            <Radio
+              className={cssClassName + '__radiobutton'}
+              value="Column"
+              checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column}
+              onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
+            >
+              Column
+            </Radio>{' '}
+            
+          </Box>
+
+         
+          {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && (
+             <HelpBlock marginBottom={2}>
+            Pick the Column Category from the list below to apply the conditional style to all Column Categorys.
+             </HelpBlock>
+            <Box className="ab_large_margin">
+             {' '}
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Conditional Style: Column Categorys'}
+                bodyText={[
+                  'Pick the Column Category from the list below to apply the conditional style to all Column Categorys.',
+                ]}
+              />
+            </Box>
+          )}
+          {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) &&
+            this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && (
+              
+            )}
         </WizardPanel>
       </div>
+      */
     );
   }
 

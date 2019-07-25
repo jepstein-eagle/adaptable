@@ -34,4 +34,9 @@ export class GridApi extends ApiBase implements IGridApi {
   public getColumnSorts(): ColumnSort[] {
     return this.getGridState().ColumnSorts;
   }
+
+  public setValue(): void {
+    //  let cellInfo: Cellinfo
+    //  this.blotter.setValue()
+  }
 }
