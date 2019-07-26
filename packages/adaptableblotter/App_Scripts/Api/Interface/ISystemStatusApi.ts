@@ -2,7 +2,7 @@ export interface ISystemStatusApi {
   /**
    * Sets which coloured System Status button is displayed in the Home Toolbar
    * @param statusMessage The message to show when the button is clicked
-   * @param statusColour The colour of the button - also influences the type of message (i.e. red: error, amber: warning, green: info)
+   * @param messageType The colour of the button - also influences the type of message (i.e. red: error, amber: warning, green: info)
    */
 
   setSystemStatus(

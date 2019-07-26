@@ -2,7 +2,10 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { DataType, MessageType, StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
-import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
+import {
+  IStrategyActionReturn,
+  BulkUpdateValidationResult,
+} from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
@@ -15,6 +18,7 @@ import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -43,10 +47,11 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     this.blotter.setValueBatch(newValues);
   }
 
-  public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
+  public CheckCorrectCellSelection(): BulkUpdateValidationResult {
     let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
     if (selectedCellInfo == null || ArrayExtensions.IsNullOrEmpty(selectedCellInfo.Columns)) {
       return {
+        IsValid: false,
         Alert: {
           Header: 'Bulk Update Error',
           Msg: 'No cells are selected.\nPlease select some cells.',
@@ -58,6 +63,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
     if (ArrayExtensions.NotCorrectLength(selectedCellInfo.Columns, 1)) {
       return {
+        IsValid: false,
         Alert: {
           Header: 'Bulk Update Error',
           Msg: 'Bulk Update only supports single column edit.\nPlease adjust cell selection.',
@@ -67,8 +73,11 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       };
     }
 
-    if (selectedCellInfo.Columns[0].ReadOnly) {
+    let selectedColumn: IColumn = selectedCellInfo.Columns[0];
+
+    if (selectedColumn.ReadOnly) {
       return {
+        IsValid: false,
         Alert: {
           Header: 'Bulk Update Error',
           Msg:
@@ -78,12 +87,16 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         },
       };
     }
-    return { ActionReturn: true };
+    return { IsValid: true, Column: selectedColumn };
   }
 
   public BuildPreviewValues(bulkUpdateValue: any): IPreviewInfo {
-    let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
     let previewResults: IPreviewResult[] = [];
+    if (StringExtensions.IsNullOrEmpty(String(bulkUpdateValue))) {
+      return null;
+    }
+    let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+
     let columnId: string = '';
     if (selectedCellInfo != null && selectedCellInfo.Columns.length > 0) {
       columnId = selectedCellInfo.Columns[0].ColumnId;

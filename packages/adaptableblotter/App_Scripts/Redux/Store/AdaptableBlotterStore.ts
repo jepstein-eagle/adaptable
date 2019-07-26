@@ -98,7 +98,10 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
 import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
-import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
+import {
+  IStrategyActionReturn,
+  BulkUpdateValidationResult,
+} from '../../Strategy/Interface/IStrategyActionReturn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
@@ -2222,7 +2225,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
+            let apiReturn: BulkUpdateValidationResult = BulkUpdateStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if BulkUpdate is showing as popup
@@ -2233,14 +2236,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 //We show the Error Popup -- assume that will alwasy be an Error
                 middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
               }
-              middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(false));
-            } else {
-              middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(true));
-              let apiPreviewReturn = BulkUpdateStrategy.BuildPreviewValues(
-                state.BulkUpdate.BulkUpdateValue
-              );
-              middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiPreviewReturn));
             }
+            middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(apiReturn));
             return returnAction;
           }
 
@@ -2254,7 +2251,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId)
             );
             let state = middlewareAPI.getState();
-
             let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
             middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiReturn));
             return returnAction;

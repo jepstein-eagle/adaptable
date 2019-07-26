@@ -26,7 +26,7 @@ export class ReminderSummaryWizard extends React.Component<ReminderSummaryWizard
       { Key: 'Message', Value: this.props.Data.Alert.Msg },
       { Key: 'Message Type', Value: this.props.Data.Alert.MessageType },
       { Key: 'Show as Popup', Value: this.props.Data.Alert.ShowAsPopup ? 'True' : 'False' },
-      { Key: 'Schedule', Value: UIHelper.GetScheduleDescription(this.props.Data.Schedule) },
+      { Key: 'Schedule', Value: UIHelper.getScheduleDescription(this.props.Data.Schedule) },
     ];
 
     let summaryPage = (

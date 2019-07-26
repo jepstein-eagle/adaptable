@@ -1,9 +1,9 @@
 import {
   DisplayAction,
   MathOperation,
-  StatusColour,
   LeafExpressionOperator,
   CellSummaryOperation,
+  MessageType,
 } from '../../PredefinedConfig/Common/Enums';
 import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common/ChartEnums';
 
@@ -66,8 +66,10 @@ export const CELL_SUMMARY_DEFAULT_OPERATION:
   | 'Only' = CellSummaryOperation.Sum;
 // system
 export const SYSTEM_DEFAULT_CHART_VISIBILITY: ChartVisibility = ChartVisibility.Hidden;
-export const SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR: 'Red' | 'Amber' | 'Green' | 'Blue' =
-  StatusColour.Green;
+//export const SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR: 'Red' | 'Amber' | 'Green' | 'Blue' =
+//  StatusColour.Green;
+export const SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE: 'Error' | 'Warning' | 'Success' | 'Info' =
+  MessageType.Info;
 // theme
 export const THEME_DEFAULT_CURRENT_THEME: string = LIGHT_THEME;
 

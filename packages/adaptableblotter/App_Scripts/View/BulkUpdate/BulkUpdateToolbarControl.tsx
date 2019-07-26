@@ -22,16 +22,17 @@ import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
-import { DEFAULT_BSSTYLE, PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';
+import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 
 interface BulkUpdateToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
   BulkUpdateValue: string;
-  IsValidSelection: boolean;
+  BulkUpdateValidationResult: BulkUpdateValidationResult;
   PreviewInfo: IPreviewInfo;
 
   onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
@@ -42,13 +43,9 @@ interface BulkUpdateToolbarControlComponentProps
   ) => PopupRedux.PopupShowConfirmationAction;
 }
 
-interface BulkUpdateToolbarControlComponentState {
-  Disabled: boolean;
-}
-
 class BulkUpdateToolbarControlComponent extends React.Component<
   BulkUpdateToolbarControlComponentProps,
-  BulkUpdateToolbarControlComponentState
+  {}
 > {
   constructor(props: BulkUpdateToolbarControlComponentProps) {
     super(props);
@@ -59,7 +56,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   public componentDidMount() {
     if (this.props.Blotter) {
       this.props.Blotter.on(CELLS_SELECTED_EVENT, () => {
-        this.onSelectionChanged();
+        this.checkSelectedCells();
       });
     }
   }
@@ -71,16 +68,12 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     // we dont want to show the panel in the form but will need to appear in a popup....
     let cssClassName: string = this.props.cssClassName + '__bulkupdate';
 
-    let activeButton = (
-      <SimpleButton marginRight={2} onClick={() => this.onDisabledChanged()} variant="text">
-        {this.state.Disabled ? 'Off' : 'On'}
-      </SimpleButton>
-    );
+    //  let selectedColumn =
+    //    this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)
+    //      ? ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns)
+    //     : null;
 
-    let selectedColumn =
-      this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)
-        ? ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns)
-        : null;
+    let selectedColumn: IColumn = this.props.BulkUpdateValidationResult.Column;
 
     let previewPanel = (
       <PreviewResultsPanel
@@ -105,22 +98,20 @@ class BulkUpdateToolbarControlComponent extends React.Component<
           this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
         }
       >
-        {activeButton}
-
         <ColumnValueSelector
           newLabel="New"
           existingLabel="Existing"
           dropdownButtonProps={{
             listMinWidth: 150,
           }}
-          disabled={!this.props.IsValidSelection}
+          disabled={!this.props.BulkUpdateValidationResult.IsValid}
           SelectedColumnValue={this.props.BulkUpdateValue}
           SelectedColumn={selectedColumn}
           Blotter={this.props.Blotter}
           onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
         />
 
-        {this.props.IsValidSelection &&
+        {this.props.BulkUpdateValidationResult.IsValid &&
           StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
             <ButtonApply
               marginLeft={2}
@@ -136,7 +127,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
             />
           )}
 
-        {this.props.IsValidSelection &&
+        {this.props.BulkUpdateValidationResult.IsValid &&
           StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
             <AdaptablePopover
               showDefaultStyle={this.props.UseSingleColourForButtons}
@@ -164,19 +155,16 @@ class BulkUpdateToolbarControlComponent extends React.Component<
       </PanelDashboard>
     );
   }
+
   private onColumnValueSelectedChanged(selectedColumnValue: any) {
     this.props.onBulkUpdateValueChange(selectedColumnValue);
   }
 
-  private onSelectionChanged(): void {
-    if (!this.state.Disabled) {
-      this.getSelectedCells();
-    }
-  }
-
-  private getSelectedCells() {
-    this.props.onBulkUpdateValueChange('');
+  private checkSelectedCells() {
     this.props.onBulkUpdateCheckSelectedCells();
+    if (StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue)) {
+      this.props.onBulkUpdateValueChange('');
+    }
   }
 
   private getStatusColour(): StatusColour {
@@ -192,14 +180,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
       }
     }
     return StatusColour.Green;
-  }
-
-  onDisabledChanged() {
-    let newDisabledState: boolean = !this.state.Disabled;
-    if (!newDisabledState) {
-      this.props.onBulkUpdateCheckSelectedCells();
-    }
-    this.setState({ Disabled: newDisabledState });
   }
 
   private onApplyClick(): void {
@@ -220,14 +200,14 @@ class BulkUpdateToolbarControlComponent extends React.Component<
 
   onApplyBulkUpdate(): any {
     this.props.onApplyBulkUpdate();
-    this.onSelectionChanged();
+    this.props.onBulkUpdateValueChange('');
   }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
     BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
-    IsValidSelection: state.System.IsValidBulkUpdateSelection,
+    BulkUpdateValidationResult: state.System.BulkUpdateValidationResult,
     PreviewInfo: state.System.BulkUpdatePreviewInfo,
   };
 }

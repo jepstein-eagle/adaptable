@@ -144,7 +144,9 @@ export function getChartContainer(
       }
     } else {
       LoggingHelper.LogAdaptableBlotterError(
-        `Chart div called '${blotterOptions.containerOptions.chartContainer}' not found: so creating standard div`
+        `Chart div called '${
+          blotterOptions.containerOptions.chartContainer
+        }' not found: so creating standard div`
       );
       chartContainer = document.getElementById('ad');
     }
@@ -241,7 +243,7 @@ export function getColorByMessageType(messageType: MessageType): string {
   }
 }
 
-export function getStyleForSystemStatusButton(statusColour: StatusColour): CSSProperties {
+export function getStyleForStatusColour(statusColour: StatusColour): CSSProperties {
   let result;
 
   switch (statusColour) {
@@ -272,7 +274,38 @@ export function getStyleForSystemStatusButton(statusColour: StatusColour): CSSPr
   return result;
 }
 
-export function getGlyphForSystemStatusButton(statusColour: StatusColour): string {
+export function getStyleForMessageType(messageType: MessageType): CSSProperties {
+  let result;
+
+  switch (messageType) {
+    case MessageType.Info:
+      result = {
+        fill: 'var(--ab-color-info)',
+      };
+      break;
+    case MessageType.Success:
+      result = {
+        fill: 'var(--ab-color-success)',
+      };
+      break;
+    case MessageType.Warning:
+      result = {
+        fill: 'var(--ab-color-warn)',
+      };
+      break;
+    case MessageType.Error:
+      result = {
+        fill: 'var(--ab-color-error)',
+      };
+      break;
+  }
+  if (result) {
+    result.color = result.fill;
+  }
+  return result;
+}
+
+export function getGlyphForStatusColour(statusColour: StatusColour): string {
   switch (statusColour) {
     case StatusColour.Blue:
       return 'info';
@@ -285,7 +318,20 @@ export function getGlyphForSystemStatusButton(statusColour: StatusColour): strin
   }
 }
 
-export function GetScheduleDescription(schedule: Schedule): string {
+export function getGlyphForMessageType(messageType: MessageType): string {
+  switch (messageType) {
+    case MessageType.Info:
+      return 'info';
+    case MessageType.Success:
+      return 'check';
+    case MessageType.Warning:
+      return 'warning';
+    case MessageType.Error:
+      return 'error';
+  }
+}
+
+export function getScheduleDescription(schedule: Schedule): string {
   if (schedule == null) {
     return '[No Schedule]';
   }
@@ -340,9 +386,11 @@ export const UIHelper = {
   getStyleNameByStatusColour,
   getGlyphByMessageType,
   getStyleNameByMessageType,
-  getStyleForSystemStatusButton,
-  getGlyphForSystemStatusButton,
-  GetScheduleDescription,
+  getStyleForStatusColour,
+  getGlyphForStatusColour,
+  getScheduleDescription,
   getColorByMessageType,
+  getGlyphForMessageType,
+  getStyleForMessageType,
 };
 export default UIHelper;

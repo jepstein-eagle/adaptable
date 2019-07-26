@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/InternalState/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
-import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
+import { ExportDestination, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
@@ -11,7 +11,6 @@ import {
   EMPTY_ARRAY,
   SYSTEM_DEFAULT_CHART_VISIBILITY,
   EMPTY_STRING,
-  SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR,
 } from '../../Utilities/Constants/GeneralConstants';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
@@ -21,6 +20,7 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -120,7 +120,7 @@ export interface BulkUpdateSetPreviewAction extends Redux.Action {
 }
 
 export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
-  IsValidBulkUpdateSelection: boolean;
+  bulkUpdateValidationResult: BulkUpdateValidationResult;
 }
 
 export interface ChartSetChartDataAction extends Redux.Action {
@@ -231,10 +231,10 @@ export const BulkUpdateCheckCellSelection = (): BulkUpdateCheckCellSelectionActi
 });
 
 export const BulkUpdateSetValidSelection = (
-  IsValidBulkUpdateSelection: boolean
+  bulkUpdateValidationResult: BulkUpdateValidationResult
 ): BulkUpdateSetValidSelectionAction => ({
   type: BULK_UPDATE_SET_VALID_SELECTION,
-  IsValidBulkUpdateSelection,
+  bulkUpdateValidationResult,
 });
 
 export const BulkUpdateSetPreview = (
@@ -306,13 +306,13 @@ export const SetNewColumnListOrder = (
 });
 
 const initialSystemState: SystemState = {
-  SystemStatus: { StatusMessage: EMPTY_STRING, StatusColour: SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR },
+  SystemStatus: { StatusMessage: 'All good', StatusType: MessageType.Success }, //SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE
   Alerts: EMPTY_ARRAY,
   AvailableCalendars: CalendarHelper.getSystemCalendars(),
   CurrentLiveReports: EMPTY_ARRAY,
   IsValidSmartEditSelection: false,
   SmartEditPreviewInfo: null,
-  IsValidBulkUpdateSelection: false,
+  BulkUpdateValidationResult: { IsValid: false, Column: null },
   BulkUpdatePreviewInfo: null,
   ChartData: null,
   ChartVisibility: SYSTEM_DEFAULT_CHART_VISIBILITY,
@@ -336,7 +336,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       });
     case SYSTEM_CLEAR_HEALTH_STATUS:
       return Object.assign({}, state, {
-        SystemStatus: { StatusMessage: '', StatusColour: 'Green' },
+        SystemStatus: { StatusMessage: '', StatusType: 'Success' },
       });
     case SYSTEM_ALERT_ADD: {
       let actionTypedAdd = <SystemAlertAddAction>action;
@@ -387,8 +387,8 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       });
     case BULK_UPDATE_SET_VALID_SELECTION:
       return Object.assign({}, state, {
-        IsValidBulkUpdateSelection: (<BulkUpdateSetValidSelectionAction>action)
-          .IsValidBulkUpdateSelection,
+        BulkUpdateValidationResult: (<BulkUpdateSetValidSelectionAction>action)
+          .bulkUpdateValidationResult,
       });
     case BULK_UPDATE_SET_PREVIEW:
       return Object.assign({}, state, {

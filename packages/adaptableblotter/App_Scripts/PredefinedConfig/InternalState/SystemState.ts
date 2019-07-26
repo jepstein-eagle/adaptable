@@ -11,6 +11,7 @@ import { Calendar } from '../RunTimeState/CalendarState';
 import { ChartData } from '../RunTimeState/ChartState';
 import { Report } from '../RunTimeState/ExportState';
 import { QueryRange } from '../Common/Expression/QueryRange';
+import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 /**
  * ISYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
  */
@@ -22,7 +23,7 @@ export interface SystemState extends InternalState {
   CurrentLiveReports: ILiveReport[];
   IsValidSmartEditSelection: boolean;
   SmartEditPreviewInfo: IPreviewInfo;
-  IsValidBulkUpdateSelection: boolean;
+  BulkUpdateValidationResult: BulkUpdateValidationResult;
   BulkUpdatePreviewInfo: IPreviewInfo;
   ChartData: ChartData;
   ChartVisibility: ChartVisibility;

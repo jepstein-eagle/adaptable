@@ -25,7 +25,7 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     let cssClassName: string = this.props.cssClassName + '-summary';
 
     let scheduleDescription = this.props.Data.AutoExport
-      ? ' (' + UIHelper.GetScheduleDescription(this.props.Data.AutoExport.Schedule) + ')'
+      ? ' (' + UIHelper.getScheduleDescription(this.props.Data.AutoExport.Schedule) + ')'
       : 'None';
 
     let keyValuePairs: IKeyValuePair[] = [

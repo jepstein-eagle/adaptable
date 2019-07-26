@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { Helper } from '../../../Utilities/Helpers/Helper';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { Typeahead } from 'react-bootstrap-typeahead';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { SortOrder, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
@@ -11,6 +9,7 @@ import Dropdown from '../../../components/Dropdown';
 import FieldWrap from '../../../components/FieldWrap';
 import DropdownButton, { DropdownButtonProps } from '../../../components/DropdownButton';
 import Input from '../../../components/Input';
+import LoggingHelper from '../../../Utilities/Helpers/LoggingHelper';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
   SelectedColumn: IColumn;
@@ -70,20 +69,13 @@ export class ColumnValueSelector extends React.Component<
       this.props.Blotter != null &&
       this.props.Blotter.getColumnValueDisplayValuePairDistinctList != null
     ) {
+      console.log('getting distinct values for ' + this.props.SelectedColumn.FriendlyName);
       let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
         this.props.SelectedColumn.ColumnId,
         DistinctCriteriaPairValue.DisplayValue,
         false
       );
 
-      if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
-        // selectedValue = '';
-      } else {
-        let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(
-          cdv => cdv.RawValue == this.props.SelectedColumnValue
-        );
-        // selectedValue = existingPair ? existingPair.DisplayValue : this.props.SelectedColumnValue;
-      }
       sortedColumnValues = ArrayExtensions.sortArrayWithProperty(
         SortOrder.Ascending,
         columnDisplayValuePairs,
@@ -99,7 +91,13 @@ export class ColumnValueSelector extends React.Component<
         showClearButton={false}
         value={this.props.SelectedColumnValue}
         onChange={(selected: any) => {
-          this.onColumnChange([{ RawValue: selected }]);
+          this.onSelectedValueChange([{ RawValue: selected }]);
+        }}
+        onClick={() => {
+          LoggingHelper.LogInfo(
+            'Opening and woudl like to get values for ' + this.props.SelectedColumn
+          );
+          // I want only to get the values NOW!
         }}
         options={sortedColumnValues.map(v => {
           return {
@@ -116,8 +114,11 @@ export class ColumnValueSelector extends React.Component<
         type="text"
         autoFocus
         style={{ width: fieldWidth }}
+        value={this.props.SelectedColumnValue}
         onChange={(e: React.SyntheticEvent) => {
-          this.onColumnChange([{ customOption: true, DisplayValue: (e.target as any).value }]);
+          this.onSelectedValueChange([
+            { customOption: true, DisplayValue: (e.target as any).value },
+          ]);
         }}
       />
     );
@@ -140,7 +141,7 @@ export class ColumnValueSelector extends React.Component<
                 this.setState({
                   newOrExisting: NEW_OR_EXISTING.existing,
                 });
-                this.onColumnChange([]);
+                this.onSelectedValueChange([]);
               },
             },
             {
@@ -149,7 +150,7 @@ export class ColumnValueSelector extends React.Component<
                 this.setState({
                   newOrExisting: NEW_OR_EXISTING.new,
                 });
-                this.onColumnChange([]);
+                this.onSelectedValueChange([]);
               },
             },
           ]}
@@ -163,7 +164,7 @@ export class ColumnValueSelector extends React.Component<
     );
   }
 
-  onColumnChange(selected: any[]) {
+  onSelectedValueChange(selected: any[]) {
     if (
       ArrayExtensions.IsEmpty(selected) &&
       StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)

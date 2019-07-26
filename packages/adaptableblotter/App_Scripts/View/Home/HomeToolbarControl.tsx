@@ -22,14 +22,13 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ButtonDashboard } from '../Components/Buttons/ButtonDashboard';
 import {
   Visibility,
-  StatusColour,
-  MessageType,
   AccessLevel,
   DashboardSize,
+  MessageType,
 } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import { ColumnHelper, getColumnsFromFriendlyNames } from '../../Utilities/Helpers/ColumnHelper';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
@@ -167,17 +166,17 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       }
     });
 
+    console.log('system state');
+    console.log(this.props.SystemStatus);
     // status button
     let statusButton = (
       <SimpleButton
         variant="text"
         key={'systemstatus'}
-        icon={UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus
-          .StatusColour as StatusColour)}
+        icon={UIHelper.getGlyphForMessageType(this.props.SystemStatus.StatusType as MessageType)}
         className={cssClassName}
-        style={UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus
-          .StatusColour as StatusColour)}
-        tooltip={'Status: ' + this.props.SystemStatus.StatusColour}
+        style={UIHelper.getStyleForMessageType(this.props.SystemStatus.StatusType as MessageType)}
+        tooltip={'Status: ' + this.props.SystemStatus.StatusMessage}
         disabled={false}
         onClick={() => this.onClickStatus()}
         AccessLevel={AccessLevel.Full}
@@ -312,9 +311,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   onClickStatus() {
-    let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour;
-    switch (statusColor) {
-      case StatusColour.Green:
+    let messageType: MessageType = this.props.SystemStatus.StatusType as MessageType;
+    switch (messageType) {
+      case MessageType.Success:
         let success: IAdaptableAlert = {
           Header: 'System Status',
           Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage)
@@ -323,9 +322,10 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           MessageType: MessageType.Success,
           ShowAsPopup: true,
         };
+        console.log('sending success');
         this.props.onShowStatusMessage(success);
         return;
-      case StatusColour.Blue:
+      case MessageType.Info:
         let info: IAdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
@@ -334,7 +334,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         };
         this.props.onShowStatusMessage(info);
         return;
-      case StatusColour.Amber:
+      case MessageType.Warning:
         let warning: IAdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
@@ -343,7 +343,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         };
         this.props.onShowStatusMessage(warning);
         return;
-      case StatusColour.Red:
+      case MessageType.Error:
         let error: IAdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
