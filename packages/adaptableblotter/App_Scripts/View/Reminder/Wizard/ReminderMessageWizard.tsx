@@ -103,13 +103,8 @@ export class ReminderMessageWizard
                   checked={this.state.ShowAsPopup == true}
                   onChange={(checked: boolean) => this.onShowAsPopupChanged(checked)}
                 >
-                  Show as Popup
+                  Show the Reminder as a Popup
                 </Checkbox>{' '}
-                <AdaptablePopover
-                  cssClassName={cssClassName}
-                  headerText={'Reminder Details'}
-                  bodyText={['A popup is displayed when the Reminder is triggered.']}
-                />
               </Box>
             </Flex>
           </Flex>

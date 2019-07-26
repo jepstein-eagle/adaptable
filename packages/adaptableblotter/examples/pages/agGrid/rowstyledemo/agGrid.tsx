@@ -50,10 +50,10 @@ let demoConfig: PredefinedConfig = {
       */
       {
         Style: {
-          //     ForeColor: 'yellow',
-          //     BackColor: 'orange',
-          //     FontWeight: 'Bold',
-          ClassName: 'evenRowStyle',
+          ForeColor: 'yellow',
+          BackColor: 'orange',
+          FontWeight: 'Bold',
+          //  ClassName: 'evenRowStyle',
         },
         RowType: 'Even',
       },
