@@ -1054,6 +1054,15 @@ export class ExamplesHelper {
     });
 
     schema.push({
+      headerName: 'Live',
+      field: 'isLive',
+      editable: false,
+      cellRenderer: (params: any) => {
+        return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
+      },
+      type: 'abColDefBoolean',
+    });
+    schema.push({
       headerName: 'Moodys',
       field: 'moodysRating',
       editable: true,
