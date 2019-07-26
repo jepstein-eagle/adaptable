@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Modal } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';

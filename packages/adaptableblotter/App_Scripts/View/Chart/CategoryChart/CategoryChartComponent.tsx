@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { ChartDisplayPopupPropsBase } from '../../Components/SharedProps/ChartDisplayPopupPropsBase';
+
 import { ButtonClose } from '../../Components/Buttons/ButtonClose';
-import { DEFAULT_BSSTYLE, INFO_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
-import { Row, Col, FormControl, HelpBlock, Table } from 'react-bootstrap';
+
 import { ButtonMinimise } from '../../Components/Buttons/ButtonMinimise';
 import { ButtonMaximise } from '../../Components/Buttons/ButtonMaximise';
 // ig chart imports
@@ -22,7 +21,7 @@ import {
 } from '../../../PredefinedConfig/Common/ChartEnums';
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
 import { ColorPicker } from '../../ColorPicker';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { ButtonGeneral } from '../../Components/Buttons/ButtonGeneral';
 import { DefaultCategoryChartProperties } from '../../../Utilities/Defaults/DefaultCategoryChartProperties';
 import { PanelWithTwoButtons } from '../../Components/Panels/PanelWithTwoButtons';
@@ -35,12 +34,13 @@ import {
 import { CategoryChartUIHelper } from './CategoryChartUIHelper';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { Flex, Text } from 'rebass';
+
 import Dropdown from '../../../components/Dropdown';
 import Input from '../../../components/Input';
 
 import Checkbox from '../../../components/CheckBox';
 import FormLayout, { FormRow, FormLayoutColumn } from '../../../components/FormLayout';
+import ChartContainer from '../../../components/ChartContainer';
 
 /*
 This is really only going to be for Category Charts.
@@ -174,7 +174,7 @@ export class CategoryChartComponent extends React.Component<
 
     let openChartSettingsButton = (
       <ButtonGeneral
-        marginRight={3}
+        style={{ alignSelf: 'flex-end' }}
         onClick={() => this.onShowChartSettings()}
         variant="text"
         tooltip={null}
@@ -291,332 +291,294 @@ export class CategoryChartComponent extends React.Component<
       />
     );
 
-    return (
-      <span className={cssClassName}>
-        <div>
-          <span>
-            {this.state.IsChartSettingsVisible == false && (
-              <span>
-                <Row>
-                  <Col xs={12}>
-                    <div className="pull-right">{openChartSettingsButton}</div>
-                  </Col>
-                </Row>
-              </span>
-            )}
-            {this.state.IsChartSettingsVisible ? (
-              <Row>
-                <Table>
-                  <tbody>
-                    <tr>
-                      <td>{this.props.ChartData.Data != null && chartElement}</td>
-                      <td style={{ width: 350, marginRight: 'var(--ab-space-3' }}>
-                        <PanelWithTwoButtons
-                          headerText={'Chart Settings'}
-                          variant="primary"
-                          firstButton={closeChartSettingsButton}
-                          secondButton={setDefaultsButton}
-                        >
-                          <PanelWithButton
-                            headerText={'General'}
-                            variant="default"
-                            button={showGeneralPropertiesButton}
-                          >
-                            {this.state.IsGeneralMinimised == false && (
-                              <FormLayout>
-                                <FormRow label="Chart Type">
-                                  <Dropdown
-                                    style={{ maxWidth: 'inherit', width: '100%' }}
-                                    placeholder="Select type"
-                                    value={this.state.ChartProperties.CategoryChartType}
-                                    onChange={x => this.onChartTypeChange(x)}
-                                    options={CategoryChartUIHelper.getChartTypeOptions()}
-                                  />
-                                </FormRow>
-                                <FormRow label="Marker Type">
-                                  <Dropdown
-                                    style={{ maxWidth: 'inherit', width: '100%' }}
-                                    placeholder="Select type"
-                                    value={this.state.ChartProperties.MarkerType}
-                                    onChange={x => this.onMarkerTypeChange(x)}
-                                    options={CategoryChartUIHelper.getMarkerTypeOptions()}
-                                  />
-                                </FormRow>
+    const settingsPanel = (
+      <PanelWithTwoButtons
+        headerText={'Chart Settings'}
+        variant="primary"
+        firstButton={closeChartSettingsButton}
+        secondButton={setDefaultsButton}
+      >
+        <PanelWithButton
+          headerText={'General'}
+          variant="default"
+          button={showGeneralPropertiesButton}
+        >
+          {this.state.IsGeneralMinimised == false && (
+            <FormLayout>
+              <FormRow label="Chart Type">
+                <Dropdown
+                  style={{ maxWidth: 'inherit', width: '100%' }}
+                  placeholder="Select type"
+                  value={this.state.ChartProperties.CategoryChartType}
+                  onChange={x => this.onChartTypeChange(x)}
+                  options={CategoryChartUIHelper.getChartTypeOptions()}
+                />
+              </FormRow>
+              <FormRow label="Marker Type">
+                <Dropdown
+                  style={{ maxWidth: 'inherit', width: '100%' }}
+                  placeholder="Select type"
+                  value={this.state.ChartProperties.MarkerType}
+                  onChange={x => this.onMarkerTypeChange(x)}
+                  options={CategoryChartUIHelper.getMarkerTypeOptions()}
+                />
+              </FormRow>
 
-                                {this.state.ChartProperties.CategoryChartType ==
-                                  CategoryChartType.Column && (
-                                  <>
-                                    <FormRow label="Column Gap">
-                                      <Input
-                                        value={this.state.ChartProperties.XAxisGap}
-                                        width="100%"
-                                        type="number"
-                                        min="0"
-                                        step="0.1"
-                                        max="1"
-                                        placeholder="Enter"
-                                        onChange={(e: React.SyntheticEvent) =>
-                                          this.onXAxisGapChanged(e)
-                                        }
-                                      />
-                                    </FormRow>
+              {this.state.ChartProperties.CategoryChartType == CategoryChartType.Column && (
+                <>
+                  <FormRow label="Column Gap">
+                    <Input
+                      value={this.state.ChartProperties.XAxisGap}
+                      width="100%"
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      max="1"
+                      placeholder="Enter"
+                      onChange={(e: React.SyntheticEvent) => this.onXAxisGapChanged(e)}
+                    />
+                  </FormRow>
 
-                                    <FormRow label="Column Overlap">
-                                      <Input
-                                        width="100%"
-                                        value={this.state.ChartProperties.XAxisOverlap}
-                                        type="number"
-                                        min="0"
-                                        step="0.1"
-                                        max="1"
-                                        placeholder="Enter"
-                                        onChange={(e: React.SyntheticEvent) =>
-                                          this.onXAxisOverlapChanged(e)
-                                        }
-                                      />
-                                    </FormRow>
-                                  </>
-                                )}
-                              </FormLayout>
-                            )}
-                          </PanelWithButton>
+                  <FormRow label="Column Overlap">
+                    <Input
+                      width="100%"
+                      value={this.state.ChartProperties.XAxisOverlap}
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      max="1"
+                      placeholder="Enter"
+                      onChange={(e: React.SyntheticEvent) => this.onXAxisOverlapChanged(e)}
+                    />
+                  </FormRow>
+                </>
+              )}
+            </FormLayout>
+          )}
+        </PanelWithButton>
 
-                          <PanelWithButton
-                            variant="default"
-                            headerText={'Y (Vertical) Axis'}
-                            style={{ marginTop: '2px' }}
-                            button={showYAxisPropertiesButton}
-                          >
-                            {this.state.IsYAxisMinimised == false && (
-                              <FormLayout columns={COLS}>
-                                <FormRow>
-                                  <Checkbox
-                                    onChange={(checked: boolean) =>
-                                      this.onYAxisVisibilityOptionChanged(checked)
-                                    }
-                                    checked={
-                                      this.state.ChartProperties.YAxisLabelVisibility ==
-                                      LabelVisibility.Visible
-                                    }
-                                  >
-                                    Axis Visible
-                                  </Checkbox>
-                                </FormRow>
+        <PanelWithButton
+          variant="default"
+          headerText={'Y (Vertical) Axis'}
+          style={{ marginTop: '2px' }}
+          button={showYAxisPropertiesButton}
+        >
+          {this.state.IsYAxisMinimised == false && (
+            <FormLayout columns={COLS}>
+              <FormRow>
+                <Checkbox
+                  onChange={(checked: boolean) => this.onYAxisVisibilityOptionChanged(checked)}
+                  checked={
+                    this.state.ChartProperties.YAxisLabelVisibility == LabelVisibility.Visible
+                  }
+                >
+                  Axis Visible
+                </Checkbox>
+              </FormRow>
 
-                                {this.state.ChartProperties.YAxisLabelVisibility ==
-                                  LabelVisibility.Visible && (
-                                  <>
-                                    <FormRow>
-                                      <Checkbox
-                                        marginTop={2}
-                                        onChange={(checked: boolean) =>
-                                          this.onYAxisInvertedChanged(checked)
-                                        }
-                                        checked={this.state.ChartProperties.YAxisInverted}
-                                      >
-                                        Axis Inverted
-                                      </Checkbox>
-                                    </FormRow>
+              {this.state.ChartProperties.YAxisLabelVisibility == LabelVisibility.Visible && (
+                <>
+                  <FormRow>
+                    <Checkbox
+                      marginTop={2}
+                      onChange={(checked: boolean) => this.onYAxisInvertedChanged(checked)}
+                      checked={this.state.ChartProperties.YAxisInverted}
+                    >
+                      Axis Inverted
+                    </Checkbox>
+                  </FormRow>
 
-                                    <FormRow label="Axis Location">
-                                      <Dropdown
-                                        style={{ maxWidth: 'inherit', width: '100%' }}
-                                        placeholder="Select"
-                                        value={this.state.ChartProperties.YAxisLabelLocation}
-                                        onChange={(x: string) => this.onYAxisLabelLocationChange(x)}
-                                        options={CategoryChartUIHelper.getYAxisLabelsLocations()}
-                                      />
-                                    </FormRow>
+                  <FormRow label="Axis Location">
+                    <Dropdown
+                      style={{ maxWidth: 'inherit', width: '100%' }}
+                      placeholder="Select"
+                      value={this.state.ChartProperties.YAxisLabelLocation}
+                      onChange={(x: string) => this.onYAxisLabelLocationChange(x)}
+                      options={CategoryChartUIHelper.getYAxisLabelsLocations()}
+                    />
+                  </FormRow>
 
-                                    <FormRow label="Labels Scale">
-                                      <Dropdown
-                                        style={{ maxWidth: 'inherit', width: '100%' }}
-                                        placeholder="Select"
-                                        value={this.state.ChartProperties.YAxisLabelScale}
-                                        onChange={x => this.onYAxisLabelScaleChanged(x)}
-                                        options={CategoryChartUIHelper.getAxisLabelScales()}
-                                      />
-                                    </FormRow>
+                  <FormRow label="Labels Scale">
+                    <Dropdown
+                      style={{ maxWidth: 'inherit', width: '100%' }}
+                      placeholder="Select"
+                      value={this.state.ChartProperties.YAxisLabelScale}
+                      onChange={x => this.onYAxisLabelScaleChanged(x)}
+                      options={CategoryChartUIHelper.getAxisLabelScales()}
+                    />
+                  </FormRow>
 
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onSetYAxisMinValueOptionChanged(checked)
-                                          }
-                                          checked={this.state.SetYAxisMinimumValue}
-                                        >
-                                          Labels Min
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.SetYAxisMinimumValue && (
-                                        <Input
-                                          type="number"
-                                          placeholder={'Input'}
-                                          width="100%"
-                                          onChange={this.onYAxisMinValueChanged}
-                                          value={this.state.ChartProperties.YAxisMinimumValue}
-                                        />
-                                      )}
-                                    </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onSetYAxisMinValueOptionChanged(checked)
+                        }
+                        checked={this.state.SetYAxisMinimumValue}
+                      >
+                        Labels Min
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.SetYAxisMinimumValue && (
+                      <Input
+                        type="number"
+                        placeholder={'Input'}
+                        width="100%"
+                        onChange={this.onYAxisMinValueChanged}
+                        value={this.state.ChartProperties.YAxisMinimumValue}
+                      />
+                    )}
+                  </FormRow>
 
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onSetYAxisMaxValueOptionChanged(checked)
-                                          }
-                                          checked={this.state.SetYAxisMinimumValue}
-                                        >
-                                          Labels Max
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.SetYAxisMinimumValue && (
-                                        <Input
-                                          type="number"
-                                          placeholder={'Input'}
-                                          width="100%"
-                                          onChange={this.onYAxisMaxValueChanged}
-                                          value={this.state.ChartProperties.YAxisMaximumValue}
-                                        />
-                                      )}
-                                    </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onSetYAxisMaxValueOptionChanged(checked)
+                        }
+                        checked={this.state.SetYAxisMinimumValue}
+                      >
+                        Labels Max
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.SetYAxisMinimumValue && (
+                      <Input
+                        type="number"
+                        placeholder={'Input'}
+                        width="100%"
+                        onChange={this.onYAxisMaxValueChanged}
+                        value={this.state.ChartProperties.YAxisMaximumValue}
+                      />
+                    )}
+                  </FormRow>
 
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onSetYAxisIntervalValueOptionChanged(checked)
-                                          }
-                                          checked={this.state.ChartProperties.YAxisIntervalCustom}
-                                        >
-                                          Labels Interval
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.ChartProperties.YAxisIntervalCustom && (
-                                        <Input
-                                          type="number"
-                                          placeholder={'Input'}
-                                          onChange={this.onYAxisIntervalValueChanged}
-                                          value={this.state.ChartProperties.YAxisIntervalValue}
-                                        />
-                                      )}
-                                    </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onSetYAxisIntervalValueOptionChanged(checked)
+                        }
+                        checked={this.state.ChartProperties.YAxisIntervalCustom}
+                      >
+                        Labels Interval
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.ChartProperties.YAxisIntervalCustom && (
+                      <Input
+                        type="number"
+                        placeholder={'Input'}
+                        onChange={this.onYAxisIntervalValueChanged}
+                        value={this.state.ChartProperties.YAxisIntervalValue}
+                      />
+                    )}
+                  </FormRow>
 
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onSetYAxisLabelColorOptionChanged(checked)
-                                          }
-                                          checked={this.state.SetYAxisLabelColor}
-                                        >
-                                          Labels Color
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.SetYAxisLabelColor && (
-                                        <ColorPicker
-                                          ColorPalette={this.props.ColorPalette}
-                                          value={this.state.ChartProperties.YAxisLabelColor}
-                                          onChange={x => this.onYAxisLabelColorChange(x)}
-                                        />
-                                      )}
-                                    </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onSetYAxisLabelColorOptionChanged(checked)
+                        }
+                        checked={this.state.SetYAxisLabelColor}
+                      >
+                        Labels Color
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.SetYAxisLabelColor && (
+                      <ColorPicker
+                        ColorPalette={this.props.ColorPalette}
+                        value={this.state.ChartProperties.YAxisLabelColor}
+                        onChange={x => this.onYAxisLabelColorChange(x)}
+                      />
+                    )}
+                  </FormRow>
 
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onUseDefaultYAxisTitleOptionChanged(checked)
-                                          }
-                                          checked={this.state.UseDefaultYAxisTitle}
-                                        >
-                                          Title Default
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.UseDefaultYAxisTitle == false && (
-                                        <Input
-                                          type="text"
-                                          placeholder={'Enter Title'}
-                                          onChange={(e: React.SyntheticEvent) =>
-                                            this.onYAxisTitleChanged(e)
-                                          }
-                                          value={this.state.ChartProperties.YAxisTitle}
-                                        />
-                                      )}
-                                    </FormRow>
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onSetYAxisTitleColorOptionChanged(checked)
-                                          }
-                                          checked={this.state.SetYAxisTitleColor}
-                                        >
-                                          Title Color
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.SetYAxisTitleColor && (
-                                        <ColorPicker
-                                          ColorPalette={this.props.ColorPalette}
-                                          value={this.state.ChartProperties.YAxisTitleColor}
-                                          onChange={x => this.onYAxisTitleColorChange(x)}
-                                        />
-                                      )}
-                                    </FormRow>
-                                  </>
-                                )}
-                              </FormLayout>
-                            )}
-                          </PanelWithButton>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onUseDefaultYAxisTitleOptionChanged(checked)
+                        }
+                        checked={this.state.UseDefaultYAxisTitle}
+                      >
+                        Title Default
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.UseDefaultYAxisTitle == false && (
+                      <Input
+                        type="text"
+                        placeholder={'Enter Title'}
+                        onChange={(e: React.SyntheticEvent) => this.onYAxisTitleChanged(e)}
+                        value={this.state.ChartProperties.YAxisTitle}
+                      />
+                    )}
+                  </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onSetYAxisTitleColorOptionChanged(checked)
+                        }
+                        checked={this.state.SetYAxisTitleColor}
+                      >
+                        Title Color
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.SetYAxisTitleColor && (
+                      <ColorPicker
+                        ColorPalette={this.props.ColorPalette}
+                        value={this.state.ChartProperties.YAxisTitleColor}
+                        onChange={x => this.onYAxisTitleColorChange(x)}
+                      />
+                    )}
+                  </FormRow>
+                </>
+              )}
+            </FormLayout>
+          )}
+        </PanelWithButton>
 
-                          <PanelWithButton
-                            variant="default"
-                            headerText={'X (Horizontal) Axis'}
-                            button={showXAxisPropertiesButton}
-                            style={{ marginTop: '2px' }}
-                          >
-                            {this.state.IsXAxisMinimised == false && (
-                              <FormLayout columns={COLS}>
-                                <FormRow
-                                  label={
-                                    <Checkbox
-                                      onChange={(checked: boolean) =>
-                                        this.onXAxisVisibilityOptionChanged(checked)
-                                      }
-                                      checked={
-                                        this.state.ChartProperties.XAxisLabelVisibility ==
-                                        LabelVisibility.Visible
-                                      }
-                                    >
-                                      Axis Visible
-                                    </Checkbox>
-                                  }
-                                ></FormRow>
+        <PanelWithButton
+          variant="default"
+          headerText={'X (Horizontal) Axis'}
+          button={showXAxisPropertiesButton}
+          style={{ marginTop: '2px' }}
+        >
+          {this.state.IsXAxisMinimised == false && (
+            <FormLayout columns={COLS}>
+              <FormRow
+                label={
+                  <Checkbox
+                    onChange={(checked: boolean) => this.onXAxisVisibilityOptionChanged(checked)}
+                    checked={
+                      this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible
+                    }
+                  >
+                    Axis Visible
+                  </Checkbox>
+                }
+              ></FormRow>
 
-                                {this.state.ChartProperties.XAxisLabelVisibility ==
-                                  LabelVisibility.Visible && (
-                                  <>
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onXAxisInvertedChanged(checked)
-                                          }
-                                          checked={this.state.ChartProperties.XAxisInverted}
-                                        >
-                                          Axis Inverted
-                                        </Checkbox>
-                                      }
-                                    ></FormRow>
-                                    {/* TODO uncomment when ChategoryChart has 'xAxisLabelLocation' property */}
-                                    {/* <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
+              {this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible && (
+                <>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) => this.onXAxisInvertedChanged(checked)}
+                        checked={this.state.ChartProperties.XAxisInverted}
+                      >
+                        Axis Inverted
+                      </Checkbox>
+                    }
+                  ></FormRow>
+                  {/* TODO uncomment when ChategoryChart has 'xAxisLabelLocation' property */}
+                  {/* <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
                                                                         <Row>
                                                                             <Col xs={6}><ControlLabel>Axis Location</ControlLabel></Col>
                                                                             <Col xs={5}>
@@ -628,297 +590,281 @@ export class CategoryChartComponent extends React.Component<
                                                                             </Col>
                                                                         </Row>
                                                                     </AdaptableBlotterForm> */}
-                                    <FormRow label="Labels Angle">
-                                      <Dropdown
-                                        placeholder="Select angle"
-                                        value={this.state.ChartProperties.XAxisAngle}
-                                        onChange={x => this.onXAxisAngleChanged(x)}
-                                        options={CategoryChartUIHelper.getAxisAngleOptions()}
-                                      ></Dropdown>
-                                    </FormRow>
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onSetXAxisLabelColorOptionChanged(checked)
-                                          }
-                                          checked={this.state.SetXAxisLabelColor}
-                                        >
-                                          Labels Color
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.SetXAxisLabelColor && (
-                                        <ColorPicker
-                                          ColorPalette={this.props.ColorPalette}
-                                          value={this.state.ChartProperties.XAxisLabelColor}
-                                          onChange={x => this.onXAxisLabelColorChange(x)}
-                                        />
-                                      )}
-                                    </FormRow>
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onSetXAxisIntervalValueOptionChanged(checked)
-                                          }
-                                          checked={this.state.ChartProperties.XAxisIntervalCustom}
-                                        >
-                                          Labels Interval
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.ChartProperties.XAxisIntervalCustom && (
-                                        <Input
-                                          type="number"
-                                          placeholder={'Input'}
-                                          onChange={this.onXAxisIntervalValueChanged}
-                                          value={this.state.ChartProperties.XAxisIntervalValue}
-                                        />
-                                      )}
-                                    </FormRow>
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onUseDefaultXAxisTitleOptionChanged(checked)
-                                          }
-                                          checked={this.state.UseDefaultXAxisTitle}
-                                        >
-                                          Title Default
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.UseDefaultXAxisTitle == false && (
-                                        <Input
-                                          type="text"
-                                          placeholder={'Enter Title'}
-                                          onChange={(e: React.SyntheticEvent) =>
-                                            this.onXAxisTitleChanged(e)
-                                          }
-                                          value={this.state.ChartProperties.XAxisTitle}
-                                        />
-                                      )}
-                                    </FormRow>
-                                    <FormRow
-                                      label={
-                                        <Checkbox
-                                          onChange={(checked: boolean) =>
-                                            this.onSetXAxisTitleColorOptionChanged(checked)
-                                          }
-                                          checked={this.state.SetXAxisTitleColor}
-                                        >
-                                          Title Color
-                                        </Checkbox>
-                                      }
-                                    >
-                                      {this.state.SetXAxisTitleColor && (
-                                        <ColorPicker
-                                          ColorPalette={this.props.ColorPalette}
-                                          value={this.state.ChartProperties.XAxisTitleColor}
-                                          onChange={x => this.onXAxisTitleColorChange(x)}
-                                        />
-                                      )}
-                                    </FormRow>
-                                  </>
-                                )}
-                              </FormLayout>
-                            )}
-                          </PanelWithButton>
+                  <FormRow label="Labels Angle">
+                    <Dropdown
+                      placeholder="Select angle"
+                      value={this.state.ChartProperties.XAxisAngle}
+                      onChange={x => this.onXAxisAngleChanged(x)}
+                      options={CategoryChartUIHelper.getAxisAngleOptions()}
+                    ></Dropdown>
+                  </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onSetXAxisLabelColorOptionChanged(checked)
+                        }
+                        checked={this.state.SetXAxisLabelColor}
+                      >
+                        Labels Color
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.SetXAxisLabelColor && (
+                      <ColorPicker
+                        ColorPalette={this.props.ColorPalette}
+                        value={this.state.ChartProperties.XAxisLabelColor}
+                        onChange={x => this.onXAxisLabelColorChange(x)}
+                      />
+                    )}
+                  </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onSetXAxisIntervalValueOptionChanged(checked)
+                        }
+                        checked={this.state.ChartProperties.XAxisIntervalCustom}
+                      >
+                        Labels Interval
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.ChartProperties.XAxisIntervalCustom && (
+                      <Input
+                        type="number"
+                        placeholder={'Input'}
+                        onChange={this.onXAxisIntervalValueChanged}
+                        value={this.state.ChartProperties.XAxisIntervalValue}
+                      />
+                    )}
+                  </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onUseDefaultXAxisTitleOptionChanged(checked)
+                        }
+                        checked={this.state.UseDefaultXAxisTitle}
+                      >
+                        Title Default
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.UseDefaultXAxisTitle == false && (
+                      <Input
+                        type="text"
+                        placeholder={'Enter Title'}
+                        onChange={(e: React.SyntheticEvent) => this.onXAxisTitleChanged(e)}
+                        value={this.state.ChartProperties.XAxisTitle}
+                      />
+                    )}
+                  </FormRow>
+                  <FormRow
+                    label={
+                      <Checkbox
+                        onChange={(checked: boolean) =>
+                          this.onSetXAxisTitleColorOptionChanged(checked)
+                        }
+                        checked={this.state.SetXAxisTitleColor}
+                      >
+                        Title Color
+                      </Checkbox>
+                    }
+                  >
+                    {this.state.SetXAxisTitleColor && (
+                      <ColorPicker
+                        ColorPalette={this.props.ColorPalette}
+                        value={this.state.ChartProperties.XAxisTitleColor}
+                        onChange={x => this.onXAxisTitleColorChange(x)}
+                      />
+                    )}
+                  </FormRow>
+                </>
+              )}
+            </FormLayout>
+          )}
+        </PanelWithButton>
 
-                          <PanelWithButton
-                            variant="default"
-                            headerText={'Annotations'}
-                            button={showHighlightsPropertiesButton}
-                            style={{ marginTop: '2px' }}
-                          >
-                            {this.state.IsHighlightsMinimised == false && (
-                              <FormLayout columns={COLS}>
-                                <FormRow
-                                  label={
-                                    <Checkbox
-                                      onChange={(checked: boolean) =>
-                                        this.onEnableFinalValueAnnotationsOptionChanged(checked)
-                                      }
-                                      checked={
-                                        this.state.ChartProperties.EnableFinalValueAnnotations
-                                      }
-                                    >
-                                      Final Values
-                                    </Checkbox>
-                                  }
-                                />
-                                <FormRow
-                                  label={
-                                    <Checkbox
-                                      onChange={e =>
-                                        this.onEnableSeriesHighlightingOptionChanged(e)
-                                      }
-                                      checked={this.state.ChartProperties.EnableSeriesHighlighting}
-                                    >
-                                      Highlight Series
-                                    </Checkbox>
-                                  }
-                                />
-                                <FormRow
-                                  label={
-                                    <Checkbox
-                                      onChange={(checked: boolean) =>
-                                        this.onEnableCategoryHighlightingOptionChanged(checked)
-                                      }
-                                      checked={
-                                        this.state.ChartProperties.EnableCategoryHighlighting
-                                      }
-                                    >
-                                      Highlight Category
-                                    </Checkbox>
-                                  }
-                                />
-                                <FormRow
-                                  label={
-                                    <Checkbox
-                                      onChange={(checked: boolean) =>
-                                        this.onEnableItemHighlightingOptionChanged(checked)
-                                      }
-                                      checked={this.state.ChartProperties.EnableItemHighlighting}
-                                    >
-                                      Highlight Item
-                                    </Checkbox>
-                                  }
-                                />
-                                <FormRow label={'Callout Type'}>
-                                  <Dropdown
-                                    placeholder="Select type"
-                                    value={this.state.ChartProperties.CalloutsType}
-                                    onChange={x => this.onChangedCalloutsType(x)}
-                                    options={CategoryChartUIHelper.getCalloutTypeOptions()}
-                                  ></Dropdown>
-                                </FormRow>
+        <PanelWithButton
+          variant="default"
+          headerText={'Annotations'}
+          button={showHighlightsPropertiesButton}
+          style={{ marginTop: '2px' }}
+        >
+          {this.state.IsHighlightsMinimised == false && (
+            <FormLayout columns={COLS}>
+              <FormRow
+                label={
+                  <Checkbox
+                    onChange={(checked: boolean) =>
+                      this.onEnableFinalValueAnnotationsOptionChanged(checked)
+                    }
+                    checked={this.state.ChartProperties.EnableFinalValueAnnotations}
+                  >
+                    Final Values
+                  </Checkbox>
+                }
+              />
+              <FormRow
+                label={
+                  <Checkbox
+                    onChange={e => this.onEnableSeriesHighlightingOptionChanged(e)}
+                    checked={this.state.ChartProperties.EnableSeriesHighlighting}
+                  >
+                    Highlight Series
+                  </Checkbox>
+                }
+              />
+              <FormRow
+                label={
+                  <Checkbox
+                    onChange={(checked: boolean) =>
+                      this.onEnableCategoryHighlightingOptionChanged(checked)
+                    }
+                    checked={this.state.ChartProperties.EnableCategoryHighlighting}
+                  >
+                    Highlight Category
+                  </Checkbox>
+                }
+              />
+              <FormRow
+                label={
+                  <Checkbox
+                    onChange={(checked: boolean) =>
+                      this.onEnableItemHighlightingOptionChanged(checked)
+                    }
+                    checked={this.state.ChartProperties.EnableItemHighlighting}
+                  >
+                    Highlight Item
+                  </Checkbox>
+                }
+              />
+              <FormRow label={'Callout Type'}>
+                <Dropdown
+                  placeholder="Select type"
+                  value={this.state.ChartProperties.CalloutsType}
+                  onChange={x => this.onChangedCalloutsType(x)}
+                  options={CategoryChartUIHelper.getCalloutTypeOptions()}
+                ></Dropdown>
+              </FormRow>
 
-                                {/* {this.state.ChartProperties.CalloutsType == "Data Points" && */}
-                                <FormRow label={'Callout Interval'}>
-                                  <Input
-                                    value={this.state.ChartProperties.CalloutsInterval}
-                                    type="number"
-                                    min="1"
-                                    step="1"
-                                    max="20"
-                                    placeholder="Enter"
-                                    onChange={(e: React.SyntheticEvent) =>
-                                      this.onChangedCalloutsInterval(e)
-                                    }
-                                  />
-                                </FormRow>
+              {/* {this.state.ChartProperties.CalloutsType == "Data Points" && */}
+              <FormRow label={'Callout Interval'}>
+                <Input
+                  value={this.state.ChartProperties.CalloutsInterval}
+                  type="number"
+                  min="1"
+                  step="1"
+                  max="20"
+                  placeholder="Enter"
+                  onChange={(e: React.SyntheticEvent) => this.onChangedCalloutsInterval(e)}
+                />
+              </FormRow>
 
-                                <FormRow label="Tooltips">
-                                  <Dropdown
-                                    placeholder="Select tooltip type"
-                                    value={this.state.ChartProperties.ToolTipType}
-                                    onChange={x => this.onToolTipTypeChange(x)}
-                                    options={CategoryChartUIHelper.getToolTipOptions()}
-                                  ></Dropdown>
-                                </FormRow>
-                                <FormRow label="Crosshairs">
-                                  <Dropdown
-                                    value={this.state.ChartProperties.CrosshairDisplayMode}
-                                    onChange={x => this.onCrosshairsModeChange(x)}
-                                    options={CategoryChartUIHelper.getCrossHairModeOptions()}
-                                  ></Dropdown>
-                                </FormRow>
-                                {this.state.ChartProperties.CrosshairDisplayMode !=
-                                  CrosshairDisplayMode.None && (
-                                  <>
-                                    <FormRow>
-                                      <div />
-                                      <Checkbox
-                                        onChange={(checked: boolean) =>
-                                          this.onCrosshairSnapToDataOptionChanged(checked)
-                                        }
-                                        checked={this.state.ChartProperties.CrosshairSnapToData}
-                                      >
-                                        Snap to Data
-                                      </Checkbox>
-                                    </FormRow>
-                                    <FormRow>
-                                      <div />
-                                      <Checkbox
-                                        onChange={(checked: boolean) =>
-                                          this.onCrosshairAnnotationEnabledOptionChanged(checked)
-                                        }
-                                        checked={
-                                          this.state.ChartProperties.CrosshairAnnotationEnabled
-                                        }
-                                      >
-                                        Show Values
-                                      </Checkbox>
-                                    </FormRow>
-                                  </>
-                                )}
-                              </FormLayout>
-                            )}
-                          </PanelWithButton>
+              <FormRow label="Tooltips">
+                <Dropdown
+                  placeholder="Select tooltip type"
+                  value={this.state.ChartProperties.ToolTipType}
+                  onChange={x => this.onToolTipTypeChange(x)}
+                  options={CategoryChartUIHelper.getToolTipOptions()}
+                ></Dropdown>
+              </FormRow>
+              <FormRow label="Crosshairs">
+                <Dropdown
+                  value={this.state.ChartProperties.CrosshairDisplayMode}
+                  onChange={x => this.onCrosshairsModeChange(x)}
+                  options={CategoryChartUIHelper.getCrossHairModeOptions()}
+                ></Dropdown>
+              </FormRow>
+              {this.state.ChartProperties.CrosshairDisplayMode != CrosshairDisplayMode.None && (
+                <>
+                  <FormRow>
+                    <div />
+                    <Checkbox
+                      onChange={(checked: boolean) =>
+                        this.onCrosshairSnapToDataOptionChanged(checked)
+                      }
+                      checked={this.state.ChartProperties.CrosshairSnapToData}
+                    >
+                      Snap to Data
+                    </Checkbox>
+                  </FormRow>
+                  <FormRow>
+                    <div />
+                    <Checkbox
+                      onChange={(checked: boolean) =>
+                        this.onCrosshairAnnotationEnabledOptionChanged(checked)
+                      }
+                      checked={this.state.ChartProperties.CrosshairAnnotationEnabled}
+                    >
+                      Show Values
+                    </Checkbox>
+                  </FormRow>
+                </>
+              )}
+            </FormLayout>
+          )}
+        </PanelWithButton>
 
-                          <PanelWithButton
-                            variant="default"
-                            headerText={'Misc'}
-                            cssClassName={cssClassName}
-                            button={showMiscPropertiesButton}
-                            style={{ marginTop: '2px' }}
-                          >
-                            {this.state.IsMiscMinimised == false && (
-                              <FormLayout columns={COLS}>
-                                <FormRow label="Title">
-                                  <Dropdown
-                                    placeholder="Select alignment"
-                                    value={this.state.ChartProperties.TitleAlignment}
-                                    onChange={x => this.onTitleAlignmentChange(x)}
-                                    options={CategoryChartUIHelper.getAlignmentOptions()}
-                                  ></Dropdown>
-                                </FormRow>
-                                <FormRow label="Subtitle">
-                                  <Dropdown
-                                    placeholder="Select alignment"
-                                    value={this.state.ChartProperties.SubTitleAlignment}
-                                    onChange={x => this.onSubTitleAlignmentChange(x)}
-                                    options={CategoryChartUIHelper.getAlignmentOptions()}
-                                  ></Dropdown>
-                                </FormRow>
-                                <FormRow
-                                  label={
-                                    <Checkbox
-                                      onChange={e => this.onEnableTransitionsOptionChanged(e)}
-                                      checked={this.state.ChartProperties.EnableTransitions}
-                                    >
-                                      Enable Transitions
-                                    </Checkbox>
-                                  }
-                                />
-                                {this.state.ChartProperties.EnableTransitions && (
-                                  <FormRow label="Duration">
-                                    <Input
-                                      placeholder={'Length (ms)'}
-                                      type="number"
-                                      onChange={this.onTransitionDurationChanged}
-                                      value={this.state.ChartProperties.TransitionInDuration}
-                                    />
-                                  </FormRow>
-                                )}
-                              </FormLayout>
-                            )}
-                          </PanelWithButton>
-                        </PanelWithTwoButtons>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Row>
-            ) : (
-              <div>{this.props.ChartData.Data != null && chartElement}</div>
-            )}
-          </span>
-        </div>
-      </span>
+        <PanelWithButton
+          variant="default"
+          headerText={'Misc'}
+          cssClassName={cssClassName}
+          button={showMiscPropertiesButton}
+          style={{ marginTop: '2px' }}
+        >
+          {this.state.IsMiscMinimised == false && (
+            <FormLayout columns={COLS}>
+              <FormRow label="Title">
+                <Dropdown
+                  placeholder="Select alignment"
+                  value={this.state.ChartProperties.TitleAlignment}
+                  onChange={x => this.onTitleAlignmentChange(x)}
+                  options={CategoryChartUIHelper.getAlignmentOptions()}
+                ></Dropdown>
+              </FormRow>
+              <FormRow label="Subtitle">
+                <Dropdown
+                  placeholder="Select alignment"
+                  value={this.state.ChartProperties.SubTitleAlignment}
+                  onChange={x => this.onSubTitleAlignmentChange(x)}
+                  options={CategoryChartUIHelper.getAlignmentOptions()}
+                ></Dropdown>
+              </FormRow>
+              <FormRow
+                label={
+                  <Checkbox
+                    onChange={e => this.onEnableTransitionsOptionChanged(e)}
+                    checked={this.state.ChartProperties.EnableTransitions}
+                  >
+                    Enable Transitions
+                  </Checkbox>
+                }
+              />
+              {this.state.ChartProperties.EnableTransitions && (
+                <FormRow label="Duration">
+                  <Input
+                    placeholder={'Length (ms)'}
+                    type="number"
+                    onChange={this.onTransitionDurationChanged}
+                    value={this.state.ChartProperties.TransitionInDuration}
+                  />
+                </FormRow>
+              )}
+            </FormLayout>
+          )}
+        </PanelWithButton>
+      </PanelWithTwoButtons>
     );
+
+    return this.props.ChartData.Data != null ? (
+      <ChartContainer
+        button={!this.state.IsChartSettingsVisible ? openChartSettingsButton : null}
+        chart={chartElement}
+        settingsPanel={this.state.IsChartSettingsVisible ? settingsPanel : null}
+      />
+    ) : null;
   }
 
   public calloutStyleUpdating(args: any) {

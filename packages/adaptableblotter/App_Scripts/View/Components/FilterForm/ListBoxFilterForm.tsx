@@ -4,25 +4,23 @@ import {
   DataType,
   DistinctCriteriaPairValue,
 } from '../../../PredefinedConfig/Common/Enums';
-import {
-  MenuItem,
-  DropdownButton,
-  ListGroupItem,
-  FormControl,
-  ListGroup,
-  ListGroupProps,
-  FormGroup,
-  InputGroup,
-} from 'react-bootstrap';
+
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterFormControlTextClear';
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
+
 import { UIHelper } from '../../UIHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import ListGroupItem from '../../../components/List/ListGroupItem';
+import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
+import { Box, Flex } from 'rebass';
+import Dropdown from '../../../components/Dropdown';
+import DropdownButton from '../../../components/DropdownButton';
+import Input from '../../../components/Input';
+import { SyntheticEvent } from 'react';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
   CurrentColumn: IColumn;
@@ -118,7 +116,6 @@ export class ListBoxFilterForm extends React.Component<
         return (
           <ListGroupItem
             key={'columnValue' + y}
-            style={columnValueItemStyle}
             onClick={() => this.onClickItemColumnValue(x)}
             active={isActive}
             value={columnValue}
@@ -132,7 +129,6 @@ export class ListBoxFilterForm extends React.Component<
     let textClear = (
       <AdaptableBlotterFormControlTextClear
         autoFocus={true}
-        style={searchFilterStyle}
         type="text"
         placeholder="Search Filters"
         value={this.state.FilterValue}
@@ -142,90 +138,65 @@ export class ListBoxFilterForm extends React.Component<
 
     let rangeOperandOptions: string[] = ['Value', 'Column'];
     let rangeMenuItemsOperand1 = rangeOperandOptions.map((rangeOperand: string, index: number) => {
-      return (
-        <MenuItem
-          key={index + rangeOperand}
-          eventKey={index + rangeOperand}
-          onClick={() => this.onRangeTypeChangedOperand1(rangeOperand)}
-        >
-          {rangeOperand}
-        </MenuItem>
-      );
+      return {
+        onClick: () => this.onRangeTypeChangedOperand1(rangeOperand),
+        label: rangeOperand,
+      };
     });
 
     let rangeMenuItemsOperand2 = rangeOperandOptions.map((rangeOperand: string, index: number) => {
-      return (
-        <MenuItem
-          key={index + rangeOperand}
-          eventKey={index + rangeOperand}
-          onClick={() => this.onRangeTypeChangedOperand2(rangeOperand)}
-        >
-          {rangeOperand}
-        </MenuItem>
-      );
+      return {
+        onClick: () => this.onRangeTypeChangedOperand2(rangeOperand),
+        label: rangeOperand,
+      };
     });
 
     let rangeForm = (
-      <AdaptableBlotterForm horizontal>
-        <FormGroup controlId={'advancedForm'}>
-          <FormControl
-            bsSize={'small'}
-            style={rangeOperatorStyle}
-            componentClass="select"
-            placeholder="select"
-            value={this.state.UiSelectedRange.Operator}
-            onChange={x => this.onLeafExpressionOperatorChange(x)}
-          >
-            {this.props.Operators.map((operator: LeafExpressionOperator) => {
-              return (
-                <option key={operator} value={operator.toString()}>
-                  {ExpressionHelper.OperatorToLongFriendlyString(operator, this.props.DataType)}
-                </option>
-              );
-            })}
-          </FormControl>
+      <Flex flexDirection="column">
+        <Dropdown
+          placeholder="Select"
+          value={this.state.UiSelectedRange.Operator}
+          onChange={(x: LeafExpressionOperator) => this.onLeafExpressionOperatorChange(x)}
+          options={this.props.Operators.map((operator: LeafExpressionOperator) => {
+            return {
+              label: ExpressionHelper.OperatorToLongFriendlyString(operator, this.props.DataType),
+              value: operator.toString(),
+            };
+          })}
+        ></Dropdown>
 
-          {this.state.UiSelectedRange.Operator != LeafExpressionOperator.Unknown && (
-            <InputGroup>
-              <DropdownButton
-                bsSize={'small'}
-                style={rangeTypeStyle}
-                title={this.state.UiSelectedRange.Operand1Type}
-                id="range_operand_1"
-                componentClass={InputGroup.Button}
-              >
-                {rangeMenuItemsOperand1}
-              </DropdownButton>
+        {this.state.UiSelectedRange.Operator != LeafExpressionOperator.Unknown && (
+          <Flex flexDirection="row" marginTop={2}>
+            <DropdownButton columns={['label']} items={rangeMenuItemsOperand1} marginRight={2}>
+              {this.state.UiSelectedRange.Operand1Type}
+            </DropdownButton>
 
-              {this.getOperand1FormControl()}
-            </InputGroup>
-          )}
-          {this.state.UiSelectedRange.Operator == LeafExpressionOperator.Between && (
-            <InputGroup>
-              <DropdownButton
-                bsSize={'small'}
-                style={rangeTypeStyle}
-                title={this.state.UiSelectedRange.Operand2Type}
-                id="range_operand_2"
-                componentClass={InputGroup.Button}
-              >
-                {rangeMenuItemsOperand2}
-              </DropdownButton>
+            {this.getOperand1FormControl()}
+          </Flex>
+        )}
+        {this.state.UiSelectedRange.Operator == LeafExpressionOperator.Between && (
+          <Flex flexDirection="row" marginTop={2}>
+            <DropdownButton columns={['label']} items={rangeMenuItemsOperand2} marginRight={2}>
+              {this.state.UiSelectedRange.Operand2Type}
+            </DropdownButton>
 
-              {this.getOperand2FormControl()}
-            </InputGroup>
-          )}
+            {this.getOperand2FormControl()}
+          </Flex>
+        )}
 
-          <div style={separatorStyle}>{'- - - - - - - - - - - - - - - -'}</div>
-        </FormGroup>
-      </AdaptableBlotterForm>
+        <Box my={3}>
+          <Box backgroundColor="darkgray" style={{ height: 1 }} />
+        </Box>
+      </Flex>
     );
 
     return (
       <div style={divStyle}>
         {rangeForm}
-        {textClear}
-        <ListGroup style={listGroupStyle}>
+        <Box mx={'2px'} marginBottom={2}>
+          {textClear}
+        </Box>
+        <ListGroup>
           {userFiltersItemsElements}
           {columnValuesItemsElements}
         </ListGroup>
@@ -234,12 +205,11 @@ export class ListBoxFilterForm extends React.Component<
   }
 
   // Methods for getting the range
-  private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onLeafExpressionOperatorChange(value: LeafExpressionOperator) {
     let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
-      Operator: e.value as LeafExpressionOperator,
+      Operator: value,
       Operand1: this.state.UiSelectedRange.Operand1,
       Operand2: this.state.UiSelectedRange.Operand2,
     };
@@ -287,39 +257,31 @@ export class ListBoxFilterForm extends React.Component<
         (c: IColumn) =>
           c != this.props.CurrentColumn && c.DataType == this.props.CurrentColumn.DataType
       ).map((column, index) => {
-        return (
-          <MenuItem
-            key={index}
-            eventKey={index}
-            onClick={() => this.onColumnOperand1SelectedChanged(column)}
-          >
-            {column.FriendlyName}
-          </MenuItem>
-        );
+        return {
+          onClick: () => this.onColumnOperand1SelectedChanged(column),
+          label: column.FriendlyName,
+        };
       });
 
       return (
         <DropdownButton
+          style={{ flex: 1 }}
+          columns={['label']}
           disabled={availableColumns.length == 0}
-          style={columnOperandStyle}
           className={this.props.cssClassName}
-          bsSize={'small'}
-          bsStyle={'default'}
-          title={operand1}
-          id="operand1"
+          items={availableColumns}
         >
-          {availableColumns}
+          {operand1}
         </DropdownButton>
       );
     } else {
       return (
-        <FormControl
+        <Input
+          style={{ flex: 1 }}
           value={String(this.state.UiSelectedRange.Operand1)}
-          bsSize={'small'}
-          style={rangeOperandStyle}
           type={UIHelper.getDescriptionForDataType(this.props.DataType)}
           placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)}
-          onChange={e => this.onOperand1Edit(e)}
+          onChange={(e: SyntheticEvent) => this.onOperand1Edit(e)}
         />
       );
     }
@@ -336,40 +298,32 @@ export class ListBoxFilterForm extends React.Component<
 
       let availableColumns: any = this.props.Columns.filter(() => this.props.CurrentColumn).map(
         (column, index) => {
-          return (
-            <MenuItem
-              key={index}
-              eventKey={index}
-              onClick={() => this.onColumnOperand2SelectedChanged(column)}
-            >
-              {column.FriendlyName}
-            </MenuItem>
-          );
+          return {
+            onClick: () => this.onColumnOperand2SelectedChanged(column),
+            label: column.FriendlyName,
+          };
         }
       );
 
       return (
         <DropdownButton
+          style={{ flex: 1 }}
+          columns={['label']}
           disabled={availableColumns.length == 0}
-          style={columnOperandStyle}
           className={this.props.cssClassName}
-          bsSize={'small'}
-          bsStyle={'default'}
-          title={operand2}
-          id="operand2"
+          items={availableColumns}
         >
-          {availableColumns}
+          {operand2}
         </DropdownButton>
       );
     } else {
       return (
-        <FormControl
+        <Input
+          style={{ flex: 1 }}
           value={String(this.state.UiSelectedRange.Operand2)}
-          bsSize={'small'}
-          style={rangeOperandStyle}
           type={UIHelper.getDescriptionForDataType(this.props.DataType)}
           placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)}
-          onChange={e => this.onOperand2Edit(e)}
+          onChange={(e: SyntheticEvent) => this.onOperand2Edit(e)}
         />
       );
     }
@@ -502,58 +456,6 @@ let divStyle: React.CSSProperties = {
   marginBottom: '0',
 };
 
-let listGroupStyle: React.CSSProperties = {
-  overflowY: 'auto',
-  overflowX: 'hidden',
-  // maxHeight: '50vh',
-  marginBottom: '0',
-};
-
 let userFilterItemStyle: React.CSSProperties = {
-  //'width': '87%',export
   fontStyle: 'italic',
-  fontSize: 'xsmall',
-  padding: '3px',
-  margin: 0,
-};
-
-let columnValueItemStyle = {
-  //'width': '87%',
-  fontSize: 'xsmall',
-  padding: '3px',
-  margin: 0,
-};
-
-let rangeOperatorStyle = {
-  marginTop: '0px',
-  marginLeft: '15px',
-  width: '200px',
-};
-let rangeOperandStyle = {
-  marginTop: '0px',
-  marginLeft: '0px',
-  width: '130px',
-};
-let columnOperandStyle = {
-  marginTop: '0px',
-  marginLeft: '0px',
-  width: '128px',
-};
-
-let rangeTypeStyle = {
-  marginTop: '0px',
-  marginLeft: '15px',
-  width: '72px',
-};
-let searchFilterStyle = {
-  marginTop: '0px',
-  marginLeft: '0px',
-  width: '203px',
-};
-
-let separatorStyle = {
-  marginTop: '5px',
-  marginBottom: '0px',
-  marginLeft: '50px',
-  width: '222px',
 };

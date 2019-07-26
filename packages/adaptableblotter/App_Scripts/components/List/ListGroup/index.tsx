@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { ReactComponentLike } from 'prop-types';
 import join from '../../utils/join';
-import { HTMLProps } from 'react';
-import { Box } from 'rebass';
-
-type TypeProps = HTMLProps<HTMLDivElement> & {};
+import { Box, BoxProps } from 'rebass';
 
 const baseClassName = 'ab-ListGroup';
 
-const ListGroup = (props: TypeProps & BoxProps) => {
+export interface ListGroupProps extends BoxProps {}
+
+const ListGroup = (props: ListGroupProps) => {
   const { className, ...domProps } = props;
 
   return <Box {...domProps} className={join(className, baseClassName)} />;

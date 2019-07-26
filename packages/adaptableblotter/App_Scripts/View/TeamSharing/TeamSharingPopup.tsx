@@ -1,25 +1,12 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import {
-  Button,
-  Col,
-  Panel,
-  ListGroup,
-  Row,
-  Glyphicon,
-  OverlayTrigger,
-  Tooltip,
-  HelpBlock,
-} from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { IColumn } from '../../Utilities/Interface/IColumn';
-import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyProfile } from '../Components/StrategyProfile';
@@ -41,6 +28,12 @@ import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSear
 import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { Icon } from '../../components/icons';
+import SimpleButton from '../../components/SimpleButton';
+import { Flex } from 'rebass';
+import Panel from '../../components/Panel';
+import HelpBlock from '../../components/HelpBlock';
+import ListGroup from '../../components/List/ListGroup';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<ISharedEntity>;
@@ -72,49 +65,45 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
     }).map((x, index) => {
       return (
         <li className="list-group-item" key={index}>
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={2}>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={2}>
               <StrategyProfile cssClassName={cssClassName} StrategyId={x.strategy} />
-            </Col>
-            <Col xs={3}>
+            </Flex>
+            <Flex flex={3}>
               {x.user}
               {<br />}
               {x.timestamp.toLocaleString()}
-            </Col>
-            <Col xs={6} style={{ fontSize: 'small' }}>
-              <Panel bsStyle="primary" className="ab_small-padding-panel">
-                {this.getSharedItemDetails(x)}
-              </Panel>
-            </Col>
-            <Col xs={1}>
-              <OverlayTrigger overlay={<Tooltip id="tooltipButton">Import</Tooltip>}>
-                <Button onClick={() => this.props.onImportItem(x.entity, x.strategy)}>
-                  <Glyphicon glyph="import" />
-                </Button>
-              </OverlayTrigger>
-            </Col>
-          </Row>
+            </Flex>
+            <Flex flex={6} style={{ fontSize: 'small' }}>
+              <Panel variant="primary">{this.getSharedItemDetails(x)}</Panel>
+            </Flex>
+            <Flex flex={1}>
+              <SimpleButton
+                variant="text"
+                tooltip="import"
+                onClick={() => this.props.onImportItem(x.entity, x.strategy)}
+              >
+                <Icon name="import-export" />
+              </SimpleButton>
+            </Flex>
+          </Flex>
         </li>
       );
     });
 
     return (
-      <div className={cssClassName}>
-        <PanelWithImage
-          cssClassName={cssClassName}
-          header={StrategyConstants.TeamSharingStrategyName}
-          infoBody={infoBody}
-          bsStyle="primary"
-          glyphicon={StrategyConstants.TeamSharingGlyph}
-        >
-          {this.props.Entities.length == 0 ? (
-            <HelpBlock>Shared Items will appear here when available.</HelpBlock>
-          ) : (
-            <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
-          )}
-          <ListGroup>{sharedItems}</ListGroup>
-        </PanelWithImage>
-      </div>
+      <PanelWithImage
+        header={StrategyConstants.TeamSharingStrategyName}
+        infoBody={infoBody}
+        glyphicon={StrategyConstants.TeamSharingGlyph}
+      >
+        {this.props.Entities.length == 0 ? (
+          <HelpBlock>Shared Items will appear here when available.</HelpBlock>
+        ) : (
+          <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
+        )}
+        <ListGroup>{sharedItems}</ListGroup>
+      </PanelWithImage>
     );
   }
 
@@ -123,81 +112,81 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
       case StrategyConstants.CustomSortStrategyId: {
         let customSort = sharedEntity.entity as CustomSort;
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>
               {ColumnHelper.getFriendlyNameFromColumnId(customSort.ColumnId, this.props.Columns)}
-            </Col>
-            <Col xs={8}>{customSort.SortedValues.join(', ')}</Col>
-          </Row>
+            </Flex>
+            <Flex flex={8}>{customSort.SortedValues.join(', ')}</Flex>
+          </Flex>
         );
       }
       case StrategyConstants.CalculatedColumnStrategyId: {
         let calcCol = sharedEntity.entity as CalculatedColumn;
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>{calcCol.ColumnId}</Col>
-            <Col xs={8}>{calcCol.ColumnExpression}</Col>
-          </Row>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>{calcCol.ColumnId}</Flex>
+            <Flex flex={8}>{calcCol.ColumnExpression}</Flex>
+          </Flex>
         );
       }
       case StrategyConstants.CellValidationStrategyId: {
         let cellVal = sharedEntity.entity as CellValidationRule;
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>
               {ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
-            </Col>
-            <Col xs={4}>
+            </Flex>
+            <Flex flex={4}>
               {CellValidationHelper.createCellValidationDescription(cellVal, this.props.Columns)}
-            </Col>
-            <Col xs={4}>
+            </Flex>
+            <Flex flex={4}>
               {ExpressionHelper.IsNotNullOrEmptyExpression(cellVal.Expression)
                 ? ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns)
                 : 'No Expression'}
-            </Col>
-          </Row>
+            </Flex>
+          </Flex>
         );
       }
       case StrategyConstants.ConditionalStyleStrategyId: {
         let cs = sharedEntity.entity as ConditionalStyle;
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col md={4}>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>
               {cs.ConditionalStyleScope == ConditionalStyleScope.Column
                 ? ColumnHelper.getFriendlyNameFromColumnId(cs.ColumnId, this.props.Columns)
                 : 'Whole Row'}
-            </Col>
-            <Col md={3}>
+            </Flex>
+            <Flex flex={3}>
               <StyleVisualItem Style={cs.Style} />
-            </Col>
-            <Col xs={5}>
+            </Flex>
+            <Flex flex={5}>
               {ExpressionHelper.ConvertExpressionToString(cs.Expression, this.props.Columns)}
-            </Col>
-          </Row>
+            </Flex>
+          </Flex>
         );
       }
       case StrategyConstants.PlusMinusStrategyId: {
         let plusMinus = sharedEntity.entity as PlusMinusRule;
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>
               {ColumnHelper.getFriendlyNameFromColumnId(plusMinus.ColumnId, this.props.Columns)}
-            </Col>
-            <Col xs={3}>{plusMinus.NudgeValue.toString()}</Col>
-            <Col xs={5}>
+            </Flex>
+            <Flex flex={3}>{plusMinus.NudgeValue.toString()}</Flex>
+            <Flex flex={5}>
               {ExpressionHelper.ConvertExpressionToString(plusMinus.Expression, this.props.Columns)}
-            </Col>
-          </Row>
+            </Flex>
+          </Flex>
         );
       }
       case StrategyConstants.ShortcutStrategyId: {
         let shortcut = sharedEntity.entity as Shortcut;
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col md={4}>{shortcut.ColumnType}</Col>
-            <Col md={4}>{shortcut.ShortcutKey}</Col>
-            <Col md={4}>{shortcut.ShortcutResult}</Col>
-          </Row>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>{shortcut.ColumnType}</Flex>
+            <Flex flex={4}>{shortcut.ShortcutKey}</Flex>
+            <Flex flex={4}>{shortcut.ShortcutResult}</Flex>
+          </Flex>
         );
       }
       case StrategyConstants.UserFilterStrategyId: {
@@ -207,10 +196,10 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
           this.props.Columns
         );
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>{filter.Name}</Col>
-            <Col xs={8}>{expressionString}</Col>
-          </Row>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>{filter.Name}</Flex>
+            <Flex flex={8}>{expressionString}</Flex>
+          </Flex>
         );
       }
       case StrategyConstants.AdvancedSearchStrategyId: {
@@ -220,32 +209,32 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
           this.props.Columns
         );
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>{search.Name}</Col>
-            <Col xs={8}>{expressionString}</Col>
-          </Row>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>{search.Name}</Flex>
+            <Flex flex={8}>{expressionString}</Flex>
+          </Flex>
         );
       }
       case StrategyConstants.LayoutStrategyId: {
         let layout = sharedEntity.entity as Layout;
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>{layout.Name}</Col>
-            <Col xs={8}>{layout.Columns.join(', ')}</Col>
-          </Row>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>{layout.Name}</Flex>
+            <Flex flex={8}>{layout.Columns.join(', ')}</Flex>
+          </Flex>
         );
       }
       case StrategyConstants.FormatColumnStrategyId: {
         let fc = sharedEntity.entity as FormatColumn;
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>
               {ColumnHelper.getFriendlyNameFromColumnId(fc.ColumnId, this.props.Columns)}
-            </Col>
-            <Col md={8}>
+            </Flex>
+            <Flex flex={8}>
               <StyleVisualItem Style={fc.Style} />
-            </Col>
-          </Row>
+            </Flex>
+          </Flex>
         );
       }
       case StrategyConstants.ExportStrategyId: {
@@ -255,10 +244,10 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
           this.props.Columns
         );
         return (
-          <Row style={{ display: 'flex', alignItems: 'center' }}>
-            <Col xs={4}>{range.Name}</Col>
-            <Col xs={8}>{expressionString}</Col>
-          </Row>
+          <Flex flexDirection="row" alignItems="center">
+            <Flex flex={4}>{range.Name}</Flex>
+            <Flex flex={8}>{expressionString}</Flex>
+          </Flex>
         );
       }
       case StrategyConstants.ColumnFilterStrategyId: {

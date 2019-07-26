@@ -23,14 +23,15 @@ export type DropdownProps = Omit<BoxProps, 'onChange'> & {
   disabled?: boolean;
   multiple?: boolean;
   allowSearch?: boolean;
-  emptyText?: ReactNode;
+  emptyText?: string;
   placeholder?: ReactNode;
   clearButtonProps?: any;
 
   renderLabel?: (label?: string, option?: DropdownOption) => ReactNode;
 
   name?: string;
-  options: (DropdownOption | string)[];
+  showEmptyItem?: boolean;
+  options: (DropdownOption | string)[] | (() => (DropdownOption | string)[]);
   defaultExpanded?: boolean;
   showClearButton?: boolean;
   onChange?: (value: any, e?: React.SyntheticEvent, option?: DropdownOption) => void;
@@ -47,6 +48,7 @@ const Dropdown = (props: DropdownProps) => {
     multiple,
     name,
     autoFocus,
+    showEmptyItem = true,
     showClearButton,
     disabled,
     allowSearch,
@@ -54,6 +56,7 @@ const Dropdown = (props: DropdownProps) => {
     value: _,
     onChange: __,
     style,
+    onExpand,
     ...boxProps
   } = props;
 
@@ -65,7 +68,31 @@ const Dropdown = (props: DropdownProps) => {
   });
 
   let selectedOption: DropdownOption | null = null;
-  const finalOptions: DropdownOption[] = options.map(
+  let [lazyOptions, setLazyOptions] = useState<(DropdownOption | string)[]>([]);
+
+  let onMouseDown = () => {
+    if (onExpand) {
+      onExpand();
+    }
+  };
+
+  if (typeof options === 'function') {
+    const lazyOptionsFn: () => (DropdownOption | string)[] = options;
+
+    onMouseDown = () => {
+      const newOptions: (DropdownOption | string)[] = lazyOptionsFn();
+      setLazyOptions(newOptions);
+      if (onExpand) {
+        onExpand();
+      }
+    };
+
+    options = lazyOptions;
+  }
+
+  let placeholder = props.emptyText || props.placeholder || 'Please select an option';
+
+  const finalOptions: DropdownOption[] = (options as (DropdownOption | string)[]).map(
     (option: DropdownOption | string): DropdownOption => {
       if (typeof option === 'string') {
         option = {
@@ -80,6 +107,12 @@ const Dropdown = (props: DropdownProps) => {
       return option;
     }
   );
+
+  if (showEmptyItem)
+    finalOptions.splice(0, 0, {
+      label: placeholder,
+      value: '',
+    });
 
   const onChange = (option: DropdownOption, e?: React.SyntheticEvent) => {
     setValue(option ? option.value : option, e, option);
@@ -107,7 +140,7 @@ const Dropdown = (props: DropdownProps) => {
     : defaultLabel;
 
   if (!selectedOption) {
-    selectedText = props.emptyText || props.placeholder || 'Please select an option';
+    selectedText = placeholder;
   }
 
   const renderClearButton = () => (
@@ -164,6 +197,7 @@ const Dropdown = (props: DropdownProps) => {
           onChange(selected, e);
         }}
         style={{ opacity: 0, width: '100%', height: '100%', top: 0, left: 0, zIndex: 1 }}
+        onMouseDown={onMouseDown}
         name={name}
         multiple={multiple}
         autoFocus={autoFocus}

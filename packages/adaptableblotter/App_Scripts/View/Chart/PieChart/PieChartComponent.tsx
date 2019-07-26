@@ -45,13 +45,9 @@ import HelpBlock from '../../../components/HelpBlock';
 import Panel from '../../../components/Panel';
 import Checkbox from '../../../components/CheckBox';
 
-import NotifyResize from '../../../components/NotifyResize';
+import SizedContainer from '../../../components/SizedContainer';
+import ChartContainer from '../../../components/ChartContainer';
 
-const COLS: FormLayoutColumn[] = [{ name: 'label', style: { textAlign: 'start' } }, { name: '2' }];
-/*
-This is really only going to be for Category Charts.
-As we add other chart types we will need to rethink this and some of the assumptions
-*/
 interface PieChartComponentProps {
   cssClassName: string;
   CurrentChartDefinition: PieChartDefinition;
@@ -63,31 +59,11 @@ const defaultButtonProps = {
   variant: 'text' as 'text',
 };
 
-interface ChartContainerProps extends Omit<BoxProps, 'children'> {
-  children: any;
-}
-
-const ChartContainer = (props: ChartContainerProps) => {
-  const { ...domProps } = props;
-  const [size, onResize] = React.useState<{ width: number; height: number } | null>(null);
-
-  const chart: any = React.Children.only(props.children);
-
-  return (
-    <Box {...domProps} style={{ flex: 1, ...domProps.style, position: 'relative' }}>
-      <Box
-        style={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}
-        data-width={size ? size.width : null}
-        data-height={size ? size.height : null}
-      >
-        <NotifyResize onResize={onResize} />
-        {size && chart
-          ? React.cloneElement(chart, { height: `${size.height}px`, width: `${chart.width}px` })
-          : null}
-      </Box>
-    </Box>
-  );
-};
+const COLS: FormLayoutColumn[] = [{ name: 'label', style: { textAlign: 'start' } }, { name: '2' }];
+/*
+This is really only going to be for Category Charts.
+As we add other chart types we will need to rethink this and some of the assumptions
+*/
 export class PieChartComponent extends React.Component<
   PieChartComponentProps,
   PieChartComponentState
@@ -342,15 +318,12 @@ export class PieChartComponent extends React.Component<
     );
 
     return this.props.ChartData != null ? (
-      <Flex flexDirection="row">
-        <Flex flexDirection="column" flex={1} style={{ textAlign: 'center' }}>
-          {!this.state.IsChartSettingsVisible ? openChartSettingsButton : null}
-          {chartTitle}
-          <ChartContainer style={{ minHeight: '60vh' }}>{chartElement}</ChartContainer>
-        </Flex>
-
-        {this.state.IsChartSettingsVisible ? sidePanel : null}
-      </Flex>
+      <ChartContainer
+        button={!this.state.IsChartSettingsVisible ? openChartSettingsButton : null}
+        chart={chartElement}
+        title={chartTitle}
+        settingsPanel={this.state.IsChartSettingsVisible ? sidePanel : null}
+      />
     ) : null;
   }
 

@@ -45,7 +45,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
     );
 
     let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)
-      ? selectSearchString
+      ? null
       : this.props.CurrentAdvancedSearchName;
 
     let sortedAdvancedSearches: AdvancedSearch[] = ArrayExtensions.sortArrayWithProperty(

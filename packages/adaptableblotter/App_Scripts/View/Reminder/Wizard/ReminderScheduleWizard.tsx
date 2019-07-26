@@ -1,6 +1,6 @@
 import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
 import * as React from 'react';
-import { Panel, FormControl, FormGroup, Col, ControlLabel, Row } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,

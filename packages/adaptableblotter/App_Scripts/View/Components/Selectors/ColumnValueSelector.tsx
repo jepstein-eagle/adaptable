@@ -64,25 +64,6 @@ export class ColumnValueSelector extends React.Component<
       // placeholderText += ' or enter free text';
     }
 
-    if (
-      this.props.SelectedColumn != null &&
-      this.props.Blotter != null &&
-      this.props.Blotter.getColumnValueDisplayValuePairDistinctList != null
-    ) {
-      console.log('getting distinct values for ' + this.props.SelectedColumn.FriendlyName);
-      let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
-        this.props.SelectedColumn.ColumnId,
-        DistinctCriteriaPairValue.DisplayValue,
-        false
-      );
-
-      sortedColumnValues = ArrayExtensions.sortArrayWithProperty(
-        SortOrder.Ascending,
-        columnDisplayValuePairs,
-        'RawValue'
-      );
-    }
-
     const fieldWidth = 150;
     const dd = (
       <Dropdown
@@ -93,18 +74,35 @@ export class ColumnValueSelector extends React.Component<
         onChange={(selected: any) => {
           this.onSelectedValueChange([{ RawValue: selected }]);
         }}
-        onClick={() => {
+        options={() => {
           LoggingHelper.LogInfo(
             'Opening and woudl like to get values for ' + this.props.SelectedColumn
           );
-          // I want only to get the values NOW!
+
+          if (
+            this.props.SelectedColumn != null &&
+            this.props.Blotter != null &&
+            this.props.Blotter.getColumnValueDisplayValuePairDistinctList != null
+          ) {
+            console.log('getting distinct values for ' + this.props.SelectedColumn.FriendlyName);
+            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+              this.props.SelectedColumn.ColumnId,
+              DistinctCriteriaPairValue.DisplayValue,
+              false
+            );
+
+            sortedColumnValues = ArrayExtensions.sortArrayWithProperty(
+              SortOrder.Ascending,
+              columnDisplayValuePairs,
+              'RawValue'
+            );
+            return sortedColumnValues.map(v => ({
+              label: v.DisplayValue,
+              value: v.RawValue,
+            }));
+          }
+          return [];
         }}
-        options={sortedColumnValues.map(v => {
-          return {
-            label: v.DisplayValue,
-            value: v.RawValue,
-          };
-        })}
         disabled={this.props.disabled}
       />
     );

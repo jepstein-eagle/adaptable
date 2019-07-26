@@ -1,8 +1,7 @@
 import * as React from 'react';
-/// <reference path="../../typings/.d.ts" />
-import { Glyphicon } from 'react-bootstrap';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import SimpleButton from '../../components/SimpleButton';
+import { Box } from 'rebass';
 
 // Keep this simple - it just takes a list of step names and the active step name
 
@@ -39,10 +38,9 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
             {s}
           </SimpleButton>
           {lastStep == false && (
-            <Glyphicon
-              style={{ verticalAlign: 'middle', margin: '5px', padding: '5px' }}
-              glyph="resize-horizontal"
-            />
+            <Box mx={2} style={{ display: 'inline-block' }}>
+              —
+            </Box>
           )}
         </div>
       );

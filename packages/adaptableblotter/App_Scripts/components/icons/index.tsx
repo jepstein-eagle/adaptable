@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { ReactNode } from 'react';
 
 import ArrowRight from './arrow-right';
@@ -33,8 +34,10 @@ import CheckCircle from './check-circle';
 import Refresh from './refresh';
 import Save from './save';
 import BarChart from './bar-chart';
+import ImportExport from './import-export';
+import { ReactComponentLike } from 'prop-types';
 
-export default {
+const allIcons = {
   'arrow-right': ArrowRight,
   'arrow-up': ArrowUp,
   'triangle-up': TriangleUp,
@@ -72,8 +75,19 @@ export default {
   dashboard: Dashboard,
   edit: Edit,
   clear: Clear,
+  'import-export': ImportExport,
   info: Info,
   'info-sign': Info,
   add: Plus,
   export: Export,
 } as { [key: string]: ReactNode };
+
+export const Icon = ({ name, ...props }: { name: string; props?: any }) => {
+  const IconCmp = (allIcons[name] || null) as ReactComponentLike;
+
+  if (!IconCmp) {
+    console.warn('NO icon found for' + name);
+  }
+
+  return <IconCmp {...props} />;
+};
