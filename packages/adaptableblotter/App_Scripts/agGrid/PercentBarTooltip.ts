@@ -9,7 +9,7 @@ export class PercentBarTooltip implements ITooltipComp {
     var eGui = document.createElement('div');
     var color = 'white';
     var data = params.api.getDisplayedRowAtIndex(params.rowIndex).data;
-    console.log(data.changeOnYear);
+    //  console.log(data.changeOnYear);
 
     // eGui.classList.add('custom-tooltip');
     //eGui.style['background-color'] = color;

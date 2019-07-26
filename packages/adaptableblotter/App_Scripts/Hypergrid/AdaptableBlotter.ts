@@ -46,7 +46,6 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
-import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
@@ -490,7 +489,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return '';
   }
 
-  getActiveCell(): ICellInfo {
+  getActiveCell(): GridCell {
     let currentCell = this.hyperGrid.selectionModel.getLastSelection();
 
     if (currentCell) {
@@ -499,7 +498,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       let primaryKey = this.getPrimaryKeyValueFromRecord(row);
 
       let value = this.valOrFunc(row, column);
-      return { Id: primaryKey, ColumnId: column.name, Value: value };
+      return { primaryKeyValue: primaryKey, columnId: column.name, value: value };
     }
     return null;
   }
@@ -661,7 +660,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return DataType.String;
   }
 
-  public setValue(cellInfo: ICellInfo): void {
+  public setValue(cellInfo: GridCell): void {
     //there is a bug in hypergrid 15/12/16 and the row object on the cellEditor is the row below the one currently edited
     //so we just close editor for now even if not the one where we set the value
     //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.hyperGrid.cellEditor.row) == id)
@@ -669,17 +668,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(
       this.blotterOptions.primaryKey,
-      cellInfo.Id
+      cellInfo.primaryKeyValue
     );
 
-    let oldValue = row[cellInfo.ColumnId];
-    row[cellInfo.ColumnId] = cellInfo.Value;
+    let oldValue = row[cellInfo.columnId];
+    row[cellInfo.columnId] = cellInfo.value;
 
     let dataChangedEvent: DataChangedInfo = {
       OldValue: oldValue,
-      NewValue: cellInfo.Value,
-      ColumnId: cellInfo.ColumnId,
-      IdentifierValue: cellInfo.Id,
+      NewValue: cellInfo.value,
+      ColumnId: cellInfo.columnId,
+      IdentifierValue: cellInfo.primaryKeyValue,
       Record: null,
     };
     if (this.AuditLogService.isAuditCellEditsEnabled) {
@@ -692,22 +691,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.filterOnUserDataChange();
   }
 
-  public setValueBatch(batchValues: ICellInfo[]): void {
+  public setValueBatch(batchValues: GridCell[]): void {
     //no need to have a batch mode so far.... we'll see in the future performance
     let dataChangedEvents: DataChangedInfo[] = [];
     for (let element of batchValues) {
       let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(
         this.blotterOptions.primaryKey,
-        element.Id
+        element.primaryKeyValue
       );
-      let oldValue = row[element.ColumnId];
-      row[element.ColumnId] = element.Value;
+      let oldValue = row[element.columnId];
+      row[element.columnId] = element.value;
 
       let dataChangedEvent: DataChangedInfo = {
         OldValue: oldValue,
-        NewValue: element.Value,
-        ColumnId: element.ColumnId,
-        IdentifierValue: element.Id,
+        NewValue: element.value,
+        ColumnId: element.columnId,
+        IdentifierValue: element.primaryKeyValue,
         Record: null,
       };
       dataChangedEvents.push(dataChangedEvent);
@@ -1435,10 +1434,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             warningMessage =
               warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + '\n';
           });
-          let cellInfo: ICellInfo = {
-            Id: dataChangedEvent.IdentifierValue,
-            ColumnId: dataChangedEvent.ColumnId,
-            Value: dataChangedEvent.NewValue,
+          let cellInfo: GridCell = {
+            primaryKeyValue: dataChangedEvent.IdentifierValue,
+            columnId: dataChangedEvent.ColumnId,
+            value: dataChangedEvent.NewValue,
           };
 
           let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(

@@ -1,8 +1,8 @@
 import { ShortcutState, Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
 import * as Redux from 'redux';
-import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
+import { GridCell } from '../../Utilities/Interface/SelectedCell/GridCell';
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';
@@ -11,7 +11,7 @@ export const SHORTCUT_DELETE = 'SHORTCUT_DELETE';
 
 export interface ShortcutApplyAction extends Redux.Action {
   Shortcut: Shortcut;
-  CellInfo: ICellInfo;
+  GridCell: GridCell;
   KeyEventString: string;
   NewValue: any;
 }
@@ -28,13 +28,13 @@ export interface ShortcutDeleteAction extends ShortcutAction {}
 
 export const ShortcutApply = (
   Shortcut: Shortcut,
-  CellInfo: ICellInfo,
+  GridCell: GridCell,
   KeyEventString: string,
   NewValue: any
 ): ShortcutApplyAction => ({
   type: SHORTCUT_APPLY,
   Shortcut,
-  CellInfo,
+  GridCell,
   KeyEventString,
   NewValue,
 });

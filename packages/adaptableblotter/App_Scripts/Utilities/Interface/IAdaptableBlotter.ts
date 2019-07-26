@@ -1,5 +1,4 @@
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
-import { ICellInfo } from './ICellInfo';
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
@@ -23,6 +22,7 @@ import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColu
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { GridCell } from './SelectedCell/GridCell';
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -102,7 +102,7 @@ export interface IAdaptableBlotter {
   redraw(): void;
 
   // cell / column selection
-  getActiveCell(): ICellInfo;
+  getActiveCell(): GridCell;
   selectColumn(columnId: string): void;
 
   // column related
@@ -131,8 +131,8 @@ export interface IAdaptableBlotter {
   getDataRowFromRecord(record: any): any;
 
   // editing related
-  setValue(cellInfo: ICellInfo): void;
-  setValueBatch(batchValues: ICellInfo[]): void;
+  setValue(gridCell: GridCell): void;
+  setValueBatch(gridCellBatch: GridCell[]): void;
   cancelEdit(): any;
   gridHasCurrentEditValue(): boolean;
   getCurrentCellEditValue(): any;

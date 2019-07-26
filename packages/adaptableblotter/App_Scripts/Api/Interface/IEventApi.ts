@@ -9,17 +9,22 @@ import {
 } from '../Events/BlotterEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 
+/**
+ * The Adaptable Blotter publishes 5 events that users can subscribe to as required.
+ *
+ * Each event contains the Adaptable Blotter and an EventArgs object that contains relevant information for the event.
+ *
+ * The way to subscribe to the events is as follows:
+ *
+ * ```ts
+ * adaptableblotter.api.eventApi
+ *    .onActionColumnClicked()
+ *    .Subscribe((sender, actionColumnEventArgs) =>
+ *        onActionColumnClicked(actionColumnEventArgs)
+ *  );
+ * ```
+ */
 export interface IEventApi {
-  /**
-   * The Adaptable Blotter publishes 5 events that users can subscribe to as required.
-   */
-
-  _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
-  _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
-  _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
-  _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
-  _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnEventArgs>;
-
   /**
    * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
    *
@@ -62,4 +67,10 @@ export interface IEventApi {
    * @returns IEvent<IAdaptableBlotter, ActionColumnEventArgs>
    */
   onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnEventArgs>;
+
+  _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
+  _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
+  _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
+  _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
+  _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnEventArgs>;
 }

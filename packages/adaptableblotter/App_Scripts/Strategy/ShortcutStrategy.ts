@@ -7,7 +7,6 @@ import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { DataType, MathOperation, ActionMode } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -19,6 +18,7 @@ import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
+import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -41,12 +41,12 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     if (ArrayExtensions.IsNullOrEmpty(shortcuts)) {
       return;
     }
-    let activeCell: ICellInfo = this.blotter.getActiveCell();
+    let activeCell: GridCell = this.blotter.getActiveCell();
     if (!activeCell) {
       return;
     }
     let selectedColumn: IColumn = ColumnHelper.getColumnFromId(
-      activeCell.ColumnId,
+      activeCell.columnId,
       this.blotter.api.gridApi.getColumns()
     );
     if (activeCell && !selectedColumn.ReadOnly) {
@@ -70,7 +70,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                 activeShortcut.ShortcutOperation as MathOperation
               );
             } else {
-              currentCellValue = activeCell.Value;
+              currentCellValue = activeCell.value;
               valueToReplace = this.CalculateShortcut(
                 currentCellValue,
                 activeShortcut.ShortcutResult,
@@ -100,10 +100,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
 
       if (activeShortcut) {
         let dataChangedEvent: DataChangedInfo = {
-          OldValue: activeCell.Value,
+          OldValue: activeCell.value,
           NewValue: valueToReplace,
-          ColumnId: activeCell.ColumnId,
-          IdentifierValue: activeCell.Id,
+          ColumnId: activeCell.columnId,
+          IdentifierValue: activeCell.primaryKeyValue,
           Record: null,
         };
 
@@ -161,12 +161,16 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
 
   private applyShortcut(
     activeShortcut: Shortcut,
-    activeCell: ICellInfo,
+    activeCell: GridCell,
     newValue: any,
     keyEventString: string
   ): void {
     this.blotter.setValueBatch([
-      { Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue },
+      {
+        primaryKeyValue: activeCell.primaryKeyValue,
+        columnId: activeCell.columnId,
+        value: newValue,
+      },
     ]);
 
     let functionAppliedDetails: FunctionAppliedDetails = {
@@ -175,8 +179,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       info: 'KeyPressed:' + keyEventString,
       data: {
         Shortcut: activeShortcut,
-        PrimaryKey: activeCell.Id,
-        ColumnId: activeCell.ColumnId,
+        PrimaryKey: activeCell.primaryKeyValue,
+        ColumnId: activeCell.columnId,
         NewValue: newValue,
       },
     };
@@ -194,7 +198,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
   private ShowWarningMessages(
     failedRules: CellValidationRule[],
     shortcut: Shortcut,
-    activeCell: ICellInfo,
+    activeCell: GridCell,
     keyEventString: string,
     newValue: any
   ): void {

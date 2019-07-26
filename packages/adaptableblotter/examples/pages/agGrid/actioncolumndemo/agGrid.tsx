@@ -20,7 +20,7 @@ var adaptableblotter: IAdaptableBlotter;
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
 
-  const tradeData: any = examplesHelper.getTrades(3);
+  const tradeData: any = examplesHelper.getTrades(300);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating blotter options here so we can add audit
@@ -36,10 +36,16 @@ function InitAdaptableBlotter() {
     userFunctions: {
       actionColumnFunctions: [
         {
-          name: 'BundleColumn',
-          func: (_record, _cellValue) => {
-            alert('hello world');
-            return 'hello';
+          name: 'RenderActionFunc',
+          func: (params, blotter) => {
+            let data: number = params.data.notional;
+            if (params.data.counterparty == 'BNP') {
+              return '';
+            }
+
+            return data > 100
+              ? '<button class="doublebutton">Double</button>'
+              : '<button class="treblebutton">Treble</button>';
           },
         },
       ],
@@ -53,23 +59,26 @@ function InitAdaptableBlotter() {
 
   adaptableblotter.api.eventApi
     .onActionColumnClicked()
-    .Subscribe((sender, actionColumnEventArgs) =>
-      listenToActionColumnClicked(actionColumnEventArgs)
-    );
+    .Subscribe((sender, actionColumnEventArgs) => onActionColumnClicked(actionColumnEventArgs));
 }
 
-function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
+function onActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
   console.log('alert fired event received');
   console.log(actionColumnEventArgs);
+
+  let rowData = actionColumnEventArgs.rowData;
+  let multiplier: number = rowData.notional > 100 ? 2 : 3;
+  let newNotional = rowData.notional * multiplier;
+  adaptableblotter.api.gridApi.setValue(rowData.tradeId, 'notional', newNotional);
 }
 
 let demoConfig: PredefinedConfig = {
   ActionColumn: {
     ActionColumns: [
       {
-        ColumnId: 'Bundle',
-        ButtonText: 'Bundle',
-        RenderFunctionName: 'BundleColumn',
+        ColumnId: 'Action',
+        ButtonText: 'Click',
+        RenderFunctionName: 'RenderActionFunc',
       },
       {
         ColumnId: 'Plus',
@@ -78,6 +87,24 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'Minus',
         ButtonText: '-',
+      },
+    ],
+  },
+  Layout: {
+    Layouts: [
+      {
+        ColumnSorts: [],
+        Columns: ['tradeId', 'Triple Notional', 'notional', 'counterparty', 'Action'],
+        Name: 'With Button',
+      },
+    ],
+    CurrentLayout: 'With Button',
+  },
+  CalculatedColumn: {
+    CalculatedColumns: [
+      {
+        ColumnExpression: "Col('notional') * 3",
+        ColumnId: 'Triple Notional',
       },
     ],
   },

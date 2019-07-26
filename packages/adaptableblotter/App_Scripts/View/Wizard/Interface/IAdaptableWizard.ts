@@ -4,6 +4,7 @@ import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterSta
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { Column } from 'ag-grid-community';
 
 export interface AdaptableWizardStep {
   canNext(): boolean;
@@ -27,6 +28,7 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];
+  ColumnCategories: ColumnCategory[];
 }
 
 // props for a wizard that wraps a config entity that contans an Expression

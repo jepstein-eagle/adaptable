@@ -5,6 +5,7 @@ import {
   PopupEditorWrapper,
   RefreshCellsParams,
   RedrawRowsParams,
+  ColDefUtil,
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
@@ -69,7 +70,6 @@ import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalSty
 // components
 import { FilterWrapperFactory } from './FilterWrapper';
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
-import { ButtonCellRenderer } from './ButtonCellRenderer';
 
 import {
   DataType,
@@ -82,7 +82,6 @@ import {
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
-import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
@@ -151,6 +150,7 @@ import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { PercentBarTooltip } from './PercentBarTooltip';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { ActionColumnRenderer } from './ActionColumnRenderer';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -264,13 +264,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.SearchService = new SearchService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
       this,
-      (columnId, record) => this.gridOptions.api.getValue(columnId, record)
+      (columnId, record) => this.gridOptions.api!.getValue(columnId, record)
     );
 
     // we prefer the grid to be NOT instantiated so that we can do it
     // perhaps in future we will force instantiation only?
     const isGridInstantiated =
-      this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
+      this.gridOptions.api && typeof this.gridOptions.api!.getValue === 'function';
     if (!isGridInstantiated) {
       const canInstantiateGrid = this.tryInstantiateAgGrid();
       if (!canInstantiateGrid) {
@@ -466,16 +466,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private createFilterWrapper(col: Column) {
-    this.gridOptions.api.destroyFilter(col);
-    this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this);
+    this.gridOptions.api!.destroyFilter(col);
+    this.gridOptions.api!.getColumnDef(col).filter = FilterWrapperFactory(this);
     col.initialise();
   }
 
   private createQuickFilterWrapper(col: Column) {
-    this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = {
+    this.gridOptions.api!.getColumnDef(col).floatingFilterComponentParams = {
       suppressFilterButton: false,
     };
-    this.gridOptions.api.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapperFactory(
+    this.gridOptions.api!.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapperFactory(
       this
     );
   }
@@ -487,18 +487,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public applyGridFiltering() {
-    this.gridOptions.api.onFilterChanged();
+    this.gridOptions.api!.onFilterChanged();
     this.emit(SEARCH_APPLIED_EVENT);
     this.emit(GRID_REFRESHED_EVENT);
   }
 
   private applyDataChange() {
-    this.gridOptions.api.onFilterChanged();
+    this.gridOptions.api!.onFilterChanged();
     this.emit(GRID_REFRESHED_EVENT);
   }
 
   public clearGridFiltering() {
-    this.gridOptions.columnApi.getAllColumns().forEach(c => {
+    this.gridOptions.columnApi!.getAllColumns().forEach(c => {
       c.setFilterActive(false);
     });
   }
@@ -523,7 +523,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
-    const allColumns = this.gridOptions.columnApi.getAllGridColumns();
+    const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
     let startIndex: number = 0;
 
     //  this is not quite right as it assumes that only the first column can be grouped
@@ -533,7 +533,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     VisibleColumnList.forEach((column, index) => {
-      const col = this.gridOptions.columnApi.getColumn(column.ColumnId);
+      const col = this.gridOptions.columnApi!.getColumn(column.ColumnId);
       if (!col) {
         LoggingHelper.LogAdaptableBlotterError(`Cannot find vendor column:${column.ColumnId}`);
       }
@@ -554,7 +554,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setColumnIntoStore() {
     const allColumns: IColumn[] = [];
     const existingColumns: IColumn[] = this.api.gridApi.getColumns();
-    const vendorCols: Column[] = this.gridOptions.columnApi.getAllGridColumns();
+    const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
     const quickSearchClassName = this.getQuickSearchClassName();
 
     vendorCols.forEach(vendorColumn => {
@@ -582,7 +582,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const abColumn: IColumn = {
       Uuid: createUuid(),
       ColumnId: colId,
-      FriendlyName: this.gridOptions.columnApi.getDisplayNameForColumn(vendorColumn, 'header'),
+      FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
       DataType: this.getColumnDataType(vendorColumn),
       Visible: vendorColumn.isVisible(),
       ReadOnly: this.isColumnReadonly(colId),
@@ -677,7 +677,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public getPrimaryKeyValueFromRecord(record: RowNode): any {
-    return this.gridOptions.api.getValue(this.blotterOptions.primaryKey, record);
+    return this.gridOptions.api!.getValue(this.blotterOptions.primaryKey, record);
   }
 
   public gridHasCurrentEditValue(): boolean {
@@ -696,17 +696,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return '';
   }
 
-  public getActiveCell(): ICellInfo {
-    const activeCell = this.gridOptions.api.getFocusedCell();
+  public getActiveCell(): GridCell {
+    const activeCell = this.gridOptions.api!.getFocusedCell();
     if (activeCell) {
-      const rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex);
+      const rowNode = this.gridOptions.api!.getModel().getRow(activeCell.rowIndex);
       // if the selected cell is from a group cell we don't return it
       // that's a design choice as this is used only when editing and you cant edit those cells
       if (rowNode && !rowNode.group) {
         return {
-          ColumnId: activeCell.column.getColId(),
-          Id: this.getPrimaryKeyValueFromRecord(rowNode),
-          Value: this.gridOptions.api.getValue(activeCell.column, rowNode),
+          columnId: activeCell.column.getColId(),
+          primaryKeyValue: this.getPrimaryKeyValueFromRecord(rowNode),
+          value: this.gridOptions.api!.getValue(activeCell.column, rowNode),
         };
       }
     }
@@ -820,7 +820,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     }
 
-    const model = this.gridOptions.api.getModel();
+    const model = this.gridOptions.api!.getModel();
     if (model == null) {
       LoggingHelper.LogAdaptableBlotterWarning(
         `No model so returning type "Unknown" for Column: "${column.getColId()}"`
@@ -848,7 +848,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       row = childNodes[0];
     }
-    const value = this.gridOptions.api.getValue(column, row);
+    const value = this.gridOptions.api!.getValue(column, row);
     let dataType: DataType;
     if (value instanceof Date) {
       dataType = DataType.Date;
@@ -891,37 +891,37 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public setValue(cellInfo: ICellInfo): void {
+  public setValue(gridCell: GridCell): void {
     if (this.useRowNodeLookUp) {
-      const rowNode: RowNode = this.gridOptions.api.getRowNode(cellInfo.Id);
+      const rowNode: RowNode = this.gridOptions.api!.getRowNode(gridCell.primaryKeyValue);
       if (rowNode != null) {
-        this.updateValue(cellInfo, rowNode);
+        this.updateValue(gridCell, rowNode);
       }
     } else {
       let isUpdated: boolean = false;
       // prefer not to use this method but if we do then at least we can prevent further lookups once we find
-      this.gridOptions.api.getModel().forEachNode(rowNode => {
+      this.gridOptions.api!.getModel().forEachNode(rowNode => {
         if (!isUpdated) {
-          if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
-            this.updateValue(cellInfo, rowNode);
+          if (gridCell.primaryKeyValue == this.getPrimaryKeyValueFromRecord(rowNode)) {
+            this.updateValue(gridCell, rowNode);
             isUpdated = true;
           }
         }
       });
     }
     this.filterOnUserDataChange();
-    this.gridOptions.api.clearRangeSelection();
+    this.gridOptions.api!.clearRangeSelection();
   }
 
-  private updateValue(cellInfo: ICellInfo, rowNode: RowNode): void {
-    const oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode);
-    rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value);
+  private updateValue(gridCell: GridCell, rowNode: RowNode): void {
+    const oldValue = this.gridOptions.api!.getValue(gridCell.columnId, rowNode);
+    rowNode.setDataValue(gridCell.columnId, gridCell.value);
 
     const dataChangedEvent: DataChangedInfo = {
       OldValue: oldValue,
-      NewValue: cellInfo.Value,
-      ColumnId: cellInfo.ColumnId,
-      IdentifierValue: cellInfo.Id,
+      NewValue: gridCell.value,
+      ColumnId: gridCell.columnId,
+      IdentifierValue: gridCell.primaryKeyValue,
       Record: rowNode,
     };
     if (this.AuditLogService.isAuditCellEditsEnabled) {
@@ -933,8 +933,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   // this is used by strategies to update the grid
   // not sure why do it this way and not just get it updated through the event
-  public setValueBatch(batchValues: ICellInfo[]): void {
-    if (ArrayExtensions.IsNullOrEmpty(batchValues)) {
+  public setValueBatch(gridCellBatch: GridCell[]): void {
+    if (ArrayExtensions.IsNullOrEmpty(gridCellBatch)) {
       return;
     }
 
@@ -945,11 +945,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // now two ways to do this - one using pk lookup and other using foreach on row node
     if (this.useRowNodeLookUp) {
-      batchValues.forEach((cellInfo: ICellInfo) => {
-        const rowNode: RowNode = this.gridOptions.api.getRowNode(cellInfo.Id);
+      gridCellBatch.forEach((gridCell: GridCell) => {
+        const rowNode: RowNode = this.gridOptions.api!.getRowNode(gridCell.primaryKeyValue);
         if (rowNode) {
           this.updateBatchValue(
-            cellInfo,
+            gridCell,
             rowNode,
             nodesToRefresh,
             refreshColumnList,
@@ -959,13 +959,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       });
     } else {
-      this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
-        const cellInfo: ICellInfo = batchValues.find(
-          x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode)
+      this.gridOptions.api!.getModel().forEachNode((rowNode: RowNode) => {
+        const gridCell: GridCell = gridCellBatch.find(
+          x => x.primaryKeyValue == this.getPrimaryKeyValueFromRecord(rowNode)
         );
-        if (cellInfo) {
+        if (gridCell) {
           this.updateBatchValue(
-            cellInfo,
+            gridCell,
             rowNode,
             nodesToRefresh,
             refreshColumnList,
@@ -988,7 +988,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // we want to reselect the cells that are selected so that users can repeat actions
     // we do this by gettng the selected cells, clearing the selection and then re-applying
     //  agGridHelper.reselectSelectedCells();
-    let selectedCellRanges: CellRange[] = this.gridOptions.api.getCellRanges();
+    let selectedCellRanges: CellRange[] = this.gridOptions.api!.getCellRanges();
 
     if (ArrayExtensions.CorrectLength(selectedCellRanges, 1)) {
       let selectedCellRange: CellRange = selectedCellRanges[0];
@@ -997,36 +997,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         rowEndIndex: selectedCellRange.endRow.rowIndex,
         columns: selectedCellRange.columns,
       };
-      this.gridOptions.api.clearRangeSelection();
+      this.gridOptions.api!.clearRangeSelection();
 
-      this.gridOptions.api.addCellRange(cellRangeParams);
+      this.gridOptions.api!.addCellRange(cellRangeParams);
     }
   }
 
   private updateBatchValue(
-    cellInfo: ICellInfo,
+    gridCell: GridCell,
     rowNode: RowNode,
     nodesToRefresh: RowNode[],
     refreshColumnList: string[],
     dataChangedEvents: DataChangedInfo[],
     percentBars: PercentBar[]
   ): void {
-    const colId: string = cellInfo.ColumnId;
+    const colId: string = gridCell.columnId;
     refreshColumnList.push(colId);
     nodesToRefresh.push(rowNode);
 
     ArrayExtensions.AddItem(refreshColumnList, colId);
 
-    const oldValue = this.gridOptions.api.getValue(colId, rowNode);
+    const oldValue = this.gridOptions.api!.getValue(colId, rowNode);
 
     var data: any = rowNode.data;
-    data[colId] = cellInfo.Value;
+    data[colId] = gridCell.value;
 
     const dataChangedEvent: DataChangedInfo = {
       OldValue: oldValue,
-      NewValue: cellInfo.Value,
+      NewValue: gridCell.value,
       ColumnId: colId,
-      IdentifierValue: cellInfo.Id,
+      IdentifierValue: gridCell.primaryKeyValue,
       Record: rowNode,
     };
     dataChangedEvents.push(dataChangedEvent);
@@ -1059,7 +1059,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public cancelEdit() {
-    this.gridOptions.api.stopEditing(true);
+    this.gridOptions.api!.stopEditing(true);
   }
 
   public getRecordIsSatisfiedFunction(
@@ -1069,17 +1069,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
       let rowNode: RowNode;
       if (this.useRowNodeLookUp) {
-        rowNode = this.gridOptions.api.getRowNode(id);
+        rowNode = this.gridOptions.api!.getRowNode(id);
       } else {
         let foundRow: boolean = false;
-        this.gridOptions.api.getModel().forEachNode(node => {
+        this.gridOptions.api!.getModel().forEachNode(node => {
           if (!foundRow && id == this.getPrimaryKeyValueFromRecord(node)) {
             rowNode = node;
             foundRow = true;
           }
         });
       }
-      return (columnId: string) => this.gridOptions.api.getValue(columnId, rowNode);
+      return (columnId: string) => this.gridOptions.api!.getValue(columnId, rowNode);
     }
     return (columnId: string) => this.getDisplayValue(id, columnId);
   }
@@ -1089,7 +1089,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     distinctCriteria: DistinctCriteriaPairValue
   ): (columnId: string) => any {
     if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-      return (columnId: string) => this.gridOptions.api.getValue(columnId, record);
+      return (columnId: string) => this.gridOptions.api!.getValue(columnId, record);
     }
     return (columnId: string) => this.getDisplayValueFromRecord(record, columnId);
   }
@@ -1098,7 +1098,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // same as hypergrid. we do not support the fact that some rows are editable and some are not
     // if editable is a function then we return that its not readonly since we assume that some record will be editable
     // that's wrong but we ll see if we face the issue later
-    const colDef = this.gridOptions.api.getColumnDef(columnId);
+    const colDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef && typeof colDef.editable === 'boolean') {
       return !colDef.editable;
     }
@@ -1107,7 +1107,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private isColumnSortable(columnId: string): boolean {
     // follow agGrid logic which is that ONLY if sortable explicitly set to false do you suppress sort
-    const colDef: ColDef = this.gridOptions.api.getColumnDef(columnId);
+    const colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef.sortable != null) {
       return colDef.sortable;
     }
@@ -1116,28 +1116,28 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private isColumnFilterable(columnId: string): boolean {
     // follow agGrid logic which is that ONLY filterable if one explicitly set
-    const colDef: ColDef = this.gridOptions.api.getColumnDef(columnId);
+    const colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
     return colDef.filter != null && colDef.filter != false;
   }
 
   public setCustomSort(columnId: string, comparer: Function): void {
-    const sortModel = this.gridOptions.api.getSortModel();
-    const columnDef = this.gridOptions.api.getColumnDef(columnId);
+    const sortModel = this.gridOptions.api!.getSortModel();
+    const columnDef = this.gridOptions.api!.getColumnDef(columnId);
 
     if (columnDef) {
       columnDef.comparator = <any>comparer;
     }
-    this.gridOptions.api.setSortModel(sortModel);
+    this.gridOptions.api!.setSortModel(sortModel);
   }
 
   public removeCustomSort(columnId: string): void {
-    const sortModel = this.gridOptions.api.getSortModel();
-    const columnDef = this.gridOptions.api.getColumnDef(columnId);
+    const sortModel = this.gridOptions.api!.getSortModel();
+    const columnDef = this.gridOptions.api!.getColumnDef(columnId);
 
     if (columnDef) {
       columnDef.comparator = null;
     }
-    this.gridOptions.api.setSortModel(sortModel);
+    this.gridOptions.api!.setSortModel(sortModel);
   }
 
   public getColumnValueDisplayValuePairDistinctList(
@@ -1159,11 +1159,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     } else {
       const useRawValue: boolean = this.useRawValueForColumn(columnId);
       if (visibleRowsOnly) {
-        this.gridOptions.api.forEachNodeAfterFilter((rowNode: RowNode) => {
+        this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
           this.addDistinctColumnValue(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
         });
       } else {
-        this.gridOptions.api.forEachNode(rowNode => {
+        this.gridOptions.api!.forEachNode(rowNode => {
           this.addDistinctColumnValue(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
         });
       }
@@ -1184,7 +1184,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // we do not return the values of the aggregates when in grouping mode
     // otherwise they would appear in the filter dropdown etc....
     if (!rowNode.group) {
-      const rawValue = this.gridOptions.api.getValue(columnId, rowNode);
+      const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
       const displayValue = useRawValue
         ? Helper.StringifyValue(rawValue)
         : this.getDisplayValueFromRecord(rowNode, columnId);
@@ -1197,6 +1197,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private useRawValueForColumn(columnId: string): boolean {
+    // we need to return false if the column has a cell rendeerer i think...
+    let colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
+    if (colDef) {
+      if (colDef.cellRenderer != null) {
+        return true;
+      }
+    }
+
     // will add more in due course I'm sure but for now only percent bar columns return false...
     const percentBars: PercentBar[] = this.api.percentBarApi.getAllPercentBar();
     if (ArrayExtensions.IsEmpty(percentBars)) {
@@ -1209,11 +1217,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     let returnValue: string;
 
     if (this.useRowNodeLookUp) {
-      const rowNode: RowNode = this.gridOptions.api.getRowNode(id);
+      const rowNode: RowNode = this.gridOptions.api!.getRowNode(id);
       returnValue = this.getDisplayValueFromRecord(rowNode, columnId);
     } else {
       let foundRow: boolean = false;
-      this.gridOptions.api.getModel().forEachNode(rowNode => {
+      this.gridOptions.api!.getModel().forEachNode(rowNode => {
         if (!foundRow && id == this.getPrimaryKeyValueFromRecord(rowNode)) {
           returnValue = this.getDisplayValueFromRecord(rowNode, columnId);
           foundRow = true;
@@ -1227,7 +1235,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (row == null) {
       return '';
     }
-    const rawValue = this.gridOptions.api.getValue(columnId, row);
+    const rawValue = this.gridOptions.api!.getValue(columnId, row);
     if (this.useRawValueForColumn(columnId)) {
       return Helper.StringifyValue(rawValue);
     }
@@ -1235,7 +1243,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
-    const colDef = this.gridOptions.api.getColumnDef(columnId);
+    const colDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef) {
       if (colDef.valueFormatter) {
         const column = this.gridOptions.columnApi
@@ -1274,7 +1282,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public getRawValueFromRecord(row: RowNode, columnId: string): any {
-    return this.gridOptions.api.getValue(columnId, row);
+    return this.gridOptions.api!.getValue(columnId, row);
   }
 
   public getDataRowFromRecord(record: any): any {
@@ -1287,7 +1295,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     columnId: string,
     type: 'ConditionalStyle' | 'QuickSearch' | 'FlashingCell' | 'FormatColumn'
   ) {
-    const localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef()
+    const localCellClassRules = this.gridOptions.columnApi!.getColumn(columnId).getColDef()
       .cellClassRules;
 
     if (localCellClassRules) {
@@ -1333,30 +1341,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         localCellClassRules[prop] = cellClassRules[prop];
       }
     } else {
-      this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
+      this.gridOptions.columnApi!.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
     }
   }
 
   public forAllRecordsDo(func: (record: any) => any) {
-    this.gridOptions.api.getModel().forEachNode(rowNode => {
+    this.gridOptions.api!.getModel().forEachNode(rowNode => {
       func(rowNode);
     });
   }
 
   public forAllVisibleRecordsDo(func: (record: any) => any) {
-    this.gridOptions.api.forEachNodeAfterFilterAndSort(rowNode => {
+    this.gridOptions.api!.forEachNodeAfterFilterAndSort(rowNode => {
       func(rowNode);
     });
   }
 
   public redraw() {
-    this.gridOptions.api.redrawRows();
-    this.gridOptions.api.refreshHeader();
+    this.gridOptions.api!.redrawRows();
+    this.gridOptions.api!.refreshHeader();
     this.emit(GRID_REFRESHED_EVENT);
   }
 
   public testredrawRow(rowNode: RowNode) {
-    this.gridOptions.api.redrawRows({ rowNodes: [rowNode] });
+    this.gridOptions.api!.redrawRows({ rowNodes: [rowNode] });
   }
 
   public refreshCells(rows: RowNode[], columnIds: string[]) {
@@ -1365,7 +1373,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       columns: columnIds,
       force: true,
     };
-    this.gridOptions.api.refreshCells(refreshCellParams);
+    this.gridOptions.api!.refreshCells(refreshCellParams);
   }
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
@@ -1374,7 +1382,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     let existingABColumn: IColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
     if (existingABColumn) {
       // now get the ag-Grid ColDef Index
-      const colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef());
+      const colDefs: ColDef[] = this.gridOptions.columnApi!.getAllColumns().map(x => x.getColDef());
       const colDefIndex = colDefs.findIndex(x => x.headerName == existingABColumn.ColumnId);
 
       // clean the expression in case it got dirty
@@ -1430,7 +1438,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
-    const colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef());
+    const colDefs: ColDef[] = this.gridOptions.columnApi!.getAllColumns().map(x => x.getColDef());
     const colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumnID);
     if (colDefIndex > -1) {
       colDefs.splice(colDefIndex, 1);
@@ -1446,7 +1454,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
-    const venderCols = this.gridOptions.columnApi.getAllColumns();
+    const venderCols = this.gridOptions.columnApi!.getAllColumns();
     const colDefs: ColDef[] = venderCols.map(x => x.getColDef());
 
     const cols: IColumn[] = this.api.gridApi.getColumns();
@@ -1521,7 +1529,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       hide: false,
       filter: false,
       sortable: false,
-      cellRenderer: ButtonCellRenderer,
+      cellRenderer: ActionColumnRenderer,
     };
     colDefs.push(newColDef);
     this.agGridHelper.safeSetColDefs(colDefs);
@@ -1575,7 +1583,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public getFirstRecord() {
     // TODO: we can find a better way but its only used by Calccolumn on creation so not urgent
     let record: RowNode;
-    this.gridOptions.api.forEachNode(rowNode => {
+    this.gridOptions.api!.forEachNode(rowNode => {
       if (!rowNode.group) {
         if (!record) {
           record = rowNode;
@@ -1675,7 +1683,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
+          `There is no Div called ${
+            this.blotterOptions.containerOptions.adaptableBlotterContainer
+          } so cannot render the Adaptable Blotter`
         );
         return;
       }
@@ -1691,7 +1701,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // });
     // we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
     // since there are many events and we want them to behave the same
-    this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {
       if (params.visible) {
         this.updateQuickSearchRangeVisibleColumn(params.column.colId);
       }
@@ -1707,7 +1717,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       //   Events.EVENT_COLUMN_PINNED,
       Events.EVENT_NEW_COLUMNS_LOADED,
     ];
-    this.gridOptions.api.addGlobalListener((type: string) => {
+    this.gridOptions.api!.addGlobalListener((type: string) => {
       if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
         // bit messy but better than alternative which was calling setColumnIntoStore for every single column
         const popupState = this.getState().Popup.ScreenPopup;
@@ -1726,11 +1736,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     });
     // dealing with scenario where the data is poured into the blotter after grid has been setup
-    this.gridOptions.api.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, () => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, () => {
       this.debouncedSetColumnIntoStore();
     });
     // once the grid is ready we should make sure we are too
-    this.gridOptions.api.addEventListener(Events.EVENT_GRID_READY, () => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_GRID_READY, () => {
       // do something?
     });
     // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
@@ -1747,11 +1757,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // this event deals with when the user makes an edit - it doesnt look at ticking data
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
       // TODO: Jo: This is a workaround as we are accessing private members of agGrid.
-      // I still wonder if we can do this nicer by using :   this.gridOptions.api.getEditingCells();
+      // I still wonder if we can do this nicer by using :   this.gridOptions.api!.getEditingCells();
       // must be a good reason why we don't use it
-
-      console.log('cell editing started triggered');
-      console.log(params);
 
       const editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex]
         .cellComps[params.column.getColId()].cellEditor;
@@ -1797,15 +1804,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             warningMessage = `${warningMessage +
               ObjectFactory.CreateCellValidationMessage(f, this)}\n`;
           });
-          const cellInfo: ICellInfo = {
-            Id: dataChangedInfo.IdentifierValue,
-            ColumnId: dataChangedInfo.ColumnId,
-            Value: dataChangedInfo.NewValue,
+          const gridCell: GridCell = {
+            primaryKeyValue: dataChangedInfo.IdentifierValue,
+            columnId: dataChangedInfo.ColumnId,
+            value: dataChangedInfo.NewValue,
           };
 
           const confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(
-            cellInfo,
-            this.gridOptions.api.getValue(params.column.getColId(), params.node)
+            gridCell,
+            this.gridOptions.api!.getValue(params.column.getColId(), params.node)
           );
           const cancelAction: Redux.Action = null;
           const confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
@@ -1833,7 +1840,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       };
       this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
     });
-    this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, () => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, () => {
       // (<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
       this._currentEditor = null;
       // We refresh the filter so we get live search/filter when editing.
@@ -1843,19 +1850,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.filterOnUserDataChange();
       this.debouncedSetSelectedCells();
     });
-    this.gridOptions.api.addEventListener(Events.EVENT_SELECTION_CHANGED, () => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_SELECTION_CHANGED, () => {
       this.debouncedSetSelectedCells();
     });
-    this.gridOptions.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, () => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, () => {
       this.debouncedSetSelectedCells();
     });
-    // this.gridOptions.api.addEventListener(Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED, () => {
+    // this.gridOptions.api!.addEventListener(Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED, () => {
     // });
 
-    //  this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
-    //     console.log(params)
+    //  this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
     // });
-    this.gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, () => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_SORT_CHANGED, () => {
       this.onSortChanged();
       this.debouncedSetSelectedCells();
     });
@@ -1863,34 +1869,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //  });
     //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
     // });
-    this.gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
       // not sure about this - doing it to make sure that we set the columns properly at least once!
 
       this.checkColumnsDataTypeSet();
     });
 
-    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
-      console.log('row data updated triggered');
-      console.log(params);
-    });
+    //  this.gridOptions.api!.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+    //   });
 
-    this.gridOptions.api.addEventListener(Events.EVENT_ROW_VALUE_CHANGED, (params: any) => {
-      console.log('row value changed triggered');
-      console.log(params);
-    });
+    //   this.gridOptions.api!.addEventListener(Events.EVENT_ROW_VALUE_CHANGED, (params: any) => {
+    //   });
 
-    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
-      console.log('row data changed triggered');
-      console.log(params);
-    });
+    //   this.gridOptions.api!.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
+    //   });
+
     // this handles ticking data
     // except it doesnt handle when data has been added to ag-Grid using updateRowData  ouch !!!
-    this.gridOptions.api.addEventListener(
+    this.gridOptions.api!.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {
-        console.log('cell value changed triggered');
-        console.log(params);
-
         // this gets called as soon as opening editor so make sure the values are different before starting any work...
         if (params.newValue != params.oldValue) {
           const identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
@@ -1913,7 +1911,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             columnList.forEach(columnId => {
               const dataChangedInfo: DataChangedInfo = {
                 OldValue: params.oldValue,
-                NewValue: this.gridOptions.api.getValue(columnId, params.node),
+                NewValue: this.gridOptions.api!.getValue(columnId, params.node),
                 ColumnId: columnId,
                 IdentifierValue: identifierValue,
                 Record: params.node,
@@ -1958,7 +1956,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       if (isFilterActive) {
         // used in particular at init time to show the filter icon correctly
         for (const colFilter of columnFilters) {
-          const agGridCol = this.gridOptions.columnApi.getColumn(colFilter.ColumnId);
+          const agGridCol = this.gridOptions.columnApi!.getColumn(colFilter.ColumnId);
           if (agGridCol) {
             if (!agGridCol.isFilterActive()) {
               agGridCol.setFilterActive(true);
@@ -2191,7 +2189,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private onSortChanged(): void {
-    const sortModel: any[] = this.gridOptions.api.getSortModel();
+    const sortModel: any[] = this.gridOptions.api!.getSortModel();
 
     const columnSorts: ColumnSort[] = [];
     if (sortModel != null) {
@@ -2241,19 +2239,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public getRowCount(): number {
     return this.gridOptions.rowData
       ? this.gridOptions.rowData.length
-      : this.gridOptions.api.getDisplayedRowCount();
+      : this.gridOptions.api!.getDisplayedRowCount();
   }
 
   public getColumnCount(): number {
-    return this.gridOptions.columnApi.getAllColumns().length;
+    return this.gridOptions.columnApi!.getAllColumns().length;
   }
 
   public getVisibleRowCount(): number {
-    return this.gridOptions.api.getDisplayedRowCount();
+    return this.gridOptions.api!.getDisplayedRowCount();
   }
 
   public getVisibleColumnCount(): number {
-    return this.gridOptions.columnApi.getAllColumns().filter(c => c.isVisible()).length;
+    return this.gridOptions.columnApi!.getAllColumns().filter(c => c.isVisible()).length;
   }
 
   public selectColumn(columnId: string) {
@@ -2276,12 +2274,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const sortDescription: string = gs.SortOrder == SortOrder.Ascending ? 'asc' : 'desc';
       sortModel.push({ colId: gs.Column, sort: sortDescription });
     });
-    this.gridOptions.api.setSortModel(sortModel);
-    this.gridOptions.api.onSortChanged();
+    this.gridOptions.api!.setSortModel(sortModel);
+    this.gridOptions.api!.onSortChanged();
   }
 
   public setGridData(dataSource: any) {
-    this.gridOptions.api.setRowData(dataSource);
+    this.gridOptions.api!.setRowData(dataSource);
   }
 
   private updateQuickSearchRangeVisibleColumn(columnId: string): void {
@@ -2340,7 +2338,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (forceFetch) {
       return {
         GroupState: null,
-        ColumnState: JSON.stringify(this.gridOptions.columnApi.getColumnState()),
+        ColumnState: JSON.stringify(this.gridOptions.columnApi!.getColumnState()),
       };
     }
 
@@ -2350,13 +2348,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.blotterOptions.layoutOptions.includeVendorStateInLayouts
     ) {
       let groupedState: any = null;
-      const displayedColumns: Column[] = this.gridOptions.columnApi.getAllDisplayedColumns();
+      const displayedColumns: Column[] = this.gridOptions.columnApi!.getAllDisplayedColumns();
       const groupedCol = displayedColumns.find(c => ColumnHelper.isSpecialColumn(c.getColId()));
       if (groupedCol) {
         groupedState = groupedCol.getActualWidth();
       }
 
-      const columnState = this.gridOptions.columnApi.getColumnState();
+      const columnState = this.gridOptions.columnApi!.getColumnState();
 
       // Dont like this but not sure we have a choice to avoid other issues...
       // Going to update the state to make sure that visibility matches those given here
@@ -2387,9 +2385,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const groupedState: any = vendorGridState.GroupState;
       if (groupedState) {
         // assume for now its just a number
-        const column: Column = this.gridOptions.columnApi.getColumn('ag-Grid-AutoColumn');
+        const column: Column = this.gridOptions.columnApi!.getColumn('ag-Grid-AutoColumn');
         if (column) {
-          this.gridOptions.columnApi.setColumnWidth(column, groupedState, true);
+          this.gridOptions.columnApi!.setColumnWidth(column, groupedState, true);
         }
       }
     }
@@ -2516,7 +2514,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     let editLookUpCols: EditLookUpColumn[] = this.api.userInterfaceApi.getUserInterfaceState()
       .EditLookUpColumns;
     if (ArrayExtensions.IsNotNullOrEmpty(editLookUpCols)) {
-      const colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef());
+      const colDefs: ColDef[] = this.gridOptions.columnApi!.getAllColumns().map(x => x.getColDef());
 
       editLookUpCols.forEach((e: EditLookUpColumn) => {
         const colDefIndex = colDefs.findIndex(x => x.field == e.ColumnId);

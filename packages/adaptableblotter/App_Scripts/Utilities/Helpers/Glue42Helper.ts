@@ -1,6 +1,5 @@
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { Helper } from './Helper';
-import { ICellInfo } from '../Interface/ICellInfo';
 import { ColumnHelper } from './ColumnHelper';
 import { IColumn } from '../Interface/IColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
@@ -8,6 +7,7 @@ import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from './ExpressionHelper';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { GridCell } from '../Interface/SelectedCell/GridCell';
 
 declare var Glue4Office: any;
 
@@ -67,7 +67,7 @@ export async function exportData(data: any[], gridColumns: IColumn[], blotter: I
         gridColumns
       );
 
-      let cellInfos: ICellInfo[] = [];
+      let cellInfos: GridCell[] = [];
       const errors: IGlue42ExportError[] = [];
       for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
         let returnedRow: any = data[rowIndex];
@@ -93,10 +93,10 @@ export async function exportData(data: any[], gridColumns: IColumn[], blotter: I
                 blotter
               )
             ) {
-              let cellInfo: ICellInfo = {
-                Id: primaryKeyValue,
-                ColumnId: column.ColumnId,
-                Value: returnedValue,
+              let cellInfo: GridCell = {
+                primaryKeyValue: primaryKeyValue,
+                columnId: column.ColumnId,
+                value: returnedValue,
               };
               cellInfos.push(cellInfo);
             }

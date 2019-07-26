@@ -1,11 +1,11 @@
 import * as Redux from 'redux';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
-import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { GridCell } from '../../Utilities/Interface/SelectedCell/GridCell';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
@@ -35,7 +35,7 @@ export interface GridHideColumnAction extends Redux.Action {
 }
 
 export interface GridSetValueLikeEditAction extends Redux.Action {
-  CellInfo: ICellInfo;
+  GridCell: GridCell;
   OldValue: any;
 }
 
@@ -88,11 +88,11 @@ export const GridHideColumn = (ColumnId: string): GridHideColumnAction => ({
 });
 
 export const GridSetValueLikeEdit = (
-  CellInfo: ICellInfo,
+  GridCell: GridCell,
   OldValue: any
 ): GridSetValueLikeEditAction => ({
   type: GRID_SET_VALUE_LIKE_EDIT,
-  CellInfo,
+  GridCell,
   OldValue,
 });
 
