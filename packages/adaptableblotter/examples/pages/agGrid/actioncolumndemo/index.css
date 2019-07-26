@@ -11,3 +11,18 @@ body,
 .number-cell {
   text-align: right;
 }
+
+.doublebutton {
+  background-color:lightgreen;
+  border: none;
+  color: black;
+  font-style: italic
+}
+.treblebutton {
+  background-color:lightblue;
+  border: none;
+  color: black;
+  border-radius: 12px;
+  font-size: smaller;
+ margin: 0px
+}
