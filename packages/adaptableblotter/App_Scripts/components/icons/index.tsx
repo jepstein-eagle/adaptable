@@ -91,3 +91,5 @@ export const Icon = ({ name, ...props }: { name: string; props?: any }) => {
 
   return <IconCmp {...props} />;
 };
+
+export default allIcons;
