@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Glyphicon } from 'react-bootstrap';
+
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
 import { ButtonInfo } from '../Components/Buttons/ButtonInfo';
 
-import icons from '../../components/icons';
+import icons, { Icon } from '../../components/icons';
 import OverlayTrigger from '../../components/OverlayTrigger';
 
 import { ReactComponentLike } from 'prop-types';
@@ -100,7 +100,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
             />
           ) : (
             <div tabIndex={0} style={{ cursor: 'pointer', display: 'inline-block' }}>
-              {IconCmp ? <IconCmp style={iconStyle} /> : <Glyphicon glyph={icon} />}
+              {IconCmp ? <IconCmp style={iconStyle} /> : <Icon name="info" />}
             </div>
           )}
         </OverlayTrigger>
