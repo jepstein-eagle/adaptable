@@ -1,0 +1,41 @@
+.ab-Popover {
+  border-radius: var(--ab-cmp-popover__border-radius);
+  border: var(--ab-cmp-popover__border);
+  background: var(--ab-cmp-popover__background);
+  box-shadow: var(--ab-cmp-popover__box-shadow);
+}
+
+$triangle-size: 10px;
+.ab-Overlay--show-triangle > .ab-Popover {
+  &:before {
+    content: '';
+    position: absolute;
+    
+    width: 0;
+    height: 0;
+    border-style: solid;
+    
+  }
+}
+
+.ab-Overlay--position-bottom.ab-Overlay--show-triangle > .ab-Popover {
+  &:before {
+    border-width: 0 $triangle-size/2 $triangle-size $triangle-size/2;
+    border-color: transparent transparent var(--ab-cmp-popover__background) transparent;
+    left: 50%;
+    top: -$triangle-size;
+    transform: translate3d(-$triangle-size/2,0px, 0px);
+  }
+}
+
+.ab-Overlay--position-top.ab-Overlay--show-triangle > .ab-Popover {
+  &:before {
+    border-width: $triangle-size $triangle-size/2  0 $triangle-size/2;
+    border-color: var(--ab-cmp-popover__background) transparent transparent transparent;
+    
+
+    left: 50%;
+    bottom: -$triangle-size;
+    transform: translate3d(-$triangle-size/2,0px, 0px);
+  }
+}

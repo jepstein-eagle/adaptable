@@ -67,7 +67,8 @@ export class ColumnValueSelector extends React.Component<
     const fieldWidth = 150;
     const dd = (
       <Dropdown
-        style={{ maxWidth: 'inherit', width: fieldWidth }}
+        disabled={this.props.disabled}
+        style={{ maxWidth: 'inherit', width: fieldWidth, border: 'none' }}
         placeholder={placeholderText}
         showClearButton={false}
         value={this.props.SelectedColumnValue}
@@ -75,16 +76,11 @@ export class ColumnValueSelector extends React.Component<
           this.onSelectedValueChange([{ RawValue: selected }]);
         }}
         options={() => {
-          LoggingHelper.LogInfo(
-            'Opening and woudl like to get values for ' + this.props.SelectedColumn
-          );
-
           if (
             this.props.SelectedColumn != null &&
             this.props.Blotter != null &&
             this.props.Blotter.getColumnValueDisplayValuePairDistinctList != null
           ) {
-            console.log('getting distinct values for ' + this.props.SelectedColumn.FriendlyName);
             let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
               this.props.SelectedColumn.ColumnId,
               DistinctCriteriaPairValue.DisplayValue,
@@ -103,7 +99,6 @@ export class ColumnValueSelector extends React.Component<
           }
           return [];
         }}
-        disabled={this.props.disabled}
       />
     );
 
@@ -111,6 +106,7 @@ export class ColumnValueSelector extends React.Component<
       <Input
         type="text"
         autoFocus
+        disabled={this.props.disabled}
         style={{ width: fieldWidth }}
         value={this.props.SelectedColumnValue}
         onChange={(e: React.SyntheticEvent) => {
@@ -131,6 +127,7 @@ export class ColumnValueSelector extends React.Component<
             color: 'var(--ab-color-white)',
             background: 'var(--ab-cmp-dashboardpanel__fill)',
           }}
+          disabled={this.props.disabled}
           marginRight={1}
           items={[
             {

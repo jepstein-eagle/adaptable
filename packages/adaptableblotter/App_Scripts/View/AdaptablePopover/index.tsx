@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
-import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { MessageType } from '../PredefinedConfig/Common/Enums';
-import * as StyleConstants from '../Utilities/Constants/StyleConstants';
+import { Glyphicon } from 'react-bootstrap';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { UIHelper } from '../UIHelper';
+import { ButtonInfo } from '../Components/Buttons/ButtonInfo';
 
-import { ButtonInfo } from './Components/Buttons/ButtonInfo';
-import { UIHelper } from './UIHelper';
-import icons from '../components/icons';
+import icons from '../../components/icons';
+import OverlayTrigger from '../../components/OverlayTrigger';
 
 import { ReactComponentLike } from 'prop-types';
-import { Flex, Box } from 'rebass';
+import { Flex, Box, Text } from 'rebass';
 
 /*
 Very basic - for now! - info box that allows us to show Error where required.
@@ -47,19 +48,25 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
       this.props.popoverMinWidth != null ? this.props.popoverMinWidth.toString() + 'px' : 'auto';
     let size = this.props.size ? this.props.size : 'small';
 
+    const title = StringExtensions.IsNotNullOrEmpty(this.props.headerText)
+      ? this.props.headerText
+      : '';
     const popoverClickRootClose = (
-      <Popover
-        style={{ margin: '0px', padding: '0px', minWidth: popoverMinWidth }}
-        title={
-          StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ''
-        }
+      <Box
+        className="ab-Popover"
+        style={{ margin: '0px', padding: '0px', minWidth: popoverMinWidth, maxWidth: 300 }}
       >
+        {title ? (
+          <Text fontSize={3} padding={2}>
+            <b>{title}</b>
+          </Text>
+        ) : null}
         <Box padding={2}>
           {this.props.bodyText.map((textOrHTML: any, index: any) => (
             <span key={index}>{textOrHTML}</span>
           ))}
         </Box>
-      </Popover>
+      </Box>
     );
 
     const icon = UIHelper.getGlyphByMessageType(messageType);
@@ -75,10 +82,14 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
       <Flex alignItems="center" className={cssClassName}>
         {icons.check}
         <OverlayTrigger
-          rootClose
-          trigger={triggerAction}
-          placement={'bottom'}
-          overlay={popoverClickRootClose}
+          showTriangle
+          render={() => popoverClickRootClose}
+          showEvent="click"
+          hideEvent="blur"
+          style={{
+            overflow: 'visible',
+          }}
+          defaultZIndex={100000}
         >
           {useButton ? (
             <ButtonInfo
@@ -88,7 +99,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
               tooltip={this.props.tooltipText}
             />
           ) : (
-            <div style={{ cursor: 'pointer', display: 'inline-block' }}>
+            <div tabIndex={0} style={{ cursor: 'pointer', display: 'inline-block' }}>
               {IconCmp ? <IconCmp style={iconStyle} /> : <Glyphicon glyph={icon} />}
             </div>
           )}

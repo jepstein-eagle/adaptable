@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { createPortal, unstable_batchedUpdates } from 'react-dom';
-import { useRef, useMemo, useState, MutableRefObject, useLayoutEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { useMemo } from 'react';
 import join from '../utils/join';
 import { RemoveScroll } from 'react-remove-scroll';
 import { FlexProps, Flex } from 'rebass';

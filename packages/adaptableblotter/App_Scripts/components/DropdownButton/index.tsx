@@ -9,6 +9,7 @@ import SimpleButton, { SimpleButtonProps } from '../SimpleButton';
 import useExpanded, { ExpandedProps } from './useExpanded';
 import renderItem from './renderItem';
 import DropdownButtonItem from './DropdownButtonItem';
+import OverlayTrigger from '../OverlayTrigger';
 
 const ICON = (
   <svg width="20" height="20" viewBox="0 0 24 24">
@@ -62,7 +63,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
     columns = ['icon', 'label'];
   }
 
-  let content;
+  let content: ReactNode;
 
   if (Array.isArray(items)) {
     content = items.map((item, index) => {
@@ -126,31 +127,26 @@ const DropdownButton = (props: DropdownButtonProps) => {
   const positionerRef = useRef<HTMLDivElement>(null);
   const { expanded, toggle, setExpanded, positionInfo } = useExpanded(props, positionerRef);
 
-  const { where, side, maxHeight: maxListHeight, maxWidth: maxListWidth } = positionInfo;
+  const {
+    verticalPosition,
+    horizontalPosition,
+    maxHeight: maxListHeight,
+    maxWidth: maxListWidth,
+  } = positionInfo;
 
   listStyle = {
     minWidth:
       typeof maxListWidth === 'number' ? Math.min(listMinWidth, maxListWidth) : listMinWidth,
     maxHeight: maxListHeight,
     maxWidth: maxListWidth,
-
-    position: 'absolute',
     overflow: 'auto',
 
     border: 'var(--ab-cmp-dropdownbutton-list__border)',
     borderRadius: 'var(--ab-cmp-dropdownbutton-list__border-radius)',
     zIndex: ('var(--ab-cmp-dropdownbutton-list__z-index)' as unknown) as number,
     background: 'var(--ab-cmp-dropdownbutton-list__background)',
-
-    [where === 'top' ? 'marginBottom' : 'marginTop']: listOffset,
-    [side === 'left' ? 'right' : 'left']: 0,
-    [where === 'top' ? 'bottom' : 'top']: where === 'top' ? '100%' : '100%',
     ...listStyle,
   };
-
-  if (!expanded) {
-    listStyle.display = 'none';
-  }
   const icon = expanded
     ? cloneElement(ICON, {
         style: {
@@ -160,49 +156,58 @@ const DropdownButton = (props: DropdownButtonProps) => {
       })
     : ICON;
   return (
-    <SimpleButton
-      icon={icon}
-      iconPosition="end"
-      paddingRight={0}
-      {...domProps}
-      style={{ ...domProps.style, overflow: 'visible', outline: 'none' }}
-      className={className}
-      onClick={(e: any) => {
-        if (domProps.onClick) {
-          domProps.onClick(e);
-        }
-        if (e.nativeEvent.preventCollapse && expanded) {
-          return;
-        }
-        toggle();
-      }}
-      onBlur={(e: any) => {
-        if (domProps.onBlur) {
-          domProps.onBlur(e);
-        }
-
-        setExpanded(false);
+    <OverlayTrigger
+      visible={expanded}
+      anchor="vertical"
+      render={() => {
+        return (
+          <div style={listStyle} className={`${baseClassName}__list`}>
+            {content}
+          </div>
+        );
       }}
     >
-      <div style={listStyle} className={`${baseClassName}__list`}>
-        {expanded ? content : null}
-      </div>
-      <div
-        ref={positionerRef}
-        tabIndex={-1}
-        style={{
-          position: 'absolute',
-          height: '100%',
-          width: '100%',
-          zIndex: -1,
-          pointerEvents: 'none',
-          opacity: 0,
-          top: 0,
-          left: 0,
+      <SimpleButton
+        icon={icon}
+        iconPosition="end"
+        paddingRight={0}
+        {...domProps}
+        style={{ ...domProps.style, overflow: 'visible', outline: 'none' }}
+        className={className}
+        onClick={(e: any) => {
+          if (domProps.onClick) {
+            domProps.onClick(e);
+          }
+          if (e.nativeEvent.preventCollapse && expanded) {
+            return;
+          }
+          toggle();
         }}
-      />
-      {children}
-    </SimpleButton>
+        onBlur={(e: any) => {
+          if (domProps.onBlur) {
+            domProps.onBlur(e);
+          }
+
+          setExpanded(false);
+        }}
+      >
+        <div
+          ref={positionerRef}
+          tabIndex={-1}
+          style={{
+            position: 'absolute',
+            height: '100%',
+            width: '100%',
+            zIndex: -1,
+            pointerEvents: 'none',
+            opacity: 0,
+            top: 0,
+            left: 0,
+          }}
+        />
+        {children}
+      </SimpleButton>
+    </OverlayTrigger>
   );
 };
 
