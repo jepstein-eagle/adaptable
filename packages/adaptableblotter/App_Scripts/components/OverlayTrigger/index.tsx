@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { useRef, MutableRefObject, useEffect, useState, ReactNode, CSSProperties } from 'react';
+import { useRef, useEffect, useState, ReactNode, CSSProperties } from 'react';
 import batchUpdate from '../utils/batchUpdate';
 import getAvailableSizeInfo, { BoundingClientRect, SizeInfo } from '../utils/getAvailableSizeInfo';
 import { createPortal } from 'react-dom';
 
 import useProperty from '../utils/useProperty';
-import Overlay, { useRefresh } from './Overlay';
+import Overlay from './Overlay';
 import getOverlayStyle from './getOverlayStyle';
 import join from '../utils/join';
 
