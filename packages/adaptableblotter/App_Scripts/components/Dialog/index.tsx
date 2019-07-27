@@ -57,6 +57,9 @@ const Dialog = (props: DialogProps) => {
   const showCloseButton = props.showCloseButton === undefined ? true : props.showCloseButton;
 
   const onKeyDown = (e: any) => {
+    if (props.onKeyDown) {
+      props.onKeyDown(e);
+    }
     if (e.key === 'Escape') {
       if (e.nativeEvent.anotherModalClosed) {
         return;

@@ -10,6 +10,9 @@ import { Flex, Box } from 'rebass';
 import Dialog from '../../components/Dialog';
 import SimpleButton from '../../components/SimpleButton';
 
+import captureTabNavigation from '@rb/capture-tab-navigation';
+import { useRef } from 'react';
+
 export interface IWizardStepInfo {
   StepName: string;
   Element: JSX.Element;
@@ -86,12 +89,18 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         return x.StepName;
       })
     );
+
+    const ref = useRef<HTMLElement>(null);
     return (
       <Dialog
         modal
         isOpen={true}
         onDismiss={() => (this.props.onHide ? this.props.onHide() : null)}
         className={cssClassName + StyleConstants.BASE}
+        onKeyDown={e => {
+          captureTabNavigation(ref.current, e);
+        }}
+        ref={ref}
       >
         <Flex
           flexDirection="column"
