@@ -170,6 +170,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     CellValidations: state.CellValidation.CellValidations,
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
+    NamedFilters: state.NamedFilter.NamedFilters,
     Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }

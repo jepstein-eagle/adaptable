@@ -186,6 +186,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
+    NamedFilters: state.NamedFilter.NamedFilters,
     Entitlements: state.Entitlements.FunctionEntitlements,
     ColorPalette: state.UserInterface.ColorPalette,
     StyleClassNames: state.UserInterface.StyleClassNames,

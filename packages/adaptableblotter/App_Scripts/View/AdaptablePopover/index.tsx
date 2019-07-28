@@ -46,7 +46,6 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     let useButton = this.props.useButton != null ? this.props.useButton : false;
     let popoverMinWidth: string =
       this.props.popoverMinWidth != null ? this.props.popoverMinWidth.toString() + 'px' : 'auto';
-    let size = this.props.size ? this.props.size : 'small';
 
     const title = StringExtensions.IsNotNullOrEmpty(this.props.headerText)
       ? this.props.headerText
@@ -57,7 +56,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
         style={{ margin: '0px', padding: '0px', minWidth: popoverMinWidth, maxWidth: 300 }}
       >
         {title ? (
-          <Text fontSize={3} padding={2}>
+          <Text fontSize={2} padding={2}>
             <b>{title}</b>
           </Text>
         ) : null}

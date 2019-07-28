@@ -174,6 +174,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     PlusMinusRules: state.PlusMinus.PlusMinusRules,
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
+    NamedFilters: state.NamedFilter.NamedFilters,
     Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }

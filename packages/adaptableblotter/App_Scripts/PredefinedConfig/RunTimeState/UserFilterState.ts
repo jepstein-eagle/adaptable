@@ -12,7 +12,7 @@ export interface UserFilter extends AdaptableBlotterObject {
 }
 
 /*
-Adaptable Blotter has 3 different types of configuration filters - ColumnFilters, UserFilters and SystemFilters.
+Adaptable Blotter has 4 different types of configuration filters - ColumnFilters, UserFilters and SystemFilters.
 
 The User Config section allows you add your own User Filters. 
 

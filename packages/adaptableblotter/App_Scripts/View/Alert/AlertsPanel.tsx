@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import ButtonPreviewDelete from '../Components/Buttons/ButtonPreviewDelete';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';

@@ -55,10 +55,6 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
       ...props
     } = this.props;
 
-    let panelStyle = this.props.useDefaultPanelStyle
-      ? StyleConstants.DEFAULT_BSSTYLE
-      : StyleConstants.PRIMARY_BSSTYLE;
-
     let header = (
       <>
         {showMinimiseButton ? (

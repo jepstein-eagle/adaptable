@@ -85,7 +85,9 @@ export function GetNamedFiltersForColumn(
   namedFilters: NamedFilter[],
   columnCategories: ColumnCategory[]
 ): NamedFilter[] {
-  if (!column) return [];
+  if (!column) {
+    return [];
+  }
   return namedFilters.filter(nf => {
     if (nf.Scope.DataType && nf.Scope.DataType === column.DataType) {
       return true;

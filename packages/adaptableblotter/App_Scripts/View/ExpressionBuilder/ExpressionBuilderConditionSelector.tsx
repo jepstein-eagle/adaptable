@@ -33,7 +33,6 @@ import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
 import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
-import { Tab, Nav, NavItem } from 'react-bootstrap';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {

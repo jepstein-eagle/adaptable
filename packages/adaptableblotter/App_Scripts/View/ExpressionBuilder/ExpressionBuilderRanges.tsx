@@ -76,7 +76,7 @@ export class ExpressionBuilderRanges extends React.Component<
         <Box padding={2} style={betweenDivStyle} key={index}>
           <FieldWrap marginBottom={1}>
             <Dropdown
-              placeholder="select"
+              placeholder="Select Operator"
               style={{ maxWidth: 'none' }}
               value={range.Operator}
               showClearButton={false}

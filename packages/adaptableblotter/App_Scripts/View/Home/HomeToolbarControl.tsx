@@ -242,6 +242,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     // shortcuts
     let shortcutsArray: string[] = this.props.DashboardState.VisibleButtons;
+    console.log('buttons');
+    console.log(shortcutsArray);
     let shortcuts: any;
     if (shortcutsArray) {
       shortcuts = shortcutsArray.map(x => {
@@ -249,6 +251,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           y => y.IsVisible && y.StrategyId == x
         );
         if (menuItem) {
+          console.log(menuItem);
           console.log(menuItem.GlyphIcon);
           return (
             <OverlayTrigger

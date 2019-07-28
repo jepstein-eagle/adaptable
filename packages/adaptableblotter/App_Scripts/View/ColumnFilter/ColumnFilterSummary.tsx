@@ -56,12 +56,10 @@ export class ColumnFilterSummaryComponent extends React.Component<
     summaryItems.push(description);
     summaryItems.push(
       <ButtonClear
-        cssClassName={this.props.cssClassName}
-        bsStyle={StyleConstants.PRIMARY_BSSTYLE}
+        marginLeft={1}
         onClick={() => this.props.onClearFilter(columnFilter)}
-        overrideTooltip="Clear Column Filter"
-        DisplayMode="Glyph"
-        overrideDisableButton={columnFilter == null}
+        tooltip="Clear Column Filter"
+        disabled={columnFilter == null}
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -85,6 +83,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,
+    NamedFilters: state.NamedFilter.NamedFilters,
     Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }

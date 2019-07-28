@@ -81,7 +81,7 @@ class ConditionalStylePopupComponent extends React.Component<
     ];
 
     let colItems: IColItem[] = [
-      { Content: 'Target', Size: 2 },
+      { Content: 'Scope', Size: 2 },
       { Content: 'Style', Size: 2 },
       { Content: 'Query', Size: 6 },
       { Content: '', Size: 2 },

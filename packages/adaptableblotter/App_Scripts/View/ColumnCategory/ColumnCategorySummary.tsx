@@ -152,6 +152,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     ColumnCategorys: state.ColumnCategory.ColumnCategories,
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
+    NamedFilters: state.NamedFilter.NamedFilters,
     Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
