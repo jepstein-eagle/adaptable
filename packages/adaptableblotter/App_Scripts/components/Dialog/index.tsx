@@ -60,6 +60,7 @@ const Dialog = (props: DialogProps) => {
     if (props.onKeyDown) {
       props.onKeyDown(e);
     }
+    captureTabNavigation(boxRef.current, e);
     if (e.key === 'Escape') {
       if (e.nativeEvent.anotherModalClosed) {
         return;
