@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -9,9 +10,6 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Flex, Box } from 'rebass';
 import Dialog from '../../components/Dialog';
 import SimpleButton from '../../components/SimpleButton';
-
-import captureTabNavigation from '@rb/capture-tab-navigation';
-import { useRef } from 'react';
 
 export interface IWizardStepInfo {
   StepName: string;
@@ -90,17 +88,12 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       })
     );
 
-    const ref = useRef<HTMLElement>(null);
     return (
       <Dialog
         modal
         isOpen={true}
         onDismiss={() => (this.props.onHide ? this.props.onHide() : null)}
         className={cssClassName + StyleConstants.BASE}
-        onKeyDown={e => {
-          captureTabNavigation(ref.current, e);
-        }}
-        ref={ref}
       >
         <Flex
           flexDirection="column"
