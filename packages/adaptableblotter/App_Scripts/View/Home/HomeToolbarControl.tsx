@@ -284,7 +284,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     return (
       <PanelDashboard
         className={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         showCloseButton={false}
         showMinimiseButton={true}
         onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}
@@ -392,9 +391,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     DashboardState: state.Dashboard,
     Columns: state.Grid.Columns,
     SystemStatus: state.System.SystemStatus,
-    DashboardSize: state.Dashboard.UseExtraSmallButtons
-      ? DashboardSize.XSmall
-      : DashboardSize.Small,
   };
 }
 

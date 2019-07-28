@@ -36,18 +36,10 @@ export class CellValidationActionWizard
 
     return (
       <WizardPanel header="Action When Validation Fails">
-        <HelpBlock>
-          <p>Choose what should happen to an edit when cell validation fails.</p>
-          <p>
-            <i>Prevent cell edit</i> ensures that no edits which fail validation will occur.
-          </p>
-          <p>
-            <i>Show a warning</i> gives you the option to allow the edit after providing a reason
-            (which will be audited).
-          </p>
-        </HelpBlock>
-
-        <Flex marginTop={3} flexDirection="row" alignItems="center" marginLeft={2}>
+        <Flex flexDirection="column" padding={2}>
+          <HelpBlock>
+            Disallow all cell edits that break the validation rule - with no override available.
+          </HelpBlock>
           <Radio
             value={ActionMode.StopEdit}
             marginRight={3}
@@ -56,15 +48,10 @@ export class CellValidationActionWizard
           >
             Prevent the cell edit
           </Radio>{' '}
-          <AdaptablePopover
-            cssClassName={cssClassName}
-            headerText={'Cell Validation Action: Prevent'}
-            bodyText={[
-              'Disallows all cell edits that break the validation rule with no override available.',
-            ]}
-          />
-        </Flex>
-        <Flex marginTop={3} flexDirection="row" alignItems="center" marginLeft={2}>
+          <HelpBlock>
+            Display a warning that the validation rule has been broken. If this is overriden, the
+            edit will be allowed.
+          </HelpBlock>
           <Radio
             marginRight={3}
             value={ActionMode.WarnUser}
@@ -73,13 +60,6 @@ export class CellValidationActionWizard
           >
             Show a warning
           </Radio>{' '}
-          <AdaptablePopover
-            cssClassName={cssClassName}
-            headerText={'Cell Validation Action: Warning'}
-            bodyText={[
-              'Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed.',
-            ]}
-          />
         </Flex>
       </WizardPanel>
     );

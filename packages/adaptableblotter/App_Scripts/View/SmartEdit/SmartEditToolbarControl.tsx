@@ -163,7 +163,6 @@ class SmartEditToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         cssClassName={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.SmartEditStrategyName}
         glyphicon={StrategyConstants.SmartEditGlyph}
         onClose={() => this.props.onClose(StrategyConstants.SmartEditStrategyId)}

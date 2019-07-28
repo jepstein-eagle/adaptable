@@ -34,10 +34,6 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
   onDashboardHideSystemStatusButton: () => DashboardRedux.DashboardHideSystemStatusButtonAction;
   onDashboardShowAboutButton: () => DashboardRedux.DashboardShowAboutButtonAction;
   onDashboardHideAboutButton: () => DashboardRedux.DashboardHideAboutButtonAction;
-  onDashboardUseSingleColourForButtons: () => DashboardRedux.DashboardUseSingleColourForButtonsAction;
-  onDashboardUseMultipleColourForButtons: () => DashboardRedux.DashboardUseMultipleColourForButtonsAction;
-  onDashboardUseExtraSmallSizeButtons: () => DashboardRedux.DashboardUseExtraSmallButtonsAction;
-  onDashboardUseDefaultSizeButtons: () => DashboardRedux.DashboardUseDefaultSizeButtonsAction;
 
   onDashboardSetToolbars: (
     StrategyConstants: string[]
@@ -130,20 +126,6 @@ class DashboardPopupComponent extends React.Component<
           Show About Button
         </Checkbox>
 
-        <Checkbox
-          onChange={checked => this.onUseSingleColourForButtonsChanged(checked)}
-          checked={this.props.DashboardState.UseSingleColourForButtons}
-        >
-          Use Single Colour for All Dashboard Buttons
-        </Checkbox>
-
-        <Checkbox
-          onChange={(checked: boolean) => this.onUseExtraSmallButtonsChanged(checked)}
-          checked={this.props.DashboardState.UseExtraSmallButtons}
-        >
-          Use Small Size Buttons
-        </Checkbox>
-
         <Flex flexDirection="row" alignItems="center" marginTop={2}>
           <Text marginRight={2}>Dashboard Zoom Factor:</Text>
           <Input
@@ -153,7 +135,7 @@ class DashboardPopupComponent extends React.Component<
             step="0.05"
             max="1"
             placeholder="Enter a Number"
-            onChange={e => this.onSetFactorChange(e)}
+            onChange={(e: any) => this.onSetFactorChange(e)}
           />
         </Flex>
       </Flex>
@@ -274,22 +256,6 @@ class DashboardPopupComponent extends React.Component<
     }
   }
 
-  onUseSingleColourForButtonsChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardUseSingleColourForButtons();
-    } else {
-      this.props.onDashboardUseMultipleColourForButtons();
-    }
-  }
-
-  onUseExtraSmallButtonsChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardUseExtraSmallSizeButtons();
-    } else {
-      this.props.onDashboardUseDefaultSizeButtons();
-    }
-  }
-
   onDashboardButtonsChanged(selectedValues: string[]) {
     let selectedFunctions = selectedValues.map(sv => StrategyConstants.getIdForStrategyName(sv));
     this.props.onDashboardSetFunctionButtons(selectedFunctions);
@@ -352,14 +318,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(DashboardRedux.DashboardHideSystemStatusButton()),
     onDashboardShowAboutButton: () => dispatch(DashboardRedux.DashboardShowAboutButton()),
     onDashboardHideAboutButton: () => dispatch(DashboardRedux.DashboardHideAboutButton()),
-    onDashboardUseSingleColourForButtons: () =>
-      dispatch(DashboardRedux.DashboardUseSingleColourForButtons()),
-    onDashboardUseMultipleColourForButtons: () =>
-      dispatch(DashboardRedux.DashboardUseMultipleColourForButtons()),
-    onDashboardUseExtraSmallSizeButtons: () =>
-      dispatch(DashboardRedux.DashboardUseExtraSmallButtons()),
-    onDashboardUseDefaultSizeButtons: () =>
-      dispatch(DashboardRedux.DashboardUseDefaultSizeButtons()),
     onDashboardSetToolbars: (StrategyConstants: string[]) =>
       dispatch(DashboardRedux.DashboardSetToolbars(StrategyConstants)),
     onSetDashboardZoom: (zoom: number) => dispatch(DashboardRedux.DashboardSetZoom(zoom)),

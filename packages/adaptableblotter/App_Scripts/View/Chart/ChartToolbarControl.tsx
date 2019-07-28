@@ -137,7 +137,6 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     return (
       <PanelDashboard
         cssClassName={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.ChartStrategyName}
         glyphicon={StrategyConstants.ChartGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ChartStrategyId)}

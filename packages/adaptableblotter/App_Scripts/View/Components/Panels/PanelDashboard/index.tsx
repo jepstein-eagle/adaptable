@@ -31,7 +31,6 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     showCloseButton: true,
     showConfigureButton: true,
     showMinimiseButton: false,
-    useDefaultPanelStyle: true,
     headerText: 'Function',
     glyphicon: 'home',
     onClose: null,

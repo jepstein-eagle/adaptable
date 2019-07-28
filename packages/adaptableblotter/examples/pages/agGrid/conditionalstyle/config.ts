@@ -5,8 +5,6 @@ export default {
     Zoom: 2,
     VisibleToolbars: [],
     VisibleButtons: ['ConditionalStyle'],
-    UseSingleColourForButtons: true,
-    ShowSystemStatusButton: false,
   },
   DataSource: {
     DataSources: [],

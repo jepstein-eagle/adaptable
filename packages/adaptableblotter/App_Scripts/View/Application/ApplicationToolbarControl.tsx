@@ -24,12 +24,11 @@ class ApplicationToolbarControlComponent extends React.Component<
     let headerText = StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitle)
       ? this.props.ApplicationToolbarTitle
       : StrategyConstants.ApplicationStrategyName;
-    let minHeight = this.props.DashboardSize == DashboardSize.XSmall ? '22px' : '30px';
+    let minHeight = '22px';
 
     return (
       <PanelDashboard
         cssClassName={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={headerText}
         glyphicon={StrategyConstants.ApplicationGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ApplicationStrategyId)}

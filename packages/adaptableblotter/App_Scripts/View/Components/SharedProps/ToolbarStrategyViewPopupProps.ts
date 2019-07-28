@@ -8,6 +8,4 @@ export interface ToolbarStrategyViewPopupProps<View> extends StrategyViewPopupPr
   onClick: (action: Redux.Action) => Redux.Action;
   onClose: (dashboardControl: string) => DashboardRedux.DashboardHideToolbarAction;
   onConfigure: () => PopupRedux.PopupShowScreenAction;
-  UseSingleColourForButtons: boolean;
-  DashboardSize: DashboardSize;
 }

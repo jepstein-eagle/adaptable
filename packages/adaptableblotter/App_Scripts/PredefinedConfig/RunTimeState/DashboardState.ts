@@ -12,8 +12,6 @@ export interface DashboardState extends RunTimeState {
   ShowToolbarsDropdown?: boolean;
   HomeToolbarTitle?: string;
   ApplicationToolbarTitle?: string;
-  UseSingleColourForButtons?: boolean;
-  UseExtraSmallButtons?: boolean;
 }
 
 /*
@@ -98,17 +96,7 @@ Sets the title of the Application Toolbar.
 Note
 The Application Toolbar is an empty toolbar designed for letting you host your own elements, buttons and controls.
 
-UseSingleColourForButtons
 
-boolean
-
-Whether to use one (plain) colour for all buttons across the Dashboard.
-
-The default is false.
-
-UseExtraSmallButtons
-
-boolean
 
 If the Dashboard buttons should be extra small.
 

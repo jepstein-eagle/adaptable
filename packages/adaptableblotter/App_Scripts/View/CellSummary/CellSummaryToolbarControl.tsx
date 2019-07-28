@@ -110,8 +110,6 @@ class CellSummaryToolbarControlComponent extends React.Component<
             </Flex>
             {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (
               <AdaptablePopover
-                showDefaultStyle={this.props.UseSingleColourForButtons}
-                size={this.props.DashboardSize}
                 cssClassName={cssClassName}
                 bodyText={[cellSummaryPopover]}
                 tooltipText={'Show Cell Summary'}

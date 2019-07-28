@@ -97,7 +97,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.AdvancedSearchStrategyName}
         glyphicon={StrategyConstants.AdvancedSearchGlyph}
         onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}

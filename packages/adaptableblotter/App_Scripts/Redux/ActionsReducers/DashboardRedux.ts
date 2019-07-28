@@ -24,10 +24,6 @@ const DASHBOARD_SHOW_TOOLBARS_DROPDOWN = 'DASHBOARD_SHOW_TOOLBARS_DROPDOWN';
 const DASHBOARD_HIDE_TOOLBARS_DROPDOWN = 'DASHBOARD_HIDE_TOOLBARS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
 const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE';
-const DASHBOARD_USE_SINGLE_COLOUR_FOR_BUTTONS = 'DASHBOARD_USE_SINGLE_COLOUR_FOR_BUTTONS';
-const DASHBOARD_USE_MULTIPLE_COLOUR_FOR_BUTTONS = 'DASHBOARD_USE_MULTIPLE_COLOUR_FOR_BUTTONS';
-const DASHBOARD_USE_EXTRA_SMALL_BUTTONS = 'DASHBOARD_USE_EXTRA_SMALL_BUTTONS';
-const DASHBOARD_USE_DEFAULT_SIZE_BUTTONS = 'DASHBOARD_USE_DEFAULT_SIZE_BUTTONS';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
   StrategyIds: string[];
@@ -93,14 +89,6 @@ export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
 export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action {
   Title: string;
 }
-
-export interface DashboardUseSingleColourForButtonsAction extends Redux.Action {}
-
-export interface DashboardUseMultipleColourForButtonsAction extends Redux.Action {}
-
-export interface DashboardUseExtraSmallButtonsAction extends Redux.Action {}
-
-export interface DashboardUseDefaultSizeButtonsAction extends Redux.Action {}
 
 export const DashboardSetAvailableToolbars = (
   StrategyIds: string[]
@@ -204,22 +192,6 @@ export const DashboardSetApplicationToolbarTitle = (
   Title,
 });
 
-export const DashboardUseSingleColourForButtons = (): DashboardUseSingleColourForButtonsAction => ({
-  type: DASHBOARD_USE_SINGLE_COLOUR_FOR_BUTTONS,
-});
-
-export const DashboardUseMultipleColourForButtons = (): DashboardUseMultipleColourForButtonsAction => ({
-  type: DASHBOARD_USE_MULTIPLE_COLOUR_FOR_BUTTONS,
-});
-
-export const DashboardUseExtraSmallButtons = (): DashboardUseExtraSmallButtonsAction => ({
-  type: DASHBOARD_USE_EXTRA_SMALL_BUTTONS,
-});
-
-export const DashboardUseDefaultSizeButtons = (): DashboardUseDefaultSizeButtonsAction => ({
-  type: DASHBOARD_USE_DEFAULT_SIZE_BUTTONS,
-});
-
 const initialDashboardState: DashboardState = {
   AvailableToolbars: [
     StrategyConstants.AdvancedSearchStrategyId,
@@ -258,8 +230,6 @@ const initialDashboardState: DashboardState = {
   ShowToolbarsDropdown: true,
   HomeToolbarTitle: '',
   ApplicationToolbarTitle: '',
-  UseSingleColourForButtons: true,
-  UseExtraSmallButtons: false,
 };
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (
@@ -357,18 +327,6 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE: {
       let actionTyped = <DashboardSetApplicationToolbarTitleAction>action;
       return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
-    }
-    case DASHBOARD_USE_SINGLE_COLOUR_FOR_BUTTONS: {
-      return Object.assign({}, state, { UseSingleColourForButtons: true });
-    }
-    case DASHBOARD_USE_MULTIPLE_COLOUR_FOR_BUTTONS: {
-      return Object.assign({}, state, { UseSingleColourForButtons: false });
-    }
-    case DASHBOARD_USE_EXTRA_SMALL_BUTTONS: {
-      return Object.assign({}, state, { UseExtraSmallButtons: true });
-    }
-    case DASHBOARD_USE_DEFAULT_SIZE_BUTTONS: {
-      return Object.assign({}, state, { UseExtraSmallButtons: false });
     }
 
     default:

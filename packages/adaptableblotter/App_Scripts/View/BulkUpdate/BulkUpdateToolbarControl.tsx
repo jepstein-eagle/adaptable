@@ -130,8 +130,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
         {this.props.BulkUpdateValidationResult.IsValid &&
           StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
             <AdaptablePopover
-              showDefaultStyle={this.props.UseSingleColourForButtons}
-              size={this.props.DashboardSize}
               cssClassName={cssClassName}
               headerText="Preview Results"
               bodyText={[previewPanel]}
@@ -145,7 +143,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.BulkUpdateStrategyName}
         glyphicon={StrategyConstants.BulkUpdateGlyph}
         onClose={() => this.props.onClose(StrategyConstants.BulkUpdateStrategyId)}

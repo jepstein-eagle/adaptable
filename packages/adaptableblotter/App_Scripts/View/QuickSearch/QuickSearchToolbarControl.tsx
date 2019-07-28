@@ -45,7 +45,6 @@ class QuickSearchToolbarControlComponent extends React.Component<
   render() {
     return (
       <PanelDashboard
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.QuickSearchStrategyName}
         glyphicon={StrategyConstants.QuickSearchGlyph}
         onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}

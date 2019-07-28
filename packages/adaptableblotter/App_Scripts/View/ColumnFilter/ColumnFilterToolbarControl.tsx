@@ -78,8 +78,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
         {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
           <>
             <AdaptablePopover
-              showDefaultStyle={this.props.UseSingleColourForButtons}
-              size={this.props.DashboardSize}
               cssClassName={cssClassName}
               headerText=""
               bodyText={[activeFiltersPanel]}
@@ -112,7 +110,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         cssClassName={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.ColumnFilterStrategyName}
         glyphicon={StrategyConstants.ColumnFilterGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)}
@@ -141,13 +138,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
       ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(columnFilter, ''),
     };
     this.props.onShowPrompt(prompt);
-  }
-
-  private getStyleForLabel(): string {
-    return this.props.UseSingleColourForButtons == false &&
-      ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters)
-      ? SUCCESS_BSSTYLE
-      : DEFAULT_BSSTYLE;
   }
 }
 

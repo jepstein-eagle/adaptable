@@ -94,8 +94,6 @@ class AlertToolbarControlComponent extends React.Component<
         {this.props.Alerts.length > 0 && (
           <Flex alignItems="center">
             <AdaptablePopover
-              showDefaultStyle={this.props.UseSingleColourForButtons}
-              size={this.props.DashboardSize}
               cssClassName={cssClassName}
               headerText=""
               tooltipText="Alerts"
@@ -112,7 +110,6 @@ class AlertToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         cssClassName={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.AlertStrategyName}
         glyphicon={StrategyConstants.AlertGlyph}
         onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)}

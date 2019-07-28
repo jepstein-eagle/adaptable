@@ -50,7 +50,6 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
         <DropdownButton
           style={{ minWidth: '100px' }}
           className={cssClassName}
-          bsSize={this.props.DashboardSize}
           bsStyle={'default'}
           title={this.props.CurrentTheme}
           id="themeDropDown"
@@ -63,7 +62,6 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
     return (
       <PanelDashboard
         cssClassName={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.ThemeStrategyName}
         glyphicon={StrategyConstants.ThemeGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)}

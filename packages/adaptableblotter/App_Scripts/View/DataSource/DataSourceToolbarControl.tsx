@@ -114,7 +114,6 @@ class DataSourceToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         cssClassName={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.DataSourceStrategyName}
         glyphicon={StrategyConstants.DataSourceGlyph}
         onClose={() => this.props.onClose(StrategyConstants.DataSourceStrategyId)}

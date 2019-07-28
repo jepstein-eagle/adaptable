@@ -54,14 +54,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
     ); //.filter(dc => dc.IsVisible);
 
-    let style: string = this.props.DashboardState.UseSingleColourForButtons
-      ? StyleConstants.DEFAULT_BSSTYLE
-      : StyleConstants.PRIMARY_BSSTYLE;
-
-    let dashboardSize: DashboardSize = this.props.DashboardState.UseExtraSmallButtons
-      ? DashboardSize.XSmall
-      : DashboardSize.Small;
-
     let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
       let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(
         this.props.EntitlementsState.FunctionEntitlements,
@@ -79,8 +71,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             ColumnSorts: this.props.ColumnSorts,
             cssClassName: cssClassName,
             AccessLevel: accessLevel,
-            DashboardSize: dashboardSize,
-            UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons,
           });
           return (
             <Box key={control} my={1} marginRight={1} className="ab-Dashboard__container">
@@ -101,7 +91,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         {React.createElement(homeToolbar, {
           cssClassName: cssClassName,
           Blotter: this.props.Blotter,
-          UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons,
         })}
       </Box>
     );
