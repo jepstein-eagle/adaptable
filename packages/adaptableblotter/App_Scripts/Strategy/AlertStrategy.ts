@@ -92,8 +92,8 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     dataChangedEvent: DataChangedInfo,
     columns: IColumn[]
   ): boolean {
-    // if its none then alert triggers immediately
-    if (alert.Range.Operator == LeafExpressionOperator.None) {
+    // if its any change then alert triggers immediately
+    if (alert.Range.Operator == LeafExpressionOperator.AnyChange) {
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...

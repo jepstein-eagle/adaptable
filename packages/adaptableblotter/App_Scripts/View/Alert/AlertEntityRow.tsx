@@ -36,6 +36,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     colItems[1].Content = (
       <Dropdown
         placeholder="select"
+        showEmptyItem={false}
         value={alertDefinition.MessageType}
         onChange={(value: any) => this.onMessageTypeChanged(alertDefinition, value)}
         options={MessageTypes}
@@ -75,7 +76,6 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
   }
 
   onMessageTypeChanged(alertDefinition: AlertDefinition, value: MessageType) {
-    let e = event.target as HTMLInputElement;
     this.props.onChangeMessageType(alertDefinition, value);
   }
 }

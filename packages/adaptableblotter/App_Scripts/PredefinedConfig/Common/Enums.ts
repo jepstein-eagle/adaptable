@@ -22,7 +22,9 @@ export enum AccessLevel {
 }
 
 export enum LeafExpressionOperator {
-  Unknown = 'Unknown',
+  // Still not sure about this tbh
+  None = 'None',
+
   // Numeric and Date
   GreaterThan = 'GreaterThan',
   LessThan = 'LessThan',
@@ -38,7 +40,7 @@ export enum LeafExpressionOperator {
   EndsWith = 'EndsWith',
   Regex = 'Regex',
   // Cell Validations
-  None = 'None',
+  AnyChange = 'AnyChange',
   ValueChange = 'ValueChange',
   PercentChange = 'PercentChange',
   NotBetween = 'NotBetween',
@@ -102,7 +104,6 @@ export enum ExportDestination {
 }
 
 export enum SortOrder {
-  Unknown = 'Unknown',
   Ascending = 'Ascending',
   Descending = 'Descending',
 }

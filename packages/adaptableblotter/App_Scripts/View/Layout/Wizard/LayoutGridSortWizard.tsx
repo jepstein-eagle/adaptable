@@ -145,7 +145,7 @@ export class LayoutGridSortWizard
   public canNext(): boolean {
     let canNext: boolean = true;
     this.state.ColumnSorts.forEach(gs => {
-      if (StringExtensions.IsNullOrEmpty(gs.Column) || gs.SortOrder == SortOrder.Unknown) {
+      if (StringExtensions.IsNullOrEmpty(gs.Column)) {
         canNext = false;
       }
     });

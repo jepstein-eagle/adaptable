@@ -397,8 +397,6 @@ function RangesToString(
 
 export function OperatorToOneCharacterString(operator: LeafExpressionOperator): string {
   switch (operator) {
-    case LeafExpressionOperator.Unknown:
-      return 'X';
     case LeafExpressionOperator.GreaterThan:
       return '>';
     case LeafExpressionOperator.LessThan:
@@ -428,8 +426,6 @@ export function OperatorToOneCharacterString(operator: LeafExpressionOperator): 
 
 export function OperatorToShortFriendlyString(operator: LeafExpressionOperator): string {
   switch (operator) {
-    case LeafExpressionOperator.Unknown:
-      return 'Select';
     case LeafExpressionOperator.GreaterThan:
       return '>';
     case LeafExpressionOperator.LessThan:
@@ -463,9 +459,9 @@ export function OperatorToLongFriendlyString(
 ): string {
   switch (leafExpressionOperator) {
     case LeafExpressionOperator.None:
+      return 'None';
+    case LeafExpressionOperator.AnyChange:
       return 'Any Edit';
-    case LeafExpressionOperator.Unknown:
-      return 'Select Operator ';
     case LeafExpressionOperator.Equals:
       return 'Equals ';
     case LeafExpressionOperator.NotEquals:
@@ -536,7 +532,6 @@ export function GetOperatorsForDataType(dataType: DataType): LeafExpressionOpera
     case DataType.Number:
     case DataType.Date:
       return [
-        LeafExpressionOperator.Unknown,
         LeafExpressionOperator.GreaterThan,
         LeafExpressionOperator.GreaterThanOrEqual,
         LeafExpressionOperator.LessThan,
@@ -547,7 +542,6 @@ export function GetOperatorsForDataType(dataType: DataType): LeafExpressionOpera
       ];
     case DataType.String:
       return [
-        LeafExpressionOperator.Unknown,
         LeafExpressionOperator.Contains,
         LeafExpressionOperator.NotContains,
         LeafExpressionOperator.StartsWith,
@@ -557,11 +551,7 @@ export function GetOperatorsForDataType(dataType: DataType): LeafExpressionOpera
         LeafExpressionOperator.Regex,
       ];
     default:
-      return [
-        LeafExpressionOperator.Unknown,
-        LeafExpressionOperator.GreaterThan,
-        LeafExpressionOperator.Between,
-      ];
+      return [LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between];
   }
 }
 
@@ -637,7 +627,7 @@ export function IsExpressionValid(expression: Expression): boolean {
   }
   return expression.RangeExpressions.every(x => {
     return x.Ranges.every(range => {
-      if (range.Operator == LeafExpressionOperator.Unknown) {
+      if (range.Operator == null || range.Operator == undefined) {
         return false;
       } else if (range.Operator == LeafExpressionOperator.Between) {
         return range.Operand1 != '' && range.Operand2 != '';
@@ -660,7 +650,7 @@ export function CreateEmptyExpression(): Expression {
 
 export function CreateEmptyRange(): QueryRange {
   return {
-    Operator: LeafExpressionOperator.Unknown,
+    Operator: LeafExpressionOperator.None, // or null?
     Operand1: '',
     Operand2: '',
     Operand1Type: RangeOperandType.Value,
@@ -760,6 +750,8 @@ export function TestRangeEvaluation(
     return false;
   }
   switch (rangeEvaluation.operator) {
+    case LeafExpressionOperator.AnyChange:
+      return true;
     case LeafExpressionOperator.Equals:
       return rangeEvaluation.newValue == rangeEvaluation.operand1;
     case LeafExpressionOperator.NotEquals:
@@ -845,6 +837,7 @@ export function ExpressionContainsFilter(expression: Expression, filter: UserFil
 export function OperatorRequiresValue(operator: LeafExpressionOperator): boolean {
   return (
     operator != LeafExpressionOperator.None &&
+    operator != LeafExpressionOperator.AnyChange &&
     operator != LeafExpressionOperator.IsPositive &&
     operator != LeafExpressionOperator.IsNegative &&
     operator != LeafExpressionOperator.IsNotNumber &&

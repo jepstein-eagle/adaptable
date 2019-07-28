@@ -78,7 +78,7 @@ export const THEME_DEFAULT_CURRENT_THEME: string = LIGHT_THEME;
  */
 export const CHART_DEFAULT_YAXIS_TOTAL: AxisTotal = AxisTotal.Sum;
 export const PLUS_MINUS_DEFAULT_NUDGE_VALUE: number = 1;
-export const ALERT_DEFAULT_OPERATOR: LeafExpressionOperator = LeafExpressionOperator.None;
+export const ALERT_DEFAULT_OPERATOR: LeafExpressionOperator = LeafExpressionOperator.AnyChange;
 export const ALERT_DEFAULT_RANGE_OPERAND_TYPE: 'Value' | 'Column' = 'Column';
 export const ALERT_DEFAULT_MESSAGE_TYPE: 'Success' | 'Info' | 'Warning' | 'Error' = 'Error';
 export const ALERT_DEFAULT_SHOW_AS_POPUP: boolean = true;

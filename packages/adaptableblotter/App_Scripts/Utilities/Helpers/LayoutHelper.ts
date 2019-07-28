@@ -29,7 +29,7 @@ export function getColumnSort(columnSorts: ColumnSort[], columns: IColumn[]): st
   return returnString;
 }
 
-export function getSortOrder(sortOrder: 'Unknown' | 'Ascending' | 'Descending'): string {
+export function getSortOrder(sortOrder: 'Ascending' | 'Descending'): string {
   return sortOrder == SortOrder.Ascending ? ' [asc] ' : ' [desc] ';
 }
 

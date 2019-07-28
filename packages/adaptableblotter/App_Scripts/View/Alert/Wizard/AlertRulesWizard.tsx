@@ -6,18 +6,15 @@ import {
 import {
   DataType,
   LeafExpressionOperator,
-  MessageType,
   RangeOperandType,
 } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
 import Radio from '../../../components/Radio';
-import Panel from '../../../components/Panel';
 import HelpBlock from '../../../components/HelpBlock';
 import { Box, Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
@@ -66,12 +63,12 @@ export class AlertRulesWizard
         <AdaptableBlotterForm>
           <Box>
             <HelpBlock>
-              {'Show alerts for any data change to the' + columnFriendlyName + ' column.'}
+              {'Show alerts for any data change to the ' + columnFriendlyName + ' column.'}
             </HelpBlock>
             <Radio
-              value="None"
+              value="Any"
               name="alert"
-              checked={this.state.Operator == LeafExpressionOperator.None}
+              checked={this.state.Operator == LeafExpressionOperator.AnyChange}
               onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
             >
               Show Alert for ALL changes
@@ -86,21 +83,21 @@ export class AlertRulesWizard
             <Radio
               value="others"
               name="alert"
-              checked={this.state.Operator != LeafExpressionOperator.None}
+              checked={this.state.Operator != LeafExpressionOperator.AnyChange}
               onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
             >
               Show Alert when new cell value matches rule:
             </Radio>{' '}
           </Box>
         </AdaptableBlotterForm>
-        {/* if not None operator then show operator dropdown */}
+        {/* if not AnyChange operator then show operator dropdown */}
         <Flex flexDirection="column">
-          {this.state.Operator != LeafExpressionOperator.None ? (
+          {this.state.Operator != LeafExpressionOperator.AnyChange ? (
             <Box marginBottom={2} style={{ flex: 1, width: '100%' }}>
               <Dropdown
-                disabled={this.checkOperator(LeafExpressionOperator.None)}
-                placeholder="select"
-                value={this.state.Operator.toString()}
+                disabled={this.checkOperator(LeafExpressionOperator.AnyChange)}
+                placeholder="Select an Operator"
+                value={this.state.Operator ? this.state.Operator.toString() : ''}
                 onChange={(operator: any) => this.onOperatorChanged(operator)}
                 options={operatorTypes}
                 style={{ maxWidth: 'inherit' }}
@@ -109,8 +106,8 @@ export class AlertRulesWizard
           ) : null}
           <Flex flexDirection="row" flex={1}>
             {/* if  numeric then show a numeric control */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            {this.state.Operator != null &&
+              !this.checkOperator(LeafExpressionOperator.AnyChange) &&
               !this.checkOperator(LeafExpressionOperator.IsPositive) &&
               !this.checkOperator(LeafExpressionOperator.IsNegative) &&
               !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
@@ -137,8 +134,8 @@ export class AlertRulesWizard
               )}
 
             {/* if  date then show a date control */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            {this.state.Operator != null &&
+              !this.checkOperator(LeafExpressionOperator.AnyChange) &&
               this.getColumnDataTypeFromState() == DataType.Date && (
                 <>
                   <Input
@@ -162,8 +159,10 @@ export class AlertRulesWizard
               )}
 
             {/* if string then show a text control  */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            {this.state.Operator != null &&
+              !this.checkOperator(LeafExpressionOperator.AnyChange) &&
+              !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
+              !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
               this.getColumnDataTypeFromState() == DataType.String && (
                 <Input
                   style={{ flex: 1 }}
@@ -204,7 +203,7 @@ export class AlertRulesWizard
   private onDisallowEditChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let operator: LeafExpressionOperator =
-      e.value == 'None' ? LeafExpressionOperator.None : LeafExpressionOperator.Unknown;
+      e.value == 'Any' ? LeafExpressionOperator.AnyChange : null;
     this.setState({ Operator: operator } as AlertSettingsWizardState, () =>
       this.props.UpdateGoBackState()
     );
@@ -228,14 +227,9 @@ export class AlertRulesWizard
   private getAvailableOperators(): LeafExpressionOperator[] {
     switch (this.getColumnDataTypeFromState()) {
       case DataType.Boolean:
-        return [
-          LeafExpressionOperator.Unknown,
-          LeafExpressionOperator.IsTrue,
-          LeafExpressionOperator.IsFalse,
-        ];
+        return [LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
       case DataType.String:
         return [
-          LeafExpressionOperator.Unknown,
           LeafExpressionOperator.Equals,
           LeafExpressionOperator.NotEquals,
           LeafExpressionOperator.Contains,
@@ -247,7 +241,6 @@ export class AlertRulesWizard
         ];
       case DataType.Date:
         return [
-          LeafExpressionOperator.Unknown,
           LeafExpressionOperator.Equals,
           LeafExpressionOperator.NotEquals,
           LeafExpressionOperator.GreaterThan,
@@ -257,7 +250,6 @@ export class AlertRulesWizard
         ];
       case DataType.Number:
         return [
-          LeafExpressionOperator.Unknown,
           LeafExpressionOperator.Equals,
           LeafExpressionOperator.NotEquals,
           LeafExpressionOperator.LessThan,
@@ -274,12 +266,16 @@ export class AlertRulesWizard
   }
 
   public canNext(): boolean {
-    if (!ExpressionHelper.OperatorRequiresValue(this.state.Operator)) {
+    if (this.state.Operator == null || this.state.Operator == undefined) {
+      return false;
+    }
+
+    if (this.state.Operator == LeafExpressionOperator.AnyChange) {
       return true;
     }
 
-    if (this.checkOperator(LeafExpressionOperator.Unknown)) {
-      return false;
+    if (!ExpressionHelper.OperatorRequiresValue(this.state.Operator)) {
+      return true;
     }
 
     if (this.isBetweenOperator() && StringExtensions.IsNullOrEmpty(this.state.Operand2)) {

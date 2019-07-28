@@ -95,18 +95,12 @@ export class ShortcutSettingsWizard
 
           <Flex flex={7} flexDirection="row" alignItems="center">
             <Dropdown
-              placeholder="select"
+              placeholder="Select Key"
               style={{ flex: 1, maxWidth: 'none' }}
               value={currentKeyValue}
               onChange={(x: any) => this.onShortcutKeyChanged(x)}
               marginRight={3}
-              options={[
-                {
-                  value: 'select',
-                  label: 'Select Key',
-                },
-                ...optionKeys,
-              ]}
+              options={optionKeys}
             ></Dropdown>
 
             <AdaptablePopover
@@ -127,6 +121,7 @@ export class ShortcutSettingsWizard
                 <Dropdown
                   style={{ flex: 1, maxWidth: 'none' }}
                   placeholder="select"
+                  showEmptyItem={false}
                   value={currentActionValue}
                   marginRight={3}
                   onChange={(x: any) => this.onShortcutOperationChanged(x)}

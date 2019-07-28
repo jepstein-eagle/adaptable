@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -13,6 +12,7 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import Dropdown from '../../components/Dropdown';
 
 export interface CellValidationEntityRowProps
   extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
@@ -25,12 +25,11 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     let cellValidationRule: CellValidationRule = this.props
       .AdaptableBlotterObject as CellValidationRule;
 
-    let ActionModeTypes = EnumExtensions.getNames(ActionMode).map(validationMode => {
-      return (
-        <option key={validationMode} value={validationMode}>
-          {validationMode}
-        </option>
-      );
+    let ActionModeTypes = EnumExtensions.getNames(ActionMode).map(type => {
+      return {
+        value: type,
+        label: type,
+      };
     });
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
@@ -40,15 +39,13 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
       <EntityRowItem Content={this.setExpressionDescription(cellValidationRule)} />
     );
     colItems[2].Content = (
-      <FormControl
-        bsSize={'small'}
-        componentClass="select"
+      <Dropdown
         placeholder="select"
+        showEmptyItem={false}
         value={cellValidationRule.ActionMode}
-        onChange={x => this.onActionModeChanged(cellValidationRule, x)}
-      >
-        {ActionModeTypes}
-      </FormControl>
+        onChange={(value: any) => this.onActionModeChanged(cellValidationRule, value)}
+        options={ActionModeTypes}
+      ></Dropdown>
     );
     colItems[3].Content = (
       <EntityListActionButtons
@@ -82,9 +79,8 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     return columnInfo;
   }
 
-  onActionModeChanged(cellValidationRule: CellValidationRule, event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let returnValue: any = e.value == 'Stop Edit' ? 'Stop Edit' : 'Warn User';
+  onActionModeChanged(cellValidationRule: CellValidationRule, value: string) {
+    let returnValue: any = value == 'Stop Edit' ? 'Stop Edit' : 'Warn User';
     this.props.onChangeActionMode(cellValidationRule, returnValue);
   }
 }

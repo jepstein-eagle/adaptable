@@ -207,7 +207,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
       let canFinish: boolean = true;
       layout.ColumnSorts.forEach(gs => {
-        if (StringExtensions.IsNullOrEmpty(gs.Column) || gs.SortOrder == SortOrder.Unknown) {
+        if (StringExtensions.IsNullOrEmpty(gs.Column)) {
           canFinish = false;
         }
       });

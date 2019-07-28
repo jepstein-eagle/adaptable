@@ -137,12 +137,14 @@ export class ListBoxFilterForm extends React.Component<
     );
 
     let rangeOperandOptions: string[] = ['Value', 'Column'];
-    let rangeMenuItemsOperand1 = rangeOperandOptions.map((rangeOperand: string, index: number) => {
-      return {
-        onClick: () => this.onRangeTypeChangedOperand1(rangeOperand),
-        label: rangeOperand,
-      };
-    });
+    let rangeMenuItemsOperand1 = rangeOperandOptions.map(
+      (rangeOperand: 'Value' | 'Column', index: number) => {
+        return {
+          onClick: () => this.onRangeTypeChangedOperand1(rangeOperand),
+          label: rangeOperand,
+        };
+      }
+    );
 
     let rangeMenuItemsOperand2 = rangeOperandOptions.map((rangeOperand: string, index: number) => {
       return {
@@ -154,7 +156,7 @@ export class ListBoxFilterForm extends React.Component<
     let rangeForm = (
       <Flex flexDirection="column">
         <Dropdown
-          placeholder="Select"
+          placeholder="Select an Operator"
           value={this.state.UiSelectedRange.Operator}
           onChange={(x: LeafExpressionOperator) => this.onLeafExpressionOperatorChange(x)}
           options={this.props.Operators.map((operator: LeafExpressionOperator) => {
@@ -165,15 +167,16 @@ export class ListBoxFilterForm extends React.Component<
           })}
         ></Dropdown>
 
-        {this.state.UiSelectedRange.Operator != LeafExpressionOperator.Unknown && (
-          <Flex flexDirection="row" marginTop={2}>
-            <DropdownButton columns={['label']} items={rangeMenuItemsOperand1} marginRight={2}>
-              {this.state.UiSelectedRange.Operand1Type}
-            </DropdownButton>
+        {this.state.UiSelectedRange.Operator != null &&
+          this.state.UiSelectedRange.Operator != LeafExpressionOperator.None && (
+            <Flex flexDirection="row" marginTop={2}>
+              <DropdownButton columns={['label']} items={rangeMenuItemsOperand1} marginRight={2}>
+                {this.state.UiSelectedRange.Operand1Type}
+              </DropdownButton>
 
-            {this.getOperand1FormControl()}
-          </Flex>
-        )}
+              {this.getOperand1FormControl()}
+            </Flex>
+          )}
         {this.state.UiSelectedRange.Operator == LeafExpressionOperator.Between && (
           <Flex flexDirection="row" marginTop={2}>
             <DropdownButton columns={['label']} items={rangeMenuItemsOperand2} marginRight={2}>
@@ -206,6 +209,11 @@ export class ListBoxFilterForm extends React.Component<
 
   // Methods for getting the range
   private onLeafExpressionOperatorChange(value: LeafExpressionOperator) {
+    if (value === null || value === LeafExpressionOperator.None) {
+      this.props.onCustomRangeExpressionChange(null);
+      return;
+    }
+
     let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
@@ -213,12 +221,13 @@ export class ListBoxFilterForm extends React.Component<
       Operand1: this.state.UiSelectedRange.Operand1,
       Operand2: this.state.UiSelectedRange.Operand2,
     };
+
     this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () =>
       this.raiseOnChangeCustomExpression()
     );
   }
 
-  private onRangeTypeChangedOperand1(rangeOperandType: any): any {
+  private onRangeTypeChangedOperand1(rangeOperandType: 'Value' | 'Column'): any {
     let editedRange: QueryRange = {
       Operand1Type: rangeOperandType,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
@@ -397,8 +406,8 @@ export class ListBoxFilterForm extends React.Component<
   }
 
   raiseOnChangeCustomExpression() {
-    let isValidRange: boolean = false;
-    if (this.state.UiSelectedRange.Operator != LeafExpressionOperator.Unknown) {
+    let isValidRange: boolean = true;
+    if (this.state.UiSelectedRange.Operator != LeafExpressionOperator.None) {
       if (this.state.UiSelectedRange.Operator != LeafExpressionOperator.Between) {
         isValidRange = StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand1);
       } else {

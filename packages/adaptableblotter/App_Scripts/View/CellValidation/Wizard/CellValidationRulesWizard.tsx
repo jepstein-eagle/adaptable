@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { FormGroup, FormControl, Col } from 'react-bootstrap';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -13,7 +11,6 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
@@ -24,6 +21,7 @@ import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import Radio from '../../../components/Radio';
 import Input from '../../../components/Input';
+import { ThemeSelect } from '../../../Redux/ActionsReducers/ThemeRedux';
 
 export interface CellValidationRulesWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -47,16 +45,7 @@ export class CellValidationRulesWizard
 
   render(): any {
     const availableOperators = this.getAvailableOperators();
-    let operatorTypes = availableOperators.map((operator: LeafExpressionOperator) => {
-      return (
-        <option key={operator} value={operator.toString()}>
-          {ExpressionHelper.OperatorToLongFriendlyString(
-            operator,
-            ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)
-          )}
-        </option>
-      );
-    });
+
     let operatorOptions = availableOperators.map((operator: LeafExpressionOperator) => {
       return {
         value: operator.toString(),
@@ -86,8 +75,8 @@ export class CellValidationRulesWizard
         <Flex flexDirection="row" alignItems="center" marginTop={3} marginLeft={2}>
           <Radio
             marginRight={2}
-            value="None"
-            checked={this.state.Operator == LeafExpressionOperator.None}
+            value="Any"
+            checked={this.state.Operator == LeafExpressionOperator.AnyChange}
             onChange={(_, e: any) => this.onDisallowEditChanged(e)}
           >
             Disallow ALL edits
@@ -102,7 +91,7 @@ export class CellValidationRulesWizard
           <Radio
             marginRight={2}
             value="others"
-            checked={this.state.Operator != LeafExpressionOperator.None}
+            checked={this.state.Operator != LeafExpressionOperator.AnyChange}
             onChange={(_, e: any) => this.onDisallowEditChanged(e)}
           >
             Disallow edits where the new cell value matches rule:
@@ -116,20 +105,20 @@ export class CellValidationRulesWizard
 
         {/* if not None operator then show operator dropdown */}
         <Flex flexDirection="column" marginTop={3} marginLeft={2} marginRight={2}>
-          {this.state.Operator != LeafExpressionOperator.None ? (
+          {this.state.Operator != LeafExpressionOperator.AnyChange ? (
             <Dropdown
               style={{ maxWidth: 'inherit', width: '100%' }}
               marginBottom={2}
               options={operatorOptions}
-              disabled={this.checkOperator(LeafExpressionOperator.None)}
-              placeholder="select"
+              disabled={this.checkOperator(LeafExpressionOperator.AnyChange)}
+              placeholder="Select an Operator"
               value={this.state.Operator ? this.state.Operator.toString() : ''}
               onChange={(x: any) => this.onOperatorChanged(x)}
             />
           ) : null}
           {/* if  numeric then show a numeric control */}
-          {!this.checkOperator(LeafExpressionOperator.None) &&
-            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+          {this.state.Operator != null &&
+            !this.checkOperator(LeafExpressionOperator.AnyChange) &&
             !this.checkOperator(LeafExpressionOperator.IsPositive) &&
             !this.checkOperator(LeafExpressionOperator.IsNegative) &&
             !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
@@ -158,8 +147,8 @@ export class CellValidationRulesWizard
               </Flex>
             )}
           {/* if  date then show a date control */}
-          {!this.checkOperator(LeafExpressionOperator.None) &&
-            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+          {this.state.Operator != null &&
+            !this.checkOperator(LeafExpressionOperator.AnyChange) &&
             ColumnHelper.getColumnDataTypeFromColumnId(
               this.props.Data.ColumnId,
               this.props.Columns
@@ -185,8 +174,8 @@ export class CellValidationRulesWizard
               </Flex>
             )}
           {/* if string then show a text control  */}
-          {!this.checkOperator(LeafExpressionOperator.None) &&
-            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+          {this.state.Operator != null &&
+            !this.checkOperator(LeafExpressionOperator.AnyChange) &&
             !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
             !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
             ColumnHelper.getColumnDataTypeFromColumnId(
@@ -232,7 +221,7 @@ export class CellValidationRulesWizard
   private onDisallowEditChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let operator: LeafExpressionOperator =
-      e.value == 'None' ? LeafExpressionOperator.None : LeafExpressionOperator.Unknown;
+      e.value == 'Any' ? LeafExpressionOperator.AnyChange : null;
     this.setState({ Operator: operator } as CellValidationSettingsWizardState, () =>
       this.props.UpdateGoBackState()
     );
@@ -254,14 +243,9 @@ export class CellValidationRulesWizard
       ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)
     ) {
       case DataType.Boolean:
-        return [
-          LeafExpressionOperator.Unknown,
-          LeafExpressionOperator.IsTrue,
-          LeafExpressionOperator.IsFalse,
-        ];
+        return [LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
       case DataType.String:
         return [
-          LeafExpressionOperator.Unknown,
           LeafExpressionOperator.Equals,
           LeafExpressionOperator.NotEquals,
           LeafExpressionOperator.Contains,
@@ -273,7 +257,6 @@ export class CellValidationRulesWizard
         ];
       case DataType.Date:
         return [
-          LeafExpressionOperator.Unknown,
           LeafExpressionOperator.Equals,
           LeafExpressionOperator.NotEquals,
           LeafExpressionOperator.GreaterThan,
@@ -283,7 +266,6 @@ export class CellValidationRulesWizard
         ];
       case DataType.Number:
         return [
-          LeafExpressionOperator.Unknown,
           LeafExpressionOperator.Equals,
           LeafExpressionOperator.NotEquals,
           LeafExpressionOperator.LessThan,
@@ -300,12 +282,16 @@ export class CellValidationRulesWizard
   }
 
   public canNext(): boolean {
-    if (!ExpressionHelper.OperatorRequiresValue(this.state.Operator)) {
+    if (this.state.Operator == null || this.state.Operator == undefined) {
+      return false;
+    }
+
+    if (this.state.Operator == LeafExpressionOperator.AnyChange) {
       return true;
     }
 
-    if (this.checkOperator(LeafExpressionOperator.Unknown)) {
-      return false;
+    if (!ExpressionHelper.OperatorRequiresValue(this.state.Operator)) {
+      return true;
     }
 
     if (this.isBetweenOperator() && StringExtensions.IsNullOrEmpty(this.state.Operand2)) {

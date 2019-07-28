@@ -193,10 +193,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
               );
             }
           } else {
-            if (
-              StringExtensions.IsEmpty(y.Operand1) ||
-              y.Operator == LeafExpressionOperator.Unknown
-            ) {
+            if (StringExtensions.IsEmpty(y.Operand1) || y.Operator == LeafExpressionOperator.None) {
               return (
                 <ListGroupItem
                   key={columnId + index}

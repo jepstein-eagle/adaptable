@@ -6,7 +6,7 @@ export interface QueryRange {
    * Operator for the range (e.g. Greater Than, Equals), sometimes varies according to the column data type
    */
   Operator:
-    | 'Unknown'
+    | 'None'
     | 'GreaterThan'
     | 'LessThan'
     | 'Equals'
@@ -19,7 +19,7 @@ export interface QueryRange {
     | 'StartsWith'
     | 'EndsWith'
     | 'Regex'
-    | 'None'
+    | 'AnyChange'
     | 'ValueChange'
     | 'PercentChange'
     | 'NotBetween'

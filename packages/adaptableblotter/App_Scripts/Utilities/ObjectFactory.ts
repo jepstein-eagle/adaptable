@@ -174,7 +174,7 @@ export function CreateEmptyColumnCategory(): ColumnCategory {
 
 export function CreateEmptyRange(): QueryRange {
   return {
-    Operator: LeafExpressionOperator.Unknown,
+    Operator: LeafExpressionOperator.None,
     Operand1: EMPTY_STRING,
     Operand2: EMPTY_STRING,
     Operand1Type: RangeOperandType.Value,
@@ -185,7 +185,7 @@ export function CreateEmptyRange(): QueryRange {
 export function CreateEmptyColumnSort(): ColumnSort {
   return {
     Column: EMPTY_STRING,
-    SortOrder: SortOrder.Unknown,
+    SortOrder: SortOrder.Ascending,
   };
 }
 
@@ -195,7 +195,7 @@ export function CreateEmptyCellValidation(): CellValidationRule {
     ActionMode: 'Stop Edit',
     ColumnId: EMPTY_STRING,
     Range: {
-      Operator: LeafExpressionOperator.None,
+      Operator: LeafExpressionOperator.AnyChange,
       Operand1: EMPTY_STRING,
       Operand2: EMPTY_STRING,
       Operand1Type: RangeOperandType.Column,

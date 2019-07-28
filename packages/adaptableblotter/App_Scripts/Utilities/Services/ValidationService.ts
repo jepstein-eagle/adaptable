@@ -144,8 +144,8 @@ export class ValidationService implements IValidationService {
     dataChangedEvent: DataChangedInfo,
     columns: IColumn[]
   ): boolean {
-    // if its none then validation fails immediately
-    if (cellValidationRule.Range.Operator == LeafExpressionOperator.None) {
+    // if its any change then validation fails immediately
+    if (cellValidationRule.Range.Operator == LeafExpressionOperator.AnyChange) {
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...

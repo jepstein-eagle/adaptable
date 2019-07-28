@@ -43,6 +43,7 @@ import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/Adaptable
 import HelpBlock from '../../../components/HelpBlock';
 import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { AlertToolbarControl } from '../../Alert/AlertToolbarControl';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: IColumn;
@@ -406,7 +407,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         ? existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues
         : [];
 
-    this.persistFilter(columnDisplayValues, columnRawValues, userFilters, [rangeExpression]);
+    if (rangeExpression == null) {
+      this.persistFilter(columnDisplayValues, columnRawValues, userFilters, []);
+    } else {
+      this.persistFilter(columnDisplayValues, columnRawValues, userFilters, [rangeExpression]);
+    }
   }
 
   persistFilter(

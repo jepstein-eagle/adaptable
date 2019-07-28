@@ -15,7 +15,7 @@ export interface Layout extends AdaptableBlotterObject {
 
 export interface ColumnSort {
   Column: string;
-  SortOrder: 'Unknown' | 'Ascending' | 'Descending';
+  SortOrder: 'Ascending' | 'Descending';
 }
 
 export interface VendorGridInfo {

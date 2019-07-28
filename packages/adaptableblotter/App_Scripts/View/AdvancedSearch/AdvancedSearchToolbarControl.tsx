@@ -38,15 +38,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   {}
 > {
   render() {
-    const selectSearchString: string = 'Select a Search';
-
     let savedSearch: AdvancedSearch = this.props.AdvancedSearches.find(
       s => s.Name == this.props.CurrentAdvancedSearchName
     );
-
-    let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)
-      ? null
-      : this.props.CurrentAdvancedSearchName;
 
     let sortedAdvancedSearches: AdvancedSearch[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
@@ -54,14 +48,12 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
       'Name'
     );
 
-    let availableSearches: any[] = sortedAdvancedSearches
-      // .filter(s => s.Name != this.props.CurrentAdvancedSearchName)
-      .map((search, index) => {
-        return {
-          label: search.Name,
-          value: search.Name,
-        };
-      });
+    let availableSearches: any[] = sortedAdvancedSearches.map((search, index) => {
+      return {
+        label: search.Name,
+        value: search.Name,
+      };
+    });
     let content = (
       <Flex flexDirection="row" alignItems="stretch">
         <Flex flexDirection="row" alignItems="stretch">
@@ -69,7 +61,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
             disabled={availableSearches.length == 0}
             style={{ minWidth: 200 }}
             options={availableSearches}
-            value={currentSearchName}
+            value={this.props.CurrentAdvancedSearchName}
             placeholder="Select Advanced Search"
             onChange={searchName => this.onSelectedSearchChanged(searchName)}
             marginRight={2}
@@ -78,7 +70,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
           <ButtonEdit
             onClick={() => this.props.onEditAdvancedSearch()}
             tooltip="Edit Current Advanced Search"
-            disabled={currentSearchName == selectSearchString}
+            disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
             AccessLevel={this.props.AccessLevel}
           />
           <ButtonNew
@@ -91,7 +83,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
 
           <ButtonDelete
             tooltip="Delete Advanced Search"
-            disabled={currentSearchName == selectSearchString}
+            disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
             ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
             ConfirmationMsg={
               "Are you sure you want to delete '" + !savedSearch ? '' : savedSearch.Name + "'?"
