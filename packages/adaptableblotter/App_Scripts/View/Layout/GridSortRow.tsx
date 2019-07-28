@@ -41,6 +41,8 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
     colItems[1].Content = (
       <Dropdown
         placeholder="select"
+        showEmptyItem={false}
+        showClearButton={false}
         value={this.props.ColumnSort.SortOrder}
         onChange={(x: any) => this.onSortOrderChanged(x)}
         options={sortOrders}
@@ -49,11 +51,8 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
 
     let deleteButton = (
       <ButtonDelete
-        cssClassName={this.props.cssClassName}
-        style={{ marginLeft: '1px', marginTop: '2px', marginBottom: '2px', marginRight: '1px' }}
-        overrideDisableButton={false}
-        overrideTooltip={'Delete Sort'}
-        DisplayMode="Glyph"
+        disabled={false}
+        tooltip={'Delete Sort'}
         ConfirmAction={null}
         ConfirmationMsg={''}
         ConfirmationTitle={''}

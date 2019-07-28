@@ -122,6 +122,7 @@ export class ShortcutSettingsWizard
                   style={{ flex: 1, maxWidth: 'none' }}
                   placeholder="select"
                   showEmptyItem={false}
+                  showClearButton={false}
                   value={currentActionValue}
                   marginRight={3}
                   onChange={(x: any) => this.onShortcutOperationChanged(x)}
@@ -211,12 +212,11 @@ export class ShortcutSettingsWizard
                 </Text>
                 <Flex flex={7} flexDirection="row" alignItems="center">
                   <Dropdown
-                    placeholder="select"
+                    placeholder="Select Dynamic Date"
                     style={{ flex: 1, maxWidth: 'none' }}
                     value={currentDynamicResult}
                     onChange={(x: any) => this.onDynamicResultChanged(x)}
                     options={[
-                      { value: 'select', label: 'Select Dynamic Date' },
                       { value: CalendarConstants.TODAY, label: 'Today' },
                       { value: CalendarConstants.YESTERDAY, label: 'Yesterday' },
                       { value: CalendarConstants.TOMORROW, label: 'Tomorrow' },

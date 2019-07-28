@@ -120,6 +120,7 @@ import {
 } from '../../Api/Events/AuditEvents';
 
 import * as Emitter from 'emittery';
+import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2025,11 +2026,23 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           /**
            * Use Case: User deletes a chart (which might be currently showing)
            * Action:  Set ALL chart visibility to hidden (even if its not current chart)?
+           * Also - check if the chart being deleted is the current chart and if so then update the current selected chart to empty.
            * Note:  No need to worry about using a popup as cannot delete a chart while in popup (other than through api)
            */
           case ChartRedux.CHART_DEFINITION_DELETE: {
             let returnAction = next(action);
             middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden));
+
+            let chartState = middlewareAPI.getState().Chart;
+            let currentChartName = chartState.CurrentChartName;
+
+            if (StringExtensions.IsNotNullOrEmpty(currentChartName)) {
+              let actionTyped = <ChartRedux.ChartDefinitionDeleteAction>action;
+              let chartDefinition: ChartDefinition = actionTyped.chartDefinition;
+              if (chartDefinition && currentChartName == actionTyped.chartDefinition.Name) {
+                middlewareAPI.dispatch(ChartRedux.ChartDefinitionSelect(''));
+              }
+            }
             return returnAction;
           }
 

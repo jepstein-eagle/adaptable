@@ -28,6 +28,8 @@ import Checkbox from '../../components/CheckBox';
 import { Text, Flex, Box } from 'rebass';
 import Panel from '../../components/Panel';
 import FormLayout, { FormRow } from '../../components/FormLayout';
+import HelpBlock from '../../components/HelpBlock';
+import Radio from '../../components/Radio';
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
@@ -129,10 +131,6 @@ class QuickSearchPopupComponent extends React.Component<
       '.',
     ];
 
-    let stringOperators: LeafExpressionOperator[] = [
-      LeafExpressionOperator.Contains,
-      LeafExpressionOperator.StartsWith,
-    ];
     let DisplayActions = EnumExtensions.getNames(DisplayAction).map(enumName => {
       return {
         label: this.getTextForDisplayAction(enumName as DisplayAction),
@@ -162,6 +160,47 @@ class QuickSearchPopupComponent extends React.Component<
         </FormLayout>
 
         <Panel
+          header="Quick Search Behaviour"
+          style={{ height: 'auto' }}
+          variant="default"
+          borderRadius="none"
+          marginTop={3}
+        >
+          <HelpBlock marginBottom={1}>
+            Choose what happens to those cells that match the Quick Search text:
+          </HelpBlock>
+
+          <Flex flexDirection="column" padding={2}>
+            <Radio
+              className={cssClassName + '__radiobutton'}
+              value="HighlightCell"
+              checked={this.props.DisplayAction == DisplayAction.HighlightCell}
+              onChange={() => this.onDisplayTypeChange(DisplayAction.HighlightCell)}
+            >
+              Highlight any matching cells in the Grid
+            </Radio>
+
+            <Radio
+              className={cssClassName + '__radiobutton'}
+              value="ShowRow"
+              checked={this.props.DisplayAction == DisplayAction.ShowRow}
+              onChange={() => this.onDisplayTypeChange(DisplayAction.ShowRow)}
+            >
+              Only display rows which contain matching cells
+            </Radio>
+
+            <Radio
+              className={cssClassName + '__radiobutton'}
+              value="ShowRowAndHighlightCell"
+              checked={this.props.DisplayAction == DisplayAction.ShowRowAndHighlightCell}
+              onChange={() => this.onDisplayTypeChange(DisplayAction.ShowRowAndHighlightCell)}
+            >
+              Highlight any matching cells and only display rows that contain them
+            </Radio>
+          </Flex>
+        </Panel>
+
+        <Panel
           header="Quick Search Options"
           style={{ height: 'auto' }}
           variant="default"
@@ -169,32 +208,6 @@ class QuickSearchPopupComponent extends React.Component<
           marginTop={3}
         >
           <FormLayout columns={['label', 2, 3]}>
-            <FormRow label={'Behaviour:'}>
-              <Dropdown
-                placeholder="select"
-                style={{ width: '100%', maxWidth: 'none' }}
-                value={this.props.DisplayAction.toString()}
-                onChange={(x: any) => this.onDisplayTypeChange(x)}
-                options={DisplayActions}
-                marginRight={3}
-              />
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Quick Search: Behaviour'}
-                bodyText={[
-                  <b>Highlight Cells Only:</b>,
-                  ' Changes back colour of cells matching search text',
-                  <br />,
-                  <br />,
-                  <b>Show Matching Rows Only:</b>,
-                  ' Only shows rows containing cells matching search text',
-                  <br />,
-                  <br />,
-                  <b>Highlight Cells and Show Matching Rows:</b>,
-                  ' Only shows rows containing cells (which are also coloured) matching search text',
-                ]}
-              />
-            </FormRow>
             <FormRow label="Set Back Colour:">
               <Flex alignItems="center">
                 <Checkbox

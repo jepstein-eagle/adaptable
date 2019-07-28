@@ -35,6 +35,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
           <Dropdown
             style={{ minWidth: 'auto', width: '100%' }}
             showClearButton={false}
+            showEmptyItem={false}
             options={this.props.AvailableKeys.map(x => {
               return {
                 value: x,
@@ -56,6 +57,8 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
           ) : (
             <Dropdown
               style={{ minWidth: 'auto', width: '100%' }}
+              showEmptyItem={false}
+              showClearButton={false}
               value={shortcut.ShortcutOperation}
               onChange={x => this.onActionChange(x)}
               options={this.props.AvailableActions.map((shortcutOperation: MathOperation) => {

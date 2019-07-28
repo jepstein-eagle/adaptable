@@ -60,14 +60,19 @@ class ChartDisplayPopupComponent extends React.Component<
   }
 
   componentWillReceiveProps(nextProps: ChartDisplayPopupProps, nextContext: any) {
-    if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
+    if (
+      this.props.CurrentChartDefinition == null ||
+      nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name
+    ) {
       this.setState({ EditedChartDefinition: null });
     }
   }
 
   render() {
     // temp till do properly
-    let currentChartType: ChartType = this.props.CurrentChartDefinition.ChartType;
+    let currentChartType: ChartType = this.props.CurrentChartDefinition
+      ? this.props.CurrentChartDefinition.ChartType
+      : null;
 
     let cssClassName: string = this.props.cssClassName + '__Charts';
 

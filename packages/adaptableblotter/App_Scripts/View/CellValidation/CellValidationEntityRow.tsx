@@ -42,6 +42,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
       <Dropdown
         placeholder="select"
         showEmptyItem={false}
+        showClearButton={false}
         value={cellValidationRule.ActionMode}
         onChange={(value: any) => this.onActionModeChanged(cellValidationRule, value)}
         options={ActionModeTypes}
