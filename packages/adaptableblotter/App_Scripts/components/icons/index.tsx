@@ -10,7 +10,9 @@ import TriangleDown from './triangle-down';
 import Check from './check';
 import Plus from './plus';
 import Clear from './clear';
+import Search from './search';
 import Info from './info';
+import Alert from './alert';
 import List from './list';
 import Edit from './edit';
 import ViewColumns from './view-columns';
@@ -34,6 +36,8 @@ import CheckCircle from './check-circle';
 import Refresh from './refresh';
 import Save from './save';
 import BarChart from './bar-chart';
+import laptop from './laptop';
+import update from './update';
 import ImportExport from './import-export';
 import { ReactComponentLike } from 'prop-types';
 
@@ -51,6 +55,7 @@ const allIcons = {
   'conditional-style': ConditionalStyle,
   list: List,
   undo: Undo,
+  update,
   delete: Delete,
   build: Build,
   save: Save,
@@ -62,6 +67,9 @@ const allIcons = {
   'fast-forward': FastForward,
   'fast-backward': FastBackward,
   warning: Warning,
+  alert: Alert,
+  laptop,
+  'notification-important': Alert,
   'warning-sign': Warning,
   justify: Justify,
   check: Check,
@@ -80,6 +88,7 @@ const allIcons = {
   'info-sign': Info,
   add: Plus,
   export: Export,
+  search: Search,
 } as { [key: string]: ReactNode };
 
 export const Icon = ({ name, ...props }: { name: string; props?: any }) => {

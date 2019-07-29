@@ -71,9 +71,9 @@ export const UserFilterStrategyName: string = 'User Filter';
 
 // Strategy Glyphs
 export const AdvancedSearchGlyph: string = 'search';
-export const AlertGlyph: string = 'bullhorn';
-export const ApplicationGlyph: string = 'font';
-export const BulkUpdateGlyph: string = 'hand-up';
+export const AlertGlyph: string = 'alert';
+export const ApplicationGlyph: string = 'laptop';
+export const BulkUpdateGlyph: string = 'update';
 export const CalculatedColumnGlyph: string = 'th-list';
 export const CalendarGlyph: string = 'calendar';
 export const CellSummaryGlyph: string = 'th-large';
