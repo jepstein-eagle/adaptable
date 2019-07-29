@@ -4,7 +4,7 @@ import Panel from '../../components/Panel';
 import ListGroupItem from '../../components/List/ListGroupItem';
 import ListGroup from '../../components/List/ListGroup';
 
-// this just takes a list of filter names - doesnt care if they are system or user
+// this just takes a list of filter names - doesnt care if they are system or user or named
 export interface ExpressionBuilderUserFilterProps
   extends React.ClassAttributes<ExpressionBuilderUserFilter> {
   AvailableSystemFilterNames: Array<string>;
@@ -20,53 +20,26 @@ export class ExpressionBuilderUserFilter extends React.Component<
   {}
 > {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '__queryuserfilters';
-
-    var systemFilterNames = this.props.AvailableSystemFilterNames.map(
-      (sf: string, index: number) => {
-        return (
-          <ListGroupItem
-            key={index}
-            onClick={() => this.onClickColum(sf)}
-            active={this.props.SelectedFilterNames.some(f => f == sf)}
-          >
-            {sf}
-          </ListGroupItem>
-        );
-      }
-    );
-
-    var userFilterNames = this.props.AvailableUserFilterNames.map((uf: string, index: number) => {
+    const filters = [
+      ...this.props.AvailableSystemFilterNames,
+      ...this.props.AvailableUserFilterNames,
+      ...this.props.AvailableNamedFilterNames,
+    ];
+    var filterItems = filters.map((sf: string, index: number) => {
       return (
         <ListGroupItem
           key={index}
-          onClick={() => this.onClickColum(uf)}
-          active={this.props.SelectedFilterNames.some(f => f == uf)}
+          onClick={() => this.onClickColum(sf)}
+          active={this.props.SelectedFilterNames.some(f => f == sf)}
         >
-          <i>{uf}</i>
-        </ListGroupItem>
-      );
-    });
-
-    var namedFilterNames = this.props.AvailableNamedFilterNames.map((uf: string, index: number) => {
-      return (
-        <ListGroupItem
-          key={index}
-          onClick={() => this.onClickColum(uf)}
-          active={this.props.SelectedFilterNames.some(f => f == uf)}
-        >
-          <i>{uf}</i>
+          {sf}
         </ListGroupItem>
       );
     });
 
     return (
       <Panel style={{ flex: 1 }} bodyScroll>
-        <ListGroup>
-          {systemFilterNames}
-          {userFilterNames}
-          {namedFilterNames}
-        </ListGroup>
+        <ListGroup>{filterItems}</ListGroup>
       </Panel>
     );
   }

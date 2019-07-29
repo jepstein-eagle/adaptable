@@ -5,9 +5,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-
 import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
-import Panel from '../../../components/Panel';
 import ErrorBox from '../../../components/ErrorBox';
 import Textarea from '../../../components/Textarea';
 import WizardPanel from '../../../components/WizardPanel';
@@ -45,7 +43,7 @@ export class CalculatedColumnExpressionWizard
           placeholder="Enter expression"
           autoFocus
           onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-          style={{ width: '100%' }}
+          style={{ width: '100%', height: '75%' }}
         ></Textarea>
 
         {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}

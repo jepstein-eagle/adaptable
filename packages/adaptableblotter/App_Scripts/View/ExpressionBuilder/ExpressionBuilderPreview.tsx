@@ -29,13 +29,6 @@ import ListGroupItem from '../../components/List/ListGroupItem';
 import ListGroup from '../../components/List/ListGroup';
 import SimpleButton from '../../components/SimpleButton';
 
-//I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
-// since html cannot render a button within a button.
-// https://github.com/react-bootstrap/react-bootstrap/issues/1445
-// I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
-// but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks bad
-// JW - 22/2/18: Ive added an underline to the column name.  Not perfect solution but think it makes it more obvious its clickable
-
 export interface ExpressionBuilderPreviewProps
   extends React.ClassAttributes<ExpressionBuilderPreview> {
   Expression: Expression;
