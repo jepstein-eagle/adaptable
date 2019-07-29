@@ -3,7 +3,6 @@ export interface DashboardState extends RunTimeState {
   AvailableToolbars?: string[];
   VisibleToolbars?: string[];
   VisibleButtons?: string[];
-  Zoom?: number;
   DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
   ShowSystemStatusButton?: boolean;
   ShowAboutButton?: boolean;
@@ -42,12 +41,6 @@ string array
 Which function buttons are visible in the Home Toolbar at startup. Choose the function buttons that make most sense to your users.
 
 Must be a valid value (the list is in the Appendix).
-
-Zoom
-
-number
-
-The scale of the dashboard. Use if you want to minimise screen estate at the top of the grid. 1 is the default (and the max), so set to a number lower than 1.
 
 DashboardVisibility
 
@@ -96,10 +89,4 @@ Sets the title of the Application Toolbar.
 Note
 The Application Toolbar is an empty toolbar designed for letting you host your own elements, buttons and controls.
 
-
-
-If the Dashboard buttons should be extra small.
-
-Note
-Another - and perhaps better - way of achieving the same effect is to use the Zoom property )and keep the buttons their default size)
 */

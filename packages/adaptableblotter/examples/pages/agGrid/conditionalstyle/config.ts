@@ -2,7 +2,6 @@ import { PredefinedConfig } from '../../../../App_Scripts/types';
 
 export default {
   Dashboard: {
-    Zoom: 2,
     VisibleToolbars: [],
     VisibleButtons: ['ConditionalStyle'],
   },

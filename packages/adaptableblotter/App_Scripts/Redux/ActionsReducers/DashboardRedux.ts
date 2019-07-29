@@ -10,7 +10,6 @@ const DASHBOARD_SHOW_TOOLBAR = 'DASHBOARD_SHOW_TOOLBAR';
 const DASHBOARD_HIDE_TOOLBAR = 'DASHBOARD_HIDE_TOOLBAR';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_SET_FUNCTION_BUTTONS = 'DASHBOARD_SET_FUNCTION_BUTTONS';
-const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
 const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
 const DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON = 'DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON';
 const DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON = 'DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON';
@@ -52,10 +51,6 @@ export interface DashboardCreateDefaultConfigurationItemAction extends Redux.Act
 
 export interface DashboardSetFunctionButtonsAction extends Redux.Action {
   StrategyIds: string[];
-}
-
-export interface DashboardSetZoomAction extends Redux.Action {
-  Zoom: Number;
 }
 
 export interface DashboardSetVisibilityAction extends Redux.Action {
@@ -126,11 +121,6 @@ export const DashboardSetFunctionButtons = (
 ): DashboardSetFunctionButtonsAction => ({
   type: DASHBOARD_SET_FUNCTION_BUTTONS,
   StrategyIds,
-});
-
-export const DashboardSetZoom = (Zoom: Number): DashboardSetZoomAction => ({
-  type: DASHBOARD_SET_ZOOM,
-  Zoom,
 });
 
 export const DashboardSetVisibility = (Visibility: Visibility): DashboardSetVisibilityAction => ({
@@ -221,7 +211,6 @@ const initialDashboardState: DashboardState = {
     StrategyConstants.ConditionalStyleStrategyId,
     StrategyConstants.TeamSharingStrategyId,
   ],
-  Zoom: 1,
   DashboardVisibility: Visibility.Visible,
   ShowSystemStatusButton: true,
   ShowAboutButton: true,
@@ -273,10 +262,6 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
       let actionTyped = <DashboardSetFunctionButtonsAction>action;
       let dashboardFunctionButtons = actionTyped.StrategyIds;
       return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
-    }
-    case DASHBOARD_SET_ZOOM: {
-      let actionTyped = <DashboardSetZoomAction>action;
-      return Object.assign({}, state, { Zoom: actionTyped.Zoom });
     }
     case DASHBOARD_SET_VISIBILITY: {
       let actionTyped = <DashboardSetVisibilityAction>action;

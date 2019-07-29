@@ -48,7 +48,6 @@ import { NamedFilterState } from './RunTimeState/NamedFilterState';
  *  Dashboard: {
  *    VisibleToolbars: ['SmartEdit', 'Export', 'Layout', 'QuickSearch'],
  *    VisibleButtons: ['Dashboard', 'ColumnChooser', 'AdvancedSearch'],
- *    Zoom: 0.9,
  * },
  *  SmartEdit: {
  *    SmartEditValue: 10,
