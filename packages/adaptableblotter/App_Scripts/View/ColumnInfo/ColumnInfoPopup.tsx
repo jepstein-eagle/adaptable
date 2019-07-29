@@ -335,9 +335,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
       }
       if (
         this.isStrategyVisible(StrategyConstants.CalculatedColumnStrategyId) &&
-        this.props.CalculatedColumns.findIndex(
-          c => c.ColumnId == this.state.SelectedColumn.ColumnId
-        ) != -1
+        ArrayExtensions.ContainsItem(
+          this.props.CalculatedColumns.map(cc => cc.ColumnId),
+          this.state.SelectedColumn.ColumnId
+        )
       ) {
         summaries.push(
           <div
