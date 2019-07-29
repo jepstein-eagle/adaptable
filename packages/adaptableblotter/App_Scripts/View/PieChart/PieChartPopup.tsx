@@ -281,6 +281,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
           <Text marginTop={3}>Labels Position: </Text>
           <Dropdown
             placeholder="select"
+            showEmptyItem={false}
+            showClearButton={false}
             value={this.state.SliceLabelsPosition}
             onChange={(v: any) => this.onSliceLabelsPositionChanged(v)}
             options={this.getOptionsForLabelsPosition()}
@@ -289,6 +291,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
           <Text marginTop={3}>Labels Content: </Text>
           <Dropdown
             placeholder="select"
+            showEmptyItem={false}
+            showClearButton={false}
             value={this.state.SliceLabelsMapping}
             onChange={(x: any) => this.onSliceLabelsMappingChanged(x)}
             options={this.getOptionsForSliceLabelsMapping()}
@@ -297,6 +301,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
           <Text marginTop={3}>Slices Sort By: </Text>
           <Dropdown
             placeholder="select"
+            showEmptyItem={false}
+            showClearButton={false}
             value={this.state.SliceSortOption}
             onChange={(x: any) => this.onSliceSortByColumnChanged(x)}
             options={this.getOptionsForSliceSortOrders()}

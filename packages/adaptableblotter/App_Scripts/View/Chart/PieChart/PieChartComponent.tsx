@@ -212,7 +212,9 @@ export class PieChartComponent extends React.Component<
         <FormLayout>
           <FormRow label="Sort by">
             <Dropdown
-              placeholder="Select"
+              placeholder="select"
+              showEmptyItem={false}
+              showClearButton={false}
               value={this.state.SliceSortOption}
               onChange={x => this.onSliceSortByColumnChanged(x)}
               options={this.getOptionsForSliceSortOrders()}
@@ -295,7 +297,9 @@ export class PieChartComponent extends React.Component<
 
               <FormRow label="Labels Position">
                 <Dropdown
-                  placeholder="Select position"
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.PieChartLabelPosition}
                   onChange={x => this.onSliceLabelsPositionChanged(x)}
                   options={this.getOptionsForLabelsPosition()}
@@ -303,7 +307,9 @@ export class PieChartComponent extends React.Component<
               </FormRow>
               <FormRow label="Labels Content">
                 <Dropdown
-                  placeholder="Select"
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.SliceLabelsMapping}
                   onChange={x => this.onSliceLabelsMappingChanged(x)}
                   options={this.getOptionsForSliceLabelsMapping()}
