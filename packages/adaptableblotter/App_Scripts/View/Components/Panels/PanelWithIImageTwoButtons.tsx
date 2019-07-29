@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { PanelProps, Panel, Row, Col, Button, Glyphicon, Radio } from 'react-bootstrap';
+
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType, ColumnMenuTab } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
+
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import { Flex, Box } from 'rebass';
+import { Icon } from '../../../components/icons';
+import Panel, { PanelProps } from '../../../components/Panel';
 
 export interface PanelWithImageTwoButtonsProps extends PanelProps {
   firstButtonContent?: React.ReactNode;
@@ -30,11 +32,11 @@ export class PanelWithImageTwoButtons extends React.Component<PanelWithImageTwoB
     }
     className += ' ' + 'ab_panel-with-button-reduce-header-padding';
     let header = (
-      <AdaptableBlotterForm inline>
-        <Row style={{ display: 'flex', alignItems: 'center' }}>
-          <Col xs={9}>
-            {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
-            {this.props.header}{' '}
+      <Flex flexDirection="column">
+        <Flex flexDirection="row" alignItems="center">
+          <Flex flex={9}>
+            <Icon name={this.props.glyphicon} />
+            {this.props.header}
             {this.props.infoBody != null && (
               <span>
                 <label> </label>
@@ -48,28 +50,25 @@ export class PanelWithImageTwoButtons extends React.Component<PanelWithImageTwoB
                 </span>
               </span>
             )}
-          </Col>
+          </Flex>
 
-          <Col xs={3}>
-            {this.props.firstButton &&
-              React.cloneElement(this.props.firstButton, { style: { float: 'right' } })}
-            {this.props.secondButton &&
-              React.cloneElement(this.props.secondButton, { style: { float: 'right' } })}
-          </Col>
-        </Row>
-      </AdaptableBlotterForm>
+          <Flex flex={1} />
+          <Box>
+            {this.props.secondButton}
+            {this.props.firstButton}
+          </Box>
+        </Flex>
+      </Flex>
     );
     return (
-      <div className={cssClassName}>
-        <Panel
-          header={header}
-          className={className}
-          style={this.props.style}
-          bsStyle={this.props.bsStyle}
-        >
-          {this.props.children}
-        </Panel>
-      </div>
+      <Panel
+        header={header}
+        className={className}
+        style={this.props.style}
+        bsStyle={this.props.bsStyle}
+      >
+        {this.props.children}
+      </Panel>
     );
   }
 }

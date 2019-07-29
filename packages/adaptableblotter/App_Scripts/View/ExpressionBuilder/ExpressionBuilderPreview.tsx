@@ -260,7 +260,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             <SimpleButton
               className={cssClassName + StyleConstants.PREVIEW_HEADER_BUTTON}
               style={{ flex: 1 }}
-              tone="success"
+              tone="accent"
               variant="raised"
               key={columnId + 'header'}
               onClick={() => this.onColumnHeaderSelected(columnId)}

@@ -45,7 +45,7 @@ export class LayoutGridSortWizard
         icon="plus"
         iconPosition="start"
         variant="raised"
-        tone="success"
+        tone="accent"
         onClick={() => this.addSort()}
       >
         Add Sort

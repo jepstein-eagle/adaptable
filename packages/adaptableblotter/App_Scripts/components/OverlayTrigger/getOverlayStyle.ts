@@ -3,6 +3,7 @@ import getAvailableSizeInfo, { BoundingClientRect } from '../utils/getAvailableS
 
 interface OverlayStyleParam {
   targetRect: BoundingClientRect;
+  constrainRect: BoundingClientRect;
   maxSizeOffset?: number;
 
   anchor: 'vertical' | 'horizontal';
@@ -16,11 +17,11 @@ const getWindowSize = (): { width: number; height: number } => ({
 
 const getOverlayStyle = ({
   targetRect,
-
+  constrainRect,
   anchor,
   targetOffset,
 }: OverlayStyleParam): CSSProperties => {
-  const sizeInfo = getAvailableSizeInfo({ targetRect });
+  const sizeInfo = getAvailableSizeInfo({ targetRect, constrainRect });
   const overlayStyle: CSSProperties = {
     maxWidth: sizeInfo.maxWidth,
     maxHeight: sizeInfo.maxHeight,
@@ -37,8 +38,9 @@ const getOverlayStyle = ({
       overlayStyle.left = targetRect.right + offset;
       overlayStyle.left += (global as any).scrollX;
     }
-    overlayStyle.top = targetRect.top + targetRect.height / 2;
+    overlayStyle.top = targetRect.top + targetRect.height / 2 + +(global as any).scrollY;
     overlayStyle.transform = 'translate3d(0px, -50%, 0px)';
+    delete overlayStyle.maxHeight;
   } else {
     if (sizeInfo.verticalPosition === 'top') {
       overlayStyle.bottom = windowSize.height - targetRect.top + offset;
@@ -48,8 +50,9 @@ const getOverlayStyle = ({
       overlayStyle.top += (global as any).scrollY;
     }
 
-    overlayStyle.left = targetRect.left + targetRect.width / 2;
+    overlayStyle.left = targetRect.left + targetRect.width / 2 + (global as any).scrollX;
     overlayStyle.transform = 'translate3d(-50%, 0px, 0px)';
+    delete overlayStyle.maxWidth;
   }
 
   return overlayStyle;

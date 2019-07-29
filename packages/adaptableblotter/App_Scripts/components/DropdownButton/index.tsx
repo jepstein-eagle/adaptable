@@ -9,7 +9,7 @@ import SimpleButton, { SimpleButtonProps } from '../SimpleButton';
 import useExpanded, { ExpandedProps } from './useExpanded';
 import renderItem from './renderItem';
 import DropdownButtonItem from './DropdownButtonItem';
-import OverlayTrigger from '../OverlayTrigger';
+import OverlayTrigger, { OverlayTriggerProps } from '../OverlayTrigger';
 
 const ICON = (
   <svg width="20" height="20" viewBox="0 0 24 24">
@@ -22,7 +22,9 @@ export type DropdownButtonProps = BoxProps &
   SimpleButtonProps &
   ExpandedProps & {
     collapseOnItemClick?: boolean;
+
     columns?: string[];
+    overlayProps?: OverlayTriggerProps;
     listOffset?: number;
     items?: DropdownButtonItem[];
     idProperty?: string;
@@ -44,16 +46,20 @@ const defaultListItemStyle = {
 const DropdownButton = (props: DropdownButtonProps) => {
   let {
     columns,
+    overlayProps,
+
     listOffset = 10,
     collapseOnItemClick = true,
+
     idProperty = 'id',
     isItemDisabled,
     items,
     children,
-    listMinWidth = 250,
+    listMinWidth = 100,
     listStyle,
     listItemStyle,
     listItemClassName,
+    constrainTo,
     ...domProps
   } = props;
 
@@ -79,7 +85,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
           : `${baseClassName}__list-item--clickable`,
         listItemClassName
       );
-      const disabled = isItemDisabled(item);
+      const disabled = isItemDisabled!(item);
 
       const getItemHandler = (eventName: string) => {
         return (e: React.SyntheticEvent) => {
@@ -158,6 +164,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
   return (
     <OverlayTrigger
       visible={expanded}
+      constrainTo={constrainTo}
       anchor="vertical"
       render={() => {
         return (
@@ -166,6 +173,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
           </div>
         );
       }}
+      {...overlayProps}
     >
       <SimpleButton
         icon={icon}

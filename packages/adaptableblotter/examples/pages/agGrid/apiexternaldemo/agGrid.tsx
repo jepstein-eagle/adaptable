@@ -7,7 +7,6 @@ import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 
-import { Button } from 'react-bootstrap';
 import { ExamplesHelper } from '../../ExamplesHelper';
 /*
 Demo that shows how we can use the api 'externally' via textboxes and buttons
@@ -55,16 +54,13 @@ export default () => {
       <label>Quick Search (from client application via Adaptable Blotter API): </label>
       &nbsp;
       <input type="text" id="txtQuickSearchText" />
-      <Button
-        bsSize={'xs'}
+      <button
         style={{ marginLeft: '5px', marginRight: '5px' }}
         onClick={() => runQuickSearchViaAPI()}
       >
         Run
-      </Button>
-      <Button bsSize={'xs'} onClick={() => clearQuickSearchViaAPI()}>
-        Clear
-      </Button>
+      </button>
+      <button onClick={() => clearQuickSearchViaAPI()}>Clear</button>
     </div>
   );
 };

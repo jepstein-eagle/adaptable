@@ -9,7 +9,7 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { DANGER_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
+
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow>
@@ -43,31 +43,26 @@ export class ColumnFilterEntityRow extends React.Component<
       />
     );
     colItems[2].Content = (
-      <span>
+      <>
         <ButtonSave
-          cssClassName={this.props.cssClassName}
+          className={this.props.cssClassName}
           onClick={() => this.props.onSaveColumnFilterasUserFilter(this.props.ColumnFilter)}
-          overrideTooltip="Save as User Filter"
-          bsStyle={'primary'}
+          tooltip="Save as User Filter"
           DisplayMode="Glyph"
-          size={'xsmall'}
-          overrideDisableButton={
+          disabled={
             this.props.ColumnFilter == null ||
             ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.Filter.FilterExpressions)
           }
           AccessLevel={this.props.AccessLevel}
-        />{' '}
+        />
         <ButtonClear
-          cssClassName={this.props.cssClassName}
+          className={this.props.cssClassName}
           onClick={() => this.props.onClear(this.props.ColumnFilter)}
-          overrideTooltip="Clear Column Filter"
-          bsStyle={DEFAULT_BSSTYLE}
-          DisplayMode="Glyph"
-          size={'xsmall'}
-          overrideDisableButton={this.props.ColumnFilter == null}
+          tooltip="Clear Column Filter"
+          disabled={this.props.ColumnFilter == null}
           AccessLevel={this.props.AccessLevel}
         />
-      </span>
+      </>
     );
 
     return (

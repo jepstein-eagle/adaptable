@@ -117,7 +117,7 @@ class SmartEditToolbarControlComponent extends React.Component<
             : ''
         }
       >
-        <DropdownButton marginRight={2} items={operationMenuItems}>
+        <DropdownButton marginRight={2} items={operationMenuItems} columns={['label']}>
           {this.props.MathOperation}
         </DropdownButton>
 
@@ -147,14 +147,14 @@ class SmartEditToolbarControlComponent extends React.Component<
 
         {this.props.IsValidSelection && (
           <AdaptablePopover
-            size={this.props.DashboardSize}
             cssClassName={cssClassName}
             headerText="Preview Results"
             tooltipText="Preview Results"
             bodyText={[previewPanel]}
             MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
             useButton={true}
-            triggerAction={'click'}
+            showEvent={'focus'}
+            hideEvent="blur"
           />
         )}
       </Flex>

@@ -1,6 +1,7 @@
 import { useRef, MutableRefObject } from 'react';
 import useProperty from '../utils/useProperty';
 import getAvailableSizeInfo, { BoundingClientRect } from '../utils/getAvailableSizeInfo';
+import { getConstrainRect, ConstrainToType } from '../OverlayTrigger';
 
 export interface PositionInfo {
   verticalPosition: 'top' | 'bottom';
@@ -11,6 +12,7 @@ export interface PositionInfo {
 
 export type ExpandedProps = {
   expanded?: boolean;
+  constrainTo?: ConstrainToType;
   defaultExpanded?: boolean;
   onExpand?: () => void;
   onCollapse?: () => void;
@@ -30,6 +32,7 @@ export default (props: ExpandedProps, positionerRef: MutableRefObject<HTMLDivEle
     const positionRect: BoundingClientRect = positionerRef.current.getBoundingClientRect();
 
     positionInfoRef.current = getAvailableSizeInfo({
+      constrainRect: getConstrainRect(positionerRef.current as HTMLElement, props.constrainTo),
       targetRect: positionRect,
       maxSizeOffset: 30,
     });

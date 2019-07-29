@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { PanelProps, Row, Col, Button, Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import useTheme from '../../../components/utils/useTheme';
+
 import SimpleButton from '../../../components/SimpleButton';
-import Panel, { PanelProps as TypePanelProps } from '../../../components/Panel';
+import Panel, { PanelProps } from '../../../components/Panel';
 import { Flex, Box, BoxProps } from 'rebass';
 import icons from '../../../components/icons';
 import { ReactComponentLike } from 'prop-types';
@@ -37,50 +36,42 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
     let { buttonContent } = this.props;
     let className = this.props.className;
 
-    const IconCmp = icons[this.props.glyphicon] as ReactComponentLike;
+    const IconCmp = icons[this.props.glyphicon!] as ReactComponentLike;
     let header = (
-      <AdaptableBlotterForm
-        inline
-        style={{
-          width: '100%',
-          flex: 1,
-        }}
-      >
+      <Flex alignItems="center" width="100%">
         <Flex alignItems="center">
-          <Flex alignItems="center">
-            {this.props.glyphicon != null &&
-              (IconCmp ? (
-                <IconCmp />
-              ) : (
-                <Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />
-              ))}
-            <Box marginRight={2} />
-            {this.props.headerText}
-            <Box marginRight={3} />
-            {this.props.infoBody != null && (
-              <AdaptablePopover
-                cssClassName={this.props.cssClassName}
-                headerText=""
-                bodyText={this.props.infoBody}
-              />
-            )}
-          </Flex>
-          <Box style={{ flex: 1 }} />
-
-          {buttonContent ? (
-            <SimpleButton
-              variant="raised"
-              tone="success"
-              disabled={this.props.buttonDisabled}
-              onClick={() => this.props.buttonClick()}
-            >
-              {buttonContent}
-            </SimpleButton>
-          ) : null}
-
-          {this.props.button ? React.cloneElement(this.props.button) : null}
+          {this.props.glyphicon != null &&
+            (IconCmp ? (
+              <IconCmp />
+            ) : (
+              <Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />
+            ))}
+          <Box marginRight={2} />
+          {this.props.headerText}
+          <Box marginRight={3} />
+          {this.props.infoBody != null && (
+            <AdaptablePopover
+              cssClassName={this.props.cssClassName}
+              headerText=""
+              bodyText={this.props.infoBody}
+            />
+          )}
         </Flex>
-      </AdaptableBlotterForm>
+        <Box style={{ flex: 1 }} />
+
+        {buttonContent ? (
+          <SimpleButton
+            variant="raised"
+            tone="accent"
+            disabled={this.props.buttonDisabled}
+            onClick={() => this.props.buttonClick()}
+          >
+            {buttonContent}
+          </SimpleButton>
+        ) : null}
+
+        {this.props.button ? React.cloneElement(this.props.button) : null}
+      </Flex>
     );
     return (
       <Panel

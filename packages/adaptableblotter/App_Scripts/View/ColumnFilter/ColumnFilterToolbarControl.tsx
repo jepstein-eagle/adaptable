@@ -83,7 +83,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<
               bodyText={[activeFiltersPanel]}
               tooltipText={'Show Filter Details'}
               useButton={true}
-              triggerAction={'click'}
+              showEvent={'focus'}
+              hideEvent="blur"
               popoverMinWidth={400}
             />
             <ButtonClear

@@ -1,5 +1,8 @@
+import { getDocRect } from '../OverlayTrigger/utils';
+
 export interface PositionInfoParam {
   targetRect: BoundingClientRect;
+  constrainRect: BoundingClientRect;
   maxSizeOffset?: number;
 }
 
@@ -18,31 +21,33 @@ export interface BoundingClientRect {
   bottom: number;
 }
 
-const getAvailableSizeInfo = ({ targetRect, maxSizeOffset }: PositionInfoParam): SizeInfo => {
+const getAvailableSizeInfo = ({
+  targetRect,
+  constrainRect,
+  maxSizeOffset,
+}: PositionInfoParam): SizeInfo => {
   let maxHeight;
   let maxWidth;
 
-  const bottom = Math.round(
-    ((global as unknown) as ({ innerHeight: number })).innerHeight - targetRect.bottom
-  );
-  const right = Math.round(
-    ((global as unknown) as ({ innerWidth: number })).innerWidth - targetRect.right
-  );
+  const topAvailableSpace = Math.round(targetRect.top - constrainRect.top);
+  const leftAvailableSpace = Math.round(targetRect.left - constrainRect.left);
+  const bottomAvailableSpace = Math.round(constrainRect.bottom - targetRect.bottom);
+  const rightAvailableSpace = Math.round(constrainRect.right - targetRect.right);
 
   let horizontalPosition: 'left' | 'right' = 'right';
   let verticalPosition: 'top' | 'bottom' = 'bottom';
 
-  if (targetRect.left > right) {
+  if (leftAvailableSpace > rightAvailableSpace) {
     horizontalPosition = 'left';
-    maxWidth = Math.round(targetRect.left);
+    maxWidth = Math.round(targetRect.left - constrainRect.left);
   } else {
-    maxWidth = right;
+    maxWidth = rightAvailableSpace;
   }
-  if (targetRect.top > bottom) {
+  if (topAvailableSpace > bottomAvailableSpace) {
     verticalPosition = 'top';
-    maxHeight = Math.round(targetRect.top);
+    maxHeight = Math.round(targetRect.top - constrainRect.top);
   } else {
-    maxHeight = bottom;
+    maxHeight = bottomAvailableSpace;
   }
 
   if (maxSizeOffset != null) {

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import { Sizes } from 'react-bootstrap';
+
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
+
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 
@@ -62,7 +62,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
       >
         {this.props.showEdit && (
           <ButtonEdit
-            onClick={() => this.props.editClick()}
+            onClick={() => (this.props.editClick ? this.props.editClick() : null)}
             style={{
               marginLeft: '0px',
               marginTop: '2px',
@@ -96,7 +96,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         )}
         {this.props.showShare && (
           <ButtonShare
-            onClick={() => this.props.shareClick()}
+            onClick={() => (this.props.shareClick ? this.props.shareClick() : null)}
             cssClassName={this.props.cssClassName}
             style={{ marginLeft: '2px', marginTop: '2px', marginBottom: '2px', marginRight: '0px' }}
             overrideDisableButton={this.props.overrideDisableShare}

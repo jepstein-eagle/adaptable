@@ -30,13 +30,9 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
     colItems[2].Content = <EntityRowItem Content={this.getChartType(Chart.ChartType)} />;
     colItems[3].Content = (
       <ButtonShowChart
-        key={'key:' + Chart.Name}
-        style={{ marginLeft: '2px' }}
-        cssClassName={this.props.cssClassName}
         onClick={() => this.props.onShowChart(Chart.Name)}
-        size={'xsmall'}
-        overrideTooltip="Show Chart"
-        DisplayMode="Glyph"
+        tooltip="Show Chart"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
       />
     );

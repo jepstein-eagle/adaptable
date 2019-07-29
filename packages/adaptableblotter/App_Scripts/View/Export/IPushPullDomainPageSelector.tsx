@@ -3,8 +3,8 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { ListGroup, ListGroupItem, Alert } from 'react-bootstrap';
-import { Button, Glyphicon } from 'react-bootstrap';
+
+import { Glyphicon } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
@@ -15,6 +15,10 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import ListGroupItem from '../../components/List/ListGroupItem';
+import ListGroup from '../../components/List/ListGroup';
+import ErrorBox from '../../components/ErrorBox';
+import SimpleButton from '../../components/SimpleButton';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
@@ -98,26 +102,21 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
         glyphicon="export"
       >
         {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? (
-          <Alert bsStyle={StyleConstants.DANGER_BSSTYLE}>
-            Error getting iPushPull Pages : {this.props.ErrorMsg}
-          </Alert>
+          <ErrorBox>Error getting iPushPull Pages : {this.props.ErrorMsg}</ErrorBox>
         ) : (
-          <ListGroup fill className="ab_preview_panel">
-            {itemsElements}
-          </ListGroup>
+          <ListGroup>{itemsElements}</ListGroup>
         )}
-        <Button
+        <SimpleButton
           className="ab_right_modal_button"
           onClick={() => {
             this.props.onCancel();
           }}
         >
           Cancel <Glyphicon glyph="remove" />
-        </Button>
-        <Button
+        </SimpleButton>
+        <SimpleButton
           disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
           className="ab_right_modal_button"
-          bsStyle="primary"
           onClick={() => {
             this.props.onApplyExport(
               tempToFixBuild,
@@ -127,7 +126,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
           }}
         >
           <Glyphicon glyph="user" /> Select
-        </Button>
+        </SimpleButton>
       </PanelWithButton>
     );
   }

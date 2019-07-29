@@ -110,7 +110,7 @@ class CellValidationPopupComponent extends React.Component<
       <SimpleButton
         className={cssClassName}
         onClick={() => this.onNew()}
-        tone="success"
+        tone="accent"
         tooltip="Create Cell Validation Rule"
         icon="plus"
         variant="raised"

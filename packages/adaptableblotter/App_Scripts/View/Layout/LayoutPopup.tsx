@@ -103,7 +103,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         onClick={() => this.onNew()}
         tooltip="Create New Layout"
         icon="plus"
-        tone="success"
+        tone="accent"
         variant="raised"
         AccessLevel={this.props.AccessLevel}
       >

@@ -96,7 +96,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     );
 
     return (
-      <div className={cssBaseClassName}>
+      <Box padding={1} className={cssBaseClassName}>
         {this.props.DashboardState.DashboardVisibility != Visibility.Hidden && (
           <div className="ab_no_margin">
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
@@ -137,7 +137,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             )}
           </div>
         )}
-      </div>
+      </Box>
     );
   }
 }

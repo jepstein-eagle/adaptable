@@ -3,7 +3,6 @@ import { Glyphicon } from 'react-bootstrap';
 import { withTheme } from 'styled-components';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import NewPanel, { PanelProps } from '../../../components/Panel';
 import { Box, Flex, BoxProps } from 'rebass';
@@ -32,7 +31,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
       ? this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE
       : '';
 
-    const IconCmp = icons[this.props.icon || this.props.glyphicon] as ReactComponentLike;
+    const IconCmp = icons[(this.props.icon || this.props.glyphicon)!] as ReactComponentLike;
     const headerStyle: any = {};
 
     if (this.props.headerColor) {
@@ -41,7 +40,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
     }
 
     let headerRow = (
-      <AdaptableBlotterForm style={{ flex: 1 }}>
+      <Flex style={{ flex: 1 }}>
         <Flex alignItems="center">
           <Flex alignItems="center" style={headerStyle}>
             {IconCmp ? <IconCmp /> : <Glyphicon glyph={this.props.glyphicon} />}
@@ -59,7 +58,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
           <Box flex={1} />
           {this.props.button && React.cloneElement(this.props.button)}
         </Flex>
-      </AdaptableBlotterForm>
+      </Flex>
     );
     return (
       <NewPanel

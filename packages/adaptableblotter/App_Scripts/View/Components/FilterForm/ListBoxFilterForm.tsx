@@ -13,12 +13,12 @@ import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterF
 import { UIHelper } from '../../UIHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
 import { Box, Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
-import DropdownButton from '../../../components/DropdownButton';
+
 import Input from '../../../components/Input';
 import { SyntheticEvent } from 'react';
 
@@ -46,6 +46,11 @@ export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFil
   FilterValue: string;
   DistinctCriteriaPairValue: DistinctCriteriaPairValue;
 }
+
+const ddStyle = {
+  minWidth: 'auto',
+  flex: 1,
+};
 
 export class ListBoxFilterForm extends React.Component<
   ListBoxFilterFormProps,
@@ -140,7 +145,7 @@ export class ListBoxFilterForm extends React.Component<
     let rangeMenuItemsOperand1 = rangeOperandOptions.map(
       (rangeOperand: 'Value' | 'Column', index: number) => {
         return {
-          onClick: () => this.onRangeTypeChangedOperand1(rangeOperand),
+          value: rangeOperand,
           label: rangeOperand,
         };
       }
@@ -148,7 +153,7 @@ export class ListBoxFilterForm extends React.Component<
 
     let rangeMenuItemsOperand2 = rangeOperandOptions.map((rangeOperand: string, index: number) => {
       return {
-        onClick: () => this.onRangeTypeChangedOperand2(rangeOperand),
+        value: rangeOperand,
         label: rangeOperand,
       };
     });
@@ -157,6 +162,7 @@ export class ListBoxFilterForm extends React.Component<
       <Flex flexDirection="column">
         <Dropdown
           placeholder="Select an Operator"
+          style={ddStyle}
           value={this.state.UiSelectedRange.Operator}
           onChange={(x: LeafExpressionOperator) => this.onLeafExpressionOperatorChange(x)}
           options={this.props.Operators.map((operator: LeafExpressionOperator) => {
@@ -169,19 +175,27 @@ export class ListBoxFilterForm extends React.Component<
 
         {this.state.UiSelectedRange.Operator != null &&
           this.state.UiSelectedRange.Operator != LeafExpressionOperator.None && (
-            <Flex flexDirection="row" marginTop={2}>
-              <DropdownButton columns={['label']} items={rangeMenuItemsOperand1} marginRight={2}>
-                {this.state.UiSelectedRange.Operand1Type}
-              </DropdownButton>
+            <Flex flex={1} flexDirection="row" marginTop={2}>
+              <Dropdown
+                placeholder="Please select"
+                style={ddStyle}
+                onChange={this.onRangeTypeChangedOperand1}
+                options={rangeMenuItemsOperand1}
+                marginRight={2}
+              ></Dropdown>
 
               {this.getOperand1FormControl()}
             </Flex>
           )}
         {this.state.UiSelectedRange.Operator == LeafExpressionOperator.Between && (
-          <Flex flexDirection="row" marginTop={2}>
-            <DropdownButton columns={['label']} items={rangeMenuItemsOperand2} marginRight={2}>
-              {this.state.UiSelectedRange.Operand2Type}
-            </DropdownButton>
+          <Flex flex={1} flexDirection="row" marginTop={2}>
+            <Dropdown
+              style={ddStyle}
+              placeholder="Please select"
+              onChange={this.onRangeTypeChangedOperand2}
+              options={rangeMenuItemsOperand2}
+              marginRight={2}
+            ></Dropdown>
 
             {this.getOperand2FormControl()}
           </Flex>
@@ -194,7 +208,7 @@ export class ListBoxFilterForm extends React.Component<
     );
 
     return (
-      <div style={divStyle}>
+      <div style={divStyle} className="ab-ListBoxFilterForm">
         {rangeForm}
         <Box mx={'2px'} marginBottom={2}>
           {textClear}
@@ -227,7 +241,7 @@ export class ListBoxFilterForm extends React.Component<
     );
   }
 
-  private onRangeTypeChangedOperand1(rangeOperandType: 'Value' | 'Column'): any {
+  private onRangeTypeChangedOperand1 = (rangeOperandType: 'Value' | 'Column') => {
     let editedRange: QueryRange = {
       Operand1Type: rangeOperandType,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
@@ -238,9 +252,9 @@ export class ListBoxFilterForm extends React.Component<
     this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () =>
       this.raiseOnChangeCustomExpression()
     );
-  }
+  };
 
-  private onRangeTypeChangedOperand2(rangeOperandType: any): any {
+  private onRangeTypeChangedOperand2 = (rangeOperandType: any): any => {
     let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: rangeOperandType,
@@ -251,42 +265,35 @@ export class ListBoxFilterForm extends React.Component<
     this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () =>
       this.raiseOnChangeCustomExpression()
     );
-  }
+  };
 
   private getOperand1FormControl(): any {
     if (this.state.UiSelectedRange.Operand1Type == 'Column') {
-      let operand1 = StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand1)
-        ? ColumnHelper.getFriendlyNameFromColumnId(
-            this.state.UiSelectedRange.Operand1,
-            this.props.Columns
-          )
-        : 'Select a column';
-
       let availableColumns: any = this.props.Columns.filter(
         (c: IColumn) =>
           c != this.props.CurrentColumn && c.DataType == this.props.CurrentColumn.DataType
       ).map((column, index) => {
         return {
-          onClick: () => this.onColumnOperand1SelectedChanged(column),
+          value: column.ColumnId,
           label: column.FriendlyName,
         };
       });
 
       return (
-        <DropdownButton
-          style={{ flex: 1 }}
-          columns={['label']}
+        <Dropdown
+          style={ddStyle}
+          placeholder="Select a column"
           disabled={availableColumns.length == 0}
           className={this.props.cssClassName}
-          items={availableColumns}
-        >
-          {operand1}
-        </DropdownButton>
+          options={availableColumns}
+          value={this.state.UiSelectedRange.Operand1}
+          onChange={this.onColumnOperand1SelectedChanged}
+        ></Dropdown>
       );
     } else {
       return (
         <Input
-          style={{ flex: 1 }}
+          style={{ flex: 1, width: '100%' }}
           value={String(this.state.UiSelectedRange.Operand1)}
           type={UIHelper.getDescriptionForDataType(this.props.DataType)}
           placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)}
@@ -298,37 +305,31 @@ export class ListBoxFilterForm extends React.Component<
 
   private getOperand2FormControl(): any {
     if (this.state.UiSelectedRange.Operand2Type == 'Column') {
-      let operand2 = StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand2)
-        ? ColumnHelper.getFriendlyNameFromColumnId(
-            this.state.UiSelectedRange.Operand2,
-            this.props.Columns
-          )
-        : 'Select a column';
-
       let availableColumns: any = this.props.Columns.filter(() => this.props.CurrentColumn).map(
         (column, index) => {
           return {
-            onClick: () => this.onColumnOperand2SelectedChanged(column),
+            value: column.ColumnId,
+
             label: column.FriendlyName,
           };
         }
       );
 
       return (
-        <DropdownButton
-          style={{ flex: 1 }}
-          columns={['label']}
+        <Dropdown
+          placeholder="Select a column"
+          style={ddStyle}
           disabled={availableColumns.length == 0}
           className={this.props.cssClassName}
-          items={availableColumns}
-        >
-          {operand2}
-        </DropdownButton>
+          options={availableColumns}
+          value={this.state.UiSelectedRange.Operand2}
+          onChange={this.onColumnOperand2SelectedChanged}
+        ></Dropdown>
       );
     } else {
       return (
         <Input
-          style={{ flex: 1 }}
+          style={{ flex: 1, width: '100%' }}
           value={String(this.state.UiSelectedRange.Operand2)}
           type={UIHelper.getDescriptionForDataType(this.props.DataType)}
           placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)}
@@ -366,31 +367,31 @@ export class ListBoxFilterForm extends React.Component<
     );
   }
 
-  private onColumnOperand1SelectedChanged(column: IColumn) {
+  private onColumnOperand1SelectedChanged = (columnId: string) => {
     let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
       Operator: this.state.UiSelectedRange.Operator,
-      Operand1: column.ColumnId,
+      Operand1: columnId,
       Operand2: this.state.UiSelectedRange.Operand2,
     };
     this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () =>
       this.raiseOnChangeCustomExpression()
     );
-  }
+  };
 
-  private onColumnOperand2SelectedChanged(column: IColumn) {
+  private onColumnOperand2SelectedChanged = (columnId: string) => {
     let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
       Operator: this.state.UiSelectedRange.Operator,
       Operand1: this.state.UiSelectedRange.Operand1,
-      Operand2: column.ColumnId,
+      Operand2: columnId,
     };
     this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () =>
       this.raiseOnChangeCustomExpression()
     );
-  }
+  };
 
   // Methods for getting column values or filters
   onUpdateFilterSearch(filterSearch: string) {

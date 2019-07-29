@@ -45,11 +45,7 @@ class IPushPullLoginComponent extends React.Component<
           validationState={StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? 'error' : null}
         >
           <ControlLabel>Email address</ControlLabel>
-          <FormControl
-            onChange={e => this.onLoginChange(e)}
-            type="email"
-            placeholder="Enter email"
-          />
+          <Input onChange={e => this.onLoginChange(e)} type="email" placeholder="Enter email" />
         </FormGroup>
         <FormGroup
           controlId={'formPassword'}

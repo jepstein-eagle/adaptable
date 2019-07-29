@@ -60,36 +60,33 @@ export class AlertRulesWizard
 
     return (
       <WizardPanel header={alertHeader}>
-        <AdaptableBlotterForm>
-          <Box>
-            <HelpBlock>
-              {'Show alerts for any data change to the ' + columnFriendlyName + ' column.'}
-            </HelpBlock>
-            <Radio
-              value="Any"
-              name="alert"
-              checked={this.state.Operator == LeafExpressionOperator.AnyChange}
-              onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
-            >
-              Show Alert for ALL changes
-            </Radio>{' '}
-          </Box>
-          <Box marginTop={4}>
-            <HelpBlock>
-              {
-                'Only show an Alert when the change to the column matches a rule (to be set by you).'
-              }
-            </HelpBlock>
-            <Radio
-              value="others"
-              name="alert"
-              checked={this.state.Operator != LeafExpressionOperator.AnyChange}
-              onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
-            >
-              Show Alert when new cell value matches rule:
-            </Radio>{' '}
-          </Box>
-        </AdaptableBlotterForm>
+        <Box>
+          <HelpBlock>
+            {'Show alerts for any data change to the ' + columnFriendlyName + ' column.'}
+          </HelpBlock>
+          <Radio
+            value="Any"
+            name="alert"
+            checked={this.state.Operator == LeafExpressionOperator.AnyChange}
+            onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
+          >
+            Show Alert for ALL changes
+          </Radio>{' '}
+        </Box>
+        <Box marginTop={4}>
+          <HelpBlock>
+            {'Only show an Alert when the change to the column matches a rule (to be set by you).'}
+          </HelpBlock>
+          <Radio
+            value="others"
+            name="alert"
+            checked={this.state.Operator != LeafExpressionOperator.AnyChange}
+            onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
+          >
+            Show Alert when new cell value matches rule:
+          </Radio>{' '}
+        </Box>
+
         {/* if not AnyChange operator then show operator dropdown */}
         <Flex flexDirection="column">
           {this.state.Operator != LeafExpressionOperator.AnyChange ? (

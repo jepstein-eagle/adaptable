@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { Modal, ControlLabel, Row, Col, Button, FormControl } from 'react-bootstrap';
+
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import Dialog from '../../../components/Dialog';
-import { Flex, Text, Box } from 'rebass';
+import { Flex, Box } from 'rebass';
 import SimpleButton from '../../../components/SimpleButton';
 import Input from '../../../components/Input';
 import { SyntheticEvent } from 'react';
@@ -80,7 +80,7 @@ export class AdaptableBlotterPopupPrompt extends React.Component<
             <Box marginTop={3}>
               <Flex padding={2}>
                 <SimpleButton
-                  tone="success"
+                  tone="accent"
                   variant="raised"
                   disabled={StringExtensions.IsNullOrEmpty(this.state.PromptText)}
                   onClick={() => this.onConfirmmForm()}

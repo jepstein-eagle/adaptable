@@ -46,6 +46,8 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
               <td>
                 {this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent == true && (
                   <AdaptablePopover
+                    showEvent="mouseenter"
+                    hideEvent="mouseleave"
                     cssClassName={cssClassName}
                     headerText={'Validation Error'}
                     bodyText={[
@@ -59,6 +61,8 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                 )}
                 {this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning == true && (
                   <AdaptablePopover
+                    showEvent="mouseenter"
+                    hideEvent="mouseleave"
                     cssClassName={cssClassName}
                     headerText={'Validation Error'}
                     bodyText={[

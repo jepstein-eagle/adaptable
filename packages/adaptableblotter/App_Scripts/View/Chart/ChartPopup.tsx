@@ -117,7 +117,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       <DropdownButton
         tooltip="Create New Chart Definition"
         variant="raised"
-        tone="success"
+        tone="accent"
+        columns={['label']}
         items={[categoryChartMenuItem, pieChartMenuItem]}
         style={{ zIndex: 100 }}
       >

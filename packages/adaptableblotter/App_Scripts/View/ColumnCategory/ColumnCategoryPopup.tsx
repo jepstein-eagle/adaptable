@@ -91,7 +91,7 @@ class ColumnCategoryPopupComponent extends React.Component<
       <ButtonNew
         className={cssClassName}
         onClick={() => this.onNew()}
-        tone="success"
+        tone="accent"
         tooltip="Create New Advanced Search"
         AccessLevel={this.props.AccessLevel}
       />

@@ -176,7 +176,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                   this.onApplyClick();
                 }}
                 variant="raised"
-                tone="success"
+                tone="accent"
               >
                 Apply to Grid
               </SimpleButton>
@@ -207,7 +207,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                   hasDataTypeError
                 }
                 variant="raised"
-                tone="success"
+                tone="accent"
                 marginRight={2}
                 onClick={() => {
                   this.onApplyClick();

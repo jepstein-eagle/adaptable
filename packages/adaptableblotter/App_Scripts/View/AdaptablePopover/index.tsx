@@ -23,6 +23,8 @@ Very basic - for now! - info box that allows us to show Error where required.
 
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
   headerText?: string;
+  showEvent?: string;
+  hideEvent?: string;
   bodyText: any[];
   MessageType?: MessageType;
   cssClassName?: string;
@@ -81,8 +83,8 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
         <OverlayTrigger
           showTriangle
           render={() => popoverClickRootClose}
-          showEvent="click"
-          hideEvent="blur"
+          showEvent={(this.props.showEvent || 'mouseenter') as 'mouseenter'}
+          hideEvent={(this.props.hideEvent || 'mouseleave') as 'mouseleave'}
           style={{
             overflow: 'visible',
           }}

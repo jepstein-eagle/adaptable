@@ -153,7 +153,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               Next
             </SimpleButton>
             <SimpleButton
-              tone="success"
+              tone="accent"
               variant="raised"
               disabled={!this.canFinishWizard()}
               onClick={() => this.handleClickFinish()}

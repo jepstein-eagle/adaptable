@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import { ListGroupItem, ListGroup, ListGroupProps, Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/AdaptableBlotterMenu';
+import ListGroupItem from '../../../components/List/ListGroupItem';
+import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
 
 export interface ListBoxMenuProps extends ListGroupProps {
   MenuItems: AdaptableBlotterMenuItem[];

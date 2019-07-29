@@ -34,6 +34,7 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.5",
     "resize-observer-polyfill": "^1.5.1",
+    "select-parent": "^1.0.1",
     "styled-components": "^4.2.0",
     "tslib": "^1.9.3",
     "uuid": "^3.3.2"

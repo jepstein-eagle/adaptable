@@ -27,6 +27,9 @@
   }
 
   &--tone-success {
+    color: var(--ab-color-success);
+  }
+  &--tone-accent {
     color: var(--ab-color-accent);
   }
   &--tone-error {
@@ -92,6 +95,16 @@
     }
 
     &.ab-SimpleButton--tone-success {
+      background: var(--ab-color-success);
+      &:not(.ab-SimpleButton--disabled) {
+        opacity: 1;
+
+        &:hover {
+          // opacity: 0.9;
+        }
+      }
+    }
+    &.ab-SimpleButton--tone-accent {
       background: var(--ab-color-accent);
       &:not(.ab-SimpleButton--disabled) {
         opacity: 1;

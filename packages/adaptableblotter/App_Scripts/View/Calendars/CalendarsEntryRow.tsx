@@ -36,7 +36,7 @@ export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {
           tooltip="Show Calendar Dates"
           iconPosition="end"
           icon="info"
-          tone="success"
+          tone="accent"
           variant="raised"
         >
           {'Calendar Details '}

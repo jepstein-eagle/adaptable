@@ -6,7 +6,7 @@ export const ButtonNew = (props: SimpleButtonProps) => {
   return (
     <SimpleButton
       tooltip="New"
-      tone="success"
+      tone="accent"
       icon="plus"
       variant="raised"
       {...props}
