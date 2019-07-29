@@ -5,13 +5,11 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
 import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { Flex, Box, Text } from 'rebass';
 import Input from '../../../components/Input';
-import HelpBlock from '../../../components/HelpBlock';
-import Panel from '../../../components/Panel';
 import WizardPanel from '../../../components/WizardPanel';
+import ErrorBox from '../../../components/ErrorBox';
 
 export interface CalculatedColumnSettingsWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {}
@@ -28,9 +26,6 @@ export class CalculatedColumnSettingsWizard
     this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null };
   }
   render(): any {
-    let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
-      ? null
-      : 'error';
     return (
       <WizardPanel header="Calculated Column Settings">
         <Flex flexDirection="row" alignItems="center">
@@ -45,10 +40,11 @@ export class CalculatedColumnSettingsWizard
               placeholder="Enter a name"
               onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
             />
-
-            {validationState ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
           </Box>
         </Flex>
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
       </WizardPanel>
     );
   }
@@ -58,7 +54,7 @@ export class CalculatedColumnSettingsWizard
     this.setState(
       {
         ColumnId: e.value,
-        ErrorMessage: ArrayExtensions.ContainsItem(this.props.Columns, e.value)
+        ErrorMessage: ArrayExtensions.ContainsItem(this.props.Columns.map(c => c.ColumnId), e.value)
           ? 'A Column already exists with that name'
           : null,
       },

@@ -36,12 +36,6 @@ export class AdvancedSearchSettingsWizard
     };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
-    let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
-      ? null
-      : 'error';
-
     return (
       <WizardPanel header="Advanced Search Settings">
         <Flex alignItems="center" flexDirection="row">

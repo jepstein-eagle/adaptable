@@ -36,9 +36,6 @@ export class FreeTextColumnSettingsWizard
   render(): any {
     let cssClassName: string = this.props.cssClassName + '-settings';
 
-    let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
-      ? null
-      : 'error';
     return (
       <div className={cssClassName} style={{ height: '100%' }}>
         <WizardPanel header="FreeText Column Settings">
@@ -80,7 +77,7 @@ export class FreeTextColumnSettingsWizard
     this.setState(
       {
         ColumnId: e.value,
-        ErrorMessage: ArrayExtensions.ContainsItem(this.props.Columns, e.value)
+        ErrorMessage: ArrayExtensions.ContainsItem(this.props.Columns.map(c => c.ColumnId), e.value)
           ? 'A Column already exists with that name'
           : null,
       },
