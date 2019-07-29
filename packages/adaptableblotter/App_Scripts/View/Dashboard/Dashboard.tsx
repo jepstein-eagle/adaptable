@@ -112,25 +112,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 {blotterName}
               </SimpleButton>
             ) : (
-              /*
-              <ButtonToolbar bsSize={'small'} bsStyle={style} className="ab_no_padding_no_margin">
-                <OverlayTrigger
-                  overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}
-                >
-                  <Button
-                    bsSize={'small'}
-                    bsStyle={style}
-                    onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}
-                  >
-                    {blotterName} <Glyphicon glyph={'chevron-down'} />
-                  </Button>
-                </OverlayTrigger>
-              </ButtonToolbar>*/
-              <Flex
-                className="ab-Dashboard"
-                alignItems="stretch"
-                style={{ zoom: this.props.DashboardState.Zoom }}
-              >
+              <Flex className="ab-Dashboard" alignItems="stretch" style={{ zoom: 1 }}>
                 {homeToolbarElement}
                 {visibleDashboardElements}
               </Flex>

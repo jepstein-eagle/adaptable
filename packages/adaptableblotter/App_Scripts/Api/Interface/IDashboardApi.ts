@@ -8,7 +8,6 @@ export interface IDashboardApi {
   HideToolbar(visibleToolbar: string): void;
   SetVisibleButtons(functionButtons: string[]): void;
   // Number has to be a decimal between 0 and 1
-  SetZoom(zoom: Number): void;
   SetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void;
   Show(): void;
   Hide(): void;

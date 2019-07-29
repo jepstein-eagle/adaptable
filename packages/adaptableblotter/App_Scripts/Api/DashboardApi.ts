@@ -31,10 +31,6 @@ export class DashboardApi extends ApiBase implements IDashboardApi {
     this.dispatchAction(DashboardRedux.DashboardSetFunctionButtons(functionButtons));
   }
 
-  public SetZoom(zoom: Number): void {
-    this.dispatchAction(DashboardRedux.DashboardSetZoom(zoom));
-  }
-
   public SetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void {
     this.dispatchAction(DashboardRedux.DashboardSetVisibility(dashboardVisibility as Visibility));
   }

@@ -38,7 +38,6 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
   onDashboardSetToolbars: (
     StrategyConstants: string[]
   ) => DashboardRedux.DashboardSetToolbarsAction;
-  onSetDashboardZoom: (zoom: number) => DashboardRedux.DashboardSetZoomAction;
 }
 
 export enum DashboardConfigView {
@@ -49,7 +48,6 @@ export enum DashboardConfigView {
 
 export interface DashboardPopupState {
   DashboardConfigView: DashboardConfigView;
-  EditedZoomFactor: Number;
 }
 
 class DashboardPopupComponent extends React.Component<
@@ -60,7 +58,6 @@ class DashboardPopupComponent extends React.Component<
     super(props);
     this.state = {
       DashboardConfigView: DashboardConfigView.General,
-      EditedZoomFactor: props.DashboardState.Zoom,
     };
   }
 
@@ -125,19 +122,6 @@ class DashboardPopupComponent extends React.Component<
         >
           Show About Button
         </Checkbox>
-
-        <Flex flexDirection="row" alignItems="center" marginTop={2}>
-          <Text marginRight={2}>Dashboard Zoom Factor:</Text>
-          <Input
-            value={this.state.EditedZoomFactor.toString()}
-            type="number"
-            min="0.5"
-            step="0.05"
-            max="1"
-            placeholder="Enter a Number"
-            onChange={(e: any) => this.onSetFactorChange(e)}
-          />
-        </Flex>
       </Flex>
     );
 
@@ -268,21 +252,6 @@ class DashboardPopupComponent extends React.Component<
     this.props.onDashboardSetToolbars(selectedToolbars);
   }
 
-  private onSetFactorChange(event: React.FormEvent<any>) {
-    const e = event.target as HTMLInputElement;
-    let factor = Number(e.value);
-    if (factor > 1) {
-      factor = 1;
-    }
-    if (factor < 0.5 && factor != 0) {
-      factor = 0.5;
-    }
-    this.setState({ EditedZoomFactor: factor });
-    if (factor != 0) {
-      this.props.onSetDashboardZoom(factor);
-    }
-  }
-
   isVisibleStrategy(strategyId: string): boolean {
     let entitlement: IEntitlement = this.props.Entitlements.find(x => x.FunctionName == strategyId);
     if (entitlement) {
@@ -320,7 +289,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onDashboardHideAboutButton: () => dispatch(DashboardRedux.DashboardHideAboutButton()),
     onDashboardSetToolbars: (StrategyConstants: string[]) =>
       dispatch(DashboardRedux.DashboardSetToolbars(StrategyConstants)),
-    onSetDashboardZoom: (zoom: number) => dispatch(DashboardRedux.DashboardSetZoom(zoom)),
   };
 }
 

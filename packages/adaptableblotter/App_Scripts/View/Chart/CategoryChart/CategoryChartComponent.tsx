@@ -308,7 +308,9 @@ export class CategoryChartComponent extends React.Component<
               <FormRow label="Chart Type">
                 <Dropdown
                   style={{ maxWidth: 'inherit', width: '100%' }}
-                  placeholder="Select type"
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.CategoryChartType}
                   onChange={x => this.onChartTypeChange(x)}
                   options={CategoryChartUIHelper.getChartTypeOptions()}
@@ -317,7 +319,9 @@ export class CategoryChartComponent extends React.Component<
               <FormRow label="Marker Type">
                 <Dropdown
                   style={{ maxWidth: 'inherit', width: '100%' }}
-                  placeholder="Select type"
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.MarkerType}
                   onChange={x => this.onMarkerTypeChange(x)}
                   options={CategoryChartUIHelper.getMarkerTypeOptions()}
@@ -391,7 +395,9 @@ export class CategoryChartComponent extends React.Component<
                   <FormRow label="Axis Location">
                     <Dropdown
                       style={{ maxWidth: 'inherit', width: '100%' }}
-                      placeholder="Select"
+                      placeholder="select"
+                      showEmptyItem={false}
+                      showClearButton={false}
                       value={this.state.ChartProperties.YAxisLabelLocation}
                       onChange={(x: string) => this.onYAxisLabelLocationChange(x)}
                       options={CategoryChartUIHelper.getYAxisLabelsLocations()}
@@ -401,7 +407,9 @@ export class CategoryChartComponent extends React.Component<
                   <FormRow label="Labels Scale">
                     <Dropdown
                       style={{ maxWidth: 'inherit', width: '100%' }}
-                      placeholder="Select"
+                      placeholder="select"
+                      showEmptyItem={false}
+                      showClearButton={false}
                       value={this.state.ChartProperties.YAxisLabelScale}
                       onChange={x => this.onYAxisLabelScaleChanged(x)}
                       options={CategoryChartUIHelper.getAxisLabelScales()}
@@ -592,7 +600,9 @@ export class CategoryChartComponent extends React.Component<
                                                                     </AdaptableBlotterForm> */}
                   <FormRow label="Labels Angle">
                     <Dropdown
-                      placeholder="Select angle"
+                      placeholder="select"
+                      showEmptyItem={false}
+                      showClearButton={false}
                       value={this.state.ChartProperties.XAxisAngle}
                       onChange={x => this.onXAxisAngleChanged(x)}
                       options={CategoryChartUIHelper.getAxisAngleOptions()}
@@ -742,7 +752,9 @@ export class CategoryChartComponent extends React.Component<
               />
               <FormRow label={'Callout Type'}>
                 <Dropdown
-                  placeholder="Select type"
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.CalloutsType}
                   onChange={x => this.onChangedCalloutsType(x)}
                   options={CategoryChartUIHelper.getCalloutTypeOptions()}
@@ -764,7 +776,9 @@ export class CategoryChartComponent extends React.Component<
 
               <FormRow label="Tooltips">
                 <Dropdown
-                  placeholder="Select tooltip type"
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.ToolTipType}
                   onChange={x => this.onToolTipTypeChange(x)}
                   options={CategoryChartUIHelper.getToolTipOptions()}
@@ -772,6 +786,9 @@ export class CategoryChartComponent extends React.Component<
               </FormRow>
               <FormRow label="Crosshairs">
                 <Dropdown
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.CrosshairDisplayMode}
                   onChange={x => this.onCrosshairsModeChange(x)}
                   options={CategoryChartUIHelper.getCrossHairModeOptions()}
@@ -818,7 +835,9 @@ export class CategoryChartComponent extends React.Component<
             <FormLayout columns={COLS}>
               <FormRow label="Title">
                 <Dropdown
-                  placeholder="Select alignment"
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.TitleAlignment}
                   onChange={x => this.onTitleAlignmentChange(x)}
                   options={CategoryChartUIHelper.getAlignmentOptions()}
@@ -826,7 +845,9 @@ export class CategoryChartComponent extends React.Component<
               </FormRow>
               <FormRow label="Subtitle">
                 <Dropdown
-                  placeholder="Select alignment"
+                  placeholder="select"
+                  showEmptyItem={false}
+                  showClearButton={false}
                   value={this.state.ChartProperties.SubTitleAlignment}
                   onChange={x => this.onSubTitleAlignmentChange(x)}
                   options={CategoryChartUIHelper.getAlignmentOptions()}
