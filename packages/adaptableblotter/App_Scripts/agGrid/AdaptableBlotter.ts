@@ -1543,15 +1543,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       .find(vc => vc.getColId() == columnId);
 
     if (vendorColumn) {
+      let vendorColDef: ColDef = vendorColumn.getColDef();
       const specialColumn: IColumn = {
         Uuid: uuid,
         ColumnId: columnId,
         FriendlyName: columnId,
         DataType: dataType,
         Visible: false,
-        ReadOnly: vendorColumn.getColDef().editable as boolean,
-        Sortable: vendorColumn.getColDef().sortable as boolean,
-        Filterable: vendorColumn.getColDef().filter as boolean,
+        ReadOnly: !vendorColDef.editable as boolean,
+        Sortable: vendorColDef.sortable as boolean,
+        Filterable: vendorColDef.filter as boolean,
       };
 
       if (this.isQuickFilterActive()) {
@@ -1683,9 +1684,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${
-            this.blotterOptions.containerOptions.adaptableBlotterContainer
-          } so cannot render the Adaptable Blotter`
+          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
         );
         return;
       }

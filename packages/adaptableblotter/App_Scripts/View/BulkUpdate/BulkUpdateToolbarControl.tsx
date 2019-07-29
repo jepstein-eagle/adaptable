@@ -63,15 +63,9 @@ class BulkUpdateToolbarControlComponent extends React.Component<
 
   render() {
     let statusColour: StatusColour = this.getStatusColour();
-    // missing datatype validation for time being
 
     // we dont want to show the panel in the form but will need to appear in a popup....
     let cssClassName: string = this.props.cssClassName + '__bulkupdate';
-
-    //  let selectedColumn =
-    //    this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)
-    //      ? ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns)
-    //     : null;
 
     let selectedColumn: IColumn = this.props.BulkUpdateValidationResult.Column;
 

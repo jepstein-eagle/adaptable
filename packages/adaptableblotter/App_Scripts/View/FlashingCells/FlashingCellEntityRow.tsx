@@ -60,6 +60,8 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
     colItems[2].Content = (
       <Dropdown
         disabled={isDisabled}
+        showEmptyItem={false}
+        showClearButton={false}
         value={flashingCell.FlashingCellDuration}
         onChange={(x: any) => this.onActionChange(x)}
         options={durations}

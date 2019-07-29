@@ -55,6 +55,7 @@ export class ReportRowTypeWizard
         </Flex>
         <Flex flexDirection="row" alignItems="center" marginTop={3}>
           <Radio
+            value="Visible"
             checked={this.state.ReportRowScope == ReportRowScope.VisibleRows}
             onChange={(_, e: any) => this.onScopeSelectChanged(e)}
             marginRight={3}

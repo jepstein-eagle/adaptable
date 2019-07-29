@@ -1,11 +1,8 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { DataType, MessageType, StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
-import {
-  IStrategyActionReturn,
-  BulkUpdateValidationResult,
-} from './Interface/IStrategyActionReturn';
+import { DataType, MessageType } from '../PredefinedConfig/Common/Enums';
+import { BulkUpdateValidationResult } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
@@ -74,7 +71,6 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     let selectedColumn: IColumn = selectedCellInfo.Columns[0];
-
     if (selectedColumn.ReadOnly) {
       return {
         IsValid: false,
