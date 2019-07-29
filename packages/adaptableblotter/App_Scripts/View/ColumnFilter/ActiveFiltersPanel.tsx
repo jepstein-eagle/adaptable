@@ -59,26 +59,18 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
     rowColItems[2].Content = (
       <span style={{ alignContent: 'right' }}>
         <ButtonSave
-          cssClassName={this.props.cssClassName}
           onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
-          overrideTooltip="Save as User Filter"
-          bsStyle={'primary'}
-          DisplayMode="Glyph"
-          size={'xsmall'}
-          overrideDisableButton={
+          tooltip="Save as User Filter"
+          disabled={
             columnFilter == null ||
             ArrayExtensions.IsNotNullOrEmpty(columnFilter.Filter.FilterExpressions)
           }
           AccessLevel={this.props.AccessLevel}
         />{' '}
         <ButtonClear
-          cssClassName={this.props.cssClassName}
           onClick={() => this.props.onClear(columnFilter)}
-          overrideTooltip="Clear Column Filter"
-          bsStyle={StyleConstants.DEFAULT_BSSTYLE}
-          DisplayMode="Glyph"
-          size={'xs'}
-          overrideDisableButton={columnFilter == null}
+          tooltip="Clear Column Filter"
+          disabled={columnFilter == null}
           AccessLevel={this.props.AccessLevel}
         />
       </span>

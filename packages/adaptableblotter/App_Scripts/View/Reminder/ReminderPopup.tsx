@@ -90,7 +90,6 @@ class ReminderPopupComponent extends React.Component<
         <PanelWithButton
           headerText={StrategyConstants.ReminderStrategyName}
           button={newButton}
-          bsStyle={StyleConstants.PRIMARY_BSSTYLE}
           cssClassName={cssClassName}
           glyphicon={StrategyConstants.ReminderGlyph}
           infoBody={infoBody}

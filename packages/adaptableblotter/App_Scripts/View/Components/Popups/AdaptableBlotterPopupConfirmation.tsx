@@ -83,7 +83,6 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
               <Box marginTop={3}>
                 <Flex padding={2}>
                   <SimpleButton
-                    bsStyle={StyleConstants.PRIMARY_BSSTYLE}
                     tone="error"
                     variant="raised"
                     disabled={!this.canConfirm()}

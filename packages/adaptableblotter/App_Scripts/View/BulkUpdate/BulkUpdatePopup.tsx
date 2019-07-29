@@ -18,7 +18,6 @@ import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { WARNING_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
@@ -167,7 +166,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
               </Flex>
 
               <SimpleButton
-                bsStyle={this.getButtonStyle()}
                 disabled={
                   StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) ||
                   this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent
@@ -200,7 +198,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                 />
               </Flex>
               <SimpleButton
-                bsStyle={this.getButtonStyle()}
                 disabled={
                   StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) ||
                   this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent ||
@@ -283,21 +280,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
       cancelAction
     );
     this.props.onConfirmWarningCellValidation(confirmation);
-  }
-
-  private getButtonStyle(): string {
-    if (this.props.PreviewInfo) {
-      if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-        return DEFAULT_BSSTYLE;
-      }
-      if (
-        this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ||
-        this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent
-      ) {
-        return WARNING_BSSTYLE;
-      }
-    }
-    return 'success';
   }
 }
 
