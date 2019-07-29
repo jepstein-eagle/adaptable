@@ -79,15 +79,20 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (
         s => s.Name === state.CurrentAdvancedSearch
       )[0];
 
+      const currentAdvancedSearchName: string = currentActiveSearch
+        ? currentActiveSearch.Name
+        : EMPTY_STRING;
+
       return {
         ...state,
         AdvancedSearches: state.AdvancedSearches.filter(
           abObject => abObject.Uuid !== actionAdvancedSearch.Uuid
         ),
+
         CurrentAdvancedSearch:
           currentActiveSearch && currentActiveSearch.Uuid === actionAdvancedSearch.Uuid
             ? EMPTY_STRING
-            : currentActiveSearch.Name,
+            : currentAdvancedSearchName,
       };
     }
     case ADVANCED_SEARCH_SELECT:
