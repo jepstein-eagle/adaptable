@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { useState, cloneElement, useLayoutEffect, useRef, useEffect, ReactNode } from 'react';
-import { BoxProps, Box, Flex } from 'rebass';
+import { cloneElement, useRef, ReactNode } from 'react';
+import { BoxProps } from 'rebass';
 import join from '../utils/join';
 
 import SimpleButton, { SimpleButtonProps } from '../SimpleButton';
@@ -34,7 +34,7 @@ export type DropdownButtonProps = BoxProps &
     listItemStyle?:
       | React.CSSProperties
       | ((item: DropdownButtonItem, index: number) => React.CSSProperties);
-    isItemDisabled?: (item: DropdownButtonItem) => boolean;
+    isItemDisabled?: (item: DropdownButtonItem) => boolean | undefined;
   };
 
 const baseClassName = 'ab-DropdownButton';
@@ -117,7 +117,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
         className: itemClassName,
         style: itemStyle,
         item,
-        columns,
+        columns: columns!,
       });
     });
 
@@ -133,12 +133,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
   const positionerRef = useRef<HTMLDivElement>(null);
   const { expanded, toggle, setExpanded, positionInfo } = useExpanded(props, positionerRef);
 
-  const {
-    verticalPosition,
-    horizontalPosition,
-    maxHeight: maxListHeight,
-    maxWidth: maxListWidth,
-  } = positionInfo;
+  const { maxHeight: maxListHeight, maxWidth: maxListWidth } = positionInfo;
 
   listStyle = {
     minWidth:

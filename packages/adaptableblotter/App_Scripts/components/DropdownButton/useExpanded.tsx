@@ -1,4 +1,4 @@
-import { useRef, MutableRefObject } from 'react';
+import { useRef, MutableRefObject, RefObject } from 'react';
 import useProperty from '../utils/useProperty';
 import getAvailableSizeInfo, { BoundingClientRect } from '../utils/getAvailableSizeInfo';
 import { getConstrainRect, ConstrainToType } from '../OverlayTrigger';
@@ -20,7 +20,7 @@ export type ExpandedProps = {
   onToggle?: (expanded: boolean) => void;
 };
 
-export default (props: ExpandedProps, positionerRef: MutableRefObject<HTMLDivElement>) => {
+export default (props: ExpandedProps, positionerRef: RefObject<HTMLDivElement>) => {
   const positionInfoRef = useRef<PositionInfo>({
     maxHeight: '50vh',
     maxWidth: '50vw',
@@ -29,7 +29,7 @@ export default (props: ExpandedProps, positionerRef: MutableRefObject<HTMLDivEle
   });
 
   const updatePosition = () => {
-    const positionRect: BoundingClientRect = positionerRef.current.getBoundingClientRect();
+    const positionRect: BoundingClientRect = positionerRef.current!.getBoundingClientRect();
 
     positionInfoRef.current = getAvailableSizeInfo({
       constrainRect: getConstrainRect(positionerRef.current as HTMLElement, props.constrainTo),

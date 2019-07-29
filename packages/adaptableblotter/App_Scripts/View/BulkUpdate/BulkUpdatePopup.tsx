@@ -71,7 +71,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
       'Edits that break Cell Validation Rules will be flagged and prevented.',
     ];
 
-    let col: IColumn;
+    let col: IColumn = null;
     if (this.props.PreviewInfo) {
       col = ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
     }

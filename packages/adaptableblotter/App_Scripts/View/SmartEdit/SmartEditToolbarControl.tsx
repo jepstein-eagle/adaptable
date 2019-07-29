@@ -204,6 +204,7 @@ class SmartEditToolbarControlComponent extends React.Component<
       case MathOperation.Divide:
         return '/';
     }
+    return '';
   }
 
   private onApplyClick(): void {

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Button, Box } from 'rebass';
 
 export default () => {
-  if (!global.document) {
+  if (!(global as any).document) {
     return null;
   }
   const [visible, setVisible] = useState(false);
@@ -24,7 +24,6 @@ export default () => {
           style={{ position: 'relative' }}
           constrainTo=".x"
           showEvent="click"
-          hideEvent="x"
           render={() => (
             <b
               style={{
@@ -38,11 +37,7 @@ export default () => {
             </b>
           )}
         >
-          <Button
-            marginTop={40}
-            marginLeft={300}
-            style={{ xposition: 'absolute', right: 0, top: 200 }}
-          >
+          <Button marginTop={40} marginLeft={300}>
             xyz
           </Button>
         </OverlayTrigger>

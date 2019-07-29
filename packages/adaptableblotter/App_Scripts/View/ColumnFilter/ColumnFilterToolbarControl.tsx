@@ -14,18 +14,17 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
-import { SUCCESS_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
-import { Flex, Text } from 'rebass';
+import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
 
 interface ColumnFilterToolbarControlComponentProps

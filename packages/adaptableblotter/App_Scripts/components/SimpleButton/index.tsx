@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Button, ButtonProps } from 'rebass';
-import { ReactNode, HTMLProps } from 'react';
+import { ReactNode } from 'react';
 import join from '../utils/join';
 
 import icons from '../icons';

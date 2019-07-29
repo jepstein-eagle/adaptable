@@ -41,8 +41,6 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     let messageType: MessageType =
       this.props.MessageType != null ? this.props.MessageType : MessageType.Info;
 
-    let triggerAction = this.props.triggerAction != null ? this.props.triggerAction : ['click'];
-
     let useButton = this.props.useButton != null ? this.props.useButton : false;
     let popoverMinWidth: string =
       this.props.popoverMinWidth != null ? this.props.popoverMinWidth.toString() + 'px' : 'auto';

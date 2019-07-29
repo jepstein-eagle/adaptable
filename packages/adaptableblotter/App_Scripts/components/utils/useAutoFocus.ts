@@ -1,4 +1,4 @@
-import { useEffect, MutableRefObject } from 'react';
+import { useEffect, RefObject } from 'react';
 import usePrevious from './usePrevious';
 
 const useAutoFocus = (
@@ -8,7 +8,7 @@ const useAutoFocus = (
     previous?: ({ autoFocus }: { autoFocus: boolean }) => boolean;
     shouldFocus?: ({ autoFocus }: { autoFocus: boolean }) => boolean;
   },
-  focusElementRef: MutableRefObject<HTMLElement>
+  focusElementRef: RefObject<HTMLElement>
 ) => {
   const autoFocus = props.autoFocus === undefined ? true : props.autoFocus;
 
