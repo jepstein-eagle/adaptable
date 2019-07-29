@@ -142,14 +142,12 @@ export class ListBoxFilterForm extends React.Component<
     );
 
     let rangeOperandOptions: string[] = ['Value', 'Column'];
-    let rangeMenuItemsOperand1 = rangeOperandOptions.map(
-      (rangeOperand: 'Value' | 'Column', index: number) => {
-        return {
-          value: rangeOperand,
-          label: rangeOperand,
-        };
-      }
-    );
+    let rangeMenuItemsOperand1 = rangeOperandOptions.map((rangeOperand: 'Value' | 'Column') => {
+      return {
+        value: rangeOperand,
+        label: rangeOperand,
+      };
+    });
 
     let rangeMenuItemsOperand2 = rangeOperandOptions.map((rangeOperand: string, index: number) => {
       return {
@@ -177,8 +175,11 @@ export class ListBoxFilterForm extends React.Component<
           this.state.UiSelectedRange.Operator != LeafExpressionOperator.None && (
             <Flex flex={1} flexDirection="row" marginTop={2}>
               <Dropdown
-                placeholder="Please select"
+                placeholder="testing"
+                showEmptyItem={false}
+                showClearButton={false}
                 style={ddStyle}
+                value={this.state.UiSelectedRange.Operand1Type}
                 onChange={this.onRangeTypeChangedOperand1}
                 options={rangeMenuItemsOperand1}
                 marginRight={2}
