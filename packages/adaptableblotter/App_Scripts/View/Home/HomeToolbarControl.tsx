@@ -28,7 +28,7 @@ import {
 } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ColumnHelper, getColumnsFromFriendlyNames } from '../../Utilities/Helpers/ColumnHelper';
+import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
@@ -166,8 +166,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       }
     });
 
-    console.log('system state');
-    console.log(this.props.SystemStatus);
     // status button
     let statusButton = (
       <SimpleButton
@@ -242,8 +240,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     // shortcuts
     let shortcutsArray: string[] = this.props.DashboardState.VisibleButtons;
-    console.log('buttons');
-    console.log(shortcutsArray);
+
     let shortcuts: any;
     if (shortcutsArray) {
       shortcuts = shortcutsArray.map(x => {
@@ -264,7 +261,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 variant="text"
                 tooltip={menuItem.Label}
                 disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-                onClick={() => this.onClick(menuItem)}
+                onClick={() => this.onClick(menuItem!)}
                 AccessLevel={AccessLevel.Full}
               />
             </OverlayTrigger>
