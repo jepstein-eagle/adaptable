@@ -9,7 +9,6 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import HelpBlock from '../../components/HelpBlock';
 
 interface IPushPullLoginProps extends StrategyViewPopupProps<IPushPullLoginComponent> {
@@ -36,7 +35,7 @@ class IPushPullLoginComponent extends React.Component<
     // let cssClassName: string = StyleConstants.PUSHPULL_LOGIN;
     // return (
     //   <PanelWithButton
-    //     cssClassName={cssClassName}
+    //
     //     headerText="iPushPull Login"
     //     bsStyle="primary"
     //     glyphicon="export"

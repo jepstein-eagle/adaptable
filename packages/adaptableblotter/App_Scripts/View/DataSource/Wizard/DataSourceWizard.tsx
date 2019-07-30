@@ -14,11 +14,10 @@ export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}>
     let dataSources: DataSource[] = this.props.ConfigEntities as DataSource[];
     let dataSourceNames: string[] = dataSources.map(s => s.Name);
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.DataSourceStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[

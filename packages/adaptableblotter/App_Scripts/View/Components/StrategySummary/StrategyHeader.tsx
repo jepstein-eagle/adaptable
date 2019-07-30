@@ -11,7 +11,7 @@ export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeade
   StrategySummary: any;
   onNew: () => void;
   NewButtonTooltip: string;
-  cssClassName: string;
+
   NewButtonDisabled?: boolean;
   AccessLevel: AccessLevel;
 }
@@ -21,7 +21,6 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
     let summaryItems: any[] = [];
     let newButton = this.props.NewButtonDisabled ? null : (
       <ButtonNew
-        cssClassName={this.props.cssClassName}
         size={'xsmall'}
         onClick={() => this.props.onNew()}
         overrideTooltip={'Create ' + this.props.NewButtonTooltip}
@@ -30,18 +29,9 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
       />
     );
 
-    summaryItems.push(
-      <b>
-        {
-          <StrategyProfile
-            cssClassName={this.props.cssClassName}
-            StrategyId={this.props.StrategyId}
-          />
-        }
-      </b>
-    );
+    summaryItems.push(<b>{<StrategyProfile StrategyId={this.props.StrategyId} />}</b>);
     summaryItems.push(this.props.StrategySummary);
     summaryItems.push(newButton);
-    return <SummaryRowItem cssClassName={this.props.cssClassName} SummaryItems={summaryItems} />;
+    return <SummaryRowItem SummaryItems={summaryItems} />;
   }
 }

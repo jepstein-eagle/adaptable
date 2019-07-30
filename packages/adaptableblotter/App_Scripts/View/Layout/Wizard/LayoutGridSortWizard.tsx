@@ -79,20 +79,15 @@ export class LayoutGridSortWizard
       );
     });
 
-    let cssClassName: string = this.props.cssClassName + '-gridsort';
-
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
         headerText="Sort Information"
-        bsStyle="primary"
         style={divStyle}
         button={addButton}
         bodyProps={{ padding: 0 }}
       >
         {gridSortRows.length > 0 ? (
           <AdaptableObjectCollection
-            cssClassName={cssClassName}
             colItems={colItems}
             items={gridSortRows}
             allowOverflow={true}

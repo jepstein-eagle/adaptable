@@ -5,7 +5,6 @@ import Panel from '../../components/Panel';
 
 export interface DataSourceParamsPopoverProps
   extends React.ClassAttributes<DataSourceParamsPopover> {
-  cssClassName: string;
   dataSourceParams: DataSourceParams[];
 }
 

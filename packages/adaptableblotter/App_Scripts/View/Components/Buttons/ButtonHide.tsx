@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ButtonBase, ButtonProps } from './ButtonBase';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export class ButtonHide extends React.Component<ButtonProps, {}> {
   render() {
@@ -14,7 +13,6 @@ export class ButtonHide extends React.Component<ButtonProps, {}> {
         style={this.props.style}
         DisplayMode={this.props.DisplayMode}
         overrideText={this.props.overrideText}
-        cssClassName={this.props.cssClassName + StyleConstants.HIDE_BUTTON}
         showDefaultStyle={this.props.showDefaultStyle}
       />
     );

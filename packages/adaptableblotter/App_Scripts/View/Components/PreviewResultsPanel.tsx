@@ -3,7 +3,6 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
@@ -27,9 +26,6 @@ export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewR
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
   render(): any {
-    let cssClassName: string = this.props.cssClassName
-      ? this.props.cssClassName + StyleConstants.PREVIEW_RESULTS
-      : '';
     let previewHeader: string =
       this.props.ShowHeader && this.props.PreviewInfo != null
         ? 'Preview Results: ' +
@@ -48,7 +44,6 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                   <AdaptablePopover
                     showEvent="mouseenter"
                     hideEvent="mouseleave"
-                    cssClassName={cssClassName}
                     headerText={'Validation Error'}
                     bodyText={[
                       this.getValidationErrorMessage(
@@ -63,7 +58,6 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                   <AdaptablePopover
                     showEvent="mouseenter"
                     hideEvent="mouseleave"
-                    cssClassName={cssClassName}
                     headerText={'Validation Error'}
                     bodyText={[
                       this.getValidationErrorMessage(
@@ -96,7 +90,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     );
 
     return (
-      <div className={cssClassName} style={{ flex: 1, overflow: 'auto', ...this.props.style }}>
+      <div style={{ flex: 1, overflow: 'auto', ...this.props.style }}>
         {this.props.ShowPanel && (
           <WizardPanel header={previewHeader} bodyScroll>
             <Table style={{ width: '100%' }}>

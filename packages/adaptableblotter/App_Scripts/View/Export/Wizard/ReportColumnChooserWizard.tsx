@@ -31,8 +31,6 @@ export class ReportColumnChooserWizard
     };
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + '-choosecolumns';
-
     return this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns ? (
       <WizardPanel
         bodyProps={{ style: { border: 'none' } }}
@@ -41,7 +39,6 @@ export class ReportColumnChooserWizard
         <Flex style={{ width: '100%' }}>
           <DualListBoxEditor
             AvailableValues={this.state.AllColumnValues}
-            cssClassName={cssClassName}
             SelectedValues={this.state.SelectedColumnValues}
             HeaderAvailable="Columns"
             HeaderSelected="Columns in Report"

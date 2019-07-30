@@ -50,12 +50,10 @@ export class ExpressionBuilderPage
   extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState>
   implements AdaptableWizardStep {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__querybuilder';
     let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
     let newButton = (
       <SimpleButton
-        className={cssClassName}
         onClick={() => this.onSelectedColumnChanged()}
         disabled={
           this.props.ExpressionMode == ExpressionMode.SingleColumn ||
@@ -76,7 +74,6 @@ export class ExpressionBuilderPage
 
     return (
       <PanelWithButton
-        headerText="Query Builder"
         button={newButton}
         bodyProps={{
           style: {
@@ -90,7 +87,6 @@ export class ExpressionBuilderPage
         <Flex flexDirection="row" style={{ height: '100%' }}>
           <ExpressionBuilderConditionSelector
             ColumnsList={this.props.Columns}
-            cssClassName={cssClassName}
             QueryBuildStatus={queryBuildStatus}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
@@ -111,7 +107,6 @@ export class ExpressionBuilderPage
 
           <ExpressionBuilderPreview
             Expression={this.state.Expression}
-            cssClassName={cssClassName}
             UserFilters={this.props.UserFilters}
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
             ColumnsList={this.props.Columns}

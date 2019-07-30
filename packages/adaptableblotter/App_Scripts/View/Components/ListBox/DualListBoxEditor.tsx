@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom';
 
 import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { IMasterChildren } from '../../../Utilities/Interface/IMasterChildren';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
@@ -38,7 +37,6 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
   SortMember?: string;
   DisplaySize?: DisplaySize;
   MasterChildren?: IMasterChildren[];
-  cssClassName: string;
 }
 
 export interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
@@ -150,7 +148,6 @@ export class DualListBoxEditor extends React.Component<
     });
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.DOUBLE_LIST_BOX;
     let setRefFirstSelected = true;
     let displaySize: DisplaySize = this.props.DisplaySize
       ? this.props.DisplaySize
@@ -259,7 +256,6 @@ export class DualListBoxEditor extends React.Component<
 
     return (
       <Flex
-        className={cssClassName}
         alignItems="stretch"
         flexDirection="row"
         style={{ ...this.props.style, maxHeight: '100%', width: '100%' }}
@@ -285,7 +281,6 @@ export class DualListBoxEditor extends React.Component<
 
         <Flex flexDirection="column" justifyContent="center">
           <ButtonDirection
-            className={cssClassName}
             marginBottom={2}
             icon="fast-forward"
             iconPosition="end"
@@ -295,7 +290,6 @@ export class DualListBoxEditor extends React.Component<
             Add All
           </ButtonDirection>
           <ButtonDirection
-            className={cssClassName}
             iconPosition="end"
             icon={'arrow-right'}
             marginBottom={3}
@@ -306,7 +300,6 @@ export class DualListBoxEditor extends React.Component<
           </ButtonDirection>
           <ButtonDirection
             icon={'arrow-left'}
-            className={cssClassName}
             marginBottom={2}
             iconPosition="start"
             disabled={this.state.UiSelectedSelectedValues.length == 0}
@@ -315,7 +308,6 @@ export class DualListBoxEditor extends React.Component<
             Remove
           </ButtonDirection>
           <ButtonDirection
-            className={cssClassName}
             marginBottom={2}
             icon="fast-backward"
             iconPosition="start"
@@ -349,7 +341,6 @@ export class DualListBoxEditor extends React.Component<
 
         <Flex flexDirection="column" justifyContent="center">
           <ButtonDirection
-            className={cssClassName}
             marginBottom={2}
             iconPosition="start"
             icon="triangle-up"
@@ -359,7 +350,6 @@ export class DualListBoxEditor extends React.Component<
             Top
           </ButtonDirection>
           <ButtonDirection
-            className={cssClassName}
             marginBottom={2}
             iconPosition="start"
             icon="arrow-up"
@@ -369,7 +359,6 @@ export class DualListBoxEditor extends React.Component<
             Up
           </ButtonDirection>
           <ButtonDirection
-            className={cssClassName}
             marginBottom={2}
             icon="arrow-down"
             iconPosition="start"
@@ -379,7 +368,6 @@ export class DualListBoxEditor extends React.Component<
             Down
           </ButtonDirection>
           <ButtonDirection
-            className={cssClassName}
             marginBottom={2}
             icon="triangle-down"
             iconPosition="start"

@@ -20,8 +20,6 @@ export class CalculatedColumnSummaryWizard
     this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.ColumnId },
       {
@@ -35,7 +33,6 @@ export class CalculatedColumnSummaryWizard
 
     return (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.CalculatedColumnStrategyName}
       />

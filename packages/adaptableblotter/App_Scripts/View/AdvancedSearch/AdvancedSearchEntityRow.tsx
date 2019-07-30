@@ -43,7 +43,6 @@ export class AdvancedSearchEntityRow extends React.Component<
 
     let buttons: any = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
         editClick={() => this.props.onEdit(advancedSearch)}
@@ -57,7 +56,6 @@ export class AdvancedSearchEntityRow extends React.Component<
 
     return (
       <AdaptableObjectRow
-        cssClassName={this.props.cssClassName}
         colItems={colItems}
         onClick={() => this.props.onSelect(advancedSearch)}
         style={{ cursor: 'pointer' }}

@@ -21,8 +21,6 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
     super(props);
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       {
@@ -43,12 +41,11 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.UserFilterStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

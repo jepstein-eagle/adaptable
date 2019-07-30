@@ -5,7 +5,6 @@ import { CalendarEntry } from '../../PredefinedConfig/RunTimeState/CalendarState
 
 export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {
   CalendarEntry: CalendarEntry;
-  cssClassName: string;
 }
 
 export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {}> {
@@ -16,6 +15,6 @@ export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {
       Size: 6,
       Content: new Date(this.props.CalendarEntry.HolidayDate).toDateString(),
     });
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

@@ -20,7 +20,7 @@ export interface PanelDashboardProps extends PanelProps {
   showConfigureButton?: boolean;
   showMinimiseButton?: boolean;
   showGlyphIcon?: boolean;
-  cssClassName: string;
+
   useDefaultPanelStyle?: boolean;
 }
 

@@ -41,7 +41,6 @@ export class ConditionalStyleEntityRow extends React.Component<
     );
     let buttons: any = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         editClick={() => this.props.onEdit(conditionalStyle)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
@@ -54,7 +53,7 @@ export class ConditionalStyleEntityRow extends React.Component<
     );
     colItems[3].Content = buttons;
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   private getScope(conditionalStyle: ConditionalStyle): string {

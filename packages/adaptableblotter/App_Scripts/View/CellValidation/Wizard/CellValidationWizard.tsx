@@ -15,11 +15,10 @@ export interface CellValidationWizardProps
 export class CellValidationWizard extends React.Component<CellValidationWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.CellValidationStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[

@@ -21,7 +21,6 @@ export interface SimpleButtonProps extends ButtonProps {
   iconSize?: number;
   iconPosition?: 'start' | 'end';
   disabled?: boolean;
-  bsStyle?: any;
   AccessLevel?: AccessLevel;
 }
 

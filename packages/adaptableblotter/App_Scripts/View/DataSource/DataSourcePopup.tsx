@@ -18,7 +18,6 @@ import {
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
@@ -46,9 +45,6 @@ class DataSourcePopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__DataSource';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__DataSource';
-
     let infoBody: any[] = [
       'Use DataSources to select from existing server queries what data to show in the Blotter.',
     ];
@@ -62,7 +58,6 @@ class DataSourcePopupComponent extends React.Component<
     let dataSources = this.props.DataSources.map((dataSource: DataSource, index: number) => {
       return (
         <DataSourceEntityRow
-          cssClassName={cssClassName}
           AdaptableBlotterObject={dataSource}
           key={'ns' + index}
           onEdit={() => this.onEdit(dataSource)}
@@ -80,7 +75,6 @@ class DataSourcePopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.CreateDataSource()}
         tooltip="Create New DataSource"
         AccessLevel={this.props.AccessLevel}
@@ -91,27 +85,20 @@ class DataSourcePopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
         headerText={StrategyConstants.DataSourceStrategyName}
-        className="ab_main_popup"
         button={newButton}
         bodyProps={{ padding: 0 }}
         glyphicon={StrategyConstants.DataSourceGlyph}
         infoBody={infoBody}
       >
         {dataSources.length > 0 ? (
-          <AdaptableObjectCollection
-            cssClassName={cssClassName}
-            colItems={colItems}
-            items={dataSources}
-          />
+          <AdaptableObjectCollection colItems={colItems} items={dataSources} />
         ) : (
           <EmptyContent>Click 'New' to add a new DataSource.</EmptyContent>
         )}
 
         {this.state.EditedAdaptableBlotterObject != null && (
           <DataSourceWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={DataSource}
             ConfigEntities={this.props.DataSources}
             ModalContainer={this.props.ModalContainer}

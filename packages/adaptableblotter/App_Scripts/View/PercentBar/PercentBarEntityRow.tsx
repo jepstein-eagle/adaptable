@@ -105,7 +105,6 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
 
     colItems[5].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
         editClick={() => this.props.onEdit(PercentBar)}
@@ -115,7 +114,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       />
     );
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   onMinimumValueChanged(event: React.FormEvent<any>) {

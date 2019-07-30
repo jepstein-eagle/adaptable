@@ -73,8 +73,6 @@ class ChartDisplayPopupComponent extends React.Component<
       ? this.props.CurrentChartDefinition.ChartType
       : null;
 
-    let cssClassName: string = this.props.cssClassName + '__Charts';
-
     let closeButton = this.props.ShowModal ? null : (
       <ButtonClose
         style={{ color: 'var(--ab-color-white)' }}
@@ -129,7 +127,6 @@ class ChartDisplayPopupComponent extends React.Component<
                   ChartData={this.props.ChartData}
                   ColorPalette={this.props.ColorPalette}
                   Columns={this.props.Columns}
-                  cssClassName={this.props.cssClassName}
                   onUpdateChartProperties={(chartUuid, chartProperties) =>
                     this.props.onUpdateChartProperties(chartUuid, chartProperties)
                   }
@@ -140,7 +137,7 @@ class ChartDisplayPopupComponent extends React.Component<
                   ChartData={this.props.ChartData}
                   //   ColorPalette={this.props.ColorPalette}
                   //   Columns={this.props.Columns}
-                  cssClassName={this.props.cssClassName}
+
                   onUpdateChartProperties={(chartUuid, chartProperties) =>
                     this.props.onUpdateChartProperties(chartUuid, chartProperties)
                   }
@@ -153,7 +150,6 @@ class ChartDisplayPopupComponent extends React.Component<
           <div>
             {this.state.EditedChartDefinition.ChartType == ChartType.CategoryChart ? (
               <CategoryChartWizard
-                cssClassName={cssClassName}
                 EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
@@ -170,7 +166,6 @@ class ChartDisplayPopupComponent extends React.Component<
               />
             ) : (
               <PieChartWizard
-                cssClassName={cssClassName}
                 EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}

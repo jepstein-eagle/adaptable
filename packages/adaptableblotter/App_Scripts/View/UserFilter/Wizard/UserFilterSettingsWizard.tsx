@@ -36,10 +36,9 @@ export class UserFilterSettingsWizard
     let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
       ? null
       : 'error';
-    let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <WizardPanel header="Filter Settings" bsStyle="primary">
+      <WizardPanel>
         <HelpBlock marginBottom={2}>
           Select a name for the User Filter - this is the name that will appear in Query Builder and
           Column Filter dropdowns.

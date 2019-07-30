@@ -20,7 +20,6 @@ class ApplicationToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '__Application';
     let headerText = StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitle)
       ? this.props.ApplicationToolbarTitle
       : StrategyConstants.ApplicationStrategyName;
@@ -28,7 +27,6 @@ class ApplicationToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={headerText}
         glyphicon={StrategyConstants.ApplicationGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ApplicationStrategyId)}

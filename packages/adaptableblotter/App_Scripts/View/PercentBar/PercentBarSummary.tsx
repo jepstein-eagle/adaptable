@@ -19,7 +19,6 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
@@ -44,8 +43,6 @@ export class PercentBarSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__percentBar';
-
     let percentBar: PercentBar = this.props.PercentBars.find(
       c => c.ColumnId == this.props.SummarisedColumn.ColumnId
     );
@@ -60,7 +57,6 @@ export class PercentBarSummaryComponent extends React.Component<
       percentBarRow = (
         <StrategyHeader
           key={StrategyConstants.PercentBarStrategyName}
-          cssClassName={this.props.cssClassName}
           StrategyId={StrategyConstants.PercentBarStrategyId}
           StrategySummary={'No Percent Bar'}
           onNew={() => this.onNew()}
@@ -72,13 +68,7 @@ export class PercentBarSummaryComponent extends React.Component<
       percentBarRow = (
         <StrategyDetail
           key={StrategyConstants.PercentBarStrategyName}
-          cssClassName={this.props.cssClassName}
-          Item1={
-            <StrategyProfile
-              cssClassName={this.props.cssClassName}
-              StrategyId={StrategyConstants.PercentBarStrategyId}
-            />
-          }
+          Item1={<StrategyProfile StrategyId={StrategyConstants.PercentBarStrategyId} />}
           Item2={'Percent Bar set'}
           ConfigEnity={percentBar}
           showShare={this.props.TeamSharingActivated}
@@ -97,7 +87,6 @@ export class PercentBarSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <PercentBarWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as PercentBar}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}

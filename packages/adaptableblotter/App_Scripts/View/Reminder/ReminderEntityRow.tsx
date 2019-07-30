@@ -26,7 +26,6 @@ export class ReminderEntityRow extends React.Component<
     );
     let buttons: any = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         editClick={() => this.props.onEdit(reminder)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
@@ -36,6 +35,6 @@ export class ReminderEntityRow extends React.Component<
     );
     colItems[3].Content = buttons;
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

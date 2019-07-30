@@ -21,13 +21,10 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__userDataManagement';
-
     let infoBody: any[] = ['Function that clears user config - for development use only.'];
 
     let clearButton = (
       <SimpleButton
-        className={cssClassName}
         onClick={() => this.onClear()}
         tooltip="Clear User Data"
         tone="error"
@@ -40,12 +37,10 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.DataManagementStrategyName}
           button={null}
-          bsStyle="primary"
-          cssClassName={cssClassName}
           glyphicon={StrategyConstants.DataManagementGlyph}
           infoBody={infoBody}
         >

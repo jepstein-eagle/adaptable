@@ -8,7 +8,6 @@ import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterS
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export interface BaseProps<View> extends React.ClassAttributes<View> {
-  cssClassName: string;
   AccessLevel: AccessLevel;
 
   Columns: IColumn[];

@@ -27,12 +27,9 @@ export class AlertSelectColumnWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-selectcolumn';
-
     return (
-      <WizardPanel header="Select a Column">
+      <WizardPanel>
         <ColumnSelector
-          cssClassName={cssClassName}
           SelectedColumnIds={[this.state.ColumnId]}
           ColumnList={this.props.Columns}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}

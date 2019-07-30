@@ -97,3 +97,40 @@
 .popover-content {
   padding: 1px;
 }
+
+/* Styles for the coloured cell render 
+
+Can I put them somewhere else?
+*/
+.ab_div-colour-render-bar {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+.ab_div-colour-render-text {
+  position: absolute;
+  font-weight: normal;
+  font-size: 12p;
+  z-index: 100;
+}
+
+.ab_div-colour-render-div {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+
+
+/*How we manage readonly controls
+is there a better way to do this?
+*/
+.ab_readonly button,
+.ab_readonly .ab_div_like_button,
+.ab_readonly select,
+.ab_readonly input,
+.ab_readonly .radio {
+  opacity: 0.65;
+  pointer-events: none;
+}

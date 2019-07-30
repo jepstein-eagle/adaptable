@@ -34,8 +34,6 @@ export class CategoryChartYAxisWizard
     };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     let numericColumnIds = ColumnHelper.getNumericColumns(this.props.Columns).map(c => {
       return c.ColumnId;
     });
@@ -74,7 +72,6 @@ export class CategoryChartYAxisWizard
               Average
             </Radio>{' '}
             <AdaptablePopover
-              cssClassName={cssClassName}
               headerText={'Chart Y Axis: Display Total'}
               bodyText={[
                 'Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average.',
@@ -86,7 +83,6 @@ export class CategoryChartYAxisWizard
         <Flex flex={1} padding={2}>
           <DualListBoxEditor
             AvailableValues={availableColumns}
-            cssClassName={cssClassName}
             SelectedValues={existingColumns}
             HeaderAvailable="Numeric Columns"
             HeaderSelected="Y Axis Columns"

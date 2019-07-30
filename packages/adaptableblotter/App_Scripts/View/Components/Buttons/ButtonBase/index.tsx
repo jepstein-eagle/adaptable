@@ -26,7 +26,7 @@ const baseClassName = 'ab-Button';
 //   tooltip: ReactNode;
 //   transformGlyph?: boolean;
 //   bsStyle?: string;
-//   cssClassName: string;
+//
 //   glyph?: string;
 //   hideToolTip?: boolean;
 //   AccessLevel?: AccessLevel;
@@ -43,8 +43,6 @@ export interface ButtonBaseProps extends BtnProps {
   DisplayMode?: string;
   icon?: string;
   ToolTipAndText?: string;
-  bsStyle?: string;
-  bsSize?: string;
   glyph?: string;
   overrideText?: string;
   overrideTooltip?: string;
@@ -58,8 +56,6 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
   public static defaultProps: ButtonBaseProps = {
     overrideDisableButton: false,
     ToolTipAndText: '',
-    bsStyle: '',
-    bsSize: null,
     glyph: '',
     DisplayMode: 'Glyph+Text',
     transformGlyph: false,
@@ -116,11 +112,6 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
       );
     }
 
-    let bsStyle =
-      this.props.showDefaultStyle && this.props.showDefaultStyle == true
-        ? 'default'
-        : this.props.bsStyle;
-
     let button = (
       <Button
         {...this.props}
@@ -128,8 +119,8 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         className={join(
           this.props.cssClassName,
           baseClassName,
-          `${baseClassName}--size-${this.props.bsSize || 'normal'}`,
-          `${baseClassName}--style-${bsStyle || 'normal'}`,
+          `${baseClassName}--size-${'normal'}`,
+          `${baseClassName}--style-${'normal'}`,
           isDisabled ? `${baseClassName}--disabled` : `${baseClassName}--enabled`
         )}
         disabled={isDisabled}

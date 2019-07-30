@@ -15,11 +15,10 @@ export interface ColumnCategoryWizardProps
 export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.ColumnCategoryStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
@@ -31,7 +30,7 @@ export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardPr
               ),
             },
             {
-              StepName: 'Columns',
+              StepName: 'Selected Columns',
               Index: 1,
               Element: <ColumnCategoryColumnsWizard ColumnCategorys={this.props.ColumnCategorys} />,
             },

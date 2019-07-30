@@ -3,7 +3,6 @@ import * as React from 'react';
 import { withTheme } from 'styled-components';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import NewPanel, { PanelProps } from '../../../components/Panel';
 import { Box, Flex, BoxProps } from 'rebass';
 
@@ -27,10 +26,6 @@ export interface PanelWithImageProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName
-      ? this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE
-      : '';
-
     const IconCmp = icons[(this.props.icon || this.props.glyphicon)!] as ReactComponentLike;
     const headerStyle: any = {};
 
@@ -48,11 +43,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
             {this.props.header}
             <Box marginRight={3} />
             {this.props.infoBody != null && (
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText=""
-                bodyText={this.props.infoBody}
-              />
+              <AdaptablePopover headerText="" bodyText={this.props.infoBody} />
             )}
           </Flex>
           <Box flex={1} />
@@ -63,7 +54,6 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
     return (
       <NewPanel
         header={headerRow}
-        className={cssClassName}
         variant={this.props.variant}
         style={this.props.style}
         bodyScroll={this.props.bodyScroll !== undefined ? this.props.bodyScroll : true}

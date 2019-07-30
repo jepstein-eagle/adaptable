@@ -15,7 +15,6 @@ import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt';
 import { Dashboard } from './Dashboard/Dashboard';
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation';
-import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterPopupAlert } from './Components/Popups/AdaptableBlotterPopupAlert';
 import { AdaptableBlotterChart } from './Components/Popups/AdaptableBlotterChart';
 import { AdaptableBlotterLoadingScreen } from './Components/Popups/AdaptableBlotterLoadingScreen';
@@ -48,7 +47,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
   render() {
     return (
-      <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
+      <div>
         <Dashboard Blotter={this.props.Blotter} />
 
         {/* The chart widget - it will decide where it will display 

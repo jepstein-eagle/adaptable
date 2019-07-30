@@ -25,7 +25,6 @@ interface ThemeToolbarControlComponentProps
 
 class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlComponentProps, {}> {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '__Theme';
     let allThemes = [].concat(this.props.SystemThemes).concat(
       this.props.UserThemes.map(x => {
         return x.Name;
@@ -53,7 +52,6 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.ThemeStrategyName}
         glyphicon={StrategyConstants.ThemeGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)}

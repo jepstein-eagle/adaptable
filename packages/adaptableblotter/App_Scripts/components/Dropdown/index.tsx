@@ -15,9 +15,6 @@ export type DropdownOption = {
 };
 
 export type DropdownProps = Omit<BoxProps, 'onChange'> & {
-  bsSize?: string;
-  bsStyle?: string;
-
   autoFocus?: boolean;
   expanded?: boolean;
   disabled?: boolean;

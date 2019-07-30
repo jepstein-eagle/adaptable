@@ -13,11 +13,10 @@ export class AdvancedSearchWizard extends React.Component<
 > {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.AdvancedSearchStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
@@ -30,7 +29,6 @@ export class AdvancedSearchWizard extends React.Component<
                   SystemFilters={this.props.SystemFilters}
                   NamedFilters={this.props.NamedFilters}
                   ColumnCategories={this.props.ColumnCategories}
-                  cssClassName={this.props.cssClassName}
                 />
               ),
             },

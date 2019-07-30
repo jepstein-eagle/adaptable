@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { ColumnMenuTab } from '../../../PredefinedConfig/Common/Enums';
 
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { Flex } from 'rebass';
 import Panel, { PanelProps } from '../../../components/Panel';
 import Radio from '../../../components/Radio';
@@ -14,7 +13,7 @@ export interface FilterFormPanelProps extends PanelProps {
 
   closeButton?: React.ReactElement<any>;
 
-  cssClassName: string;
+  cssClassName?: string;
 
   ColumnMenuTab: ColumnMenuTab;
   ColumnMenuTabChanged: (e: any) => void;
@@ -29,13 +28,6 @@ export interface FilterFormPanelProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL;
-
-    let className = 'ab_panel-with-button';
-    if (this.props.className) {
-      className += ' ' + this.props.className;
-    }
-    className += ' ' + 'ab_panel-with-button-reduce-header-padding';
     let header = (
       <Flex alignItems="center" flexDirection="row" style={{ width: '100%' }}>
         {this.props.IsAlwaysFilter ? (
@@ -84,10 +76,9 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
       </Flex>
     );
     return (
-      <div className={cssClassName}>
+      <div>
         <Panel
           header={header}
-          className={className}
           style={this.props.style}
           bodyProps={{ padding: 1, style: { maxHeight: '50vh' } }}
           bodyScroll

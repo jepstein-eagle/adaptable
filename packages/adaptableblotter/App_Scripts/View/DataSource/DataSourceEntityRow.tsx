@@ -23,7 +23,6 @@ export class DataSourceEntityRow extends React.Component<DataSourceEntityRowProp
 
     colItems[2].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         editClick={() => this.props.onEdit(dataSource)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
@@ -32,7 +31,7 @@ export class DataSourceEntityRow extends React.Component<DataSourceEntityRowProp
       />
     );
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   onDescriptionChange(event: React.FormEvent<any>) {

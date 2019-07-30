@@ -20,7 +20,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -44,9 +43,6 @@ class ReminderPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__Reminder';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__Reminder';
-
     let infoBody: any[] = [
       'Reminders are alerts that you set by schdedule.',
       <br />,
@@ -62,7 +58,6 @@ class ReminderPopupComponent extends React.Component<
     let Reminders = this.props.Reminders.map((reminder: Reminder, index) => {
       return (
         <ReminderEntityRow
-          cssClassName={cssClassName}
           AdaptableBlotterObject={reminder}
           colItems={colItems}
           key={'CS' + index}
@@ -78,7 +73,6 @@ class ReminderPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create Reminder"
         AccessLevel={this.props.AccessLevel}
@@ -86,11 +80,10 @@ class ReminderPopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.ReminderStrategyName}
           button={newButton}
-          cssClassName={cssClassName}
           glyphicon={StrategyConstants.ReminderGlyph}
           infoBody={infoBody}
         >
@@ -100,16 +93,11 @@ class ReminderPopupComponent extends React.Component<
               schedule set by you.
             </EmptyContent>
           ) : (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={Reminders}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={Reminders} />
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <ReminderWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as Reminder}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}

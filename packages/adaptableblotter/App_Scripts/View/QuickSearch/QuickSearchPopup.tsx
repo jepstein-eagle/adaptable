@@ -117,8 +117,6 @@ class QuickSearchPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__quicksearch';
-
     let infoBody: any[] = [
       'Run a simple text search across all visible cells in the Blotter.',
       <br />,
@@ -140,7 +138,6 @@ class QuickSearchPopupComponent extends React.Component<
 
     return (
       <PanelWithImage
-        cssClassName={cssClassName}
         variant="primary"
         header={StrategyConstants.QuickSearchStrategyName}
         glyphicon={StrategyConstants.QuickSearchGlyph}
@@ -150,7 +147,6 @@ class QuickSearchPopupComponent extends React.Component<
         <FormLayout>
           <FormRow label={'Search For:'}>
             <AdaptableBlotterFormControlTextClear
-              cssClassName={cssClassName}
               type="text"
               placeholder="Quick Search Text"
               value={this.state.EditedQuickSearchText}
@@ -172,7 +168,6 @@ class QuickSearchPopupComponent extends React.Component<
 
           <Flex flexDirection="column" padding={2}>
             <Radio
-              className={cssClassName + '__radiobutton'}
               value="HighlightCell"
               checked={this.props.DisplayAction == DisplayAction.HighlightCell}
               onChange={() => this.onDisplayTypeChange(DisplayAction.HighlightCell)}
@@ -181,7 +176,6 @@ class QuickSearchPopupComponent extends React.Component<
             </Radio>
 
             <Radio
-              className={cssClassName + '__radiobutton'}
               value="ShowRow"
               checked={this.props.DisplayAction == DisplayAction.ShowRow}
               onChange={() => this.onDisplayTypeChange(DisplayAction.ShowRow)}
@@ -190,7 +184,6 @@ class QuickSearchPopupComponent extends React.Component<
             </Radio>
 
             <Radio
-              className={cssClassName + '__radiobutton'}
               value="ShowRowAndHighlightCell"
               checked={this.props.DisplayAction == DisplayAction.ShowRowAndHighlightCell}
               onChange={() => this.onDisplayTypeChange(DisplayAction.ShowRowAndHighlightCell)}

@@ -35,10 +35,8 @@ export class CellValidationSelectQueryWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-selectquery';
-
     return (
-      <WizardPanel header="Cell Validation Query">
+      <WizardPanel>
         <HelpBlock marginBottom={2}>
           <p>A Query is used if the rule is dependent on other values in the row.</p>
           <p>The rule will only be activated and checked if the Query passes.</p>
@@ -53,7 +51,6 @@ export class CellValidationSelectQueryWizard
             Use Validation Query
           </Checkbox>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Validation Rule: Query'}
             bodyText={[
               'Create a query (in next step) which will stipulate other cell values required for the Rule.',

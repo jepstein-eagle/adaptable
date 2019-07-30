@@ -21,7 +21,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -57,8 +56,6 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     }
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + '__Alert';
-
     let infoBody: any[] = [
       'Alert Definitions define which changes to the source data will trigger an Alert.',
       <br />,
@@ -78,7 +75,6 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
       return (
         <AlertEntityRow
           key={index}
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={alertDefinition}
           Column={column}
@@ -97,7 +93,6 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.createAlertDefinition()}
         tooltip="Create Alert"
         AccessLevel={this.props.AccessLevel}
@@ -113,17 +108,12 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
       <PanelWithButton
         bodyProps={{ padding: 0 }}
         headerText={StrategyConstants.AlertStrategyName}
-        cssClassName={cssClassName}
         button={newButton}
         glyphicon={StrategyConstants.AlertGlyph}
         infoBody={infoBody}
       >
         {alertEntities.length > 0 ? (
-          <AdaptableObjectCollection
-            cssClassName={cssClassName}
-            colItems={colItems}
-            items={alertEntities}
-          />
+          <AdaptableObjectCollection colItems={colItems} items={alertEntities} />
         ) : (
           <EmptyContent>{startWizardText}</EmptyContent>
         )}

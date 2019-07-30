@@ -7,7 +7,6 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import {
@@ -41,7 +40,6 @@ export interface ExpressionBuilderPreviewProps
   DeleteAllColumnExpression: (ColumnId: string) => void;
   ShowPanel: boolean; // currently ALWAYS true!
   ReadOnlyMode?: boolean;
-  cssClassName: string;
 }
 
 export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderPreviewProps, {}> {
@@ -49,7 +47,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     //       this.ensureSelectedColumnVisible(nextProps.SelectedColumnId)
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + '__querypreview';
     let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression);
     let previewLists = columnList.map(columnId => {
       // First lets do the column values
@@ -76,7 +73,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
               <div style={{ flex: 1 }}>{y}</div>
               <ButtonPreviewDelete
                 as="div"
-                className={cssClassName}
                 onClick={(e: React.SyntheticEvent) => {
                   e.stopPropagation();
                   this.props.DeleteColumnValue(columnId, y);
@@ -105,12 +101,10 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 key={filter}
                 style={previewListBoxItemStyle}
                 onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Filter)}
-                className="ab_div_like_button"
               >
                 <div style={{ flex: 1 }}>{filter}</div>
                 <ButtonPreviewDelete
                   as="div"
-                  className={cssClassName}
                   onClick={(e: React.SyntheticEvent) => {
                     this.props.DeleteUserFilterExpression(columnId, index);
                     e.stopPropagation();
@@ -145,7 +139,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     ...previewListBoxItemStyle,
                     ...dangerStyle,
                   }}
-                  className="ab_div_like_button"
                   onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                 >
                   <div style={{ flex: 1 }}>
@@ -154,7 +147,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                   </div>
                   <ButtonPreviewDelete
                     as="div"
-                    className={cssClassName}
                     onClick={(e: React.SyntheticEvent) => {
                       this.props.DeleteRange(columnId, index);
                       e.stopPropagation();
@@ -167,7 +159,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 <ListGroupItem
                   key={columnId + index}
                   style={previewListBoxItemStyle}
-                  className="ab_div_like_button"
                   onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                 >
                   <div style={{ flex: 1 }}>
@@ -176,7 +167,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                   </div>
                   <ButtonPreviewDelete
                     as="div"
-                    className={cssClassName}
                     onClick={(e: React.SyntheticEvent) => {
                       this.props.DeleteRange(columnId, index);
                       e.stopPropagation();
@@ -194,7 +184,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     ...previewListBoxItemStyle,
                     ...dangerStyle,
                   }}
-                  className="ab_div_like_button"
                   onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                 >
                   <div style={{ flex: 1 }}>
@@ -203,7 +192,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                   </div>
                   <ButtonPreviewDelete
                     as="div"
-                    className={cssClassName}
                     onClick={(e: React.SyntheticEvent) => {
                       this.props.DeleteRange(columnId, index);
                       e.stopPropagation();
@@ -216,7 +204,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 <ListGroupItem
                   key={columnId + index}
                   style={previewListBoxItemStyle}
-                  className="ab_div_like_button"
                   onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                 >
                   <div style={{ flex: 1 }}>
@@ -225,7 +212,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                   </div>
                   <ButtonPreviewDelete
                     as="div"
-                    className={cssClassName}
                     onClick={(e: React.SyntheticEvent) => {
                       this.props.DeleteRange(columnId, index);
                       e.stopPropagation();
@@ -251,7 +237,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         >
           <Flex flexDirection="row">
             <SimpleButton
-              className={cssClassName + StyleConstants.PREVIEW_HEADER_BUTTON}
               style={{ flex: 1 }}
               tone="accent"
               variant="raised"
@@ -262,7 +247,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             </SimpleButton>
 
             <SimpleButton
-              className={cssClassName + StyleConstants.PREVIEW_DELETE_COLUMN_BUTTON}
               style={{ marginLeft: 'var(--ab-space-2)' }}
               key={columnId + 'headerx'}
               onClick={() => this.props.DeleteAllColumnExpression(columnId)}
@@ -285,7 +269,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
           <PanelWithButton
             variant="default"
             style={{ flex: 1 }}
-            cssClassName={cssClassName}
             bodyProps={{
               padding: 0,
               paddingTop: 2,

@@ -16,11 +16,10 @@ export interface UserFilterWizardProps
 export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.UserFilterStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[

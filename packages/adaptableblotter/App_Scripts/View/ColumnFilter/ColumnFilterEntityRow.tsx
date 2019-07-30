@@ -45,7 +45,6 @@ export class ColumnFilterEntityRow extends React.Component<
     colItems[2].Content = (
       <>
         <ButtonSave
-          className={this.props.cssClassName}
           onClick={() => this.props.onSaveColumnFilterasUserFilter(this.props.ColumnFilter)}
           tooltip="Save as User Filter"
           DisplayMode="Glyph"
@@ -56,7 +55,6 @@ export class ColumnFilterEntityRow extends React.Component<
           AccessLevel={this.props.AccessLevel}
         />
         <ButtonClear
-          className={this.props.cssClassName}
           onClick={() => this.props.onClear(this.props.ColumnFilter)}
           tooltip="Clear Column Filter"
           disabled={this.props.ColumnFilter == null}
@@ -65,12 +63,6 @@ export class ColumnFilterEntityRow extends React.Component<
       </>
     );
 
-    return (
-      <AdaptableObjectRow
-        cssClassName={this.props.cssClassName}
-        colItems={colItems}
-        key={this.props.ColumnFilter.Uuid}
-      />
-    );
+    return <AdaptableObjectRow colItems={colItems} key={this.props.ColumnFilter.Uuid} />;
   }
 }

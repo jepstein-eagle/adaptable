@@ -26,8 +26,6 @@ export class CellValidationSummaryWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       {
         Key: 'Column',
@@ -57,7 +55,6 @@ export class CellValidationSummaryWizard
 
     return (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.CellValidationStrategyName}
       />

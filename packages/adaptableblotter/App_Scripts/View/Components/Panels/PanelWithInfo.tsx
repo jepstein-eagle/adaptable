@@ -24,11 +24,7 @@ export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
         {this.props.header}
 
         <Box marginLeft={2}>
-          <AdaptablePopover
-            cssClassName={this.props.cssClassName || ''}
-            headerText=""
-            bodyText={this.props.infoBody}
-          />
+          <AdaptablePopover headerText="" bodyText={this.props.infoBody} />
         </Box>
       </Flex>
     );

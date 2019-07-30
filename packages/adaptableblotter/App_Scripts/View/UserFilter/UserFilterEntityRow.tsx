@@ -35,7 +35,6 @@ export class UserFilterEntityRow extends React.Component<
     );
     colItems[3].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         editClick={() => this.props.onEdit(userFilter)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
@@ -45,6 +44,6 @@ export class UserFilterEntityRow extends React.Component<
       />
     );
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

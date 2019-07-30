@@ -18,7 +18,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
@@ -54,9 +53,6 @@ class ColumnCategoryPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__ColumnCategory';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__ColumnCategory';
-
     let infoBody: any[] = [
       'Column Categories allow you to link different columns, primarily for use in Conditional Styles.',
       <br />,
@@ -74,7 +70,6 @@ class ColumnCategoryPopupComponent extends React.Component<
       return (
         <ColumnCategoryEntityRow
           key={index}
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={item}
           Columns={this.props.Columns}
@@ -89,7 +84,6 @@ class ColumnCategoryPopupComponent extends React.Component<
 
     let newSearchButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tone="accent"
         tooltip="Create New Advanced Search"
@@ -99,20 +93,14 @@ class ColumnCategoryPopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
         headerText={StrategyConstants.ColumnCategoryStrategyName}
         infoBody={infoBody}
         button={newSearchButton}
         glyphicon={StrategyConstants.ColumnCategoryGlyph}
-        className="ab_main_popup"
         bodyProps={{ padding: 0 }}
       >
         {ColumnCategoryRows.length > 0 ? (
-          <AdaptableObjectCollection
-            cssClassName={cssClassName}
-            colItems={colItems}
-            items={ColumnCategoryRows}
-          />
+          <AdaptableObjectCollection colItems={colItems} items={ColumnCategoryRows} />
         ) : (
           <EmptyContent>
             <p>Click 'New' to start creating Column Categories.</p>
@@ -121,7 +109,6 @@ class ColumnCategoryPopupComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject != null && (
           <ColumnCategoryWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
             ConfigEntities={this.props.ColumnCategorys}
             ModalContainer={this.props.ModalContainer}

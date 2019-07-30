@@ -20,7 +20,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -68,9 +67,6 @@ class AdvancedSearchPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__advancedsearch';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__advancedsearch';
-
     let infoBody: any[] = [
       'Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.',
       <br />,
@@ -94,7 +90,6 @@ class AdvancedSearchPopupComponent extends React.Component<
       (advancedSearch: AdvancedSearch, index) => {
         return (
           <AdvancedSearchEntityRow
-            cssClassName={cssClassName}
             key={advancedSearch.Uuid || index}
             colItems={colItems}
             IsCurrentAdvancedSearch={advancedSearch.Name == this.props.CurrentAdvancedSearchName}
@@ -113,7 +108,6 @@ class AdvancedSearchPopupComponent extends React.Component<
 
     let newSearchButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create Conditional Style"
         AccessLevel={this.props.AccessLevel}
@@ -121,9 +115,8 @@ class AdvancedSearchPopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          cssClassName={cssClassName}
           headerText={StrategyConstants.AdvancedSearchStrategyName}
           infoBody={infoBody}
           button={newSearchButton}
@@ -131,11 +124,7 @@ class AdvancedSearchPopupComponent extends React.Component<
           glyphicon={StrategyConstants.AdvancedSearchGlyph}
         >
           {advancedSearchRows.length > 0 && (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={advancedSearchRows}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={advancedSearchRows} />
           )}
 
           {advancedSearchRows.length == 0 && (
@@ -146,7 +135,6 @@ class AdvancedSearchPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <AdvancedSearchWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
               ConfigEntities={this.props.AdvancedSearches}
               Blotter={this.props.Blotter}

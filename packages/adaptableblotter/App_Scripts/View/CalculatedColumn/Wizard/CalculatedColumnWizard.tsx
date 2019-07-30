@@ -16,16 +16,15 @@ export interface CalculatedColumnWizardProps
 export class CalculatedColumnWizard extends React.Component<CalculatedColumnWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.CalculatedColumnStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Settings',
               Index: 0,
               Element: <CalculatedColumnSettingsWizard />,
             },

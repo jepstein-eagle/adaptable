@@ -72,18 +72,12 @@ class SmartEditToolbarControlComponent extends React.Component<
   render() {
     let statusColour: StatusColour = this.getStatusColour();
 
-    let cssClassName: string = this.props.cssClassName + '__SmartEdit';
-
     let selectedColumn = StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)
       ? ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns)
       : null;
 
-    let formControlStyle: any =
-      this.props.DashboardSize == 'xsmall' ? smallFormControlStyle : standardFormControlStyle;
-
     let previewPanel = (
       <PreviewResultsPanel
-        cssClassName={cssClassName}
         UpdateValue={this.props.SmartEditValue}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
@@ -123,7 +117,6 @@ class SmartEditToolbarControlComponent extends React.Component<
 
         <Input
           value={this.props.SmartEditValue.toString()}
-          style={formControlStyle}
           type="number"
           placeholder="Enter a Number"
           step="any"
@@ -147,7 +140,6 @@ class SmartEditToolbarControlComponent extends React.Component<
 
         {this.props.IsValidSelection && (
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText="Preview Results"
             tooltipText="Preview Results"
             bodyText={[previewPanel]}
@@ -162,7 +154,6 @@ class SmartEditToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.SmartEditStrategyName}
         glyphicon={StrategyConstants.SmartEditGlyph}
         onClose={() => this.props.onClose(StrategyConstants.SmartEditStrategyId)}

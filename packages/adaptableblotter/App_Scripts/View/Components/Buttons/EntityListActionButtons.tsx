@@ -4,8 +4,6 @@ import * as Redux from 'redux';
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 
@@ -24,7 +22,7 @@ export interface EntityListActionButtonsProps
   overrideTooltipShare?: string;
   ConfirmDeleteAction: Redux.Action;
   EntityType: string;
-  cssClassName: string;
+
   AccessLevel: AccessLevel;
   editSize: any;
   deleteSize: any;
@@ -53,13 +51,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
   };
   render() {
     return (
-      <Flex
-        className={this.props.cssClassName + StyleConstants.BUTTON_TOOLBAR}
-        justifyContent="center"
-        margin={0}
-        padding={0}
-        onClick={stopPropagation}
-      >
+      <Flex justifyContent="center" margin={0} padding={0} onClick={stopPropagation}>
         {this.props.showEdit && (
           <ButtonEdit
             onClick={() => (this.props.editClick ? this.props.editClick() : null)}
@@ -97,7 +89,6 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         {this.props.showShare && (
           <ButtonShare
             onClick={() => (this.props.shareClick ? this.props.shareClick() : null)}
-            cssClassName={this.props.cssClassName}
             style={{ marginLeft: '2px', marginTop: '2px', marginBottom: '2px', marginRight: '0px' }}
             overrideDisableButton={this.props.overrideDisableShare}
             overrideTooltip={this.props.overrideTooltipShare}

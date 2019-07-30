@@ -17,7 +17,6 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
@@ -45,8 +44,6 @@ export class FreeTextColumnSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__FreeTextcolumn';
-
     let freeTextColumn: FreeTextColumn = this.props.FreeTextColumns.find(
       c => c.ColumnId == this.props.SummarisedColumn.ColumnId
     );
@@ -64,13 +61,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
       FreeTextColumnRow = (
         <StrategyDetail
           key={StrategyConstants.FreeTextColumnStrategyName}
-          cssClassName={this.props.cssClassName}
-          Item1={
-            <StrategyProfile
-              cssClassName={this.props.cssClassName}
-              StrategyId={StrategyConstants.FreeTextColumnStrategyId}
-            />
-          }
+          Item1={<StrategyProfile StrategyId={StrategyConstants.FreeTextColumnStrategyId} />}
           Item2={description}
           ConfigEnity={freeTextColumn}
           showShare={this.props.TeamSharingActivated}
@@ -89,7 +80,6 @@ export class FreeTextColumnSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <FreeTextColumnWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as FreeTextColumn}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}

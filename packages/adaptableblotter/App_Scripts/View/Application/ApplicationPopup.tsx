@@ -9,9 +9,7 @@ interface ApplicationPopupComponentProps
 
 class ApplicationPopupComponent extends React.Component<ApplicationPopupComponentProps, {}> {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__Application';
-
-    return <div className={cssClassName} />;
+    return <div />;
   }
 }
 

@@ -17,8 +17,6 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       { Key: 'Key', Value: this.props.Data.ShortcutKey },
       { Key: 'Result', Value: this.props.Data.ShortcutResult },
@@ -28,12 +26,11 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ShortcutStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

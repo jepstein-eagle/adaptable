@@ -41,11 +41,10 @@ export class CategoryChartXAxisWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     return (
-      <WizardPanel header="Chart: X (Horizontal) Axis Column">
+      <WizardPanel>
         <HelpBlock>
+          <p>Chart: X (Horizontal) Axis Column</p>
           <p>Select a column for the X Axis.</p>
 
           <p>
@@ -58,7 +57,6 @@ export class CategoryChartXAxisWizard
           <Text style={{ flex: 2 }}>X Axis Column: </Text>
           <Box style={{ flex: 6 }}>
             <ColumnSelector
-              cssClassName={cssClassName}
               SelectedColumnIds={[this.state.XAxisColumnId]}
               ColumnList={this.props.Columns}
               onColumnChange={columns => this.onXAxisColumnChanged(columns)}

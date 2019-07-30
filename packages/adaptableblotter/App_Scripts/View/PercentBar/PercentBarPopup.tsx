@@ -19,7 +19,6 @@ import {
   WizardStatus,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -74,9 +73,6 @@ class PercentBarPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__percentBar';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__percentBar';
-
     let infoBody: any[] = [
       'Use Percent Bars to render numeric columns with a coloured bar, the length of which is dependent on the column value',
       <br />,
@@ -98,7 +94,6 @@ class PercentBarPopupComponent extends React.Component<
       return (
         <PercentBarEntityRow
           key={percentBar.Uuid}
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={percentBar}
           Column={column}
@@ -126,7 +121,6 @@ class PercentBarPopupComponent extends React.Component<
     });
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create Percent Bar "
         AccessLevel={this.props.AccessLevel}
@@ -134,22 +128,17 @@ class PercentBarPopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.PercentBarStrategyName}
           style={{ height: '100%' }}
-          cssClassName={cssClassName}
           button={newButton}
           glyphicon={StrategyConstants.PercentBarGlyph}
           infoBody={infoBody}
           bodyProps={{ padding: 0 }}
         >
           {PercentBarItems.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={PercentBarItems}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={PercentBarItems} />
           ) : (
             <EmptyContent>
               <p>Click 'New' to start creating Percent Bars.</p>
@@ -162,7 +151,6 @@ class PercentBarPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <PercentBarWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as PercentBar}
               ConfigEntities={null}
               Blotter={this.props.Blotter}

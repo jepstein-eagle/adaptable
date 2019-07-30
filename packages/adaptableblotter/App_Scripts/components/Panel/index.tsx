@@ -10,9 +10,7 @@ export type PanelProps = HTMLProps<HTMLElement> & {
   header?: ReactNode | string;
   headerProps?: HeaderProps;
   bodyProps?: BoxProps;
-  bsStyle?: string;
   variant?: 'default' | 'primary';
-  bsSize?: string;
   border?: string | number;
   borderRadius?: string | number;
   bodyScroll?: string | boolean;

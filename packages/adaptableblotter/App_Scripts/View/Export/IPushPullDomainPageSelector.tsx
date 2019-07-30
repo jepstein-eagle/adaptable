@@ -12,12 +12,12 @@ import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import ListGroupItem from '../../components/List/ListGroupItem';
 import ListGroup from '../../components/List/ListGroup';
 import ErrorBox from '../../components/ErrorBox';
 import SimpleButton from '../../components/SimpleButton';
+import { Icon } from '../../components/icons';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
@@ -42,7 +42,6 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
     this.state = { SelectedFolder: null, SelectedPage: null };
   }
   render() {
-    let cssClassName: string = StyleConstants.PUSHPULL_PAGE_SELECTOR;
     let itemsElements: any[] = [];
     // this line is total rubbish and just here to get the build to work!
     let tempToFixBuild: Report = this.props.LiveReports.find(
@@ -94,19 +93,13 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
       }
     });
     return (
-      <PanelWithButton
-        cssClassName={cssClassName}
-        headerText="iPushPull Folder and Page Selector"
-        bsStyle="primary"
-        glyphicon="export"
-      >
+      <PanelWithButton headerText="iPushPull Folder and Page Selector" glyphicon="export">
         {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? (
           <ErrorBox>Error getting iPushPull Pages : {this.props.ErrorMsg}</ErrorBox>
         ) : (
           <ListGroup>{itemsElements}</ListGroup>
         )}
         <SimpleButton
-          className="ab_right_modal_button"
           onClick={() => {
             this.props.onCancel();
           }}

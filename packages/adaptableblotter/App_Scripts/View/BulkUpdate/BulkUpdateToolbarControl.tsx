@@ -64,9 +64,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   render() {
     let statusColour: StatusColour = this.getStatusColour();
 
-    // we dont want to show the panel in the form but will need to appear in a popup....
-    let cssClassName: string = this.props.cssClassName + '__bulkupdate';
-
     let selectedColumn: IColumn = this.props.BulkUpdateValidationResult.Column;
 
     let previewPanel = (
@@ -124,7 +121,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
         {this.props.BulkUpdateValidationResult.IsValid &&
           StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
             <AdaptablePopover
-              cssClassName={cssClassName}
               headerText="Preview Results"
               bodyText={[previewPanel]}
               MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}

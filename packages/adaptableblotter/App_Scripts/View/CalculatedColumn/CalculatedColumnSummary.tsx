@@ -15,7 +15,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 
@@ -38,7 +37,6 @@ export class CalculatedColumnSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__calculatedcolumn';
     let detailRow;
     let sharing = this.props.TeamSharingActivated;
 
@@ -46,7 +44,6 @@ export class CalculatedColumnSummaryComponent extends React.Component<
       if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
         detailRow = (
           <StrategyDetail
-            cssClassName={this.props.cssClassName}
             key={'UF' + index}
             Item1={StrategyConstants.CalculatedColumnStrategyName}
             Item2={item.ColumnExpression}
@@ -68,7 +65,6 @@ export class CalculatedColumnSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <CalculatedColumnWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
               this.state.EditedAdaptableBlotterObject as CalculatedColumn
             }

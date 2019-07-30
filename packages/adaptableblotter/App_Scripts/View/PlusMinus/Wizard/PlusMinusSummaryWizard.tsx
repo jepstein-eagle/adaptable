@@ -22,8 +22,6 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
     super(props);
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       {
         Key: 'Name',
@@ -47,12 +45,11 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.PlusMinusStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

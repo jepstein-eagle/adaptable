@@ -26,7 +26,6 @@ import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { ButtonClose } from '../Buttons/ButtonClose';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ButtonClear } from '../Buttons/ButtonClear';
@@ -166,8 +165,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 
   render(): any {
-    let cssClassName: string = StyleConstants.FILTER_FORM;
-
     let isFilterable: string = this.isFilterable();
 
     // get user filter expressions appropriate for this column
@@ -267,13 +264,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       <div>
         {StringExtensions.IsNullOrEmpty(isFilterable) ? (
           <FilterFormPanel
-            cssClassName={cssClassName}
             style={panelStyle}
-            className="ab_no-padding-except-top-panel ab_small-padding-panel"
             ColumnMenuTab={this.state.SelectedTab}
             ColumnMenuTabChanged={e => this.onSelectTab(e)}
             IsAlwaysFilter={this.props.EmbedColumnMenu}
-            bsStyle="default"
             clearFilterButton={clearFilterButton}
             saveButton={saveButton}
             closeButton={closeButton}
@@ -290,7 +284,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                   <Waiting WaitingMessage="Retrieving Column Values..." />
                 ) : (
                   <ListBoxFilterForm
-                    cssClassName={cssClassName}
                     CurrentColumn={this.props.CurrentColumn}
                     Columns={this.props.Columns}
                     ColumnValuePairs={this.state.ColumnValuePairs}

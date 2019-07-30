@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-
 import SimpleButton from '../../../components/SimpleButton';
 import Panel, { PanelProps } from '../../../components/Panel';
 import { Flex, Box, BoxProps } from 'rebass';
@@ -30,11 +27,7 @@ export interface PanelWithButtonProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class PanelWithButton extends React.Component<PanelWithButtonProps & TypePanelProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName
-      ? this.props.cssClassName + StyleConstants.ITEMS_PANEL
-      : '';
     let { buttonContent } = this.props;
-    let className = this.props.className;
 
     const IconCmp = icons[this.props.glyphicon!] as ReactComponentLike;
     let header = (
@@ -50,11 +43,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
           {this.props.headerText}
           <Box marginRight={3} />
           {this.props.infoBody != null && (
-            <AdaptablePopover
-              cssClassName={this.props.cssClassName}
-              headerText=""
-              bodyText={this.props.infoBody}
-            />
+            <AdaptablePopover headerText="" bodyText={this.props.infoBody} />
           )}
         </Flex>
         <Box style={{ flex: 1 }} />
@@ -81,7 +70,6 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
         variant={this.props.variant || 'primary'}
         header={header}
         style={this.props.style}
-        className={`${className} ${cssClassName || ''}`}
         borderRadius={(this.props.borderRadius || 'none') as any}
         border={(this.props.border || 'none') as any}
       >

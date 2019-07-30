@@ -16,11 +16,10 @@ export interface FormatColumnWizardProps
 export class FormatColumnWizard extends React.Component<FormatColumnWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.FormatColumnStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[

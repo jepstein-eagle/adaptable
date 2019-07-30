@@ -3,7 +3,6 @@ import * as React from 'react';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode, SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
 
@@ -13,14 +12,11 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
   onColumnChange: (SelectedColumns: IColumn[]) => void;
   SelectionMode: SelectionMode;
   className?: string;
-  bsSize?: 'large' | 'lg' | 'small' | 'sm';
-  cssClassName: string;
+  cssClassName?: string;
   placeHolder?: string;
 }
 
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
-  // _typeahead: any;
-
   componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any) {
     //if there was a selected column and parent unset the column we then clear the component
     // otherwise it's correctly unselected but the input still have the previsous selected column text
@@ -41,7 +37,6 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.COLUMN_SELECTOR;
     let sortedColumns = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
       this.props.ColumnList,
@@ -50,9 +45,6 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
     let selectedColumnIds = this.props.SelectedColumnIds.filter(x =>
       StringExtensions.IsNotNullOrEmpty(x)
     );
-    let selectedColums: IColumn[] = this.props.ColumnList.filter(x =>
-      selectedColumnIds.find(c => c == x.ColumnId)
-    );
 
     let placeHolder: string = StringExtensions.IsNotNullOrEmpty(this.props.placeHolder)
       ? this.props.placeHolder.toString()
@@ -60,13 +52,11 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
       ? 'Select a column'
       : 'Select columns';
 
-    // let size: any = (this.props.bsSize) ? this.props.bsSize : 'large';
-
     let isEmptySelectedColumnIds: boolean =
       this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
     return (
-      <div className={cssClassName} style={{ flex: 1 }}>
+      <div style={{ flex: 1 }}>
         <Dropdown
           style={{ maxWidth: 'none' }}
           placeholder={placeHolder}
@@ -88,32 +78,6 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
             }
           }}
         />
-
-        {/*
-        <Typeahead
-          ref={'typeahead'}
-          emptyLabel={'No Column'}
-          placeholder={placeHolder}
-          labelKey={'FriendlyName'}
-          filterBy={['FriendlyName', 'ColumnId']}
-          multiple={this.props.SelectionMode == SelectionMode.Multi}
-          selected={selectedColums}
-          onChange={selected => {
-            this.onColumnChange(selected, isEmptySelectedColumnIds);
-          }}
-          options={sortedColumns}
-          disabled={this.props.disabled}
-        />*/}
-        {/*
-        <SimpleButton
-          className={cssClassName}
-          onClick={() => this.onClearButton()}
-          tooltip="Clear Column"
-          icon="clear"
-          variant="text"
-          py={0}
-          px={0}
-/>*/}
       </div>
     );
   }

@@ -41,10 +41,8 @@ export class PieChartPrimaryColumnWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     return (
-      <WizardPanel header="Primary Column">
+      <WizardPanel>
         <HelpBlock>
           <p>Select a Primary Column for the Pie Chart.</p>
         </HelpBlock>
@@ -52,7 +50,6 @@ export class PieChartPrimaryColumnWizard
           <Text marginRight={2}>Primary Column:</Text>
 
           <ColumnSelector
-            cssClassName={cssClassName}
             SelectedColumnIds={[this.state.PrimaryColumnId]}
             ColumnList={this.props.Columns}
             onColumnChange={columns => this.onPrimaryColumnChanged(columns)}

@@ -29,9 +29,8 @@ export class ReportColumnTypeWizard
     };
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + '-reportcolumns';
     return (
-      <WizardPanel header="Select Columns for the Report">
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center">
           <Radio
             value="All"
@@ -42,7 +41,6 @@ export class ReportColumnTypeWizard
             All Columns in the Data Source
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Report: All Columns'}
             bodyText={[
               'All columns in the datasource will be included in the report, whether visible or not at time of export.',
@@ -59,7 +57,6 @@ export class ReportColumnTypeWizard
             Visible Columns Only (at time that report is run)
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Report: Visible Columns'}
             bodyText={[
               'Only columns that are visible at the time the Report is exported will be included in the Export.',
@@ -76,7 +73,6 @@ export class ReportColumnTypeWizard
             Bespoke Columns - selected by you in next step
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Report: Bespoke Columns'}
             bodyText={['Only the columns chosen in next step will be exported (visible or not).']}
           />

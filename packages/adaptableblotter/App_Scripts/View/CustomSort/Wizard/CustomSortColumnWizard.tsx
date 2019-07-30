@@ -27,12 +27,10 @@ export class CustomSortColumnWizard
     this.state = { SelectedColumnId: this.props.Data.ColumnId };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-column';
     let sortableCols = ColumnHelper.getSortableColumns(this.props.Columns);
     return (
-      <WizardPanel header="Select a Column" variant="primary">
+      <WizardPanel>
         <ColumnSelector
-          cssClassName={cssClassName}
           SelectedColumnIds={[this.state.SelectedColumnId]}
           ColumnList={sortableCols}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}

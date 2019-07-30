@@ -50,7 +50,6 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     );
     colItems[3].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
         editClick={() => this.props.onEdit(cellValidationRule)}
@@ -60,7 +59,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
       />
     );
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   setExpressionDescription(CellValidation: CellValidationRule): string {

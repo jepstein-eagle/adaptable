@@ -38,10 +38,8 @@ export class PercentBarSettingsWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-s';
-
     return (
-      <WizardPanel header={'Select Style'}>
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center" marginTop={3}>
           <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
             Positive Colour:
@@ -83,7 +81,6 @@ export class PercentBarSettingsWizard
             />
 
             <AdaptablePopover
-              cssClassName={cssClassName}
               headerText={'Percent Bar: Show Value'}
               bodyText={['Whether to show additionally the value of the cell in the bar.']}
             />
@@ -103,7 +100,6 @@ export class PercentBarSettingsWizard
             />
 
             <AdaptablePopover
-              cssClassName={cssClassName}
               headerText={'Percent Bar: Show Tooltip'}
               bodyText={[
                 'Whether to display a tooltip that shows the value of the cell when you hover in the Column.',

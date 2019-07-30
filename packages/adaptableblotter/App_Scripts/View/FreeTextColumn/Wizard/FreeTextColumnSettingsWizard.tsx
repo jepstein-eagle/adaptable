@@ -34,11 +34,9 @@ export class FreeTextColumnSettingsWizard
     };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     return (
-      <div className={cssClassName} style={{ height: '100%' }}>
-        <WizardPanel header="FreeText Column Settings">
+      <div style={{ height: '100%' }}>
+        <WizardPanel>
           <Flex alignItems="center" flexDirection="row">
             <Text style={{ flex: 2 }}>Column Name</Text>
 

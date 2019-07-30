@@ -50,13 +50,11 @@ export class CustomSortValuesWizard
       <br />,
       "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically.",
     ];
-    let cssClassName: string = this.props.cssClassName + '-values';
 
     return (
       <PanelWithInfo header={'Sort Order for: ' + friendlyName} infoBody={infoBody}>
         <DualListBoxEditor
           AvailableValues={this.state.ColumnValues}
-          cssClassName={cssClassName}
           SelectedValues={this.state.SelectedValues}
           HeaderAvailable="Column Values"
           HeaderSelected="Custom Sort Order"

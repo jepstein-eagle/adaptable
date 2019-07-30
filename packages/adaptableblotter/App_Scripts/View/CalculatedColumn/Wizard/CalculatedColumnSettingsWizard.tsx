@@ -27,7 +27,7 @@ export class CalculatedColumnSettingsWizard
   }
   render(): any {
     return (
-      <WizardPanel header="Calculated Column Settings">
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center">
           <Text>Column Name</Text>
 

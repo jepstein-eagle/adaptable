@@ -44,10 +44,8 @@ export class PercentBarValuesWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-s';
-
     return (
-      <WizardPanel header="Values">
+      <WizardPanel>
         <Panel header={'Minimum Value'} marginTop={2}>
           <Flex flexDirection="row" alignItems="center">
             <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
@@ -71,7 +69,6 @@ export class PercentBarValuesWizard
                 Another Column Value
               </Radio>
               <AdaptablePopover
-                cssClassName={cssClassName}
                 headerText={'Percent Bar: Minimum Value'}
                 bodyText={[
                   'The minimum value of the column (can be minus).  Defaults to the currenty smallest value in the column.  If the column only contains positive numbers use 0.  Additionally, you can set the value to be that in another column.',
@@ -94,7 +91,6 @@ export class PercentBarValuesWizard
                 />
               ) : (
                 <ColumnSelector
-                  cssClassName={cssClassName}
                   SelectedColumnIds={[this.state.MinValueColumnId]}
                   ColumnList={this.props.Columns}
                   onColumnChange={columns => this.onColumnMinValueSelectedChanged(columns)}
@@ -127,7 +123,6 @@ export class PercentBarValuesWizard
                 Another Column Value
               </Radio>
               <AdaptablePopover
-                cssClassName={cssClassName}
                 headerText={'Percent Bar: Maximum Value'}
                 bodyText={[
                   'The maximum value of the bar.  Defaults to the currently largest value in the column.  Additionally, you can set the value to be that in another column.',
@@ -151,7 +146,6 @@ export class PercentBarValuesWizard
                 />
               ) : (
                 <ColumnSelector
-                  cssClassName={cssClassName}
                   SelectedColumnIds={[this.state.MaxValueColumnId]}
                   ColumnList={this.props.Columns}
                   onColumnChange={columns => this.onColumnMaxValueSelectedChanged(columns)}

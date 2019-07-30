@@ -9,7 +9,6 @@ import { AdaptableBlotterOptions } from '../../../BlotterOptions/AdaptableBlotte
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ColumnFilterHelper } from '../../../Utilities/Helpers/ColumnFilterHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../../UIHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { PanelWithButton } from '../Panels/PanelWithButton';
@@ -33,9 +32,6 @@ interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlot
 export interface AboutBlotterState {
   // General
   ShowGridProperties: boolean;
-
-  cssClassName: string;
-
   //  Options Minimised
   IsBaseOptionsMinimised: boolean;
   IsContainerOptionsMinimised: boolean;
@@ -55,7 +51,6 @@ export class AdaptableBlotterAbout extends React.Component<
     super(props);
     this.state = {
       ShowGridProperties: true,
-      cssClassName: StyleConstants.AB_STYLE,
       IsBaseOptionsMinimised: true,
       IsContainerOptionsMinimised: true,
       IsAuditOptionsMinimised: true,
@@ -84,66 +79,52 @@ export class AdaptableBlotterAbout extends React.Component<
     ];
 
     let gridProperties = this.CreateGridInfo(gridPropertiesColItems).map((x, index) => {
-      return <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />;
+      return <AdaptableObjectRow key={index} colItems={x} />;
     });
 
     let baseBlotterOptions = this.CreateBaseOptionsInfo(blotterOptionsColItems).map((x, index) => {
-      return <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />;
+      return <AdaptableObjectRow key={index} colItems={x} />;
     });
 
     let containerBlotterOptions = this.CreateContainerOptionsInfo(blotterOptionsColItems).map(
       (x, index) => {
-        return (
-          <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />
-        );
+        return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
     let auditBlotterOptions = this.CreateAuditOptionsInfo(blotterOptionsColItems).map(
       (x, index) => {
-        return (
-          <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />
-        );
+        return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
     let configServerBlotterOptions = this.CreateConfigServerOptionsInfo(blotterOptionsColItems).map(
       (x, index) => {
-        return (
-          <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />
-        );
+        return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
     let queryBlotterOptions = this.CreateQueryOptionsInfo(blotterOptionsColItems).map(
       (x, index) => {
-        return (
-          <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />
-        );
+        return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
     let layoutBlotterOptions = this.CreateLayoutOptionsInfo(blotterOptionsColItems).map(
       (x, index) => {
-        return (
-          <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />
-        );
+        return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
     let filterBlotterOptions = this.CreateFilterOptionsInfo(blotterOptionsColItems).map(
       (x, index) => {
-        return (
-          <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />
-        );
+        return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
     let generalBlotterOptions = this.CreateGeneralOptionsInfo(blotterOptionsColItems).map(
       (x, index) => {
-        return (
-          <AdaptableObjectRow cssClassName={this.state.cssClassName} key={index} colItems={x} />
-        );
+        return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
@@ -287,13 +268,11 @@ export class AdaptableBlotterAbout extends React.Component<
       <Dialog
         isOpen={this.props.showAbout}
         onDismiss={this.props.onClose}
-        className={this.state.cssClassName + StyleConstants.BASE}
         style={{ minWidth: '35vw' }}
         showCloseButton={false}
       >
         <Flex flexDirection="column" style={{ height: '100%' }}>
           <PanelWithImage
-            cssClassName={this.state.cssClassName}
             header={'About'}
             variant="primary"
             glyphicon={'info-sign'}
@@ -320,7 +299,6 @@ export class AdaptableBlotterAbout extends React.Component<
             {this.state.ShowGridProperties ? (
               <div>
                 <AdaptableObjectCollection
-                  cssClassName={this.state.cssClassName}
                   colItems={gridPropertiesColItems}
                   items={gridProperties}
                 />
@@ -330,12 +308,10 @@ export class AdaptableBlotterAbout extends React.Component<
                 <PanelWithButton
                   variant="default"
                   headerText={'Base Options'}
-                  cssClassName={this.state.cssClassName}
                   button={showBaseOptionsButton}
                 >
                   {this.state.IsBaseOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      cssClassName={this.state.cssClassName}
                       colItems={blotterOptionsColItems}
                       items={baseBlotterOptions}
                     />
@@ -345,12 +321,10 @@ export class AdaptableBlotterAbout extends React.Component<
                 <PanelWithButton
                   variant="default"
                   headerText={'Container Options'}
-                  cssClassName={this.state.cssClassName}
                   button={showContainerOptionsButton}
                 >
                   {this.state.IsContainerOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      cssClassName={this.state.cssClassName}
                       colItems={blotterOptionsColItems}
                       items={containerBlotterOptions}
                     />
@@ -359,12 +333,10 @@ export class AdaptableBlotterAbout extends React.Component<
                 <PanelWithButton
                   variant="default"
                   headerText={'Audit Options'}
-                  cssClassName={this.state.cssClassName}
                   button={showAuditOptionsButton}
                 >
                   {this.state.IsAuditOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      cssClassName={this.state.cssClassName}
                       colItems={blotterOptionsColItems}
                       items={auditBlotterOptions}
                     />
@@ -373,12 +345,10 @@ export class AdaptableBlotterAbout extends React.Component<
                 <PanelWithButton
                   variant="default"
                   headerText={'Config Server Options'}
-                  cssClassName={this.state.cssClassName}
                   button={showConfigServerOptionsButton}
                 >
                   {this.state.IsConfigServerOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      cssClassName={this.state.cssClassName}
                       colItems={blotterOptionsColItems}
                       items={configServerBlotterOptions}
                     />
@@ -387,12 +357,10 @@ export class AdaptableBlotterAbout extends React.Component<
                 <PanelWithButton
                   variant="default"
                   headerText={'Query Options'}
-                  cssClassName={this.state.cssClassName}
                   button={showQueryOptionsButton}
                 >
                   {this.state.IsQueryOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      cssClassName={this.state.cssClassName}
                       colItems={blotterOptionsColItems}
                       items={queryBlotterOptions}
                     />
@@ -401,12 +369,10 @@ export class AdaptableBlotterAbout extends React.Component<
                 <PanelWithButton
                   variant="default"
                   headerText={'Layout Options'}
-                  cssClassName={this.state.cssClassName}
                   button={showLayoutOptionsButton}
                 >
                   {this.state.IsLayoutOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      cssClassName={this.state.cssClassName}
                       colItems={blotterOptionsColItems}
                       items={layoutBlotterOptions}
                     />
@@ -415,12 +381,10 @@ export class AdaptableBlotterAbout extends React.Component<
                 <PanelWithButton
                   variant="default"
                   headerText={'Filter Options'}
-                  cssClassName={this.state.cssClassName}
                   button={showFilterOptionsButton}
                 >
                   {this.state.IsFilterOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      cssClassName={this.state.cssClassName}
                       colItems={blotterOptionsColItems}
                       items={filterBlotterOptions}
                     />
@@ -429,12 +393,10 @@ export class AdaptableBlotterAbout extends React.Component<
                 <PanelWithButton
                   variant="default"
                   headerText={'General Options'}
-                  cssClassName={this.state.cssClassName}
                   button={showGeneralOptionsButton}
                 >
                   {this.state.IsGeneralOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      cssClassName={this.state.cssClassName}
                       colItems={blotterOptionsColItems}
                       items={generalBlotterOptions}
                     />
@@ -450,14 +412,7 @@ export class AdaptableBlotterAbout extends React.Component<
             padding={2}
             backgroundColor="secondarybackground"
           >
-            <SimpleButton
-              className={
-                this.state.cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON
-              }
-              onClick={() => this.props.onClose()}
-            >
-              Close
-            </SimpleButton>
+            <SimpleButton onClick={() => this.props.onClose()}>Close</SimpleButton>
           </Flex>
         </Flex>
       </Dialog>
@@ -875,13 +830,7 @@ export class AdaptableBlotterAbout extends React.Component<
     rowColItems[0].Content = item1;
     rowColItems[1].Content = item2;
     if (item3) {
-      let infoButton = (
-        <AdaptablePopover
-          cssClassName={this.state.cssClassName}
-          headerText={null}
-          bodyText={[item3]}
-        />
-      );
+      let infoButton = <AdaptablePopover headerText={null} bodyText={[item3]} />;
       rowColItems[2].Content = infoButton;
     }
     return rowColItems;

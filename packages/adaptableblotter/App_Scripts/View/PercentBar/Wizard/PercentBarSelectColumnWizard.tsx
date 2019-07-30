@@ -31,12 +31,9 @@ export class PercentBarSelectColumnWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-selectcolumn';
-
     return (
-      <WizardPanel header="Select a Column">
+      <WizardPanel>
         <ColumnSelector
-          cssClassName={cssClassName}
           SelectedColumnIds={[this.state.ColumnId]}
           ColumnList={ColumnHelper.getNumericColumns(this.props.Columns)}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}

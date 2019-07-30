@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -11,7 +10,6 @@ import { Flex, Box } from 'rebass';
 import Dialog from '../../components/Dialog';
 import SimpleButton from '../../components/SimpleButton';
 import Panel from '../../components/Panel';
-import WizardPanel from '../../components/WizardPanel';
 
 export interface IWizardStepInfo {
   StepName: string;
@@ -27,7 +25,6 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
   StepStartIndex?: number;
   FriendlyName?: string;
   ModalContainer: HTMLElement;
-  cssClassName: string;
   canFinishWizard: Function;
   Blotter: IAdaptableBlotter;
   Columns: Array<IColumn>;
@@ -83,7 +80,6 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
   }
 
   render() {
-    let cssClassName: string = StyleConstants.AB_STYLE;
     let wizardStepNames: string[] = ArrayExtensions.RetrieveDistinct(
       this.props.Steps.map(x => {
         return x.StepName;
@@ -95,16 +91,13 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         modal
         isOpen={true}
         onDismiss={() => (this.props.onHide ? this.props.onHide() : null)}
-        className={cssClassName + StyleConstants.BASE}
       >
         <Flex
           flexDirection="column"
           style={{ height: '100%', width: '70vw', maxWidth: 800, maxHeight: '80vh' }}
-          className={cssClassName + StyleConstants.WIZARD_BASE}
         >
           <Panel
             header={this.props.FriendlyName}
-            className={cssClassName + StyleConstants.WIZARD_HEADER}
             border="none"
             borderRadius="none"
             variant="primary"
@@ -117,11 +110,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               onStepButtonClicked={s => this.onStepButtonClicked(s)}
             />
           </Panel>
-          <Flex
-            style={{ flex: 1 }}
-            flexDirection="column"
-            className={cssClassName + StyleConstants.WIZARD_BODY}
-          >
+          <Flex style={{ flex: 1 }} flexDirection="column">
             {this.state.ActiveState}
           </Flex>
           <Flex flexDirection="row" padding={2} backgroundColor="secondarybackground">
@@ -243,7 +232,6 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       Data: this.props.Data,
       UpdateGoBackState: () => this.ForceUpdateGoBackState(),
       Blotter: this.props.Blotter,
-      cssClassName: this.props.cssClassName,
       Columns: this.props.Columns,
     });
   }

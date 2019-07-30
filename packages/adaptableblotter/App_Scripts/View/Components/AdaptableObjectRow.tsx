@@ -1,13 +1,12 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import { IColItem } from '../UIInterfaces';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { Flex, Text, Box } from 'rebass';
 import styled from 'styled-components';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
   colItems: IColItem[];
-  cssClassName: string;
+  cssClassName?: string;
   fontSize?: string;
   onClick?: (e: React.SyntheticEvent) => void;
   style?: React.CSSProperties;
@@ -26,8 +25,6 @@ const Row = styled.div`
 
 export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps, {}> {
   render(): any {
-    let cssClassName = this.props.cssClassName + StyleConstants.LIST_GROUP_ITEM;
-
     let colItems = this.props.colItems.map((colItem: IColItem, index: number) => {
       return (
         <Text
@@ -43,7 +40,7 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
     });
 
     return (
-      <Row className={cssClassName} onClick={this.props.onClick} style={this.props.style}>
+      <Row onClick={this.props.onClick} style={this.props.style}>
         <Box padding={2} className="list-group-item">
           <Flex
             alignItems="center"

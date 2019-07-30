@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
 
 export class ButtonEdit extends React.Component<SimpleButtonProps, {}> {

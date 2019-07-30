@@ -17,7 +17,6 @@ export interface AdaptableWizardStep {
 export interface AdaptableWizardStepProps<T> {
   Data?: T;
   UpdateGoBackState?(): void;
-  cssClassName?: string;
   Blotter?: IAdaptableBlotter;
   Columns?: IColumn[];
 }
@@ -47,7 +46,6 @@ export interface AdaptableWizardProps<View> extends React.ClassAttributes<View> 
   onCloseWizard: () => void;
   onFinishWizard: () => void;
   ModalContainer: HTMLElement;
-  cssClassName?: string;
   canFinishWizard: Function;
 }
 

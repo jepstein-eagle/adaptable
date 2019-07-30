@@ -13,7 +13,6 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { Visibility, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
@@ -35,9 +34,6 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
   render() {
-    let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD;
-    let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE;
-
     // this logic is repeated from Home Toolbar where we get the Title  - perhaps put it one place?
     let blotterName = this.props.DashboardState.HomeToolbarTitle;
     if (StringExtensions.IsNullOrEmpty(blotterName)) {
@@ -70,7 +66,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             SystemFilters: this.props.SystemFilters,
             ColorPalette: this.props.ColorPalette,
             ColumnSorts: this.props.ColumnSorts,
-            cssClassName: cssClassName,
             AccessLevel: accessLevel,
           });
           return (
@@ -90,14 +85,13 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     let homeToolbarElement = (
       <Box key={'home'} marginTop={1} marginRight={1} className="ab-Dashboard__container">
         {React.createElement(homeToolbar, {
-          cssClassName: cssClassName,
           Blotter: this.props.Blotter,
         })}
       </Box>
     );
 
     return (
-      <Box padding={1} paddingTop={0} className={join(cssBaseClassName, 'ab-Dashboard')}>
+      <Box padding={1} paddingTop={0}>
         {this.props.DashboardState.DashboardVisibility != Visibility.Hidden && (
           <div className="ab_no_margin">
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (

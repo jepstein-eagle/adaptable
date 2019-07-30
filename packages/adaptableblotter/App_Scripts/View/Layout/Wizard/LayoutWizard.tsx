@@ -19,11 +19,10 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
   render() {
     let layouts: Layout[] = this.props.ConfigEntities as Layout[];
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.LayoutStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[

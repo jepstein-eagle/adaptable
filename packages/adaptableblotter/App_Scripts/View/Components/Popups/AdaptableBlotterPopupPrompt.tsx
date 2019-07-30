@@ -1,6 +1,4 @@
 import * as React from 'react';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
@@ -38,7 +36,6 @@ export class AdaptableBlotterPopupPrompt extends React.Component<
       this.props.AdaptableBlotter.blotterOptions,
       document
     );
-    let cssClassName: string = StyleConstants.POPUP_PROMPT;
 
     return (
       this.props.ShowPopup && (
@@ -46,7 +43,6 @@ export class AdaptableBlotterPopupPrompt extends React.Component<
           modal
           isOpen={this.props.ShowPopup}
           onDismiss={this.props.onClose}
-          className={cssClassName}
           showCloseButton={false}
           style={{ minHeight: 'auto', maxWidth: '50%' }}
         >

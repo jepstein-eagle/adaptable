@@ -17,7 +17,6 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
   onColumnValueChange: (columnvalue: any) => void;
   Blotter: IAdaptableBlotter;
   AllowNew?: boolean; // defaults to true if not provided
-  bsSize?: 'large' | 'lg' | 'small' | 'sm';
   cssClassName?: string;
   style?: React.CSSProperties;
   newLabel?: string;

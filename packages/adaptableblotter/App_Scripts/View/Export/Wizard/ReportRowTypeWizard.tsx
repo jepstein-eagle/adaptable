@@ -33,9 +33,8 @@ export class ReportRowTypeWizard
     };
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + '-ReportRows';
     return (
-      <WizardPanel header="Select Rows for the Report">
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center">
           <Radio
             value="All"
@@ -46,7 +45,6 @@ export class ReportRowTypeWizard
             All Rows in the Data Source
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Report: All Rows'}
             bodyText={[
               'All rows in the datasource will be included in the report, whether visible or not at time of export.',
@@ -63,7 +61,6 @@ export class ReportRowTypeWizard
             Visible Rows Only (at time that report is run)
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Report: Visible Rows'}
             bodyText={[
               'Only rows that are visible at the time the Report is exported will be included in the Export.',
@@ -80,7 +77,6 @@ export class ReportRowTypeWizard
             By Query - built by you in next step
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Report: Bespoke Rows'}
             bodyText={['Only the rows which match the query will be exported (visible or not).']}
           />

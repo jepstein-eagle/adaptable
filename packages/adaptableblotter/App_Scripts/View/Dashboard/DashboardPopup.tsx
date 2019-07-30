@@ -62,8 +62,6 @@ class DashboardPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__home';
-
     let selectedValues: string[] = [];
     this.props.DashboardState.VisibleButtons.forEach(x => {
       let menuItem = this.props.MenuState.MainMenuItems.find(m => m.StrategyId == x);
@@ -126,9 +124,8 @@ class DashboardPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <div>
         <PanelWithButton
-          cssClassName={cssClassName}
           headerText="Dashboard Configuration"
           bodyProps={{ padding: 0, style: { display: 'flex', flexDirection: 'column' } }}
           glyphicon={StrategyConstants.DashboardGlyph}
@@ -169,7 +166,6 @@ class DashboardPopupComponent extends React.Component<
             {this.state.DashboardConfigView == DashboardConfigView.Buttons && (
               <DualListBoxEditor
                 AvailableValues={availableValues}
-                cssClassName={cssClassName}
                 SelectedValues={selectedValues}
                 HeaderAvailable="Hidden Function Buttons"
                 HeaderSelected="Visible Function Buttons"
@@ -180,7 +176,6 @@ class DashboardPopupComponent extends React.Component<
             {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
               <DualListBoxEditor
                 AvailableValues={availableToolbarNames}
-                cssClassName={cssClassName}
                 SelectedValues={visibleToolbarNames}
                 HeaderAvailable="Available Toolbars"
                 HeaderSelected="Visible Toolbars"

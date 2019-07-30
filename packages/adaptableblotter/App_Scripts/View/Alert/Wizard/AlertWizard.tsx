@@ -15,26 +15,25 @@ export interface AlertWizardProps
 export class AlertWizard extends React.Component<AlertWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.AlertStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: <AlertSelectColumnWizard />,
             },
             {
-              StepName: 'Rules',
+              StepName: 'Alert Rules',
               Index: 1,
               Element: <AlertRulesWizard />,
             },
             {
-              StepName: 'Type',
+              StepName: 'Message Type',
               Index: 2,
               Element: <AlertTypeWizard />,
             },

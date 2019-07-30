@@ -20,8 +20,6 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       {
         Key: 'Column',
@@ -35,12 +33,11 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.FormatColumnStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

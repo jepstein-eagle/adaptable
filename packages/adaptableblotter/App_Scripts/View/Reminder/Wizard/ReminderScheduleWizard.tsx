@@ -43,8 +43,6 @@ export class ReminderScheduleWizard
     };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-Schedule';
-
     let hours: any[] = [];
     let i: number;
     for (i = 0; i < 24; i++) {
@@ -64,8 +62,8 @@ export class ReminderScheduleWizard
     }
 
     return (
-      <div className={cssClassName}>
-        <WizardPanel header="Schedule Reminder">
+      <div>
+        <WizardPanel>
           <Flex alignItems="center" flexDirection="row">
             <Text style={{ flex: 1 }}>Hour</Text>
 
@@ -119,7 +117,6 @@ export class ReminderScheduleWizard
               <div style={{ flex: 1 }} />
               <Flex padding={2} style={{ flex: 6 }} flexDirection="column">
                 <Checkbox
-                  className={cssClassName + '__checkbox'}
                   value={DayOfWeek.Monday}
                   checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Monday)}
                   onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
@@ -128,7 +125,6 @@ export class ReminderScheduleWizard
                 </Checkbox>
 
                 <Checkbox
-                  className={cssClassName + '__checkbox'}
                   value={DayOfWeek.Tuesday}
                   checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Tuesday)}
                   onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
@@ -137,7 +133,6 @@ export class ReminderScheduleWizard
                 </Checkbox>
 
                 <Checkbox
-                  className={cssClassName + '__checkbox'}
                   value={DayOfWeek.Wednesday}
                   checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Wednesday)}
                   onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
@@ -146,7 +141,6 @@ export class ReminderScheduleWizard
                 </Checkbox>
 
                 <Checkbox
-                  className={cssClassName + '__checkbox'}
                   value={DayOfWeek.Thursday}
                   checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Thursday)}
                   onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
@@ -155,7 +149,6 @@ export class ReminderScheduleWizard
                 </Checkbox>
 
                 <Checkbox
-                  className={cssClassName + '__checkbox'}
                   value={DayOfWeek.Friday}
                   checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Friday)}
                   onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
@@ -164,7 +157,6 @@ export class ReminderScheduleWizard
                 </Checkbox>
 
                 <Checkbox
-                  className={cssClassName + '__checkbox'}
                   value={DayOfWeek.Saturday}
                   checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Saturday)}
                   onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
@@ -173,7 +165,6 @@ export class ReminderScheduleWizard
                 </Checkbox>
 
                 <Checkbox
-                  className={cssClassName + '__checkbox'}
                   value={DayOfWeek.Sunday}
                   checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Sunday)}
                   onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}

@@ -31,11 +31,9 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-scope';
-
     return (
       <>
-        <WizardPanel header="Select The Type of the Alert" border="none" style={{ height: 'auto' }}>
+        <WizardPanel border="none" style={{ height: 'auto' }}>
           <Box>
             <Radio
               value="Info"
@@ -76,8 +74,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
               Error
             </Radio>
           </Box>
-        </WizardPanel>
-        <WizardPanel header="Alert Details" border="none" style={{ height: 'auto' }}>
+
           <Checkbox
             className={cssClassName + '__checkbox'}
             checked={this.state.ShowAsPopup == true}

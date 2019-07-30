@@ -42,7 +42,6 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
 
     let buttons: any = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
         editClick={() => this.props.onEdit(layout)}
@@ -55,6 +54,6 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
 
     colItems[3].Content = buttons;
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

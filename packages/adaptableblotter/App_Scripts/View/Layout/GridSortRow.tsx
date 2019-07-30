@@ -30,7 +30,6 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
 
     colItems[0].Content = (
       <ColumnSelector
-        cssClassName={this.props.cssClassName}
         SelectedColumnIds={[this.props.ColumnSort.Column]}
         ColumnList={this.props.Columns.filter(c => c.Sortable)}
         onColumnChange={columns => this.onColumnSelectedChanged(columns)}
@@ -63,7 +62,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
 
     colItems[2].Content = deleteButton;
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   private onColumnSelectedChanged(columns: IColumn[]): any {

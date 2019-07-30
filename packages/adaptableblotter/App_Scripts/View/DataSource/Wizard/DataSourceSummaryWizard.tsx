@@ -17,8 +17,6 @@ export class DataSourceSummaryWizard extends React.Component<DataSourceSummaryWi
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       { Key: 'Description', Value: this.props.Data.Description },
@@ -26,12 +24,11 @@ export class DataSourceSummaryWizard extends React.Component<DataSourceSummaryWi
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.DataSourceStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

@@ -44,8 +44,6 @@ interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPo
 
 class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProps, {}> {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__flashingcells';
-
     let infoBody: any[] = [
       'Make numeric cells flash briefly as their value changes',
       <br />,
@@ -100,7 +98,6 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     let allFlashingCells = allPotentialFlashingCells.map((flashingcell: FlashingCell, index) => {
       return (
         <FlashingCellEntityRow
-          cssClassName={cssClassName}
           AdaptableBlotterObject={flashingcell}
           key={flashingcell.ColumnId}
           Columns={this.props.Columns}
@@ -140,10 +137,9 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithImage
           variant="primary"
-          cssClassName={cssClassName}
           header={StrategyConstants.FlashingCellsStrategyName}
           glyphicon={StrategyConstants.FlashingCellGlyph}
           infoBody={infoBody}
@@ -151,7 +147,6 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         >
           {setAllOption}
           <AdaptableObjectCollection
-            cssClassName={cssClassName}
             colItems={colItems}
             items={allFlashingCells}
             reducedPanel={true}

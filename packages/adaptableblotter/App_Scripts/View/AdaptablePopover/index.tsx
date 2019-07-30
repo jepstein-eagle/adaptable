@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
 import { ButtonInfo } from '../Components/Buttons/ButtonInfo';
 
@@ -18,7 +17,6 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
   hideEvent?: string;
   bodyText: any[];
   MessageType?: MessageType;
-  cssClassName?: string;
   triggerAction?: string;
   useButton?: boolean;
   tooltipText?: string;
@@ -27,8 +25,6 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
 
 export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}> {
   render() {
-    let cssClassName = (this.props.cssClassName || '') + StyleConstants.INFO_BUTTON;
-
     let messageType: MessageType =
       this.props.MessageType != null ? this.props.MessageType : MessageType.Info;
 
@@ -67,7 +63,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     };
 
     return (
-      <Flex alignItems="center" className={cssClassName}>
+      <Flex alignItems="center">
         {icons.check}
         <OverlayTrigger
           showTriangle

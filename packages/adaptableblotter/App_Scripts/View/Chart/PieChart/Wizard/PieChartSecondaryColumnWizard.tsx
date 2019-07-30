@@ -37,7 +37,6 @@ export class PieChartSecondaryColumnWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
     let secondaryColumnDataType: DataType = StringExtensions.IsNotNullOrEmpty(
       this.state.SecondaryColumnId
     )
@@ -45,7 +44,7 @@ export class PieChartSecondaryColumnWizard
       : DataType.Unknown;
 
     return (
-      <WizardPanel header="Secondary Column">
+      <WizardPanel>
         <HelpBlock>
           <p>Select a Secondary Column for the Pie Chart (Note: this is optional).</p>
         </HelpBlock>
@@ -55,7 +54,6 @@ export class PieChartSecondaryColumnWizard
 
           <Flex flex={7}>
             <ColumnSelector
-              cssClassName={cssClassName}
               placeHolder={'Choose a column (optional)'}
               SelectedColumnIds={[this.state.SecondaryColumnId]}
               ColumnList={this.props.Columns}

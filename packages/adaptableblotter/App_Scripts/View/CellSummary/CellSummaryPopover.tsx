@@ -3,7 +3,6 @@ import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummm
 import { CellSummaryDetails } from './CellSummaryDetails';
 
 export interface CellSummaryPopoverProps extends React.ClassAttributes<CellSummaryPopover> {
-  cssClassName: string;
   CellSummary: ICellSummmary;
 }
 

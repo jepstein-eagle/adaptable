@@ -30,7 +30,7 @@ export class AlertSelectQueryWizard
 
   render(): any {
     return (
-      <WizardPanel header="Alert Query" bsStyle="primary">
+      <WizardPanel>
         <HelpBlock>
           A Query is used if the alert is dependent on other values in the row.
           <br />

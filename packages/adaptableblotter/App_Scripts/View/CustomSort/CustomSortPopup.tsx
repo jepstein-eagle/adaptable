@@ -23,7 +23,6 @@ import {
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -63,9 +62,6 @@ class CustomSortPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__customsort';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__customsort';
-
     let infoBody: any[] = [
       'Custom Sorts enable you to create your own sort orders for columns where the default (alphabetical ascending or descending) is insufficient.',
       <br />,
@@ -87,7 +83,6 @@ class CustomSortPopupComponent extends React.Component<
     let customSorts = this.props.CustomSorts.map((customSort: CustomSort, index) => {
       return (
         <CustomSortEntityRow
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={customSort}
           key={customSort.Uuid}
@@ -105,7 +100,6 @@ class CustomSortPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create Custom Sort"
         AccessLevel={this.props.AccessLevel}
@@ -113,9 +107,8 @@ class CustomSortPopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          cssClassName={cssClassName}
           headerText={StrategyConstants.CustomSortStrategyName}
           infoBody={infoBody}
           button={newButton}
@@ -123,11 +116,7 @@ class CustomSortPopupComponent extends React.Component<
           glyphicon={StrategyConstants.CustomSortGlyph}
         >
           {customSorts.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={customSorts}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={customSorts} />
           ) : (
             <EmptyContent>
               Click 'New' to create a bespoke sort order for a selected column.
@@ -136,7 +125,6 @@ class CustomSortPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableBlotterObject && (
             <CustomSortWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as CustomSort}
               ConfigEntities={this.props.CustomSorts}
               ModalContainer={this.props.ModalContainer}

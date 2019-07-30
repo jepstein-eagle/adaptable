@@ -6,7 +6,6 @@ import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
 
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import Checkbox from '../../components/CheckBox';
 import Panel from '../../components/Panel';
@@ -25,7 +24,6 @@ export interface StyleComponentProps extends React.ClassAttributes<StyleComponen
   Style: IStyle;
   UpdateStyle: (style: IStyle) => void;
   CanUseClassName: boolean;
-  cssClassName: string;
 }
 
 export interface StyleComponentState {
@@ -43,7 +41,6 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.STYLE_COMPONENT;
     let optionFontSizes = EnumExtensions.getNames(FontSize).map(enumName => {
       return {
         value: enumName,
@@ -184,7 +181,6 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                           options={optionFontSizes}
                         />{' '}
                         <AdaptablePopover
-                          cssClassName={cssClassName}
                           headerText={'Conditional Style: Font Size'}
                           bodyText={[
                             "Select the size of the font for the Conditional Style.  The default is 'Medium'.",

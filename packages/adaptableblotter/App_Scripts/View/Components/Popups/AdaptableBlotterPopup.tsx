@@ -4,7 +4,6 @@ import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
@@ -29,8 +28,6 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
 
 export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopupProps, {}> {
   render() {
-    let cssClassName: string = StyleConstants.AB_STYLE;
-
     let modalContainer: HTMLElement = UIHelper.getModalContainer(
       this.props.Blotter.blotterOptions,
       document
@@ -65,7 +62,6 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         ColorPalette: this.props.Blotter.adaptableBlotterStore.TheStore.getState().UserInterface
           .ColorPalette,
         ColumnSorts: this.props.Blotter.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts,
-        cssClassName: cssClassName + StyleConstants.MODAL_BODY,
         AccessLevel: accessLevel,
         Blotter: this.props.Blotter,
       };
@@ -77,7 +73,6 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       <Dialog
         isOpen={this.props.showModal}
         onDismiss={this.props.onHide}
-        className={cssClassName + StyleConstants.BASE}
         showCloseButton={false}
         modal
         padding={0}
@@ -92,12 +87,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
             maxWidth: 800,
           }}
         >
-          <Flex
-            flexDirection="column"
-            className={cssClassName + StyleConstants.MODAL_BODY}
-            padding={0}
-            flex={1}
-          >
+          <Flex flexDirection="column" padding={0} flex={1}>
             <Flex flexDirection="column" flex={1}>
               <Flex
                 flexDirection="column"

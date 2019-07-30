@@ -48,7 +48,6 @@ export interface ExpressionBuilderConditionSelectorProps
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
-  cssClassName: string;
   Blotter: IAdaptableBlotter;
 }
 
@@ -280,7 +279,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__conditionselector';
     let column = StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)
       ? null
       : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
@@ -324,7 +322,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
     let clearButton = (
       <SimpleButton
-        className={this.props.cssClassName + ' pull-right '}
         onClick={() => this.onSelectedColumnChanged()}
         disabled={
           this.props.ExpressionMode == ExpressionMode.SingleColumn ||
@@ -346,7 +343,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     const thirdSelected = this.state.SelectedTab == QueryTab.QueryRange;
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
         headerText={panelHeader}
         variant="default"
         button={clearButton}
@@ -379,7 +375,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
               <Waiting WaitingMessage="Retrieving Column Values..." />
             ) : (
               <ColumnSelector
-                cssClassName={cssClassName}
                 SelectedColumnIds={[this.props.SelectedColumnId]}
                 ColumnList={this.props.ColumnsList}
                 onColumnChange={columns => this.onColumnSelectChange(columns)}
@@ -397,7 +392,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                       <Waiting WaitingMessage="Retrieving Column Values..." />
                     ) : (
                       <ExpressionBuilderColumnValues
-                        cssClassName={cssClassName}
                         ColumnValues={this.state.ColumnRawValueDisplayValuePairs}
                         SelectedValues={this.state.SelectedColumnDisplayValues}
                         onColumnValuesChange={selectedValues =>
@@ -440,7 +434,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                           <Waiting WaitingMessage="Retrieving Column Values..." />
                         ) : (
                           <ExpressionBuilderColumnValues
-                            cssClassName={cssClassName}
                             ColumnValues={this.state.ColumnRawValueDisplayValuePairs}
                             SelectedValues={this.state.SelectedColumnDisplayValues}
                             onColumnValuesChange={selectedValues =>
@@ -453,7 +446,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
                     {secondSelected ? (
                       <ExpressionBuilderUserFilter
-                        cssClassName={cssClassName}
                         AvailableSystemFilterNames={availableSystemFilterNames}
                         AvailableUserFilterNames={availableUserFilterNames}
                         AvailableNamedFilterNames={availableNamedFilterNames}
@@ -466,7 +458,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
                     {thirdSelected ? (
                       <ExpressionBuilderRanges
-                        cssClassName={cssClassName}
                         SelectedColumn={selectedColumn}
                         Ranges={this.state.SelectedColumnRanges}
                         Columns={this.props.ColumnsList}

@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { ButtonBase, ButtonProps, ButtonBaseProps } from './ButtonBase';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 export class ButtonDashboard extends React.Component<ButtonBaseProps, {}> {
   render() {
     return (
       <ButtonBase
-        bsStyle={this.props.bsStyle}
-        bsSize={this.props.bsSize}
         glyph={this.props.glyph}
         onClick={() => this.props.onClick()}
         overrideDisableButton={this.props.overrideDisableButton}
@@ -17,7 +14,6 @@ export class ButtonDashboard extends React.Component<ButtonBaseProps, {}> {
         DisplayMode={this.props.DisplayMode}
         overrideText={this.props.overrideText}
         ToolTipAndText={this.props.ToolTipAndText}
-        cssClassName={this.props.cssClassName + StyleConstants.DASHBOARD_BUTTON}
         AccessLevel={AccessLevel.Full}
         showDefaultStyle={this.props.showDefaultStyle}
       />

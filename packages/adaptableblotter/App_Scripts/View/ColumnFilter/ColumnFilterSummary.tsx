@@ -13,7 +13,6 @@ import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
@@ -37,21 +36,13 @@ export class ColumnFilterSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__columnfilter';
     let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
       c => c.ColumnId == this.props.SummarisedColumn.ColumnId
     );
     let description: string = this.getDescription(columnFilter);
     let summaryItems: any[] = [];
     summaryItems.push(
-      <b>
-        {
-          <StrategyProfile
-            cssClassName={this.props.cssClassName}
-            StrategyId={StrategyConstants.ColumnFilterStrategyId}
-          />
-        }
-      </b>
+      <b>{<StrategyProfile StrategyId={StrategyConstants.ColumnFilterStrategyId} />}</b>
     );
     summaryItems.push(description);
     summaryItems.push(
@@ -64,7 +55,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
       />
     );
 
-    return <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />;
+    return <SummaryRowItem SummaryItems={summaryItems} />;
   }
 
   getDescription(columnFilter: ColumnFilter): string {

@@ -40,10 +40,8 @@ export class DataSourceSettingsWizard
       ? null
       : 'error';
 
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     return (
-      <WizardPanel header="DataSource Definition Settings">
+      <WizardPanel>
         <Flex alignItems="center" flexDirection="row">
           <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
             Name:

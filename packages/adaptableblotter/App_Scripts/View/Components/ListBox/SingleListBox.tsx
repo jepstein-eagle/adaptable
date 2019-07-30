@@ -3,7 +3,6 @@ import * as React from 'react';
 import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 import ListGroupItem from '../../../components/List/ListGroupItem';
@@ -60,8 +59,6 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     });
   }
   render() {
-    let cssClassName: string =
-      (this.props.cssClassName || '') + StyleConstants.SINGLE_LIST_BOX + ` ${baseClassName}`;
     let itemsElements = this.state.Values.map(x => {
       let isActive: boolean;
       if (this.props.ValueMember) {

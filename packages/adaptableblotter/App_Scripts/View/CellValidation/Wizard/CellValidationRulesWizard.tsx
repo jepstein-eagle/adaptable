@@ -62,7 +62,6 @@ export class CellValidationRulesWizard
 
     let helpText: string =
       'Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).';
-    let cssClassName: string = this.props.cssClassName + '-rules';
 
     return (
       <WizardPanel>
@@ -82,7 +81,6 @@ export class CellValidationRulesWizard
             Disallow ALL edits
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Validation Rule: No Edits Allowed'}
             bodyText={['Any edit is invalid - effectively makes the column read-only.']}
           />
@@ -97,7 +95,6 @@ export class CellValidationRulesWizard
             Disallow edits where the new cell value matches rule:
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Validation Rule: Custom'}
             bodyText={['Disallow edits that match the rule defined in the dropdown below.']}
           />

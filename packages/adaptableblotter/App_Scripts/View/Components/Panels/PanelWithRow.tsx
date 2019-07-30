@@ -1,14 +1,13 @@
 import * as React from 'react';
 
 import { IColItem } from '../../UIInterfaces';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import Panel, { PanelProps } from '../../../components/Panel';
 import { Flex, Text } from 'rebass';
 
 export interface PanelWithRowProps extends PanelProps {
   // CellInfo: [string, number][]
   colItems: IColItem[];
-  cssClassName: string;
+  cssClassName?: string;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you
@@ -16,8 +15,6 @@ export interface PanelWithRowProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_TABLE_HEADER;
-
     let headerItems = this.props.colItems.map((colItem: IColItem, index) => {
       return (
         <Text
@@ -42,7 +39,7 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
     );
 
     return (
-      <div className={cssClassName} style={this.props.style}>
+      <div style={this.props.style}>
         <Panel
           bodyScroll
           header={header}

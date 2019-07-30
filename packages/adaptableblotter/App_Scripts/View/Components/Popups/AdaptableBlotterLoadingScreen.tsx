@@ -2,7 +2,6 @@ import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotte
 import * as React from 'react';
 
 import { UIHelper } from '../../UIHelper';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import Dialog from '../../../components/Dialog';
 import { Box } from 'rebass';
 
@@ -18,13 +17,6 @@ export class AdaptableBlotterLoadingScreen extends React.Component<
   {}
 > {
   render() {
-    let cssClassName: string = StyleConstants.AB_STYLE;
-
-    let modalContainer: HTMLElement = UIHelper.getModalContainer(
-      this.props.AdaptableBlotter.blotterOptions,
-      document
-    );
-
     return (
       <Dialog
         modal

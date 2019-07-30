@@ -38,18 +38,11 @@ export class LayoutColumnWizard
       <br />,
       "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically.",
     ];
-    let cssClassName: string = this.props.cssClassName + '-column';
 
     return (
-      <PanelWithInfo
-        cssClassName={cssClassName}
-        header={'Choose columns for the Layout'}
-        bsStyle="primary"
-        infoBody={infoBody}
-      >
+      <PanelWithInfo header={'Choose columns for the Layout'} infoBody={infoBody}>
         <DualListBoxEditor
           AvailableValues={this.props.Columns.map(x => x.FriendlyName)}
-          cssClassName={cssClassName}
           SelectedValues={this.state.SelectedColumns}
           HeaderAvailable="Available Columns"
           HeaderSelected="Columns in Layout"

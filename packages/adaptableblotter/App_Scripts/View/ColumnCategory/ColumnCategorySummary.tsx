@@ -17,7 +17,6 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -39,7 +38,6 @@ export class ColumnCategorySummaryComponent extends React.Component<
     this.state = UIHelper.getEmptyConfigState();
   }
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__ColumnCategory';
     let ColumnCategory: ColumnCategory = this.props.ColumnCategorys.find(lk =>
       ArrayExtensions.ContainsItem(lk.ColumnIds, this.props.SummarisedColumn.ColumnId)
     );
@@ -50,7 +48,6 @@ export class ColumnCategorySummaryComponent extends React.Component<
       ColumnCategoryRow = (
         <StrategyHeader
           key={StrategyConstants.ColumnCategoryStrategyName}
-          cssClassName={this.props.cssClassName}
           StrategyId={StrategyConstants.ColumnCategoryStrategyId}
           StrategySummary={'None'}
           onNew={() => this.onNew()}
@@ -62,13 +59,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
       ColumnCategoryRow = (
         <StrategyDetail
           key={StrategyConstants.ColumnCategoryStrategyName}
-          cssClassName={this.props.cssClassName}
-          Item1={
-            <StrategyProfile
-              cssClassName={this.props.cssClassName}
-              StrategyId={StrategyConstants.ColumnCategoryStrategyId}
-            />
-          }
+          Item1={<StrategyProfile StrategyId={StrategyConstants.ColumnCategoryStrategyId} />}
           Item2={ColumnCategory.ColumnCategoryId}
           ConfigEnity={ColumnCategory}
           showShare={this.props.TeamSharingActivated}
@@ -87,7 +78,6 @@ export class ColumnCategorySummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <ColumnCategoryWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ColumnCategory}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
