@@ -283,7 +283,7 @@ export class ListBoxFilterForm extends React.Component<
       return (
         <Dropdown
           style={ddStyle}
-          placeholder="Select a column"
+          placeholder="Select"
           disabled={availableColumns.length == 0}
           className={this.props.cssClassName}
           options={availableColumns}
