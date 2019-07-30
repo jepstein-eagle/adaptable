@@ -49,8 +49,6 @@ export class AlertApi extends ApiBase implements IAlertApi {
     this.displayAlert(alertToShow);
 
     // tmp
-    console.log(alertToShow);
-    console.log(createOpenFinNotification.toString());
     createOpenFinNotification({
       id: String(Math.random()),
       title: alertToShow.Header,
