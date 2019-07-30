@@ -1,14 +1,9 @@
 ﻿import * as React from 'react';
-import { connect, ReactNode } from 'react-redux';
+import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import {
-  OverlayTrigger,
-  Tooltip,
-  // DropdownButton,
-} from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
@@ -18,7 +13,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ButtonDashboard } from '../Components/Buttons/ButtonDashboard';
+
 import {
   Visibility,
   AccessLevel,
@@ -249,20 +244,15 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         );
         if (menuItem) {
           return (
-            <OverlayTrigger
-              key={x}
-              overlay={<Tooltip id="tooltipButton"> {menuItem.Label}</Tooltip>}
-            >
-              <SimpleButton
-                icon={menuItem.GlyphIcon}
-                className={cssClassName}
-                variant="text"
-                tooltip={menuItem.Label}
-                disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-                onClick={() => this.onClick(menuItem!)}
-                AccessLevel={AccessLevel.Full}
-              />
-            </OverlayTrigger>
+            <SimpleButton
+              icon={menuItem.GlyphIcon}
+              className={cssClassName}
+              variant="text"
+              tooltip={menuItem.Label}
+              disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
+              onClick={() => this.onClick(menuItem!)}
+              AccessLevel={AccessLevel.Full}
+            />
           );
         }
       });

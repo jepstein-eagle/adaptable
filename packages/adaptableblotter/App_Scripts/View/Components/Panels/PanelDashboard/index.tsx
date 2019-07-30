@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Glyphicon } from 'react-bootstrap';
+
 import Panel, { PanelProps } from '../../../../components/Panel';
-import * as StyleConstants from '../../../../Utilities/Constants/StyleConstants';
+
 import { ButtonClose } from '../../Buttons/ButtonClose';
 import { ButtonConfigure } from '../../Buttons/ButtonConfigure';
 import { ButtonMinimise } from '../../Buttons/ButtonMinimise';

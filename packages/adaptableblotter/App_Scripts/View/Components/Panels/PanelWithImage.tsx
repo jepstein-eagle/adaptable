@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Glyphicon } from 'react-bootstrap';
+
 import { withTheme } from 'styled-components';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
@@ -43,7 +43,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
       <Flex style={{ flex: 1 }}>
         <Flex alignItems="center">
           <Flex alignItems="center" style={headerStyle}>
-            {IconCmp ? <IconCmp /> : <Glyphicon glyph={this.props.glyphicon} />}
+            {IconCmp ? <IconCmp /> : null}
             <Box marginRight={2} />
             {this.props.header}
             <Box marginRight={3} />

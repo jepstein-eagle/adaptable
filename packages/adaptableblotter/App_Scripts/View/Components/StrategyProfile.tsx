@@ -1,8 +1,9 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { Glyphicon } from 'react-bootstrap';
+
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { Icon } from '../../components/icons';
 
 // Simple compnent which just shows the Icon and Name for any strategy
 
@@ -16,7 +17,7 @@ export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {
     let cssClassName: string = this.props.cssClassName + StyleConstants.STRATEGY_PROFILE;
     return (
       <div className={cssClassName}>
-        <Glyphicon glyph={StrategyConstants.getGhyphiconForStrategyId(this.props.StrategyId)} />{' '}
+        <Icon name={StrategyConstants.getGhyphiconForStrategyId(this.props.StrategyId)} />{' '}
         {StrategyConstants.getNameForStrategyId(this.props.StrategyId)}
       </div>
     );

@@ -14,14 +14,13 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
-import { Box, Flex } from 'rebass';
+import { Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
-import Panel from '../../../components/Panel';
+
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import Radio from '../../../components/Radio';
 import Input from '../../../components/Input';
-import { ThemeSelect } from '../../../Redux/ActionsReducers/ThemeRedux';
 
 export interface CellValidationRulesWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -61,15 +60,16 @@ export class CellValidationRulesWizard
       this.props.Columns
     );
 
-    let validationRuleHeader: string = 'Validation Rule for Column: ' + columnFriendlyName;
-
     let helpText: string =
       'Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).';
     let cssClassName: string = this.props.cssClassName + '-rules';
 
     return (
-      <WizardPanel header={validationRuleHeader}>
+      <WizardPanel>
         <HelpBlock>
+          <p>
+            Validation Rule for Column: <b>{columnFriendlyName}</b>
+          </p>
           <p>{helpText}</p>
         </HelpBlock>
         <Flex flexDirection="row" alignItems="center" marginTop={3} marginLeft={2}>

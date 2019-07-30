@@ -102,10 +102,12 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
           style={{ height: '100%', width: '70vw', maxWidth: 800, maxHeight: '80vh' }}
           className={cssClassName + StyleConstants.WIZARD_BASE}
         >
-          <WizardPanel
+          <Panel
             header={this.props.FriendlyName}
             className={cssClassName + StyleConstants.WIZARD_HEADER}
-            style={{ height: 'auto' }}
+            border="none"
+            borderRadius="none"
+            variant="primary"
           >
             <WizardLegend
               StepNames={wizardStepNames}
@@ -114,7 +116,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               CanShowAllSteps={this.canFinishWizard()}
               onStepButtonClicked={s => this.onStepButtonClicked(s)}
             />
-          </WizardPanel>
+          </Panel>
           <Flex
             style={{ flex: 1 }}
             flexDirection="column"

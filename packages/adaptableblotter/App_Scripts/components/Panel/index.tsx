@@ -5,9 +5,10 @@ import join from '../utils/join';
 
 export const baseClassName = 'ab-Panel';
 
+export interface HeaderProps extends FlexProps {}
 export type PanelProps = HTMLProps<HTMLElement> & {
   header?: ReactNode | string;
-  headerProps?: FlexProps;
+  headerProps?: HeaderProps;
   bodyProps?: BoxProps;
   bsStyle?: string;
   variant?: 'default' | 'primary';

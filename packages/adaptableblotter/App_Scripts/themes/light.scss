@@ -1,34 +1,7 @@
+
 html.ab--theme-light {
   --ab-theme-loaded: 777; // this custom variable is here to allow checking if the theme was correctly loaded by the host app
-}
 
-
-@import '../components/CheckBox/style.scss';
-@import '../components/Dialog/style.scss';
-@import '../components/Dropdown/style.scss';
-@import '../components/DropdownButton/style.scss';
-@import '../components/EmptyContent/style.scss';
-@import '../components/ErrorBox/style.scss';
-@import '../components/FieldWrap/style.scss';
-@import '../components/FormLayout/style.scss';
-@import '../components/HelpBlock/style.scss';
-@import '../components/Input/style.scss';
-@import '../components/List/ListGroup/style.scss';
-@import '../components/List/ListGroupItem/style.scss';
-@import '../components/Modal/style.scss';
-@import '../components/Panel/style.scss';
-@import '../components/SimpleButton/style.scss';
-@import '../components/Textarea/style.scss';
-@import '../View/Components/AdaptableObjectCollection//style.scss';
-@import '../View/Components/Buttons/ButtonBase/style.scss';
-@import '../View/Components/Panels/PanelDashboard/style.scss';
-@import '../View/AdaptablePopover/style.scss';
-@import '../View/Dashboard/style.scss';
-
-
-
-// dark theme
-:root {
             --ab-cmp-dropdownbutton-list__background: var(--ab-cmp-dashboardpanel_header__background);
             --ab-color-secondarybackground: #3c3c3c;
             --ab-color-textgray: rgb(167, 167, 167);
@@ -48,6 +21,5 @@ html.ab--theme-light {
     --ab-cmp-panel_header--variant-primary__color: #3c3c3c;
     --ab-color-primarybackground: #3e444c;
      --ab-cmp-simple-button--outlined__background:var(--ab-color-primarybackground);
-     --ab-dashboard__background: #232323;
-    
+     --ab-dashboard__background: #232323;   
 }

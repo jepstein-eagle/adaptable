@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 
-import { Glyphicon } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
@@ -61,7 +60,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
             }}
             value={x.Name}
           >
-            <Glyphicon glyph="folder-open" /> {x.Name}
+            <Icon name="folder-open" /> {x.Name}
           </ListGroupItem>
         );
         x.Pages.forEach((page: string) => {
@@ -76,7 +75,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
               active={this.state.SelectedPage == page}
               value={page}
             >
-              <Glyphicon glyph="cloud-download" /> {page}
+              <Icon name="cloud-download" /> {page}
             </ListGroupItem>
           );
         });
