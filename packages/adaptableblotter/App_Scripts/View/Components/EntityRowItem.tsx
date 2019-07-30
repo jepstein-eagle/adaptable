@@ -7,6 +7,6 @@ export interface EntityRowItemProps extends React.ClassAttributes<EntityRowItem>
 
 export class EntityRowItem extends React.Component<EntityRowItemProps, {}> {
   render(): any {
-    return <span style={{ fontSize: 'small' }}> {this.props.Content}</span>;
+    return <span> {this.props.Content}</span>;
   }
 }
