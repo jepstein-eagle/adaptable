@@ -10,6 +10,8 @@ import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualLis
 import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import HelpBlock from '../../../components/HelpBlock';
+import Panel from '../../../components/Panel';
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<CustomSort> {}
 export interface CustomSortValuesWizardState {
@@ -39,20 +41,14 @@ export class CustomSortValuesWizard
       this.props.Data.ColumnId,
       this.props.Columns
     );
-    let infoBody: any[] = [
-      "Create a custom sort for the '" +
-        friendlyName +
-        "' column by moving items to the 'Custom Sort Order' listbox.",
-      <br />,
-      <br />,
-      'Use the buttons on the right of the box to order items in the list as required.',
-      <br />,
-      <br />,
-      "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically.",
-    ];
 
     return (
-      <PanelWithInfo header={'Sort Order for: ' + friendlyName} infoBody={infoBody}>
+      <Panel>
+        <HelpBlock margin={1}>
+          Create a Custom Sort by moving items into the 'Custom Sort Order' listbox. The new sort
+          for the column will consist first of the items in the 'Custom Sort Order' listbox; all
+          other column values will then sort alphabetically.
+        </HelpBlock>
         <DualListBoxEditor
           AvailableValues={this.state.ColumnValues}
           SelectedValues={this.state.SelectedValues}
@@ -64,7 +60,7 @@ export class CustomSortValuesWizard
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
-      </PanelWithInfo>
+      </Panel>
     );
   }
   OnSelectedValuesChange(newValues: Array<string>) {

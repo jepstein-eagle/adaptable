@@ -23,7 +23,7 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column Type',
+              StepName: 'Column Data Type',
               Index: 0,
               Element: <ShortcutTypeWizard />,
             },

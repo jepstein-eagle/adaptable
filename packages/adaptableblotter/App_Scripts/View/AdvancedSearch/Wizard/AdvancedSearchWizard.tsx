@@ -21,7 +21,7 @@ export class AdvancedSearchWizard extends React.Component<
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 0,
               Element: (
                 <AdvancedSearchExpressionWizard

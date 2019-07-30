@@ -57,6 +57,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   render() {
+    // let cssClassName: string = this.props.cssClassName + '__home';
+    //let cssDropdownClassName: string = '__home__dropdown';
+
     const functionsGlyph: any = <Icon name={'home'} />;
     const colsGlyph: any = <Icon name={'list'} />;
     const toolbarsGlyph: any = <Icon name={'align-justify'} />;
@@ -96,7 +99,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           this.onSetColumnVisibility(col.ColumnId);
         },
         label: (
-          <div>
+          <div className="ab_home_toolbar_column_list">
             <Checkbox
               as="div"
               className="ab-dd-checkbox"
@@ -140,7 +143,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             this.onSetToolbarVisibility(toolbar, !isVisible);
           },
           label: (
-            <div key={index}>
+            <div className="ab_home_toolbar_column_list" key={index}>
               <Checkbox
                 className="ab-dd-checkbox"
                 my={0}
@@ -164,6 +167,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         variant="text"
         key={'systemstatus'}
         icon={UIHelper.getGlyphForMessageType(this.props.SystemStatus.StatusType as MessageType)}
+        //  className={cssClassName}
         style={UIHelper.getStyleForMessageType(this.props.SystemStatus.StatusType as MessageType)}
         tooltip={'Status: ' + this.props.SystemStatus.StatusMessage}
         disabled={false}
@@ -177,6 +181,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       <SimpleButton
         tooltip="About"
         icon={'info'}
+        //    className={cssClassName}
         variant="text"
         onClick={() => this.onClickAbout()}
         AccessLevel={AccessLevel.Full}
@@ -187,6 +192,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let functionsDropdown = (
       <DropdownButton
         variant="text"
+        //    className={cssDropdownClassName}
+        items={menuItems}
         tooltip="Functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
@@ -200,6 +207,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       <DropdownButton
         variant="text"
         collapseOnItemClick={false}
+        //  className={cssDropdownClassName}
         items={colItems}
         key={'dropdown-cols'}
         id={'dropdown-cols'}
@@ -214,6 +222,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       <DropdownButton
         variant="text"
         collapseOnItemClick={false}
+        //  className={cssDropdownClassName}
         key={'dropdown-toolbars'}
         id={'dropdown-toolbars'}
         columns={['label']}
@@ -237,6 +246,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           return (
             <SimpleButton
               icon={menuItem.GlyphIcon}
+              //  className={cssClassName}
               variant="text"
               tooltip={menuItem.Label}
               disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
@@ -258,6 +268,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     return (
       <PanelDashboard
+        //   className={cssClassName}
         showCloseButton={false}
         showMinimiseButton={true}
         onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}

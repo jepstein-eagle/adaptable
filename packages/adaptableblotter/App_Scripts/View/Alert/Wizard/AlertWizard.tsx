@@ -38,12 +38,12 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
               Element: <AlertTypeWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 3,
               Element: <AlertSelectQueryWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 4,
               Element: (
                 <AlertExpressionWizard

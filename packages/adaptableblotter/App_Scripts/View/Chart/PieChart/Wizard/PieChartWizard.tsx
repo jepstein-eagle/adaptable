@@ -24,12 +24,12 @@ export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Primary',
+              StepName: 'Primary Column',
               Index: 0,
               Element: <PieChartPrimaryColumnWizard />,
             },
             {
-              StepName: 'Secondary',
+              StepName: 'Secondary Column',
               Index: 1,
               Element: <PieChartSecondaryColumnWizard />,
             },

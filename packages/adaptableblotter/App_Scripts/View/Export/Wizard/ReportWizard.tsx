@@ -25,12 +25,12 @@ export class ReportWizard extends React.Component<
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: <ReportColumnTypeWizard />,
             },
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 1,
               Element: <ReportColumnChooserWizard />,
             },

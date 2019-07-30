@@ -56,7 +56,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
     });
 
     return (
-      <WizardPanel header="Style">
+      <Panel header="Style">
         {this.props.CanUseClassName && this.props.StyleClassNames.length > 0 && (
           <Checkbox
             onChange={checked => this.onShowClassNameChanged(checked)}
@@ -90,10 +90,10 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
         ) : (
           <Flex flexDirection="column">
             <Flex flex={1}>
-              <Panel header="Cell Colours" bodyProps={{ padding: 0 }}>
+              <div>
                 <HelpBlock marginTop={2}>
-                  Set the colour by ticking a checkbox and selecting a colour from the dropdown;
-                  leave unchecked to use colours from the cell's existing style.
+                  Set colours by ticking a checkbox and selecting from the dropdown; leave unchecked
+                  to use cell's existing colours.
                 </HelpBlock>
                 <Flex flexDirection="column" margin={1}>
                   <Flex flexDirection="row" alignItems="center">
@@ -136,11 +136,8 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     )}
                   </Flex>
                 </Flex>
-              </Panel>
-            </Flex>
 
-            <Flex flex={1} marginTop={2}>
-              <Panel header="Font Properties" style={{ width: '100%' }}>
+                <HelpBlock marginTop={2}>Set the font properties of the Style.</HelpBlock>
                 <Flex flexDirection="column">
                   <Checkbox
                     marginLeft={1}
@@ -190,11 +187,11 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     )}
                   </Box>
                 </Flex>
-              </Panel>
+              </div>
             </Flex>
           </Flex>
         )}
-      </WizardPanel>
+      </Panel>
     );
   }
 

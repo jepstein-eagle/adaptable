@@ -278,7 +278,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 {'\u00a0'}
               </SimpleButton>
             } //whitespace
-            headerText="Preview"
+            headerText="Preview Results"
           >
             <div style={{ overflowY: 'auto', overflowX: 'hidden' }}>{previewLists}</div>
           </PanelWithButton>

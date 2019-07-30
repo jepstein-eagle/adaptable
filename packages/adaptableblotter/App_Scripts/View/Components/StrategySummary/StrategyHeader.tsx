@@ -21,10 +21,8 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
     let summaryItems: any[] = [];
     let newButton = this.props.NewButtonDisabled ? null : (
       <ButtonNew
-        size={'xsmall'}
         onClick={() => this.props.onNew()}
-        overrideTooltip={'Create ' + this.props.NewButtonTooltip}
-        DisplayMode="Glyph"
+        tooltip={'Create ' + this.props.NewButtonTooltip}
         AccessLevel={this.props.AccessLevel}
       />
     );

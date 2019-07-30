@@ -24,12 +24,12 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: <UserFilterSelectColumnWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 1,
               Element: (
                 <UserFilterExpressionWizard

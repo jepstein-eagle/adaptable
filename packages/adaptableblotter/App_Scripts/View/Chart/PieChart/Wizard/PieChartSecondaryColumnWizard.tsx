@@ -45,16 +45,11 @@ export class PieChartSecondaryColumnWizard
 
     return (
       <WizardPanel>
-        <HelpBlock>
-          <p>Select a Secondary Column for the Pie Chart (Note: this is optional).</p>
-        </HelpBlock>
-
         <Flex paddingLeft={2} marginTop={3} flexDirection="row" alignItems="center">
-          <Text style={{ flex: 2 }}>Secondary Column: </Text>
+          <Text style={{ flex: 2 }}>Secondary Column (optional): </Text>
 
           <Flex flex={7}>
             <ColumnSelector
-              placeHolder={'Choose a column (optional)'}
               SelectedColumnIds={[this.state.SecondaryColumnId]}
               ColumnList={this.props.Columns}
               onColumnChange={columns => this.onSecondaryColumnChanged(columns)}

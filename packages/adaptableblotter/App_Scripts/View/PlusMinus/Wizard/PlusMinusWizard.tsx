@@ -26,7 +26,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: (
                 <PlusMinusColumnWizard
@@ -40,7 +40,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
               Element: <PlusMinusSettingsWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 2,
               Element: (
                 <PlusMinusExpressionWizard

@@ -21,7 +21,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
         Columns={this.props.Columns}
         Steps={[
           {
-            StepName: 'Column',
+            StepName: 'Select Column',
             Index: 0,
             Element: (
               <CustomSortColumnWizard

@@ -23,7 +23,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: <CellValidationSelectColumnWizard />,
             },
@@ -38,12 +38,12 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
               Element: <CellValidationRulesWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 3,
               Element: <CellValidationSelectQueryWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 4,
               Element: (
                 <CellValidationExpressionWizard

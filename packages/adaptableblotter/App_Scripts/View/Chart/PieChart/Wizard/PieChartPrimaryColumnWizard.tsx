@@ -43,9 +43,6 @@ export class PieChartPrimaryColumnWizard
   render(): any {
     return (
       <WizardPanel>
-        <HelpBlock>
-          <p>Select a Primary Column for the Pie Chart.</p>
-        </HelpBlock>
         <Flex paddingLeft={2} marginTop={3} flexDirection="row" alignItems="center">
           <Text marginRight={2}>Primary Column:</Text>
 

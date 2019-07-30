@@ -44,7 +44,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               ),
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 2,
               Element: (
                 <ConditionalStyleExpressionWizard
