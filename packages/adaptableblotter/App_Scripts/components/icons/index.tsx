@@ -40,22 +40,61 @@ import laptop from './laptop';
 import update from './update';
 import ImportExport from './import-export';
 import { ReactComponentLike } from 'prop-types';
+import phoneSetup from './phone-setup';
+import viewModule from './view-module';
+import flag from './flag';
+import tableChart from './table-chart';
+import filterList from './filter-list';
+import columnInfo from './column-info';
+import swapVert from './swap-vert';
+import dataSource from './data-source';
+import flashOn from './flash-on';
+import colorLens from './color-lens';
+import shortText from './short-text';
+import comment from './comment';
+import apps from './apps';
+import assignment from './assignment';
+import linearScale from './linear-scale';
+import pieChart from './pie-chart';
+import addCircle from './add-circle';
+import pageView from './page-view';
+import alarm from './alarm';
+import link from './link';
+import person from './person';
 
 const allIcons = {
+  assignment,
+  'linear-scale': linearScale,
+  'pie-chart': pieChart,
+  'add-circle': addCircle,
+  'page-view': pageView,
+  alarm,
+  person,
+  link,
   'arrow-right': ArrowRight,
   'arrow-up': ArrowUp,
   'triangle-up': TriangleUp,
   'arrow-down': ArrowDown,
   'triangle-down': TriangleDown,
+  'color-lens': colorLens,
+  'short-text': shortText,
   'arrow-left': ArrowLeft,
   'bar-chart': BarChart,
   'color-drop': ColorDrop,
+  'column-info': columnInfo,
   'check-circle': CheckCircle,
   'view-columns': ViewColumns,
   'conditional-style': ConditionalStyle,
+  apps,
+  'filter-list': filterList,
+  comment,
   list: List,
   undo: Undo,
+  'table-chart': tableChart,
+  flag,
   update,
+  'phone-setup': phoneSetup,
+  'view-module': viewModule,
   delete: Delete,
   build: Build,
   save: Save,
@@ -80,6 +119,8 @@ const allIcons = {
   home: Home,
   'sort-asc': SortAsc,
   'sort-desc': SortDesc,
+  'swap-vert': swapVert,
+  'data-source': dataSource,
   dashboard: Dashboard,
   edit: Edit,
   clear: Clear,
@@ -87,6 +128,8 @@ const allIcons = {
   info: Info,
   'info-sign': Info,
   add: Plus,
+  'flash-on': flashOn,
+  flash: flashOn,
   export: Export,
   search: Search,
 } as { [key: string]: ReactNode };
