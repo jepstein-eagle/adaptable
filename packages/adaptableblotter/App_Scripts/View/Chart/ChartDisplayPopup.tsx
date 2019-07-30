@@ -11,7 +11,6 @@ import {
 } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonClose } from '../Components/Buttons/ButtonClose';
-import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonMaximise } from '../Components/Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Components/Buttons/ButtonMinimise';

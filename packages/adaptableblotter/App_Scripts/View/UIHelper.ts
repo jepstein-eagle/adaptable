@@ -16,12 +16,7 @@ import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptio
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
-import {
-  SUCCESS_BSSTYLE,
-  WARNING_BSSTYLE,
-  DANGER_BSSTYLE,
-  INFO_BSSTYLE,
-} from '../Utilities/Constants/StyleConstants';
+
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
@@ -144,9 +139,7 @@ export function getChartContainer(
       }
     } else {
       LoggingHelper.LogAdaptableBlotterError(
-        `Chart div called '${
-          blotterOptions.containerOptions.chartContainer
-        }' not found: so creating standard div`
+        `Chart div called '${blotterOptions.containerOptions.chartContainer}' not found: so creating standard div`
       );
       chartContainer = document.getElementById('ad');
     }
@@ -191,19 +184,6 @@ export function getMessageTypeByStatusColour(statusColour: StatusColour): Messag
   }
 }
 
-export function getStyleNameByStatusColour(statusColour: StatusColour): string {
-  switch (statusColour) {
-    case StatusColour.Red:
-      return DANGER_BSSTYLE;
-    case StatusColour.Amber:
-      return WARNING_BSSTYLE;
-    case StatusColour.Green:
-      return SUCCESS_BSSTYLE;
-    case StatusColour.Blue:
-      return INFO_BSSTYLE;
-  }
-}
-
 export function getGlyphByMessageType(messageType: MessageType): string {
   switch (messageType) {
     case MessageType.Info:
@@ -214,19 +194,6 @@ export function getGlyphByMessageType(messageType: MessageType): string {
       return 'warning';
     case MessageType.Error:
       return 'error';
-  }
-}
-
-export function getStyleNameByMessageType(messageType: MessageType): string {
-  switch (messageType) {
-    case MessageType.Error:
-      return DANGER_BSSTYLE;
-    case MessageType.Warning:
-      return WARNING_BSSTYLE;
-    case MessageType.Success:
-      return SUCCESS_BSSTYLE;
-    case MessageType.Info:
-      return INFO_BSSTYLE;
   }
 }
 
@@ -383,9 +350,7 @@ export const UIHelper = {
   isValidUserChartContainer,
   IsNotEmptyStyle,
   getMessageTypeByStatusColour,
-  getStyleNameByStatusColour,
   getGlyphByMessageType,
-  getStyleNameByMessageType,
   getStyleForStatusColour,
   getGlyphForStatusColour,
   getScheduleDescription,

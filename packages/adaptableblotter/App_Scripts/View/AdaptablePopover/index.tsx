@@ -12,15 +12,6 @@ import OverlayTrigger from '../../components/OverlayTrigger';
 import { ReactComponentLike } from 'prop-types';
 import { Flex, Box, Text } from 'rebass';
 
-/*
-Very basic - for now! - info box that allows us to show Error where required.
-3 params:
-1. HeaderText - if not supplied then no header appears
-2. BodyText - the main message (sent not as a string but as an array so it can include html elements)
-3. MessageType - Info, Warning or Error (matching the bootstrap types)
-4. Trigger - defaults to hover but can be click...
-*/
-
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
   headerText?: string;
   showEvent?: string;

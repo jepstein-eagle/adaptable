@@ -119,7 +119,6 @@ class ConditionalStylePopupComponent extends React.Component<
         <PanelWithButton
           headerText={StrategyConstants.ConditionalStyleStrategyName}
           button={newButton}
-          bsStyle={StyleConstants.PRIMARY_BSSTYLE}
           bodyProps={{ padding: 0 }}
           cssClassName={cssClassName}
           glyphicon={StrategyConstants.ConditionalStyleGlyph}

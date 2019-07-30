@@ -13,15 +13,12 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { DEFAULT_BSSTYLE, INFO_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import icons from '../../components/icons';
 import { ReactComponentLike } from 'prop-types';
 import { Flex } from 'rebass';

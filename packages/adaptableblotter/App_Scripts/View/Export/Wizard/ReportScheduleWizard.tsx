@@ -103,6 +103,7 @@ export class ReportScheduleWizard
               <Flex flex={7}>
                 <Dropdown
                   placeholder="select"
+                  showEmptyItem={false}
                   showClearButton={false}
                   value={this.state.ExportDestination}
                   onChange={(x: any) => this.onExportDestinationChanged(x)}
@@ -117,6 +118,7 @@ export class ReportScheduleWizard
               <Flex flex={7}>
                 <Dropdown
                   placeholder="select"
+                  showEmptyItem={false}
                   showClearButton={false}
                   value={this.state.Hour}
                   onChange={(x: any) => this.onHourChanged(x)}
@@ -130,6 +132,7 @@ export class ReportScheduleWizard
               </Text>
               <Flex flex={7}>
                 <Dropdown
+                  showEmptyItem={false}
                   showClearButton={false}
                   placeholder="select"
                   value={this.state.Minute}

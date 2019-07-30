@@ -7,8 +7,6 @@ export class ButtonHide extends React.Component<ButtonProps, {}> {
     return (
       <ButtonBase
         ToolTipAndText="Hide"
-        bsStyle={StyleConstants.DEFAULT_BSSTYLE}
-        bsSize={this.props.size}
         glyph="resize-small"
         onClick={() => this.props.onClick()}
         overrideDisableButton={this.props.overrideDisableButton}

@@ -8,15 +8,6 @@ import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { IAdaptableBlotterToolPanelContext } from '../../../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
 import { render } from 'react-dom';
-import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterFormControlTextClear';
-import { ButtonMinimise } from '../Buttons/ButtonMinimise';
-import { ButtonMaximise } from '../Buttons/ButtonMaximise';
-
-import { ButtonGeneral } from '../Buttons/ButtonGeneral';
-import { DEFAULT_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
-import { PanelWithButton } from '../Panels/PanelWithButton';
-import { ToolPanelSettingsPanel } from '../Panels/ToolPanelSettingsPanel';
-import { gunzip } from 'zlib';
 
 interface AdaptableBlotterToolPanelProps
   extends StrategyViewPopupProps<AdaptableBlotterToolPanelComponent> {
