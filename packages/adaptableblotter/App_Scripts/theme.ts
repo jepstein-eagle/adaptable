@@ -11,19 +11,21 @@ export default {
     'var(--ab-font-size-7)',
   ],
   colors: {
-    blue: '#07c',
-    accent: '#07c',
-    lightgray: 'var(--ab-color-lightgray)',
+    accent: 'var(--ab-color-accent)',
     white: 'var(--ab-color-white)',
+
+    secondarybackground: 'var(--ab-color-secondarybackground)',
     textgray: 'var(--ab-color-textgray)',
     darkgray: 'var(--ab-color-darkgray)',
+    gray: 'var(--ab-color-gray)',
+
+    blue: 'var(--ab-color-blue)',
     warn: 'var(--ab-color-warn)',
     info: 'var(--ab-color-info)',
     error: 'var(--ab-color-error)',
     errorlight: 'var(--ab-color-errorlight)',
-    gray: 'var(--ab-color-gray)',
-    'almost-white': 'var(--ab-color-almost-white)',
-    almostwhite: 'var(--ab-color-almost-white)',
+
+    primarybackground: 'var(--ab-color-primarybackground)',
   },
   space: [
     'var(--ab-space-0)',
@@ -38,9 +40,5 @@ export default {
   fonts: {
     sans: 'system-ui, sans-serif',
     mono: 'Menlo, monospace',
-  },
-  shadows: {
-    small: '0 0 4px rgba(0, 0, 0, .125)',
-    large: '0 0 24px rgba(0, 0, 0, .125)',
   },
 };

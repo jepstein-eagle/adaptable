@@ -61,6 +61,8 @@ import pageView from './page-view';
 import alarm from './alarm';
 import link from './link';
 import person from './person';
+import alignJustify from './align-justify';
+import colorFill from './color-fill';
 
 const allIcons = {
   assignment,
@@ -122,9 +124,11 @@ const allIcons = {
   'swap-vert': swapVert,
   'data-source': dataSource,
   dashboard: Dashboard,
+  'align-justify': alignJustify,
   edit: Edit,
   clear: Clear,
   'import-export': ImportExport,
+  'color-fill': colorFill,
   info: Info,
   'info-sign': Info,
   add: Plus,

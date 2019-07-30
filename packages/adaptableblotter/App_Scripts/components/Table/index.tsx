@@ -9,7 +9,7 @@ const Table = styled.table`
     border-bottom: 2px solid var(--ab-color-darkgray);
   }
   tr:not(last-child) td {
-    border-bottom: 1px solid var(--ab-color-lightgray);
+    border-bottom: 1px solid var(--ab-color-secondarybackground);
   }
 `;
 

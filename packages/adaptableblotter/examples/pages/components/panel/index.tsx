@@ -1,6 +1,6 @@
 import Panel from '../../../../App_Scripts/components/Panel';
 
-import '../../../../App_Scripts/base-new.scss';
+import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/components/Panel/base.scss';
 import '../../../../App_Scripts/components/Panel/style.scss';
 

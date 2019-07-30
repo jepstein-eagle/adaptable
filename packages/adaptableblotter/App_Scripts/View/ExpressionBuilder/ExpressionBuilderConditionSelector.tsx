@@ -412,7 +412,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                       <SimpleButton
                         onClick={() => this.onTabChanged(QueryTab.ColumnValue)}
                         marginRight={2}
-                        tone={(firstSelected ? 'success' : 'neutral') as ('success' | 'neutral')}
+                        tone={(firstSelected ? 'accent' : 'neutral') as ('accent' | 'neutral')}
                         variant={firstSelected ? 'raised' : 'outlined'}
                       >
                         Column Values
@@ -420,13 +420,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                       <SimpleButton
                         onClick={() => this.onTabChanged(QueryTab.Filter)}
                         marginRight={2}
-                        tone={(secondSelected ? 'success' : 'neutral') as ('success' | 'neutral')}
+                        tone={(secondSelected ? 'accent' : 'neutral') as ('accent' | 'neutral')}
                         variant={secondSelected ? 'raised' : 'outlined'}
                       >
                         Filters
                       </SimpleButton>
                       <SimpleButton
-                        tone={thirdSelected ? 'success' : ('neutral' as ('success' | 'neutral'))}
+                        tone={thirdSelected ? 'accent' : ('neutral' as ('accent' | 'neutral'))}
                         onClick={() => this.onTabChanged(QueryTab.QueryRange)}
                         variant={thirdSelected ? 'raised' : 'outlined'}
                       >

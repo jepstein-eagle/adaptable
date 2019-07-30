@@ -5,7 +5,6 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import {
-  Glyphicon,
   OverlayTrigger,
   Tooltip,
   // DropdownButton,
@@ -37,6 +36,7 @@ import Checkbox from '../../components/CheckBox';
 import SimpleButton from '../../components/SimpleButton';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
+import { Icon } from '../../components/icons';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -65,9 +65,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let cssClassName: string = this.props.cssClassName + '__home';
     let cssDropdownClassName: string = this.props.cssClassName + '__home__dropdown';
 
-    const functionsGlyph: any = <Glyphicon glyph={'home'} />;
-    const colsGlyph: any = <Glyphicon glyph={'list'} />;
-    const toolbarsGlyph: any = <Glyphicon glyph={'align-justify'} />;
+    const functionsGlyph: any = <Icon name={'home'} />;
+    const colsGlyph: any = <Icon name={'list'} />;
+    const toolbarsGlyph: any = <Icon name={'align-justify'} />;
 
     // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
     let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
@@ -80,7 +80,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       return {
         disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
         onClick: () => this.onClick(menuItem),
-        icon: <Glyphicon glyph={menuItem.GlyphIcon} />,
+        icon: <Icon name={menuItem.GlyphIcon} />,
         label: menuItem.Label,
       };
     });
@@ -248,8 +248,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           y => y.IsVisible && y.StrategyId == x
         );
         if (menuItem) {
-          console.log(menuItem);
-          console.log(menuItem.GlyphIcon);
           return (
             <OverlayTrigger
               key={x}

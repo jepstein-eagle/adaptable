@@ -14,6 +14,7 @@
 .ab-DropdownButton__list-item {
   fill: currentColor;
   color: var(--ab-cmp-dropdownbutton-list-item__color);
+
 }
 .ab-DropdownButton__list-item--not-clickable {
   cursor: auto;
@@ -23,6 +24,7 @@
   background: var(--ab-cmp-dropdownbutton-list-item-hover__background);
   color: var(--ab-cmp-dropdownbutton-list-item-hover__color);
   fill: currentColor;
+  cursor: pointer;
   .glyphicon.glyphicon {
     color: inherit;
   }

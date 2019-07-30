@@ -1,7 +1,7 @@
 import SimpleButton from '../../../../App_Scripts/components/SimpleButton';
 import DropdownButton from '../../../../App_Scripts/components/DropdownButton';
 
-import '../../../../App_Scripts/base-new.scss';
+import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/components/SimpleButton/base.scss';
 import '../../../../App_Scripts/components/SimpleButton/style.scss';
 

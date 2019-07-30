@@ -46,11 +46,7 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
       );
     });
 
-    return (
-      <div className={StyleConstants.WIZARD_LEGEND}>
-        {this.props.FriendlyName}: {stepButtons}
-      </div>
-    );
+    return <div className={StyleConstants.WIZARD_LEGEND}>{stepButtons}</div>;
   }
 
   private onStepButtonClicked(stepName: string): void {

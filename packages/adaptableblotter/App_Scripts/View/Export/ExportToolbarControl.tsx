@@ -161,7 +161,7 @@ class ExportToolbarControlComponent extends React.Component<
         ></Dropdown>
 
         <DropdownButton
-          mx={2}
+          columns={['label']}
           variant="text"
           disabled={currentReportId == selectReportString}
           items={exportItems}

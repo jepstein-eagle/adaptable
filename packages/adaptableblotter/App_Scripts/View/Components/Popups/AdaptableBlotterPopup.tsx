@@ -110,11 +110,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
               </Flex>
             </Flex>
           </Flex>
-          <Flex
-            className={cssClassName + StyleConstants.MODAL_FOOTER}
-            padding={2}
-            backgroundColor="lightgray"
-          >
+          <Flex padding={2} backgroundColor="secondarybackground">
             <SimpleButton onClick={() => this.props.onHide()} variant="text">
               CLOSE
             </SimpleButton>

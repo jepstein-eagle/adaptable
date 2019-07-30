@@ -444,7 +444,12 @@ export class AdaptableBlotterAbout extends React.Component<
             )}
           </PanelWithImage>
 
-          <Flex alignItems="center" flexDirection="row" padding={2} backgroundColor="lightgray">
+          <Flex
+            alignItems="center"
+            flexDirection="row"
+            padding={2}
+            backgroundColor="secondarybackground"
+          >
             <SimpleButton
               className={
                 this.state.cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON

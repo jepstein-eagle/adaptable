@@ -136,7 +136,7 @@ class DashboardPopupComponent extends React.Component<
           <Flex
             flexDirection="row"
             padding={2}
-            style={{ borderBottom: '1px solid var(--ab-color-lightgray)' }}
+            style={{ borderBottom: '1px solid var(--ab-color-secondarybackground)' }}
           >
             <Radio
               value={DashboardConfigView.General}

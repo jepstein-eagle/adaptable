@@ -4,11 +4,13 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import FieldWrap from '../../../components/FieldWrap';
 import SimpleButton from '../../../components/SimpleButton';
 import Input, { InputProps } from '../../../components/Input';
+import { CSSProperties } from 'react';
 
 export type AdaptableBlotterFormControlTextClearProps = {
   OnTextChange: (textValue: string) => void;
   autoFocus?: boolean;
   cssClassName?: string;
+  inputStyle?: CSSProperties;
 } & InputProps;
 
 export class AdaptableBlotterFormControlTextClear extends React.Component<
@@ -22,11 +24,12 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<
           background: 'var(--ab-color-white)',
           overflow: 'visible',
           width: '100%',
+          ...this.props.style,
         }}
       >
         <Input
           autoFocus={this.props.autoFocus}
-          style={this.props.style}
+          style={this.props.inputStyle}
           type="text"
           placeholder={this.props.placeholder}
           value={this.props.value}

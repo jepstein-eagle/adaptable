@@ -1,5 +1,7 @@
 :root {
   --ab-cmp-input__padding: var(--ab-space-2);
+  --ab-cmp-input__color: var(--ab-color-inputcolor);
+  --ab-cmp-input__background: var(--ab-color-primarybackground);
   --ab-cmp-input__border-radius: var(--ab__border-radius);
   --ab-cmp-input__border: 1px solid var(--ab-color-inputborder);
   --ab-cmp-input--disabled__background: var(--ab-color-gray);

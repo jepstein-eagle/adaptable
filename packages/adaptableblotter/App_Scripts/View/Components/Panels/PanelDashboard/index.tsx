@@ -8,6 +8,7 @@ import { ButtonMinimise } from '../../Buttons/ButtonMinimise';
 
 import { Flex } from 'rebass';
 import join from '../../../../components/utils/join';
+import { Icon } from '../../../../components/icons';
 
 export interface PanelDashboardProps extends PanelProps {
   headerText: string;
@@ -60,13 +61,13 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
           <ButtonMinimise onClick={() => onMinimise()} marginRight={2} />
         ) : null}
         {showGlyphIcon ? (
-          <Glyphicon
+          <Icon
             style={{
               alignSelf: 'center',
               fontSize: 'small',
               color: 'var(--ab-cmp-dashboardpanel_header__fill)',
             }}
-            glyph={glyphicon}
+            name={glyphicon}
           />
         ) : null}
 

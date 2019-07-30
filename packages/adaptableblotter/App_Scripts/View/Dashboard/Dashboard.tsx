@@ -24,6 +24,7 @@ import {
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';
+import join from '../../components/utils/join';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -73,7 +74,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             AccessLevel: accessLevel,
           });
           return (
-            <Box key={control} my={1} marginRight={1} className="ab-Dashboard__container">
+            <Box key={control} marginTop={1} marginRight={1} className="ab-Dashboard__container">
               {dashboardElememt}
             </Box>
           );
@@ -87,7 +88,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       StrategyConstants.HomeStrategyId
     );
     let homeToolbarElement = (
-      <Box key={'home'} my={1} marginRight={1} className="ab-Dashboard__container">
+      <Box key={'home'} marginTop={1} marginRight={1} className="ab-Dashboard__container">
         {React.createElement(homeToolbar, {
           cssClassName: cssClassName,
           Blotter: this.props.Blotter,
@@ -96,7 +97,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     );
 
     return (
-      <Box padding={1} className={cssBaseClassName}>
+      <Box padding={1} paddingTop={0} className={join(cssBaseClassName, 'ab-Dashboard')}>
         {this.props.DashboardState.DashboardVisibility != Visibility.Hidden && (
           <div className="ab_no_margin">
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
@@ -112,7 +113,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 {blotterName}
               </SimpleButton>
             ) : (
-              <Flex className="ab-Dashboard" alignItems="stretch" style={{ zoom: 1 }}>
+              <Flex className="ab-Dashboard__inner" alignItems="stretch" style={{ zoom: 1 }}>
                 {homeToolbarElement}
                 {visibleDashboardElements}
               </Flex>

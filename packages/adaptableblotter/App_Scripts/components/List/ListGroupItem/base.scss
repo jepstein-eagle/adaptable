@@ -1,11 +1,11 @@
 :root {
   --ab-cmp-listgroupitem__width: 100%;
 
-  --ab-cmp-listgroupitem__background: var(--ab-color-lightgray);
+  --ab-cmp-listgroupitem__background: var(--ab-color-secondarybackground);
   --ab-cmp-listgroupitem__color: var(--ab-color-textgray);
   --ab-cmp-listgroupitem__border-radius: 0px;
 
-  --ab-cmp-listgroupitem--odd__background: var(--ab-color-almost-white);
+  --ab-cmp-listgroupitem--odd__background: var(--ab-color-primarybackground);
   --ab-cmp-listgroupitem--odd__color: var(--ab-color-textgray);
 
   --ab-cmp-listgroupitem--active__background: var(--ab-color-textgray);

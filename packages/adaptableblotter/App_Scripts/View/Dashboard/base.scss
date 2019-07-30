@@ -1,6 +1,7 @@
-.ab-Dashboard {
+.ab-Dashboard__inner {
   flex-wrap: wrap;
   flex-direction: row;
+  
    &>ul {
      flex: 0 0 auto;
    }
@@ -8,4 +9,9 @@
 
 .ab-Dashboard__container > * {
   height: 100%;
+}
+
+.ab-Dashboard {
+  background: var(--ab-dashboard__background);
+  border-radius: var(--ab-dashboard__border-radius);
 }

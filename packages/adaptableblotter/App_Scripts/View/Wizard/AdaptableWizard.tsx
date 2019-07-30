@@ -10,6 +10,8 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Flex, Box } from 'rebass';
 import Dialog from '../../components/Dialog';
 import SimpleButton from '../../components/SimpleButton';
+import Panel from '../../components/Panel';
+import WizardPanel from '../../components/WizardPanel';
 
 export interface IWizardStepInfo {
   StepName: string;
@@ -100,19 +102,19 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
           style={{ height: '100%', width: '70vw', maxWidth: 800, maxHeight: '80vh' }}
           className={cssClassName + StyleConstants.WIZARD_BASE}
         >
-          <Box
-            style={{ fontWeight: 600 }}
-            padding={2}
+          <WizardPanel
+            header={this.props.FriendlyName}
             className={cssClassName + StyleConstants.WIZARD_HEADER}
+            style={{ height: 'auto' }}
           >
             <WizardLegend
               StepNames={wizardStepNames}
               ActiveStepName={this.stepName}
-              FriendlyName={this.props.FriendlyName}
+              FriendlyName={''}
               CanShowAllSteps={this.canFinishWizard()}
               onStepButtonClicked={s => this.onStepButtonClicked(s)}
             />
-          </Box>
+          </WizardPanel>
           <Flex
             style={{ flex: 1 }}
             flexDirection="column"
@@ -120,7 +122,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
           >
             {this.state.ActiveState}
           </Flex>
-          <Flex flexDirection="row" padding={2} backgroundColor="lightgray">
+          <Flex flexDirection="row" padding={2} backgroundColor="secondarybackground">
             <SimpleButton
               tone="neutral"
               variant="text"
@@ -230,6 +232,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
   //So we inject everything needed for the Wizard
   private cloneWizardStep(step: JSX.Element): JSX.Element {
+    console.log(step);
     return React.cloneElement(step, {
       ref: (Element: AdaptableWizardStep) => {
         this.ActiveStep = Element;
