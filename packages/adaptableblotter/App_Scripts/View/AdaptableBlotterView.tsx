@@ -58,7 +58,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             AdaptableBlotter={this.props.Blotter}
             onClose={this.props.onCloseChartPopup}
             showChart={this.props.SystemState.ChartVisibility == ChartVisibility.Maximised}
-            showModal={this.props.Blotter.blotterOptions.chartOptions.showModal}
+            showModal={this.props.Blotter.blotterOptions.chartOptions!.showModal!}
           />
         )}
 

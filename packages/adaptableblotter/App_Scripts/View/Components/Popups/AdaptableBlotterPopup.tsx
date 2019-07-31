@@ -20,7 +20,7 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
   showModal: boolean;
   ComponentName?: string;
   ComponentStrategy: string;
-  onHide?: () => void | Function;
+  onHide?: () => void;
   Blotter: IAdaptableBlotter;
   PopupParams: string;
   onClearPopupParams?: () => PopupRedux.PopupClearParamAction;

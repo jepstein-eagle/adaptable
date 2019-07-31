@@ -7,7 +7,6 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview';
 import {
   ExpressionMode,
-  DistinctCriteriaPairValue,
   QueryBuildStatus,
   QueryTab,
   AccessLevel,
@@ -70,6 +69,7 @@ export class ExpressionBuilderPage
     return (
       <PanelWithButton
         button={newButton}
+        headerText=""
         bodyProps={{
           style: {
             display: 'flex',
@@ -81,7 +81,7 @@ export class ExpressionBuilderPage
       >
         <Flex flexDirection="row" style={{ height: '100%' }}>
           <ExpressionBuilderConditionSelector
-            ColumnsList={this.props.Columns}
+            ColumnsList={this.props.Columns || []}
             QueryBuildStatus={queryBuildStatus}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
@@ -97,14 +97,14 @@ export class ExpressionBuilderPage
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
             SelectedColumnId={this.state.SelectedColumnId}
             SelectedTab={this.state.SelectedTab}
-            Blotter={this.props.Blotter}
+            Blotter={this.props.Blotter!}
           />
 
           <ExpressionBuilderPreview
             Expression={this.state.Expression}
             UserFilters={this.props.UserFilters}
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
-            ColumnsList={this.props.Columns}
+            ColumnsList={this.props.Columns || []}
             DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
             DeleteUserFilterExpression={(columnId, index) =>
               this.DeleteUserFilterExpression(columnId, index)
