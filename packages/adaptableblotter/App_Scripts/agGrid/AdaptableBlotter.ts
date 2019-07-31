@@ -730,9 +730,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
     //  const rows: any[] = this.gridOptions.api!.getSelectedRows();
 
-    console.log(selected);
+    // console.log(selected);
 
-    console.log(nodes);
+    // console.log(nodes);
     const columns: IColumn[] = [];
     const selectedCells: GridCell[] = [];
 
