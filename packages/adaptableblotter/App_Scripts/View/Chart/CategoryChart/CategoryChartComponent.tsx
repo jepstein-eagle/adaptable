@@ -163,7 +163,7 @@ export class CategoryChartComponent extends React.Component<
     let closeChartSettingsButton = (
       <ButtonClose
         {...defaultButtonProps}
-        style={{ color: 'var(--ab-color-white)' }}
+        style={{ color: 'var(--ab-color-defaultbackground)' }}
         onClick={() => this.onHideChartSettings()}
         tooltip={'Close Chart Settings'}
       />
@@ -183,7 +183,7 @@ export class CategoryChartComponent extends React.Component<
     let setDefaultsButton = (
       <ButtonGeneral
         {...defaultButtonProps}
-        style={{ color: 'var(--ab-color-white)' }}
+        style={{ color: 'var(--ab-color-defaultbackground)' }}
         onClick={() => this.onSetPropertyDefaults()}
         tooltip={null}
       >

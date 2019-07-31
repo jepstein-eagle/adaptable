@@ -124,68 +124,66 @@ class DashboardPopupComponent extends React.Component<
     );
 
     return (
-      <div>
-        <PanelWithButton
-          headerText="Dashboard Configuration"
-          bodyProps={{ padding: 0, style: { display: 'flex', flexDirection: 'column' } }}
-          glyphicon={StrategyConstants.DashboardGlyph}
+      <PanelWithButton
+        headerText="Dashboard Configuration"
+        bodyProps={{ padding: 0, style: { display: 'flex', flexDirection: 'column' } }}
+        glyphicon={StrategyConstants.DashboardGlyph}
+      >
+        <Flex
+          flexDirection="row"
+          padding={2}
+          style={{ borderBottom: '1px solid var(--ab-color-primary)' }}
         >
-          <Flex
-            flexDirection="row"
-            padding={2}
-            style={{ borderBottom: '1px solid var(--ab-color-secondarybackground)' }}
+          <Radio
+            value={DashboardConfigView.General}
+            checked={this.state.DashboardConfigView == DashboardConfigView.General}
+            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
           >
-            <Radio
-              value={DashboardConfigView.General}
-              checked={this.state.DashboardConfigView == DashboardConfigView.General}
-              onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
-            >
-              General Options
-            </Radio>
-            <Radio
-              marginLeft={3}
-              value={DashboardConfigView.Buttons}
-              checked={this.state.DashboardConfigView == DashboardConfigView.Buttons}
-              onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
-            >
-              Function Buttons
-            </Radio>
-            <Radio
-              marginLeft={3}
-              value={DashboardConfigView.Toolbars}
-              checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
-              onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
-            >
-              Function Toolbars
-            </Radio>
-          </Flex>
+            General Options
+          </Radio>
+          <Radio
+            marginLeft={3}
+            value={DashboardConfigView.Buttons}
+            checked={this.state.DashboardConfigView == DashboardConfigView.Buttons}
+            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+          >
+            Function Buttons
+          </Radio>
+          <Radio
+            marginLeft={3}
+            value={DashboardConfigView.Toolbars}
+            checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
+            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+          >
+            Function Toolbars
+          </Radio>
+        </Flex>
 
-          <Box style={{ overflow: 'auto', flex: 1, display: 'flex' }} padding={2}>
-            {this.state.DashboardConfigView == DashboardConfigView.General &&
-              individualHomeToolbarOptions}
-            {this.state.DashboardConfigView == DashboardConfigView.Buttons && (
-              <DualListBoxEditor
-                AvailableValues={availableValues}
-                SelectedValues={selectedValues}
-                HeaderAvailable="Hidden Function Buttons"
-                HeaderSelected="Visible Function Buttons"
-                onChange={SelectedValues => this.onDashboardButtonsChanged(SelectedValues)}
-                DisplaySize={DisplaySize.Large}
-              />
-            )}
-            {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
-              <DualListBoxEditor
-                AvailableValues={availableToolbarNames}
-                SelectedValues={visibleToolbarNames}
-                HeaderAvailable="Available Toolbars"
-                HeaderSelected="Visible Toolbars"
-                onChange={SelectedValues => this.onDashboardToolbarsChanged(SelectedValues)}
-                DisplaySize={DisplaySize.Small}
-              />
-            )}
-          </Box>
-        </PanelWithButton>
-      </div>
+        <Box style={{ overflow: 'auto', flex: 1, display: 'flex' }} padding={2}>
+          {this.state.DashboardConfigView == DashboardConfigView.General &&
+            individualHomeToolbarOptions}
+          {this.state.DashboardConfigView == DashboardConfigView.Buttons && (
+            <DualListBoxEditor
+              AvailableValues={availableValues}
+              SelectedValues={selectedValues}
+              HeaderAvailable="Hidden Function Buttons"
+              HeaderSelected="Visible Function Buttons"
+              onChange={SelectedValues => this.onDashboardButtonsChanged(SelectedValues)}
+              DisplaySize={DisplaySize.Large}
+            />
+          )}
+          {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
+            <DualListBoxEditor
+              AvailableValues={availableToolbarNames}
+              SelectedValues={visibleToolbarNames}
+              HeaderAvailable="Available Toolbars"
+              HeaderSelected="Visible Toolbars"
+              onChange={SelectedValues => this.onDashboardToolbarsChanged(SelectedValues)}
+              DisplaySize={DisplaySize.Small}
+            />
+          )}
+        </Box>
+      </PanelWithButton>
     );
   }
 

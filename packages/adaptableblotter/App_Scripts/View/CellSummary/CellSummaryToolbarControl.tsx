@@ -109,8 +109,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
                 bodyText={[cellSummaryPopover]}
                 tooltipText={'Show Cell Summary'}
                 useButton={true}
-                triggerAction={'click'}
-                popoverMinWidth={300}
+                showEvent={'focus'}
+                hideEvent="blur"
               />
             )}
           </>

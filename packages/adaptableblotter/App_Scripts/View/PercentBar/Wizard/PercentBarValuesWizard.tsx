@@ -110,7 +110,7 @@ export class PercentBarValuesWizard
                 marginRight={2}
                 value="value"
                 checked={this.state.UseMaxColumn == false}
-                onChange={e => this.onUseMaxColumnSelectChanged(e)}
+                onChange={(checked, e) => this.onUseMaxColumnSelectChanged(e)}
               >
                 Static Value
               </Radio>{' '}
@@ -118,7 +118,7 @@ export class PercentBarValuesWizard
                 marginRight={2}
                 value="column"
                 checked={this.state.UseMaxColumn == true}
-                onChange={e => this.onUseMaxColumnSelectChanged(e)}
+                onChange={(checked, e) => this.onUseMaxColumnSelectChanged(e)}
               >
                 Another Column Value
               </Radio>

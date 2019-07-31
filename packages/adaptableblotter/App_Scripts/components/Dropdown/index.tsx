@@ -14,7 +14,7 @@ export type DropdownOption = {
   value: string;
 };
 
-export type DropdownProps = Omit<BoxProps, 'onChange'> & {
+export type DropdownProps = Omit<BoxProps, 'onChange' | 'value'> & {
   autoFocus?: boolean;
   expanded?: boolean;
   disabled?: boolean;
@@ -23,8 +23,9 @@ export type DropdownProps = Omit<BoxProps, 'onChange'> & {
   emptyText?: string;
   placeholder?: ReactNode;
   clearButtonProps?: any;
+  value: string | number | null | undefined;
 
-  renderLabel?: (label?: string, option?: DropdownOption) => ReactNode;
+  renderLabel?: (label?: string | null, option?: DropdownOption) => ReactNode;
 
   name?: string;
   showEmptyItem?: boolean;
@@ -124,14 +125,14 @@ const Dropdown = (props: DropdownProps) => {
       return;
     }
     if (e.target === domRef.current) {
-      selectRef.current.focus();
+      selectRef.current!.focus();
     }
   };
   const onBlur = () => {
     setFocused(false);
   };
 
-  const defaultLabel = selectedOption! ? selectedOption.label : null;
+  const defaultLabel = selectedOption! ? selectedOption!.label : null;
   let selectedText = props.renderLabel
     ? props.renderLabel(defaultLabel, selectedOption!)
     : defaultLabel;

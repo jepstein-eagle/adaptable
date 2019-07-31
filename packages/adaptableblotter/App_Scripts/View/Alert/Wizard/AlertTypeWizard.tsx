@@ -33,7 +33,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
   render(): any {
     return (
       <>
-        <WizardPanel border="none" style={{ height: 'auto' }}>
+        <WizardPanel border="none">
           <Box>
             <Radio
               value="Info"
@@ -75,7 +75,11 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
             </Radio>
           </Box>
 
-          <Checkbox checked={this.state.ShowAsPopup == true} onChange={this.onShowAsPopupChanged}>
+          <Checkbox
+            marginLeft={2}
+            checked={this.state.ShowAsPopup == true}
+            onChange={this.onShowAsPopupChanged}
+          >
             Show as Popup
           </Checkbox>
         </WizardPanel>

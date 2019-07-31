@@ -1,6 +1,6 @@
 :root {
   --ab-cmp-error-box__padding: var(--ab-space-3); 
   --ab-cmp-error-box__border-radius: var(--ab__border-radius);
-  --ab-cmp-error-box__color: var(--ab-color-error);
-  --ab-cmp-error-box__background: var(--ab-color-errorlight);
+  --ab-cmp-error-box__color: var(--ab-color-text-on-error);
+  --ab-cmp-error-box__background: var(--ab-color-error);
 }

@@ -1,6 +1,6 @@
 :root {
-  --ab-cmp-help-block__padding: var(--ab-space-3); 
+  --ab-cmp-help-block__padding: var(--ab-space-2); 
   --ab-cmp-help-block__border-radius: var(--ab__border-radius);
-  --ab-cmp-help-block__color: var(--ab-color-textgray);
-  --ab-cmp-help-block__background: var(--ab-color-secondarybackground);
+  --ab-cmp-help-block__color: var(--ab-color-text-on-primary);
+  --ab-cmp-help-block__background: var(--ab-color-primarylight);
 }

@@ -59,8 +59,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '2px',
-              color: 'var(--ab-color-accent)',
-              background: 'var(--ab-color-accentlight)',
+              color: 'var(--ab-color-text-on-info)',
+              fill: 'var(--ab-color-text-on-info)',
+              background: 'var(--ab-color-info)',
             }}
             disabled={this.props.overrideDisableEdit}
             tooltip={this.props.overrideTooltipEdit}
@@ -74,8 +75,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '1px',
-              color: 'var(--ab-color-error)',
-              background: 'var(--ab-color-errorlight)',
+              color: 'var(--ab-color-text-on-error)',
+              fill: 'var(--ab-color-text-on-error)',
+              background: 'var(--ab-color-error)',
             }}
             disabled={this.props.overrideDisableDelete}
             tooltip={this.props.overrideTooltipDelete}

@@ -10,7 +10,7 @@ const useProperty = <TS>(
   props: any,
   propName: string,
   defaultValue?: any | undefined,
-  config?: { onChange: (value: TS, ...args: any[]) => void }
+  config?: { onChange?: (value: TS, ...args: any[]) => void }
 ): [TS, (...args: any[]) => any] => {
   const PropName = toUpperFirst(propName);
 

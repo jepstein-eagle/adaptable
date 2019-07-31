@@ -195,6 +195,7 @@ export class ListBoxFilterForm extends React.Component<
               placeholder="Please select"
               onChange={this.onRangeTypeChangedOperand2}
               options={rangeMenuItemsOperand2}
+              value={this.state.UiSelectedRange.Operand2Type}
               marginRight={2}
             ></Dropdown>
 
@@ -203,7 +204,7 @@ export class ListBoxFilterForm extends React.Component<
         )}
 
         <Box my={3}>
-          <Box backgroundColor="darkgray" style={{ height: 1 }} />
+          <Box style={{ background: 'var(--ab-color-secondary)', height: 1 }} />
         </Box>
       </Flex>
     );

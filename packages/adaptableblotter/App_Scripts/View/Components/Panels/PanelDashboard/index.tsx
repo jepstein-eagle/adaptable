@@ -57,13 +57,13 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     let header = (
       <>
         {showMinimiseButton ? (
-          <ButtonMinimise onClick={() => onMinimise()} marginRight={2} />
+          <ButtonMinimise onClick={() => (onMinimise ? onMinimise() : null)} marginRight={2} />
         ) : null}
         {showGlyphIcon ? (
           <Icon
             style={{
               alignSelf: 'center',
-              fontSize: 'small',
+
               color: 'var(--ab-cmp-dashboardpanel_header__fill)',
             }}
             name={glyphicon}

@@ -129,7 +129,7 @@ export class PieChartComponent extends React.Component<
     let closeChartSettingsButton = (
       <ButtonClose
         {...defaultButtonProps}
-        style={{ color: 'var(--ab-color-white' }}
+        style={{ color: 'var(--ab-color-defaultbackground' }}
         onClick={() => this.onHideChartSettings()}
         tooltip={'Close Chart Settings'}
       />
@@ -143,7 +143,7 @@ export class PieChartComponent extends React.Component<
 
     let setDefaultsButton = (
       <ButtonGeneral
-        style={{ color: 'var(--ab-color-white' }}
+        style={{ color: 'var(--ab-color-defaultbackground' }}
         onClick={() => this.onSetPropertyDefaults()}
       >
         Reset

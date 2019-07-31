@@ -212,7 +212,6 @@ export class DualListBoxEditor extends React.Component<
             active={isActive}
             draggable={false}
             onClick={() => this.onClickAvailableValuesItem(x)}
-            key={value}
             value={value}
           >
             <Checkbox

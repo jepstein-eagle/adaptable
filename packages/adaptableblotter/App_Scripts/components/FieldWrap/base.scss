@@ -1,5 +1,6 @@
 .ab-FieldWrap {
   border: 1px solid var(--ab-color-inputborder);
+  color: 1px solid var(--ab-color-inputcolor);
   border-radius: var(--ab__border-radius);
   background: var(--ab-cmp-field-wrap__background);
   
@@ -8,7 +9,7 @@
   fill: var(--ab-cmp-field-wrap__fill);
 
   .ab-SimpleButton {
-    color: var(--ab-cmp-field-wrap__fill) !important;
+    // color: var(--ab-cmp-field-wrap__fill) !important;
   }
 
   &:focus-within {

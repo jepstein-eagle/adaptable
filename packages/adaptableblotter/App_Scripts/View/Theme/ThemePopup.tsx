@@ -58,6 +58,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
 
             <Box>
               <Dropdown
+                style={{ width: '50%', minWidth: 200 }}
                 placeholder="select"
                 value={this.props.CurrentTheme}
                 onChange={(value: any) => this.onChangeTheme(value)}

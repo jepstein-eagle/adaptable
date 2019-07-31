@@ -410,7 +410,7 @@ export class AdaptableBlotterAbout extends React.Component<
             alignItems="center"
             flexDirection="row"
             padding={2}
-            backgroundColor="secondarybackground"
+            backgroundColor="defaultbackground"
           >
             <SimpleButton onClick={() => this.props.onClose()}>Close</SimpleButton>
           </Flex>

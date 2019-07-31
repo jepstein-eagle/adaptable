@@ -21,7 +21,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<
     return (
       <FieldWrap
         style={{
-          background: 'var(--ab-color-white)',
+          background: 'var(--ab-color-defaultbackground)',
           overflow: 'visible',
           width: '100%',
           ...this.props.style,

@@ -157,6 +157,7 @@ class ExportToolbarControlComponent extends React.Component<
           onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
           value={currentReport ? currentReport.Name : null}
           showClearButton
+          marginRight={2}
         ></Dropdown>
 
         <DropdownButton

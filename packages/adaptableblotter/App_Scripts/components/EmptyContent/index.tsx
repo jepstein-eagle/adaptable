@@ -17,7 +17,7 @@ const EmptyContent = ({ children, className, style, ...flexProps }: EmptyContent
       justifyContent="center"
       flexDirection="column"
       padding={4}
-      fontSize={2}
+      fontSize={'var(--ab__font-size)'}
       {...flexProps}
       className={join(baseClassName, className)}
       style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, ...style }}

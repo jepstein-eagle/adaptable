@@ -115,7 +115,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
 };
 
 SimpleButton.defaultProps = {
-  px: 2,
-  py: 1,
+  px: null,
+  py: null,
 };
 export default SimpleButton;

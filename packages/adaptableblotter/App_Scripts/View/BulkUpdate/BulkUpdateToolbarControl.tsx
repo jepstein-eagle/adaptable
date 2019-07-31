@@ -125,7 +125,8 @@ class BulkUpdateToolbarControlComponent extends React.Component<
               bodyText={[previewPanel]}
               MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
               useButton={true}
-              triggerAction={'click'}
+              showEvent={'focus'}
+              hideEvent="blur"
             />
           )}
       </Flex>

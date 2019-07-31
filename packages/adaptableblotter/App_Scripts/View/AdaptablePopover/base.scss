@@ -2,7 +2,10 @@
   border-radius: var(--ab-cmp-popover__border-radius);
   border: var(--ab-cmp-popover__border);
   background: var(--ab-cmp-popover__background);
+  color: var(--ab-cmp-popover__color);
   box-shadow: var(--ab-cmp-popover__box-shadow);
+  font-size: var(--ab__font-size);
+  font-family: var(--ab__font-family);
 }
 
 $triangle-size: 10px;

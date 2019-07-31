@@ -77,8 +77,8 @@ class AlertToolbarControlComponent extends React.Component<
             style={{ borderRadius: 'var(--ab__border-radius)' }}
             marginRight={2}
             padding={2}
-            color="white"
-            backgroundColor="darkgray"
+            color="text-on-secondary"
+            backgroundColor="secondary"
             fontSize={'10px'}
             alignItems="center"
           >
@@ -93,7 +93,8 @@ class AlertToolbarControlComponent extends React.Component<
               bodyText={[alertsPanel]}
               MessageType={this.getMessageType()}
               useButton={true}
-              triggerAction={'click'}
+              showEvent={'focus'}
+              hideEvent="blur"
             />
           </Flex>
         )}

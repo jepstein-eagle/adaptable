@@ -44,7 +44,7 @@ export class PlusMinusSettingsWizard
             value={this.state.NudgeValue.toString()}
             type="number"
             placeholder="Enter a Number"
-            onChange={e => this.onColumnDefaultNudgeValueChange(e)}
+            onChange={(e: React.SyntheticEvent) => this.onColumnDefaultNudgeValueChange(e)}
           />
         </Flex>
         <Flex flexDirection="row" marginTop={2}>

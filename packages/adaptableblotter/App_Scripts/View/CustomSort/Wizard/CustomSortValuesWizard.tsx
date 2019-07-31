@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
-import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
+
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import HelpBlock from '../../../components/HelpBlock';
-import Panel from '../../../components/Panel';
+
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<CustomSort> {}
 export interface CustomSortValuesWizardState {
@@ -43,7 +44,7 @@ export class CustomSortValuesWizard
     );
 
     return (
-      <Panel>
+      <WizardPanel>
         <HelpBlock margin={1}>
           Create a Custom Sort by moving items into the 'Custom Sort Order' listbox. The new sort
           for the column will consist first of the items in the 'Custom Sort Order' listbox; all
@@ -60,7 +61,7 @@ export class CustomSortValuesWizard
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
-      </Panel>
+      </WizardPanel>
     );
   }
   OnSelectedValuesChange(newValues: Array<string>) {
