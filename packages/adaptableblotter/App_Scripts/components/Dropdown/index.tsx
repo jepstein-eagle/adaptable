@@ -14,7 +14,7 @@ export type DropdownOption = {
   value: string;
 };
 
-export type DropdownProps = Omit<BoxProps, 'onChange'> & {
+export type DropdownProps = Omit<BoxProps, 'onChange' | 'value'> & {
   autoFocus?: boolean;
   expanded?: boolean;
   disabled?: boolean;
@@ -23,6 +23,7 @@ export type DropdownProps = Omit<BoxProps, 'onChange'> & {
   emptyText?: string;
   placeholder?: ReactNode;
   clearButtonProps?: any;
+  value: string | number | null | undefined;
 
   renderLabel?: (label?: string, option?: DropdownOption) => ReactNode;
 

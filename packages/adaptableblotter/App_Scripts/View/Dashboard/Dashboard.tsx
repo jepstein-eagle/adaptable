@@ -12,7 +12,8 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { Visibility, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
+import { Visibility, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
@@ -23,7 +24,6 @@ import {
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';
-import join from '../../components/utils/join';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -66,6 +66,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             SystemFilters: this.props.SystemFilters,
             ColorPalette: this.props.ColorPalette,
             ColumnSorts: this.props.ColumnSorts,
+
             AccessLevel: accessLevel,
           });
           return (
@@ -91,7 +92,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     );
 
     return (
-      <Box padding={1} paddingTop={0}>
+      <Box padding={1} paddingTop={0} className={'ab-Dashboard'}>
         {this.props.DashboardState.DashboardVisibility != Visibility.Hidden && (
           <div className="ab_no_margin">
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
