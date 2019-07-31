@@ -26,6 +26,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex, Text } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface CellSummaryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {
@@ -101,7 +102,12 @@ class CellSummaryToolbarControlComponent extends React.Component<
         </DropdownButton>
         {this.props.CellSummary != null && (
           <>
-            <Flex flex={1} marginRight={2} justifyContent="center">
+            <Flex
+              flex={1}
+              marginRight={2}
+              justifyContent="center"
+              color={'var(--ab-color-text-on-primary)'}
+            >
               {this.getOperationValue()}
             </Flex>
             {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (

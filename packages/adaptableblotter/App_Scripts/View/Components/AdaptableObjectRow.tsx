@@ -28,7 +28,7 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
       return (
         <Text
           key={index}
-          fontSize={1}
+          fontSize={'var(--ab__font-size)'}
           style={{ flex: colItem.Size }}
           paddingLeft={1}
           paddingRight={1}
