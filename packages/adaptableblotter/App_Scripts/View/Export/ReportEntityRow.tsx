@@ -94,7 +94,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
     let buttons: any = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(report)}
         overrideDisableEdit={isSystemReport}
@@ -108,6 +107,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
     colItems[4].Content = buttons;
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
-import { PanelProps } from '../../../components/Panel';
+import { PanelProps, HeaderProps } from '../../../components/Panel';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Box } from 'rebass';
 
 export interface PanelWithInfoProps extends PanelProps {
   infoBody: any[];
-  cssClassName?: string;
+  headerProps?: HeaderProps;
 }
 
 export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
@@ -16,22 +16,25 @@ export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
     if (this.props.className) {
       className += ' ' + this.props.className;
     }
+    const { headerProps } = this.props;
 
     let headerRow = (
       <Flex flexDirection="row">
         {this.props.header}
 
         <Box marginLeft={2}>
-          <AdaptablePopover
-            cssClassName={this.props.cssClassName || ''}
-            headerText=""
-            bodyText={this.props.infoBody}
-          />
+          <AdaptablePopover headerText="" bodyText={this.props.infoBody} />
         </Box>
       </Flex>
     );
     return (
-      <WizardPanel header={headerRow} className={className} bodyScroll style={this.props.style}>
+      <WizardPanel
+        headerProps={headerProps}
+        header={headerRow}
+        className={className}
+        bodyScroll
+        style={this.props.style}
+      >
         {this.props.children}
       </WizardPanel>
     );

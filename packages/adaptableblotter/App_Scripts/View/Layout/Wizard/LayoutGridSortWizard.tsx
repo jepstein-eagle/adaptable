@@ -62,7 +62,6 @@ export class LayoutGridSortWizard
       return (
         <GridSortRow
           key={index}
-          cssClassName={''}
           AdaptableBlotterObject={null}
           colItems={colItems}
           Columns={this.props.Columns}
@@ -79,20 +78,15 @@ export class LayoutGridSortWizard
       );
     });
 
-    let cssClassName: string = this.props.cssClassName + '-gridsort';
-
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
-        headerText="Sort Information"
-        bsStyle="primary"
-        style={divStyle}
+        headerText={''}
+        variant="default"
         button={addButton}
         bodyProps={{ padding: 0 }}
       >
         {gridSortRows.length > 0 ? (
           <AdaptableObjectCollection
-            cssClassName={cssClassName}
             colItems={colItems}
             items={gridSortRows}
             allowOverflow={true}
@@ -170,8 +164,3 @@ export class LayoutGridSortWizard
     return 1; // some way of knowing to go back 2 steps?
   }
 }
-
-let divStyle: React.CSSProperties = {
-  overflowY: 'auto',
-  height: '500px',
-};

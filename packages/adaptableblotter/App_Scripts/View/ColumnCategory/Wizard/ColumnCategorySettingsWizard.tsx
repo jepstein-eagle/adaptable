@@ -41,7 +41,7 @@ export class ColumnCategorySettingsWizard
       : 'error';
 
     return (
-      <WizardPanel header="Column Category Settings">
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center">
           <Text marginRight={3}>Name: </Text>
 

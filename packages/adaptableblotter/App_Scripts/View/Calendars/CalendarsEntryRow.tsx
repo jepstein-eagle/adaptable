@@ -11,7 +11,6 @@ export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsE
   CurrentCalendar: string;
   onSelect: (calendar: Calendar) => void;
   onShowInformation: (calendar: Calendar) => void;
-  cssClassName: string;
 }
 
 export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {}> {
@@ -45,7 +44,6 @@ export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {
     });
     return (
       <AdaptableObjectRow
-        cssClassName={this.props.cssClassName}
         colItems={colItems}
         style={{ width: '100%', cursor: 'pointer' }}
         onClick={() => this.props.onSelect(this.props.Calendar)}

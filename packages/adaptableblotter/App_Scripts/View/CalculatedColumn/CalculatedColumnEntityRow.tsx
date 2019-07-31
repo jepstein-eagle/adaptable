@@ -35,7 +35,6 @@ export class CalculatedColumnEntityRow extends React.Component<
 
     let buttons: any = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(calculatedColumn)}
         shareClick={() => this.props.onShare()}
@@ -45,6 +44,6 @@ export class CalculatedColumnEntityRow extends React.Component<
     );
     colItems[2].Content = buttons;
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

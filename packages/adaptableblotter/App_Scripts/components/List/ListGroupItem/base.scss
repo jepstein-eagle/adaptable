@@ -1,13 +1,13 @@
 :root {
   --ab-cmp-listgroupitem__width: 100%;
 
-  --ab-cmp-listgroupitem__background: var(--ab-color-lightgray);
-  --ab-cmp-listgroupitem__color: var(--ab-color-textgray);
+  --ab-cmp-listgroupitem__background: var(--ab-color-primary);
+  --ab-cmp-listgroupitem__color: var(--ab-color-text-on-primary);
   --ab-cmp-listgroupitem__border-radius: 0px;
 
-  --ab-cmp-listgroupitem--odd__background: var(--ab-color-almost-white);
-  --ab-cmp-listgroupitem--odd__color: var(--ab-color-textgray);
+  --ab-cmp-listgroupitem--odd__background: var(--ab-color-primarylight);
+  --ab-cmp-listgroupitem--odd__color: var(--ab-color-text-on-primary);
 
-  --ab-cmp-listgroupitem--active__background: var(--ab-color-textgray);
-  --ab-cmp-listgroupitem--active__color: var(--ab-color-white);
+  --ab-cmp-listgroupitem--active__background: var(--ab-color-secondarylight);
+  --ab-cmp-listgroupitem--active__color: var(--ab-color-text-on-secondarylight);
 }

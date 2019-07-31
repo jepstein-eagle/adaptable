@@ -1,4 +1,4 @@
-import { useRef, MutableRefObject, RefObject } from 'react';
+import { useRef, RefObject } from 'react';
 import useProperty from '../utils/useProperty';
 import getAvailableSizeInfo, { BoundingClientRect } from '../utils/getAvailableSizeInfo';
 import { getConstrainRect, ConstrainToType } from '../OverlayTrigger';

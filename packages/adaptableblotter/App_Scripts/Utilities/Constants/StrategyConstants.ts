@@ -102,7 +102,7 @@ export const ReminderGlyph: string = 'alarm';
 export const ShortcutGlyph: string = 'link';
 export const SmartEditGlyph: string = 'edit';
 export const TeamSharingGlyph: string = 'share';
-export const ThemeGlyph: string = 'leaf';
+export const ThemeGlyph: string = 'color-fill';
 export const UserFilterGlyph: string = 'person';
 
 export function getIdForStrategyName(strategyName: string) {

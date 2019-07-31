@@ -37,7 +37,7 @@ export class CalculatedColumnExpressionWizard
       : 'error';
 
     return (
-      <WizardPanel header="Calculated Column Expression" borderRadius="none" border="none">
+      <WizardPanel borderRadius="none" border="none">
         <Textarea
           value={this.state.ColumnExpression}
           placeholder="Enter expression"

@@ -151,6 +151,8 @@ import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnSt
 import { PercentBarTooltip } from './PercentBarTooltip';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
+import { ReactComponentLike } from 'prop-types';
+import icons from '../components/icons';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -725,9 +727,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   // this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
   public setSelectedCells(): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
-    //  const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
+    const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
     //  const rows: any[] = this.gridOptions.api!.getSelectedRows();
 
+    console.log(selected);
+
+    console.log(nodes);
     const columns: IColumn[] = [];
     const selectedCells: GridCell[] = [];
 
@@ -772,6 +777,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // this._onSelectedCellsChanged.Dispatch(this, this);
     this.emit(CELLS_SELECTED_EVENT);
+
+    // todo fire an externral event through event api (doesnt exist yet - and should have row and cell info)
   }
 
   // We deduce the type here, as there is no way to get it through the definition
@@ -2093,12 +2100,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       colMenuItems.push('separator');
 
       this.getState().Menu.ColumnMenu.MenuItems.forEach((x: AdaptableBlotterMenuItem) => {
-        const glyph = this.abContainerElement.ownerDocument.createElement('span');
-        glyph.className = `glyphicon glyphicon-${x.GlyphIcon}`;
+        /*  this was working but isnt any more
+        we need to pass in an image to the menu either as a string or an HTMLElement
+        https://www.ag-grid.com/javascript-grid-column-menu/
+        we *are* able to get the right icon but no idea how to transform this into something taht ag-Grid will accept...
+
+        the property x.Glyphicon IS correct (thanks Radu!) but not sure of next step...
+        */
+
+        const glyphSpan: HTMLSpanElement = this.abContainerElement.ownerDocument.createElement(
+          'span'
+        );
+        glyphSpan.className = `glyphicon glyphicon-${x.GlyphIcon}`;
+
+        const IconCmp = icons[x.GlyphIcon] as ReactComponentLike;
+        //  const icon = IconCmp ? <IconCmp /> : null;
+
         colMenuItems.push({
           name: x.Label,
           action: () => this.dispatchAction(x.Action),
-          icon: glyph,
+          icon: glyphSpan,
         });
       });
       return colMenuItems;

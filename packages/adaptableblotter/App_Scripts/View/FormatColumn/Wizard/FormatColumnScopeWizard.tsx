@@ -28,12 +28,9 @@ export class FormatColumnScopeWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-scope';
-
     return (
-      <WizardPanel header="Choose a column to format">
+      <WizardPanel>
         <ColumnSelector
-          cssClassName={cssClassName}
           SelectedColumnIds={[this.state.ColumnId]}
           ColumnList={this.props.Columns}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}

@@ -68,7 +68,6 @@ class ExportToolbarControlComponent extends React.Component<
 
     let currentReport: Report = this.props.Blotter.api.exportApi.getCurrentReport();
 
-    let cssClassName: string = this.props.cssClassName + '__export';
     let savedReport: Report = allReports.find(s => s.Name == this.props.CurrentReport);
     let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
 
@@ -158,10 +157,11 @@ class ExportToolbarControlComponent extends React.Component<
           onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
           value={currentReport ? currentReport.Name : null}
           showClearButton
+          marginRight={2}
         ></Dropdown>
 
         <DropdownButton
-          mx={2}
+          columns={['label']}
           variant="text"
           disabled={currentReportId == selectReportString}
           items={exportItems}
@@ -203,7 +203,6 @@ class ExportToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.ExportStrategyName}
         glyphicon={StrategyConstants.ExportGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ExportStrategyId)}

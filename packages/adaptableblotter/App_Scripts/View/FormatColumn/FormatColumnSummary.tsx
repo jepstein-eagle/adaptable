@@ -20,7 +20,6 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
@@ -45,8 +44,6 @@ export class FormatColumnSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__formatcolumn';
-
     let formatColumn: FormatColumn = this.props.FormatColumns.find(
       c => c.ColumnId == this.props.SummarisedColumn.ColumnId
     );
@@ -58,7 +55,6 @@ export class FormatColumnSummaryComponent extends React.Component<
       formatColumnRow = (
         <StrategyHeader
           key={StrategyConstants.FormatColumnStrategyName}
-          cssClassName={this.props.cssClassName}
           StrategyId={StrategyConstants.FormatColumnStrategyId}
           StrategySummary={'No Format Column Set'}
           onNew={() => this.onNew()}
@@ -70,13 +66,7 @@ export class FormatColumnSummaryComponent extends React.Component<
       formatColumnRow = (
         <StrategyDetail
           key={StrategyConstants.FormatColumnStrategyName}
-          cssClassName={this.props.cssClassName}
-          Item1={
-            <StrategyProfile
-              cssClassName={this.props.cssClassName}
-              StrategyId={StrategyConstants.FormatColumnStrategyId}
-            />
-          }
+          Item1={<StrategyProfile StrategyId={StrategyConstants.FormatColumnStrategyId} />}
           Item2={<StyleVisualItem Style={formatColumn.Style} />}
           ConfigEnity={formatColumn}
           showShare={this.props.TeamSharingActivated}
@@ -95,7 +85,6 @@ export class FormatColumnSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <FormatColumnWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as FormatColumn}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}

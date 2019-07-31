@@ -55,6 +55,7 @@ class QuickSearchToolbarControlComponent extends React.Component<
           placeholder="Search Text"
           value={this.state.EditedQuickSearchText}
           OnTextChange={x => this.onUpdateQuickSearchText(x)}
+          style={{ height: '100%' }}
         />
       </PanelDashboard>
     );

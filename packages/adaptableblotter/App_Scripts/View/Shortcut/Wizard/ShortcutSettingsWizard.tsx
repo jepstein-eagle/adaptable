@@ -84,10 +84,9 @@ export class ShortcutSettingsWizard
     let currentKeyValue = !this.state.ShortcutKey ? 'select' : this.state.ShortcutKey;
     let currentDynamicResult =
       this.state.ShortcutResult != '' ? this.state.ShortcutResult : 'select';
-    let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <WizardPanel header="Shortcut Settings">
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center">
           <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
             Key:
@@ -104,7 +103,6 @@ export class ShortcutSettingsWizard
             ></Dropdown>
 
             <AdaptablePopover
-              cssClassName={cssClassName}
               headerText={'Shortcut: Key'}
               bodyText={['The keyboard key that, when pressed, triggers the shortcut.']}
             />
@@ -130,7 +128,6 @@ export class ShortcutSettingsWizard
                 ></Dropdown>
 
                 <AdaptablePopover
-                  cssClassName={cssClassName}
                   headerText={'Shortcut: Operation'}
                   bodyText={[
                     "The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell.",
@@ -153,7 +150,6 @@ export class ShortcutSettingsWizard
                 />
 
                 <AdaptablePopover
-                  cssClassName={cssClassName}
                   headerText={'Shortcut: Value'}
                   bodyText={[
                     "The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell.",
@@ -188,7 +184,6 @@ export class ShortcutSettingsWizard
                 </Flex>
 
                 <AdaptablePopover
-                  cssClassName={cssClassName}
                   headerText={'Shortcut: Date Type'}
                   bodyText={[
                     <b>Custom dates</b>,
@@ -233,7 +228,6 @@ export class ShortcutSettingsWizard
                   />
 
                   <AdaptablePopover
-                    cssClassName={cssClassName}
                     headerText={'Shortcut: Dynamic Date'}
                     bodyText={[
                       "The dynamic date that becomes the cell's new value when the shortcut is triggered.",
@@ -257,7 +251,6 @@ export class ShortcutSettingsWizard
                     marginRight={3}
                   />
                   <AdaptablePopover
-                    cssClassName={cssClassName}
                     headerText={'Shortcut: Custom Date'}
                     bodyText={[
                       "The date that becomes the cell's new value when the shortcut is triggered.",

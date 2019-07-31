@@ -48,7 +48,6 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     );
     colItems[3].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
         editClick={() => this.props.onEdit(alertDefinition)}
@@ -58,7 +57,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
       />
     );
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   setExpressionDescription(Alert: AlertDefinition): string {

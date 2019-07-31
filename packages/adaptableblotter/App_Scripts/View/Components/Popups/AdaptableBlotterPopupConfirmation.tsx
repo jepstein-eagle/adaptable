@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../../UIHelper';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';

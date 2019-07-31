@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { Glyphicon } from 'react-bootstrap';
+
 import Panel, { PanelProps } from '../../../../components/Panel';
-import * as StyleConstants from '../../../../Utilities/Constants/StyleConstants';
+
 import { ButtonClose } from '../../Buttons/ButtonClose';
 import { ButtonConfigure } from '../../Buttons/ButtonConfigure';
 import { ButtonMinimise } from '../../Buttons/ButtonMinimise';
 
 import { Flex } from 'rebass';
 import join from '../../../../components/utils/join';
+import { Icon } from '../../../../components/icons';
 
 export interface PanelDashboardProps extends PanelProps {
   headerText: string;
@@ -19,7 +20,7 @@ export interface PanelDashboardProps extends PanelProps {
   showConfigureButton?: boolean;
   showMinimiseButton?: boolean;
   showGlyphIcon?: boolean;
-  cssClassName: string;
+
   useDefaultPanelStyle?: boolean;
 }
 
@@ -37,7 +38,6 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     onConfigure: null,
     onMinimise: null,
     showGlyphIcon: true,
-    cssClassName: '',
   };
   render() {
     const {
@@ -57,16 +57,16 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     let header = (
       <>
         {showMinimiseButton ? (
-          <ButtonMinimise onClick={() => onMinimise()} marginRight={2} />
+          <ButtonMinimise onClick={() => (onMinimise ? onMinimise() : null)} marginRight={2} />
         ) : null}
         {showGlyphIcon ? (
-          <Glyphicon
+          <Icon
             style={{
               alignSelf: 'center',
-              fontSize: 'small',
+
               color: 'var(--ab-cmp-dashboardpanel_header__fill)',
             }}
-            glyph={glyphicon}
+            name={glyphicon}
           />
         ) : null}
 

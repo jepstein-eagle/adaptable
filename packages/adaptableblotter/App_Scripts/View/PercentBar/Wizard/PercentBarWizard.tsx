@@ -15,21 +15,20 @@ export interface PercentBarWizardProps
 export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.PercentBarStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: <PercentBarSelectColumnWizard />,
             },
             {
-              StepName: 'Values',
+              StepName: 'Min / Max Values',
               Index: 1,
               Element: <PercentBarValuesWizard />,
             },

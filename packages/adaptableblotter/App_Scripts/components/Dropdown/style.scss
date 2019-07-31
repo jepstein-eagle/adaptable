@@ -1,5 +1,9 @@
 :root {
-  --ab-cmp-dropdown__border: 1px solid var(--ab-color-gray);
+  --ab-cmp-dropdown__color: var(--ab-color-inputcolor);
+  --ab-cmp-dropdown--empty__color: var(--ab-color-text-on-primary);
+  --ab-cmp-dropdown__border: 1px solid var(--ab-color-inputborder);
   --ab-cmp-dropdown__border-radius: var(--ab__border-radius);
-  --ab-cmp-dropdown__fill: var(--ab__color-darkgray);
+  --ab-cmp-dropdown__fill: var(--ab__color-text-on-primary);
+  --ab-cmp-dropdown__font-size: var(--ab__font-size);
+  --ab-cmp-dropdown__font-family: var(--ab__font-family);
 }

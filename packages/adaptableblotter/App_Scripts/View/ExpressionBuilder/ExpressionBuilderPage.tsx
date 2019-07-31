@@ -7,20 +7,14 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview';
 import {
   ExpressionMode,
-  DistinctCriteriaPairValue,
   QueryBuildStatus,
   QueryTab,
   AccessLevel,
 } from '../../PredefinedConfig/Common/Enums';
-import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ButtonCondition } from '../Components/Buttons/ButtonCondition';
-import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
-import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import SimpleButton from '../../components/SimpleButton';
 import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
@@ -35,7 +29,6 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   // these all need to be ptional because of wizard compatibility - todo: fix...
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
-  cssClassName?: string;
   Columns?: Array<IColumn>;
   Blotter?: IAdaptableBlotter;
 }
@@ -50,12 +43,10 @@ export class ExpressionBuilderPage
   extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState>
   implements AdaptableWizardStep {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__querybuilder';
     let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
     let newButton = (
       <SimpleButton
-        className={cssClassName}
         onClick={() => this.onSelectedColumnChanged()}
         disabled={
           this.props.ExpressionMode == ExpressionMode.SingleColumn ||
@@ -76,8 +67,9 @@ export class ExpressionBuilderPage
 
     return (
       <PanelWithButton
-        headerText="Query Builder"
         button={newButton}
+        headerText=""
+        variant="default"
         bodyProps={{
           style: {
             display: 'flex',
@@ -89,8 +81,7 @@ export class ExpressionBuilderPage
       >
         <Flex flexDirection="row" style={{ height: '100%' }}>
           <ExpressionBuilderConditionSelector
-            ColumnsList={this.props.Columns}
-            cssClassName={cssClassName}
+            ColumnsList={this.props.Columns || []}
             QueryBuildStatus={queryBuildStatus}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
@@ -106,15 +97,14 @@ export class ExpressionBuilderPage
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
             SelectedColumnId={this.state.SelectedColumnId}
             SelectedTab={this.state.SelectedTab}
-            Blotter={this.props.Blotter}
+            Blotter={this.props.Blotter!}
           />
 
           <ExpressionBuilderPreview
             Expression={this.state.Expression}
-            cssClassName={cssClassName}
             UserFilters={this.props.UserFilters}
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
-            ColumnsList={this.props.Columns}
+            ColumnsList={this.props.Columns || []}
             DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
             DeleteUserFilterExpression={(columnId, index) =>
               this.DeleteUserFilterExpression(columnId, index)

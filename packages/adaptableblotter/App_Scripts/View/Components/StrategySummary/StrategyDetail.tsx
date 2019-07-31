@@ -17,7 +17,6 @@ export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetai
   showBold?: boolean;
   showEdit?: boolean;
   showShare?: boolean;
-  cssClassName: string;
 }
 
 export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
@@ -30,7 +29,6 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
     summaryItems.push(<i>{this.props.Item2}</i>);
     summaryItems.push(
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDelete}
         showEdit={this.props.showEdit}
         editClick={() => this.props.onEdit()}
@@ -43,6 +41,6 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
       />
     );
 
-    return <SummaryRowItem cssClassName={this.props.cssClassName} SummaryItems={summaryItems} />;
+    return <SummaryRowItem SummaryItems={summaryItems} />;
   }
 }

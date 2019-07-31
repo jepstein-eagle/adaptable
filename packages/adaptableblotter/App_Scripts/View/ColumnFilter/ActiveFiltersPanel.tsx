@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
@@ -16,7 +15,7 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFiltersPanel> {
   ColumnFilters: ColumnFilter[];
   Columns: IColumn[];
-  cssClassName: string;
+
   AccessLevel: AccessLevel;
   onClear: (columnFilter: ColumnFilter) => void;
   onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
@@ -24,8 +23,6 @@ export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFil
 
 export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps, {}> {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.ACTIVE_FILTERS;
-
     let colItems: IColItem[] = [
       { Content: 'Column', Size: 4 },
       { Content: 'Filter', Size: 5 },
@@ -34,18 +31,18 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
 
     let rowElements: any[] = [];
     this.props.ColumnFilters.forEach((columnFilter: ColumnFilter, index: number) => {
-      rowElements.push(this.createRow(colItems, columnFilter, cssClassName));
+      rowElements.push(this.createRow(colItems, columnFilter));
     });
 
     return (
-      <div className={cssClassName}>
-        <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
-        <div className={cssClassName + StyleConstants.ITEMS_TABLE_BODY}>{rowElements}</div>
+      <div>
+        <PanelWithRow colItems={colItems} />
+        <div>{rowElements}</div>
       </div>
     );
   }
 
-  private createRow(colItems: IColItem[], columnFilter: ColumnFilter, cssClassName: string): any {
+  private createRow(colItems: IColItem[], columnFilter: ColumnFilter): any {
     let rowColItems: IColItem[] = Helper.cloneObject(colItems);
     rowColItems[0].Content = ColumnHelper.getFriendlyNameFromColumnId(
       columnFilter.ColumnId,
@@ -76,13 +73,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
       </span>
     );
 
-    let rowElement = (
-      <AdaptableObjectRow
-        cssClassName={cssClassName}
-        key={columnFilter.ColumnId}
-        colItems={rowColItems}
-      />
-    );
+    let rowElement = <AdaptableObjectRow key={columnFilter.ColumnId} colItems={rowColItems} />;
     return rowElement;
   }
 }

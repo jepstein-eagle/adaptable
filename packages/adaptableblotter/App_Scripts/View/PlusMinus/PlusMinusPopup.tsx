@@ -22,7 +22,6 @@ import { PlusMinusEntityRow } from './PlusMinusEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
@@ -68,9 +67,6 @@ class PlusMinusPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__plusminus';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__plusminus';
-
     let infoBody: any[] = [
       "Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ",
       <i>'+'</i>,
@@ -93,7 +89,6 @@ class PlusMinusPopupComponent extends React.Component<
 
       return (
         <PlusMinusEntityRow
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={x}
           key={index}
@@ -113,7 +108,6 @@ class PlusMinusPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create Plus / Minus Rule"
         AccessLevel={this.props.AccessLevel}
@@ -121,21 +115,16 @@ class PlusMinusPopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.PlusMinusStrategyName}
           bodyProps={{ padding: 0 }}
-          cssClassName={cssClassName}
           button={newButton}
           glyphicon={StrategyConstants.PlusMinusGlyph}
           infoBody={infoBody}
         >
           {PlusMinusRules.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={PlusMinusRules}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={PlusMinusRules} />
           ) : (
             <EmptyContent>
               Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked
@@ -145,7 +134,6 @@ class PlusMinusPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <PlusMinusWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={
                 this.state.EditedAdaptableBlotterObject as PlusMinusRule
               }

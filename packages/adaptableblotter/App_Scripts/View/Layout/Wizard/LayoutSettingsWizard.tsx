@@ -36,10 +36,9 @@ export class LayoutSettingsWizard
     let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
       ? null
       : 'error';
-    let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <WizardPanel header="Layout Settings">
+      <WizardPanel>
         <Flex alignItems="center">
           <Text marginRight={2}>Layout Name: </Text>
 

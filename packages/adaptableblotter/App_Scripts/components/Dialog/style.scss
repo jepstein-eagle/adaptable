@@ -1,6 +1,7 @@
 :root {
-  --ab-cmp-dialog__background: var(--ab-color-white, white);
-  --ab-cmp-dialog-close-button__color: var(--ab-color-textgray);
+  --ab-cmp-dialog__background: var(--ab-color-defaultbackground, white);
+  --ab-cmp-dialog__color: var(--ab-color-text-on-defaultbackground, white);
+  --ab-cmp-dialog-close-button__color: var(--ab-color-text-on-primary);
   --ab-cmp-dialog__border-radius: var(--ab__border-radius);
   --ab-cmp-dialog__min-height: 60vh;
 }

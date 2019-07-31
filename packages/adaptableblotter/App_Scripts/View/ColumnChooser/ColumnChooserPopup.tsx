@@ -21,7 +21,6 @@ interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPo
 
 class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProps, {}> {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__columnchooser';
     let availableValues: any[];
     let selectedValues: any[];
     let masterChildren: IMasterChildren[];
@@ -55,7 +54,6 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
     return (
       <PanelWithImage
         variant="primary"
-        cssClassName={cssClassName}
         header={StrategyConstants.ColumnChooserStrategyName}
         glyphicon={StrategyConstants.ColumnChooserGlyph}
         infoBody={infoBody}
@@ -66,7 +64,6 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
         <Flex padding={2} style={{ width: '100%' }}>
           <DualListBoxEditor
             AvailableValues={availableValues}
-            cssClassName={cssClassName}
             SelectedValues={selectedValues}
             HeaderAvailable="Hidden Columns"
             HeaderSelected="Visible Columns"

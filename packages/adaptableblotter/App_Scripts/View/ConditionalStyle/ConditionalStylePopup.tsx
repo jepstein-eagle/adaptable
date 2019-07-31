@@ -22,7 +22,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
@@ -70,9 +69,6 @@ class ConditionalStylePopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__conditionalstyle';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__conditionalstyle';
-
     let infoBody: any[] = [
       'Conditional Styles enable columns and rows to be given distinct styles according to user rules.',
       <br />,
@@ -90,7 +86,6 @@ class ConditionalStylePopupComponent extends React.Component<
       (conditionalStyle: ConditionalStyle, index) => {
         return (
           <ConditionalStyleEntityRow
-            cssClassName={cssClassName}
             AdaptableBlotterObject={conditionalStyle}
             colItems={colItems}
             key={'CS' + (conditionalStyle.Uuid || index)}
@@ -107,7 +102,6 @@ class ConditionalStylePopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create Conditional Style"
         AccessLevel={this.props.AccessLevel}
@@ -115,12 +109,11 @@ class ConditionalStylePopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.ConditionalStyleStrategyName}
           button={newButton}
           bodyProps={{ padding: 0 }}
-          cssClassName={cssClassName}
           glyphicon={StrategyConstants.ConditionalStyleGlyph}
           infoBody={infoBody}
         >
@@ -130,16 +123,11 @@ class ConditionalStylePopupComponent extends React.Component<
               when a rule set by you is met.
             </EmptyContent>
           ) : (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={conditionalStyles}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={conditionalStyles} />
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <ConditionalStyleWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={
                 this.state.EditedAdaptableBlotterObject as ConditionalStyle
               }

@@ -116,7 +116,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '__quickFilterForm';
     let controlType: string = this.props.CurrentColumn.DataType == DataType.Date ? 'date' : 'text';
 
     return (
@@ -132,12 +131,11 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
                 fontSize: 'x-small',
                 fontWeight: 'lighter',
               }}
-              className={cssClassName}
               autoFocus={false}
               type={controlType}
               placeholder={this.state.placeholder}
               value={this.state.quickFilterFormText}
-              onChange={x => this.OnTextChange((x.target as HTMLInputElement).value)}
+              onChange={(x: any) => this.OnTextChange((x.target as HTMLInputElement).value)}
             />
           )}
       </span>

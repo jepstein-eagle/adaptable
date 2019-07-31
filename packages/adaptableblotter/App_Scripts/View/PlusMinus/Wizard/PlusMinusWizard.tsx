@@ -18,16 +18,15 @@ export interface PlusMinusWizardProps
 export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.PlusMinusStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: (
                 <PlusMinusColumnWizard
@@ -41,7 +40,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
               Element: <PlusMinusSettingsWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 2,
               Element: (
                 <PlusMinusExpressionWizard

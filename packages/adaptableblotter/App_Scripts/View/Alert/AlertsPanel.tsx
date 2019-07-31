@@ -1,6 +1,4 @@
 import * as React from 'react';
-
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
 import ButtonPreviewDelete from '../Components/Buttons/ButtonPreviewDelete';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -17,7 +15,7 @@ import SimpleButton from '../../components/SimpleButton';
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
   Alerts: IAdaptableAlert[];
   ShowPanel: boolean;
-  cssClassName: string;
+
   ShowHeader: boolean;
   onClearAlert: (index: number) => void;
   onClearAllAlerts: () => void;
@@ -30,8 +28,6 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.ALERTS;
-
     let alerts = this.props.Alerts.map((alert: IAdaptableAlert, index: number) => {
       let alertHasheader: boolean = StringExtensions.IsNotNullOrEmpty(alert.Header);
 
@@ -86,7 +82,6 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
       <PanelWithButton
         variant="default"
         bodyProps={{ padding: 0 }}
-        cssClassName={cssClassName}
         headerText={'Alerts'}
         button={clearAllButton}
       >

@@ -15,16 +15,15 @@ export interface CellValidationWizardProps
 export class CellValidationWizard extends React.Component<CellValidationWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.CellValidationStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: <CellValidationSelectColumnWizard />,
             },
@@ -39,12 +38,12 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
               Element: <CellValidationRulesWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 3,
               Element: <CellValidationSelectQueryWizard />,
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 4,
               Element: (
                 <CellValidationExpressionWizard

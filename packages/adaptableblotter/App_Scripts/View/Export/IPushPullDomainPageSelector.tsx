@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 
-import { Glyphicon } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
@@ -13,12 +12,12 @@ import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import ListGroupItem from '../../components/List/ListGroupItem';
 import ListGroup from '../../components/List/ListGroup';
 import ErrorBox from '../../components/ErrorBox';
 import SimpleButton from '../../components/SimpleButton';
+import { Icon } from '../../components/icons';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
@@ -43,7 +42,6 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
     this.state = { SelectedFolder: null, SelectedPage: null };
   }
   render() {
-    let cssClassName: string = StyleConstants.PUSHPULL_PAGE_SELECTOR;
     let itemsElements: any[] = [];
     // this line is total rubbish and just here to get the build to work!
     let tempToFixBuild: Report = this.props.LiveReports.find(
@@ -61,7 +59,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
             }}
             value={x.Name}
           >
-            <Glyphicon glyph="folder-open" /> {x.Name}
+            <Icon name="folder-open" /> {x.Name}
           </ListGroupItem>
         );
         x.Pages.forEach((page: string) => {
@@ -76,7 +74,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
               active={this.state.SelectedPage == page}
               value={page}
             >
-              <Glyphicon glyph="cloud-download" /> {page}
+              <Icon name="cloud-download" /> {page}
             </ListGroupItem>
           );
         });
@@ -89,30 +87,26 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
             }}
             value={x.Name}
           >
-            <Glyphicon glyph="folder-close" /> {x.Name}
+            {/* <Glyphicon glyph="folder-close" />  */}
+            {x.Name}
           </ListGroupItem>
         );
       }
     });
     return (
-      <PanelWithButton
-        cssClassName={cssClassName}
-        headerText="iPushPull Folder and Page Selector"
-        bsStyle="primary"
-        glyphicon="export"
-      >
+      <PanelWithButton headerText="iPushPull Folder and Page Selector" glyphicon="export">
         {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? (
           <ErrorBox>Error getting iPushPull Pages : {this.props.ErrorMsg}</ErrorBox>
         ) : (
           <ListGroup>{itemsElements}</ListGroup>
         )}
         <SimpleButton
-          className="ab_right_modal_button"
           onClick={() => {
             this.props.onCancel();
           }}
         >
-          Cancel <Glyphicon glyph="remove" />
+          Cancel
+          {/* <Glyphicon glyph="remove" />  */}
         </SimpleButton>
         <SimpleButton
           disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
@@ -125,7 +119,8 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
             );
           }}
         >
-          <Glyphicon glyph="user" /> Select
+          {/* <Glyphicon glyph="user" />  */}
+          remove Select
         </SimpleButton>
       </PanelWithButton>
     );

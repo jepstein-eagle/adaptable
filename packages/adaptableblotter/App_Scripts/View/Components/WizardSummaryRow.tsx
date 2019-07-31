@@ -17,12 +17,6 @@ export class WizardSummaryRow extends React.Component<WizardSummaryRowProps<Wiza
     colItems[0].Content = this.props.propertyName;
     colItems[1].Content = this.props.propertyValue;
 
-    return (
-      <AdaptableObjectRow
-        cssClassName={this.props.cssClassName}
-        colItems={colItems}
-        fontSize={'medium'}
-      />
-    );
+    return <AdaptableObjectRow colItems={colItems} fontSize={'medium'} />;
   }
 }

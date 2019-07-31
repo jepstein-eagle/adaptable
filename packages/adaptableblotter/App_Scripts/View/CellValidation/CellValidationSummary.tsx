@@ -18,7 +18,6 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
@@ -45,14 +44,12 @@ export class CellValidationSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__cellvalidation';
     let strategySummaries: any = [];
 
     // title row
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.CellValidationStrategyName}
-        cssClassName={this.props.cssClassName}
         StrategyId={StrategyConstants.CellValidationStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.CellValidations.filter(
@@ -72,7 +69,6 @@ export class CellValidationSummaryComponent extends React.Component<
       if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
         let detailRow = (
           <StrategyDetail
-            cssClassName={this.props.cssClassName}
             key={'CV' + index}
             Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
             Item2={CellValidationHelper.createCellValidationDescription(item, this.props.Columns)}
@@ -94,7 +90,6 @@ export class CellValidationSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <CellValidationWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
               this.state.EditedAdaptableBlotterObject as CellValidationRule
             }

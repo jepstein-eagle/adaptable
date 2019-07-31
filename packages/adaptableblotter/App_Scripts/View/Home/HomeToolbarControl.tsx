@@ -1,15 +1,9 @@
 ﻿import * as React from 'react';
-import { connect, ReactNode } from 'react-redux';
+import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import {
-  Glyphicon,
-  OverlayTrigger,
-  Tooltip,
-  // DropdownButton,
-} from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
@@ -19,7 +13,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ButtonDashboard } from '../Components/Buttons/ButtonDashboard';
+
 import {
   Visibility,
   AccessLevel,
@@ -37,6 +31,7 @@ import Checkbox from '../../components/CheckBox';
 import SimpleButton from '../../components/SimpleButton';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
+import { Icon } from '../../components/icons';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -62,12 +57,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__home';
-    let cssDropdownClassName: string = this.props.cssClassName + '__home__dropdown';
-
-    const functionsGlyph: any = <Glyphicon glyph={'home'} />;
-    const colsGlyph: any = <Glyphicon glyph={'list'} />;
-    const toolbarsGlyph: any = <Glyphicon glyph={'align-justify'} />;
+    const functionsGlyph: any = <Icon name={'home'} />;
+    const colsGlyph: any = <Icon name={'list'} />;
+    const toolbarsGlyph: any = <Icon name={'align-justify'} />;
 
     // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
     let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
@@ -80,7 +72,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       return {
         disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
         onClick: () => this.onClick(menuItem),
-        icon: <Glyphicon glyph={menuItem.GlyphIcon} />,
+        icon: <Icon name={menuItem.GlyphIcon} />,
         label: menuItem.Label,
       };
     });
@@ -172,7 +164,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         variant="text"
         key={'systemstatus'}
         icon={UIHelper.getGlyphForMessageType(this.props.SystemStatus.StatusType as MessageType)}
-        className={cssClassName}
         style={UIHelper.getStyleForMessageType(this.props.SystemStatus.StatusType as MessageType)}
         tooltip={'Status: ' + this.props.SystemStatus.StatusMessage}
         disabled={false}
@@ -186,7 +177,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       <SimpleButton
         tooltip="About"
         icon={'info'}
-        className={cssClassName}
         variant="text"
         onClick={() => this.onClickAbout()}
         AccessLevel={AccessLevel.Full}
@@ -197,7 +187,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let functionsDropdown = (
       <DropdownButton
         variant="text"
-        className={cssDropdownClassName}
         items={menuItems}
         tooltip="Functions"
         key={'dropdown-functions'}
@@ -212,7 +201,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       <DropdownButton
         variant="text"
         collapseOnItemClick={false}
-        className={cssDropdownClassName}
         items={colItems}
         key={'dropdown-cols'}
         id={'dropdown-cols'}
@@ -227,7 +215,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       <DropdownButton
         variant="text"
         collapseOnItemClick={false}
-        className={cssDropdownClassName}
         key={'dropdown-toolbars'}
         id={'dropdown-toolbars'}
         columns={['label']}
@@ -248,23 +235,15 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           y => y.IsVisible && y.StrategyId == x
         );
         if (menuItem) {
-          console.log(menuItem);
-          console.log(menuItem.GlyphIcon);
           return (
-            <OverlayTrigger
-              key={x}
-              overlay={<Tooltip id="tooltipButton"> {menuItem.Label}</Tooltip>}
-            >
-              <SimpleButton
-                icon={menuItem.GlyphIcon}
-                className={cssClassName}
-                variant="text"
-                tooltip={menuItem.Label}
-                disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-                onClick={() => this.onClick(menuItem!)}
-                AccessLevel={AccessLevel.Full}
-              />
-            </OverlayTrigger>
+            <SimpleButton
+              icon={menuItem.GlyphIcon}
+              variant="text"
+              tooltip={menuItem.Label}
+              disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
+              onClick={() => this.onClick(menuItem!)}
+              AccessLevel={AccessLevel.Full}
+            />
           );
         }
       });
@@ -280,7 +259,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     return (
       <PanelDashboard
-        className={cssClassName}
         showCloseButton={false}
         showMinimiseButton={true}
         onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}

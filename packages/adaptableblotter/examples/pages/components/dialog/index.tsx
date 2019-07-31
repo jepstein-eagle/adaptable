@@ -1,6 +1,6 @@
 import Dialog from '../../../../App_Scripts/components/Dialog';
 
-import '../../../../App_Scripts/base-new.scss';
+import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/components/Dialog/base.scss';
 import '../../../../App_Scripts/components/Dialog/style.scss';
 

@@ -39,8 +39,6 @@ class CalendarsPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__calendars';
-
     let infoBody: any[] = [
       'Choose which region Holiday Calendars you wish to use.',
       <br />,
@@ -57,7 +55,6 @@ class CalendarsPopupComponent extends React.Component<
     let allCalendars = this.props.AvailableCalendars.map((calendar: Calendar) => {
       return (
         <CalendarsEntryRow
-          cssClassName={cssClassName}
           Calendar={calendar}
           key={calendar.Name}
           onSelect={calendar => this.props.onSelectCalendar(calendar)}
@@ -78,7 +75,6 @@ class CalendarsPopupComponent extends React.Component<
         : this.state.DisplayedCalendar.CalendarEntries.map((calendarEntry: CalendarEntry) => {
             return (
               <CalendarEntryItem
-                cssClassName={cssClassName}
                 CalendarEntry={calendarEntry}
                 key={calendarEntry.HolidayName + calendarEntry.HolidayDate}
               />
@@ -87,16 +83,13 @@ class CalendarsPopupComponent extends React.Component<
 
     return (
       <PanelWithImage
-        cssClassName={cssClassName}
         header={StrategyConstants.CalendarStrategyName}
         variant="primary"
         glyphicon={StrategyConstants.CalendarGlyph}
         infoBody={infoBody}
       >
         <PanelWithRow
-          cssClassName={cssClassName}
           colItems={allCalenderColItems}
-          bsStyle="info"
           borderRadius="none"
           border="none"
           className="ab_preview_panel"
@@ -108,7 +101,6 @@ class CalendarsPopupComponent extends React.Component<
             modal
             isOpen={this.state.DisplayedCalendar != null}
             onDismiss={() => this.closeInformationModal()}
-            className={cssClassName}
           >
             <Panel
               bodyProps={{ padding: 0 }}
@@ -124,7 +116,6 @@ class CalendarsPopupComponent extends React.Component<
                   bodyScroll
                   border="none"
                   borderRadius="none"
-                  cssClassName={cssClassName}
                   colItems={calenderEntryColItems}
                   variant="primary"
                 />

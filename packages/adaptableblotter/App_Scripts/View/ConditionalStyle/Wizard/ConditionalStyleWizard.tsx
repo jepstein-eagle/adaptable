@@ -19,11 +19,10 @@ export interface ConditionalStyleWizardProps
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.ConditionalStyleStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
@@ -45,7 +44,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               ),
             },
             {
-              StepName: 'Query',
+              StepName: 'Query Builder',
               Index: 2,
               Element: (
                 <ConditionalStyleExpressionWizard

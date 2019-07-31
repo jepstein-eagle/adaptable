@@ -5,13 +5,12 @@ import join from '../utils/join';
 
 export const baseClassName = 'ab-Panel';
 
+export interface HeaderProps extends FlexProps {}
 export type PanelProps = HTMLProps<HTMLElement> & {
   header?: ReactNode | string;
-  headerProps?: FlexProps;
+  headerProps?: HeaderProps;
   bodyProps?: BoxProps;
-  bsStyle?: string;
   variant?: 'default' | 'primary';
-  bsSize?: string;
   border?: string | number;
   borderRadius?: string | number;
   bodyScroll?: string | boolean;
@@ -32,7 +31,6 @@ const Header = ({
     <Flex
       flexDirection="row"
       alignItems="center"
-      fontSize={2}
       {...headerProps}
       style={{ ...style, ...headerProps.style }}
       className={join(`${baseClassName}__header`, `${baseClassName}__header--variant-${variant}`)}

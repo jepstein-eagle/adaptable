@@ -32,10 +32,8 @@ export class CellValidationActionWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-action';
-
     return (
-      <WizardPanel header="Action When Validation Fails">
+      <WizardPanel>
         <Flex flexDirection="column" padding={2}>
           <HelpBlock>
             Disallow all cell edits that break the validation rule - with no override available.

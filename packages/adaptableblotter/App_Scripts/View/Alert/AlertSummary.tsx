@@ -16,7 +16,6 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
@@ -38,14 +37,12 @@ export class AlertSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__Alert';
     let strategySummaries: any = [];
 
     // title row
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.AlertStrategyName}
-        cssClassName={this.props.cssClassName}
         StrategyId={StrategyConstants.AlertStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId),
@@ -63,7 +60,6 @@ export class AlertSummaryComponent extends React.Component<
       if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
         let detailRow = (
           <StrategyDetail
-            cssClassName={this.props.cssClassName}
             key={'CV' + index}
             Item1={'something here?'}
             Item2={AlertHelper.createAlertDescription(item, this.props.Columns)}
@@ -85,7 +81,6 @@ export class AlertSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <AlertWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
               this.state.EditedAdaptableBlotterObject as AlertDefinition
             }

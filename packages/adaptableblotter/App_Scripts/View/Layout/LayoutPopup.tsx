@@ -20,7 +20,6 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
@@ -58,11 +57,6 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__layout';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__layout';
-
-    let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName);
-
     let infoBody: any[] = [
       'Create layouts - groups of column order, visibility and sorts.',
       <br />,
@@ -82,7 +76,6 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         return (
           <LayoutEntityRow
             key={x.Uuid}
-            cssClassName={cssClassName}
             colItems={colItems}
             IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
             AdaptableBlotterObject={x}
@@ -112,9 +105,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          cssClassName={cssClassName}
           headerText={StrategyConstants.LayoutStrategyName}
           infoBody={infoBody}
           button={newSearchButton}
@@ -122,18 +114,13 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
           bodyProps={{ padding: 0 }}
         >
           {LayoutRows.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={LayoutRows}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={LayoutRows} />
           ) : (
             <EmptyContent>Click 'New' to start creating layouts.</EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <LayoutWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
               ConfigEntities={this.props.Layouts}
               ModalContainer={this.props.ModalContainer}

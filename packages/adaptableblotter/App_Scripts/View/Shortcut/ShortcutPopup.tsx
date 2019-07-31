@@ -21,7 +21,6 @@ import {
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import Helper from '../../Utilities/Helpers/Helper';
 import EmptyContent from '../../components/EmptyContent';
@@ -46,9 +45,6 @@ class ShortcutPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__shortcut';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__shortcut';
-
     let infoBody: any[] = [
       'Use shortcuts to replace frequently entered text (in numeric or date columns) with a single keystroke.',
       <br />,
@@ -77,7 +73,6 @@ class ShortcutPopupComponent extends React.Component<
     let shortcuts = this.props.Shortcuts.map((shortcut: Shortcut, index: number) => {
       return (
         <ShortcutEntityRow
-          cssClassName={cssClassName}
           AdaptableBlotterObject={shortcut}
           key={'ns' + index}
           onEdit={null}
@@ -98,7 +93,6 @@ class ShortcutPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create New Shortcut"
         AccessLevel={this.props.AccessLevel}
@@ -108,9 +102,8 @@ class ShortcutPopupComponent extends React.Component<
     let shortcut: Shortcut = this.state.EditedAdaptableBlotterObject as Shortcut;
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          cssClassName={cssClassName}
           headerText={StrategyConstants.ShortcutStrategyName}
           className="ab_main_popup"
           button={newButton}
@@ -119,18 +112,13 @@ class ShortcutPopupComponent extends React.Component<
           bodyProps={{ padding: 0 }}
         >
           {shortcuts.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={shortcuts}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={shortcuts} />
           ) : (
             <EmptyContent>Click 'New' to add a new Shortcut.</EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <ShortcutWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={shortcut}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}

@@ -21,7 +21,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
@@ -70,9 +69,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__Chart';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__Chart';
-
     let infoBody: any[] = ['Create Charts to view your grid data visually.'];
 
     let colItems: IColItem[] = [
@@ -86,7 +82,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     let Charts = this.props.ChartDefinitions.map((Chart: ChartDefinition, index) => {
       return (
         <ChartEntityRow
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={Chart}
           key={Chart.Name}
@@ -130,7 +125,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
         headerText={StrategyConstants.ChartStrategyName}
         infoBody={infoBody}
         button={dropdownButton}
@@ -139,11 +133,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         glyphicon={StrategyConstants.ChartGlyph}
       >
         {Charts.length > 0 ? (
-          <AdaptableObjectCollection
-            cssClassName={cssClassName}
-            colItems={colItems}
-            items={Charts}
-          />
+          <AdaptableObjectCollection colItems={colItems} items={Charts} />
         ) : (
           <EmptyContent>
             <p>Click 'New' to create a new Chart.</p>
@@ -156,7 +146,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           <div>
             {editedChartDefinition.ChartType == ChartType.CategoryChart ? (
               <CategoryChartWizard
-                cssClassName={cssWizardClassName}
                 EditedAdaptableBlotterObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
@@ -173,7 +162,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
               />
             ) : (
               <PieChartWizard
-                cssClassName={cssClassName}
                 EditedAdaptableBlotterObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}

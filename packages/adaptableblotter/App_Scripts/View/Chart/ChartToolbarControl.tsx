@@ -41,7 +41,6 @@ interface ChartToolbarControlComponentProps
 class ChartToolbarControlComponent extends React.Component<ChartToolbarControlComponentProps, {}> {
   render() {
     const selectChartString: string = 'Select a Chart';
-    let cssClassName: string = this.props.cssClassName + '__Chart';
 
     let currentChartDefinitionName =
       this.props.CurrentChartDefinition == null
@@ -133,7 +132,6 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.ChartStrategyName}
         glyphicon={StrategyConstants.ChartGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ChartStrategyId)}

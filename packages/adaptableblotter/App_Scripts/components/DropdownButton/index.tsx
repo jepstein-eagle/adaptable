@@ -47,10 +47,8 @@ const DropdownButton = (props: DropdownButtonProps) => {
   let {
     columns,
     overlayProps,
-
     listOffset = 10,
     collapseOnItemClick = true,
-
     idProperty = 'id',
     isItemDisabled,
     items,

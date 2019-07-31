@@ -46,7 +46,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '__columnfilter';
     let collapsedText = ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters)
       ? 'No Filters'
       : ArrayExtensions.hasOneItem(this.props.ColumnFilters)
@@ -55,7 +54,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
 
     let activeFiltersPanel = (
       <ActiveFiltersPanel
-        cssClassName={cssClassName}
         Columns={this.props.Columns}
         ColumnFilters={this.props.ColumnFilters}
         AccessLevel={this.props.AccessLevel}
@@ -77,7 +75,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
         {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
           <>
             <AdaptablePopover
-              cssClassName={cssClassName}
               headerText=""
               bodyText={[activeFiltersPanel]}
               tooltipText={'Show Filter Details'}
@@ -109,7 +106,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.ColumnFilterStrategyName}
         glyphicon={StrategyConstants.ColumnFilterGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)}

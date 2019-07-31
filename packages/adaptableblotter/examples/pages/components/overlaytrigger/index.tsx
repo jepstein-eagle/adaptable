@@ -1,6 +1,6 @@
 import OverlayTrigger from '../../../../App_Scripts/components/OverlayTrigger';
 
-import '../../../../App_Scripts/base-new.scss';
+import '../../../../App_Scripts/base.scss';
 
 import React, { useState } from 'react';
 import { Button, Box } from 'rebass';

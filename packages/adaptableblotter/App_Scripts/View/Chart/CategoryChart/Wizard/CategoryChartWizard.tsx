@@ -21,11 +21,10 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
     let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.ChartStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[

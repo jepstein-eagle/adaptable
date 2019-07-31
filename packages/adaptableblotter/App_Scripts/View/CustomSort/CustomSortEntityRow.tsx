@@ -21,7 +21,6 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
     colItems[1].Content = <EntityRowItem Content={customSort.SortedValues.join(', ')} />;
     colItems[2].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(customSort)}
         shareClick={() => this.props.onShare()}
@@ -31,6 +30,6 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
       />
     );
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

@@ -211,7 +211,7 @@ export function getColorByMessageType(messageType: MessageType): string {
 }
 
 export function getStyleForStatusColour(statusColour: StatusColour): CSSProperties {
-  let result;
+  let result: any;
 
   switch (statusColour) {
     case StatusColour.Blue:
@@ -242,7 +242,7 @@ export function getStyleForStatusColour(statusColour: StatusColour): CSSProperti
 }
 
 export function getStyleForMessageType(messageType: MessageType): CSSProperties {
-  let result;
+  let result: any;
 
   switch (messageType) {
     case MessageType.Info:

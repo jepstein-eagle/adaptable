@@ -1,19 +1,24 @@
 .ab-DropdownButton {
   position: relative;
+  
 }
 .ab-DropdownButton__list {
   text-align: start;
+  
   padding: var(--ab-space-1) 0;
   box-shadow: var(--ab-cmp-dropdownbutton-list__box-shadow);
 
 }
 .ab-DropdownButton__content {
+  font-family: var(--ab__font-family);
   max-width: 100%;
   width: 100%;
+  border-spacing: 0;
 }
 .ab-DropdownButton__list-item {
   fill: currentColor;
   color: var(--ab-cmp-dropdownbutton-list-item__color);
+
 }
 .ab-DropdownButton__list-item--not-clickable {
   cursor: auto;
@@ -23,6 +28,7 @@
   background: var(--ab-cmp-dropdownbutton-list-item-hover__background);
   color: var(--ab-cmp-dropdownbutton-list-item-hover__color);
   fill: currentColor;
+  cursor: pointer;
   .glyphicon.glyphicon {
     color: inherit;
   }

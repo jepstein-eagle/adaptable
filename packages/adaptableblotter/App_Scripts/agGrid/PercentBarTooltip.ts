@@ -12,8 +12,8 @@ export class PercentBarTooltip implements ITooltipComp {
     //  console.log(data.changeOnYear);
 
     // eGui.classList.add('custom-tooltip');
-    //eGui.style['background-color'] = color;
-    eGui.style.backgroundColor = 'white';
+    // eGui.style['background-color'] = color;
+    eGui.style.backgroundColor = 'var(--ab-color-defaultbackground)';
     eGui.style.position = 'absolute';
     eGui.style.width = '50px';
     eGui.style.height = '20px';
@@ -22,10 +22,11 @@ export class PercentBarTooltip implements ITooltipComp {
     eGui.style.opacity = '1';
     eGui.style.transition = 'opacity 1s';
 
-    eGui.innerHTML = '<p><span class"name">' + data.changeOnYear + '</span></p>';
+    eGui.innerHTML = `<p><span class"name">${data.changeOnYear}</span></p>`;
 
     this.eGui = eGui;
   }
+
   // gets called once when grid ready to insert the element
   getGui(): HTMLElement {
     //  console.log('getting gui');

@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -10,6 +9,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Flex, Box } from 'rebass';
 import Dialog from '../../components/Dialog';
 import SimpleButton from '../../components/SimpleButton';
+import Panel from '../../components/Panel';
 
 export interface IWizardStepInfo {
   StepName: string;
@@ -25,7 +25,6 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
   StepStartIndex?: number;
   FriendlyName?: string;
   ModalContainer: HTMLElement;
-  cssClassName: string;
   canFinishWizard: Function;
   Blotter: IAdaptableBlotter;
   Columns: Array<IColumn>;
@@ -81,7 +80,6 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
   }
 
   render() {
-    let cssClassName: string = StyleConstants.AB_STYLE;
     let wizardStepNames: string[] = ArrayExtensions.RetrieveDistinct(
       this.props.Steps.map(x => {
         return x.StepName;
@@ -92,35 +90,31 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       <Dialog
         modal
         isOpen={true}
+        showCloseButton={false}
         onDismiss={() => (this.props.onHide ? this.props.onHide() : null)}
-        className={cssClassName + StyleConstants.BASE}
       >
         <Flex
           flexDirection="column"
           style={{ height: '100%', width: '70vw', maxWidth: 800, maxHeight: '80vh' }}
-          className={cssClassName + StyleConstants.WIZARD_BASE}
         >
-          <Box
-            style={{ fontWeight: 600 }}
-            padding={2}
-            className={cssClassName + StyleConstants.WIZARD_HEADER}
+          <Panel
+            header={this.props.FriendlyName}
+            border="none"
+            borderRadius="none"
+            variant="primary"
           >
             <WizardLegend
               StepNames={wizardStepNames}
               ActiveStepName={this.stepName}
-              FriendlyName={this.props.FriendlyName}
+              FriendlyName={''}
               CanShowAllSteps={this.canFinishWizard()}
               onStepButtonClicked={s => this.onStepButtonClicked(s)}
             />
-          </Box>
-          <Flex
-            style={{ flex: 1 }}
-            flexDirection="column"
-            className={cssClassName + StyleConstants.WIZARD_BODY}
-          >
+          </Panel>
+          <Flex style={{ flex: 1 }} flexDirection="column">
             {this.state.ActiveState}
           </Flex>
-          <Flex flexDirection="row" padding={2} backgroundColor="lightgray">
+          <Flex flexDirection="row" padding={2} backgroundColor="primary">
             <SimpleButton
               tone="neutral"
               variant="text"
@@ -128,7 +122,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               tooltip="Close wizard"
               AccessLevel={AccessLevel.Full}
             >
-              CLOSE WIZARD
+              CLOSE
             </SimpleButton>
             <div style={{ flex: 1 }} />
             <SimpleButton
@@ -230,6 +224,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
   //So we inject everything needed for the Wizard
   private cloneWizardStep(step: JSX.Element): JSX.Element {
+    console.log(step);
     return React.cloneElement(step, {
       ref: (Element: AdaptableWizardStep) => {
         this.ActiveStep = Element;
@@ -238,7 +233,6 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       Data: this.props.Data,
       UpdateGoBackState: () => this.ForceUpdateGoBackState(),
       Blotter: this.props.Blotter,
-      cssClassName: this.props.cssClassName,
       Columns: this.props.Columns,
     });
   }

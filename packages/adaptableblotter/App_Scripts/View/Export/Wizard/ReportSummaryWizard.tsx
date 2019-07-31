@@ -22,8 +22,6 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     super(props);
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let scheduleDescription = this.props.Data.AutoExport
       ? ' (' + UIHelper.getScheduleDescription(this.props.Data.AutoExport.Schedule) + ')'
       : 'None';
@@ -43,12 +41,11 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ExportStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

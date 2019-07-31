@@ -19,7 +19,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
@@ -63,9 +62,6 @@ class FormatColumnPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__formatcolumn';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__formatcolumn';
-
     let infoBody: any[] = [
       'Format a column so it styles with the colours and font properties that you provide.',
       <br />,
@@ -84,7 +80,6 @@ class FormatColumnPopupComponent extends React.Component<
       return (
         <FormatColumnEntityRow
           key={formatColumn.Uuid}
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={formatColumn}
           Columns={this.props.Columns}
@@ -106,9 +101,8 @@ class FormatColumnPopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          cssClassName={cssClassName}
           headerText={StrategyConstants.FormatColumnStrategyName}
           button={newButton}
           glyphicon={StrategyConstants.FormatColumnGlyph}
@@ -118,16 +112,11 @@ class FormatColumnPopupComponent extends React.Component<
           {this.props.FormatColumns.length == 0 ? (
             <EmptyContent>Click 'New' to create a new column format.</EmptyContent>
           ) : (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={FormatColumns}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={FormatColumns} />
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <FormatColumnWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as FormatColumn}
               ModalContainer={this.props.ModalContainer}
               ColorPalette={this.props.ColorPalette}

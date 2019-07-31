@@ -11,8 +11,9 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+
 import { UserTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import DropdownButton from '../../components/DropdownButton';
 
 interface ThemeToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ThemeToolbarControlComponent> {
@@ -24,22 +25,18 @@ interface ThemeToolbarControlComponentProps
 
 class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlComponentProps, {}> {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '__Theme';
     let allThemes = [].concat(this.props.SystemThemes).concat(
       this.props.UserThemes.map(x => {
         return x.Name;
       })
     );
 
-    let themes: any[] = allThemes
-      .filter(s => s != this.props.CurrentTheme)
-      .map((search, index) => {
-        return (
-          <MenuItem key={index} eventKey={index} onClick={() => this.onSelectTheme(search)}>
-            {search}
-          </MenuItem>
-        );
-      });
+    let themes: any[] = allThemes.map((search, index) => {
+      return {
+        label: search,
+        onClick: () => this.onSelectTheme(search),
+      };
+    });
 
     let content = (
       <div
@@ -47,21 +44,14 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
           this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
         }
       >
-        <DropdownButton
-          style={{ minWidth: '100px' }}
-          className={cssClassName}
-          bsStyle={'default'}
-          title={this.props.CurrentTheme}
-          id="themeDropDown"
-        >
-          {themes}
+        <DropdownButton style={{ minWidth: '100px' }} id="themeDropDown" items={themes}>
+          {this.props.CurrentTheme}
         </DropdownButton>
       </div>
     );
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.ThemeStrategyName}
         glyphicon={StrategyConstants.ThemeGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)}

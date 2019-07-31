@@ -20,7 +20,6 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
@@ -49,14 +48,12 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     this.state = UIHelper.getEmptyConfigState();
   }
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__conditionalstyle';
     let strategySummaries: any = [];
 
     // title row
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.ConditionalStyleStrategyName}
-        cssClassName={this.props.cssClassName}
         StrategyId={StrategyConstants.ConditionalStyleStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.ConditionalStyles.filter(
@@ -81,7 +78,6 @@ export class ConditionalStyleSummaryComponent extends React.Component<
       ) {
         let detailRow = (
           <StrategyDetail
-            cssClassName={this.props.cssClassName}
             key={'CS' + index}
             Item1={<StyleVisualItem Style={item.Style} />}
             Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)}
@@ -103,7 +99,6 @@ export class ConditionalStyleSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <ConditionalStyleWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
               this.state.EditedAdaptableBlotterObject as ConditionalStyle
             }

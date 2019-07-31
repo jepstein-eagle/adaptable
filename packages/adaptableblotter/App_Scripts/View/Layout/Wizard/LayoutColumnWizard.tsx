@@ -9,6 +9,8 @@ import { Helper } from '../../../Utilities/Helpers/Helper';
 import { SHORTCUT_ADD } from '../../../Redux/ActionsReducers/ShortcutRedux';
 import { Layout } from '../../../PredefinedConfig/RunTimeState/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
 export interface LayoutColumnWizardState {
@@ -38,25 +40,18 @@ export class LayoutColumnWizard
       <br />,
       "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically.",
     ];
-    let cssClassName: string = this.props.cssClassName + '-column';
 
     return (
-      <PanelWithInfo
-        cssClassName={cssClassName}
-        header={'Choose columns for the Layout'}
-        bsStyle="primary"
-        infoBody={infoBody}
-      >
+      <WizardPanel>
         <DualListBoxEditor
           AvailableValues={this.props.Columns.map(x => x.FriendlyName)}
-          cssClassName={cssClassName}
           SelectedValues={this.state.SelectedColumns}
           HeaderAvailable="Available Columns"
           HeaderSelected="Columns in Layout"
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
-      </PanelWithInfo>
+      </WizardPanel>
     );
   }
   OnSelectedValuesChange(newValues: Array<string>) {

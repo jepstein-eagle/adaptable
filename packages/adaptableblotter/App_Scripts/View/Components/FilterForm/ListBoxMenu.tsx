@@ -1,9 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import { Glyphicon } from 'react-bootstrap';
+
 import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/AdaptableBlotterMenu';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
+import { Icon } from '../../../components/icons';
 
 export interface ListBoxMenuProps extends ListGroupProps {
   MenuItems: AdaptableBlotterMenuItem[];
@@ -23,7 +24,7 @@ export class ListBoxMenu extends React.Component<ListBoxMenuProps, ListBoxMenuSt
     let menuItems = this.props.MenuItems.map((menuItem: AdaptableBlotterMenuItem) => {
       return (
         <ListGroupItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
-          <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
+          <Icon name={menuItem.GlyphIcon} /> {menuItem.Label}
         </ListGroupItem>
       );
     });

@@ -91,7 +91,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
         }
       />
     );
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   onActionChange(value: any) {

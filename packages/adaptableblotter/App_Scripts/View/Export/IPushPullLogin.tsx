@@ -3,13 +3,12 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { ControlLabel, Button, FormControl, FormGroup, Glyphicon } from 'react-bootstrap';
+
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import HelpBlock from '../../components/HelpBlock';
 
 interface IPushPullLoginProps extends StrategyViewPopupProps<IPushPullLoginComponent> {
@@ -32,49 +31,50 @@ class IPushPullLoginComponent extends React.Component<
     this.state = { Login: null, Password: null };
   }
   render() {
-    let cssClassName: string = StyleConstants.PUSHPULL_LOGIN;
-    return (
-      <PanelWithButton
-        cssClassName={cssClassName}
-        headerText="iPushPull Login"
-        bsStyle="primary"
-        glyphicon="export"
-      >
-        <FormGroup
-          controlId={'formEmail'}
-          validationState={StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? 'error' : null}
-        >
-          <ControlLabel>Email address</ControlLabel>
-          <Input onChange={e => this.onLoginChange(e)} type="email" placeholder="Enter email" />
-        </FormGroup>
-        <FormGroup
-          controlId={'formPassword'}
-          validationState={StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? 'error' : null}
-        >
-          <ControlLabel>Password</ControlLabel>
-          <FormControl type="password" onChange={e => this.onPasswordChange(e)} />
-          <HelpBlock>{this.props.ErrorMsg}</HelpBlock>
-        </FormGroup>
-        <Button
-          className="ab_right_modal_button"
-          onClick={() => {
-            this.props.onCancel();
-          }}
-        >
-          Cancel <Glyphicon glyph="remove" />
-        </Button>
-        <Button
-          disabled={StringExtensions.IsNullOrEmpty(this.state.Password)}
-          className="ab_right_modal_button"
-          bsStyle="primary"
-          onClick={() => {
-            this.props.onLogin(this.state.Login, this.state.Password);
-          }}
-        >
-          <Glyphicon glyph="user" /> Login
-        </Button>
-      </PanelWithButton>
-    );
+    return <div>TODO</div>;
+    // let cssClassName: string = StyleConstants.PUSHPULL_LOGIN;
+    // return (
+    //   <PanelWithButton
+    //
+    //     headerText="iPushPull Login"
+    //     bsStyle="primary"
+    //     glyphicon="export"
+    //   >
+    //     <FormGroup
+    //       controlId={'formEmail'}
+    //       validationState={StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? 'error' : null}
+    //     >
+    //       <ControlLabel>Email address</ControlLabel>
+    //       <Input onChange={e => this.onLoginChange(e)} type="email" placeholder="Enter email" />
+    //     </FormGroup>
+    //     <FormGroup
+    //       controlId={'formPassword'}
+    //       validationState={StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? 'error' : null}
+    //     >
+    //       <ControlLabel>Password</ControlLabel>
+    //       <FormControl type="password" onChange={e => this.onPasswordChange(e)} />
+    //       <HelpBlock>{this.props.ErrorMsg}</HelpBlock>
+    //     </FormGroup>
+    //     <Button
+    //       className="ab_right_modal_button"
+    //       onClick={() => {
+    //         this.props.onCancel();
+    //       }}
+    //     >
+    //       Cancel <Glyphicon glyph="remove" />
+    //     </Button>
+    //     <Button
+    //       disabled={StringExtensions.IsNullOrEmpty(this.state.Password)}
+    //       className="ab_right_modal_button"
+    //       bsStyle="primary"
+    //       onClick={() => {
+    //         this.props.onLogin(this.state.Login, this.state.Password);
+    //       }}
+    //     >
+    //       <Glyphicon glyph="user" /> Login
+    //     </Button>
+    //   </PanelWithButton>
+    // );
   }
 
   private onLoginChange(event: React.FormEvent<any>) {

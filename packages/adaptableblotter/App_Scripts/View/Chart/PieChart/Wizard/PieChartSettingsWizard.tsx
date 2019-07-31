@@ -39,7 +39,7 @@ export class PieChartSettingsWizard
   }
   render(): any {
     return (
-      <WizardPanel header="Chart Definition Settings">
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center">
           <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
             Name:

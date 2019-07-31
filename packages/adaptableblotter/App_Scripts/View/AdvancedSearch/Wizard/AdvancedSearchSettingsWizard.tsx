@@ -37,7 +37,7 @@ export class AdvancedSearchSettingsWizard
   }
   render(): any {
     return (
-      <WizardPanel header="Advanced Search Settings">
+      <WizardPanel>
         <Flex alignItems="center" flexDirection="row">
           <Box>Search Name:</Box>
           <Input

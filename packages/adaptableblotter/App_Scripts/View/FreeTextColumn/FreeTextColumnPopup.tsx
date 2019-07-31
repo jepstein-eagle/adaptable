@@ -19,7 +19,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import EmptyContent from '../../components/EmptyContent';
@@ -61,9 +60,6 @@ class FreeTextColumnPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__FreeTextcolumn';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__FreeTextcolumn';
-
     let infoBody: any[] = [
       'A FreeText Column is one where you can insert any values you wish (e.g.comments).',
       <br />,
@@ -82,7 +78,6 @@ class FreeTextColumnPopupComponent extends React.Component<
         return (
           <FreeTextColumnEntityRow
             key={FreeTextColumn.Uuid}
-            cssClassName={cssClassName}
             colItems={colItems}
             AdaptableBlotterObject={FreeTextColumn}
             Columns={this.props.Columns}
@@ -98,7 +93,6 @@ class FreeTextColumnPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create FreeText Column"
         AccessLevel={this.props.AccessLevel}
@@ -106,30 +100,22 @@ class FreeTextColumnPopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          cssClassName={cssClassName}
           headerText={StrategyConstants.FreeTextColumnStrategyName}
           button={newButton}
           bodyProps={{ padding: 0 }}
-          bsStyle="primary"
-          className="ab_main_popup"
           glyphicon={StrategyConstants.FreeTextColumnGlyph}
           infoBody={infoBody}
         >
           {this.props.FreeTextColumns.length == 0 ? (
             <EmptyContent>Click 'New' to create a new column FreeText.</EmptyContent>
           ) : (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={freeTextColumns}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={freeTextColumns} />
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <FreeTextColumnWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={
                 this.state.EditedAdaptableBlotterObject as FreeTextColumn
               }

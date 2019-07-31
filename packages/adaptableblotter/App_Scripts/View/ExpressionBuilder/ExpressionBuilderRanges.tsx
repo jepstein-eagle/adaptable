@@ -27,7 +27,6 @@ export interface ExpressionBuilderRangesPropsExpressionBuilderRanges
   Ranges: Array<QueryRange>;
   Columns: Array<IColumn>;
   onRangesChange: (Ranges: Array<QueryRange>) => void;
-  cssClassName: string;
 }
 
 export class ExpressionBuilderRanges extends React.Component<
@@ -35,8 +34,6 @@ export class ExpressionBuilderRanges extends React.Component<
   {}
 > {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__queryranges';
-
     let selectedColumnDataType = this.props.SelectedColumn.DataType;
     let addButton = (
       <SimpleButton margin={2} icon="plus" variant="text" onClick={() => this.addRange()}>
@@ -103,7 +100,6 @@ export class ExpressionBuilderRanges extends React.Component<
 
             {range.Operand1Type == RangeOperandType.Column ? (
               <ColumnSelector
-                cssClassName={cssClassName}
                 SelectedColumnIds={[range.Operand1]}
                 ColumnList={this.props.Columns.filter(
                   c =>
@@ -132,7 +128,6 @@ export class ExpressionBuilderRanges extends React.Component<
 
               {range.Operand2Type == RangeOperandType.Column ? (
                 <ColumnSelector
-                  cssClassName={cssClassName}
                   SelectedColumnIds={[range.Operand2]}
                   ColumnList={this.props.Columns.filter(
                     c =>

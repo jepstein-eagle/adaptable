@@ -6,10 +6,10 @@ const Table = styled.table`
     padding: var(--ab-space-2);
   }
   th {
-    border-bottom: 2px solid var(--ab-color-darkgray);
+    border-bottom: 2px solid var(--ab-color-primarydark);
   }
   tr:not(last-child) td {
-    border-bottom: 1px solid var(--ab-color-lightgray);
+    border-bottom: 1px solid var(--ab-color-primarylight);
   }
 `;
 

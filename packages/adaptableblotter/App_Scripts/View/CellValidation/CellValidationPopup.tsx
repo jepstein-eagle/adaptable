@@ -22,7 +22,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -67,9 +66,6 @@ class CellValidationPopupComponent extends React.Component<
     }
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + '__cellValidation';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__cellvalidation';
-
     let infoBody: any[] = [
       'Cell Validation Rules determine whether an edit is valid.',
       <br />,
@@ -92,7 +88,6 @@ class CellValidationPopupComponent extends React.Component<
       return (
         <CellValidationEntityRow
           key={index}
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={cellValidationRule}
           Column={column}
@@ -108,7 +103,6 @@ class CellValidationPopupComponent extends React.Component<
     });
     let newButton = (
       <SimpleButton
-        className={cssClassName}
         onClick={() => this.onNew()}
         tone="accent"
         tooltip="Create Cell Validation Rule"
@@ -123,18 +117,13 @@ class CellValidationPopupComponent extends React.Component<
     return (
       <PanelWithButton
         headerText={StrategyConstants.CellValidationStrategyName}
-        cssClassName={cssClassName}
         button={newButton}
         glyphicon={StrategyConstants.CellValidationGlyph}
         infoBody={infoBody}
         bodyProps={{ padding: 0 }}
       >
         {CellValidationItems.length > 0 ? (
-          <AdaptableObjectCollection
-            cssClassName={cssClassName}
-            colItems={colItems}
-            items={CellValidationItems}
-          />
+          <AdaptableObjectCollection colItems={colItems} items={CellValidationItems} />
         ) : (
           <EmptyContent>
             <p>Click 'New' to start creating rules for valid cell edits.</p>
@@ -147,7 +136,6 @@ class CellValidationPopupComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject != null && (
           <CellValidationWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
               this.state.EditedAdaptableBlotterObject as CellValidationRule
             }

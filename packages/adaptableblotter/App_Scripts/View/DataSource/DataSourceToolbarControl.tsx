@@ -46,7 +46,6 @@ class DataSourceToolbarControlComponent extends React.Component<
 
   render() {
     const selectDataSourceString: string = 'Select Data Source';
-    let cssClassName: string = this.props.cssClassName + '__DataSource';
 
     let currentDataSourceName =
       this.state.CurrentDataSource == null
@@ -69,10 +68,7 @@ class DataSourceToolbarControlComponent extends React.Component<
 
     let dataSourceParamsPopover =
       this.state.CurrentDataSource == null ? null : (
-        <DataSourceParamsPopover
-          cssClassName={cssClassName}
-          dataSourceParams={this.state.CurrentDataSource.DataSourceParams}
-        />
+        <DataSourceParamsPopover dataSourceParams={this.state.CurrentDataSource.DataSourceParams} />
       );
 
     let content = (
@@ -99,7 +95,7 @@ class DataSourceToolbarControlComponent extends React.Component<
           <AdaptablePopover
             showDefaultStyle={this.props.UseSingleColourForButtons}
             size={this.props.DashboardSize}
-            cssClassName={cssClassName}
+           
             headerText="Data Source Params"
             bodyText={[dataSourceParamsPopover]}
             tooltipText={'Get Data Source Params'}
@@ -113,7 +109,6 @@ class DataSourceToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.DataSourceStrategyName}
         glyphicon={StrategyConstants.DataSourceGlyph}
         onClose={() => this.props.onClose(StrategyConstants.DataSourceStrategyId)}

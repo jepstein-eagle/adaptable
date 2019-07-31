@@ -3,11 +3,9 @@ import * as Redux from 'redux';
 
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
-import { ButtonShare } from './ButtonShare';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
+import { ButtonShare } from './ButtonShare';
 
 export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {
@@ -24,7 +22,7 @@ export interface EntityListActionButtonsProps
   overrideTooltipShare?: string;
   ConfirmDeleteAction: Redux.Action;
   EntityType: string;
-  cssClassName: string;
+
   AccessLevel: AccessLevel;
   editSize: any;
   deleteSize: any;
@@ -45,7 +43,6 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
     overrideDisableShare: false,
     ConfirmDeleteAction: null,
     EntityType: '',
-    cssClassName: '',
     AccessLevel: AccessLevel.Full,
     editSize: 'xsmall',
     deleteSize: 'xsmall',
@@ -53,13 +50,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
   };
   render() {
     return (
-      <Flex
-        className={this.props.cssClassName + StyleConstants.BUTTON_TOOLBAR}
-        justifyContent="center"
-        margin={0}
-        padding={0}
-        onClick={stopPropagation}
-      >
+      <Flex justifyContent="center" margin={0} padding={0} onClick={stopPropagation}>
         {this.props.showEdit && (
           <ButtonEdit
             onClick={() => (this.props.editClick ? this.props.editClick() : null)}
@@ -68,8 +59,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '2px',
-              color: 'var(--ab-color-accent)',
-              background: 'var(--ab-color-accentlight)',
+              color: 'var(--ab-color-text-on-info)',
+              fill: 'var(--ab-color-text-on-info)',
+              background: 'var(--ab-color-info)',
             }}
             disabled={this.props.overrideDisableEdit}
             tooltip={this.props.overrideTooltipEdit}
@@ -83,8 +75,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '1px',
-              color: 'var(--ab-color-error)',
-              background: 'var(--ab-color-errorlight)',
+              color: 'var(--ab-color-text-on-error)',
+              fill: 'var(--ab-color-text-on-error)',
+              background: 'var(--ab-color-error)',
             }}
             disabled={this.props.overrideDisableDelete}
             tooltip={this.props.overrideTooltipDelete}
@@ -97,12 +90,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         {this.props.showShare && (
           <ButtonShare
             onClick={() => (this.props.shareClick ? this.props.shareClick() : null)}
-            cssClassName={this.props.cssClassName}
             style={{ marginLeft: '2px', marginTop: '2px', marginBottom: '2px', marginRight: '0px' }}
-            overrideDisableButton={this.props.overrideDisableShare}
-            overrideTooltip={this.props.overrideTooltipShare}
-            DisplayMode="Glyph"
-            size={this.props.shareSize}
+            disabled={this.props.overrideDisableShare}
+            tooltip={this.props.overrideTooltipShare}
             AccessLevel={this.props.AccessLevel}
           />
         )}

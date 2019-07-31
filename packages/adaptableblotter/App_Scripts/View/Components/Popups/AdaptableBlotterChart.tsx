@@ -5,7 +5,6 @@ import * as ReactDOM from 'react-dom';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import { UIHelper } from '../../UIHelper';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
@@ -62,12 +61,9 @@ export class AdaptableBlotterChart extends React.Component<
   }
 
   render() {
-    let cssClassName: string = StyleConstants.AB_STYLE;
-
     let commonProps: ChartDisplayPopupPropsBase<this> = {
       Columns: this.props.AdaptableBlotter.api.gridApi.getColumns(),
       ModalContainer: this.state.chartContainer,
-      cssClassName: cssClassName + StyleConstants.MODAL_BODY,
       onClose: this.props.onClose,
       ShowModal: this.props.showModal,
       Blotter: this.props.AdaptableBlotter,
@@ -77,6 +73,8 @@ export class AdaptableBlotterChart extends React.Component<
         .SystemFilter.SystemFilters,
       NamedFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
         .NamedFilter.NamedFilters,
+      ColumnCategories: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
+        .ColumnCategory.ColumnCategories,
       ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.getAllColumnFilter(),
       ColorPalette: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
         .UserInterface.ColorPalette,

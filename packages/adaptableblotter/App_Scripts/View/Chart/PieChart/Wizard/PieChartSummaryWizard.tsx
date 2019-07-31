@@ -18,8 +18,6 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
     super(props);
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let primaryColumnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
       this.props.Data.PrimaryColumnId,
       this.props.Columns
@@ -52,12 +50,11 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ChartStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

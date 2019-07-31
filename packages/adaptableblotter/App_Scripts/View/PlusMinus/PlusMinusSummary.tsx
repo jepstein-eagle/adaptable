@@ -18,7 +18,6 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
@@ -39,14 +38,12 @@ export class PlusMinusSummaryComponent extends React.Component<
     this.state = UIHelper.getEmptyConfigState();
   }
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__plusminus';
     let strategySummaries: any = [];
 
     // title row
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.PlusMinusStrategyName}
-        cssClassName={this.props.cssClassName}
         StrategyId={StrategyConstants.PlusMinusStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.PlusMinusRules.filter(
@@ -68,7 +65,6 @@ export class PlusMinusSummaryComponent extends React.Component<
         let detailRow = (
           <StrategyDetail
             key={'PM' + index}
-            cssClassName={this.props.cssClassName}
             Item1={'Nudge Value: ' + item.NudgeValue}
             Item2={this.wrapExpressionDescription(
               ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)
@@ -91,7 +87,6 @@ export class PlusMinusSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <PlusMinusWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as PlusMinusRule}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}

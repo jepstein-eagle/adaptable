@@ -22,8 +22,6 @@ export class FreeTextColumnSummaryWizard
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.ColumnId },
       {
@@ -42,12 +40,11 @@ export class FreeTextColumnSummaryWizard
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.FreeTextColumnStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

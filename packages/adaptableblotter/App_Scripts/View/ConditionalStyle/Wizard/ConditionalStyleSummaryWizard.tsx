@@ -27,8 +27,6 @@ export class ConditionalStyleSummaryWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       { Key: 'Scope', Value: this.getScope() },
       { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
@@ -43,12 +41,11 @@ export class ConditionalStyleSummaryWizard
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ConditionalStyleStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   private getScope(): string {

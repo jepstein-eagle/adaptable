@@ -1,11 +1,10 @@
 import * as React from 'react';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { Modal, Button, ControlLabel } from 'react-bootstrap';
+
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import { Flex, Text, Box } from 'rebass';
+import { Flex, Text } from 'rebass';
 import Dialog from '../../../components/Dialog';
 import SimpleButton from '../../../components/SimpleButton';
 
@@ -37,6 +36,7 @@ export class AdaptableBlotterPopupAlert extends React.Component<
     return (
       this.props.ShowPopup && (
         <Dialog
+          showCloseButton={false}
           isOpen={this.props.ShowPopup}
           onDismiss={this.props.onClose}
           style={{

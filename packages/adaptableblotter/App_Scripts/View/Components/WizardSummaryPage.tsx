@@ -7,7 +7,6 @@ import WizardPanel from '../../components/WizardPanel';
 
 export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSummaryPage> {
   KeyValuePairs: IKeyValuePair[];
-  cssClassName: string;
   header: string;
 }
 
@@ -20,7 +19,6 @@ export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {
       summaryRows.push(
         <WizardSummaryRow
           key={index}
-          cssClassName={this.props.cssClassName + '__summaryrow'}
           colItems={colItems}
           propertyName={kvp.Key}
           propertyValue={kvp.Value}
@@ -29,16 +27,11 @@ export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {
     });
 
     return (
-      <WizardPanel
-        className={this.props.cssClassName}
-        header={this.props.header + ' Summary'}
-        bodyProps={{ padding: 0 }}
-      >
+      <WizardPanel bodyProps={{ padding: 0 }}>
         <AdaptableObjectCollection
-          cssClassName={this.props.cssClassName}
+          //
           colItems={colItems}
           items={summaryRows}
-          bsSize={'medium'}
         />
       </WizardPanel>
     );

@@ -29,15 +29,12 @@ export class UserFilterSelectColumnWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-column';
-
     return (
-      <WizardPanel header="Select a Column">
+      <WizardPanel>
         <HelpBlock marginBottom={2}>
           {'Choose which column the User Filter will apply to.'}
         </HelpBlock>
         <ColumnSelector
-          cssClassName={cssClassName}
           SelectedColumnIds={[this.state.ColumnId]}
           ColumnList={this.props.Columns}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}

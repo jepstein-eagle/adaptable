@@ -1,10 +1,10 @@
 :root {
-  --ab-cmp-dropdownbutton-list__border: none;//2px solid var(--ab-color-darkgray);
-  --ab-cmp-dropdownbutton-list__background: rgb(247, 247, 247);
+  --ab-cmp-dropdownbutton-list__border: none;
+  --ab-cmp-dropdownbutton-list__background: var(--ab-color-primarylight);
   --ab-cmp-dropdownbutton-list-item__padding: var(--ab-space-2);
-  --ab-cmp-dropdownbutton-list-item-hover__background: var(--ab-color-textgray);
-  --ab-cmp-dropdownbutton-list-item-hover__color: var(--ab-color-white);
-  --ab-cmp-dropdownbutton-list-item__color: var(--ab-color-textgray);
+  --ab-cmp-dropdownbutton-list-item-hover__background: var(--ab-color-primary);
+  --ab-cmp-dropdownbutton-list-item-hover__color: var(--ab-color-text-on-primary);
+  --ab-cmp-dropdownbutton-list-item__color: var(--ab-color-text-on-primary);
   --ab-cmp-dropdownbutton-list__z-index: 1000;
   --ab-cmp-dropdownbutton-list__border-radius: var(--ab__border-radius);
   --ab-cmp-dropdownbutton-list__box-shadow: 4px 5px 11px -5px rgba(0,0,0,.2), -4px 6px 5px 0 rgba(0,0,0,.14), 5px 3px 5px 0 rgba(0,0,0,.12);

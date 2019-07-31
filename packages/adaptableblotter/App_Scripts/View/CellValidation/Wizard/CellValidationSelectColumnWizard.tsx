@@ -31,12 +31,9 @@ export class CellValidationSelectColumnWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-selectcolumn';
-
     return (
-      <WizardPanel header="Select a Column" borderRadius={'none'} border="none" bsStyle="primary">
+      <WizardPanel>
         <ColumnSelector
-          cssClassName={cssClassName}
           SelectedColumnIds={[this.state.ColumnId]}
           ColumnList={this.props.Columns}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}

@@ -19,8 +19,6 @@ export class ReminderSummaryWizard extends React.Component<ReminderSummaryWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let keyValuePairs: IKeyValuePair[] = [
       { Key: 'Header', Value: this.props.Data.Alert.Header },
       { Key: 'Message', Value: this.props.Data.Alert.Msg },
@@ -31,12 +29,11 @@ export class ReminderSummaryWizard extends React.Component<ReminderSummaryWizard
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ReminderStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

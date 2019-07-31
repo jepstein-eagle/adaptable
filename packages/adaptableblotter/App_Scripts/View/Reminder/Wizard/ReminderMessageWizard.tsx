@@ -38,8 +38,6 @@ export class ReminderMessageWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-scope';
-
     let messageTypes = EnumExtensions.getNames(MessageType).map(type => {
       return {
         label: type,
@@ -48,8 +46,8 @@ export class ReminderMessageWizard
     });
 
     return (
-      <div className={cssClassName} style={{ height: '100%' }}>
-        <WizardPanel header="Message Settings">
+      <div style={{ height: '100%' }}>
+        <WizardPanel>
           <Flex flexDirection="column">
             <Flex marginTop={2} alignItems="center">
               <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
@@ -99,7 +97,6 @@ export class ReminderMessageWizard
               <Box style={{ flex: 7 }}>
                 <Checkbox
                   marginLeft={2}
-                  className={cssClassName + '__checkbox'}
                   checked={this.state.ShowAsPopup == true}
                   onChange={(checked: boolean) => this.onShowAsPopupChanged(checked)}
                 >

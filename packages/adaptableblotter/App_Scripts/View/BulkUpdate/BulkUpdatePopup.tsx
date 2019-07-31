@@ -57,8 +57,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__bulkupdate';
-
     let infoBody: any[] = [
       'Click ',
       <i>
@@ -99,7 +97,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
-        cssClassName={cssClassName}
         UpdateValue={this.props.BulkUpdateValue}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
@@ -115,7 +112,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
     }
     return (
       <PanelWithImage
-        cssClassName={cssClassName}
         header={StrategyConstants.BulkUpdateStrategyName}
         glyphicon={StrategyConstants.BulkUpdateGlyph}
         infoBody={infoBody}
@@ -133,7 +129,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
             <Box>
               <CheckBox
                 marginLeft={2}
-                className="ab_medium_margin"
                 onChange={(checked: boolean) => this.onUseColumnValuesSelectorChanged(checked)}
                 checked={this.state.useSelector}
               >
@@ -146,7 +141,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
               <Flex alignItems="center" flexDirection="row" flex={1} marginRight={2}>
                 {this.state.useSelector ? (
                   <ColumnValueSelector
-                    cssClassName={cssClassName}
                     SelectedColumnValue={this.props.BulkUpdateValue}
                     SelectedColumn={col}
                     Blotter={this.props.Blotter}
@@ -189,7 +183,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
             <Flex marginTop={2} flexDirection="row" alignItems="center">
               <Flex alignItems="center" flexDirection="row" flex={1} marginRight={2}>
                 <ColumnValueSelector
-                  cssClassName={cssClassName}
                   SelectedColumnValue={this.props.BulkUpdateValue}
                   SelectedColumn={col}
                   Blotter={this.props.Blotter}
@@ -214,7 +207,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
               </SimpleButton>{' '}
               {hasDataTypeError && (
                 <AdaptablePopover
-                  cssClassName={cssClassName}
                   headerText={'Update Error'}
                   bodyText={[dataTypeErrorMessage]}
                   MessageType={MessageType.Error}
@@ -223,7 +215,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
               {StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
                 this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && (
                   <AdaptablePopover
-                    cssClassName={cssClassName}
                     headerText={'Validation Error'}
                     bodyText={[globalValidationMessage]}
                     MessageType={MessageType.Warning}
@@ -233,7 +224,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                 !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning &&
                 this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent && (
                   <AdaptablePopover
-                    cssClassName={cssClassName}
                     headerText={'Validation Error'}
                     bodyText={[globalValidationMessage]}
                     MessageType={MessageType.Error}

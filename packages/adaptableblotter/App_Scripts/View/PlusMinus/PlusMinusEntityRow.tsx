@@ -50,7 +50,6 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
 
     let buttons: any = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(plusMinusRule)}
         shareClick={() => this.props.onShare()}
@@ -61,7 +60,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
     );
     colItems[3].Content = buttons;
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   private wrapExpressionDescription(PlusMinusRule: PlusMinusRule): string {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ReactNode } from 'react';
 
-export type IconProps = { size?: number; children?: ReactNode };
+export type IconProps = { size?: number; children?: ReactNode; style?: React.CSSProperties };
 
 export default ({ children, size = 24, ...props }: IconProps) => (
   <svg

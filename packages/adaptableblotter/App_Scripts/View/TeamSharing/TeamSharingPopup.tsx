@@ -50,8 +50,6 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__teamsharing';
-
     let infoBody: any[] = ['Team Sharing'];
 
     let colItems: IColItem[] = [
@@ -67,7 +65,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         <li className="list-group-item" key={index}>
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={2}>
-              <StrategyProfile cssClassName={cssClassName} StrategyId={x.strategy} />
+              <StrategyProfile StrategyId={x.strategy} />
             </Flex>
             <Flex flex={3}>
               {x.user}
@@ -100,7 +98,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         {this.props.Entities.length == 0 ? (
           <HelpBlock>Shared Items will appear here when available.</HelpBlock>
         ) : (
-          <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
+          <PanelWithRow colItems={colItems} />
         )}
         <ListGroup>{sharedItems}</ListGroup>
       </PanelWithImage>

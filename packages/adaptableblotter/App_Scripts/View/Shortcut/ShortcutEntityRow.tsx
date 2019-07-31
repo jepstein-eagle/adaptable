@@ -89,7 +89,6 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
     );
     colItems[4].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         showEdit={false}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
@@ -98,7 +97,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
       />
     );
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   onResultChange(event: React.FormEvent<any>) {

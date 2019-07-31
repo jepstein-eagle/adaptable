@@ -17,8 +17,6 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
   onColumnValueChange: (columnvalue: any) => void;
   Blotter: IAdaptableBlotter;
   AllowNew?: boolean; // defaults to true if not provided
-  bsSize?: 'large' | 'lg' | 'small' | 'sm';
-  cssClassName?: string;
   style?: React.CSSProperties;
   newLabel?: string;
   existingLabel?: string;
@@ -124,7 +122,7 @@ export class ColumnValueSelector extends React.Component<
           tone="neutral"
           columns={['label']}
           style={{
-            color: 'var(--ab-color-white)',
+            color: 'var(--ab-color-defaultbackground)',
             background: 'var(--ab-cmp-dashboardpanel__fill)',
           }}
           disabled={this.props.disabled}

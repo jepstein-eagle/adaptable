@@ -5,9 +5,9 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../App_Scripts/base.scss';
-import '../../../../App_Scripts/base-new.scss';
 
 import '../../../../App_Scripts/themes/light.scss';
+import '../../../../App_Scripts/themes/dark.scss';
 
 import './index.css';
 
@@ -38,6 +38,10 @@ function InitAdaptableBlotter() {
   adaptableBlotterOptions.chartOptions = {
     showModal: false,
     displayOnStartUp: true,
+  };
+  adaptableBlotterOptions.filterOptions = {
+    // useAdaptableBlotterFilterForm: false,
+    // useAdaptableBlotterQuickFilter: false,
   };
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);

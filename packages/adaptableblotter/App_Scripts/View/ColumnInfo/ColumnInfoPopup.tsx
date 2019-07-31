@@ -56,8 +56,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__columninfo';
-
     let infoBody: any[] = [
       'Displays information about a column in the grid - which Adaptable Blotter Objects it has attached.',
     ];
@@ -364,7 +362,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
     return (
       <PanelWithImage
-        cssClassName={cssClassName}
         header={headerText}
         variant="primary"
         glyphicon={StrategyConstants.ColumnInfoGlyph}
@@ -376,7 +373,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <Box>Column: </Box>
             <Box flex={1} marginLeft={2}>
               <ColumnSelector
-                cssClassName={cssClassName}
                 SelectedColumnIds={[selectedColumnId]}
                 ColumnList={this.props.Columns}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
@@ -390,7 +386,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           {this.state.SelectedColumn && (
             <AdaptableObjectCollection
               style={{ width: '100%' }}
-              cssClassName={cssClassName}
               colItems={colItems}
               items={summaries}
               reducedPanel={this.state.ShowSelector}

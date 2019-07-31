@@ -38,7 +38,6 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
     );
     colItems[4].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(Chart)}
         shareClick={() => this.props.onShare()}
@@ -47,7 +46,7 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
         EntityType={StrategyConstants.ChartStrategyName}
       />
     );
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 
   private getChartType(chartType: ChartType): string {

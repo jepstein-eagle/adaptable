@@ -26,11 +26,9 @@ export class PlusMinusColumnWizard
     this.state = { SelectedColumnId: this.props.Data.ColumnId };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-column';
     return (
-      <WizardPanel header="Select a Column">
+      <WizardPanel>
         <ColumnSelector
-          cssClassName={cssClassName}
           SelectedColumnIds={[this.state.SelectedColumnId]}
           ColumnList={this.props.NumericColumns}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}

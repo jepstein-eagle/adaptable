@@ -50,7 +50,6 @@ interface CategoryChartComponentProps {
   CurrentChartDefinition: CategoryChartDefinition;
   ChartData: ChartData;
   Columns: IColumn[];
-  cssClassName: string;
   ColorPalette: string[];
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }
@@ -91,8 +90,6 @@ export class CategoryChartComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__CategoryCharts';
-
     let showGeneralPropertiesButton = this.state.IsGeneralMinimised ? (
       <ButtonMaximise
         {...defaultButtonProps}
@@ -166,7 +163,7 @@ export class CategoryChartComponent extends React.Component<
     let closeChartSettingsButton = (
       <ButtonClose
         {...defaultButtonProps}
-        style={{ color: 'var(--ab-color-white)' }}
+        style={{ color: 'var(--ab-color-defaultbackground)' }}
         onClick={() => this.onHideChartSettings()}
         tooltip={'Close Chart Settings'}
       />
@@ -186,7 +183,7 @@ export class CategoryChartComponent extends React.Component<
     let setDefaultsButton = (
       <ButtonGeneral
         {...defaultButtonProps}
-        style={{ color: 'var(--ab-color-white)' }}
+        style={{ color: 'var(--ab-color-defaultbackground)' }}
         onClick={() => this.onSetPropertyDefaults()}
         tooltip={null}
       >
@@ -827,7 +824,6 @@ export class CategoryChartComponent extends React.Component<
         <PanelWithButton
           variant="default"
           headerText={'Misc'}
-          cssClassName={cssClassName}
           button={showMiscPropertiesButton}
           style={{ marginTop: '2px' }}
         >

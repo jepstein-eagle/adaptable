@@ -16,21 +16,20 @@ export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
     let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.ChartStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Primary',
+              StepName: 'Primary Column',
               Index: 0,
               Element: <PieChartPrimaryColumnWizard />,
             },
             {
-              StepName: 'Secondary',
+              StepName: 'Secondary Column',
               Index: 1,
               Element: <PieChartSecondaryColumnWizard />,
             },

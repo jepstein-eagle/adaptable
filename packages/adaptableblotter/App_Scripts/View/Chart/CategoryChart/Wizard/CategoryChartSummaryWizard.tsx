@@ -20,7 +20,6 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
     super(props);
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
     let friendlyNames = this.props.Data.YAxisColumnIds.map(c => {
       return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns);
     });
@@ -41,12 +40,11 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ChartStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   private getExpressionString(expression: Expression): string {

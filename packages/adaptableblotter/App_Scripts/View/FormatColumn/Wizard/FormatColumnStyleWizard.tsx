@@ -29,12 +29,10 @@ export class FormatColumnStyleWizard
 
   render() {
     let canUseClassName = true; // get from somewhere...
-    let cssClassName: string = this.props.cssClassName + '-style';
 
     return (
-      <div className={cssClassName}>
+      <div>
         <StyleComponent
-          cssClassName={cssClassName}
           ColorPalette={this.props.ColorPalette}
           StyleClassNames={this.props.StyleClassNames}
           Style={this.props.Data.Style}

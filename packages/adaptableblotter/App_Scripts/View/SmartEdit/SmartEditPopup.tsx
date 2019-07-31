@@ -53,7 +53,6 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__smartedit';
     let infoBody: any[] = [
       'Click ',
       <i>
@@ -84,7 +83,6 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
         style={{ flex: '1 1 100%', overflow: 'initial' }}
-        cssClassName={cssClassName}
         UpdateValue={this.props.SmartEditValue}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
@@ -108,7 +106,6 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     return (
       <PanelWithImage
-        cssClassName={cssClassName}
         variant="primary"
         header={StrategyConstants.SmartEditStrategyName}
         glyphicon={StrategyConstants.SmartEditGlyph}
@@ -154,7 +151,6 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
           {this.props.PreviewInfo &&
             this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && (
               <AdaptablePopover
-                cssClassName={cssClassName}
                 headerText={'Validation Error'}
                 bodyText={[globalValidationMessage]}
                 MessageType={MessageType.Warning}
@@ -164,7 +160,6 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
             !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning &&
             this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent && (
               <AdaptablePopover
-                cssClassName={cssClassName}
                 headerText={'Validation Error'}
                 bodyText={[globalValidationMessage]}
                 MessageType={MessageType.Error}

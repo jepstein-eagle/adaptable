@@ -34,10 +34,8 @@ export class LayoutSelectionWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-selection';
-
     return (
-      <WizardPanel header="Select Source for Layout">
+      <WizardPanel>
         <HelpBlock>Create a new layout using the Grid's current columns and sort order.</HelpBlock>
 
         <Flex alignItems="center" marginLeft={2} marginTop={2}>
@@ -50,7 +48,6 @@ export class LayoutSelectionWizard
             Copy current Grid setup
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Layout:  Current Grid'}
             bodyText={[
               'The new layout will contain the current column order and sort order in the grid.',
@@ -72,7 +69,6 @@ export class LayoutSelectionWizard
             Create a new Layout
           </Radio>{' '}
           <AdaptablePopover
-            cssClassName={cssClassName}
             headerText={'Layout: New'}
             bodyText={[
               'Build the layout yourself by selecting columns and sort order (in following steps).',

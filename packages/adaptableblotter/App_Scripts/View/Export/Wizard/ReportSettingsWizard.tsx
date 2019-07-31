@@ -36,10 +36,9 @@ export class ReportSettingsWizard
     let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
       ? null
       : 'error';
-    let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <WizardPanel header="Enter a Name for the Report">
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center">
           <Text marginRight={2}>Enter Report Name:</Text>
 

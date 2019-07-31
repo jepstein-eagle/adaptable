@@ -55,8 +55,6 @@ export class ReportScheduleWizard
     };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-Schedule';
-
     let destinations = EnumExtensions.getNames(ExportDestination).map(type => {
       return {
         label: type,
@@ -83,10 +81,9 @@ export class ReportScheduleWizard
     }
 
     return (
-      <WizardPanel header="Schedule Report">
+      <WizardPanel>
         <Checkbox
           marginLeft={2}
-          className={cssClassName + '__checkbox'}
           checked={this.state.HasAutoExport == true}
           onChange={(checked: boolean) => this.onHasAutoExportChanged(checked)}
         >
@@ -171,7 +168,6 @@ export class ReportScheduleWizard
                   <Flex flexDirection="column">
                     <Checkbox
                       marginLeft={2}
-                      className={cssClassName + '__checkbox'}
                       value={DayOfWeek.Monday}
                       checked={ArrayExtensions.ContainsItem(
                         this.state.DaysOfWeek,
@@ -184,7 +180,6 @@ export class ReportScheduleWizard
 
                     <Checkbox
                       marginLeft={2}
-                      className={cssClassName + '__checkbox'}
                       marginTop={2}
                       value={DayOfWeek.Tuesday}
                       checked={ArrayExtensions.ContainsItem(
@@ -198,7 +193,6 @@ export class ReportScheduleWizard
 
                     <Checkbox
                       marginLeft={2}
-                      className={cssClassName + '__checkbox'}
                       marginTop={2}
                       value={DayOfWeek.Wednesday}
                       checked={ArrayExtensions.ContainsItem(
@@ -212,7 +206,6 @@ export class ReportScheduleWizard
 
                     <Checkbox
                       marginLeft={2}
-                      className={cssClassName + '__checkbox'}
                       marginTop={2}
                       value={DayOfWeek.Thursday}
                       checked={ArrayExtensions.ContainsItem(
@@ -226,7 +219,6 @@ export class ReportScheduleWizard
 
                     <Checkbox
                       marginLeft={2}
-                      className={cssClassName + '__checkbox'}
                       value={DayOfWeek.Friday}
                       checked={ArrayExtensions.ContainsItem(
                         this.state.DaysOfWeek,
@@ -240,7 +232,6 @@ export class ReportScheduleWizard
 
                     <Checkbox
                       marginLeft={2}
-                      className={cssClassName + '__checkbox'}
                       marginTop={2}
                       value={DayOfWeek.Saturday}
                       checked={ArrayExtensions.ContainsItem(
@@ -254,7 +245,6 @@ export class ReportScheduleWizard
 
                     <Checkbox
                       marginLeft={2}
-                      className={cssClassName + '__checkbox'}
                       marginTop={2}
                       value={DayOfWeek.Sunday}
                       checked={ArrayExtensions.ContainsItem(

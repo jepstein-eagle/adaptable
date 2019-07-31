@@ -21,7 +21,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
@@ -72,9 +71,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__export';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__export';
-
     let infoBody: any[] = [
       "Create a 'Report' (or use a predefined one) and then export it to specified location.",
       <br />,
@@ -94,7 +90,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         let reportIndex = index - this.props.SystemReports.length;
         return (
           <ReportEntityRow
-            cssClassName={cssClassName}
             AdaptableBlotterObject={report}
             key={report.Uuid}
             colItems={colItems}
@@ -116,7 +111,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     let newButton = (
       <ButtonNew
-        className={cssClassName}
         onClick={() => this.onNew()}
         tooltip="Create Report"
         AccessLevel={this.props.AccessLevel}
@@ -125,7 +119,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
         headerText={StrategyConstants.ExportStrategyName}
         bodyProps={{ padding: 0 }}
         glyphicon={StrategyConstants.ExportGlyph}
@@ -133,12 +126,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         button={newButton}
       >
         {Reports.length > 0 ? (
-          <AdaptableObjectCollection
-            cssClassName={cssClassName}
-            colItems={colItems}
-            items={Reports}
-            allowOverflow={true}
-          />
+          <AdaptableObjectCollection colItems={colItems} items={Reports} allowOverflow={true} />
         ) : (
           <EmptyContent>
             <p>
@@ -150,7 +138,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
         {this.state.EditedAdaptableBlotterObject && (
           <ReportWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as Report}
             ModalContainer={this.props.ModalContainer}
             ConfigEntities={this.props.Reports}

@@ -23,7 +23,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
@@ -65,9 +64,6 @@ class CalculatedColumnPopupComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__calculatedcolumn';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__calculatedcolumn';
-
     let infoBody: any[] = [
       'Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.',
       <br />,
@@ -92,7 +88,6 @@ class CalculatedColumnPopupComponent extends React.Component<
 
         return (
           <CalculatedColumnEntityRow
-            cssClassName={cssClassName}
             colItems={colItems}
             Columns={this.props.Columns}
             onShare={() => this.props.onShare(calculatedColumn)}
@@ -111,7 +106,6 @@ class CalculatedColumnPopupComponent extends React.Component<
         onClick={() => {
           this.onNew();
         }}
-        className={cssClassName}
         tooltip="Create Calculated Column"
         AccessLevel={this.props.AccessLevel}
       />
@@ -119,7 +113,6 @@ class CalculatedColumnPopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
         headerText={StrategyConstants.CalculatedColumnStrategyName}
         className="ab_main_popup"
         infoBody={infoBody}
@@ -129,11 +122,7 @@ class CalculatedColumnPopupComponent extends React.Component<
         glyphicon={StrategyConstants.CalculatedColumnGlyph}
       >
         {this.props.CalculatedColumns.length > 0 ? (
-          <AdaptableObjectCollection
-            cssClassName={cssClassName}
-            colItems={colItems}
-            items={calculatedColumns}
-          />
+          <AdaptableObjectCollection colItems={colItems} items={calculatedColumns} />
         ) : (
           <EmptyContent>Click 'New' to create a new Calculated Column.</EmptyContent>
         )}
@@ -141,7 +130,6 @@ class CalculatedColumnPopupComponent extends React.Component<
         {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
         {this.state.EditedAdaptableBlotterObject && (
           <CalculatedColumnWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
               this.state.EditedAdaptableBlotterObject as CalculatedColumn
             }

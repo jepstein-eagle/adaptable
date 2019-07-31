@@ -15,16 +15,15 @@ export interface ShortcutWizardProps
 export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.ShortcutStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Column Type',
+              StepName: 'Column Data Type',
               Index: 0,
               Element: <ShortcutTypeWizard />,
             },

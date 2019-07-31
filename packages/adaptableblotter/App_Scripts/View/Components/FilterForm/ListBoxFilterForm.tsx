@@ -35,7 +35,6 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
   onCustomRangeExpressionChange: (rangeExpression: QueryRange) => void;
   Operators: Array<LeafExpressionOperator>;
   DataType: DataType;
-  cssClassName: string;
   DistinctCriteriaPairValue: DistinctCriteriaPairValue;
 }
 
@@ -195,6 +194,7 @@ export class ListBoxFilterForm extends React.Component<
               placeholder="Please select"
               onChange={this.onRangeTypeChangedOperand2}
               options={rangeMenuItemsOperand2}
+              value={this.state.UiSelectedRange.Operand2Type}
               marginRight={2}
             ></Dropdown>
 
@@ -203,7 +203,7 @@ export class ListBoxFilterForm extends React.Component<
         )}
 
         <Box my={3}>
-          <Box backgroundColor="darkgray" style={{ height: 1 }} />
+          <Box style={{ background: 'var(--ab-color-secondary)', height: 1 }} />
         </Box>
       </Flex>
     );
@@ -285,7 +285,6 @@ export class ListBoxFilterForm extends React.Component<
           style={ddStyle}
           placeholder="Select"
           disabled={availableColumns.length == 0}
-          className={this.props.cssClassName}
           options={availableColumns}
           value={this.state.UiSelectedRange.Operand1}
           onChange={this.onColumnOperand1SelectedChanged}
@@ -321,7 +320,6 @@ export class ListBoxFilterForm extends React.Component<
           placeholder="Select a column"
           style={ddStyle}
           disabled={availableColumns.length == 0}
-          className={this.props.cssClassName}
           options={availableColumns}
           value={this.state.UiSelectedRange.Operand2}
           onChange={this.onColumnOperand2SelectedChanged}

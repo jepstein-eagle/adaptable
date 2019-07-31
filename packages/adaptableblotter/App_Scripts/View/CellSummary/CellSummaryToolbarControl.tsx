@@ -62,8 +62,6 @@ class CellSummaryToolbarControlComponent extends React.Component<
   // }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__CellSummary';
-
     let operationMenuItems = EnumExtensions.getNames(CellSummaryOperation).map(
       (summaryOperation: CellSummaryOperation, index) => {
         return {
@@ -83,9 +81,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
         }
       })
       .filter(x => !!x);
-    let cellSummaryPopover = (
-      <CellSummaryPopover cssClassName={cssClassName} CellSummary={this.props.CellSummary} />
-    );
+    let cellSummaryPopover = <CellSummaryPopover CellSummary={this.props.CellSummary} />;
 
     let content = (
       <Flex
@@ -110,12 +106,11 @@ class CellSummaryToolbarControlComponent extends React.Component<
             </Flex>
             {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (
               <AdaptablePopover
-                cssClassName={cssClassName}
                 bodyText={[cellSummaryPopover]}
                 tooltipText={'Show Cell Summary'}
                 useButton={true}
-                triggerAction={'click'}
-                popoverMinWidth={300}
+                showEvent={'focus'}
+                hideEvent="blur"
               />
             )}
           </>

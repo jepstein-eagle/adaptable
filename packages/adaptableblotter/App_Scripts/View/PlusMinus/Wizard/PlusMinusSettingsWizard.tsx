@@ -32,10 +32,8 @@ export class PlusMinusSettingsWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     return (
-      <WizardPanel header="Plus/Minus Settings">
+      <WizardPanel>
         <Flex flexDirection="row" alignItems="center">
           <Text style={{ flex: 2 }} marginRight={2}>
             Nudge Value:
@@ -46,7 +44,7 @@ export class PlusMinusSettingsWizard
             value={this.state.NudgeValue.toString()}
             type="number"
             placeholder="Enter a Number"
-            onChange={e => this.onColumnDefaultNudgeValueChange(e)}
+            onChange={(e: React.SyntheticEvent) => this.onColumnDefaultNudgeValueChange(e)}
           />
         </Flex>
         <Flex flexDirection="row" marginTop={2}>
@@ -64,7 +62,6 @@ export class PlusMinusSettingsWizard
                 Custom Plus/Minus Rule{' '}
               </Radio>
               <AdaptablePopover
-                cssClassName={cssClassName}
                 headerText={'Plus Minus Settings: Apply As'}
                 bodyText={[
                   'Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)',
@@ -81,7 +78,6 @@ export class PlusMinusSettingsWizard
                 Default Nudge Value for Column
               </Radio>
               <AdaptablePopover
-                cssClassName={cssClassName}
                 headerText={'Plus Minus Settings: Apply As'}
                 bodyText={['Set default nudge value for the column']}
               />

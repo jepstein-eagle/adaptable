@@ -34,7 +34,6 @@ class LayoutToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '__layout';
     let nonDefaultLayouts = this.props.Layouts.filter(
       l => l.Name != GeneralConstants.DEFAULT_LAYOUT
     );
@@ -125,7 +124,6 @@ class LayoutToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.LayoutStrategyName}
         glyphicon={StrategyConstants.LayoutGlyph}
         onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)}

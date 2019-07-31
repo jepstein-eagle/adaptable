@@ -10,7 +10,6 @@ import {
 } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
@@ -56,10 +55,8 @@ export class AlertRulesWizard
       this.props.Columns
     );
 
-    let alertHeader: string = 'Alert for Column: ' + columnFriendlyName;
-
     return (
-      <WizardPanel header={alertHeader}>
+      <WizardPanel>
         <Box>
           <HelpBlock>
             {'Show alerts for any data change to the ' + columnFriendlyName + ' column.'}

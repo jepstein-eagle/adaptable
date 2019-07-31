@@ -6,7 +6,6 @@ import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
 
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import Checkbox from '../../components/CheckBox';
 import Panel from '../../components/Panel';
@@ -25,7 +24,6 @@ export interface StyleComponentProps extends React.ClassAttributes<StyleComponen
   Style: IStyle;
   UpdateStyle: (style: IStyle) => void;
   CanUseClassName: boolean;
-  cssClassName: string;
 }
 
 export interface StyleComponentState {
@@ -43,7 +41,6 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.STYLE_COMPONENT;
     let optionFontSizes = EnumExtensions.getNames(FontSize).map(enumName => {
       return {
         value: enumName,
@@ -59,7 +56,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
     });
 
     return (
-      <WizardPanel header="Style">
+      <Panel header="Style">
         {this.props.CanUseClassName && this.props.StyleClassNames.length > 0 && (
           <Checkbox
             onChange={checked => this.onShowClassNameChanged(checked)}
@@ -93,10 +90,10 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
         ) : (
           <Flex flexDirection="column">
             <Flex flex={1}>
-              <Panel header="Cell Colours" bodyProps={{ padding: 0 }}>
+              <div>
                 <HelpBlock marginTop={2}>
-                  Set the colour by ticking a checkbox and selecting a colour from the dropdown;
-                  leave unchecked to use colours from the cell's existing style.
+                  Set colours by ticking a checkbox and selecting from the dropdown; leave unchecked
+                  to use cell's existing colours.
                 </HelpBlock>
                 <Flex flexDirection="column" margin={1}>
                   <Flex flexDirection="row" alignItems="center">
@@ -139,11 +136,8 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     )}
                   </Flex>
                 </Flex>
-              </Panel>
-            </Flex>
 
-            <Flex flex={1} marginTop={2}>
-              <Panel header="Font Properties" style={{ width: '100%' }}>
+                <HelpBlock marginTop={2}>Set the font properties of the Style.</HelpBlock>
                 <Flex flexDirection="column">
                   <Checkbox
                     marginLeft={1}
@@ -184,7 +178,6 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                           options={optionFontSizes}
                         />{' '}
                         <AdaptablePopover
-                          cssClassName={cssClassName}
                           headerText={'Conditional Style: Font Size'}
                           bodyText={[
                             "Select the size of the font for the Conditional Style.  The default is 'Medium'.",
@@ -194,11 +187,11 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     )}
                   </Box>
                 </Flex>
-              </Panel>
+              </div>
             </Flex>
           </Flex>
         )}
-      </WizardPanel>
+      </Panel>
     );
   }
 

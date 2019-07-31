@@ -19,28 +19,27 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
   render() {
     let layouts: Layout[] = this.props.ConfigEntities as Layout[];
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.LayoutStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Source',
+              StepName: 'Layout Source',
               Index: 0,
               Element: (
                 <LayoutSelectionWizard Layouts={layouts} ColumnSorts={this.props.ColumnSorts} />
               ),
             },
             {
-              StepName: 'Columns',
+              StepName: 'Select Columns',
               Index: 1,
               Element: <LayoutColumnWizard />,
             },
             {
-              StepName: 'Sort',
+              StepName: 'Set Column Sorts',
               Index: 2,
               Element: <LayoutGridSortWizard />,
             },

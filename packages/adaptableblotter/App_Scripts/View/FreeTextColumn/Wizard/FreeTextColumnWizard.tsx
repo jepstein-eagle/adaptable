@@ -12,11 +12,10 @@ export interface FreeTextColumnWizardProps
 export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardProps, {}> {
   render() {
     return (
-      <div className={this.props.cssClassName}>
+      <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.FreeTextColumnStrategyName}
           ModalContainer={this.props.ModalContainer}
-          cssClassName={this.props.cssClassName}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
           Steps={[

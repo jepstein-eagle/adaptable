@@ -17,7 +17,6 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
@@ -38,14 +37,12 @@ export class UserFilterSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__userfilter';
     let strategySummaries: any = [];
 
     // title row
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.UserFilterStrategyName}
-        cssClassName={this.props.cssClassName}
         StrategyId={StrategyConstants.UserFilterStrategyId}
         StrategySummary={this.getSummary()}
         onNew={() => this.onNew()}
@@ -62,7 +59,6 @@ export class UserFilterSummaryComponent extends React.Component<
         let detailRow = (
           <StrategyDetail
             key={item.Uuid}
-            cssClassName={this.props.cssClassName}
             Item1={item.Name}
             Item2={this.getDescription(item)}
             ConfigEnity={item}
@@ -84,7 +80,6 @@ export class UserFilterSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <UserFilterWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as UserFilter}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}

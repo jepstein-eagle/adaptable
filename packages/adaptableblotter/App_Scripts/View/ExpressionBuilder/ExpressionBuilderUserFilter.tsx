@@ -12,7 +12,6 @@ export interface ExpressionBuilderUserFilterProps
   AvailableNamedFilterNames: Array<string>;
   SelectedFilterNames: Array<string>;
   onFilterNameChange: (selectedFilterNames: Array<string>) => void;
-  cssClassName: string;
 }
 
 export class ExpressionBuilderUserFilter extends React.Component<

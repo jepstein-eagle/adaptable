@@ -11,19 +11,27 @@ export default {
     'var(--ab-font-size-7)',
   ],
   colors: {
-    blue: '#07c',
-    accent: '#07c',
-    lightgray: 'var(--ab-color-lightgray)',
-    white: 'var(--ab-color-white)',
-    textgray: 'var(--ab-color-textgray)',
-    darkgray: 'var(--ab-color-darkgray)',
+    accent: 'var(--ab-color-accent)',
+
+    blue: 'var(--ab-color-blue)',
     warn: 'var(--ab-color-warn)',
     info: 'var(--ab-color-info)',
     error: 'var(--ab-color-error)',
     errorlight: 'var(--ab-color-errorlight)',
-    gray: 'var(--ab-color-gray)',
-    'almost-white': 'var(--ab-color-almost-white)',
-    almostwhite: 'var(--ab-color-almost-white)',
+
+    defaultbackground: 'var(--ab-color-defaultbackground)',
+
+    primary: 'var(--ab-color-primary)',
+    primarydark: 'var(--ab-color-primarydark)',
+    primarylight: 'var(--ab-color-primarylight)',
+    'text-on-primary': 'var(--ab-color-text-on-primary)',
+
+    secondary: 'var(--ab-color-secondary)',
+    secondarydark: 'var(--ab-color-secondarydark)',
+    secondarylight: 'var(--ab-color-secondarylight)',
+
+    'text-on-secondary': 'var(--ab-color-text-on-secondary)',
+    'text-on-secondarylight': 'var(--ab-color-text-on-secondarylight)',
   },
   space: [
     'var(--ab-space-0)',
@@ -38,9 +46,5 @@ export default {
   fonts: {
     sans: 'system-ui, sans-serif',
     mono: 'Menlo, monospace',
-  },
-  shadows: {
-    small: '0 0 4px rgba(0, 0, 0, .125)',
-    large: '0 0 24px rgba(0, 0, 0, .125)',
   },
 };

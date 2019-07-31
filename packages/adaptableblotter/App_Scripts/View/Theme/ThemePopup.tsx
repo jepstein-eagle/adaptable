@@ -21,7 +21,6 @@ interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
 
 class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__theme';
     let infoBody: any[] = [
       'Choose a theme to change the look & feel of the Adaptable Blotter screens.',
       <br />,
@@ -48,11 +47,9 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
       };
     });
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          cssClassName={cssClassName}
           headerText={StrategyConstants.ThemeStrategyName}
-          bsStyle="primary"
           glyphicon={StrategyConstants.ThemeGlyph}
           infoBody={infoBody}
         >
@@ -61,6 +58,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
 
             <Box>
               <Dropdown
+                style={{ width: '50%', minWidth: 200 }}
                 placeholder="select"
                 value={this.props.CurrentTheme}
                 onChange={(value: any) => this.onChangeTheme(value)}

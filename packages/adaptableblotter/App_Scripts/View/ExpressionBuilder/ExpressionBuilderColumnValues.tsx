@@ -8,7 +8,6 @@ export interface ExpressionBuilderColumnValuesProps
   SelectedValues: Array<any>;
   ColumnValues: Array<any>;
   onColumnValuesChange: (SelectedValues: Array<any>) => void;
-  cssClassName?: string;
 }
 
 export class ExpressionBuilderColumnValues extends React.Component<

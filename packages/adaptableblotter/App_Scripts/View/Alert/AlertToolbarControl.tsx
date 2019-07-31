@@ -51,11 +51,8 @@ class AlertToolbarControlComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__Alert';
-
     let alertsPanel = (
       <AlertsPanel
-        cssClassName={cssClassName}
         Alerts={this.props.Alerts}
         ShowPanel={true}
         ShowHeader={false}
@@ -72,19 +69,16 @@ class AlertToolbarControlComponent extends React.Component<
         ? '1 Alert'
         : this.props.Alerts.length + ' Alerts';
 
-    let formControlStyle: any =
-      this.props.DashboardSize == 'xsmall' ? smallFormControlStyle : standardFormControlStyle;
-
     let content = (
       <Flex alignItems="stretch">
-        <Input style={formControlStyle} value={collapsedText} disabled={true} marginRight={2} />
+        <Input value={collapsedText} disabled={true} marginRight={2} />
         {this.state.ShowMessage && (
           <Flex
             style={{ borderRadius: 'var(--ab__border-radius)' }}
             marginRight={2}
             padding={2}
-            color="white"
-            backgroundColor="darkgray"
+            color="text-on-secondary"
+            backgroundColor="secondary"
             fontSize={'10px'}
             alignItems="center"
           >
@@ -94,13 +88,13 @@ class AlertToolbarControlComponent extends React.Component<
         {this.props.Alerts.length > 0 && (
           <Flex alignItems="center">
             <AdaptablePopover
-              cssClassName={cssClassName}
               headerText=""
               tooltipText="Alerts"
               bodyText={[alertsPanel]}
               MessageType={this.getMessageType()}
               useButton={true}
-              triggerAction={'click'}
+              showEvent={'focus'}
+              hideEvent="blur"
             />
           </Flex>
         )}
@@ -109,7 +103,6 @@ class AlertToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         headerText={StrategyConstants.AlertStrategyName}
         glyphicon={StrategyConstants.AlertGlyph}
         onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)}

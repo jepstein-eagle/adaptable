@@ -32,7 +32,6 @@ export class FormatColumnEntityRow extends React.Component<
     );
     colItems[2].Content = (
       <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
         editClick={() => this.props.onEdit(formatColumn)}
         showShare={this.props.TeamSharingActivated}
         shareClick={() => this.props.onShare()}
@@ -41,6 +40,6 @@ export class FormatColumnEntityRow extends React.Component<
       />
     );
 
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

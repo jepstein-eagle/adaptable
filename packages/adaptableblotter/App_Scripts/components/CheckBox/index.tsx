@@ -15,6 +15,10 @@ const CheckSvg = styled.svg`
   top: 0px;
   left: -3px;
   pointer-events: none;
+
+  color: var(--ab-color-inputcolor);
+  background: var(--ab-color-defaultbackground);
+
   rect,
   polyline {
     fill: none;
@@ -27,11 +31,11 @@ const CheckSvg = styled.svg`
 
 const CheckboxInput = styled.input`
   &:focus + svg rect {
-    stroke: var(--ab-color-accent);
+    stroke: var(--ab-color-inputcolor);
     stroke-width: 2;
   }
   &:focus + svg {
-    outline: 2px solid var(--ab-color-accent);
+    outline: 2px solid var(--ab-color-focus);
   }
   &:checked + svg rect,
   &:checked + svg polyline {

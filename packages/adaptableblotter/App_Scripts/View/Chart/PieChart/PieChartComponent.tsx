@@ -49,7 +49,6 @@ import SizedContainer from '../../../components/SizedContainer';
 import ChartContainer from '../../../components/ChartContainer';
 
 interface PieChartComponentProps {
-  cssClassName: string;
   CurrentChartDefinition: PieChartDefinition;
   ChartData: ChartData;
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
@@ -102,8 +101,6 @@ export class PieChartComponent extends React.Component<
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__PieCharts';
-
     let chartTitle: string = this.props.CurrentChartDefinition.Name;
     if (StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.Description)) {
       chartTitle += ' : ' + this.props.CurrentChartDefinition.Description;
@@ -132,7 +129,7 @@ export class PieChartComponent extends React.Component<
     let closeChartSettingsButton = (
       <ButtonClose
         {...defaultButtonProps}
-        style={{ color: 'var(--ab-color-white' }}
+        style={{ color: 'var(--ab-color-defaultbackground' }}
         onClick={() => this.onHideChartSettings()}
         tooltip={'Close Chart Settings'}
       />
@@ -146,7 +143,7 @@ export class PieChartComponent extends React.Component<
 
     let setDefaultsButton = (
       <ButtonGeneral
-        style={{ color: 'var(--ab-color-white' }}
+        style={{ color: 'var(--ab-color-defaultbackground' }}
         onClick={() => this.onSetPropertyDefaults()}
       >
         Reset
@@ -273,7 +270,6 @@ export class PieChartComponent extends React.Component<
                   />
 
                   <AdaptablePopover
-                    cssClassName={cssClassName}
                     headerText={'Pie Chart: Others Threshold'}
                     bodyText={[
                       'Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value.',

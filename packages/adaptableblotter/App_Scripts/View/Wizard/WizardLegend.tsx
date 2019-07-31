@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import SimpleButton from '../../components/SimpleButton';
 import { Box } from 'rebass';
 
@@ -46,11 +45,7 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
       );
     });
 
-    return (
-      <div className={StyleConstants.WIZARD_LEGEND}>
-        {this.props.FriendlyName}: {stepButtons}
-      </div>
-    );
+    return <div>{stepButtons}</div>;
   }
 
   private onStepButtonClicked(stepName: string): void {

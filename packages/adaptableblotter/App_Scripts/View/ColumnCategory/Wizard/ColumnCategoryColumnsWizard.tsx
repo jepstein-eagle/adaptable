@@ -9,6 +9,8 @@ import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualLis
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import HelpBlock from '../../../components/HelpBlock';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface ColumnCategoryColumnsWizardProps extends AdaptableWizardStepProps<ColumnCategory> {
   ColumnCategorys: ColumnCategory[];
@@ -56,32 +58,17 @@ export class ColumnCategoryColumnsWizard
   }
 
   render(): any {
-    let infoBody: any[] = [
-      'Choose which columns should be linked.',
-      <br />,
-      <br />,
-      'Use the buttons on the right of the box to order items in the list as required.',
-      <br />,
-      <br />,
-    ];
-    let cssClassName: string = this.props.cssClassName + '-values';
-
     return (
-      <PanelWithInfo
-        cssClassName={cssClassName}
-        header={'Columns in Column Category: ' + this.props.Data.ColumnCategoryId}
-        infoBody={infoBody}
-      >
+      <WizardPanel>
         <DualListBoxEditor
           AvailableValues={this.state.AvailableColumns}
-          cssClassName={cssClassName}
           SelectedValues={this.state.SelectedColumns}
           HeaderAvailable="Available Columns"
           HeaderSelected="Selected Columns"
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
-      </PanelWithInfo>
+      </WizardPanel>
     );
   }
 

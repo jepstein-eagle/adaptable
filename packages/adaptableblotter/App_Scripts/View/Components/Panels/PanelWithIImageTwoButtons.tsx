@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { AdaptablePopover } from '../../AdaptablePopover';
 
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { Flex, Box } from 'rebass';
 import { Icon } from '../../../components/icons';
 import Panel, { PanelProps } from '../../../components/Panel';
@@ -16,7 +15,6 @@ export interface PanelWithImageTwoButtonsProps extends PanelProps {
 
   glyphicon?: string;
   infoBody?: any[];
-  cssClassName: string;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you
@@ -24,13 +22,6 @@ export interface PanelWithImageTwoButtonsProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class PanelWithImageTwoButtons extends React.Component<PanelWithImageTwoButtonsProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL;
-
-    let className = 'ab_panel-with-button';
-    if (this.props.className) {
-      className += ' ' + this.props.className;
-    }
-    className += ' ' + 'ab_panel-with-button-reduce-header-padding';
     let header = (
       <Flex flexDirection="column">
         <Flex flexDirection="row" alignItems="center">
@@ -42,11 +33,7 @@ export class PanelWithImageTwoButtons extends React.Component<PanelWithImageTwoB
                 <label> </label>
                 <span>
                   {' '}
-                  <AdaptablePopover
-                    cssClassName={cssClassName}
-                    headerText=""
-                    bodyText={this.props.infoBody}
-                  />
+                  <AdaptablePopover headerText="" bodyText={this.props.infoBody} />
                 </span>
               </span>
             )}
@@ -61,12 +48,7 @@ export class PanelWithImageTwoButtons extends React.Component<PanelWithImageTwoB
       </Flex>
     );
     return (
-      <Panel
-        header={header}
-        className={className}
-        style={this.props.style}
-        bsStyle={this.props.bsStyle}
-      >
+      <Panel header={header} style={this.props.style}>
         {this.props.children}
       </Panel>
     );

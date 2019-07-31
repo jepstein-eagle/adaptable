@@ -3,7 +3,6 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
@@ -12,6 +11,8 @@ import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellVali
 import WizardPanel from '../../components/WizardPanel';
 import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';
+import icons, { Icon } from '../../components/icons';
+import UIHelper from '../UIHelper';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;
@@ -21,20 +22,18 @@ export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewR
   SelectedColumn: IColumn;
   ShowPanel: boolean;
   style?: React.CSSProperties;
-  cssClassName?: string;
   ShowHeader: boolean;
 }
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
   render(): any {
-    let cssClassName: string = this.props.cssClassName
-      ? this.props.cssClassName + StyleConstants.PREVIEW_RESULTS
-      : '';
     let previewHeader: string =
       this.props.ShowHeader && this.props.PreviewInfo != null
         ? 'Preview Results: ' +
           (this.props.SelectedColumn ? this.props.SelectedColumn.FriendlyName : '')
         : '';
+
+    let successColor = UIHelper.getColorByMessageType(MessageType.Success);
 
     var previewItems = this.props.PreviewInfo.PreviewResults.map(
       (previewResult: IPreviewResult, index: number) => {
@@ -48,7 +47,6 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                   <AdaptablePopover
                     showEvent="mouseenter"
                     hideEvent="mouseleave"
-                    cssClassName={cssClassName}
                     headerText={'Validation Error'}
                     bodyText={[
                       this.getValidationErrorMessage(
@@ -63,7 +61,6 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                   <AdaptablePopover
                     showEvent="mouseenter"
                     hideEvent="mouseleave"
-                    cssClassName={cssClassName}
                     headerText={'Validation Error'}
                     bodyText={[
                       this.getValidationErrorMessage(
@@ -78,7 +75,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
             ) : (
               <td>
                 {' '}
-                <CheckIcon />
+                <CheckIcon style={{ color: successColor, fill: 'currentColor' }} />
               </td>
             )}
           </tr>
@@ -96,7 +93,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     );
 
     return (
-      <div className={cssClassName} style={{ flex: 1, overflow: 'auto', ...this.props.style }}>
+      <div style={{ flex: 1, overflow: 'auto', ...this.props.style }}>
         {this.props.ShowPanel && (
           <WizardPanel header={previewHeader} bodyScroll>
             <Table style={{ width: '100%' }}>

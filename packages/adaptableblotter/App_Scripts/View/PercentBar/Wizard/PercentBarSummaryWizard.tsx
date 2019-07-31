@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -23,8 +22,6 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-summary';
-
     let positiveStyle: IStyle = ObjectFactory.CreateEmptyStyle();
     positiveStyle.BackColor = this.props.Data.PositiveColor;
     positiveStyle.ForeColor = this.props.Data.PositiveColor;
@@ -70,12 +67,11 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
 
     let summaryPage = (
       <WizardSummaryPage
-        cssClassName={cssClassName}
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.PercentBarStrategyName}
       />
     );
-    return <div className={cssClassName}>{summaryPage}</div>;
+    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

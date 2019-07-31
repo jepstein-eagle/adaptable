@@ -17,7 +17,6 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
@@ -38,7 +37,6 @@ export class CustomSortSummaryComponent extends React.Component<
     this.state = UIHelper.getEmptyConfigState();
   }
   render(): any {
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__customsort';
     let customSort: CustomSort = this.props.CustomSorts.find(
       c => c.ColumnId == this.props.SummarisedColumn.ColumnId
     );
@@ -49,7 +47,6 @@ export class CustomSortSummaryComponent extends React.Component<
     if (!this.props.SummarisedColumn.Sortable) {
       customSortRow = (
         <StrategyHeader
-          cssClassName={this.props.cssClassName}
           key={StrategyConstants.CustomSortStrategyName}
           StrategyId={StrategyConstants.CustomSortStrategyId}
           StrategySummary={'Column is not sortable'}
@@ -63,7 +60,6 @@ export class CustomSortSummaryComponent extends React.Component<
       // title row
       customSortRow = (
         <StrategyHeader
-          cssClassName={this.props.cssClassName}
           key={StrategyConstants.CustomSortStrategyName}
           StrategyId={StrategyConstants.CustomSortStrategyId}
           StrategySummary={'No Custom Sort Set'}
@@ -75,14 +71,8 @@ export class CustomSortSummaryComponent extends React.Component<
     } else {
       customSortRow = (
         <StrategyDetail
-          cssClassName={this.props.cssClassName}
           key={StrategyConstants.CustomSortStrategyName}
-          Item1={
-            <StrategyProfile
-              cssClassName={this.props.cssClassName}
-              StrategyId={StrategyConstants.CustomSortStrategyId}
-            />
-          }
+          Item1={<StrategyProfile StrategyId={StrategyConstants.CustomSortStrategyId} />}
           Item2={customSort.SortedValues.join(', ')}
           ConfigEnity={customSort}
           EntityType={StrategyConstants.CustomSortStrategyName}
@@ -101,7 +91,6 @@ export class CustomSortSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableBlotterObject && (
           <CustomSortWizard
-            cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as CustomSort}
             ConfigEntities={this.props.CustomSorts}
             ModalContainer={this.props.ModalContainer}

@@ -1,6 +1,6 @@
 import Dropdown from '../../../../App_Scripts/components/Dropdown';
 
-import '../../../../App_Scripts/base-new.scss';
+import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/components/Dropdown/base.scss';
 import '../../../../App_Scripts/components/Dropdown/style.scss';
 

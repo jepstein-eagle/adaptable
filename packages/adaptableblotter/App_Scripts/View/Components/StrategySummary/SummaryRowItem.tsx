@@ -8,7 +8,6 @@ import { IColItem } from '../../UIInterfaces';
 
 export interface SummaryRowItemProps extends React.ClassAttributes<SummaryRowItem> {
   SummaryItems: any[];
-  cssClassName: string;
 }
 
 export class SummaryRowItem extends React.Component<SummaryRowItemProps, {}> {
@@ -17,6 +16,6 @@ export class SummaryRowItem extends React.Component<SummaryRowItemProps, {}> {
     colItems.push({ Size: 3, Content: this.props.SummaryItems[0] });
     colItems.push({ Size: 7, Content: this.props.SummaryItems[1] });
     colItems.push({ Size: 2, Content: this.props.SummaryItems[2] });
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return <AdaptableObjectRow colItems={colItems} />;
   }
 }

@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { PanelProps, Panel, Row, Col, Button, Glyphicon } from 'react-bootstrap';
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import { Icon } from '../../../components/icons';
+import Panel, { PanelProps } from '../../../components/Panel';
 
 export interface ToolPanelSettingsPanelProps extends PanelProps {
   button: React.ReactElement<any>;
@@ -17,7 +14,7 @@ export class ToolPanelSettingsPanel extends React.Component<ToolPanelSettingsPan
     let header = (
       <span style={{ verticalAlign: 'middle' }}>
         {' '}
-        <Glyphicon glyph={'wrench'} /> <span>Settings</span>
+        <Icon name={'build'} /> <span>Settings</span>
         {this.props.button &&
           React.cloneElement(this.props.button, {
             style: {
@@ -32,13 +29,7 @@ export class ToolPanelSettingsPanel extends React.Component<ToolPanelSettingsPan
     );
 
     return (
-      <Panel
-        className="ab_small-padding-panel ab-panel-header-toolbar-settings"
-        header={header}
-        style={{ margin: '0px', padding: '0px' }}
-        bsStyle={this.props.bsStyle}
-        bsSize={'xsmall'}
-      >
+      <Panel header={header} style={{ margin: '0px', padding: '0px' }}>
         {this.props.children}
       </Panel>
     );

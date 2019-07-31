@@ -33,8 +33,6 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
   }
 
   render() {
-    let cssClassName: string = this.props.cssClassName + '__columnfilter';
-
     let infoBody: any[] = [
       'Column Filters are set using the filter dropdown in the column header menu.',
       <br />,
@@ -51,7 +49,6 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
       return (
         <ColumnFilterEntityRow
           key={index}
-          cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={null}
           ColumnFilter={columnFilter}
@@ -68,7 +65,6 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
     return (
       <PanelWithImage
-        cssClassName={cssClassName}
         header={StrategyConstants.ColumnFilterStrategyName}
         variant="primary"
         infoBody={infoBody}
@@ -76,11 +72,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         style={{ flex: 1 }}
       >
         {columnFilterItems.length > 0 ? (
-          <AdaptableObjectCollection
-            cssClassName={cssClassName}
-            colItems={colItems}
-            items={columnFilterItems}
-          />
+          <AdaptableObjectCollection colItems={colItems} items={columnFilterItems} />
         ) : (
           <EmptyContent>
             <p>There are currently no column filters applied.</p>

@@ -9,8 +9,6 @@ export interface PanelWithTwoButtonsProps extends PanelProps {
   secondButtonContent?: React.ReactNode;
   secondButton?: React.ReactElement<any>;
 
-  cssClassName?: string;
-
   headerText: string;
 }
 

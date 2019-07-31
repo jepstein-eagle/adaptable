@@ -21,7 +21,6 @@ import {
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
@@ -57,9 +56,6 @@ class UserFilterPopupComponent extends React.Component<
     }
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + '__userfilter';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__userfilter';
-
     let infoBody: any[] = [
       'User Filters are named, reusable Column Queries.',
       <br />,
@@ -97,7 +93,6 @@ class UserFilterPopupComponent extends React.Component<
     let UserFilterItems = this.props.UserFilters.map((userFilter, index) => {
       return (
         <UserFilterEntityRow
-          cssClassName={cssClassName}
           AdaptableBlotterObject={userFilter}
           colItems={colItems}
           key={'CS' + index}
@@ -113,30 +108,23 @@ class UserFilterPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create User Filter"
-        DisplayMode="Glyph+Text"
+        tooltip="Create User Filter"
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
+      <Flex flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.UserFilterStrategyName}
-          cssClassName={cssClassName}
           infoBody={infoBody}
           button={newButton}
           glyphicon={StrategyConstants.UserFilterGlyph}
           bodyProps={{ padding: 0 }}
         >
           {UserFilterItems.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={UserFilterItems}
-            />
+            <AdaptableObjectCollection colItems={colItems} items={UserFilterItems} />
           ) : (
             <EmptyContent>
               <p>Click 'New' to start creating user filters.</p>
@@ -150,7 +138,6 @@ class UserFilterPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableBlotterObject != null && (
             <UserFilterWizard
-              cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as UserFilter}
               Columns={this.props.Columns}
               ConfigEntities={null}
