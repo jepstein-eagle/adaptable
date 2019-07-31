@@ -9,7 +9,7 @@ const Arrows = () => {
         display: 'flex',
         flexFlow: 'column',
         position: 'absolute',
-        background: 'var(--ab-color-white)',
+        background: 'var(--ab-color-defaultbackground)',
         fill: 'var(--ab-cmp-dropdown__fill)',
         top: '50%',
         right: 'var(--ab-space-1)',

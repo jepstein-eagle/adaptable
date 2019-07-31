@@ -31,7 +31,6 @@ const Header = ({
     <Flex
       flexDirection="row"
       alignItems="center"
-      fontSize={2}
       {...headerProps}
       style={{ ...style, ...headerProps.style }}
       className={join(`${baseClassName}__header`, `${baseClassName}__header--variant-${variant}`)}

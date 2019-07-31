@@ -203,7 +203,7 @@ export class ListBoxFilterForm extends React.Component<
         )}
 
         <Box my={3}>
-          <Box backgroundColor="darkgray" style={{ height: 1 }} />
+          <Box backgroundColor="defaultbackground" style={{ height: 1 }} />
         </Box>
       </Flex>
     );

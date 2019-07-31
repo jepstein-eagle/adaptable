@@ -90,6 +90,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       <Dialog
         modal
         isOpen={true}
+        showCloseButton={false}
         onDismiss={() => (this.props.onHide ? this.props.onHide() : null)}
       >
         <Flex
@@ -113,7 +114,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
           <Flex style={{ flex: 1 }} flexDirection="column">
             {this.state.ActiveState}
           </Flex>
-          <Flex flexDirection="row" padding={2} backgroundColor="secondarybackground">
+          <Flex flexDirection="row" padding={2} backgroundColor="primary">
             <SimpleButton
               tone="neutral"
               variant="text"
@@ -121,7 +122,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               tooltip="Close wizard"
               AccessLevel={AccessLevel.Full}
             >
-              CLOSE WIZARD
+              CLOSE
             </SimpleButton>
             <div style={{ flex: 1 }} />
             <SimpleButton

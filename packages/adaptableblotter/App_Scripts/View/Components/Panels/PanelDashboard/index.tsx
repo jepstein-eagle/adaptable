@@ -63,7 +63,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
           <Icon
             style={{
               alignSelf: 'center',
-              fontSize: 'small',
+
               color: 'var(--ab-cmp-dashboardpanel_header__fill)',
             }}
             name={glyphicon}

@@ -1,9 +1,9 @@
 :root {
-  --ab-cmp-dashboardpanel_body__background: #f9f9f9;
-  --ab-cmp-dashboardpanel_header__background: #e2e2e2;
-  --ab-cmp-dashboardpanel_header__color: var(--ab-color-darkgray);
+  --ab-cmp-dashboardpanel_body__background: var(--ab-color-primarylight);
+  --ab-cmp-dashboardpanel_header__background: var(--ab-color-primary);
   --ab-cmp-dashboardpanel_header__fill: currentColor;
-  --ab-cmp-dashboardpanel__fill: var(--ab-color-darkgray);
+  --ab-cmp-dashboardpanel_header__color: var(--ab-color-text-on-primary);
+  --ab-cmp-dashboardpanel__fill: var(--ab-color-text-on-primary);
   --ab-cmp-dashboardpanel__color: currentColor;
   --ab-cmp-dashboardpanel_header__padding: var(--ab-space-1);
   --ab-cmp-dashboardpanel_body__padding: var(--ab-space-1);

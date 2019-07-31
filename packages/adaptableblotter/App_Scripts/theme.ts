@@ -12,12 +12,6 @@ export default {
   ],
   colors: {
     accent: 'var(--ab-color-accent)',
-    white: 'var(--ab-color-white)',
-
-    secondarybackground: 'var(--ab-color-secondarybackground)',
-    textgray: 'var(--ab-color-textgray)',
-    darkgray: 'var(--ab-color-darkgray)',
-    gray: 'var(--ab-color-gray)',
 
     blue: 'var(--ab-color-blue)',
     warn: 'var(--ab-color-warn)',
@@ -25,7 +19,18 @@ export default {
     error: 'var(--ab-color-error)',
     errorlight: 'var(--ab-color-errorlight)',
 
-    primarybackground: 'var(--ab-color-primarybackground)',
+    defaultbackground: 'var(--ab-color-defaultbackground)',
+
+    primary: 'var(--ab-color-primary)',
+    primarydark: 'var(--ab-color-primarydark)',
+    primarylight: 'var(--ab-color-primarylight)',
+    'text-on-primary': 'var(--ab-color-text-on-primary)',
+
+    secondary: 'var(--ab-color-secondary)',
+    secondarydark: 'var(--ab-color-secondarydark)',
+    secondarylight: 'var(--ab-color-secondarylight)',
+
+    'text-on-secondary': 'var(--ab-color-text-on-secondary)',
   },
   space: [
     'var(--ab-space-0)',

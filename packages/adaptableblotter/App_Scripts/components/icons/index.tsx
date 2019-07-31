@@ -138,7 +138,7 @@ const allIcons = {
   search: Search,
 } as { [key: string]: ReactNode };
 
-export const Icon = ({ name, ...props }: { name: string; props?: any }) => {
+export const Icon = ({ name, ...props }: { name: string; props?: React.CSSProperties }) => {
   const IconCmp = (allIcons[name] || null) as ReactComponentLike;
 
   if (!IconCmp) {

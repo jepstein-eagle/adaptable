@@ -1,8 +1,12 @@
 :root {
   --ab-cmp-input__padding: var(--ab-space-2);
   --ab-cmp-input__color: var(--ab-color-inputcolor);
-  --ab-cmp-input__background: var(--ab-color-primarybackground);
+  --ab-cmp-input__background: var(--ab-color-defaultbackground);
   --ab-cmp-input__border-radius: var(--ab__border-radius);
-  --ab-cmp-input__border: 1px solid var(--ab-color-inputborder);
-  --ab-cmp-input--disabled__background: var(--ab-color-gray);
+  --ab-cmp-input__border: 1px solid var(--ab-color-primarydark);
+  --ab-cmp-input--disabled__background: var(--ab-color-primarydark);
+
+  --ab-cmp-input__font-size: var(--ab__font-size);
+  --ab-cmp-input__font-family: var(--ab__font-family);
+  
 }

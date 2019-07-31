@@ -1,10 +1,12 @@
 .ab-Dropdown {
-  background: var(--ab-color-white);
+  background: var(--ab-color-defaultbackground);
   border: var(--ab-cmp-dropdown__border);
   border-radius: var(--ab-cmp-dropdown__border-radius);
   position: relative;
   min-width: 120px;
   max-width: 300px;
+  font-family: var(--ab-cmp-dropdown__font-family);
+  font-size: var(--ab-cmp-dropdown__font-size);
 
   &--focused {
     box-shadow: var(--ab-focus__box-shadow);
@@ -29,11 +31,13 @@
   
   &--empty {
     .ab-Dropdown__text {
-      color: var(--ab-color-textgray);
+      color: var(--ab-color-text-on-primary);
     }
   }
 
   select {
+    font-family: inherit;
+    font-size: inherit;
     position: absolute;
     cursor: pointer;
   }

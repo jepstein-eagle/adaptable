@@ -3,7 +3,10 @@
     box-shadow: var(--ab-focus__box-shadow);
     outline: var(--ab-focus__outline);
   }
+  font-family: var(--ab-cmp-simple-button__font-family);
+  font-size: var(--ab-cmp-simple-button__font-size);
 }
+
 .ab-SimpleButton.ab-SimpleButton {
   vertical-align: middle;
   & > * {
@@ -13,7 +16,7 @@
     vertical-align: middle;
   }
   border-radius: var(--ab-cmp-simple-button__border-radius);
-  color: var(--ab-color-textgray);
+  color: var(--ab-color-text-on-primary);
   position: relative;
   overflow: hidden;
   display: inline-flex;
@@ -23,14 +26,14 @@
   fill: currentColor;
 
    &--tone-neutral {
-    color: var(--ab-color-textgray);
+    color: var(--ab-color-text-on-primary);
   }
 
   &--tone-success {
     color: var(--ab-color-success);
   }
   &--tone-accent {
-    color: var(--ab-color-accent);
+    color: var(--ab-color-text-on-secondary);
   }
   &--tone-error {
     color: var(--ab-color-error);
@@ -81,7 +84,7 @@
   }
 
   &--variant-raised {
-    color: white;
+    color: var(--ab-color-text-on-primary);
     
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
     transition: box-shadow .28s cubic-bezier(.4,0,.2,1), -webkit-box-shadow .28s cubic-bezier(.4,0,.2,1);
@@ -96,13 +99,15 @@
 
     &.ab-SimpleButton--tone-success {
       background: var(--ab-color-success);
+      color: var(--ab-color-text-on-success);
       &:not(.ab-SimpleButton--disabled) {
         opacity: 1;
-
       }
     }
+
     &.ab-SimpleButton--tone-accent {
-      background: var(--ab-color-accent);
+      background: var(--ab-color-secondary);
+      color: var(--ab-color-text-on-secondary);
       &:not(.ab-SimpleButton--disabled) {
         opacity: 1;
 
@@ -115,7 +120,8 @@
       }
     }
     &.ab-SimpleButton--tone-neutral {
-      background: var(--ab-color-textgray);
+      background: var(--ab-color-primary);
+      color: var(--ab-color-text-on-primary);
       &:not(.ab-SimpleButton--disabled) {
         opacity: 1;
 
@@ -123,6 +129,7 @@
     }
     &.ab-SimpleButton--tone-error {
       background: var(--ab-color-error);
+      color: var(--ab-color-text-on-error);
       &:not(.ab-SimpleButton--disabled) {
         opacity: 1;
 
@@ -130,6 +137,7 @@
     }
     &.ab-SimpleButton--tone-warning {
       background: var(--ab-color-warn);
+      color: var(--ab-color-text-on-warn);
       &:not(.ab-SimpleButton--disabled) {
         opacity: 1;
 
@@ -137,6 +145,7 @@
     }
     &.ab-SimpleButton--tone-info {
       background: var(--ab-color-info);
+      color: var(--ab-color-text-on-info);
       &:not(.ab-SimpleButton--disabled) {
         opacity: 1;
 

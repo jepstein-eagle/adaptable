@@ -75,7 +75,7 @@ class ChartDisplayPopupComponent extends React.Component<
 
     let closeButton = this.props.ShowModal ? null : (
       <ButtonClose
-        style={{ color: 'var(--ab-color-white)' }}
+        style={{ color: 'var(--ab-color-defaultbackground)' }}
         onClick={() => this.props.onClose()}
         tooltip={null}
         tone="none"
@@ -85,7 +85,7 @@ class ChartDisplayPopupComponent extends React.Component<
     let editButton =
       this.props.ChartVisibility == ChartVisibility.Minimised ? null : (
         <ButtonEdit
-          style={{ color: 'var(--ab-color-white)' }}
+          style={{ color: 'var(--ab-color-defaultbackground)' }}
           onClick={() => this.onEditChart()}
           tooltip={null}
         />
@@ -94,13 +94,13 @@ class ChartDisplayPopupComponent extends React.Component<
     let minmaxButton = this.props.ShowModal ? null : this.props.ChartVisibility ==
       ChartVisibility.Minimised ? (
       <ButtonMaximise
-        style={{ color: 'var(--ab-color-white)' }}
+        style={{ color: 'var(--ab-color-defaultbackground)' }}
         onClick={() => this.onChartMaximised()}
         tooltip={null}
       />
     ) : (
       <ButtonMinimise
-        style={{ color: 'var(--ab-color-white)' }}
+        style={{ color: 'var(--ab-color-defaultbackground)' }}
         onClick={() => this.onChartMinimised()}
       />
     );
