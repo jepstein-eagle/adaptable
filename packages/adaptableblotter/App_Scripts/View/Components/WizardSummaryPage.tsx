@@ -7,7 +7,6 @@ import WizardPanel from '../../components/WizardPanel';
 
 export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSummaryPage> {
   KeyValuePairs: IKeyValuePair[];
-  cssClassName?: string;
   header: string;
 }
 

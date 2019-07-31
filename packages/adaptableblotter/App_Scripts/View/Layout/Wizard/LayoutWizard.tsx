@@ -27,19 +27,19 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Source',
+              StepName: 'Layout Source',
               Index: 0,
               Element: (
                 <LayoutSelectionWizard Layouts={layouts} ColumnSorts={this.props.ColumnSorts} />
               ),
             },
             {
-              StepName: 'Columns',
+              StepName: 'Select Columns',
               Index: 1,
               Element: <LayoutColumnWizard />,
             },
             {
-              StepName: 'Sort',
+              StepName: 'Set Column Sorts',
               Index: 2,
               Element: <LayoutGridSortWizard />,
             },

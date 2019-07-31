@@ -151,6 +151,8 @@ import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnSt
 import { PercentBarTooltip } from './PercentBarTooltip';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
+import { ReactComponentLike } from 'prop-types';
+import icons from '../components/icons';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -2098,12 +2100,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       colMenuItems.push('separator');
 
       this.getState().Menu.ColumnMenu.MenuItems.forEach((x: AdaptableBlotterMenuItem) => {
-        const glyph = this.abContainerElement.ownerDocument.createElement('span');
-        glyph.className = `glyphicon glyphicon-${x.GlyphIcon}`;
+        /*  this was working but isnt any more
+        we need to pass in an image to the menu either as a string or an HTMLElement
+        https://www.ag-grid.com/javascript-grid-column-menu/
+        we *are* able to get the right icon but no idea how to transform this into something taht ag-Grid will accept...
+
+        the property x.Glyphicon IS correct (thanks Radu!) but not sure of next step...
+        */
+
+        const glyphSpan: HTMLSpanElement = this.abContainerElement.ownerDocument.createElement(
+          'span'
+        );
+        glyphSpan.className = `glyphicon glyphicon-${x.GlyphIcon}`;
+
+        const IconCmp = icons[x.GlyphIcon] as ReactComponentLike;
+        //  const icon = IconCmp ? <IconCmp /> : null;
+
         colMenuItems.push({
           name: x.Label,
           action: () => this.dispatchAction(x.Action),
-          icon: glyph,
+          icon: glyphSpan,
         });
       });
       return colMenuItems;

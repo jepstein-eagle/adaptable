@@ -7,7 +7,6 @@ import { Flex, Text } from 'rebass';
 export interface PanelWithRowProps extends PanelProps {
   // CellInfo: [string, number][]
   colItems: IColItem[];
-  cssClassName?: string;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you

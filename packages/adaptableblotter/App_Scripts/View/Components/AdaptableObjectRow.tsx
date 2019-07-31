@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
   colItems: IColItem[];
-  cssClassName?: string;
   fontSize?: string;
   onClick?: (e: React.SyntheticEvent) => void;
   style?: React.CSSProperties;

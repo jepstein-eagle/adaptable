@@ -31,6 +31,7 @@ export default {
     secondarylight: 'var(--ab-color-secondarylight)',
 
     'text-on-secondary': 'var(--ab-color-text-on-secondary)',
+    'text-on-secondarylight': 'var(--ab-color-text-on-secondarylight)',
   },
   space: [
     'var(--ab-space-0)',

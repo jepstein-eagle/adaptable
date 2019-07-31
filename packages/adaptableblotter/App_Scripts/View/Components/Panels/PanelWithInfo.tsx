@@ -7,7 +7,6 @@ import { Flex, Box } from 'rebass';
 
 export interface PanelWithInfoProps extends PanelProps {
   infoBody: any[];
-  cssClassName?: string;
   headerProps?: HeaderProps;
 }
 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import SimpleButton from '../../../components/SimpleButton';
 import Panel, { PanelProps } from '../../../components/Panel';
@@ -19,7 +18,6 @@ export interface PanelWithButtonProps extends PanelProps {
   buttonStyle?: string;
   borderRadius?: string;
   infoBody?: any[];
-  cssClassName?: string;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you
@@ -33,12 +31,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Pane
     let header = (
       <Flex alignItems="center" width="100%">
         <Flex alignItems="center">
-          {this.props.glyphicon != null &&
-            (IconCmp ? (
-              <IconCmp />
-            ) : (
-              <Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />
-            ))}
+          {this.props.glyphicon != null && (IconCmp ? <IconCmp /> : null)}
           <Box marginRight={2} />
           {this.props.headerText}
           <Box marginRight={3} />

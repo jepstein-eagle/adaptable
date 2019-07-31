@@ -9,7 +9,6 @@ import { CSSProperties } from 'react';
 export type AdaptableBlotterFormControlTextClearProps = {
   OnTextChange: (textValue: string) => void;
   autoFocus?: boolean;
-  cssClassName?: string;
   inputStyle?: CSSProperties;
 } & InputProps;
 

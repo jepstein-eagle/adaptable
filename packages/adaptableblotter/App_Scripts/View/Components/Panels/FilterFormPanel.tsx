@@ -13,8 +13,6 @@ export interface FilterFormPanelProps extends PanelProps {
 
   closeButton?: React.ReactElement<any>;
 
-  cssClassName?: string;
-
   ColumnMenuTab: ColumnMenuTab;
   ColumnMenuTabChanged: (e: any) => void;
 
