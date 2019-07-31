@@ -3,9 +3,9 @@ import * as Redux from 'redux';
 
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
-import { ButtonShare } from './ButtonShare';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
+import { ButtonShare } from './ButtonShare';
 
 export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {
@@ -43,7 +43,6 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
     overrideDisableShare: false,
     ConfirmDeleteAction: null,
     EntityType: '',
-    cssClassName: '',
     AccessLevel: AccessLevel.Full,
     editSize: 'xsmall',
     deleteSize: 'xsmall',
@@ -90,10 +89,8 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
           <ButtonShare
             onClick={() => (this.props.shareClick ? this.props.shareClick() : null)}
             style={{ marginLeft: '2px', marginTop: '2px', marginBottom: '2px', marginRight: '0px' }}
-            overrideDisableButton={this.props.overrideDisableShare}
-            overrideTooltip={this.props.overrideTooltipShare}
-            DisplayMode="Glyph"
-            size={this.props.shareSize}
+            disabled={this.props.overrideDisableShare}
+            tooltip={this.props.overrideTooltipShare}
             AccessLevel={this.props.AccessLevel}
           />
         )}

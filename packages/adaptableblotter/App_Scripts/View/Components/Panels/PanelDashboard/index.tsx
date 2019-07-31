@@ -38,7 +38,6 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     onConfigure: null,
     onMinimise: null,
     showGlyphIcon: true,
-    cssClassName: '',
   };
   render() {
     const {

@@ -59,11 +59,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
       let columnValuesListgroupItems: JSX.Element[];
       if (columnValues) {
         columnValuesListgroupItems = columnValues.ColumnDisplayValues.map(y => {
-          //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
-          // since html cannot render a button within a button.
-          // https://github.com/react-bootstrap/react-bootstrap/issues/1445
-          // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
-          // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
           return (
             <ListGroupItem
               key={y}

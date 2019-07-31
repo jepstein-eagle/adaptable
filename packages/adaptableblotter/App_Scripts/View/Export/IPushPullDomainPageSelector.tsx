@@ -87,7 +87,8 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
             }}
             value={x.Name}
           >
-            <Glyphicon glyph="folder-close" /> {x.Name}
+            {/* <Glyphicon glyph="folder-close" />  */}
+            {x.Name}
           </ListGroupItem>
         );
       }
@@ -104,7 +105,8 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
             this.props.onCancel();
           }}
         >
-          Cancel <Glyphicon glyph="remove" />
+          Cancel
+          {/* <Glyphicon glyph="remove" />  */}
         </SimpleButton>
         <SimpleButton
           disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
@@ -117,7 +119,8 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
             );
           }}
         >
-          <Glyphicon glyph="user" /> Select
+          {/* <Glyphicon glyph="user" />  */}
+          remove Select
         </SimpleButton>
       </PanelWithButton>
     );

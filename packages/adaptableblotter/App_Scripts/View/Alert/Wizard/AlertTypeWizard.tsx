@@ -75,11 +75,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
             </Radio>
           </Box>
 
-          <Checkbox
-            className={cssClassName + '__checkbox'}
-            checked={this.state.ShowAsPopup == true}
-            onChange={this.onShowAsPopupChanged}
-          >
+          <Checkbox checked={this.state.ShowAsPopup == true} onChange={this.onShowAsPopupChanged}>
             Show as Popup
           </Checkbox>
         </WizardPanel>

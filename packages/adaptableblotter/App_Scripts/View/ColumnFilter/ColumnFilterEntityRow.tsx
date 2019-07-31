@@ -47,7 +47,6 @@ export class ColumnFilterEntityRow extends React.Component<
         <ButtonSave
           onClick={() => this.props.onSaveColumnFilterasUserFilter(this.props.ColumnFilter)}
           tooltip="Save as User Filter"
-          DisplayMode="Glyph"
           disabled={
             this.props.ColumnFilter == null ||
             ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.Filter.FilterExpressions)

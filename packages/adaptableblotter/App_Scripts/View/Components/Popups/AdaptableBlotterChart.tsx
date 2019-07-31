@@ -73,6 +73,8 @@ export class AdaptableBlotterChart extends React.Component<
         .SystemFilter.SystemFilters,
       NamedFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
         .NamedFilter.NamedFilters,
+      ColumnCategories: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
+        .ColumnCategory.ColumnCategories,
       ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.getAllColumnFilter(),
       ColorPalette: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
         .UserInterface.ColorPalette,
