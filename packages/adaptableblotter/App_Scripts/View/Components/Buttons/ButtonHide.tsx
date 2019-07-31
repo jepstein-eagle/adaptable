@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ButtonBase, ButtonProps } from './ButtonBase';
 
+/*
 export class ButtonHide extends React.Component<ButtonProps, {}> {
   render() {
     return (
@@ -18,3 +19,4 @@ export class ButtonHide extends React.Component<ButtonProps, {}> {
     );
   }
 }
+*/

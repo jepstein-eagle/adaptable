@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ButtonBase, ButtonProps } from './ButtonBase';
-
+/*
 export class ButtonCondition extends React.Component<ButtonProps, {}> {
   render() {
     return (
@@ -18,3 +18,4 @@ export class ButtonCondition extends React.Component<ButtonProps, {}> {
     );
   }
 }
+*/

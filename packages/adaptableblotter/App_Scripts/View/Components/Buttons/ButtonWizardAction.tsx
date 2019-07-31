@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ButtonBase, ButtonProps } from './ButtonBase';
 
+/*
 export class ButtonWizardAction extends React.Component<ButtonProps, {}> {
   render() {
     return (
@@ -19,3 +20,4 @@ export class ButtonWizardAction extends React.Component<ButtonProps, {}> {
     );
   }
 }
+*/

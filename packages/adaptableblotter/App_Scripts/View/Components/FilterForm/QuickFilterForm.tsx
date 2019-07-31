@@ -135,7 +135,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               type={controlType}
               placeholder={this.state.placeholder}
               value={this.state.quickFilterFormText}
-              onChange={x => this.OnTextChange((x.target as HTMLInputElement).value)}
+              onChange={(x: any) => this.OnTextChange((x.target as HTMLInputElement).value)}
             />
           )}
       </span>

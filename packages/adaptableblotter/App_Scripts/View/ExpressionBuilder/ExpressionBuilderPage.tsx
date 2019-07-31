@@ -12,15 +12,10 @@ import {
   QueryTab,
   AccessLevel,
 } from '../../PredefinedConfig/Common/Enums';
-import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ButtonCondition } from '../Components/Buttons/ButtonCondition';
-import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
-import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import SimpleButton from '../../components/SimpleButton';
 import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
