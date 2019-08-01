@@ -312,7 +312,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     });
 
     // get the help descriptions
-    let firstTimeText: string = 'Start creating the query by selecting a column below.';
+    let firstTimeText: string = 'Start creating the query by selecting a column';
     let secondTimeText: string = 'Select another column for the query.';
 
     let panelHeader: string =

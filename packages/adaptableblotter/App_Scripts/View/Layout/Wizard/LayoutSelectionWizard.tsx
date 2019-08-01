@@ -46,17 +46,12 @@ export class LayoutSelectionWizard
             onChange={(_: boolean, e: any) => this.onScopeSelectChanged(e)}
           >
             Copy current Grid setup
-          </Radio>{' '}
-          <AdaptablePopover
-            headerText={'Layout:  Current Grid'}
-            bodyText={[
-              'The new layout will contain the current column order and sort order in the grid.',
-            ]}
-          />
+          </Radio>
         </Flex>
 
-        <HelpBlock marginTop={4}>
-          Build a new layout from scratch, choosing the columns (and sort order).
+        <HelpBlock marginTop={2}>
+          Build a new layout from scratch. You will choose the columns (and sort order) in the
+          following steps.
         </HelpBlock>
 
         <Flex alignItems="center" marginLeft={2} marginTop={2}>
@@ -67,13 +62,7 @@ export class LayoutSelectionWizard
             onChange={(_, e) => this.onScopeSelectChanged(e)}
           >
             Create a new Layout
-          </Radio>{' '}
-          <AdaptablePopover
-            headerText={'Layout: New'}
-            bodyText={[
-              'Build the layout yourself by selecting columns and sort order (in following steps).',
-            ]}
-          />
+          </Radio>
         </Flex>
       </WizardPanel>
     );
