@@ -7,7 +7,6 @@ node_modules/
 /packages/adaptableblotter-react-aggrid/package-lock.json
 .DS_Store
 .env
-/packages/adaptableblotter/App_Scripts/**/*.d.ts
 
 # ignore symlink in angular project
 
