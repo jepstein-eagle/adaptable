@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-monorepo",
-  "version": "4.1.2",
+  "version": "4.1.2-canary.0",
   "private": true,
   "repository": {
     "type": "git",
