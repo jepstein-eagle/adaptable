@@ -122,8 +122,8 @@ export class ColumnValueSelector extends React.Component<
           tone="neutral"
           columns={['label']}
           style={{
-            color: 'var(--ab-color-defaultbackground)',
-            background: 'var(--ab-cmp-dashboardpanel__fill)',
+            color: 'var(--ab-cmp-dashboardpanel__fill)',
+            background: 'var(--ab-color-defaultbackground)',
           }}
           disabled={this.props.disabled}
           marginRight={1}

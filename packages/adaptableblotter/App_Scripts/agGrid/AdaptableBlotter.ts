@@ -1761,6 +1761,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     });
 
+    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_RESIZED, (params: any) => {
+      if (params.type == 'columnResized' && params.finished == true) {
+        if (this.isQuickFilterActive()) {
+          this.gridOptions.api!.refreshHeader();
+        }
+      }
+    });
+
     // this event deals with when the user makes an edit - it doesnt look at ticking data
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
       // TODO: Jo: This is a workaround as we are accessing private members of agGrid.

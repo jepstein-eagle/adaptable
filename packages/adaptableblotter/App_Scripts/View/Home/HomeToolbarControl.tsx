@@ -299,7 +299,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           MessageType: MessageType.Success,
           ShowAsPopup: true,
         };
-        console.log('sending success');
         this.props.onShowStatusMessage(success);
         return;
       case MessageType.Info:

@@ -920,6 +920,7 @@ export class ExamplesHelper {
       sortable: true,
       enableRowGroup: true,
       type: 'abColDefString',
+      resizable: true,
       //  tooltipField: 'country',
       //  cellEditor: 'agLargeTextCellEditor',
     });
@@ -967,6 +968,7 @@ export class ExamplesHelper {
       field: 'ask',
       columnGroupShow: 'closed',
       filter: true,
+      resizable: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
@@ -987,7 +989,7 @@ export class ExamplesHelper {
       filter: true,
       sortable: true,
       type: 'abColDefString',
-      resizable: true,
+      // resizable: true,
       tooltipComponent: 'percentBarTooltip',
     });
 
