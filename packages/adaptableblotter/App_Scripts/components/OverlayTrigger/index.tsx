@@ -4,7 +4,7 @@ import batchUpdate from '../utils/batchUpdate';
 import getAvailableSizeInfo, { BoundingClientRect, SizeInfo } from '../utils/getAvailableSizeInfo';
 import { createPortal } from 'react-dom';
 
-import selectParent from 'select-parent';
+import * as selectParent from 'select-parent';
 
 import useProperty from '../utils/useProperty';
 import Overlay from './Overlay';

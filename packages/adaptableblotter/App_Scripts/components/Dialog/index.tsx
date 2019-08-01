@@ -4,7 +4,7 @@ import { useRef, useEffect } from 'react';
 import join from '../utils/join';
 import contains from '../utils/contains';
 
-import captureTabNavigation from '@rb/capture-tab-navigation';
+import * as captureTabNavigation from '@rb/capture-tab-navigation';
 
 import { BoxProps, Box } from 'rebass';
 import { ModalProps, default as Modal } from '../Modal';

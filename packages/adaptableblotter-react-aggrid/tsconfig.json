@@ -1,5 +1,5 @@
 {
   "extends": "../adaptableblotter/tsconfig.json",
-  "include": ["src/**/*"],
+  "include": ["src/**/*","../adaptableblotter/App_Scripts/@types/**/*"],
   "exclude": ["node_modules", ".next", "typings"]
 }
