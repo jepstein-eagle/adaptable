@@ -188,7 +188,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       <DropdownButton
         variant="text"
         items={menuItems}
-        tooltip="Functions"
+        tooltip="Grid Functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
       >
@@ -204,7 +204,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         items={colItems}
         key={'dropdown-cols'}
         id={'dropdown-cols'}
-        tooltip="Columns"
+        tooltip="Select Columns"
       >
         {colsGlyph}
       </DropdownButton>
@@ -219,7 +219,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         id={'dropdown-toolbars'}
         columns={['label']}
         items={toolbarItems}
-        tooltip="Toolbars"
+        tooltip="Manage Toolbars"
       >
         {toolbarsGlyph}
       </DropdownButton>

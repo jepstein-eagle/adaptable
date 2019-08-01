@@ -17,6 +17,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<
   {}
 > {
   render() {
+    let closeButtonTooltip: string = this.props.value ? 'clear' : null;
     return (
       <FieldWrap
         style={{
@@ -39,7 +40,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<
           variant="text"
           icon="clear"
           tone="none"
-          tooltip="Clear"
+          tooltip={closeButtonTooltip} // jw commenting out as tooltip stayed in place when it was cleared
           px={0}
           py={0}
           marginRight={1}
