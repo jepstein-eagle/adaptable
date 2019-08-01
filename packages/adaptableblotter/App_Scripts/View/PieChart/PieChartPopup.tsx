@@ -247,7 +247,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
           </Checkbox>
 
           <Box marginTop={2}>
-            Others Threshold{' '}
+            Others Threshold
             <AdaptablePopover
               headerText={'Pie Chart: Others Threshold'}
               bodyText={[

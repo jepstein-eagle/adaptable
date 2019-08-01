@@ -11,3 +11,7 @@ body,
 .number-cell {
   text-align: right;
 }
+
+html {
+  font-family: Helvetica, Arial, sans-serif;
+}

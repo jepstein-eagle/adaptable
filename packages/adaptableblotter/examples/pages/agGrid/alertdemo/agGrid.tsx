@@ -6,15 +6,15 @@ import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../App_Scripts/base.scss';
 
-import '../../../../App_Scripts/themes/dark.scss';
 import '../../../../App_Scripts/themes/light.scss';
+import '../../../../App_Scripts/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-i;
+
 /*
 Demo for checking alerts work
 */
@@ -41,7 +41,7 @@ let demoConfig: PredefinedConfig = {
         ColumnId: 'price',
         Expression: undefined,
         MessageType: 'Warning',
-        QueryRange: {
+        Range: {
           Operand1: '100',
           Operand1Type: 'Value',
           Operand2: '',
