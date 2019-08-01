@@ -140,6 +140,7 @@ const Dropdown = (props: DropdownProps) => {
   if (!selectedOption) {
     selectedText = placeholder;
   }
+  //20  ... 20 16
 
   const renderClearButton = () => (
     <SimpleButton

@@ -9,16 +9,16 @@
   --ab-space-6: 128px;
   --ab-space-7: 256px;
 
-  --ab-font-size-0: 10px;
-  --ab-font-size-1: 12px;
-  --ab-font-size-2: 14px;
-  --ab-font-size-3: 18px;
-  --ab-font-size-4: 20px;
-  --ab-font-size-5: 28px;
-  --ab-font-size-6: 40px;
-  --ab-font-size-7: 54px;
+  --ab-font-size-0: 8px;
+  --ab-font-size-1: 10px;
+  --ab-font-size-2: 12px;
+  --ab-font-size-3: 14px;
+  --ab-font-size-4: 16px;
+  --ab-font-size-5: 20px;
+  --ab-font-size-6: 24px;
+  --ab-font-size-7: 36px;
 
-  --ab__font-size: var(--ab-font-size-2);
+ // --ab__font-size: var(--ab-font-size-2);  I'm not sure about this...
   --ab__font-family: inherit;
 
   --ab__border-radius: var(--ab-space-1);
