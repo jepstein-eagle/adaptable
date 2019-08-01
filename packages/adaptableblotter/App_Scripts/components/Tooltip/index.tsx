@@ -1,8 +1,12 @@
 import * as React from 'react';
-import ReachTooltip from '@reach/tooltip';
+import OverlayTrigger from '../OverlayTrigger';
 
-const Tooltip = (props: any) => {
-  return <ReachTooltip {...props} />;
+const Tooltip = ({ label, children }: { label?: React.ReactNode; children: React.ReactNode }) => {
+  return (
+    <OverlayTrigger defaultZIndex={2000000} className="ab-Tooltip" render={() => label}>
+      {children}
+    </OverlayTrigger>
+  );
 };
 
 export default Tooltip;

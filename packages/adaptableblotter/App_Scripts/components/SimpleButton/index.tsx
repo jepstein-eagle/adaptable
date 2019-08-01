@@ -109,9 +109,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
     </Button>
   );
 
-  // the current implementation of tooltip does not allow responding to blur events on the element
-  // return tooltip ? <Tooltip label={tooltip}>{btn}</Tooltip> : btn;
-  return btn;
+  return tooltip ? <Tooltip label={tooltip}>{btn}</Tooltip> : btn;
 };
 
 SimpleButton.defaultProps = {

@@ -183,6 +183,7 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
         ref={domRef}
         style={{
           visibility: 'hidden',
+          flex: 'none',
           width: 0,
           height: 0,
           pointerEvents: 'none',

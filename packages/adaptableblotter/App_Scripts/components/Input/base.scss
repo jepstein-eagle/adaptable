@@ -1,7 +1,7 @@
 .ab-Input {
   padding: var(--ab-cmp-input__padding);
   color: var(--ab-cmp-input__color);
-  background: var(--ab-cmp-input__background);
+  background: var(--ab-cmp-input__background) !important;
   border-radius: var(--ab-cmp-input__border-radius);
   border: var(--ab-cmp-input__border);
 
