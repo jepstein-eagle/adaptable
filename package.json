@@ -23,7 +23,7 @@
   },
   "scripts": {
     "release": "npm run release:patch",
-    "canaryrelease": "npm run build && release pre --show-url && npm run registry-publish",
+    "canaryrelease": "npm run build && release pre --show-url && npm run registry-publish-canary",
     "release:patch": "npm run build && release patch --show-url && npm run registry-publish",
     "release:minor": "npm run build && release minor --show-url && npm run registry-publish",
     "release:major": "npm run build && release major --show-url && npm run registry-publish",
