@@ -60,7 +60,7 @@ class LayoutToolbarControlComponent extends React.Component<
       <Flex flexDirection="row">
         <Dropdown
           disabled={availableLayoutOptions.length == 0}
-          style={{ minWidth: 170 }}
+          style={{ minWidth: 160 }}
           marginRight={2}
           placeholder="Select Layout"
           value={layoutEntity ? layoutEntity.Name : null}

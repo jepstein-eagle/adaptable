@@ -77,7 +77,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       <Flex alignItems="stretch">
         <Dropdown
           disabled={availablechartDefinitions.length == 0}
-          style={{ minWidth: 170 }}
+          style={{ minWidth: 160 }}
           marginRight={2}
           placeholder="Select Chart"
           value={this.props.CurrentChartDefinition ? this.props.CurrentChartDefinition.Name : null}
