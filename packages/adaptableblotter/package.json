@@ -4,8 +4,7 @@
   "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their grids and blotters",
   "main": "index.js",
   "typings": "index.d.ts",
-  "dependencies": {
-    "@rb/capture-tab-navigation": "^0.1.2",
+  "dependencies": {    
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "bootswatch": "^3.3.7",
@@ -35,7 +34,6 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.5",
     "resize-observer-polyfill": "^1.5.1",
-    "select-parent": "^1.0.1",
     "styled-components": "^4.2.0",
     "tslib": "^1.9.3",
     "uuid": "^3.3.2"
@@ -117,6 +115,7 @@
     "sass": "node-sass ./App_Scripts/index.scss ./dist/index.css && ../../node_modules/.bin/postcss ./dist/index.css --config ../../ --output ./dist/index.css && node-sass ./App_Scripts/base.scss ./dist/base.css && ../../node_modules/.bin/postcss ./dist/base.css --config ../../ --output ./dist/base.css && node-sass ./App_Scripts/themes/light.scss ./dist/themes/light.css && ../../node_modules/.bin/postcss ./dist/themes/light.css --config ../../ --output ./dist/themes/light.css && node-sass ./App_Scripts/themes/dark.scss ./dist/themes/dark.css && ../../node_modules/.bin/postcss ./dist/themes/dark.css --config ../../ --output ./dist/themes/dark.css ",
     "copy-assets": "cp -R ./App_Scripts/fonts ./dist/ && cp README.md ./dist && cp LICENSE.md ./dist",
     "tsc": "tsc --outDir dist",
+    "tscv": "tsc --version",
     "build": "npm run build-prod",
     "openfin": "node openfin-launcher.js",
     "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan"

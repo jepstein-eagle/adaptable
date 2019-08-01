@@ -8,8 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "typeRoots": ["node_modules/@types"],
+    "importHelpers": true,    
     "lib": ["es2018", "dom"],
     "paths": {
       "adaptableblotter-angular-aggrid": [

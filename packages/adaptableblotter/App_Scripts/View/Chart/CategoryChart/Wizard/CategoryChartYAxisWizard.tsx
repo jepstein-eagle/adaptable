@@ -8,7 +8,6 @@ import { AxisTotal } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 
-import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../../AdaptablePopover';
 import { DualListBoxEditor, DisplaySize } from '../../../Components/ListBox/DualListBoxEditor';
 import WizardPanel from '../../../../components/WizardPanel';
