@@ -144,7 +144,7 @@ class SmartEditToolbarControlComponent extends React.Component<
         {this.props.IsValidSelection && (
           <AdaptablePopover
             headerText="Preview Results"
-            tooltipText="Preview Results"
+            //  tooltipText="Preview Results"
             bodyText={[previewPanel]}
             MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
             useButton={true}

@@ -89,7 +89,7 @@ class AlertToolbarControlComponent extends React.Component<
           <Flex alignItems="center">
             <AdaptablePopover
               headerText=""
-              tooltipText="Alerts"
+              // tooltipText="Alerts"
               bodyText={[alertsPanel]}
               MessageType={this.getMessageType()}
               useButton={true}
