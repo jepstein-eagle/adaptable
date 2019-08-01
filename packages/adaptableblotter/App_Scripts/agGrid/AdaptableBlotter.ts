@@ -36,6 +36,7 @@ import {
 } from 'ag-grid-community/dist/lib/entities/gridOptions';
 import { Action } from 'redux';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
+import { iconToString } from '../components/icons';
 import { IAdaptableBlotter, EmitterCallback } from '../Utilities/Interface/IAdaptableBlotter';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
@@ -2095,10 +2096,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.getState().Menu.ColumnMenu.MenuItems.forEach((x: AdaptableBlotterMenuItem) => {
         const glyph = this.abContainerElement.ownerDocument.createElement('span');
         glyph.className = `glyphicon glyphicon-${x.GlyphIcon}`;
+        glyph.innerHTML = x.GlyphIcon;
         colMenuItems.push({
           name: x.Label,
           action: () => this.dispatchAction(x.Action),
-          icon: glyph,
+          icon: iconToString(x.GlyphIcon, {
+            style: {
+              fill: 'var(--ab-color-text-on-primary)',
+            },
+          }),
         });
       });
       return colMenuItems;

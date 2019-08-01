@@ -12,7 +12,7 @@ import { GRID_RELOADED_EVENT } from '../Utilities/Constants/GeneralConstants';
 export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.HomeStrategyId, blotter);
-    //this.blotter.onGridReloaded().Subscribe(() => this.handleGridReloaded());
+    // this.blotter.onGridReloaded().Subscribe(() => this.handleGridReloaded());
 
     // useful for when grid reloads (e.g. at midnight);
     this.blotter.on(GRID_RELOADED_EVENT, () => {
@@ -30,7 +30,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     }
 
     if (this.canCreateColumnMenuItem(column, this.blotter, 'quickfilter')) {
-      let isFilterActive: boolean = this.blotter.api.gridApi.getGridState().IsQuickFilterActive;
+      const isFilterActive: boolean = this.blotter.api.gridApi.getGridState().IsQuickFilterActive;
       this.createColumnMenuItemReduxAction(
         isFilterActive ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
         isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
@@ -42,7 +42,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
       if (this.canCreateColumnMenuItem(column, this.blotter)) {
         this.createColumnMenuItemReduxAction(
           'Select Column',
-          'compressed',
+          'tab-unselected',
           GridRedux.GridSelectColumn(column.ColumnId)
         );
       }

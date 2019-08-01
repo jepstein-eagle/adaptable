@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDOMServer from 'react-dom/server';
 import { ReactNode } from 'react';
 
 import ArrowRight from './arrow-right';
@@ -63,6 +64,9 @@ import link from './link';
 import person from './person';
 import alignJustify from './align-justify';
 import colorFill from './color-fill';
+import checkBox from './check-box';
+import checkBoxOutline from './check-box-outline';
+import tabUnselected from './tab-unselected';
 
 const allIcons = {
   assignment,
@@ -70,6 +74,11 @@ const allIcons = {
   'pie-chart': pieChart,
   'add-circle': addCircle,
   'page-view': pageView,
+  'tab-unselected': tabUnselected,
+  'check-box': checkBox,
+  'check-box-outline': checkBoxOutline,
+  unchecked: checkBoxOutline,
+  checked: checkBox,
   alarm,
   person,
   link,
@@ -150,10 +159,13 @@ export const Icon = ({
   const IconCmp = (allIcons[name] || null) as ReactComponentLike;
 
   if (!IconCmp) {
-    console.warn('NO icon found for' + name);
+    console.warn('NO icon found for ' + name);
   }
 
   return <IconCmp {...props} style={style} />;
 };
+
+export const iconToString = (name: string, props?: any) =>
+  ReactDOMServer.renderToString(<Icon name={name} {...props} />);
 
 export default allIcons;
