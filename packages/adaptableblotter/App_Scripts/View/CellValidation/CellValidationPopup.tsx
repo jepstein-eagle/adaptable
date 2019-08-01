@@ -77,8 +77,8 @@ class CellValidationPopupComponent extends React.Component<
     ];
 
     let colItems: IColItem[] = [
-      { Content: 'Validation Rule', Size: 5 },
-      { Content: 'Expression', Size: 3 },
+      { Content: 'Validation Rule', Size: 4 },
+      { Content: 'Expression', Size: 4 },
       { Content: 'Action', Size: 2 },
       { Content: '', Size: 2 },
     ];

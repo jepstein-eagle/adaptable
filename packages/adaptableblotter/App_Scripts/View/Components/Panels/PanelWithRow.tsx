@@ -19,7 +19,7 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
         <Text
           key={colItem.Content || index}
           fontWeight="bold"
-          fontSize={'var(--ab-font-size-2)'}
+          fontSize={'var(--ab-font-size-4)'}
           paddingLeft={1}
           paddingRight={1}
           style={{
