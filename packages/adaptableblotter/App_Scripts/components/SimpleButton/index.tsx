@@ -117,5 +117,6 @@ const SimpleButton = (props: SimpleButtonProps) => {
 SimpleButton.defaultProps = {
   px: null,
   py: null,
+  fontWeight: 'normal',
 };
 export default SimpleButton;

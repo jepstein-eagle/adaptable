@@ -12,7 +12,6 @@
     "importHelpers": true,
     "emitDecoratorMetadata": false,
     "resolveJsonModule": true,
-    "typeRoots": ["./customtypes","./node_modules/@types"],
     "allowSyntheticDefaultImports": true
   },
   "include": [

@@ -22,8 +22,6 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
     return (
       <SimpleButton
         tooltip="Delete"
-        px={2}
-        py={1}
         variant="text"
         icon="trash"
         iconSize={20}

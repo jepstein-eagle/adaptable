@@ -4,15 +4,7 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 export class ButtonClear extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <SimpleButton
-        px={2}
-        py={1}
-        tooltip="Clear"
-        iconSize={20}
-        icon="clear"
-        {...this.props}
-        variant="text"
-      />
+      <SimpleButton tooltip="Clear" iconSize={20} icon="clear" {...this.props} variant="text" />
     );
   }
 }

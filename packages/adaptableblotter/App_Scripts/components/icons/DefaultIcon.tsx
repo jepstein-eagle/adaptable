@@ -3,9 +3,16 @@ import { ReactNode } from 'react';
 
 export type IconProps = { size?: number; children?: ReactNode; style?: React.CSSProperties };
 
+const HUNDRED_PERCENT_SIZE = 24;
+
 const DEFAULT_SIZE = 20;
+
+export const getSize = (size: number) => {
+  return Math.round(size * (DEFAULT_SIZE / HUNDRED_PERCENT_SIZE));
+};
+
 export default ({ children, size = DEFAULT_SIZE, ...props }: IconProps) => {
-  size = Math.round(((size * 100) / DEFAULT_SIZE) * (DEFAULT_SIZE / 100));
+  size = getSize(size);
   return (
     <svg
       width={size}

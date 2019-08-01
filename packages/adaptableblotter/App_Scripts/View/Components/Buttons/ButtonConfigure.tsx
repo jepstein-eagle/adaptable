@@ -4,15 +4,7 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 export class ButtonConfigure extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <SimpleButton
-        tooltip="Configure"
-        px={2}
-        py={1}
-        iconSize={18}
-        icon="build"
-        {...this.props}
-        variant="text"
-      />
+      <SimpleButton tooltip="Configure" iconSize={18} icon="build" {...this.props} variant="text" />
     );
   }
 }

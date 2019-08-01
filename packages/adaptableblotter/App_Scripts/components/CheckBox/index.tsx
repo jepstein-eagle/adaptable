@@ -2,6 +2,7 @@ import React, { ReactNode, useState, SyntheticEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Box, BoxProps } from 'rebass';
 import join from '../utils/join';
+import { getSize } from '../icons/DefaultIcon';
 
 const checked = keyframes`
   100% {
@@ -55,7 +56,7 @@ type TypeProps = {
   value?: any;
   onChange?: (checked: boolean, event: SyntheticEvent) => void;
   children?: ReactNode;
-  gapDistance?: number;
+  gapDistance?: number | string;
   childrenPosition?: 'start' | 'end';
 };
 
@@ -67,7 +68,7 @@ const CheckBox = ({
   onChange,
   value,
   name,
-  gapDistance = 10,
+  gapDistance = 'var(--ab-space-1)',
   childrenPosition = 'end',
   as = 'label',
   ...props
@@ -104,6 +105,7 @@ const CheckBox = ({
       style={{
         display: 'inline-flex',
         flexFlow: 'row',
+        alignItems: 'center',
         cursor: 'pointer',
         position: 'relative',
         ...props.style,
@@ -127,7 +129,7 @@ const CheckBox = ({
         onChange={onInputChange}
       />
 
-      <CheckSvg viewBox="0 0 40 40" height={20}>
+      <CheckSvg viewBox="0 0 40 40" height={getSize(20)}>
         <rect x="2" y="2" width="36" height="36" />
         <polyline points="9,22 18,30 33,14" />
       </CheckSvg>

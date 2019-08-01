@@ -4,6 +4,6 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 
 export class ButtonGeneral extends React.Component<SimpleButtonProps, {}> {
   render() {
-    return <SimpleButton px={2} py={1} tooltip="" variant="text" {...this.props} />;
+    return <SimpleButton tooltip="" variant="text" {...this.props} />;
   }
 }

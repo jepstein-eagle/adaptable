@@ -116,6 +116,9 @@ class SmartEditToolbarControlComponent extends React.Component<
         </DropdownButton>
 
         <Input
+          style={{
+            width: '5rem',
+          }}
           value={this.props.SmartEditValue.toString()}
           type="number"
           placeholder="Enter a Number"
