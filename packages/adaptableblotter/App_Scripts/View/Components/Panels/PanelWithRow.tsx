@@ -7,7 +7,6 @@ import { Flex, Text } from 'rebass';
 export interface PanelWithRowProps extends PanelProps {
   // CellInfo: [string, number][]
   colItems: IColItem[];
-  cssClassName?: string;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you
@@ -20,7 +19,7 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
         <Text
           key={colItem.Content || index}
           fontWeight="bold"
-          fontSize={1}
+          fontSize={'var(--ab-font-size-2)'}
           paddingLeft={1}
           paddingRight={1}
           style={{

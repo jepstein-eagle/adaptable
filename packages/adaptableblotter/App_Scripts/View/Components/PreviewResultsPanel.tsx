@@ -11,6 +11,8 @@ import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellVali
 import WizardPanel from '../../components/WizardPanel';
 import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';
+import icons, { Icon } from '../../components/icons';
+import UIHelper from '../UIHelper';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;
@@ -20,7 +22,6 @@ export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewR
   SelectedColumn: IColumn;
   ShowPanel: boolean;
   style?: React.CSSProperties;
-  cssClassName?: string;
   ShowHeader: boolean;
 }
 
@@ -31,6 +32,8 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         ? 'Preview Results: ' +
           (this.props.SelectedColumn ? this.props.SelectedColumn.FriendlyName : '')
         : '';
+
+    let successColor = UIHelper.getColorByMessageType(MessageType.Success);
 
     var previewItems = this.props.PreviewInfo.PreviewResults.map(
       (previewResult: IPreviewResult, index: number) => {
@@ -72,7 +75,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
             ) : (
               <td>
                 {' '}
-                <CheckIcon />
+                <CheckIcon style={{ color: successColor, fill: 'currentColor' }} />
               </td>
             )}
           </tr>

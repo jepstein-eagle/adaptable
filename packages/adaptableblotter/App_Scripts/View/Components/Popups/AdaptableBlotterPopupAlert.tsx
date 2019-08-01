@@ -36,6 +36,7 @@ export class AdaptableBlotterPopupAlert extends React.Component<
     return (
       this.props.ShowPopup && (
         <Dialog
+          showCloseButton={false}
           isOpen={this.props.ShowPopup}
           onDismiss={this.props.onClose}
           style={{

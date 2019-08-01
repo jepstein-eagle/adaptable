@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
   colItems: IColItem[];
-  cssClassName?: string;
   fontSize?: string;
   onClick?: (e: React.SyntheticEvent) => void;
   style?: React.CSSProperties;
@@ -29,7 +28,7 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
       return (
         <Text
           key={index}
-          fontSize={1}
+          fontSize={'var(--ab-font-size-3)'}
           style={{ flex: colItem.Size }}
           paddingLeft={1}
           paddingRight={1}

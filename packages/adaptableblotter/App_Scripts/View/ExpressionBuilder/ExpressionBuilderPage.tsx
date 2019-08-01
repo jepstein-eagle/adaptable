@@ -29,7 +29,6 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   // these all need to be ptional because of wizard compatibility - todo: fix...
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
-  cssClassName?: string;
   Columns?: Array<IColumn>;
   Blotter?: IAdaptableBlotter;
 }
@@ -70,6 +69,7 @@ export class ExpressionBuilderPage
       <PanelWithButton
         button={newButton}
         headerText=""
+        variant="default"
         bodyProps={{
           style: {
             display: 'flex',

@@ -10,7 +10,6 @@ export interface AdaptableObjectCollectionProps
   items: any[];
   reducedPanel?: boolean;
   allowOverflow?: boolean;
-  cssClassName?: string;
   style?: React.CSSProperties;
 }
 

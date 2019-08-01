@@ -65,12 +65,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     );
 
     let content = (
-      <Flex
-        alignItems="stretch"
-        className={
-          this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-        }
-      >
+      <Flex alignItems="stretch">
         {/*<Text mx={1}>{collapsedText}</Text>*/}
         {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
           <>

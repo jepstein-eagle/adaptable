@@ -9,6 +9,8 @@ import { Helper } from '../../../Utilities/Helpers/Helper';
 import { SHORTCUT_ADD } from '../../../Redux/ActionsReducers/ShortcutRedux';
 import { Layout } from '../../../PredefinedConfig/RunTimeState/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
 export interface LayoutColumnWizardState {
@@ -40,7 +42,7 @@ export class LayoutColumnWizard
     ];
 
     return (
-      <PanelWithInfo header={'Choose columns for the Layout'} infoBody={infoBody}>
+      <WizardPanel>
         <DualListBoxEditor
           AvailableValues={this.props.Columns.map(x => x.FriendlyName)}
           SelectedValues={this.state.SelectedColumns}
@@ -49,7 +51,7 @@ export class LayoutColumnWizard
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
-      </PanelWithInfo>
+      </WizardPanel>
     );
   }
   OnSelectedValuesChange(newValues: Array<string>) {

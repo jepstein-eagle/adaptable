@@ -35,7 +35,6 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
   onCustomRangeExpressionChange: (rangeExpression: QueryRange) => void;
   Operators: Array<LeafExpressionOperator>;
   DataType: DataType;
-  cssClassName?: string;
   DistinctCriteriaPairValue: DistinctCriteriaPairValue;
 }
 

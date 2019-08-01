@@ -103,48 +103,50 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
   ): IPreviewInfo {
     let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
     let previewResults: IPreviewResult[] = [];
-    let columnId: string = selectedCellInfo.Columns[0].ColumnId;
+    let columnId: string = '';
+    if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
+      columnId = selectedCellInfo.Columns[0].ColumnId;
 
-    selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
-      let newValue: number;
-      switch (smartEditOperation) {
-        case MathOperation.Add:
-          newValue = Number(selectedCell.value) + smartEditValue;
-          break;
-        case MathOperation.Subtract:
-          newValue = Number(selectedCell.value) - smartEditValue;
-          break;
-        case MathOperation.Multiply:
-          newValue = Number(selectedCell.value) * smartEditValue;
-          break;
-        case MathOperation.Divide:
-          newValue = Number(selectedCell.value) / smartEditValue;
-          break;
-      }
-      //avoid the 0.0000000000x
-      newValue = parseFloat(newValue.toFixed(12));
+      selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
+        let newValue: number;
+        switch (smartEditOperation) {
+          case MathOperation.Add:
+            newValue = Number(selectedCell.value) + smartEditValue;
+            break;
+          case MathOperation.Subtract:
+            newValue = Number(selectedCell.value) - smartEditValue;
+            break;
+          case MathOperation.Multiply:
+            newValue = Number(selectedCell.value) * smartEditValue;
+            break;
+          case MathOperation.Divide:
+            newValue = Number(selectedCell.value) / smartEditValue;
+            break;
+        }
+        //avoid the 0.0000000000x
+        newValue = parseFloat(newValue.toFixed(12));
 
-      let dataChangedEvent: DataChangedInfo = {
-        OldValue: Number(selectedCell.value),
-        NewValue: newValue,
-        ColumnId: selectedCell.columnId,
-        IdentifierValue: selectedCell.primaryKeyValue,
-        Record: null,
-      };
+        let dataChangedEvent: DataChangedInfo = {
+          OldValue: Number(selectedCell.value),
+          NewValue: newValue,
+          ColumnId: selectedCell.columnId,
+          IdentifierValue: selectedCell.primaryKeyValue,
+          Record: null,
+        };
 
-      let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
-        dataChangedEvent
-      );
+        let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+          dataChangedEvent
+        );
 
-      let previewResult: IPreviewResult = {
-        Id: selectedCell.primaryKeyValue,
-        InitialValue: Number(selectedCell.value),
-        ComputedValue: newValue,
-        ValidationRules: validationRules,
-      };
-      previewResults.push(previewResult);
-    });
-
+        let previewResult: IPreviewResult = {
+          Id: selectedCell.primaryKeyValue,
+          InitialValue: Number(selectedCell.value),
+          ComputedValue: newValue,
+          ValidationRules: validationRules,
+        };
+        previewResults.push(previewResult);
+      });
+    }
     return {
       ColumnId: columnId,
       PreviewResults: previewResults,

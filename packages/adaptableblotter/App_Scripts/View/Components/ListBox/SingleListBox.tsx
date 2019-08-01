@@ -18,7 +18,6 @@ export interface SingleListBoxProps {
   ValueMember?: string;
   SortMember?: string;
   SelectionMode: SelectionMode;
-  cssClassName?: string;
   style?: React.CSSProperties;
   listStyle?: React.CSSProperties;
 }

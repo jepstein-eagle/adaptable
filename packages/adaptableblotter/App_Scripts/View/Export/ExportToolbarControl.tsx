@@ -151,7 +151,7 @@ class ExportToolbarControlComponent extends React.Component<
       <Flex alignItems="stretch">
         <Dropdown
           disabled={allReports.length == 0}
-          style={{ minWidth: 200 }}
+          style={{ minWidth: 170 }}
           options={availableReports}
           placeholder="Select Report"
           onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}

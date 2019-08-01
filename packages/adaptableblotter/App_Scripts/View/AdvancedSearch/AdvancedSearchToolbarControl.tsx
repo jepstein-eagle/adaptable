@@ -59,10 +59,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
         <Flex flexDirection="row" alignItems="stretch">
           <Dropdown
             disabled={availableSearches.length == 0}
-            style={{ minWidth: 200 }}
+            style={{ minWidth: 170 }}
             options={availableSearches}
             value={this.props.CurrentAdvancedSearchName}
-            placeholder="Select Advanced Search"
+            placeholder="Select Search"
             onChange={searchName => this.onSelectedSearchChanged(searchName)}
             marginRight={2}
           ></Dropdown>

@@ -7,6 +7,8 @@ import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
 import { IAlertApi } from './Interface/IAlertApi';
 import { AlertState } from '../PredefinedConfig/RunTimeState/AlertState';
+import { create as createOpenFinNotification } from 'openfin-notifications';
+import OpenfinHelper from '../Utilities/Helpers/OpenfinHelper';
 
 export class AlertApi extends ApiBase implements IAlertApi {
   public getAlertState(): AlertState {
@@ -46,6 +48,18 @@ export class AlertApi extends ApiBase implements IAlertApi {
       ShowAsPopup: showAsPopup,
     };
     this.displayAlert(alertToShow);
+
+    // tmp
+    if (OpenfinHelper.isRunningInOpenfin) {
+      /*
+      createOpenFinNotification({
+        id: String(Math.random()),
+        title: alertToShow.Header,
+        body: alertToShow.Msg,
+        icon: 'https://openfin.co/favicon.ico',
+      });
+      */
+    }
   }
 
   public showAlertInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {

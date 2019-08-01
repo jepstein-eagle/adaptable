@@ -152,6 +152,8 @@ import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnSt
 import { PercentBarTooltip } from './PercentBarTooltip';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
+import { ReactComponentLike } from 'prop-types';
+import icons from '../components/icons';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -726,9 +728,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   // this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
   public setSelectedCells(): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
-    //  const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
+    const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
     //  const rows: any[] = this.gridOptions.api!.getSelectedRows();
 
+    // console.log(selected);
+
+    // console.log(nodes);
     const columns: IColumn[] = [];
     const selectedCells: GridCell[] = [];
 
@@ -773,6 +778,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // this._onSelectedCellsChanged.Dispatch(this, this);
     this.emit(CELLS_SELECTED_EVENT);
+
+    // todo fire an externral event through event api (doesnt exist yet - and should have row and cell info)
   }
 
   // We deduce the type here, as there is no way to get it through the definition

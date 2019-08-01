@@ -8,7 +8,6 @@ import { IColItem } from '../../UIInterfaces';
 
 export interface SummaryRowItemProps extends React.ClassAttributes<SummaryRowItem> {
   SummaryItems: any[];
-  cssClassName?: string;
 }
 
 export class SummaryRowItem extends React.Component<SummaryRowItemProps, {}> {

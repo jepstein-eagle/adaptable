@@ -79,7 +79,7 @@ class AlertToolbarControlComponent extends React.Component<
             padding={2}
             color="text-on-secondary"
             backgroundColor="secondary"
-            fontSize={'10px'}
+            fontSize={'var( --ab-font-size-1)'}
             alignItems="center"
           >
             New

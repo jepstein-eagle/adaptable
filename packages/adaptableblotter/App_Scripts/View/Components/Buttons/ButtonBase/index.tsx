@@ -36,7 +36,6 @@ const baseClassName = 'ab-Button';
 export interface ButtonBaseProps extends BtnProps {
   overrideDisableButton?: boolean;
   transformGlyph?: boolean;
-  cssClassName?: string;
   className?: string;
   AccessLevel?: AccessLevel;
   showDefaultStyle?: boolean;
@@ -59,7 +58,6 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
     glyph: '',
     DisplayMode: 'Glyph+Text',
     transformGlyph: false,
-    cssClassName: 'btn',
     AccessLevel: AccessLevel.Full,
     showDefaultStyle: false,
   };
@@ -117,7 +115,6 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         {...this.props}
         style={{ color: 'currentColor', ...this.props.style }}
         className={join(
-          this.props.cssClassName,
           baseClassName,
           `${baseClassName}--size-${'normal'}`,
           `${baseClassName}--style-${'normal'}`,

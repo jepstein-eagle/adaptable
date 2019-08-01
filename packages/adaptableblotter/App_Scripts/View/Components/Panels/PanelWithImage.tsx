@@ -13,7 +13,6 @@ export interface PanelWithImageProps extends PanelProps {
   glyphicon?: string;
   icon?: string;
   infoBody?: any[];
-  cssClassName?: string;
   borderRadius?: string;
   bodyProps?: BoxProps;
   theme: any;

@@ -9,7 +9,6 @@ import { IColItem } from '../../UIInterfaces';
 // base props
 export interface BaseRowProps<View> extends React.ClassAttributes<View> {
   colItems: IColItem[];
-  cssClassName?: string;
 }
 
 export interface BaseEntityRowProps<View> extends BaseRowProps<View> {

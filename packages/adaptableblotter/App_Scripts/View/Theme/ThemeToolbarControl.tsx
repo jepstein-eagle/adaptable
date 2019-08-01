@@ -44,7 +44,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
           this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
         }
       >
-        <DropdownButton style={{ minWidth: '100px' }} id="themeDropDown" items={themes}>
+        <DropdownButton style={{ minWidth: '170' }} id="themeDropDown" items={themes}>
           {this.props.CurrentTheme}
         </DropdownButton>
       </div>

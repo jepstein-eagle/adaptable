@@ -12,7 +12,6 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
   onColumnChange: (SelectedColumns: IColumn[]) => void;
   SelectionMode: SelectionMode;
   className?: string;
-  cssClassName?: string;
   placeHolder?: string;
 }
 
