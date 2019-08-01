@@ -7,7 +7,7 @@ import {
   ThemeChangedEventArgs,
   AlertFiredEventArgs,
   ColumnStateChangedEventArgs,
-  ActionColumnEventArgs,
+  ActionColumnClickedEventArgs,
 } from './Events/BlotterEvents';
 import { IEventApi } from './Interface/IEventApi';
 
@@ -20,7 +20,7 @@ export class EventApi extends ApiBase implements IEventApi {
 
   public _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
 
-  public _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnEventArgs>;
+  public _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnClickedEventArgs>;
 
   constructor(blotter: IAdaptableBlotter) {
     super(blotter);
@@ -32,7 +32,10 @@ export class EventApi extends ApiBase implements IEventApi {
       ColumnStateChangedEventArgs
     >();
     this._onAlertFired = new EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>();
-    this._onActionColumnClicked = new EventDispatcher<IAdaptableBlotter, ActionColumnEventArgs>();
+    this._onActionColumnClicked = new EventDispatcher<
+      IAdaptableBlotter,
+      ActionColumnClickedEventArgs
+    >();
   }
 
   public onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs> {
@@ -51,7 +54,7 @@ export class EventApi extends ApiBase implements IEventApi {
     return this._onAlertFired;
   }
 
-  public onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnEventArgs> {
+  public onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs> {
     return this._onActionColumnClicked;
   }
 }

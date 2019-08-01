@@ -20,7 +20,7 @@ export interface AlertFiredEventArgs {
   alert: IAdaptableAlert;
 }
 
-export interface ActionColumnEventArgs {
+export interface ActionColumnClickedEventArgs {
   actionColumn: ActionColumn;
   primaryKeyValue: any;
   rowData: any;
