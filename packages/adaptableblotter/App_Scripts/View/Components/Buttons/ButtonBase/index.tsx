@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Button, ButtonProps as BtnProps } from 'rebass';
-import Tooltip from '@reach/tooltip';
+
 import join from '../../../../components/utils/join';
 import { AccessLevel } from '../../../../PredefinedConfig/Common/Enums';
 
