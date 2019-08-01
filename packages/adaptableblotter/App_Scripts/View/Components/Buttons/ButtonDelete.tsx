@@ -3,7 +3,6 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
-import { ButtonBase, ButtonProps } from './ButtonBase';
 
 import { IUIConfirmation } from '../../../Utilities/Interface/IMessage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';

@@ -127,7 +127,7 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         {content}
       </Button>
     );
-    let buttonwithtooltip = <Tooltip label={tooltip}>{button}</Tooltip>;
+    let buttonwithtooltip = <div>{button}</div>;
     return hideToolTip ? button : buttonwithtooltip;
   }
 }

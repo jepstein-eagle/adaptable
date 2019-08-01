@@ -4,7 +4,6 @@ import { useState, useRef, ReactNode } from 'react';
 import { BoxProps, Flex } from 'rebass';
 import join from '../utils/join';
 import useProperty from '../utils/useProperty';
-import { ButtonBase } from '../../View/Components/Buttons/ButtonBase';
 
 import Arrows from './Arrows';
 import SimpleButton from '../SimpleButton';
