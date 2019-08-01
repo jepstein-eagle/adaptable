@@ -5,7 +5,7 @@ import {
   ThemeChangedEventArgs,
   ColumnStateChangedEventArgs,
   AlertFiredEventArgs,
-  ActionColumnEventArgs,
+  ActionColumnClickedEventArgs,
 } from '../Events/BlotterEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 
@@ -64,13 +64,13 @@ export interface IEventApi {
    *
    * The EventArgs contain the column that has been clicked and the rowData for that row.
    *
-   * @returns IEvent<IAdaptableBlotter, ActionColumnEventArgs>
+   * @returns IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>
    */
-  onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnEventArgs>;
+  onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>;
 
   _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
   _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
   _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
   _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
-  _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnEventArgs>;
+  _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnClickedEventArgs>;
 }

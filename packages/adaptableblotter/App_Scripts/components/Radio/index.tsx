@@ -1,4 +1,5 @@
-import React, { ReactNode, useState, SyntheticEvent } from 'react';
+import * as React from 'react';
+import { ReactNode, useState, SyntheticEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Box, BoxProps } from 'rebass';
 

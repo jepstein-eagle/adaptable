@@ -54,7 +54,8 @@ export default () => <AdaptableBlotterReact
 - onThemeChanged: (blotter, arg: ThemeChangedEventArgs)
 - onSearchChanged: (blotter, arg: SearchChangedEventArgs)
 - onColumnStateChanged: (blotter, arg: ColumnStateChangedEventArgs)
-- onAlertFired: (blotter, arg: IAlertFiredEventArgs)
+- onAlertFired: (blotter, arg: AlertFiredEventArgs)
+- onActionColumnClicked: (blotter, arg: ActionColumnClickedEventArgs)
 
 ## Licences
 

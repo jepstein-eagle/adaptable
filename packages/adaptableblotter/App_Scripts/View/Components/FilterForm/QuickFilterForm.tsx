@@ -23,9 +23,11 @@ import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRan
 import Input from '../../../components/Input';
 import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { Column } from 'ag-grid-community';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: IColumn;
+  ColumnWidth: number;
   Blotter: IAdaptableBlotter;
   Columns: IColumn[];
   UserFilters: UserFilter[];
@@ -124,12 +126,13 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
           this.props.CurrentColumn.DataType != DataType.Boolean && (
             <Input
               style={{
-                padding: '1px',
-                marginTop: '1px',
+                width: this.props.ColumnWidth,
+                padding: '0px',
+                marginTop: '5px',
+                marginRight: '0px',
                 minHeight: '20px',
                 maxHeight: '20px',
-                fontSize: 'x-small',
-                fontWeight: 'lighter',
+                fontSize: 'var(--ab-font-size-1)',
               }}
               autoFocus={false}
               type={controlType}
@@ -333,6 +336,7 @@ export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
       Blotter={FilterContext.Blotter}
       CurrentColumn={FilterContext.Column}
       TeamSharingActivated={false}
+      ColumnWidth={FilterContext.ColumnWidth}
       EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
     />
   </Provider>

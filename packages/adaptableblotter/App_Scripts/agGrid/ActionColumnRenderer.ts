@@ -4,7 +4,7 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
-import { ActionColumnEventArgs } from '../Api/Events/BlotterEvents';
+import { ActionColumnClickedEventArgs } from '../Api/Events/BlotterEvents';
 import AdaptableBlotter from '../../agGrid';
 
 export class ActionColumnRenderer implements ICellRendererComp {
@@ -49,7 +49,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
 
       // add event listener to button
       this.eventListener = function() {
-        let eventArgs: ActionColumnEventArgs = {
+        let eventArgs: ActionColumnClickedEventArgs = {
           actionColumn: actionCol as ActionColumn,
           primaryKeyValue: blotter.getPrimaryKeyValueFromRecord(params.node),
           rowData: params.data,

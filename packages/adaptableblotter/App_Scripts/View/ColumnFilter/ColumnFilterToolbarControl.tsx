@@ -72,7 +72,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
             <AdaptablePopover
               headerText=""
               bodyText={[activeFiltersPanel]}
-              tooltipText={'Show Filter Details'}
+              //  tooltipText={'Show Filter Details'}
               useButton={true}
               showEvent={'focus'}
               hideEvent="blur"

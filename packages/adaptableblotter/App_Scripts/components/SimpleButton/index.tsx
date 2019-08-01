@@ -116,5 +116,7 @@ SimpleButton.defaultProps = {
   px: null,
   py: null,
   fontWeight: 'normal',
+  m: null,
+  borderRadius: null,
 };
 export default SimpleButton;

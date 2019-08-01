@@ -13,7 +13,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { ActionColumnEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
+import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -62,7 +62,7 @@ function InitAdaptableBlotter() {
     .Subscribe((sender, actionColumnEventArgs) => onActionColumnClicked(actionColumnEventArgs));
 }
 
-function onActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
+function onActionColumnClicked(actionColumnEventArgs: ActionColumnClickedEventArgs) {
   console.log('alert fired event received');
   console.log(actionColumnEventArgs);
 

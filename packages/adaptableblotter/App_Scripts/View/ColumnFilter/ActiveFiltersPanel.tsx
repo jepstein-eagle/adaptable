@@ -11,6 +11,7 @@ import { IColItem } from '../UIInterfaces';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
+import { Flex } from 'rebass';
 
 export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFiltersPanel> {
   ColumnFilters: ColumnFilter[];
@@ -20,6 +21,10 @@ export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFil
   onClear: (columnFilter: ColumnFilter) => void;
   onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
 }
+
+const stopPropagation = (e: React.SyntheticEvent) => {
+  e.stopPropagation();
+};
 
 export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps, {}> {
   render(): any {
@@ -54,7 +59,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
       false
     );
     rowColItems[2].Content = (
-      <span style={{ alignContent: 'right' }}>
+      <Flex justifyContent="center" margin={0} padding={0} onClick={stopPropagation}>
         <ButtonSave
           onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
           tooltip="Save as User Filter"
@@ -70,7 +75,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
           disabled={columnFilter == null}
           AccessLevel={this.props.AccessLevel}
         />
-      </span>
+      </Flex>
     );
 
     let rowElement = <AdaptableObjectRow key={columnFilter.ColumnId} colItems={rowColItems} />;

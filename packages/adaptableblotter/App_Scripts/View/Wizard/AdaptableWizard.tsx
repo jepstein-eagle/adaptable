@@ -224,7 +224,6 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
   //So we inject everything needed for the Wizard
   private cloneWizardStep(step: JSX.Element): JSX.Element {
-    console.log(step);
     return React.cloneElement(step, {
       ref: (Element: AdaptableWizardStep) => {
         this.ActiveStep = Element;

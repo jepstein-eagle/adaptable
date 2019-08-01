@@ -28,9 +28,13 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
       this.filterContainer = document.createElement('div');
       this.filterContainer.id = 'floatingFilter_' + colId + '_' + blotter.blotterOptions.blotterId;
       let column: IColumn = ColumnHelper.getColumnFromId(colId, blotter.api.gridApi.getColumns());
+
+      let width: number = params.column.getActualWidth() - 40;
+
       let filterContext: IColumnFilterContext = {
         Column: column,
         Blotter: blotter,
+        ColumnWidth: width,
         ShowCloseButton: false,
       };
       ReactDOM.render(QuickFilterFormReact(filterContext), this.filterContainer);
