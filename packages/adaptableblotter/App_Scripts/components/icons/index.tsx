@@ -160,6 +160,7 @@ export const Icon = ({
 
   if (!IconCmp) {
     console.warn('NO icon found for ' + name);
+    return <svg />;
   }
 
   return <IconCmp {...props} style={style} />;
