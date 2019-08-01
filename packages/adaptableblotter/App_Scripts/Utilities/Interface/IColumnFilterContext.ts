@@ -3,6 +3,6 @@ import { IColumn } from './IColumn';
 export interface IColumnFilterContext {
   Column: IColumn;
   Blotter: IAdaptableBlotter;
-  ColumnWidth: number;
+  ColumnWidth?: number;
   ShowCloseButton: boolean;
 }
