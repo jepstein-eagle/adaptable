@@ -1,7 +1,7 @@
 ﻿/**********************************
  ** ADAPTABLEBLOTTER BASE STYLES **
  **********************************/
- 
+
 :root {
   --ab-space-0: 0px;
   --ab-space-1: 4px;
@@ -91,6 +91,7 @@
 @import './components/Panel/style.scss';
 @import './components/SimpleButton/style.scss';
 @import './components/Textarea/style.scss';
+@import './components/Tooltip/style.scss';
 @import './View/Components/AdaptableObjectCollection//style.scss';
 @import './View/Components/Buttons/ButtonBase/style.scss';
 @import './View/Components/Panels/PanelDashboard/style.scss';
