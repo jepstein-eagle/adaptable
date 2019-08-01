@@ -22,9 +22,9 @@ const warnTheme = (themeName: string) => {
 
     'import "adaptableblotter/themes/${themeFile}"'
 
-Also make sure to import the base styles:
+Also make sure to import the main styles:
 
-    'import "adaptableblotter/base.css"'`);
+    'import "adaptableblotter/index.css"'`);
       }
     }
   }, 500);
