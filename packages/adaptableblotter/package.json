@@ -7,7 +7,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
-    "bootswatch": "^3.3.7",
+    
     "deep-diff": "^1.0.2",
     "emittery": "^0.4.1",
     "es6-promise": "^4.2.4",
@@ -23,8 +23,6 @@
     "openfin-notifications": "^0.10.1",
     "prop-types": "^15.6.2",
     "react": ">=16.4.0",
-    "react-bootstrap": "^0.31.5",
-    "react-bootstrap-typeahead": "^3.2.0",
     "react-dom": ">=16.4.0",
     "react-redux": "^5.1.1",
     "react-remove-scroll": "^1.0.8",
@@ -53,8 +51,6 @@
     "@types/node": "^9.6.22",
     "@types/node-schedule": "^1.2.3",
     "@types/react": "^16.8.10",
-    "@types/react-bootstrap": "0.0.49",
-    "@types/react-bootstrap-typeahead": "^3.2.0",
     "@types/react-dom": "^16.8.3",
     "@types/react-redux": "^4.4.40",
     "@types/rebass": "^3.0.4",
@@ -68,7 +64,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2015-loose": "^8.0.0",
     "body-parser": "^1.18.3",
-    "bootstrap": "^3.3.7",
+    
     "buffer-shims": "^1.0.0",
     "bunyan": "^1.8.12",
     "copy-webpack-plugin": "^4.5.1",

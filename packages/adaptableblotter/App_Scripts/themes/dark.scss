@@ -1,10 +1,6 @@
-
 html.ab--theme-dark {
-
-  //font-size: 50;
-
   font-family: Helvetica, Arial, sans-serif;
-  --ab-theme-loaded: 777; // this custom variable is here to allow checking if the theme was correctly loaded by the host app
+  --ab-theme-loaded: dark;
 
   --ab-dashboard__background: #232323;   
   --ab-cmp-input--disabled__background:#b6b7b8;
@@ -22,7 +18,4 @@ html.ab--theme-dark {
   --ab-color-secondarydark: #f7f7f7;
   --ab-color-text-on-secondary: #262d2f;
   --ab-color-text-on-secondarylight: #f7f7f7;
-
-
-
 }

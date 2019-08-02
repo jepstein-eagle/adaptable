@@ -18,13 +18,21 @@ export interface DeleteButtonProps extends SimpleButtonProps {
 
 class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
   render() {
+    const {
+      onConfirmWarning,
+      ConfirmAction,
+      ConfirmationMsg,
+      ConfirmationTitle,
+      onClickAction,
+      ...props
+    } = this.props;
     return (
       <SimpleButton
         tooltip="Delete"
         variant="text"
         icon="trash"
         iconSize={20}
-        {...this.props}
+        {...props}
         onClick={() => this.onClick()}
       />
     );

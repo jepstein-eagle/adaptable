@@ -237,6 +237,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         if (menuItem) {
           return (
             <SimpleButton
+              key={menuItem.Label}
               icon={menuItem.GlyphIcon}
               variant="text"
               tooltip={menuItem.Label}

@@ -10,8 +10,8 @@ import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/Theme
 
 export const MISSING_COLUMN: string = ' [MISSING]';
 export const DEFAULT_LAYOUT: string = 'Ab_Default_Layout';
-export const LIGHT_THEME: string = 'Light Theme';
-export const DARK_THEME: string = 'Dark Theme';
+export const LIGHT_THEME: string = 'light';
+export const DARK_THEME: string = 'dark';
 
 export const USER_NAME: string = 'anonymous';
 export const BLOTTER_ID: string = 'adaptable_blotter_id';
@@ -34,7 +34,7 @@ export const MONTH_ADD: number = 47;
 
 /*
 Redux / State Defaults
-Try to put all our Redux / State defaults here and ONLY reference from here - avoid magic numbers / strings.  
+Try to put all our Redux / State defaults here and ONLY reference from here - avoid magic numbers / strings.
 Please!!!
 */
 // Alert
@@ -67,7 +67,7 @@ export const CELL_SUMMARY_DEFAULT_OPERATION:
   | 'Only' = CellSummaryOperation.Sum;
 // system
 export const SYSTEM_DEFAULT_CHART_VISIBILITY: ChartVisibility = ChartVisibility.Hidden;
-//export const SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR: 'Red' | 'Amber' | 'Green' | 'Blue' =
+// export const SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR: 'Red' | 'Amber' | 'Green' | 'Blue' =
 //  StatusColour.Green;
 export const SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE: 'Error' | 'Warning' | 'Success' | 'Info' =
   MessageType.Info;
@@ -108,12 +108,12 @@ export const SMART_EDIT_MATH_OPERATION_STATE_PROPERTY: string = 'MathOperationz'
 // consts for Themes
 export const SYSTEM_THEMES: Array<AdaptableBlotterTheme> = [
   {
-    Name: 'light',
-    Description: LIGHT_THEME,
+    Name: LIGHT_THEME,
+    Description: 'Light Theme',
   },
   {
-    Name: 'dark',
-    Description: DARK_THEME,
+    Name: DARK_THEME,
+    Description: 'Dark Theme',
   },
 ];
 

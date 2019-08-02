@@ -117,6 +117,8 @@ import {
   SEARCH_APPLIED_EVENT,
   GRID_REFRESHED_EVENT,
   KEY_DOWN_EVENT,
+  LIGHT_THEME,
+  DARK_THEME,
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { IEvent } from '../Utilities/Interface/IEvent';
@@ -154,6 +156,7 @@ import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotte
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { ReactComponentLike } from 'prop-types';
 import icons from '../components/icons';
+import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -2459,11 +2462,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public applyLightTheme(): void {
-    if (
-      this.blotterOptions.generalOptions.useDefaultVendorGridThemes &&
-      StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)
-    ) {
+  public applyBlotterTheme(theme: AdaptableBlotterTheme | string) {
+    const themeName = typeof theme === 'string' ? theme : theme.Name;
+
+    const themesToRemove: string[] = [];
+    const el: HTMLElement = document.documentElement;
+    el.classList.forEach((cssClassName: string) => {
+      if (cssClassName.indexOf('ab--theme-') === 0) {
+        themesToRemove.push(cssClassName);
+      }
+    });
+
+    themesToRemove.forEach(cssClassName => el.classList.remove(cssClassName));
+
+    const newThemeClassName = `ab--theme-${themeName}`;
+
+    el.classList.add(newThemeClassName);
+
+    const computedDocumentStyle = getComputedStyle(el);
+    const [abLoaded, abThemeLoaded] = ['--ab-loaded', '--ab-theme-loaded'].map(variable => {
+      let val = computedDocumentStyle.getPropertyValue(variable);
+
+      if (typeof val === 'string' && val.trim) {
+        val = val.trim();
+      }
+      return val;
+    });
+
+    const systemThemes = this.api.themeApi.getAllSystemTheme();
+    const isSystemTheme = !!systemThemes.filter(t => t.Name === themeName)[0];
+    if (isSystemTheme) {
       const container = this.getGridContainerElement();
       if (container != null) {
         const light = this.agGridHelper.getLightThemeName();
@@ -2472,55 +2500,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         container.classList.remove(light);
         container.classList.remove(dark);
 
-        container.classList.add(light);
+        container.classList.add(themeName === LIGHT_THEME ? light : dark);
       }
     }
 
-    this.applyBlotterTheme(this.getBlotterLightThemeName());
-  }
-
-  public getBlotterLightThemeName() {
-    return 'ab--theme-light';
-  }
-
-  public getBlotterDarkThemeName() {
-    return 'ab--theme-dark';
-  }
-
-  public applyDarkTheme(): void {
-    console.log('here');
-    if (
-      this.blotterOptions.generalOptions.useDefaultVendorGridThemes &&
-      StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)
-    ) {
-      const container = this.getGridContainerElement();
-      if (container != null) {
-        const light = this.agGridHelper.getLightThemeName();
-        const dark = this.agGridHelper.getDarkThemeName();
-
-        container.classList.remove(light);
-        container.classList.remove(dark);
-
-        container.classList.add(dark);
-      }
+    if (abLoaded !== '777') {
+      console.error('Please import the AdaptableBlotter styles from "adaptableblotter/index.css"');
     }
 
-    this.applyBlotterTheme(this.getBlotterDarkThemeName());
-  }
+    // every theme should define a custom css variable: --ab-theme-loaded: <themeName> defined on the document element.
+    if (abThemeLoaded !== themeName) {
+      console.warn(`Theme "${themeName}" doesn't seem to be loaded! Make sure you import the css file for the "${themeName}" theme!
+        
+If it's a default theme, try
 
-  public applyBlotterTheme(themeClassName: string) {
-    const blotterContainer = this.getBlotterContainerElement();
-    if (blotterContainer) {
-      blotterContainer.classList.remove(this.getBlotterDarkThemeName());
-      blotterContainer.classList.remove(this.getBlotterLightThemeName());
-      blotterContainer.classList.add(themeClassName);
-    }
-
-    if (document.documentElement) {
-      // also add those classes on the document element
-      document.documentElement.classList.remove(this.getBlotterDarkThemeName());
-      document.documentElement.classList.remove(this.getBlotterLightThemeName());
-      document.documentElement.classList.add(themeClassName);
+import "adaptableblotter/themes/${themeName}.css"`);
     }
   }
 

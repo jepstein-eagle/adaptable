@@ -45,12 +45,22 @@ function InitAdaptableBlotter() {
   };
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-  adaptableblotter.applyLightTheme();
 
   adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  Theme: {
+    SystemThemes: ['light'],
+    UserThemes: [
+      {
+        Name: 'custom-theme',
+        Description: 'A Custom theme',
+      },
+    ],
+    CurrentTheme: 'custom-theme',
+  },
+};
 
 export default () => {
   useEffect(() => {

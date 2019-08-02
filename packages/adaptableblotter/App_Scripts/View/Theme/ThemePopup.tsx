@@ -8,13 +8,13 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
-import { UserTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 import { Flex, Box, Text } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
-  SystemThemes: Array<string>;
-  UserThemes: Array<UserTheme>;
+  SystemThemes: Array<AdaptableBlotterTheme>;
+  UserThemes: Array<AdaptableBlotterTheme>;
   CurrentTheme: string;
   SelectTheme: (newTheme: string) => ThemeRedux.ThemeSelectAction;
 }
@@ -29,21 +29,28 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
       <i>None</i>,
       ' if you prefer to upload your own custom theme or ',
       <i>Default</i>,
-      ' to use the standard Bootstrap theme.',
+      ' to use the standard theme.',
     ];
 
-    let availableThemes: string[] = [];
-    this.props.SystemThemes.forEach(st => {
+    let availableThemes: AdaptableBlotterTheme[] = [];
+    this.props.SystemThemes.forEach((st: AdaptableBlotterTheme) => {
       availableThemes.push(st);
     });
     this.props.UserThemes.forEach(ut => {
-      availableThemes.push(ut.Name);
+      availableThemes.push(ut);
     });
 
-    let optionThemes = availableThemes.map(x => {
+    let optionThemes = availableThemes.map(theme => {
+      if (typeof theme === 'string') {
+        // protection against old state, which could be string
+        theme = {
+          Name: theme,
+          Description: theme,
+        };
+      }
       return {
-        value: x,
-        label: x,
+        value: theme.Name,
+        label: theme.Description,
       };
     });
     return (
@@ -59,7 +66,9 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
             <Box>
               <Dropdown
                 style={{ width: '50%', minWidth: 200 }}
-                placeholder="select"
+                placeholder="Select theme"
+                showEmptyItem={false}
+                showClearButton={false}
                 value={this.props.CurrentTheme}
                 onChange={(value: any) => this.onChangeTheme(value)}
                 options={optionThemes}

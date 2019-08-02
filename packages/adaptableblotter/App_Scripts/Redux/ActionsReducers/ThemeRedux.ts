@@ -1,8 +1,6 @@
 import * as Redux from 'redux';
-import { ThemeState } from '../../PredefinedConfig/RunTimeState/ThemeState';
-import { StaticThemes } from '../../themes';
+import { ThemeState, AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 import {
-  LIGHT_THEME,
   EMPTY_ARRAY,
   THEME_DEFAULT_CURRENT_THEME,
   SYSTEM_THEMES,
@@ -13,23 +11,27 @@ const THEME_SET_USER_THEMES = 'THEME_SET_USER_THEMES';
 export const THEME_SELECT = 'THEME_SELECT';
 
 export interface ThemeSetSystemThemesAction extends Redux.Action {
-  SystemThemes: string[];
+  SystemThemes: AdaptableBlotterTheme[];
 }
 
 export interface ThemeSetUserThemesAction extends Redux.Action {
-  UserThemes: string[];
+  UserThemes: AdaptableBlotterTheme[];
 }
 
 export interface ThemeSelectAction extends Redux.Action {
   Theme: string;
 }
 
-export const ThemeSetSystemThemes = (SystemThemes: string[]): ThemeSetSystemThemesAction => ({
+export const ThemeSetSystemThemes = (
+  SystemThemes: AdaptableBlotterTheme[]
+): ThemeSetSystemThemesAction => ({
   type: THEME_SET_SYSTEM_THEMES,
   SystemThemes,
 });
 
-export const ThemeSetUserThemes = (UserThemes: string[]): ThemeSetUserThemesAction => ({
+export const ThemeSetUserThemes = (
+  UserThemes: AdaptableBlotterTheme[]
+): ThemeSetUserThemesAction => ({
   type: THEME_SET_USER_THEMES,
   UserThemes,
 });

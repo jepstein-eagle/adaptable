@@ -57,18 +57,13 @@
   --ab-color-text-on-secondary: white;
   --ab-color-text-on-secondarylight: #000000;
  
-
-
-
-
-
-
- 
   --ab-icon-fill: currentColor;
   --ab-color-focus: var(--ab-color-accent);
   --ab-focus__box-shadow: 0 0 5px 1px var(--ab-color-accent);
   --ab-focus__outline: none;
   --ab-dashboard__background:  var(--ab-color-defaultbackground);
+
+  --ab-loaded: 777; // dont remove - required for checking styles have been loaded
 }
 
 .ab-style__list-group-item:nth-child(2n+1) {

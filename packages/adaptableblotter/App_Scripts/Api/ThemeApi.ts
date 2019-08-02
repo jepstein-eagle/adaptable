@@ -1,7 +1,7 @@
 import * as ThemeRedux from '../Redux/ActionsReducers/ThemeRedux';
 import { ApiBase } from './ApiBase';
 import { IThemeApi } from './Interface/IThemeApi';
-import { ThemeState, UserTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
+import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 
 export class ThemeApi extends ApiBase implements IThemeApi {
   public getThemeState(): ThemeState {
@@ -16,19 +16,34 @@ export class ThemeApi extends ApiBase implements IThemeApi {
     return this.getBlotterState().Theme.CurrentTheme;
   }
 
-  public setSystemThemes(systemThemes: string[]): void {
+  public setSystemThemes(systemThemes: AdaptableBlotterTheme[]): void {
     this.dispatchAction(ThemeRedux.ThemeSetSystemThemes(systemThemes));
   }
 
-  public setUserThemes(userThemes: string[]): void {
+  public setUserThemes(userThemes: AdaptableBlotterTheme[]): void {
     this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes));
   }
 
-  public getAllSystemTheme(): string[] {
-    return this.getBlotterState().Theme.SystemThemes;
+  public getAllSystemTheme(): AdaptableBlotterTheme[] {
+    const themes = this.getBlotterState().Theme.SystemThemes;
+
+    return themes.map((theme: AdaptableBlotterTheme | string) => {
+      if (typeof theme === 'string') {
+        return {
+          Name: theme,
+          Description: theme,
+        };
+      }
+
+      return theme;
+    });
   }
 
-  public getAllUserTheme(): UserTheme[] {
+  public getAllUserTheme(): AdaptableBlotterTheme[] {
     return this.getBlotterState().Theme.UserThemes;
+  }
+
+  public getAllTheme(): AdaptableBlotterTheme[] {
+    return [...this.getAllSystemTheme(), ...this.getAllUserTheme()];
   }
 }

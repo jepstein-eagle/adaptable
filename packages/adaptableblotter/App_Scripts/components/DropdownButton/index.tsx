@@ -173,7 +173,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
         iconPosition="end"
         paddingRight={0}
         {...domProps}
-        style={{ ...domProps.style, overflow: 'visible', outline: 'none' }}
+        style={{ overflow: 'visible', ...domProps.style, outline: 'none' }}
         className={className}
         onClick={(e: any) => {
           if (domProps.onClick) {

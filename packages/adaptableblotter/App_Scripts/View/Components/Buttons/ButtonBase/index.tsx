@@ -19,7 +19,7 @@ const baseClassName = 'ab-Button';
 //   //The entity we pass in to check normal disabled status
 //   //  ConfigEntity?: IAdaptableBlotterObject
 //   style?: React.CSSProperties;
-//   size?: ReactBootstrap.Sizes;
+
 //   //Override normal Text i.e. Edit
 //   overrideText?: string;
 //   DisplayMode: 'Glyph' | 'Text' | 'Glyph+Text' | 'Text+Glyph';

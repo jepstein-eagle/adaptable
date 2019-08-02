@@ -23,6 +23,7 @@ import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/Calculated
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { GridCell } from './SelectedCell/GridCell';
+import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -192,7 +193,5 @@ export interface IAdaptableBlotter {
   hideQuickFilter(): void;
 
   //Theme
-  applyBlotterTheme(themeClassName: string): void;
-  applyLightTheme(): void;
-  applyDarkTheme(): void;
+  applyBlotterTheme(theme: AdaptableBlotterTheme | string): void;
 }

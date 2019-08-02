@@ -10,33 +10,39 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
-import { UserTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 import DropdownButton from '../../components/DropdownButton';
 
 interface ThemeToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ThemeToolbarControlComponent> {
   onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction;
-  SystemThemes: string[];
-  UserThemes: UserTheme[];
+  SystemThemes: AdaptableBlotterTheme[];
+  UserThemes: AdaptableBlotterTheme[];
   CurrentTheme: string;
 }
 
 class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlComponentProps, {}> {
   render(): any {
-    let allThemes = [].concat(this.props.SystemThemes).concat(
-      this.props.UserThemes.map(x => {
-        return x.Name;
-      })
-    );
+    let allThemes: AdaptableBlotterTheme[] = [...this.props.SystemThemes, ...this.props.UserThemes];
 
-    let themes: any[] = allThemes.map((search, index) => {
+    let themes: any[] = allThemes.map((theme: AdaptableBlotterTheme, index) => {
+      if (typeof theme === 'string') {
+        // protection against old state, which could be string
+        theme = {
+          Name: theme,
+          Description: theme,
+        };
+      }
       return {
-        label: search,
-        onClick: () => this.onSelectTheme(search),
+        label: theme.Description,
+        onClick: () => this.onSelectTheme(theme),
       };
     });
+
+    let currentTheme = allThemes.filter(theme => theme.Name === this.props.CurrentTheme)[0];
+    let currentThemeDescription = currentTheme ? currentTheme.Description : this.props.CurrentTheme;
 
     let content = (
       <div
@@ -44,8 +50,17 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
           this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
         }
       >
-        <DropdownButton items={themes} columns={['label']}>
-          {this.props.CurrentTheme}
+        <DropdownButton
+          style={{
+            maxWidth: '25rem',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+          items={themes}
+          columns={['label']}
+        >
+          {currentThemeDescription}
         </DropdownButton>
       </div>
     );
@@ -62,8 +77,8 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
     );
   }
 
-  private onSelectTheme(theme: string) {
-    this.props.onSelectTheme(theme);
+  private onSelectTheme(theme: AdaptableBlotterTheme) {
+    this.props.onSelectTheme(theme.Name);
   }
 }
 

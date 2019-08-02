@@ -25,13 +25,12 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
-
   }
 
   
   &--empty {
     .ab-Dropdown__text {
-      color: var(--ab-color-text-on-primary);
+      color: var(--ab-color-text-on-defaultbackground);
     }
   }
 

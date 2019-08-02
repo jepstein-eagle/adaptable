@@ -1,5 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
+
 export interface ThemeState extends RunTimeState {
   /**
    * The name of the currently applied theme or the theme to set at startup
@@ -11,7 +12,7 @@ export interface ThemeState extends RunTimeState {
    *
    * If you have useDefaultVendorGridThemes set to true in IAdaptableBlotterOptions then setting (or changing to) either of the shipped System Themes will set the theme of the vendor grid too.  See BlotterOptions.
    */
-  SystemThemes?: AdaptableBlotterTheme[];
+  SystemThemes?: (AdaptableBlotterTheme | string)[];
 
   /**
    * Themes provided by the User
