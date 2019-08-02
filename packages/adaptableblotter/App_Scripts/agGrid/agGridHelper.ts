@@ -64,11 +64,11 @@ export class agGridHelper {
     this.gridOptions = gridOptions;
   }
 
-  public getLightThemeName(): string {
+  public getVendorLightThemeName(): string {
     return 'ag-theme-balham';
   }
 
-  public getDarkThemeName(): string {
+  public getVendorDarkThemeName(): string {
     return 'ag-theme-balham-dark';
   }
 

@@ -2494,23 +2494,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (isSystemTheme) {
       const container = this.getGridContainerElement();
       if (container != null) {
-        const light = this.agGridHelper.getLightThemeName();
-        const dark = this.agGridHelper.getDarkThemeName();
+        const vendorLight = this.agGridHelper.getVendorLightThemeName();
+        const vendorDark = this.agGridHelper.getVendorDarkThemeName();
 
-        container.classList.remove(light);
-        container.classList.remove(dark);
+        container.classList.remove(vendorLight);
+        container.classList.remove(vendorDark);
 
-        container.classList.add(themeName === LIGHT_THEME ? light : dark);
+        container.classList.add(themeName === LIGHT_THEME ? vendorLight : vendorDark);
       }
     }
 
     if (abLoaded !== '777') {
-      console.error('Please import the AdaptableBlotter styles from "adaptableblotter/index.css"');
+      LoggingHelper.LogError(
+        'Please import the AdaptableBlotter styles from "adaptableblotter/index.css"'
+      );
     }
 
     // every theme should define a custom css variable: --ab-theme-loaded: <themeName> defined on the document element.
     if (abThemeLoaded !== themeName) {
-      console.warn(`Theme "${themeName}" doesn't seem to be loaded! Make sure you import the css file for the "${themeName}" theme!
+      LoggingHelper.LogWarning(`Theme "${themeName}" doesn't seem to be loaded! Make sure you import the css file for the "${themeName}" theme!
         
 If it's a default theme, try
 

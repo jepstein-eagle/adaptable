@@ -68,8 +68,8 @@
 	"Theme": {
 		"CurrentTheme": "Default",
 		"SystemThemes": [
-			"Light Theme",
-			"Dark Theme"
+			"Light",
+			"Dark"
 		],
 		"UserThemes": []
 	},

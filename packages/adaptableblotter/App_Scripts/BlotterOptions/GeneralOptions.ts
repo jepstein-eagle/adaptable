@@ -27,7 +27,7 @@ export interface GeneralOptions {
   /**
    * Use the default theme that we provide for the vendor grid.
    *
-   * There is one each for 'Light Theme' and 'Dark Theme'.
+   * There is one each for 'Light' and 'Dark'.
    *
    * **Default Value: true**
    *

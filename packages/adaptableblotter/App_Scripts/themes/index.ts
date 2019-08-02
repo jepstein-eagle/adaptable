@@ -3,18 +3,11 @@ import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeSta
 
 export const StaticThemes: Array<AdaptableBlotterTheme> = [
   {
-    Name: 'Light Theme',
+    Name: LIGHT_THEME,
     Description: 'Light Theme',
   },
   {
-    Name: 'Dark Theme',
+    Name: DARK_THEME,
     Description: 'Dark Theme',
   },
 ];
-declare var require: any;
-export var ThemesContent = new Map<string, string>([
-  // tslint:disable-next-line:no-var-requires
-  [LIGHT_THEME, ''],
-  // tslint:disable-next-line:no-var-requires
-  [DARK_THEME, ''],
-]);

@@ -34,3 +34,14 @@ html.ab--theme-custom-theme {
 
   --ab-color-defaultbackground: var(--ab-color-primary);
 }
+
+html.ab--theme-liverpool {
+  --ab-theme-loaded: liverpool;
+
+  --ab-color-primary: red;
+  --ab-color-primarydark: darkred;
+  --ab-color-primarylight: white;
+  --ab-color-text-on-primary: white;
+
+  --ab-color-defaultbackground: var(--ab-color-primary);
+}

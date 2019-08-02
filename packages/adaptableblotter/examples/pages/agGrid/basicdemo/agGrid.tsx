@@ -50,15 +50,22 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Theme'],
+  },
   Theme: {
-    SystemThemes: ['light'],
+    SystemThemes: ['dark'],
     UserThemes: [
       {
         Name: 'custom-theme',
         Description: 'A Custom theme',
       },
+      {
+        Name: 'liverpool',
+        Description: 'Euro Champs',
+      },
     ],
-    CurrentTheme: 'custom-theme',
+    CurrentTheme: 'liverpool',
   },
 };
 
