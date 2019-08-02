@@ -192,6 +192,7 @@ export interface IAdaptableBlotter {
   hideQuickFilter(): void;
 
   //Theme
+  applyBlotterTheme(themeClassName: string): void;
   applyLightTheme(): void;
   applyDarkTheme(): void;
 }

@@ -5,6 +5,7 @@ import {
   LIGHT_THEME,
   EMPTY_ARRAY,
   THEME_DEFAULT_CURRENT_THEME,
+  SYSTEM_THEMES,
 } from '../../Utilities/Constants/GeneralConstants';
 
 const THEME_SET_SYSTEM_THEMES = 'THEME_SET_SYSTEM_THEMES';
@@ -40,7 +41,7 @@ export const ThemeSelect = (Theme: string): ThemeSelectAction => ({
 
 const initialThemeState: ThemeState = {
   CurrentTheme: THEME_DEFAULT_CURRENT_THEME,
-  SystemThemes: StaticThemes,
+  SystemThemes: SYSTEM_THEMES,
   UserThemes: EMPTY_ARRAY,
 };
 

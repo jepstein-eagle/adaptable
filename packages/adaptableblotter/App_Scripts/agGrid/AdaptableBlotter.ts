@@ -2488,6 +2488,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public applyDarkTheme(): void {
+    console.log('here');
     if (
       this.blotterOptions.generalOptions.useDefaultVendorGridThemes &&
       StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)
@@ -2507,7 +2508,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.applyBlotterTheme(this.getBlotterDarkThemeName());
   }
 
-  private applyBlotterTheme(themeClassName: string) {
+  public applyBlotterTheme(themeClassName: string) {
     const blotterContainer = this.getBlotterContainerElement();
     if (blotterContainer) {
       blotterContainer.classList.remove(this.getBlotterDarkThemeName());

@@ -1778,6 +1778,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
+  public applyBlotterTheme(themeClassName: string) {
+    // TODO:  this is currently not supported
+  }
+
   private applyAlternateRowStyle() {
     var origgetCell = this.hyperGrid.behavior.dataModel.getCell;
     this.hyperGrid.behavior.dataModel.getCell = (config: any, declaredRendererName: any) => {

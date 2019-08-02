@@ -6,6 +6,7 @@ import {
   MessageType,
 } from '../../PredefinedConfig/Common/Enums';
 import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common/ChartEnums';
+import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 
 export const MISSING_COLUMN: string = ' [MISSING]';
 export const DEFAULT_LAYOUT: string = 'Ab_Default_Layout';
@@ -103,6 +104,18 @@ export const QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY: string = 'DisplayAction
 export const QUICK_SEARCH_STYLE_STATE_PROPERTY: string = 'Style';
 export const SMART_EDIT_VALUE_STATE_PROPERTY: string = 'SmartEditValue';
 export const SMART_EDIT_MATH_OPERATION_STATE_PROPERTY: string = 'MathOperationz';
+
+// consts for Themes
+export const SYSTEM_THEMES: Array<AdaptableBlotterTheme> = [
+  {
+    Name: 'light',
+    Description: LIGHT_THEME,
+  },
+  {
+    Name: 'dark',
+    Description: DARK_THEME,
+  },
+];
 
 // these are the internal events that the AB fires that other strategies and classes listen to
 // put in another file?

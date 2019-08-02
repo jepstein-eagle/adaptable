@@ -73,6 +73,9 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
       // publish the theme changed event even on initialization
       this.publishThemeChanged(this.ThemeState);
 
+      console.log('here in theme changed');
+      console.log(this.ThemeState);
+
       this.theme.href = '';
       switch (this.ThemeState.CurrentTheme) {
         case 'None':
@@ -90,7 +93,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
           break;
         default:
           const shippedTheme = this.ThemeState.SystemThemes.find(
-            t => t == this.ThemeState.CurrentTheme
+            t => t.Name == this.ThemeState.CurrentTheme
           );
           // if its a system theme then use that..
           if (shippedTheme) {
@@ -102,7 +105,9 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
               t => t.Name == this.ThemeState.CurrentTheme
             );
             if (userTheme) {
-              this.theme.href = userTheme.Url;
+              // to do:  we need to make this theme happen
+              // JW to Radu:  will this do???
+              this.blotter.applyBlotterTheme(userTheme.Name);
             }
           }
           break;
@@ -112,7 +117,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
         // do nothing...
       } else {
         const shippedTheme = this.ThemeState.SystemThemes.find(
-          t => t == this.ThemeState.CurrentTheme
+          t => t.Name == this.ThemeState.CurrentTheme
         );
         // if its a system theme then use that..
         if (shippedTheme) {
@@ -123,7 +128,9 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
             t => t.Name == this.ThemeState.CurrentTheme
           );
           if (userTheme) {
-            this.theme.href = userTheme.Url;
+            // todo:  need to apply this theme!
+            // JW to Radu:  will this do???
+            this.blotter.applyBlotterTheme(userTheme.Name);
           }
         }
       }
