@@ -28,6 +28,7 @@
     "release:minor": "npm run build && release minor --show-url && npm run registry-publish",
     "release:major": "npm run build && release major --show-url && npm run registry-publish",
     "registry-publish": "npm run --prefix packages/adaptableblotter registry-publish && npm run --prefix packages/adaptableblotter-react-aggrid registry-publish && npm run --prefix packages/adaptableblotter-ng-aggrid registry-publish",
+    "registry-publish-canary": "npm run --prefix packages/adaptableblotter registry-publish-canary && npm run --prefix packages/adaptableblotter-react-aggrid registry-publish-canary && npm run --prefix packages/adaptableblotter-ng-aggrid registry-publish-canary",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "build-core": "npm run --prefix packages/adaptableblotter build",
     "build-react": "npm run --prefix packages/adaptableblotter-react-aggrid build",
