@@ -31,25 +31,37 @@ function InitAdaptableBlotter() {
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'basic demo'
+    'custom theme demo'
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.chartOptions = {
-    showModal: false,
-    displayOnStartUp: true,
-  };
-  adaptableBlotterOptions.filterOptions = {
-    // useAdaptableBlotterFilterForm: false,
-    // useAdaptableBlotterQuickFilter: false,
-  };
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Theme'],
+  },
+  Theme: {
+    SystemThemes: ['dark'],
+    //  SystemThemes: ['light'],
+    //  SystemThemes: [],
+    UserThemes: [
+      {
+        Name: 'custom-theme',
+        Description: 'A Custom theme',
+      },
+      {
+        Name: 'liverpool',
+        Description: 'Euro Champs',
+      },
+    ],
+    CurrentTheme: 'liverpool',
+  },
+};
 
 export default () => {
   useEffect(() => {

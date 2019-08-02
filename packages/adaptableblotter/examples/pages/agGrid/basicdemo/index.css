@@ -23,25 +23,3 @@ body,
   font-style: italic !important;
 }
 
-
-html.ab--theme-custom-theme {
-  --ab-theme-loaded: custom-theme;
-
-  --ab-color-primary: #608860;
-  --ab-color-primarydark: #315d31;
-  --ab-color-primarylight: #a5c3a5;
-  --ab-color-text-on-primary: white;
-
-  --ab-color-defaultbackground: var(--ab-color-primary);
-}
-
-html.ab--theme-liverpool {
-  --ab-theme-loaded: liverpool;
-
-  --ab-color-primary: red;
-  --ab-color-primarydark: darkred;
-  --ab-color-primarylight: white;
-  --ab-color-text-on-primary: white;
-
-  --ab-color-defaultbackground: var(--ab-color-primary);
-}
