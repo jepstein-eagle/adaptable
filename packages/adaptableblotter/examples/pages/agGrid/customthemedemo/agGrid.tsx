@@ -4,9 +4,9 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import '../../../../App_Scripts/base.scss';
+import '../../../../App_Scripts/index.scss';
 
-import '../../../../App_Scripts/themes/light.scss';
+//import '../../../../App_Scripts/themes/light.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
 import './index.css';
@@ -46,9 +46,10 @@ let demoConfig: PredefinedConfig = {
     VisibleToolbars: ['Theme'],
   },
   Theme: {
-    SystemThemes: ['dark'],
-    //  SystemThemes: ['light'],
-    //  SystemThemes: [],
+    // if all 3 are commented out then we see both light theme and dark theme
+    //  SystemThemes: ['dark'], // just dark
+    //  SystemThemes: ['light'],  // just light
+    //  SystemThemes: [],  // no themes;
     UserThemes: [
       {
         Name: 'custom-theme',

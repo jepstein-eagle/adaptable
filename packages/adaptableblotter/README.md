@@ -36,7 +36,7 @@ In order for the AdaptableBlotter to look right, you have to import the index.cs
 import "adaptableblotter/index.css"
 ```
 
-This contains the structural styles and the light theme.
+This contains the structural styles and the (default) light theme.
 
 For the dark theme, you also have to import
 
@@ -53,7 +53,7 @@ import "adaptableblotter/themes/dark.css"
 
 This makes both the `light` and the `dark` themes available. You can also write your own custom theme for the AdaptableBlotter - see the section below for this.
 
-A theme is basically a collection of css variables that the AdaptableBlotter exposes, and you can customize. You can have more css theme files imported in the app without them overriding each-other.
+A theme is basically a collection of css variables that the AdaptableBlotter exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
 When the AdaptableBlotter applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time.
 
@@ -63,7 +63,7 @@ In order to write a theme, let's call it `blue`, you have to define it with the 
 
 ```css
 html.ab--theme-blue {
-  --ab-theme-loaded: dark;
+  --ab-theme-loaded: blue;
 }
 ```
 
@@ -75,7 +75,7 @@ html.ab--theme-<THEME_NAME> {
 }
 ```
 
-There are a number of css variables that are available for customizing a theme - see below (it's the contents of the dark theme)
+There are a number of css variables that are available for customising a theme - see below (it's the contents of the dark theme)
 
 ```css
 html.ab--theme-dark {
@@ -114,7 +114,7 @@ In adition to the above variables, the following are also available
 html.ab--theme-my-theme {
   --ab-theme-loaded: my-theme;
 
-  /* we define a set of spacings, which you can customize to suit your needs */
+  /* we define a set of spacings, which you can customise to suit your needs */
   --ab-space-0: 0px;
   --ab-space-1: 4px;
   --ab-space-2: 8px;
@@ -134,7 +134,7 @@ html.ab--theme-my-theme {
   /* use this to specify the font family you want for the blotter */
   --ab__font-family: inherit;
   
-  /* customize the border radius for some of the AdaptableBlotter elements */
+  /* customise the border radius for some of the AdaptableBlotter elements */
   --ab__border-radius: var(--ab-space-1);
 }
 ```
