@@ -106,15 +106,42 @@ export interface EditLookUpColumn {
 }
 
 /**
- * Interface that allows users to define a style for a Row.
+ * Object that allows users to pre-define styles for Rows in the Vendor Grid.
  *
- * It includes the Style (which can be just a classname)
+ * This is particularly useful for when you create a custom theme for the Adaptable Blotter and want the grid to share the same colour scheme.
  *
- * And also the RowType - e.g. All Rows, or Just Odd or Even (used for when requiring an Alternate Row style)
+ * It includes the Style - which can be just a classname or a set of properties .
+ *
+ * Also contains the RowType - e.g. All Rows, or Just Odd or Even (used for when requiring an Alternate Row style)
+ *
+ * **Row Style Example**
+ *
+ * ```ts
+ * export default {
+ *  UserInterface: {
+ *    RowStyles: [
+ *      {
+ *     Style: {
+ *       ClassName: 'evenRowStyle',
+ *      },
+ *      RowType: 'Even',
+ *     },
+ *     {
+ *       Style: {
+ *         ForeColor: 'lightyellow',
+ *         BackColor: 'brown',
+ *        FontStyle: 'Italic',
+ *     },
+ *     RowType: 'Odd',
+ *   },
+ *  ],
+ * },
+ * } as PredefinedConfig;
+ * ```
  */
 export interface RowStyle {
   /**
-   * The Style to use for the Row
+   * The Style to use for the Row. For more details see the [Style](_predefinedconfig_common_istyle_.istyle.html) object.
    */
   Style: IStyle;
 
@@ -123,7 +150,7 @@ export interface RowStyle {
    *
    * We provide All (which styles the whole grid) and 'Odd' and 'Even' for where you require alternating row styles.
    *
-   * **note if you have any 'All' RowTypes then 'Odd' and 'Even' RowTypes will be ignored.**
+   * **Note: if you have any 'All' RowTypes then 'Odd' and 'Even' RowTypes will be ignored.**
    */
   RowType: 'All' | 'Odd' | 'Even';
 }

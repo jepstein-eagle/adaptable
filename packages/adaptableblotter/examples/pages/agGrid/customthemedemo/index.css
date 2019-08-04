@@ -24,6 +24,29 @@ body,
 }
 
 
+
+html.ab--theme-liverpool {
+  font-family: Helvetica, Arial, sans-serif;
+  --ab-theme-loaded: 777;
+
+  --ab-dashboard__background: orchid;
+  --ab-cmp-input--disabled__background: green;
+
+  --ab-color-defaultbackground: #98ff98;
+  --ab-color-text-on-defaultbackground: purple;
+
+  --ab-color-primary: purple;
+  --ab-color-primarylight: green;
+  --ab-color-primarydark: blue;
+  --ab-color-text-on-primary: white;
+
+  --ab-color-secondary: green;
+  --ab-color-secondarylight: #07456d;
+  --ab-color-secondarydark: purple;
+  --ab-color-text-on-secondary: purple;
+  --ab-color-text-on-secondarylight: red;
+}
+
 html.ab--theme-custom-theme {
   --ab-theme-loaded: custom-theme;
 
@@ -35,13 +58,3 @@ html.ab--theme-custom-theme {
   --ab-color-defaultbackground: var(--ab-color-primary);
 }
 
-html.ab--theme-liverpool {
-  --ab-theme-loaded: liverpool;
-
-  --ab-color-primary: red;
-  --ab-color-primarydark: green;
-  --ab-color-primarylight: lightyellow;
-  --ab-color-text-on-primary: red;
-
-  --ab-color-defaultbackground: var(--ab-color-primary);
-}
