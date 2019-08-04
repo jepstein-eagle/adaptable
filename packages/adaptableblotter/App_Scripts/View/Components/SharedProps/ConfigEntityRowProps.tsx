@@ -5,6 +5,7 @@ import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
+import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 // base props
 export interface BaseRowProps<View> extends React.ClassAttributes<View> {
@@ -21,6 +22,7 @@ export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
 export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
   onShare: () => void;
   TeamSharingActivated: boolean;
+  AccessLevel: AccessLevel;
 }
 
 // Expression props

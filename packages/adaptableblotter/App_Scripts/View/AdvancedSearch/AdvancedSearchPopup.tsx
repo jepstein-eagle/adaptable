@@ -101,6 +101,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)}
             onSelect={() => this.props.onSelectAdvancedSearch(advancedSearch.Name)}
+            AccessLevel={this.props.AccessLevel}
           />
         );
       }

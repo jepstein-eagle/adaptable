@@ -1779,7 +1779,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public applyBlotterTheme(themeClassName: string) {
-    // TODO:  this is currently not supported
+    if (themeClassName == 'Light') {
+      this.applyLightTheme();
+    } else {
+      this.applyDarkTheme();
+    }
   }
 
   private applyAlternateRowStyle() {

@@ -102,6 +102,7 @@ class PlusMinusPopupComponent extends React.Component<
           onColumnDefaultNudgeValueChange={(plusMinusRule, event) =>
             this.onColumnDefaultNudgeValueChange(plusMinusRule, event)
           }
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

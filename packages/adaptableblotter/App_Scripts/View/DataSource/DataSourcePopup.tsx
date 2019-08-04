@@ -69,6 +69,7 @@ class DataSourcePopupComponent extends React.Component<
           onChangeDescription={(dataSource, description) =>
             this.onChangeDescription(dataSource, description)
           }
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

@@ -30,7 +30,6 @@ function InitAdaptableBlotter() {
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-  adaptableblotter.applyLightTheme();
 }
 
 let demoConfig: PredefinedConfig = {
@@ -42,13 +41,34 @@ let demoConfig: PredefinedConfig = {
       },
       {
         FunctionName: 'AdvancedSearch',
-        AccessLevel: 'ReadOnly',
+        AccessLevel: 'Hidden',
       },
       {
         FunctionName: 'Export',
         AccessLevel: 'ReadOnly',
       },
+      {
+        FunctionName: 'Layout',
+        AccessLevel: 'ReadOnly',
+      },
     ],
+  },
+  Export: {
+    Reports: [
+      {
+        AutoExport: undefined,
+        ColumnIds: [],
+        Expression: {
+          ColumnValueExpressions: [],
+          FilterExpressions: [],
+          RangeExpressions: [],
+        },
+        Name: 'Test',
+        ReportColumnScope: 'AllColumns',
+        ReportRowScope: 'AllRows',
+      },
+    ],
+    CurrentReport: 'Test',
   },
 };
 

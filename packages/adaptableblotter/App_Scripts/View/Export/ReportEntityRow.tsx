@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
+import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
@@ -10,7 +10,6 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 import icons from '../../components/icons';
@@ -102,6 +101,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
         showShare={this.props.TeamSharingActivated}
         shareClick={() => this.props.onShare()}
         EntityType="Report"
+        AccessLevel={this.props.AccessLevel}
       />
     );
 

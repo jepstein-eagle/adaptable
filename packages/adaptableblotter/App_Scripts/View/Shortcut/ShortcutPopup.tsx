@@ -87,6 +87,7 @@ class ShortcutPopupComponent extends React.Component<
             this.onChangeOperationShortcut(shortcut, newOperation)
           }
           onChangeResult={(shortcut, newResult) => this.onChangeResultShortcut(shortcut, newResult)}
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

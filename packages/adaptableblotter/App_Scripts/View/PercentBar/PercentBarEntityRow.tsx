@@ -111,6 +111,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={!this.props.Column}
         EntityType={StrategyConstants.PercentBarStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
 

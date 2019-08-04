@@ -31,6 +31,7 @@ export class ReminderEntityRow extends React.Component<
         showShare={this.props.TeamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.ReminderStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
     colItems[3].Content = buttons;

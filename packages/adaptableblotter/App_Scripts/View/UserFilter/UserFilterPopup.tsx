@@ -102,6 +102,7 @@ class UserFilterPopupComponent extends React.Component<
           Columns={this.props.Columns}
           onEdit={() => this.onEdit(userFilter)}
           onDeleteConfirm={UserFilterRedux.UserFilterDelete(userFilter)}
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

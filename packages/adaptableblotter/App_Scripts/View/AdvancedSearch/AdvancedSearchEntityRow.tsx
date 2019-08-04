@@ -9,6 +9,7 @@ import { IColItem } from '../UIInterfaces';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import Radio from '../../components/Radio';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>
   extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
@@ -49,6 +50,7 @@ export class AdvancedSearchEntityRow extends React.Component<
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={undefined}
         EntityType={StrategyConstants.AdvancedSearchStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
 

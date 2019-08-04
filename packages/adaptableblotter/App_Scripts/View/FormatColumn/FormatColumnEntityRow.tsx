@@ -37,6 +37,7 @@ export class FormatColumnEntityRow extends React.Component<
         shareClick={() => this.props.onShare()}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.FormatColumnStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
 

@@ -35,7 +35,6 @@ function InitAdaptableBlotter() {
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-  adaptableblotter.applyLightTheme();
 }
 
 export default () => {

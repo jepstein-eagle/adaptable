@@ -87,7 +87,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     let Reports = this.props.SystemReports.concat(this.props.Reports).map(
       (report: Report, index) => {
-        let reportIndex = index - this.props.SystemReports.length;
         return (
           <ReportEntityRow
             AdaptableBlotterObject={report}
@@ -104,6 +103,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             }
             onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
+            AccessLevel={this.props.AccessLevel}
           />
         );
       }

@@ -34,6 +34,7 @@ export class ColumnCategoryEntityRow extends React.Component<
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={false}
         EntityType={StrategyConstants.ColumnCategoryStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
 

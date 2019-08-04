@@ -83,11 +83,12 @@ class FormatColumnPopupComponent extends React.Component<
           colItems={colItems}
           AdaptableBlotterObject={formatColumn}
           Columns={this.props.Columns}
-          UserFilters={null}
+          UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={() => this.props.onShare(formatColumn)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={FormatColumnRedux.FormatColumnDelete(formatColumn)}
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

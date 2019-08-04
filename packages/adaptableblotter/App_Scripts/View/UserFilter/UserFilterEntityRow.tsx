@@ -41,6 +41,7 @@ export class UserFilterEntityRow extends React.Component<
         overrideDisableEdit={false}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.UserFilterStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
 

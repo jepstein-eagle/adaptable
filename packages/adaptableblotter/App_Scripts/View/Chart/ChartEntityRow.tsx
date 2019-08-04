@@ -44,6 +44,7 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={undefined}
         EntityType={StrategyConstants.ChartStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
     return <AdaptableObjectRow colItems={colItems} />;

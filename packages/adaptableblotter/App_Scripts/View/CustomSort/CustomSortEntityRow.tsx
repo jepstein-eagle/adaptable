@@ -27,6 +27,7 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={this.props.ColumnLabel.includes(GeneralConstants.MISSING_COLUMN)}
         EntityType={StrategyConstants.CustomSortStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
 

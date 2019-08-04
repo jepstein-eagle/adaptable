@@ -40,6 +40,7 @@ export class CalculatedColumnEntityRow extends React.Component<
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         EntityType={StrategyConstants.CalculatedColumnStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
     colItems[2].Content = buttons;

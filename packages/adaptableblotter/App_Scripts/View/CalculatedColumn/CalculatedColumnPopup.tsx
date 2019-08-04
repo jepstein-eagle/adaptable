@@ -96,6 +96,7 @@ class CalculatedColumnPopupComponent extends React.Component<
             key={calculatedColumn.ColumnId}
             onEdit={calculatedColumn => this.onEdit(calculatedColumn as CalculatedColumn)}
             onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
+            AccessLevel={this.props.AccessLevel}
           />
         );
       }

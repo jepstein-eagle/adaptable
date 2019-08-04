@@ -78,6 +78,7 @@ class ColumnCategoryPopupComponent extends React.Component<
           onShare={() => this.props.onShare(item)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={ColumnCategoryRedux.ColumnCategoryDelete(item)}
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

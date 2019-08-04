@@ -81,11 +81,12 @@ class FreeTextColumnPopupComponent extends React.Component<
             colItems={colItems}
             AdaptableBlotterObject={FreeTextColumn}
             Columns={this.props.Columns}
-            UserFilters={null}
+            UserFilters={this.props.UserFilters}
             onEdit={() => this.onEdit(FreeTextColumn)}
             onShare={() => this.props.onShare(FreeTextColumn)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={FreeTextColumnRedux.FreeTextColumnDelete(FreeTextColumn)}
+            AccessLevel={this.props.AccessLevel}
           />
         );
       }

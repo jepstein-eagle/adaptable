@@ -116,6 +116,7 @@ class PercentBarPopupComponent extends React.Component<
           onNegativeColorChanged={(percentBar, negativeColor) =>
             this.onNegativeColorChanged(percentBar, negativeColor)
           }
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });
@@ -165,6 +166,7 @@ class PercentBarPopupComponent extends React.Component<
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
+              AccessLevel={this.props.AccessLevel}
             />
           )}
         </PanelWithButton>

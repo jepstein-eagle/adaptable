@@ -94,6 +94,7 @@ class CustomSortPopupComponent extends React.Component<
             customSort.ColumnId,
             this.props.Columns
           )}
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

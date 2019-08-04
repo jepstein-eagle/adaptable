@@ -98,6 +98,7 @@ class CellValidationPopupComponent extends React.Component<
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={CellValidationRedux.CellValidationDelete(cellValidationRule)}
           onChangeActionMode={(x, actionMode) => this.onActionModeChanged(x, actionMode)}
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

@@ -49,6 +49,7 @@ export class ConditionalStyleEntityRow extends React.Component<
         }
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.ConditionalStyleStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
     colItems[3].Content = buttons;

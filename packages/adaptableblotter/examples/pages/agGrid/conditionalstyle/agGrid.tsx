@@ -242,7 +242,6 @@ function InitAdaptableBlotter() {
       gridOptions.columnApi!.autoSizeAllColumns();
     }
   });
-  adaptableblotter.applyLightTheme();
 
   global.adaptableblotter = adaptableblotter;
 }

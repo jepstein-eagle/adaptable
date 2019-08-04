@@ -50,7 +50,6 @@ function InitAdaptableBlotter() {
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-  adaptableblotter.applyLightTheme();
 
   adaptableblotter.api.eventApi
     .onSearchChanged()

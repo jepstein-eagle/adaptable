@@ -49,6 +49,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         overrideDisableEdit={false}
         overrideDisableDelete={layout.Name == DEFAULT_LAYOUT}
         EntityType={StrategyConstants.LayoutStrategyName}
+        AccessLevel={this.props.AccessLevel}
       />
     );
 

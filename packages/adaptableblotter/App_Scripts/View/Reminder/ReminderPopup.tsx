@@ -67,6 +67,7 @@ class ReminderPopupComponent extends React.Component<
           Columns={this.props.Columns}
           onEdit={() => this.onEdit(reminder)}
           onDeleteConfirm={ReminderRedux.ReminderDelete(reminder)}
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

@@ -86,6 +86,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
             onSelect={() => this.props.onSelectLayout(x.Name)}
+            AccessLevel={this.props.AccessLevel}
           />
         );
       }

@@ -56,6 +56,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={false}
         EntityType={StrategyConstants.PlusMinusStrategyName + ' Rule '}
+        AccessLevel={this.props.AccessLevel}
       />
     );
     colItems[3].Content = buttons;
