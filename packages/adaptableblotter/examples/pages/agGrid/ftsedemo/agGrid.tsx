@@ -6,8 +6,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 
-import '../../../../App_Scripts/base.scss';
-import '../../../../App_Scripts/themes/light.scss';
+import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
 import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
