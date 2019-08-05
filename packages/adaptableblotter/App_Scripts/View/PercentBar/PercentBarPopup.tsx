@@ -166,7 +166,6 @@ class PercentBarPopupComponent extends React.Component<
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
-              AccessLevel={this.props.AccessLevel}
             />
           )}
         </PanelWithButton>

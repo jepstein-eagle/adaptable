@@ -119,6 +119,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
           onShare={null}
           onEdit={null}
           onDeleteConfirm={null}
+          AccessLevel={this.props.AccessLevel}
         />
       );
     });

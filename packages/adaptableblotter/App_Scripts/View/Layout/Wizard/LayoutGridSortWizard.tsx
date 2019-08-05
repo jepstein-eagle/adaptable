@@ -7,7 +7,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
+import { SortOrder, AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 import { GridSortRow } from '../GridSortRow';
 import { IColItem } from '../../UIInterfaces';
@@ -74,6 +74,7 @@ export class LayoutGridSortWizard
           TeamSharingActivated={false}
           onDeleteConfirm={null}
           ColumnSort={x}
+          AccessLevel={AccessLevel.Full}
         />
       );
     });
