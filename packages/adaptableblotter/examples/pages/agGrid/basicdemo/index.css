@@ -7,6 +7,10 @@ body,
 #grid {
   height: 85%;
 }
+
+html {
+  font-family: “Helvetica Neue”, Helvetica, Arial, sans-serif;
+}
 .evenRowStyle {
   background: lightgrey !important;
   font-weight: normal !important;
