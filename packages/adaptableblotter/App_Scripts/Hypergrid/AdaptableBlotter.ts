@@ -1,6 +1,6 @@
 ﻿import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 
-import * as Emitter from 'emittery';
+import * as Emitter from 'emittery/legacy';
 
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';

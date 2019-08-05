@@ -9,7 +9,7 @@ import {
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
-import * as Emitter from 'emittery';
+import * as Emitter from 'emittery/legacy';
 
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';
