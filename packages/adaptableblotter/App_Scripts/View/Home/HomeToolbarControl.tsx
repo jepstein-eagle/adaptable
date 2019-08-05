@@ -47,7 +47,7 @@ interface HomeToolbarComponentProps
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
   onSetToolbarVisibility: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction;
   onShowStatusMessage: (alert: IAdaptableAlert) => PopupRedux.PopupShowAlertAction;
-  onShowAbout: () => PopupRedux.PopupShowAboutAction;
+  onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
 
 class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
@@ -172,13 +172,13 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       />
     );
 
-    // about button
-    let aboutButton = (
+    // gridInfo button
+    let gridInfoButton = (
       <SimpleButton
-        tooltip="About"
+        tooltip="Grid Info"
         icon={'info'}
         variant="text"
-        onClick={() => this.onClickAbout()}
+        onClick={() => this.onClickGridInfo()}
         AccessLevel={AccessLevel.Full}
       />
     );
@@ -272,7 +272,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         <Flex flexDirection="row">
           {this.props.DashboardState.ShowFunctionsDropdown && functionsDropdown}
           {this.props.DashboardState.ShowSystemStatusButton && statusButton}
-          {this.props.DashboardState.ShowAboutButton && aboutButton}
+          {this.props.DashboardState.ShowGridInfoButton && gridInfoButton}
 
           {shortcuts}
 
@@ -331,8 +331,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         return;
     }
   }
-  onClickAbout() {
-    this.props.onShowAbout();
+  onClickGridInfo() {
+    this.props.onShowGridInfo();
   }
 
   onSetColumnVisibility(name: string) {
@@ -385,7 +385,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onSetToolbarVisibility: (strategyIds: string[]) =>
       dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
     onShowStatusMessage: (alert: IAdaptableAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
-    onShowAbout: () => dispatch(PopupRedux.PopupShowAbout()),
+    onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };
 }
 

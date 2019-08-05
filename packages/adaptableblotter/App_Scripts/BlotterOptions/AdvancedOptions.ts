@@ -21,7 +21,17 @@ import { IAdaptableBlotter } from '../types';
  *       return cellValue > 100;
  *     },
  *   },
- * ],
+ *  ],
+ * actionColumnFunctions: [
+ * {
+ *  name: 'RenderActionFunc',
+ *   func: (params) => {
+ *     return params.data.ItemCos > 75
+ *       ? '<button class="doublebutton">Double</button>'
+ *        : '<button class="treblebutton">Treble</button>';
+ *    },
+ *  },
+ *  ],
  * },
  *};
  * ```

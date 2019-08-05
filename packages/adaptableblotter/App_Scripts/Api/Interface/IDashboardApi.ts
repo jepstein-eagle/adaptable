@@ -13,9 +13,9 @@ export interface IDashboardApi {
   Hide(): void;
   ShowSystemStatusButton(): void;
   HideSystemStatusButton(): void;
-  // The About Screen shows information about the current Blotter (e.g. visible rows and columns, any calculated columns etc.)
-  ShowAboutButton(): void;
-  HideAboutButton(): void;
+  // The GridInfo Screen shows information about the current Blotter (e.g. visible rows and columns, any calculated columns etc.)
+  ShowGridInfoButton(): void;
+  HideGridInfoButton(): void;
   // The Functions dropdown appears on the left of the Home Toolbar and lists all the functions available to the user.
   ShowFunctionsDropdown(): void;
   HideFunctionsDropdown(): void;

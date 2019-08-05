@@ -18,7 +18,7 @@ import { AdaptableBlotterPopupConfirmation } from './Components/Popups/Adaptable
 import { AdaptableBlotterPopupAlert } from './Components/Popups/AdaptableBlotterPopupAlert';
 import { AdaptableBlotterChart } from './Components/Popups/AdaptableBlotterChart';
 import { AdaptableBlotterLoadingScreen } from './Components/Popups/AdaptableBlotterLoadingScreen';
-import { AdaptableBlotterAbout } from './Components/Popups/AdaptableBlotterAbout';
+import { AdaptableBlotterGridInfo } from './Components/Popups/AdaptableBlotterGridInfo';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
@@ -40,7 +40,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
   onCloseChartPopup: () => SystemRedux.ChartSetChartVisibiityAction;
   onCloseLoadingPopup: () => PopupRedux.PopupHideLoadingAction;
-  onCloseAboutPopup: () => PopupRedux.PopupHideAboutAction;
+  onCloseGridInfoPopup: () => PopupRedux.PopupHideGridInfoAction;
 }
 
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
@@ -63,10 +63,10 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         )}
 
         {/*  These are all popups that we show at different times */}
-        <AdaptableBlotterAbout
+        <AdaptableBlotterGridInfo
           AdaptableBlotter={this.props.Blotter}
-          onClose={this.props.onCloseAboutPopup}
-          showAbout={this.props.PopupState.AboutPopup.ShowAboutPopup}
+          onClose={this.props.onCloseGridInfoPopup}
+          showAbout={this.props.PopupState.GridInfoPopup.ShowGridInfoPopup}
         />
 
         <AdaptableBlotterLoadingScreen
@@ -134,7 +134,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
     onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
-    onCloseAboutPopup: () => dispatch(PopupRedux.PopupHideAbout()),
+    onCloseGridInfoPopup: () => dispatch(PopupRedux.PopupHideGridInfo()),
     onCloseChartPopup: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden)),
     onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
     onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),

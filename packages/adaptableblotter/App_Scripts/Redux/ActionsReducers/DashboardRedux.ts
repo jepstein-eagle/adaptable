@@ -13,8 +13,8 @@ const DASHBOARD_SET_FUNCTION_BUTTONS = 'DASHBOARD_SET_FUNCTION_BUTTONS';
 const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
 const DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON = 'DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON';
 const DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON = 'DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON';
-const DASHBOARD_SHOW_ABOUT_BUTTON = 'DASHBOARD_SHOW_ABOUT_BUTTON';
-const DASHBOARD_HIDE_ABOUT_BUTTON = 'DASHBOARD_HIDE_ABOUT_BUTTON';
+const DASHBOARD_SHOW_GRID_INFO_BUTTON = 'DASHBOARD_SHOW_GRID_INFO_BUTTON';
+const DASHBOARD_HIDE_GRID_INFO_BUTTON = 'DASHBOARD_HIDE_GRID_INFO_BUTTON';
 const DASHBOARD_SHOW_FUNCTIONS_DROPDOWN = 'DASHBOARD_SHOW_FUNCTIONS_DROPDOWN';
 const DASHBOARD_HIDE_FUNCTIONS_DROPDOWN = 'DASHBOARD_HIDE_FUNCTIONS_DROPDOWN';
 const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
@@ -61,9 +61,9 @@ export interface DashboardShowSystemStatusButtonAction extends Redux.Action {}
 
 export interface DashboardHideSystemStatusButtonAction extends Redux.Action {}
 
-export interface DashboardShowAboutButtonAction extends Redux.Action {}
+export interface DashboardShowGridInfoButtonAction extends Redux.Action {}
 
-export interface DashboardHideAboutButtonAction extends Redux.Action {}
+export interface DashboardHideGridInfoButtonAction extends Redux.Action {}
 
 export interface DashboardShowFunctionsDropdownAction extends Redux.Action {}
 
@@ -136,12 +136,12 @@ export const DashboardHideSystemStatusButton = (): DashboardHideSystemStatusButt
   type: DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON,
 });
 
-export const DashboardShowAboutButton = (): DashboardShowAboutButtonAction => ({
-  type: DASHBOARD_SHOW_ABOUT_BUTTON,
+export const DashboardShowGridInfoButton = (): DashboardShowGridInfoButtonAction => ({
+  type: DASHBOARD_SHOW_GRID_INFO_BUTTON,
 });
 
-export const DashboardHideAboutButton = (): DashboardHideAboutButtonAction => ({
-  type: DASHBOARD_HIDE_ABOUT_BUTTON,
+export const DashboardHideGridInfoButton = (): DashboardHideGridInfoButtonAction => ({
+  type: DASHBOARD_HIDE_GRID_INFO_BUTTON,
 });
 
 export const DashboardShowFunctionsDropdown = (): DashboardShowFunctionsDropdownAction => ({
@@ -213,7 +213,7 @@ const initialDashboardState: DashboardState = {
   ],
   DashboardVisibility: Visibility.Visible,
   ShowSystemStatusButton: true,
-  ShowAboutButton: true,
+  ShowGridInfoButton: true,
   ShowFunctionsDropdown: true,
   ShowColumnsDropdown: true,
   ShowToolbarsDropdown: true,
@@ -274,12 +274,12 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON: {
       return Object.assign({}, state, { ShowSystemStatusButton: false });
     }
-    case DASHBOARD_SHOW_ABOUT_BUTTON: {
-      return Object.assign({}, state, { ShowAboutButton: true });
+    case DASHBOARD_SHOW_GRID_INFO_BUTTON: {
+      return Object.assign({}, state, { ShowGridInfoButton: true });
     }
 
-    case DASHBOARD_HIDE_ABOUT_BUTTON: {
-      return Object.assign({}, state, { ShowAboutButton: false });
+    case DASHBOARD_HIDE_GRID_INFO_BUTTON: {
+      return Object.assign({}, state, { ShowGridInfoButton: false });
     }
 
     case DASHBOARD_SHOW_FUNCTIONS_DROPDOWN: {

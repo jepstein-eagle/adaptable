@@ -52,7 +52,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
       </Box>
     );
 
-    const icon = UIHelper.getGlyphByMessageType(messageType);
+    const icon = 'info'; // - think this is wrong - UIHelper.getGlyphByMessageType(messageType);
     const color = UIHelper.getColorByMessageType(messageType);
 
     const iconStyle = {
@@ -62,7 +62,6 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
 
     return (
       <Flex alignItems="center">
-        <Icon name="check" />
         <OverlayTrigger
           showTriangle
           render={() => popoverClickRootClose}

@@ -1479,6 +1479,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       enableValue: true, // makes the column 'summable'
       editable: false,
       filter: true,
+      resizable: true,
       sortable: true,
       valueGetter: (params: ValueGetterParams) =>
         Helper.RoundValueIfNumeric(
@@ -1518,6 +1519,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       hide: true,
       filter: true,
       sortable: true,
+      resizable: true,
       cellEditor: 'agLargeTextCellEditor',
       valueGetter: (params: ValueGetterParams) =>
         this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node),
@@ -1538,6 +1540,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       hide: false,
       filter: false,
       sortable: false,
+      resizable: true,
       cellRenderer: ActionColumnRenderer,
     };
     colDefs.push(newColDef);

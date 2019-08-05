@@ -44,8 +44,8 @@ export interface ILoadingPopup {
   ShowLoadingPopup: boolean;
 }
 
-export interface IAboutPopup {
-  ShowAboutPopup: boolean;
+export interface IGridInfoPopup {
+  ShowGridInfoPopup: boolean;
 }
 
 export interface IAlertPopup {

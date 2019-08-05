@@ -32,8 +32,8 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
   onDashboardHideToolbarsDropdown: () => DashboardRedux.DashboardHideToolbarsDropdownAction;
   onDashboardShowSystemStatusButton: () => DashboardRedux.DashboardShowSystemStatusButtonAction;
   onDashboardHideSystemStatusButton: () => DashboardRedux.DashboardHideSystemStatusButtonAction;
-  onDashboardShowAboutButton: () => DashboardRedux.DashboardShowAboutButtonAction;
-  onDashboardHideAboutButton: () => DashboardRedux.DashboardHideAboutButtonAction;
+  onDashboardShowGridInfoButton: () => DashboardRedux.DashboardShowGridInfoButtonAction;
+  onDashboardHideGridInfoButton: () => DashboardRedux.DashboardHideGridInfoButtonAction;
 
   onDashboardSetToolbars: (
     StrategyConstants: string[]
@@ -115,10 +115,10 @@ class DashboardPopupComponent extends React.Component<
         </Checkbox>
 
         <Checkbox
-          onChange={checked => this.onShowAboutButtonChanged(checked)}
-          checked={this.props.DashboardState.ShowAboutButton}
+          onChange={checked => this.onShowGridInfoButtonChanged(checked)}
+          checked={this.props.DashboardState.ShowGridInfoButton}
         >
-          Show About Button
+          Show GridInfo Button
         </Checkbox>
       </Flex>
     );
@@ -225,11 +225,11 @@ class DashboardPopupComponent extends React.Component<
     }
   }
 
-  onShowAboutButtonChanged(checked: boolean): void {
+  onShowGridInfoButtonChanged(checked: boolean): void {
     if (checked) {
-      this.props.onDashboardShowAboutButton();
+      this.props.onDashboardShowGridInfoButton();
     } else {
-      this.props.onDashboardHideAboutButton();
+      this.props.onDashboardHideGridInfoButton();
     }
   }
 
@@ -278,8 +278,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(DashboardRedux.DashboardShowSystemStatusButton()),
     onDashboardHideSystemStatusButton: () =>
       dispatch(DashboardRedux.DashboardHideSystemStatusButton()),
-    onDashboardShowAboutButton: () => dispatch(DashboardRedux.DashboardShowAboutButton()),
-    onDashboardHideAboutButton: () => dispatch(DashboardRedux.DashboardHideAboutButton()),
+    onDashboardShowGridInfoButton: () => dispatch(DashboardRedux.DashboardShowGridInfoButton()),
+    onDashboardHideGridInfoButton: () => dispatch(DashboardRedux.DashboardHideGridInfoButton()),
     onDashboardSetToolbars: (StrategyConstants: string[]) =>
       dispatch(DashboardRedux.DashboardSetToolbars(StrategyConstants)),
   };

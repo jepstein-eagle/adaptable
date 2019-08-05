@@ -55,12 +55,12 @@ export class DashboardApi extends ApiBase implements IDashboardApi {
     this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton());
   }
 
-  public ShowAboutButton(): void {
-    this.dispatchAction(DashboardRedux.DashboardShowAboutButton());
+  public ShowGridInfoButton(): void {
+    this.dispatchAction(DashboardRedux.DashboardShowGridInfoButton());
   }
 
-  public HideAboutButton(): void {
-    this.dispatchAction(DashboardRedux.DashboardHideAboutButton());
+  public HideGridInfoButton(): void {
+    this.dispatchAction(DashboardRedux.DashboardHideGridInfoButton());
   }
 
   public ShowFunctionsDropdown(): void {

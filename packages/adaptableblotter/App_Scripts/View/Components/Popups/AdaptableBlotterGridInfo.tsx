@@ -23,13 +23,13 @@ import { Flex } from 'rebass';
 import SimpleButton from '../../../components/SimpleButton';
 import Radio from '../../../components/Radio';
 
-interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
+interface AdaptableBlotterGridInfoProps extends React.ClassAttributes<AdaptableBlotterGridInfo> {
   AdaptableBlotter: IAdaptableBlotter;
   onClose?: () => void;
   showAbout: boolean;
 }
 
-export interface AboutBlotterState {
+export interface GridInfoBlotterState {
   // General
   ShowGridProperties: boolean;
   //  Options Minimised
@@ -43,11 +43,11 @@ export interface AboutBlotterState {
   IsGeneralOptionsMinimised: boolean;
 }
 
-export class AdaptableBlotterAbout extends React.Component<
-  AdaptableBlotterAboutProps,
-  AboutBlotterState
+export class AdaptableBlotterGridInfo extends React.Component<
+  AdaptableBlotterGridInfoProps,
+  GridInfoBlotterState
 > {
-  constructor(props: AdaptableBlotterAboutProps) {
+  constructor(props: AdaptableBlotterGridInfoProps) {
     super(props);
     this.state = {
       ShowGridProperties: true,
@@ -139,10 +139,10 @@ export class AdaptableBlotterAbout extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as AboutBlotterState);
+          } as GridInfoBlotterState);
         })
       : this.createMinimiseButton('Base', () => {
-          this.setState({ IsBaseOptionsMinimised: true } as AboutBlotterState);
+          this.setState({ IsBaseOptionsMinimised: true } as GridInfoBlotterState);
         });
 
     let showContainerOptionsButton = this.state.IsContainerOptionsMinimised
@@ -156,10 +156,10 @@ export class AdaptableBlotterAbout extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as AboutBlotterState);
+          } as GridInfoBlotterState);
         })
       : this.createMinimiseButton('Container', () => {
-          this.setState({ IsContainerOptionsMinimised: true } as AboutBlotterState);
+          this.setState({ IsContainerOptionsMinimised: true } as GridInfoBlotterState);
         });
 
     let showAuditOptionsButton = this.state.IsAuditOptionsMinimised
@@ -173,10 +173,10 @@ export class AdaptableBlotterAbout extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as AboutBlotterState);
+          } as GridInfoBlotterState);
         })
       : this.createMinimiseButton('Audit', () => {
-          this.setState({ IsAuditOptionsMinimised: true } as AboutBlotterState);
+          this.setState({ IsAuditOptionsMinimised: true } as GridInfoBlotterState);
         });
 
     let showConfigServerOptionsButton = this.state.IsConfigServerOptionsMinimised
@@ -190,10 +190,10 @@ export class AdaptableBlotterAbout extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as AboutBlotterState);
+          } as GridInfoBlotterState);
         })
       : this.createMinimiseButton('Config Server', () => {
-          this.setState({ IsConfigServerOptionsMinimised: true } as AboutBlotterState);
+          this.setState({ IsConfigServerOptionsMinimised: true } as GridInfoBlotterState);
         });
 
     let showQueryOptionsButton = this.state.IsQueryOptionsMinimised
@@ -207,10 +207,10 @@ export class AdaptableBlotterAbout extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as AboutBlotterState);
+          } as GridInfoBlotterState);
         })
       : this.createMinimiseButton('Query', () => {
-          this.setState({ IsQueryOptionsMinimised: true } as AboutBlotterState);
+          this.setState({ IsQueryOptionsMinimised: true } as GridInfoBlotterState);
         });
 
     let showLayoutOptionsButton = this.state.IsLayoutOptionsMinimised
@@ -224,10 +224,10 @@ export class AdaptableBlotterAbout extends React.Component<
             IsLayoutOptionsMinimised: false,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as AboutBlotterState);
+          } as GridInfoBlotterState);
         })
       : this.createMinimiseButton('Layout', () => {
-          this.setState({ IsLayoutOptionsMinimised: true } as AboutBlotterState);
+          this.setState({ IsLayoutOptionsMinimised: true } as GridInfoBlotterState);
         });
 
     let showFilterOptionsButton = this.state.IsFilterOptionsMinimised
@@ -241,10 +241,10 @@ export class AdaptableBlotterAbout extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: false,
             IsGeneralOptionsMinimised: true,
-          } as AboutBlotterState);
+          } as GridInfoBlotterState);
         })
       : this.createMinimiseButton('Filter', () => {
-          this.setState({ IsFilterOptionsMinimised: true } as AboutBlotterState);
+          this.setState({ IsFilterOptionsMinimised: true } as GridInfoBlotterState);
         });
 
     let showGeneralOptionsButton = this.state.IsGeneralOptionsMinimised
@@ -258,10 +258,10 @@ export class AdaptableBlotterAbout extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: false,
-          } as AboutBlotterState);
+          } as GridInfoBlotterState);
         })
       : this.createMinimiseButton('General', () => {
-          this.setState({ IsGeneralOptionsMinimised: true } as AboutBlotterState);
+          this.setState({ IsGeneralOptionsMinimised: true } as GridInfoBlotterState);
         });
 
     return (
@@ -273,7 +273,7 @@ export class AdaptableBlotterAbout extends React.Component<
       >
         <Flex flexDirection="column" style={{ height: '100%' }}>
           <PanelWithImage
-            header={'About'}
+            header={'Grid Info'}
             variant="primary"
             glyphicon={'info-sign'}
             style={{ flex: 1 }}
@@ -838,6 +838,6 @@ export class AdaptableBlotterAbout extends React.Component<
 
   onShowGridPropertiesChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.setState({ ShowGridProperties: e.value == 'GridProperties' } as AboutBlotterState);
+    this.setState({ ShowGridProperties: e.value == 'GridProperties' } as GridInfoBlotterState);
   }
 }

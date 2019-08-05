@@ -1,4 +1,4 @@
-export const AboutPopup: string = 'AboutPopup';
+export const GridInfoPopup: string = 'GridInfoPopup';
 export const AdvancedSearchPopup: string = 'AdvancedSearchPopup';
 export const AlertPopup: string = 'AlertPopup';
 export const ApplicationPopup: string = 'ApplicationPopup';

@@ -5,7 +5,7 @@ export interface DashboardState extends RunTimeState {
   VisibleButtons?: string[];
   DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
   ShowSystemStatusButton?: boolean;
-  ShowAboutButton?: boolean;
+  ShowGridInfoButton?: boolean;
   ShowFunctionsDropdown?: boolean;
   ShowColumnsDropdown?: boolean;
   ShowToolbarsDropdown?: boolean;

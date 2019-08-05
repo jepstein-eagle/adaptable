@@ -4,7 +4,7 @@ import {
   IConfirmationPopup,
   IPromptPopup,
   ILoadingPopup,
-  IAboutPopup,
+  IGridInfoPopup,
 } from '../../Utilities/Interface/IMessage';
 import { InternalState } from './InternalState';
 export interface PopupState extends InternalState {
@@ -13,5 +13,5 @@ export interface PopupState extends InternalState {
   ConfirmationPopup: IConfirmationPopup;
   PromptPopup: IPromptPopup;
   LoadingPopup: ILoadingPopup;
-  AboutPopup: IAboutPopup;
+  GridInfoPopup: IGridInfoPopup;
 }
