@@ -119,7 +119,7 @@ import {
   StateChangedDetails,
 } from '../../Api/Events/AuditEvents';
 
-import * as Emitter from 'emittery/legacy';
+import Emitter from '../../Utilities/Emitter';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 
 type EmitterCallback = (data?: any) => any;

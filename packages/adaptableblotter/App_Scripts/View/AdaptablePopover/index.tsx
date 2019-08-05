@@ -5,10 +5,9 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { UIHelper } from '../UIHelper';
 import { ButtonInfo } from '../Components/Buttons/ButtonInfo';
 
-import icons, { Icon } from '../../components/icons';
+import { Icon } from '../../components/icons';
 import OverlayTrigger from '../../components/OverlayTrigger';
 
-import { ReactComponentLike } from 'prop-types';
 import { Flex, Box, Text } from 'rebass';
 
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
@@ -55,7 +54,6 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
 
     const icon = UIHelper.getGlyphByMessageType(messageType);
     const color = UIHelper.getColorByMessageType(messageType);
-    const IconCmp = icons[icon] as ReactComponentLike;
 
     const iconStyle = {
       color,
@@ -64,7 +62,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
 
     return (
       <Flex alignItems="center">
-        {icons.check}
+        <Icon name="check" />
         <OverlayTrigger
           showTriangle
           render={() => popoverClickRootClose}
@@ -79,12 +77,12 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
             <ButtonInfo
               style={iconStyle}
               onClick={() => null}
-              glyph={icon}
+              icon={icon}
               tooltip={this.props.tooltipText}
             />
           ) : (
             <div tabIndex={0} style={{ cursor: 'pointer', display: 'inline-block' }}>
-              {IconCmp ? <IconCmp style={iconStyle} /> : <Icon name="info" />}
+              <Icon name={icon} />
             </div>
           )}
         </OverlayTrigger>

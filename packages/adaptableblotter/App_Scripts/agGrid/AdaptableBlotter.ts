@@ -4,12 +4,10 @@ import {
   CellRangeParams,
   PopupEditorWrapper,
   RefreshCellsParams,
-  RedrawRowsParams,
-  ColDefUtil,
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
-import * as Emitter from 'emittery/legacy';
+import Emitter from '../Utilities/Emitter';
 
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';

@@ -127,11 +127,10 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             <Input
               style={{
                 width: this.props.ColumnWidth,
-                padding: '0px',
-                marginTop: '5px',
-                marginRight: '0px',
-                minHeight: '20px',
-                maxHeight: '20px',
+                padding: 0,
+                marginRight: 0,
+                minHeight: 20,
+                maxHeight: 20,
                 fontSize: 'var(--ab-font-size-1)',
               }}
               autoFocus={false}
