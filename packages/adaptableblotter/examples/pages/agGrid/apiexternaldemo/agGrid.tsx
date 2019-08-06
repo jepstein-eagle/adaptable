@@ -18,12 +18,14 @@ var adaptableblotter: IAdaptableBlotter;
 export function runQuickSearchViaAPI() {
   const element: any = document.getElementById('txtQuickSearchText');
   adaptableblotter.api.quickSearchApi.applyQuickSearch(element.value);
+  // adaptableblotter.api.themeApi.setLightTheme();
 }
 
 export function clearQuickSearchViaAPI() {
   const element: any = document.getElementById('txtQuickSearchText');
   element.value = '';
   adaptableblotter.api.quickSearchApi.clearQuickSearch();
+  // adaptableblotter.api.themeApi.setDarkTheme();
 }
 
 function InitAdaptableBlotter() {
