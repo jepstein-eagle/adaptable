@@ -1,6 +1,7 @@
 import {
   UserInterfaceState,
   PermittedColumnValues,
+  EditLookUpColumn,
 } from '../../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 export interface IUserInterfaceApi {
@@ -41,4 +42,8 @@ export interface IUserInterfaceApi {
   getAllPermittedValues(): PermittedColumnValues[];
 
   getPermittedValuesForColumn(columnId: string): PermittedColumnValues;
+
+  getAllEditLookUpColumns(): EditLookUpColumn[];
+
+  getLookUpValuesForColumn(columnId: string): EditLookUpColumn;
 }

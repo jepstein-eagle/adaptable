@@ -5,6 +5,7 @@ import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import {
   UserInterfaceState,
   PermittedColumnValues,
+  EditLookUpColumn,
 } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
@@ -46,5 +47,17 @@ export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
 
   public clearColumnPermittedValues(column: string): void {
     this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesDelete(column));
+  }
+
+  public getAllEditLookUpColumns(): EditLookUpColumn[] {
+    return this.getBlotterState().UserInterface.EditLookUpColumns;
+  }
+
+  public getLookUpValuesForColumn(columnId: string): EditLookUpColumn {
+    let editLookUpColumns: EditLookUpColumn[] = this.getAllEditLookUpColumns();
+    if (ArrayExtensions.IsNotNullOrEmpty(editLookUpColumns)) {
+      return editLookUpColumns.find(pc => pc.ColumnId == columnId);
+    }
+    return undefined;
   }
 }
