@@ -13,6 +13,7 @@ import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';
 import icons, { Icon } from '../../components/icons';
 import UIHelper from '../UIHelper';
+import Panel from '../../components/Panel';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;
@@ -95,12 +96,12 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     return (
       <div style={{ flex: 1, overflow: 'auto', ...this.props.style }}>
         {this.props.ShowPanel && (
-          <WizardPanel header={previewHeader} bodyScroll>
+          <Panel header={previewHeader} bodyScroll>
             <Table style={{ width: '100%' }}>
               {header}
               <tbody style={{ minWidth: 500 }}>{previewItems}</tbody>
             </Table>
-          </WizardPanel>
+          </Panel>
         )}
       </div>
     );
