@@ -1,6 +1,5 @@
 import { ApiBase } from './ApiBase';
 import { INamedFilterApi } from './Interface/INamedFilterApi';
-import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { NamedFilter, NamedFilterState } from '../PredefinedConfig/RunTimeState/NamedFilterState';
 
 export class NamedFilterApi extends ApiBase implements INamedFilterApi {
@@ -10,5 +9,9 @@ export class NamedFilterApi extends ApiBase implements INamedFilterApi {
 
   public getAllNamedFilter(): NamedFilter[] {
     return this.getNamedFilterState().NamedFilters;
+  }
+
+  public getNamedFilterByName(name: string): NamedFilter {
+    return this.getAllNamedFilter().find(nf => nf.Name == name);
   }
 }
