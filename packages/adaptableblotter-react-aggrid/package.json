@@ -1,5 +1,8 @@
 {
-  "name": "adaptableblotter-react-aggrid",
+  "name": "@adaptabletools/adaptableblotter-react-aggrid",
+  "publishConfig": {
+    "registry": "https://registry.adaptabletools.com"
+  },
   "version": "4.0.1",
   "description": "React version of the powerful data-agnostic HTML5 datagrid add-on that sits on top of the agGrid component and provides all the rich functionality that advanced users expect from their grids and blotters",
   "keywords": [],
