@@ -24,15 +24,10 @@ AdaptableBlotter.JS is fully data agnostic and can work with any data set you pr
 ## Licences
 
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
-There are 3 licence types available (all sold on an annual basis):
 
-- _Community_ - free for charities, students in full time education and open-source projects. Offers full range of functionality but state cannot be saved.
-- _Standard_ - full functionality of the Adaptable Blotter other than Enteprise modules like Charting (which can be created by not saved).
-- _Enterprise_ - full access to all functionality and modules in the Adaptable Blotter.
+The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.
 
-The Adaptable Blotter licence offers regular updates and full support.
-
-It is free to use the Evaluation for an evaulation (a Community licence will be given).
+If you wish to evaluate the Adaptable Blotter before purchase, please contact us requesting a Trial Licence.
 
 Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
