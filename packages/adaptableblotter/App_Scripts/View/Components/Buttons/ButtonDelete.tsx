@@ -57,9 +57,6 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
   }
 }
 
-//Here we bypass slightly how the whole thing works and consider Delete as a smart component that will show the warning
-//Purist will say that we should pass in everything we need through the props but I don't think it's really needed in that case
-//and it makes the component where we use the DeleteButton slighlty less verbos
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
     ConfirmAction: ownProps.ConfirmAction,

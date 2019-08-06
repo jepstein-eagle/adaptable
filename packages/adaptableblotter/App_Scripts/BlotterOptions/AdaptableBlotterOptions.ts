@@ -90,22 +90,14 @@ export interface AdaptableBlotterOptions {
   predefinedConfig?: PredefinedConfig | string;
 
   /**
-   * A unique key - provided by the Adaptable Tools team that uniquely identifies the user / team.
-   *
-   * Required to get access to Standard or Enterprise functionality.
-   *
-   * If not supplied then user has Community / Evaluation access where state cannot be saved or loaded.
-   *
-   * See full details at [Licence Key](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
-   *
-   * **Default value: ''**
+   * **This property is deprecated.  It is no longer used as licencing by key has been removed in version 5**
    */
   licenceKey?: string;
 
   /**
    * Options for setting the  *Div elements* in which the Adaptable Blotter and underlying grid are placed.
    *
-   * Also allow you  to set where popups appear relative to the page and where charts are displayed.
+   * Also allows you to set where popups appear relative to the page and where charts are displayed.
    */
   containerOptions?: ContainerOptions;
 
