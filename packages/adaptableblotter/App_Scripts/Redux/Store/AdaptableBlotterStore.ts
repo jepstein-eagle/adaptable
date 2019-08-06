@@ -4,7 +4,7 @@ import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEngine as createEngineRemote } from './IAdaptableBlotterReduxRemoteStorageEngine';
 import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
-import { licenseMergeReducer } from './AdaptableBlotterReduxMerger';
+import { mergeReducer } from './AdaptableBlotterReduxMerger';
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux';
 import * as PopupRedux from '../ActionsReducers/PopupRedux';
@@ -282,11 +282,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         blotter.blotterOptions.blotterId
       );
     } else {
-      storageEngine = createEngineLocal(
-        localStorageKey,
-        blotter.blotterOptions.predefinedConfig,
-        blotter.LicenceService.LicenceInfo
-      );
+      storageEngine = createEngineLocal(localStorageKey, blotter.blotterOptions.predefinedConfig);
     }
 
     const nonPersistentReduxKeys = [
@@ -302,11 +298,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.APPLICATION,
     ];
 
-    let rootReducer = licenseMergeReducer(
-      rootReducerWithResetManagement,
-      blotter.LicenceService.LicenceInfo,
-      LOAD_STATE
-    );
+    // this is now VERY BADLY NAMED!
+    let rootReducer = mergeReducer(rootReducerWithResetManagement, LOAD_STATE);
 
     let composeEnhancers;
     if ('production' != process.env.NODE_ENV) {

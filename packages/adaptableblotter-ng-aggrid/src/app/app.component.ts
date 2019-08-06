@@ -22,7 +22,6 @@ export class AppComponent {
     primaryKey: 'OrderId',
     userName: 'demo user',
     blotterId: 'an angular wrapper',
-    licenceKey: 'abc5834u-yt5a4esp1-r1oq9jclf1',
     containerOptions: {
       vendorContainer: 'adaptableBlotter',
     },

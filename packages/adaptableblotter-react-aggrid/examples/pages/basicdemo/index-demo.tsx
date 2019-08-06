@@ -43,7 +43,6 @@ export default () => (
     blotterOptions={{
       primaryKey: 'tradeId',
       blotterId: 'BYOP demo',
-      licenceKey: process.env.ENTERPRISE_LICENSE,
     }}
   />
 );

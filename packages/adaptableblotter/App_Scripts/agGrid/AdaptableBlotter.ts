@@ -124,8 +124,6 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { agGridHelper } from './agGridHelper';
 import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
-import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
-import { LicenceService } from '../Utilities/Services/LicenceService';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
@@ -188,8 +186,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public FreeTextColumnService: IFreeTextColumnService;
 
-  public LicenceService: ILicenceService;
-
   public ScheduleService: IScheduleService;
   public SearchService: ISearchService;
 
@@ -239,10 +235,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.isInitialised = false;
     this.hasQuickFilter = true;
     this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
-
-    // set the licence first
-    this.LicenceService = new LicenceService(this);
-    BlotterHelper.checkLicenceKey(this.LicenceService.LicenceInfo);
 
     // get the api ready
     this.api = new BlotterApi(this);

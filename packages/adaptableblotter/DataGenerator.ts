@@ -1,7 +1,6 @@
 ﻿/// <reference path="trade.d.ts" />
 
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { LeaderLineType } from 'igniteui-react-charts/ES2015/LeaderLineType';
 
 export interface IFtse {
   date: Date;
@@ -1035,7 +1034,6 @@ export class DataGenerator {
       primaryKey: 'tradeId',
       userName: 'demo user',
       blotterId: blotterId,
-      licenceKey: this.getEnterpriseLicenceKey(),
     };
     return adaptableBlotterOptions;
   }
@@ -1046,7 +1044,6 @@ export class DataGenerator {
       primaryKey: 'date',
       userName: 'demo user',
       blotterId: blotterId,
-      licenceKey: this.getStandardLicenceKey(),
     };
     return adaptableBlotterOptions;
   }
@@ -1092,16 +1089,4 @@ export class DataGenerator {
     }
     return null;
   };
-
-  public getCommunityLicenceKey(): string {
-    return process.env.COMMUNITY_LICENSE as string;
-  }
-
-  public getStandardLicenceKey(): string {
-    return process.env.STANDARD_LICENSE as string;
-  }
-
-  public getEnterpriseLicenceKey(): string {
-    return process.env.ENTERPRISE_LICENSE as string;
-  }
 }

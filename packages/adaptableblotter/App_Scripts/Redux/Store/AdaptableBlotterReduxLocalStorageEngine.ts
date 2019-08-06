@@ -1,8 +1,7 @@
 import fetch from 'isomorphic-fetch';
-import { MergeStateFunctionChooser } from './AdaptableBlotterReduxMerger';
+import { MergeStateFunction } from './AdaptableBlotterReduxMerger';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { ILicenceInfo } from '../../Utilities/Interface/ILicenceInfo';
 
 import IStorageEngine from './Interface/IStorageEngine';
 import { PredefinedConfig } from '../../PredefinedConfig/PredefinedConfig';
@@ -17,14 +16,9 @@ const checkStatus = (response: Response) => {
 };
 
 class AdaptableBlotterReduxLocalStorageEngine implements IStorageEngine {
-  constructor(
-    private key: string,
-    private predefinedConfig: PredefinedConfig | string,
-    private licenceInfo: ILicenceInfo
-  ) {
+  constructor(private key: string, private predefinedConfig: PredefinedConfig | string) {
     this.key = key;
     this.predefinedConfig = predefinedConfig;
-    this.licenceInfo = licenceInfo;
   }
 
   load(): Promise<any> {
@@ -38,17 +32,13 @@ class AdaptableBlotterReduxLocalStorageEngine implements IStorageEngine {
       return fetch(this.predefinedConfig)
         .then(checkStatus)
         .then(response => response.json())
-        .then(parsedPredefinedState =>
-          MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceInfo)
-        )
+        .then(parsedPredefinedState => MergeStateFunction(parsedPredefinedState, parsedJsonState))
         .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
     }
     if (this.predefinedConfig != null) {
       // we have config as an object so need to merge that
       return Promise.resolve(this.predefinedConfig)
-        .then(parsedPredefinedState =>
-          MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceInfo)
-        )
+        .then(parsedPredefinedState => MergeStateFunction(parsedPredefinedState, parsedJsonState))
         .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
     }
     // no predefined config so nothing to merge
@@ -71,8 +61,7 @@ function rejectWithMessage(error: any) {
 
 export function createEngine(
   key: string,
-  predefinedConfig: PredefinedConfig | string,
-  licenceInfo: ILicenceInfo
+  predefinedConfig: PredefinedConfig | string
 ): IStorageEngine {
-  return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig, licenceInfo);
+  return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig);
 }

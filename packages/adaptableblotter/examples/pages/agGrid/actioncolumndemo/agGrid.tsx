@@ -28,7 +28,6 @@ function InitAdaptableBlotter() {
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'action column demo',
-    licenceKey: examplesHelper.getEnterpriseLicenceKey(),
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   (adaptableBlotterOptions.advancedOptions = {

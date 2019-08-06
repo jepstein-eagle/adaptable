@@ -27,7 +27,6 @@ function InitAdaptableBlotter() {
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'cell validation demo',
-    licenceKey: examplesHelper.getEnterpriseLicenceKey(),
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 

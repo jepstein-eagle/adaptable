@@ -13,7 +13,6 @@ import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from './Reports/IPPStyle';
 import { IEvent } from './IEvent';
 import { IStrategyCollection } from '../../Strategy/Interface/IStrategy';
-import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
 import { IAuditLogService } from '../Services/Interface/IAuditLogService';
 import { ISearchService } from '../Services/Interface/ISearchService';
@@ -88,7 +87,6 @@ export interface IAdaptableBlotter {
   AuditLogService: IAuditLogService;
   CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
   ChartService: IChartService;
-  LicenceService: ILicenceService;
   ScheduleService: IScheduleService;
   SearchService: ISearchService;
 

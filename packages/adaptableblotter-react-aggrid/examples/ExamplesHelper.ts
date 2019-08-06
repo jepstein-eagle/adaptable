@@ -1151,7 +1151,6 @@ export class ExamplesHelper {
       primaryKey: 'tradeId',
       userName: 'demo user',
       blotterId: blotterId,
-      licenceKey: this.getEnterpriseLicenceKey(),
     };
     return adaptableBlotterOptions;
   }
@@ -1162,7 +1161,6 @@ export class ExamplesHelper {
       primaryKey: 'date',
       userName: 'demo user',
       blotterId: blotterId,
-      licenceKey: this.getStandardLicenceKey(),
     };
     return adaptableBlotterOptions;
   }
@@ -1218,17 +1216,5 @@ export class ExamplesHelper {
         gridOptions.columnApi!.autoSizeAllColumns();
       }
     });
-  }
-
-  public getCommunityLicenceKey(): string {
-    return process.env.COMMUNITY_LICENSE as string;
-  }
-
-  public getStandardLicenceKey(): string {
-    return process.env.STANDARD_LICENSE as string;
-  }
-
-  public getEnterpriseLicenceKey(): string {
-    return process.env.ENTERPRISE_LICENSE as string;
   }
 }

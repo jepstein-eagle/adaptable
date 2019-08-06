@@ -1,6 +1,4 @@
 import {
-  LicenceScopeType,
-  LicenceUserType,
   MessageType,
   LeafExpressionOperator,
   RangeOperandType,
@@ -15,7 +13,6 @@ import {
   FontWeight,
   FontStyle,
 } from '../PredefinedConfig/Common/Enums';
-import { ILicenceInfo } from './Interface/ILicenceInfo';
 import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
 import {
   EMPTY_STRING,
@@ -65,20 +62,6 @@ import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ICellSummmary } from './Interface/SelectedCell/ICellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
-
-export function CreateLicenceInfo(
-  licenceScopeType: LicenceScopeType,
-  isLicenceInDate: boolean,
-  licenceUserType: LicenceUserType,
-  expiryDate: Date
-): ILicenceInfo {
-  return {
-    LicenceScopeType: licenceScopeType,
-    IsLicenceInDate: isLicenceInDate,
-    LicenceUserType: licenceUserType,
-    ExpiryDate: expiryDate,
-  };
-}
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -454,7 +437,6 @@ export function CreateEmptyCellSummmary(): ICellSummmary {
 }
 
 export const ObjectFactory = {
-  CreateLicenceInfo,
   CreateEmptyCustomSort,
   CreateEmptyDataSource,
   CreateEmptyPieChartDefinition,

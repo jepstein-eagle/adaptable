@@ -1143,7 +1143,6 @@ export class ExamplesHelper {
       primaryKey: 'tradeId',
       userName: 'demo user',
       blotterId: blotterId,
-      licenceKey: this.getEnterpriseLicenceKey(),
     };
     return adaptableBlotterOptions;
   }
@@ -1154,7 +1153,6 @@ export class ExamplesHelper {
       primaryKey: 'date',
       userName: 'demo user',
       blotterId: blotterId,
-      licenceKey: this.getStandardLicenceKey(),
     };
     return adaptableBlotterOptions;
   }

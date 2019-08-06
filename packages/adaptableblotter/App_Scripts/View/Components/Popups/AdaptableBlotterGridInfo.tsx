@@ -434,32 +434,13 @@ export class AdaptableBlotterGridInfo extends React.Component<
       let sorts: any = this.props.AdaptableBlotter.api.gridApi.getColumnSorts().map(gs => {
         return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ': ' + gs.SortOrder;
       });
-      let licenceInDate: string = this.props.AdaptableBlotter.LicenceService.LicenceInfo
-        .IsLicenceInDate
-        ? 'In Date'
-        : 'Expired';
+
       returnRows.push(
         this.createColItem(colItems, 'Vendor Grid', this.props.AdaptableBlotter.vendorGridName)
       );
 
       returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', version));
-      returnRows.push(
-        this.createColItem(
-          colItems,
-          'Licence Key',
-          this.props.AdaptableBlotter.blotterOptions.licenceKey + ' (' + licenceInDate + ')'
-        )
-      );
-      returnRows.push(
-        this.createColItem(
-          colItems,
-          'Licence Type',
-          this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceScopeType +
-            ' (' +
-            this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceUserType +
-            ')'
-        )
-      );
+
       returnRows.push(
         this.createColItem(
           colItems,

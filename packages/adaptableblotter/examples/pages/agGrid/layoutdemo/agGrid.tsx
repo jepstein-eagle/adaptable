@@ -25,7 +25,6 @@ function InitAdaptableBlotter() {
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'layout demo',
-    licenceKey: examplesHelper.getEnterpriseLicenceKey(),
 
     layoutOptions: {
       includeVendorStateInLayouts: true,

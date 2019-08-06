@@ -229,7 +229,6 @@ function InitAdaptableBlotter() {
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'config blotter demo',
-    licenceKey: process.env.ENTERPRISE_LICENSE,
     predefinedConfig: config as PredefinedConfig,
   };
 

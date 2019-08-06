@@ -1,7 +1,5 @@
 import * as _ from 'lodash';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { LicenceScopeType } from '../../PredefinedConfig/Common/Enums';
-import { ILicenceInfo } from '../../Utilities/Interface/ILicenceInfo';
+
 import { AdaptableBlotterState } from './Interface/IAdaptableStore';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 
@@ -13,42 +11,15 @@ function customizer(objValue: any, srcValue: any) {
   }
 }
 
-// Works out which Merge function to use (for prdedefined config) based on Licence Type
-export function MergeStateFunctionChooser(oldState: any, newState: any, licenceInfo: ILicenceInfo) {
-  switch (licenceInfo.LicenceScopeType) {
-    case LicenceScopeType.Community:
-      return MergeStateCommunityLicence(oldState, newState);
-    case LicenceScopeType.Standard:
-      return MergeStateStandardLicence(oldState, newState);
-    case LicenceScopeType.Enterprise:
-      return MergeStateEnterpriseLicence(oldState, newState);
-  }
-}
-
-// Simplest of the 3 - we basically dont merge under any circumstance!
-export function MergeStateCommunityLicence(oldState: any, newState: any) {
-  return _.extend({}, oldState);
-}
-
-// We merge most state - except for Chart (and others to come)
-export function MergeStateStandardLicence(oldState: any, newState: any) {
-  return MergeState(oldState, newState, ['Chart']);
-}
-
-// We merge everything
-export function MergeStateEnterpriseLicence(oldState: any, newState: any) {
-  return MergeState(oldState, newState, []);
+export function MergeStateFunction(oldState: any, newState: any) {
+  return MergeState(oldState, newState);
 }
 
 // main merge function
-export function MergeState(oldState: any, newState: any, nonMergableKeys: string[]) {
+export function MergeState(oldState: any, newState: any) {
   const result = _.extend({}, oldState);
 
   for (const key in newState) {
-    if (ArrayExtensions.ContainsItem(nonMergableKeys, key)) {
-      continue;
-    }
-
     if (!newState.hasOwnProperty(key)) {
       continue;
     }
@@ -71,41 +42,27 @@ export function MergeState(oldState: any, newState: any, nonMergableKeys: string
   return result;
 }
 
-const LICENSE_MERGER_MAP = {
-  [LicenceScopeType.Community]: MergeStateCommunityLicence,
-  [LicenceScopeType.Standard]: MergeStateStandardLicence,
-  [LicenceScopeType.Enterprise]: MergeStateEnterpriseLicence,
-};
-
 type TypeReducer = (
   state: AdaptableBlotterState,
   action: { type: string; State?: { [s: string]: ConfigState } }
 ) => AdaptableBlotterState;
 
-export const licenseMergeReducer = (
-  rootReducer: TypeReducer,
-  licenceInfo: ILicenceInfo,
-  LOAD_STATE_TYPE: string
-): TypeReducer => {
+export const mergeReducer = (rootReducer: TypeReducer, LOAD_STATE_TYPE: string): TypeReducer => {
   let finalReducer = rootReducer;
 
-  const filterMergeStateByLicense = LICENSE_MERGER_MAP[licenceInfo.LicenceScopeType];
+  finalReducer = (
+    state: AdaptableBlotterState,
+    action: { type: string; State: { [s: string]: ConfigState } }
+  ) => {
+    if (action.type === LOAD_STATE_TYPE) {
+      state = MergeState(state, action.State);
 
-  if (filterMergeStateByLicense) {
-    finalReducer = (
-      state: AdaptableBlotterState,
-      action: { type: string; State: { [s: string]: ConfigState } }
-    ) => {
-      if (action.type === LOAD_STATE_TYPE) {
-        state = filterMergeStateByLicense(state, action.State);
-
-        // put this new state on the action, since the root reducer further copies
-        // keys from action.State to the new state
-        action.State = state;
-      }
-      return rootReducer(state, action);
-    };
-  }
+      // put this new state on the action, since the root reducer further copies
+      // keys from action.State to the new state
+      action.State = state;
+    }
+    return rootReducer(state, action);
+  };
 
   return finalReducer;
 };

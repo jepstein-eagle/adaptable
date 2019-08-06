@@ -5,8 +5,6 @@ import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { ILicenceInfo } from '../Interface/ILicenceInfo';
-import { LicenceScopeType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
@@ -102,54 +100,6 @@ export function isConfigServerEnabled(blotterOptions: AdaptableBlotterOptions): 
   );
 }
 
-export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
-  const universalOrEndUser: string = ` (${licenceInfo.LicenceUserType}). `;
-  const expiryDate: string = `Expires: ${licenceInfo.ExpiryDate.toLocaleDateString()}`;
-  switch (licenceInfo.LicenceScopeType) {
-    case LicenceScopeType.Community:
-      let licenceMessage: string = '\n';
-      licenceMessage +=
-        '***********************************************************************************\n';
-      licenceMessage +=
-        '************************** Adaptable Blotter License ******************************\n';
-      licenceMessage +=
-        '********************* This is an evaluation / community licence *******************\n';
-      licenceMessage +=
-        '******** It contains full functionality - but you cannot load or save state *******\n';
-      licenceMessage +=
-        '********* Please contact sales@adaptabletools.com for upgrade information *********\n';
-      licenceMessage +=
-        '***********************************************************************************\n';
-      LoggingHelper.LogError(licenceMessage);
-      break;
-
-    case LicenceScopeType.Standard:
-      LoggingHelper.LogAdaptableBlotterInfo(
-        ` Licence Type: Standard${universalOrEndUser}${expiryDate}`
-      );
-      break;
-    case LicenceScopeType.Enterprise:
-      LoggingHelper.LogAdaptableBlotterInfo(
-        ` Licence Type: Enterprise${universalOrEndUser}${expiryDate}`
-      );
-      break;
-  }
-  if (!licenceInfo.IsLicenceInDate) {
-    let licenceMessage: string = '\n';
-    licenceMessage +=
-      '***********************************************************************************\n';
-    licenceMessage +=
-      '************************** Adaptable Blotter License ******************************\n';
-    licenceMessage +=
-      '************************* This licence is out of date *****************************\n';
-    licenceMessage +=
-      '******** Please contact sales@adaptabletools.com for to renew your licence ********\n';
-    licenceMessage +=
-      '***********************************************************************************\n';
-    LoggingHelper.LogError(licenceMessage);
-  }
-}
-
 export function BlotterObjectExistsInState(
   array: AdaptableBlotterObject[],
   itemToCheck: AdaptableBlotterObject
@@ -169,7 +119,6 @@ export const BlotterHelper = {
   assignBlotterOptions,
   isValidPrimaryKey,
   isConfigServerEnabled,
-  checkLicenceKey,
   BlotterObjectExistsInState,
 };
 export default BlotterHelper;

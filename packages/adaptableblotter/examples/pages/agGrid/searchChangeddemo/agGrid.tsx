@@ -27,7 +27,6 @@ function InitAdaptableBlotter() {
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'audit demo',
-    licenceKey: examplesHelper.getEnterpriseLicenceKey(),
   };
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);

@@ -96,8 +96,6 @@ import {
   GRID_RELOADED_EVENT,
   KEY_DOWN_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
-import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
-import { LicenceService } from '../Utilities/Services/LicenceService';
 import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
@@ -153,7 +151,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public ValidationService: IValidationService;
   public AuditLogService: IAuditLogService;
   public ChartService: IChartService;
-  public LicenceService: ILicenceService;
   public CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
   public FreeTextColumnService: IFreeTextColumnService;
   public ScheduleService: IScheduleService;
@@ -187,10 +184,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.vendorGridName = 'Hypergrid';
     this.embedColumnMenu = false;
     this.hasQuickFilter = true;
-
-    // Create licencing
-    this.LicenceService = new LicenceService(this);
-    BlotterHelper.checkLicenceKey(this.LicenceService.LicenceInfo);
 
     // the audit service needs to be created before the store
     this.AuditLogService = new AuditLogService(this);
