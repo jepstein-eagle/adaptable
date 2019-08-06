@@ -90,7 +90,7 @@ export interface AdaptableBlotterOptions {
   predefinedConfig?: PredefinedConfig | string;
 
   /**
-   * **This property is deprecated.  It is no longer used as licencing by key has been removed in version 5**
+   * **This property is deprecated.  It is no longer used or required; licencing by key was removed in version 5**
    */
   licenceKey?: string;
 
