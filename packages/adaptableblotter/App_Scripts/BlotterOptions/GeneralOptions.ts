@@ -64,7 +64,11 @@ export interface GeneralOptions {
   showAdaptableBlotterToolPanel?: boolean;
 
   /**
+   * Runs a check to see if the current version of the Adaptable Blotter is the latest version.
    *
+   * If set to true, then a check is run when the Blotter starts up and a message is written to the Console if its not the latest version.
+   *
+   * **Default Value: false**
    */
   checkIfLatestVersionOnStartup?: boolean;
 }
