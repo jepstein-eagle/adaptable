@@ -4,6 +4,8 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * The Predefined Configuration for Entitlements
  *
+ * This lets you manage which functions are available for which user and in which form.
+ *
  * By default every function has the Entitlement of 'Full', so only set those which you want to be different to that default.
  *
  * ```ts
@@ -38,12 +40,14 @@ export interface IEntitlement {
   /**
    * The name of the function that has the Entitlement applied
    *
+   * You can see a full list of function names in our Help.
+   *
    * **Default Value**:  Empty array
    */
   FunctionName: string;
 
   /**
-   * What type of Access Level the Entitlement has.
+   * What type of Access Level the Entitlement provides.  The options are:
    *
    * **Full** - Complete Read / Write Access
    *

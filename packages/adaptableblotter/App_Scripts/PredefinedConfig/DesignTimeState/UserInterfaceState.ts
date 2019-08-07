@@ -27,25 +27,25 @@ export interface UserInterfaceState extends DesignTimeState {
 
   /**
    * An optional list of css styles(existing and available) that can be used when creating Conditional Styles or Format Columns.
-   * 
+   *
    * If this collection is not empty then they will be listed in a dropdown that will be visible in the Syle Creation dialog.
-   * 
-   * This will allow you quicly choose the css style name instead of having to build the style manually.
-   * 
+   *
+   * This will allow you quickly choose the css style name instead of having to build the style manually.
+   *
    * **You must ensure that any style name you list here is available to the Adaptable Blotter in a stylesheet that you provide**
-
+   *
    */
   StyleClassNames?: string[];
 
   /**
-   * An optional list of values which are permitted for the given column.
+   * An optional list of values which are permitted for a given column.
    *
-   * If set, then only these values will appear in the Query Builder, Bulk Update dropdown etc when that column is selected.
+   * If set, then only these values will appear in the Column Filter, Query Builder, Bulk Update dropdown etc when that column is selected.
    */
   PermittedColumnValues?: PermittedColumnValues[];
 
   /**
-   * An optional list of Columns which when edited will automatically display a Dropdown allowing the user easily to select a value.
+   * A list of Columns which, when edited, will automatically display a Dropdown allowing the user easily to select a value.
    *
    * You can, optionally, also provide a list of values that will appear in the Dropdown.
    *
@@ -58,7 +58,7 @@ export interface UserInterfaceState extends DesignTimeState {
   EditLookUpColumns?: EditLookUpColumn[];
 
   /**
-   * An optional list of RowStyles which allow you to specifiy how the Blotter should look.
+   * A list of RowStyles which allow you to specifiy how the Blotter should look.
    *
    * You can choose to style All, Odd or Even rows (the last 2 are used for when wanting to have alternating row styles).
    *
@@ -90,6 +90,43 @@ export interface PermittedColumnValues {
  * Can optionally include which look up values the Dropdown will contain; if none are provided then the Adaptable Blotter will get the distinct values for the Column.
  *
  * However if Permitted Values have been set for that column then they will be displayed in the Dropdown instead.
+ *
+ *  **Edit LookUp Columm Example**
+ *
+ * ```ts
+ * export default {
+ *  UserInterface: {
+ *     EditLookUpColumns: [
+ * {
+ *    ColumnId: 'CustomerReference',
+ *    LookUpValues: [
+ *      'SANTG',
+ *      'LINOD',
+ *      'ROMEY',
+ *      'FRANK',
+ *      'ALFKI',
+ *      'REGGC',
+ *      'GODOS',
+ *      'PRINI',
+ *      'GREAL',
+ *      'WILMK',
+ *      'MAISD',
+ *      'THECR',
+ *      'SAVEA',
+ *      'FOLKO',
+ *      'RATTC',
+ *    ],
+ *  },
+ *  {
+ *    ColumnId: 'ContactName',
+ *  },
+ *  {
+ *    ColumnId: 'Employee',
+ *  },
+ * ],
+ * },
+ * } as PredefinedConfig;
+ * ```
  */
 export interface EditLookUpColumn {
   /**

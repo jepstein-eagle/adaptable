@@ -29,5 +29,9 @@ export interface ILayoutApi {
   /**
    * Saves the current layout - using the column order and grid sort info currently in the grid
    */
-  saveLayout(): void;
+  saveCurrentLayout(): void;
+  /**
+   * Saves the given layout
+   */
+  saveLayout(layoutToSave: Layout): void;
 }

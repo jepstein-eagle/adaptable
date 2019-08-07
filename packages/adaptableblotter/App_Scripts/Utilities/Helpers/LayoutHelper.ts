@@ -56,7 +56,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
           ColumnSorts: gridState.ColumnSorts,
           VendorGridInfo: gridVendorState,
         };
-        blotter.adaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSave(layoutToSave));
+        blotter.api.layoutApi.saveLayout(layoutToSave);
       }
     }
     blotter.api.eventApi._onColumnStateChanged.Dispatch(blotter, {

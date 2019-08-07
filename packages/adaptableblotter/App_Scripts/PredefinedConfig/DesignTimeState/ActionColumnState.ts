@@ -8,6 +8,27 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * You can choose to render the cell contents yourself (via the *RenderFunctionName* property).
  *
+ * ```ts
+ * export default {
+ * ActionColumn: {
+ *  ActionColumns: [
+ *   {
+ *      ColumnId: 'Action',
+ *      ButtonText: 'Click',
+ *      RenderFunctionName: 'RenderActionFunc',
+ *   },
+ *   {
+ *      ColumnId: 'Plus',
+ *      ButtonText: '+',
+ *   },
+ *   {
+ *      ColumnId: 'Minus',
+ *      ButtonText: '-',
+ *   },
+ *  ],
+ *  },
+ * } as PredefinedConfig;
+ * ```
  */
 export interface ActionColumnState extends DesignTimeState {
   /**

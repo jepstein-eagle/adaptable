@@ -53,11 +53,16 @@ export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
     return this.getBlotterState().UserInterface.EditLookUpColumns;
   }
 
-  public getLookUpValuesForColumn(columnId: string): EditLookUpColumn {
+  public getEditLookUpColumnForColumn(columnId: string): EditLookUpColumn {
     let editLookUpColumns: EditLookUpColumn[] = this.getAllEditLookUpColumns();
     if (ArrayExtensions.IsNotNullOrEmpty(editLookUpColumns)) {
       return editLookUpColumns.find(pc => pc.ColumnId == columnId);
     }
     return undefined;
+  }
+
+  public isEditLookUpColumn(columnId: string): boolean {
+    let editLookUpColumnIds: string[] = this.getAllEditLookUpColumns().map(c => c.ColumnId);
+    return ArrayExtensions.ContainsItem(editLookUpColumnIds, columnId);
   }
 }

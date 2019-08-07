@@ -3,7 +3,6 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { ILayoutApi } from './Interface/ILayoutApi';
 import { LayoutState, Layout, ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
 
@@ -43,7 +42,7 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
     return this.getBlotterState().Layout.Layouts;
   }
 
-  public saveLayout(): void {
+  public saveCurrentLayout(): void {
     let currentLayoutName: string = this.getBlotterState().Layout.CurrentLayout;
     if (currentLayoutName != DEFAULT_LAYOUT) {
       let currentLayoutObject: Layout = this.getBlotterState().Layout.Layouts.find(
@@ -62,8 +61,12 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
           VendorGridInfo: gridState,
         };
 
-        this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
+        this.saveLayout(layoutToSave);
       }
     }
+  }
+
+  public saveLayout(layoutToSave: Layout): void {
+    this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
   }
 }

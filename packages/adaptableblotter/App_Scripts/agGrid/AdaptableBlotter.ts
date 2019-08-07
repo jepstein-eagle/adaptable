@@ -153,6 +153,7 @@ import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { ReactComponentLike } from 'prop-types';
 import icons from '../components/icons';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
+import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -229,7 +230,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
     this.runtimeConfig = runtimeConfig;
 
-    this.gridOptions = this.blotterOptions.vendorGrid;
+    this.gridOptions = this.blotterOptions!.vendorGrid;
     this.vendorGridName = 'agGrid';
     this.embedColumnMenu = true;
     this.isInitialised = false;
@@ -283,7 +284,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     // set up iPushPull
-    iPushPullHelper.init(this.blotterOptions.iPushPullConfig);
+    iPushPullHelper.init(this.blotterOptions!.iPushPullConfig);
 
     // set up Glue42 - note this is currently not working in the browser but will be done shortly
     if (Glue42Helper.isRunningGlue42()) {
@@ -331,11 +332,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // create debounce methods that take a time based on user settings
     this.throttleOnDataChangedUser = _.throttle(
       this.applyDataChange,
-      this.blotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay
+      this.blotterOptions!.filterOptions.filterActionOnUserDataChange.ThrottleDelay
     );
     this.throttleOnDataChangedExternal = _.throttle(
       this.applyDataChange,
-      this.blotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
+      this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
     );
   }
 
@@ -371,7 +372,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
 
     // Create Adaptable Blotter Tool Panel
-    if (this.blotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
+    if (this.blotterOptions!!.generalOptions!.showAdaptableBlotterToolPanel) {
       LoggingHelper.LogAdaptableBlotterInfo('Adding Adaptable Blotter Tool Panel');
       this.gridOptions.sideBar = this.gridOptions.sideBar || {};
       this.gridOptions.components = this.gridOptions.components || {};
@@ -435,12 +436,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private filterOnUserDataChange(): void {
     if (
-      this.blotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter ==
+      this.blotterOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
     ) {
       this.applyDataChange();
     } else if (
-      this.blotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter ==
+      this.blotterOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
       FilterOnDataChangeOptions.Throttle
     ) {
       this.throttleOnDataChangedUser();
@@ -449,12 +450,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private filterOnExternalDataChange(): void {
     if (
-      this.blotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter ==
+      this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
     ) {
       this.applyDataChange();
     } else if (
-      this.blotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter ==
+      this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
       FilterOnDataChangeOptions.Throttle
     ) {
       this.throttleOnDataChangedExternal();
@@ -593,14 +594,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private addFiltersToVendorColumn(vendorColumn: Column): void {
     if (
       vendorColumn.getColDef().filter &&
-      this.blotterOptions.filterOptions.useAdaptableBlotterFilterForm
+      this.blotterOptions!.filterOptions.useAdaptableBlotterFilterForm
     ) {
       this.createFilterWrapper(vendorColumn);
     }
 
     if (
       this.gridOptions.floatingFilter &&
-      this.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
+      this.blotterOptions!.filterOptions.useAdaptableBlotterQuickFilter
     ) {
       this.createQuickFilterWrapper(vendorColumn);
     }
@@ -673,7 +674,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public getPrimaryKeyValueFromRecord(record: RowNode): any {
-    return this.gridOptions.api!.getValue(this.blotterOptions.primaryKey, record);
+    return this.gridOptions.api!.getValue(this.blotterOptions!.primaryKey, record);
   }
 
   public gridHasCurrentEditValue(): boolean {
@@ -710,9 +711,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public saveGridLayout() {
     if (
-      this.blotterOptions.layoutOptions != null &&
-      this.blotterOptions.layoutOptions.includeVendorStateInLayouts != null &&
-      this.blotterOptions.layoutOptions.includeVendorStateInLayouts
+      this.blotterOptions!.layoutOptions != null &&
+      this.blotterOptions!.layoutOptions.includeVendorStateInLayouts != null &&
+      this.blotterOptions!.layoutOptions.includeVendorStateInLayouts
     ) {
       LayoutHelper.autoSaveLayout(this);
     }
@@ -1171,7 +1172,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     return Array.from(returnMap.values()).slice(
       0,
-      this.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
+      this.blotterOptions!.queryOptions.maxColumnValueItemsDisplayed
     );
   }
 
@@ -1666,7 +1667,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private getBlotterContainerElement(): HTMLElement | null {
     if (!this.abContainerElement) {
       this.abContainerElement = document.getElementById(
-        this.blotterOptions.containerOptions.adaptableBlotterContainer
+        this.blotterOptions!.containerOptions.adaptableBlotterContainer
       );
     }
     return this.abContainerElement;
@@ -1675,7 +1676,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private getGridContainerElement(): HTMLElement | null {
     if (!this.gridContainerElement) {
       this.gridContainerElement = document.getElementById(
-        this.blotterOptions.containerOptions.vendorContainer
+        this.blotterOptions!.containerOptions.vendorContainer
       );
     }
     return this.gridContainerElement;
@@ -1688,7 +1689,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
+          `There is no Div called ${
+            this.blotterOptions!.containerOptions.adaptableBlotterContainer
+          } so cannot render the Adaptable Blotter`
         );
         return;
       }
@@ -1959,7 +1962,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     );
 
-    // We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
+    // We plug our filter mechanism and if there is already something like external widgets... we save ref to the function
     const originalisExternalFilterPresent = this.gridOptions.isExternalFilterPresent;
     this.gridOptions.isExternalFilterPresent = () => {
       const columnFilters: ColumnFilter[] = this.getState().ColumnFilter.ColumnFilters;
@@ -1994,7 +1997,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const columns = this.api.gridApi.getColumns();
 
       // first we assess AdvancedSearch (if its running locally)
-      if (this.blotterOptions.generalOptions.serverSearchOption == 'None') {
+      if (this.blotterOptions!.generalOptions!.serverSearchOption == 'None') {
         const currentSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
         if (currentSearch) {
           // See if our record passes the Expression - using Expression Helper; if not then return false
@@ -2012,8 +2015,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       // we then assess filters
       if (
-        this.blotterOptions.generalOptions.serverSearchOption == 'None' ||
-        this.blotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch'
+        this.getGeneralOptions().serverSearchOption == 'None' ||
+        this.getGeneralOptions().serverSearchOption == 'AdvancedSearch'
       ) {
         const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {
@@ -2055,6 +2058,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (
                   ExpressionHelper.checkForExpressionFromRecord(expression, node, [column], this)
                 ) {
+                  console.log(node);
                   return originaldoesExternalFilterPass
                     ? originaldoesExternalFilterPass(node)
                     : true;
@@ -2160,7 +2164,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (renderedColumn) {
       const cellRendererFunc: ICellRendererFunc = this.agGridHelper.createPercentBarCellRendererFunc(
         pcr,
-        this.blotterOptions.blotterId!
+        this.blotterOptions!.blotterId!
       );
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       const coldDef: ColDef = vendorGridColumn.getColDef();
@@ -2359,9 +2363,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     if (
-      this.blotterOptions.layoutOptions != null &&
-      this.blotterOptions.layoutOptions.includeVendorStateInLayouts != null &&
-      this.blotterOptions.layoutOptions.includeVendorStateInLayouts
+      this.blotterOptions!.layoutOptions != null &&
+      this.blotterOptions!.layoutOptions.includeVendorStateInLayouts != null &&
+      this.blotterOptions!.layoutOptions.includeVendorStateInLayouts
     ) {
       let groupedState: any = null;
       const displayedColumns: Column[] = this.gridOptions.columnApi!.getAllDisplayedColumns();
@@ -2434,12 +2438,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return (
       this.gridOptions.floatingFilter != null &&
       this.gridOptions.floatingFilter == true &&
-      this.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
+      this.blotterOptions!.filterOptions.useAdaptableBlotterQuickFilter
     );
   }
 
   public showQuickFilter(): void {
-    if (this.blotterOptions.filterOptions!.useAdaptableBlotterQuickFilter) {
+    if (this.blotterOptions!.filterOptions!.useAdaptableBlotterQuickFilter) {
       this.gridOptions.floatingFilter = true;
       this.gridOptions.columnApi!.getAllGridColumns().forEach(col => {
         this.createQuickFilterWrapper(col);
@@ -2449,7 +2453,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public hideQuickFilter(): void {
-    if (this.blotterOptions.filterOptions!.useAdaptableBlotterQuickFilter) {
+    if (this.blotterOptions!.filterOptions!.useAdaptableBlotterQuickFilter) {
       this.gridOptions.floatingFilter = false;
       this.gridOptions.api!.refreshHeader();
     }
@@ -2550,9 +2554,9 @@ import "adaptableblotter/themes/${themeName}.css"`);
     }
 
     // add the filter header style if required
-    if (this.blotterOptions.filterOptions!.indicateFilteredColumns == true) {
+    if (this.blotterOptions!.filterOptions!.indicateFilteredColumns == true) {
       var css = document.createElement('style');
-      css.id = `${this.blotterOptions.blotterId}_filtered-columns-style`;
+      css.id = `${this.blotterOptions!.blotterId}_filtered-columns-style`;
       css.type = 'text/css';
       css.innerHTML = '.ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}';
       document.body.appendChild(css);
@@ -2575,6 +2579,10 @@ import "adaptableblotter/themes/${themeName}.css"`);
 
     // at the end so load the current layout
     this.api.layoutApi.setLayout(currentlayout);
+  }
+
+  private getGeneralOptions(): GeneralOptions {
+    return this.blotterOptions!.generalOptions!;
   }
 
   // A couple of state management functions

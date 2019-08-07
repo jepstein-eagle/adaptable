@@ -45,5 +45,7 @@ export interface IUserInterfaceApi {
 
   getAllEditLookUpColumns(): EditLookUpColumn[];
 
-  getLookUpValuesForColumn(columnId: string): EditLookUpColumn;
+  getEditLookUpColumnForColumn(columnId: string): EditLookUpColumn;
+
+  isEditLookUpColumn(columnId: string): boolean;
 }
