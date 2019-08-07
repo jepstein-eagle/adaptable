@@ -5,8 +5,6 @@ import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
-import { ObjectFactory } from '../ObjectFactory';
-import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 
 export function getLayoutDescription(layout: Layout, columns: IColumn[]): string {
   let returnString: string = '';

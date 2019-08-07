@@ -70,5 +70,5 @@ export interface GeneralOptions {
    *
    * **Default Value: false**
    */
-  checkIfLatestVersionOnStartup?: boolean;
+  // checkIfLatestVersionOnStartup?: boolean;
 }
