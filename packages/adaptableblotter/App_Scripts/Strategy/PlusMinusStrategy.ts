@@ -16,10 +16,10 @@ import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -63,7 +63,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         if (keyEventString == '-') {
           side = -1;
         }
-        let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+        let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
         let isPlusMinusApplicable: boolean = this.applyPlusMinus(
           plusMinusRules,

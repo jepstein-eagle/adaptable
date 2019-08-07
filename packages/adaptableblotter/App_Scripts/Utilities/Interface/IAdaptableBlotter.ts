@@ -21,7 +21,7 @@ import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColu
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
-import { GridCell } from './SelectedCell/GridCell';
+import { GridCell } from './Selection/GridCell';
 import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 
 export type EmitterCallback = (data?: any) => any;

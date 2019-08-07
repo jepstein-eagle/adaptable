@@ -21,7 +21,10 @@ import {
 
 import useEventListener from './useEventListener';
 import { BLOTTER_READY_EVENT } from '../../adaptableblotter/App_Scripts/Utilities/Constants/GeneralConstants';
-import { ActionColumnClickedEventArgs } from '../../adaptableblotter/App_Scripts/Api/Events/BlotterEvents';
+import {
+  ActionColumnClickedEventArgs,
+  SelectionChangedEventArgs,
+} from '../../adaptableblotter/App_Scripts/Api/Events/BlotterEvents';
 
 export * from '../../adaptableblotter/types';
 
@@ -126,6 +129,7 @@ const AdaptableBlotterReact = ({
   onColumnStateChanged,
   onAlertFired,
   onActionColumnClicked,
+  onSelectionChanged,
   onBlotterReady,
   ...props
 }: {
@@ -137,6 +141,7 @@ const AdaptableBlotterReact = ({
   onColumnStateChanged?: (blotter: AdaptableBlotter, args: ColumnStateChangedEventArgs) => void;
   onAlertFired?: (blotter: AdaptableBlotter, args: AlertFiredEventArgs) => void;
   onActionColumnClicked?: (blotter: AdaptableBlotter, args: ActionColumnClickedEventArgs) => void;
+  onSelectionChanged?: (blotter: AdaptableBlotter, args: SelectionChangedEventArgs) => void;
   onBlotterReady?: (api: IBlotterApi) => void;
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
@@ -216,6 +221,9 @@ const AdaptableBlotterReact = ({
   useEventListener(onAlertFired, blotter, (eventApi: IEventApi) => eventApi.onAlertFired());
   useEventListener(onActionColumnClicked, blotter, (eventApi: IEventApi) =>
     eventApi.onActionColumnClicked()
+  );
+  useEventListener(onSelectionChanged, blotter, (eventApi: IEventApi) =>
+    eventApi.onSelectionChanged()
   );
 
   return (

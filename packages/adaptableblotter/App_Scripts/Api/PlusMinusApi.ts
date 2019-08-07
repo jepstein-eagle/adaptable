@@ -3,8 +3,7 @@ import { PlusMinusState, PlusMinusRule } from '../PredefinedConfig/RunTimeState/
 import { IPlusMinusApi } from './Interface/IPlusMinusApi';
 import { IPlusMinusStrategy } from '../Strategy/Interface/IPlusMinusStrategy';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 
 export class PlusMinusApi extends ApiBase implements IPlusMinusApi {
   public getPlusMinusState(): PlusMinusState {

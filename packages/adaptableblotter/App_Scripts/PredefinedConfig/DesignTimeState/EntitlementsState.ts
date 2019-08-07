@@ -40,7 +40,7 @@ export interface IEntitlement {
   /**
    * The name of the function that has the Entitlement applied
    *
-   * You can see a full list of function names in our Help.
+   * You can see a full list of function names in the [Help Appendix](https://adaptabletools.zendesk.com/hc/en-us/articles/360024889311-Appendix).
    *
    * **Default Value**:  Empty array
    */

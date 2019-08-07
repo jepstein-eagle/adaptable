@@ -6,6 +6,7 @@ import {
   ColumnStateChangedEventArgs,
   AlertFiredEventArgs,
   ActionColumnClickedEventArgs,
+  SelectionChangedEventArgs,
 } from '../Events/BlotterEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 
@@ -68,9 +69,19 @@ export interface IEventApi {
    */
   onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>;
 
+  /**
+   * Event fired whenever the Selection in the Adaptable Blotter changes.
+   *
+   * The EventArgs contain both cell and row selection information.
+   *
+   * @returns IEvent<IAdaptableBlotter, SelectionChangedEventArgs>
+   */
+  onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs>;
+
   _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
   _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
   _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
   _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
   _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnClickedEventArgs>;
+  _onSelectionChanged: EventDispatcher<IAdaptableBlotter, SelectionChangedEventArgs>;
 }

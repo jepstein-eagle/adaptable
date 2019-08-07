@@ -3,13 +3,12 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ICellSummaryStrategy } from './Interface/ICellSummaryStrategy';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ICellSummmary } from '../Utilities/Interface/SelectedCell/ICellSummmary';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { ICellSummmary } from '../Utilities/Interface/Selection/ICellSummmary';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -24,7 +23,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     );
   }
 
-  public CreateCellSummary(selectedCellInfo: ISelectedCellInfo): ICellSummmary {
+  public CreateCellSummary(selectedCellInfo: SelectedCellInfo): ICellSummmary {
     let selectedCellSummary: ICellSummmary;
 
     if (selectedCellInfo && ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
@@ -32,8 +31,10 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
       let allValues: any[] = [];
       let numericColumns: string[] = [];
 
+      console.log(selectedCellInfo.Columns);
+      console.log(selectedCellInfo);
       selectedCellInfo.Columns.map(c => {
-        if (c.DataType == DataType.Number) {
+        if (c && c.DataType == DataType.Number) {
           numericColumns.push(c.ColumnId);
         }
       });

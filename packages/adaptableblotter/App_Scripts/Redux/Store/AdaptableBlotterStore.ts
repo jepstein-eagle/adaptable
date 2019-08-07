@@ -90,7 +90,7 @@ import {
 } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
-import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
+import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';

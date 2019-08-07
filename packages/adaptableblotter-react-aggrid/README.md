@@ -56,6 +56,7 @@ export default () => <AdaptableBlotterReact
 - onColumnStateChanged: (blotter, arg: ColumnStateChangedEventArgs)
 - onAlertFired: (blotter, arg: AlertFiredEventArgs)
 - onActionColumnClicked: (blotter, arg: ActionColumnClickedEventArgs)
+- onSelectionChanged: (blotter, arg: SelectionChangedEventArgs)
 
 ## Licences
 

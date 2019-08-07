@@ -7,7 +7,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
-import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
+import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { CellSummaryDetails } from './CellSummaryDetails';
 
 interface CellSummaryPopupProps extends StrategyViewPopupProps<CellSummaryPopupComponent> {

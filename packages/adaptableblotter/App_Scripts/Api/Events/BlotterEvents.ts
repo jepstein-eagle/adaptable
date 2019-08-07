@@ -1,5 +1,7 @@
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
+import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 
 /**
  * The main object used when publishing events.
@@ -24,6 +26,11 @@ export interface ActionColumnClickedEventArgs {
   actionColumn: ActionColumn;
   primaryKeyValue: any;
   rowData: any;
+}
+
+export interface SelectionChangedEventArgs {
+  selectedCellInfo: SelectedCellInfo;
+  selectedRowInfo: SelectedRowInfo;
 }
 
 export interface ThemeChangedEventArgs {

@@ -50,6 +50,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -387,5 +388,13 @@ export class agGridHelper {
         }
       }
     }
+  }
+
+  public fireSelectionChangedEvent(): void {
+    let selectionChangedArgs: SelectionChangedEventArgs = {
+      selectedCellInfo: this.blotter.api.gridApi.getGridState().SelectedCellInfo,
+      selectedRowInfo: this.blotter.api.gridApi.getGridState().SelectedRowInfo,
+    };
+    this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
   }
 }

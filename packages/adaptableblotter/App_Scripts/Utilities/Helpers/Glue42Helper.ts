@@ -7,7 +7,7 @@ import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from './ExpressionHelper';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
-import { GridCell } from '../Interface/SelectedCell/GridCell';
+import { GridCell } from '../Interface/Selection/GridCell';
 
 declare var Glue4Office: any;
 

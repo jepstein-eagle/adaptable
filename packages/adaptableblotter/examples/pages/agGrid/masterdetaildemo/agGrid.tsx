@@ -22,6 +22,7 @@ LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getMasterGridOptionsFTSE(200);
+  // gridOptions.rowSelection = 'multiple';
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsFtse(
     gridOptions,
     'master detail demo'

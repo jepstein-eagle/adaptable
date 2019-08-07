@@ -51,8 +51,8 @@ import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptio
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash';
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
@@ -95,6 +95,7 @@ import {
   CELLS_SELECTED_EVENT,
   GRID_RELOADED_EVENT,
   KEY_DOWN_EVENT,
+  ROWS_SELECTED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
@@ -527,7 +528,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
+  //This method returns selected cells ONLY (if selection mode is cells or multiple cells).
+  //If the selection mode is row it will returns nothing - use the setSelectedRows() method
   public setSelectedCells(): void {
     let selected: Array<any> = this.hyperGrid.selectionModel.getSelections();
     let columns: IColumn[] = [];
@@ -557,11 +559,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       }
     }
-    let selectedCellInfo: ISelectedCellInfo = { Columns: columns, GridCells: selectedCells };
+    let selectedCellInfo: SelectedCellInfo = { Columns: columns, GridCells: selectedCells };
     this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(
       GridRedux.GridSetSelectedCells(selectedCellInfo)
     );
     this.emitter.emit(CELLS_SELECTED_EVENT);
+  }
+
+  public setSelectedRows(): void {
+    // to do
   }
 
   public getColumnDataType(column: any): DataType {

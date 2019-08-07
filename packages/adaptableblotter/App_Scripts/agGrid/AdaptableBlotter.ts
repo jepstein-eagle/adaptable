@@ -84,8 +84,8 @@ import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
@@ -117,6 +117,7 @@ import {
   KEY_DOWN_EVENT,
   LIGHT_THEME,
   DARK_THEME,
+  ROWS_SELECTED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { IEvent } from '../Utilities/Interface/IEvent';
@@ -154,6 +155,9 @@ import { ReactComponentLike } from 'prop-types';
 import icons from '../components/icons';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
+import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
+import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -431,6 +435,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), HALF_SECOND);
 
   debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), HALF_SECOND);
+
+  debouncedSetSelectedRows = _.debounce(() => this.setSelectedRows(), HALF_SECOND);
 
   debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
 
@@ -719,15 +725,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  // this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
+  //This method returns selected cells ONLY (if selection mode is cells or multiple cells).
+  //If the selection mode is row it will returns nothing - use the setSelectedRows() method
   public setSelectedCells(): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
-    const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
-    //  const rows: any[] = this.gridOptions.api!.getSelectedRows();
-
-    // console.log(selected);
-
-    // console.log(nodes);
     const columns: IColumn[] = [];
     const selectedCells: GridCell[] = [];
 
@@ -767,13 +768,40 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       });
     }
-    const selectedCellInfo: ISelectedCellInfo = { Columns: columns, GridCells: selectedCells };
+    const selectedCellInfo: SelectedCellInfo = { Columns: columns, GridCells: selectedCells };
     this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCellInfo));
 
-    // this._onSelectedCellsChanged.Dispatch(this, this);
     this.emit(CELLS_SELECTED_EVENT);
 
-    // todo fire an externral event through event api (doesnt exist yet - and should have row and cell info)
+    this.agGridHelper.fireSelectionChangedEvent();
+  }
+
+  public setSelectedRows(): void {
+    const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
+    const selectedRows: GridRow[] = [];
+
+    if (ArrayExtensions.IsNotNullOrEmpty(nodes)) {
+      nodes.forEach(node => {
+        let rowInfo: RowInfo = {
+          isMaster: node.master != null && node.master == true ? true : false,
+          isExpanded: node.expanded != null && node.expanded == true ? true : false,
+          isGroup: node.group != null && node.group == true ? true : false,
+          level: node.level,
+        };
+
+        let gridRow: GridRow = {
+          primaryKeyValue: this.getPrimaryKeyValueFromRecord(node),
+          rowData: node.data,
+          rowInfo: rowInfo,
+        };
+        selectedRows.push(gridRow);
+      });
+    }
+    const selectedRowInfo: SelectedRowInfo = { GridRows: selectedRows };
+    this.dispatchAction(GridRedux.GridSetSelectedRows(selectedRowInfo));
+
+    this.emit(ROWS_SELECTED_EVENT);
+    this.agGridHelper.fireSelectionChangedEvent();
   }
 
   // We deduce the type here, as there is no way to get it through the definition
@@ -1864,12 +1892,33 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.filterOnUserDataChange();
       this.debouncedSetSelectedCells();
     });
+
+    const columnEventsThatTriggerSetRowSelection = [
+      Events.EVENT_ROW_GROUP_OPENED,
+      Events.EVENT_SELECTION_CHANGED,
+      Events.EVENT_ROW_SELECTED,
+    ];
+    this.gridOptions.api!.addGlobalListener((type: string) => {
+      if (ArrayExtensions.ContainsItem(columnEventsThatTriggerSetRowSelection, type)) {
+        this.debouncedSetSelectedRows();
+      }
+    });
+
+    this.gridOptions.api!.addEventListener(Events.EVENT_ROW_GROUP_OPENED, () => {
+      //      this.debouncedSetSelectedRows();
+    });
+
     this.gridOptions.api!.addEventListener(Events.EVENT_SELECTION_CHANGED, () => {
-      this.debouncedSetSelectedCells();
+      //     this.debouncedSetSelectedRows();
+    });
+
+    this.gridOptions.api!.addEventListener(Events.EVENT_ROW_SELECTED, () => {
+      //     this.debouncedSetSelectedRows();
     });
     this.gridOptions.api!.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, () => {
       this.debouncedSetSelectedCells();
     });
+
     // this.gridOptions.api!.addEventListener(Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED, () => {
     // });
 

@@ -8,13 +8,13 @@ import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
@@ -45,7 +45,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
   }
 
   public CheckCorrectCellSelection(): BulkUpdateValidationResult {
-    let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+    let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
     if (selectedCellInfo == null || ArrayExtensions.IsNullOrEmpty(selectedCellInfo.Columns)) {
       return {
         IsValid: false,

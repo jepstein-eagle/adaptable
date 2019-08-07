@@ -1,6 +1,7 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter } from '../../App_Scripts/types';
 import { StarsCellRenderer } from './StarsCellRenderer';
+import { SingleEntryPlugin } from 'webpack';
 
 export interface ITrade {
   tradeId: number;
@@ -747,6 +748,7 @@ export class ExamplesHelper {
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
       sideBar: undefined,
+      rowSelection: 'multiple',
       columnTypes: {
         abColDefNumber: {},
         abColDefString: {},
@@ -791,6 +793,7 @@ export class ExamplesHelper {
         },
       },
       enableRangeSelection: true,
+      rowSelection: 'multiple',
       floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
@@ -832,6 +835,7 @@ export class ExamplesHelper {
       valueFormatter: this.shortDateFormatteragGrid,
       cellRenderer: 'agGroupCellRenderer',
       type: 'abColDefDate',
+      checkboxSelection: true,
     });
 
     schema.push({

@@ -1,11 +1,12 @@
 import * as Redux from 'redux';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
+import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
+import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
-import { GridCell } from '../../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
+import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
@@ -15,6 +16,7 @@ export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_SORT = 'GRID_SET_SORT';
 export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
+export const GRID_SET_SELECTED_ROWS = 'GRID_SET_SELECTED_ROWS';
 export const GRID_CREATE_CELLS_SUMMARY = 'GRID_CREATE_CELLS_SUMMARY';
 export const GRID_SET_CELLS_SUMMARY = 'GRID_SET_CELLS_SUMMARY';
 export const GRID_QUICK_FILTER_BAR_SHOW = 'GRID_QUICK_FILTER_BAR_SHOW';
@@ -52,7 +54,11 @@ export interface GridSetBlotterRestrictionsAction extends Redux.Action {
 }
 
 export interface GridSetSelectedCellsAction extends Redux.Action {
-  SelectedCellInfo: ISelectedCellInfo;
+  SelectedCellInfo: SelectedCellInfo;
+}
+
+export interface GridSetSelectedRowsAction extends Redux.Action {
+  SelectedRowInfo: SelectedRowInfo;
 }
 
 export interface GridCreateCellSummaryAction extends Redux.Action {}
@@ -107,10 +113,17 @@ export const GridSetSort = (ColumnSorts: ColumnSort[]): GridSetSortAction => ({
 });
 
 export const GridSetSelectedCells = (
-  SelectedCellInfo: ISelectedCellInfo
+  SelectedCellInfo: SelectedCellInfo
 ): GridSetSelectedCellsAction => ({
   type: GRID_SET_SELECTED_CELLS,
   SelectedCellInfo,
+});
+
+export const GridSetSelectedRows = (
+  SelectedRowInfo: SelectedRowInfo
+): GridSetSelectedRowsAction => ({
+  type: GRID_SET_SELECTED_ROWS,
+  SelectedRowInfo,
 });
 
 export const GridCreateCellSummary = (): GridCreateCellSummaryAction => ({
@@ -138,6 +151,7 @@ const initialGridState: GridState = {
   Columns: EMPTY_ARRAY,
   ColumnSorts: EMPTY_ARRAY,
   SelectedCellInfo: null,
+  SelectedRowInfo: null,
   CellSummary: null,
   IsQuickFilterActive: false,
 };
@@ -170,6 +184,10 @@ export const GridReducer: Redux.Reducer<GridState> = (
     case GRID_SET_SELECTED_CELLS:
       return Object.assign({}, state, {
         SelectedCellInfo: (<GridSetSelectedCellsAction>action).SelectedCellInfo,
+      });
+    case GRID_SET_SELECTED_ROWS:
+      return Object.assign({}, state, {
+        SelectedRowInfo: (<GridSetSelectedRowsAction>action).SelectedRowInfo,
       });
     case GRID_SET_CELLS_SUMMARY:
       return Object.assign({}, state, {

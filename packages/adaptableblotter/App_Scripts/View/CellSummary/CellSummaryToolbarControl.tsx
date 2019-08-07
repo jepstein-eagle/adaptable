@@ -10,7 +10,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
-import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import {
   AccessLevel,
   CellSummaryOperation,
@@ -19,18 +19,17 @@ import {
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
+import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import DropdownButton from '../../components/DropdownButton';
-import { Flex, Text } from 'rebass';
-import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface CellSummaryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {
-  SelectedCellInfo: ISelectedCellInfo;
+  SelectedCellInfo: SelectedCellInfo;
   CellSummaryOperation: CellSummaryOperation | CellSummaryOptionalOperation;
   OptionalSummaryOperations: string[];
   onCellSummaryOperationChange: (

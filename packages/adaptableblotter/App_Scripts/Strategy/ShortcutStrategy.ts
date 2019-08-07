@@ -18,7 +18,7 @@ import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {

@@ -121,6 +121,7 @@ export const SYSTEM_THEMES: Array<AdaptableBlotterTheme> = [
 // put in another file?
 export const BLOTTER_READY_EVENT: string = 'BlotterReady';
 export const CELLS_SELECTED_EVENT: string = 'CellsSelected';
+export const ROWS_SELECTED_EVENT: string = 'RowsSelected';
 export const SEARCH_APPLIED_EVENT: string = 'SearchApplied';
 export const GRID_REFRESHED_EVENT: string = 'GridRefreshed';
 export const GRID_RELOADED_EVENT: string = 'GridReloaded';

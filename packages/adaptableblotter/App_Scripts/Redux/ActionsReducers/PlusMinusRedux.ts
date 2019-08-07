@@ -2,7 +2,7 @@ import { PlusMinusState, PlusMinusRule } from '../../PredefinedConfig/RunTimeSta
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { GridCell } from '../../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 
 export const PLUS_MINUS_APPLY = 'PLUS_MINUS_APPLY';
 export const PLUS_MINUS_RULE_ADD = 'PLUS_MINUS_RULE_ADD';

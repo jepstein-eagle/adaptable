@@ -3,9 +3,9 @@ import { IGridApi } from './Interface/IGridApi';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { GridState } from '../PredefinedConfig/InternalState/GridState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {
@@ -20,7 +20,7 @@ export class GridApi extends ApiBase implements IGridApi {
     return this.getGridState().Columns;
   }
 
-  public getSelectedCellInfo(): ISelectedCellInfo {
+  public getSelectedCellInfo(): SelectedCellInfo {
     return this.getGridState().SelectedCellInfo;
   }
 

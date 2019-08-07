@@ -59,7 +59,7 @@ import { FreeTextColumn } from '../PredefinedConfig/RunTimeState/FreeTextColumnS
 import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
-import { ICellSummmary } from './Interface/SelectedCell/ICellSummmary';
+import { ICellSummmary } from './Interface/Selection/ICellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 

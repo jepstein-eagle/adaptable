@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
+import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { CellSummaryDetails } from './CellSummaryDetails';
 
 export interface CellSummaryPopoverProps extends React.ClassAttributes<CellSummaryPopover> {

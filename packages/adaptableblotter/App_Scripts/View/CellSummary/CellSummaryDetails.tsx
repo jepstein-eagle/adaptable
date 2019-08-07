@@ -3,7 +3,7 @@ import { IColItem } from '../UIInterfaces';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
+import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 
 import {
   CellSummaryOperation,

@@ -1,7 +1,7 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { ISelectedCellInfo } from '../Interface/SelectedCell/ISelectedCellInfo';
+import { SelectedCellInfo } from '../Interface/Selection/SelectedCellInfo';
 import { IColumn } from '../Interface/IColumn';
 import {
   ReportColumnScope,
@@ -13,7 +13,7 @@ import { createUuid } from '../../PredefinedConfig/Uuid';
 import ColumnHelper from './ColumnHelper';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
-import { GridCell } from '../Interface/SelectedCell/GridCell';
+import { GridCell } from '../Interface/Selection/GridCell';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -80,7 +80,7 @@ export function ConvertReportToArray(
       ReportColumns = gridColumns.filter(c => c.Visible);
       break;
     case ReportColumnScope.SelectedColumns:
-      let selectedCellInfo: ISelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
+      let selectedCellInfo: SelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
 
       if (ArrayExtensions.IsNullOrEmpty(selectedCellInfo.Columns)) {
         // some way of saying we cannot export anything
@@ -142,7 +142,7 @@ export function ConvertReportToArray(
       break;
 
     case ReportRowScope.SelectedRows:
-      const selectedCellInfo: ISelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
+      const selectedCellInfo: SelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
 
       const { Columns, GridCells } = selectedCellInfo;
       const colCount = Columns.length;

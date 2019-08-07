@@ -15,10 +15,10 @@ import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -49,7 +49,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
   }
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-    let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+    let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
     if (selectedCellInfo == null || ArrayExtensions.IsNullOrEmpty(selectedCellInfo.Columns)) {
       return {
         Alert: {
@@ -101,7 +101,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     smartEditValue: number,
     smartEditOperation: MathOperation
   ): IPreviewInfo {
-    let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+    let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
     let previewResults: IPreviewResult[] = [];
     let columnId: string = '';
     if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {

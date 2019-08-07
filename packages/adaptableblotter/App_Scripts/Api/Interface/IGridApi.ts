@@ -1,8 +1,8 @@
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
-import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
-import { GridCell } from '../../Utilities/Interface/SelectedCell/GridCell';
+import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 
 export interface IGridApi {
   getGridState(): GridState;
@@ -20,7 +20,7 @@ export interface IGridApi {
 
   getColumnSorts(): ColumnSort[];
 
-  getSelectedCellInfo(): ISelectedCellInfo;
+  getSelectedCellInfo(): SelectedCellInfo;
 
   /**
    * Updates a cell in the Adaptable Blotter

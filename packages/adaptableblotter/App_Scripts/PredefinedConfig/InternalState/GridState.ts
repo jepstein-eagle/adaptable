@@ -1,12 +1,14 @@
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
+import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
+import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { InternalState } from './InternalState';
 import { ColumnSort } from '../RunTimeState/LayoutState';
+import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 export interface GridState extends InternalState {
   Columns: IColumn[];
   ColumnSorts: ColumnSort[];
-  SelectedCellInfo: ISelectedCellInfo;
+  SelectedCellInfo: SelectedCellInfo;
+  SelectedRowInfo: SelectedRowInfo;
   CellSummary: ICellSummmary;
   IsQuickFilterActive: boolean;
 }
