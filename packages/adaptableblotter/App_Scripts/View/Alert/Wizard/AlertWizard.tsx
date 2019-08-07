@@ -8,6 +8,7 @@ import { AlertSelectQueryWizard } from './AlertSelectQueryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { AlertTypeWizard } from './AlertTypeWizard';
+import { AlertScopeWizard } from './AlertScopeWizard';
 
 export interface AlertWizardProps
   extends AdaptableBlotterObjectExpressionAdaptableWizardProps<AlertWizard> {}
@@ -38,13 +39,18 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
               Element: <AlertTypeWizard />,
             },
             {
-              StepName: 'Query Builder',
+              StepName: 'Scope',
               Index: 3,
-              Element: <AlertSelectQueryWizard />,
+              Element: <AlertScopeWizard />,
             },
             {
               StepName: 'Query Builder',
               Index: 4,
+              Element: <AlertSelectQueryWizard />,
+            },
+            {
+              StepName: 'Query Builder',
+              Index: 5,
               Element: (
                 <AlertExpressionWizard
                   Columns={this.props.Columns}

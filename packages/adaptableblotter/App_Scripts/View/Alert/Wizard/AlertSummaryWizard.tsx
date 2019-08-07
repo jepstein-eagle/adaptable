@@ -24,24 +24,26 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
   }
 
   render(): any {
+    let alertDefinition: AlertDefinition = this.props.Data as AlertDefinition;
     let keyValuePairs: IKeyValuePair[] = [
       {
         Key: 'Column',
         Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
+          alertDefinition.ColumnId,
           this.props.Columns
         ),
       },
       {
         Key: 'Rule',
-        Value: AlertHelper.createAlertDescription(this.props.Data, this.props.Columns),
+        Value: AlertHelper.createAlertDescription(alertDefinition, this.props.Columns),
       },
-      { Key: 'Alert Type', Value: this.props.Data.MessageType },
+      { Key: 'Alert Type', Value: alertDefinition.MessageType },
+      { Key: 'Show as Popup', Value: alertDefinition.ShowAsPopup ? 'True' : 'False' },
       {
         Key: 'Query',
-        Value: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression)
+        Value: ExpressionHelper.IsNotNullOrEmptyExpression(alertDefinition.Expression)
           ? ExpressionHelper.ConvertExpressionToString(
-              this.props.Data.Expression,
+              alertDefinition.Expression,
               this.props.Columns
             )
           : 'None',
@@ -76,6 +78,6 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     return 1;
   }
   public GetIndexStepDecrement() {
-    return ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.Expression) ? 2 : 1;
+    return ExpressionHelper.IsNullOrEmptyExpression(alertDefinition.Expression) ? 2 : 1;
   }
 }

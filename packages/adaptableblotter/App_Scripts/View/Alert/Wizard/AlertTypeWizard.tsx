@@ -4,20 +4,15 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptablePopover } from '../../AdaptablePopover';
-
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
-import Panel from '../../../components/Panel';
 import { Box } from 'rebass';
 import Radio from '../../../components/Radio';
-import Checkbox from '../../../components/CheckBox';
 import WizardPanel from '../../../components/WizardPanel';
 
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
 export interface AlertTypeWizardState {
   MessageType: MessageType;
-  ShowAsPopup: boolean;
 }
 
 export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, AlertTypeWizardState>
@@ -25,8 +20,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
   constructor(props: AlertTypeWizardProps) {
     super(props);
     this.state = {
-      MessageType: this.props.Data.MessageType as MessageType,
-      ShowAsPopup: this.props.Data.ShowAsPopup,
+      MessageType: this.props.Data!.MessageType as MessageType,
     };
   }
 
@@ -74,14 +68,6 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
               Error
             </Radio>
           </Box>
-
-          <Checkbox
-            marginLeft={2}
-            checked={this.state.ShowAsPopup == true}
-            onChange={this.onShowAsPopupChanged}
-          >
-            Show as Popup
-          </Checkbox>
         </WizardPanel>
       </>
     );
@@ -108,12 +94,6 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     }
   }
 
-  private onShowAsPopupChanged = (checked: boolean) => {
-    this.setState({ ShowAsPopup: checked } as AlertTypeWizardState, () =>
-      this.props.UpdateGoBackState()
-    );
-  };
-
   public canNext(): boolean {
     return this.state.MessageType != null;
   }
@@ -122,8 +102,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     return true;
   }
   public Next(): void {
-    this.props.Data.MessageType = this.state.MessageType;
-    this.props.Data.ShowAsPopup = this.state.ShowAsPopup;
+    this.props.Data!.MessageType = this.state.MessageType;
   }
 
   public Back(): void {
