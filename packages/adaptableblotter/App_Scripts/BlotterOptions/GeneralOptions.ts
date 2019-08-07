@@ -62,4 +62,9 @@ export interface GeneralOptions {
    * **Default Value: false**
    */
   showAdaptableBlotterToolPanel?: boolean;
+
+  /**
+   *
+   */
+  checkIfLatestVersionOnStartup?: boolean;
 }

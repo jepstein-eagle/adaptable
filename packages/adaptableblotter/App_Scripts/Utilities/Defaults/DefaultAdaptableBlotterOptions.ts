@@ -88,6 +88,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     preventDuplicatePrimaryKeyValues: true,
     serverSearchOption: 'None',
     showAdaptableBlotterToolPanel: false,
+    checkIfLatestVersionOnStartup: true,
   },
   advancedOptions: {
     userFunctions: {
