@@ -44,6 +44,7 @@ export class TickingDataHelper {
     }, 5000);
   }
 
+  // This DOES update the AB as agGrid fires an event
   startTickingDataagGridSetDataValue(gridOptions: GridOptions) {
     setInterval(() => {
       let tradeId = this.generateRandomInt(0, 20);
@@ -84,6 +85,7 @@ export class TickingDataHelper {
     }, 2000);
   }
 
+  // This DOES NOT update the AB as agGrid fires an event
   startTickingDataagGridThroughRowData(gridOptions: GridOptions, rowData: any) {
     if (
       gridOptions != null &&

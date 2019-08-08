@@ -27,6 +27,9 @@ function InitAdaptableBlotter() {
     'entitlements demo'
   );
 
+  adaptableBlotterOptions.filterOptions = {
+    // useAdaptableBlotterFilterForm: false,
+  };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);

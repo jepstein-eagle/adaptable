@@ -272,6 +272,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             saveButton={saveButton}
             closeButton={closeButton}
             showCloseButton={this.props.ShowCloseButton}
+            autoApplyFilter={
+              this.props.Blotter.blotterOptions.filterOptions!.autoApplyFilter ? true : false
+            }
           >
             {this.state.SelectedTab == ColumnMenuTab.Menu ? (
               <ListBoxMenu
