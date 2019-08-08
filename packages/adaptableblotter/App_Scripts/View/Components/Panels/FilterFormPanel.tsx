@@ -21,9 +21,6 @@ export interface FilterFormPanelProps extends PanelProps {
   showCloseButton: boolean;
 }
 
-//We cannot destructure this.props using the react way in typescript which is a real pain as you
-//need to transfer props individually as a consequence
-//let { buttonContent, ...other } = this.props
 export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
   render() {
     let header = (
