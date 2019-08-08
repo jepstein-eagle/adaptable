@@ -112,7 +112,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
             {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (
               <AdaptablePopover
                 bodyText={[cellSummaryPopover]}
-                tooltipText={'Show Cell Summary'}
+                // tooltipText={'Show Cell Summary'}
                 useButton={true}
                 showEvent={'focus'}
                 hideEvent="blur"
