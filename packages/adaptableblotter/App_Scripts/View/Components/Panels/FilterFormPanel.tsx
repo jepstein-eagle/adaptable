@@ -16,11 +16,13 @@ export interface FilterFormPanelProps extends PanelProps {
 
   ColumnMenuTab: ColumnMenuTab;
   ColumnMenuTabChanged: (e: any) => void;
+  onFilterApplied: () => void;
 
   IsAlwaysFilter: boolean;
 
   showCloseButton: boolean;
 
+  applyFilterButtonDisabled: boolean;
   autoApplyFilter: boolean;
 }
 
@@ -91,6 +93,7 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
             <SimpleButton
               variant="raised"
               tone="accent"
+              disabled={this.props.applyFilterButtonDisabled}
               onClick={() => this.onApplyFilterClicked()}
             >
               Apply Filter
@@ -104,6 +107,7 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
   onApplyFilterClicked(): void {
     // todo - need something here
     console.log('ive been blicked');
+    this.props.onFilterApplied();
   }
 
   onSelectMenu(): any {

@@ -42,7 +42,6 @@ import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/Adaptable
 import HelpBlock from '../../../components/HelpBlock';
 import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
-import { AlertToolbarControl } from '../../Alert/AlertToolbarControl';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: IColumn;
@@ -59,6 +58,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   onClearColumnFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
   onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
+  onSetColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterSetAction;
   onHideFilterForm: () => GridRedux.FilterFormHideAction;
   onMenuItemClick: (action: Redux.Action) => Redux.Action;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
@@ -69,81 +69,101 @@ export interface FilterFormState {
   ShowWaitingMessage: boolean;
   SelectedTab: ColumnMenuTab;
   DistinctCriteriaPairValue: DistinctCriteriaPairValue;
+  editedColumnFilter: ColumnFilter | undefined;
 }
 
 class FilterFormComponent extends React.Component<FilterFormProps, FilterFormState> {
   constructor(props: FilterFormProps) {
     super(props);
 
+    let existingColumnFilter = this.props.ColumnFilters.find(
+      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
+    );
+    if (!existingColumnFilter) {
+      existingColumnFilter = ObjectFactory.CreateColumnFilter(
+        this.props.CurrentColumn.ColumnId,
+        ExpressionHelper.CreateEmptyExpression()
+      );
+    }
+
     this.state = {
       ColumnValuePairs: [],
       ShowWaitingMessage: false,
       SelectedTab: ColumnMenuTab.Filter,
       DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
+      editedColumnFilter: existingColumnFilter,
     };
   }
   componentWillMount() {
     if (this.props.CurrentColumn.DataType != DataType.Boolean) {
       let columnValuePairs: IRawValueDisplayValuePair[] = [];
+
+      let existingColumnFilter = this.props.ColumnFilters.find(
+        cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
+      );
+      if (!existingColumnFilter) {
+        existingColumnFilter = ObjectFactory.CreateColumnFilter(
+          this.props.CurrentColumn.ColumnId,
+          ExpressionHelper.CreateEmptyExpression()
+        );
+      }
+
       if (this.props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
         this.setState({ ShowWaitingMessage: true });
         this.props.Blotter.blotterOptions.queryOptions
           .getColumnValues(this.props.CurrentColumn.ColumnId)
-          .then(
-            result => {
-              if (result == null) {
-                // if nothing returned then default to normal
-                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
-                  this.props.CurrentColumn.ColumnId,
-                  DistinctCriteriaPairValue.DisplayValue,
-                  false
-                );
-                columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-                  SortOrder.Ascending,
-                  columnValuePairs,
-                  DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
-                );
-                this.setState({
-                  ColumnValuePairs: columnValuePairs,
-                  ShowWaitingMessage: false,
-                  DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
-                });
-              } else {
-                // get the distinct items and make sure within max items that can be displayed
-                let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
-                  0,
-                  this.props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
-                );
-                distinctItems.forEach(distinctItem => {
-                  let displayValue =
-                    result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue
-                      ? this.props.Blotter.getDisplayValueFromRawValue(
-                          this.props.CurrentColumn.ColumnId,
-                          distinctItem
-                        )
-                      : distinctItem;
-                  columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
-                });
-                let distinctCriteriaPairValue: DistinctCriteriaPairValue =
-                  result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.RawValue
-                    ? DistinctCriteriaPairValue.RawValue
-                    : DistinctCriteriaPairValue.DisplayValue;
-                this.setState({
-                  ColumnValuePairs: columnValuePairs,
-                  ShowWaitingMessage: false,
-                  DistinctCriteriaPairValue: distinctCriteriaPairValue,
-                });
-                // set the UIPermittedValues for this column to what has been sent
-                this.props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
-                  this.props.CurrentColumn.ColumnId,
-                  distinctItems
-                );
-              }
-            },
-            function() {
-              //    this.setState({ name: error });
+          .then(result => {
+            if (result == null) {
+              // if nothing returned then default to normal
+              columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+                this.props.CurrentColumn.ColumnId,
+                DistinctCriteriaPairValue.DisplayValue,
+                false
+              );
+              columnValuePairs = ArrayExtensions.sortArrayWithProperty(
+                SortOrder.Ascending,
+                columnValuePairs,
+                DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
+              );
+              this.setState({
+                ColumnValuePairs: columnValuePairs,
+                ShowWaitingMessage: false,
+                DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
+                editedColumnFilter: existingColumnFilter,
+              });
+            } else {
+              // get the distinct items and make sure within max items that can be displayed
+              let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
+                0,
+                this.props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
+              );
+              distinctItems.forEach(distinctItem => {
+                let displayValue =
+                  result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue
+                    ? this.props.Blotter.getDisplayValueFromRawValue(
+                        this.props.CurrentColumn.ColumnId,
+                        distinctItem
+                      )
+                    : distinctItem;
+                columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
+              });
+              let distinctCriteriaPairValue: DistinctCriteriaPairValue =
+                result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.RawValue
+                  ? DistinctCriteriaPairValue.RawValue
+                  : DistinctCriteriaPairValue.DisplayValue;
+              this.setState({
+                ColumnValuePairs: columnValuePairs,
+                ShowWaitingMessage: false,
+                DistinctCriteriaPairValue: distinctCriteriaPairValue,
+                editedColumnFilter: existingColumnFilter,
+              });
+              // set the UIPermittedValues for this column to what has been sent
+              this.props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
+                this.props.CurrentColumn.ColumnId,
+                distinctItems
+              );
             }
-          );
+          });
       } else {
         columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
           this.props.CurrentColumn.ColumnId,
@@ -159,6 +179,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           ColumnValuePairs: columnValuePairs,
           ShowWaitingMessage: false,
           DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
+          editedColumnFilter: existingColumnFilter,
         });
       }
     }
@@ -191,36 +212,35 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       return { RawValue: uf, DisplayValue: uf };
     });
 
-    let existingColumnFilter: ColumnFilter =
-      this.props.CurrentColumn.DataType != DataType.Boolean &&
-      this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
-
     // populate any missing arrays
-    if (existingColumnFilter && existingColumnFilter.Filter) {
-      if (ArrayExtensions.IsNull(existingColumnFilter.Filter.ColumnValueExpressions)) {
-        existingColumnFilter.Filter.ColumnValueExpressions = [];
+    if (this.state.editedColumnFilter && this.state.editedColumnFilter.Filter) {
+      if (ArrayExtensions.IsNull(this.state.editedColumnFilter.Filter.ColumnValueExpressions)) {
+        this.state.editedColumnFilter.Filter.ColumnValueExpressions = [];
       }
-      if (ArrayExtensions.IsNull(existingColumnFilter.Filter.FilterExpressions)) {
-        existingColumnFilter.Filter.FilterExpressions = [];
+      if (ArrayExtensions.IsNull(this.state.editedColumnFilter.Filter.FilterExpressions)) {
+        this.state.editedColumnFilter.Filter.FilterExpressions = [];
       }
-      if (ArrayExtensions.IsNull(existingColumnFilter.Filter.RangeExpressions)) {
-        existingColumnFilter.Filter.RangeExpressions = [];
+      if (ArrayExtensions.IsNull(this.state.editedColumnFilter.Filter.RangeExpressions)) {
+        this.state.editedColumnFilter.Filter.RangeExpressions = [];
       }
     }
 
     let uiSelectedColumnValues: string[] =
-      existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
         : [];
 
     let uiSelectedUserFilters =
-      existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0
-        ? existingColumnFilter.Filter.FilterExpressions[0].Filters
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.FilterExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.FilterExpressions[0].Filters
         : [];
 
     let uiSelectedRangeExpression: QueryRange =
-      existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0
-        ? existingColumnFilter.Filter.RangeExpressions[0].Ranges[0]
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.RangeExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.RangeExpressions[0].Ranges[0]
         : ExpressionHelper.CreateEmptyRange();
 
     let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(
@@ -275,6 +295,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             autoApplyFilter={
               this.props.Blotter.blotterOptions.filterOptions!.autoApplyFilter ? true : false
             }
+            applyFilterButtonDisabled={ExpressionHelper.IsEmptyExpression(
+              this.state.editedColumnFilter!.Filter
+            )}
+            onFilterApplied={() => this.onFilterApplied()}
           >
             {this.state.SelectedTab == ColumnMenuTab.Menu ? (
               <ListBoxMenu
@@ -343,64 +367,60 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       }
     });
 
-    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-
     let userFilters =
-      existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0
-        ? existingColumnFilter.Filter.FilterExpressions[0].Filters
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.FilterExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.FilterExpressions[0].Filters
         : [];
 
     let rangeExpressions =
-      existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0
-        ? existingColumnFilter.Filter.RangeExpressions[0].Ranges
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.RangeExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.RangeExpressions[0].Ranges
         : [];
 
     this.persistFilter(displayValues, rawValues, userFilters, rangeExpressions);
   }
 
   onClickUserFilter(userFilters: string[]) {
-    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-
     let columnDisplayValues =
-      existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
         : [];
 
     let columnRawValues =
-      existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues
         : [];
 
     let rangeExpressions =
-      existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0
-        ? existingColumnFilter.Filter.RangeExpressions[0].Ranges
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.RangeExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.RangeExpressions[0].Ranges
         : [];
 
     this.persistFilter(columnDisplayValues, columnRawValues, userFilters, rangeExpressions);
   }
 
   onSetCustomExpression(rangeExpression: QueryRange) {
-    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-
     let userFilters =
-      existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0
-        ? existingColumnFilter.Filter.FilterExpressions[0].Filters
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.FilterExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.FilterExpressions[0].Filters
         : [];
 
     let columnDisplayValues =
-      existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
         : [];
 
     let columnRawValues =
-      existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues
+      this.state.editedColumnFilter &&
+      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
+        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues
         : [];
 
     if (rangeExpression == null) {
@@ -424,19 +444,16 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       userFilters,
       rangeExpressions
     );
-    let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-    let alreadyExists: boolean = columnFilter != null;
 
-    if (alreadyExists) {
-      columnFilter.Filter = expression;
-    } else {
-      columnFilter = ObjectFactory.CreateColumnFilter(
-        this.props.CurrentColumn.ColumnId,
-        expression
-      );
-    }
+    let columnFilter: ColumnFilter = this.state.editedColumnFilter;
+    columnFilter.Filter = expression;
+
+    this.setState({
+      editedColumnFilter: columnFilter,
+    });
+
+    console.log('in persist filter');
+    console.log(columnFilter);
     //delete if empty
     if (
       columnDisplayValues.length == 0 &&
@@ -446,29 +463,45 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     ) {
       this.props.onClearColumnFilter(columnFilter);
     } else {
-      if (alreadyExists) {
-        this.props.onEditColumnFilter(columnFilter);
+      if (this.props.Blotter.blotterOptions!.filterOptions!.autoApplyFilter) {
+        this.props.onSetColumnFilter(columnFilter);
+        //  if (alreadyExists) {
+        //    this.props.onEditColumnFilter(columnFilter);
+        //   } else {
+        //     this.props.onAddColumnFilter(columnFilter);
+        //   }
       } else {
-        this.props.onAddColumnFilter(columnFilter);
+        //  this.setState({
+        //    editedColumnFilter: columnFilter,
+        //  });
       }
     }
   }
 
   onSaveFilter() {
-    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-
     let prompt: IUIPrompt = {
       Header: 'Enter name for User Filter',
       Msg: '',
-      ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, ''),
+      ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(
+        this.state.editedColumnFilter,
+        ''
+      ),
     };
     this.props.onShowPrompt(prompt);
   }
 
   onClearFilter() {
     this.persistFilter([], [], [], []);
+  }
+
+  onFilterApplied() {
+    console.log('im going to apply filters');
+    console.log(this.state.editedColumnFilter);
+
+    // do some existing or real
+    this.props.onAddColumnFilter(this.state.editedColumnFilter);
+
+    this.props.onHideFilterForm();
   }
 
   onCloseForm() {
@@ -505,6 +538,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
     onEditColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
+    onSetColumnFilter: (columnFilter: ColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterSet(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onHideFilterForm: () => dispatch(GridRedux.FilterFormHide()),
   };

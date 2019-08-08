@@ -8,6 +8,7 @@ import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const COLUMN_FILTER_ADD = 'COLUMN_FILTER_ADD';
 export const COLUMN_FILTER_EDIT = 'COLUMN_FILTER_EDIT';
+export const COLUMN_FILTER_SET = 'COLUMN_FILTER_SET';
 export const COLUMN_FILTER_CLEAR_ALL = 'COLUMN_FILTER_CLEAR_ALL';
 export const COLUMN_FILTER_CLEAR = 'COLUMN_FILTER_CLEAR';
 
@@ -18,6 +19,7 @@ export interface ColumnFilterAction extends Redux.Action {
 export interface ColumnFilterAddAction extends ColumnFilterAction {}
 
 export interface ColumnFilterEditAction extends ColumnFilterAction {}
+export interface ColumnFilterSetAction extends ColumnFilterAction {}
 
 export interface ColumnFilterClearAllAction extends Redux.Action {}
 
@@ -32,6 +34,10 @@ export const ColumnFilterAdd = (columnFilter: ColumnFilter): ColumnFilterAddActi
 
 export const ColumnFilterEdit = (columnFilter: ColumnFilter): ColumnFilterEditAction => ({
   type: COLUMN_FILTER_EDIT,
+  columnFilter,
+});
+export const ColumnFilterSet = (columnFilter: ColumnFilter): ColumnFilterSetAction => ({
+  type: COLUMN_FILTER_SET,
   columnFilter,
 });
 
@@ -55,6 +61,26 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
   let columnFilters: ColumnFilter[];
 
   switch (action.type) {
+    case COLUMN_FILTER_SET: {
+      const actionColumnFilter: ColumnFilter = (action as ColumnFilterAction).columnFilter;
+      if (!actionColumnFilter.Uuid) {
+        actionColumnFilter.Uuid = createUuid();
+      }
+      let exists = state.ColumnFilters.find(cf => cf.Uuid == actionColumnFilter.Uuid);
+      if (exists) {
+        return {
+          ...state,
+          ColumnFilters: state.ColumnFilters.map(abObject =>
+            abObject.Uuid === actionColumnFilter.Uuid ? actionColumnFilter : abObject
+          ),
+        };
+      } else {
+        columnFilters = [].concat(state.ColumnFilters);
+        columnFilters.push(actionColumnFilter);
+        return { ...state, ColumnFilters: columnFilters };
+      }
+    }
+
     case COLUMN_FILTER_ADD: {
       const actionColumnFilter: ColumnFilter = (action as ColumnFilterAction).columnFilter;
       if (!actionColumnFilter.Uuid) {
@@ -67,9 +93,7 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
 
     case COLUMN_FILTER_EDIT: {
       const actionColumnFilter: ColumnFilter = (action as ColumnFilterAction).columnFilter;
-      const filtersToSave = state.ColumnFilters.map(abObject =>
-        abObject.Uuid === actionColumnFilter.Uuid ? actionColumnFilter : abObject
-      );
+
       return {
         ...state,
         ColumnFilters: state.ColumnFilters.map(abObject =>

@@ -38,8 +38,7 @@ function InitAdaptableBlotter() {
     displayOnStartUp: true,
   };
   adaptableBlotterOptions.filterOptions = {
-    // useAdaptableBlotterFilterForm: false,
-    // useAdaptableBlotterQuickFilter: false,
+    autoApplyFilter: false,
   };
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);

@@ -16,6 +16,7 @@ html {
 
 .doublebutton {
   background-color:lightgreen;
+  padding: 20px;
   border: none;
   color: black;
   font-style: italic
