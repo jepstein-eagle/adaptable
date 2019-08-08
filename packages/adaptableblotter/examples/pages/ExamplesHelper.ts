@@ -994,7 +994,7 @@ export class ExamplesHelper {
       sortable: true,
       type: 'abColDefString',
       // resizable: true,
-      tooltipComponent: 'percentBarTooltip',
+      //  tooltipComponent: 'percentBarTooltip',
     });
 
     schema.push({

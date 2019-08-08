@@ -4,6 +4,7 @@ import {
   CellRangeParams,
   PopupEditorWrapper,
   RefreshCellsParams,
+  ITooltipParams,
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
@@ -1512,6 +1513,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ),
     };
 
+    // if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
+    newColDef.tooltipField = 'changeOnYear';
+    // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
+    //  coldDef.tooltipComponent = PercentBarTooltip;
+    // } else {
+    //   coldDef.tooltipField = '';
+    // }
+
     colDefs.push(newColDef);
     this.agGridHelper.safeSetColDefs(colDefs);
 
@@ -2225,12 +2234,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
 
       if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
-        coldDef.tooltipField = 'changeOnYear';
+        coldDef.tooltipField = coldDef.field;
         // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
+        //   console.log('getting tooltip');
         //  coldDef.tooltipComponent = PercentBarTooltip;
+        // coldDef.tooltipValueGetter = (params: ITooltipParams) => {
+        //   return { value: params.value * 10 };
+        // };
       } else {
         coldDef.tooltipField = '';
       }
+
+      console.log('after');
+      console.log(coldDef);
     }
   }
 

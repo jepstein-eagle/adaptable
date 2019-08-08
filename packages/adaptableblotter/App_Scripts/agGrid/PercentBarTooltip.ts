@@ -1,30 +1,25 @@
 import { ITooltipComp, ITooltipParams } from 'ag-grid-community';
-import AdaptableBlotter from '../../agGrid';
 
 export class PercentBarTooltip implements ITooltipComp {
   private eGui: any;
 
   // gets called once before the renderer is used
   init(params: ITooltipParams): void {
-    var eGui = document.createElement('div');
+    console.log('in tooltip');
+    console.log(params);
+    console.log(params.value);
+    //  var eGui = document.createElement('div');
+    this.eGui = document.createElement('div');
+    // this.eGui.classList.add('custom-tooltip');
     var color = 'white';
-    var data = params.api.getDisplayedRowAtIndex(params.rowIndex).data;
-    //  console.log(data.changeOnYear);
+    // var data = params.api.getDisplayedRowAtIndex(params.rowIndex).data;
 
     // eGui.classList.add('custom-tooltip');
     // eGui.style['background-color'] = color;
-    eGui.style.backgroundColor = 'var(--ab-color-defaultbackground)';
-    eGui.style.position = 'absolute';
-    eGui.style.width = '50px';
-    eGui.style.height = '20px';
-    eGui.style.border = '1px solid cornflowerblue';
-    eGui.style.pointerEvents = 'none';
-    eGui.style.opacity = '1';
-    eGui.style.transition = 'opacity 1s';
+    this.eGui.innerHTML = params.value;
+    //   eGui.innerHTML = 'hello';
 
-    eGui.innerHTML = `<p><span class"name">${data.changeOnYear}</span></p>`;
-
-    this.eGui = eGui;
+    // this.eGui = eGui;
   }
 
   // gets called once when grid ready to insert the element

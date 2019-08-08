@@ -31,8 +31,6 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
       let allValues: any[] = [];
       let numericColumns: string[] = [];
 
-      console.log(selectedCellInfo.Columns);
-      console.log(selectedCellInfo);
       selectedCellInfo.Columns.map(c => {
         if (c && c.DataType == DataType.Number) {
           numericColumns.push(c.ColumnId);
