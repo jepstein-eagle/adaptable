@@ -15,7 +15,7 @@ export interface ExportState extends RunTimeState {
 export interface Report extends AdaptableBlotterObject {
   Name: string;
   ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedColumns' | 'BespokeColumns';
-  ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedRows' | 'ExpressionRows';
+  ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedCells' | 'SelectedRows' | 'ExpressionRows';
   ColumnIds?: string[];
   Expression?: Expression;
   AutoExport?: AutoExport;
