@@ -1,10 +1,8 @@
 import * as React from 'react';
-
 import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup from '../../../components/List/ListGroup';
 import { Flex } from 'rebass';
