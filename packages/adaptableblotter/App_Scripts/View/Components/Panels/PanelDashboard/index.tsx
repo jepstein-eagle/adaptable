@@ -63,7 +63,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
           <Icon
             style={{
               alignSelf: 'center',
-
+              marginLeft: 'var(--ab-space-2)',
               color: 'var(--ab-cmp-dashboardpanel_header__fill)',
             }}
             name={glyphicon}
@@ -76,7 +76,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
         {showConfigureButton ? (
           <ButtonConfigure
             iconSize={16}
-            marginLeft={3}
+            marginLeft={2}
             tooltip={'Configure ' + headerText}
             onClick={() => onConfigure()}
           />

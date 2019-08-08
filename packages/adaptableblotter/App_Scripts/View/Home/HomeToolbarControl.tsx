@@ -96,19 +96,17 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           this.onSetColumnVisibility(col.ColumnId);
         },
         label: (
-          <div className="ab_home_toolbar_column_list">
-            <Checkbox
-              as="div"
-              className="ab-dd-checkbox"
-              my={0}
-              value={col.ColumnId}
-              key={col.ColumnId}
-              checked={col.Visible}
-              onMouseDown={preventDefault}
-            >
-              {col.FriendlyName}
-            </Checkbox>
-          </div>
+          <Checkbox
+            as="div"
+            className="ab-dd-checkbox"
+            my={0}
+            value={col.ColumnId}
+            key={col.ColumnId}
+            checked={col.Visible}
+            onMouseDown={preventDefault}
+          >
+            {col.FriendlyName}
+          </Checkbox>
         ),
       });
     });
@@ -140,19 +138,17 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             this.onSetToolbarVisibility(toolbar, !isVisible);
           },
           label: (
-            <div className="ab_home_toolbar_column_list" key={index}>
-              <Checkbox
-                className="ab-dd-checkbox"
-                my={0}
-                as="div"
-                value={toolbar}
-                key={toolbar}
-                checked={isVisible}
-                onMouseDown={preventDefault}
-              >
-                {functionName}
-              </Checkbox>
-            </div>
+            <Checkbox
+              className="ab-dd-checkbox"
+              my={0}
+              as="div"
+              value={toolbar}
+              key={toolbar}
+              checked={isVisible}
+              onMouseDown={preventDefault}
+            >
+              {functionName}
+            </Checkbox>
           ),
         });
       }
@@ -202,6 +198,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         variant="text"
         collapseOnItemClick={false}
         items={colItems}
+        columns={['label']}
         key={'dropdown-cols'}
         id={'dropdown-cols'}
         tooltip="Select Columns"

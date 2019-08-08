@@ -109,6 +109,7 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
         });
 
         setTargetRect(targetRect);
+
         setSizeInfo(sizeInfo);
       }).commit();
     };

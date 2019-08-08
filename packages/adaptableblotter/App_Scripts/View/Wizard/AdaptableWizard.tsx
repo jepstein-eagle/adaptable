@@ -102,6 +102,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             border="none"
             borderRadius="none"
             variant="primary"
+            style={{ flex: 'none' }}
           >
             <WizardLegend
               StepNames={wizardStepNames}
@@ -111,10 +112,10 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               onStepButtonClicked={s => this.onStepButtonClicked(s)}
             />
           </Panel>
-          <Flex style={{ flex: 1 }} flexDirection="column">
+          <Flex style={{ flex: 1, overflow: 'auto' }} flexDirection="column">
             {this.state.ActiveState}
           </Flex>
-          <Flex flexDirection="row" padding={2} backgroundColor="primary">
+          <Flex flexDirection="row" padding={2} backgroundColor="primary" alignItems="center">
             <SimpleButton
               tone="neutral"
               variant="text"

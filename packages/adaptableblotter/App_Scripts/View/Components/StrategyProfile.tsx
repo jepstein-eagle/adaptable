@@ -14,7 +14,12 @@ export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {
   render(): any {
     return (
       <div>
-        <Icon name={StrategyConstants.getGhyphiconForStrategyId(this.props.StrategyId)} />{' '}
+        <Icon
+          name={StrategyConstants.getGhyphiconForStrategyId(this.props.StrategyId)}
+          style={{
+            fill: 'var(--ab-color-text-on-primary)',
+          }}
+        />{' '}
         {StrategyConstants.getNameForStrategyId(this.props.StrategyId)}
       </div>
     );

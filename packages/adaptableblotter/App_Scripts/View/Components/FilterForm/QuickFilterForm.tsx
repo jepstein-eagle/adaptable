@@ -120,28 +120,25 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   render(): any {
     let controlType: string = this.props.CurrentColumn.DataType == DataType.Date ? 'date' : 'text';
 
-    return (
-      <span>
-        {this.props.CurrentColumn.Filterable &&
-          this.props.CurrentColumn.DataType != DataType.Boolean && (
-            <Input
-              style={{
-                width: this.props.ColumnWidth,
-                padding: 0,
-                marginRight: 0,
-                minHeight: 20,
-                maxHeight: 20,
-                fontSize: 'var(--ab-font-size-1)',
-              }}
-              autoFocus={false}
-              type={controlType}
-              placeholder={this.state.placeholder}
-              value={this.state.quickFilterFormText}
-              onChange={(x: any) => this.OnTextChange((x.target as HTMLInputElement).value)}
-            />
-          )}
-      </span>
-    );
+    return this.props.CurrentColumn.Filterable &&
+      this.props.CurrentColumn.DataType != DataType.Boolean ? (
+      <Input
+        style={{
+          width: this.props.ColumnWidth,
+          padding: 0,
+          margin: 'auto',
+
+          minHeight: 20,
+          maxHeight: 20,
+          fontSize: 'var(--ab-font-size-1)',
+        }}
+        autoFocus={false}
+        type={controlType}
+        placeholder={this.state.placeholder}
+        value={this.state.quickFilterFormText}
+        onChange={(x: any) => this.OnTextChange((x.target as HTMLInputElement).value)}
+      />
+    ) : null;
   }
 
   // debouncedRunQuickSearch = _.debounce((searchText: string) => this.runTextchanged(searchText), 250);

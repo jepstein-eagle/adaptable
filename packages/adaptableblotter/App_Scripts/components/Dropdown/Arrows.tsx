@@ -17,8 +17,8 @@ const Arrows = () => {
         cursor: 'pointer',
       }}
     >
-      <ArrowUp size={24} style={{ position: 'relative', top: 8 }} />
-      <ArrowDown size={24} style={{ position: 'relative', top: -8 }} />
+      <ArrowUp size={24} style={{ position: 'relative', top: 7 }} />
+      <ArrowDown size={24} style={{ position: 'relative', top: -7 }} />
     </div>
   );
 };

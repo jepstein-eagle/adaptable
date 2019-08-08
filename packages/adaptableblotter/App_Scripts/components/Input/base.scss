@@ -16,4 +16,36 @@
     box-shadow: var(--ab-focus__box-shadow);
     outline: var(--ab-focus__outline);
   }
+
+
+  /* WebKit, Edge */
+&::-webkit-input-placeholder {
+  color: var(--ab-cmp-input--placeholder__color);
+  opacity: var(--ab-cmp-input--placeholder__opacity);
+}
+/* Firefox 4-18 */
+&:-moz-placeholder { 
+  color: var(--ab-cmp-input--placeholder__color);
+  opacity: var(--ab-cmp-input--placeholder__opacity);
+}
+/* Firefox 19+ */
+&::-moz-placeholder { 
+  color: var(--ab-cmp-input--placeholder__color);
+  opacity: var(--ab-cmp-input--placeholder__opacity);
+}
+/* IE 10-11 */
+&:-ms-input-placeholder { 
+  color: var(--ab-cmp-input--placeholder__color);
+  opacity: var(--ab-cmp-input--placeholder__opacity);
+}
+/* Edge */
+&::-ms-input-placeholder { 
+  color: var(--ab-cmp-input--placeholder__color);
+  opacity: var(--ab-cmp-input--placeholder__opacity);
+}
+/* MODERN BROWSER */
+&::placeholder { 
+  color: var(--ab-cmp-input--placeholder__color);
+  opacity: var(--ab-cmp-input--placeholder__opacity);
+}
 }
