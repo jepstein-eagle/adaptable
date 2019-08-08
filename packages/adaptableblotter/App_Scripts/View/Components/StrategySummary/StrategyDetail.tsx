@@ -29,15 +29,13 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
     summaryItems.push(<i>{this.props.Item2}</i>);
     summaryItems.push(
       <EntityListActionButtons
+        justifyContent="start"
         ConfirmDeleteAction={this.props.onDelete}
         showEdit={this.props.showEdit}
         editClick={() => this.props.onEdit()}
         shareClick={() => this.props.onShare()}
         showShare={this.props.showShare}
         EntityType={this.props.EntityType}
-        editSize={'xs'}
-        deleteSize={'xs'}
-        shareSize={'xs'}
       />
     );
 

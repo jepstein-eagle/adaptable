@@ -246,15 +246,15 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             Doughnut View
           </Checkbox>
 
-          <Box marginTop={2}>
-            Others Threshold
+          <Flex alignItems="center" flexDirection="row" marginTop={2}>
+            Others Threshold{' '}
             <AdaptablePopover
               headerText={'Pie Chart: Others Threshold'}
               bodyText={[
                 'Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value.',
               ]}
             />
-          </Box>
+          </Flex>
 
           <Input
             marginTop={2}
@@ -275,7 +275,9 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             Others Threshold %
           </Checkbox>
 
-          <Text marginTop={3}>Labels Position: </Text>
+          <Text marginTop={3} marginBottom={2}>
+            Labels Position:{' '}
+          </Text>
           <Dropdown
             placeholder="select"
             showEmptyItem={false}
@@ -285,7 +287,9 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             options={this.getOptionsForLabelsPosition()}
           ></Dropdown>
 
-          <Text marginTop={3}>Labels Content: </Text>
+          <Text marginTop={3} marginBottom={2}>
+            Labels Content:{' '}
+          </Text>
           <Dropdown
             placeholder="select"
             showEmptyItem={false}
@@ -295,7 +299,9 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             options={this.getOptionsForSliceLabelsMapping()}
           ></Dropdown>
 
-          <Text marginTop={3}>Slices Sort By: </Text>
+          <Text marginTop={3} marginBottom={2}>
+            Slices Sort By:{' '}
+          </Text>
           <Dropdown
             placeholder="select"
             showEmptyItem={false}

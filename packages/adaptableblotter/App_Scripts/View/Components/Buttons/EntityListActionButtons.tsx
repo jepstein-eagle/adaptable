@@ -22,6 +22,7 @@ export interface EntityListActionButtonsProps
   overrideTooltipShare?: string;
   ConfirmDeleteAction: Redux.Action;
   EntityType: string;
+  justifyContent?: string;
 
   AccessLevel: AccessLevel;
   editSize: any;
@@ -50,7 +51,12 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
   };
   render() {
     return (
-      <Flex justifyContent="center" margin={0} padding={0} onClick={stopPropagation}>
+      <Flex
+        justifyContent={this.props.justifyContent || 'center'}
+        margin={0}
+        padding={0}
+        onClick={stopPropagation}
+      >
         {this.props.showEdit && (
           <ButtonEdit
             onClick={() => (this.props.editClick ? this.props.editClick() : null)}

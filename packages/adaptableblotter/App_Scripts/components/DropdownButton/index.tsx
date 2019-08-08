@@ -184,6 +184,14 @@ const DropdownButton = (props: DropdownButtonProps) => {
           }
           toggle();
         }}
+        onKeyDown={(e: any) => {
+          if (domProps.onKeyDown) {
+            domProps.onKeyDown(e);
+          }
+          if (expanded && e.key === 'Escape') {
+            toggle();
+          }
+        }}
         onBlur={(e: any) => {
           if (domProps.onBlur) {
             domProps.onBlur(e);

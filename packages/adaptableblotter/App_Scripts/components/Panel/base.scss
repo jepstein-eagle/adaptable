@@ -12,6 +12,7 @@
   font-size: var(--ab-cmp-panel__font-size);
 
   &__header {
+    flex: none;
     background: var(--ab-cmp-panel_header__background);
     color: var(--ab-cmp-panel_header__color);
     font-size: var(--ab-cmp-panel_header__font-size);
@@ -20,7 +21,6 @@
     border-top-left-radius: var(--ab-cmp-panel__border-radius);
     border-top-right-radius: var(--ab-cmp-panel__border-radius);
     border: var(--ab-cmp-panel__border);
-    
 
     &--variant-primary {
       background: var(--ab-cmp-panel_header--variant-primary__background);

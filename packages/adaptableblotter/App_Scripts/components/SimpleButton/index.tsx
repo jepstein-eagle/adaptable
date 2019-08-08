@@ -93,6 +93,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
     disabled = true;
   }
 
+  tooltip = null;
   const btn = (
     <Button
       {...buttonProps}

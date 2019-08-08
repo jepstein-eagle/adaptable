@@ -12,10 +12,9 @@ const checked = keyframes`
 `;
 
 const CheckSvg = styled.svg`
-  position: absolute;
+  position: relative;
   z-index: 1;
-  top: 0px;
-  left: -3px;
+
   pointer-events: none;
 
   color: var(--ab-color-inputcolor);
@@ -32,6 +31,7 @@ const CheckSvg = styled.svg`
 `;
 
 const CheckboxInput = styled.input`
+  width: 0;
   &:focus + svg rect {
     stroke: var(--ab-color-inputcolor);
     stroke-width: 2;
@@ -92,6 +92,8 @@ const CheckBox = ({
 
   const gap = <div style={{ marginLeft: gapDistance, display: 'inline-block' }} />;
 
+  children = <div style={{ display: 'inline-block' }}>{children}</div>;
+
   const before = childrenPosition === 'start' ? children : null;
   const beforeGap = childrenPosition === 'start' ? gap : null;
 
@@ -130,7 +132,7 @@ const CheckBox = ({
         onChange={onInputChange}
       />
 
-      <CheckSvg viewBox="0 0 40 40" height={getSize(20)}>
+      <CheckSvg viewBox="0 0 40 40" height={getSize(19)}>
         <rect x="2" y="2" width="36" height="36" />
         <polyline points="9,22 18,30 33,14" />
       </CheckSvg>

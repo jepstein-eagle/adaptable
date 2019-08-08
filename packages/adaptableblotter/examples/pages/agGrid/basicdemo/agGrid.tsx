@@ -29,7 +29,7 @@ function InitAdaptableBlotter() {
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'basic demo'
+    'basic-demo'
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
