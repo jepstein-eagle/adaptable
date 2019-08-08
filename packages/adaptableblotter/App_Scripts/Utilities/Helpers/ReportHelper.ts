@@ -15,7 +15,6 @@ import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { SelectedRowInfo } from '../Interface/Selection/SelectedRowInfo';
 import { GridRow } from '../Interface/Selection/GridRow';
-import cellvalidationdemo from '../../../examples/pages/agGrid/cellvalidationdemo';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';

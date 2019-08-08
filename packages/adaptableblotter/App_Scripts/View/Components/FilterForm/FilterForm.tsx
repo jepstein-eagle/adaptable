@@ -452,8 +452,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       editedColumnFilter: columnFilter,
     });
 
-    console.log('in persist filter');
-    console.log(columnFilter);
     //delete if empty
     if (
       columnDisplayValues.length == 0 &&
@@ -465,15 +463,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     } else {
       if (this.props.Blotter.blotterOptions!.filterOptions!.autoApplyFilter) {
         this.props.onSetColumnFilter(columnFilter);
-        //  if (alreadyExists) {
-        //    this.props.onEditColumnFilter(columnFilter);
-        //   } else {
-        //     this.props.onAddColumnFilter(columnFilter);
-        //   }
-      } else {
-        //  this.setState({
-        //    editedColumnFilter: columnFilter,
-        //  });
       }
     }
   }

@@ -2246,9 +2246,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       } else {
         coldDef.tooltipField = '';
       }
-
-      console.log('after');
-      console.log(coldDef);
     }
   }
 
