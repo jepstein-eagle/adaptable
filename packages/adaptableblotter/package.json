@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "publishConfig": {
+  "xpublishConfig": {
     "registry": "https://registry.adaptabletools.com"
   },
   "version": "4.0.1",
