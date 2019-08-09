@@ -167,15 +167,17 @@ export function ConvertReportToArray(
       const selectedRowInfo: SelectedRowInfo = blotter.api.gridApi.getSelectedRowInfo();
       if (selectedRowInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedRowInfo.GridRows)) {
         let columnIds: string[] = ReportColumns.map(rc => rc.ColumnId);
-        selectedRowInfo.GridRows.forEach((gridRow: GridRow) => {
-          let rowData: any = gridRow.rowData;
-          const newRow: any[] = [];
-          columnIds.forEach((colId: string) => {
-            let cellValue = rowData[colId];
-            newRow.push(cellValue ? String(cellValue) : '');
-          });
-          dataToExport.push(newRow);
-        });
+        selectedRowInfo.GridRows.filter(gr => gr.rowInfo.isGroup == false).forEach(
+          (gridRow: GridRow) => {
+            let rowData: any = gridRow.rowData;
+            const newRow: any[] = [];
+            columnIds.forEach((colId: string) => {
+              let cellValue = rowData[colId];
+              newRow.push(cellValue ? String(cellValue) : '');
+            });
+            dataToExport.push(newRow);
+          }
+        );
       }
       break;
   }
