@@ -1,5 +1,5 @@
 {
-  "name": "@adaptabletools/adaptableblotter",
+  "name": "adaptableblotter",
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
   },
