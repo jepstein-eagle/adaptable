@@ -26,7 +26,6 @@ import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import EmptyContent from '../../components/EmptyContent';
-import SimpleButton from '../../components/SimpleButton';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
   AdvancedSearches: AdvancedSearch[];

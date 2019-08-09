@@ -1947,8 +1947,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.checkColumnsDataTypeSet();
     });
 
-    //  this.gridOptions.api!.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
-    //   });
+    this.gridOptions.api!.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+      console.log('triggered row data');
+      console.log(params);
+    });
 
     //   this.gridOptions.api!.addEventListener(Events.EVENT_ROW_VALUE_CHANGED, (params: any) => {
     //   });
@@ -2244,9 +2246,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       } else {
         coldDef.tooltipField = '';
       }
-
-      console.log('after');
-      console.log(coldDef);
     }
   }
 

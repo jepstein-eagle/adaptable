@@ -5,6 +5,7 @@ import { ColumnMenuTab } from '../../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import Panel, { PanelProps } from '../../../components/Panel';
 import Radio from '../../../components/Radio';
+import SimpleButton from '../../../components/SimpleButton';
 
 export interface FilterFormPanelProps extends PanelProps {
   clearFilterButton?: React.ReactElement<any>;
@@ -15,10 +16,14 @@ export interface FilterFormPanelProps extends PanelProps {
 
   ColumnMenuTab: ColumnMenuTab;
   ColumnMenuTabChanged: (e: any) => void;
+  onFilterApplied: () => void;
 
   IsAlwaysFilter: boolean;
 
   showCloseButton: boolean;
+
+  applyFilterButtonDisabled: boolean;
+  autoApplyFilter: boolean;
 }
 
 export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
@@ -70,19 +75,39 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
         </Flex>
       </Flex>
     );
+
+    // const autoApplyFilter = true;
     return (
-      <div>
+      <Flex flexDirection="column">
         <Panel
           header={header}
-          style={this.props.style}
+          style={{ ...this.props.style, flex: 1 }}
           bodyProps={{ padding: 1, style: { maxHeight: '50vh' } }}
           bodyScroll
           border="none"
         >
           {this.props.children}
         </Panel>
-      </div>
+        {this.props.autoApplyFilter ? null : (
+          <Flex flex="none" flexDirection="row" padding={1} justifyContent="flex-end">
+            <SimpleButton
+              variant="raised"
+              tone="accent"
+              disabled={this.props.applyFilterButtonDisabled}
+              onClick={() => this.onApplyFilterClicked()}
+            >
+              Apply Filter
+            </SimpleButton>
+          </Flex>
+        )}
+      </Flex>
     );
+  }
+
+  onApplyFilterClicked(): void {
+    // todo - need something here
+    console.log('ive been blicked');
+    this.props.onFilterApplied();
   }
 
   onSelectMenu(): any {

@@ -1,13 +1,12 @@
 import * as React from 'react';
-
 import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup from '../../../components/List/ListGroup';
 import { Flex } from 'rebass';
+import Helper from '../../../Utilities/Helpers/Helper';
 
 export interface SingleListBoxProps {
   Values: Array<any>;
@@ -58,7 +57,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     });
   }
   render() {
-    let itemsElements = this.state.Values.map(x => {
+    let itemsElements = this.state.Values.map((x, index) => {
       let isActive: boolean;
       if (this.props.ValueMember) {
         isActive = this.state.UiSelectedValues.indexOf(x[this.props.ValueMember]) >= 0;
@@ -67,6 +66,11 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
       }
 
       let display: string = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
+      // possible that a column will cellrendeer has no display value; in that scenario lets return null
+      if (Helper.objectNotExists(display)) {
+        console.log('return null');
+        return null;
+      }
       let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
       if (
         StringExtensions.IsNotEmpty(this.state.FilterValue) &&
@@ -76,7 +80,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
       } else {
         return (
           <ListGroupItem
-            key={value}
+            key={value + index}
             onClick={() => this.onClickItem(x)}
             active={isActive}
             value={value}

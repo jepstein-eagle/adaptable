@@ -6,6 +6,7 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {
@@ -22,6 +23,10 @@ export class GridApi extends ApiBase implements IGridApi {
 
   public getSelectedCellInfo(): SelectedCellInfo {
     return this.getGridState().SelectedCellInfo;
+  }
+
+  public getSelectedRowInfo(): SelectedRowInfo {
+    return this.getGridState().SelectedRowInfo;
   }
 
   public getVisibleColumns(): IColumn[] {

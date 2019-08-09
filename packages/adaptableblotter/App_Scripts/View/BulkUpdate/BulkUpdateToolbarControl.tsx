@@ -24,7 +24,6 @@ import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
-import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { IColumn } from '../../Utilities/Interface/IColumn';

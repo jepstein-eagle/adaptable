@@ -17,7 +17,6 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
@@ -27,9 +26,11 @@ import { Box, Flex } from 'rebass';
 import Input from '../../components/Input';
 import SimpleButton from '../../components/SimpleButton';
 import HelpBlock from '../../components/HelpBlock';
+import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
   BulkUpdateValue: string;
+  BulkUpdateValidationResult: BulkUpdateValidationResult;
   PreviewInfo: IPreviewInfo;
   onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
   onBulkUpdateCheckSelectedCells: () => SystemRedux.BulkUpdateCheckCellSelectionAction;
@@ -52,8 +53,8 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
   }
 
   public componentDidMount() {
+    this.props.onBulkUpdateValueChange('');
     this.props.onBulkUpdateCheckSelectedCells();
-    //      this.props.onBulkUpdateValueChange("");
   }
 
   render() {
@@ -68,10 +69,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
       'Edits that break Cell Validation Rules will be flagged and prevented.',
     ];
 
-    let col: IColumn = null;
-    if (this.props.PreviewInfo) {
-      col = ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
-    }
+    let col: IColumn | undefined = this.props.BulkUpdateValidationResult.Column;
 
     let hasDataTypeError = false;
     let dataTypeErrorMessage = '';
@@ -277,6 +275,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
     BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
     PreviewInfo: state.System.BulkUpdatePreviewInfo,
+    BulkUpdateValidationResult: state.System.BulkUpdateValidationResult,
   };
 }
 

@@ -91,6 +91,7 @@ export enum ReportColumnScope {
 export enum ReportRowScope {
   AllRows = 'AllRows',
   VisibleRows = 'VisibleRows',
+  SelectedCells = 'SelectedCells',
   SelectedRows = 'SelectedRows',
   ExpressionRows = 'ExpressionRows',
 }

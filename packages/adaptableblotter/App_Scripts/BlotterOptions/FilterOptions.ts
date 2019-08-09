@@ -55,7 +55,7 @@ export interface FilterOptions {
    */
   filterActionOnUserDataChange?: FilterActionOnDataChange;
   /**
-   * Whether to to re-apply Adaptable Blotter filtering whenever data updates or ticks in the background (ie. not result of user action)
+   * Whether to re-apply Adaptable Blotter filtering whenever data updates or ticks in the background (ie. not result of user action)
    *
    * The choice is 'Always', 'Never' (the default value) or 'Throttle'
    *
@@ -64,6 +64,16 @@ export interface FilterOptions {
    * **Default Value: Never**
    */
   filterActionOnExternalDataChange?: FilterActionOnDataChange;
+  /**
+   * Whether to apply filters in the Filter Form as soon as they are clicked
+   *
+   * If set to true (the default), clicking on a filter applies it immediately.
+   *
+   * If set to False then an Apply Filter button appears and filters are only applied when that is clicked.
+   *
+   * **Default Value: true**
+   */
+  autoApplyFilter?: boolean;
 }
 
 /**

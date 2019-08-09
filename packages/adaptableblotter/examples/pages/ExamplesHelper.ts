@@ -1,7 +1,6 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter } from '../../App_Scripts/types';
 import { StarsCellRenderer } from './StarsCellRenderer';
-import { SingleEntryPlugin } from 'webpack';
 
 export interface ITrade {
   tradeId: number;
@@ -253,7 +252,7 @@ export class ExamplesHelper {
       currency: tradeCurrency,
       country: this.getRandomItem(this.getCountries()),
       changeOnYear: this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
-      stars: this.generateRandomInt(1, 5),
+      stars: undefined, // this.generateRandomInt(1, 5),
       amount: this.getRandomItem(this.getAmounts()),
       price: price,
       bid: bid,
