@@ -7,6 +7,7 @@ import {
   ReportColumnScope,
   MessageType,
   ReportRowScope,
+  ExportDestination,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { createUuid } from '../../PredefinedConfig/Uuid';
@@ -15,6 +16,9 @@ import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { SelectedRowInfo } from '../Interface/Selection/SelectedRowInfo';
 import { GridRow } from '../Interface/Selection/GridRow';
+import OpenfinHelper from './OpenfinHelper';
+import iPushPullHelper from './iPushPullHelper';
+import Glue42Helper from './Glue42Helper';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -67,6 +71,22 @@ export function GetReportExpressionDescription(Report: Report, cols: IColumn[]):
         return ExpressionHelper.ConvertExpressionToString(Report.Expression, cols);
     }
   }
+}
+
+export function IsReportDestinationActive(exportDestination: ExportDestination): boolean {
+  switch (exportDestination) {
+    case ExportDestination.CSV:
+    case ExportDestination.Clipboard:
+      return true;
+    case ExportDestination.OpenfinExcel:
+      return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
+    case ExportDestination.iPushPull:
+      return iPushPullHelper.isIPushPullLoaded();
+    case ExportDestination.Glue42:
+      return Glue42Helper.isRunningGlue42();
+  }
+
+  return false;
 }
 
 export function ConvertReportToArray(
@@ -241,6 +261,7 @@ export const ReportHelper = {
   SELECTED_CELLS_REPORT,
   SELECTED_ROWS_REPORT,
   IsSystemReport,
+  IsReportDestinationActive,
   GetReportColumnsDescription,
   GetReportExpressionDescription,
   ConvertReportToArray,

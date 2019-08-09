@@ -140,11 +140,10 @@ class ExportToolbarControlComponent extends React.Component<
       csvMenuItem,
       clipboardMenuItem,
       ,
-      OpenfinHelper.isRunningInOpenfin() &&
-        OpenfinHelper.isExcelOpenfinLoaded() &&
+      ReportHelper.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
         openfinExcelMenuItem,
-      iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem,
-      Glue42Helper.isRunningGlue42() && glue42MenuItem,
+      ReportHelper.IsReportDestinationActive(ExportDestination.iPushPull) && iPushPullExcelMenuItem,
+      ReportHelper.IsReportDestinationActive(ExportDestination.Glue42) && glue42MenuItem,
     ].filter(x => !!x);
 
     let content = (

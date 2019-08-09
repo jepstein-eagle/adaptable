@@ -21,6 +21,7 @@ import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
 
 import { Flex, Box, Text } from 'rebass';
 import Input from '../../../components/Input';
+import ReportHelper from '../../../Utilities/Helpers/ReportHelper';
 
 export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<Report> {}
 
@@ -55,12 +56,14 @@ export class ReportScheduleWizard
     };
   }
   render(): any {
-    let destinations = EnumExtensions.getNames(ExportDestination).map(type => {
-      return {
-        label: type,
-        value: type,
-      };
-    });
+    let destinations = EnumExtensions.getNames(ExportDestination)
+      .filter(type => ReportHelper.IsReportDestinationActive(type as ExportDestination))
+      .map(type => {
+        return {
+          label: type,
+          value: type,
+        };
+      });
 
     let hours: any[] = [];
     let i: number;
