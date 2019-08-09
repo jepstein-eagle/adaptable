@@ -8,7 +8,7 @@
  * ```ts
  * layoutOptions = {
  *  includeVendorStateInLayouts: true,
- *  autoSaveLayouts: true
+ *  autoSaveLayouts: false
  *};
  * ```
  */
@@ -18,7 +18,7 @@ export interface LayoutOptions {
    *
    * Currently only available in ag-Grid
    *
-   * **Default Value: false**
+   * **Default Value: true**
    */
   includeVendorStateInLayouts?: boolean;
   /**
@@ -26,7 +26,7 @@ export interface LayoutOptions {
    *
    * If set to false, the user needs to click save to persist changes to the layout.
    *
-   * **Default Value: false**
+   * **Default Value: true**
    */
   autoSaveLayouts?: boolean;
 }
