@@ -10,9 +10,10 @@ import { baseClassName, default as Backdrop } from './Backdrop';
 const uuidv4 = require('uuid/v4');
 const createUuid = (): string => uuidv4();
 
+const globalObject = typeof global !== 'undefined' ? global : window;
 let portalElement: HTMLElement;
 const ensurePortalElement = () => {
-  if (!(global as any).document) {
+  if (!(globalObject as any).document) {
     return;
   }
   if (portalElement) {

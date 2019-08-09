@@ -47,9 +47,10 @@ export interface OverlayTriggerProps extends React.HTMLAttributes<HTMLElement> {
   constrainTo?: ConstrainToType;
 }
 
+const globalObject = typeof global !== 'undefined' ? global : window;
 let portalElement: HTMLElement;
 const ensurePortalElement = () => {
-  if (!(global as any).document) {
+  if (!(globalObject as any).document) {
     return;
   }
   if (portalElement) {
