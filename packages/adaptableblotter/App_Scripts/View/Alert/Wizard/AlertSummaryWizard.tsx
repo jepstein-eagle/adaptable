@@ -78,6 +78,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     return 1;
   }
   public GetIndexStepDecrement() {
+    let alertDefinition: AlertDefinition = this.props.Data as AlertDefinition;
     return ExpressionHelper.IsNullOrEmptyExpression(alertDefinition.Expression) ? 2 : 1;
   }
 }

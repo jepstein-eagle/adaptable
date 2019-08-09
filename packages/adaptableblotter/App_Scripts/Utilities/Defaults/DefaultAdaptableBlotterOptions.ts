@@ -55,8 +55,8 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     chartContainer: undefined,
   },
   layoutOptions: {
-    includeVendorStateInLayouts: false,
-    autoSaveLayouts: false,
+    includeVendorStateInLayouts: true,
+    autoSaveLayouts: true,
   },
   filterOptions: {
     indicateFilteredColumns: true,

@@ -2,7 +2,8 @@ import * as React from 'react';
 
 import ResizeObserverPoly from 'resize-observer-polyfill';
 
-const RO = (global as any).ResizeObserver || ResizeObserverPoly;
+const globalObject = typeof global !== 'undefined' ? global : window;
+const RO = (globalObject as any).ResizeObserver || ResizeObserverPoly;
 
 export interface NotifyResizeProps {
   onResize: (size: { width: number; height: number }) => void;

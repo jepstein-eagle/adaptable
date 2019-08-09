@@ -1,6 +1,6 @@
 {
-  "name": "@adaptabletools/adaptableblotter-react-aggrid",
-  "publishConfig": {
+  "name": "adaptableblotter-react-aggrid",
+  "xpublishConfig": {
     "registry": "https://registry.adaptabletools.com"
   },
   "version": "4.0.1",
