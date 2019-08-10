@@ -58,6 +58,11 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
           label: 'Start Sync with iPushPull',
         };
 
+    let glue42MenuItem = {
+      onClick: () => this.props.onExport(ExportDestination.Glue42),
+      label: 'Export to Excel (via Glue42)',
+    };
+
     // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
     let isSystemReport: boolean = ReportHelper.IsSystemReport(report);
     let colItems: IColItem[] = [].concat(this.props.colItems);
@@ -77,10 +82,10 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     const exportItems = [
       csvMenuItem,
       clipboardMenuItem,
-      OpenfinHelper.isRunningInOpenfin() &&
-        OpenfinHelper.isExcelOpenfinLoaded() &&
+      ReportHelper.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
         openfinExcelMenuItem,
-      iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem,
+      ReportHelper.IsReportDestinationActive(ExportDestination.iPushPull) && iPushPullExcelMenuItem,
+      ReportHelper.IsReportDestinationActive(ExportDestination.Glue42) && glue42MenuItem,
     ].filter(x => !!x);
 
     let exportButton = (

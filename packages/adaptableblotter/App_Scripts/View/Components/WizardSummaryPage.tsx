@@ -12,7 +12,7 @@ export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSumm
 
 export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {}> {
   render(): any {
-    let colItems: IColItem[] = [{ Content: 'Property', Size: 4 }, { Content: 'Value', Size: 8 }];
+    let colItems: IColItem[] = [{ Content: 'Property', Size: 3 }, { Content: 'Value', Size: 9 }];
 
     let summaryRows: any[] = [];
     this.props.KeyValuePairs.forEach((kvp, index) => {
