@@ -37,6 +37,13 @@ function InitAdaptableBlotter() {
     showModal: false,
     displayOnStartUp: true,
   };
+  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
+    console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
+  };
+  adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
+    var data = event.data;
+    console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
+  };
   adaptableBlotterOptions.filterOptions = {
     autoApplyFilter: false,
   };
@@ -44,6 +51,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
+  global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {};
