@@ -70,7 +70,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
       RunFilter: GeneralConstants.FILTER_NEVER,
       ThrottleDelay: 0,
     },
-    autoApplyFilter: true,
+    // autoApplyFilter: true,
   },
   queryOptions: {
     maxColumnValueItemsDisplayed: 2000,

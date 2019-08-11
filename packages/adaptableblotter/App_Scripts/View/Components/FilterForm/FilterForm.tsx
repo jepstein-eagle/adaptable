@@ -292,9 +292,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             saveButton={saveButton}
             closeButton={closeButton}
             showCloseButton={this.props.ShowCloseButton}
-            autoApplyFilter={
-              this.props.Blotter.blotterOptions.filterOptions!.autoApplyFilter ? true : false
-            }
+            autoApplyFilter={true} // only adding AFTER release 5...
+            //  {
+            //    this.props.Blotter.blotterOptions.filterOptions!.autoApplyFilter ? true : false
+            //  }
             applyFilterButtonDisabled={ExpressionHelper.IsEmptyExpression(
               this.state.editedColumnFilter!.Filter
             )}
@@ -461,9 +462,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     ) {
       this.props.onClearColumnFilter(columnFilter);
     } else {
-      if (this.props.Blotter.blotterOptions!.filterOptions!.autoApplyFilter) {
-        this.props.onSetColumnFilter(columnFilter);
-      }
+      //  if (this.props.Blotter.blotterOptions!.filterOptions!.autoApplyFilter) {
+      this.props.onSetColumnFilter(columnFilter);
+      //  }
     }
   }
 

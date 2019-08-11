@@ -45,7 +45,7 @@ function InitAdaptableBlotter() {
     console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
   };
   adaptableBlotterOptions.filterOptions = {
-    autoApplyFilter: false,
+    // autoApplyFilter: false,
   };
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);

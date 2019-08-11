@@ -13,7 +13,7 @@ import { Report } from '../RunTimeState/ExportState';
 import { QueryRange } from '../Common/Expression/QueryRange';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 /**
- * ISYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
+ * SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
  */
 
 export interface SystemState extends InternalState {

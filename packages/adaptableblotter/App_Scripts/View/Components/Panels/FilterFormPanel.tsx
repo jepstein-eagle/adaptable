@@ -76,7 +76,6 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
       </Flex>
     );
 
-    // const autoApplyFilter = true;
     return (
       <Flex flexDirection="column">
         <Panel

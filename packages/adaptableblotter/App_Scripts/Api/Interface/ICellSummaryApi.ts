@@ -2,4 +2,15 @@ import { CellSummaryState } from '../../PredefinedConfig/RunTimeState/CellSummar
 
 export interface ICellSummaryApi {
   getCellSummaryState(): CellSummaryState;
+  getCellSummaryOperation():
+    | 'Sum'
+    | 'Average'
+    | 'Mode'
+    | 'Median'
+    | 'Distinct'
+    | 'Max'
+    | 'Min'
+    | 'Count'
+    | 'VWap'
+    | 'Only';
 }

@@ -73,7 +73,7 @@ export interface FilterOptions {
    *
    * **Default Value: true**
    */
-  autoApplyFilter?: boolean;
+  // autoApplyFilter?: boolean;
 }
 
 /**
