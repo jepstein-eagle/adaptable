@@ -17,12 +17,13 @@ This uses the agGrid updateRowData method which does NOT call cell value changed
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeData: any = examplesHelper.getTrades(25);
+  const tradeData: any = examplesHelper.getTrades(5);
+
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'ticking demo row data'
+    'ticking demo row '
   );
   adaptableBlotterOptions.predefinedConfig = flashingJson;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);

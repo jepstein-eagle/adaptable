@@ -175,13 +175,13 @@ export class ExamplesHelper {
       ftseDayDetails.push(dayDetails);
     }
 
-    let ftse = {
+    let ftse: IFtse = {
       date: newDate,
       start: start,
       end: end,
       low: low,
       high: high,
-      details: ftseDayDetails,
+      details: index > 3 ? ftseDayDetails : [],
     };
     return ftse;
   }
@@ -790,6 +790,9 @@ export class ExamplesHelper {
         getDetailRowData: function(params: any) {
           params.successCallback(params.data.details);
         },
+      },
+      isRowMaster: function(dataItem) {
+        return dataItem ? dataItem.details.length > 0 : false;
       },
       enableRangeSelection: true,
       rowSelection: 'multiple',

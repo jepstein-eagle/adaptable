@@ -94,26 +94,28 @@ export class TickingDataHelper {
       rowData != null
     ) {
       setInterval(() => {
-        let tradeId = this.generateRandomInt(0, 25);
+        let tradeId = 4; //this.generateRandomInt(0, 25);
         let trade: ITrade = rowData[tradeId];
-        let randomInt = this.generateRandomInt(1, 2);
-        let numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
-        let directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-        let newPrice = this.roundTo4Dp(trade.price + numberToAdd);
-        let bidOfferSpread = trade.bidOfferSpread;
-        let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
-        let bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
+        if (trade) {
+          let randomInt = this.generateRandomInt(1, 2);
+          let numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
+          let directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
+          let newPrice = this.roundTo4Dp(trade.price + numberToAdd);
+          let bidOfferSpread = trade.bidOfferSpread;
+          let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
+          let bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
 
-        trade.price = newPrice;
-        trade.bid = bid;
-        trade.ask = ask;
-        trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
-        trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
-        trade.notional = trade.notional == 4 ? 34 : 4;
-        trade.changeOnYear = trade.changeOnYear > 0 ? -100 : 100;
+          trade.price = newPrice;
+          trade.bid = bid;
+          trade.ask = ask;
+          trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
+          trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
+          trade.notional = trade.notional == 4 ? 34 : 4;
+          trade.changeOnYear = trade.changeOnYear > 0 ? -100 : 100;
 
-        gridOptions.api!.updateRowData({ update: [trade] });
-      }, 3000);
+          gridOptions.api!.updateRowData({ update: [trade] });
+        }
+      }, 10000);
     }
   }
 

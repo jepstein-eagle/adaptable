@@ -1934,10 +1934,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.onSortChanged();
       this.debouncedSetSelectedCells();
     });
-    //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
-    //  });
-    //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
-    // });
+
+    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+      console.log('in row data updated');
+      console.log(params);
+    });
+    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
+      console.log('in row data changed');
+      console.log(params);
+    });
+
     this.gridOptions.api!.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
       // not sure about this - doing it to make sure that we set the columns properly at least once!
 
@@ -1947,6 +1953,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const rowListeners: { [key: string]: (event: any) => void } = {
       dataChanged: (event: any) =>
         this.onRowDataChanged({
+          //  myevent: event,
           node: event.node,
           oldData: event.oldData,
           newData: event.newData,
@@ -2261,14 +2268,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private onRowDataChanged({
+    // myevent,
     node,
     oldData,
     newData,
   }: {
+    // myevent: any;
     node: RowNode;
     oldData: any;
     newData: any;
   }): void {
+    console.log(oldData);
+    console.log(newData);
+    console.log(node);
+
+    // this is not quite right as its breaking for master / detail : openign a Master fires DataChanged Events of update : false and no oldData
+    // should we check the event for false?
+    // or should we check for oldData?
+    // for now will do the second...
+    // might need to rethink if we add full cache and then just return if its master / details
+    if (oldData == null || oldData == undefined) {
+      return;
+    }
+
     const identifierValue = this.getPrimaryKeyValueFromRecord(node);
 
     Object.keys(oldData).forEach((key: string) => {
@@ -2284,7 +2306,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           Record: node,
         };
 
+        // this never seems to get triggered as the both the oldvalue and newvalue show the changed value :(
+        // wont be an issue if we audit the changes but otherwise it will be...
+        console.log(dataChangedInfo);
         this.DataService.CreateDataChangedEvent(dataChangedInfo);
+
+        // todo - same stuff with percent bars and calculated columns
+        // need to refactor into an afterDataChangedEventCreated method so we do it once
       }
     });
   }
