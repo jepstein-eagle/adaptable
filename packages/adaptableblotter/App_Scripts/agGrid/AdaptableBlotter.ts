@@ -2303,9 +2303,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           Record: node,
         };
 
-        // this never seems to get triggered as the both the oldvalue and newvalue show the changed value :(
-        // wont be an issue if we audit the changes but otherwise it will be...
-
         this.DataService.CreateDataChangedEvent(dataChangedInfo);
 
         // todo - same stuff with percent bars and calculated columns

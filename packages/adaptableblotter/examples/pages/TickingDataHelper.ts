@@ -85,6 +85,47 @@ export class TickingDataHelper {
     }, 2000);
   }
 
+  startTickingDataagGridRowNodeSetData(gridOptions: GridOptions, rowData: any) {
+    setInterval(() => {
+      if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
+        gridOptions.api.forEachNode((rowNode: RowNode) => {
+          if (rowNode.group) {
+            return;
+          }
+          const tradeId = this.generateRandomInt(0, 4);
+
+          const rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
+          if (rowTradeId != tradeId) {
+            return;
+          }
+
+          // NOTE:  You need to make a COPY of the data that you are changing...
+          const trade: ITrade = { ...rowData[tradeId - 1] };
+          if (trade) {
+            const randomInt = this.generateRandomInt(1, 2);
+            const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
+            const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
+            const newPrice = this.roundTo4Dp(trade.price + numberToAdd);
+            const bidOfferSpread = trade.bidOfferSpread;
+            const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
+            const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
+
+            trade.price = newPrice;
+            trade.bid = bid;
+            trade.ask = ask;
+            trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
+            trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
+
+            trade.notional = this.generateRandomInt(1, 50);
+            trade.changeOnYear = trade.changeOnYear > 0 ? -100 : 100;
+
+            rowNode.setData(trade);
+          }
+        });
+      }
+    }, 3000);
+  }
+
   // This DOES NOT update the AB as agGrid fires an event
   startTickingDataagGridThroughRowData(gridOptions: GridOptions, rowData: any) {
     if (
@@ -95,6 +136,7 @@ export class TickingDataHelper {
     ) {
       setInterval(() => {
         const tradeId = this.generateRandomInt(0, 25);
+        // NOTE:  You need to make a COPY of the data that you are changing...
         const trade: ITrade = { ...rowData[tradeId] };
         if (trade) {
           const randomInt = this.generateRandomInt(1, 2);

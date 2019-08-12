@@ -15,8 +15,8 @@ import { MessageType, AccessLevel, DashboardSize } from '../../PredefinedConfig/
 import { AlertsPanel } from './AlertsPanel';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
-import { Text, Flex } from 'rebass';
-import Input from '../../components/Input';
+import { Flex } from 'rebass';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
@@ -69,22 +69,27 @@ class AlertToolbarControlComponent extends React.Component<
         ? '1 Alert'
         : this.props.Alerts.length + ' Alerts';
 
+    let buttonColor: string = ArrayExtensions.IsNotNullOrEmpty(this.props.Alerts)
+      ? 'secondary'
+      : 'primary';
+    let buttonTextColor: string = ArrayExtensions.IsNotNullOrEmpty(this.props.Alerts)
+      ? 'text-on-secondary'
+      : 'text-on-primary';
+
     let content = (
       <Flex alignItems="stretch">
-        <Input value={collapsedText} disabled={true} marginRight={2} />
-        {this.state.ShowMessage && (
-          <Flex
-            style={{ borderRadius: 'var(--ab__border-radius)' }}
-            marginRight={2}
-            padding={2}
-            color="text-on-secondary"
-            backgroundColor="secondary"
-            fontSize={'var( --ab-font-size-1)'}
-            alignItems="center"
-          >
-            New
-          </Flex>
-        )}
+        <Flex
+          style={{ borderRadius: 'var(--ab__border-radius)' }}
+          marginRight={2}
+          padding={2}
+          color={buttonTextColor}
+          backgroundColor={buttonColor}
+          fontSize={'var( --ab-font-size-2)'}
+          alignItems="center"
+        >
+          {collapsedText}
+        </Flex>
+
         {this.props.Alerts.length > 0 && (
           <Flex alignItems="center">
             <AdaptablePopover
