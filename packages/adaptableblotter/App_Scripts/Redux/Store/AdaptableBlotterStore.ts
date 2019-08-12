@@ -252,6 +252,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
   public TheStore: Redux.Store<AdaptableBlotterState>;
   public Load: PromiseLike<any>;
   private emitter: Emitter;
+  private loadStartOnStartup: boolean = false;
 
   public on = (eventName: string, callback: EmitterCallback): (() => void) => {
     return this.emitter.on(eventName, callback);
@@ -347,7 +348,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     this.Load = storageEngine
       .load()
       .then(storedState => {
-        if (storedState) {
+        if (storedState && this.loadStartOnStartup) {
           this.TheStore.dispatch(LoadState(storedState));
         }
       })

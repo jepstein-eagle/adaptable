@@ -94,7 +94,7 @@ export class TickingDataHelper {
       rowData != null
     ) {
       setInterval(() => {
-        const tradeId = 4; // this.generateRandomInt(0, 25);
+        const tradeId = this.generateRandomInt(0, 25);
         const trade: ITrade = { ...rowData[tradeId] };
         if (trade) {
           const randomInt = this.generateRandomInt(1, 2);
@@ -115,7 +115,7 @@ export class TickingDataHelper {
 
           gridOptions.api!.updateRowData({ update: [trade] });
         }
-      }, 10000);
+      }, 3000);
     }
   }
 

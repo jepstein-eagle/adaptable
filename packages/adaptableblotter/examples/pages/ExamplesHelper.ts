@@ -252,7 +252,7 @@ export class ExamplesHelper {
       currency: tradeCurrency,
       country: this.getRandomItem(this.getCountries()),
       changeOnYear: this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
-      stars: undefined, // this.generateRandomInt(1, 5),
+      stars: this.generateRandomInt(1, 5),
       amount: this.getRandomItem(this.getAmounts()),
       price: price,
       bid: bid,

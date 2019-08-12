@@ -1936,14 +1936,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.debouncedSetSelectedCells();
     });
 
-    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
-      console.log('in row data updated');
-      console.log(params);
-    });
-    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
-      console.log('in row data changed');
-      console.log(params);
-    });
+    // this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+    //  console.log('in row data updated');
+    //  console.log(params);
+    //});
+    // this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
+    //  console.log('in row data changed');
+    //   console.log(params);
+    // });
 
     this.gridOptions.api!.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
       // not sure about this - doing it to make sure that we set the columns properly at least once!
