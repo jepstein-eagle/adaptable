@@ -424,6 +424,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     // global.grid = grid;
+
     return grid != null;
   }
 
@@ -2278,10 +2279,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     oldData: any;
     newData: any;
   }): void {
-    console.log(oldData);
-    console.log(newData);
-    console.log(node);
-
     // this is not quite right as its breaking for master / detail : openign a Master fires DataChanged Events of update : false and no oldData
     // should we check the event for false?
     // or should we check for oldData?
@@ -2308,7 +2305,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // this never seems to get triggered as the both the oldvalue and newvalue show the changed value :(
         // wont be an issue if we audit the changes but otherwise it will be...
-        console.log(dataChangedInfo);
+
         this.DataService.CreateDataChangedEvent(dataChangedInfo);
 
         // todo - same stuff with percent bars and calculated columns

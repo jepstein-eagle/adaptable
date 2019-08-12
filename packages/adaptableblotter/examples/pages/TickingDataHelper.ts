@@ -4,39 +4,39 @@ import { ITrade } from './ExamplesHelper';
 export class TickingDataHelper {
   startTickingDataHypergrid(grid: any) {
     setInterval(() => {
-      let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
-      //pick a random trade in the first ten
-      let trade = this.getRandomItem(grid.behavior.getData(), 20);
-      //pick a random colum in the numeric col
-      let columnName = 'price'; // this.getRandomItem(this._numericCols);
-      let initialNewValue = trade[columnName];
-      let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
+      const numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
+      // pick a random trade in the first ten
+      const trade = this.getRandomItem(grid.behavior.getData(), 20);
+      // pick a random colum in the numeric col
+      const columnName = 'price'; // this.getRandomItem(this._numericCols);
+      const initialNewValue = trade[columnName];
+      const newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
       trade[columnName] = newValue;
 
-      trade['ask'] = this.roundTo4Dp(trade['price'] - trade['bidOfferSpread'] / 2);
-      trade['bid'] = this.roundTo4Dp(trade['price'] + trade['bidOfferSpread'] / 2);
+      trade.ask = this.roundTo4Dp(trade.price - trade.bidOfferSpread / 2);
+      trade.bid = this.roundTo4Dp(trade.price + trade.bidOfferSpread / 2);
 
-      trade['bloombergAsk'] = this.roundTo4Dp(trade['ask'] + 0.01);
-      trade['bloombergBid'] = this.roundTo4Dp(trade['bid'] - 0.01);
-      //grid.behavior.reindex();
+      trade.bloombergAsk = this.roundTo4Dp(trade.ask + 0.01);
+      trade.bloombergBid = this.roundTo4Dp(trade.bid - 0.01);
+      // grid.behavior.reindex();
       grid.repaint();
     }, 1000);
   }
 
   startTickingDataagGridSetData(gridOptions: GridOptions) {
     setInterval(() => {
-      let tradeId = this.generateRandomInt(0, 20);
+      const tradeId = this.generateRandomInt(0, 20);
       if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
         gridOptions.api.forEachNode((rowNode: RowNode) => {
           if (rowNode.group) {
             return;
           }
-          let rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
+          const rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
           if (rowTradeId != tradeId) {
             return;
           }
 
-          let test = rowNode.data;
+          const test = rowNode.data;
           test.notional = this.generateRandomInt(1, 200000);
           rowNode.setData(test);
         });
@@ -47,34 +47,34 @@ export class TickingDataHelper {
   // This DOES update the AB as agGrid fires an event
   startTickingDataagGridSetDataValue(gridOptions: GridOptions) {
     setInterval(() => {
-      let tradeId = this.generateRandomInt(0, 20);
+      const tradeId = this.generateRandomInt(0, 20);
       if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
         gridOptions.api.forEachNode((rowNode: RowNode) => {
           if (rowNode.group) {
             return;
           }
-          let rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
+          const rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
           if (rowTradeId != tradeId) {
             return;
           }
 
-          let randomInt = this.generateRandomInt(1, 2);
-          let numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
-          let directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-          let trade = rowNode;
-          let columnName = 'price';
-          let initialPrice = gridOptions.api!.getValue(columnName, trade);
-          let newPrice = this.roundTo4Dp(initialPrice + numberToAdd);
+          const randomInt = this.generateRandomInt(1, 2);
+          const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
+          const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
+          const trade = rowNode;
+          const columnName = 'price';
+          const initialPrice = gridOptions.api!.getValue(columnName, trade);
+          const newPrice = this.roundTo4Dp(initialPrice + numberToAdd);
           trade.setDataValue(columnName, newPrice);
-          let bidOfferSpread = gridOptions.api!.getValue('bidOfferSpread', trade);
-          let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
+          const bidOfferSpread = gridOptions.api!.getValue('bidOfferSpread', trade);
+          const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
           trade.setDataValue('ask', ask);
-          let bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
+          const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
           trade.setDataValue('bid', bid);
           trade.setDataValue('bloombergAsk', this.roundTo4Dp(ask + directionToAdd));
           trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - directionToAdd));
 
-          let notional = gridOptions.api!.getValue('notional', trade);
+          const notional = gridOptions.api!.getValue('notional', trade);
           if (notional == 340) {
             trade.setDataValue('notional', 4);
           } else {
@@ -94,16 +94,16 @@ export class TickingDataHelper {
       rowData != null
     ) {
       setInterval(() => {
-        let tradeId = 4; //this.generateRandomInt(0, 25);
-        let trade: ITrade = rowData[tradeId];
+        const tradeId = 4; // this.generateRandomInt(0, 25);
+        const trade: ITrade = { ...rowData[tradeId] };
         if (trade) {
-          let randomInt = this.generateRandomInt(1, 2);
-          let numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
-          let directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-          let newPrice = this.roundTo4Dp(trade.price + numberToAdd);
-          let bidOfferSpread = trade.bidOfferSpread;
-          let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
-          let bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
+          const randomInt = this.generateRandomInt(1, 2);
+          const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
+          const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
+          const newPrice = this.roundTo4Dp(trade.price + numberToAdd);
+          const bidOfferSpread = trade.bidOfferSpread;
+          const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
+          const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
 
           trade.price = newPrice;
           trade.bid = bid;
@@ -122,9 +122,8 @@ export class TickingDataHelper {
   public getRandomItem(ary: any[], max?: number): any {
     if (max) {
       return ary[this.generateRandomInt(0, Math.min(max, ary.length - 1))];
-    } else {
-      return ary[this.generateRandomInt(0, ary.length - 1)];
     }
+    return ary[this.generateRandomInt(0, ary.length - 1)];
   }
 
   public generateRandomInt(minValue: number, maxValue: number): number {
