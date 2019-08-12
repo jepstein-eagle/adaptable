@@ -5,9 +5,9 @@ export class PercentBarTooltip implements ITooltipComp {
 
   // gets called once before the renderer is used
   init(params: ITooltipParams): void {
-    console.log('in tooltip');
-    console.log(params);
-    console.log(params.value);
+    // console.log('in tooltip');
+    // console.log(params);
+    // console.log(params.value);
     //  var eGui = document.createElement('div');
     this.eGui = document.createElement('div');
     // this.eGui.classList.add('custom-tooltip');

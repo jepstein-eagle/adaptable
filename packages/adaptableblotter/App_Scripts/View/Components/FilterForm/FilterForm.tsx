@@ -485,9 +485,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 
   onFilterApplied() {
-    console.log('im going to apply filters');
-    console.log(this.state.editedColumnFilter);
-
     // do some existing or real
     this.props.onAddColumnFilter(this.state.editedColumnFilter);
 

@@ -232,6 +232,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.renderGrid = renderGrid;
     // we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
     this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
+    BlotterHelper.CheckBlotterOptions(this.blotterOptions);
     this.runtimeConfig = runtimeConfig;
 
     this.gridOptions = this.blotterOptions!.vendorGrid;
@@ -2140,7 +2141,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (
                   ExpressionHelper.checkForExpressionFromRecord(expression, node, [column], this)
                 ) {
-                  console.log(node);
                   return originaldoesExternalFilterPass
                     ? originaldoesExternalFilterPass(node)
                     : true;

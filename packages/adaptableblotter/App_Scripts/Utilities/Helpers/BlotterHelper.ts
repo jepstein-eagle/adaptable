@@ -114,11 +114,24 @@ export function isDemoSite(): boolean {
   return window.location.hostname == 'demo.adaptableblotter.com';
 }
 
+// perform any checks that are necessary here
+// for now just blotterId
+export function CheckBlotterOptions(blotterOptions: AdaptableBlotterOptions): void {
+  if (blotterOptions.blotterId) {
+    if (blotterOptions.blotterId.includes('.')) {
+      LoggingHelper.LogWarning(
+        "The 'blotterId' property in BlotterOptions should not include a '.'.  We strongly recommend that you remove this."
+      );
+    }
+  }
+}
+
 export const BlotterHelper = {
   isDemoSite,
   assignBlotterOptions,
   isValidPrimaryKey,
   isConfigServerEnabled,
   BlotterObjectExistsInState,
+  CheckBlotterOptions,
 };
 export default BlotterHelper;

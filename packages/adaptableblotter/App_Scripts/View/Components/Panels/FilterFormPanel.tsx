@@ -104,8 +104,6 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
   }
 
   onApplyFilterClicked(): void {
-    // todo - need something here
-    console.log('ive been blicked');
     this.props.onFilterApplied();
   }
 

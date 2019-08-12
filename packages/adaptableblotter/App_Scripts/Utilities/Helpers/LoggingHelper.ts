@@ -23,9 +23,9 @@ export function LogAlert(
 }
 export function LogAdaptableBlotterInfo(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.log('Adaptable Blotter Info: ' + message, optionalParams);
+    console.info('Adaptable Blotter Info: ' + message, optionalParams);
   } else {
-    console.log('Adaptable Blotter Info: ' + message);
+    console.info('Adaptable Blotter Info: ' + message);
   }
 }
 export function LogAdaptableBlotterSuccess(message: string, ...optionalParams: any[]): void {
@@ -37,7 +37,7 @@ export function LogAdaptableBlotterSuccess(message: string, ...optionalParams: a
 }
 export function LogAdaptableBlotterWarning(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.warn('Adaptable Blovtter Warning: ' + message, optionalParams);
+    console.warn('Adaptable Blotter Warning: ' + message, optionalParams);
   } else {
     console.warn('Adaptable Blotter Warning: ' + message);
   }

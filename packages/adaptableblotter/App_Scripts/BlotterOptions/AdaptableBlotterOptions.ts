@@ -57,6 +57,8 @@ export interface AdaptableBlotterOptions {
    *
    * Useful if Audit Log is turned on or you are using multiple Blotters
    *
+   * **Note** it cannot contain a '.' (as this value is used to name styles which raises issues if it contains a full stop).
+   *
    * The value provided here is also that used to name the *Home Toolbar* (the first toolbar that appears in the Dashboard).
    *
    * **Default value: adaptable_blotter_id**
