@@ -1,7 +1,7 @@
 {
-  "name": "adaptableblotter-ng-aggrid",
+  "name": "@adaptabletools/adaptableblotter-ng-aggrid",
   "version": "0.0.0",
-  "xpublishConfig": {
+  "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
   },
   "description": "Angular version of the powerful data-agnostic HTML5 datagrid add-on that sits on top of the agGrid component and provides all the rich functionality that advanced users expect from their grids and blotters",

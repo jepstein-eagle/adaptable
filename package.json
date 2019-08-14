@@ -1,8 +1,8 @@
 {
-  "name": "adaptableblotter-monorepo",
+  "name": "@adaptabletools/adaptableblotter-monorepo",
   "version": "4.1.2-canary.6",
   "private": true,
-  "xpublishConfig": {
+  "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
   },
   "repository": {

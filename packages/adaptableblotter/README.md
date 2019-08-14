@@ -21,19 +21,47 @@ There are additional React and Angular wrappers - please see the relevant packag
 
 ## Installation
 
-To install Adaptable Blotter via npm, run:
+The Adaptable Blotter is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
 
-```javascript
-npm install adaptableblotter
-```
+1. get a commercial license - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), so we'll provide you with a username.
 
+2. point your npm client to the correct registry for packages under the `@adaptabletools` scope
+
+```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
+
+if you're using yarn
+
+```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
+
+
+3. login with your username for the `@adaptabletools` scope, on the private registry
+
+```npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools```
+
+4. check you are logged-in correctly via
+
+```npm whoami --registry=https://registry.adaptabletools.com```
+
+it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
+
+5. install the Adaptable Blotter
+
+```npm i @adaptabletools/adaptableblotter```
+
+for the React wrapper, use
+
+```npm i @adaptabletools/adaptableblotter-react-aggrid```
+
+for the Angular wrapper, use
+
+```npm i @adaptabletools/adaptableblotter-ng-aggrid```
 
 ## Styling
 
 In order for the AdaptableBlotter to look right, you have to import the index.css file
 
 ```tsx
-import "adaptableblotter/index.css"
+import "@adaptabletools/adaptableblotter/index.css"
 ```
 
 This contains the structural styles and the (default) light theme.
@@ -41,14 +69,14 @@ This contains the structural styles and the (default) light theme.
 For the dark theme, you also have to import
 
 ```tsx
-import "adaptableblotter/themes/dark.css"
+import "@adaptabletools/adaptableblotter/themes/dark.css"
 ```
 
 So if you want the dark theme in your app, you have to do
 
 ```tsx
-import "adaptableblotter/index.css"
-import "adaptableblotter/themes/dark.css"
+import "@adaptabletools/adaptableblotter/index.css"
+import "@adaptabletools/adaptableblotter/themes/dark.css"
 ```
 
 This makes both the `light` and the `dark` themes available. You can also write your own custom theme for the AdaptableBlotter - see the section below for this.
@@ -158,13 +186,13 @@ Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for mo
 ## Usage
 
 ```js
-import AdaptableBlotter from 'adaptableblotter/agGrid';
+import AdaptableBlotter from '@adaptabletools/adaptableblotter/agGrid';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
-import 'adaptableblotter/base.css';
-import 'adaptableblotter/themes/light.css';
+import '@adaptabletools/adaptableblotter/index.css'; // includes the light theme, which is the default
+import '@adaptabletools/adaptableblotter/themes/dark.css'; // if you want to use the dark theme
 ```
 
 ## Demo
