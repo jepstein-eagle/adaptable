@@ -69,13 +69,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 > {
   constructor(props: ExpressionBuilderConditionSelectorProps) {
     super(props);
-    // this.state = this.buildState(this.props);
   }
-
-  // componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
-  //   this.setState(this.buildState(nextProps));
-  //   this.buildColumnValuesState();
-  // }
 
   static getDerivedStateFromProps(
     props: ExpressionBuilderConditionSelectorProps,

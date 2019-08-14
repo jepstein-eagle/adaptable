@@ -41,7 +41,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       };
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
-    this.blotter.setValueBatch(newValues);
+    this.blotter.api.gridApi.setGridCellBatch(newValues);
   }
 
   public CheckCorrectCellSelection(): BulkUpdateValidationResult {

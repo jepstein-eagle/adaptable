@@ -80,7 +80,7 @@ export class CategoryChartComponent extends React.Component<
     IgrDataChartAnnotationModule.register();
   }
 
-  componentWillReceiveProps(nextProps: CategoryChartComponentProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: CategoryChartComponentProps, nextContext: any) {
     if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
       this.setState(CategoryChartUIHelper.setChartDisplayPopupState(
         nextProps.CurrentChartDefinition as CategoryChartDefinition,

@@ -37,6 +37,10 @@ export class GridApi extends ApiBase implements IGridApi {
     return this.getColumns().filter(c => c.DataType == DataType.Number);
   }
 
+  public getDateColumns(): IColumn[] {
+    return this.getColumns().filter(c => c.DataType == DataType.Date);
+  }
+
   public getColumnSorts(): ColumnSort[] {
     return this.getGridState().ColumnSorts;
   }

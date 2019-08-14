@@ -58,7 +58,7 @@ class ChartDisplayPopupComponent extends React.Component<
     this.state = { EditedChartDefinition: null };
   }
 
-  componentWillReceiveProps(nextProps: ChartDisplayPopupProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: ChartDisplayPopupProps, nextContext: any) {
     if (
       this.props.CurrentChartDefinition == null ||
       nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name

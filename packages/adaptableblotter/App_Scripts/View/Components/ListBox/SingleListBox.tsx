@@ -44,7 +44,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
       SortOrder: SortOrder.Ascending,
     };
   }
-  componentWillReceiveProps(nextProps: SingleListBoxProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: SingleListBoxProps, nextContext: any) {
     this.setState({
       Values: ArrayExtensions.sortArrayWithProperty(
         this.state.SortOrder,

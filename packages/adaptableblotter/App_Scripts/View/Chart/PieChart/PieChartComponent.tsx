@@ -91,7 +91,7 @@ export class PieChartComponent extends React.Component<
     this.onPieChartLegendRef = this.onPieChartLegendRef.bind(this);
   }
 
-  componentWillReceiveProps(nextProps: PieChartComponentProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: PieChartComponentProps, nextContext: any) {
     this.setState(
       PieChartUIHelper.setChartDisplayPopupState(
         nextProps.CurrentChartDefinition,

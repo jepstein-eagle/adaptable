@@ -32,7 +32,11 @@ class QuickSearchToolbarControlComponent extends React.Component<
     super(props);
     this.state = { EditedQuickSearchText: this.props.QuickSearchText };
   }
-  componentWillReceiveProps(nextProps: QuickSearchToolbarControlComponentProps, nextContext: any) {
+
+  UNSAFE_componentWillReceiveProps(
+    nextProps: QuickSearchToolbarControlComponentProps,
+    nextContext: any
+  ) {
     this.setState({
       EditedQuickSearchText: nextProps.QuickSearchText,
     });

@@ -97,7 +97,7 @@ export class DualListBoxEditor extends React.Component<
     };
   }
 
-  componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any) {
     let availableValues = new Array<any>();
     nextProps.AvailableValues.forEach(x => {
       if (nextProps.ValueMember) {

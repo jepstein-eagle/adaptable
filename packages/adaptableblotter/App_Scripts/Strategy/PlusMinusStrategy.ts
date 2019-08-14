@@ -174,7 +174,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       this.ShowWarningMessages(failedWarningEdits, warningValues, successfulValues);
     } else {
       if (ArrayExtensions.IsNotNullOrEmpty(successfulValues)) {
-        this.blotter.setValueBatch(successfulValues);
+        this.blotter.api.gridApi.setGridCellBatch(successfulValues);
       }
     }
 

@@ -165,7 +165,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     newValue: any,
     keyEventString: string
   ): void {
-    this.blotter.setValueBatch([
+    this.blotter.api.gridApi.setGridCellBatch([
       {
         primaryKeyValue: activeCell.primaryKeyValue,
         columnId: activeCell.columnId,
