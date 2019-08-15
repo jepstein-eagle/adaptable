@@ -45,12 +45,13 @@ export class CustomSortValuesWizard
 
     return (
       <WizardPanel>
-        <HelpBlock margin={1}>
+        <HelpBlock marginBottom={2}>
           Create a Custom Sort by moving items into the 'Custom Sort Order' listbox. The new sort
           for the column will consist first of the items in the 'Custom Sort Order' listbox; all
           other column values will then sort alphabetically.
         </HelpBlock>
         <DualListBoxEditor
+          style={{ flex: 1, overflow: 'hidden' }}
           AvailableValues={this.state.ColumnValues}
           SelectedValues={this.state.SelectedValues}
           HeaderAvailable="Column Values"
@@ -61,6 +62,9 @@ export class CustomSortValuesWizard
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
+        <HelpBlock marginTop={2}>
+          Press ctrl/cmd key while clicking to select multiple items.
+        </HelpBlock>
       </WizardPanel>
     );
   }

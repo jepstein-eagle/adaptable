@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { SingleListBox } from '../Components/ListBox/SingleListBox';
-import Panel from '../../components/Panel';
 import { DistinctCriteriaPairValue, SelectionMode } from '../../PredefinedConfig/Common/Enums';
 
 export interface ExpressionBuilderColumnValuesProps

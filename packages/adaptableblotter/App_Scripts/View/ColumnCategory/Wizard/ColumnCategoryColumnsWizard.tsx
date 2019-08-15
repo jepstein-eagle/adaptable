@@ -60,7 +60,11 @@ export class ColumnCategoryColumnsWizard
   render(): any {
     return (
       <WizardPanel>
+        <HelpBlock marginBottom={2}>
+          Press ctrl/cmd key while clicking to select multiple items.
+        </HelpBlock>
         <DualListBoxEditor
+          style={{ flex: 1, overflow: 'hidden' }}
           AvailableValues={this.state.AvailableColumns}
           SelectedValues={this.state.SelectedColumns}
           HeaderAvailable="Available Columns"

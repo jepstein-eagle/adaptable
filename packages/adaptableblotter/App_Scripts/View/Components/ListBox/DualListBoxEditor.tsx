@@ -12,6 +12,7 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 import { Flex } from 'rebass';
 import Panel from '../../../components/Panel';
 import ListGroup from '../../../components/List/ListGroup';
+import SelectableList from '../../../components/SelectableList';
 
 export enum DisplaySize {
   Large,
@@ -62,6 +63,8 @@ export class DualListBoxEditor extends React.Component<
   DualListBoxEditorState
 > {
   private placeholder: HTMLButtonElement;
+  private firstSelected: HTMLElement;
+  private refFirstSelectedSelected: (node: HTMLElement) => void;
   constructor(props: DualListBoxEditorProps) {
     super(props);
     this.placeholder = document.createElement('button');
@@ -69,6 +72,10 @@ export class DualListBoxEditor extends React.Component<
     this.placeholder.classList.add('list-group-item');
     this.placeholder.type = 'button';
     let availableValues = new Array<any>();
+
+    this.refFirstSelectedSelected = node => {
+      this.firstSelected = node;
+    };
 
     this.props.AvailableValues.forEach(x => {
       if (this.props.ValueMember) {
@@ -148,53 +155,40 @@ export class DualListBoxEditor extends React.Component<
     });
   }
   render() {
-    let setRefFirstSelected = true;
+    let setRefFirstSelectedSelected = true;
     let displaySize: DisplaySize = this.props.DisplaySize
       ? this.props.DisplaySize
       : DisplaySize.Large;
 
     // build selected elements
-    let selectedElements = this.state.SelectedValues.map(x => {
+    let selectedElements = this.state.SelectedValues.map((x, index) => {
       let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
-      if (isActive && setRefFirstSelected) {
-        setRefFirstSelected = false;
-        return (
-          <ListGroupItem
-            key={`${x}-1`}
-            className="Selected"
-            draggable={true}
-            onClick={() => this.onClickSelectedItem(x)}
-            style={listGroupItemStyle}
-            active={isActive}
-            ref="FirstSelectedSelected"
-            onDragStart={event => this.DragSelectedStart(event, x)}
-            onDragEnd={() => this.DragSelectedEnd()}
-            value={x}
-          >
-            {x}
-          </ListGroupItem>
-        );
-      } else {
-        return (
-          <ListGroupItem
-            key={`${x}-2`}
-            className="Selected"
-            style={listGroupItemStyle}
-            draggable={true}
-            onClick={() => this.onClickSelectedItem(x)}
-            active={isActive}
-            onDragStart={event => this.DragSelectedStart(event, x)}
-            onDragEnd={() => this.DragSelectedEnd()}
-            value={x}
-          >
-            {x}
-          </ListGroupItem>
-        );
+
+      const result = (
+        <ListGroupItem
+          key={`${x}-1`}
+          index={index}
+          className="Selected"
+          draggable={true}
+          style={listGroupItemStyle}
+          active={isActive}
+          ref={isActive && setRefFirstSelectedSelected ? this.refFirstSelectedSelected : null}
+          onDragStart={event => this.DragSelectedStart(event, x)}
+          onDragEnd={() => this.DragSelectedEnd()}
+          value={x}
+        >
+          {x}
+        </ListGroupItem>
+      );
+      if (isActive && setRefFirstSelectedSelected) {
+        setRefFirstSelectedSelected = false;
       }
+
+      return result;
     });
 
     // build available elements - might have master/children
-    let availableElements = this.state.AvailableValues.map(x => {
+    let availableElements = this.state.AvailableValues.map((x, index) => {
       let isActive = this.state.UiSelectedAvailableValues.indexOf(x) >= 0;
       let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
       let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
@@ -208,10 +202,11 @@ export class DualListBoxEditor extends React.Component<
           <ListGroupItem
             key={`${value}-master`}
             className="Available"
+            index={index}
+            selectionId={value}
             style={listGroupItemStyle}
             active={isActive}
             draggable={false}
-            onClick={() => this.onClickAvailableValuesItem(x)}
             value={value}
           >
             <Checkbox
@@ -227,8 +222,8 @@ export class DualListBoxEditor extends React.Component<
             className="Available"
             style={listGroupItemStyle}
             active={isActive}
+            index={index}
             draggable={true}
-            onClick={() => this.onClickAvailableValuesItem(x)}
             key={`${value}-not-master`}
             onDragStart={event => this.DragAvailableStart(event, x)}
             onDragEnd={() => this.DragAvailableEnd()}
@@ -267,15 +262,20 @@ export class DualListBoxEditor extends React.Component<
           bodyScroll
         >
           {headerFirstListBox}
-          <ListGroup
-            className="AvailableDropZone"
-            style={listGroupAvailableStyle}
-            onDragEnter={(event: any) => this.DragEnterAvailable(event)}
-            onDragOver={(event: any) => this.DragOverAvailable(event)}
-            onDragLeave={(event: any) => this.DragLeaveAvailable(event)}
+          <SelectableList
+            getItemId={this.getAvailableItemId}
+            onSelectedChange={this.onAvailableListSelectionChange}
           >
-            {availableElements}
-          </ListGroup>
+            <ListGroup
+              className="ab-AvailableDropZone"
+              style={listGroupAvailableStyle}
+              onDragEnter={(event: any) => this.DragEnterAvailable(event)}
+              onDragOver={(event: any) => this.DragOverAvailable(event)}
+              onDragLeave={(event: any) => this.DragLeaveAvailable(event)}
+            >
+              {availableElements}
+            </ListGroup>
+          </SelectableList>
         </Panel>
 
         <Flex flexDirection="column" justifyContent="center">
@@ -327,15 +327,20 @@ export class DualListBoxEditor extends React.Component<
           marginLeft={2}
           marginRight={2}
         >
-          <ListGroup
-            style={listGroupSelectedStyle}
-            className="SelectedDropZone"
-            onDragEnter={(event: any) => this.DragEnterSelected(event)}
-            onDragOver={(event: any) => this.DragOverSelected(event)}
-            onDragLeave={(event: any) => this.DragLeaveSelected(event)}
+          <SelectableList
+            getItemId={this.getSelectedItemId}
+            onSelectedChange={this.onSelectedListSelectionChange}
           >
-            {selectedElements}
-          </ListGroup>
+            <ListGroup
+              style={listGroupSelectedStyle}
+              className="ab-SelectedDropZone"
+              onDragEnter={(event: any) => this.DragEnterSelected(event)}
+              onDragOver={(event: any) => this.DragOverSelected(event)}
+              onDragLeave={(event: any) => this.DragLeaveSelected(event)}
+            >
+              {selectedElements}
+            </ListGroup>
+          </SelectableList>
         </Panel>
 
         <Flex flexDirection="column" justifyContent="center">
@@ -560,10 +565,9 @@ export class DualListBoxEditor extends React.Component<
   }
 
   ensureFirstSelectedItemVisible(top: boolean) {
-    var itemComponent = this.refs['FirstSelectedSelected'];
-    if (itemComponent) {
-      var domNode = ReactDOM.findDOMNode(itemComponent) as HTMLElement;
-      domNode.scrollIntoView(top);
+    var itemComponentDOMNode = this.firstSelected;
+    if (itemComponentDOMNode) {
+      itemComponentDOMNode.scrollIntoView(top);
     }
   }
 
@@ -812,7 +816,7 @@ export class DualListBoxEditor extends React.Component<
             }
           }
         }
-      } else if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
+      } else if (this.overHTMLElement.classList.contains('ab-AvailableDropZone')) {
         newSelectedArray = [...this.state.SelectedValues];
         newSelectedArray.splice(from, 1);
         newAvailableValues = [...this.state.AvailableValues];
@@ -841,7 +845,7 @@ export class DualListBoxEditor extends React.Component<
         newSelectedArray.splice(from, 1);
         newSelectedArray.splice(to, 0, this.draggedElement);
         newAvailableValues = [...this.state.AvailableValues];
-      } else if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+      } else if (this.overHTMLElement.classList.contains('ab-SelectedDropZone')) {
         newSelectedArray = [...this.state.SelectedValues];
         newSelectedArray.splice(from, 1);
         newSelectedArray.push(this.draggedElement);
@@ -849,8 +853,8 @@ export class DualListBoxEditor extends React.Component<
       }
       //We remove our awesome placeholder
       if (
-        this.overHTMLElement.classList.contains('SelectedDropZone') ||
-        this.overHTMLElement.classList.contains('AvailableDropZone')
+        this.overHTMLElement.classList.contains('ab-SelectedDropZone') ||
+        this.overHTMLElement.classList.contains('ab-AvailableDropZone')
       ) {
         this.overHTMLElement.removeChild(this.placeholder);
       } else {
@@ -899,7 +903,7 @@ export class DualListBoxEditor extends React.Component<
         }
         newAvailableValues = [...this.state.AvailableValues];
         newAvailableValues.splice(from, 1);
-      } else if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+      } else if (this.overHTMLElement.classList.contains('ab-SelectedDropZone')) {
         newSelectedArray = [...this.state.SelectedValues];
         if (this.props.ValueMember) {
           newSelectedArray.push(this.draggedElement[this.props.ValueMember]);
@@ -911,7 +915,7 @@ export class DualListBoxEditor extends React.Component<
       }
 
       //We remove our awesome placeholder
-      if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+      if (this.overHTMLElement.classList.contains('ab-SelectedDropZone')) {
         this.overHTMLElement.removeChild(this.placeholder);
       } else {
         this.overHTMLElement.parentNode.removeChild(this.placeholder);
@@ -950,7 +954,7 @@ export class DualListBoxEditor extends React.Component<
       return;
     }
     this.overHTMLElement = targetElement;
-    if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
+    if (this.overHTMLElement.classList.contains('ab-AvailableDropZone')) {
       targetElement.appendChild(this.placeholder);
     } else {
       targetElement.parentNode.insertBefore(this.placeholder, targetElement);
@@ -961,11 +965,11 @@ export class DualListBoxEditor extends React.Component<
     e.stopPropagation();
     let targetElement = e.target as HTMLElement;
     if (
-      targetElement.classList.contains('AvailableDropZone') ||
+      targetElement.classList.contains('ab-AvailableDropZone') ||
       targetElement.classList.contains('placeholder')
     ) {
       if (this.overHTMLElement) {
-        if (this.overHTMLElement.classList.contains('AvailableDropZone')) {
+        if (this.overHTMLElement.classList.contains('ab-AvailableDropZone')) {
           this.overHTMLElement.removeChild(this.placeholder);
         } else {
           this.overHTMLElement.parentNode.removeChild(this.placeholder);
@@ -988,7 +992,7 @@ export class DualListBoxEditor extends React.Component<
       return;
     }
     this.overHTMLElement = targetElement;
-    if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+    if (this.overHTMLElement.classList.contains('ab-SelectedDropZone')) {
       targetElement.appendChild(this.placeholder);
     } else {
       targetElement.parentNode.insertBefore(this.placeholder, targetElement);
@@ -999,11 +1003,11 @@ export class DualListBoxEditor extends React.Component<
     e.stopPropagation();
     let targetElement = e.target as HTMLElement;
     if (
-      targetElement.classList.contains('SelectedDropZone') ||
+      targetElement.classList.contains('ab-SelectedDropZone') ||
       targetElement.classList.contains('placeholder')
     ) {
       if (this.overHTMLElement) {
-        if (this.overHTMLElement.classList.contains('SelectedDropZone')) {
+        if (this.overHTMLElement.classList.contains('ab-SelectedDropZone')) {
           this.overHTMLElement.removeChild(this.placeholder);
         } else {
           this.overHTMLElement.parentNode.removeChild(this.placeholder);
@@ -1045,46 +1049,70 @@ export class DualListBoxEditor extends React.Component<
     this.props.onChange(this.state.SelectedValues);
   }
 
-  onClickSelectedItem(item: any) {
-    let index = this.state.UiSelectedSelectedValues.indexOf(item);
-    if (index >= 0) {
-      let newArray = [...this.state.UiSelectedSelectedValues];
-      newArray.splice(index, 1);
-      this.setState({ UiSelectedSelectedValues: newArray } as DualListBoxEditorState);
-    } else {
-      let newArray = [...this.state.UiSelectedSelectedValues];
-      newArray.push(item);
-      //we reorder the array so UiSelectedSelectedValues hass the same order as the list displayed on screen
-      newArray.sort((a, b) =>
-        this.state.SelectedValues.indexOf(a) < this.state.SelectedValues.indexOf(b)
-          ? -1
-          : this.state.SelectedValues.indexOf(a) > this.state.SelectedValues.indexOf(b)
-          ? 1
-          : 0
-      );
-      this.setState({ UiSelectedSelectedValues: newArray } as DualListBoxEditorState);
+  private getSelectedItemId = (index: number) => {
+    const item = this.state.SelectedValues[index];
+
+    if (!item) {
+      return -1;
     }
-  }
-  onClickAvailableValuesItem(item: any) {
-    let index = this.state.UiSelectedAvailableValues.indexOf(item);
-    if (index >= 0) {
-      let newArray = [...this.state.UiSelectedAvailableValues];
-      newArray.splice(index, 1);
-      this.setState({ UiSelectedAvailableValues: newArray } as DualListBoxEditorState);
-    } else {
-      let newArray = [...this.state.UiSelectedAvailableValues];
-      newArray.push(item);
-      //we reorder the array so UiSelectedAvailableValues hass the same order as the list displayed on screen
-      newArray.sort((a, b) =>
-        this.state.AvailableValues.indexOf(a) < this.state.AvailableValues.indexOf(b)
-          ? -1
-          : this.state.AvailableValues.indexOf(a) > this.state.AvailableValues.indexOf(b)
-          ? 1
-          : 0
-      );
-      this.setState({ UiSelectedAvailableValues: newArray } as DualListBoxEditorState);
+
+    return item;
+  };
+
+  private onSelectedListSelectionChange = (selection: { [key: string]: boolean }) => {
+    const UiSelectedSelectedValues = Object.keys(selection);
+
+    UiSelectedSelectedValues.sort(
+      (a, b) => this.state.SelectedValues.indexOf(a) - this.state.SelectedValues.indexOf(b)
+    );
+
+    this.setState({ UiSelectedSelectedValues } as DualListBoxEditorState);
+  };
+
+  private getAvailableItemId = (index: number) => {
+    const item = this.state.AvailableValues[index];
+
+    if (!item) {
+      return -1;
     }
-  }
+
+    let display = this.props.DisplayMember ? item[this.props.DisplayMember] : item;
+    let value = this.props.ValueMember ? item[this.props.ValueMember] : item;
+
+    if (this.isValueFilteredOut(display)) {
+      return -1;
+    }
+
+    return value;
+  };
+
+  /**
+   * @param selection - is a map, values being item keys (their textual representation), while values being true
+   */
+  private onAvailableListSelectionChange = (selection: { [key: string]: boolean }) => {
+    let UiSelectedAvailableValues = Object.keys(selection);
+
+    let availableValues = this.state.AvailableValues;
+    let availableValuesMap: { [key: string]: any } = {};
+
+    if (this.props.ValueMember) {
+      availableValues = availableValues.map(x => {
+        const key = x[this.props.ValueMember];
+
+        availableValuesMap[key] = x;
+        return key;
+      });
+    }
+    UiSelectedAvailableValues.sort(
+      (a, b) => availableValues.indexOf(a) - availableValues.indexOf(b)
+    );
+
+    if (this.props.ValueMember) {
+      UiSelectedAvailableValues = UiSelectedAvailableValues.map(k => availableValuesMap[k]);
+    }
+
+    this.setState({ UiSelectedAvailableValues } as DualListBoxEditorState);
+  };
 }
 
 var listGroupStyleAvailableLarge: React.CSSProperties = {
