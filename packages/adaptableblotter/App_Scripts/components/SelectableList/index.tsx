@@ -1,11 +1,5 @@
-import React, {
-  SyntheticEvent,
-  HTMLProps,
-  useContext,
-  useRef,
-  MouseEvent,
-  MutableRefObject,
-} from 'react';
+import * as React from 'react';
+import { SyntheticEvent, HTMLProps, useContext, useRef, MouseEvent, MutableRefObject } from 'react';
 
 import useProperty from '../utils/useProperty';
 
