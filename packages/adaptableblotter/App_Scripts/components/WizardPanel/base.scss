@@ -1,0 +1,6 @@
+.ab-WizardPanel {
+  & > .ab-Panel__body {
+    display: flex;
+    flex-flow: column;
+  }
+}

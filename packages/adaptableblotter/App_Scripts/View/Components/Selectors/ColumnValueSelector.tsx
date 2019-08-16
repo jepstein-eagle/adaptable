@@ -42,7 +42,7 @@ export class ColumnValueSelector extends React.Component<
       newOrExisting: NEW_OR_EXISTING.existing,
     };
   }
-  componentWillReceiveProps(nextProps: ColumnValueSelectorProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: ColumnValueSelectorProps, nextContext: any) {
     if (
       StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue) &&
       StringExtensions.IsNullOrEmpty(nextProps.SelectedColumnValue)

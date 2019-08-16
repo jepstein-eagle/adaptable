@@ -66,7 +66,7 @@ export class ListBoxFilterForm extends React.Component<
       DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue,
     };
   }
-  componentWillReceiveProps(nextProps: ListBoxFilterFormProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: ListBoxFilterFormProps, nextContext: any) {
     this.setState({
       UiSelectedColumnValues: nextProps.UiSelectedColumnValues,
       UiSelectedUserFilters: nextProps.UiSelectedUserFilters,

@@ -13,6 +13,7 @@ import { DualListBoxEditor, DisplaySize } from '../../../Components/ListBox/Dual
 import WizardPanel from '../../../../components/WizardPanel';
 import Radio from '../../../../components/Radio';
 import { Flex, Text, Box } from 'rebass';
+import HelpBlock from '../../../../components/HelpBlock';
 
 export interface CategoryChartYAxisWizardProps
   extends AdaptableWizardStepProps<CategoryChartDefinition> {}
@@ -79,8 +80,12 @@ export class CategoryChartYAxisWizard
           </Flex>
         </Flex>
 
-        <Flex flex={1} padding={2}>
+        <Flex flex={1} padding={2} flexDirection={'column'}>
+          <HelpBlock marginBottom={2}>
+            Press ctrl/cmd key while clicking to select multiple items.
+          </HelpBlock>
           <DualListBoxEditor
+            style={{ flex: 1, overflow: 'hidden' }}
             AvailableValues={availableColumns}
             SelectedValues={existingColumns}
             HeaderAvailable="Numeric Columns"

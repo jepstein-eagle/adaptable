@@ -16,7 +16,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
 }
 
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
-  componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any) {
     //if there was a selected column and parent unset the column we then clear the component
     // otherwise it's correctly unselected but the input still have the previsous selected column text
     let propsSelectedColumnIds: string[] = this.props.SelectedColumnIds.filter(x =>

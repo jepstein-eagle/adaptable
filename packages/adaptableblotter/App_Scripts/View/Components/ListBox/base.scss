@@ -1,0 +1,9 @@
+.ab-AvailableDropZone,
+.ab-SelectedDropZone {
+  .placeholder {
+    width: 100%;
+    &:before {
+      content: 'DROPS HERE'
+    }
+  }
+}

@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
-import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import ListGroupItem from '../../../components/List/ListGroupItem';
-import ListGroup from '../../../components/List/ListGroup';
 import { Flex } from 'rebass';
-import Helper from '../../../Utilities/Helpers/Helper';
+import { SortOrder, SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
+import { ListBoxFilterSortComponent } from '../ListBoxFilterSortComponent';
+import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
+import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
+import ListGroupItem from '../../../../components/List/ListGroupItem';
+import ListGroup from '../../../../components/List/ListGroup';
+import SelectableList from '../../../../components/SelectableList';
+import Helper from '../../../../Utilities/Helpers/Helper';
 
 export interface SingleListBoxProps {
   Values: Array<any>;
@@ -28,8 +29,6 @@ export interface SingleListBoxState extends React.ClassAttributes<SingleListBox>
   SortOrder: SortOrder;
 }
 
-const baseClassName = 'ab-SingleListBox';
-
 export class SingleListBox extends React.Component<SingleListBoxProps, SingleListBoxState> {
   constructor(props: SingleListBoxProps) {
     super(props);
@@ -44,7 +43,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
       SortOrder: SortOrder.Ascending,
     };
   }
-  componentWillReceiveProps(nextProps: SingleListBoxProps, nextContext: any) {
+  UNSAFE_componentWillReceiveProps(nextProps: SingleListBoxProps, nextContext: any) {
     this.setState({
       Values: ArrayExtensions.sortArrayWithProperty(
         this.state.SortOrder,
@@ -68,7 +67,6 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
       let display: string = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
       // possible that a column will cellrendeer has no display value; in that scenario lets return null
       if (Helper.objectNotExists(display)) {
-        console.log('return null');
         return null;
       }
       let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
@@ -79,12 +77,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         return null;
       } else {
         return (
-          <ListGroupItem
-            key={value + index}
-            onClick={() => this.onClickItem(x)}
-            active={isActive}
-            value={value}
-          >
+          <ListGroupItem key={value + index} index={index} active={isActive} value={value}>
             {display}
           </ListGroupItem>
         );
@@ -104,12 +97,26 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     return (
       <Flex flex={1} flexDirection="column" style={{ width: '100%' }}>
         {header}
-        <ListGroup marginTop={2} style={{ overflow: 'auto', flex: 1, ...this.props.listStyle }}>
-          {itemsElements}
-        </ListGroup>
+        <SelectableList onSelectedChange={this.onSelectionChange} getItemId={this.getItemId}>
+          <ListGroup marginTop={2} style={{ overflow: 'auto', flex: 1, ...this.props.listStyle }}>
+            {itemsElements}
+          </ListGroup>
+        </SelectableList>
       </Flex>
     );
   }
+
+  private getItemId = (index: number) => {
+    const item = this.state.Values[index];
+
+    if (!item) {
+      return -1;
+    }
+
+    let value = this.props.ValueMember ? item[this.props.ValueMember] : item;
+
+    return value;
+  };
 
   handleChangeFilterValue(x: string) {
     this.setState({
@@ -143,32 +150,9 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     this.props.onSelectedChange(this.state.UiSelectedValues);
   }
 
-  onClickItem(item: any) {
-    let index: number;
-    if (this.props.ValueMember) {
-      index = this.state.UiSelectedValues.indexOf(item[this.props.ValueMember]);
-    } else {
-      index = this.state.UiSelectedValues.indexOf(item);
-    }
-    if (index >= 0) {
-      let newArray = [...this.state.UiSelectedValues];
-      newArray.splice(index, 1);
-      this.setState({ UiSelectedValues: newArray } as SingleListBoxState, () =>
-        this.raiseOnChange()
-      );
-    } else {
-      let newArray = [...this.state.UiSelectedValues];
-      if (this.props.SelectionMode == SelectionMode.Single) {
-        newArray = [];
-      }
-      if (this.props.ValueMember) {
-        newArray.push(item[this.props.ValueMember]);
-      } else {
-        newArray.push(item);
-      }
-      this.setState({ UiSelectedValues: newArray } as SingleListBoxState, () =>
-        this.raiseOnChange()
-      );
-    }
-  }
+  private onSelectionChange = (selection: { [key: string]: boolean }) => {
+    let UiSelectedValues = Object.keys(selection);
+
+    this.setState({ UiSelectedValues } as SingleListBoxState, () => this.raiseOnChange());
+  };
 }

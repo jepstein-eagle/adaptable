@@ -94,7 +94,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       editedColumnFilter: existingColumnFilter,
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.CurrentColumn.DataType != DataType.Boolean) {
       let columnValuePairs: IRawValueDisplayValuePair[] = [];
 

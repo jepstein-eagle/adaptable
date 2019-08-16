@@ -45,7 +45,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
 
-    this.blotter.setValueBatch(newValues);
+    this.blotter.api.gridApi.setGridCellBatch(newValues);
   }
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {

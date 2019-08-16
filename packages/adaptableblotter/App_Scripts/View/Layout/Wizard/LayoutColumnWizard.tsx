@@ -43,7 +43,11 @@ export class LayoutColumnWizard
 
     return (
       <WizardPanel>
+        <HelpBlock marginBottom={2}>
+          Press ctrl/cmd key while clicking to select multiple items.
+        </HelpBlock>
         <DualListBoxEditor
+          style={{ flex: 1, overflow: 'hidden' }}
           AvailableValues={this.props.Columns.map(x => x.FriendlyName)}
           SelectedValues={this.state.SelectedColumns}
           HeaderAvailable="Available Columns"

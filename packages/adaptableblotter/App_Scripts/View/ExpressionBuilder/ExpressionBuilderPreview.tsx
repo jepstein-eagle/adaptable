@@ -43,9 +43,6 @@ export interface ExpressionBuilderPreviewProps
 }
 
 export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderPreviewProps, {}> {
-  componentWillReceiveProps(nextProps: ExpressionBuilderPreviewProps, nextContext: any) {
-    //       this.ensureSelectedColumnVisible(nextProps.SelectedColumnId)
-  }
   render() {
     let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression);
     let previewLists = columnList.map(columnId => {

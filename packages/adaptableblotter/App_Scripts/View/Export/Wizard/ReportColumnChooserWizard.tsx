@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Panel from '../../../components/Panel';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -9,7 +8,7 @@ import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualLis
 import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
 import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import WizardPanel from '../../../components/WizardPanel';
-import { Flex } from 'rebass';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportColumnsWizardState {
@@ -36,16 +35,19 @@ export class ReportColumnChooserWizard
         bodyProps={{ style: { border: 'none' } }}
         headerProps={{ style: { border: 'none' } }}
       >
-        <Flex style={{ width: '100%' }}>
-          <DualListBoxEditor
-            AvailableValues={this.state.AllColumnValues}
-            SelectedValues={this.state.SelectedColumnValues}
-            HeaderAvailable="Columns"
-            HeaderSelected="Columns in Report"
-            onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
-            DisplaySize={DisplaySize.Small}
-          />
-        </Flex>
+        <HelpBlock marginBottom={2}>
+          Press ctrl/cmd key while clicking to select multiple items.
+        </HelpBlock>
+
+        <DualListBoxEditor
+          style={{ flex: 1, overflow: 'hidden' }}
+          AvailableValues={this.state.AllColumnValues}
+          SelectedValues={this.state.SelectedColumnValues}
+          HeaderAvailable="Columns"
+          HeaderSelected="Columns in Report"
+          onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
+          DisplaySize={DisplaySize.Small}
+        />
       </WizardPanel>
     ) : null;
   }
