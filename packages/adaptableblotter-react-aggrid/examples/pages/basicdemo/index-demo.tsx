@@ -9,6 +9,8 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
+global.React = React;
+
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 const examplesHelper = new ExamplesHelper();
 

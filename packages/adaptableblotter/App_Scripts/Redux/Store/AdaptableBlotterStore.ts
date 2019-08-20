@@ -236,7 +236,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       state.Theme = undefined;
       break;
     case LOAD_STATE:
-      const { State } = <LoadStateAction>action;
+      const { State } = action as LoadStateAction;
       Object.keys(State).forEach(key => {
         state[key] = State[key];
       });

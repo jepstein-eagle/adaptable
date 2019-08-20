@@ -306,7 +306,7 @@ export const SetNewColumnListOrder = (
 });
 
 const initialSystemState: SystemState = {
-  SystemStatus: { StatusMessage: 'All good', StatusType: MessageType.Success }, //SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE
+  SystemStatus: { StatusMessage: 'All good', StatusType: MessageType.Success }, // SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE
   Alerts: EMPTY_ARRAY,
   AvailableCalendars: CalendarHelper.getSystemCalendars(),
   CurrentLiveReports: EMPTY_ARRAY,
@@ -332,14 +332,14 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
   switch (action.type) {
     case SYSTEM_SET_HEALTH_STATUS:
       return Object.assign({}, state, {
-        SystemStatus: (<SystemSetHealthStatusAction>action).SystemStatus,
+        SystemStatus: (action as SystemSetHealthStatusAction).SystemStatus,
       });
     case SYSTEM_CLEAR_HEALTH_STATUS:
       return Object.assign({}, state, {
         SystemStatus: { StatusMessage: '', StatusType: 'Success' },
       });
     case SYSTEM_ALERT_ADD: {
-      let actionTypedAdd = <SystemAlertAddAction>action;
+      const actionTypedAdd = action as SystemAlertAddAction;
       alerts = [].concat(state.Alerts);
       if (alerts.length == actionTypedAdd.MaxAlerts) {
         // we have hit the maximum so remove first item (oldest)
@@ -349,7 +349,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       return Object.assign({}, state, { Alerts: alerts });
     }
     case SYSTEM_ALERT_DELETE: {
-      let actionTypedDelete = <SystemAlertDeleteAction>action;
+      const actionTypedDelete = action as SystemAlertDeleteAction;
       alerts = [].concat(state.Alerts);
       alerts.splice(actionTypedDelete.Index, 1);
       return Object.assign({}, state, { Alerts: alerts });
@@ -358,8 +358,8 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       return Object.assign({}, state, { Alerts: [] });
     }
     case REPORT_START_LIVE: {
-      let actionTyped = <ReportStartLiveAction>action;
-      let currentLiveReports: ILiveReport[] = [].concat(state.CurrentLiveReports);
+      const actionTyped = action as ReportStartLiveAction;
+      const currentLiveReports: ILiveReport[] = [].concat(state.CurrentLiveReports);
       currentLiveReports.push({
         ExportDestination: actionTyped.ExportDestination,
         Report: actionTyped.Report,
@@ -368,9 +368,9 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       return Object.assign({}, state, { CurrentLiveReports: currentLiveReports });
     }
     case REPORT_STOP_LIVE: {
-      let actionTyped = <ReportStopLiveAction>action;
-      let currentLiveReports: ILiveReport[] = [].concat(state.CurrentLiveReports);
-      let index = currentLiveReports.findIndex(
+      const actionTyped = action as ReportStopLiveAction;
+      const currentLiveReports: ILiveReport[] = [].concat(state.CurrentLiveReports);
+      const index = currentLiveReports.findIndex(
         x => x.Report == actionTyped.Report && x.ExportDestination == actionTyped.ExportDestination
       );
       currentLiveReports.splice(index, 1);
@@ -378,50 +378,50 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     }
     case SMARTEDIT_SET_VALID_SELECTION:
       return Object.assign({}, state, {
-        IsValidSmartEditSelection: (<SmartEditSetValidSelectionAction>action)
+        IsValidSmartEditSelection: (action as SmartEditSetValidSelectionAction)
           .IsValidSmartEditSelection,
       });
     case SMARTEDIT_SET_PREVIEW:
       return Object.assign({}, state, {
-        SmartEditPreviewInfo: (<SmartEditSetPreviewAction>action).SmartEditPreviewInfo,
+        SmartEditPreviewInfo: (action as SmartEditSetPreviewAction).SmartEditPreviewInfo,
       });
     case BULK_UPDATE_SET_VALID_SELECTION:
       return Object.assign({}, state, {
-        BulkUpdateValidationResult: (<BulkUpdateSetValidSelectionAction>action)
+        BulkUpdateValidationResult: (action as BulkUpdateSetValidSelectionAction)
           .bulkUpdateValidationResult,
       });
     case BULK_UPDATE_SET_PREVIEW:
       return Object.assign({}, state, {
-        BulkUpdatePreviewInfo: (<BulkUpdateSetPreviewAction>action).BulkUpdatePreviewInfo,
+        BulkUpdatePreviewInfo: (action as BulkUpdateSetPreviewAction).BulkUpdatePreviewInfo,
       });
 
     // Chart Actions
     case CHART_SET_CHART_DATA:
-      return Object.assign({}, state, { ChartData: (<ChartSetChartDataAction>action).chartData });
+      return Object.assign({}, state, { ChartData: (action as ChartSetChartDataAction).chartData });
 
     case CHART_SET_CHART_VISIBILITY:
       return Object.assign({}, state, {
-        ChartVisibility: (<ChartSetChartVisibiityAction>action).ChartVisibility,
+        ChartVisibility: (action as ChartSetChartVisibiityAction).ChartVisibility,
       });
 
     case CALCULATEDCOLUMN_SET_ERROR_MESSAGE: {
       return Object.assign({}, state, {
-        CalculatedColumnErrorMessage: (<CalculatedColumnSetErrorMessageAction>action).ErrorMsg,
+        CalculatedColumnErrorMessage: (action as CalculatedColumnSetErrorMessageAction).ErrorMsg,
       });
     }
     case SET_IPP_DOMAIN_PAGES: {
       return Object.assign({}, state, {
-        IPPDomainsPages: (<SetIPPDomainPagesAction>action).IPPDomainsPages,
+        IPPDomainsPages: (action as SetIPPDomainPagesAction).IPPDomainsPages,
       });
     }
     case REPORT_SET_ERROR_MESSAGE: {
       return Object.assign({}, state, {
-        ReportErrorMessage: (<ReportSetErrorMessageAction>action).ErrorMessage,
+        ReportErrorMessage: (action as ReportSetErrorMessageAction).ErrorMessage,
       });
     }
     case QUICK_SEARCH_SET_RANGE: {
       return Object.assign({}, state, {
-        QuickSearchRange: (<QuickSearchSetRangeAction>action).QueryRange,
+        QuickSearchRange: (action as QuickSearchSetRangeAction).QueryRange,
       });
     }
     case QUICK_SEARCH_CLEAR_RANGE: {
@@ -429,7 +429,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     }
     case QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS: {
       return Object.assign({}, state, {
-        QuickSearchVisibleColumnExpressions: (<QuickSearchSetVisibleColumnExpressionsAction>action)
+        QuickSearchVisibleColumnExpressions: (action as QuickSearchSetVisibleColumnExpressionsAction)
           .Expressions,
       });
     }

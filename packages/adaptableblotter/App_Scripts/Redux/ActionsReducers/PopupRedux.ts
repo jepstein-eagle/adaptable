@@ -196,7 +196,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (
 ): PopupState => {
   switch (action.type) {
     case POPUP_SHOW_SCREEN: {
-      let actionTypedShowPopup = <PopupShowScreenAction>action;
+      let actionTypedShowPopup = action as PopupShowScreenAction;
       let newScreenPopup: IScreenPopup = {
         ShowScreenPopup: true,
         ComponentStrategy: actionTypedShowPopup.ComponentStrategy,
@@ -215,7 +215,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (
       return Object.assign({}, state, { ScreenPopup: newScreenPopup });
     }
     case POPUP_SHOW_PROMPT: {
-      let actionTyped = <PopupShowPromptAction>action;
+      let actionTyped = action as PopupShowPromptAction;
       let newPromptPopup: IPromptPopup = {
         ShowPromptPopup: true,
         Header: actionTyped.Prompt.Header,
@@ -244,7 +244,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (
       return Object.assign({}, state, { PromptPopup: newPromptPopup });
     }
     case POPUP_SHOW_CONFIRMATION: {
-      let actionTyped = <PopupShowConfirmationAction>action;
+      let actionTyped = action as PopupShowConfirmationAction;
       let newConfirmationPopup: IConfirmationPopup = {
         ShowConfirmationPopup: true,
         Msg: actionTyped.Confirmation.Msg,
@@ -260,7 +260,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (
       return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup });
     }
     case POPUP_CONFIRM_CONFIRMATION: {
-      let actionTyped = <PopupConfirmConfirmationAction>action;
+      let actionTyped = action as PopupConfirmConfirmationAction;
       //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
       let newConfirmationPopup: IConfirmationPopup = {
         ShowConfirmationPopup: false,
@@ -293,7 +293,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (
       return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup });
     }
     case POPUP_SHOW_ALERT: {
-      let showAlertAction = <PopupShowAlertAction>action;
+      let showAlertAction = action as PopupShowAlertAction;
       let newAlertPopup: IAlertPopup = {
         ShowAlertPopup: true,
         Header: showAlertAction.Alert.Header,

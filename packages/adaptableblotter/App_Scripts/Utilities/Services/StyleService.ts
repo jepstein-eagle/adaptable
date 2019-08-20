@@ -16,18 +16,17 @@ import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRe
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import { BLOTTER_READY_EVENT } from '../Constants/GeneralConstants';
 
-//Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
+// Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
   private style: HTMLStyleElement;
+
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     // Create the <style> tag
     this.style = document.createElement('style');
-    this.style.id =
-      blotter.blotterOptions.containerOptions!.adaptableBlotterContainer +
-      '_' +
-      blotter.blotterOptions.blotterId +
-      '-style';
+    this.style.id = `${blotter.blotterOptions.containerOptions!.adaptableBlotterContainer}_${
+      blotter.blotterOptions.blotterId
+    }-style`;
     // WebKit hack :(
     this.style.appendChild(document.createTextNode(''));
     // Add the <style> element to the page
@@ -46,22 +45,25 @@ export class StyleService {
     this.setUpConditionalStyle();
     this.createAdaptableBlotterFunctionStyles();
   }
+
   private setUpFormatColumn() {
-    let formatColumnStrategy = <IFormatColumnStrategy>(
-      this.blotter.strategies.get(StrategyConstants.FormatColumnStrategyId)
-    );
+    const formatColumnStrategy = this.blotter.strategies.get(
+      StrategyConstants.FormatColumnStrategyId
+    ) as IFormatColumnStrategy;
     formatColumnStrategy.initStyles();
   }
+
   private setUpFlashingCells() {
-    let flashingCellsStrategy = <IFlashingCellsStrategy>(
-      this.blotter.strategies.get(StrategyConstants.FlashingCellsStrategyId)
-    );
+    const flashingCellsStrategy = this.blotter.strategies.get(
+      StrategyConstants.FlashingCellsStrategyId
+    ) as IFlashingCellsStrategy;
     flashingCellsStrategy.initStyles();
   }
+
   private setUpConditionalStyle() {
-    let conditionalStyleStrategy = <IConditionalStyleStrategy>(
-      this.blotter.strategies.get(StrategyConstants.ConditionalStyleStrategyId)
-    );
+    const conditionalStyleStrategy = this.blotter.strategies.get(
+      StrategyConstants.ConditionalStyleStrategyId
+    ) as IConditionalStyleStrategy;
     conditionalStyleStrategy.initStyles();
   }
 
@@ -75,147 +77,132 @@ export class StyleService {
 
     // Format Column
     this.blotter.api.formatColumnApi.getAllFormatColumn().forEach(formatColumn => {
-      let styleName = StyleHelper.CreateUniqueStyleName(
+      const styleName = StyleHelper.CreateUniqueStyleName(
         StrategyConstants.FormatColumnStrategyId,
         this.blotter,
         formatColumn
       );
       this.addCSSRule(
-        '.' + styleName,
-        'background-color: ' +
-          formatColumn.Style.BackColor +
-          ' !important;color: ' +
-          formatColumn.Style.ForeColor +
-          ' !important;font-weight: ' +
-          formatColumn.Style.FontWeight +
-          ' !important;font-style: ' +
-          formatColumn.Style.FontStyle +
-          ' !important;' +
-          (formatColumn.Style.FontSize
-            ? 'font-size: ' +
-              EnumExtensions.getCssFontSizeFromFontSizeEnum(formatColumn.Style.FontSize) +
-              ' !important'
-            : '')
+        `.${styleName}`,
+        `background-color: ${formatColumn.Style.BackColor} !important;color: ${
+          formatColumn.Style.ForeColor
+        } !important;font-weight: ${formatColumn.Style.FontWeight} !important;font-style: ${
+          formatColumn.Style.FontStyle
+        } !important;${
+          formatColumn.Style.FontSize
+            ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
+                formatColumn.Style.FontSize
+              )} !important`
+            : ''
+        }`
       );
     });
 
-    //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
-    let conditioonalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    // we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
+    const conditioonalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
     conditioonalStyles
       .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
       .forEach(element => {
-        let styleName = StyleHelper.CreateUniqueStyleName(
+        const styleName = StyleHelper.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
           this.blotter,
           element
         );
         this.addCSSRule(
-          '.' + styleName,
-          'background-color: ' +
-            element.Style.BackColor +
-            ' !important;color: ' +
-            element.Style.ForeColor +
-            ' !important;font-weight: ' +
-            element.Style.FontWeight +
-            ' !important;font-style: ' +
-            element.Style.FontStyle +
-            ' !important;' +
-            (element.Style.FontSize
-              ? 'font-size: ' +
-                EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) +
-                ' !important'
-              : '')
+          `.${styleName}`,
+          `background-color: ${element.Style.BackColor} !important;color: ${
+            element.Style.ForeColor
+          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
+            element.Style.FontStyle
+          } !important;${
+            element.Style.FontSize
+              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
+                  element.Style.FontSize
+                )} !important`
+              : ''
+          }`
         );
       });
     conditioonalStyles
       .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory)
       .forEach(element => {
-        let styleName = StyleHelper.CreateUniqueStyleName(
+        const styleName = StyleHelper.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
           this.blotter,
           element
         );
         this.addCSSRule(
-          '.' + styleName,
-          'background-color: ' +
-            element.Style.BackColor +
-            ' !important;color: ' +
-            element.Style.ForeColor +
-            ' !important;font-weight: ' +
-            element.Style.FontWeight +
-            ' !important;font-style: ' +
-            element.Style.FontStyle +
-            ' !important;' +
-            (element.Style.FontSize
-              ? 'font-size: ' +
-                EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) +
-                ' !important'
-              : '')
+          `.${styleName}`,
+          `background-color: ${element.Style.BackColor} !important;color: ${
+            element.Style.ForeColor
+          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
+            element.Style.FontStyle
+          } !important;${
+            element.Style.FontSize
+              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
+                  element.Style.FontSize
+                )} !important`
+              : ''
+          }`
         );
       });
     conditioonalStyles
       .filter(cs => cs.ConditionalStyleScope == ConditionalStyleScope.Column)
       .forEach(element => {
-        let styleName = StyleHelper.CreateUniqueStyleName(
+        const styleName = StyleHelper.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
           this.blotter,
           element
         );
         this.addCSSRule(
-          '.' + styleName,
-          'background-color: ' +
-            element.Style.BackColor +
-            ' !important;color: ' +
-            element.Style.ForeColor +
-            ' !important;font-weight: ' +
-            element.Style.FontWeight +
-            ' !important;font-style: ' +
-            element.Style.FontStyle +
-            ' !important;' +
-            (element.Style.FontSize
-              ? 'font-size: ' +
-                EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) +
-                ' !important'
-              : '')
+          `.${styleName}`,
+          `background-color: ${element.Style.BackColor} !important;color: ${
+            element.Style.ForeColor
+          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
+            element.Style.FontStyle
+          } !important;${
+            element.Style.FontSize
+              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
+                  element.Style.FontSize
+                )} !important`
+              : ''
+          }`
         );
       });
 
     // quick search
-    let quickSearchStyle: IStyle = this.blotter.api.quickSearchApi.getQuickSearchStyle();
+    const quickSearchStyle: IStyle = this.blotter.api.quickSearchApi.getQuickSearchStyle();
     if (StringExtensions.IsNullOrEmpty(quickSearchStyle.ClassName)) {
-      let styleName = StyleHelper.CreateStyleName(
+      const styleName = StyleHelper.CreateStyleName(
         StrategyConstants.QuickSearchStrategyId,
         this.blotter
       );
 
       this.addCSSRule(
-        '.' + styleName,
-        'background-color: ' +
-          quickSearchStyle.BackColor +
-          ' !important;color: ' +
-          quickSearchStyle.ForeColor +
-          ' !important;font-weight: ' +
-          quickSearchStyle.FontWeight +
-          ' !important;font-style: ' +
-          quickSearchStyle.FontStyle +
-          ' !important;' +
-          (quickSearchStyle.FontSize
-            ? 'font-size: ' +
-              EnumExtensions.getCssFontSizeFromFontSizeEnum(quickSearchStyle.FontSize) +
-              ' !important'
-            : '')
+        `.${styleName}`,
+        `background-color: ${quickSearchStyle.BackColor} !important;color: ${
+          quickSearchStyle.ForeColor
+        } !important;font-weight: ${quickSearchStyle.FontWeight} !important;font-style: ${
+          quickSearchStyle.FontStyle
+        } !important;${
+          quickSearchStyle.FontSize
+            ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
+                quickSearchStyle.FontSize
+              )} !important`
+            : ''
+        }`
       );
     }
-    //we define last Flash since it has the highest priority
+    // we define last Flash since it has the highest priority
     this.blotter.api.flashingCellApi.getAllFlashingCell().forEach(element => {
       if (element.IsLive) {
         this.addCSSRule(
-          '.' + StyleConstants.FLASH_UP_STYLE + '-' + element.Uuid,
-          'background-color: ' + element.UpColor + ' !important'
+          `.${StyleConstants.FLASH_UP_STYLE}-${element.Uuid}`,
+          `background-color: ${element.UpColor} !important`
         );
         this.addCSSRule(
-          '.' + StyleConstants.FLASH_DOWN_STYLE + '-' + element.Uuid,
-          'background-color: ' + element.DownColor + ' !important'
+          `.${StyleConstants.FLASH_DOWN_STYLE}-${element.Uuid}`,
+          `background-color: ${element.DownColor} !important`
         );
       }
     });
@@ -226,7 +213,7 @@ export class StyleService {
   }
 
   private addCSSRule(selector: string, rules: string) {
-    this.style.innerHTML += selector + '{' + rules + '}' + '\n';
+    this.style.innerHTML += `${selector}{${rules}}` + '\n';
   }
 
   // not sure if this is better than us keeping a copy of the state and listening to it which is what we used to do.

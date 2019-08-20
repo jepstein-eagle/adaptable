@@ -1,6 +1,6 @@
+import * as Redux from 'redux';
 import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
 import { DisplayAction } from '../../PredefinedConfig/Common/Enums';
-import * as Redux from 'redux';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import {
   QUICK_SEARCH_DEFAULT_BACK_COLOR,
@@ -60,14 +60,14 @@ export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (
   switch (action.type) {
     case QUICK_SEARCH_APPLY:
       return Object.assign({}, state, {
-        QuickSearchText: (<QuickSearchApplyAction>action).quickSearchText,
+        QuickSearchText: (action as QuickSearchApplyAction).quickSearchText,
       });
     case QUICK_SEARCH_SET_DISPLAY:
       return Object.assign({}, state, {
-        DisplayAction: (<QuickSearchSetDisplayAction>action).DisplayAction,
+        DisplayAction: (action as QuickSearchSetDisplayAction).DisplayAction,
       });
     case QUICK_SEARCH_SET_STYLE:
-      return Object.assign({}, state, { Style: (<QuickSearchSetStyleAction>action).style });
+      return Object.assign({}, state, { Style: (action as QuickSearchSetStyleAction).style });
     default:
       return state;
   }

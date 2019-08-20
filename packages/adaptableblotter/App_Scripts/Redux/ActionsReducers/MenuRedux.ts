@@ -22,7 +22,7 @@ export interface AddItemColumnMenuAction extends Redux.Action {
 
 export interface ClearColumnMenuAction extends Redux.Action {}
 
-//we do not use Redux.ActionCreator as we want to be typed safe for the arguments..... Redux.ActionCreator doesnt really make any sense to me as a consequence!!!!
+// we do not use Redux.ActionCreator as we want to be typed safe for the arguments..... Redux.ActionCreator doesnt really make any sense to me as a consequence!!!!
 export const SetMainMenuItems = (
   MenuItems: AdaptableBlotterMenuItem[]
 ): SetMainMenuItemsAction => ({
@@ -58,10 +58,10 @@ export const MenuReducer: Redux.Reducer<MenuState> = (
 ): MenuState => {
   switch (action.type) {
     case SET_MAIN_MENUITEMS: {
-      //TODO: we need to merge with the existing set of menuitems instead of replacing it.
-      //it will be important we we ever allow show/hide on menus
-      let actionTyped = <SetMainMenuItemsAction>action;
-      let menuItems = actionTyped.MenuItems.sort(
+      // TODO: we need to merge with the existing set of menuitems instead of replacing it.
+      // it will be important we we ever allow show/hide on menus
+      const actionTyped = action as SetMainMenuItemsAction;
+      const menuItems = actionTyped.MenuItems.sort(
         (a: AdaptableBlotterMenuItem, b: AdaptableBlotterMenuItem) =>
           a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
       );
@@ -69,7 +69,7 @@ export const MenuReducer: Redux.Reducer<MenuState> = (
       return Object.assign({}, state, { MainMenuItems: menuItems });
     }
     case BUILD_COLUMN_MENU: {
-      let actionTyped = <BuildColumnMenuAction>action;
+      const actionTyped = action as BuildColumnMenuAction;
       return Object.assign({}, state, {
         ColumnMenu: {
           ColumnId: actionTyped.ColumnId,
@@ -86,7 +86,7 @@ export const MenuReducer: Redux.Reducer<MenuState> = (
       });
     }
     case ADD_ITEM_COLUMN_MENU: {
-      let actionTyped = <AddItemColumnMenuAction>action;
+      const actionTyped = action as AddItemColumnMenuAction;
       return Object.assign({}, state, {
         ColumnMenu: {
           ColumnId: state.ColumnMenu.ColumnId,

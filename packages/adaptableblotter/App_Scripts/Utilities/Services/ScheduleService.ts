@@ -1,6 +1,6 @@
+import * as NodeSchedule from 'node-schedule';
 import { IScheduleService } from './Interface/IScheduleService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import * as NodeSchedule from 'node-schedule';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
@@ -17,9 +17,11 @@ import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
  */
 export class ScheduleService implements IScheduleService {
   private alertJobs: NodeSchedule.Job[];
+
   private exportJobs: NodeSchedule.Job[];
 
   private reminderState: ReminderState;
+
   private exportState: ExportState;
 
   constructor(private blotter: IAdaptableBlotter) {
@@ -31,13 +33,13 @@ export class ScheduleService implements IScheduleService {
     this.exportJobs = [];
 
     // create the midnight reload job
-    let reloadSchedule: Schedule = {
+    const reloadSchedule: Schedule = {
       Hour: 0,
       Minute: 1,
       DaysOfWeek: [0, 1, 2, 3, 4, 5, 6],
     };
 
-    let date: Date = this.getDateFromSchedule(reloadSchedule);
+    const date: Date = this.getDateFromSchedule(reloadSchedule);
     if (date != null) {
       var refreshGridJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
         this.blotter.reloadGrid();
@@ -49,24 +51,24 @@ export class ScheduleService implements IScheduleService {
     if (this.blotter.isInitialised) {
       if (this.reminderState != this.getReminderState()) {
         this.reminderState = this.getReminderState();
-        let reminderStrategy = <IReminderStrategy>(
-          this.blotter.strategies.get(StrategyConstants.ReminderStrategyId)
-        );
+        const reminderStrategy = this.blotter.strategies.get(
+          StrategyConstants.ReminderStrategyId
+        ) as IReminderStrategy;
         reminderStrategy.scheduleReminders();
       }
 
       if (this.exportState != this.getExportState()) {
         this.exportState = this.getExportState();
-        let exportStrategy = <IExportStrategy>(
-          this.blotter.strategies.get(StrategyConstants.ExportStrategyId)
-        );
+        const exportStrategy = this.blotter.strategies.get(
+          StrategyConstants.ExportStrategyId
+        ) as IExportStrategy;
         exportStrategy.scheduleReports();
       }
     }
   }
 
   public AddReminderSchedule(reminder: Reminder): void {
-    let date: Date = this.getDateFromSchedule(reminder.Schedule);
+    const date: Date = this.getDateFromSchedule(reminder.Schedule);
     if (date != null) {
       var alertJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
         this.blotter.api.alertApi.displayAlert(reminder.Alert);
@@ -77,7 +79,7 @@ export class ScheduleService implements IScheduleService {
 
   public AddReportSchedule(report: Report): void {
     if (report.AutoExport) {
-      let date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
+      const date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
       if (date != null) {
         var exportJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
           this.blotter.api.exportApi.sendReport(report.Name, report.AutoExport.ExportDestination);

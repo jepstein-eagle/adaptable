@@ -26,11 +26,17 @@ export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;
 
   private advancedSearchState: AdvancedSearchState;
+
   private columnFilterState: ColumnFilterState;
+
   private dataSourceState: DataSourceState;
+
   private quickSearchState: QuickSearchState;
+
   private userFilterState: UserFilterState;
+
   private columnSorts: ColumnSort[];
+
   private columns: IColumn[];
 
   constructor(blotter: IAdaptableBlotter) {
@@ -73,9 +79,9 @@ export class SearchService implements ISearchService {
 
         // if not highlighting cell then lets tell quick search strategy to create a range
         if (this.quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
-          let quickSearchStrategy = <IQuickSearchStrategy>(
-            this.blotter.strategies.get(StrategyConstants.QuickSearchStrategyId)
-          );
+          const quickSearchStrategy = this.blotter.strategies.get(
+            StrategyConstants.QuickSearchStrategyId
+          ) as IQuickSearchStrategy;
           quickSearchStrategy.createQuickSearchRange();
         }
 
@@ -138,12 +144,15 @@ export class SearchService implements ISearchService {
   private getColumnFilterState(): ColumnFilterState {
     return this.blotter.api.columnFilterApi.getColumnFilterState();
   }
+
   private getDataSourceState(): DataSourceState {
     return this.blotter.api.dataSourceApi.getDataSourceState();
   }
+
   private getQuickSearchState(): QuickSearchState {
     return this.blotter.api.quickSearchApi.getQuickSearchState();
   }
+
   private getUserFilterState(): UserFilterState {
     return this.blotter.api.userFilterApi.getUserFilterState();
   }
@@ -163,36 +172,36 @@ export class SearchService implements ISearchService {
    */
   publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
     if (this.blotter.isInitialised) {
-      let currentDataSource: DataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
-      let currentAdvancedSearch: AdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
+      const currentDataSource: DataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
+      const currentAdvancedSearch: AdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
 
       // lets get the searchstate
-      let blotterSearchState: BlotterSearchState = {
+      const blotterSearchState: BlotterSearchState = {
         dataSource: currentDataSource == null ? null : currentDataSource,
         advancedSearch: currentAdvancedSearch == null ? null : currentAdvancedSearch,
         quickSearch: this.blotter.api.quickSearchApi.getQuickSearchValue(),
         columnFilters: this.blotter.api.columnFilterApi.getAllColumnFilter(),
       };
 
-      let blotterSortState: BlotterSortState = {
+      const blotterSortState: BlotterSortState = {
         columnSorts: this.blotter.api.gridApi.getColumnSorts(),
         customSorts: this.blotter.api.customSortApi.getAllCustomSort(),
       };
 
-      let searchChangedInfo: SearchChangedInfo = {
-        searchChangedTrigger: searchChangedTrigger,
-        blotterSearchState: blotterSearchState,
-        blotterSortState: blotterSortState,
+      const searchChangedInfo: SearchChangedInfo = {
+        searchChangedTrigger,
+        blotterSearchState,
+        blotterSortState,
         searchAsAtDate: new Date(),
       };
 
-      let searchEventData: SearchEventData = {
+      const searchEventData: SearchEventData = {
         name: 'Adaptable Blotter',
         type: 'Search Args',
         id: searchChangedInfo,
       };
 
-      let searchChangedArgs: SearchChangedEventArgs = {
+      const searchChangedArgs: SearchChangedEventArgs = {
         object: 'fdc3-context',
         definition: 'https://fdc3.org/context/1.0.0/',
         version: '1.0.0',
