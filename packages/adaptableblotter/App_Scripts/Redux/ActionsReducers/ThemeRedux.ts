@@ -54,14 +54,14 @@ export const ThemeReducer: Redux.Reducer<ThemeState> = (
   switch (action.type) {
     case THEME_SET_SYSTEM_THEMES:
       return Object.assign({}, state, {
-        SystemThemes: (<ThemeSetSystemThemesAction>action).SystemThemes,
+        SystemThemes: (action as ThemeSetSystemThemesAction).SystemThemes,
       });
     case THEME_SET_USER_THEMES:
       return Object.assign({}, state, {
-        UserThemes: (<ThemeSetUserThemesAction>action).UserThemes,
+        UserThemes: (action as ThemeSetUserThemesAction).UserThemes,
       });
     case THEME_SELECT:
-      return Object.assign({}, state, { CurrentTheme: (<ThemeSelectAction>action).Theme });
+      return Object.assign({}, state, { CurrentTheme: (action as ThemeSelectAction).Theme });
     default:
       return state;
   }

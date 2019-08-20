@@ -37,7 +37,7 @@ export const BulkUpdateReducer: Redux.Reducer<BulkUpdateState> = (
       return Object.assign({}, state, { PreviewInfo: null });
     case BULK_UPDATE_CHANGE_VALUE:
       return Object.assign({}, state, {
-        BulkUpdateValue: (<BulkUpdateChangeValueAction>action).bulkUpdateValue,
+        BulkUpdateValue: (action as BulkUpdateChangeValueAction).bulkUpdateValue,
       });
     default:
       return state;

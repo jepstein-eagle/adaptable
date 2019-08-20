@@ -24,7 +24,7 @@ export const SystemFilterReducer: Redux.Reducer<SystemFilterState> = (
   switch (action.type) {
     case SYSTEM_FILTER_SET:
       return Object.assign({}, state, {
-        SystemFilters: (<SystemFilterSetAction>action).SystemFilters,
+        SystemFilters: (action as SystemFilterSetAction).SystemFilters,
       });
 
     default:

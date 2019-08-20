@@ -121,6 +121,7 @@ import {
 
 import Emitter from '../../Utilities/Emitter';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -443,7 +444,8 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action;
+            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchSelectAction;
+
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.AdvancedSearchStrategyId,
               actionType: action.type,
@@ -457,7 +459,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case AdvancedSearchRedux.ADVANCED_SEARCH_ADD: {
-            let actionTyped = <AdvancedSearchRedux.AdvancedSearchAddAction>action;
+            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.AdvancedSearchStrategyId,
               actionType: action.type,
@@ -470,7 +472,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case AdvancedSearchRedux.ADVANCED_SEARCH_EDIT: {
-            let actionTyped = <AdvancedSearchRedux.AdvancedSearchEditAction>action;
+            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.AdvancedSearchStrategyId,
               actionType: action.type,
@@ -483,7 +485,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
-            let actionTyped = <AdvancedSearchRedux.AdvancedSearchDeleteAction>action;
+            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.AdvancedSearchStrategyId,
               actionType: action.type,
@@ -501,7 +503,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case AlertRedux.ALERT_DEFIINITION_ADD: {
-            let actionTyped = <AlertRedux.AlertDefinitionAddAction>action;
+            const actionTyped = action as AlertRedux.AlertDefinitionAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.AlertStrategyId,
               actionType: action.type,
@@ -514,7 +516,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case AlertRedux.ALERT_DEFIINITION_EDIT: {
-            let actionTyped = <AlertRedux.AlertDefinitionEditAction>action;
+            const actionTyped = action as AlertRedux.AlertDefinitionEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.AlertStrategyId,
               actionType: action.type,
@@ -527,7 +529,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case AlertRedux.ALERT_DEFIINITION_DELETE: {
-            let actionTyped = <AlertRedux.AlertDefinitionDeleteAction>action;
+            const actionTyped = action as AlertRedux.AlertDefinitionDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.AlertStrategyId,
               actionType: action.type,
@@ -545,7 +547,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case BulkUpdateRedux.BULK_UPDATE_CHANGE_VALUE: {
-            let actionTyped = <BulkUpdateRedux.BulkUpdateChangeValueAction>action;
+            const actionTyped = action as BulkUpdateRedux.BulkUpdateChangeValueAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.BulkUpdateStrategyId,
               actionType: action.type,
@@ -565,7 +567,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
-            let actionTyped = <CalculatedColumnRedux.CalculatedColumnAddAction>action;
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CalculatedColumnStrategyId,
               actionType: action.type,
@@ -578,7 +580,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
-            let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action;
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CalculatedColumnStrategyId,
               actionType: action.type,
@@ -591,7 +593,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case CalculatedColumnRedux.CalculatedColumnDelete: {
-            let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action;
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CalculatedColumnStrategyId,
               actionType: action.type,
@@ -609,7 +611,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case CalendarRedux.CALENDAR_SELECT: {
-            let actionTyped = <CalendarRedux.CalendarSelectAction>action;
+            const actionTyped = action as CalendarRedux.CalendarSelectAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.CalendarStrategyId,
               actionType: action.type,
@@ -628,7 +630,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case CellSummaryRedux.CELL_SUMMARY_CHANGE_OPERATION: {
-            let actionTyped = <CellSummaryRedux.CellSummaryChangeOperationAction>action;
+            const actionTyped = action as CellSummaryRedux.CellSummaryChangeOperationAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.CellSummaryStrategyId,
               actionType: action.type,
@@ -647,7 +649,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case CellValidationRedux.CELL_VALIDATION_ADD: {
-            let actionTyped = <CellValidationRedux.CellValidationAddAction>action;
+            const actionTyped = action as CellValidationRedux.CellValidationAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CellValidationStrategyId,
               actionType: action.type,
@@ -660,7 +662,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case CellValidationRedux.CELL_VALIDATION_EDIT: {
-            let actionTyped = <CellValidationRedux.CellValidationEditAction>action;
+            const actionTyped = action as CellValidationRedux.CellValidationEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CellValidationStrategyId,
               actionType: action.type,
@@ -673,7 +675,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case CellValidationRedux.CELL_VALIDATION_DELETE: {
-            let actionTyped = <CellValidationRedux.CellValidationDeleteAction>action;
+            const actionTyped = action as CellValidationRedux.CellValidationDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CellValidationStrategyId,
               actionType: action.type,
@@ -691,7 +693,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case ChartRedux.CHART_DEFINITION_SELECT: {
-            let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action;
+            const actionTyped = action as ChartRedux.ChartDefinitionSelectAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.ChartStrategyId,
               actionType: action.type,
@@ -705,7 +707,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ChartRedux.CHART_DEFINITION_ADD: {
-            let actionTyped = <ChartRedux.ChartDefinitionAddAction>action;
+            const actionTyped = action as ChartRedux.ChartDefinitionAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ChartStrategyId,
               actionType: action.type,
@@ -718,7 +720,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ChartRedux.CHART_DEFINITION_EDIT: {
-            let actionTyped = <ChartRedux.ChartDefinitionEditAction>action;
+            const actionTyped = action as ChartRedux.ChartDefinitionEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ChartStrategyId,
               actionType: action.type,
@@ -731,7 +733,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ChartRedux.CHART_DEFINITION_DELETE: {
-            let actionTyped = <ChartRedux.ChartDefinitionDeleteAction>action;
+            const actionTyped = action as ChartRedux.ChartDefinitionDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ChartStrategyId,
               actionType: action.type,
@@ -749,7 +751,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case ColumnCategoryRedux.COLUMN_CATEGORY_ADD: {
-            let actionTyped = <ColumnCategoryRedux.ColumnCategoryAddAction>action;
+            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ColumnCategoryStrategyId,
               actionType: action.type,
@@ -762,7 +764,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ColumnCategoryRedux.COLUMN_CATEGORY_EDIT: {
-            let actionTyped = <ColumnCategoryRedux.ColumnCategoryEditAction>action;
+            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ColumnCategoryStrategyId,
               actionType: action.type,
@@ -775,7 +777,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
-            let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action;
+            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ColumnCategoryStrategyId,
               actionType: action.type,
@@ -793,7 +795,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
          **********************
           */
           case ColumnFilterRedux.COLUMN_FILTER_ADD: {
-            let actionTyped = <ColumnFilterRedux.ColumnFilterAddAction>action;
+            const actionTyped = action as ColumnFilterRedux.ColumnFilterAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ColumnFilterStrategyId,
               actionType: action.type,
@@ -806,7 +808,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ColumnFilterRedux.COLUMN_FILTER_EDIT: {
-            let actionTyped = <ColumnFilterRedux.ColumnFilterEditAction>action;
+            const actionTyped = action as ColumnFilterRedux.ColumnFilterEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ColumnFilterStrategyId,
               actionType: action.type,
@@ -819,7 +821,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ColumnFilterRedux.COLUMN_FILTER_CLEAR: {
-            let actionTyped = <ColumnFilterRedux.ColumnFilterClearAction>action;
+            const actionTyped = action as ColumnFilterRedux.ColumnFilterClearAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ColumnFilterStrategyId,
               actionType: action.type,
@@ -850,7 +852,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case ConditionalStyleRedux.CONDITIONAL_STYLE_ADD: {
-            let actionTyped = <ConditionalStyleRedux.ConditionalStyleAddAction>action;
+            const actionTyped = action as ConditionalStyleRedux.ConditionalStyleAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ConditionalStyleStrategyId,
               actionType: action.type,
@@ -863,7 +865,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT: {
-            let actionTyped = <ConditionalStyleRedux.ConditionalStyleEditAction>action;
+            const actionTyped = action as ConditionalStyleRedux.ConditionalStyleEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ConditionalStyleStrategyId,
               actionType: action.type,
@@ -876,7 +878,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE: {
-            let actionTyped = <ConditionalStyleRedux.ConditionalStyleDeleteAction>action;
+            const actionTyped = action as ConditionalStyleRedux.ConditionalStyleDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ConditionalStyleStrategyId,
               actionType: action.type,
@@ -894,7 +896,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case CustomSortRedux.CUSTOM_SORT_ADD: {
-            let actionTyped = <CustomSortRedux.CustomSortAddAction>action;
+            const actionTyped = action as CustomSortRedux.CustomSortAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CustomSortStrategyId,
               actionType: action.type,
@@ -907,7 +909,8 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case CustomSortRedux.CUSTOM_SORT_EDIT: {
-            let actionTyped = <CustomSortRedux.CustomSortEditAction>action;
+            const actionTyped = action as CustomSortRedux.CustomSortEditAction;
+
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CustomSortStrategyId,
               actionType: action.type,
@@ -920,7 +923,8 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case CustomSortRedux.CUSTOM_SORT_DELETE: {
-            let actionTyped = <CustomSortRedux.CustomSortDeleteAction>action;
+            const actionTyped = action as CustomSortRedux.CustomSortDeleteAction;
+
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.CustomSortStrategyId,
               actionType: action.type,
@@ -938,7 +942,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case DataSourceRedux.DATA_SOURCE_SELECT: {
-            let actionTyped = <DataSourceRedux.DataSourceSelectAction>action;
+            const actionTyped = action as DataSourceRedux.DataSourceSelectAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.DataSourceStrategyId,
               actionType: action.type,
@@ -952,7 +956,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case DataSourceRedux.DATA_SOURCE_ADD: {
-            let actionTyped = <DataSourceRedux.DataSourceAddAction>action;
+            const actionTyped = action as DataSourceRedux.DataSourceAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.DataSourceStrategyId,
               actionType: action.type,
@@ -965,7 +969,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case DataSourceRedux.DATA_SOURCE_EDIT: {
-            let actionTyped = <DataSourceRedux.DataSourceEditAction>action;
+            const actionTyped = action as DataSourceRedux.DataSourceEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.DataSourceStrategyId,
               actionType: action.type,
@@ -978,7 +982,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case DataSourceRedux.DATA_SOURCE_DELETE: {
-            let actionTyped = <DataSourceRedux.DataSourceDeleteAction>action;
+            const actionTyped = action as DataSourceRedux.DataSourceDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.DataSourceStrategyId,
               actionType: action.type,
@@ -996,7 +1000,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case ExportRedux.REPORT_SELECT: {
-            let actionTyped = <ExportRedux.ReportSelectAction>action;
+            const actionTyped = action as ExportRedux.ReportSelectAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.ExportStrategyId,
               actionType: action.type,
@@ -1010,7 +1014,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ExportRedux.REPORT_ADD: {
-            let actionTyped = <ExportRedux.ReportAddAction>action;
+            const actionTyped = action as ExportRedux.ReportAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ExportStrategyId,
               actionType: action.type,
@@ -1023,7 +1027,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ExportRedux.REPORT_EDIT: {
-            let actionTyped = <ExportRedux.ReportEditAction>action;
+            const actionTyped = action as ExportRedux.ReportEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ExportStrategyId,
               actionType: action.type,
@@ -1036,7 +1040,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ExportRedux.REPORT_DELETE: {
-            let actionTyped = <ExportRedux.ReportDeleteAction>action;
+            const actionTyped = action as ExportRedux.ReportDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ExportStrategyId,
               actionType: action.type,
@@ -1053,7 +1057,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case FlashingCellsRedux.FLASHING_CELL_CHANGE_UP_COLOR: {
-            let actionTyped = <FlashingCellsRedux.FlashingCellChangeUpColorAction>action;
+            const actionTyped = action as FlashingCellsRedux.FlashingCellChangeUpColorAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.FlashingCellsStrategyId,
               actionType: action.type,
@@ -1067,7 +1071,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR: {
-            let actionTyped = <FlashingCellsRedux.FlashingCellChangeDownColorAction>action;
+            const actionTyped = action as FlashingCellsRedux.FlashingCellChangeDownColorAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.FlashingCellsStrategyId,
               actionType: action.type,
@@ -1081,7 +1085,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION: {
-            let actionTyped = <FlashingCellsRedux.FlashingCellChangeDurationAction>action;
+            const actionTyped = action as FlashingCellsRedux.FlashingCellChangeDurationAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.FlashingCellsStrategyId,
               actionType: action.type,
@@ -1100,7 +1104,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case FormatColumnRedux.FORMAT_COLUMN_ADD: {
-            let actionTyped = <FormatColumnRedux.FormatColumnAddAction>action;
+            const actionTyped = action as FormatColumnRedux.FormatColumnAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.FormatColumnStrategyId,
               actionType: action.type,
@@ -1113,7 +1117,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case FormatColumnRedux.FORMAT_COLUMN_EDIT: {
-            let actionTyped = <FormatColumnRedux.FormatColumnEditAction>action;
+            const actionTyped = action as FormatColumnRedux.FormatColumnEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.FormatColumnStrategyId,
               actionType: action.type,
@@ -1126,7 +1130,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case FormatColumnRedux.FORMAT_COLUMN_DELETE: {
-            let actionTyped = <FormatColumnRedux.FormatColumnDeleteAction>action;
+            const actionTyped = action as FormatColumnRedux.FormatColumnDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.FormatColumnStrategyId,
               actionType: action.type,
@@ -1144,7 +1148,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
-            let actionTyped = <FreeTextColumnRedux.FreeTextColumnAddAction>action;
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.FreeTextColumnStrategyId,
               actionType: action.type,
@@ -1157,7 +1161,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
-            let actionTyped = <FreeTextColumnRedux.FreeTextColumnEditAction>action;
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.FreeTextColumnStrategyId,
               actionType: action.type,
@@ -1170,7 +1174,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_DELETE: {
-            let actionTyped = <FreeTextColumnRedux.FreeTextColumnDeleteAction>action;
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.FreeTextColumnStrategyId,
               actionType: action.type,
@@ -1189,7 +1193,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case LayoutRedux.LAYOUT_SELECT: {
-            let actionTyped = <LayoutRedux.LayoutSelectAction>action;
+            const actionTyped = action as LayoutRedux.LayoutSelectAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.LayoutStrategyId,
               actionType: action.type,
@@ -1203,7 +1207,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case LayoutRedux.LAYOUT_SAVE: {
-            let actionTyped = <LayoutRedux.LayoutSaveAction>action;
+            const actionTyped = action as LayoutRedux.LayoutSaveAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.LayoutStrategyId,
               actionType: action.type,
@@ -1216,7 +1220,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case LayoutRedux.LAYOUT_ADD: {
-            let actionTyped = <LayoutRedux.LayoutAddAction>action;
+            const actionTyped = action as LayoutRedux.LayoutAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.LayoutStrategyId,
               actionType: action.type,
@@ -1229,7 +1233,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case LayoutRedux.LAYOUT_EDIT: {
-            let actionTyped = <LayoutRedux.LayoutEditAction>action;
+            const actionTyped = action as LayoutRedux.LayoutEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.LayoutStrategyId,
               actionType: action.type,
@@ -1242,7 +1246,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case LayoutRedux.LAYOUT_DELETE: {
-            let actionTyped = <LayoutRedux.LayoutDeleteAction>action;
+            const actionTyped = action as LayoutRedux.LayoutDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.LayoutStrategyId,
               actionType: action.type,
@@ -1260,7 +1264,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case PercentBarRedux.PERCENT_BAR_ADD: {
-            let actionTyped = <PercentBarRedux.PercentBarAddAction>action;
+            const actionTyped = action as PercentBarRedux.PercentBarAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.PercentBarStrategyId,
               actionType: action.type,
@@ -1273,7 +1277,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case PercentBarRedux.PERCENT_BAR_EDIT: {
-            let actionTyped = <PercentBarRedux.PercentBarEditAction>action;
+            const actionTyped = action as PercentBarRedux.PercentBarEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.PercentBarStrategyId,
               actionType: action.type,
@@ -1286,7 +1290,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case PercentBarRedux.PERCENT_BAR_DELETE: {
-            let actionTyped = <PercentBarRedux.PercentBarDeleteAction>action;
+            const actionTyped = action as PercentBarRedux.PercentBarDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.PercentBarStrategyId,
               actionType: action.type,
@@ -1304,7 +1308,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case PlusMinusRedux.PLUS_MINUS_RULE_ADD: {
-            let actionTyped = <PlusMinusRedux.PlusMinusRuleAddAction>action;
+            const actionTyped = action as PlusMinusRedux.PlusMinusRuleAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.PlusMinusStrategyId,
               actionType: action.type,
@@ -1317,7 +1321,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case PlusMinusRedux.PLUS_MINUS_RULE_EDIT: {
-            let actionTyped = <PlusMinusRedux.PlusMinusRuleEditAction>action;
+            const actionTyped = action as PlusMinusRedux.PlusMinusRuleEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.PlusMinusStrategyId,
               actionType: action.type,
@@ -1330,7 +1334,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case PlusMinusRedux.PLUS_MINUS_RULE_DELETE: {
-            let actionTyped = <PlusMinusRedux.PlusMinusRuleDeleteAction>action;
+            const actionTyped = action as PlusMinusRedux.PlusMinusRuleDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.PlusMinusStrategyId,
               actionType: action.type,
@@ -1348,7 +1352,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case QuickSearchRedux.QUICK_SEARCH_APPLY: {
-            let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action;
+            const actionTyped = action as QuickSearchRedux.QuickSearchApplyAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.QuickSearchStrategyId,
               actionType: action.type,
@@ -1362,7 +1366,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
-            let actionTyped = <QuickSearchRedux.QuickSearchSetDisplayAction>action;
+            const actionTyped = action as QuickSearchRedux.QuickSearchSetDisplayAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.QuickSearchStrategyId,
               actionType: action.type,
@@ -1376,7 +1380,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
-            let actionTyped = <QuickSearchRedux.QuickSearchSetStyleAction>action;
+            const actionTyped = action as QuickSearchRedux.QuickSearchSetStyleAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.QuickSearchStrategyId,
               actionType: action.type,
@@ -1400,7 +1404,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case ReminderRedux.REMINDER_ADD: {
-            let actionTyped = <ReminderRedux.ReminderAddAction>action;
+            const actionTyped = action as ReminderRedux.ReminderAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
@@ -1413,7 +1417,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ReminderRedux.REMINDER_EDIT: {
-            let actionTyped = <ReminderRedux.ReminderEditAction>action;
+            const actionTyped = action as ReminderRedux.ReminderEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
@@ -1426,7 +1430,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ReminderRedux.REMINDER_DELETE: {
-            let actionTyped = <ReminderRedux.ReminderDeleteAction>action;
+            const actionTyped = action as ReminderRedux.ReminderDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
@@ -1444,7 +1448,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case ShortcutRedux.SHORTCUT_ADD: {
-            let actionTyped = <ShortcutRedux.ShortcutAddAction>action;
+            const actionTyped = action as ShortcutRedux.ShortcutAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ShortcutStrategyId,
               actionType: action.type,
@@ -1457,7 +1461,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ShortcutRedux.SHORTCUT_EDIT: {
-            let actionTyped = <ShortcutRedux.ShortcutEditAction>action;
+            const actionTyped = action as ShortcutRedux.ShortcutEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ShortcutStrategyId,
               actionType: action.type,
@@ -1470,7 +1474,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case ShortcutRedux.SHORTCUT_DELETE: {
-            let actionTyped = <ShortcutRedux.ShortcutDeleteAction>action;
+            const actionTyped = action as ShortcutRedux.ShortcutDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ShortcutStrategyId,
               actionType: action.type,
@@ -1488,7 +1492,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case SmartEditRedux.SMARTEDIT_CHANGE_VALUE: {
-            let actionTyped = <SmartEditRedux.SmartEditChangeValueAction>action;
+            const actionTyped = action as SmartEditRedux.SmartEditChangeValueAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.SmartEditStrategyId,
               actionType: action.type,
@@ -1502,7 +1506,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION: {
-            let actionTyped = <SmartEditRedux.SmartEditChangeOperationAction>action;
+            const actionTyped = action as SmartEditRedux.SmartEditChangeOperationAction;
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.SmartEditStrategyId,
               actionType: action.type,
@@ -1521,7 +1525,8 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case ThemeRedux.THEME_SELECT: {
-            let actionTyped = <ThemeRedux.ThemeSelectAction>action;
+            const actionTyped = action as ThemeRedux.ThemeSelectAction;
+
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.ThemeStrategyId,
               actionType: action.type,
@@ -1540,7 +1545,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           **********************
            */
           case UserFilterRedux.USER_FILTER_ADD: {
-            let actionTyped = <UserFilterRedux.UserFilterAddAction>action;
+            const actionTyped = action as UserFilterRedux.UserFilterAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -1553,7 +1558,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case UserFilterRedux.USER_FILTER_EDIT: {
-            let actionTyped = <UserFilterRedux.UserFilterEditAction>action;
+            const actionTyped = action as UserFilterRedux.UserFilterEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -1566,7 +1571,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
           case UserFilterRedux.USER_FILTER_DELETE: {
-            let actionTyped = <UserFilterRedux.UserFilterDeleteAction>action;
+            const actionTyped = action as UserFilterRedux.UserFilterDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -1626,7 +1631,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
         // Shortcut Apply, Bulk Update Apply and Smart Edit Apply we do in relevant Strategy
         switch (action.type) {
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action;
+            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchSelectAction;
             let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(
               as => as.Name == actionTyped.selectedSearchName
             );
@@ -1641,7 +1646,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case CalendarRedux.CALENDAR_SELECT: {
-            let actionTyped = <CalendarRedux.CalendarSelectAction>action;
+            const actionTyped = action as CalendarRedux.CalendarSelectAction;
 
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.CalendarStrategyId,
@@ -1654,7 +1659,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case ChartRedux.CHART_DEFINITION_SELECT: {
-            let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action;
+            const actionTyped = action as ChartRedux.ChartDefinitionSelectAction;
             let chart = state.Chart.ChartDefinitions.find(cd => cd.Name == actionTyped.chartName);
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.ChartStrategyId,
@@ -1667,7 +1672,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case DataSourceRedux.DATA_SOURCE_SELECT: {
-            let actionTyped = <DataSourceRedux.DataSourceSelectAction>action;
+            const actionTyped = action as DataSourceRedux.DataSourceSelectAction;
             let dataSource = state.DataSource.DataSources.find(
               ds => ds.Name == actionTyped.SelectedDataSource
             );
@@ -1682,7 +1687,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case ExportRedux.EXPORT_APPLY: {
-            let actionTyped = <ExportRedux.ExportApplyAction>action;
+            const actionTyped = action as ExportRedux.ExportApplyAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.ExportStrategyId,
               action: action.type,
@@ -1694,7 +1699,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case FlashingCellsRedux.FLASHING_CELL_SELECT: {
-            let actionTyped = <FlashingCellsRedux.FlashingCellSelectAction>action;
+            const actionTyped = action as FlashingCellsRedux.FlashingCellSelectAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.FlashingCellsStrategyId,
               action: action.type,
@@ -1708,7 +1713,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case FlashingCellsRedux.FLASHING_CELL_SELECT_ALL: {
-            let actionTyped = <FlashingCellsRedux.FlashingCellSelectAllAction>action;
+            const actionTyped = action as FlashingCellsRedux.FlashingCellSelectAllAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.FlashingCellsStrategyId,
               action: action.type,
@@ -1722,7 +1727,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE: {
-            let actionTyped = <FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction>action;
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.FreeTextColumnStrategyId,
               action: action.type,
@@ -1735,7 +1740,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 
           // should we create a Quick Search Clear?  Might be neater...
           case QuickSearchRedux.QUICK_SEARCH_APPLY: {
-            let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action;
+            const actionTyped = action as QuickSearchRedux.QuickSearchApplyAction;
 
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.QuickSearchStrategyId,
@@ -1748,7 +1753,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return next(action);
           }
           case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
-            let actionTyped = <QuickSearchRedux.QuickSearchSetDisplayAction>action;
+            const actionTyped = action as QuickSearchRedux.QuickSearchSetDisplayAction;
 
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.QuickSearchStrategyId,
@@ -1761,8 +1766,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return next(action);
           }
           case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
-            let actionTyped = <QuickSearchRedux.QuickSearchSetStyleAction>action;
-
+            const actionTyped = action as QuickSearchRedux.QuickSearchSetStyleAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.QuickSearchStrategyId,
               action: action.type,
@@ -1774,7 +1778,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return next(action);
           }
           case PlusMinusRedux.PLUS_MINUS_APPLY: {
-            let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action;
+            const actionTyped = action as PlusMinusRedux.PlusMinusApplyAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.PlusMinusStrategyId,
               action: action.type,
@@ -1787,7 +1791,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case ThemeRedux.THEME_SELECT: {
-            let actionTyped = <ThemeRedux.ThemeSelectAction>action;
+            const actionTyped = action as ThemeRedux.ThemeSelectAction;
 
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.ThemeStrategyId,
@@ -1800,8 +1804,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case ColumnFilterRedux.COLUMN_FILTER_ADD: {
-            let actionTyped = <ColumnFilterRedux.ColumnFilterAddAction>action;
-
+            const actionTyped = action as ColumnFilterRedux.ColumnFilterAddAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.ColumnFilterStrategyId,
               action: action.type,
@@ -1818,8 +1821,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return next(action);
           }
           case ColumnFilterRedux.COLUMN_FILTER_EDIT: {
-            let actionTyped = <ColumnFilterRedux.ColumnFilterEditAction>action;
-
+            const actionTyped = action as ColumnFilterRedux.ColumnFilterEditAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.ColumnFilterStrategyId,
               action: action.type,
@@ -1838,7 +1840,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
 
           case ColumnFilterRedux.COLUMN_FILTER_CLEAR: {
-            let actionTyped = <ColumnFilterRedux.ColumnFilterClearAction>action;
+            const actionTyped = action as ColumnFilterRedux.ColumnFilterClearAction;
 
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.ColumnFilterStrategyId,
@@ -1888,7 +1890,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * Action: If the deleted Advanced Search was the currently selected one: Apply Grid Filtering
            */
           case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
-            let actionTyped = <AdvancedSearchRedux.AdvancedSearchDeleteAction>action;
+            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchDeleteAction;
             let CurrentAdvancedSearch = middlewareAPI.getState().AdvancedSearch
               .CurrentAdvancedSearch;
             let ret = next(action);
@@ -1908,7 +1910,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            */
           case SystemRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
             let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid(
-              (<SystemRedux.CalculatedColumnIsExpressionValidAction>action).expression
+              (action as SystemRedux.CalculatedColumnIsExpressionValidAction).expression
             );
             if (!returnObj.IsValid) {
               middlewareAPI.dispatch(
@@ -1926,9 +1928,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
             let returnAction = next(action);
-            let calculatedColumn: CalculatedColumn = (<
-              CalculatedColumnRedux.CalculatedColumnAddAction
-            >action).calculatedColumn;
+            let calculatedColumn: CalculatedColumn = (action as CalculatedColumnRedux.CalculatedColumnAddAction)
+              .calculatedColumn;
             blotter.addCalculatedColumnToGrid(calculatedColumn);
             return returnAction;
           }
@@ -1940,7 +1941,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * N.B. This will NOT update any layouts that reference the column
            */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
-            let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action;
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
             let columnsLocalLayout = middlewareAPI.getState().Grid.Columns;
 
             blotter.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
@@ -1963,7 +1964,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * Action:  Tell the blotter so it can do what it needs
            */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
-            let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action;
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
             let columnsLocalLayout = middlewareAPI.getState().Grid.Columns;
             blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
             middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(columnsLocalLayout));
@@ -2001,7 +2002,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            */
           case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
             let returnAction = next(action);
-            let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action;
+            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryDeleteAction;
             let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
             conditionalStyleState.ConditionalStyles.forEach((cs: ConditionalStyle) => {
               if (cs.ColumnCategoryId == actionTyped.columnCategory.ColumnCategoryId) {
@@ -2030,7 +2031,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let currentChartName = chartState.CurrentChartName;
 
             if (StringExtensions.IsNotNullOrEmpty(currentChartName)) {
-              let actionTyped = <ChartRedux.ChartDefinitionDeleteAction>action;
+              const actionTyped = action as ChartRedux.ChartDefinitionDeleteAction;
+
               let chartDefinition: ChartDefinition = actionTyped.chartDefinition;
               if (chartDefinition && currentChartName == actionTyped.chartDefinition.Name) {
                 middlewareAPI.dispatch(ChartRedux.ChartDefinitionSelect(''));
@@ -2044,7 +2046,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * Action:  Set chart visibility to hidden
            */
           case ChartRedux.CHART_DEFINITION_SELECT: {
-            let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action;
+            const actionTyped = action as ChartRedux.ChartDefinitionSelectAction;
             if (StringExtensions.IsNullOrEmpty(actionTyped.chartName)) {
               middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden));
             }
@@ -2057,7 +2059,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * Action:  Close all popups (so that user directly sees the chart)
            */
           case SystemRedux.CHART_SET_CHART_VISIBILITY: {
-            let actionTyped = <SystemRedux.ChartSetChartVisibiityAction>action;
+            const actionTyped = action as SystemRedux.ChartSetChartVisibiityAction;
             if (actionTyped.ChartVisibility == ChartVisibility.Maximised) {
               middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             }
@@ -2106,7 +2108,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
           case LayoutRedux.LAYOUT_SAVE: {
             let returnAction = next(action);
-            let actionTyped = <LayoutRedux.LayoutSaveAction>action;
+            const actionTyped = action as LayoutRedux.LayoutSaveAction;
             let layout: Layout = Helper.cloneObject(actionTyped.layout);
 
             let forceFetch = layout.Name == DEFAULT_LAYOUT;
@@ -2211,7 +2213,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let SmartEditStrategy = <ISmartEditStrategy>(
               blotter.strategies.get(StrategyConstants.SmartEditStrategyId)
             );
-            let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
+            const actionTyped = action as SmartEditRedux.SmartEditApplyAction;
             let thePreview = middlewareAPI.getState().System.SmartEditPreviewInfo;
             let newValues = PreviewHelper.GetCellInfosFromPreview(
               thePreview,
@@ -2266,7 +2268,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let BulkUpdateStrategy = <IBulkUpdateStrategy>(
               blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId)
             );
-            let actionTyped = <BulkUpdateRedux.BulkUpdateApplyAction>action;
+            const actionTyped = action as BulkUpdateRedux.BulkUpdateApplyAction;
             let thePreview = middlewareAPI.getState().System.BulkUpdatePreviewInfo;
             let newValues = PreviewHelper.GetCellInfosFromPreview(
               thePreview,
@@ -2284,7 +2286,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           case PlusMinusRedux.PLUS_MINUS_APPLY: {
             // This is for the very rare use case that a Plus Minus breaks validation and the user wants to continue
             // in which case we just need to apply the values to the Grid
-            let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action;
+            const actionTyped = action as PlusMinusRedux.PlusMinusApplyAction;
             if (ArrayExtensions.IsNotNullOrEmpty(actionTyped.GridCells)) {
               blotter.setValueBatch(actionTyped.GridCells);
             }
@@ -2300,7 +2302,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let exportStrategy = <IExportStrategy>(
               blotter.strategies.get(StrategyConstants.ExportStrategyId)
             );
-            let actionTyped = <ExportRedux.ExportApplyAction>action;
+            const actionTyped = action as ExportRedux.ExportApplyAction;
             if (
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
               iPushPullHelper.getIPPStatus() != iPushPullHelper.ServiceStatus.Connected
@@ -2348,7 +2350,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
 
           case ExportRedux.IPP_LOGIN: {
-            let actionTyped = <ExportRedux.IPPLoginAction>action;
+            const actionTyped = action as ExportRedux.IPPLoginAction;
             iPushPullHelper
               .Login(actionTyped.Login, actionTyped.Password)
               .then(() => {
@@ -2379,7 +2381,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             return next(action);
           }
           case SystemRedux.REPORT_STOP_LIVE: {
-            let actionTyped = <SystemRedux.ReportStopLiveAction>action;
+            const actionTyped = action as SystemRedux.ReportStopLiveAction;
             if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
               let currentLiveReports = middlewareAPI.getState().System.CurrentLiveReports;
               let lre = currentLiveReports.find(
@@ -2396,7 +2398,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * USER FILTER ACTIONS
            *******************/
           case UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER: {
-            let actionTyped = <UserFilterRedux.CreateUserFilterFromColumnFilterAction>action;
+            const actionTyped = action as UserFilterRedux.CreateUserFilterFromColumnFilterAction;
             // first create a new user filter based on the column filter and input name
             let userFilter: UserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(
               actionTyped.ColumnFilter,
@@ -2424,7 +2426,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
           // Use case - an item needs to be shared between teams
           case TeamSharingRedux.TEAMSHARING_SHARE: {
-            let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action;
+            const actionTyped = action as TeamSharingRedux.TeamSharingShareAction;
             let returnAction = next(action);
             let xhr = new XMLHttpRequest();
             xhr.onerror = (ev: any) =>
@@ -2512,7 +2514,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
           case TeamSharingRedux.TEAMSHARING_IMPORT_ITEM: {
             let returnAction = next(action);
-            let actionTyped = <TeamSharingRedux.TeamSharingImportItemAction>action;
+            const actionTyped = action as TeamSharingRedux.TeamSharingImportItemAction;
             let importAction: Redux.Action;
             let overwriteConfirmation = false;
             switch (actionTyped.Strategy) {
@@ -2674,7 +2676,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
 
           case SystemRedux.SET_NEW_COLUMN_LIST_ORDER:
-            let actionTyped = <SystemRedux.SetNewColumnListOrderAction>action;
+            const actionTyped = action as SystemRedux.SetNewColumnListOrderAction;
             blotter.setNewColumnListOrder(actionTyped.VisibleColumnList);
             return next(action);
 
@@ -2682,12 +2684,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * GRID (INTERNAL) ACTIONS
            *******************/
           case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
-            let actionTyped = <GridRedux.GridSetValueLikeEditAction>action;
+            const actionTyped = action as GridRedux.GridSetValueLikeEditAction;
             blotter.setValue(actionTyped.GridCell);
             return next(action);
           }
           case GridRedux.GRID_HIDE_COLUMN: {
-            let actionTyped = <GridRedux.GridHideColumnAction>action;
+            const actionTyped = action as GridRedux.GridHideColumnAction;
             let columnList = [].concat(
               middlewareAPI.getState().Grid.Columns.filter(c => c.Visible)
             );
@@ -2697,7 +2699,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             return next(action);
           }
           case GridRedux.GRID_SELECT_COLUMN: {
-            let actionTyped = <GridRedux.GridSelectColumnAction>action;
+            const actionTyped = action as GridRedux.GridSelectColumnAction;
             blotter.selectColumn(actionTyped.ColumnId);
             return next(action);
           }
@@ -2720,7 +2722,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           case PopupRedux.POPUP_CONFIRM_PROMPT: {
             let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
             if (promptConfirmationAction) {
-              let inputText: string = (<InputAction>action).InputText;
+              let inputText: string = (action as InputAction).InputText;
               promptConfirmationAction.InputText = inputText;
               middlewareAPI.dispatch(promptConfirmationAction);
             }
@@ -2789,17 +2791,21 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             }
 
             //Create all calculated columns before we load the layout
-            middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(cc => {
-              blotter.addCalculatedColumnToGrid(cc);
-            });
+            middlewareAPI
+              .getState()
+              .CalculatedColumn.CalculatedColumns.forEach((cc: CalculatedColumn) => {
+                blotter.addCalculatedColumnToGrid(cc);
+              });
 
             //Create all free text columns before we load the layout
-            middlewareAPI.getState().FreeTextColumn.FreeTextColumns.forEach(ftc => {
-              blotter.addFreeTextColumnToGrid(ftc);
-            });
+            middlewareAPI
+              .getState()
+              .FreeTextColumn.FreeTextColumns.forEach((ftc: FreeTextColumn) => {
+                blotter.addFreeTextColumnToGrid(ftc);
+              });
 
             //Create all action columns before we load the layout
-            middlewareAPI.getState().ActionColumn.ActionColumns.forEach(ac => {
+            middlewareAPI.getState().ActionColumn.ActionColumns.forEach((ac: ActionColumn) => {
               blotter.addActionColumnToGrid(ac);
             });
 

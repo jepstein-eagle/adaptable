@@ -165,7 +165,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onSelectColumn: (flashingCell: FlashingCell) =>
       dispatch(FlashingCellsRedux.FlashingCellSelect(flashingCell)),

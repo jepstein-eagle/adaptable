@@ -94,7 +94,7 @@ export const FreeTextColumnReducer: Redux.Reducer<FreeTextColumnState> = (
     }
 
     case FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE: {
-      let actionTypedAddEditStoredValue = <FreeTextColumnAddEditStoredValueAction>action;
+      const actionTypedAddEditStoredValue = action as FreeTextColumnAddEditStoredValueAction;
 
       let existingIndex: number = actionTypedAddEditStoredValue.FreeTextColumn.FreeTextStoredValues.findIndex(
         ftsv => ftsv.PrimaryKey == actionTypedAddEditStoredValue.FreeTextStoredValue.PrimaryKey

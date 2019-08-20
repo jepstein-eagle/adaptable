@@ -24,7 +24,7 @@ export const CalendarReducer: Redux.Reducer<CalendarState> = (
   switch (action.type) {
     case CALENDAR_SELECT:
       return Object.assign({}, state, {
-        CurrentCalendar: (<CalendarSelectAction>action).selectedCalendarName,
+        CurrentCalendar: (action as CalendarSelectAction).selectedCalendarName,
       });
     default:
       return state;

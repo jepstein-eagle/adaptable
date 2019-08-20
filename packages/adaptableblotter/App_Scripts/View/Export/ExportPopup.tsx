@@ -243,7 +243,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onApplyExport: (report: Report, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(report, exportDestination)),

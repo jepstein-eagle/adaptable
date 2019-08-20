@@ -94,7 +94,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
 ): FlashingCellState => {
   switch (action.type) {
     case FLASHING_CELL_SELECT: {
-      let selectedFlashingCell = (<FlashingCellSelectAction>action).FlashingCell;
+      let selectedFlashingCell = (action as FlashingCellSelectAction).FlashingCell;
       let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       selectedFlashingCell = Object.assign({}, selectedFlashingCell, {
         IsLive: !selectedFlashingCell.IsLive,
@@ -111,8 +111,9 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
       });
     }
     case FLASHING_CELL_SELECT_ALL: {
-      let flashingCells: Array<FlashingCell> = (<FlashingCellSelectAllAction>action).FlashingCells;
-      let shouldTurnOn = (<FlashingCellSelectAllAction>action).shouldTurnOn;
+      let flashingCells: Array<FlashingCell> = (action as FlashingCellSelectAllAction)
+        .FlashingCells;
+      let shouldTurnOn = (action as FlashingCellSelectAllAction).shouldTurnOn;
       let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       flashingCells.forEach(column => {
         let index = items.findIndex(i => i.ColumnId == column.ColumnId);
@@ -128,7 +129,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
       });
     }
     case FLASHING_CELL_CHANGE_DURATION: {
-      let actionTyped = <FlashingCellChangeDurationAction>action;
+      const actionTyped = action as FlashingCellChangeDurationAction;
       let flashingCell = actionTyped.FlashingCell;
       let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       let index = items.findIndex(i => i == flashingCell);
@@ -148,7 +149,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
     }
     //Jo: Not sure we need to do all that since we already have the instance..... but I'm copy pasting what's been done previously
     case FLASHING_CELL_CHANGE_UP_COLOR: {
-      let actionTyped = <FlashingCellChangeUpColorAction>action;
+      const actionTyped = action as FlashingCellChangeUpColorAction;
       let flashingCell = actionTyped.FlashingCell;
       let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       let index = items.findIndex(i => i == flashingCell);
@@ -164,7 +165,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
     }
     //Jo: Not sure we need to do all that since we already have the instance..... but I'm copy pasting what's been done previously
     case FLASHING_CELL_CHANGE_DOWN_COLOR: {
-      let actionTyped = <FlashingCellChangeDownColorAction>action;
+      const actionTyped = action as FlashingCellChangeDownColorAction;
       let flashingCell = actionTyped.FlashingCell;
       let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       let index = items.findIndex(i => i == flashingCell);

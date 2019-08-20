@@ -115,7 +115,7 @@ export const ChartReducer: Redux.Reducer<ChartState> = (
     }
 
     case CHART_PROPERTIES_UPDATE: {
-      let actionTypedPropertiesUpdate = <ChartPropertiesUpdateAction>action;
+      const actionTypedPropertiesUpdate = action as ChartPropertiesUpdateAction;
       chartDefinitions = [].concat(state.ChartDefinitions);
       let chartDefinition: ChartDefinition = chartDefinitions.find(
         c => c.Uuid == actionTypedPropertiesUpdate.chartUuid
@@ -126,7 +126,7 @@ export const ChartReducer: Redux.Reducer<ChartState> = (
 
     case CHART_DEFINITION_SELECT: {
       return Object.assign({}, state, {
-        CurrentChartName: (<ChartDefinitionSelectAction>action).chartName,
+        CurrentChartName: (action as ChartDefinitionSelectAction).chartName,
       });
     }
     default:

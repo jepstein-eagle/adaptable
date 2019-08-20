@@ -163,10 +163,10 @@ export const GridReducer: Redux.Reducer<GridState> = (
   switch (action.type) {
     case GRID_SET_COLUMNS:
       return Object.assign({}, state, {
-        Columns: [].concat((<GridSetColumnsAction>action).Columns),
+        Columns: [].concat((action as GridSetColumnsAction).Columns),
       });
     case GRID_ADD_COLUMN:
-      let actionTypedAdd = <GridAddColumnAction>action;
+      const actionTypedAdd = action as GridAddColumnAction;
       let columns = [].concat(state.Columns);
       columns.push(actionTypedAdd.Column);
       return Object.assign({}, state, { Columns: columns });
@@ -180,18 +180,18 @@ export const GridReducer: Redux.Reducer<GridState> = (
       };
 
     case GRID_SET_SORT:
-      return Object.assign({}, state, { ColumnSorts: (<GridSetSortAction>action).ColumnSorts });
+      return Object.assign({}, state, { ColumnSorts: (action as GridSetSortAction).ColumnSorts });
     case GRID_SET_SELECTED_CELLS:
       return Object.assign({}, state, {
-        SelectedCellInfo: (<GridSetSelectedCellsAction>action).SelectedCellInfo,
+        SelectedCellInfo: (action as GridSetSelectedCellsAction).SelectedCellInfo,
       });
     case GRID_SET_SELECTED_ROWS:
       return Object.assign({}, state, {
-        SelectedRowInfo: (<GridSetSelectedRowsAction>action).SelectedRowInfo,
+        SelectedRowInfo: (action as GridSetSelectedRowsAction).SelectedRowInfo,
       });
     case GRID_SET_CELLS_SUMMARY:
       return Object.assign({}, state, {
-        CellSummary: (<GridSetCellSummaryAction>action).CellSummary,
+        CellSummary: (action as GridSetCellSummaryAction).CellSummary,
       });
     case GRID_QUICK_FILTER_BAR_SHOW:
       return Object.assign({}, state, { IsQuickFilterActive: true });
