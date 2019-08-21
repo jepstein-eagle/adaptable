@@ -95,7 +95,6 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
-        UpdateValue={this.props.BulkUpdateValue}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}

@@ -4,6 +4,7 @@ import {
   LeafExpressionOperator,
   CellSummaryOperation,
   MessageType,
+  CellSummaryOptionalOperation,
 } from '../../PredefinedConfig/Common/Enums';
 import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common/ChartEnums';
 import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
@@ -51,20 +52,11 @@ export const QUICK_SEARCH_DEFAULT_FORE_COLOR: string = '#000000';
 export const FLASHING_CELLS_DEFAULT_DURATION: 250 | 500 | 750 | 1000 = 500;
 // Selected Cells
 export const SMART_EDIT_DEFAULT_VALUE: number = 1;
-export const SMART_EDIT_DEFAULT_OPERATION: 'Add' | 'Subtract' | 'Multiply' | 'Divide' =
+export const SMART_EDIT_DEFAULT_OPERATION: Exclude<MathOperation, MathOperation.Replace> =
   MathOperation.Multiply;
 // Cells Summary
-export const CELL_SUMMARY_DEFAULT_OPERATION:
-  | 'Sum'
-  | 'Average'
-  | 'Mode'
-  | 'Median'
-  | 'Distinct'
-  | 'Max'
-  | 'Min'
-  | 'Count'
-  | 'VWap'
-  | 'Only' = CellSummaryOperation.Sum;
+export const CELL_SUMMARY_DEFAULT_OPERATION: CellSummaryOperation | CellSummaryOptionalOperation =
+  CellSummaryOperation.Sum;
 // system
 export const SYSTEM_DEFAULT_CHART_VISIBILITY: ChartVisibility = ChartVisibility.Hidden;
 // export const SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR: 'Red' | 'Amber' | 'Green' | 'Blue' =

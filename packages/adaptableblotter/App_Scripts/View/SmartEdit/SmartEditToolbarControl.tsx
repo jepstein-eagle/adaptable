@@ -31,7 +31,7 @@ import Input from '../../components/Input';
 
 interface SmartEditToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
-  SmartEditValue: string;
+  SmartEditValue: number | string;
   MathOperation: MathOperation;
   IsValidSelection: boolean;
   PreviewInfo: IPreviewInfo;
@@ -78,7 +78,6 @@ class SmartEditToolbarControlComponent extends React.Component<
 
     let previewPanel = (
       <PreviewResultsPanel
-        UpdateValue={this.props.SmartEditValue}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
@@ -133,7 +132,7 @@ class SmartEditToolbarControlComponent extends React.Component<
             style={applyButtonStyle}
             tooltip="Apply Smart Edit"
             disabled={
-              StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) ||
+              StringExtensions.IsNullOrEmpty(`${this.props.SmartEditValue}`) ||
               (this.props.PreviewInfo != null &&
                 this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
             }
@@ -173,7 +172,10 @@ class SmartEditToolbarControlComponent extends React.Component<
   }
 
   private getStatusColour(): StatusColour {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue) && this.props.PreviewInfo) {
+    if (
+      StringExtensions.IsNotNullOrEmpty(`${this.props.SmartEditValue}`) &&
+      this.props.PreviewInfo
+    ) {
       if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
         return StatusColour.Red;
       }

@@ -67,7 +67,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
 
     let previewPanel = (
       <PreviewResultsPanel
-        UpdateValue={this.props.BulkUpdateValue}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}

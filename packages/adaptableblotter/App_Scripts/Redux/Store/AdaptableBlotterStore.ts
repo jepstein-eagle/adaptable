@@ -336,7 +336,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
     //TODO: need to check if we want the storage to be done before or after
     //we enrich the state with the AB middleware
-    this.TheStore = Redux.createStore<AdaptableBlotterState>(
+    this.TheStore = Redux.createStore<AdaptableBlotterState, Redux.Action<any>, any, any>(
       persistedReducer,
       composeEnhancers(
         Redux.applyMiddleware(
@@ -381,8 +381,13 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 // we now allow users to differentiate between user and internal state so we check for both
 // NOTE:  the Audit Logger is also responsible for firing AuditEventApi changes if that has been set
 var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
-  function(middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
-    return function(next: Redux.Dispatch<AdaptableBlotterState>) {
+  function(
+    middlewareAPI: Redux.MiddlewareAPI<
+      Redux.Dispatch<Redux.Action<AdaptableBlotterState>>,
+      AdaptableBlotterState
+    >
+  ) {
+    return function(next: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
       return function(action: Redux.Action) {
         if (
           // if audit state is turned off, then get out
@@ -1612,8 +1617,13 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
 // note it does not capture when something happens automatically as the result of a function (e.g. if a conditional style gets applied because a value has changed)
 // e.g. this should say when the current Advanced search has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
 var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
-  function(middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
-    return function(next: Redux.Dispatch<AdaptableBlotterState>) {
+  function(
+    middlewareAPI: Redux.MiddlewareAPI<
+      Redux.Dispatch<Redux.Action<AdaptableBlotterState>>,
+      AdaptableBlotterState
+    >
+  ) {
+    return function(next: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
       return function(action: Redux.Action) {
         if (!adaptableBlotter.AuditLogService.isAuditFunctionEventsEnabled) {
           // not logging functions so leave...
@@ -1867,8 +1877,13 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 // this is the main function for dealing with Redux Actions which require additional functionality to be triggered.
 // Please document each use case where we have to use the Store
 var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
-  function(middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
-    return function(next: Redux.Dispatch<AdaptableBlotterState>) {
+  function(
+    middlewareAPI: Redux.MiddlewareAPI<
+      Redux.Dispatch<Redux.Action<AdaptableBlotterState>>,
+      AdaptableBlotterState
+    >
+  ) {
+    return function(next: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
       return function(action: Redux.Action) {
         switch (action.type) {
           /*******************

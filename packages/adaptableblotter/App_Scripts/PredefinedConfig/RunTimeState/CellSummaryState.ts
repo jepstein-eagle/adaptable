@@ -1,16 +1,8 @@
 import { RunTimeState } from './RunTimeState';
+import { CellSummaryOperation, CellSummaryOptionalOperation } from '../Common/Enums';
+
 export interface CellSummaryState extends RunTimeState {
-  SummaryOperation?:
-    | 'Sum'
-    | 'Average'
-    | 'Mode'
-    | 'Median'
-    | 'Distinct'
-    | 'Max'
-    | 'Min'
-    | 'Count'
-    | 'VWap'
-    | 'Only';
+  SummaryOperation?: CellSummaryOperation | CellSummaryOptionalOperation;
   OptionalSummaryOperations?: string[]; // for now just 'VWaP' and 'Only' are available
 }
 
