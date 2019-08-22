@@ -51,6 +51,8 @@ import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
+import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -74,8 +76,8 @@ export class agGridHelper {
   }
 
   public setUpStrategies(): Map<string, IStrategy> {
-    let strategies = new Map<string, IStrategy>();
-    let blotter = this.blotter as AdaptableBlotter;
+    const strategies = new Map<string, IStrategy>();
+    const blotter = this.blotter as AdaptableBlotter;
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(blotter));
     strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(blotter));
     strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(blotter));
@@ -136,7 +138,7 @@ export class agGridHelper {
     }
 
     // also we can check if they have done it
-    let primaryKey: any = this.blotter.blotterOptions.primaryKey;
+    const primaryKey: any = this.blotter.blotterOptions.primaryKey;
     // otherwise lets set the Id so that it returns the primaryKey
     this.gridOptions.getRowNodeId = function(data) {
       return data[primaryKey];
@@ -144,38 +146,45 @@ export class agGridHelper {
     return true;
   }
 
-  public createPercentBarCellRendererFunc(pcr: PercentBar, blotterId: string): ICellRendererFunc {
-    let showNegatives: boolean = pcr.MinValue < 0;
-    let showPositives: boolean = pcr.MaxValue > 0;
+  public createSparklineCellRendererComp(
+    sparkline: SparklineColumn,
+    blotterId: string
+  ): ICellRendererFunc {
+    return getSparklineRendererForColumn(sparkline);
+  }
 
-    let cellRendererFunc: ICellRendererFunc = (params: ICellRendererParams) => {
-      let isNegativeValue: boolean = params.value < 0;
+  public createPercentBarCellRendererFunc(pcr: PercentBar, blotterId: string): ICellRendererFunc {
+    const showNegatives: boolean = pcr.MinValue < 0;
+    const showPositives: boolean = pcr.MaxValue > 0;
+
+    const cellRendererFunc: ICellRendererFunc = (params: ICellRendererParams) => {
+      const isNegativeValue: boolean = params.value < 0;
       let value = params.value;
 
-      let maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId)
+      const maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId)
         ? this.blotter.getRawValueFromRecord(params.node, pcr.MaxValueColumnId)
         : pcr.MaxValue;
-      let minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId)
+      const minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId)
         ? this.blotter.getRawValueFromRecord(params.node, pcr.MinValueColumnId)
         : pcr.MinValue;
 
       if (isNegativeValue) {
-        value = value * -1;
+        value *= -1;
       }
       let percentagePositiveValue = (100 / maxValue) * value;
       let percentageNegativeValue = (100 / (minValue * -1)) * value;
 
       if (showNegatives && showPositives) {
         // if need both then half the space
-        percentagePositiveValue = percentagePositiveValue / 2;
-        percentageNegativeValue = percentageNegativeValue / 2;
+        percentagePositiveValue /= 2;
+        percentageNegativeValue /= 2;
       }
 
-      let eOuterDiv = document.createElement('div');
+      const eOuterDiv = document.createElement('div');
       eOuterDiv.className = 'ab_div-colour-render-div';
       if (pcr.ShowValue) {
-        let showValueBar = document.createElement('div');
-        showValueBar.id = 'ab_div-colour-render-text_' + blotterId + '_' + pcr.ColumnId;
+        const showValueBar = document.createElement('div');
+        showValueBar.id = `ab_div-colour-render-text_${blotterId}_${pcr.ColumnId}`;
         showValueBar.className = 'ab_div-colour-render-text';
         if (showNegatives && showPositives) {
           showValueBar.style.paddingLeft = isNegativeValue ? '50%' : '20%';
@@ -187,18 +196,18 @@ export class agGridHelper {
       }
 
       if (showNegatives) {
-        let fullWidth = showPositives ? 50 : 100;
+        const fullWidth = showPositives ? 50 : 100;
 
-        let negativeDivBlankBar = document.createElement('div');
+        const negativeDivBlankBar = document.createElement('div');
         negativeDivBlankBar.className = 'ab_div-colour-render-bar';
-        negativeDivBlankBar.id = 'ab_div-colour-blank-bar_' + blotterId + '_' + pcr.ColumnId;
-        negativeDivBlankBar.style.width = fullWidth - percentageNegativeValue + '%';
+        negativeDivBlankBar.id = `ab_div-colour-blank-bar_${blotterId}_${pcr.ColumnId}`;
+        negativeDivBlankBar.style.width = `${fullWidth - percentageNegativeValue}%`;
         eOuterDiv.appendChild(negativeDivBlankBar);
 
-        let negativeDivPercentBar = document.createElement('div');
+        const negativeDivPercentBar = document.createElement('div');
         negativeDivPercentBar.className = 'ab_div-colour-render-bar';
-        negativeDivBlankBar.id = 'ab_div-colour-negative-bar_' + blotterId + '_' + pcr.ColumnId;
-        negativeDivPercentBar.style.width = percentageNegativeValue + '%';
+        negativeDivBlankBar.id = `ab_div-colour-negative-bar_${blotterId}_${pcr.ColumnId}`;
+        negativeDivPercentBar.style.width = `${percentageNegativeValue}%`;
         if (isNegativeValue) {
           negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
         }
@@ -206,10 +215,10 @@ export class agGridHelper {
       }
 
       if (showPositives) {
-        let positivePercentBarDiv = document.createElement('div');
+        const positivePercentBarDiv = document.createElement('div');
         positivePercentBarDiv.className = 'ab_div-colour-render-bar';
-        positivePercentBarDiv.id = 'ab_div-colour-positive-bar_' + blotterId + '_' + pcr.ColumnId;
-        positivePercentBarDiv.style.width = percentagePositiveValue + '%';
+        positivePercentBarDiv.id = `ab_div-colour-positive-bar_${blotterId}_${pcr.ColumnId}`;
+        positivePercentBarDiv.style.width = `${percentagePositiveValue}%`;
         if (!isNegativeValue) {
           positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
         }
@@ -224,19 +233,18 @@ export class agGridHelper {
   public getCleanValue(value: string): string | undefined {
     if (value == null || value == 'null' || value == undefined || value == 'undefined') {
       return undefined;
-    } else {
-      return String(value) || '';
     }
+    return String(value) || '';
   }
 
   public getRenderedValue(percentBars: PercentBar[], colDef: ColDef, valueToRender: any): any {
-    let isRenderedColumn = ArrayExtensions.ContainsItem(percentBars, colDef.field);
+    const isRenderedColumn = ArrayExtensions.ContainsItem(percentBars, colDef.field);
     if (isRenderedColumn) {
       return valueToRender;
     }
 
-    let render: any = colDef.cellRenderer;
-    if (typeof render == 'string') {
+    const render: any = colDef.cellRenderer;
+    if (typeof render === 'string') {
       return this.getCleanValue(valueToRender);
     }
     return render({ value: valueToRender }) || '';
@@ -252,10 +260,10 @@ export class agGridHelper {
     showFilterPanel: boolean,
     showColumnsPanel: boolean
   ): SideBarDef {
-    let toolPanelDef: ToolPanelDef[] = [];
+    const toolPanelDef: ToolPanelDef[] = [];
 
     if (showFilterPanel) {
-      let filterToolPanel: ToolPanelDef = {
+      const filterToolPanel: ToolPanelDef = {
         id: 'filters',
         labelDefault: 'Filters',
         labelKey: 'filters',
@@ -266,7 +274,7 @@ export class agGridHelper {
     }
 
     if (showColumnsPanel) {
-      let columnsToolPanel: ToolPanelDef = {
+      const columnsToolPanel: ToolPanelDef = {
         id: 'columns',
         labelDefault: 'Columns',
         labelKey: 'columns',
@@ -277,7 +285,7 @@ export class agGridHelper {
     }
     toolPanelDef.push(this.createAdaptableBlotterToolPanel());
 
-    let abSideBarDef: SideBarDef = {
+    const abSideBarDef: SideBarDef = {
       toolPanels: toolPanelDef,
       defaultToolPanel: '', // for now we wont show an open (default) tool panel in this scenario - might revisit
     };
@@ -298,11 +306,11 @@ export class agGridHelper {
   // Might be able to change that later
   // We do this by gettng the selected cells, clearing the selection and then re-applying
   public reselectSelectedCells(): void {
-    let selectedCellRanges: CellRange[] = this.gridOptions.api!.getCellRanges();
+    const selectedCellRanges: CellRange[] = this.gridOptions.api!.getCellRanges();
 
     if (ArrayExtensions.CorrectLength(selectedCellRanges, 1)) {
-      let selectedCellRange: CellRange = selectedCellRanges[0];
-      let cellRangeParams: CellRangeParams = {
+      const selectedCellRange: CellRange = selectedCellRanges[0];
+      const cellRangeParams: CellRangeParams = {
         rowStartIndex: selectedCellRange.startRow.rowIndex,
         rowEndIndex: selectedCellRange.endRow.rowIndex,
         columns: selectedCellRange.columns,
@@ -314,10 +322,11 @@ export class agGridHelper {
   }
 
   public setUpRowStyles(): void {
-    let rowStyles: RowStyle[] = this.blotter.api.userInterfaceApi.getUserInterfaceState().RowStyles;
+    const rowStyles: RowStyle[] = this.blotter.api.userInterfaceApi.getUserInterfaceState()
+      .RowStyles;
     if (ArrayExtensions.IsNotNullOrEmpty(rowStyles)) {
       // First lets deal with Alls - we will get the first one and then get out
-      let allRowStyle = rowStyles.find(rs => rs.RowType == 'All');
+      const allRowStyle = rowStyles.find(rs => rs.RowType == 'All');
       if (allRowStyle) {
         if (StringExtensions.IsNotNullOrEmpty(allRowStyle.Style.ClassName)) {
           // we have a row style name so we can just set that for the whole grid and no need to use the function
@@ -333,17 +342,17 @@ export class agGridHelper {
         }
       } else {
         // we dont have an all row style so now things get hard and we need to see if we have one alternating style or 2
-        let evenRowStyle = rowStyles.find(rs => rs.RowType == 'Even');
-        let oddRowStyle = rowStyles.find(rs => rs.RowType == 'Odd');
+        const evenRowStyle = rowStyles.find(rs => rs.RowType == 'Even');
+        const oddRowStyle = rowStyles.find(rs => rs.RowType == 'Odd');
 
         // this logic feels a bit OTT but the idea is to avoid having to create this getRowClass or getRowStyle functions when not needed.
-        let evenRowStyleName: string = evenRowStyle && evenRowStyle.Style.ClassName;
-        let oddRowStyleName: string = oddRowStyle && oddRowStyle.Style.ClassName;
+        const evenRowStyleName: string = evenRowStyle && evenRowStyle.Style.ClassName;
+        const oddRowStyleName: string = oddRowStyle && oddRowStyle.Style.ClassName;
 
-        let emptyEvenRowStyleName = StringExtensions.IsNullOrEmpty(evenRowStyleName);
-        let emptyOddRowStyleName = StringExtensions.IsNullOrEmpty(oddRowStyleName);
+        const emptyEvenRowStyleName = StringExtensions.IsNullOrEmpty(evenRowStyleName);
+        const emptyOddRowStyleName = StringExtensions.IsNullOrEmpty(oddRowStyleName);
 
-        let atLeastOneNormalStyle: boolean =
+        const atLeastOneNormalStyle: boolean =
           (evenRowStyle && emptyEvenRowStyleName) || (oddRowStyle && emptyOddRowStyleName);
 
         if (evenRowStyleName || oddRowStyleName) {
@@ -391,7 +400,7 @@ export class agGridHelper {
   }
 
   public fireSelectionChangedEvent(): void {
-    let selectionChangedArgs: SelectionChangedEventArgs = {
+    const selectionChangedArgs: SelectionChangedEventArgs = {
       selectedCellInfo: this.blotter.api.gridApi.getGridState().SelectedCellInfo,
       selectedRowInfo: this.blotter.api.gridApi.getGridState().SelectedRowInfo,
     };

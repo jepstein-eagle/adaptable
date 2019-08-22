@@ -23,6 +23,7 @@ import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState'
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { GridCell } from './Selection/GridCell';
 import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -162,6 +163,9 @@ export interface IAdaptableBlotter {
   removePercentBar(percentBar: PercentBar): void;
   addPercentBar(percentBar: PercentBar): void;
   editPercentBar(percentBar: PercentBar): void;
+
+  // sparklines
+  addSparkline(sparklineColumn: SparklineColumn): void;
 
   // Filtering
   hideFilterForm(): void;

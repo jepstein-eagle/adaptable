@@ -76,9 +76,12 @@ import { IActionColumnApi } from './Interface/IActionColumnApi';
 import { ActionColumnApi } from './ActionColumnApi';
 import { NamedFilterApi } from './NamedFilterApi';
 import { INamedFilterApi } from './Interface/INamedFilterApi';
+import { ISparklineColumnApi } from './Interface/ISparklineColumnApi';
+import { SparklineColumnApi } from './SparklineColumnApi';
 
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
+  public sparklineColumnApi: ISparklineColumnApi;
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
   public auditEventApi: IAuditEventApi;
@@ -120,6 +123,7 @@ export class BlotterApi implements IBlotterApi {
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     this.actionColumnApi = new ActionColumnApi(blotter);
+    this.sparklineColumnApi = new SparklineColumnApi(blotter);
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
     this.auditEventApi = new AuditEventApi(blotter);

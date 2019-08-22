@@ -35,6 +35,7 @@ import { IPlusMinusApi } from './IPlusMinusApi';
 import { IBulkUpdateApi } from './IBulkUpdateApi';
 import { IAuditEventApi } from './IAuditEventApi';
 import { IActionColumnApi } from './IActionColumnApi';
+import { ISparklineColumnApi } from './ISparklineColumnApi';
 import { INamedFilterApi } from './INamedFilterApi';
 
 /**
@@ -55,9 +56,14 @@ import { INamedFilterApi } from './INamedFilterApi';
 
 export interface IBlotterApi {
   /**
-   * Provides access to the *Advanced Search* function, the *ActionColumn* object.
+   * Provides access to the Action Column functionality, the *ActionColumn* object.
    */
   actionColumnApi: IActionColumnApi;
+
+  /**
+   * Provides access to the *Sparkline Column* functionality
+   */
+  sparklineColumnApi: ISparklineColumnApi;
 
   /**
    * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_predefinedconfig_runtimestate_advancedsearchstate_.advancedsearchstate.html).

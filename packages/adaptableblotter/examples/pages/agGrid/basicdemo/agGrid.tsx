@@ -25,11 +25,12 @@ LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(5000);
+  console.log(tradeData.slice(0, 10));
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'basic-demo'
+    `basic-demo ${Date.now()}`
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
@@ -54,7 +55,26 @@ function InitAdaptableBlotter() {
   global.adaptableblotter = adaptableblotter;
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  ActionColumn: {},
+  SparklineColumn: {
+    Columns: [
+      {
+        ColumnId: 'sparks',
+        SparklineType: 'Line',
+        Expression: {
+          ColumnValueExpressions: [
+            {
+              ColumnDisplayValues: ['Goldman Sachs', 'JP Morgan'],
+              ColumnId: 'counterparty',
+              ColumnRawValues: ['Goldman Sachs', 'JP Morgan'],
+            },
+          ],
+        },
+      },
+    ],
+  },
+};
 
 export default () => {
   useEffect(() => {

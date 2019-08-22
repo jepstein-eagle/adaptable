@@ -154,6 +154,7 @@ import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeSta
 import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -2160,6 +2161,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
       this.addPercentBar(pcr);
     });
+    this.api.sparklineColumnApi.getAllSparklineColumn().forEach(sparklineColumn => {
+      this.addSparkline(sparklineColumn);
+    });
 
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
     this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
@@ -2233,6 +2237,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       return colMenuItems;
     };
+  }
+
+  public addSparkline(sparklineColumn: SparklineColumn): void {
+    const renderedColumn = ColumnHelper.getColumnFromId(
+      sparklineColumn.ColumnId,
+      this.api.gridApi.getColumns()
+    );
+
+    if (renderedColumn) {
+      const cellRendererComp: any = this.agGridHelper.createSparklineCellRendererComp(
+        sparklineColumn,
+        this.blotterOptions!.blotterId!
+      );
+      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
+        sparklineColumn.ColumnId
+      );
+      const colDef: ColDef = vendorGridColumn.getColDef();
+      colDef.cellRenderer = cellRendererComp;
+    }
   }
 
   public addPercentBar(pcr: PercentBar): void {
