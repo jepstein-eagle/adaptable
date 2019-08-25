@@ -148,10 +148,10 @@ export interface IAdaptableBlotter {
   removeCustomSort(columnId: string): void;
   setColumnSort(columnSorts: ColumnSort[]): void;
 
-  //FreeTextColumn
+  // FreeTextColumn
   addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void;
 
-  //CalculatedColumn
+  // CalculatedColumn
   addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
   removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
   editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
@@ -166,6 +166,8 @@ export interface IAdaptableBlotter {
 
   // sparklines
   addSparkline(sparklineColumn: SparklineColumn): void;
+  removeSparkline(sparklineColumn: SparklineColumn): void;
+  editSparkline(sparklineColumn: SparklineColumn): void;
 
   // Filtering
   hideFilterForm(): void;
@@ -173,7 +175,7 @@ export interface IAdaptableBlotter {
   clearGridFiltering(): void;
   clearColumnFiltering(columnIds: string[]): void;
 
-  //TEMPORARY : JO
+  // TEMPORARY : JO
   getIPPStyle(): IPPStyle;
 
   // info
@@ -194,6 +196,6 @@ export interface IAdaptableBlotter {
   showQuickFilter(): void;
   hideQuickFilter(): void;
 
-  //Theme
+  // Theme
   applyBlotterTheme(theme: AdaptableBlotterTheme | string): void;
 }

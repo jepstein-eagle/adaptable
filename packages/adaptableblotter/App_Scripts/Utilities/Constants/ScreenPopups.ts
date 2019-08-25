@@ -23,6 +23,7 @@ export const FormatColumnPopup: string = 'FormatColumnPopup';
 export const FreeTextColumnPopup: string = 'FreeTextColumnPopup';
 export const LayoutPopup: string = 'LayoutPopup';
 export const PercentBarPopup: string = 'PercentBarPopup';
+export const SparklinesPopup: string = 'SparklinesPopup';
 export const PieChartPopup: string = 'PieChartPopup';
 export const PlusMinusPopup: string = 'PlusMinusPopup';
 export const CellSummaryPopup: string = 'CellSummaryPopup';

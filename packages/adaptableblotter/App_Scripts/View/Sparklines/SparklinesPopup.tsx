@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux';
+import * as SparklineColumnRedux from '../../Redux/ActionsReducers/SparklineColumnRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { PercentBarWizard } from './Wizard/PercentBarWizard';
+import { PercentBarWizard } from './Wizard/SparklinesWizard';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { PercentBarEntityRow } from './PercentBarEntityRow';
+import { PercentBarEntityRow } from './SparklinesEntityRow';
 import {
   EditableConfigEntityState,
   WizardStatus,
@@ -26,19 +26,24 @@ import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
+import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
-interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
-  PercentBars: PercentBar[];
-  onAddPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarAddAction;
-  onEditPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarEditAction;
+interface SparklinesPopupProps extends StrategyViewPopupProps<SparklinesPopupComponent> {
+  SparklineColumns: SparklineColumn[];
+  onAddSparklineColumn: (
+    sparklineColumn: SparklineColumn
+  ) => SparklineColumnRedux.SparklineColumnAddAction;
+  onEditSparklineColumn: (
+    sparklineColumn: SparklineColumn
+  ) => SparklineColumnRedux.SparklineColumnEditAction;
   onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-class PercentBarPopupComponent extends React.Component<
-  PercentBarPopupProps,
+class SparklinesPopupComponent extends React.Component<
+  SparklinesPopupProps,
   EditableConfigEntityState
 > {
-  constructor(props: PercentBarPopupProps) {
+  constructor(props: SparklinesPopupProps) {
     super(props);
     this.state = {
       EditedAdaptableBlotterObject: null,
@@ -65,20 +70,15 @@ class PercentBarPopupComponent extends React.Component<
         newPercentRender.MaxValue = Math.max(...distinctColumnsValues);
         this.onNewFromColumn(newPercentRender);
       }
-      if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
-        let editPercentRender = this.props.PercentBars.find(x => x.ColumnId == arrayParams[1]);
-        this.onEdit(editPercentRender);
-      }
+      // if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
+      //   let editPercentRender = this.props.SparklineColumns.find(x => x.ColumnId == arrayParams[1]);
+      //   this.onEdit(editPercentRender);
+      // }
     }
   }
 
   render() {
-    let infoBody: any[] = [
-      'Use Percent Bars to render numeric columns with a coloured bar, the length of which is dependent on the column value',
-      <br />,
-      <br />,
-      'For each Percent Bar you can select the colours and range boundaries.',
-    ];
+    let infoBody: any[] = ['Use Sparklines to render columns with arrays of numeric values'];
 
     let colItems: IColItem[] = [
       { Content: 'Column', Size: 2 },
@@ -89,37 +89,33 @@ class PercentBarPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar, index) => {
-      let column = ColumnHelper.getColumnFromId(percentBar.ColumnId, this.props.Columns);
-      return (
-        <PercentBarEntityRow
-          key={percentBar.Uuid}
-          colItems={colItems}
-          AdaptableBlotterObject={percentBar}
-          Column={column}
-          Columns={this.props.Columns}
-          UserFilters={this.props.UserFilters}
-          ColorPalette={this.props.ColorPalette}
-          onEdit={() => this.onEdit(percentBar)}
-          onShare={() => this.props.onShare(percentBar)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
-          onDeleteConfirm={PercentBarRedux.PercentBarDelete(percentBar)}
-          onMinimumValueChanged={(percentBar, minimumValue) =>
-            this.onMinimumValueChanged(percentBar, minimumValue)
-          }
-          onMaximumValueChanged={(percentBar, maximumValue) =>
-            this.onMaximumValueChanged(percentBar, maximumValue)
-          }
-          onPositiveColorChanged={(percentBar, positiveColor) =>
-            this.onPositiveColorChanged(percentBar, positiveColor)
-          }
-          onNegativeColorChanged={(percentBar, negativeColor) =>
-            this.onNegativeColorChanged(percentBar, negativeColor)
-          }
-          AccessLevel={this.props.AccessLevel}
-        />
-      );
-    });
+    let PercentBarItems = this.props.SparklineColumns.map(
+      (sparklineColumn: SparklineColumn, index) => {
+        let column = ColumnHelper.getColumnFromId(sparklineColumn.ColumnId, this.props.Columns);
+        return (
+          <PercentBarEntityRow
+            key={sparklineColumn.Uuid}
+            colItems={colItems}
+            AdaptableBlotterObject={sparklineColumn}
+            Column={column}
+            Columns={this.props.Columns}
+            UserFilters={this.props.UserFilters}
+            ColorPalette={this.props.ColorPalette}
+            onEdit={() => this.onEdit(sparklineColumn)}
+            onShare={() => this.props.onShare(sparklineColumn)}
+            TeamSharingActivated={this.props.TeamSharingActivated}
+            onDeleteConfirm={SparklineColumnRedux.SparklineColumnsDelete(sparklineColumn)}
+            onMinimumValueChanged={(sparklineColumn, minimumValue) =>
+              this.onMinimumValueChanged(sparklineColumn, minimumValue)
+            }
+            onMaximumValueChanged={(sparklineColumn, maximumValue) =>
+              this.onMaximumValueChanged(sparklineColumn, maximumValue)
+            }
+            AccessLevel={this.props.AccessLevel}
+          />
+        );
+      }
+    );
     let newButton = (
       <ButtonNew
         onClick={() => this.onNew()}
@@ -174,27 +170,17 @@ class PercentBarPopupComponent extends React.Component<
   }
 
   onMinimumValueChanged(percentBar: PercentBar, minimumValue: number): void {
-    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.MinValue = minimumValue;
-    this.props.onEditPercentBar(clonedPercentBar);
+    let clonedSparklineColumn: SparklineColumn = Helper.cloneObject(percentBar);
+    clonedSparklineColumn.MinimumValue = minimumValue;
+    this.props.onEditSparklineColumn(clonedSparklineColumn);
   }
-  onMaximumValueChanged(percentBar: PercentBar, maximumValue: number): void {
-    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.MaxValue = maximumValue;
-    this.props.onEditPercentBar(clonedPercentBar);
-  }
-  onPositiveColorChanged(percentBar: PercentBar, positiveColor: string): void {
-    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.PositiveColor = positiveColor;
-    this.props.onEditPercentBar(clonedPercentBar);
-  }
-  onNegativeColorChanged(percentBar: PercentBar, negativeColor: string): void {
-    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.NegativeColor = negativeColor;
-    this.props.onEditPercentBar(clonedPercentBar);
+  onMaximumValueChanged(percentBar: SparklineColumn, maximumValue: number): void {
+    let clonedSparklineColumn: SparklineColumn = Helper.cloneObject(percentBar);
+    clonedSparklineColumn.MaximumValue = maximumValue;
+    this.props.onEditSparklineColumn(clonedSparklineColumn);
   }
 
-  onNewFromColumn(percentBar: PercentBar) {
+  onNewFromColumn(percentBar: SparklineColumn) {
     this.setState({
       EditedAdaptableBlotterObject: percentBar,
       WizardStatus: WizardStatus.New,
@@ -210,8 +196,8 @@ class PercentBarPopupComponent extends React.Component<
     });
   }
 
-  onEdit(percentBar: PercentBar) {
-    let clonedObject: PercentBar = Helper.cloneObject(percentBar);
+  onEdit(sparklineColumn: SparklineColumn) {
+    let clonedObject: PercentBar = Helper.cloneObject(sparklineColumn);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
@@ -231,9 +217,9 @@ class PercentBarPopupComponent extends React.Component<
   onFinishWizard() {
     let percentBar: PercentBar = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
-      this.props.onEditPercentBar(percentBar);
+      this.props.onEditSparklineColumn(percentBar);
     } else {
-      this.props.onAddPercentBar(percentBar);
+      this.props.onAddSparklineColumn(percentBar);
     }
     this.setState({
       EditedAdaptableBlotterObject: null,
@@ -243,37 +229,33 @@ class PercentBarPopupComponent extends React.Component<
   }
 
   canFinishWizard(): boolean {
-    let percentBar = this.state.EditedAdaptableBlotterObject as PercentBar;
-    if (
-      StringExtensions.IsNullOrEmpty(percentBar.ColumnId) ||
-      StringExtensions.IsNullOrEmpty(percentBar.PositiveColor) ||
-      StringExtensions.IsNullOrEmpty(percentBar.NegativeColor)
-    ) {
+    let sparklineColumn = this.state.EditedAdaptableBlotterObject as SparklineColumn;
+    if (StringExtensions.IsNullOrEmpty(sparklineColumn.ColumnId)) {
       return false;
     }
-    // we are not currently checking for columns - ok? or problem?
+
     return true;
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
   return {
-    PercentBars: state.PercentBar.PercentBars,
+    SparklineColumns: state.SparklineColumn.Columns,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onAddPercentBar: (percentBar: PercentBar) =>
-      dispatch(PercentBarRedux.PercentBarAdd(percentBar)),
-    onEditPercentBar: (percentBar: PercentBar) =>
-      dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
+    onAddSparklineColumn: (percentBar: PercentBar) =>
+      dispatch(SparklineColumnRedux.SparklineColumnsAdd(percentBar)),
+    onEditSparklineColumn: (percentBar: PercentBar) =>
+      dispatch(SparklineColumnRedux.SparklineColumnsEdit(percentBar)),
     onShare: (entity: AdaptableBlotterObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.SparklinesStrategyId)),
   };
 }
 
 export let PercentBarPopup = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PercentBarPopupComponent);
+)(SparklinesPopupComponent);

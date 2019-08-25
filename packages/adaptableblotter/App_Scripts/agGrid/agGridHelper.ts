@@ -36,6 +36,7 @@ import { HomeStrategy } from '../Strategy/HomeStrategy';
 import { LayoutStrategy } from '../Strategy/LayoutStrategy';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { PercentBarStrategy } from '../Strategy/PercentBarStrategy';
+import { SparklinesStrategy } from '../Strategy/SparklinesStrategy';
 import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy';
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
@@ -123,6 +124,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(blotter));
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter));
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(blotter));
+    strategies.set(StrategyConstants.SparklinesStrategyId, new SparklinesStrategy(blotter));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(blotter));
     return strategies;
   }

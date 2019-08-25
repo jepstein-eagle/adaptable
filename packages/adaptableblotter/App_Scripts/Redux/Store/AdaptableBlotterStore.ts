@@ -382,8 +382,10 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 // we now allow users to differentiate between user and internal state so we check for both
 // NOTE:  the Audit Logger is also responsible for firing AuditEventApi changes if that has been set
 var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
-  function(middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
-    return function(next: Redux.Dispatch<AdaptableBlotterState>) {
+  function(
+    middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableBlotterState>>>
+  ) {
+    return function(next: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
       return function(action: Redux.Action) {
         if (
           // if audit state is turned off, then get out
@@ -1295,6 +1297,51 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               state: newState.PercentBar,
               diffInfo: diff,
               objectChanged: actionTyped.percentBar,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+
+          /* 
+          **********************
+          Sparklines
+          **********************
+           */
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_ADD: {
+            let actionTyped = <SparklineColumnRedux.SparklineColumnAddAction>action;
+            let changedDetails: StateObjectChangedDetails = {
+              name: StrategyConstants.SparklinesStrategyId,
+              actionType: action.type,
+              state: newState.SparklineColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.sparklineColumn,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_EDIT: {
+            let actionTyped = <SparklineColumnRedux.SparklineColumnEditAction>action;
+            let changedDetails: StateObjectChangedDetails = {
+              name: StrategyConstants.SparklinesStrategyId,
+              actionType: action.type,
+              state: newState.SparklineColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.sparklineColumn,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_DELETE: {
+            let actionTyped = <SparklineColumnRedux.SparklineColumnDeleteAction>action;
+            let changedDetails: StateObjectChangedDetails = {
+              name: StrategyConstants.SparklinesStrategyId,
+              actionType: action.type,
+              state: newState.SparklineColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.sparklineColumn,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);

@@ -3,6 +3,7 @@
 export enum DataType {
   String = 'String',
   Number = 'Number',
+  NumberArray = 'NumberArray',
   Boolean = 'Boolean',
   Date = 'Date',
   Object = 'Object',

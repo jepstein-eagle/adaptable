@@ -57,12 +57,13 @@ function InitAdaptableBlotter() {
 
 let demoConfig: PredefinedConfig = {
   ActionColumn: {},
+
   SparklineColumn: {
     Columns: [
       {
         ColumnId: 'sparks',
         SparklineType: 'Line',
-        Expression: {
+        Expressionx: {
           ColumnValueExpressions: [
             {
               ColumnDisplayValues: ['Goldman Sachs', 'JP Morgan'],

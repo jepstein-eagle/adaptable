@@ -114,6 +114,7 @@ import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -606,6 +607,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var value = this.valOrFunc(record, column);
             if (value instanceof Date) {
               dataType = DataType.Date;
+            } else if (Array.isArray(value) && value.length && typeof value[0] === 'number') {
+              dataType = DataType.NumberArray;
             } else {
               switch (typeof value) {
                 case 'string':
@@ -1806,6 +1809,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public editPercentBar(pcr: PercentBar): void {
+    // todo
+  }
+
+  public addSparkline(sparklineColumn: SparklineColumn): void {
+    // to do
+  }
+  public removeSparkline(sparklineColumn: SparklineColumn): void {
+    // todo
+  }
+
+  public editSparkline(sparklineColumn: SparklineColumn): void {
     // todo
   }
 

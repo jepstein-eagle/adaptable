@@ -26,24 +26,22 @@ export function getFriendlyNameFromColumn(columnId: string, column: IColumn): st
   }
   if (column) {
     return column.FriendlyName;
-  } else {
-    LogMissingColumnWarning(columnId);
-    return columnId + GeneralConstants.MISSING_COLUMN;
   }
+  LogMissingColumnWarning(columnId);
+  return columnId + GeneralConstants.MISSING_COLUMN;
 }
 
 export function getFriendlyNameFromColumnId(columnId: string, columns: IColumn[]): string {
-  let foundColumn: IColumn | undefined = columns.find(c => c.ColumnId == columnId);
+  const foundColumn: IColumn | undefined = columns.find(c => c.ColumnId == columnId);
   if (foundColumn) {
     return getFriendlyNameFromColumn(columnId, foundColumn);
-  } else {
-    LogMissingColumnWarning(columnId);
-    return columnId + GeneralConstants.MISSING_COLUMN;
   }
+  LogMissingColumnWarning(columnId);
+  return columnId + GeneralConstants.MISSING_COLUMN;
 }
 
 export function getFriendlyNamesFromColumnIds(columnIds: string[], columns: IColumn[]): string[] {
-  let friendlyNames: string[] = [];
+  const friendlyNames: string[] = [];
   if (ArrayExtensions.IsNullOrEmpty(columnIds)) {
     return friendlyNames;
   }
@@ -57,20 +55,19 @@ export function getColumnIdFromFriendlyName(friendlyName: string, columns: IColu
   if (friendlyName.includes(GeneralConstants.MISSING_COLUMN)) {
     return friendlyName.replace(GeneralConstants.MISSING_COLUMN, ''); // Ids should stay "pure"
   }
-  let foundColumn: IColumn = columns.find(c => c.FriendlyName == friendlyName);
+  const foundColumn: IColumn = columns.find(c => c.FriendlyName == friendlyName);
   if (foundColumn) {
     return foundColumn.ColumnId;
-  } else {
-    LogMissingColumnWarning(friendlyName);
-    return friendlyName + GeneralConstants.MISSING_COLUMN;
   }
+  LogMissingColumnWarning(friendlyName);
+  return friendlyName + GeneralConstants.MISSING_COLUMN;
 }
 
 export function getColumnIdsFromFriendlyNames(
   friendlyNames: string[],
   columns: IColumn[]
 ): string[] {
-  let columnIds: string[] = [];
+  const columnIds: string[] = [];
   if (ArrayExtensions.IsNullOrEmpty(friendlyNames)) {
     return columnIds;
   }
@@ -93,15 +90,14 @@ export function getColumnFromId(columnId: string, columns: IColumn[], logWarning
   if (ArrayExtensions.IsNullOrEmpty(columns)) {
     return null;
   }
-  let foundColumn: IColumn = columns.find(c => c.ColumnId == columnId);
+  const foundColumn: IColumn = columns.find(c => c.ColumnId == columnId);
   if (foundColumn) {
     return foundColumn;
-  } else {
-    if (logWarning) {
-      LogMissingColumnWarning(columnId);
-    }
-    return null;
   }
+  if (logWarning) {
+    LogMissingColumnWarning(columnId);
+  }
+  return null;
 }
 
 export function getColumnFromFriendlyName(
@@ -113,15 +109,14 @@ export function getColumnFromFriendlyName(
   if (ArrayExtensions.IsNullOrEmpty(columns)) {
     return null;
   }
-  let foundColumn: IColumn = columns.find(c => c.FriendlyName == columnName);
+  const foundColumn: IColumn = columns.find(c => c.FriendlyName == columnName);
   if (foundColumn) {
     return foundColumn;
-  } else {
-    if (logWarning) {
-      LogMissingColumnWarning(columnName);
-    }
-    return null;
   }
+  if (logWarning) {
+    LogMissingColumnWarning(columnName);
+  }
+  return null;
 }
 
 export function getColumnsOfType(columns: IColumn[], dataType: DataType): IColumn[] {
@@ -145,6 +140,10 @@ export function getNumericColumns(columns: IColumn[]): IColumn[] {
   return columns.filter(c => c.DataType == DataType.Number);
 }
 
+export function getNumericArrayColumns(columns: IColumn[]): IColumn[] {
+  return columns.filter(c => c.DataType == DataType.NumberArray);
+}
+
 export function getStringColumns(columns: IColumn[]): IColumn[] {
   return columns.filter(c => c.DataType == DataType.String);
 }
@@ -164,7 +163,7 @@ export function getColumnCategoryFromColumnCategories(
   let returnValue: string = '';
   ColumnCategoryns.forEach(c => {
     if (StringExtensions.IsNullOrEmpty(returnValue)) {
-      let column: string = c.ColumnIds.find(col => col == columnId);
+      const column: string = c.ColumnIds.find(col => col == columnId);
       if (column) {
         returnValue = c.ColumnCategoryId;
       }
@@ -179,7 +178,7 @@ export function getSortableColumns(columns: IColumn[]): IColumn[] {
 
 function LogMissingColumnWarning(columnId: string): void {
   if (!isSpecialColumn(columnId)) {
-    LoggingHelper.LogAdaptableBlotterWarning("No column found named '" + columnId + "'");
+    LoggingHelper.LogAdaptableBlotterWarning(`No column found named '${columnId}'`);
   }
 }
 
@@ -195,6 +194,7 @@ export const ColumnHelper = {
   getColumnFromFriendlyName,
   getColumnsOfType,
   getNumericColumns,
+  getNumericArrayColumns,
   getStringColumns,
   getDateColumns,
   getBooleanColumns,

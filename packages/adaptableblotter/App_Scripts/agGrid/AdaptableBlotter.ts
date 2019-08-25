@@ -669,6 +669,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public createMainMenu() {
     const menuItems: AdaptableBlotterMenuItem[] = [];
+
     this.strategies.forEach(x => {
       const menuItem = x.getPopupMenuItem();
       if (menuItem != null && menuItem != undefined) {
@@ -883,6 +884,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     let dataType: DataType;
     if (value instanceof Date) {
       dataType = DataType.Date;
+    } else if (Array.isArray(value) && value.length && typeof value[0] === 'number') {
+      dataType = DataType.NumberArray;
     } else {
       switch (typeof value) {
         case 'string':
@@ -911,6 +914,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     switch (colType) {
       case 'abColDefNumber':
         return DataType.Number;
+      case 'abColDefNumberArray':
+        return DataType.NumberArray;
       case 'abColDefString':
         return DataType.String;
       case 'abColDefBoolean':

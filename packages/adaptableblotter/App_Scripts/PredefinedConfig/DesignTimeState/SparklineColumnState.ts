@@ -15,7 +15,10 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *      ColumnId: 'Prices',
  *   },
  *   {
- *      ColumnId: 'Values'
+ *      ColumnId: 'Values',
+ *      MinimumValue: 20,
+ *      MaximumValue: 1000,
+ *      SparklineType: 'Line'
  *   },
  *  ],
  *  },
@@ -44,4 +47,24 @@ export interface SparklineColumn extends AdaptableBlotterObject {
    * The type of the sparkline chart to display
    */
   SparklineType?: 'Line' | 'Column';
+
+  /**
+   * The value to be considered the minimum value for the sparkline chart of the column
+   */
+  MinimumValue?: number;
+
+  /**
+   * The value to be considered the maximum value for the sparkline chart of the column
+   */
+  MaximumValue?: number;
+
+  /**
+   * The column id from where to take the maximum value for the sparkline  chart of the column
+   */
+  MaximumValueColumnId?: string;
+
+  /**
+   * The column id from where to take the minimum value for the sparkline  chart of the column
+   */
+  MinimumValueColumnId?: string;
 }
