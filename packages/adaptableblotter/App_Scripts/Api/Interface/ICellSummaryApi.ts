@@ -1,16 +1,10 @@
 import { CellSummaryState } from '../../PredefinedConfig/RunTimeState/CellSummaryState';
+import {
+  CellSummaryOperation,
+  CellSummaryOptionalOperation,
+} from '../../PredefinedConfig/Common/Enums';
 
 export interface ICellSummaryApi {
   getCellSummaryState(): CellSummaryState;
-  getCellSummaryOperation():
-    | 'Sum'
-    | 'Average'
-    | 'Mode'
-    | 'Median'
-    | 'Distinct'
-    | 'Max'
-    | 'Min'
-    | 'Count'
-    | 'VWap'
-    | 'Only';
+  getCellSummaryOperation(): CellSummaryOperation | CellSummaryOptionalOperation;
 }

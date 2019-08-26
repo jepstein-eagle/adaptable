@@ -215,7 +215,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {};
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onAddUserFilter: (userFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterAdd(userFilter)),

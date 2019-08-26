@@ -132,7 +132,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onEdit: (calculatedColumn: CalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),

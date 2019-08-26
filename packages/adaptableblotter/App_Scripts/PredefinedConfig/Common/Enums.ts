@@ -239,6 +239,7 @@ export enum CellSummaryOperation {
   Sum = 'Sum',
   Average = 'Average',
   Median = 'Median',
+  Mode = 'Mode',
   Distinct = 'Distinct',
   Max = 'Max',
   Min = 'Min',

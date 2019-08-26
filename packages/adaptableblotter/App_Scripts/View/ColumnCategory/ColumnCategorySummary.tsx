@@ -147,7 +147,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     //   onAddUpdateColumnCategory: (index: number, ColumnCategory: ColumnCategory) => dispatch(ColumnCategoryRedux.ColumnCategoryAddUpdateCondition(index, ColumnCategory)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),

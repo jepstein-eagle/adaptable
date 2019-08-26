@@ -54,7 +54,7 @@ export const DataSourceReducer: Redux.Reducer<DataSourceState> = (
   switch (action.type) {
     case DATA_SOURCE_SELECT:
       return Object.assign({}, state, {
-        CurrentDataSource: (<DataSourceSelectAction>action).SelectedDataSource,
+        CurrentDataSource: (action as DataSourceSelectAction).SelectedDataSource,
       });
     case DATA_SOURCE_ADD: {
       const actionDataSource: DataSource = (action as DataSourceAction).dataSource;

@@ -196,7 +196,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onAddDataSource: (DataSource: DataSource) =>
       dispatch(DataSourceRedux.DataSourceAdd(DataSource)),

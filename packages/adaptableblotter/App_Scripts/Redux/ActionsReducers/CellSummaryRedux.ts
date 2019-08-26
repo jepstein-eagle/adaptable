@@ -31,7 +31,7 @@ export const CellSummaryReducer: Redux.Reducer<CellSummaryState> = (
   switch (action.type) {
     case CELL_SUMMARY_CHANGE_OPERATION:
       return Object.assign({}, state, {
-        SummaryOperation: (<CellSummaryChangeOperationAction>action).SummaryOperation,
+        SummaryOperation: (action as CellSummaryChangeOperationAction).SummaryOperation,
       });
     default:
       return state;

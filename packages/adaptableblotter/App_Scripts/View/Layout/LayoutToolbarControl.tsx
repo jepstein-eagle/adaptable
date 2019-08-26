@@ -194,7 +194,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),

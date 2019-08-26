@@ -79,24 +79,24 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
   switch (action.type) {
     case COLOR_PALETTE_SET:
       return Object.assign({}, state, {
-        ColorPalette: (<ColorPaletteSetAction>action).ColorPalette,
+        ColorPalette: (action as ColorPaletteSetAction).ColorPalette,
       });
     case COLOR_PALETTE_ADD:
-      let actionTypedAddColors = <ColorPaletteAddAction>action;
+      const actionTypedAddColors = action as ColorPaletteAddAction;
       let existingColors = [].concat(state.ColorPalette);
       actionTypedAddColors.ColorPalette.forEach(cp => {
         existingColors.push(cp);
       });
       return Object.assign({}, state, { ColorPalette: existingColors });
     case STYLE_CLASSNAMES_ADD:
-      let actionTypedAddStyles = <StyleClassNameAddAction>action;
+      const actionTypedAddStyles = action as StyleClassNameAddAction;
       let existingStyleNames = [].concat(state.StyleClassNames);
       actionTypedAddStyles.StyleClassNames.forEach(sc => {
         existingStyleNames.push(sc);
       });
       return Object.assign({}, state, { StyleClassNames: existingStyleNames });
     case PERMITTED_COLUMNVALUES_SET:
-      let actionTypedSetColumnValues = <PermittedColumnValuesSetAction>action;
+      const actionTypedSetColumnValues = action as PermittedColumnValuesSetAction;
       permittedColumnValues = [].concat(state.PermittedColumnValues);
       let existingPermittedColumnValues: PermittedColumnValues = permittedColumnValues.find(
         pcv => pcv.ColumnId == actionTypedSetColumnValues.PermittedColumnValues.ColumnId
@@ -111,7 +111,7 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
         PermittedColumnValues: permittedColumnValues,
       });
     case PERMITTED_COLUMNVALUES_DELETE:
-      let actionTypedDeleteColumnValues = <PermittedColumnValuesDeleteAction>action;
+      const actionTypedDeleteColumnValues = action as PermittedColumnValuesDeleteAction;
       permittedColumnValues = [].concat(state.PermittedColumnValues);
       let index: number = permittedColumnValues.findIndex(
         pcv => pcv.ColumnId == actionTypedDeleteColumnValues.Column

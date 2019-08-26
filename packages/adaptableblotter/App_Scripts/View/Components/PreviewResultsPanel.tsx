@@ -16,7 +16,6 @@ import UIHelper from '../UIHelper';
 import Panel from '../../components/Panel';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
-  UpdateValue: string;
   PreviewInfo: IPreviewInfo;
   Columns: IColumn[];
   UserFilters: UserFilter[];

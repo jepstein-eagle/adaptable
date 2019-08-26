@@ -28,7 +28,7 @@ import { SyntheticEvent } from 'react';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
-  SmartEditValue: string;
+  SmartEditValue: number;
   MathOperation: MathOperation;
   PreviewInfo: IPreviewInfo;
   onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
@@ -74,16 +74,15 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     let globalValidationMessage: string = PreviewHelper.GetValidationMessage(
       this.props.PreviewInfo,
-      this.props.SmartEditValue
+      `${this.props.SmartEditValue}`
     );
 
     let showPanel: boolean =
-      this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue);
+      this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(`${this.props.SmartEditValue}`);
 
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
         style={{ flex: '1 1 100%', overflow: 'initial' }}
-        UpdateValue={this.props.SmartEditValue}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
@@ -137,7 +136,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
             tone={this.getButtonStyle() as 'neutral' | 'error' | 'success'}
             variant="raised"
             disabled={
-              StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) ||
+              StringExtensions.IsNullOrEmpty(`${this.props.SmartEditValue}`) ||
               (this.props.PreviewInfo &&
                 this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
             }
@@ -220,7 +219,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
     onSmartEditOperationChange: (SmartEditOperation: MathOperation) =>

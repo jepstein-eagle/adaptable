@@ -44,7 +44,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onClose: (dashboardControl: string) =>
       dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),

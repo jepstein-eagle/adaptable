@@ -27,7 +27,7 @@ export const ActionColumnReducer: Redux.Reducer<ActionColumnState> = (
   switch (action.type) {
     case ACTION_COLUMNS_SET:
       return Object.assign({}, state, {
-        ActionColumns: (<ActionColumnsSetAction>action).ActionColumns,
+        ActionColumns: (action as ActionColumnsSetAction).ActionColumns,
       });
 
     default:

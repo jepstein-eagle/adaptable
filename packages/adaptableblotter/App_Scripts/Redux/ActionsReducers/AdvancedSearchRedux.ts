@@ -97,7 +97,7 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (
     }
     case ADVANCED_SEARCH_SELECT:
       return Object.assign({}, state, {
-        CurrentAdvancedSearch: (<AdvancedSearchSelectAction>action).selectedSearchName,
+        CurrentAdvancedSearch: (action as AdvancedSearchSelectAction).selectedSearchName,
       });
 
     default:

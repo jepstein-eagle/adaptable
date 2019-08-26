@@ -63,7 +63,7 @@ export const TeamSharingReducer: Redux.Reducer<TeamSharingState> = (
 ): TeamSharingState => {
   switch (action.type) {
     case TEAMSHARING_SET: {
-      let actionTyped = <TeamSharingSetAction>action;
+      const actionTyped = action as TeamSharingSetAction;
       return Object.assign({}, state, {
         SharedEntities: actionTyped.Entities,
       });

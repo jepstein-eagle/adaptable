@@ -24,7 +24,7 @@ export const NamedFilterReducer: Redux.Reducer<NamedFilterState> = (
   switch (action.type) {
     case NAMED_FILTER_SET:
       return Object.assign({}, state, {
-        NamedFilters: (<NamedFilterSetAction>action).NamedFilters,
+        NamedFilters: (action as NamedFilterSetAction).NamedFilters,
       });
 
     default:

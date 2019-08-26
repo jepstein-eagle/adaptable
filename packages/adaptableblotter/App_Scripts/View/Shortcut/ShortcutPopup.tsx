@@ -257,7 +257,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onAddShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
     onEditShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutEdit(shortcut)),

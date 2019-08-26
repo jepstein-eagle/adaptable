@@ -51,11 +51,11 @@ export const SmartEditReducer: Redux.Reducer<SmartEditState> = (
   switch (action.type) {
     case SMARTEDIT_CHANGE_VALUE:
       return Object.assign({}, state, {
-        SmartEditValue: (<SmartEditChangeValueAction>action).value,
+        SmartEditValue: (action as SmartEditChangeValueAction).value,
       });
     case SMARTEDIT_CHANGE_OPERATION:
       return Object.assign({}, state, {
-        MathOperation: (<SmartEditChangeOperationAction>action).MathOperation,
+        MathOperation: (action as SmartEditChangeOperationAction).MathOperation,
       });
     default:
       return state;

@@ -99,7 +99,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
   switch (action.type) {
     case REPORT_SELECT:
       return Object.assign({}, state, {
-        CurrentReport: (<ReportSelectAction>action).SelectedReport,
+        CurrentReport: (action as ReportSelectAction).SelectedReport,
       });
 
     case REPORT_ADD: {

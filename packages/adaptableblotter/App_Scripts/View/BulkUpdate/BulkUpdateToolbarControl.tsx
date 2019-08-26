@@ -67,7 +67,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
 
     let previewPanel = (
       <PreviewResultsPanel
-        UpdateValue={this.props.BulkUpdateValue}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
@@ -199,7 +198,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onBulkUpdateValueChange: (value: string) =>
       dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),

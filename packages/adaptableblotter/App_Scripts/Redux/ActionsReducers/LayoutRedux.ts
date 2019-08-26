@@ -67,7 +67,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
     //  case LAYOUT_SAVE: // we do nothing here as its all done in the store
     //      return state
     case LAYOUT_SELECT:
-      return Object.assign({}, state, { CurrentLayout: (<LayoutSelectAction>action).LayoutName });
+      return Object.assign({}, state, { CurrentLayout: (action as LayoutSelectAction).LayoutName });
     case LAYOUT_ADD: {
       const actionLayout: Layout = (action as LayoutAction).layout;
 

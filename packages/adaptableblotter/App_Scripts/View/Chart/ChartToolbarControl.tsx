@@ -160,7 +160,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),

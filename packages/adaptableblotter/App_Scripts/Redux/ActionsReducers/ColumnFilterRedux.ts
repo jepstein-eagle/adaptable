@@ -107,7 +107,7 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
     }
 
     case COLUMN_FILTER_CLEAR: {
-      const actionTypedDelete = <ColumnFilterClearAction>action;
+      const actionTypedDelete = action as ColumnFilterClearAction;
       columnFilters = [].concat(state.ColumnFilters);
       const index = actionTypedDelete.columnFilter
         ? columnFilters.findIndex(i => i.Uuid == actionTypedDelete.columnFilter.Uuid)

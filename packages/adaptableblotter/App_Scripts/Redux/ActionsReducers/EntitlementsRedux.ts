@@ -49,12 +49,12 @@ export const EntitlementsReducer: Redux.Reducer<EntitlementsState> = (
 
   switch (action.type) {
     case ENTITLEMENT_ADD:
-      let actionTypedAdd = <EntitlementAddAction>action;
+      const actionTypedAdd = action as EntitlementAddAction;
       functionEntitlements = [].concat(state.FunctionEntitlements);
       functionEntitlements.push(actionTypedAdd.Entitlement);
       return Object.assign({}, state, { FunctionEntitlements: functionEntitlements });
     case ENTITLEMENT_UPDATE:
-      let actionTypedUpdate = <EntitlementUpdateAction>action;
+      const actionTypedUpdate = action as EntitlementUpdateAction;
       functionEntitlements = [].concat(state.FunctionEntitlements);
       index = functionEntitlements.findIndex(
         fe => fe.FunctionName == actionTypedUpdate.Entitlement.FunctionName
@@ -62,7 +62,7 @@ export const EntitlementsReducer: Redux.Reducer<EntitlementsState> = (
       functionEntitlements[index] = actionTypedUpdate.Entitlement;
       return Object.assign({}, state, { FunctionEntitlements: functionEntitlements });
     case ENTITLEMENT_DELETE:
-      let actionTypedDelete = <EntitlementDeleteAction>action;
+      const actionTypedDelete = action as EntitlementDeleteAction;
       functionEntitlements = [].concat(state.FunctionEntitlements);
       index = functionEntitlements.findIndex(a => a.FunctionName == actionTypedDelete.FunctionName);
       functionEntitlements.splice(index, 1);

@@ -184,7 +184,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onAddReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderAdd(reminder)),
     onEditReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderEdit(reminder)),

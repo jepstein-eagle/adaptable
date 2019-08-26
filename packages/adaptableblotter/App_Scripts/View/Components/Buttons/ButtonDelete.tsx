@@ -65,7 +65,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onConfirmWarning: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
