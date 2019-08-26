@@ -19,7 +19,7 @@ export class SparklinesColumnStrategy extends AdaptableStrategyBase
   public addColumnMenuItem(column: IColumn): void {
     if (column.DataType === DataType.NumberArray) {
       this.createColumnMenuItemShowPopup(
-        'Edit Sparkline',
+        'Edit Sparklines Column',
         ScreenPopups.SparklinesColumnPopup,
         StrategyConstants.SparklinesColumnGlyph,
         column.ColumnId
