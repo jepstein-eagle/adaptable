@@ -336,6 +336,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     );
   }
 
+  public addSparkline(sparklineColumn: SparklineColumn): void {
+    // to do
+  }
+  public removeSparkline(sparklineColumn: SparklineColumn): void {
+    // todo
+  }
+
+  public editSparkline(sparklineColumn: SparklineColumn): void {
+    // todo
+  }
+
   private getState(): AdaptableBlotterState {
     return this.adaptableBlotterStore.TheStore.getState();
   }
@@ -1809,17 +1820,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public editPercentBar(pcr: PercentBar): void {
-    // todo
-  }
-
-  public addSparkline(sparklineColumn: SparklineColumn): void {
-    // to do
-  }
-  public removeSparkline(sparklineColumn: SparklineColumn): void {
-    // todo
-  }
-
-  public editSparkline(sparklineColumn: SparklineColumn): void {
     // todo
   }
 

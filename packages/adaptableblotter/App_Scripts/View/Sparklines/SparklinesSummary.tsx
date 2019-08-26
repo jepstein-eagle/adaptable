@@ -7,7 +7,7 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
-import { SparklineWizard } from './Wizard/SparklinesWizard';
+import { SparklinesColumnWizard } from './Wizard/SparklinesColumnWizard';
 import * as SparklineColumnRedux from '../../Redux/ActionsReducers/SparklineColumnRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
@@ -83,7 +83,7 @@ export class SparklineColumnSummaryComponent extends React.Component<
         {sparklineColumnRow}
 
         {this.state.EditedAdaptableBlotterObject && (
-          <SparklineWizard
+          <SparklinesColumnWizard
             EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as PercentBar}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}

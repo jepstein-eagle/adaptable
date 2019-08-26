@@ -24,6 +24,7 @@ export const FreeTextColumnStrategyId: string = 'FreeTextColumn';
 export const HomeStrategyId: string = 'Home';
 export const LayoutStrategyId: string = 'Layout';
 export const PercentBarStrategyId: string = 'PercentBar';
+export const SparklinesColumnStrategyId: string = 'SparklinesColumn';
 export const SparklinesStrategyId: string = 'Sparklines';
 export const PieChartStrategyId: string = 'PieChart';
 export const PlusMinusStrategyId: string = 'PlusMinus';
@@ -60,6 +61,7 @@ export const FormatColumnStrategyName: string = 'Format Column';
 export const FreeTextColumnStrategyName: string = 'Free Text Column';
 export const LayoutStrategyName: string = 'Layout';
 export const PercentBarStrategyName: string = 'Percent Bar';
+export const SparklinesColumnStrategyName: string = 'Sparklines Column';
 export const SparklinesStrategyName: string = 'Sparklines';
 export const PieChartStrategyName: string = 'Pie Chart';
 export const PlusMinusStrategyName: string = 'Plus Minus';
@@ -97,6 +99,7 @@ export const FreeTextColumnGlyph: string = 'short-text';
 export const FunctionsGlyph: string = 'home';
 export const LayoutGlyph: string = 'apps';
 export const PercentBarGlyph: string = 'linear-scale';
+export const SparklinesColumnGlyph: string = 'linear-scale';
 export const SparklinesGlyph: string = 'linear-scale';
 export const PieChartGlyph: string = 'pie-chart';
 export const PlusMinusGlyph: string = 'add-circle';
@@ -156,6 +159,8 @@ export function getIdForStrategyName(strategyName: string) {
       return LayoutStrategyId;
     case PercentBarStrategyName:
       return PercentBarStrategyId;
+    case SparklinesColumnStrategyName:
+      return SparklinesColumnStrategyId;
     case SparklinesStrategyName:
       return SparklinesStrategyId;
     case PieChartStrategyName:
@@ -231,6 +236,8 @@ export function getNameForStrategyId(strategyID: string) {
       return PercentBarStrategyName;
     case SparklinesStrategyId:
       return SparklinesStrategyName;
+    case SparklinesColumnStrategyId:
+      return SparklinesColumnStrategyName;
     case PieChartStrategyId:
       return PieChartStrategyName;
     case PlusMinusStrategyId:
@@ -302,6 +309,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
       return PercentBarGlyph;
     case SparklinesStrategyId:
       return SparklinesGlyph;
+    case SparklinesColumnStrategyId:
+      return SparklinesColumnGlyph;
     case PieChartStrategyId:
       return PieChartGlyph;
     case PlusMinusStrategyId:

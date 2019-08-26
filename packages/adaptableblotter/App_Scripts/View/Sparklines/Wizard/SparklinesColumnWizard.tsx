@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
-import { SparklinesSelectColumnWizard } from './SparklinesSelectColumnWizard';
-import { SparklinesSummaryWizard } from './SparklinesSummaryWizard';
+import { SparklinesColumnSelectColumnWizard } from './SparklinesColumnSelectColumnWizard';
+import { SparklinesColumnSummaryWizard } from './SparklinesColumnSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { SparklinesValuesWizard } from './SparklinesValuesWizard';
+import { SparklinesColumnValuesWizard } from './SparklinesColumnValuesWizard';
 
-export interface SparklineWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<SparklineWizard> {}
+export interface SparklinesColumnWizardProps
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<SparklinesColumnWizard> {}
 
-export class SparklineWizard extends React.Component<SparklineWizardProps, {}> {
+export class SparklinesColumnWizard extends React.Component<SparklinesColumnWizardProps, {}> {
   render() {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.PercentBarStrategyName}
+          FriendlyName={StrategyConstants.SparklinesColumnStrategyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}
@@ -22,17 +22,17 @@ export class SparklineWizard extends React.Component<SparklineWizardProps, {}> {
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <SparklinesSelectColumnWizard />,
+              Element: <SparklinesColumnSelectColumnWizard />,
             },
             {
               StepName: 'Min / Max Values',
               Index: 1,
-              Element: <SparklinesValuesWizard />,
+              Element: <SparklinesColumnValuesWizard />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <SparklinesSummaryWizard />,
+              Element: <SparklinesColumnSummaryWizard />,
             },
           ]}
           Data={this.props.EditedAdaptableBlotterObject}

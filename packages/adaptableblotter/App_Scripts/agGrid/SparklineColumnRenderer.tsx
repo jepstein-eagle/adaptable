@@ -1,24 +1,30 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import { ICellRendererParams, ICellRendererFunc } from 'ag-grid-community';
 import SparklineChart from '../components/SparklineChart';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
-import { ICellRendererParams, ICellRendererFunc } from 'ag-grid-community';
 
 export const getSparklineRendererForColumn = (
   sparklineColumn: SparklineColumn
 ): ICellRendererFunc => {
-  const SparklineRenderer: ICellRendererFunc = (): HTMLElement | string => {
-    return '';
-  };
+  const SparklineRenderer: ICellRendererFunc = (): HTMLElement | string => '';
 
   const renderSparkline = (params: ICellRendererParams): React.ReactElement => {
+    const min = sparklineColumn.MinimumValue;
+    const max = sparklineColumn.MaximumValue;
+
+    // todo implement max and min value from column
+    if (sparklineColumn.MaximumValueColumnId) {
+    }
     return (
       <SparklineChart
         type={sparklineColumn.SparklineType}
+        min={min}
+        max={max}
         values={params.value}
-        width={params.column.getActualWidth() - 5} //TODO - replace
-        height={params.node.rowHeight - 5} //TODO - replace
+        width={params.column.getActualWidth() - 5} // TODO - replace
+        height={params.node.rowHeight - 5} // TODO - replace
       />
     );
   };

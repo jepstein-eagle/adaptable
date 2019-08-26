@@ -2296,6 +2296,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
+  public removeSparkline(sparklineColumn: SparklineColumn): void {
+    const renderedColumn = ColumnHelper.getColumnFromId(
+      sparklineColumn.ColumnId,
+      this.api.gridApi.getColumns()
+    );
+    if (renderedColumn) {
+      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
+        sparklineColumn.ColumnId
+      );
+      // note we dont get it from the original (but I guess it will be applied next time you run...)
+      vendorGridColumn.getColDef().cellRenderer = null;
+      const coldDef: ColDef = vendorGridColumn.getColDef();
+      coldDef.cellRenderer = null;
+    }
+  }
+
   private onRowDataChanged({
     // myevent,
     node,
@@ -2360,6 +2376,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public editPercentBar(pcr: PercentBar): void {
     this.removePercentBar(pcr);
     this.addPercentBar(pcr);
+  }
+
+  public editSparkline(sparklineColumn: SparklineColumn): void {
+    this.removeSparkline(sparklineColumn);
+    this.addSparkline(sparklineColumn);
   }
 
   private onSortChanged(): void {

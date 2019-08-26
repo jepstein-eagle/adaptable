@@ -55,7 +55,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
       this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
     return (
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, ...this.props.style }}>
         <Dropdown
           style={{ maxWidth: 'none' }}
           placeholder={placeHolder}

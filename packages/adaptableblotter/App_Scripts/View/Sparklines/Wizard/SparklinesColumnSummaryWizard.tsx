@@ -10,11 +10,13 @@ import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { SparklineColumn } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
-export interface SparklineSummaryWizardProps extends AdaptableWizardStepProps<SparklineColumn> {}
+export interface SparklinesColumnSummaryWizardProps
+  extends AdaptableWizardStepProps<SparklineColumn> {}
 
-export class SparklineSummaryWizard extends React.Component<SparklineSummaryWizardProps, {}>
+export class SparklinesColumnSummaryWizard
+  extends React.Component<SparklinesColumnSummaryWizardProps, {}>
   implements AdaptableWizardStep {
-  constructor(props: SparklineSummaryWizardProps) {
+  constructor(props: SparklinesColumnSummaryWizardProps) {
     super(props);
   }
 
@@ -31,7 +33,9 @@ export class SparklineSummaryWizard extends React.Component<SparklineSummaryWiza
         Key: 'Minimum Value',
         Value:
           this.props.Data.MinimumValueColumnId == null
-            ? this.props.Data.MinimumValue
+            ? this.props.Data.MinimumValue == null
+              ? 'Current cell'
+              : this.props.Data.MinimumValue
             : '[' +
               ColumnHelper.getFriendlyNameFromColumnId(
                 this.props.Data.MinimumValueColumnId,
@@ -43,7 +47,9 @@ export class SparklineSummaryWizard extends React.Component<SparklineSummaryWiza
         Key: 'Maximum Value',
         Value:
           this.props.Data.MaximumValueColumnId == null
-            ? this.props.Data.MaximumValue
+            ? this.props.Data.MaximumValue == null
+              ? 'Current cell'
+              : this.props.Data.MaximumValue
             : '[' +
               ColumnHelper.getFriendlyNameFromColumnId(
                 this.props.Data.MaximumValueColumnId,
@@ -56,7 +62,7 @@ export class SparklineSummaryWizard extends React.Component<SparklineSummaryWiza
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.SparklinesStrategyName}
+        header={StrategyConstants.SparklinesColumnStrategyName}
       />
     );
     return <div>{summaryPage}</div>;

@@ -4,6 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IPieChartStrategy } from './Interface/IPieChartStrategy';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -19,7 +20,10 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   }
 
   public addColumnMenuItem(column: IColumn): void {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (
+      this.canCreateColumnMenuItem(column, this.blotter) &&
+      column.DataType !== DataType.NumberArray
+    ) {
       this.createColumnMenuItemShowPopup(
         'See as Pie Chart',
         ScreenPopups.PieChartPopup,

@@ -20,6 +20,7 @@ import {
   ChartDefinition,
   PieChartDefinition,
   PieChartDataItem,
+  SparklinesChartDefinition,
 } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
 
@@ -78,6 +79,25 @@ export class ChartService implements IChartService {
     // no error message built yet but need to add
     let chartData: ChartData = {
       Data: returnData,
+      ErrorMessage: null,
+    };
+    return chartData;
+  }
+
+  public BuildSparklinesChartData(chartDefinition: SparklinesChartDefinition): ChartData {
+    let values: number[] = this.blotter
+      .getColumnValueDisplayValuePairDistinctList(
+        chartDefinition.ColumnId,
+        DistinctCriteriaPairValue.DisplayValue,
+        chartDefinition.VisibleRowsOnly
+      )
+      .filter(cv => Helper.objectExists(cv.RawValue))
+      .map(cv => {
+        return cv.RawValue;
+      });
+
+    let chartData: ChartData = {
+      Data: values,
       ErrorMessage: null,
     };
     return chartData;

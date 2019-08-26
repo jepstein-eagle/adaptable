@@ -9,7 +9,7 @@
   font-size: var(--ab-cmp-input__font-size);
 
   &[disabled] {
-    background: var(--ab-cmp-input--disabled__background); 
+    background: var(--ab-cmp-input--disabled__background) !important; 
   }
 
   &:focus {

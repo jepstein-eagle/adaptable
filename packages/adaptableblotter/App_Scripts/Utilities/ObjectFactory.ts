@@ -29,6 +29,7 @@ import { DataSource } from '../PredefinedConfig/RunTimeState/DataSourceState';
 import {
   PieChartDefinition,
   CategoryChartDefinition,
+  SparklinesChartDefinition,
 } from '../PredefinedConfig/RunTimeState/ChartState';
 import { SecondaryColumnOperation, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
@@ -62,6 +63,8 @@ import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ICellSummmary } from './Interface/Selection/ICellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
+import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -84,6 +87,18 @@ export function CreateEmptyPieChartDefinition(): PieChartDefinition {
     VisibleRowsOnly: true,
   };
 }
+export function CreateEmptySparklinesChartDefinition(): SparklinesChartDefinition {
+  return {
+    Uuid: createUuid(),
+    Name: EMPTY_STRING,
+    Description: EMPTY_STRING,
+    ColumnId: EMPTY_STRING,
+    ChartProperties: DefaultSparklinesChartProperties,
+    ChartType: ChartType.SparklinesChart,
+    VisibleRowsOnly: true,
+  };
+}
+
 export function CreateEmptyCategoryChartDefinition(): CategoryChartDefinition {
   return {
     Uuid: createUuid(),
@@ -200,6 +215,17 @@ export function CreateEmptyPercentBar(): PercentBar {
     ShowToolTip: true,
     MaxValueColumnId: undefined,
     MinValueColumnId: undefined,
+  };
+}
+
+export function CreateEmptySparklineColumn(): SparklineColumn {
+  return {
+    Uuid: createUuid(),
+    ColumnId: EMPTY_STRING,
+    MaximumValue: undefined,
+    MinimumValue: undefined,
+    MaximumValueColumnId: undefined,
+    MinimumValueColumnId: undefined,
   };
 }
 
@@ -440,6 +466,7 @@ export const ObjectFactory = {
   CreateEmptyCustomSort,
   CreateEmptyDataSource,
   CreateEmptyPieChartDefinition,
+  CreateEmptySparklinesChartDefinition,
   CreateEmptyCategoryChartDefinition,
   CreateEmptyCalculatedColumn,
   CreateEmptyPlusMinusRule,
@@ -451,6 +478,7 @@ export const ObjectFactory = {
   CreateEmptyColumnSort,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,
+  CreateEmptySparklineColumn,
   CreateEmptyUserFilter,
   CreateEmptyReport,
   CreateDefaultFlashingCell,

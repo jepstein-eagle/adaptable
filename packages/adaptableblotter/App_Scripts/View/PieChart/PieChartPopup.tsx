@@ -40,6 +40,7 @@ import Input from '../../components/Input';
 import Checkbox from '../../components/CheckBox';
 import Panel from '../../components/Panel';
 import Dropdown from '../../components/Dropdown';
+import ChartContainer from '../../components/ChartContainer';
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}
 
@@ -163,21 +164,36 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
       <br />,
       "There are options to view as doughnut, set the 'Others' threshold (and type) and manage labels.",
     ];
-    let chartSize: string = '450px';
+
     let radiusFactor: number = 0.8;
 
     let chartBlock = (
-      <div>
-        {this.state.ShowAsDoughnut ? (
-          <IgrDoughnutChart
-            height={chartSize}
-            width={chartSize}
-            allowSliceSelection="true"
-            allowSliceExplosion="true"
-            ref={this.onDoughnutChartRef}
-          >
-            <IgrRingSeries
-              name="ring1"
+      <ChartContainer
+        chart={
+          this.state.ShowAsDoughnut ? (
+            <IgrDoughnutChart
+              allowSliceSelection="true"
+              allowSliceExplosion="true"
+              ref={this.onDoughnutChartRef}
+            >
+              <IgrRingSeries
+                name="ring1"
+                dataSource={this.state.DataSource}
+                labelsPosition={this.state.SliceLabelsPosition}
+                labelMemberPath={this.state.SliceLabelsMapping}
+                valueMemberPath={this.state.SliceValuesMapping}
+                legendLabelMemberPath={this.state.SliceLegendMapping}
+                othersCategoryThreshold={this.state.OthersCategoryThreshold}
+                othersCategoryType={this.state.OthersCategoryType}
+                othersCategoryText="Others"
+                brushes={this.state.SliceBrushes}
+                outlines={this.state.SliceBrushes}
+                radiusFactor={radiusFactor}
+              />
+            </IgrDoughnutChart>
+          ) : (
+            <IgrPieChart
+              ref={this.onPieChartRef}
               dataSource={this.state.DataSource}
               labelsPosition={this.state.SliceLabelsPosition}
               labelMemberPath={this.state.SliceLabelsMapping}
@@ -186,34 +202,17 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
               othersCategoryThreshold={this.state.OthersCategoryThreshold}
               othersCategoryType={this.state.OthersCategoryType}
               othersCategoryText="Others"
+              othersCategoryFill="#9A9A9A"
+              othersCategoryStroke="#9A9A9A"
               brushes={this.state.SliceBrushes}
               outlines={this.state.SliceBrushes}
               radiusFactor={radiusFactor}
+              selectionMode="single"
+              //sliceClick={(s, e) => this.onSliceClick(e)}
             />
-          </IgrDoughnutChart>
-        ) : (
-          <IgrPieChart
-            ref={this.onPieChartRef}
-            dataSource={this.state.DataSource}
-            labelsPosition={this.state.SliceLabelsPosition}
-            labelMemberPath={this.state.SliceLabelsMapping}
-            valueMemberPath={this.state.SliceValuesMapping}
-            legendLabelMemberPath={this.state.SliceLegendMapping}
-            width={chartSize}
-            height={chartSize}
-            othersCategoryThreshold={this.state.OthersCategoryThreshold}
-            othersCategoryType={this.state.OthersCategoryType}
-            othersCategoryText="Others"
-            othersCategoryFill="#9A9A9A"
-            othersCategoryStroke="#9A9A9A"
-            brushes={this.state.SliceBrushes}
-            outlines={this.state.SliceBrushes}
-            radiusFactor={radiusFactor}
-            selectionMode="single"
-            //sliceClick={(s, e) => this.onSliceClick(e)}
-          />
-        )}
-      </div>
+          )
+        }
+      />
     );
 
     let settingsBlock = (
