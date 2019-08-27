@@ -871,6 +871,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.emitter.emit(GRID_REFRESHED_EVENT);
   }
 
+  public getColumnValueDisplayValuePairList(
+    columnId: string,
+
+    visibleRowsOnly: boolean
+  ): Array<IRawValueDisplayValuePair> {
+    // todo implement
+    return [];
+  }
+
   public getColumnValueDisplayValuePairDistinctList(
     columnId: string,
     distinctCriteria: DistinctCriteriaPairValue,

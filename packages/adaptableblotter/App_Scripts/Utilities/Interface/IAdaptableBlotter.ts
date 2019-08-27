@@ -111,6 +111,11 @@ export interface IAdaptableBlotter {
 
   // getting records and keys
   getPrimaryKeyValueFromRecord(record: any): any;
+  getColumnValueDisplayValuePairList(
+    columnId: string,
+
+    visibleRowsOnly: boolean
+  ): Array<IRawValueDisplayValuePair>;
   getColumnValueDisplayValuePairDistinctList(
     columnId: string,
     distinctCriteria: DistinctCriteriaPairValue,

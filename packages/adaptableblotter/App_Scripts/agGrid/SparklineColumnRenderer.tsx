@@ -14,9 +14,6 @@ export const getSparklineRendererForColumn = (
     const min = sparklineColumn.MinimumValue;
     const max = sparklineColumn.MaximumValue;
 
-    // todo implement max and min value from column
-    if (sparklineColumn.MaximumValueColumnId) {
-    }
     return (
       <SparklineChart
         type={sparklineColumn.SparklineType}

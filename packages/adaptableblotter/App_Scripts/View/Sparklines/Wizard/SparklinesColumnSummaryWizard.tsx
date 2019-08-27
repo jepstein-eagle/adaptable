@@ -31,31 +31,11 @@ export class SparklinesColumnSummaryWizard
       },
       {
         Key: 'Minimum Value',
-        Value:
-          this.props.Data.MinimumValueColumnId == null
-            ? this.props.Data.MinimumValue == null
-              ? 'Current cell'
-              : this.props.Data.MinimumValue
-            : '[' +
-              ColumnHelper.getFriendlyNameFromColumnId(
-                this.props.Data.MinimumValueColumnId,
-                this.props.Columns
-              ) +
-              ']',
+        Value: this.props.Data.MinimumValue == null ? 'Current cell' : this.props.Data.MinimumValue,
       },
       {
         Key: 'Maximum Value',
-        Value:
-          this.props.Data.MaximumValueColumnId == null
-            ? this.props.Data.MaximumValue == null
-              ? 'Current cell'
-              : this.props.Data.MaximumValue
-            : '[' +
-              ColumnHelper.getFriendlyNameFromColumnId(
-                this.props.Data.MaximumValueColumnId,
-                this.props.Columns
-              ) +
-              ']',
+        Value: this.props.Data.MaximumValue == null ? 'Current cell' : this.props.Data.MaximumValue,
       },
     ];
 

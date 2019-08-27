@@ -5,7 +5,6 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ISparklinesStrategy } from './Interface/ISparklinesStrategy';
 
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { SparklineColumnState } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 export class SparklinesStrategy extends AdaptableStrategyBase implements ISparklinesStrategy {
   constructor(blotter: IAdaptableBlotter) {

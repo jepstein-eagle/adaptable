@@ -1210,6 +1210,54 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     );
   }
 
+  public getColumnValueDisplayValuePairList(
+    columnId: string,
+    visibleRowsOnly: boolean
+  ): Array<IRawValueDisplayValuePair> {
+    const returnArray: IRawValueDisplayValuePair[] = [];
+
+    let permittedMap = new Map<string, IRawValueDisplayValuePair>();
+
+    // check if there are permitted column values for that column
+    // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
+    const permittedValuesForColumn: PermittedColumnValues = this.api.userInterfaceApi.getPermittedValuesForColumn(
+      columnId
+    );
+    if (permittedValuesForColumn != undefined) {
+      permittedValuesForColumn.PermittedValues.forEach(pv => {
+        permittedMap.set(pv, { RawValue: pv, DisplayValue: pv });
+      });
+    } else {
+      permittedMap = null;
+    }
+    const useRawValue: boolean = this.useRawValueForColumn(columnId);
+
+    const eachFn = (rowNode: RowNode, columnId: string, useRawValue: boolean) => {
+      if (!rowNode.group) {
+        const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
+        const displayValue = useRawValue
+          ? Helper.StringifyValue(rawValue)
+          : this.getDisplayValueFromRecord(rowNode, columnId);
+
+        if (!permittedMap || permittedMap.has(displayValue)) {
+          returnArray.push({ RawValue: rawValue, DisplayValue: displayValue });
+        }
+      }
+    };
+
+    if (visibleRowsOnly) {
+      this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
+        eachFn(rowNode, columnId, useRawValue);
+      });
+    } else {
+      this.gridOptions.api!.forEachNode(rowNode => {
+        eachFn(rowNode, columnId, useRawValue);
+      });
+    }
+
+    return returnArray.slice(0, this.blotterOptions!.queryOptions.maxColumnValueItemsDisplayed);
+  }
+
   private addDistinctColumnValue(
     rowNode: RowNode,
     columnId: string,

@@ -8,15 +8,22 @@ import { IColItem } from '../UIInterfaces';
 
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Input from '../../components/Input';
-import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import {
+  SparklineColumn,
+  SparklineTypeEnum,
+} from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineTypeDropdown } from './Wizard/SparklinesColumnSettingsWizard';
 
 export interface SparklinesColumnEntityRowProps
   extends SharedEntityExpressionRowProps<SparklinesColumnEntityRow> {
   Column: IColumn;
 
+  onSparklineTypeChange: (
+    sparklineColumn: SparklineColumn,
+    sparklineType: SparklineTypeEnum
+  ) => void;
   onMinimumValueChanged: (sparklineColumn: SparklineColumn, minimumValue: number) => void;
   onMaximumValueChanged: (sparklineColumn: SparklineColumn, maximumValue: number) => void;
 }
@@ -35,59 +42,57 @@ export class SparklinesColumnEntityRow extends React.Component<SparklinesColumnE
         )}
       />
     );
+
     colItems[1].Content = (
       <EntityRowItem
         Content={
-          StringExtensions.IsNullOrEmpty(sparklineColumn.MinimumValueColumnId) ? (
-            sparklineColumn.MinimumValue != null ? (
-              <Input
-                type={'number'}
-                style={{ width: '100%' }}
-                placeholder="Min Value"
-                onChange={(e: any) => this.onMinimumValueChanged(e)}
-                value={sparklineColumn.MinimumValue}
-              />
-            ) : (
-              'Cell min value'
-            )
-          ) : (
-            '[' +
-            ColumnHelper.getFriendlyNameFromColumnId(
-              sparklineColumn.MinimumValueColumnId,
-              this.props.Columns
-            ) +
-            ']'
-          )
+          <SparklineTypeDropdown
+            value={sparklineColumn.SparklineType}
+            onChange={(sparklineType: SparklineTypeEnum) => {
+              this.props.onSparklineTypeChange(
+                this.props.AdaptableBlotterObject as SparklineColumn,
+                sparklineType
+              );
+            }}
+          />
         }
       />
     );
     colItems[2].Content = (
       <EntityRowItem
         Content={
-          StringExtensions.IsNullOrEmpty(sparklineColumn.MaximumValueColumnId) ? (
-            sparklineColumn.MaximumValue != null ? (
-              <Input
-                type={'number'}
-                style={{ width: '100%' }}
-                placeholder="Max Value"
-                onChange={(e: React.SyntheticEvent) => this.onMaximumValueChanged(e)}
-                value={sparklineColumn.MaximumValue}
-              />
-            ) : (
-              'Cell max value'
-            )
+          sparklineColumn.MinimumValue != null ? (
+            <Input
+              type={'number'}
+              style={{ width: '100%' }}
+              placeholder="Min Value"
+              onChange={(e: any) => this.onMinimumValueChanged(e)}
+              value={sparklineColumn.MinimumValue}
+            />
           ) : (
-            '[' +
-            ColumnHelper.getFriendlyNameFromColumnId(
-              sparklineColumn.MaximumValueColumnId,
-              this.props.Columns
-            ) +
-            ']'
+            'Cell min value'
           )
         }
       />
     );
     colItems[3].Content = (
+      <EntityRowItem
+        Content={
+          sparklineColumn.MaximumValue != null ? (
+            <Input
+              type={'number'}
+              style={{ width: '100%' }}
+              placeholder="Max Value"
+              onChange={(e: React.SyntheticEvent) => this.onMaximumValueChanged(e)}
+              value={sparklineColumn.MaximumValue}
+            />
+          ) : (
+            'Cell max value'
+          )
+        }
+      />
+    );
+    colItems[4].Content = (
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}

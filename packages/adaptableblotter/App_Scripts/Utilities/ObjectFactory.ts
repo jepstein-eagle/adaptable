@@ -224,8 +224,6 @@ export function CreateEmptySparklineColumn(): SparklineColumn {
     ColumnId: EMPTY_STRING,
     MaximumValue: undefined,
     MinimumValue: undefined,
-    MaximumValueColumnId: undefined,
-    MinimumValueColumnId: undefined,
   };
 }
 

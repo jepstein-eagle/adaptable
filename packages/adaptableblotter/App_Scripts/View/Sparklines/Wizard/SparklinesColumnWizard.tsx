@@ -4,7 +4,7 @@ import { SparklinesColumnSelectColumnWizard } from './SparklinesColumnSelectColu
 import { SparklinesColumnSummaryWizard } from './SparklinesColumnSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { SparklinesColumnValuesWizard } from './SparklinesColumnValuesWizard';
+import { SparklinesColumnSettingsWizard } from './SparklinesColumnSettingsWizard';
 
 export interface SparklinesColumnWizardProps
   extends AdaptableBlotterObjectExpressionAdaptableWizardProps<SparklinesColumnWizard> {}
@@ -25,9 +25,9 @@ export class SparklinesColumnWizard extends React.Component<SparklinesColumnWiza
               Element: <SparklinesColumnSelectColumnWizard />,
             },
             {
-              StepName: 'Min / Max Values',
+              StepName: 'Sparkline Settings',
               Index: 1,
-              Element: <SparklinesColumnValuesWizard />,
+              Element: <SparklinesColumnSettingsWizard />,
             },
             {
               StepName: 'Summary',

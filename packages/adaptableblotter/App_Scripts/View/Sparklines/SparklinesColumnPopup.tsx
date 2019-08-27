@@ -26,7 +26,10 @@ import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import {
+  SparklineColumn,
+  SparklineTypeEnum,
+} from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 interface SparklinesColumnPopupProps
   extends StrategyViewPopupProps<SparklinesColumnPopupComponent> {
@@ -71,9 +74,9 @@ class SparklinesColumnPopupComponent extends React.Component<
 
     let colItems: IColItem[] = [
       { Content: 'Column', Size: 2 },
+      { Content: 'Type', Size: 2 },
       { Content: 'Min', Size: 2 },
       { Content: 'Max', Size: 2 },
-
       { Content: '', Size: 2 },
     ];
 
@@ -94,6 +97,7 @@ class SparklinesColumnPopupComponent extends React.Component<
           onMinimumValueChanged={(sparklineColumn, minimumValue) =>
             this.onMinimumValueChanged(sparklineColumn, minimumValue)
           }
+          onSparklineTypeChange={this.onSparklineTypeChange}
           onMaximumValueChanged={(sparklineColumn, maximumValue) =>
             this.onMaximumValueChanged(sparklineColumn, maximumValue)
           }
@@ -160,6 +164,15 @@ class SparklinesColumnPopupComponent extends React.Component<
     clonedSparklineColumn.MinimumValue = minimumValue;
     this.props.onEditSparklineColumn(clonedSparklineColumn);
   }
+
+  onSparklineTypeChange = (
+    sparklineColumn: SparklineColumn,
+    sparklineType: SparklineTypeEnum
+  ): void => {
+    let clonedSparklineColumn: SparklineColumn = Helper.cloneObject(sparklineColumn);
+    clonedSparklineColumn.SparklineType = sparklineType;
+    this.props.onEditSparklineColumn(clonedSparklineColumn);
+  };
   onMaximumValueChanged(sparklineColumn: SparklineColumn, maximumValue: number): void {
     let clonedSparklineColumn: SparklineColumn = Helper.cloneObject(sparklineColumn);
     clonedSparklineColumn.MaximumValue = maximumValue;

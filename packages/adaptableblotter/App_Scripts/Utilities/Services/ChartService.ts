@@ -86,11 +86,7 @@ export class ChartService implements IChartService {
 
   public BuildSparklinesChartData(chartDefinition: SparklinesChartDefinition): ChartData {
     let values: number[] = this.blotter
-      .getColumnValueDisplayValuePairDistinctList(
-        chartDefinition.ColumnId,
-        DistinctCriteriaPairValue.DisplayValue,
-        chartDefinition.VisibleRowsOnly
-      )
+      .getColumnValueDisplayValuePairList(chartDefinition.ColumnId, chartDefinition.VisibleRowsOnly)
       .filter(cv => Helper.objectExists(cv.RawValue))
       .map(cv => {
         return cv.RawValue;

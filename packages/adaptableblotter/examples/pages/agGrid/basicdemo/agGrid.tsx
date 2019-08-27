@@ -26,7 +26,7 @@ function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   let tradeData: any = examplesHelper.getTrades(5000);
   console.log(tradeData.slice(0, 10));
-  tradeData = tradeData.slice(0, 10);
+  // tradeData = tradeData.slice(0, 10);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
