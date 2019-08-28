@@ -216,7 +216,8 @@ class ViewAsSparklinesPopupComponent extends React.Component<
     sparklinesChartDefinition = { ...sparklinesChartDefinition, ColumnId: columnId };
 
     let chartData: ChartData = this.props.Blotter.ChartService.BuildSparklinesChartData(
-      sparklinesChartDefinition
+      sparklinesChartDefinition,
+      this.props.Columns
     );
     let dataSource: number[] = chartData.Data;
     let errorMessage: string = chartData.ErrorMessage;

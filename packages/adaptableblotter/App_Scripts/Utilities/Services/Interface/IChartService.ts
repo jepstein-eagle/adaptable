@@ -11,5 +11,8 @@ export interface IChartService {
 
   BuildPieChartData(chartDefinition: PieChartDefinition): ChartData;
 
-  BuildSparklinesChartData(chartDefinition: SparklinesChartDefinition): ChartData;
+  BuildSparklinesChartData(
+    chartDefinition: SparklinesChartDefinition,
+    columns: IColumn[]
+  ): ChartData;
 }

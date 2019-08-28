@@ -26,6 +26,7 @@ import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState'
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
+import { SparklinesChartWizard } from './SparklinesChart/Wizard/SparklinesChartWizard';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import HelpBlock from '../../components/HelpBlock';
 import EmptyContent from '../../components/EmptyContent';
@@ -106,6 +107,12 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       label: 'Pie Chart',
     };
 
+    let sparklinesChartMenuItem = {
+      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      onClick: () => this.onNew(ChartType.SparklinesChart),
+      label: 'Sparklines Chart',
+    };
+
     // we need to make this a button type...
 
     let dropdownButton = (
@@ -114,7 +121,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         variant="raised"
         tone="accent"
         columns={['label']}
-        items={[categoryChartMenuItem, pieChartMenuItem]}
+        items={[categoryChartMenuItem, pieChartMenuItem, sparklinesChartMenuItem]}
         style={{ zIndex: 100 }}
       >
         <PlusIcon /> New
@@ -138,7 +145,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           <EmptyContent>
             <p>Click 'New' to create a new Chart.</p>
 
-            <p>Choose between Category and Pie Chart.</p>
+            <p>Choose between Category, Pie or Sparklines Chart.</p>
           </EmptyContent>
         )}
 
@@ -160,7 +167,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
               />
-            ) : (
+            ) : null}
+            {editedChartDefinition.ChartType === ChartType.PieChart ? (
               <PieChartWizard
                 EditedAdaptableBlotterObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
@@ -176,7 +184,25 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
               />
-            )}
+            ) : null}
+
+            {editedChartDefinition.ChartType === ChartType.SparklinesChart ? (
+              <SparklinesChartWizard
+                EditedAdaptableBlotterObject={editedChartDefinition}
+                ConfigEntities={this.props.ChartDefinitions}
+                ModalContainer={this.props.ModalContainer}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                SystemFilters={this.props.SystemFilters}
+                NamedFilters={this.props.NamedFilters}
+                ColumnCategories={this.props.ColumnCategories}
+                Blotter={this.props.Blotter}
+                WizardStartIndex={0}
+                onCloseWizard={() => this.onCloseWizard()}
+                onFinishWizard={() => this.onFinishWizard()}
+                canFinishWizard={() => this.canFinishWizard()}
+              />
+            ) : null}
           </div>
         )}
       </PanelWithButton>
@@ -198,10 +224,21 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   onNew(chartType: ChartType) {
-    let emptyChartDefinition: ChartDefinition =
-      chartType == ChartType.CategoryChart
-        ? ObjectFactory.CreateEmptyCategoryChartDefinition()
-        : ObjectFactory.CreateEmptyPieChartDefinition();
+    let emptyChartDefinition: ChartDefinition;
+
+    switch (chartType) {
+      case ChartType.CategoryChart: {
+        emptyChartDefinition = ObjectFactory.CreateEmptyCategoryChartDefinition();
+        break;
+      }
+      case ChartType.PieChart: {
+        emptyChartDefinition = ObjectFactory.CreateEmptyPieChartDefinition();
+        break;
+      }
+      case ChartType.SparklinesChart: {
+        emptyChartDefinition = ObjectFactory.CreateEmptySparklinesChartDefinition();
+      }
+    }
     this.setState({
       EditedAdaptableBlotterObject: emptyChartDefinition,
       WizardStartIndex: 0,

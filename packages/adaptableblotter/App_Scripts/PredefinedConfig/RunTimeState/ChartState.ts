@@ -15,6 +15,7 @@ import {
   HorizontalAlignment,
 } from '../Common/ChartEnums';
 import { Expression } from '../Common/Expression/Expression';
+import { SparklineTypeEnum } from '../DesignTimeState/SparklineColumnState';
 
 export interface ChartState extends RunTimeState {
   ChartDefinitions?: ChartDefinition[];
@@ -48,6 +49,7 @@ export interface PieChartDefinition extends ChartDefinition {
 
 export interface SparklinesChartDefinition extends ChartDefinition {
   ColumnId: string;
+  Expression?: Expression;
 }
 
 export interface CategoryChartDefinition extends ChartDefinition {
@@ -70,7 +72,7 @@ export interface PieChartProperties extends ChartProperties {
 export interface SparklinesChartProperties extends ChartProperties {
   Maximum?: number;
   Minimum?: number;
-  DisplayType: 'Line' | 'Column';
+  DisplayType: SparklineTypeEnum;
 }
 
 export interface CategoryChartProperties extends ChartProperties {

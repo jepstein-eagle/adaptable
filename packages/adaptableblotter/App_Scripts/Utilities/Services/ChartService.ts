@@ -84,13 +84,45 @@ export class ChartService implements IChartService {
     return chartData;
   }
 
-  public BuildSparklinesChartData(chartDefinition: SparklinesChartDefinition): ChartData {
-    let values: number[] = this.blotter
-      .getColumnValueDisplayValuePairList(chartDefinition.ColumnId, chartDefinition.VisibleRowsOnly)
-      .filter(cv => Helper.objectExists(cv.RawValue))
-      .map(cv => {
-        return cv.RawValue;
-      });
+  public BuildSparklinesChartData(
+    chartDefinition: SparklinesChartDefinition,
+    columns: IColumn[]
+  ): ChartData {
+    let values: number[];
+    // TODO - is this correct?
+    if (chartDefinition.Expression) {
+      values = [];
+      const forEach = (row: any) => {
+        if (
+          ExpressionHelper.checkForExpressionFromRecord(
+            chartDefinition.Expression,
+            row,
+            columns,
+            this.blotter
+          )
+        ) {
+          let columnValue = this.blotter.getRawValueFromRecord(row, chartDefinition.ColumnId);
+          values.push(columnValue);
+        }
+      };
+      if (chartDefinition.VisibleRowsOnly) {
+        this.blotter.forAllVisibleRecordsDo(forEach);
+      } else {
+        this.blotter.forAllRecordsDo(forEach);
+      }
+    } else {
+      values = this.blotter
+        .getColumnValueDisplayValuePairList(
+          chartDefinition.ColumnId,
+          chartDefinition.VisibleRowsOnly
+        )
+        .filter(cv => {
+          return Helper.objectExists(cv.RawValue);
+        })
+        .map(cv => {
+          return cv.RawValue;
+        });
+    }
 
     let chartData: ChartData = {
       Data: values,

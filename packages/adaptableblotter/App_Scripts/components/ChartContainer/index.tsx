@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BoxProps, Box, Flex } from 'rebass';
+import { Flex } from 'rebass';
 
 import { ReactNode } from 'react';
 import SizedContainer from '../SizedContainer';
@@ -9,7 +9,7 @@ export interface ChartContainerProps {
   style?: React.CSSProperties;
   title?: ReactNode;
   button?: ReactNode;
-  flexDirection?: 'row' | 'column';
+  flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
   sizeAsString?: boolean;
   settingsPanel?: ReactNode;
   minHeight?: string | number;

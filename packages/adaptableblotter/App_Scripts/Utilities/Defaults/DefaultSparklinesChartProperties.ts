@@ -1,6 +1,6 @@
-import {} from '../../PredefinedConfig/Common/ChartEnums';
 import { SparklinesChartProperties } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { SparklineTypeEnum } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 export const DefaultSparklinesChartProperties: SparklinesChartProperties = {
-  DisplayType: 'Line',
+  DisplayType: SparklineTypeEnum.Line,
 };

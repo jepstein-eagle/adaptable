@@ -93,6 +93,7 @@ export function CreateEmptySparklinesChartDefinition(): SparklinesChartDefinitio
     Name: EMPTY_STRING,
     Description: EMPTY_STRING,
     ColumnId: EMPTY_STRING,
+    Expression: undefined,
     ChartProperties: DefaultSparklinesChartProperties,
     ChartType: ChartType.SparklinesChart,
     VisibleRowsOnly: true,
