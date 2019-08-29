@@ -35,7 +35,7 @@ export const BuildColumnMenu = (ColumnId: string): BuildColumnMenuAction => ({
   ColumnId,
 });
 
-export const AddItemColumntMenu = (Item: AdaptableBlotterMenuItem): AddItemColumnMenuAction => ({
+export const AddItemColumnMenu = (Item: AdaptableBlotterMenuItem): AddItemColumnMenuAction => ({
   type: ADD_ITEM_COLUMN_MENU,
   Item,
 });
@@ -58,8 +58,6 @@ export const MenuReducer: Redux.Reducer<MenuState> = (
 ): MenuState => {
   switch (action.type) {
     case SET_MAIN_MENUITEMS: {
-      // TODO: we need to merge with the existing set of menuitems instead of replacing it.
-      // it will be important we we ever allow show/hide on menus
       const actionTyped = action as SetMainMenuItemsAction;
       const menuItems = actionTyped.MenuItems.sort(
         (a: AdaptableBlotterMenuItem, b: AdaptableBlotterMenuItem) =>
@@ -69,6 +67,7 @@ export const MenuReducer: Redux.Reducer<MenuState> = (
       return Object.assign({}, state, { MainMenuItems: menuItems });
     }
     case BUILD_COLUMN_MENU: {
+      alert('building column menu');
       const actionTyped = action as BuildColumnMenuAction;
       return Object.assign({}, state, {
         ColumnMenu: {
@@ -98,6 +97,7 @@ export const MenuReducer: Redux.Reducer<MenuState> = (
         },
       });
     }
+
     default:
       return state;
   }

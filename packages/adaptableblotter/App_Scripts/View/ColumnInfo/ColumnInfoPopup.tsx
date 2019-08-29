@@ -30,11 +30,11 @@ import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
-import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;
-  FunctionEntitlements: IEntitlement[];
+  FunctionEntitlements: Entitlement[];
   ColumnCategory: ColumnCategory[];
 }
 

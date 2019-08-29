@@ -23,7 +23,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
-import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
 
@@ -37,7 +37,7 @@ interface ColumnFilterToolbarControlComponentProps
   ColumnFilters: ColumnFilter[];
   Columns: IColumn[];
   UserFilters: UserFilter[];
-  Entitlements: IEntitlement[];
+  Entitlements: Entitlement[];
   IsQuickFilterActive: boolean;
 }
 

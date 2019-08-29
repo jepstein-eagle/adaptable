@@ -1,6 +1,6 @@
 import {
   EntitlementsState,
-  IEntitlement,
+  Entitlement,
 } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -10,23 +10,23 @@ export const ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
 export const ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
 
 export interface EntitlementAddAction extends Redux.Action {
-  Entitlement: IEntitlement;
+  Entitlement: Entitlement;
 }
 
 export interface EntitlementUpdateAction extends Redux.Action {
-  Entitlement: IEntitlement;
+  Entitlement: Entitlement;
 }
 
 export interface EntitlementDeleteAction extends Redux.Action {
   FunctionName: string;
 }
 
-export const EntitlementAdd = (Entitlement: IEntitlement): EntitlementAddAction => ({
+export const EntitlementAdd = (Entitlement: Entitlement): EntitlementAddAction => ({
   type: ENTITLEMENT_ADD,
   Entitlement,
 });
 
-export const EntitlementUpdate = (Entitlement: IEntitlement): EntitlementUpdateAction => ({
+export const EntitlementUpdate = (Entitlement: Entitlement): EntitlementUpdateAction => ({
   type: ENTITLEMENT_UPDATE,
   Entitlement,
 });
@@ -45,7 +45,7 @@ export const EntitlementsReducer: Redux.Reducer<EntitlementsState> = (
   action: Redux.Action
 ): EntitlementsState => {
   let index: number;
-  let functionEntitlements: IEntitlement[];
+  let functionEntitlements: Entitlement[];
 
   switch (action.type) {
     case ENTITLEMENT_ADD:

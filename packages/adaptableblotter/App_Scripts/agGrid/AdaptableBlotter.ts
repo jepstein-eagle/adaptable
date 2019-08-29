@@ -122,7 +122,7 @@ import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
-import { agGridHelper } from './agGridHelper';
+import { agGridHelper, ContextMenuInfo } from './agGridHelper';
 import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
@@ -1188,6 +1188,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       });
     } else {
       const useRawValue: boolean = this.useRawValueForColumn(columnId);
+
       if (visibleRowsOnly) {
         this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
           this.addDistinctColumnValue(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
@@ -1213,11 +1214,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   ): void {
     // we do not return the values of the aggregates when in grouping mode
     // otherwise they would appear in the filter dropdown etc....
+
     if (!rowNode.group) {
       const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
+
       const displayValue = useRawValue
         ? Helper.StringifyValue(rawValue)
         : this.getDisplayValueFromRecord(rowNode, columnId);
+
       if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
         returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
       } else {
@@ -2190,17 +2194,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       colMenuItems.push('separator');
 
-      this.getState().Menu.ColumnMenu.MenuItems.forEach((x: AdaptableBlotterMenuItem) => {
-        colMenuItems.push({
-          name: x.Label,
-          action: () => this.dispatchAction(x.Action),
-          icon: iconToString(x.GlyphIcon, {
-            style: {
-              fill: 'var(--ab-color-text-on-primary)',
-            },
-          }),
-        });
-      });
+      this.getState().Menu.ColumnMenu.MenuItems.forEach(
+        (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(
+            adaptableBlotterMenuItem
+          );
+          colMenuItems.push(menuItem);
+        }
+      );
       return colMenuItems;
     };
     /*
@@ -2214,11 +2215,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
 */
 
+    // this is the agGrid Context Menu that we might want to listen to...
+    // unlike with column menu we build on the fly which is much easier
     const originalgetContextMenuItems = this.gridOptions.getContextMenuItems;
     this.gridOptions.getContextMenuItems = (params: GetContextMenuItemsParams) => {
-      // this is the agGrid Context Menu that we might want to listen to...
-
       let colMenuItems: (string | MenuItemDef)[];
+      console.log(params);
       // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
       // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
       if (originalgetContextMenuItems) {
@@ -2229,8 +2231,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       colMenuItems.push('separator');
 
-      // this is where we will add extra itesm...
+      const agGridColumn: Column = params.column;
+      if (agGridColumn) {
+        const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
+        const column: IColumn = ColumnHelper.getColumnFromId(
+          agGridColumn.getColId(),
+          this.api.gridApi.getColumns()
+        );
+        if (column != null) {
+          let contextMenuInfo: ContextMenuInfo = this.agGridHelper.getContextMenuInfo(params);
+          console.log(contextMenuInfo);
+          this.strategies.forEach(s => {
+            let menuItem: AdaptableBlotterMenuItem = s.addContextMenuItem(column, contextMenuInfo);
+            if (menuItem) {
+              adaptableBlotterMenuItems.push(menuItem);
+            }
+          });
+        }
 
+        adaptableBlotterMenuItems.forEach((adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(
+            adaptableBlotterMenuItem
+          );
+          colMenuItems.push(menuItem);
+        });
+      }
       return colMenuItems;
     };
   }
@@ -2717,6 +2742,7 @@ import "adaptableblotter/themes/${themeName}.css"`);
   }
 
   private dispatchAction(action: Action): void {
-    this.adaptableBlotterStore.TheStore.dispatch(action);
+    // makes this slightly circular but at least it means that everything goes through the api
+    this.api.internalApi.dispatchReduxAction(action);
   }
 }

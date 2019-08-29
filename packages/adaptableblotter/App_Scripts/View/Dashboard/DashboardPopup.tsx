@@ -13,13 +13,13 @@ import Checkbox from '../../components/CheckBox';
 import Radio from '../../components/Radio';
 import Input from '../../components/Input';
 
-import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import { Box, Flex, Text } from 'rebass';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
   MenuState: MenuState;
-  Entitlements: IEntitlement[];
+  Entitlements: Entitlement[];
 
   onDashboardSetFunctionButtons: (
     StrategyConstants: string[]
@@ -246,7 +246,7 @@ class DashboardPopupComponent extends React.Component<
   }
 
   isVisibleStrategy(strategyId: string): boolean {
-    let entitlement: IEntitlement = this.props.Entitlements.find(x => x.FunctionName == strategyId);
+    let entitlement: Entitlement = this.props.Entitlements.find(x => x.FunctionName == strategyId);
     if (entitlement) {
       return entitlement.AccessLevel != 'Hidden';
     }

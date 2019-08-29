@@ -1,7 +1,7 @@
 import * as StrategyConstants from '../Constants/StrategyConstants';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 export function IsEditStrategy(strategyId: string): boolean {
   return strategyId != StrategyConstants.SmartEditStrategyId;
@@ -14,11 +14,11 @@ export function IsSortStrategy(strategyId: string): boolean {
 }
 
 export function getEntitlementAccessLevelForStrategy(
-  entitlements: IEntitlement[],
+  entitlements: Entitlement[],
   strategyId: string
 ): AccessLevel {
   if (ArrayExtensions.IsNotNullOrEmpty(entitlements)) {
-    let entitlement: IEntitlement = entitlements.find(e => e.FunctionName == strategyId);
+    let entitlement: Entitlement = entitlements.find(e => e.FunctionName == strategyId);
     if (entitlement) {
       return entitlement.AccessLevel as AccessLevel;
     }

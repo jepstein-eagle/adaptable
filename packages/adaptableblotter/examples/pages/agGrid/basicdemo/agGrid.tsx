@@ -6,7 +6,6 @@ import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
-
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
@@ -24,7 +23,7 @@ Nor do we create the ag-Grid
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(5000);
+  const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
@@ -45,7 +44,7 @@ function InitAdaptableBlotter() {
     console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
   };
   adaptableBlotterOptions.filterOptions = {
-    // autoApplyFilter: false,
+    //  autoApplyFilter: false,
   };
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);

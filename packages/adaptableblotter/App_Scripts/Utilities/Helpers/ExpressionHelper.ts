@@ -200,6 +200,11 @@ export function IsSatisfied(
 ): boolean {
   let expressionColumnList = GetColumnListFromExpression(Expression);
   for (let columnId of expressionColumnList) {
+    let columnValue = getColumnValue(columnId);
+    if (!columnValue) {
+      return false;
+    }
+
     //we need either a column value or user filter expression or range to match the column
     let isColumnSatisfied = false;
 
@@ -253,9 +258,8 @@ export function IsSatisfied(
             f => filtersForColumn.Filters.find(u => u == f) != null
           );
           for (let systemFilter of filteredSystemFilters) {
-            let valueToCheck: any = getColumnValue(columnId);
             let satisfyFunction: any = FilterHelper.GetFunctionForSystemFilter(systemFilter);
-            isColumnSatisfied = satisfyFunction.IsExpressionSatisfied(valueToCheck, blotter);
+            isColumnSatisfied = satisfyFunction.IsExpressionSatisfied(columnValue, blotter);
             if (isColumnSatisfied) {
               break;
             }
@@ -268,7 +272,6 @@ export function IsSatisfied(
             filtersForColumn.Filters.find(u => u == f.Name)
           );
           for (let namedFilter of filteredNamedFilters) {
-            let valueToCheck: any = getColumnValue(columnId);
             let funcName: string = namedFilter.PredicateName;
 
             if (StringExtensions.IsNotNullOrEmpty(funcName)) {
@@ -282,7 +285,7 @@ export function IsSatisfied(
                 );
                 if (namedFilterFunction) {
                   let satisfyFunction = namedFilterFunction.func;
-                  isColumnSatisfied = satisfyFunction(record, columnId, valueToCheck);
+                  isColumnSatisfied = satisfyFunction(record, columnId, columnValue);
                   if (isColumnSatisfied) {
                     break;
                   }

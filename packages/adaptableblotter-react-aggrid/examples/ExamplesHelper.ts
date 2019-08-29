@@ -976,6 +976,7 @@ export class ExamplesHelper {
       filter: true,
       sortable: true,
       type: 'abColDefString',
+      cellRenderer: 'agAnimateShowChangeCellRenderer',
     });
 
     schema.push({

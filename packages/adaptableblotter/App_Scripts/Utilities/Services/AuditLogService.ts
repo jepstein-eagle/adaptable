@@ -298,7 +298,7 @@ export class AuditLogService implements IAuditLogService {
       client_timestamp: new Date(),
       username: this.blotter.blotterOptions.userName!,
       blotter_id: this.blotter.blotterOptions.blotterId!,
-      ticking_data_change_details: {
+      data_change_details: {
         primarykey_column_value: String(dataChangedInfo.IdentifierValue),
         primarykey_column_id: this.blotter.blotterOptions.primaryKey,
         column_id: dataChangedInfo.ColumnId,

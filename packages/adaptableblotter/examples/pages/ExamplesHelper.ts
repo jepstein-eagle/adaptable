@@ -246,7 +246,7 @@ export class ExamplesHelper {
     let tradeCurrency = currency ? currency : this.getRandomItem(this.getCurrencies());
     let trade = {
       tradeId: i,
-      notional: this.generateRandomInt(0, 300), // this.getRandomItem(this.getNotionals()),
+      notional: this.getRandomItem(this.getNotionals()), // this.generateRandomInt(0, 300), //
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
@@ -336,6 +336,13 @@ export class ExamplesHelper {
     } else if (randomNumber == 3) {
       return 'Rejected';
     }
+  }
+  protected getRandomHardcode(): number {
+    let randomNumber = this.generateRandomInt(1, 10);
+    if (randomNumber == 1) {
+      return undefined;
+    }
+    return randomNumber;
   }
 
   protected generateRandomNullableDouble(): number {
@@ -526,7 +533,7 @@ export class ExamplesHelper {
   }
 
   protected getNotionals(): number[] {
-    let notionals = [1000000, 2000000, 5000000, 7500000, 10000000];
+    let notionals = [1000000, 2000000, 5000000, 7500000, 10000000, undefined];
     return notionals;
   }
   protected getBidOfferSpreads(): number[] {
@@ -917,6 +924,7 @@ export class ExamplesHelper {
       resizable: true,
       // headerCheckboxSelection: true,
       checkboxSelection: true,
+      cellRenderer: 'agAnimateShowChangeCellRenderer',
     });
     schema.push({
       headerName: 'Country',
@@ -995,6 +1003,7 @@ export class ExamplesHelper {
       filter: true,
       sortable: true,
       type: 'abColDefString',
+      cellRenderer: 'agAnimateShowChangeCellRenderer',
       // resizable: true,
       //  tooltipComponent: 'percentBarTooltip',
     });

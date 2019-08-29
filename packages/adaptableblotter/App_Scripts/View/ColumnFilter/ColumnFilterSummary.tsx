@@ -15,7 +15,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
-import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import { Column } from 'ag-grid-community';
 
 export interface ColumnFilterSummaryProps
@@ -23,7 +23,7 @@ export interface ColumnFilterSummaryProps
   ColumnFilters: ColumnFilter[];
   onClearFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
-  Entitlements: IEntitlement[];
+  Entitlements: Entitlement[];
 }
 
 export class ColumnFilterSummaryComponent extends React.Component<

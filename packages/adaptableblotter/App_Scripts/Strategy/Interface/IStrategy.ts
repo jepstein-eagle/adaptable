@@ -1,6 +1,7 @@
 import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { ContextMenuInfo } from '../../agGrid/agGridHelper';
 
 /**
  * This is the interface that all Strategies implement (as well as all deriving from AdaptableStrategyBase).
@@ -19,9 +20,13 @@ import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/Entitlement
 export interface IStrategy {
   Id: string;
   getPopupMenuItem(): AdaptableBlotterMenuItem;
-  getStrategyEntitlement(): IEntitlement;
+  getStrategyEntitlement(): Entitlement;
   initializeWithRedux(): void;
   addColumnMenuItem(column: IColumn): void;
+  addContextMenuItem(
+    column: IColumn,
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined;
 }
 
 /**

@@ -7,6 +7,7 @@ import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
+import { Action } from 'redux';
 
 export interface IInternalApi {
   // System Redux
@@ -28,4 +29,7 @@ export interface IInternalApi {
 
   // Popup Redux
   showPopupConfirmation(confirmation: IUIConfirmation): void;
+
+  // for general store accessibilty - not sure that this is right but...
+  dispatchReduxAction(action: Action): void;
 }

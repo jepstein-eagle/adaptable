@@ -12,6 +12,7 @@ import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
 import { Calendar } from '../PredefinedConfig/RunTimeState/CalendarState';
 import { ChartData } from '../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
+import { Action } from 'redux';
 
 export class InternalApi extends ApiBase implements IInternalApi {
   // System Redux Actions
@@ -53,11 +54,16 @@ export class InternalApi extends ApiBase implements IInternalApi {
   }
 
   public addColumnMenuItem(menuItem: AdaptableBlotterMenuItem): void {
-    this.dispatchAction(MenuRedux.AddItemColumntMenu(menuItem));
+    this.dispatchAction(MenuRedux.AddItemColumnMenu(menuItem));
   }
 
   // Popup Redux Actions
   public showPopupConfirmation(confirmation: IUIConfirmation): void {
     this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
+  }
+
+  // General way to get to store from inside the Blotter...
+  public dispatchReduxAction(action: Action): void {
+    this.dispatchAction(action);
   }
 }

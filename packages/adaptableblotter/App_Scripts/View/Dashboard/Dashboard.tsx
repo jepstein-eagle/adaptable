@@ -19,7 +19,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
 import {
   EntitlementsState,
-  IEntitlement,
+  Entitlement,
 } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
@@ -44,7 +44,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     }
 
     let showBlotterName: string = 'Show ' + blotterName + ' Dashboard';
-    let hiddenEntitlements: IEntitlement[] = this.props.EntitlementsState.FunctionEntitlements.filter(
+    let hiddenEntitlements: Entitlement[] = this.props.EntitlementsState.FunctionEntitlements.filter(
       e => e.AccessLevel == 'Hidden'
     );
     let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt =>

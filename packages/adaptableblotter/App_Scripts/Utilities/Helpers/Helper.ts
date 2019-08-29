@@ -199,6 +199,8 @@ export function areObjectsEqual(obj1: any, obj2: any) {
 export function StringifyValue(value: any): string {
   if (!isNaN(Number(value))) {
     return Number(value).toString();
+  } else {
+    return value;
   }
 }
 

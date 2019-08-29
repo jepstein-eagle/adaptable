@@ -5,7 +5,7 @@ export interface IAdaptableAlert {
   Header: string;
   Msg: string;
   MessageType: MessageType;
-  ShowAsPopup: boolean;
+  ShowAsPopup?: boolean;
 }
 
 export interface IUIConfirmation {

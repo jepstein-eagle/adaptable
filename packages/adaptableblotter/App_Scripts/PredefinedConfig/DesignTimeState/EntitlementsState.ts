@@ -6,11 +6,11 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * This lets you manage which functions are available for which user and in which form.
  *
- * By default every function has the Entitlement of 'Full', so only set those which you want to be different to that default.
+ * By default every function has the Entitlement of <i>Full</i>, so only set those which you want to be different to that default.
  *
  * ```ts
  * export default {
- * Entitlement: {
+ * Entitlements: {
  *   FunctionEntitlements: [
  *     {
  *       FunctionName: 'ColumnCategory',
@@ -33,10 +33,10 @@ export interface EntitlementsState extends DesignTimeState {
   /**
    * A collection of Entitlement objects.
    */
-  FunctionEntitlements?: IEntitlement[];
+  FunctionEntitlements?: Entitlement[];
 }
 
-export interface IEntitlement {
+export interface Entitlement {
   /**
    * The name of the function that has the Entitlement applied
    *

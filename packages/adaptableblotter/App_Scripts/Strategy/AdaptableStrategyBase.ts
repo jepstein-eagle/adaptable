@@ -6,7 +6,8 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
-import { IEntitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Entitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { ContextMenuInfo } from '../agGrid/agGridHelper';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
@@ -59,14 +60,22 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     // base class implementation which is empty
   }
 
-  getStrategyEntitlement(): IEntitlement {
-    let functionEntitlements: IEntitlement[] = this.blotter.api.entitlementApi.getEntitlementState()
+  public addContextMenuItem(
+    column: IColumn,
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    // base class implementation which is empty
+    return undefined;
+  }
+
+  getStrategyEntitlement(): Entitlement {
+    let functionEntitlements: Entitlement[] = this.blotter.api.entitlementApi.getEntitlementState()
       .FunctionEntitlements;
     return functionEntitlements.find(x => x.FunctionName == this.Id);
   }
 
   isVisibleStrategy(): boolean {
-    let entitlement: IEntitlement = this.getStrategyEntitlement();
+    let entitlement: Entitlement = this.getStrategyEntitlement();
     if (entitlement) {
       return entitlement.AccessLevel != 'Hidden';
     }
@@ -74,7 +83,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   isReadOnlyStrategy(): boolean {
-    let entitlement: IEntitlement = this.getStrategyEntitlement();
+    let entitlement: Entitlement = this.getStrategyEntitlement();
     if (entitlement) {
       if (entitlement.AccessLevel == 'ReadOnly') {
         return true;

@@ -3,7 +3,7 @@ import { ApiBase } from './ApiBase';
 import { IEntitlementApi } from './Interface/IEntitlementApi';
 import {
   EntitlementsState,
-  IEntitlement,
+  Entitlement,
 } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 export class EntitlementApi extends ApiBase implements IEntitlementApi {
@@ -11,11 +11,11 @@ export class EntitlementApi extends ApiBase implements IEntitlementApi {
     return this.getBlotterState().Entitlements;
   }
 
-  public getAllEntitlement(): IEntitlement[] {
+  public getAllEntitlement(): Entitlement[] {
     return this.getBlotterState().Entitlements.FunctionEntitlements;
   }
 
-  public getEntitlementByFunction(functionName: string): IEntitlement {
+  public getEntitlementByFunction(functionName: string): Entitlement {
     return this.getBlotterState().Entitlements.FunctionEntitlements.find(
       f => f.FunctionName == functionName
     );
@@ -28,12 +28,12 @@ export class EntitlementApi extends ApiBase implements IEntitlementApi {
   }
 
   public addEntitlement(functionName: string, accessLevel: 'ReadOnly' | 'Hidden' | 'Full'): void {
-    let entitlement: IEntitlement = { FunctionName: functionName, AccessLevel: accessLevel };
+    let entitlement: Entitlement = { FunctionName: functionName, AccessLevel: accessLevel };
     this.dispatchAction(EntitlementsRedux.EntitlementAdd(entitlement));
   }
 
   public editEntitlement(functionName: string, accessLevel: 'ReadOnly' | 'Hidden' | 'Full'): void {
-    let entitlement: IEntitlement = { FunctionName: functionName, AccessLevel: accessLevel };
+    let entitlement: Entitlement = { FunctionName: functionName, AccessLevel: accessLevel };
     this.dispatchAction(EntitlementsRedux.EntitlementUpdate(entitlement));
   }
 

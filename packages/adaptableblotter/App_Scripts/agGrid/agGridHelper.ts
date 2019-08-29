@@ -7,6 +7,8 @@ import {
   ToolPanelDef,
   CellRange,
   CellRangeParams,
+  MenuItemDef,
+  GetContextMenuItemsParams,
 } from 'ag-grid-community';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -51,6 +53,17 @@ import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { iconToString } from '../components/icons';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+
+export interface ContextMenuInfo {
+  // selectedCellInfo: SelectedCellInfo;
+  currentCell: GridCell;
+  isGroupedCell: boolean;
+  isSelectedCell: boolean;
+}
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -396,5 +409,62 @@ export class agGridHelper {
       selectedRowInfo: this.blotter.api.gridApi.getGridState().SelectedRowInfo,
     };
     this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
+  }
+
+  public getContextMenuInfo(params: GetContextMenuItemsParams): ContextMenuInfo {
+    // lets build a picture of what has been right clicked
+    // will take time to get right but lets start
+
+    let clickedCell: GridCell = null;
+    let isGroupedCell: boolean = params.node.group;
+    // we dont deal with weird cases
+    if (!isGroupedCell) {
+      const colId = params.column.getColId();
+      const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRecord(params.node);
+      const cellValue = this.blotter.getDisplayValueFromRecord(
+        params.node,
+        params.column.getColId()
+      );
+      // lets build the context Menu info
+      clickedCell = {
+        columnId: colId,
+        value: cellValue,
+        primaryKeyValue: primaryKeyValue,
+      };
+    }
+    console.log(clickedCell);
+
+    let isSelectedCell: boolean = false;
+    if (
+      ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.gridApi.getSelectedCellInfo().GridCells)
+    ) {
+      this.blotter.api.gridApi.getSelectedCellInfo().GridCells.forEach(gc => {
+        if (
+          gc.columnId == clickedCell.columnId &&
+          gc.primaryKeyValue == clickedCell.primaryKeyValue
+        ) {
+          isSelectedCell = true;
+        }
+      });
+    }
+    // first use case - they have cells selected and the current cell is one of them
+    console.log(isSelectedCell);
+    return {
+      isSelectedCell: isSelectedCell,
+      currentCell: clickedCell,
+      isGroupedCell: isGroupedCell,
+    };
+  }
+
+  public createAgGridMenuDef(x: AdaptableBlotterMenuItem): MenuItemDef {
+    return {
+      name: x.Label,
+      action: () => this.blotter.api.internalApi.dispatchReduxAction(x.Action),
+      icon: iconToString(x.GlyphIcon, {
+        style: {
+          fill: 'var(--ab-color-text-on-primary)',
+        },
+      }),
+    };
   }
 }
