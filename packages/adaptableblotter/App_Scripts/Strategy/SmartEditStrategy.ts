@@ -19,18 +19,53 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { ContextMenuInfo } from '../agGrid/agGridHelper';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { MenuItemShowPopup } from '../Utilities/MenuItem';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.SmartEditStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.SmartEditStrategyName,
       ScreenPopups.SmartEditPopup,
       StrategyConstants.SmartEditGlyph
     );
+  }
+
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    // not sure if this is right but logic is that
+    // if the context cell is one of a selection taht can have smart edit applied
+    // then open the smart edit screen
+    // perhaps this is faulty logic though?
+    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    if (
+      contextMenuInfo.column &&
+      contextMenuInfo.column.DataType == DataType.Number &&
+      !contextMenuInfo.column.ReadOnly &&
+      contextMenuInfo.isSelectedCell
+    ) {
+      let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+      if (selectedCellInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
+        if (ArrayExtensions.CorrectLength(selectedCellInfo.Columns, 1)) {
+          if (selectedCellInfo.Columns[0].DataType == DataType.Number) {
+            if (!selectedCellInfo.Columns[0].ReadOnly) {
+              menuItemShowPopup = this.createMainMenuItemShowPopup(
+                StrategyConstants.SmartEditStrategyName,
+                ScreenPopups.SmartEditPopup,
+                StrategyConstants.SmartEditGlyph
+              );
+            }
+          }
+        }
+      }
+    }
+    return menuItemShowPopup;
   }
 
   public ApplySmartEdit(newValues: GridCell[]): void {

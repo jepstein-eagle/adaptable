@@ -1,4 +1,3 @@
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { ApiBase } from './ApiBase';
@@ -46,15 +45,6 @@ export class InternalApi extends ApiBase implements IInternalApi {
 
   public getLiveReports(): ILiveReport[] {
     return this.getSystemState().CurrentLiveReports;
-  }
-
-  // Menu Redux Actions
-  public clearColumnMenu(): void {
-    this.dispatchAction(MenuRedux.ClearColumntMenu());
-  }
-
-  public addColumnMenuItem(menuItem: AdaptableBlotterMenuItem): void {
-    this.dispatchAction(MenuRedux.AddItemColumnMenu(menuItem));
   }
 
   // Popup Redux Actions

@@ -7,7 +7,7 @@ import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
-import { MenuState } from '../../PredefinedConfig/InternalState/MenuState';
+import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -37,7 +37,7 @@ const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface HomeToolbarComponentProps
   extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
-  MenuState: MenuState;
+  GridState: GridState;
   DashboardState: DashboardState;
   Columns: IColumn[];
   SystemStatus: ISystemStatus;
@@ -63,7 +63,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
     let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
-    let allowedMenuItems = this.props.MenuState.MainMenuItems.filter(
+    let allowedMenuItems = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
 
@@ -228,7 +228,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let shortcuts: any;
     if (shortcutsArray) {
       shortcuts = shortcutsArray.map(x => {
-        let menuItem = this.props.MenuState.MainMenuItems.find(
+        let menuItem = this.props.GridState.MainMenuItems.find(
           y => y.IsVisible && y.StrategyId == x
         );
         if (menuItem) {
@@ -359,7 +359,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
-    MenuState: state.Menu,
+    GridState: state.Grid,
     DashboardState: state.Dashboard,
     Columns: state.Grid.Columns,
     SystemStatus: state.System.SystemStatus,

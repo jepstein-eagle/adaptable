@@ -5,30 +5,31 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
 import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.DashboardStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.DashboardStrategyName,
       ScreenPopups.DashboardPopup,
       StrategyConstants.DashboardGlyph
     );
   }
 
-  public addColumnMenuItem(): void {
+  public addColumnMenuItem(): AdaptableBlotterMenuItem | undefined {
     // for now just show / hide = lets worry about minimise later..
     if (this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Hidden) {
-      this.createColumnMenuItemReduxAction(
+      return this.createColumnMenuItemReduxAction(
         'Show Dashboard',
         StrategyConstants.DashboardGlyph,
         DashboardRedux.DashboardSetVisibility(Visibility.Visible)
       );
     } else {
-      this.createColumnMenuItemReduxAction(
+      return this.createColumnMenuItemReduxAction(
         'Hide Dashboard',
         StrategyConstants.DashboardGlyph,
         DashboardRedux.DashboardSetVisibility(Visibility.Hidden)

@@ -54,6 +54,10 @@ let demoConfig: PredefinedConfig = {
         FunctionName: 'Layout',
         AccessLevel: 'ReadOnly',
       },
+      {
+        FunctionName: 'CustomSort',
+        AccessLevel: 'Hidden',
+      },
     ],
   },
   Export: {

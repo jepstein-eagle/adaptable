@@ -4,6 +4,7 @@ import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary
 import { InternalState } from './InternalState';
 import { ColumnSort } from '../RunTimeState/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 export interface GridState extends InternalState {
   Columns: IColumn[];
   ColumnSorts: ColumnSort[];
@@ -11,4 +12,5 @@ export interface GridState extends InternalState {
   SelectedRowInfo: SelectedRowInfo;
   CellSummary: ICellSummmary;
   IsQuickFilterActive: boolean;
+  MainMenuItems: AdaptableBlotterMenuItem[];
 }

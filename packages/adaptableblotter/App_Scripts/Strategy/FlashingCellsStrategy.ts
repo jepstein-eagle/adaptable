@@ -12,6 +12,7 @@ import {
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
@@ -24,15 +25,15 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     }
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.FlashingCellsStrategyName,
       ScreenPopups.FlashingCellsPopup,
       StrategyConstants.FlashingCellGlyph
     );
   }
 
-  public addColumnMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (column.DataType == DataType.Number) {
         if (
@@ -44,7 +45,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
             .getAllFlashingCell()
             .find(x => x.ColumnId == column.ColumnId);
           if (flashingCell && flashingCell.IsLive) {
-            this.createColumnMenuItemReduxAction(
+            return this.createColumnMenuItemReduxAction(
               'Turn Flashing Cell Off',
               StrategyConstants.FlashingCellGlyph,
               FlashingCellsRedux.FlashingCellSelect(flashingCell)
@@ -59,7 +60,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
                 flashingCellState.DefaultDuration
               );
             }
-            this.createColumnMenuItemReduxAction(
+            return this.createColumnMenuItemReduxAction(
               'Turn Flashing Cell On',
               StrategyConstants.FlashingCellGlyph,
               FlashingCellsRedux.FlashingCellSelect(flashingCell)

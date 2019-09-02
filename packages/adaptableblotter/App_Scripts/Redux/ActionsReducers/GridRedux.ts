@@ -7,6 +7,7 @@ import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
@@ -22,6 +23,7 @@ export const GRID_SET_CELLS_SUMMARY = 'GRID_SET_CELLS_SUMMARY';
 export const GRID_QUICK_FILTER_BAR_SHOW = 'GRID_QUICK_FILTER_BAR_SHOW';
 export const GRID_QUICK_FILTER_BAR_HIDE = 'GRID_QUICK_FILTER_BAR_HIDE';
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
+export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
 
 export interface GridSetColumnsAction extends Redux.Action {
   Columns: IColumn[];
@@ -72,6 +74,10 @@ export interface QuickFilterBarShowAction extends Redux.Action {}
 export interface QuickFilterBarHideAction extends Redux.Action {}
 
 export interface FilterFormHideAction extends Redux.Action {}
+
+export interface SetMainMenuItemsAction extends Redux.Action {
+  MenuItems: AdaptableBlotterMenuItem[];
+}
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
   type: GRID_SET_COLUMNS,
@@ -147,6 +153,13 @@ export const FilterFormHide = (): FilterFormHideAction => ({
   type: FILTER_FORM_HIDE,
 });
 
+export const SetMainMenuItems = (
+  MenuItems: AdaptableBlotterMenuItem[]
+): SetMainMenuItemsAction => ({
+  type: SET_MAIN_MENUITEMS,
+  MenuItems,
+});
+
 const initialGridState: GridState = {
   Columns: EMPTY_ARRAY,
   ColumnSorts: EMPTY_ARRAY,
@@ -154,6 +167,7 @@ const initialGridState: GridState = {
   SelectedRowInfo: null,
   CellSummary: null,
   IsQuickFilterActive: false,
+  MainMenuItems: EMPTY_ARRAY,
 };
 
 export const GridReducer: Redux.Reducer<GridState> = (
@@ -197,7 +211,14 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { IsQuickFilterActive: true });
     case GRID_QUICK_FILTER_BAR_HIDE:
       return Object.assign({}, state, { IsQuickFilterActive: false });
-
+    case SET_MAIN_MENUITEMS: {
+      const actionTyped = action as SetMainMenuItemsAction;
+      const menuItems = actionTyped.MenuItems.sort(
+        (a: AdaptableBlotterMenuItem, b: AdaptableBlotterMenuItem) =>
+          a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
+      );
+      return Object.assign({}, state, { MainMenuItems: menuItems });
+    }
     default:
       return state;
   }

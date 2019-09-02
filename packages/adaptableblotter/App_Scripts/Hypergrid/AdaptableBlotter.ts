@@ -5,7 +5,6 @@ import Emitter from '../Utilities/Emitter';
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
@@ -454,13 +453,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public createMainMenu() {
     let menuItems: AdaptableBlotterMenuItem[] = [];
     this.strategies.forEach(x => {
-      let menuItem = x.getPopupMenuItem();
+      let menuItem = x.addMainMenuItem();
       if (menuItem != null) {
         menuItems.push(menuItem);
       }
     });
-    this.adaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMainMenuItemsAction>(
-      MenuRedux.SetMainMenuItems(menuItems)
+    this.adaptableBlotterStore.TheStore.dispatch<GridRedux.SetMainMenuItemsAction>(
+      GridRedux.SetMainMenuItems(menuItems)
     );
   }
 
@@ -1375,8 +1374,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px';
 
           let colId: string = e.detail.primitiveEvent.column.name;
-
-          this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumntMenu());
 
           let column: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
           if (column != null) {

@@ -3,14 +3,15 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.CalendarStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.CalendarStrategyName,
       ScreenPopups.CalendarsPopup,
       StrategyConstants.CalendarGlyph

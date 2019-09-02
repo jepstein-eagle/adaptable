@@ -20,6 +20,7 @@ import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { SEARCH_APPLIED_EVENT } from '../Utilities/Constants/GeneralConstants';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
   private ChartState: ChartState;
@@ -41,8 +42,8 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.ChartStrategyName,
       ScreenPopups.ChartPopup,
       StrategyConstants.ChartGlyph

@@ -14,37 +14,22 @@ export class CellValidationStrategy extends AdaptableStrategyBase
     super(StrategyConstants.CellValidationStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.CellValidationStrategyName,
       ScreenPopups.CellValidationPopup,
       StrategyConstants.CellValidationGlyph
     );
   }
 
-  public addColumnMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
-      this.createColumnMenuItemShowPopup(
+      return this.createColumnMenuItemShowPopup(
         'Create Cell Validation Rule',
         ScreenPopups.CellValidationPopup,
         StrategyConstants.CellValidationGlyph,
         'New|' + column.ColumnId
       );
     }
-  }
-
-  public addContextMenuItem(
-    column: IColumn,
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
-    let menuItemShowPopup: MenuItemShowPopup = new MenuItemShowPopup(
-      'Cell Validaton stuff',
-      this.Id,
-      ScreenPopups.CellValidationPopup,
-      StrategyConstants.CellValidationGlyph,
-      this.isVisibleStrategy(),
-      null
-    );
-    return menuItemShowPopup;
   }
 }

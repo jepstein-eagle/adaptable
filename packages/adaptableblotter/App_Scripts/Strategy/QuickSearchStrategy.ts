@@ -10,14 +10,15 @@ import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { DisplayAction, LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.QuickSearchStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.QuickSearchStrategyName,
       ScreenPopups.QuickSearchPopup,
       StrategyConstants.QuickSearchGlyph

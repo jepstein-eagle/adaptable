@@ -23,10 +23,6 @@ export interface IInternalApi {
   getSystemReports(): Report[];
   getLiveReports(): ILiveReport[];
 
-  // Menu Redux
-  clearColumnMenu(): void;
-  addColumnMenuItem(menuItem: AdaptableBlotterMenuItem): void;
-
   // Popup Redux
   showPopupConfirmation(confirmation: IUIConfirmation): void;
 

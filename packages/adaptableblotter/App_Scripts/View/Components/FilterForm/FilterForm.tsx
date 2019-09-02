@@ -510,7 +510,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     ColumnCategories: state.ColumnCategory.ColumnCategories,
     SystemFilters: state.SystemFilter.SystemFilters,
     NamedFilters: state.NamedFilter.NamedFilters,
-    ColumnMenuItems: state.Menu.ColumnMenu.MenuItems,
     ShowCloseButton: ownProps.ShowCloseButton,
   };
 }

@@ -9,14 +9,15 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.CellSummaryStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.CellSummaryStrategyName,
       ScreenPopups.CellSummaryPopup,
       StrategyConstants.CellSummaryGlyph

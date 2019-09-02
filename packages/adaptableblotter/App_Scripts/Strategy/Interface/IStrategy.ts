@@ -19,14 +19,11 @@ import { ContextMenuInfo } from '../../agGrid/agGridHelper';
 
 export interface IStrategy {
   Id: string;
-  getPopupMenuItem(): AdaptableBlotterMenuItem;
-  getStrategyEntitlement(): Entitlement;
+  addMainMenuItem(): AdaptableBlotterMenuItem | undefined;
   initializeWithRedux(): void;
-  addColumnMenuItem(column: IColumn): void;
-  addContextMenuItem(
-    column: IColumn,
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined;
+  addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined;
+  addContextMenuItem(contextMenuInfo: ContextMenuInfo): AdaptableBlotterMenuItem | undefined;
+  setStrategyEntitlement(): void;
 }
 
 /**

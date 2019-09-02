@@ -55,14 +55,13 @@ import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState
 import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 import { iconToString } from '../components/icons';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 export interface ContextMenuInfo {
-  // selectedCellInfo: SelectedCellInfo;
   currentCell: GridCell;
-  isGroupedCell: boolean;
   isSelectedCell: boolean;
+  column: IColumn;
 }
 
 /**
@@ -411,48 +410,36 @@ export class agGridHelper {
     this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
   }
 
-  public getContextMenuInfo(params: GetContextMenuItemsParams): ContextMenuInfo {
+  public getContextMenuInfo(params: GetContextMenuItemsParams, column: IColumn): ContextMenuInfo {
     // lets build a picture of what has been right clicked
     // will take time to get right but lets start
 
     let clickedCell: GridCell = null;
-    let isGroupedCell: boolean = params.node.group;
-    // we dont deal with weird cases
-    if (!isGroupedCell) {
-      const colId = params.column.getColId();
-      const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRecord(params.node);
-      const cellValue = this.blotter.getDisplayValueFromRecord(
-        params.node,
-        params.column.getColId()
-      );
-      // lets build the context Menu info
-      clickedCell = {
-        columnId: colId,
-        value: cellValue,
-        primaryKeyValue: primaryKeyValue,
-      };
-    }
-    console.log(clickedCell);
+    // let isSelectedCell: boolean = false;
+    const colId = params.column.getColId();
+    const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRecord(params.node);
 
-    let isSelectedCell: boolean = false;
-    if (
-      ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.gridApi.getSelectedCellInfo().GridCells)
-    ) {
-      this.blotter.api.gridApi.getSelectedCellInfo().GridCells.forEach(gc => {
-        if (
+    // lets build the context Menu info
+    clickedCell = {
+      columnId: colId,
+      value: params.value,
+      primaryKeyValue: primaryKeyValue,
+    };
+
+    let matchedCell: GridCell = this.blotter.api.gridApi
+      .getSelectedCellInfo()
+      .GridCells.find(
+        gc =>
+          gc != null &&
           gc.columnId == clickedCell.columnId &&
           gc.primaryKeyValue == clickedCell.primaryKeyValue
-        ) {
-          isSelectedCell = true;
-        }
-      });
-    }
-    // first use case - they have cells selected and the current cell is one of them
-    console.log(isSelectedCell);
+      );
+    let isSelectedCell: boolean = matchedCell != null;
+
     return {
       isSelectedCell: isSelectedCell,
       currentCell: clickedCell,
-      isGroupedCell: isGroupedCell,
+      column: column,
     };
   }
 

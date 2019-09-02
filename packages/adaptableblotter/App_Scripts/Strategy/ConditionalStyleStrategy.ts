@@ -7,6 +7,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
@@ -17,17 +18,17 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     );
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.ConditionalStyleStrategyName,
       ScreenPopups.ConditionalStylePopup,
       StrategyConstants.ConditionalStyleGlyph
     );
   }
 
-  public addColumnMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
-      this.createColumnMenuItemShowPopup(
+      return this.createColumnMenuItemShowPopup(
         'Create ' + StrategyConstants.ConditionalStyleStrategyName,
         ScreenPopups.ConditionalStylePopup,
         StrategyConstants.ConditionalStyleGlyph,

@@ -44,7 +44,6 @@ import {
   AdaptableBlotterState,
 } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterStore, INIT_STATE } from '../Redux/Store/AdaptableBlotterStore';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
@@ -63,7 +62,7 @@ import { ChartService } from '../Utilities/Services/ChartService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { CalculatedColumnExpressionService } from '../Utilities/Services/CalculatedColumnExpressionService';
 // strategies
-import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
+import { IStrategyCollection, IStrategy } from '../Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
 // components
 import { FilterWrapperFactory } from './FilterWrapper';
@@ -668,15 +667,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public createMainMenu() {
     const menuItems: AdaptableBlotterMenuItem[] = [];
-    this.strategies.forEach(x => {
-      const menuItem = x.getPopupMenuItem();
-      if (menuItem != null && menuItem != undefined) {
+    this.strategies.forEach((strat: IStrategy) => {
+      strat.setStrategyEntitlement();
+      const menuItem: AdaptableBlotterMenuItem | undefined = strat.addMainMenuItem();
+      if (Helper.objectExists(menuItem)) {
         if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
           menuItems.push(menuItem);
         }
       }
     });
-    this.dispatchAction(MenuRedux.SetMainMenuItems(menuItems));
+    // store the main menu as we will re-use (and it never changes)
+    this.dispatchAction(GridRedux.SetMainMenuItems(menuItems));
   }
 
   public getPrimaryKeyValueFromRecord(record: RowNode): any {
@@ -2175,11 +2176,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // we clear the column menu
       // set all the items
       // then read them 5 lines below !....
-      this.dispatchAction(MenuRedux.ClearColumntMenu());
+      const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
+
       const column: IColumn = ColumnHelper.getColumnFromId(colId, this.api.gridApi.getColumns());
       if (column != null) {
         this.strategies.forEach(s => {
-          s.addColumnMenuItem(column);
+          let menuItem: AdaptableBlotterMenuItem = s.addColumnMenuItem(column);
+          if (menuItem) {
+            adaptableBlotterMenuItems.push(menuItem);
+          }
         });
       }
 
@@ -2194,14 +2199,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       colMenuItems.push('separator');
 
-      this.getState().Menu.ColumnMenu.MenuItems.forEach(
-        (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(
-            adaptableBlotterMenuItem
-          );
-          colMenuItems.push(menuItem);
-        }
-      );
+      adaptableBlotterMenuItems.forEach((adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+        let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(adaptableBlotterMenuItem);
+        colMenuItems.push(menuItem);
+      });
       return colMenuItems;
     };
     /*
@@ -2229,32 +2230,41 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       } else {
         colMenuItems = params.defaultItems.slice(0);
       }
-      colMenuItems.push('separator');
 
-      const agGridColumn: Column = params.column;
-      if (agGridColumn) {
+      // keep it simple for now - if its grouped then do nothing
+      if (!params.node.group) {
+        colMenuItems.push('separator');
         const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
-        const column: IColumn = ColumnHelper.getColumnFromId(
-          agGridColumn.getColId(),
-          this.api.gridApi.getColumns()
-        );
-        if (column != null) {
-          let contextMenuInfo: ContextMenuInfo = this.agGridHelper.getContextMenuInfo(params);
-          console.log(contextMenuInfo);
-          this.strategies.forEach(s => {
-            let menuItem: AdaptableBlotterMenuItem = s.addContextMenuItem(column, contextMenuInfo);
-            if (menuItem) {
-              adaptableBlotterMenuItems.push(menuItem);
-            }
-          });
-        }
-
-        adaptableBlotterMenuItems.forEach((adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(
-            adaptableBlotterMenuItem
+        const agGridColumn: Column = params.column;
+        if (agGridColumn) {
+          const adaptableColumn: IColumn = ColumnHelper.getColumnFromId(
+            agGridColumn.getColId(),
+            this.api.gridApi.getColumns()
           );
-          colMenuItems.push(menuItem);
-        });
+
+          if (adaptableColumn != null) {
+            let contextMenuInfo: ContextMenuInfo = this.agGridHelper.getContextMenuInfo(
+              params,
+              adaptableColumn
+            );
+            console.log(contextMenuInfo);
+            this.strategies.forEach(s => {
+              let menuItem: AdaptableBlotterMenuItem = s.addContextMenuItem(contextMenuInfo);
+              if (menuItem) {
+                adaptableBlotterMenuItems.push(menuItem);
+              }
+            });
+          }
+
+          adaptableBlotterMenuItems.forEach(
+            (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(
+                adaptableBlotterMenuItem
+              );
+              colMenuItems.push(menuItem);
+            }
+          );
+        }
       }
       return colMenuItems;
     };

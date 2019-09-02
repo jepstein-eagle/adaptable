@@ -16,14 +16,15 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.BulkUpdateStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.BulkUpdateStrategyName,
       ScreenPopups.BulkUpdatePopup,
       StrategyConstants.BulkUpdateGlyph

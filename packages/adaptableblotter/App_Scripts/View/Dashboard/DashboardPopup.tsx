@@ -5,7 +5,6 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
-import { MenuState } from '../../PredefinedConfig/InternalState/MenuState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { DualListBoxEditor, DisplaySize } from '../Components/ListBox/DualListBoxEditor';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -15,10 +14,12 @@ import Input from '../../components/Input';
 
 import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import { Box, Flex, Text } from 'rebass';
+import { StateChangedTrigger } from '../../PredefinedConfig/Common/Enums';
+import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
-  MenuState: MenuState;
+  GridState: GridState;
   Entitlements: Entitlement[];
 
   onDashboardSetFunctionButtons: (
@@ -64,7 +65,7 @@ class DashboardPopupComponent extends React.Component<
   render() {
     let selectedValues: string[] = [];
     this.props.DashboardState.VisibleButtons.forEach(x => {
-      let menuItem = this.props.MenuState.MainMenuItems.find(m => m.StrategyId == x);
+      let menuItem = this.props.GridState.MainMenuItems.find(m => m.StrategyId == x);
       if (menuItem != null && menuItem.IsVisible) {
         selectedValues.push(StrategyConstants.getNameForStrategyId(x));
       }
@@ -82,7 +83,7 @@ class DashboardPopupComponent extends React.Component<
       return StrategyConstants.getNameForStrategyId(vt);
     });
 
-    let availableValues = this.props.MenuState.MainMenuItems.filter(
+    let availableValues = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && selectedValues.indexOf(x.Label) == -1
     ).map(x => x.Label);
 
@@ -257,7 +258,7 @@ class DashboardPopupComponent extends React.Component<
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
     DashboardState: state.Dashboard,
-    MenuState: state.Menu,
+    GridState: state.Grid,
     Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }

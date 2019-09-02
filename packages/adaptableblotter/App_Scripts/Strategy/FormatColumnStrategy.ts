@@ -5,6 +5,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
@@ -12,15 +13,15 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.FormatColumnStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.FormatColumnStrategyName,
       ScreenPopups.FormatColumnPopup,
       StrategyConstants.FormatColumnGlyph
     );
   }
 
-  public addColumnMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
         this.blotter.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
@@ -29,7 +30,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
       let label = formatExists ? 'Edit ' : 'Create ';
       let popupParam = formatExists ? 'Edit|' : 'New|';
 
-      this.createColumnMenuItemShowPopup(
+      return this.createColumnMenuItemShowPopup(
         label + StrategyConstants.FormatColumnStrategyName,
         ScreenPopups.FormatColumnPopup,
         StrategyConstants.FormatColumnGlyph,

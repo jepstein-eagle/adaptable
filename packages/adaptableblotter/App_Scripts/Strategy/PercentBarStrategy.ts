@@ -6,6 +6,7 @@ import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
 import { PercentBarState } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
   protected PercentBarState: PercentBarState;
@@ -13,15 +14,15 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     super(StrategyConstants.PercentBarStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.PercentBarStrategyName,
       ScreenPopups.PercentBarPopup,
       StrategyConstants.PercentBarGlyph
     );
   }
 
-  public addColumnMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'numeric')) {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
         this.PercentBarState.PercentBars.map(f => f.ColumnId),
@@ -30,7 +31,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       let label = percentBarExists ? 'Edit ' : 'Create ';
       let popupParam = percentBarExists ? 'Edit|' : 'New|';
 
-      this.createColumnMenuItemShowPopup(
+      return this.createColumnMenuItemShowPopup(
         label + StrategyConstants.PercentBarStrategyName,
         ScreenPopups.PercentBarPopup,
         StrategyConstants.PercentBarGlyph,

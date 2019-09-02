@@ -11,6 +11,7 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -20,8 +21,8 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     );
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.AlertStrategyName,
       ScreenPopups.AlertPopup,
       StrategyConstants.AlertGlyph

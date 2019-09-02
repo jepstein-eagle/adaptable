@@ -5,6 +5,7 @@ import { IThemeStrategy } from './Interface/IThemeStrategy';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 import { ThemeChangedEventArgs } from '../Api/Events/BlotterEvents';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
   private ThemeState: ThemeState;
@@ -13,8 +14,8 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     super(StrategyConstants.ThemeStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.ThemeStrategyName,
       ScreenPopups.ThemePopup,
       StrategyConstants.ThemeGlyph

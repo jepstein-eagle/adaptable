@@ -1,6 +1,5 @@
 import * as Redux from 'redux';
 import { PopupState } from '../../../PredefinedConfig/InternalState/PopupState';
-import { MenuState } from '../../../PredefinedConfig/InternalState/MenuState';
 import { GridState } from '../../../PredefinedConfig/InternalState/GridState';
 import { SystemState } from '../../../PredefinedConfig/InternalState/SystemState';
 import { AdvancedSearchState } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
@@ -43,7 +42,6 @@ export interface AdaptableBlotterState {
 
   // internal state
   Popup: PopupState;
-  Menu: MenuState;
   Grid: GridState;
   System: SystemState;
 

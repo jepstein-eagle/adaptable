@@ -6,7 +6,6 @@ import { createEngine as createEngineRemote } from './IAdaptableBlotterReduxRemo
 import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
 import { mergeReducer } from './AdaptableBlotterReduxMerger';
 
-import * as MenuRedux from '../ActionsReducers/MenuRedux';
 import * as PopupRedux from '../ActionsReducers/PopupRedux';
 import * as ChartRedux from '../ActionsReducers/ChartRedux';
 import * as AlertRedux from '../ActionsReducers/AlertRedux';
@@ -133,7 +132,6 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 >({
   //  Reducers for Non-Persisted State
   Popup: PopupRedux.ShowPopupReducer,
-  Menu: MenuRedux.MenuReducer,
   System: SystemRedux.SystemReducer,
   Grid: GridRedux.GridReducer,
 
@@ -2893,11 +2891,7 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_SET_CELLS_SUMMARY,
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
-
-    MenuRedux.SET_MAIN_MENUITEMS,
-    MenuRedux.BUILD_COLUMN_MENU,
-    MenuRedux.ADD_ITEM_COLUMN_MENU,
-    MenuRedux.CLEAR_COLUMN_MENU,
+    GridRedux.SET_MAIN_MENUITEMS,
 
     PopupRedux.POPUP_SHOW_SCREEN,
     PopupRedux.POPUP_HIDE_SCREEN,

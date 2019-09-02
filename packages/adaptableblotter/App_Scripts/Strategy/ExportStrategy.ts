@@ -21,6 +21,7 @@ import {
   GRID_RELOADED_EVENT,
   GRID_REFRESHED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private ExportState: ExportState;
@@ -96,8 +97,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     });
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.ExportStrategyName,
       ScreenPopups.ExportPopup,
       StrategyConstants.ExportGlyph

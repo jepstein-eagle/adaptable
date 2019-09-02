@@ -1,6 +1,7 @@
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
+// want to rename this to AdaptableColumn but big job...
 export interface IColumn {
   Uuid?: TypeUuid; // not sure about this but could be a winner...
   ColumnId: string;

@@ -19,12 +19,18 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     this.blotter = blotter;
   }
 
+  private isVisible: boolean;
+  private isReadOnly: boolean;
+
   public initializeWithRedux() {
     this.InitState();
     this.blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState());
   }
 
-  public popupMenuItem: AdaptableBlotterMenuItem;
+  public setStrategyEntitlement(): void {
+    this.isVisible = this.isVisibleStrategy();
+    this.isReadOnly = this.isReadOnlyStrategy();
+  }
 
   protected InitState(): void {
     /**
@@ -37,44 +43,30 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      */
   }
 
-  public getPopupMenuItem(): AdaptableBlotterMenuItem {
-    if (!this.hasPopupMenu()) {
-      return null;
-    }
-
-    if (this.popupMenuItem == null) {
-      this.addPopupMenuItem();
-    }
-    return this.popupMenuItem;
-  }
-
-  protected hasPopupMenu(): boolean {
-    return true;
-  }
-
-  protected addPopupMenuItem(): void {
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
     // base class implementation which is empty
+    return undefined;
   }
 
-  public addColumnMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     // base class implementation which is empty
+    return undefined;
   }
 
   public addContextMenuItem(
-    column: IColumn,
     contextMenuInfo: ContextMenuInfo
   ): AdaptableBlotterMenuItem | undefined {
     // base class implementation which is empty
     return undefined;
   }
 
-  getStrategyEntitlement(): Entitlement {
+  private getStrategyEntitlement(): Entitlement {
     let functionEntitlements: Entitlement[] = this.blotter.api.entitlementApi.getEntitlementState()
       .FunctionEntitlements;
     return functionEntitlements.find(x => x.FunctionName == this.Id);
   }
 
-  isVisibleStrategy(): boolean {
+  private isVisibleStrategy(): boolean {
     let entitlement: Entitlement = this.getStrategyEntitlement();
     if (entitlement) {
       return entitlement.AccessLevel != 'Hidden';
@@ -82,47 +74,39 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     return true;
   }
 
-  isReadOnlyStrategy(): boolean {
+  private isReadOnlyStrategy(): boolean {
     let entitlement: Entitlement = this.getStrategyEntitlement();
     if (entitlement) {
-      if (entitlement.AccessLevel == 'ReadOnly') {
-        return true;
-      } else {
-        return false;
-      }
+      return entitlement.AccessLevel == 'ReadOnly';
     }
     return false;
   }
 
   // creates the menu items in the main dropdown
-  createMenuItemShowPopup(
+  createMainMenuItemShowPopup(
     Label: string,
     ComponentName: string,
     GlyphIcon: string,
     PopupParams?: string
-  ) {
-    let menuItemShowPopup: MenuItemShowPopup = new MenuItemShowPopup(
+  ): MenuItemShowPopup {
+    return new MenuItemShowPopup(
       Label,
       this.Id,
       ComponentName,
       GlyphIcon,
-      this.isVisibleStrategy(),
+      this.isVisible,
       PopupParams
     );
-    this.popupMenuItem = menuItemShowPopup;
   }
 
   // direct actions called by the column menu - invisible if strategy is hidden or readonly
-  createColumnMenuItemReduxAction(Label: string, GlyphIcon: string, Action: Action): any {
-    if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
-      let menuItemShowPopup: MenuItemDoReduxAction = new MenuItemDoReduxAction(
-        Label,
-        this.Id,
-        Action,
-        GlyphIcon,
-        true
-      );
-      this.addMenuItemToStore(menuItemShowPopup);
+  createColumnMenuItemReduxAction(
+    Label: string,
+    GlyphIcon: string,
+    Action: Action
+  ): MenuItemDoReduxAction {
+    if (this.isVisible && !this.isReadOnly) {
+      return new MenuItemDoReduxAction(Label, this.Id, Action, GlyphIcon, true);
     }
   }
 
@@ -132,22 +116,10 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     ComponentName: string,
     GlyphIcon: string,
     PopupParams?: string
-  ) {
-    if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
-      let menuItemShowPopup: MenuItemShowPopup = new MenuItemShowPopup(
-        Label,
-        this.Id,
-        ComponentName,
-        GlyphIcon,
-        true,
-        PopupParams
-      );
-      this.addMenuItemToStore(menuItemShowPopup);
+  ): MenuItemShowPopup {
+    if (this.isVisible && !this.isReadOnly) {
+      return new MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, true, PopupParams);
     }
-  }
-
-  private addMenuItemToStore(menuItem: AdaptableBlotterMenuItem): void {
-    this.blotter.api.internalApi.addColumnMenuItem(menuItem);
   }
 
   canCreateColumnMenuItem(
@@ -155,7 +127,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     blotter: IAdaptableBlotter,
     functionType: string = ''
   ): boolean {
-    if (this.isReadOnlyStrategy()) {
+    if (this.isReadOnly) {
       return false;
     }
     if (StringExtensions.IsNotNullOrEmpty(functionType)) {

@@ -5,6 +5,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IReminderStrategy } from './Interface/IReminderStrategy';
 import { ReminderState } from '../PredefinedConfig/RunTimeState/ReminderState';
 import { GRID_RELOADED_EVENT } from '../Utilities/Constants/GeneralConstants';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class ReminderStrategy extends AdaptableStrategyBase implements IReminderStrategy {
   protected ReminderState: ReminderState;
@@ -17,8 +18,8 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
     });
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.ReminderStrategyName,
       ScreenPopups.ReminderPopup,
       StrategyConstants.ReminderGlyph

@@ -19,6 +19,7 @@ import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -28,8 +29,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     });
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.ShortcutStrategyName,
       ScreenPopups.ShortcutPopup,
       StrategyConstants.ShortcutGlyph

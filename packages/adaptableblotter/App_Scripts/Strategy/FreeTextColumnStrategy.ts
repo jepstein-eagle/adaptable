@@ -4,6 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class FreeTextColumnStrategy extends AdaptableStrategyBase
   implements IFreeTextColumnStrategy {
@@ -11,22 +12,22 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.FreeTextColumnStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.FreeTextColumnStrategyName,
       ScreenPopups.FreeTextColumnPopup,
       StrategyConstants.FreeTextColumnGlyph
     );
   }
 
-  public addColumnMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (
         this.blotter.api.freeTextColumnApi
           .getAllFreeTextColumn()
           .find(ftc => ftc.ColumnId == column.ColumnId)
       ) {
-        this.createColumnMenuItemShowPopup(
+        return this.createColumnMenuItemShowPopup(
           'Edit ' + StrategyConstants.FreeTextColumnStrategyName,
           ScreenPopups.FreeTextColumnPopup,
           StrategyConstants.FreeTextColumnGlyph,

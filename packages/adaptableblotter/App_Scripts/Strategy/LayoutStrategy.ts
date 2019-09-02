@@ -5,6 +5,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { LayoutState } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStrategy {
   public CurrentLayout: string;
@@ -14,8 +15,8 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
     super(StrategyConstants.LayoutStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
-    this.createMenuItemShowPopup(
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.LayoutStrategyName,
       ScreenPopups.LayoutPopup,
       StrategyConstants.LayoutGlyph

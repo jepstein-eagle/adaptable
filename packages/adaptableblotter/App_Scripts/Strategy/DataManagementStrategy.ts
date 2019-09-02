@@ -4,6 +4,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 export class DataManagementStrategy extends AdaptableStrategyBase
   implements IDataManagementStrategy {
@@ -11,11 +12,11 @@ export class DataManagementStrategy extends AdaptableStrategyBase
     super(StrategyConstants.DataManagementStrategyId, blotter);
   }
 
-  protected addPopupMenuItem() {
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
     if ('production' == process.env.NODE_ENV && !BlotterHelper.isDemoSite()) {
-      return;
+      return undefined;
     }
-    this.createMenuItemShowPopup(
+    return this.createMainMenuItemShowPopup(
       StrategyConstants.DataManagementStrategyName,
       ScreenPopups.DataManagementPopup,
       StrategyConstants.DataManagementGlyph
