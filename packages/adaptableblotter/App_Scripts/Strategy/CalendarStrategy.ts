@@ -11,10 +11,10 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.CalendarStrategyName,
-      ScreenPopups.CalendarsPopup,
-      StrategyConstants.CalendarGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.CalendarStrategyName,
+      ComponentName: ScreenPopups.CalendarsPopup,
+      GlyphIcon: StrategyConstants.CalendarGlyph,
+    });
   }
 }

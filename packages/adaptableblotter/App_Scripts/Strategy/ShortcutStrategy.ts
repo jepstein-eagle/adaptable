@@ -30,11 +30,11 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ShortcutStrategyName,
-      ScreenPopups.ShortcutPopup,
-      StrategyConstants.ShortcutGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ShortcutStrategyName,
+      ComponentName: ScreenPopups.ShortcutPopup,
+      GlyphIcon: StrategyConstants.ShortcutGlyph,
+    });
   }
 
   private handleKeyDown(keyEvent: KeyboardEvent | any) {

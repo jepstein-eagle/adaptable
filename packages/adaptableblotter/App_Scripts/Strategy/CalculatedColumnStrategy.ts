@@ -5,6 +5,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ICalculatedColumnStrategy } from './Interface/ICalculatedColumnStrategy';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CalculatedColumnStrategy extends AdaptableStrategyBase
   implements ICalculatedColumnStrategy {
@@ -13,11 +14,11 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.CalculatedColumnStrategyName,
-      ScreenPopups.CalculatedColumnPopup,
-      StrategyConstants.CalculatedColumnGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.CalculatedColumnStrategyName,
+      ComponentName: ScreenPopups.CalculatedColumnPopup,
+      GlyphIcon: StrategyConstants.CalculatedColumnGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
@@ -27,11 +28,16 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
           .getAllCalculatedColumn()
           .find(cc => cc.ColumnId == column.ColumnId)
       ) {
+        let popupParam: StrategyParams = {
+          columnId: column.ColumnId,
+          action: 'Edit',
+        };
+
         return this.createColumnMenuItemShowPopup(
           'Edit ' + StrategyConstants.CalculatedColumnStrategyName,
           ScreenPopups.CalculatedColumnPopup,
           StrategyConstants.CalculatedColumnGlyph,
-          'Edit|' + column.ColumnId
+          popupParam
         );
       }
     }

@@ -19,8 +19,10 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { ContextMenuInfo } from '../agGrid/agGridHelper';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+} from '../Utilities/Interface/AdaptableBlotterMenu';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
@@ -29,11 +31,11 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.SmartEditStrategyName,
-      ScreenPopups.SmartEditPopup,
-      StrategyConstants.SmartEditGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.SmartEditStrategyName,
+      ComponentName: ScreenPopups.SmartEditPopup,
+      GlyphIcon: StrategyConstants.SmartEditGlyph,
+    });
   }
 
   public addContextMenuItem(
@@ -48,22 +50,14 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       contextMenuInfo.column &&
       contextMenuInfo.column.DataType == DataType.Number &&
       !contextMenuInfo.column.ReadOnly &&
-      contextMenuInfo.isSelectedCell
+      contextMenuInfo.isSelectedCell &&
+      contextMenuInfo.isSelectedColumn
     ) {
-      let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
-      if (selectedCellInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
-        if (ArrayExtensions.CorrectLength(selectedCellInfo.Columns, 1)) {
-          if (selectedCellInfo.Columns[0].DataType == DataType.Number) {
-            if (!selectedCellInfo.Columns[0].ReadOnly) {
-              menuItemShowPopup = this.createMainMenuItemShowPopup(
-                StrategyConstants.SmartEditStrategyName,
-                ScreenPopups.SmartEditPopup,
-                StrategyConstants.SmartEditGlyph
-              );
-            }
-          }
-        }
-      }
+      menuItemShowPopup = this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.SmartEditStrategyName,
+        ComponentName: ScreenPopups.SmartEditPopup,
+        GlyphIcon: StrategyConstants.SmartEditGlyph,
+      });
     }
     return menuItemShowPopup;
   }

@@ -49,12 +49,15 @@ class FreeTextColumnPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
-        let editFreeTextColumn = this.props.FreeTextColumns.find(x => x.ColumnId == arrayParams[1]);
-        let index = this.props.FreeTextColumns.indexOf(editFreeTextColumn);
-        this.onEdit(editFreeTextColumn);
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        if (this.props.PopupParams.action == 'Edit') {
+          let editFreeTextColumn = this.props.FreeTextColumns.find(
+            x => x.ColumnId == this.props.PopupParams.columnId
+          );
+          let index = this.props.FreeTextColumns.indexOf(editFreeTextColumn);
+          this.onEdit(editFreeTextColumn);
+        }
       }
     }
   }

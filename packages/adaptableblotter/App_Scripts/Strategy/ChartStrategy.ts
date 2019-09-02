@@ -43,11 +43,11 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ChartStrategyName,
-      ScreenPopups.ChartPopup,
-      StrategyConstants.ChartGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ChartStrategyName,
+      ComponentName: ScreenPopups.ChartPopup,
+      GlyphIcon: StrategyConstants.ChartGlyph,
+    });
   }
 
   protected InitState() {

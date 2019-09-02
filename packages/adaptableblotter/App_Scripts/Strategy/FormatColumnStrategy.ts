@@ -6,6 +6,7 @@ import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
@@ -14,11 +15,11 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.FormatColumnStrategyName,
-      ScreenPopups.FormatColumnPopup,
-      StrategyConstants.FormatColumnGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.FormatColumnStrategyName,
+      ComponentName: ScreenPopups.FormatColumnPopup,
+      GlyphIcon: StrategyConstants.FormatColumnGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
@@ -28,13 +29,17 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
         column.ColumnId
       );
       let label = formatExists ? 'Edit ' : 'Create ';
-      let popupParam = formatExists ? 'Edit|' : 'New|';
+
+      let popupParam: StrategyParams = {
+        columnId: column.ColumnId,
+        action: formatExists ? 'Edit' : 'New',
+      };
 
       return this.createColumnMenuItemShowPopup(
         label + StrategyConstants.FormatColumnStrategyName,
         ScreenPopups.FormatColumnPopup,
         StrategyConstants.FormatColumnGlyph,
-        popupParam + column.ColumnId
+        popupParam
       );
     }
   }

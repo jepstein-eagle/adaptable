@@ -16,10 +16,10 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.LayoutStrategyName,
-      ScreenPopups.LayoutPopup,
-      StrategyConstants.LayoutGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.LayoutStrategyName,
+      ComponentName: ScreenPopups.LayoutPopup,
+      GlyphIcon: StrategyConstants.LayoutGlyph,
+    });
   }
 }

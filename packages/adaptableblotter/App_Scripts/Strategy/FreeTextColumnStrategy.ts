@@ -5,6 +5,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class FreeTextColumnStrategy extends AdaptableStrategyBase
   implements IFreeTextColumnStrategy {
@@ -13,11 +14,11 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.FreeTextColumnStrategyName,
-      ScreenPopups.FreeTextColumnPopup,
-      StrategyConstants.FreeTextColumnGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.FreeTextColumnStrategyName,
+      ComponentName: ScreenPopups.FreeTextColumnPopup,
+      GlyphIcon: StrategyConstants.FreeTextColumnGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
@@ -27,11 +28,15 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
           .getAllFreeTextColumn()
           .find(ftc => ftc.ColumnId == column.ColumnId)
       ) {
+        let popupParam: StrategyParams = {
+          columnId: column.ColumnId,
+          action: 'Edit',
+        };
         return this.createColumnMenuItemShowPopup(
           'Edit ' + StrategyConstants.FreeTextColumnStrategyName,
           ScreenPopups.FreeTextColumnPopup,
           StrategyConstants.FreeTextColumnGlyph,
-          'Edit|' + column.ColumnId
+          popupParam
         );
       }
     }

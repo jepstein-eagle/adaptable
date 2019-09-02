@@ -121,6 +121,7 @@ import {
 import Emitter from '../../Utilities/Emitter';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2320,11 +2321,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
               iPushPullHelper.getIPPStatus() != iPushPullHelper.ServiceStatus.Connected
             ) {
+              let params: StrategyParams = {
+                value: actionTyped.Report.Name,
+              };
+
               middlewareAPI.dispatch(
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullLogin',
-                  actionTyped.Report.Name
+                  params
                 )
               );
             } else if (
@@ -2340,11 +2345,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 .catch((err: any) => {
                   middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(err));
                 });
+              let params: StrategyParams = {
+                value: actionTyped.Report.Name,
+              };
               middlewareAPI.dispatch(
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullDomainPageSelector',
-                  actionTyped.Report.Name
+                  params
                 )
               );
             } else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {

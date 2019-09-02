@@ -5,9 +5,12 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+} from '../Utilities/Interface/AdaptableBlotterMenu';
 import { Entitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
-import { ContextMenuInfo } from '../agGrid/agGridHelper';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
@@ -83,12 +86,17 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   // creates the menu items in the main dropdown
-  createMainMenuItemShowPopup(
-    Label: string,
-    ComponentName: string,
-    GlyphIcon: string,
-    PopupParams?: string
-  ): MenuItemShowPopup {
+  createMainMenuItemShowPopup({
+    Label,
+    ComponentName,
+    GlyphIcon,
+    PopupParams,
+  }: {
+    Label: string;
+    ComponentName: string;
+    GlyphIcon: string;
+    PopupParams?: StrategyParams;
+  }): MenuItemShowPopup {
     return new MenuItemShowPopup(
       Label,
       this.Id,
@@ -115,7 +123,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Label: string,
     ComponentName: string,
     GlyphIcon: string,
-    PopupParams?: string
+    PopupParams?: StrategyParams
   ): MenuItemShowPopup {
     if (this.isVisible && !this.isReadOnly) {
       return new MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, true, PopupParams);

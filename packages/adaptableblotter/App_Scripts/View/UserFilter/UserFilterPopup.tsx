@@ -42,16 +42,17 @@ class UserFilterPopupComponent extends React.Component<
     this.state = UIHelper.getEmptyConfigState();
   }
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let userFilter: UserFilter = ObjectFactory.CreateEmptyUserFilter();
-        userFilter.ColumnId = arrayParams[1];
-        this.setState({
-          EditedAdaptableBlotterObject: userFilter,
-          WizardStartIndex: 1,
-          WizardStatus: WizardStatus.New,
-        });
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        if (this.props.PopupParams.action == 'New') {
+          let userFilter: UserFilter = ObjectFactory.CreateEmptyUserFilter();
+          userFilter.ColumnId = this.props.PopupParams.columnId;
+          this.setState({
+            EditedAdaptableBlotterObject: userFilter,
+            WizardStartIndex: 1,
+            WizardStatus: WizardStatus.New,
+          });
+        }
       }
     }
   }
@@ -75,10 +76,9 @@ class UserFilterPopupComponent extends React.Component<
       let editedColumn: string = filter.ColumnId;
       if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
         selectedColumnId = editedColumn;
-      } else if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-        let arrayParams = this.props.PopupParams.split('|');
-        if (arrayParams.length == 2) {
-          selectedColumnId = arrayParams[1];
+      } else if (this.props.PopupParams) {
+        if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+          selectedColumnId = this.props.PopupParams.columnId;
         }
       }
     }

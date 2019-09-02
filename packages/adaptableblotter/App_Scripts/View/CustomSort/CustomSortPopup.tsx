@@ -47,16 +47,18 @@ class CustomSortPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let newCustomSort = ObjectFactory.CreateEmptyCustomSort();
-        newCustomSort.ColumnId = arrayParams[1];
-        this.onNewFromColumn(newCustomSort);
-      }
-      if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
-        let editCustomSort = this.props.CustomSorts.find(x => x.ColumnId == arrayParams[1]);
-        this.onEdit(editCustomSort);
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        let columnId: string = this.props.PopupParams.columnId;
+        if (this.props.PopupParams.action == 'New') {
+          let newCustomSort = ObjectFactory.CreateEmptyCustomSort();
+          newCustomSort.ColumnId = columnId;
+          this.onNewFromColumn(newCustomSort);
+        }
+        if (this.props.PopupParams.action == 'Edit') {
+          let editCustomSort = this.props.CustomSorts.find(x => x.ColumnId == columnId);
+          this.onEdit(editCustomSort);
+        }
       }
     }
   }

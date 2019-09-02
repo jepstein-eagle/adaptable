@@ -12,10 +12,10 @@ export class ColumnCategoryStrategy extends AdaptableStrategyBase
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ColumnCategoryStrategyName,
-      ScreenPopups.ColumnCategoryPopup,
-      StrategyConstants.ColumnCategoryGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ColumnCategoryStrategyName,
+      ComponentName: ScreenPopups.ColumnCategoryPopup,
+      GlyphIcon: StrategyConstants.ColumnCategoryGlyph,
+    });
   }
 }

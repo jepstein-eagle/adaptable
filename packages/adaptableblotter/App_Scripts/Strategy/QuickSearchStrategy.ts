@@ -18,11 +18,11 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.QuickSearchStrategyName,
-      ScreenPopups.QuickSearchPopup,
-      StrategyConstants.QuickSearchGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.QuickSearchStrategyName,
+      ComponentName: ScreenPopups.QuickSearchPopup,
+      GlyphIcon: StrategyConstants.QuickSearchGlyph,
+    });
   }
 
   public createQuickSearchRange() {

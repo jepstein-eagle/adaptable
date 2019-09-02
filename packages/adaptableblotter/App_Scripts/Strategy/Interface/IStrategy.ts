@@ -1,7 +1,8 @@
-import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+} from '../../Utilities/Interface/AdaptableBlotterMenu';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
-import { ContextMenuInfo } from '../../agGrid/agGridHelper';
 
 /**
  * This is the interface that all Strategies implement (as well as all deriving from AdaptableStrategyBase).

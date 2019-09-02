@@ -52,15 +52,17 @@ class AdvancedSearchPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams == 'New') {
-      this.onNew();
-    }
-    if (this.props.PopupParams == 'Edit') {
-      let currentAdvancedSearch = this.props.AdvancedSearches.find(
-        as => as.Name == this.props.CurrentAdvancedSearchName
-      );
-      if (currentAdvancedSearch) {
-        this.onEdit(currentAdvancedSearch);
+    if (this.props.PopupParams.action) {
+      if (this.props.PopupParams.action == 'New') {
+        this.onNew();
+      }
+      if (this.props.PopupParams.action == 'Edit') {
+        let currentAdvancedSearch = this.props.AdvancedSearches.find(
+          as => as.Name == this.props.CurrentAdvancedSearchName
+        );
+        if (currentAdvancedSearch) {
+          this.onEdit(currentAdvancedSearch);
+        }
       }
     }
   }

@@ -1,5 +1,6 @@
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Action } from 'redux';
+import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 
 export interface IAdaptableAlert {
   Header: string;
@@ -33,7 +34,7 @@ export interface IScreenPopup {
   ShowScreenPopup: boolean;
   ComponentStrategy: string;
   ComponentName: string;
-  Params: string;
+  Params: StrategyParams;
 }
 
 export interface IChartPopup {

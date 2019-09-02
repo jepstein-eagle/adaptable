@@ -26,11 +26,11 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.FlashingCellsStrategyName,
-      ScreenPopups.FlashingCellsPopup,
-      StrategyConstants.FlashingCellGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.FlashingCellsStrategyName,
+      ComponentName: ScreenPopups.FlashingCellsPopup,
+      GlyphIcon: StrategyConstants.FlashingCellGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {

@@ -17,11 +17,11 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.CellSummaryStrategyName,
-      ScreenPopups.CellSummaryPopup,
-      StrategyConstants.CellSummaryGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.CellSummaryStrategyName,
+      ComponentName: ScreenPopups.CellSummaryPopup,
+      GlyphIcon: StrategyConstants.CellSummaryGlyph,
+    });
   }
 
   public CreateCellSummary(selectedCellInfo: SelectedCellInfo): ICellSummmary {

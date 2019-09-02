@@ -52,16 +52,17 @@ class CellValidationPopupComponent extends React.Component<
     this.state = UIHelper.getEmptyConfigState();
   }
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let cellValitdation = ObjectFactory.CreateEmptyCellValidation();
-        cellValitdation.ColumnId = arrayParams[1];
-        this.setState({
-          EditedAdaptableBlotterObject: cellValitdation,
-          WizardStartIndex: 1,
-          WizardStatus: WizardStatus.New,
-        });
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        if (this.props.PopupParams.action == 'New') {
+          let cellValitdation = ObjectFactory.CreateEmptyCellValidation();
+          cellValitdation.ColumnId = this.props.PopupParams.columnId;
+          this.setState({
+            EditedAdaptableBlotterObject: cellValitdation,
+            WizardStartIndex: 1,
+            WizardStatus: WizardStatus.New,
+          });
+        }
       }
     }
   }

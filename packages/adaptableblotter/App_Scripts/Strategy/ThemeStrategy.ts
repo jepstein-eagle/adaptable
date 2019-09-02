@@ -15,11 +15,11 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ThemeStrategyName,
-      ScreenPopups.ThemePopup,
-      StrategyConstants.ThemeGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ThemeStrategyName,
+      ComponentName: ScreenPopups.ThemePopup,
+      GlyphIcon: StrategyConstants.ThemeGlyph,
+    });
   }
 
   publishThemeChanged(themeState: ThemeState) {

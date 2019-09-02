@@ -40,6 +40,7 @@ import Input from '../../components/Input';
 import Checkbox from '../../components/CheckBox';
 import Panel from '../../components/Panel';
 import Dropdown from '../../components/Dropdown';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}
 
@@ -97,9 +98,14 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
   }
 
   componentDidMount() {
-    const column = this.props.PopupParams;
-    if (StringExtensions.IsNotNullOrEmpty(column)) {
-      this.updateDataSource(null, column);
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.columnId) {
+        const column = this.props.PopupParams.columnId;
+
+        if (StringExtensions.IsNotNullOrEmpty(column)) {
+          this.updateDataSource(null, column, this.props.PopupParams.primaryKeyValues);
+        }
+      }
     }
   }
 
@@ -395,10 +401,13 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     this.updateDataSource(valueColumn, labelColumn);
   }
 
-  private updateDataSource(valueColumn: string, labelColumn: string) {
+  private updateDataSource(valueColumn: string, labelColumn: string, primaryKeyValues?: any[]) {
     let pieChartDefinition: PieChartDefinition = this.state.PieChartDefinition;
     pieChartDefinition.PrimaryColumnId = labelColumn;
     pieChartDefinition.SecondaryColumnId = valueColumn;
+    if (ArrayExtensions.IsNotNullOrEmpty(primaryKeyValues)) {
+      pieChartDefinition.PimaryKeyValues = primaryKeyValues;
+    }
 
     let chartData: ChartData = this.props.Blotter.ChartService.BuildPieChartData(
       pieChartDefinition

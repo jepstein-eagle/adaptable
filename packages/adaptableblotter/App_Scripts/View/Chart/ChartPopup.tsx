@@ -49,16 +49,14 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-        let arrayParams = this.props.PopupParams.split('|');
-        let action: string = arrayParams[0].trim();
-        let chartType: ChartType = arrayParams[1].trim() as ChartType; // todo: use the enum...
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.value) {
+        let chartType: ChartType = this.props.PopupParams.value.trim() as ChartType; // todo: use the enum...
 
-        if (action == 'New') {
+        if (this.props.PopupParams.action == 'New') {
           this.onNew(chartType);
         }
-        if (this.props.PopupParams == 'Edit') {
+        if (this.props.PopupParams.action == 'Edit') {
           let index: number = this.props.ChartDefinitions.findIndex(
             cd => cd.Name == this.props.CurrentChartDefinition.Name
           );

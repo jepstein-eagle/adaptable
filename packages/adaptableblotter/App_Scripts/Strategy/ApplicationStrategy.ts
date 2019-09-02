@@ -11,10 +11,10 @@ export class ApplicationStrategy extends AdaptableStrategyBase implements IAppli
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ApplicationStrategyName,
-      ScreenPopups.ApplicationPopup,
-      StrategyConstants.ApplicationGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ApplicationStrategyName,
+      ComponentName: ScreenPopups.ApplicationPopup,
+      GlyphIcon: StrategyConstants.ApplicationGlyph,
+    });
   }
 }

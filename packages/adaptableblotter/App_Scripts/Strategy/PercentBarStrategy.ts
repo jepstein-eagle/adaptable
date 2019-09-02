@@ -7,6 +7,7 @@ import { PercentBarState } from '../PredefinedConfig/RunTimeState/PercentBarStat
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
   protected PercentBarState: PercentBarState;
@@ -15,11 +16,11 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.PercentBarStrategyName,
-      ScreenPopups.PercentBarPopup,
-      StrategyConstants.PercentBarGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.PercentBarStrategyName,
+      ComponentName: ScreenPopups.PercentBarPopup,
+      GlyphIcon: StrategyConstants.PercentBarGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
@@ -29,13 +30,17 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
         column.ColumnId
       );
       let label = percentBarExists ? 'Edit ' : 'Create ';
-      let popupParam = percentBarExists ? 'Edit|' : 'New|';
+
+      let popupParam: StrategyParams = {
+        columnId: column.ColumnId,
+        action: percentBarExists ? 'Edit' : 'New',
+      };
 
       return this.createColumnMenuItemShowPopup(
         label + StrategyConstants.PercentBarStrategyName,
         ScreenPopups.PercentBarPopup,
         StrategyConstants.PercentBarGlyph,
-        popupParam + column.ColumnId
+        popupParam
       );
     }
   }

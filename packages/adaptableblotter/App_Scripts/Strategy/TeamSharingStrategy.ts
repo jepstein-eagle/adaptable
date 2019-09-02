@@ -13,11 +13,11 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
     if (BlotterHelper.isConfigServerEnabled(this.blotter.blotterOptions)) {
-      return this.createMainMenuItemShowPopup(
-        StrategyConstants.TeamSharingStrategyName,
-        ScreenPopups.TeamSharingPopup,
-        StrategyConstants.TeamSharingGlyph
-      );
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.TeamSharingStrategyName,
+        ComponentName: ScreenPopups.TeamSharingPopup,
+        GlyphIcon: StrategyConstants.TeamSharingGlyph,
+      });
     }
   }
 }

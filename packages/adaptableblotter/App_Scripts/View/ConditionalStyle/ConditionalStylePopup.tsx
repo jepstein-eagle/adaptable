@@ -53,17 +53,19 @@ class ConditionalStylePopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
-        _editedConditionalStyle.ColumnId = arrayParams[1];
-        _editedConditionalStyle.ConditionalStyleScope = ConditionalStyleScope.Column;
-        this.setState({
-          EditedAdaptableBlotterObject: _editedConditionalStyle,
-          WizardStartIndex: 1,
-          WizardStatus: WizardStatus.New,
-        });
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        let columnId: string = this.props.PopupParams.columnId;
+        if (this.props.PopupParams.action == 'New') {
+          let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
+          _editedConditionalStyle.ColumnId = columnId;
+          _editedConditionalStyle.ConditionalStyleScope = ConditionalStyleScope.Column;
+          this.setState({
+            EditedAdaptableBlotterObject: _editedConditionalStyle,
+            WizardStartIndex: 1,
+            WizardStatus: WizardStatus.New,
+          });
+        }
       }
     }
   }

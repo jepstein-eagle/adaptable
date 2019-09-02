@@ -44,16 +44,13 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   componentDidMount() {
-    if (this.props.PopupParams == 'New') {
-      this.onNew();
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action) {
+        if (this.props.PopupParams.action == 'New') {
+          this.onNew();
+        }
+      }
     }
-    // dont think we will ever let you an edit a layout this way - only create and then save what is currently in the grid.
-    //   if (this.props.PopupParams == "Edit") {
-    //       let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
-    //       if (currentLayout) {
-    ///          this.onEdit(currentLayout)
-    //     }
-    //  }
   }
 
   render() {

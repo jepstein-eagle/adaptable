@@ -50,9 +50,14 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   UNSAFE_componentWillMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let column = ColumnHelper.getColumnFromId(this.props.PopupParams, this.props.Columns);
-      this.setState({ SelectedColumn: column, ShowSelector: false });
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.columnId) {
+        let column = ColumnHelper.getColumnFromId(
+          this.props.PopupParams.columnId,
+          this.props.Columns
+        );
+        this.setState({ SelectedColumn: column, ShowSelector: false });
+      }
     }
   }
 

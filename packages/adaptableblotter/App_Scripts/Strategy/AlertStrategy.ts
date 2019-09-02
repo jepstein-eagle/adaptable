@@ -22,11 +22,11 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.AlertStrategyName,
-      ScreenPopups.AlertPopup,
-      StrategyConstants.AlertGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.AlertStrategyName,
+      ComponentName: ScreenPopups.AlertPopup,
+      GlyphIcon: StrategyConstants.AlertGlyph,
+    });
   }
 
   protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {

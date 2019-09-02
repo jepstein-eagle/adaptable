@@ -5,6 +5,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
   private CustomSorts: CustomSort[];
@@ -21,23 +22,28 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.CustomSortStrategyName,
-      ScreenPopups.CustomSortPopup,
-      StrategyConstants.CustomSortGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.CustomSortStrategyName,
+      ComponentName: ScreenPopups.CustomSortPopup,
+      GlyphIcon: StrategyConstants.CustomSortGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'sort')) {
       let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
       let label = customSort ? 'Edit ' : 'Create ';
-      let popupParam = customSort ? 'Edit|' : 'New|';
+
+      let popupParam: StrategyParams = {
+        columnId: column.ColumnId,
+        action: customSort ? 'Edit' : 'New',
+      };
+
       return this.createColumnMenuItemShowPopup(
         label + StrategyConstants.CustomSortStrategyName,
         ScreenPopups.CustomSortPopup,
         StrategyConstants.CustomSortGlyph,
-        popupParam + column.ColumnId
+        popupParam
       );
     }
   }

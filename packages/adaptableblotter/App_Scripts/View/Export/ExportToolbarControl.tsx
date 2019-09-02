@@ -237,19 +237,15 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onNewReport: () =>
       dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.ExportStrategyId,
-          ScreenPopups.ExportPopup,
-          'New'
-        )
+        PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup, {
+          action: 'New',
+        })
       ),
     onEditReport: () =>
       dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.ExportStrategyId,
-          ScreenPopups.ExportPopup,
-          'Edit'
-        )
+        PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup, {
+          action: 'Edit',
+        })
       ),
     onClose: (dashboardControl: string) =>
       dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),

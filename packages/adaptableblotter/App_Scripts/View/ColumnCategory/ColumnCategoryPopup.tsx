@@ -47,8 +47,10 @@ class ColumnCategoryPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams == 'New') {
-      this.onNew();
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action == 'New') {
+        this.onNew();
+      }
     }
   }
 

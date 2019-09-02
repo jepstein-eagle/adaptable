@@ -11,10 +11,10 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ColumnChooserStrategyName,
-      ScreenPopups.ColumnChooserPopup,
-      StrategyConstants.ColumnChooserGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ColumnChooserStrategyName,
+      ComponentName: ScreenPopups.ColumnChooserPopup,
+      GlyphIcon: StrategyConstants.ColumnChooserGlyph,
+    });
   }
 }

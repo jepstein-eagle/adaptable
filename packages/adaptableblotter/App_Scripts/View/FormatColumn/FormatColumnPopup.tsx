@@ -47,16 +47,18 @@ class FormatColumnPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let newFormatColumn = ObjectFactory.CreateEmptyFormatColumn();
-        newFormatColumn.ColumnId = arrayParams[1];
-        this.onNewFromColumn(newFormatColumn);
-      }
-      if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
-        let editFormatColumn = this.props.FormatColumns.find(x => x.ColumnId == arrayParams[1]);
-        this.onEdit(editFormatColumn);
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        let columnId: string = this.props.PopupParams.columnId;
+        if (this.props.PopupParams.action == 'New') {
+          let newFormatColumn = ObjectFactory.CreateEmptyFormatColumn();
+          newFormatColumn.ColumnId = columnId;
+          this.onNewFromColumn(newFormatColumn);
+        }
+        if (this.props.PopupParams.action == 'Edit') {
+          let editFormatColumn = this.props.FormatColumns.find(x => x.ColumnId == columnId);
+          this.onEdit(editFormatColumn);
+        }
       }
     }
   }

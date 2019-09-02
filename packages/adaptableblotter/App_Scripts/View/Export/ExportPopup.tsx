@@ -61,12 +61,18 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   componentDidMount() {
-    if (this.props.PopupParams == 'New') {
-      this.onNew();
-    }
-    if (this.props.PopupParams == 'Edit') {
-      let selectedReport: Report = this.props.Reports.find(a => a.Name == this.props.CurrentReport);
-      this.onEdit(selectedReport);
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action) {
+        if (this.props.PopupParams.action == 'New') {
+          this.onNew();
+        }
+        if (this.props.PopupParams.action == 'Edit') {
+          let selectedReport: Report = this.props.Reports.find(
+            a => a.Name == this.props.CurrentReport
+          );
+          this.onEdit(selectedReport);
+        }
+      }
     }
   }
 

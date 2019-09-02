@@ -13,6 +13,7 @@ import {
   IGridInfoPopup,
   IAdaptableAlert,
 } from '../../Utilities/Interface/IMessage';
+import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 
 export const POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 export const POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
@@ -33,7 +34,7 @@ export const POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
 export interface PopupShowScreenAction extends Redux.Action {
   ComponentStrategy: string;
   ComponentName: string;
-  Params?: string;
+  Params?: StrategyParams;
 }
 
 export interface PopupHideScreenAction extends Redux.Action {}
@@ -77,7 +78,7 @@ export interface PopupChartClearParamAction extends Redux.Action {}
 export const PopupShowScreen = (
   ComponentStrategy: string,
   ComponentName: string,
-  Params?: string
+  Params?: StrategyParams
 ): PopupShowScreenAction => ({
   type: POPUP_SHOW_SCREEN,
   ComponentStrategy,

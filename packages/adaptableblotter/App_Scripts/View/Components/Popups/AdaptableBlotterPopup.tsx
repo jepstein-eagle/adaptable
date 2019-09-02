@@ -3,7 +3,7 @@ import * as React from 'react';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
-import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
+import { StrategyViewPopupProps, StrategyParams } from '../SharedProps/StrategyViewPopupProps';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
@@ -22,7 +22,7 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
   ComponentStrategy: string;
   onHide?: () => void;
   Blotter: IAdaptableBlotter;
-  PopupParams: string;
+  PopupParams: StrategyParams;
   onClearPopupParams?: () => PopupRedux.PopupClearParamAction;
 }
 

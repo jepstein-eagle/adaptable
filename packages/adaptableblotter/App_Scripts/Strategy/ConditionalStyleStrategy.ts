@@ -8,6 +8,7 @@ import { IColumn } from '../Utilities/Interface/IColumn';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
@@ -19,20 +20,24 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ConditionalStyleStrategyName,
-      ScreenPopups.ConditionalStylePopup,
-      StrategyConstants.ConditionalStyleGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ConditionalStyleStrategyName,
+      ComponentName: ScreenPopups.ConditionalStylePopup,
+      GlyphIcon: StrategyConstants.ConditionalStyleGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
+      let popupParam: StrategyParams = {
+        columnId: column.ColumnId,
+        action: 'New',
+      };
       return this.createColumnMenuItemShowPopup(
         'Create ' + StrategyConstants.ConditionalStyleStrategyName,
         ScreenPopups.ConditionalStylePopup,
         StrategyConstants.ConditionalStyleGlyph,
-        'New|' + column.ColumnId
+        popupParam
       );
     }
   }

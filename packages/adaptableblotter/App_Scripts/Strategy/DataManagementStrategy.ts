@@ -16,10 +16,10 @@ export class DataManagementStrategy extends AdaptableStrategyBase
     if ('production' == process.env.NODE_ENV && !BlotterHelper.isDemoSite()) {
       return undefined;
     }
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.DataManagementStrategyName,
-      ScreenPopups.DataManagementPopup,
-      StrategyConstants.DataManagementGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.DataManagementStrategyName,
+      ComponentName: ScreenPopups.DataManagementPopup,
+      GlyphIcon: StrategyConstants.DataManagementGlyph,
+    });
   }
 }

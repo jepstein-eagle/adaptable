@@ -12,10 +12,10 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.AdvancedSearchStrategyName,
-      ScreenPopups.AdvancedSearchPopup,
-      StrategyConstants.AdvancedSearchGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.AdvancedSearchStrategyName,
+      ComponentName: ScreenPopups.AdvancedSearchPopup,
+      GlyphIcon: StrategyConstants.AdvancedSearchGlyph,
+    });
   }
 }

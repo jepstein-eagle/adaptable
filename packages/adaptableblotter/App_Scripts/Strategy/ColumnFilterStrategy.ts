@@ -13,11 +13,11 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ColumnFilterStrategyName,
-      ScreenPopups.ColumnFilterPopup,
-      StrategyConstants.ColumnFilterGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ColumnFilterStrategyName,
+      ComponentName: ScreenPopups.ColumnFilterPopup,
+      GlyphIcon: StrategyConstants.ColumnFilterGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {

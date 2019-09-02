@@ -45,7 +45,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
     let itemsElements: any[] = [];
     // this line is total rubbish and just here to get the build to work!
     let tempToFixBuild: Report = this.props.LiveReports.find(
-      lr => lr.Report.Name == this.props.PopupParams
+      lr => lr.Report.Name == this.props.PopupParams.value
     ).Report;
 
     this.props.IPPDomainsPages.forEach(x => {

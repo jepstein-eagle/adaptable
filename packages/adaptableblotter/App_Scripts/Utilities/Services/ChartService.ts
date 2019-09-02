@@ -211,18 +211,25 @@ export class ChartService implements IChartService {
 
     let valueTotal: number = 0;
 
-    if (chartDefinition.VisibleRowsOnly) {
-      this.blotter.forAllVisibleRecordsDo(row => {
-        valueTotal = hasSecondaryColumn
-          ? this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
-          : this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
+    if (ArrayExtensions.IsNotNullOrEmpty(chartDefinition.PimaryKeyValues)) {
+      // if doing Primary Key Values then we know that we have no secondary column and no need to worry about visible rows
+      this.blotter.getRecordsForPrimaryKeys(chartDefinition.PimaryKeyValues).forEach(row => {
+        this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
       });
     } else {
-      this.blotter.forAllRecordsDo(row => {
-        valueTotal = hasSecondaryColumn
-          ? this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
-          : this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
-      });
+      if (chartDefinition.VisibleRowsOnly) {
+        this.blotter.forAllVisibleRecordsDo(row => {
+          valueTotal = hasSecondaryColumn
+            ? this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
+            : this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
+        });
+      } else {
+        this.blotter.forAllRecordsDo(row => {
+          valueTotal = hasSecondaryColumn
+            ? this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
+            : this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
+        });
+      }
     }
 
     let dataItems: PieChartDataItem[] = [];

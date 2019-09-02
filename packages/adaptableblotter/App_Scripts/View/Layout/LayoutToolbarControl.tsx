@@ -200,11 +200,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onNewLayout: () =>
       dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.LayoutStrategyId,
-          ScreenPopups.LayoutPopup,
-          'New'
-        )
+        PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
+          action: 'New',
+        })
       ),
     onClose: (dashboardControl: string) =>
       dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),

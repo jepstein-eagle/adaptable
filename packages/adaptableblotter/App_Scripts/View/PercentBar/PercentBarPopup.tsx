@@ -48,26 +48,27 @@ class PercentBarPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let columnId: string = arrayParams[1];
-        let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
-          columnId,
-          DistinctCriteriaPairValue.RawValue,
-          false
-        ).map(pair => {
-          return pair.RawValue;
-        });
-        let newPercentRender: PercentBar = ObjectFactory.CreateEmptyPercentBar();
-        newPercentRender.ColumnId = columnId;
-        newPercentRender.MinValue = Math.min(...distinctColumnsValues);
-        newPercentRender.MaxValue = Math.max(...distinctColumnsValues);
-        this.onNewFromColumn(newPercentRender);
-      }
-      if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
-        let editPercentRender = this.props.PercentBars.find(x => x.ColumnId == arrayParams[1]);
-        this.onEdit(editPercentRender);
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        let columnId: string = this.props.PopupParams.columnId;
+        if (this.props.PopupParams.action == 'New') {
+          let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+            columnId,
+            DistinctCriteriaPairValue.RawValue,
+            false
+          ).map(pair => {
+            return pair.RawValue;
+          });
+          let newPercentRender: PercentBar = ObjectFactory.CreateEmptyPercentBar();
+          newPercentRender.ColumnId = columnId;
+          newPercentRender.MinValue = Math.min(...distinctColumnsValues);
+          newPercentRender.MaxValue = Math.max(...distinctColumnsValues);
+          this.onNewFromColumn(newPercentRender);
+        }
+        if (this.props.PopupParams.action == 'Edit') {
+          let editPercentRender = this.props.PercentBars.find(x => x.ColumnId == columnId);
+          this.onEdit(editPercentRender);
+        }
       }
     }
   }

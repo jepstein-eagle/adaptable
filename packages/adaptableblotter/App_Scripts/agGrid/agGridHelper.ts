@@ -53,16 +53,14 @@ import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+} from '../Utilities/Interface/AdaptableBlotterMenu';
 import { iconToString } from '../components/icons';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IColumn } from '../Utilities/Interface/IColumn';
-
-export interface ContextMenuInfo {
-  currentCell: GridCell;
-  isSelectedCell: boolean;
-  column: IColumn;
-}
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -411,35 +409,33 @@ export class agGridHelper {
   }
 
   public getContextMenuInfo(params: GetContextMenuItemsParams, column: IColumn): ContextMenuInfo {
-    // lets build a picture of what has been right clicked
-    // will take time to get right but lets start
+    // lets build a picture of what has been right clicked.  Will take time to get right but lets start
 
-    let clickedCell: GridCell = null;
-    // let isSelectedCell: boolean = false;
     const colId = params.column.getColId();
     const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRecord(params.node);
-
-    // lets build the context Menu info
-    clickedCell = {
+    let isSelectedColumn: boolean = false;
+    let clickedCell: GridCell = {
       columnId: colId,
       value: params.value,
       primaryKeyValue: primaryKeyValue,
     };
-
-    let matchedCell: GridCell = this.blotter.api.gridApi
-      .getSelectedCellInfo()
-      .GridCells.find(
-        gc =>
-          gc != null &&
-          gc.columnId == clickedCell.columnId &&
-          gc.primaryKeyValue == clickedCell.primaryKeyValue
-      );
+    let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+    let matchedCell: GridCell = selectedCellInfo.GridCells.find(
+      gc =>
+        gc != null &&
+        gc.columnId == clickedCell.columnId &&
+        gc.primaryKeyValue == clickedCell.primaryKeyValue
+    );
     let isSelectedCell: boolean = matchedCell != null;
+    if (isSelectedCell) {
+      isSelectedColumn = ArrayExtensions.CorrectLength(selectedCellInfo.Columns, 1);
+    }
 
     return {
       isSelectedCell: isSelectedCell,
       currentCell: clickedCell,
       column: column,
+      isSelectedColumn: isSelectedColumn,
     };
   }
 

@@ -5,6 +5,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -12,20 +13,23 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ColumnInfoStrategyName,
-      ScreenPopups.ColumnInfoPopup,
-      StrategyConstants.ColumnInfoGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ColumnInfoStrategyName,
+      ComponentName: ScreenPopups.ColumnInfoPopup,
+      GlyphIcon: StrategyConstants.ColumnInfoGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
+      let popupParam: StrategyParams = {
+        columnId: column.ColumnId,
+      };
       return this.createColumnMenuItemShowPopup(
         StrategyConstants.ColumnInfoStrategyName,
         ScreenPopups.ColumnInfoPopup,
         StrategyConstants.ColumnInfoGlyph,
-        column.ColumnId
+        popupParam
       );
     }
   }

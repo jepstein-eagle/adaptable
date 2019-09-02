@@ -52,16 +52,17 @@ class PlusMinusPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let plusMinus = ObjectFactory.CreateEmptyPlusMinusRule();
-        plusMinus.ColumnId = arrayParams[1];
-        this.setState({
-          EditedAdaptableBlotterObject: plusMinus,
-          WizardStatus: WizardStatus.New,
-          WizardStartIndex: 1,
-        });
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        if (this.props.PopupParams.action == 'New') {
+          let plusMinus = ObjectFactory.CreateEmptyPlusMinusRule();
+          plusMinus.ColumnId = this.props.PopupParams.columnId;
+          this.setState({
+            EditedAdaptableBlotterObject: plusMinus,
+            WizardStatus: WizardStatus.New,
+            WizardStartIndex: 1,
+          });
+        }
       }
     }
   }

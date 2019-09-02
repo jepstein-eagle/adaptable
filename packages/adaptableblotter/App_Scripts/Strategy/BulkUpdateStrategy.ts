@@ -24,11 +24,11 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.BulkUpdateStrategyName,
-      ScreenPopups.BulkUpdatePopup,
-      StrategyConstants.BulkUpdateGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.BulkUpdateStrategyName,
+      ComponentName: ScreenPopups.BulkUpdatePopup,
+      GlyphIcon: StrategyConstants.BulkUpdateGlyph,
+    });
   }
 
   public ApplyBulkUpdate(newValues: GridCell[]): void {

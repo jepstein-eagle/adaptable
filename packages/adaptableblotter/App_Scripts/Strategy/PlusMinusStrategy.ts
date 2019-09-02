@@ -21,6 +21,7 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -32,21 +33,25 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.PlusMinusStrategyName,
-      ScreenPopups.PlusMinusPopup,
-      StrategyConstants.PlusMinusGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.PlusMinusStrategyName,
+      ComponentName: ScreenPopups.PlusMinusPopup,
+      GlyphIcon: StrategyConstants.PlusMinusGlyph,
+    });
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (column && column.DataType == DataType.Number) {
+        let popupParam: StrategyParams = {
+          columnId: column.ColumnId,
+          action: 'New',
+        };
         return this.createColumnMenuItemShowPopup(
           'Create Plus/Minus Rule',
           ScreenPopups.PlusMinusPopup,
           StrategyConstants.PlusMinusGlyph,
-          'New|' + column.ColumnId
+          popupParam
         );
       }
     }

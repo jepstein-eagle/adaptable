@@ -13,11 +13,11 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.DashboardStrategyName,
-      ScreenPopups.DashboardPopup,
-      StrategyConstants.DashboardGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.DashboardStrategyName,
+      ComponentName: ScreenPopups.DashboardPopup,
+      GlyphIcon: StrategyConstants.DashboardGlyph,
+    });
   }
 
   public addColumnMenuItem(): AdaptableBlotterMenuItem | undefined {

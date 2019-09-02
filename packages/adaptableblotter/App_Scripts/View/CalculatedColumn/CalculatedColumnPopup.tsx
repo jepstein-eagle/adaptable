@@ -53,12 +53,15 @@ class CalculatedColumnPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-      let arrayParams = this.props.PopupParams.split('|');
-      // only editing is possible - you cannot create a new calc column from the column menu
-      if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
-        let calculatedColumn = this.props.CalculatedColumns.find(x => x.ColumnId == arrayParams[1]);
-        this.onEdit(calculatedColumn);
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
+        if (this.props.PopupParams.action == 'Edit') {
+          // only editing is possible - you cannot create a new calc column from the column menu
+          let calculatedColumn = this.props.CalculatedColumns.find(
+            x => x.ColumnId == this.props.PopupParams.columnId
+          );
+          this.onEdit(calculatedColumn);
+        }
       }
     }
   }

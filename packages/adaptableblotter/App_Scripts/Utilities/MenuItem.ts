@@ -1,6 +1,7 @@
 import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import { AdaptableBlotterMenuItem } from './Interface/AdaptableBlotterMenu';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {
   constructor(
@@ -31,7 +32,7 @@ export class MenuItemShowPopup implements AdaptableBlotterMenuItem {
     componentName: string,
     glyphIcon: string,
     isVisible: boolean,
-    popupParams?: string
+    popupParams?: StrategyParams
   ) {
     this.Label = label;
     this.StrategyId = strategyId;

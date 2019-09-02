@@ -128,6 +128,7 @@ export interface IAdaptableBlotter {
   ): (columnId: string) => any;
   getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
   getDataRowFromRecord(record: any): any;
+  getRecordsForPrimaryKeys(primaryKeyValues: any[]): any[];
 
   // editing related
   setValue(gridCell: GridCell): void;

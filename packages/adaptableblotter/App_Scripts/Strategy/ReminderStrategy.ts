@@ -19,11 +19,11 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ReminderStrategyName,
-      ScreenPopups.ReminderPopup,
-      StrategyConstants.ReminderGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ReminderStrategyName,
+      ComponentName: ScreenPopups.ReminderPopup,
+      GlyphIcon: StrategyConstants.ReminderGlyph,
+    });
   }
 
   public scheduleReminders(): void {

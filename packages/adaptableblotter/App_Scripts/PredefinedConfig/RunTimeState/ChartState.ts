@@ -43,6 +43,7 @@ export interface PieChartDefinition extends ChartDefinition {
   PrimaryColumnId: string;
   SecondaryColumnId?: string;
   SecondaryColumnOperation: 'Sum' | 'Count';
+  PimaryKeyValues?: any[];
 }
 
 export interface CategoryChartDefinition extends ChartDefinition {

@@ -121,7 +121,7 @@ import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
-import { agGridHelper, ContextMenuInfo } from './agGridHelper';
+import { agGridHelper } from './agGridHelper';
 import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
@@ -147,12 +147,16 @@ import {
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { PercentBarTooltip } from './PercentBarTooltip';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+} from '../Utilities/Interface/AdaptableBlotterMenu';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -1325,6 +1329,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return rowNode != null && rowNode != undefined ? rowNode.data : undefined;
   }
 
+  public getRecordsForPrimaryKeys(primaryKeyValues: any[]): any[] {
+    let rowNodes: RowNode[] = [];
+    if (this.useRowNodeLookUp) {
+      primaryKeyValues.forEach((pkValue: any) => {
+        const rowNode: RowNode = this.gridOptions.api!.getRowNode(pkValue);
+        if (rowNode) {
+          rowNodes.push(rowNode);
+        }
+      });
+    } else {
+      primaryKeyValues.forEach((pkValue: any) => {
+        let foundRow: boolean = false;
+        this.gridOptions.api!.getModel().forEachNode(rowNode => {
+          if (!foundRow && pkValue == this.getPrimaryKeyValueFromRecord(rowNode)) {
+            rowNodes.push(rowNode);
+            foundRow = true;
+          }
+        });
+      });
+    }
+    return rowNodes;
+  }
+
   public setCellClassRules(
     cellClassRules: any,
     columnId: string,
@@ -2166,16 +2193,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.addPercentBar(pcr);
     });
 
+    // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
     this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
-      // couldnt find a way to listen for menu close. There is a Menu Item Select
-      // but you can also clsoe the menu from filter and clicking outside the menu....
+      // couldnt find a way to listen for menu close. There is a Menu Item Select, but you can also close menu from filter and clicking outside menu....
       const colId: string = params.column.getColId();
 
-      // not quite sure we why do it this way
-      // we clear the column menu
-      // set all the items
-      // then read them 5 lines below !....
       const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
 
       const column: IColumn = ColumnHelper.getColumnFromId(colId, this.api.gridApi.getColumns());
@@ -2186,11 +2209,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             adaptableBlotterMenuItems.push(menuItem);
           }
         });
+        // add the column menu items from Home Strategy
+        const homeStrategy: IHomeStrategy = this.strategies.get(
+          StrategyConstants.HomeStrategyId
+        ) as IHomeStrategy;
+        adaptableBlotterMenuItems.push(...homeStrategy.addBaseColumnMenuItems(column));
       }
 
       let colMenuItems: (string | MenuItemDef)[];
-      // if there was an initial implementation we init the list of menu items with this one, otherwise we take
-      // the default items
+      // if there was an initial implementation we init the list of menu items with this one; otherwise we take the default items
       if (originalgetMainMenuItems) {
         const originalMenuItems = originalgetMainMenuItems(params);
         colMenuItems = originalMenuItems.slice(0);
@@ -2205,19 +2232,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       });
       return colMenuItems;
     };
-    /*
-        this.AdaptableBlotterStore.Load
-            .then(() => this.strategies.forEach(strat => strat.initializeWithRedux()), (e) => {
-                LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
-                //for now i'm still initializing the strategies even if loading state has failed....
-                //we may revisit that later
-                this.strategies.forEach(strat => strat.initializeWithRedux());
 
-            });
-*/
-
-    // this is the agGrid Context Menu that we might want to listen to...
-    // unlike with column menu we build on the fly which is much easier
+    // Build the CONTEXT MENU.  Again we do this each time a cell is right clicked as its context-sensitive
     const originalgetContextMenuItems = this.gridOptions.getContextMenuItems;
     this.gridOptions.getContextMenuItems = (params: GetContextMenuItemsParams) => {
       let colMenuItems: (string | MenuItemDef)[];
@@ -2231,9 +2247,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         colMenuItems = params.defaultItems.slice(0);
       }
 
-      // keep it simple for now - if its grouped then do nothing
+      // keep it simple for now - if its a grouped cell then do nothing
       if (!params.node.group) {
-        colMenuItems.push('separator');
         const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
         const agGridColumn: Column = params.column;
         if (agGridColumn) {
@@ -2247,7 +2262,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               params,
               adaptableColumn
             );
-            console.log(contextMenuInfo);
             this.strategies.forEach(s => {
               let menuItem: AdaptableBlotterMenuItem = s.addContextMenuItem(contextMenuInfo);
               if (menuItem) {
@@ -2256,14 +2270,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
           }
 
-          adaptableBlotterMenuItems.forEach(
-            (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(
-                adaptableBlotterMenuItem
-              );
-              colMenuItems.push(menuItem);
-            }
-          );
+          if (ArrayExtensions.IsNotNullOrEmpty(adaptableBlotterMenuItems)) {
+            colMenuItems.push('separator');
+            adaptableBlotterMenuItems.forEach(
+              (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(
+                  adaptableBlotterMenuItem
+                );
+                colMenuItems.push(menuItem);
+              }
+            );
+          }
         }
       }
       return colMenuItems;

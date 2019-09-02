@@ -1,4 +1,6 @@
 import { Action } from 'redux';
+import { GridCell } from './Selection/GridCell';
+import { IColumn } from './IColumn';
 
 export interface AdaptableBlotterMenuItem {
   Label: string;
@@ -11,4 +13,11 @@ export interface AdaptableBlotterMenuItem {
 export interface AdaptableBlotterMenu {
   ColumnId: string;
   MenuItems: AdaptableBlotterMenuItem[];
+}
+
+export interface ContextMenuInfo {
+  currentCell: GridCell;
+  isSelectedCell: boolean;
+  column: IColumn;
+  isSelectedColumn: boolean;
 }

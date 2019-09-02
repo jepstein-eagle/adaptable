@@ -9,9 +9,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
-import Dialog from '../../../components/Dialog';
 import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
-import { PopupClearParamAction } from '../../../Redux/ActionsReducers/PopupRedux';
 
 /*
 The Chart popup or Div.
@@ -91,7 +89,7 @@ export class AdaptableBlotterChart extends React.Component<
         Blotter={this.props.AdaptableBlotter}
         onHide={this.props.onClose}
         showModal
-        PopupParams=""
+        PopupParams={null}
         ComponentName={ScreenPopups.ChartDisplayPopup}
         ComponentStrategy={StrategyConstants.ChartStrategyId}
       >

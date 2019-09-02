@@ -98,11 +98,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    return this.createMainMenuItemShowPopup(
-      StrategyConstants.ExportStrategyName,
-      ScreenPopups.ExportPopup,
-      StrategyConstants.ExportGlyph
-    );
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.ExportStrategyName,
+      ComponentName: ScreenPopups.ExportPopup,
+      GlyphIcon: StrategyConstants.ExportGlyph,
+    });
   }
 
   private sendNewDataToLiveExcel() {

@@ -128,7 +128,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
         PopupRedux.PopupShowScreen(
           StrategyConstants.AdvancedSearchStrategyId,
           ScreenPopups.AdvancedSearchPopup,
-          'New'
+          {
+            action: 'New',
+          }
         )
       ),
     onEditAdvancedSearch: () =>
@@ -136,7 +138,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
         PopupRedux.PopupShowScreen(
           StrategyConstants.AdvancedSearchStrategyId,
           ScreenPopups.AdvancedSearchPopup,
-          'Edit'
+          {
+            action: 'Edit',
+          }
         )
       ),
     onClose: (dashboardControl: string) =>

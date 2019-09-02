@@ -24,6 +24,7 @@ import { ReactComponentLike } from 'prop-types';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import DropdownButton from '../../components/DropdownButton';
+import { StrategyParams } from '../Components/SharedProps/StrategyViewPopupProps';
 
 const AddIcon = icons.add as ReactComponentLike;
 
@@ -33,8 +34,8 @@ interface ChartToolbarControlComponentProps
   CurrentChartDefinition: ChartDefinition;
 
   onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
-  onNewChartDefinition: (popupParams: string) => PopupRedux.PopupShowScreenAction;
-  onEditChartDefinition: (popupParams: string) => PopupRedux.PopupShowScreenAction;
+  onNewChartDefinition: (popupParams: StrategyParams) => PopupRedux.PopupShowScreenAction;
+  onEditChartDefinition: (popupParams: StrategyParams) => PopupRedux.PopupShowScreenAction;
   onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
 }
 
@@ -64,12 +65,20 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
     let categoryChartMenuItem = {
       disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
-      onClick: () => this.props.onNewChartDefinition('New | CategoryChart'),
+      onClick: () =>
+        this.props.onNewChartDefinition({
+          value: 'CategoryChart',
+          action: 'New',
+        }),
       label: 'Category Chart',
     };
     let pieChartMenuItem = {
       disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
-      onClick: () => this.props.onNewChartDefinition('New | PieChart'),
+      onClick: () =>
+        this.props.onNewChartDefinition({
+          value: 'PieChart',
+          action: 'New',
+        }),
       label: 'Pie Chart',
     };
 
@@ -110,7 +119,12 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
           </DropdownButton>
 
           <ButtonEdit
-            onClick={() => this.props.onEditChartDefinition('Edit | CategoryChart')}
+            onClick={() =>
+              this.props.onNewChartDefinition({
+                value: 'CategoryChart',
+                action: 'New',
+              })
+            }
             tooltip="Edit Chart Definition"
             disabled={currentChartDefinitionName == selectChartString}
             AccessLevel={this.props.AccessLevel}
@@ -164,7 +178,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   return {
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
-    onNewChartDefinition: (popupParams: string) =>
+    onNewChartDefinition: (popupParams: StrategyParams) =>
       dispatch(
         PopupRedux.PopupShowScreen(
           StrategyConstants.ChartStrategyId,
@@ -172,7 +186,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           popupParams
         )
       ),
-    onEditChartDefinition: (popupParams: string) =>
+    onEditChartDefinition: (popupParams: StrategyParams) =>
       dispatch(
         PopupRedux.PopupShowScreen(
           StrategyConstants.ChartStrategyId,
