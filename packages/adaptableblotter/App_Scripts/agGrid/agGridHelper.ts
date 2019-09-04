@@ -53,14 +53,11 @@ import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
-import {
-  AdaptableBlotterMenuItem,
-  ContextMenuInfo,
-} from '../Utilities/Interface/AdaptableBlotterMenu';
 import { iconToString } from '../components/icons';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { ContextMenuInfo, AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -413,7 +410,7 @@ export class agGridHelper {
 
     const colId = params.column.getColId();
     const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRecord(params.node);
-    let isSelectedColumn: boolean = false;
+    let isSingleSelectedColumn: boolean = false;
     let clickedCell: GridCell = {
       columnId: colId,
       value: params.value,
@@ -428,14 +425,14 @@ export class agGridHelper {
     );
     let isSelectedCell: boolean = matchedCell != null;
     if (isSelectedCell) {
-      isSelectedColumn = ArrayExtensions.CorrectLength(selectedCellInfo.Columns, 1);
+      isSingleSelectedColumn = ArrayExtensions.CorrectLength(selectedCellInfo.Columns, 1);
     }
 
     return {
       isSelectedCell: isSelectedCell,
-      currentCell: clickedCell,
+      gridCell: clickedCell,
       column: column,
-      isSelectedColumn: isSelectedColumn,
+      isSingleSelectedColumn: isSingleSelectedColumn,
     };
   }
 

@@ -1,7 +1,4 @@
-import {
-  AdaptableBlotterMenuItem,
-  ContextMenuInfo,
-} from '../../Utilities/Interface/AdaptableBlotterMenu';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../../Utilities/MenuItem';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 
 /**

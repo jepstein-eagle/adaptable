@@ -3,7 +3,6 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { ApiBase } from './ApiBase';
 import { IInternalApi } from './Interface/IInternalApi';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 import { Report } from '../PredefinedConfig/RunTimeState/ExportState';

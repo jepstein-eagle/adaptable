@@ -5,7 +5,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { LayoutState } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStrategy {
   public CurrentLayout: string;

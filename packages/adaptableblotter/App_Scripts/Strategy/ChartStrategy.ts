@@ -20,7 +20,7 @@ import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { SEARCH_APPLIED_EVENT } from '../Utilities/Constants/GeneralConstants';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
   private ChartState: ChartState;

@@ -112,7 +112,7 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 // do I need this in both places??
 type RuntimeConfig = {

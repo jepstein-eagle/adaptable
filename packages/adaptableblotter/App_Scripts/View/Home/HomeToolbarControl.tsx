@@ -26,12 +26,12 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 import Checkbox from '../../components/CheckBox';
 import SimpleButton from '../../components/SimpleButton';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { Icon } from '../../components/icons';
+import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 

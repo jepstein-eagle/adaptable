@@ -20,10 +20,10 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import {
+  MenuItemShowPopup,
   AdaptableBlotterMenuItem,
   ContextMenuInfo,
-} from '../Utilities/Interface/AdaptableBlotterMenu';
-import { MenuItemShowPopup } from '../Utilities/MenuItem';
+} from '../Utilities/MenuItem';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -51,7 +51,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       contextMenuInfo.column.DataType == DataType.Number &&
       !contextMenuInfo.column.ReadOnly &&
       contextMenuInfo.isSelectedCell &&
-      contextMenuInfo.isSelectedColumn
+      contextMenuInfo.isSingleSelectedColumn
     ) {
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: StrategyConstants.SmartEditStrategyName,

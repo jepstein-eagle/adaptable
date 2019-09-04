@@ -21,7 +21,7 @@ import {
   GRID_RELOADED_EVENT,
   GRID_REFRESHED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
-import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
+import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private ExportState: ExportState;

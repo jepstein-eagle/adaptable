@@ -4,13 +4,15 @@ import { Action } from 'redux';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
+
+import { Entitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import {
   AdaptableBlotterMenuItem,
   ContextMenuInfo,
-} from '../Utilities/Interface/AdaptableBlotterMenu';
-import { Entitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
-import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+  MenuItemShowPopup,
+  MenuItemDoReduxAction,
+} from '../Utilities/MenuItem';
 
 /**
  * Base class for all strategies and does most of the work of creating menus

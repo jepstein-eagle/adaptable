@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 
-import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/AdaptableBlotterMenu';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
 import { Icon } from '../../../components/icons';
+import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
 
 export interface ListBoxMenuProps extends ListGroupProps {
   MenuItems: AdaptableBlotterMenuItem[];

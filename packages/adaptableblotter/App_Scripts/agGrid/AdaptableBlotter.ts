@@ -146,17 +146,14 @@ import {
 } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
-import { PercentBarTooltip } from './PercentBarTooltip';
-import {
-  AdaptableBlotterMenuItem,
-  ContextMenuInfo,
-} from '../Utilities/Interface/AdaptableBlotterMenu';
+
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../Utilities/MenuItem';
 
 // do I need this in both places??
 type RuntimeConfig = {

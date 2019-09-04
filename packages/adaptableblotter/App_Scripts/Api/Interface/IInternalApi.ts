@@ -6,7 +6,6 @@ import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
-import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 import { Action } from 'redux';
 
 export interface IInternalApi {
