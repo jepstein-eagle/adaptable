@@ -58,6 +58,7 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ContextMenuInfo, AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import Helper from '../Utilities/Helpers/Helper';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -152,12 +153,16 @@ export class agGridHelper {
   }
 
   public createPercentBarCellRendererFunc(pcr: PercentBar, blotterId: string): ICellRendererFunc {
+    console.log(pcr);
     let showNegatives: boolean = pcr.MinValue < 0;
     let showPositives: boolean = pcr.MaxValue > 0;
 
     let cellRendererFunc: ICellRendererFunc = (params: ICellRendererParams) => {
       let isNegativeValue: boolean = params.value < 0;
       let value = params.value;
+      if (Helper.objectNotExists(value)) {
+        value = 0;
+      }
 
       let maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId)
         ? this.blotter.getRawValueFromRecord(params.node, pcr.MaxValueColumnId)

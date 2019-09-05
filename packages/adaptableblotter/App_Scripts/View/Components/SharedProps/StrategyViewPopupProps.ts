@@ -10,6 +10,7 @@ export interface StrategyViewPopupProps<View> extends BaseProps<View> {
   ColumnSorts: ColumnSort[]; // we should get rid of this!
 }
 
+// The params object that is, optionally, passed into each popup.  contains useful information
 export interface StrategyParams {
   columnId?: string;
   action?: 'New' | 'Edit';

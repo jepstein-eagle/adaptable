@@ -5,11 +5,12 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
+import PercentBarHelper from '../../../Utilities/Helpers/PercentBarHelper';
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 export interface PercentBarSelectColumnWizardState {
@@ -45,13 +46,10 @@ export class PercentBarSelectColumnWizard
 
   private onColumnSelectedChanged(columns: IColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
-        columns[0].ColumnId,
-        DistinctCriteriaPairValue.RawValue,
-        false
-      ).map(pair => {
-        return pair.RawValue;
-      });
+      let distinctColumnsValues: number[] = PercentBarHelper.getDistinctColumnValues(
+        this.props.Blotter,
+        columns[0].ColumnId
+      );
       let minValue = Math.min(...distinctColumnsValues);
       let maxValue = Math.max(...distinctColumnsValues);
       this.setState(
