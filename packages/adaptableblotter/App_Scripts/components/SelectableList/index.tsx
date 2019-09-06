@@ -39,7 +39,10 @@ export const useSelectionEvent = () => {
 
     const { lastClickIndexWithoutShift, lastShiftSelectionRange } = clickInfoRef.current;
 
-    let { shiftKey, metaKey } = event as MouseEvent;
+    let { shiftKey, metaKey, ctrlKey } = event as MouseEvent;
+    if (ctrlKey) {
+      metaKey = true;
+    }
 
     if (metaKey) {
       // as if shift key is not pressed
