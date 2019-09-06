@@ -8,10 +8,8 @@ import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelp
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
-import WizardPanel from '../../components/WizardPanel';
 import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';
-import icons, { Icon } from '../../components/icons';
 import UIHelper from '../UIHelper';
 import Panel from '../../components/Panel';
 
@@ -42,7 +40,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
             <td>{previewResult.InitialValue}</td>
             <td>{previewResult.ComputedValue}</td>
             {previewResult.ValidationRules.length > 0 ? (
-              <td>
+              <td style={{ textAlign: 'center' }}>
                 {this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent == true && (
                   <AdaptablePopover
                     showEvent="mouseenter"
@@ -73,7 +71,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                 )}
               </td>
             ) : (
-              <td>
+              <td style={{ textAlign: 'center' }}>
                 {' '}
                 <CheckIcon style={{ color: successColor, fill: 'currentColor' }} />
               </td>
@@ -87,7 +85,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         <tr>
           <th>Old</th>
           <th>New</th>
-          <th>Valid</th>
+          <th style={{ width: '10%' }}>Valid</th>
         </tr>
       </thead>
     );
