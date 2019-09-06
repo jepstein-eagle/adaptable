@@ -32,9 +32,11 @@ export class AlertSelectQueryWizard
     return (
       <WizardPanel>
         <HelpBlock>
-          A Query is used if the alert is dependent on other values in the row.
-          <br />
-          The alert will only be triggered if the Query passes.
+          <p>
+            A Query is used if the alert triggering is dependent on value in other columns in the
+            row.
+          </p>
+          <p>If so, then alert will only be triggered if the Query evaluates as true.</p>
         </HelpBlock>
 
         <Flex alignItems="center" flexDirection="row" marginTop={2}>

@@ -4,8 +4,13 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+  MenuItemShowPopup,
+} from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -32,5 +37,25 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
         popupParam
       );
     }
+  }
+
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    if (this.canCreateColumnMenuItem(contextMenuInfo.column, this.blotter)) {
+      let popupParam: StrategyParams = {
+        columnId: contextMenuInfo.column.ColumnId,
+      };
+      if (contextMenuInfo.column) {
+        menuItemShowPopup = this.createMainMenuItemShowPopup({
+          Label: StrategyConstants.ColumnInfoStrategyName,
+          ComponentName: ScreenPopups.ColumnInfoPopup,
+          GlyphIcon: StrategyConstants.ColumnInfoGlyph,
+          PopupParams: popupParam,
+        });
+      }
+    }
+    return menuItemShowPopup;
   }
 }

@@ -153,7 +153,6 @@ export class agGridHelper {
   }
 
   public createPercentBarCellRendererFunc(pcr: PercentBar, blotterId: string): ICellRendererFunc {
-    console.log(pcr);
     let showNegatives: boolean = pcr.MinValue < 0;
     let showPositives: boolean = pcr.MaxValue > 0;
 

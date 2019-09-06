@@ -52,7 +52,7 @@ class AdvancedSearchPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams.action) {
+    if (this.props.PopupParams && this.props.PopupParams.action) {
       if (this.props.PopupParams.action == 'New') {
         this.onNew();
       }

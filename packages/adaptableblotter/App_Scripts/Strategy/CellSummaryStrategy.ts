@@ -9,7 +9,11 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+  MenuItemShowPopup,
+} from '../Utilities/MenuItem';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -22,6 +26,20 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
       ComponentName: ScreenPopups.CellSummaryPopup,
       GlyphIcon: StrategyConstants.CellSummaryGlyph,
     });
+  }
+
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    if (contextMenuInfo.column && contextMenuInfo.isSelectedCell) {
+      menuItemShowPopup = this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.CellSummaryStrategyName,
+        ComponentName: ScreenPopups.CellSummaryPopup,
+        GlyphIcon: StrategyConstants.CellSummaryGlyph,
+      });
+    }
+    return menuItemShowPopup;
   }
 
   public CreateCellSummary(selectedCellInfo: SelectedCellInfo): ICellSummmary {

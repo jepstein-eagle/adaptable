@@ -1773,7 +1773,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
     // since there are many events and we want them to behave the same
     this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {
-      if (params.visible) {
+      if (params.visible && params.column) {
         this.updateQuickSearchRangeVisibleColumn(params.column.colId);
       }
     });
@@ -2562,9 +2562,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           c.hide = true;
         }
       });
+
+      const columnGroupState = this.gridOptions.columnApi!.getColumnGroupState();
+
       return {
         GroupState: groupedState,
         ColumnState: JSON.stringify(columnState),
+        ColumnGroupState: ArrayExtensions.IsNotNullOrEmpty(columnGroupState)
+          ? JSON.stringify(columnGroupState)
+          : null,
       };
     }
     return null; // need this?
@@ -2584,6 +2590,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (column) {
           this.gridOptions.columnApi!.setColumnWidth(column, groupedState, true);
         }
+      }
+
+      const columnGroupState: any = vendorGridState.ColumnGroupState;
+      if (columnGroupState) {
+        this.gridOptions.columnApi.setColumnGroupState(JSON.parse(columnGroupState));
       }
     }
   }

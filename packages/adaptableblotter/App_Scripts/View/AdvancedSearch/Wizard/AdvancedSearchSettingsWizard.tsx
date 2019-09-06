@@ -39,7 +39,7 @@ export class AdvancedSearchSettingsWizard
     return (
       <WizardPanel>
         <Flex alignItems="center" flexDirection="row">
-          <Box>Search Name:</Box>
+          <Box>Name:</Box>
           <Input
             marginLeft={2}
             value={this.state.AdvancedSearchName}

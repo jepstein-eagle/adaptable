@@ -21,6 +21,7 @@ export interface ColumnSort {
 export interface VendorGridInfo {
   GroupState: any;
   ColumnState: any;
+  ColumnGroupState?: any;
 }
 
 /*

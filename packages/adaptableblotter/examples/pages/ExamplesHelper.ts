@@ -764,6 +764,25 @@ export class ExamplesHelper {
       },
     };
   }
+  public getGridOptionsTradeColumnGrouping(rowData: any): GridOptions {
+    return {
+      columnDefs: this.getTradeSchemaColumnGroups(),
+      rowData: rowData,
+      enableRangeSelection: true,
+      floatingFilter: true,
+      suppressColumnVirtualisation: false,
+      suppressMenuHide: true,
+      sideBar: true,
+      rowSelection: 'multiple',
+      columnTypes: {
+        abColDefNumber: {},
+        abColDefString: {},
+        abColDefBoolean: {},
+        abColDefDate: {},
+        abColDefObject: {},
+      },
+    };
+  }
 
   public getGridOptionsFTSE(rowCount: number): GridOptions {
     return {
@@ -1059,6 +1078,252 @@ export class ExamplesHelper {
       enableRowGroup: true,
       filter: 'agNumberColumnFilter',
       type: 'abColDefNumber',
+    });
+
+    schema.push({
+      headerName: 'DV01',
+      field: 'dv01',
+      columnGroupShow: 'closed',
+      filter: true,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+    });
+
+    schema.push({
+      headerName: 'Live',
+      field: 'isLive',
+      editable: false,
+      cellRenderer: (params: any) => {
+        return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
+      },
+      type: 'abColDefBoolean',
+    });
+    schema.push({
+      headerName: 'Moodys',
+      field: 'moodysRating',
+      editable: true,
+      filter: 'text',
+      type: 'abColDefString',
+    });
+    schema.push({
+      headerName: 'Trade Date',
+      field: 'tradeDate',
+      editable: true,
+      cellEditorParams: {
+        useFormatter: true,
+      },
+      valueParser: this.dateParseragGrid,
+      valueFormatter: this.shortDateFormatteragGrid,
+      filter: 'agDateColumnFilter',
+      type: 'abColDefDate',
+    });
+    schema.push({
+      headerName: 'SandP',
+      field: 'sandpRating',
+      editable: true,
+      sortable: true,
+      filter: 'text',
+      type: 'abColDefString',
+    });
+    schema.push({
+      headerName: 'Settlement Date',
+      field: 'settlementDate',
+      editable: true,
+      cellEditorParams: {
+        useFormatter: true,
+      },
+      valueParser: this.dateParseragGrid,
+      valueFormatter: this.shortDateFormatteragGrid,
+      type: 'abColDefDate',
+    });
+    schema.push({
+      headerName: 'Last Updated By',
+      field: 'lastUpdatedBy',
+      enableRowGroup: true,
+      type: 'abColDefString',
+    });
+    schema.push({
+      headerName: 'Last Updated',
+      field: 'lastUpdated',
+      editable: true,
+      filter: true,
+      cellEditorParams: {
+        useFormatter: true,
+      },
+      //  valueParser: this.dateParseragGrid,
+      //  valueFormatter: this.shortDateFormatteragGrid,
+      type: 'abColDefDate',
+    });
+    schema.push({
+      headerName: 'Pct Change',
+      field: 'percentChange',
+      editable: true,
+      filter: 'text',
+      type: 'abColDefNumber',
+    });
+    schema.push({
+      headerName: 'Desk No.',
+      field: 'deskId',
+      editable: true,
+      type: 'abColDefNumber',
+      enableRowGroup: true,
+    });
+    return schema;
+  }
+
+  public getTradeSchemaColumnGroups(): ColDef[] {
+    var schema: any[] = [];
+    schema.push({
+      headerName: 'Trade Id',
+      field: 'tradeId',
+      editable: true,
+      type: 'abColDefNumber',
+      sortable: true,
+      filter: true,
+      resizable: true,
+      // headerCheckboxSelection: true,
+      checkboxSelection: true,
+      cellRenderer: 'agAnimateShowChangeCellRenderer',
+    });
+    schema.push({
+      headerName: 'Prices',
+      //  marryChildren: true,
+      children: [
+        {
+          headerName: 'B/O Spread',
+          field: 'bidOfferSpread',
+          columnGroupShow: 'open',
+          enableValue: true,
+          editable: true,
+          filter: true,
+          cellClass: 'number-cell',
+          type: 'abColDefNumber',
+        },
+        {
+          headerName: 'Price',
+          field: 'price',
+          columnGroupShow: 'open',
+          editable: true,
+          enableValue: true,
+          cellClass: 'number-cell',
+          enableRowGroup: true,
+          filter: 'agNumberColumnFilter',
+          type: 'abColDefNumber',
+        },
+        {
+          headerName: 'Bid',
+          field: 'bid',
+          columnGroupShow: 'closed',
+          filter: true,
+          cellClass: 'number-cell',
+          type: 'abColDefNumber',
+        },
+
+        {
+          headerName: 'Bbg Bid',
+          field: 'bloombergBid',
+          columnGroupShow: 'closed',
+          cellClass: 'number-cell',
+          type: 'abColDefNumber',
+        },
+        {
+          headerName: 'Ask',
+          field: 'ask',
+          columnGroupShow: 'closed',
+          filter: true,
+          resizable: true,
+          cellClass: 'number-cell',
+          type: 'abColDefNumber',
+        },
+        {
+          headerName: 'Bbg Ask',
+          field: 'bloombergAsk',
+          editable: true,
+          columnGroupShow: 'closed',
+          cellClass: 'number-cell',
+          type: 'abColDefNumber',
+        },
+      ],
+    });
+    schema.push({
+      headerName: 'Country',
+      field: 'country',
+      editable: true,
+      filter: true,
+      sortable: true,
+      enableRowGroup: true,
+      type: 'abColDefString',
+      resizable: true,
+      //  tooltipField: 'country',
+      //  cellEditor: 'agLargeTextCellEditor',
+    });
+    schema.push({
+      headerName: 'Notional',
+      field: 'notional',
+      enableValue: true,
+      editable: true,
+      sortable: true,
+      // valueFormatter: notionalFormatter,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+      filter: true,
+      resizable: true,
+    });
+    schema.push({
+      headerName: 'Stars',
+      field: 'stars',
+      enableValue: true,
+      editable: true,
+      sortable: true,
+      cellRenderer: StarsCellRenderer,
+      type: 'abColDefNumber',
+      filter: true,
+      resizable: true,
+    });
+
+    schema.push({
+      headerName: 'Counterparty',
+      field: 'counterparty',
+      editable: true,
+      enableRowGroup: true,
+      filter: true,
+      sortable: true,
+      type: 'abColDefString',
+      cellRenderer: 'agAnimateShowChangeCellRenderer',
+      // resizable: true,
+      //  tooltipComponent: 'percentBarTooltip',
+    });
+
+    schema.push({
+      headerName: 'Change',
+      field: 'changeOnYear',
+      filter: true,
+      editable: true,
+      type: 'abColDefNumber',
+      sortable: true,
+      //  tooltipField: 'changeOnYear',
+      //  tooltipComponent: 'percentBarTooltip',
+    });
+
+    schema.push({
+      headerName: 'Currency',
+      field: 'currency',
+      editable: true,
+      enableRowGroup: true,
+      sortable: true,
+      filter: 'agTextColumnFilter',
+      type: 'abColDefString',
+      resizable: true,
+    });
+    schema.push({
+      headerName: 'Status',
+      field: 'status',
+      editable: true,
+      filter: true,
+      sortable: true,
+      enableRowGroup: true,
+      type: 'abColDefString',
+      resizable: true,
     });
 
     schema.push({
