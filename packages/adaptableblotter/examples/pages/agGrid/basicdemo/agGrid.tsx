@@ -64,7 +64,7 @@ let demoConfig: PredefinedConfig = {
     Columns: [
       {
         ColumnId: 'sparks',
-        SparklineType: 'Line',
+        SparklineType: 'Line' as SparklineTypeEnum.Line,
       },
     ],
   },

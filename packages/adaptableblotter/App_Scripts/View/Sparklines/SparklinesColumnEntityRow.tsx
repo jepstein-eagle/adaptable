@@ -99,6 +99,7 @@ export class SparklinesColumnEntityRow extends React.Component<SparklinesColumnE
         editClick={() => this.props.onEdit(sparklineColumn)}
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={!this.props.Column}
+        showDelete={false}
         EntityType={StrategyConstants.SparklinesColumnStrategyName}
         AccessLevel={this.props.AccessLevel}
       />

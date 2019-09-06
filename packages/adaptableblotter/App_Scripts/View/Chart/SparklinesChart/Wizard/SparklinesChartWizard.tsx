@@ -49,12 +49,12 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
             },
             {
               StepName: 'Chart Settings',
-              Index: 3,
+              Index: 2,
               Element: <SparklinesChartSettingsWizard ChartNames={chartNames} />,
             },
             {
               StepName: 'Summary',
-              Index: 4,
+              Index: 3,
               Element: <SparklinesChartSummaryWizard />,
             },
           ]}

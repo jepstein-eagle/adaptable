@@ -147,7 +147,7 @@ export class SparklinesChartComponent extends React.Component<
                 marginRight={2}
                 onChange={UseMinStaticValue => this.updateChartProperties({ UseMinStaticValue })}
               >
-                Use custom minimum value
+                Use static minimum value
               </CheckBox>
               {this.state.ChartProperties.UseMinStaticValue ? (
                 <Input
@@ -168,7 +168,7 @@ export class SparklinesChartComponent extends React.Component<
                 marginRight={2}
                 onChange={UseMaxStaticValue => this.updateChartProperties({ UseMaxStaticValue })}
               >
-                Use custom maximum value
+                Use static maximum value
               </CheckBox>
               {this.state.ChartProperties.UseMaxStaticValue ? (
                 <Input

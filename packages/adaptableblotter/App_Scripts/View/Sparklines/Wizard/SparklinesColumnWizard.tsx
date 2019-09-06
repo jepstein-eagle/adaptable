@@ -31,7 +31,7 @@ export class SparklinesColumnWizard extends React.Component<SparklinesColumnWiza
             },
             {
               StepName: 'Summary',
-              Index: 3,
+              Index: 2,
               Element: <SparklinesColumnSummaryWizard />,
             },
           ]}
