@@ -51,7 +51,7 @@ export interface SparklineColumn extends AdaptableBlotterObject {
   /**
    * The type of the sparkline chart to display
    */
-  SparklineType?: SparklineTypeEnum;
+  SparklineType?: 'Line' | 'Column';
 
   /**
    * The value to be considered the minimum value for the sparkline chart of the column

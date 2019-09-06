@@ -71,7 +71,7 @@ export class SparklinesColumnSettingsWizard
     this.state = {
       MinimumValue: this.props.Data.MinimumValue,
       MaximumValue: this.props.Data.MaximumValue,
-      SparklineType: this.props.Data.SparklineType || SparklineTypeEnum.Line,
+      SparklineType: (this.props.Data.SparklineType as SparklineTypeEnum) || SparklineTypeEnum.Line,
       UseMinStaticValue: this.props.Data.MinimumValue != null,
       UseMinCurrentValue: this.props.Data.MinimumValue == null,
       UseMaxStaticValue: this.props.Data.MaximumValue != null,

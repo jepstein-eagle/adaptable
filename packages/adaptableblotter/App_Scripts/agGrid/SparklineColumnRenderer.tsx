@@ -3,7 +3,10 @@ import * as ReactDOM from 'react-dom';
 
 import { ICellRendererParams, ICellRendererFunc } from 'ag-grid-community';
 import SparklineChart from '../components/SparklineChart';
-import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import {
+  SparklineColumn,
+  SparklineTypeEnum,
+} from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 export const getSparklineRendererForColumn = (
   sparklineColumn: SparklineColumn
@@ -16,7 +19,7 @@ export const getSparklineRendererForColumn = (
 
     return (
       <SparklineChart
-        type={sparklineColumn.SparklineType}
+        type={sparklineColumn.SparklineType as SparklineTypeEnum}
         min={min}
         max={max}
         values={params.value}

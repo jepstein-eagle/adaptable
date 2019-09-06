@@ -47,7 +47,7 @@ export class SparklinesColumnEntityRow extends React.Component<SparklinesColumnE
       <EntityRowItem
         Content={
           <SparklineTypeDropdown
-            value={sparklineColumn.SparklineType}
+            value={sparklineColumn.SparklineType as SparklineTypeEnum}
             onChange={(sparklineType: SparklineTypeEnum) => {
               this.props.onSparklineTypeChange(
                 this.props.AdaptableBlotterObject as SparklineColumn,
