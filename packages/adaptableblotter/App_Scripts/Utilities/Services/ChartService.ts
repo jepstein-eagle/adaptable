@@ -20,6 +20,7 @@ import {
   ChartDefinition,
   PieChartDefinition,
   PieChartDataItem,
+  SparklinesChartDefinition,
 } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
 
@@ -78,6 +79,53 @@ export class ChartService implements IChartService {
     // no error message built yet but need to add
     let chartData: ChartData = {
       Data: returnData,
+      ErrorMessage: null,
+    };
+    return chartData;
+  }
+
+  public BuildSparklinesChartData(
+    chartDefinition: SparklinesChartDefinition,
+    columns: IColumn[]
+  ): ChartData {
+    let values: number[];
+    // TODO - is this correct?
+    if (chartDefinition.Expression) {
+      values = [];
+      const forEach = (row: any) => {
+        if (
+          ExpressionHelper.checkForExpressionFromRecord(
+            chartDefinition.Expression,
+            row,
+            columns,
+            this.blotter
+          )
+        ) {
+          let columnValue = this.blotter.getRawValueFromRecord(row, chartDefinition.ColumnId);
+          values.push(columnValue);
+        }
+      };
+      if (chartDefinition.VisibleRowsOnly) {
+        this.blotter.forAllVisibleRecordsDo(forEach);
+      } else {
+        this.blotter.forAllRecordsDo(forEach);
+      }
+    } else {
+      values = this.blotter
+        .getColumnValueDisplayValuePairList(
+          chartDefinition.ColumnId,
+          chartDefinition.VisibleRowsOnly
+        )
+        .filter(cv => {
+          return Helper.objectExists(cv.RawValue);
+        })
+        .map(cv => {
+          return cv.RawValue;
+        });
+    }
+
+    let chartData: ChartData = {
+      Data: values,
       ErrorMessage: null,
     };
     return chartData;

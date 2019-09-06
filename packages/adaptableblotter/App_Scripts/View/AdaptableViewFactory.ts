@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { CustomSortPopup } from './CustomSort/CustomSortPopup';
 import { SmartEditPopup } from './SmartEdit/SmartEditPopup';
 import { ShortcutPopup } from './Shortcut/ShortcutPopup';
@@ -33,7 +34,6 @@ import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { DataManagementPopup } from './DataManagement/DataManagementPopup';
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import * as React from 'react';
 import { CalculatedColumnPopup } from './CalculatedColumn/CalculatedColumnPopup';
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
 import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
@@ -45,6 +45,8 @@ import { ChartPopup } from './Chart/ChartPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
+import { SparklinesColumnPopup } from './Sparklines/SparklinesColumnPopup';
+import { ViewAsSparklinesPopup } from './Sparklines/ViewAsSparklinesPopup';
 import { PieChartPopup } from './PieChart/PieChartPopup';
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
@@ -52,45 +54,47 @@ import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ReminderPopup } from './Reminder/ReminderPopup';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
-  AdvancedSearchPopup: AdvancedSearchPopup,
-  AlertPopup: AlertPopup,
-  ApplicationPopup: ApplicationPopup,
-  BulkUpdatePopup: BulkUpdatePopup,
-  CalculatedColumnPopup: CalculatedColumnPopup,
-  CalendarsPopup: CalendarsPopup,
-  CellValidationPopup: CellValidationPopup,
-  ChartPopup: ChartPopup,
-  ColumnChooserPopup: ColumnChooserPopup,
-  ColumnFilterPopup: ColumnFilterPopup,
-  ColumnInfoPopup: ColumnInfoPopup,
-  ConditionalStylePopup: ConditionalStylePopup,
-  CustomSortPopup: CustomSortPopup,
-  DashboardPopup: DashboardPopup,
-  DataManagementPopup: DataManagementPopup,
-  DataSourcePopup: DataSourcePopup,
-  ExportPopup: ExportPopup,
-  FlashingCellsPopup: FlashingCellsPopup,
-  FormatColumnPopup: FormatColumnPopup,
-  FreeTextColumnPopup: FreeTextColumnPopup,
-  IPushPullLogin: IPushPullLogin,
-  IPushPullDomainPageSelector: IPushPullDomainPageSelector,
-  LayoutPopup: LayoutPopup,
-  ColumnCategoryPopup: ColumnCategoryPopup,
-  PercentBarPopup: PercentBarPopup,
-  PieChartPopup: PieChartPopup,
-  PlusMinusPopup: PlusMinusPopup,
-  QuickSearchPopup: QuickSearchPopup,
-  ReminderPopup: ReminderPopup,
-  CellSummaryPopup: CellSummaryPopup,
-  SmartEditPopup: SmartEditPopup,
-  ShortcutPopup: ShortcutPopup,
-  ThemePopup: ThemePopup,
-  TeamSharingPopup: TeamSharingPopup,
-  UserFilterPopup: UserFilterPopup,
-  ChartDisplayPopup: ChartDisplayPopup,
+  AdvancedSearchPopup,
+  AlertPopup,
+  ApplicationPopup,
+  BulkUpdatePopup,
+  CalculatedColumnPopup,
+  CalendarsPopup,
+  CellValidationPopup,
+  ChartPopup,
+  ColumnChooserPopup,
+  ColumnFilterPopup,
+  ColumnInfoPopup,
+  ConditionalStylePopup,
+  CustomSortPopup,
+  DashboardPopup,
+  DataManagementPopup,
+  DataSourcePopup,
+  ExportPopup,
+  FlashingCellsPopup,
+  FormatColumnPopup,
+  FreeTextColumnPopup,
+  IPushPullLogin,
+  IPushPullDomainPageSelector,
+  LayoutPopup,
+  ColumnCategoryPopup,
+  PercentBarPopup,
+  PieChartPopup,
+  PlusMinusPopup,
+  QuickSearchPopup,
+  ReminderPopup,
+  CellSummaryPopup,
+  SmartEditPopup,
+  SparklinesColumnPopup,
+  ViewAsSparklinesPopup,
+  ShortcutPopup,
+  ThemePopup,
+  TeamSharingPopup,
+  UserFilterPopup,
+  ChartDisplayPopup,
 };
 
-//here we put the dashboard control for each strategy
+// here we put the dashboard control for each strategy
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
   [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],

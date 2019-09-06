@@ -23,6 +23,7 @@ import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState'
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { GridCell } from './Selection/GridCell';
 import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -110,6 +111,11 @@ export interface IAdaptableBlotter {
 
   // getting records and keys
   getPrimaryKeyValueFromRecord(record: any): any;
+  getColumnValueDisplayValuePairList(
+    columnId: string,
+
+    visibleRowsOnly: boolean
+  ): Array<IRawValueDisplayValuePair>;
   getColumnValueDisplayValuePairDistinctList(
     columnId: string,
     distinctCriteria: DistinctCriteriaPairValue,
@@ -148,10 +154,10 @@ export interface IAdaptableBlotter {
   removeCustomSort(columnId: string): void;
   setColumnSort(columnSorts: ColumnSort[]): void;
 
-  //FreeTextColumn
+  // FreeTextColumn
   addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void;
 
-  //CalculatedColumn
+  // CalculatedColumn
   addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
   removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
   editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
@@ -164,13 +170,18 @@ export interface IAdaptableBlotter {
   addPercentBar(percentBar: PercentBar): void;
   editPercentBar(percentBar: PercentBar): void;
 
+  // sparklines
+  addSparkline(sparklineColumn: SparklineColumn): void;
+  removeSparkline(sparklineColumn: SparklineColumn): void;
+  editSparkline(sparklineColumn: SparklineColumn): void;
+
   // Filtering
   hideFilterForm(): void;
   applyGridFiltering(): void;
   clearGridFiltering(): void;
   clearColumnFiltering(columnIds: string[]): void;
 
-  //TEMPORARY : JO
+  // TEMPORARY : JO
   getIPPStyle(): IPPStyle;
 
   // info
@@ -191,6 +202,6 @@ export interface IAdaptableBlotter {
   showQuickFilter(): void;
   hideQuickFilter(): void;
 
-  //Theme
+  // Theme
   applyBlotterTheme(theme: AdaptableBlotterTheme | string): void;
 }

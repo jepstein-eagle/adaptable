@@ -13,6 +13,7 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { SparklineTypeEnum } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 /*
 Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
@@ -28,7 +29,7 @@ function InitAdaptableBlotter() {
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'basic-demo'
+    `basic-demo` // ${Date.now()}`
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
@@ -53,7 +54,18 @@ function InitAdaptableBlotter() {
   global.adaptableblotter = adaptableblotter;
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  ActionColumn: {},
+
+  SparklineColumn: {
+    Columns: [
+      {
+        ColumnId: 'sparks',
+        SparklineType: 'Line' as SparklineTypeEnum.Line,
+      },
+    ],
+  },
+};
 
 export default () => {
   useEffect(() => {

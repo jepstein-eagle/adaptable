@@ -30,6 +30,7 @@ import { ThemeState } from './RunTimeState/ThemeState';
 import { UserFilterState } from './RunTimeState/UserFilterState';
 import { ChartState } from './RunTimeState/ChartState';
 import { ActionColumnState } from './DesignTimeState/ActionColumnState';
+import { SparklineColumnState } from './DesignTimeState/SparklineColumnState';
 import { NamedFilterState } from './RunTimeState/NamedFilterState';
 
 /**
@@ -257,6 +258,11 @@ export interface PredefinedConfig {
    * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
   ActionColumn?: ActionColumnState;
+
+  /**
+   * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
+   */
+  SparklineColumn?: SparklineColumnState;
   /**
    * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of the Adaptable Blotter state.
    *

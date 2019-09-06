@@ -54,6 +54,7 @@ const Radio = ({
   gapDistance = 10,
   childrenPosition = 'end',
   as = 'label',
+  id,
   ...props
 }: RadioProps) => {
   const [stateChecked, setStateChecked] = useState<boolean>(false);
@@ -96,17 +97,17 @@ const Radio = ({
       {before}
       {beforeGap}
       <RadioInput
+        id={id}
         checked={computedChecked}
         type="radio"
         name={name}
         value={value}
         style={{
           verticalAlign: 'middle',
-          // opacity: 0,
+
           borderRadius: '50%',
           cursor: 'pointer',
           position: 'relative',
-          // top: -2,
         }}
         onChange={onInputChange}
       />

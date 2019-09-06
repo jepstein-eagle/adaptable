@@ -6,6 +6,7 @@ export interface ITrade {
   tradeId: number;
   notional: number;
   deskId: number;
+  sparks: number[];
   counterparty: string;
   currency: string;
   country: string;
@@ -80,16 +81,16 @@ export interface IFX {
 
 export class ExamplesHelper {
   getFtseData(count: number): IFtse[] {
-    let ftseRows: IFtse[] = [];
-    let todayDate: Date = new Date();
-    let startDate: Date = this.addExtraDays(todayDate, 20);
-    let start: number = this.roundTo2Dp(325 + this.generateRandomDouble());
+    const ftseRows: IFtse[] = [];
+    const todayDate: Date = new Date();
+    const startDate: Date = this.addExtraDays(todayDate, 20);
+    const start: number = this.roundTo2Dp(325 + this.generateRandomDouble());
     let end: number = this.roundTo2Dp(
       start + (this.generateRandomInt(-15, 10) + this.generateRandomDouble())
     );
     ftseRows.push(this.createIFtse(startDate, 0, start, end));
     for (let i = 1; i <= count; i++) {
-      let newStart: number = end;
+      const newStart: number = end;
       end = this.roundTo2Dp(
         newStart + this.generateRandomInt(-15, 10) + this.generateRandomDouble()
       );
@@ -99,7 +100,7 @@ export class ExamplesHelper {
   }
 
   addExtraDays(date: Date, days: number): Date {
-    let newDate = new Date(date.getFullYear(), date.getMonth(), date.getDay());
+    const newDate = new Date(date.getFullYear(), date.getMonth(), date.getDay());
     newDate.setDate(newDate.getDate() + days);
     return newDate;
   }
@@ -109,28 +110,31 @@ export class ExamplesHelper {
   }
 
   public getTrades(count: number): ITrade[] {
-    let trades: ITrade[] = [];
+    const trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {
       trades.push(this.createTrade(i));
     }
     return trades;
   }
+
   public getDollarTrades(count: number): ITrade[] {
-    let trades: ITrade[] = [];
+    const trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {
       trades.push(this.createTrade(i, 'USD'));
     }
     return trades;
   }
+
   public getGBPTrades(count: number): ITrade[] {
-    let trades: ITrade[] = [];
+    const trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {
       trades.push(this.createTrade(i, 'GBP'));
     }
     return trades;
   }
+
   public getEuroTrades(count: number): ITrade[] {
-    let trades: ITrade[] = [];
+    const trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {
       trades.push(this.createTrade(i, 'EUR'));
     }
@@ -138,7 +142,7 @@ export class ExamplesHelper {
   }
 
   getBonds(count: number): IBond[] {
-    let bonds: IBond[] = [];
+    const bonds: IBond[] = [];
     for (let i = 1; i <= count; i++) {
       bonds.push(this.createBond(i));
     }
@@ -146,7 +150,7 @@ export class ExamplesHelper {
   }
 
   getFX(count: number): IFX[] {
-    let fxs: IFX[] = [];
+    const fxs: IFX[] = [];
     for (let i = 1; i <= count; i++) {
       fxs.push(this.createFX(i));
     }
@@ -154,20 +158,20 @@ export class ExamplesHelper {
   }
 
   createIFtse(date: Date, index: number, start: number, end: number): IFtse {
-    let newDate: Date = this.addDays(date, -index);
-    let low: number =
+    const newDate: Date = this.addDays(date, -index);
+    const low: number =
       start > end
         ? this.roundTo2Dp(end - this.generateRandomInt(0, 10) + this.generateRandomDouble())
         : this.roundTo2Dp(start - this.generateRandomInt(0, 10) + this.generateRandomDouble());
-    let high =
+    const high =
       start > end
         ? this.roundTo2Dp(start + this.generateRandomInt(0, 10) + this.generateRandomDouble())
         : this.roundTo2Dp(end + this.generateRandomInt(0, 10) + this.generateRandomDouble());
 
-    let ftseDayDetails: IFtseDayDetails[] = [];
-    let detailsCount = this.generateRandomInt(1, 10);
+    const ftseDayDetails: IFtseDayDetails[] = [];
+    const detailsCount = this.generateRandomInt(1, 10);
     for (let i = 0; i <= detailsCount; i++) {
-      let dayDetails: IFtseDayDetails = {
+      const dayDetails: IFtseDayDetails = {
         volume: this.generateRandomInt(3423, 6978),
         peakHour: this.generateRandomInt(0, 12),
         location: this.getRandomItem(this.getCountries()),
@@ -175,35 +179,35 @@ export class ExamplesHelper {
       ftseDayDetails.push(dayDetails);
     }
 
-    let ftse: IFtse = {
+    const ftse: IFtse = {
       date: newDate,
-      start: start,
-      end: end,
-      low: low,
-      high: high,
+      start,
+      end,
+      low,
+      high,
       details: index > 3 ? ftseDayDetails : [],
     };
     return ftse;
   }
 
   createBond(i: number): IBond {
-    let tradedAt = this.getMeaningfulDoubleInRange(0, 2);
-    let coupon = this.roundTo4Dp(
+    const tradedAt = this.getMeaningfulDoubleInRange(0, 2);
+    const coupon = this.roundTo4Dp(
       this.getMeaningfulDouble() * this.getRandomItem(this.getBidOfferSpreads())
     );
-    let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
-    let bond = {
+    const tradeDate = this.generateRandomDateAndTime(-1000, 1000);
+    const bond = {
       tradeId: i,
       notional: this.getRandomItem(this.getNotionals()),
       buySell: this.getRandomItem(this.getBuySell()),
       currency: this.getRandomItem(this.getCurrencies()),
-      tradedAt: tradedAt,
+      tradedAt,
       isin: this.getIsin(i),
       counterparty: this.getRandomItem(this.getCounterparties()),
       ticker: this.getTicker(i),
-      coupon: coupon,
+      coupon,
       trader: this.getRandomItem(this.getNames()),
-      tradeDate: tradeDate,
+      tradeDate,
       effectiveDate: this.addDays(tradeDate, 3),
       maturityDate: this.addDays(tradeDate, 245),
       lastUpdated: this.generateRandomDateAndTime(-7, 0),
@@ -212,24 +216,24 @@ export class ExamplesHelper {
   }
 
   createFX(i: number): IFX {
-    let baseAmount = this.getRandomItem(this.getNotionals());
-    let rate = this.getMeaningfulDoubleInRange(0, 2);
-    let secondaryAmount = this.removeDecimalPoints(baseAmount * rate);
-    let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
-    let baseCurrency = this.getRandomItem(this.getCurrencies());
-    let fx = {
+    const baseAmount = this.getRandomItem(this.getNotionals());
+    const rate = this.getMeaningfulDoubleInRange(0, 2);
+    const secondaryAmount = this.removeDecimalPoints(baseAmount * rate);
+    const tradeDate = this.generateRandomDateAndTime(-1000, 1000);
+    const baseCurrency = this.getRandomItem(this.getCurrencies());
+    const fx = {
       tradeId: i,
       notional: this.getRandomItem(this.getNotionals()),
       dealType: this.getRandomItem(this.getDealType()),
       baseCcy: baseCurrency,
-      baseAmount: baseAmount,
+      baseAmount,
       secondCcy: this.getRandomItem(this.getCurrenciesOtherThanOne(baseCurrency)),
       secondAmount: secondaryAmount,
-      rate: rate,
+      rate,
       pnL: this.getMeaningfulDoubleInRange(3, 40),
       counterparty: this.getRandomItem(this.getCounterparties()),
       trader: this.getRandomItem(this.getNames()),
-      tradeDate: tradeDate,
+      tradeDate,
       effectiveDate: this.addDays(tradeDate, 3),
       lastUpdated: this.generateRandomDateAndTime(-7, 0),
     };
@@ -237,16 +241,17 @@ export class ExamplesHelper {
   }
 
   createTrade(i: number, currency?: string): ITrade {
-    let price = this.getMeaningfulDouble();
-    let bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
-    let ask = this.roundTo4Dp(price + bidOfferSpread / 2);
-    let bid = this.roundTo4Dp(price - bidOfferSpread / 2);
-    let tradeDate = this.generateRandomDate(-1000, 1000);
-    let moodyRating = this.getRandomItem(this.getMoodysRatings());
-    let tradeCurrency = currency ? currency : this.getRandomItem(this.getCurrencies());
-    let trade = {
+    const price = this.getMeaningfulDouble();
+    const bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
+    const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
+    const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
+    const tradeDate = this.generateRandomDate(-1000, 1000);
+    const moodyRating = this.getRandomItem(this.getMoodysRatings());
+    const tradeCurrency = currency || this.getRandomItem(this.getCurrencies());
+    const trade = {
       tradeId: i,
-      notional: this.getRandomItem(this.getNotionals()), // this.generateRandomInt(0, 300), //
+      sparks: [...new Array(this.generateRandomInt(0, 10))].map(_ => this.generateRandomInt(0, 10)),
+      notional: this.generateRandomInt(0, 300), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
@@ -254,17 +259,17 @@ export class ExamplesHelper {
       changeOnYear: this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
       stars: this.generateRandomInt(1, 5),
       amount: this.getRandomItem(this.getAmounts()),
-      price: price,
-      bid: bid,
-      ask: ask,
+      price,
+      bid,
+      ask,
       dv01: ask,
-      bidOfferSpread: bidOfferSpread,
+      bidOfferSpread,
       status: this.getStatus(),
       isLive: this.generateRandomBool(),
       moodysRating: moodyRating,
       fitchRating: this.getRatingFromMoodyRating(moodyRating),
       sandpRating: this.getRatingFromMoodyRating(moodyRating),
-      tradeDate: tradeDate,
+      tradeDate,
       settlementDate: this.addDays(tradeDate, 3),
       bloombergAsk: this.getSimilarNumber(ask),
       bloombergBid: this.getSimilarNumber(bid),
@@ -290,7 +295,7 @@ export class ExamplesHelper {
              "extraCol16": "16",
              "extraCol17": "17",
              "extraCol18": "18"
-             
+
                "bid2": bid,
                "ask2": ask,
                "bidOfferSpread2": bidOfferSpread,
@@ -318,7 +323,7 @@ export class ExamplesHelper {
   }
 
   protected generateRandomBool(): boolean {
-    let amount = this.generateRandomInt(0, 1);
+    const amount = this.generateRandomInt(0, 1);
     return amount === 0;
   }
 
@@ -328,12 +333,14 @@ export class ExamplesHelper {
   }
 
   protected getStatus(): string {
-    let randomNumber = this.generateRandomInt(1, 3);
+    const randomNumber = this.generateRandomInt(1, 3);
     if (randomNumber == 1) {
       return 'Completed';
-    } else if (randomNumber == 2) {
+    }
+    if (randomNumber == 2) {
       return 'Pending';
-    } else if (randomNumber == 3) {
+    }
+    if (randomNumber == 3) {
       return 'Rejected';
     }
   }
@@ -347,20 +354,20 @@ export class ExamplesHelper {
 
   protected generateRandomNullableDouble(): number {
     let myValue = this.generateRandomDouble();
-    let randomInt = this.generateRandomInt(1, 10);
+    const randomInt = this.generateRandomInt(1, 10);
     if (randomInt > 7) {
       myValue = null;
     }
 
     if (randomInt % 2 === 0 && myValue != null) {
-      myValue = myValue * -1;
+      myValue *= -1;
     }
 
     return myValue;
   }
 
   protected generateRandomNullableString(myString: string): string | null {
-    let randomInt = this.generateRandomInt(1, 10);
+    const randomInt = this.generateRandomInt(1, 10);
     if (randomInt > 7) {
       return null;
     }
@@ -402,20 +409,20 @@ export class ExamplesHelper {
   }
 
   protected generateRandomDateAndTime(minDays: number, maxDays: number): Date {
-    let currentDate = new Date(); // Fix it
-    let start = this.addDays(currentDate, minDays);
-    let end = this.addDays(currentDate, maxDays);
+    const currentDate = new Date(); // Fix it
+    const start = this.addDays(currentDate, minDays);
+    const end = this.addDays(currentDate, maxDays);
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   }
 
   protected generateRandomDate(minDays: number, maxDays: number): Date {
-    let date = this.generateRandomDateAndTime(minDays, maxDays);
+    const date = this.generateRandomDateAndTime(minDays, maxDays);
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    //return toDateTimeString(date);
+    // return toDateTimeString(date);
   }
 
   protected toDateTimeString(date: Date) {
-    let options = {
+    const options = {
       weekday: 'long',
       year: 'numeric',
       month: 'short',
@@ -427,17 +434,17 @@ export class ExamplesHelper {
   }
 
   protected generateCounterparty(): string {
-    let counterparties = this.getCounterparties();
+    const counterparties = this.getCounterparties();
     return counterparties[this.generateRandomInt(0, counterparties.length - 1)];
   }
 
   protected generateCurrency(): string {
-    let currencies = this.getCurrencies();
+    const currencies = this.getCurrencies();
     return currencies[this.generateRandomInt(0, currencies.length - 1)];
   }
 
   protected getIsin(index: number): string {
-    let isins: string[] = [
+    const isins: string[] = [
       'US046353AB45',
       'FR0010326975',
       'XS0133582147',
@@ -480,7 +487,7 @@ export class ExamplesHelper {
   }
 
   protected getTicker(index: number): string {
-    let tickers: string[] = [
+    const tickers: string[] = [
       'AZN',
       'BOUY',
       'BYLAN',
@@ -527,17 +534,17 @@ export class ExamplesHelper {
   public getRandomItem(ary: any[], max?: number): any {
     if (max) {
       return ary[this.generateRandomInt(0, Math.min(max, ary.length - 1))];
-    } else {
-      return ary[this.generateRandomInt(0, ary.length - 1)];
     }
+    return ary[this.generateRandomInt(0, ary.length - 1)];
   }
 
   protected getNotionals(): number[] {
     let notionals = [1000000, 2000000, 5000000, 7500000, 10000000, undefined];
     return notionals;
   }
+
   protected getBidOfferSpreads(): number[] {
-    let bidOfferSpreads = [
+    const bidOfferSpreads = [
       0.1,
       0.15,
       0.2,
@@ -559,8 +566,9 @@ export class ExamplesHelper {
     ];
     return bidOfferSpreads;
   }
+
   protected getCounterparties(): string[] {
-    let counterparties = [
+    const counterparties = [
       'Goldman Sachs',
       'Soc Gen',
       'BAML',
@@ -583,7 +591,7 @@ export class ExamplesHelper {
   }
 
   protected getCurrencies(): string[] {
-    let currencies = ['EUR', 'USD', 'GBP', 'CHF', 'CAD', 'AUD', 'ZAR'];
+    const currencies = ['EUR', 'USD', 'GBP', 'CHF', 'CAD', 'AUD', 'ZAR'];
     return currencies;
   }
 
@@ -592,16 +600,17 @@ export class ExamplesHelper {
   }
 
   protected getBuySell(): string[] {
-    let buySell = ['Buy', 'Sell'];
+    const buySell = ['Buy', 'Sell'];
     return buySell;
   }
+
   protected getDealType(): string[] {
-    let dealType = ['Swap', 'Spot', 'Forward'];
+    const dealType = ['Swap', 'Spot', 'Forward'];
     return dealType;
   }
 
   protected getCountries(): string[] {
-    let countries = [
+    const countries = [
       //  'Argentina',
       'Australia',
       'Belgium',
@@ -630,12 +639,12 @@ export class ExamplesHelper {
   }
 
   protected getAmounts(): number[] {
-    let amounts = [1000, 1500, 2000, 2500, 3000];
+    const amounts = [1000, 1500, 2000, 2500, 3000];
     return amounts;
   }
 
   protected getMoodysRatings(): string[] {
-    let moodysRatings = [
+    const moodysRatings = [
       'Aaa',
       'Aa1',
       'Aa2',
@@ -662,9 +671,9 @@ export class ExamplesHelper {
   }
 
   protected getSimilarNumber(originalNumber: number): number {
-    let direction = this.generateRandomInt(1, 2);
+    const direction = this.generateRandomInt(1, 2);
     //  let randomDouble = this.generateRandomDouble();
-    let returnValue =
+    const returnValue =
       direction == 1
         ? this.roundTo4Dp(originalNumber + 0.01)
         : this.roundTo4Dp(originalNumber - 0.01);
@@ -720,7 +729,7 @@ export class ExamplesHelper {
   }
 
   protected getNames(): string[] {
-    let names: string[] = [
+    const names: string[] = [
       'Stacee Dreiling',
       'Cecil Staab',
       'Sheba Dowdy',
@@ -748,7 +757,7 @@ export class ExamplesHelper {
   public getGridOptionsTrade(rowData: any): GridOptions {
     return {
       columnDefs: this.getTradeSchema(),
-      rowData: rowData,
+      rowData,
       enableRangeSelection: true,
       floatingFilter: true,
       suppressColumnVirtualisation: false,
@@ -756,6 +765,7 @@ export class ExamplesHelper {
       sideBar: undefined,
       rowSelection: 'multiple',
       columnTypes: {
+        abColDefNumberArray: {},
         abColDefNumber: {},
         abColDefString: {},
         abColDefBoolean: {},
@@ -794,11 +804,11 @@ export class ExamplesHelper {
         detailGridOptions: this.getDetailGridOptionsFTSE(),
 
         // extract and supply row data for detail
-        getDetailRowData: function(params: any) {
+        getDetailRowData(params: any) {
           params.successCallback(params.data.details);
         },
       },
-      isRowMaster: function(dataItem) {
+      isRowMaster(dataItem) {
         return dataItem ? dataItem.details.length > 0 : false;
       },
       enableRangeSelection: true,
@@ -951,6 +961,18 @@ export class ExamplesHelper {
       resizable: true,
     });
     schema.push({
+      headerName: 'Sparks',
+      field: 'sparks',
+      enableValue: true,
+      editable: false,
+      sortable: true,
+      // valueFormatter: notionalFormatter,
+
+      type: 'abColDefNumberArray',
+      filter: false,
+      resizable: true,
+    });
+    schema.push({
       headerName: 'Stars',
       field: 'stars',
       enableValue: true,
@@ -1074,9 +1096,7 @@ export class ExamplesHelper {
       headerName: 'Live',
       field: 'isLive',
       editable: false,
-      cellRenderer: (params: any) => {
-        return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
-      },
+      cellRenderer: (params: any) => `<input type='checkbox' ${params.value ? 'checked' : ''} />`,
       type: 'abColDefBoolean',
     });
     schema.push({
@@ -1157,7 +1177,7 @@ export class ExamplesHelper {
       vendorGrid: gridOptions,
       primaryKey: 'tradeId',
       userName: 'demo user',
-      blotterId: blotterId,
+      blotterId,
     };
     return adaptableBlotterOptions;
   }
@@ -1167,7 +1187,7 @@ export class ExamplesHelper {
       vendorGrid: gridOptions,
       primaryKey: 'date',
       userName: 'demo user',
-      blotterId: blotterId,
+      blotterId,
     };
     return adaptableBlotterOptions;
   }

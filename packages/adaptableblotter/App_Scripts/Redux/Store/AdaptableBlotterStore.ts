@@ -31,6 +31,7 @@ import * as ReminderRedux from '../ActionsReducers/ReminderRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
 import * as ActionColumnRedux from '../ActionsReducers/ActionColumnRedux';
+import * as SparklineColumnRedux from '../ActionsReducers/SparklineColumnRedux';
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux';
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux';
 import * as NamedFilterRedux from '../ActionsReducers/NamedFilterRedux';
@@ -138,6 +139,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 
   // Reducers for Persisted State
   ActionColumn: ActionColumnRedux.ActionColumnReducer,
+  SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
   AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
   Alert: AlertRedux.AlertReducer,
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
@@ -1301,6 +1303,51 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               state: newState.PercentBar,
               diffInfo: diff,
               objectChanged: actionTyped.percentBar,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+
+          /* 
+          **********************
+          Sparklines
+          **********************
+           */
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_ADD: {
+            let actionTyped = <SparklineColumnRedux.SparklineColumnAddAction>action;
+            let changedDetails: StateObjectChangedDetails = {
+              name: StrategyConstants.SparklinesStrategyId,
+              actionType: action.type,
+              state: newState.SparklineColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.sparklineColumn,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_EDIT: {
+            let actionTyped = <SparklineColumnRedux.SparklineColumnEditAction>action;
+            let changedDetails: StateObjectChangedDetails = {
+              name: StrategyConstants.SparklinesStrategyId,
+              actionType: action.type,
+              state: newState.SparklineColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.sparklineColumn,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_DELETE: {
+            let actionTyped = <SparklineColumnRedux.SparklineColumnDeleteAction>action;
+            let changedDetails: StateObjectChangedDetails = {
+              name: StrategyConstants.SparklinesStrategyId,
+              actionType: action.type,
+              state: newState.SparklineColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.sparklineColumn,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);

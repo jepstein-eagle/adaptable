@@ -13,6 +13,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -28,7 +29,10 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (
+      this.canCreateColumnMenuItem(column, this.blotter) &&
+      column.DataType !== DataType.NumberArray
+    ) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
       };

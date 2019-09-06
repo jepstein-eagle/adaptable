@@ -10,6 +10,7 @@ import {
   CategoryChartDefinition,
   PieChartDefinition,
   ChartData,
+  SparklinesChartDefinition,
 } from '../PredefinedConfig/RunTimeState/ChartState';
 import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -144,6 +145,13 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         cd2 as PieChartDefinition
       );
     }
+
+    if (cd1.ChartType == ChartType.SparklinesChart) {
+      return this.doSparklinesChartDefinitionChangesRequireDataUpdate(
+        cd1 as SparklinesChartDefinition,
+        cd2 as SparklinesChartDefinition
+      );
+    }
   }
 
   private doCategoryChartDefinitionChangesRequireDataUpdate(
@@ -180,6 +188,16 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
       return true;
     }
     if (cd1.SecondaryColumnOperation != cd2.SecondaryColumnOperation) {
+      return true;
+    }
+    return false;
+  }
+
+  private doSparklinesChartDefinitionChangesRequireDataUpdate(
+    cd1: SparklinesChartDefinition,
+    cd2: SparklinesChartDefinition
+  ): boolean {
+    if (cd1.ColumnId != cd2.ColumnId) {
       return true;
     }
     return false;
@@ -239,6 +257,9 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
           pieChartDefinition.PrimaryColumnId == columnChangedId ||
           pieChartDefinition.SecondaryColumnId == columnChangedId
         );
+      case ChartType.SparklinesChart:
+        let sparklinesChartDefinition: SparklinesChartDefinition = currentChartDefinition as SparklinesChartDefinition;
+        return sparklinesChartDefinition.ColumnId == columnChangedId;
     }
   }
 
@@ -254,6 +275,11 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
       } else if (chartDefinition.ChartType == ChartType.PieChart) {
         chartData = this.blotter.ChartService.BuildPieChartData(
           chartDefinition as PieChartDefinition
+        );
+      } else if (chartDefinition.ChartType == ChartType.SparklinesChart) {
+        chartData = this.blotter.ChartService.BuildSparklinesChartData(
+          chartDefinition as SparklinesChartDefinition,
+          this.GetColumnState()
         );
       }
       this.blotter.api.internalApi.setChartData(chartData);

@@ -113,6 +113,7 @@ import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -332,6 +333,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.applyDataChange,
       this.blotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
     );
+  }
+
+  public addSparkline(sparklineColumn: SparklineColumn): void {
+    // to do
+  }
+  public removeSparkline(sparklineColumn: SparklineColumn): void {
+    // todo
+  }
+
+  public editSparkline(sparklineColumn: SparklineColumn): void {
+    // todo
   }
 
   private getState(): AdaptableBlotterState {
@@ -605,6 +617,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var value = this.valOrFunc(record, column);
             if (value instanceof Date) {
               dataType = DataType.Date;
+            } else if (Array.isArray(value) && value.length && typeof value[0] === 'number') {
+              dataType = DataType.NumberArray;
             } else {
               switch (typeof value) {
                 case 'string':
@@ -854,6 +868,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.hyperGrid.behavior.reindex();
     this.hyperGrid.repaint();
     this.emitter.emit(GRID_REFRESHED_EVENT);
+  }
+
+  public getColumnValueDisplayValuePairList(
+    columnId: string,
+
+    visibleRowsOnly: boolean
+  ): Array<IRawValueDisplayValuePair> {
+    // todo implement
+    return [];
   }
 
   public getColumnValueDisplayValuePairDistinctList(
