@@ -7,6 +7,8 @@ import { ISparklinesColumnStrategy } from './Interface/ISparklinesColumnStrategy
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { SparklineColumnState } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
+import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class SparklinesColumnStrategy extends AdaptableStrategyBase
   implements ISparklinesColumnStrategy {
@@ -16,13 +18,16 @@ export class SparklinesColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.SparklinesColumnStrategyId, blotter);
   }
 
-  public addColumnMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
     if (column.DataType === DataType.NumberArray) {
-      this.createColumnMenuItemShowPopup(
+      let popUpParams: StrategyParams = {
+        columnId: column.ColumnId,
+      };
+      return this.createColumnMenuItemShowPopup(
         'Edit Sparklines Column',
         ScreenPopups.SparklinesColumnPopup,
         StrategyConstants.SparklinesColumnGlyph,
-        column.ColumnId
+        popUpParams
       );
     }
   }

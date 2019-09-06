@@ -405,7 +405,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     pieChartDefinition.PrimaryColumnId = labelColumn;
     pieChartDefinition.SecondaryColumnId = valueColumn;
     if (ArrayExtensions.IsNotNullOrEmpty(primaryKeyValues)) {
-      pieChartDefinition.PimaryKeyValues = primaryKeyValues;
+      pieChartDefinition.PrimaryKeyValues = primaryKeyValues;
     }
 
     let chartData: ChartData = this.props.Blotter.ChartService.BuildPieChartData(

@@ -90,6 +90,7 @@ export class ChartService implements IChartService {
   ): ChartData {
     let values: number[];
     // TODO - is this correct?
+
     if (chartDefinition.Expression) {
       values = [];
       const forEach = (row: any) => {
@@ -111,10 +112,24 @@ export class ChartService implements IChartService {
         this.blotter.forAllRecordsDo(forEach);
       }
     } else {
+      values = [];
+
+      let onlyIncludeIds;
+
+      if (chartDefinition.PrimaryKeyValues) {
+        onlyIncludeIds = chartDefinition.PrimaryKeyValues.reduce(
+          (allowedIds, primaryKey) => {
+            allowedIds[primaryKey] = true;
+            return allowedIds;
+          },
+          {} as { [key: string]: boolean }
+        );
+      }
       values = this.blotter
         .getColumnValueDisplayValuePairList(
           chartDefinition.ColumnId,
-          chartDefinition.VisibleRowsOnly
+          chartDefinition.VisibleRowsOnly,
+          onlyIncludeIds
         )
         .filter(cv => {
           return Helper.objectExists(cv.RawValue);
@@ -259,9 +274,9 @@ export class ChartService implements IChartService {
 
     let valueTotal: number = 0;
 
-    if (ArrayExtensions.IsNotNullOrEmpty(chartDefinition.PimaryKeyValues)) {
+    if (ArrayExtensions.IsNotNullOrEmpty(chartDefinition.PrimaryKeyValues)) {
       // if doing Primary Key Values then we know that we have no secondary column and no need to worry about visible rows
-      this.blotter.getRecordsForPrimaryKeys(chartDefinition.PimaryKeyValues).forEach(row => {
+      this.blotter.getRecordsForPrimaryKeys(chartDefinition.PrimaryKeyValues).forEach(row => {
         this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
       });
     } else {

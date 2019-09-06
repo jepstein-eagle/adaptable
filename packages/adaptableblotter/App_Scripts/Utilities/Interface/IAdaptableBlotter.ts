@@ -114,7 +114,8 @@ export interface IAdaptableBlotter {
   getColumnValueDisplayValuePairList(
     columnId: string,
 
-    visibleRowsOnly: boolean
+    visibleRowsOnly: boolean,
+    onlyIncludeIds?: { [key: string]: boolean }
   ): Array<IRawValueDisplayValuePair>;
   getColumnValueDisplayValuePairDistinctList(
     columnId: string,

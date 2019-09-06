@@ -13,7 +13,6 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { DataType } from '../PredefinedConfig/Common/Enums';
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
   constructor(blotter: IAdaptableBlotter) {

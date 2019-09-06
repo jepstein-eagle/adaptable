@@ -45,14 +45,13 @@ export interface PieChartDefinition extends ChartDefinition {
   PrimaryColumnId: string;
   SecondaryColumnId?: string;
   SecondaryColumnOperation: 'Sum' | 'Count';
-  PimaryKeyValues?: any[];
+  PrimaryKeyValues?: any[];
 }
 
 export interface SparklinesChartDefinition extends ChartDefinition {
   ColumnId: string;
   Expression?: Expression;
-
-  // DisplayType?: SparklineTypeEnum;
+  PrimaryKeyValues?: any[];
 }
 
 export interface CategoryChartDefinition extends ChartDefinition {

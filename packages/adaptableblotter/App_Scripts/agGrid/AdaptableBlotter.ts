@@ -435,7 +435,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), HALF_SECOND);
 
-  debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), HALF_SECOND);
+  debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 250);
 
   debouncedSetSelectedRows = _.debounce(() => this.setSelectedRows(), HALF_SECOND);
 
@@ -1214,7 +1214,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public getColumnValueDisplayValuePairList(
     columnId: string,
-    visibleRowsOnly: boolean
+    visibleRowsOnly: boolean,
+    onlyIncludeIds?: { [key: string]: boolean }
   ): Array<IRawValueDisplayValuePair> {
     const returnArray: IRawValueDisplayValuePair[] = [];
 
@@ -1241,7 +1242,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           ? Helper.StringifyValue(rawValue)
           : this.getDisplayValueFromRecord(rowNode, columnId);
 
-        if (!permittedMap || permittedMap.has(displayValue)) {
+        let allowed = !permittedMap || permittedMap.has(displayValue);
+        if (allowed && onlyIncludeIds) {
+          let id = this.getPrimaryKeyValueFromRecord(rowNode);
+          allowed = !!onlyIncludeIds[id];
+        }
+        if (allowed) {
           returnArray.push({ RawValue: rawValue, DisplayValue: displayValue });
         }
       }
@@ -2291,6 +2297,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.getContextMenuItems = (params: GetContextMenuItemsParams) => {
       let colMenuItems: (string | MenuItemDef)[];
       console.log(params);
+
       // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
       // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
       if (originalgetContextMenuItems) {

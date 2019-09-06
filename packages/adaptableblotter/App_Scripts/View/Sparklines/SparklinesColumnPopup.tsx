@@ -57,14 +57,16 @@ class SparklinesColumnPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    let sparklineColumnId = this.props.PopupParams;
-    if (sparklineColumnId) {
-      const sparklineColumn = this.props.SparklineColumns.filter(
-        c => c.ColumnId === sparklineColumnId
-      )[0];
+    if (this.props.PopupParams) {
+      let sparklineColumnId = this.props.PopupParams.columnId;
+      if (sparklineColumnId) {
+        const sparklineColumn = this.props.SparklineColumns.filter(
+          c => c.ColumnId === sparklineColumnId
+        )[0];
 
-      if (sparklineColumn) {
-        this.onEdit(sparklineColumn);
+        if (sparklineColumn) {
+          this.onEdit(sparklineColumn);
+        }
       }
     }
   }

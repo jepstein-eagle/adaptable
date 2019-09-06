@@ -26,6 +26,7 @@ import CheckBox from '../../components/CheckBox';
 import Input from '../../components/Input';
 import { SparklineTypeEnum } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { SparklineTypeDropdown } from './Wizard/SparklinesColumnSettingsWizard';
+import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 interface ViewAsSparklinesPopupProps
   extends StrategyViewPopupProps<ViewAsSparklinesPopupComponent> {}
@@ -59,13 +60,6 @@ class ViewAsSparklinesPopupComponent extends React.Component<
       ErrorMessage: null,
       DataSource: null,
     };
-  }
-
-  componentDidMount() {
-    const column = this.props.PopupParams;
-    if (StringExtensions.IsNotNullOrEmpty(column)) {
-      this.updateDataSource(column);
-    }
   }
 
   hasValidDataSelection(): boolean {
@@ -202,18 +196,30 @@ class ViewAsSparklinesPopupComponent extends React.Component<
     );
   }
 
+  componentDidMount() {
+    if (this.props.PopupParams) {
+      const column = this.props.PopupParams.columnId;
+      if (StringExtensions.IsNotNullOrEmpty(column)) {
+        this.updateDataSource(column, this.props.PopupParams.primaryKeyValues);
+      }
+    }
+  }
+
   private onDataColumnChanged(columns: IColumn[]) {
     let columnId = this.state.SparklinesChartDefinition.ColumnId;
     if (columns.length > 0) {
       columnId = columns[0].ColumnId;
     }
-    this.updateDataSource(columnId);
+    this.updateDataSource(columnId, this.props.PopupParams.primaryKeyValues);
   }
 
-  private updateDataSource(columnId: string) {
+  private updateDataSource(columnId: string, primaryKeyValues?: any[]) {
     let sparklinesChartDefinition: SparklinesChartDefinition = this.state.SparklinesChartDefinition;
 
     sparklinesChartDefinition = { ...sparklinesChartDefinition, ColumnId: columnId };
+    if (ArrayExtensions.IsNotNullOrEmpty(primaryKeyValues)) {
+      sparklinesChartDefinition.PrimaryKeyValues = primaryKeyValues;
+    }
 
     let chartData: ChartData = this.props.Blotter.ChartService.BuildSparklinesChartData(
       sparklinesChartDefinition,
