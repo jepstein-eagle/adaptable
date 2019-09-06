@@ -2234,7 +2234,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const originalgetContextMenuItems = this.gridOptions.getContextMenuItems;
     this.gridOptions.getContextMenuItems = (params: GetContextMenuItemsParams) => {
       let colMenuItems: (string | MenuItemDef)[];
-      console.log(params);
       // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
       // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
       if (originalgetContextMenuItems) {
