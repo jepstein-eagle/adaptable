@@ -19,11 +19,11 @@ import { SparklinesChartComponentState } from './SparklinesChartComponentState';
 import ChartContainer from '../../../components/ChartContainer';
 import SparklineChart from '../../../components/SparklineChart';
 import { SparklineTypeEnum } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
+import Radio from '../../../components/Radio';
+import Input from '../../../components/Input';
+import CheckBox from '../../../components/CheckBox';
 
-/*
-This is really only going to be for Category Charts.
-As we add other chart types we will need to rethink this and some of the assumptions
-*/
 interface SparklinesChartComponentProps {
   CurrentChartDefinition: SparklinesChartDefinition;
   ChartData: ChartData;
@@ -90,6 +90,16 @@ export class SparklinesChartComponent extends React.Component<
       <SparklineChart
         // data source
         values={this.props.ChartData.Data}
+        min={
+          this.state.ChartProperties.UseMinStaticValue
+            ? this.state.ChartProperties.Minimum
+            : undefined
+        }
+        max={
+          this.state.ChartProperties.UseMaxStaticValue
+            ? this.state.ChartProperties.Maximum
+            : undefined
+        }
         // chart type
         type={this.state.ChartProperties.DisplayType}
         // titles (titles, alignment and margins)
@@ -105,7 +115,74 @@ export class SparklinesChartComponent extends React.Component<
         variant="primary"
         firstButton={closeChartSettingsButton}
         secondButton={setDefaultsButton}
-      ></PanelWithTwoButtons>
+      >
+        <FormLayout>
+          <FormRow label={<b>Sparkline Type</b>}>
+            <Radio
+              checked={this.state.ChartProperties.DisplayType === SparklineTypeEnum.Line}
+              onChange={checked => {
+                this.updateChartProperties({
+                  DisplayType: checked ? SparklineTypeEnum.Line : SparklineTypeEnum.Column,
+                });
+              }}
+            >
+              Line
+            </Radio>
+            <Radio
+              marginLeft={2}
+              checked={this.state.ChartProperties.DisplayType === SparklineTypeEnum.Column}
+              onChange={checked => {
+                this.updateChartProperties({
+                  DisplayType: checked ? SparklineTypeEnum.Column : SparklineTypeEnum.Line,
+                });
+              }}
+            >
+              Column
+            </Radio>
+          </FormRow>
+          <FormRow label={<b>Minimum Value</b>}>
+            <>
+              <CheckBox
+                checked={this.state.ChartProperties.UseMinStaticValue}
+                marginRight={2}
+                onChange={UseMinStaticValue => this.updateChartProperties({ UseMinStaticValue })}
+              >
+                Use custom minimum value
+              </CheckBox>
+              {this.state.ChartProperties.UseMinStaticValue ? (
+                <Input
+                  type={'number'}
+                  style={{ width: '10rem' }}
+                  placeholder="Min Value"
+                  onChange={(e: any) => this.onMinMaxValueChange('Minimum', Number(e.target.value))}
+                  value={this.state.ChartProperties.Minimum}
+                />
+              ) : null}
+            </>
+          </FormRow>
+
+          <FormRow label={<b>Maximum Value</b>}>
+            <>
+              <CheckBox
+                checked={this.state.ChartProperties.UseMaxStaticValue}
+                marginRight={2}
+                onChange={UseMaxStaticValue => this.updateChartProperties({ UseMaxStaticValue })}
+              >
+                Use custom maximum value
+              </CheckBox>
+              {this.state.ChartProperties.UseMaxStaticValue ? (
+                <Input
+                  type={'number'}
+                  style={{ width: '10rem' }}
+                  placeholder="Min Value"
+                  onChange={(e: any) => this.onMinMaxValueChange('Maximum', Number(e.target.value))}
+                  value={this.state.ChartProperties.Maximum}
+                />
+              ) : null}
+            </>
+          </FormRow>
+        </FormLayout>
+      </PanelWithTwoButtons>
     );
 
     return this.props.ChartData.Data != null ? (
@@ -119,14 +196,17 @@ export class SparklinesChartComponent extends React.Component<
     ) : null;
   }
 
+  onMinMaxValueChange = (minOrMax: 'Minimum' | 'Maximum', value: number) => {
+    if (isNaN(value)) {
+      value = undefined;
+    }
+
+    this.updateChartProperties({
+      [minOrMax]: value,
+    });
+  };
+
   onSetPropertyDefaults() {
-    // this overrides what has been set in predefined config with defaults - is that right?
-    // or should it just override what has been changed ?
-    // first update our state
-    // this.setState(
-    //   SparklinesChartUIHelper.setChartDisplayPopupState() as SparklinesChartComponentState
-    // );
-    // then update the properties
     let chartProperties: SparklinesChartProperties = Helper.cloneObject(
       DefaultSparklinesChartProperties
     );
@@ -141,14 +221,10 @@ export class SparklinesChartComponent extends React.Component<
     this.setState({ IsChartSettingsVisible: false } as SparklinesChartComponentState);
   }
 
-  onChartTypeChange(value: SparklineTypeEnum) {
-    let chartProperties: SparklinesChartProperties = this.state.ChartProperties;
-    chartProperties.DisplayType = value as SparklineTypeEnum;
-    this.updateChartProperties(chartProperties);
-  }
-
-  private updateChartProperties(chartProperties: SparklinesChartProperties): void {
-    this.setState({ ChartProperties: chartProperties } as SparklinesChartComponentState);
+  updateChartProperties(chartProperties: Partial<SparklinesChartProperties>): void {
+    this.setState({
+      ChartProperties: { ...this.state.ChartProperties, ...chartProperties },
+    } as SparklinesChartComponentState);
     this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Uuid, chartProperties);
   }
 }

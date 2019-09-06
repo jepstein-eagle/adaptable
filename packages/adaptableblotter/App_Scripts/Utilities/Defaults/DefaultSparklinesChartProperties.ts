@@ -3,4 +3,6 @@ import { SparklineTypeEnum } from '../../PredefinedConfig/DesignTimeState/Sparkl
 
 export const DefaultSparklinesChartProperties: SparklinesChartProperties = {
   DisplayType: SparklineTypeEnum.Line,
+  UseMaxStaticValue: false,
+  UseMinStaticValue: false,
 };

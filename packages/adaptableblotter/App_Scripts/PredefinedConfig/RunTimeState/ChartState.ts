@@ -50,6 +50,8 @@ export interface PieChartDefinition extends ChartDefinition {
 export interface SparklinesChartDefinition extends ChartDefinition {
   ColumnId: string;
   Expression?: Expression;
+
+  // DisplayType?: SparklineTypeEnum;
 }
 
 export interface CategoryChartDefinition extends ChartDefinition {
@@ -73,6 +75,8 @@ export interface SparklinesChartProperties extends ChartProperties {
   Maximum?: number;
   Minimum?: number;
   DisplayType: SparklineTypeEnum;
+  UseMinStaticValue: boolean;
+  UseMaxStaticValue: boolean;
 }
 
 export interface CategoryChartProperties extends ChartProperties {
