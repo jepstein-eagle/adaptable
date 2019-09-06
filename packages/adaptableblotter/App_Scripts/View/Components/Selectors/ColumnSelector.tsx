@@ -13,59 +13,40 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
   SelectionMode: SelectionMode;
   className?: string;
   placeHolder?: string;
+  showClearButton?: boolean;
 }
 
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
-  UNSAFE_componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any) {
-    //if there was a selected column and parent unset the column we then clear the component
-    // otherwise it's correctly unselected but the input still have the previsous selected column text
-    let propsSelectedColumnIds: string[] = this.props.SelectedColumnIds.filter(x =>
-      StringExtensions.IsNotNullOrEmpty(x)
-    );
-    let nextPropsSelectedColumnIds: string[] = nextProps.SelectedColumnIds.filter(x =>
-      StringExtensions.IsNotNullOrEmpty(x)
-    );
-
-    if (
-      propsSelectedColumnIds.length == 0 &&
-      nextPropsSelectedColumnIds.length == 0 &&
-      this.refs.typeahead
-    ) {
-      (this.refs.typeahead as any).getInstance().clear();
-    }
-  }
-
   render() {
-    let sortedColumns = ArrayExtensions.sortArrayWithProperty(
+    const sortedColumns = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
       this.props.ColumnList,
       'FriendlyName'
     );
-    let selectedColumnIds = this.props.SelectedColumnIds.filter(x =>
+    const selectedColumnIds = this.props.SelectedColumnIds.filter(x =>
       StringExtensions.IsNotNullOrEmpty(x)
     );
 
-    let placeHolder: string = StringExtensions.IsNotNullOrEmpty(this.props.placeHolder)
+    const placeHolder: string = StringExtensions.IsNotNullOrEmpty(this.props.placeHolder)
       ? this.props.placeHolder.toString()
       : this.props.SelectionMode == SelectionMode.Single
       ? 'Select a column'
       : 'Select columns';
 
-    let isEmptySelectedColumnIds: boolean =
+    const isEmptySelectedColumnIds: boolean =
       this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
     return (
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, ...this.props.style }}>
         <Dropdown
           style={{ maxWidth: 'none' }}
+          showClearButton={this.props.showClearButton}
           placeholder={placeHolder}
           multiple={this.props.SelectionMode == SelectionMode.Multi}
-          options={sortedColumns.map(c => {
-            return {
-              value: c.ColumnId,
-              label: c.FriendlyName,
-            };
-          })}
+          options={sortedColumns.map(c => ({
+            value: c.ColumnId,
+            label: c.FriendlyName,
+          }))}
           disabled={this.props.disabled}
           value={selectedColumnIds[0] || null}
           onChange={(value: any) => {
@@ -83,9 +64,6 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
 
   onClearButton() {
     this.props.onColumnChange([]);
-    if (this.refs.typeahead) {
-      (this.refs.typeahead as any).getInstance().clear();
-    }
   }
 
   onColumnChange(selected: IColumn[], isEmptySelection: boolean) {

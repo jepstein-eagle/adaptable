@@ -56,6 +56,8 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
         return 'Category Chart';
       case ChartType.PieChart:
         return 'Pie Chart';
+      case ChartType.SparklinesChart:
+        return 'Sparklines Chart';
     }
   }
 }

@@ -15,6 +15,8 @@ import {
   HorizontalAlignment,
 } from '../Common/ChartEnums';
 import { Expression } from '../Common/Expression/Expression';
+import { SparklineTypeEnum } from '../DesignTimeState/SparklineColumnState';
+
 export interface ChartState extends RunTimeState {
   ChartDefinitions?: ChartDefinition[];
   CurrentChartName?: string;
@@ -43,7 +45,13 @@ export interface PieChartDefinition extends ChartDefinition {
   PrimaryColumnId: string;
   SecondaryColumnId?: string;
   SecondaryColumnOperation: 'Sum' | 'Count';
-  PimaryKeyValues?: any[];
+  PrimaryKeyValues?: any[];
+}
+
+export interface SparklinesChartDefinition extends ChartDefinition {
+  ColumnId: string;
+  Expression?: Expression;
+  PrimaryKeyValues?: any[];
 }
 
 export interface CategoryChartDefinition extends ChartDefinition {
@@ -61,6 +69,14 @@ export interface PieChartProperties extends ChartProperties {
   SliceValuesMapping?: SliceLabelOption;
   SliceLegendMapping?: SliceLabelOption;
   ShowAsDoughnut?: boolean;
+}
+
+export interface SparklinesChartProperties extends ChartProperties {
+  Maximum?: number;
+  Minimum?: number;
+  DisplayType: SparklineTypeEnum;
+  UseMinStaticValue: boolean;
+  UseMaxStaticValue: boolean;
 }
 
 export interface CategoryChartProperties extends ChartProperties {

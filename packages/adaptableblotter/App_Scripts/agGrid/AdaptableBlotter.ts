@@ -154,6 +154,7 @@ import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../Utilities/MenuItem';
+import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -434,7 +435,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), HALF_SECOND);
 
-  debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), HALF_SECOND);
+  debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 250);
 
   debouncedSetSelectedRows = _.debounce(() => this.setSelectedRows(), HALF_SECOND);
 
@@ -884,6 +885,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     let dataType: DataType;
     if (value instanceof Date) {
       dataType = DataType.Date;
+    } else if (Array.isArray(value) && value.length && typeof value[0] === 'number') {
+      dataType = DataType.NumberArray;
     } else {
       switch (typeof value) {
         case 'string':
@@ -912,6 +915,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     switch (colType) {
       case 'abColDefNumber':
         return DataType.Number;
+      case 'abColDefNumberArray':
+        return DataType.NumberArray;
       case 'abColDefString':
         return DataType.String;
       case 'abColDefBoolean':
@@ -1205,6 +1210,60 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       0,
       this.blotterOptions!.queryOptions.maxColumnValueItemsDisplayed
     );
+  }
+
+  public getColumnValueDisplayValuePairList(
+    columnId: string,
+    visibleRowsOnly: boolean,
+    onlyIncludeIds?: { [key: string]: boolean }
+  ): Array<IRawValueDisplayValuePair> {
+    const returnArray: IRawValueDisplayValuePair[] = [];
+
+    let permittedMap = new Map<string, IRawValueDisplayValuePair>();
+
+    // check if there are permitted column values for that column
+    // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
+    const permittedValuesForColumn: PermittedColumnValues = this.api.userInterfaceApi.getPermittedValuesForColumn(
+      columnId
+    );
+    if (permittedValuesForColumn != undefined) {
+      permittedValuesForColumn.PermittedValues.forEach(pv => {
+        permittedMap.set(pv, { RawValue: pv, DisplayValue: pv });
+      });
+    } else {
+      permittedMap = null;
+    }
+    const useRawValue: boolean = this.useRawValueForColumn(columnId);
+
+    const eachFn = (rowNode: RowNode, columnId: string, useRawValue: boolean) => {
+      if (!rowNode.group) {
+        const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
+        const displayValue = useRawValue
+          ? Helper.StringifyValue(rawValue)
+          : this.getDisplayValueFromRecord(rowNode, columnId);
+
+        let allowed = !permittedMap || permittedMap.has(displayValue);
+        if (allowed && onlyIncludeIds) {
+          let id = this.getPrimaryKeyValueFromRecord(rowNode);
+          allowed = !!onlyIncludeIds[id];
+        }
+        if (allowed) {
+          returnArray.push({ RawValue: rawValue, DisplayValue: displayValue });
+        }
+      }
+    };
+
+    if (visibleRowsOnly) {
+      this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
+        eachFn(rowNode, columnId, useRawValue);
+      });
+    } else {
+      this.gridOptions.api!.forEachNode(rowNode => {
+        eachFn(rowNode, columnId, useRawValue);
+      });
+    }
+
+    return returnArray.slice(0, this.blotterOptions!.queryOptions.maxColumnValueItemsDisplayed);
   }
 
   private addDistinctColumnValue(
@@ -2189,6 +2248,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
       this.addPercentBar(pcr);
     });
+    this.api.sparklineColumnApi.getAllSparklineColumn().forEach(sparklineColumn => {
+      this.addSparkline(sparklineColumn);
+    });
 
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -2283,6 +2345,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
   }
 
+  public addSparkline(sparklineColumn: SparklineColumn): void {
+    const renderedColumn = ColumnHelper.getColumnFromId(
+      sparklineColumn.ColumnId,
+      this.api.gridApi.getColumns()
+    );
+
+    if (renderedColumn) {
+      const cellRendererComp: any = this.agGridHelper.createSparklineCellRendererComp(
+        sparklineColumn,
+        this.blotterOptions!.blotterId!
+      );
+      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
+        sparklineColumn.ColumnId
+      );
+      const colDef: ColDef = vendorGridColumn.getColDef();
+      colDef.cellRenderer = cellRendererComp;
+    }
+  }
+
   public addPercentBar(pcr: PercentBar): void {
     const renderedColumn = ColumnHelper.getColumnFromId(
       pcr.ColumnId,
@@ -2313,6 +2394,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       } else {
         coldDef.tooltipField = '';
       }
+    }
+  }
+
+  public removeSparkline(sparklineColumn: SparklineColumn): void {
+    const renderedColumn = ColumnHelper.getColumnFromId(
+      sparklineColumn.ColumnId,
+      this.api.gridApi.getColumns()
+    );
+    if (renderedColumn) {
+      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
+        sparklineColumn.ColumnId
+      );
+      // note we dont get it from the original (but I guess it will be applied next time you run...)
+      vendorGridColumn.getColDef().cellRenderer = null;
+      const coldDef: ColDef = vendorGridColumn.getColDef();
+      coldDef.cellRenderer = null;
     }
   }
 
@@ -2380,6 +2477,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public editPercentBar(pcr: PercentBar): void {
     this.removePercentBar(pcr);
     this.addPercentBar(pcr);
+  }
+
+  public editSparkline(sparklineColumn: SparklineColumn): void {
+    this.removeSparkline(sparklineColumn);
+    this.addSparkline(sparklineColumn);
   }
 
   private onSortChanged(): void {

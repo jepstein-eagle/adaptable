@@ -28,7 +28,10 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (
+      this.canCreateColumnMenuItem(column, this.blotter) &&
+      column.DataType !== DataType.NumberArray
+    ) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
       };

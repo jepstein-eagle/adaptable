@@ -8,6 +8,7 @@ import {
   ChartProperties,
   PieChartDefinition,
   ChartData,
+  SparklinesChartDefinition,
 } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonClose } from '../Components/Buttons/ButtonClose';
@@ -25,6 +26,8 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { CategoryChartComponent } from './CategoryChart/CategoryChartComponent';
 import { PieChartComponent } from './PieChart/PieChartComponent';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
+import { SparklinesChartComponent } from './SparklinesChart/SparklinesChartComponent';
+import { SparklinesChartWizard } from './SparklinesChart/Wizard/SparklinesChartWizard';
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
   ChartDefinitions: ChartDefinition[];
@@ -131,7 +134,8 @@ class ChartDisplayPopupComponent extends React.Component<
                     this.props.onUpdateChartProperties(chartUuid, chartProperties)
                   }
                 />
-              ) : (
+              ) : null}
+              {currentChartType == ChartType.PieChart ? (
                 <PieChartComponent
                   CurrentChartDefinition={this.props.CurrentChartDefinition as PieChartDefinition}
                   ChartData={this.props.ChartData}
@@ -142,7 +146,18 @@ class ChartDisplayPopupComponent extends React.Component<
                     this.props.onUpdateChartProperties(chartUuid, chartProperties)
                   }
                 />
-              )}
+              ) : null}
+              {currentChartType == ChartType.SparklinesChart ? (
+                <SparklinesChartComponent
+                  CurrentChartDefinition={
+                    this.props.CurrentChartDefinition as SparklinesChartDefinition
+                  }
+                  ChartData={this.props.ChartData}
+                  onUpdateChartProperties={(chartUuid, chartProperties) =>
+                    this.props.onUpdateChartProperties(chartUuid, chartProperties)
+                  }
+                />
+              ) : null}
             </div>
           )}
 
@@ -164,7 +179,8 @@ class ChartDisplayPopupComponent extends React.Component<
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
               />
-            ) : (
+            ) : null}
+            {this.state.EditedChartDefinition.ChartType == ChartType.PieChart ? (
               <PieChartWizard
                 EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
@@ -180,7 +196,25 @@ class ChartDisplayPopupComponent extends React.Component<
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
               />
-            )}
+            ) : null}
+
+            {this.state.EditedChartDefinition.ChartType == ChartType.SparklinesChart ? (
+              <SparklinesChartWizard
+                EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
+                ConfigEntities={this.props.ChartDefinitions}
+                ModalContainer={this.props.ModalContainer}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                SystemFilters={this.props.SystemFilters}
+                NamedFilters={this.props.NamedFilters}
+                ColumnCategories={this.props.ColumnCategories}
+                Blotter={this.props.Blotter}
+                WizardStartIndex={0}
+                onCloseWizard={() => this.onCloseWizard()}
+                onFinishWizard={() => this.onFinishWizard()}
+                canFinishWizard={() => this.canFinishWizard()}
+              />
+            ) : null}
           </div>
         )}
       </PanelWithImageThreeButtons>

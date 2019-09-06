@@ -103,7 +103,7 @@ const FormLayout = (props: FormLayoutProps) => {
 };
 
 interface FormRowProps {
-  [k: string]: React.ReactNode;
+  [k: string]: React.ReactElement[] | React.ReactElement | ReactNode;
 }
 
 export const FormRow = (props: FormRowProps) => {
@@ -123,14 +123,14 @@ export const FormRow = (props: FormRowProps) => {
       item = children.shift();
     }
 
-    let value = item;
+    let value = item as React.ReactElement;
     if (item == null) {
       value = placeholder;
     }
 
     if (column.component != null) {
       const Cmp = column.component;
-      return (
+      value = (
         <Cmp
           style={{ ...column.style, gridColumn: columnIndex + 1, gridRow: rowIndex + 1 }}
           className={column.className}
@@ -139,7 +139,7 @@ export const FormRow = (props: FormRowProps) => {
         </Cmp>
       );
     }
-    return value;
+    return typeof value === 'string' ? value : React.cloneElement(value, { key: columnName });
   });
 
   return <>{columnValues}</>;

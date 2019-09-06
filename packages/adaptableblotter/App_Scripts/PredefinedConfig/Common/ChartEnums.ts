@@ -9,6 +9,7 @@ export enum ChartVisibility {
 export enum ChartType {
   CategoryChart = 'CategoryChart',
   PieChart = 'PieChart',
+  SparklinesChart = 'SparklinesChart',
   Data = 'Data',
 }
 
