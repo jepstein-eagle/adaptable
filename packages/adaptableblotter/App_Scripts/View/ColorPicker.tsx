@@ -13,7 +13,15 @@ export class ColorPicker extends React.Component<ColorPickerProps, {}> {
     const Inpt = Input as any;
     return (
       <div className={'ColorPicker'}>
-        <Inpt {...restProps} type="color" style={{ width: 70 }} list="ABcolorChoices" />
+        <Inpt
+          {...restProps}
+          type="color"
+          style={{
+            width: 70,
+            padding: 0 /* we need this to be 0, since otherwise on Windows browsers, the chosen color cannot be seen */,
+          }}
+          list="ABcolorChoices"
+        />
         {ABcolorChoices}
       </div>
     );
