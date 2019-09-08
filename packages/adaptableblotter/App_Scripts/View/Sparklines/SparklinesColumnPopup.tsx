@@ -22,14 +22,11 @@ import { IColItem } from '../UIInterfaces';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import {
-  SparklineColumn,
-  SparklineTypeEnum,
-} from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 
 interface SparklinesColumnPopupProps
   extends StrategyViewPopupProps<SparklinesColumnPopupComponent> {
@@ -79,6 +76,7 @@ class SparklinesColumnPopupComponent extends React.Component<
       { Content: 'Type', Size: 2 },
       { Content: 'Min', Size: 2 },
       { Content: 'Max', Size: 2 },
+      { Content: 'Color', Size: 2 },
       { Content: '', Size: 2 },
     ];
 
@@ -92,6 +90,7 @@ class SparklinesColumnPopupComponent extends React.Component<
           Column={column}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
+          ColorPalette={this.props.ColorPalette}
           onEdit={() => this.onEdit(sparklineColumn)}
           onShare={() => this.props.onShare(sparklineColumn)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -103,24 +102,19 @@ class SparklinesColumnPopupComponent extends React.Component<
           onMaximumValueChanged={(sparklineColumn, maximumValue) =>
             this.onMaximumValueChanged(sparklineColumn, maximumValue)
           }
+          onLineColorChanged={(sparklineColumn, color) =>
+            this.onLineColorChanged(sparklineColumn, color)
+          }
           AccessLevel={this.props.AccessLevel}
         />
       );
     });
-    let newButton = (
-      <ButtonNew
-        onClick={() => this.onNew()}
-        tooltip="Create Sparkline Column "
-        AccessLevel={this.props.AccessLevel}
-      />
-    );
 
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.SparklinesColumnStrategyName}
           style={{ height: '100%' }}
-          button={newButton}
           glyphicon={StrategyConstants.SparklinesGlyph}
           infoBody={infoBody}
           bodyProps={{ padding: 0 }}
@@ -143,6 +137,7 @@ class SparklinesColumnPopupComponent extends React.Component<
                 this.state.EditedAdaptableBlotterObject as SparklineColumn
               }
               ConfigEntities={null}
+              ColorPalette={this.props.ColorPalette}
               Blotter={this.props.Blotter}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
@@ -178,6 +173,12 @@ class SparklinesColumnPopupComponent extends React.Component<
   onMaximumValueChanged(sparklineColumn: SparklineColumn, maximumValue: number): void {
     let clonedSparklineColumn: SparklineColumn = Helper.cloneObject(sparklineColumn);
     clonedSparklineColumn.MaximumValue = maximumValue;
+    this.props.onEditSparklineColumn(clonedSparklineColumn);
+  }
+
+  onLineColorChanged(sparklineColumn: SparklineColumn, color: string): void {
+    let clonedSparklineColumn: SparklineColumn = Helper.cloneObject(sparklineColumn);
+    clonedSparklineColumn.LineColor = color;
     this.props.onEditSparklineColumn(clonedSparklineColumn);
   }
 
@@ -243,7 +244,7 @@ class SparklinesColumnPopupComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableBlotterState) {
   return {
-    SparklineColumns: state.SparklineColumn.Columns,
+    SparklineColumns: state.SparklineColumn.SparklineColumns,
   };
 }
 

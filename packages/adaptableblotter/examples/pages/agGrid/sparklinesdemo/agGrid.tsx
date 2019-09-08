@@ -9,51 +9,40 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-/*
-Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
-No JSON or anything complicated
-Nor do we create the ag-Grid
-*/
-
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(10000);
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  const tradeData: any = examplesHelper.getTrades(5000);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeWithSparkline(tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    `basic-demo` // ${Date.now()}`
+    `sparklines-demo`
   );
 
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
+  adaptableBlotterOptions.predefinedConfig = {
+    SparklineColumn: {
+      SparklineColumns: [
+        {
+          ColumnId: 'history',
+          SparklineType: 'Line',
+        },
+      ],
+    },
+  };
   adaptableBlotterOptions.chartOptions = {
     showModal: false,
     displayOnStartUp: true,
   };
-  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
-    console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
-  };
-  adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
-    var data = event.data;
-    console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
-  };
-  adaptableBlotterOptions.filterOptions = {
-    autoApplyFilter: false,
-  };
+
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
-  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
   global.adaptableblotter = adaptableblotter;
 }
-
-let demoConfig: PredefinedConfig = {};
 
 export default () => {
   useEffect(() => {

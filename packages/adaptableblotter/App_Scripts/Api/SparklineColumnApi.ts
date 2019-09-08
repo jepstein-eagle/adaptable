@@ -12,10 +12,14 @@ export class SparklineColumnApi extends ApiBase implements ISparklineColumnApi {
 
   public getAllSparklineColumn(): SparklineColumn[] {
     let sparklineColumns: SparklineColumn[] | undefined = this.getBlotterState().SparklineColumn
-      .Columns;
+      .SparklineColumns;
     if (sparklineColumns == undefined) {
       sparklineColumns = [];
     }
     return sparklineColumns;
+  }
+
+  public isSparklineColumn(colId: string): boolean {
+    return this.getAllSparklineColumn().find(sc => sc.ColumnId === colId) != null;
   }
 }

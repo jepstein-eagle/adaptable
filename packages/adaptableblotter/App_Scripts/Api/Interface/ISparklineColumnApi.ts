@@ -16,4 +16,6 @@ export interface ISparklineColumnApi {
    * Returns all the Sparkline columns in the State
    */
   getAllSparklineColumn(): SparklineColumn[];
+
+  isSparklineColumn(colId: string): boolean;
 }

@@ -22,8 +22,6 @@ import {
   ALERT_DEFAULT_OPERATOR,
   ALERT_DEFAULT_RANGE_OPERAND_TYPE,
   ALERT_DEFAULT_MESSAGE_TYPE,
-  DEFAULT_DARK_GREEN_COLOR,
-  DEFAULT_DARK_RED_COLOR,
 } from './Constants/GeneralConstants';
 import { DataSource } from '../PredefinedConfig/RunTimeState/DataSourceState';
 import {
@@ -65,6 +63,7 @@ import { createUuid } from '../PredefinedConfig/Uuid';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
+import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -210,8 +209,8 @@ export function CreateEmptyPercentBar(): PercentBar {
     ColumnId: EMPTY_STRING,
     MaxValue: 100,
     MinValue: 0,
-    PositiveColor: DEFAULT_DARK_GREEN_COLOR,
-    NegativeColor: DEFAULT_DARK_RED_COLOR,
+    PositiveColor: getHexForName(DARK_GREEN),
+    NegativeColor: getHexForName(DARK_RED),
     ShowValue: false,
     ShowToolTip: true,
     MaxValueColumnId: undefined,
@@ -225,6 +224,8 @@ export function CreateEmptySparklineColumn(): SparklineColumn {
     ColumnId: EMPTY_STRING,
     MaximumValue: undefined,
     MinimumValue: undefined,
+    ShowToolTip: true,
+    LineColor: DefaultSparklinesChartProperties.Brush,
   };
 }
 

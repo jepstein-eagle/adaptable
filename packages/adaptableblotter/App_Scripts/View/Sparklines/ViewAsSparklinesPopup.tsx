@@ -24,9 +24,12 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import FormLayout, { FormRow } from '../../components/FormLayout';
 import CheckBox from '../../components/CheckBox';
 import Input from '../../components/Input';
-import { SparklineTypeEnum } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { SparklineTypeDropdown } from './Wizard/SparklinesColumnSettingsWizard';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { DefaultSparklinesChartProperties } from '../../Utilities/Defaults/DefaultSparklinesChartProperties';
+import { ColorPicker } from '../ColorPicker';
+import { DefaultAdaptableBlotterOptions } from '../../Utilities/Defaults/DefaultAdaptableBlotterOptions';
+import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 
 interface ViewAsSparklinesPopupProps
   extends StrategyViewPopupProps<ViewAsSparklinesPopupComponent> {}
@@ -44,6 +47,8 @@ interface ViewAsSparklinesPopupState {
 
   ErrorMessage: string;
   DataSource: number[];
+  Brush: string;
+  NegativeBrush: string;
 }
 
 class ViewAsSparklinesPopupComponent extends React.Component<
@@ -52,6 +57,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
 > {
   constructor(props: ViewAsSparklinesPopupProps) {
     super(props);
+
     this.state = {
       DisplayType: SparklineTypeEnum.Line,
       UseMaxStaticValue: false,
@@ -59,6 +65,8 @@ class ViewAsSparklinesPopupComponent extends React.Component<
       SparklinesChartDefinition: ObjectFactory.CreateEmptySparklinesChartDefinition(),
       ErrorMessage: null,
       DataSource: null,
+      Brush: DefaultSparklinesChartProperties.Brush,
+      NegativeBrush: DefaultSparklinesChartProperties.NegativeBrush,
     };
   }
 
@@ -138,6 +146,22 @@ class ViewAsSparklinesPopupComponent extends React.Component<
               <div />
             )}
           </FormRow>
+          <FormRow>
+            <label>Line Color</label>
+            <ColorPicker
+              ColorPalette={this.props.ColorPalette}
+              value={this.state.Brush}
+              onChange={x => this.onBrushColorChange(x)}
+            />
+          </FormRow>
+          <FormRow>
+            <label>Negative Color (for Columns)</label>
+            <ColorPicker
+              ColorPalette={this.props.ColorPalette}
+              value={this.state.NegativeBrush}
+              onChange={x => this.onNegativeBrushColorChange(x)}
+            />
+          </FormRow>
         </FormLayout>
       </Panel>
     );
@@ -156,6 +180,8 @@ class ViewAsSparklinesPopupComponent extends React.Component<
             type={this.state.DisplayType}
             min={this.state.UseMinStaticValue ? this.state.MinStaticValue : undefined}
             max={this.state.UseMaxStaticValue ? this.state.MaxStaticValue : undefined}
+            brush={this.state.Brush}
+            negativeBrush={this.state.NegativeBrush}
           />
         }
       />
@@ -233,6 +259,15 @@ class ViewAsSparklinesPopupComponent extends React.Component<
       DataSource: dataSource,
       ErrorMessage: errorMessage,
     });
+  }
+
+  private onBrushColorChange(event: React.FormEvent<ColorPicker>) {
+    let e = event.target as HTMLInputElement;
+    this.setState({ Brush: e.value });
+  }
+  private onNegativeBrushColorChange(event: React.FormEvent<ColorPicker>) {
+    let e = event.target as HTMLInputElement;
+    this.setState({ NegativeBrush: e.value });
   }
 }
 

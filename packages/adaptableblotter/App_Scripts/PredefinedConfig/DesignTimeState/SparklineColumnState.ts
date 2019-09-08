@@ -29,12 +29,7 @@ export interface SparklineColumnState extends DesignTimeState {
   /**
    * The list of column you want to represent with sparklines
    */
-  Columns?: SparklineColumn[];
-}
-
-export enum SparklineTypeEnum {
-  Line = 'Line',
-  Column = 'Column',
+  SparklineColumns?: SparklineColumn[];
 }
 
 /**
@@ -51,7 +46,7 @@ export interface SparklineColumn extends AdaptableBlotterObject {
   /**
    * The type of the sparkline chart to display
    */
-  SparklineType?: 'Line' | 'Column';
+  SparklineType?: 'Line' | 'Column' | 'Area';
 
   /**
    * The value to be considered the minimum value for the sparkline chart of the column
@@ -62,4 +57,13 @@ export interface SparklineColumn extends AdaptableBlotterObject {
    * The value to be considered the maximum value for the sparkline chart of the column
    */
   MaximumValue?: number;
+  /**
+   * Whether to show a tooltip which will display the underlying values in the Sparklne
+   */
+  ShowToolTip?: boolean;
+
+  /**
+   * Colour of the Sparkline line
+   */
+  LineColor?: string;
 }

@@ -141,8 +141,14 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       return false;
     }
     if (StringExtensions.IsNotNullOrEmpty(functionType)) {
-      if (functionType == 'sort') {
+      if (functionType == 'sort' && !column.IsSparkline) {
         return column.Sortable;
+      } else if (functionType == 'editable') {
+        return !column.ReadOnly;
+      } else if (functionType == 'style') {
+        return !column.IsSparkline;
+      } else if (functionType == 'sparkline') {
+        return column.IsSparkline;
       } else if (functionType == 'numeric') {
         return column.DataType == DataType.Number;
       } else if (functionType == 'columnfilter') {

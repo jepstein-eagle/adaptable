@@ -1,13 +1,14 @@
 /**
  * Options for managing Filters.
  *
- * Includes properties on how Filters should look and whether to use Adaptable Blotter or Vendor filters.
+ * Includes settings for how Filters should look and whether to use Adaptable Blotter or Vendor filters.
  *
  * ```ts
  * filterOptions = {
  *  indicateFilteredColumns: false,
  *  useAdaptableBlotterFilterForm: false,
  *  useAdaptableBlotterQuickFilter: false,
+ *  autoApplyFilter: false,
  *  filterActionOnUserDataChange: {
  *   RunFilter: 'Throttle',
  *   ThrottleDelay: 50
@@ -65,11 +66,11 @@ export interface FilterOptions {
    */
   filterActionOnExternalDataChange?: FilterActionOnDataChange;
   /**
-   * Whether to apply filters in the Filter Form as soon as they are clicked
+   * Whether to apply selected filters in the Filter Form as soon as they are clicked
    *
    * If set to true (the default), clicking on a filter applies it immediately.
    *
-   * If set to False then an Apply Filter button appears and filters are only applied when that is clicked.
+   * If set to False then an Apply Filter button is placeda at the bottom, and filters are only applied when that button is clicked.
    *
    * **Default Value: true**
    */

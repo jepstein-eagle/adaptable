@@ -28,7 +28,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'style')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

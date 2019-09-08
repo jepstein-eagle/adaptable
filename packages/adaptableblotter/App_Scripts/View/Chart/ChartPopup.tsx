@@ -235,6 +235,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       }
       case ChartType.SparklinesChart: {
         emptyChartDefinition = ObjectFactory.CreateEmptySparklinesChartDefinition();
+        break;
       }
     }
     this.setState({

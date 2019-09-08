@@ -1,14 +1,12 @@
 import * as React from 'react';
 import {
   SparklinesChartDefinition,
-  SparklinesChartProperties,
+  SparklineChartProperties,
 } from '../../../PredefinedConfig/RunTimeState/ChartState';
-
-import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
-
 import { SparklinesChartComponentState } from './SparklinesChartComponentState';
 import { DefaultSparklinesChartProperties } from '../../../Utilities/Defaults/DefaultSparklinesChartProperties';
-import { SparklineTypeEnum } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineTypeEnum } from '../../../PredefinedConfig/Common/ChartEnums';
+import EnumExtensions from '../../../Utilities/Extensions/EnumExtensions';
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
  */
@@ -16,7 +14,7 @@ import { SparklineTypeEnum } from '../../../PredefinedConfig/DesignTimeState/Spa
 export function setChartDisplayPopupState(
   chartDefinition: SparklinesChartDefinition
 ): SparklinesChartComponentState {
-  let sparklinesChartProperties: SparklinesChartProperties = Object.assign(
+  let sparklinesChartProperties: SparklineChartProperties = Object.assign(
     {},
     DefaultSparklinesChartProperties,
     chartDefinition.ChartProperties

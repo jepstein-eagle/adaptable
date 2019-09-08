@@ -155,6 +155,7 @@ import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInf
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../Utilities/MenuItem';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -592,6 +593,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       ReadOnly: this.isColumnReadonly(colId),
       Sortable: this.isColumnSortable(colId),
       Filterable: this.isColumnFilterable(colId),
+      IsSparkline: this.api.sparklineColumnApi.isSparklineColumn(colId),
     };
     this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
     this.addFiltersToVendorColumn(vendorColumn);
@@ -1682,6 +1684,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReadOnly: !vendorColDef.editable as boolean,
         Sortable: vendorColDef.sortable as boolean,
         Filterable: vendorColDef.filter as boolean,
+        IsSparkline: dataType == DataType.NumberArray,
       };
 
       if (this.isQuickFilterActive()) {
@@ -1885,9 +1888,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     });
 
     this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_RESIZED, (params: any) => {
+      // if a column is resized there are a couple of things we need to do once its finished
       if (params.type == 'columnResized' && params.finished == true) {
+        // refresh the header if you have quick filter bar to ensure its full length
         if (this.isQuickFilterActive()) {
           this.gridOptions.api!.refreshHeader();
+        }
+        // redraw any sparklines if that has been changed
+        if (params.column) {
+          let colId = params.column.colId;
+          const isSparklineColumn: boolean = this.api.sparklineColumnApi.isSparklineColumn(colId);
+
+          if (isSparklineColumn) {
+            // this is a bit brute force as its redrawing the whole grid but its quite a rare use case so probably ok
+            this.redraw();
+          }
         }
       }
     });
@@ -2346,6 +2361,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public addSparkline(sparklineColumn: SparklineColumn): void {
+    // check that the brushes are set as might not be
+    if (sparklineColumn.LineColor == null || sparklineColumn.LineColor == undefined) {
+      sparklineColumn.LineColor = DefaultSparklinesChartProperties.Brush;
+    }
+
     const renderedColumn = ColumnHelper.getColumnFromId(
       sparklineColumn.ColumnId,
       this.api.gridApi.getColumns()
@@ -2361,6 +2381,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       );
       const colDef: ColDef = vendorGridColumn.getColDef();
       colDef.cellRenderer = cellRendererComp;
+
+      if (sparklineColumn.ShowToolTip != null && sparklineColumn.ShowToolTip == true) {
+        colDef.tooltipField = colDef.field;
+      } else {
+        colDef.tooltipField = '';
+      }
     }
   }
 
@@ -2375,16 +2401,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.blotterOptions!.blotterId!
       );
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
-      const coldDef: ColDef = vendorGridColumn.getColDef();
-      coldDef.cellRenderer = cellRendererFunc;
+      const colDef: ColDef = vendorGridColumn.getColDef();
+      colDef.cellRenderer = cellRendererFunc;
 
       // change the style from number-cell temporarily?
-      if (coldDef.cellClass == 'number-cell') {
-        coldDef.cellClass = 'number-cell-changed';
+      if (colDef.cellClass == 'number-cell') {
+        colDef.cellClass = 'number-cell-changed';
       }
 
       if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
-        coldDef.tooltipField = coldDef.field;
+        colDef.tooltipField = colDef.field;
         // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
         //   console.log('getting tooltip');
         //  coldDef.tooltipComponent = PercentBarTooltip;
@@ -2392,7 +2418,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //   return { value: params.value * 10 };
         // };
       } else {
-        coldDef.tooltipField = '';
+        colDef.tooltipField = '';
       }
     }
   }

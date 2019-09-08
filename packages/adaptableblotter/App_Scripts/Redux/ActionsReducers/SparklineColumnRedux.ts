@@ -57,7 +57,7 @@ export const SparklineColumnsDelete = (
 });
 
 const initialFilterState: SparklineColumnState = {
-  Columns: EMPTY_ARRAY,
+  SparklineColumns: EMPTY_ARRAY,
 };
 
 export const SparklineColumnReducer: Redux.Reducer<SparklineColumnState> = (
@@ -78,9 +78,9 @@ export const SparklineColumnReducer: Redux.Reducer<SparklineColumnState> = (
       if (!actionSparklineColumn.Uuid) {
         actionSparklineColumn.Uuid = createUuid();
       }
-      sparklineColumns = [].concat(state.Columns);
+      sparklineColumns = [].concat(state.SparklineColumns);
       sparklineColumns.push(actionSparklineColumn);
-      return { ...state, Columns: sparklineColumns };
+      return { ...state, SparklineColumns: sparklineColumns };
     }
 
     case SPARKLINE_COLUMNS_EDIT: {
@@ -88,7 +88,7 @@ export const SparklineColumnReducer: Redux.Reducer<SparklineColumnState> = (
         .sparklineColumn;
       return {
         ...state,
-        Columns: state.Columns.map(abObject =>
+        SparklineColumns: state.SparklineColumns.map(abObject =>
           abObject.Uuid === actionSparklineColumn.Uuid ? actionSparklineColumn : abObject
         ),
       };
@@ -98,7 +98,9 @@ export const SparklineColumnReducer: Redux.Reducer<SparklineColumnState> = (
         .sparklineColumn;
       return {
         ...state,
-        Columns: state.Columns.filter(abObject => abObject.Uuid !== actionSparklineColumn.Uuid),
+        SparklineColumns: state.SparklineColumns.filter(
+          abObject => abObject.Uuid !== actionSparklineColumn.Uuid
+        ),
       };
     }
 

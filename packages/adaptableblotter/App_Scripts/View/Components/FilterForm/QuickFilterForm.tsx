@@ -238,6 +238,9 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       case DataType.Date:
         operators = this.state.dateOperatorPairs;
         break;
+      default:
+        operators = [];
+        break;
     }
 
     operators.forEach(op => {

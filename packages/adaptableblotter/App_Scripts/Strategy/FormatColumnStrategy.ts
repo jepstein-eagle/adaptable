@@ -23,7 +23,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'style')) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
         this.blotter.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
         column.ColumnId

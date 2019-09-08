@@ -192,6 +192,7 @@ export class ListBoxFilterForm extends React.Component<
             <Dropdown
               style={ddStyle}
               placeholder="Please select"
+              showClearButton={false}
               onChange={this.onRangeTypeChangedOperand2}
               options={rangeMenuItemsOperand2}
               value={this.state.UiSelectedRange.Operand2Type}

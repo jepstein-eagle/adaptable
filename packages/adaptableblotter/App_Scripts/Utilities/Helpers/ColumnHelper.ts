@@ -55,7 +55,7 @@ export function getColumnIdFromFriendlyName(friendlyName: string, columns: IColu
   if (friendlyName.includes(GeneralConstants.MISSING_COLUMN)) {
     return friendlyName.replace(GeneralConstants.MISSING_COLUMN, ''); // Ids should stay "pure"
   }
-  const foundColumn: IColumn = columns.find(c => c.FriendlyName == friendlyName);
+  const foundColumn: IColumn | undefined = columns.find(c => c.FriendlyName == friendlyName);
   if (foundColumn) {
     return foundColumn.ColumnId;
   }
@@ -124,13 +124,15 @@ export function getColumnsOfType(columns: IColumn[], dataType: DataType): IColum
     case DataType.All:
       return columns;
     case DataType.Boolean:
-      return this.getBooleanColumns(columns, DataType.Boolean);
+      return getBooleanColumns(columns);
     case DataType.Date:
-      return this.getBooleanColumns(columns, DataType.Date);
+      return getDateColumns(columns);
     case DataType.Number:
-      return this.getBooleanColumns(columns, DataType.Number);
+      return getNumericColumns(columns);
+    case DataType.NumberArray:
+      return getNumericArrayColumns(columns);
     case DataType.String:
-      return this.getBooleanColumns(columns, DataType.String);
+      return getStringColumns(columns);
     default:
       return columns;
   }
@@ -163,7 +165,7 @@ export function getColumnCategoryFromColumnCategories(
   let returnValue: string = '';
   ColumnCategoryns.forEach(c => {
     if (StringExtensions.IsNullOrEmpty(returnValue)) {
-      const column: string = c.ColumnIds.find(col => col == columnId);
+      const column: string | undefined = c.ColumnIds.find(col => col == columnId);
       if (column) {
         returnValue = c.ColumnCategoryId;
       }

@@ -9,8 +9,6 @@ import {
   ContextMenuInfo,
 } from '../Utilities/MenuItem';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
@@ -51,7 +49,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   public addContextMenuItem(
     contextMenuInfo: ContextMenuInfo
   ): AdaptableBlotterMenuItem | undefined {
-    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
     if (
       contextMenuInfo.column &&
       contextMenuInfo.isSelectedCell &&
@@ -65,7 +63,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
         primaryKeyValues: pkValues,
       };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.PieChartStrategyName,
+        Label: 'See as Pie Chart',
         ComponentName: ScreenPopups.PieChartPopup,
         GlyphIcon: StrategyConstants.PieChartGlyph,
         PopupParams: popUpParams,

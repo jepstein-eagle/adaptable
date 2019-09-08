@@ -9,20 +9,20 @@ import { DefaultSparklinesChartProperties } from '../../../Utilities/Defaults/De
 import { PanelWithTwoButtons } from '../../Components/Panels/PanelWithTwoButtons';
 import {
   SparklinesChartDefinition,
-  SparklinesChartProperties,
   ChartProperties,
   ChartData,
+  SparklineChartProperties,
 } from '../../../PredefinedConfig/RunTimeState/ChartState';
 import { SparklinesChartUIHelper } from './SparklinesChartUIHelper';
 import { SparklinesChartComponentState } from './SparklinesChartComponentState';
 
 import ChartContainer from '../../../components/ChartContainer';
 import SparklineChart from '../../../components/SparklineChart';
-import { SparklineTypeEnum } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import Radio from '../../../components/Radio';
 import Input from '../../../components/Input';
 import CheckBox from '../../../components/CheckBox';
+import { SparklineTypeEnum } from '../../../PredefinedConfig/Common/ChartEnums';
 
 interface SparklinesChartComponentProps {
   CurrentChartDefinition: SparklinesChartDefinition;
@@ -139,6 +139,17 @@ export class SparklinesChartComponent extends React.Component<
             >
               Column
             </Radio>
+            <Radio
+              marginLeft={2}
+              checked={this.state.ChartProperties.DisplayType === SparklineTypeEnum.Area}
+              onChange={checked => {
+                this.updateChartProperties({
+                  DisplayType: checked ? SparklineTypeEnum.Area : SparklineTypeEnum.Line,
+                });
+              }}
+            >
+              Area
+            </Radio>
           </FormRow>
           <FormRow label={<b>Minimum Value</b>}>
             <>
@@ -207,7 +218,7 @@ export class SparklinesChartComponent extends React.Component<
   };
 
   onSetPropertyDefaults() {
-    let chartProperties: SparklinesChartProperties = Helper.cloneObject(
+    let chartProperties: SparklineChartProperties = Helper.cloneObject(
       DefaultSparklinesChartProperties
     );
     this.updateChartProperties(chartProperties);
@@ -221,7 +232,7 @@ export class SparklinesChartComponent extends React.Component<
     this.setState({ IsChartSettingsVisible: false } as SparklinesChartComponentState);
   }
 
-  updateChartProperties(chartProperties: Partial<SparklinesChartProperties>): void {
+  updateChartProperties(chartProperties: Partial<SparklineChartProperties>): void {
     this.setState({
       ChartProperties: { ...this.state.ChartProperties, ...chartProperties },
     } as SparklinesChartComponentState);

@@ -6,7 +6,7 @@ export interface ITrade {
   tradeId: number;
   notional: number;
   deskId: number;
-  sparks: number[];
+  history: number[];
   counterparty: string;
   currency: string;
   country: string;
@@ -250,7 +250,9 @@ export class ExamplesHelper {
     const tradeCurrency = currency || this.getRandomItem(this.getCurrencies());
     const trade = {
       tradeId: i,
-      sparks: [...new Array(this.generateRandomInt(0, 10))].map(_ => this.generateRandomInt(0, 10)),
+      history: [...new Array(this.generateRandomInt(4, 10))].map(_ =>
+        this.generateRandomInt(4, 10)
+      ),
       notional: this.generateRandomInt(0, 300), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
@@ -765,15 +767,37 @@ export class ExamplesHelper {
       sideBar: undefined,
       rowSelection: 'multiple',
       columnTypes: {
-        abColDefNumberArray: {},
         abColDefNumber: {},
         abColDefString: {},
         abColDefBoolean: {},
         abColDefDate: {},
+        abColDefNumberArray: {},
         abColDefObject: {},
       },
     };
   }
+
+  public getGridOptionsTradeWithSparkline(rowData: any): GridOptions {
+    return {
+      columnDefs: this.getTradeSchemaWithSparkline(),
+      rowData,
+      enableRangeSelection: true,
+      floatingFilter: true,
+      suppressColumnVirtualisation: false,
+      suppressMenuHide: true,
+      sideBar: undefined,
+      rowSelection: 'multiple',
+      columnTypes: {
+        abColDefNumber: {},
+        abColDefString: {},
+        abColDefBoolean: {},
+        abColDefDate: {},
+        abColDefNumberArray: {},
+        abColDefObject: {},
+      },
+    };
+  }
+
   public getGridOptionsTradeColumnGrouping(rowData: any): GridOptions {
     return {
       columnDefs: this.getTradeSchemaColumnGroups(),
@@ -979,18 +1003,7 @@ export class ExamplesHelper {
       filter: true,
       resizable: true,
     });
-    schema.push({
-      headerName: 'Sparks',
-      field: 'sparks',
-      enableValue: true,
-      editable: false,
-      sortable: true,
-      // valueFormatter: notionalFormatter,
 
-      type: 'abColDefNumberArray',
-      filter: false,
-      resizable: true,
-    });
     schema.push({
       headerName: 'Stars',
       field: 'stars',
@@ -1001,6 +1014,29 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
       filter: true,
       resizable: true,
+    });
+
+    schema.push({
+      headerName: 'Change',
+      field: 'changeOnYear',
+      filter: true,
+      editable: true,
+      type: 'abColDefNumber',
+      sortable: true,
+      //  tooltipField: 'changeOnYear',
+      //  tooltipComponent: 'percentBarTooltip',
+    });
+    schema.push({
+      headerName: 'Trade Date',
+      field: 'tradeDate',
+      editable: true,
+      cellEditorParams: {
+        useFormatter: true,
+      },
+      valueParser: this.dateParseragGrid,
+      valueFormatter: this.shortDateFormatteragGrid,
+      filter: 'agDateColumnFilter',
+      type: 'abColDefDate',
     });
     schema.push({
       headerName: 'Bid',
@@ -1046,17 +1082,6 @@ export class ExamplesHelper {
       type: 'abColDefString',
       cellRenderer: 'agAnimateShowChangeCellRenderer',
       // resizable: true,
-      //  tooltipComponent: 'percentBarTooltip',
-    });
-
-    schema.push({
-      headerName: 'Change',
-      field: 'changeOnYear',
-      filter: true,
-      editable: true,
-      type: 'abColDefNumber',
-      sortable: true,
-      //  tooltipField: 'changeOnYear',
       //  tooltipComponent: 'percentBarTooltip',
     });
 
@@ -1125,18 +1150,7 @@ export class ExamplesHelper {
       filter: 'text',
       type: 'abColDefString',
     });
-    schema.push({
-      headerName: 'Trade Date',
-      field: 'tradeDate',
-      editable: true,
-      cellEditorParams: {
-        useFormatter: true,
-      },
-      valueParser: this.dateParseragGrid,
-      valueFormatter: this.shortDateFormatteragGrid,
-      filter: 'agDateColumnFilter',
-      type: 'abColDefDate',
-    });
+
     schema.push({
       headerName: 'SandP',
       field: 'sandpRating',
@@ -1191,6 +1205,19 @@ export class ExamplesHelper {
     return schema;
   }
 
+  public getTradeSchemaWithSparkline(): ColDef[] {
+    let schema = this.getTradeSchema();
+    let historyArray = {
+      headerName: 'History',
+      field: 'history',
+      editable: false,
+      type: 'abColDefNumberArray',
+      resizable: true,
+    };
+    schema.splice(3, 0, historyArray);
+    return schema;
+  }
+
   public getTradeSchemaColumnGroups(): ColDef[] {
     var schema: any[] = [];
     schema.push({
@@ -1207,7 +1234,7 @@ export class ExamplesHelper {
     });
     schema.push({
       headerName: 'Prices',
-      //  marryChildren: true,
+      marryChildren: true,
       children: [
         {
           headerName: 'B/O Spread',
@@ -1380,6 +1407,7 @@ export class ExamplesHelper {
       },
       valueParser: this.dateParseragGrid,
       valueFormatter: this.shortDateFormatteragGrid,
+      sortable: true,
       filter: 'agDateColumnFilter',
       type: 'abColDefDate',
     });

@@ -9,6 +9,9 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { SparklineColumn } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import ObjectFactory from '../../../Utilities/ObjectFactory';
+import { StyleVisualItem } from '../../Components/StyleVisualItem';
 
 export interface SparklinesColumnSummaryWizardProps
   extends AdaptableWizardStepProps<SparklineColumn> {}
@@ -21,21 +24,32 @@ export class SparklinesColumnSummaryWizard
   }
 
   render(): any {
+    let lineColorStyle: IStyle = ObjectFactory.CreateEmptyStyle();
+    lineColorStyle.BackColor = this.props.Data!.LineColor;
+    lineColorStyle.ForeColor = this.props.Data!.LineColor;
+
     let keyValuePairs: IKeyValuePair[] = [
       {
         Key: 'Column',
         Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
+          this.props.Data!.ColumnId,
           this.props.Columns
         ),
       },
       {
         Key: 'Minimum Value',
-        Value: this.props.Data.MinimumValue == null ? 'Current cell' : this.props.Data.MinimumValue,
+        Value:
+          this.props.Data!.MinimumValue == null ? 'Current cell' : this.props.Data!.MinimumValue,
       },
       {
         Key: 'Maximum Value',
-        Value: this.props.Data.MaximumValue == null ? 'Current cell' : this.props.Data.MaximumValue,
+        Value:
+          this.props.Data!.MaximumValue == null ? 'Current cell' : this.props.Data!.MaximumValue,
+      },
+      { Key: 'Line Color', Value: <StyleVisualItem Style={lineColorStyle} /> },
+      {
+        Key: 'Show Tool Tip',
+        Value: this.props.Data!.ShowToolTip ? 'True' : 'False',
       },
     ];
 

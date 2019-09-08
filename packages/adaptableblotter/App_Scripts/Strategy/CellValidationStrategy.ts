@@ -22,7 +22,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'editable')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

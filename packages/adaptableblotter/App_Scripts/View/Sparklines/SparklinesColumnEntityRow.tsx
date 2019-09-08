@@ -10,15 +10,15 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Input from '../../components/Input';
-import {
-  SparklineColumn,
-  SparklineTypeEnum,
-} from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { SparklineTypeDropdown } from './Wizard/SparklinesColumnSettingsWizard';
+import { ColorPicker } from '../ColorPicker';
+import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 
 export interface SparklinesColumnEntityRowProps
   extends SharedEntityExpressionRowProps<SparklinesColumnEntityRow> {
   Column: IColumn;
+  ColorPalette: string[];
 
   onSparklineTypeChange: (
     sparklineColumn: SparklineColumn,
@@ -26,6 +26,7 @@ export interface SparklinesColumnEntityRowProps
   ) => void;
   onMinimumValueChanged: (sparklineColumn: SparklineColumn, minimumValue: number) => void;
   onMaximumValueChanged: (sparklineColumn: SparklineColumn, maximumValue: number) => void;
+  onLineColorChanged: (sparklineColumn: SparklineColumn, positiveColor: string) => void;
 }
 
 export class SparklinesColumnEntityRow extends React.Component<SparklinesColumnEntityRowProps, {}> {
@@ -93,6 +94,18 @@ export class SparklinesColumnEntityRow extends React.Component<SparklinesColumnE
       />
     );
     colItems[4].Content = (
+      <EntityRowItem
+        Content={
+          <ColorPicker
+            style={{ width: '100%' }}
+            ColorPalette={this.props.ColorPalette}
+            value={sparklineColumn.LineColor}
+            onChange={x => this.onLineColorChanged(x)}
+          />
+        }
+      />
+    );
+    colItems[5].Content = (
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
@@ -128,5 +141,10 @@ export class SparklinesColumnEntityRow extends React.Component<SparklinesColumnE
         maxValue
       );
     }
+  }
+
+  onLineColorChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    this.props.onLineColorChanged(this.props.AdaptableBlotterObject as SparklineColumn, e.value);
   }
 }

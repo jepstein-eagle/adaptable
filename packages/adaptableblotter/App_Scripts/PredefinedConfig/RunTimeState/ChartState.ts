@@ -15,7 +15,6 @@ import {
   HorizontalAlignment,
 } from '../Common/ChartEnums';
 import { Expression } from '../Common/Expression/Expression';
-import { SparklineTypeEnum } from '../DesignTimeState/SparklineColumnState';
 
 export interface ChartState extends RunTimeState {
   ChartDefinitions?: ChartDefinition[];
@@ -71,12 +70,31 @@ export interface PieChartProperties extends ChartProperties {
   ShowAsDoughnut?: boolean;
 }
 
-export interface SparklinesChartProperties extends ChartProperties {
+export interface SparklineChartProperties extends ChartProperties {
   Maximum?: number;
   Minimum?: number;
-  DisplayType: SparklineTypeEnum;
+  DisplayType: 'Line' | 'Column' | 'Area';
   UseMinStaticValue: boolean;
   UseMaxStaticValue: boolean;
+
+  // Brush
+  Brush: string;
+  NegativeBrush: string;
+
+  // Marker Visibility
+  HighMarkerVisibility: 'Visible' | 'Collapsed';
+  LowMarkerVisibility: 'Visible' | 'Collapsed';
+  FirstMarkerVisibility: 'Visible' | 'Collpsed';
+  LastMarkerVisibility: 'Visible' | 'Collapsed';
+  NegativeMarkerVisibility: 'Visible' | 'Collapsed';
+  MarkerVisibility: 'Visible' | 'Collapsed';
+
+  // Marker Brush
+  FirstMarkerBrush: string;
+  LastMarkerBrush: string;
+  HighMarkerBrush: string;
+  LowMarkerBrush: string;
+  NegativeMarkerBrush: string;
 }
 
 export interface CategoryChartProperties extends ChartProperties {

@@ -18,8 +18,16 @@ export class SparklinesColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.SparklinesColumnStrategyId, blotter);
   }
 
+  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup({
+      Label: StrategyConstants.SparklinesColumnStrategyName,
+      ComponentName: ScreenPopups.SparklinesColumnPopup,
+      GlyphIcon: StrategyConstants.SparklinesColumnGlyph,
+    });
+  }
+
   public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
-    if (column.DataType === DataType.NumberArray) {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'sparkline')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
       };
@@ -36,11 +44,11 @@ export class SparklinesColumnStrategy extends AdaptableStrategyBase
     if (this.SparklinesState != this.GetSparklinesState()) {
       if (this.blotter.isInitialised) {
         // if we have made any changes then first delete them all
-        this.SparklinesState.Columns.forEach(sparklineColumn => {
+        this.SparklinesState.SparklineColumns.forEach(sparklineColumn => {
           this.blotter.removeSparkline(sparklineColumn);
         });
 
-        this.GetSparklinesState().Columns.forEach(sparklineColumn => {
+        this.GetSparklinesState().SparklineColumns.forEach(sparklineColumn => {
           this.blotter.editSparkline(sparklineColumn);
         });
         this.blotter.redraw();

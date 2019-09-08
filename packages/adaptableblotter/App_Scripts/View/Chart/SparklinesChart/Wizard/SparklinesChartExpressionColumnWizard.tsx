@@ -11,10 +11,7 @@ export class SparklinesChartExpressionColumnWizard extends ExpressionBuilderPage
   constructor(private props2: ExpressionWizardProps<SparklinesChartDefinition>) {
     super(props2);
     this.Data = props2.Data;
-    this.state = UIHelper.getExpressionBuilderStateWithColumn(
-      props2.Data.Expression,
-      props2.Data.ColumnId
-    );
+    this.state = UIHelper.getExpressionBuilderState(props2.Data.Expression);
   }
 
   public Data: any;

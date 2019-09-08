@@ -7,7 +7,9 @@ import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wiza
 import { SparklinesColumnSettingsWizard } from './SparklinesColumnSettingsWizard';
 
 export interface SparklinesColumnWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<SparklinesColumnWizard> {}
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<SparklinesColumnWizard> {
+  ColorPalette: Array<string>;
+}
 
 export class SparklinesColumnWizard extends React.Component<SparklinesColumnWizardProps, {}> {
   render() {
@@ -27,7 +29,7 @@ export class SparklinesColumnWizard extends React.Component<SparklinesColumnWiza
             {
               StepName: 'Sparkline Settings',
               Index: 1,
-              Element: <SparklinesColumnSettingsWizard />,
+              Element: <SparklinesColumnSettingsWizard ColorPalette={this.props.ColorPalette} />,
             },
             {
               StepName: 'Summary',

@@ -138,3 +138,9 @@ export enum OthersCategoryType {
   Number = 'Number',
   Percent = 'Percent',
 }
+
+export enum SparklineTypeEnum {
+  Line = 'Line',
+  Column = 'Column',
+  Area = 'Area',
+}

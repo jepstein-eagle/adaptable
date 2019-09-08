@@ -29,12 +29,12 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Sparklines Column',
+              StepName: 'Select Column',
               Index: 0,
               Element: <SparklinesChartColumnWizard />,
             },
             {
-              StepName: 'Sparklines Column',
+              StepName: 'Build Query',
               Index: 1,
               Element: (
                 <SparklinesChartExpressionColumnWizard

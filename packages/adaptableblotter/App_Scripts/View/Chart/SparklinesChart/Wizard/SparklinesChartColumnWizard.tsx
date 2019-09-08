@@ -35,7 +35,7 @@ export class SparklinesChartColumnWizard
   constructor(props: SparklinesChartColumnWizardProps) {
     super(props);
     this.state = {
-      Filtered: !ExpressionHelper.IsNullOrEmptyExpression(props.Data.Expression),
+      Filtered: ExpressionHelper.IsNotNullOrEmptyExpression(props.Data.Expression),
       Expression: props.Data.Expression,
       ColumnId: props.Data.ColumnId,
     };

@@ -22,31 +22,105 @@ import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 
+export const BLACK: string = 'Black';
+export const WHITE: string = 'White';
+export const LIGHT_GRAY: string = 'LightGray';
+export const GRAY: string = 'Gray';
+export const BROWN: string = 'Brown';
+
+export const DARK_GREEN: string = 'DarkGreen';
+export const GREEN: string = 'Green';
+export const LIME_GREEN: string = 'LimeGreen';
+export const YELLOW: string = 'Yellow';
+export const LIGHT_YELLOW: string = 'LightYellow';
+
+export const DARK_BLUE: string = 'DarkBlue';
+export const BLUE: string = 'Blue';
+export const LIGHT_BLUE: string = 'LightBlue';
+export const CYAN: string = 'Cyan';
+export const MAGENTA: string = 'Magenta';
+
+export const PURPLE: string = 'Purple';
+export const DARK_RED: string = 'DarkRed';
+export const RED: string = 'Red';
+export const LIGHT_RED: string = 'LightRed';
+export const ORANGE: string = 'Orange';
+
+export function getHexForName(name: string): string {
+  switch (name) {
+    case BLACK:
+      return '#000000';
+    case WHITE:
+      return '#FFFFFF';
+    case LIGHT_GRAY:
+      return '#D3D3D3';
+    case GRAY:
+      return '#808080';
+    case BROWN:
+      return '#A52A2A';
+
+    case DARK_GREEN:
+      return '#006400';
+    case GREEN:
+      return '#008000';
+    case LIME_GREEN:
+      return '#32CD32';
+    case YELLOW:
+      return '#FFFF00';
+    case LIGHT_YELLOW:
+      return '#FFFFE0';
+
+    case DARK_BLUE:
+      return '#00008B';
+    case BLUE:
+      return '#0000FF';
+    case LIGHT_BLUE:
+      return '#87CEFA';
+    case CYAN:
+      return '#00FFFF';
+    case MAGENTA:
+      return '#FF00FF';
+
+    case PURPLE:
+      return '#800080';
+    case DARK_RED:
+      return '#8B0000';
+    case RED:
+      return '#FF0000';
+    case LIGHT_RED:
+      return '#DC143C';
+    case ORANGE:
+      return '#FFA500';
+    default:
+      return 'not found';
+  }
+}
+
 export function getDefaultColors(): string[] {
   return [
-    '#000000', //  {/* black */}
-    '#ffffff', //  {/* white */}
-    '#C0C0C0', //  {/* light gray */}
-    '#808080', //  {/* dark gray */}
-    '#800000', //  {/* brown */}
+    getHexForName(BLACK),
+    getHexForName(WHITE),
+    getHexForName(LIGHT_GRAY),
+    getHexForName(GRAY),
+    getHexForName(BROWN),
 
-    '#808000', //  {/* olive */}
-    '#008000', //  {/* dark green */}
-    '#00FF00', //  {/* light green */}
-    '#FFFF00', //  {/* yellow */}
-    '#FFFFCC', //  {/* pale yellow (quick search default) */}
+    getHexForName(DARK_GREEN),
+    getHexForName(GREEN),
+    getHexForName(LIME_GREEN),
+    getHexForName(YELLOW),
+    getHexForName(LIGHT_YELLOW), //  (quick search default)
 
-    '#000080', //  {/* dark blue */}
-    '#0000FF', //  {/* blue */}
-    '#008080', //  {/* cyan */}
-    '#00FFFF', //  {/* light blue */}
-    '#FF00FF', //  {/* pink */}
+    getHexForName(DARK_BLUE),
+    getHexForName(BLUE),
+    getHexForName(LIGHT_BLUE),
+    getHexForName(CYAN),
+    getHexForName(MAGENTA),
 
-    '#800080', //  {/* purple */}
-    '#8B0000', //  {/* dark red */}
-    '#FF0000', //  {/* red */}
-    '#FF6961', //  {/* pastel red */}
-    '#FFA500', //  {/* orange */}
+    getHexForName(PURPLE),
+    getHexForName(DARK_RED),
+    getHexForName(RED),
+    getHexForName(LIGHT_RED),
+    getHexForName(ORANGE),
   ];
 }
 
@@ -339,6 +413,7 @@ function addLeadingZero(item: number): string {
 }
 
 export const UIHelper = {
+  getHexForName,
   getDefaultColors,
   getEmptyConfigState,
   getExpressionBuilderState,

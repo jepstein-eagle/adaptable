@@ -16,7 +16,7 @@ import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
-import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
+import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import icons from '../../components/icons';
@@ -67,7 +67,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
       onClick: () =>
         this.props.onNewChartDefinition({
-          value: 'CategoryChart',
+          value: ChartType.CategoryChart,
           action: 'New',
         }),
       label: 'Category Chart',
@@ -76,10 +76,19 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
       onClick: () =>
         this.props.onNewChartDefinition({
-          value: 'PieChart',
+          value: ChartType.PieChart,
           action: 'New',
         }),
       label: 'Pie Chart',
+    };
+    let sparkLineMenuItem = {
+      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      onClick: () =>
+        this.props.onNewChartDefinition({
+          value: ChartType.SparklinesChart,
+          action: 'New',
+        }),
+      label: 'Sparkline',
     };
 
     let content = (
@@ -113,7 +122,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
             columns={['label']}
             mx={2}
             variant="text"
-            items={[categoryChartMenuItem, pieChartMenuItem]}
+            items={[categoryChartMenuItem, pieChartMenuItem, sparkLineMenuItem]}
           >
             <AddIcon />
           </DropdownButton>

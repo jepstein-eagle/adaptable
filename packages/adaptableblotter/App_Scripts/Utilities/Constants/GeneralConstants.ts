@@ -8,6 +8,7 @@ import {
 } from '../../PredefinedConfig/Common/Enums';
 import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common/ChartEnums';
 import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { LIGHT_YELLOW, BLACK, getHexForName } from '../../View/UIHelper';
 
 export const MISSING_COLUMN: string = ' [MISSING]';
 export const DEFAULT_LAYOUT: string = 'Ab_Default_Layout';
@@ -27,9 +28,6 @@ export const EMPTY_ARRAY: any[] = [];
 
 export const HALF_SECOND: number = 500;
 
-export const DEFAULT_DARK_GREEN_COLOR: string = '#008000';
-export const DEFAULT_DARK_RED_COLOR: string = '#FF0000';
-
 export const YEAR_ADD: number = 1985;
 export const MONTH_ADD: number = 47;
 
@@ -46,8 +44,8 @@ export const CALENDAR_DEFAULT_CURRENT_CALENDER: string = 'United States';
 export const CHART_DEFAULT_REFRESH_RATE: number = 3; // refresh the chart every 3 seconds if stuff chnanges
 // Quick Search
 export const QUICK_SEARCH_DEFAULT_DISPLAY_ACTION: DisplayAction = DisplayAction.HighlightCell;
-export const QUICK_SEARCH_DEFAULT_BACK_COLOR: string = '#FFFFCC';
-export const QUICK_SEARCH_DEFAULT_FORE_COLOR: string = '#000000';
+export const QUICK_SEARCH_DEFAULT_BACK_COLOR: string = getHexForName(LIGHT_YELLOW);
+export const QUICK_SEARCH_DEFAULT_FORE_COLOR: string = getHexForName(BLACK);
 // Flashing Cells
 export const FLASHING_CELLS_DEFAULT_DURATION: 250 | 500 | 750 | 1000 = 500;
 // Selected Cells
