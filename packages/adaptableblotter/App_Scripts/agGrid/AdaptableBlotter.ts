@@ -477,12 +477,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private createQuickFilterWrapper(col: Column) {
-    this.gridOptions.api!.getColumnDef(col).floatingFilterComponentParams = {
-      suppressFilterButton: false,
-    };
-    this.gridOptions.api!.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapperFactory(
-      this
-    );
+    let vendorColDef: ColDef = this.gridOptions.api!.getColumnDef(col);
+    if (vendorColDef) {
+      vendorColDef.floatingFilterComponentParams = {
+        suppressFilterButton: false,
+      };
+      vendorColDef.floatingFilterComponent = FloatingFilterWrapperFactory(this);
+    }
   }
 
   private _currentEditor: ICellEditor;
@@ -541,11 +542,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const col = this.gridOptions.columnApi!.getColumn(column.ColumnId);
       if (!col) {
         LoggingHelper.LogAdaptableBlotterError(`Cannot find vendor column:${column.ColumnId}`);
+      } else {
+        if (!col.isVisible()) {
+          this.setColumnVisible(this.gridOptions.columnApi, col, true, 'api');
+        }
+        this.moveColumn(this.gridOptions.columnApi, col, startIndex + index, 'api');
       }
-      if (!col.isVisible()) {
-        this.setColumnVisible(this.gridOptions.columnApi, col, true, 'api');
-      }
-      this.moveColumn(this.gridOptions.columnApi, col, startIndex + index, 'api');
     });
     allColumns
       .filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0)
@@ -1147,7 +1149,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private isColumnSortable(columnId: string): boolean {
     // follow agGrid logic which is that ONLY if sortable explicitly set to false do you suppress sort
     const colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
-    if (colDef.sortable != null) {
+    if (colDef && colDef.sortable != null) {
       return colDef.sortable;
     }
     return true;
@@ -1156,7 +1158,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private isColumnFilterable(columnId: string): boolean {
     // follow agGrid logic which is that ONLY filterable if one explicitly set
     const colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
-    return colDef.filter != null && colDef.filter != false;
+    return colDef != null && colDef.filter != null && colDef.filter != false;
   }
 
   public setCustomSort(columnId: string, comparer: Function): void {
@@ -1415,53 +1417,58 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     columnId: string,
     type: 'ConditionalStyle' | 'QuickSearch' | 'FlashingCell' | 'FormatColumn'
   ) {
-    const localCellClassRules = this.gridOptions.columnApi!.getColumn(columnId).getColDef()
-      .cellClassRules;
+    const vendorColumn: Column = this.gridOptions.columnApi!.getColumn(columnId);
+    if (vendorColumn) {
+      const colDef: ColDef = vendorColumn.getColDef();
+      if (colDef) {
+        const localCellClassRules = colDef.cellClassRules;
 
-    if (localCellClassRules) {
-      if (type == 'FormatColumn') {
-        for (const prop in localCellClassRules) {
-          if (prop.includes(StrategyConstants.FormatColumnStrategyId)) {
-            delete localCellClassRules[prop];
+        if (localCellClassRules) {
+          if (type == 'FormatColumn') {
+            for (const prop in localCellClassRules) {
+              if (prop.includes(StrategyConstants.FormatColumnStrategyId)) {
+                delete localCellClassRules[prop];
+              }
+            }
+          } else if (type == 'ConditionalStyle') {
+            const cssStyles: string[] = this.api.conditionalStyleApi
+              .getAllConditionalStyle()
+              .map(c => c.Style.ClassName);
+            for (const prop in localCellClassRules) {
+              if (
+                prop.includes(StrategyConstants.ConditionalStyleStrategyId) ||
+                ArrayExtensions.ContainsItem(cssStyles, prop)
+              ) {
+                delete localCellClassRules[prop];
+              }
+            }
           }
-        }
-      } else if (type == 'ConditionalStyle') {
-        const cssStyles: string[] = this.api.conditionalStyleApi
-          .getAllConditionalStyle()
-          .map(c => c.Style.ClassName);
-        for (const prop in localCellClassRules) {
-          if (
-            prop.includes(StrategyConstants.ConditionalStyleStrategyId) ||
-            ArrayExtensions.ContainsItem(cssStyles, prop)
-          ) {
-            delete localCellClassRules[prop];
+          // Is initialized in setColumnIntoStore
+          else if (type == 'QuickSearch') {
+            for (const prop in localCellClassRules) {
+              if (prop.includes(StrategyConstants.QuickSearchStrategyId)) {
+                delete localCellClassRules[prop];
+              }
+            }
           }
+          // Is initialized in Flash
+          else if (type == 'FlashingCell') {
+            for (const prop in localCellClassRules) {
+              if (prop.includes(StyleConstants.FLASH_UP_STYLE)) {
+                delete localCellClassRules[prop];
+              }
+              if (prop.includes(StyleConstants.FLASH_DOWN_STYLE)) {
+                delete localCellClassRules[prop];
+              }
+            }
+          }
+          for (const prop in cellClassRules) {
+            localCellClassRules[prop] = cellClassRules[prop];
+          }
+        } else {
+          colDef.cellClassRules = cellClassRules;
         }
       }
-      // Is initialized in setColumnIntoStore
-      else if (type == 'QuickSearch') {
-        for (const prop in localCellClassRules) {
-          if (prop.includes(StrategyConstants.QuickSearchStrategyId)) {
-            delete localCellClassRules[prop];
-          }
-        }
-      }
-      // Is initialized in Flash
-      else if (type == 'FlashingCell') {
-        for (const prop in localCellClassRules) {
-          if (prop.includes(StyleConstants.FLASH_UP_STYLE)) {
-            delete localCellClassRules[prop];
-          }
-          if (prop.includes(StyleConstants.FLASH_DOWN_STYLE)) {
-            delete localCellClassRules[prop];
-          }
-        }
-      }
-      for (const prop in cellClassRules) {
-        localCellClassRules[prop] = cellClassRules[prop];
-      }
-    } else {
-      this.gridOptions.columnApi!.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
     }
   }
 
