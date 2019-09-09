@@ -101,7 +101,7 @@ export class SparklinesChartComponent extends React.Component<
             : undefined
         }
         // chart type
-        type={this.state.ChartProperties.DisplayType}
+        type={this.state.ChartProperties.DisplayType as SparklineTypeEnum}
         // titles (titles, alignment and margins)
         // chartTitle={this.props.CurrentChartDefinition.Name}
         // subtitle={this.props.CurrentChartDefinition.Description}

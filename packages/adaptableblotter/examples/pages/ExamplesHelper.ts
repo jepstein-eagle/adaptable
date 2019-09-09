@@ -250,8 +250,8 @@ export class ExamplesHelper {
     const tradeCurrency = currency || this.getRandomItem(this.getCurrencies());
     const trade = {
       tradeId: i,
-      history: [...new Array(this.generateRandomInt(4, 10))].map(_ =>
-        this.generateRandomInt(4, 10)
+      history: [...new Array(this.generateRandomInt(5, 20))].map(_ =>
+        this.generateRandomInt(1, 30)
       ),
       notional: this.generateRandomInt(0, 300), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
