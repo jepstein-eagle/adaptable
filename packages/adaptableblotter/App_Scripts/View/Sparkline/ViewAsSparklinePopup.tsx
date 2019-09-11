@@ -24,7 +24,7 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import FormLayout, { FormRow } from '../../components/FormLayout';
 import CheckBox from '../../components/CheckBox';
 import Input from '../../components/Input';
-import { SparklineTypeDropdown } from './Wizard/SparklinesColumnSettingsWizard';
+import { SparklineTypeDropdown } from './Wizard/SparklineColumnSettingsWizard';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { DefaultSparklinesChartProperties } from '../../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { ColorPicker } from '../ColorPicker';
@@ -190,7 +190,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithImage
-          header={StrategyConstants.SparklinesStrategyName}
+          header={StrategyConstants.SparklineStrategyName}
           glyphicon={StrategyConstants.SparklinesGlyph}
           infoBody={infoBody}
           variant="primary"

@@ -7,13 +7,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as SparklineColumnRedux from '../../Redux/ActionsReducers/SparklineColumnRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { Helper } from '../../Utilities/Helpers/Helper';
-import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { SparklinesColumnWizard } from './Wizard/SparklinesColumnWizard';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { SparklinesColumnEntityRow } from './SparklinesColumnEntityRow';
+
 import {
   EditableConfigEntityState,
   WizardStatus,
@@ -27,9 +21,14 @@ import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
+import { SparklineColumnEntityRow } from './SparklineColumnEntityRow';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
+import { SparklineColumnWizard } from './Wizard/SparklineColumnWizard';
+import ObjectFactory from '../../Utilities/ObjectFactory';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
-interface SparklinesColumnPopupProps
-  extends StrategyViewPopupProps<SparklinesColumnPopupComponent> {
+interface SparklineColumnPopupProps extends StrategyViewPopupProps<SparklineColumnPopupComponent> {
   SparklineColumns: SparklineColumn[];
   onAddSparklineColumn: (
     sparklineColumn: SparklineColumn
@@ -40,11 +39,11 @@ interface SparklinesColumnPopupProps
   onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-class SparklinesColumnPopupComponent extends React.Component<
-  SparklinesColumnPopupProps,
+class SparklineColumnPopupComponent extends React.Component<
+  SparklineColumnPopupProps,
   EditableConfigEntityState
 > {
-  constructor(props: SparklinesColumnPopupProps) {
+  constructor(props: SparklineColumnPopupProps) {
     super(props);
     this.state = {
       EditedAdaptableBlotterObject: null,
@@ -83,7 +82,7 @@ class SparklinesColumnPopupComponent extends React.Component<
     let SparklineItems = this.props.SparklineColumns.map((sparklineColumn: SparklineColumn) => {
       let column = ColumnHelper.getColumnFromId(sparklineColumn.ColumnId, this.props.Columns);
       return (
-        <SparklinesColumnEntityRow
+        <SparklineColumnEntityRow
           key={sparklineColumn.Uuid}
           colItems={colItems}
           AdaptableBlotterObject={sparklineColumn}
@@ -113,7 +112,7 @@ class SparklinesColumnPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.SparklinesColumnStrategyName}
+          headerText={StrategyConstants.SparklineColumnStrategyName}
           style={{ height: '100%' }}
           glyphicon={StrategyConstants.SparklinesGlyph}
           infoBody={infoBody}
@@ -132,7 +131,7 @@ class SparklinesColumnPopupComponent extends React.Component<
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
-            <SparklinesColumnWizard
+            <SparklineColumnWizard
               EditedAdaptableBlotterObject={
                 this.state.EditedAdaptableBlotterObject as SparklineColumn
               }
@@ -255,11 +254,11 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onEditSparklineColumn: (sparklineColumn: SparklineColumn) =>
       dispatch(SparklineColumnRedux.SparklineColumnsEdit(sparklineColumn)),
     onShare: (entity: AdaptableBlotterObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.SparklinesStrategyId)),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.SparklineStrategyId)),
   };
 }
 
-export let SparklinesColumnPopup = connect(
+export let SparklineColumnPopup = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SparklinesColumnPopupComponent);
+)(SparklineColumnPopupComponent);

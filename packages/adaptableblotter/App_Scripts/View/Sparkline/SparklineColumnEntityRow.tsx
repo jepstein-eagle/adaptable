@@ -11,12 +11,12 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Input from '../../components/Input';
 import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
-import { SparklineTypeDropdown } from './Wizard/SparklinesColumnSettingsWizard';
+import { SparklineTypeDropdown } from './Wizard/SparklineColumnSettingsWizard';
 import { ColorPicker } from '../ColorPicker';
 import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 
-export interface SparklinesColumnEntityRowProps
-  extends SharedEntityExpressionRowProps<SparklinesColumnEntityRow> {
+export interface SparklineColumnEntityRowProps
+  extends SharedEntityExpressionRowProps<SparklineColumnEntityRow> {
   Column: IColumn;
   ColorPalette: string[];
 
@@ -29,7 +29,7 @@ export interface SparklinesColumnEntityRowProps
   onLineColorChanged: (sparklineColumn: SparklineColumn, positiveColor: string) => void;
 }
 
-export class SparklinesColumnEntityRow extends React.Component<SparklinesColumnEntityRowProps, {}> {
+export class SparklineColumnEntityRow extends React.Component<SparklineColumnEntityRowProps, {}> {
   render(): any {
     let sparklineColumn: SparklineColumn = this.props.AdaptableBlotterObject as SparklineColumn;
 
@@ -113,7 +113,7 @@ export class SparklinesColumnEntityRow extends React.Component<SparklinesColumnE
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={!this.props.Column}
         showDelete={false}
-        EntityType={StrategyConstants.SparklinesColumnStrategyName}
+        EntityType={StrategyConstants.SparklineColumnStrategyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

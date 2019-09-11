@@ -13,13 +13,13 @@ import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 
-export interface SparklinesColumnSummaryWizardProps
+export interface SparklineColumnSummaryWizardProps
   extends AdaptableWizardStepProps<SparklineColumn> {}
 
-export class SparklinesColumnSummaryWizard
-  extends React.Component<SparklinesColumnSummaryWizardProps, {}>
+export class SparklineColumnSummaryWizard
+  extends React.Component<SparklineColumnSummaryWizardProps, {}>
   implements AdaptableWizardStep {
-  constructor(props: SparklinesColumnSummaryWizardProps) {
+  constructor(props: SparklineColumnSummaryWizardProps) {
     super(props);
   }
 
@@ -56,7 +56,7 @@ export class SparklinesColumnSummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.SparklinesColumnStrategyName}
+        header={StrategyConstants.SparklineColumnStrategyName}
       />
     );
     return <div>{summaryPage}</div>;

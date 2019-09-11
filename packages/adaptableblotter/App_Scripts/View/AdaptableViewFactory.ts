@@ -45,8 +45,8 @@ import { ChartPopup } from './Chart/ChartPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
-import { SparklinesColumnPopup } from './Sparklines/SparklinesColumnPopup';
-import { ViewAsSparklinesPopup } from './Sparklines/ViewAsSparklinesPopup';
+import { SparklineColumnPopup } from './Sparkline/SparklineColumnPopup';
+import { ViewAsSparklinesPopup } from './Sparkline/ViewAsSparklinePopup';
 import { PieChartPopup } from './PieChart/PieChartPopup';
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
@@ -85,7 +85,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ReminderPopup,
   CellSummaryPopup,
   SmartEditPopup,
-  SparklinesColumnPopup,
+  SparklineColumnPopup,
   ViewAsSparklinesPopup,
   ShortcutPopup,
   ThemePopup,

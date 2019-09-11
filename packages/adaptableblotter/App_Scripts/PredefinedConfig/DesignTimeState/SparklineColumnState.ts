@@ -9,8 +9,8 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * ```ts
  * export default {
- * Sparkline: {
- *  Columns: [
+ * SparklineColumn: {
+ *  SparklineColumns: [
  *   {
  *      ColumnId: 'Prices',
  *   },

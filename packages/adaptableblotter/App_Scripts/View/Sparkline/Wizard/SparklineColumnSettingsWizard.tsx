@@ -18,12 +18,12 @@ import { ColorPicker } from '../../ColorPicker';
 import { DefaultSparklinesChartProperties } from '../../../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { SparklineTypeEnum } from '../../../PredefinedConfig/Common/ChartEnums';
 
-export interface SparklinesColumnSettingsWizardProps
+export interface SparklineColumnSettingsWizardProps
   extends AdaptableWizardStepProps<SparklineColumn> {
   ColorPalette: string[];
 }
 
-export interface SparklinesColumnSettingsWizardState {
+export interface SparklineColumnSettingsWizardState {
   MinimumValue: number;
   MaximumValue: number;
   SparklineType: SparklineTypeEnum;
@@ -71,11 +71,11 @@ export const SparklineTypeDropdown = ({
   );
 };
 
-export class SparklinesColumnSettingsWizard
-  extends React.Component<SparklinesColumnSettingsWizardProps, SparklinesColumnSettingsWizardState>
+export class SparklineColumnSettingsWizard
+  extends React.Component<SparklineColumnSettingsWizardProps, SparklineColumnSettingsWizardState>
   implements AdaptableWizardStep {
   private _prefix: string;
-  constructor(props: SparklinesColumnSettingsWizardProps) {
+  constructor(props: SparklineColumnSettingsWizardProps) {
     super(props);
     this._prefix = `${Date.now()}`;
     this.state = {
@@ -257,7 +257,7 @@ export class SparklinesColumnSettingsWizard
     if (!isNaN(Number(value))) {
       value = Number(value);
     }
-    this.setState({ MinimumValue: value } as SparklinesColumnSettingsWizardState, () =>
+    this.setState({ MinimumValue: value } as SparklineColumnSettingsWizardState, () =>
       this.props.UpdateGoBackState()
     );
   };
@@ -268,7 +268,7 @@ export class SparklinesColumnSettingsWizard
       value = Number(value);
     }
 
-    this.setState({ MaximumValue: value } as SparklinesColumnSettingsWizardState, () =>
+    this.setState({ MaximumValue: value } as SparklineColumnSettingsWizardState, () =>
       this.props.UpdateGoBackState()
     );
   };
