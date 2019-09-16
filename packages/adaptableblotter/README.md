@@ -173,14 +173,14 @@ That's all the css you have to write for defining a theme - in fact, you can cho
 
 The AdaptableBlotter uses inline svg for icons, since that's very performant and doesn't require any additional download.
 
-However, you might want to style icons differently - in this case, you can customize that through css. Every icon has the `ab-icon` css class, and also `ab-icon--NAME` where `NAME` is the name of the icon. So for example, if you want to use a background image, you can do the following:
+However, you might want to style icons differently - in this case, you can customize that through css. Every icon has the `ab-Icon` css class, and also `ab-Icon--NAME` where `NAME` is the name of the icon. So for example, if you want to use a background image, you can do the following:
 
 
 ```css
-.ab-icon--build path {
+.ab-Icon--build path {
   visibility: hidden; /* to hide the contents of the actual SVG */
 }
-.ab-icon--build {
+.ab-Icon--build {
   background-image: url(...);
   background-size: cover;
 }

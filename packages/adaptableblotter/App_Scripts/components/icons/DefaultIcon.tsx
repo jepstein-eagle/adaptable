@@ -23,7 +23,7 @@ export default ({ children, size = DEFAULT_SIZE, name, ...props }: IconProps) =>
       height={size}
       viewBox="0 0 24 24"
       {...props}
-      className={join((props as any).className, `ab-icon ab-icon--${name}`)}
+      className={join((props as any).className, `ab-Icon ab-Icon--${name}`)}
       style={{ verticalAlign: 'middle', ...props.style }}
     >
       {children}
