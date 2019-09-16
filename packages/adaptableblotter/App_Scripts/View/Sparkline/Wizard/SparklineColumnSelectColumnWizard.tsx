@@ -11,17 +11,17 @@ import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import { SparklineColumn } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
-export interface SparklinesColumnSelectColumnWizardProps
+export interface SparklineColumnSelectColumnWizardProps
   extends AdaptableWizardStepProps<SparklineColumn> {}
-export interface SparklinesColumnSelectColumnWizardState extends SparklineColumn {}
+export interface SparklineColumnSelectColumnWizardState extends SparklineColumn {}
 
-export class SparklinesColumnSelectColumnWizard
+export class SparklineColumnSelectColumnWizard
   extends React.Component<
-    SparklinesColumnSelectColumnWizardProps,
-    SparklinesColumnSelectColumnWizardState
+    SparklineColumnSelectColumnWizardProps,
+    SparklineColumnSelectColumnWizardState
   >
   implements AdaptableWizardStep {
-  constructor(props: SparklinesColumnSelectColumnWizardProps) {
+  constructor(props: SparklineColumnSelectColumnWizardProps) {
     super(props);
     this.state = {
       ColumnId: this.props.Data.ColumnId,
@@ -60,11 +60,11 @@ export class SparklinesColumnSelectColumnWizard
           ColumnId: columns[0].ColumnId,
           // MinimumValue: minValue,
           // MaximumValue: maxValue,
-        } as SparklinesColumnSelectColumnWizardState,
+        } as SparklineColumnSelectColumnWizardState,
         () => this.props.UpdateGoBackState()
       );
     } else {
-      this.setState({ ColumnId: '' } as SparklinesColumnSelectColumnWizardState, () =>
+      this.setState({ ColumnId: '' } as SparklineColumnSelectColumnWizardState, () =>
         this.props.UpdateGoBackState()
       );
     }

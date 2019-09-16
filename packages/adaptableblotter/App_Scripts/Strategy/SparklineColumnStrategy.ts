@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ISparklinesColumnStrategy } from './Interface/ISparklinesColumnStrategy';
+import { ISparklineColumnStrategy } from './Interface/ISparklineColumnStrategy';
 
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { SparklineColumnState } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
@@ -10,19 +10,19 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
-export class SparklinesColumnStrategy extends AdaptableStrategyBase
-  implements ISparklinesColumnStrategy {
+export class SparklineColumnStrategy extends AdaptableStrategyBase
+  implements ISparklineColumnStrategy {
   protected SparklinesState: SparklineColumnState;
 
   constructor(blotter: IAdaptableBlotter) {
-    super(StrategyConstants.SparklinesColumnStrategyId, blotter);
+    super(StrategyConstants.SparklineColumnStrategyId, blotter);
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.SparklinesColumnStrategyName,
-      ComponentName: ScreenPopups.SparklinesColumnPopup,
-      GlyphIcon: StrategyConstants.SparklinesColumnGlyph,
+      Label: StrategyConstants.SparklineColumnStrategyName,
+      ComponentName: ScreenPopups.SparklineColumnPopup,
+      GlyphIcon: StrategyConstants.SparklineColumnGlyph,
     });
   }
 
@@ -32,9 +32,9 @@ export class SparklinesColumnStrategy extends AdaptableStrategyBase
         columnId: column.ColumnId,
       };
       return this.createColumnMenuItemShowPopup(
-        'Edit Sparklines Column',
-        ScreenPopups.SparklinesColumnPopup,
-        StrategyConstants.SparklinesColumnGlyph,
+        'Edit Sparkline Column',
+        ScreenPopups.SparklineColumnPopup,
+        StrategyConstants.SparklineColumnGlyph,
         popUpParams
       );
     }

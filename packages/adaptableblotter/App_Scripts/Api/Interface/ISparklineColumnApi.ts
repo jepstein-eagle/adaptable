@@ -17,5 +17,9 @@ export interface ISparklineColumnApi {
    */
   getAllSparklineColumn(): SparklineColumn[];
 
+  /**
+   * Returns true if the Column with given ColId is a Sparkline Column
+   * @param colId the id of the Column to check
+   */
   isSparklineColumn(colId: string): boolean;
 }

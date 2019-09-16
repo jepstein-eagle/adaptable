@@ -38,8 +38,8 @@ import { HomeStrategy } from '../Strategy/HomeStrategy';
 import { LayoutStrategy } from '../Strategy/LayoutStrategy';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { PercentBarStrategy } from '../Strategy/PercentBarStrategy';
-import { SparklinesColumnStrategy } from '../Strategy/SparklinesColumnStrategy';
-import { SparklinesStrategy } from '../Strategy/SparklinesStrategy';
+import { SparklineColumnStrategy } from '../Strategy/SparklineColumnStrategy';
+import { SparklineStrategy } from '../Strategy/SparklineStrategy';
 import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy';
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
@@ -134,10 +134,10 @@ export class agGridHelper {
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter));
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(blotter));
     strategies.set(
-      StrategyConstants.SparklinesColumnStrategyId,
-      new SparklinesColumnStrategy(blotter)
+      StrategyConstants.SparklineColumnStrategyId,
+      new SparklineColumnStrategy(blotter)
     );
-    strategies.set(StrategyConstants.SparklinesStrategyId, new SparklinesStrategy(blotter));
+    strategies.set(StrategyConstants.SparklineStrategyId, new SparklineStrategy(blotter));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(blotter));
     return strategies;
   }

@@ -1317,7 +1317,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           case SparklineColumnRedux.SPARKLINE_COLUMNS_ADD: {
             let actionTyped = <SparklineColumnRedux.SparklineColumnAddAction>action;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.SparklinesStrategyId,
+              name: StrategyConstants.SparklineStrategyId,
               actionType: action.type,
               state: newState.SparklineColumn,
               diffInfo: diff,
@@ -1330,7 +1330,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           case SparklineColumnRedux.SPARKLINE_COLUMNS_EDIT: {
             let actionTyped = <SparklineColumnRedux.SparklineColumnEditAction>action;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.SparklinesStrategyId,
+              name: StrategyConstants.SparklineStrategyId,
               actionType: action.type,
               state: newState.SparklineColumn,
               diffInfo: diff,
@@ -1343,7 +1343,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           case SparklineColumnRedux.SPARKLINE_COLUMNS_DELETE: {
             let actionTyped = <SparklineColumnRedux.SparklineColumnDeleteAction>action;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.SparklinesStrategyId,
+              name: StrategyConstants.SparklineStrategyId,
               actionType: action.type,
               state: newState.SparklineColumn,
               diffInfo: diff,
