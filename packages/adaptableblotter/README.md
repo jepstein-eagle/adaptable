@@ -169,6 +169,23 @@ html.ab--theme-my-theme {
 
 That's all the css you have to write for defining a theme - in fact, you can choose which of the above colors/variables to define - you don't have to define them all. Start incrementally, and work your way up as you need - use the dark theme as an example.
 
+### Styling icons
+
+The AdaptableBlotter uses inline svg for icons, since that's very performant and doesn't require any additional download.
+
+However, you might want to style icons differently - in this case, you can customize that through css. Every icon has the `ab-icon` css class, and also `ab-icon--NAME` where `NAME` is the name of the icon. So for example, if you want to use a background image, you can do the following:
+
+
+```css
+.ab-icon--build path {
+  visibility: hidden; /* to hide the contents of the actual SVG */
+}
+.ab-icon--build {
+  background-image: url(...);
+  background-size: cover;
+}
+```
+
 ## Licences
 
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
