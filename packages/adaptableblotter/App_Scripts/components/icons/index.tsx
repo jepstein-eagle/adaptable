@@ -148,6 +148,11 @@ const allIcons = {
   search: Search,
 } as { [key: string]: ReactNode };
 
+Object.keys(allIcons).forEach(name => {
+  const ReactCmp = allIcons[name] as ReactComponentLike;
+  allIcons[name] = (props: any) => <ReactCmp {...props} name={name} />;
+});
+
 export const Icon = ({
   name,
   style,
@@ -155,7 +160,7 @@ export const Icon = ({
 }: {
   style?: React.CSSProperties;
   name: string;
-  props?: React.HTMLProps<HTMLElement>;
+  props?: React.SVGProps<SVGElement>;
 }) => {
   const IconCmp = (allIcons[name] || null) as ReactComponentLike;
 
@@ -164,7 +169,7 @@ export const Icon = ({
     return <svg />;
   }
 
-  return <IconCmp {...props} style={style} />;
+  return <IconCmp {...props} style={style} name={name} />;
 };
 
 export const iconToString = (name: string, props?: any) =>
