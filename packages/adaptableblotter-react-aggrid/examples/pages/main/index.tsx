@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 // import AdaptableBlotterAgGrid from '../../../src/AdaptableBlotterAgGrid'
 import { DataGenerator } from '../../../../../packages/adaptableblotter/Harness/DataGenerator';
+import LoggingHelper from '../../../../adaptableblotter/App_Scripts/Utilities/Helpers/LoggingHelper';
 
 function getRowsForGrid(dataGen: DataGenerator) {
   return dataGen.getTrades(6000);
@@ -11,7 +12,10 @@ function dateParseragGrid(params) {
   try {
     return stringToDate(params.newValue, 'dd/mm/yyyy', '/');
   } catch (ex) {
-    console.error(`Error parsing the date value: ${params.newValue} and node : `, params.node);
+    LoggingHelper.LogAdaptableBlotterError(
+      `Error parsing the date value: ${params.newValue} and node : `,
+      params.node
+    );
     return null;
   }
 }
@@ -41,7 +45,10 @@ function shortDateFormatteragGrid(params) {
       return shortDateFormatter.format(params.value);
     }
   } catch (ex) {
-    console.error(`Error formatting the date for value: ${params.value} and node : `, params.node);
+    LoggingHelper.LogAdaptableBlotterError(
+      `Error formatting the date for value: ${params.value} and node : `,
+      params.node
+    );
   }
   return null;
 }

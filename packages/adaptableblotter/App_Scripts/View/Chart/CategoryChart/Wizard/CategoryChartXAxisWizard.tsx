@@ -43,30 +43,31 @@ export class CategoryChartXAxisWizard
   render(): any {
     return (
       <WizardPanel>
-        <HelpBlock>
-          <p>Chart: X (Horizontal) Axis Column</p>
-          <p>Select a column for the X Axis.</p>
+        <HelpBlock>Select a column for the X Axis (Horizontal).</HelpBlock>
 
-          <p>
-            Choose whether to show all values for this column or to filter them (performed in next
-            step)
-          </p>
-        </HelpBlock>
-
-        <Flex paddingLeft={2} marginTop={3} flexDirection="row" alignItems="center">
-          <Text style={{ flex: 2 }}>X Axis Column: </Text>
-          <Box style={{ flex: 6 }}>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            X Axis Column:
+          </Text>
+          <Flex flex={7} flexDirection="row" alignItems="center">
             <ColumnSelector
               SelectedColumnIds={[this.state.XAxisColumnId]}
               ColumnList={this.props.Columns}
               onColumnChange={columns => this.onXAxisColumnChanged(columns)}
               SelectionMode={SelectionMode.Single}
             />
-          </Box>
+          </Flex>
         </Flex>
+
+        <HelpBlock marginTop={3}>
+          Choose whether to show all values for this column or to filter them (performed in next
+          step)
+        </HelpBlock>
         <Flex paddingLeft={2} marginTop={3} flexDirection="row" alignItems="center">
-          <Text style={{ flex: 2 }}>X Axis Column Values:</Text>
-          <Flex flex={6} flexDirection="row" alignItems="center">
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            X Axis Column Values:
+          </Text>
+          <Flex flex={7} flexDirection="row" alignItems="center">
             <Radio
               value="All"
               marginRight={2}

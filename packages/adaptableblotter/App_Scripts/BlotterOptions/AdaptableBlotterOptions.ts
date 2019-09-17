@@ -169,7 +169,7 @@ export interface AdaptableBlotterOptions {
    *
    * The properties in this section are used for more advanced scenarios.
    *
-   * Currently it contains properties for managing fumctions with developers provide (that cannot be stored in the 'normal' way with JSON).
+   * Currently it contains properties for managing fumctions which developers provide (that cannot be stored in the 'normal' way with JSON).
    */
   advancedOptions?: AdvancedOptions;
 

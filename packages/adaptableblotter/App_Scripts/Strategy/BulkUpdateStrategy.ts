@@ -72,7 +72,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     let selectedColumn: IColumn = selectedCellInfo.Columns[0];
-    if (selectedColumn.ReadOnly) {
+    if (selectedColumn && selectedColumn.ReadOnly) {
       return {
         IsValid: false,
         Alert: {

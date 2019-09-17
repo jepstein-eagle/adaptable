@@ -28,9 +28,9 @@ export interface QueryOptions {
   /**
    * Whether the query builder will include just ColumnValues in the UI it displays.
    *
-   * If false (the default) the Query Builder UI will dispaly 3 tabs: Column Values, Filters and Ranges.
+   * If false (the default) the Query Builder UI will display 3 tabs: Column Values, Filters and Ranges.
    *
-   * This option is useful primarily if you aare running Search on your Server and want easily to translate the Adaptable Blotter Query JSON into something you can use.
+   * This option is useful primarily if you are running Server Searching and want more easily to translate the Adaptable Blotter Query JSON into something you can readily understand.
    *
    * **Default Value: false**
    */
@@ -39,18 +39,20 @@ export interface QueryOptions {
   /**
    * Whether or not to ignore case when running queries on text (string) columns.
    *
-   * If set to false then [StartsWith 'c'] will return false for the value 'Canada' but true for 'charlie'.
+   * If set to false (the default is 'true') then [StartsWith 'c'] will return false for the value 'Canada' but true for 'charlie'.
    *
    * **Default Value: true**
    */
   ignoreCaseInQueries?: boolean;
 
   /**
-   * Used when you want to provide the Adaptable Blotter with a list of column values each time its required (e.g. in Column Filters, when building Queries and in Bulk Update).
+   * Used when you want to dynamically provide the Adaptable Blotter with a list of column values each time its required (e.g. in Column Filters, or when building Queries or in Bulk Update).
    *
-   * It is called each time a query is built or filter is opened and it returns a promise that includes the Column Values whih the user (dev team) will provide each time it is needed.
+   * The property returns a promise that includes the Column Values whih the user (dev team) will provide each time it is needed.
    *
-   * If this not set the Adaptable Blottter will use PermittedColumnValues (in User Interface State) if they have been set.  Otherwise it will build a list of distince values for the column dynamically.
+   * If this not set the Adaptable Blottter will use PermittedColumnValues (in User Interface State) if they have been set.
+   *
+   * Otherwise it will build a list of distince values for the column dynamically.
    *
    *  **Default Value: null**
    */
@@ -75,7 +77,7 @@ export interface IServerColumnValues {
   /**
    * The values to display in the list.
    *
-   * Always sent as strings.
+   * Always sent as an array of strings irrespective of the DataType of the column.
    */
   ColumnValues: string[];
 }

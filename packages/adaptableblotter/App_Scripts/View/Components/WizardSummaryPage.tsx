@@ -28,11 +28,7 @@ export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {
 
     return (
       <WizardPanel bodyProps={{ padding: 0 }}>
-        <AdaptableObjectCollection
-          //
-          colItems={colItems}
-          items={summaryRows}
-        />
+        <AdaptableObjectCollection colItems={colItems} items={summaryRows} />
       </WizardPanel>
     );
   }

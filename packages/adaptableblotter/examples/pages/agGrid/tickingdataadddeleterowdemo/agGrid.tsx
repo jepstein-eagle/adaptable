@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+
+import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -6,47 +8,40 @@ import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
-import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
+/*
+Has pseudo ticking data together with some JSON that sets flashing in 3 columns
+This uses the agGrid updateRowData method which does NOT call cell value changed
+*/
+
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(5000);
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeWithSparkline(tradeData);
   const tickingDataHelper = new TickingDataHelper();
+  let rowCount: number = 25;
+  const tradeData: any = examplesHelper.getTrades(rowCount);
+
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    `sparklines-demo`
+    'ticking data add delete row'
   );
-
-  adaptableBlotterOptions.predefinedConfig = {
-    SparklineColumn: {
-      SparklineColumns: [
-        {
-          ColumnId: 'history',
-          SparklineType: 'Line',
-        },
-      ],
-    },
-  };
-  adaptableBlotterOptions.chartOptions = {
-    showModal: false,
-    displayOnStartUp: true,
-  };
-
+  adaptableBlotterOptions.predefinedConfig = json;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
-  global.adaptableblotter = adaptableblotter;
-
-  tickingDataHelper.startTickingDataagGridSetDataValue(gridOptions);
+  // turn on mimicing adding rows
+  tickingDataHelper.startTickingDataagGridAddRow(gridOptions, tradeData, rowCount);
+  // turn on mimicing removing rows
+  tickingDataHelper.startTickingDataagGridDeleteRow(gridOptions, tradeData, rowCount);
 }
+
+let json: PredefinedConfig = {};
 
 export default () => {
   useEffect(() => {

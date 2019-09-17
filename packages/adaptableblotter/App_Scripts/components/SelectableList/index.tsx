@@ -2,6 +2,7 @@ import * as React from 'react';
 import { SyntheticEvent, HTMLProps, useContext, useRef, MouseEvent, MutableRefObject } from 'react';
 
 import useProperty from '../utils/useProperty';
+import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 type SelectableListValues = {
   [key: string]: boolean;
@@ -33,7 +34,7 @@ export const useSelectionEvent = () => {
 
   return (event: SyntheticEvent, { index }: { index: number }) => {
     if (index === undefined) {
-      console.warn('No "index" was passed to the list item');
+      LoggingHelper.LogAdaptableBlotterWarning('No "index" was passed to the list item');
       return;
     }
 

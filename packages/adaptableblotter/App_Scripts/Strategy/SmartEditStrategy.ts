@@ -24,6 +24,7 @@ import {
   AdaptableBlotterMenuItem,
   ContextMenuInfo,
 } from '../Utilities/MenuItem';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -101,27 +102,30 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       };
     }
 
-    if (selectedCellInfo.Columns[0].DataType != DataType.Number) {
-      return {
-        Alert: {
-          Header: 'Smart Edit Error',
-          Msg:
-            'Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
-        },
-      };
-    }
-    if (selectedCellInfo.Columns[0].ReadOnly) {
-      return {
-        Alert: {
-          Header: 'Smart Edit Error',
-          Msg:
-            'Smart Edit is not permitted on readonly columns.\nPlease adjust the cell selection.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
-        },
-      };
+    let column: IColumn = selectedCellInfo.Columns[0];
+    if (column) {
+      if (column.DataType != DataType.Number) {
+        return {
+          Alert: {
+            Header: 'Smart Edit Error',
+            Msg:
+              'Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection.',
+            MessageType: MessageType.Error,
+            ShowAsPopup: true,
+          },
+        };
+      }
+      if (column.ReadOnly) {
+        return {
+          Alert: {
+            Header: 'Smart Edit Error',
+            Msg:
+              'Smart Edit is not permitted on readonly columns.\nPlease adjust the cell selection.',
+            MessageType: MessageType.Error,
+            ShowAsPopup: true,
+          },
+        };
+      }
     }
     return { ActionReturn: true };
   }
@@ -134,47 +138,50 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     let previewResults: IPreviewResult[] = [];
     let columnId: string = '';
     if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
-      columnId = selectedCellInfo.Columns[0].ColumnId;
+      let column: IColumn = selectedCellInfo.Columns[0];
+      if (column) {
+        columnId = column.ColumnId;
 
-      selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
-        let newValue: number;
-        switch (smartEditOperation) {
-          case MathOperation.Add:
-            newValue = Number(selectedCell.value) + smartEditValue;
-            break;
-          case MathOperation.Subtract:
-            newValue = Number(selectedCell.value) - smartEditValue;
-            break;
-          case MathOperation.Multiply:
-            newValue = Number(selectedCell.value) * smartEditValue;
-            break;
-          case MathOperation.Divide:
-            newValue = Number(selectedCell.value) / smartEditValue;
-            break;
-        }
-        //avoid the 0.0000000000x
-        newValue = parseFloat(newValue.toFixed(12));
+        selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
+          let newValue: number;
+          switch (smartEditOperation) {
+            case MathOperation.Add:
+              newValue = Number(selectedCell.value) + smartEditValue;
+              break;
+            case MathOperation.Subtract:
+              newValue = Number(selectedCell.value) - smartEditValue;
+              break;
+            case MathOperation.Multiply:
+              newValue = Number(selectedCell.value) * smartEditValue;
+              break;
+            case MathOperation.Divide:
+              newValue = Number(selectedCell.value) / smartEditValue;
+              break;
+          }
+          //avoid the 0.0000000000x
+          newValue = parseFloat(newValue.toFixed(12));
 
-        let dataChangedEvent: DataChangedInfo = {
-          OldValue: Number(selectedCell.value),
-          NewValue: newValue,
-          ColumnId: selectedCell.columnId,
-          IdentifierValue: selectedCell.primaryKeyValue,
-          Record: null,
-        };
+          let dataChangedEvent: DataChangedInfo = {
+            OldValue: Number(selectedCell.value),
+            NewValue: newValue,
+            ColumnId: selectedCell.columnId,
+            IdentifierValue: selectedCell.primaryKeyValue,
+            Record: null,
+          };
 
-        let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
-          dataChangedEvent
-        );
+          let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+            dataChangedEvent
+          );
 
-        let previewResult: IPreviewResult = {
-          Id: selectedCell.primaryKeyValue,
-          InitialValue: Number(selectedCell.value),
-          ComputedValue: newValue,
-          ValidationRules: validationRules,
-        };
-        previewResults.push(previewResult);
-      });
+          let previewResult: IPreviewResult = {
+            Id: selectedCell.primaryKeyValue,
+            InitialValue: Number(selectedCell.value),
+            ComputedValue: newValue,
+            ValidationRules: validationRules,
+          };
+          previewResults.push(previewResult);
+        });
+      }
     }
     return {
       ColumnId: columnId,

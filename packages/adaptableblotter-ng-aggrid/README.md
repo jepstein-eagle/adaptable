@@ -103,6 +103,22 @@ html.ab--theme-<THEME_NAME> {
 }
 ```
 
+and you also need to make sure that the theme name is included in the UserThemes property in the Theme section of Predefined Confing:
+
+ ```ts
+  export default {
+    Theme: {
+      UserThemes:[
+        {
+          Name:"blue",
+          Description:"Blue Theme",
+        }
+      ],
+      CurrentTheme: 'blue'
+    }  
+  } as PredefinedConfig;
+  ```
+
 There are a number of css variables that are available for customising a theme - see below (it's the contents of the dark theme)
 
 ```css

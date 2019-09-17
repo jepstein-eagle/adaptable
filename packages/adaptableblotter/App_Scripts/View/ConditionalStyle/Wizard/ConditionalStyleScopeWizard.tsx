@@ -13,7 +13,7 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
-import { Box, Flex } from 'rebass';
+import { Box, Flex, Text } from 'rebass';
 import Radio from '../../../components/Radio';
 import Dropdown from '../../../components/Dropdown';
 
@@ -59,7 +59,9 @@ export class ConditionalStyleScopeWizard
           <HelpBlock marginBottom={1}>
             Apply the Conditional Style to ALL cells in each matching row.
           </HelpBlock>
+
           <Radio
+            marginLeft={3}
             value="Row"
             checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row}
             onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
@@ -70,6 +72,7 @@ export class ConditionalStyleScopeWizard
           <HelpBlock marginBottom={1}>Apply the Conditional Style to a single Column</HelpBlock>
 
           <Radio
+            marginLeft={3}
             value="Column"
             checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column}
             onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
@@ -95,6 +98,7 @@ export class ConditionalStyleScopeWizard
               </HelpBlock>
 
               <Radio
+                marginLeft={3}
                 value="ColumnCategory"
                 checked={this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory}
                 onChange={(checked: boolean, e: React.SyntheticEvent) =>

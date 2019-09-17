@@ -1,5 +1,6 @@
 ﻿import { GridOptions, RowNode } from 'ag-grid-community';
-import { ITrade } from './ExamplesHelper';
+import { ITrade, ExamplesHelper } from './ExamplesHelper';
+import ArrayExtensions from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
 
 export class TickingDataHelper {
   startTickingDataHypergrid(grid: any) {
@@ -47,7 +48,7 @@ export class TickingDataHelper {
   // This DOES update the AB as agGrid fires an event
   startTickingDataagGridSetDataValue(gridOptions: GridOptions) {
     setInterval(() => {
-      const tradeId = this.generateRandomInt(0, 20);
+      const tradeId = this.generateRandomInt(0, 29);
       if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
         gridOptions.api.forEachNode((rowNode: RowNode) => {
           if (rowNode.group) {
@@ -73,16 +74,9 @@ export class TickingDataHelper {
           trade.setDataValue('bid', bid);
           trade.setDataValue('bloombergAsk', this.roundTo4Dp(ask + directionToAdd));
           trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - directionToAdd));
-
-          const notional = gridOptions.api!.getValue('notional', trade);
-          if (notional == 340) {
-            trade.setDataValue('notional', 4);
-          } else {
-            trade.setDataValue('notional', 340);
-          }
         });
       }
-    }, 2000);
+    }, 400);
   }
 
   startTickingDataagGridRowNodeSetData(gridOptions: GridOptions, rowData: any) {
@@ -158,6 +152,46 @@ export class TickingDataHelper {
           gridOptions.api!.updateRowData({ update: [trade] });
         }
       }, 3000);
+    }
+  }
+
+  startTickingDataagGridAddRow(gridOptions: GridOptions, rowData: any, rowCount: number) {
+    if (
+      gridOptions != null &&
+      gridOptions.api != null &&
+      gridOptions.api != undefined &&
+      rowData != null
+    ) {
+      let newRowCount: number = rowCount;
+      const examplesHelper = new ExamplesHelper();
+      setInterval(() => {
+        ++newRowCount;
+
+        const trade: ITrade = examplesHelper.createTrade(newRowCount);
+        if (trade) {
+          console.log('adding row with tradeid: ' + newRowCount);
+          gridOptions.api!.updateRowData({ add: [trade] });
+        }
+      }, 2000);
+    }
+  }
+
+  startTickingDataagGridDeleteRow(gridOptions: GridOptions, rowData: any, rowCount: number) {
+    if (
+      gridOptions != null &&
+      gridOptions.api != null &&
+      gridOptions.api != undefined &&
+      rowData != null
+    ) {
+      let deletedTradeIds: number[] = [];
+      setInterval(() => {
+        const tradeId = this.generateRandomInt(1, rowCount - 1);
+        if (ArrayExtensions.NotContainsItem(deletedTradeIds, tradeId)) {
+          deletedTradeIds.push(tradeId);
+          console.log('deleting row with tradeid: ' + tradeId);
+          gridOptions.api!.updateRowData({ remove: [rowData[tradeId]] });
+        }
+      }, 5000);
     }
   }
 

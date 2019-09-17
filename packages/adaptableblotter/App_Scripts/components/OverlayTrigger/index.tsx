@@ -12,6 +12,7 @@ import getOverlayStyle from './getOverlayStyle';
 import join from '../utils/join';
 import usePrevious from '../utils/usePrevious';
 import { getDocRect, getRect } from './utils';
+import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 export type ConstrainToType = ((node: HTMLElement) => HTMLElement) | string;
 
@@ -92,7 +93,7 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
   useEffect(() => {
     const target = (domRef as any).current.previousSibling;
     if (!target) {
-      console.warn(
+      LoggingHelper.LogAdaptableBlotterWarning(
         'No OverlayTrigger target - make sure you render a child inside the OverlayTrigger, which will be the overlay target'
       );
       return;

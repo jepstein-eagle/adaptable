@@ -1,5 +1,6 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter } from '../../App_Scripts/types';
+import LoggingHelper from '../../adaptableblotter/App_Scripts/Utilities/Helpers/LoggingHelper';
 
 interface ITrade {
   tradeId: number;
@@ -1170,7 +1171,10 @@ export class ExamplesHelper {
     try {
       return this.stringToDate(params.newValue, 'dd/mm/yyyy', '/');
     } catch (ex) {
-      console.error(`Error parsing the date value: ${params.newValue} and node : `, params.node);
+      LoggingHelper.LogAdaptableBlotterError(
+        `Error parsing the date value: ${params.newValue} and node : `,
+        params.node
+      );
       return null;
     }
   };
@@ -1200,7 +1204,7 @@ export class ExamplesHelper {
         return this.shortDateFormatter.format(params.value);
       }
     } catch (ex) {
-      console.error(
+      LoggingHelper.LogAdaptableBlotterError(
         `Error formatting the date for value: ${params.value} and node : `,
         params.node
       );

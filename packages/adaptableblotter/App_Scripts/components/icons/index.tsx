@@ -67,6 +67,7 @@ import colorFill from './color-fill';
 import checkBox from './check-box';
 import checkBoxOutline from './check-box-outline';
 import tabUnselected from './tab-unselected';
+import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 const allIcons = {
   assignment,
@@ -159,7 +160,7 @@ export const Icon = ({
   const IconCmp = (allIcons[name] || null) as ReactComponentLike;
 
   if (!IconCmp) {
-    console.warn('NO icon found for ' + name);
+    LoggingHelper.LogAdaptableBlotterWarning('NO icon found for ' + name);
     return <svg />;
   }
 

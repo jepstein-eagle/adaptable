@@ -1,6 +1,7 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter } from '../../App_Scripts/types';
 import { StarsCellRenderer } from './StarsCellRenderer';
+import LoggingHelper from '../../App_Scripts/Utilities/Helpers/LoggingHelper';
 
 export interface ITrade {
   tradeId: number;
@@ -764,7 +765,7 @@ export class ExamplesHelper {
       floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
-      sideBar: true,
+      sideBar: 'columns',
       rowSelection: 'multiple',
       columnTypes: {
         abColDefNumber: {},
@@ -997,7 +998,7 @@ export class ExamplesHelper {
       filter: true,
       resizable: true,
       // headerCheckboxSelection: true,
-      checkboxSelection: true,
+      //  checkboxSelection: true,
       cellRenderer: 'agAnimateShowChangeCellRenderer',
     });
     schema.push({
@@ -1752,7 +1753,10 @@ export class ExamplesHelper {
     try {
       return this.stringToDate(params.newValue, 'dd/mm/yyyy', '/');
     } catch (ex) {
-      console.error(`Error parsing the date value: ${params.newValue} and node : `, params.node);
+      LoggingHelper.LogAdaptableBlotterError(
+        `Error parsing the date value: ${params.newValue} and node : `,
+        params.node
+      );
       return null;
     }
   };
@@ -1782,7 +1786,7 @@ export class ExamplesHelper {
         return this.shortDateFormatter.format(params.value);
       }
     } catch (ex) {
-      console.error(
+      LoggingHelper.LogAdaptableBlotterError(
         `Error formatting the date for value: ${params.value} and node : `,
         params.node
       );

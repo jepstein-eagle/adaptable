@@ -8,6 +8,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import LoggingHelper from '../../../../adaptableblotter/App_Scripts/Utilities/Helpers/LoggingHelper';
 
 global.React = React;
 
@@ -24,7 +25,7 @@ export default () => (
   <AdaptableBlotterReact
     style={{ height: '100vh' }}
     onSearchChanged={(...args: any[]) => {
-      console.warn('search changed', args);
+      LoggingHelper.LogAdaptableBlotterWarning('search changed', args);
     }}
     onBlotterReady={api => {
       console.log('blotter ready!!!', api);

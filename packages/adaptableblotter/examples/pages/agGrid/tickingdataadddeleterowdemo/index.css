@@ -4,12 +4,14 @@ body,
   height: 100%;
 }
 
-#grid {
-  height: 95%;
-}
-
 html {
   font-family: “Helvetica Neue”, Helvetica, Arial, sans-serif;
 }
 
+#grid {
+  height: 88%;
+}
 
+.number-cell {
+  text-align: right;
+}
