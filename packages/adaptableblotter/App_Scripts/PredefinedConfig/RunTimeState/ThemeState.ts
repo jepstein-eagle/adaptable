@@ -48,7 +48,11 @@ export interface ThemeState extends RunTimeState {
   /**
    * User / Custom themes provided by the User.
    *
-   * Each User Theme has just 2 properties - the **name** of the css file that needs to be applied.  And a **description** of the theme (which will appear in the Theme Popup).
+   * Each User Theme has just 2 properties
+   *
+   * * the **name** of the css file that needs to be applied
+   *
+   * * a **description** of the theme (which will appear in the Theme Popup).
    *
    * To learn how to create a Custom Theme please refer to the [Online Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360025111951-Themes).
    */
