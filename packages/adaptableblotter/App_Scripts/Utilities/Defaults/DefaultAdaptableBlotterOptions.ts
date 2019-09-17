@@ -97,4 +97,8 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
       actionColumnFunctions: [],
     },
   },
+  partnerOptions: {
+    iPushPullConfig: undefined,
+    glue42Config: undefined,
+  },
 };

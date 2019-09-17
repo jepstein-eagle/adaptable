@@ -7,8 +7,8 @@ import { QueryOptions } from './QueryOptions';
 import { GeneralOptions } from './GeneralOptions';
 import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
-import { iPushPullConfig } from './iPushPullConfig';
 import { AdvancedOptions } from './AdvancedOptions';
+import { PartnerOptions } from './PartnerOptions';
 
 /**
  * AdaptableBlotterOptions is the class injected into the Adaptable Blotter at startup.
@@ -173,12 +173,5 @@ export interface AdaptableBlotterOptions {
    */
   advancedOptions?: AdvancedOptions;
 
-  /**
-   * Configuration settings for iPushPull users.
-   *
-   * Required if using iPushPull to display / send live report data.
-   *
-   * **NOTE: a valid iPushPull licence is required to access this functionality**
-   */
-  iPushPullConfig?: iPushPullConfig;
+  partnerOptions?: PartnerOptions;
 }

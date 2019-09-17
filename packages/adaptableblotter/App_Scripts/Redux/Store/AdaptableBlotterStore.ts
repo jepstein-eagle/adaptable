@@ -2384,7 +2384,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               !actionTyped.Folder
             ) {
               iPushPullHelper
-                .GetDomainPages(blotter.blotterOptions.iPushPullConfig.api_key)
+                .GetDomainPages(blotter.blotterOptions.partnerOptions.iPushPullConfig.api_key)
                 .then((domainpages: IPPDomain[]) => {
                   middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                   middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2426,7 +2426,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
                 iPushPullHelper
-                  .GetDomainPages(blotter.blotterOptions.iPushPullConfig.api_key)
+                  .GetDomainPages(blotter.blotterOptions.partnerOptions.iPushPullConfig.api_key)
                   .then((domainpages: IPPDomain[]) => {
                     middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));

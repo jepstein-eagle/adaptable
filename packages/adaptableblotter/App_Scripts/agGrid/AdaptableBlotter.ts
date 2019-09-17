@@ -291,7 +291,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     // set up iPushPull
-    iPushPullHelper.init(this.blotterOptions!.iPushPullConfig);
+    iPushPullHelper.init(this.blotterOptions!.partnerOptions.iPushPullConfig);
 
     // set up Glue42 - note this is currently not working in the browser but will be done shortly
     if (Glue42Helper.isRunningGlue42()) {

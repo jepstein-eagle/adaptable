@@ -290,7 +290,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.filterContainer.style.visibility = 'hidden';
     this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer);
 
-    iPushPullHelper.init(this.blotterOptions.iPushPullConfig);
+    iPushPullHelper.init(this.blotterOptions.partnerOptions.iPushPullConfig);
 
     this.adaptableBlotterStore.Load.then(
       () => this.strategies.forEach(strat => strat.initializeWithRedux()),
