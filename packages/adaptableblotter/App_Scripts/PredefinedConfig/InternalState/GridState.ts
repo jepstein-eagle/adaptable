@@ -14,4 +14,6 @@ export interface GridState extends InternalState {
   CellSummary: ICellSummmary;
   IsQuickFilterActive: boolean;
   MainMenuItems: AdaptableBlotterMenuItem[];
+  IsGlue42Running: boolean;
+  IsIPushPullRunning: boolean;
 }

@@ -27,10 +27,12 @@ export interface IGlue42ColumnInfo {
 let glue42office: any; // =   Glue4Office();
 let excelAPIEntryPoint: any;
 
-export async function init() {
+export async function init(blotter: IAdaptableBlotter) {
   try {
     glue42office = await Glue4Office();
     excelAPIEntryPoint = glue42office.excel;
+    // NOTE by Jonny, 18/9/19:  you will need to set this to true here if you want it to work
+    // something like blotter.api.gridApi.setGlue42On();
   } catch (error) {
     console.log(error);
   }
@@ -41,6 +43,7 @@ export function isRunningGlue42(): boolean {
    * Checks if the glue4office.js file is referenced and if we are running inside of a Glue42 container.
    * v2 will support browser.
    */
+
   return false; // typeof window !== "undefined" && "glue42gd" in window && "Glue4Office" in window;
 }
 

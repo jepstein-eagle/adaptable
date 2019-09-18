@@ -24,6 +24,8 @@ export const GRID_QUICK_FILTER_BAR_SHOW = 'GRID_QUICK_FILTER_BAR_SHOW';
 export const GRID_QUICK_FILTER_BAR_HIDE = 'GRID_QUICK_FILTER_BAR_HIDE';
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
+export const SET_GLUE42_ON = 'SET_GLUE42_ON';
+export const SET_GLUE42_OFF = 'SET_GLUE42_OFF';
 
 export interface GridSetColumnsAction extends Redux.Action {
   Columns: IColumn[];
@@ -78,6 +80,10 @@ export interface FilterFormHideAction extends Redux.Action {}
 export interface SetMainMenuItemsAction extends Redux.Action {
   MenuItems: AdaptableBlotterMenuItem[];
 }
+
+export interface SetGlue42OnAction extends Redux.Action {}
+
+export interface SetGlue42OffAction extends Redux.Action {}
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
   type: GRID_SET_COLUMNS,
@@ -153,6 +159,13 @@ export const FilterFormHide = (): FilterFormHideAction => ({
   type: FILTER_FORM_HIDE,
 });
 
+export const SetGlue42On = (): SetGlue42OnAction => ({
+  type: SET_GLUE42_ON,
+});
+export const SetGlue42Off = (): SetGlue42OffAction => ({
+  type: SET_GLUE42_OFF,
+});
+
 export const SetMainMenuItems = (
   MenuItems: AdaptableBlotterMenuItem[]
 ): SetMainMenuItemsAction => ({
@@ -168,6 +181,8 @@ const initialGridState: GridState = {
   CellSummary: null,
   IsQuickFilterActive: false,
   MainMenuItems: EMPTY_ARRAY,
+  IsGlue42Running: false,
+  IsIPushPullRunning: false,
 };
 
 export const GridReducer: Redux.Reducer<GridState> = (
@@ -219,6 +234,10 @@ export const GridReducer: Redux.Reducer<GridState> = (
       );
       return Object.assign({}, state, { MainMenuItems: menuItems });
     }
+    case SET_GLUE42_ON:
+      return Object.assign({}, state, { IsGlue42Running: true });
+    case SET_GLUE42_OFF:
+      return Object.assign({}, state, { IsGlue42Running: false });
     default:
       return state;
   }

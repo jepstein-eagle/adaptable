@@ -2947,6 +2947,8 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
     GridRedux.SET_MAIN_MENUITEMS,
+    GridRedux.SET_GLUE42_ON,
+    GridRedux.SET_GLUE42_OFF,
 
     PopupRedux.POPUP_SHOW_SCREEN,
     PopupRedux.POPUP_HIDE_SCREEN,

@@ -295,7 +295,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // set up Glue42 - note this is currently not working in the browser but will be done shortly
     if (Glue42Helper.isRunningGlue42()) {
-      Glue42Helper.init();
+      Glue42Helper.init(this);
     }
 
     // Set up strategies - we set up all the strategies suitable for the vendor grid

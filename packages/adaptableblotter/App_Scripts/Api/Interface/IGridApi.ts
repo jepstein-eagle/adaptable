@@ -78,4 +78,8 @@ export interface IGridApi {
    * @param gridCells the new cells
    */
   setGridCellBatch(gridCells: GridCell[]): void;
+
+  setGlue42On(): void;
+
+  setGlue42Off(): void;
 }

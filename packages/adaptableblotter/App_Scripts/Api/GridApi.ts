@@ -7,6 +7,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {
@@ -59,5 +60,12 @@ export class GridApi extends ApiBase implements IGridApi {
 
   public setGridCellBatch(gridCells: GridCell[]): void {
     this.blotter.setValueBatch(gridCells);
+  }
+
+  public setGlue42On(): void {
+    this.dispatchAction(GridRedux.SetGlue42On());
+  }
+  public setGlue42Off(): void {
+    this.dispatchAction(GridRedux.SetGlue42Off());
   }
 }
