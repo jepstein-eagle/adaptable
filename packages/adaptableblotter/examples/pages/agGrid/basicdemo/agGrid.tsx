@@ -28,7 +28,7 @@ function InitAdaptableBlotter() {
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    `basic-demo` // ${Date.now()}`
+    `basic-demo1` // ${Date.now()}`
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
@@ -50,7 +50,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-  global.adaptableblotter = adaptableblotter;
+  // global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {};

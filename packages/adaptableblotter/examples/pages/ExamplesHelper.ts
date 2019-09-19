@@ -765,6 +765,7 @@ export class ExamplesHelper {
       floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
+      rowHeight: 30,
       sideBar: 'columns',
       rowSelection: 'multiple',
       columnTypes: {
