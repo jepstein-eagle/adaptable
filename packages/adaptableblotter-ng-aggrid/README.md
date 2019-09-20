@@ -190,7 +190,7 @@ That's all the css you have to write for defining a theme - in fact, you can cho
 
 ### Using with SASS
 
-##### When using sass, in order to use sass variables as values for css properties, you have to use interpolation!!!
+#### When using sass, in order to use sass variables as values for css properties, you have to use interpolation!!!
 
 ```scss
 $theme-color: #fea7ff;
