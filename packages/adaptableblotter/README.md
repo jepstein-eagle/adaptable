@@ -187,6 +187,18 @@ html.ab--theme-my-theme {
 
 That's all the css you have to write for defining a theme - in fact, you can choose which of the above colors/variables to define - you don't have to define them all. Start incrementally, and work your way up as you need - use the dark theme above as an example.
 
+### Using with SASS
+
+##### When using sass, in order to use sass variables as values for css properties, you have to use interpolation!!!
+
+```scss
+$theme-color: #fea7ff;
+
+html.ab--theme-light {
+  --ab-cmp-dashboardpanel_header__background: #{$theme-color}; /* use interpolation ! */
+}
+```
+
 ### Styling icons
 
 The AdaptableBlotter uses inline SVG for icons, since that's very performant and doesn't require any additional download.
