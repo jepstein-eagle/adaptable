@@ -1956,7 +1956,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // must be a good reason why we don't use it
 
       if (this.gridOptions.columnApi.isPivotMode) {
-        console.log('cannot edit when pivot');
+        //  console.log('cannot edit when pivot');
         return;
       }
       const editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex]

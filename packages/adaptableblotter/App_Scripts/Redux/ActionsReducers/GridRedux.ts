@@ -255,10 +255,8 @@ export const GridReducer: Redux.Reducer<GridState> = (
     case SET_GLUE42_OFF:
       return Object.assign({}, state, { IsGlue42Running: false });
     case SET_PIVOT_MODE_ON:
-      console.log('setting pivot mode on');
       return Object.assign({}, state, { IsGridInPivotMode: true });
     case SET_PIVOT_MODE_OFF:
-      console.log('setting pivot mode off');
       return Object.assign({}, state, { IsGridInPivotMode: false });
     default:
       return state;

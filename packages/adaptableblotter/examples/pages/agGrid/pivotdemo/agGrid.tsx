@@ -25,6 +25,10 @@ function InitAdaptableBlotter() {
     'pivot-demo'
   );
 
+  adaptableBlotterOptions.filterOptions = {
+    useVendorFilterFormStyle: true,
+  };
+
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
