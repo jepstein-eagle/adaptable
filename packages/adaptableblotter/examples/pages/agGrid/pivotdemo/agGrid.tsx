@@ -27,6 +27,7 @@ function InitAdaptableBlotter() {
 
   adaptableBlotterOptions.filterOptions = {
     useVendorFilterFormStyle: true,
+    autoApplyFilter: false,
   };
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;

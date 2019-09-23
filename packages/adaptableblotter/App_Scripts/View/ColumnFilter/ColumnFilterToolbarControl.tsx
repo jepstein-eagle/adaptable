@@ -46,12 +46,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let collapsedText = ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters)
-      ? 'No Filters'
-      : ArrayExtensions.hasOneItem(this.props.ColumnFilters)
-      ? '1 Filter'
-      : this.props.ColumnFilters.length + ' Filters';
-
     let activeFiltersPanel = (
       <ActiveFiltersPanel
         Columns={this.props.Columns}
@@ -87,15 +81,18 @@ class ColumnFilterToolbarControlComponent extends React.Component<
             />
           </>
         )}
-        <CheckBox
-          marginLeft={3}
-          checked={this.props.IsQuickFilterActive}
-          onChange={(checked: boolean) => {
-            checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
-          }}
-        >
-          Quick Filter
-        </CheckBox>
+
+        {!this.props.Blotter.api.gridApi.IsGridInPivotMode() && (
+          <CheckBox
+            marginLeft={3}
+            checked={this.props.IsQuickFilterActive}
+            onChange={(checked: boolean) => {
+              checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
+            }}
+          >
+            Quick Filter
+          </CheckBox>
+        )}
       </Flex>
     );
 

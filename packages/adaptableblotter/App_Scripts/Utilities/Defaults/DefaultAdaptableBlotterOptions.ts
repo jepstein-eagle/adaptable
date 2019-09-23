@@ -89,7 +89,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     showMissingPrimaryKeyWarning: true,
     preventDuplicatePrimaryKeyValues: true,
     serverSearchOption: 'None',
-    showAdaptableBlotterToolPanel: true,
+    showAdaptableBlotterToolPanel: false,
     // checkIfLatestVersionOnStartup: true,
   },
   advancedOptions: {

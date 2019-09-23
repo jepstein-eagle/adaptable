@@ -527,6 +527,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
     let startIndex: number = 0;
 
+    if (this.api.gridApi.IsGridInPivotMode()) {
+      return;
+    }
     //  this is not quite right as it assumes that only the first column can be grouped
     //  but lets do this for now and then refine and refactor later to deal with weirder use cases
     if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
