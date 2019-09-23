@@ -16,7 +16,7 @@
   &__text {
     color: var(--ab-cmp-dropdown__color);
 
-    padding: var(--ab-space-2);
+    padding: var(--ab-cmp-dropdown__padding);
     pointer-events: none;
     position: relative;
     cursor: pointer;

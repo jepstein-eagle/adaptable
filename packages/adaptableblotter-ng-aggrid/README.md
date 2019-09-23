@@ -103,7 +103,7 @@ html.ab--theme-<THEME_NAME> {
 }
 ```
 
-and you also need to make sure that the theme name is included in the UserThemes property in the Theme section of Predefined Confing:
+and you also need to make sure that the theme name is included in the UserThemes property in the Theme section of Predefined Config:
 
  ```ts
   export default {
@@ -119,9 +119,12 @@ and you also need to make sure that the theme name is included in the UserThemes
   } as PredefinedConfig;
   ```
 
-There are a number of css variables that are available for customising a theme - see below (it's the contents of the dark theme)
+There are a number of css variables that are available for customizing a theme - see below (it's the contents of the dark theme)
 
 ```css
+/** 
+ * This is the whole source for the dark theme - it's all there is to it!
+ */ 
 html.ab--theme-dark {
   /* this is here so we detect when the dark theme has been correctly loaded */
   --ab-theme-loaded: dark;
@@ -152,7 +155,7 @@ html.ab--theme-dark {
 }
 ```
 
-In adition to the above variables, the following are also available
+In addition to the above variables, the following are also available
 
 ```css
 html.ab--theme-my-theme {
@@ -185,6 +188,35 @@ html.ab--theme-my-theme {
 
 That's all the css you have to write for defining a theme - in fact, you can choose which of the above colors/variables to define - you don't have to define them all. Start incrementally, and work your way up as you need - use the dark theme as an example.
 
+### Using with SASS
+
+#### When using sass, in order to use sass variables as values for css properties, you have to use interpolation!!!
+
+```scss
+$theme-color: #fea7ff;
+
+html.ab--theme-light {
+  --ab-cmp-dashboardpanel_header__background: #{$theme-color}; /* use interpolation ! */
+}
+```
+
+
+### Styling icons
+
+The AdaptableBlotter uses inline SVG for icons, since that's very performant and doesn't require any additional download.
+
+However, you might want to style icons differently - in this case, you can customize that through css. Every icon has the `ab-Icon` css class, and also `ab-Icon--NAME` where `NAME` is the name of the icon. So for example, if you want to use a background image, you can do the following:
+
+
+```css
+.ab-Icon--build path {
+  visibility: hidden; /* to hide the contents of the actual SVG */
+}
+.ab-Icon--build {
+  background-image: url(...);
+  background-size: cover;
+}
+```
 
 ## Inputs
 

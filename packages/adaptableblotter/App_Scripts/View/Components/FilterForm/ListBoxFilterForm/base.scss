@@ -1,0 +1,25 @@
+.ab-ListBoxFilterForm {
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  margin-Bottom: 0; 
+  &--vendor-style {
+    --ab-cmp-dropdown__border-radius: 0;
+    --ab-cmp-input__border-radius: 0;
+    --ab-cmp-input__padding: 0;
+    --ab-cmp-dropdown__padding: 3px;
+    --ab-focus__box-shadow: 0 0 3px 0px var(--ab-color-accent);
+
+    .ab-FieldWrap {
+      border-radius: 0;
+    }
+  }
+}
+
+html.ab--theme-dark .ab-ListBoxFilterForm--vendor-style {
+  --ab-color-inputborder: white;
+  --ab-cmp-input__border: 1px solid white;
+  --ab-cmp-dropdown__border: 1px solid white;
+  
+ 
+}

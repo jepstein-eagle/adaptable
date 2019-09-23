@@ -7,6 +7,7 @@
  * filterOptions = {
  *  indicateFilteredColumns: false,
  *  useAdaptableBlotterFilterForm: false,
+ *  useVendorFilterFormStyle: true,
  *  useAdaptableBlotterQuickFilter: false,
  *  autoApplyFilter: false,
  *  filterActionOnUserDataChange: {
@@ -35,6 +36,16 @@ export interface FilterOptions {
    * **Default Value: true**
    */
   useAdaptableBlotterFilterForm?: boolean;
+
+  /**
+   * Only applicable when the AdaptableBlotter filter form is being used.
+   *
+   * By default, the filter form will be styled to match the AdaptableBlotter styles. Setting this to `true` will style it to match the styling of the current vendor grid.
+   *
+   * **Default Value: false**
+   */
+  useVendorFilterFormStyle?: boolean;
+
   /**
    * Whether to use the Adaptable Blotter quick filter row or the one supplied by the Vendor grid.
    *

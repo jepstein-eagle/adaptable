@@ -55,6 +55,7 @@ type TypeProps = {
   as?: any;
   name?: string;
   value?: any;
+  variant?: 'default' | 'agGrid';
   onChange?: (checked: boolean, event: SyntheticEvent) => void;
   children?: ReactNode;
   gapDistance?: number | string;
@@ -69,6 +70,7 @@ const CheckBox = ({
   onChange,
   value,
   name,
+  variant = 'default',
   gapDistance = 'var(--ab-space-1)',
   childrenPosition = 'end',
   as = 'label',
@@ -132,10 +134,14 @@ const CheckBox = ({
         onChange={onInputChange}
       />
 
-      <CheckSvg viewBox="0 0 40 40" height={getSize(19)}>
-        <rect x="2" y="2" width="36" height="36" />
-        <polyline points="9,22 18,30 33,14" />
-      </CheckSvg>
+      {variant !== 'agGrid' ? (
+        <CheckSvg viewBox="0 0 40 40" height={getSize(19)}>
+          <rect x="2" y="2" width="36" height="36" />
+          <polyline points="9,22 18,30 33,14" />
+        </CheckSvg>
+      ) : (
+        <span className={`ag-icon ag-icon-checkbox-${computedChecked ? 'checked' : 'unchecked'}`} />
+      )}
 
       {afterGap}
       {after}
