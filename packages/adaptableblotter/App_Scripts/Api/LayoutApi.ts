@@ -31,6 +31,10 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
     return this.getBlotterState().Layout.CurrentLayout;
   }
 
+  public isDefaultLayout(): boolean {
+    return this.getCurrentLayoutName() == DEFAULT_LAYOUT;
+  }
+
   public getLayoutByName(layoutName: string): Layout {
     let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
     if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {

@@ -68,4 +68,16 @@ export class GridApi extends ApiBase implements IGridApi {
   public setGlue42Off(): void {
     this.dispatchAction(GridRedux.SetGlue42Off());
   }
+
+  public setPivotModeOn(): void {
+    this.dispatchAction(GridRedux.SetPivotModeOn());
+  }
+
+  public setPivotModeOff(): void {
+    this.dispatchAction(GridRedux.SetPivotModeOff());
+  }
+
+  public IsGridInPivotMode(): boolean {
+    return this.getGridState().IsGridInPivotMode;
+  }
 }

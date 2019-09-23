@@ -1497,6 +1497,7 @@ export class ExamplesHelper {
       sortable: true,
       filter: true,
       resizable: true,
+      enableRowGroup: true,
       // headerCheckboxSelection: true,
       checkboxSelection: true,
       cellRenderer: 'agAnimateShowChangeCellRenderer',
@@ -1518,6 +1519,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Notional',
       field: 'notional',
+      enableRowGroup: true,
       enableValue: true,
       editable: true,
       sortable: true,
@@ -1628,6 +1630,7 @@ export class ExamplesHelper {
       enableRowGroup: true,
       type: 'abColDefString',
       resizable: true,
+      enablePivot: true,
     });
     schema.push({
       headerName: 'B/O Spread',

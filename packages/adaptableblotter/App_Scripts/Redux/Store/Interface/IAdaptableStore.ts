@@ -37,6 +37,7 @@ import { SystemFilterState } from '../../../PredefinedConfig/DesignTimeState/Sys
 import { ActionColumnState } from '../../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { SparklineColumnState } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { NamedFilterState } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { PartnerConfigState } from '../../../PredefinedConfig/RunTimeState/PartnerConfigstate';
 
 export interface AdaptableBlotterState {
   [s: string]: ConfigState;
@@ -52,6 +53,7 @@ export interface AdaptableBlotterState {
   SystemFilter: SystemFilterState;
   ActionColumn: ActionColumnState;
   SparklineColumn: SparklineColumnState;
+  PartnerConfig: PartnerConfigState;
 
   // Set at design time and / or run time => only state is persisted
   AdvancedSearch: AdvancedSearchState;

@@ -78,6 +78,8 @@ import { NamedFilterApi } from './NamedFilterApi';
 import { INamedFilterApi } from './Interface/INamedFilterApi';
 import { ISparklineColumnApi } from './Interface/ISparklineColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
+import { IPartnerConfigAPI } from './Interface/IPartnerConfigAPI';
+import { PartnerConfigAPI } from './PartnerConfigAPI';
 
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
@@ -119,6 +121,7 @@ export class BlotterApi implements IBlotterApi {
   public userInterfaceApi: IUserInterfaceApi;
   public userFilterApi: IUserFilterApi;
   public namedFilterApi: INamedFilterApi;
+  public partnerConfigApi: IPartnerConfigAPI;
 
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
@@ -160,6 +163,7 @@ export class BlotterApi implements IBlotterApi {
     this.userInterfaceApi = new UserInterfaceApi(blotter);
     this.userFilterApi = new UserFilterApi(blotter);
     this.namedFilterApi = new NamedFilterApi(blotter);
+    this.partnerConfigApi = new PartnerConfigAPI(blotter);
 
     this.internalApi = new InternalApi(blotter);
   }

@@ -3,9 +3,14 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
-
+import '../../../../App_Scripts/themes/dark.scss';
+import './index.css';
 import { GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import {
+  IAdaptableBlotter,
+  AdaptableBlotterOptions,
+  PredefinedConfig,
+} from '../../../../App_Scripts/types';
 
 import { ExamplesHelper } from '../../ExamplesHelper';
 /*
@@ -18,14 +23,22 @@ var adaptableblotter: IAdaptableBlotter;
 export function runQuickSearchViaAPI() {
   const element: any = document.getElementById('txtQuickSearchText');
   adaptableblotter.api.quickSearchApi.applyQuickSearch(element.value);
-  // adaptableblotter.api.themeApi.setLightTheme();
 }
 
 export function clearQuickSearchViaAPI() {
   const element: any = document.getElementById('txtQuickSearchText');
   element.value = '';
   adaptableblotter.api.quickSearchApi.clearQuickSearch();
-  // adaptableblotter.api.themeApi.setDarkTheme();
+}
+
+export function setDarkTheme() {
+  adaptableblotter.api.themeApi.loadDarkTheme();
+}
+export function setLightTheme() {
+  adaptableblotter.api.themeApi.loadLightTheme();
+}
+export function setCustomTheme() {
+  adaptableblotter.api.themeApi.loadTheme('custom-theme');
 }
 
 function InitAdaptableBlotter() {
@@ -36,9 +49,25 @@ function InitAdaptableBlotter() {
     gridOptions,
     'api external demo'
   );
+  adaptableBlotterOptions.predefinedConfig = demoConfig;
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
+
+let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Theme'],
+  },
+  Theme: {
+    UserThemes: [
+      {
+        Name: 'custom-theme',
+        Description: 'A Custom theme',
+      },
+    ],
+    CurrentTheme: 'light',
+  },
+};
 
 export default () => {
   useEffect(() => {
@@ -63,6 +92,9 @@ export default () => {
         Run
       </button>
       <button onClick={() => clearQuickSearchViaAPI()}>Clear</button>
+      <button onClick={() => setDarkTheme()}>Set Dark Theme</button>
+      <button onClick={() => setLightTheme()}>Set Light Theme</button>
+      <button onClick={() => setCustomTheme()}>Set Custom Theme</button>
     </div>
   );
 };

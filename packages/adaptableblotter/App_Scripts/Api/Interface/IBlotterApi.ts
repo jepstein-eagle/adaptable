@@ -37,6 +37,7 @@ import { IAuditEventApi } from './IAuditEventApi';
 import { IActionColumnApi } from './IActionColumnApi';
 import { ISparklineColumnApi } from './ISparklineColumnApi';
 import { INamedFilterApi } from './INamedFilterApi';
+import { IPartnerConfigAPI } from './IPartnerConfigAPI';
 
 /**
  * The Blotter API (which implements the **IBlotterAPI** interface) provides developers with run-time access to the Adaptable Blotter.
@@ -51,7 +52,7 @@ import { INamedFilterApi } from './INamedFilterApi';
  *
  * The Blotter API consists of over 35 properties.
  *
- * Eeach of these properties is a class that contains a set of API method grouped either by Adaptable Blotter Function (e.g. *AdvancedSearchAPI*) or type (e.g. *AuditEventApi*)
+ * Each of these properties is a class that contains a set of API method grouped either by Adaptable Blotter Function (e.g. *AdvancedSearchAPI*) or type (e.g. *AuditEventApi*)
  */
 
 export interface IBlotterApi {
@@ -64,6 +65,11 @@ export interface IBlotterApi {
    * Provides access to the *Sparkline Column* functionality
    */
   sparklineColumnApi: ISparklineColumnApi;
+
+  /**
+   * Enables developers to set up configuration when using our Partner tools (like iPushPull and Glue42)
+   */
+  partnerConfigApi: IPartnerConfigAPI;
 
   /**
    * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_predefinedconfig_runtimestate_advancedsearchstate_.advancedsearchstate.html).

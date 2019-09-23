@@ -8,7 +8,6 @@ import { GeneralOptions } from './GeneralOptions';
 import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { AdvancedOptions } from './AdvancedOptions';
-import { PartnerOptions } from './PartnerOptions';
 
 /**
  * AdaptableBlotterOptions is the class injected into the Adaptable Blotter at startup.
@@ -172,6 +171,4 @@ export interface AdaptableBlotterOptions {
    * Currently it contains properties for managing fumctions which developers provide (that cannot be stored in the 'normal' way with JSON).
    */
   advancedOptions?: AdvancedOptions;
-
-  partnerOptions?: PartnerOptions;
 }

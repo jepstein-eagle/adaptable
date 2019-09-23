@@ -118,9 +118,13 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   render(): any {
-    let controlType: string = this.props.CurrentColumn.DataType == DataType.Date ? 'date' : 'text';
+    let controlType: string =
+      this.props.CurrentColumn && this.props.CurrentColumn.DataType == DataType.Date
+        ? 'date'
+        : 'text';
 
-    return this.props.CurrentColumn.Filterable &&
+    return this.props.CurrentColumn &&
+      this.props.CurrentColumn.Filterable &&
       this.props.CurrentColumn.DataType != DataType.Boolean ? (
       <Input
         style={{

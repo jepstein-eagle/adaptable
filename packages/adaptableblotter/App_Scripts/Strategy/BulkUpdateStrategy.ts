@@ -47,6 +47,19 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
   public CheckCorrectCellSelection(): BulkUpdateValidationResult {
     let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+
+    if (this.blotter.api.gridApi.IsGridInPivotMode()) {
+      return {
+        IsValid: false,
+        Alert: {
+          Header: 'Bulk Update Error',
+          Msg: 'Cannot edit while Grid is in Pivot Mode.',
+          MessageType: MessageType.Error,
+          ShowAsPopup: true,
+        },
+      };
+    }
+
     if (selectedCellInfo == null || ArrayExtensions.IsNullOrEmpty(selectedCellInfo.Columns)) {
       return {
         IsValid: false,
@@ -95,41 +108,43 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
     let columnId: string = '';
-    if (selectedCellInfo != null && selectedCellInfo.Columns.length > 0) {
-      columnId = selectedCellInfo.Columns[0].ColumnId;
-      let typedBulkUpdateValue: any;
-      switch (selectedCellInfo.Columns[0].DataType) {
-        case DataType.Number:
-          typedBulkUpdateValue = Number(bulkUpdateValue);
-          break;
-        case DataType.String:
-          typedBulkUpdateValue = bulkUpdateValue;
-          break;
-        case DataType.Date:
-          typedBulkUpdateValue = new Date(bulkUpdateValue);
-          break;
+    if (!this.blotter.api.gridApi.IsGridInPivotMode()) {
+      if (selectedCellInfo != null && selectedCellInfo.Columns.length > 0) {
+        columnId = selectedCellInfo.Columns[0].ColumnId;
+        let typedBulkUpdateValue: any;
+        switch (selectedCellInfo.Columns[0].DataType) {
+          case DataType.Number:
+            typedBulkUpdateValue = Number(bulkUpdateValue);
+            break;
+          case DataType.String:
+            typedBulkUpdateValue = bulkUpdateValue;
+            break;
+          case DataType.Date:
+            typedBulkUpdateValue = new Date(bulkUpdateValue);
+            break;
+        }
+
+        selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
+          let dataChangedEvent: DataChangedInfo = {
+            OldValue: selectedCell.value,
+            NewValue: typedBulkUpdateValue,
+            ColumnId: selectedCell.columnId,
+            IdentifierValue: selectedCell.primaryKeyValue,
+            Record: null,
+          };
+
+          let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+            dataChangedEvent
+          );
+          let previewResult: IPreviewResult = {
+            Id: selectedCell.primaryKeyValue,
+            InitialValue: selectedCell.value,
+            ComputedValue: typedBulkUpdateValue,
+            ValidationRules: validationRules,
+          };
+          previewResults.push(previewResult);
+        });
       }
-
-      selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
-        let dataChangedEvent: DataChangedInfo = {
-          OldValue: selectedCell.value,
-          NewValue: typedBulkUpdateValue,
-          ColumnId: selectedCell.columnId,
-          IdentifierValue: selectedCell.primaryKeyValue,
-          Record: null,
-        };
-
-        let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
-          dataChangedEvent
-        );
-        let previewResult: IPreviewResult = {
-          Id: selectedCell.primaryKeyValue,
-          InitialValue: selectedCell.value,
-          ComputedValue: typedBulkUpdateValue,
-          ValidationRules: validationRules,
-        };
-        previewResults.push(previewResult);
-      });
     }
     return {
       ColumnId: columnId,

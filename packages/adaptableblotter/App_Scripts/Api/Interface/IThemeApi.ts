@@ -13,21 +13,21 @@ export interface IThemeApi {
    * Sets the Adaptable Blotter to use the given theme
    * @param theme name of the theme to apply
    */
-  setTheme(theme: string): void;
+  loadTheme(theme: string): void;
 
   /**
    * Sets the Light Theme of the Adaptable Blotter
    *
    * This will also update the underlying vendor grid to match
    */
-  setLightTheme(): void;
+  loadLightTheme(): void;
 
   /**
    * Sets the Dark Theme of the Adaptable Blotter
    *
    * This will also update the underlying vendor grid theme to match
    */
-  setDarkTheme(): void;
+  loadDarkTheme(): void;
 
   /**
    * Retrieves the name of the Current Theme

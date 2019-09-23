@@ -26,6 +26,8 @@ export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
 export const SET_GLUE42_ON = 'SET_GLUE42_ON';
 export const SET_GLUE42_OFF = 'SET_GLUE42_OFF';
+export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
+export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
 
 export interface GridSetColumnsAction extends Redux.Action {
   Columns: IColumn[];
@@ -84,6 +86,10 @@ export interface SetMainMenuItemsAction extends Redux.Action {
 export interface SetGlue42OnAction extends Redux.Action {}
 
 export interface SetGlue42OffAction extends Redux.Action {}
+
+export interface SetPivotModeOnAction extends Redux.Action {}
+
+export interface SetPivotModeOffAction extends Redux.Action {}
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
   type: GRID_SET_COLUMNS,
@@ -162,8 +168,17 @@ export const FilterFormHide = (): FilterFormHideAction => ({
 export const SetGlue42On = (): SetGlue42OnAction => ({
   type: SET_GLUE42_ON,
 });
+
 export const SetGlue42Off = (): SetGlue42OffAction => ({
   type: SET_GLUE42_OFF,
+});
+
+export const SetPivotModeOn = (): SetPivotModeOnAction => ({
+  type: SET_PIVOT_MODE_ON,
+});
+
+export const SetPivotModeOff = (): SetPivotModeOffAction => ({
+  type: SET_PIVOT_MODE_OFF,
 });
 
 export const SetMainMenuItems = (
@@ -183,6 +198,7 @@ const initialGridState: GridState = {
   MainMenuItems: EMPTY_ARRAY,
   IsGlue42Running: false,
   IsIPushPullRunning: false,
+  IsGridInPivotMode: false,
 };
 
 export const GridReducer: Redux.Reducer<GridState> = (
@@ -238,6 +254,12 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { IsGlue42Running: true });
     case SET_GLUE42_OFF:
       return Object.assign({}, state, { IsGlue42Running: false });
+    case SET_PIVOT_MODE_ON:
+      console.log('setting pivot mode on');
+      return Object.assign({}, state, { IsGridInPivotMode: true });
+    case SET_PIVOT_MODE_OFF:
+      console.log('setting pivot mode off');
+      return Object.assign({}, state, { IsGridInPivotMode: false });
     default:
       return state;
   }

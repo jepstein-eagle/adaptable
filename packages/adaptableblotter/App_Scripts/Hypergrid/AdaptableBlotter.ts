@@ -290,7 +290,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.filterContainer.style.visibility = 'hidden';
     this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer);
 
-    iPushPullHelper.init(this.blotterOptions.partnerOptions.iPushPullConfig);
+    //iPushPullHelper.init(this.blotterOptions.partnerOptions.iPushPullConfig);
 
     this.adaptableBlotterStore.Load.then(
       () => this.strategies.forEach(strat => strat.initializeWithRedux()),
@@ -1752,11 +1752,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.ReindexAndRepaint();
   }
 
-  public getVendorGridState(): VendorGridInfo {
+  public getVendorGridInfo(): VendorGridInfo {
     return null;
   }
 
-  public setVendorGridState(vendorGridState: VendorGridInfo): void {
+  public setVendorGridInfo(vendorGridInfo: VendorGridInfo): void {
     // todo - but we dont know how to ;(
   }
 

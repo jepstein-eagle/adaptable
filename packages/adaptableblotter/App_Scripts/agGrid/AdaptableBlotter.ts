@@ -291,12 +291,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     // set up iPushPull
-    iPushPullHelper.init(this.blotterOptions!.partnerOptions.iPushPullConfig);
-
-    // set up Glue42 - note this is currently not working in the browser but will be done shortly
-    if (Glue42Helper.isRunningGlue42()) {
-      Glue42Helper.init(this);
-    }
+    // iPushPullHelper.init(this.blotterOptions!.partnerOptions.iPushPullConfig);
 
     // Set up strategies - we set up all the strategies suitable for the vendor grid
     // But users can make some hidden or readonly in their entitlements
@@ -559,6 +554,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public setColumnIntoStore() {
+    // if pivotig and we have 'special' columns as a result then do nothing ...
+    if (this.gridOptions.columnApi.isPivotMode) {
+      if (ArrayExtensions.IsNotNullOrEmpty(this.gridOptions.columnApi.getPivotColumns())) {
+        return;
+      }
+    }
     const allColumns: IColumn[] = [];
     const existingColumns: IColumn[] = this.api.gridApi.getColumns();
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
@@ -739,6 +740,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const columns: IColumn[] = [];
     const selectedCells: GridCell[] = [];
 
+    if (this.api.gridApi.IsGridInPivotMode()) {
+      //  LoggingHelper.LogAdaptableBlotterWarning(
+      //    'cannot currently perform cell selection in pivot mode'
+      //  );
+      return;
+    }
+
     if (selected) {
       // we iterate for each ranges
       selected.forEach((rangeSelection, index) => {
@@ -786,6 +794,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setSelectedRows(): void {
     const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
     const selectedRows: GridRow[] = [];
+
+    if (this.gridOptions.columnApi.isPivotMode) {
+      //  console.log('cannot currently perform row selection in pivot mode');
+      return;
+    }
 
     if (ArrayExtensions.IsNotNullOrEmpty(nodes)) {
       nodes.forEach(node => {
@@ -1883,10 +1896,32 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api!.addEventListener(Events.EVENT_GRID_READY, () => {
       // do something?
     });
+
+    this.gridOptions.api!.addEventListener(
+      Events.EVENT_COLUMN_PIVOT_MODE_CHANGED,
+      (params: any) => {
+        //  console.log(params);
+        if (
+          params.type == 'columnPivotModeChanged' &&
+          params.columnApi != null &&
+          params.columnApi.columnController != null &&
+          params.columnApi.columnController.pivotMode == true
+        ) {
+          //   console.log('pivoting on');
+          this.api.gridApi.setPivotModeOn();
+        } else {
+          this.api.gridApi.setPivotModeOff();
+        }
+      }
+    );
+
     // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
     const columnEventsThatTriggersAutoLayoutSave = [
       Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
       Events.EVENT_COLUMN_PINNED,
+      Events.EVENT_COLUMN_PIVOT_CHANGED,
+      Events.EVENT_COLUMN_PIVOT_MODE_CHANGED,
+      Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
     ];
     this.gridOptions.api!.addGlobalListener((type: string) => {
       if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
@@ -1920,6 +1955,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // I still wonder if we can do this nicer by using :   this.gridOptions.api!.getEditingCells();
       // must be a good reason why we don't use it
 
+      if (this.gridOptions.columnApi.isPivotMode) {
+        console.log('cannot edit when pivot');
+        return;
+      }
       const editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex]
         .cellComps[params.column.getColId()].cellEditor;
 
@@ -2662,12 +2701,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public getVendorGridState(visibleCols: string[], forceFetch: boolean): VendorGridInfo {
+  public getVendorGridInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo {
     // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
     if (forceFetch) {
       return {
-        GroupState: null,
+        GroupState: null, // is this right????  what if they want to group
         ColumnState: JSON.stringify(this.gridOptions.columnApi!.getColumnState()),
+        ColumnGroupState: JSON.stringify(this.gridOptions.columnApi!.getColumnGroupState()),
+        InPivotMode: this.gridOptions.pivotMode,
       };
     }
 
@@ -2705,19 +2746,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ColumnGroupState: ArrayExtensions.IsNotNullOrEmpty(columnGroupState)
           ? JSON.stringify(columnGroupState)
           : null,
+        InPivotMode: this.gridOptions.columnApi.isPivotMode(),
       };
     }
     return null; // need this?
   }
 
-  public setVendorGridState(vendorGridState: VendorGridInfo): void {
-    if (vendorGridState) {
-      const columnState: any = JSON.parse(vendorGridState.ColumnState);
+  public setVendorGridInfo(vendorGridInfo: VendorGridInfo): void {
+    if (vendorGridInfo) {
+      const columnState: any = JSON.parse(vendorGridInfo.ColumnState);
       if (columnState) {
         this.setColumnState(this.gridOptions.columnApi, columnState, 'api');
       }
 
-      const groupedState: any = vendorGridState.GroupState;
+      const groupedState: any = vendorGridInfo.GroupState;
       if (groupedState) {
         // assume for now its just a number
         const column: Column = this.gridOptions.columnApi!.getColumn('ag-Grid-AutoColumn');
@@ -2726,9 +2768,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       }
 
-      const columnGroupState: any = vendorGridState.ColumnGroupState;
+      const columnGroupState: any = vendorGridInfo.ColumnGroupState;
       if (columnGroupState) {
         this.gridOptions.columnApi.setColumnGroupState(JSON.parse(columnGroupState));
+      }
+
+      if (vendorGridInfo.InPivotMode && vendorGridInfo.InPivotMode == true) {
+        this.gridOptions.columnApi.setPivotMode(true);
+      } else {
+        this.gridOptions.columnApi.setPivotMode(false);
       }
     }
   }

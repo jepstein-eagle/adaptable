@@ -2,7 +2,7 @@
  * Config required for when using iPushPull
  */
 // tslint:disable-next-line: class-name
-export interface iPushPullConfig {
+export interface PushPullConfig {
   api_url?: string;
   ws_url?: string;
   api_key: string;
@@ -11,3 +11,5 @@ export interface iPushPullConfig {
   storage_prefix?: string;
   hsts?: boolean;
 }
+
+

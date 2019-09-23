@@ -43,10 +43,11 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
       if (layout != null) {
         let gridState: GridState = blotter.api.gridApi.getGridState();
         let visibleColumns: IColumn[] = gridState.Columns.filter(c => c.Visible);
-        let gridVendorState: any = blotter.getVendorGridState(
+        let gridVendorState: any = blotter.getVendorGridInfo(
           visibleColumns.map(vc => vc.ColumnId),
           false
         );
+
         let layoutToSave: Layout = {
           Uuid: layout.Uuid,
           Name: layoutState.CurrentLayout,

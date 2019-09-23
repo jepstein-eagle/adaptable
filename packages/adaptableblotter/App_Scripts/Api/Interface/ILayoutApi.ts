@@ -19,6 +19,10 @@ export interface ILayoutApi {
    */
   getCurrentLayoutName(): string;
   /**
+   * Returns true if the current layout is the default layout
+   */
+  isDefaultLayout(): boolean;
+  /**
    * Retrieves the layout with the inputted name
    */
   getLayoutByName(layoutName: string): Layout;

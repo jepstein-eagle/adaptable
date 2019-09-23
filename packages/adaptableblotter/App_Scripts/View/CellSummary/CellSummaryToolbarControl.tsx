@@ -83,19 +83,22 @@ class CellSummaryToolbarControlComponent extends React.Component<
       .filter(x => !!x);
     let cellSummaryPopover = <CellSummaryPopover CellSummary={this.props.CellSummary} />;
 
+    let shouldDisable: boolean =
+      this.props.AccessLevel == AccessLevel.ReadOnly ||
+      this.props.Blotter.api.gridApi.IsGridInPivotMode();
+
     let content = (
       <Flex
         flexDirection="row"
         alignItems="center"
         width="100%"
-        className={
-          this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-        }
+        className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}
       >
         <DropdownButton
           marginRight={2}
           columns={['label']}
           items={[...operationMenuItems, ...operationOptionalMenuItems]}
+          disabled={shouldDisable}
         >
           {this.props.CellSummaryOperation}
         </DropdownButton>

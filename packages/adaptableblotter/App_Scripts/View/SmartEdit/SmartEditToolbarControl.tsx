@@ -101,16 +101,19 @@ class SmartEditToolbarControlComponent extends React.Component<
       fill: 'currentColor',
     };
 
+    let shouldDisable: boolean =
+      this.props.AccessLevel == AccessLevel.ReadOnly ||
+      !this.props.IsValidSelection ||
+      this.props.Blotter.api.gridApi.IsGridInPivotMode();
+
     let content = (
-      <Flex
-        alignItems="stretch"
-        className={
-          this.props.AccessLevel == AccessLevel.ReadOnly || !this.props.IsValidSelection
-            ? GeneralConstants.READ_ONLY_STYLE
-            : ''
-        }
-      >
-        <DropdownButton marginRight={2} items={operationMenuItems} columns={['label']}>
+      <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>
+        <DropdownButton
+          marginRight={2}
+          items={operationMenuItems}
+          columns={['label']}
+          disabled={shouldDisable}
+        >
           {this.props.MathOperation}
         </DropdownButton>
 
@@ -123,9 +126,10 @@ class SmartEditToolbarControlComponent extends React.Component<
           placeholder="Enter a Number"
           step="any"
           onChange={(e: React.SyntheticEvent) => this.onSmartEditValueChange(e)}
+          disabled={shouldDisable}
         />
 
-        {this.props.IsValidSelection && (
+        {!shouldDisable && (
           <ButtonApply
             marginLeft={2}
             onClick={() => this.onApplyClick()}
@@ -140,7 +144,7 @@ class SmartEditToolbarControlComponent extends React.Component<
           />
         )}
 
-        {this.props.IsValidSelection && (
+        {!shouldDisable && (
           <AdaptablePopover
             headerText="Preview Results"
             //  tooltipText="Preview Results"

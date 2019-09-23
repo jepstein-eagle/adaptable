@@ -50,6 +50,8 @@
   --ab-color-primarydark: #b7b7b7;
   --ab-color-primarylight: #f5f5f5;
   --ab-color-text-on-primary: #656565;
+  --ab-color-text-on-primarydark: var(--ab-color-text-on-primary);
+  /*--ab-color-text-on-primarylight: var(--ab-color-text-on-primary);*/
 
   --ab-color-secondary: #07c;
   --ab-color-secondarydark: #015a9a;

@@ -76,57 +76,55 @@ class BulkUpdateToolbarControlComponent extends React.Component<
       />
     );
 
+    let shouldDisable: boolean =
+      this.props.AccessLevel == AccessLevel.ReadOnly ||
+      !this.props.BulkUpdateValidationResult.IsValid ||
+      this.props.Blotter.api.gridApi.IsGridInPivotMode();
+
     const applyStyle = {
       color: statusColour,
       fill: 'currentColor',
     };
     let content = (
-      <Flex
-        alignItems="stretch"
-        className={
-          this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-        }
-      >
+      <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>
         <ColumnValueSelector
           newLabel="New"
           existingLabel="Existing"
           dropdownButtonProps={{
             listMinWidth: 150,
           }}
-          disabled={!this.props.BulkUpdateValidationResult.IsValid}
+          disabled={shouldDisable}
           SelectedColumnValue={this.props.BulkUpdateValue}
           SelectedColumn={selectedColumn}
           Blotter={this.props.Blotter}
           onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
         />
 
-        {this.props.BulkUpdateValidationResult.IsValid &&
-          StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
-            <ButtonApply
-              marginLeft={2}
-              onClick={() => this.onApplyClick()}
-              style={applyStyle}
-              tooltip="Apply Bulk Update"
-              disabled={
-                StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) ||
-                (this.props.PreviewInfo != null &&
-                  this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
-              }
-              AccessLevel={this.props.AccessLevel}
-            />
-          )}
+        {!shouldDisable && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
+          <ButtonApply
+            marginLeft={2}
+            onClick={() => this.onApplyClick()}
+            style={applyStyle}
+            tooltip="Apply Bulk Update"
+            disabled={
+              StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) ||
+              (this.props.PreviewInfo != null &&
+                this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
+            }
+            AccessLevel={this.props.AccessLevel}
+          />
+        )}
 
-        {this.props.BulkUpdateValidationResult.IsValid &&
-          StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
-            <AdaptablePopover
-              headerText="Preview Results"
-              bodyText={[previewPanel]}
-              MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
-              useButton={true}
-              showEvent={'focus'}
-              hideEvent="blur"
-            />
-          )}
+        {!shouldDisable && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
+          <AdaptablePopover
+            headerText="Preview Results"
+            bodyText={[previewPanel]}
+            MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
+            useButton={true}
+            showEvent={'focus'}
+            hideEvent="blur"
+          />
+        )}
       </Flex>
     );
 

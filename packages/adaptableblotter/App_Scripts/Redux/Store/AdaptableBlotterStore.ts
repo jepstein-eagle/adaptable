@@ -43,6 +43,7 @@ import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux';
 import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
+import * as PartnerConfigRedux from '../ActionsReducers/PartnerConfigRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -172,6 +173,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Theme: ThemeRedux.ThemeReducer,
   UserFilter: UserFilterRedux.UserFilterReducer,
   UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
+  PartnerConfig: PartnerConfigRedux.PartnerConfigReducer,
 });
 
 export const RESET_STATE = 'RESET_STATE';
@@ -2151,9 +2153,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(blotterColumns));
               // set sort
               middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.ColumnSorts));
+              // set pivot
+              if (
+                currentLayout.VendorGridInfo &&
+                currentLayout.VendorGridInfo.InPivotMode &&
+                currentLayout.VendorGridInfo.InPivotMode == true
+              ) {
+                middlewareAPI.dispatch(GridRedux.SetPivotModeOn());
+              } else {
+                middlewareAPI.dispatch(GridRedux.SetPivotModeOff());
+              }
               blotter.setColumnSort(currentLayout.ColumnSorts);
               // set vendor specific info
-              blotter.setVendorGridState(currentLayout.VendorGridInfo);
+              blotter.setVendorGridInfo(currentLayout.VendorGridInfo);
             }
             return returnAction;
           }
@@ -2173,7 +2185,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let layout: Layout = Helper.cloneObject(actionTyped.layout);
 
             let forceFetch = layout.Name == DEFAULT_LAYOUT;
-            layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns, forceFetch);
+            layout.VendorGridInfo = blotter.getVendorGridInfo(layout.Columns, forceFetch);
             let layoutState = middlewareAPI.getState().Layout;
             let isExistingLayout: boolean =
               layoutState.Layouts.find(l => l.Uuid == actionTyped.layout.Uuid) != null;
@@ -2384,7 +2396,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               !actionTyped.Folder
             ) {
               iPushPullHelper
-                .GetDomainPages(blotter.blotterOptions.partnerOptions.iPushPullConfig.api_key)
+                .GetDomainPages(
+                  blotter.api.partnerConfigApi.getPartnerConfigState().pushPullConfig.api_key
+                )
                 .then((domainpages: IPPDomain[]) => {
                   middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                   middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2426,7 +2440,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
                 iPushPullHelper
-                  .GetDomainPages(blotter.blotterOptions.partnerOptions.iPushPullConfig.api_key)
+                  .GetDomainPages(
+                    blotter.api.partnerConfigApi.getPartnerConfigState().pushPullConfig.api_key
+                  )
                   .then((domainpages: IPPDomain[]) => {
                     middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2850,7 +2866,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let defaultLayout: Layout = ObjectFactory.CreateLayout(
               gridState.Columns,
               [],
-              blotter.getVendorGridState(visibleColumnNames, true),
+              blotter.getVendorGridInfo(visibleColumnNames, true),
               DEFAULT_LAYOUT
             );
             middlewareAPI.dispatch(LayoutRedux.LayoutSave(defaultLayout));

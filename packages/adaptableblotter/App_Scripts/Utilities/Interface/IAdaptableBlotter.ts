@@ -113,7 +113,6 @@ export interface IAdaptableBlotter {
   getPrimaryKeyValueFromRecord(record: any): any;
   getColumnValueDisplayValuePairList(
     columnId: string,
-
     visibleRowsOnly: boolean,
     onlyIncludeIds?: { [key: string]: boolean }
   ): Array<IRawValueDisplayValuePair>;
@@ -192,8 +191,8 @@ export interface IAdaptableBlotter {
   getVisibleColumnCount(): number;
 
   // layout
-  getVendorGridState(visibleCols: string[], forceFetch: boolean): VendorGridInfo;
-  setVendorGridState(vendorGridState: VendorGridInfo): void;
+  getVendorGridInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo;
+  setVendorGridInfo(vendorGridInfo: VendorGridInfo): void;
 
   // vendor grid related
   isSelectable(): boolean;

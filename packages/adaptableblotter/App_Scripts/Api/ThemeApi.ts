@@ -8,15 +8,16 @@ export class ThemeApi extends ApiBase implements IThemeApi {
     return this.getBlotterState().Theme;
   }
 
-  public setTheme(theme: string): void {
+  public loadTheme(theme: string): void {
     this.dispatchAction(ThemeRedux.ThemeSelect(theme));
   }
 
-  public setLightTheme(): void {
-    this.setTheme('light');
+  public loadLightTheme(): void {
+    this.loadTheme('light');
   }
-  public setDarkTheme(): void {
-    this.setTheme('dark');
+
+  public loadDarkTheme(): void {
+    this.loadTheme('dark');
   }
 
   public getCurrentTheme(): string {

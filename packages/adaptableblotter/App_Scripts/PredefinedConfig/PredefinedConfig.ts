@@ -32,6 +32,7 @@ import { ChartState } from './RunTimeState/ChartState';
 import { ActionColumnState } from './DesignTimeState/ActionColumnState';
 import { SparklineColumnState } from './DesignTimeState/SparklineColumnState';
 import { NamedFilterState } from './RunTimeState/NamedFilterState';
+import { PartnerConfigState } from './RunTimeState/PartnerConfigstate';
 
 /**
  * This is the main Predefined Config interface which users will populate if they wish to ship their Adaptable Botter instance with initial state.
@@ -406,4 +407,6 @@ export interface PredefinedConfig {
   UserFilter?: UserFilterState;
 
   NamedFilter?: NamedFilterState;
+
+  PartnerConfig?: PartnerConfigState;
 }

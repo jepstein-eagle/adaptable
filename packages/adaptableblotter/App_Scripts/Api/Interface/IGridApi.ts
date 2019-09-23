@@ -82,4 +82,10 @@ export interface IGridApi {
   setGlue42On(): void;
 
   setGlue42Off(): void;
+
+  setPivotModeOn(): void;
+
+  setPivotModeOff(): void;
+
+  IsGridInPivotMode(): boolean;
 }
