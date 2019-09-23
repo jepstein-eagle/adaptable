@@ -72,6 +72,10 @@ export interface FilterFormState {
   editedColumnFilter: ColumnFilter | undefined;
 }
 
+const panelStyle = {
+  width: 235,
+};
+
 class FilterFormComponent extends React.Component<FilterFormProps, FilterFormState> {
   constructor(props: FilterFormProps) {
     super(props);
@@ -280,6 +284,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       ></ButtonSave>
     );
 
+    const useVendorStyle = !!this.props.Blotter.blotterOptions.filterOptions!
+      .useVendorFilterFormStyle;
+
     return (
       <div>
         {StringExtensions.IsNullOrEmpty(isFilterable) ? (
@@ -295,6 +302,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             autoApplyFilter={
               this.props.Blotter.blotterOptions.filterOptions!.autoApplyFilter ? true : false
             }
+            useVendorStyle={useVendorStyle}
             applyFilterButtonDisabled={ExpressionHelper.IsEmptyExpression(
               this.state.editedColumnFilter!.Filter
             )}
@@ -320,6 +328,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                     UiSelectedUserFilters={uiSelectedUserFilters}
                     UiSelectedRange={uiSelectedRangeExpression}
                     UserFilters={appropriateFilterItems}
+                    useVendorStyle={useVendorStyle}
                     onColumnValueSelectedChange={list => this.onClickColumValue(list)}
                     onUserFilterSelectedChange={list => this.onClickUserFilter(list)}
                     Operators={leafExpressionOperators}
@@ -546,7 +555,3 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
     />
   </Provider>
 );
-
-let panelStyle = {
-  width: '235px',
-};

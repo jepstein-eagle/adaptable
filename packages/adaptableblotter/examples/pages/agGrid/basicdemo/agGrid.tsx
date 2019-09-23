@@ -36,6 +36,7 @@ function InitAdaptableBlotter() {
     showModal: false,
     displayOnStartUp: true,
   };
+
   adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
     console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
   };
@@ -44,7 +45,8 @@ function InitAdaptableBlotter() {
     console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
   };
   adaptableBlotterOptions.filterOptions = {
-    autoApplyFilter: false,
+    autoApplyFilter: true,
+    useVendorFilterFormStyle: true,
   };
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);

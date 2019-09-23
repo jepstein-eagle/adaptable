@@ -21,10 +21,13 @@ import Dropdown from '../../../components/Dropdown';
 
 import Input from '../../../components/Input';
 import { SyntheticEvent } from 'react';
+import CheckBox, { CheckBoxProps } from '../../../components/CheckBox';
+import join from '../../../components/utils/join';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
   CurrentColumn: IColumn;
   Columns: IColumn[];
+  useVendorStyle?: boolean;
   ColumnValuePairs: Array<IRawValueDisplayValuePair>;
   UserFilters: Array<IRawValueDisplayValuePair>;
   UiSelectedColumnValues: Array<string>;
@@ -86,19 +89,29 @@ export class ListBoxFilterForm extends React.Component<
         display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0
       ) {
         return null;
-      } else {
-        return (
-          <ListGroupItem
-            key={'userFilter' + y}
-            style={userFilterItemStyle}
-            onClick={() => this.onClickItemUserFilter(x)}
-            active={isActive}
-            value={value}
-          >
-            {display}
-          </ListGroupItem>
-        );
       }
+
+      if (this.props.useVendorStyle) {
+        return this.renderItemForVendorStyle({
+          key: 'userFilter' + y,
+          children: display,
+          checked: isActive,
+          style: userFilterItemStyle,
+          onChange: () => this.onClickItemUserFilter(x),
+        });
+      }
+      return (
+        <ListGroupItem
+          key={'userFilter' + y}
+          style={userFilterItemStyle}
+          noZebra={this.props.useVendorStyle}
+          onClick={() => this.onClickItemUserFilter(x)}
+          active={isActive}
+          value={value}
+        >
+          {display}
+        </ListGroupItem>
+      );
     });
 
     let columnValuesItemsElements = this.props.ColumnValuePairs.map((x, y) => {
@@ -116,18 +129,27 @@ export class ListBoxFilterForm extends React.Component<
         columnValue.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0
       ) {
         return null;
-      } else {
-        return (
-          <ListGroupItem
-            key={'columnValue' + y}
-            onClick={() => this.onClickItemColumnValue(x)}
-            active={isActive}
-            value={columnValue}
-          >
-            {columnValue}
-          </ListGroupItem>
-        );
       }
+
+      if (this.props.useVendorStyle) {
+        return this.renderItemForVendorStyle({
+          key: 'columnValue' + y,
+          children: columnValue,
+          checked: isActive,
+          onChange: () => this.onClickItemColumnValue(x),
+        });
+      }
+      return (
+        <ListGroupItem
+          noZebra={this.props.useVendorStyle}
+          key={'columnValue' + y}
+          onClick={() => this.onClickItemColumnValue(x)}
+          active={isActive}
+          value={columnValue}
+        >
+          {columnValue}
+        </ListGroupItem>
+      );
     });
 
     let textClear = (
@@ -203,16 +225,21 @@ export class ListBoxFilterForm extends React.Component<
           </Flex>
         )}
 
-        <Box my={3}>
-          <Box style={{ background: 'var(--ab-color-secondary)', height: 1 }} />
+        <Box my={1}>
+          <Box style={{ background: 'var(--ab-color-text-on-defaultbackground)', height: 1 }} />
         </Box>
       </Flex>
     );
 
     return (
-      <div style={divStyle} className="ab-ListBoxFilterForm">
+      <div
+        className={join(
+          `ab-ListBoxFilterForm`,
+          this.props.useVendorStyle ? `ab-ListBoxFilterForm--vendor-style` : null
+        )}
+      >
         {rangeForm}
-        <Box mx={'2px'} marginBottom={2}>
+        <Box mx={this.props.useVendorStyle ? 0 : '2px'} marginBottom={2}>
           {textClear}
         </Box>
         <ListGroup>
@@ -222,6 +249,10 @@ export class ListBoxFilterForm extends React.Component<
       </div>
     );
   }
+
+  private renderItemForVendorStyle = (props: CheckBoxProps): React.ReactNode => {
+    return <CheckBox {...props} variant="agGrid" fontSize="12px" marginTop={1} />;
+  };
 
   // Methods for getting the range
   private onLeafExpressionOperatorChange(value: LeafExpressionOperator) {
@@ -458,13 +489,6 @@ export class ListBoxFilterForm extends React.Component<
     }
   }
 }
-
-let divStyle: React.CSSProperties = {
-  overflowY: 'auto',
-  overflowX: 'hidden',
-  // maxHeight: '40vh',
-  marginBottom: '0',
-};
 
 let userFilterItemStyle: React.CSSProperties = {
   fontStyle: 'italic',

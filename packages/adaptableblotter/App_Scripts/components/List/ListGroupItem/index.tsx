@@ -7,6 +7,7 @@ import { useSelectionEvent } from '../../SelectableList';
 type TypeProps = HTMLProps<HTMLElement> & {
   factory?: string | ReactComponentLike;
   active?: boolean;
+  noZebra?: boolean;
   index?: number;
   selectionId?: string | number;
 };
@@ -14,7 +15,7 @@ type TypeProps = HTMLProps<HTMLElement> & {
 const baseClassName = 'ab-ListGroupItem';
 
 const ListGroupItem = React.forwardRef((props: TypeProps, ref) => {
-  const { className, active, factory: Tag = 'button', ...domProps } = props;
+  const { className, active, factory: Tag = 'button', noZebra, ...domProps } = props;
 
   const onSelectionClick = useSelectionEvent();
 
@@ -32,6 +33,7 @@ const ListGroupItem = React.forwardRef((props: TypeProps, ref) => {
       className={join(
         className,
         baseClassName,
+        noZebra ? `${baseClassName}--no-zebra` : null,
         `${baseClassName}--${active ? 'active' : 'not-active'}`
       )}
     ></Tag>

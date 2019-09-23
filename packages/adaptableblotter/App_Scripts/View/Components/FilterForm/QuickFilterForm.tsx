@@ -62,7 +62,10 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: any, prevState: QuickFilterFormState) {
+    if (JSON.stringify(this.state) === JSON.stringify(prevState)) {
+      return;
+    }
     this.reconcileFilters();
   }
 

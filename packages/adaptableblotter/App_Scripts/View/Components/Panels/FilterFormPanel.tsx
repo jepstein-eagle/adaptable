@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import { Flex } from 'rebass';
 import { ColumnMenuTab } from '../../../PredefinedConfig/Common/Enums';
 
-import { Flex } from 'rebass';
 import Panel, { PanelProps } from '../../../components/Panel';
 import Radio from '../../../components/Radio';
 import SimpleButton from '../../../components/SimpleButton';
@@ -22,13 +22,15 @@ export interface FilterFormPanelProps extends PanelProps {
 
   showCloseButton: boolean;
 
+  useVendorStyle: boolean;
+
   applyFilterButtonDisabled: boolean;
   autoApplyFilter: boolean;
 }
 
 export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
   render() {
-    let header = (
+    const header = (
       <Flex alignItems="center" flexDirection="row" style={{ width: '100%' }}>
         {this.props.IsAlwaysFilter ? (
           <Flex flex={6} marginRight={2}>
@@ -63,26 +65,26 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
           </Flex>
         )}
 
-        <Flex flex={2}>
-          {this.props.clearFilterButton &&
-            this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
-            this.props.clearFilterButton}
-        </Flex>
-        <Flex flex={2}>
-          {this.props.saveButton &&
-            this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
-            this.props.saveButton}
-        </Flex>
+        {this.props.clearFilterButton &&
+          this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
+          this.props.clearFilterButton}
+
+        {this.props.saveButton &&
+          this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
+          this.props.saveButton}
       </Flex>
     );
 
     return (
       <Flex flexDirection="column">
         <Panel
+          className="ab-FilterFormPanel"
           header={header}
+          headerProps={{ padding: 1 }}
           style={{ ...this.props.style, flex: 1 }}
           bodyProps={{ padding: 1, style: { maxHeight: '50vh' } }}
           bodyScroll
+          borderRadius={0}
           border="none"
         >
           {this.props.children}
