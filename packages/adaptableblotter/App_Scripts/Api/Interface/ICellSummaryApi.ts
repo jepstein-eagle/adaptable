@@ -7,4 +7,6 @@ import {
 export interface ICellSummaryApi {
   getCellSummaryState(): CellSummaryState;
   getCellSummaryOperation(): CellSummaryOperation | CellSummaryOptionalOperation;
+  hasOnlySummary(): boolean;
+  hasVWAPSummary(): boolean;
 }

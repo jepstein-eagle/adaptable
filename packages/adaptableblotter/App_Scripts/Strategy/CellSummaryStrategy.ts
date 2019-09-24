@@ -79,25 +79,42 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         Median: hasNumericColumns
           ? Helper.RoundNumberTo4dp(this.medianNumberArray(numericValues))
           : '',
+        Mode: hasNumericColumns ? Helper.RoundNumberTo4dp(this.modeNumberArray(numericValues)) : '',
         Distinct: distinctCount,
         Max: hasNumericColumns ? Helper.RoundNumberTo4dp(Math.max(...numericValues)) : '',
         Min: hasNumericColumns ? Helper.RoundNumberTo4dp(Math.min(...numericValues)) : '',
         Count: allValues.length,
-        Only: this.calculateOnly(distinctCount, allValues),
-        VWAP: this.calculateVwap(numericValues, numericColumns),
       };
+      if (this.blotter.api.cellSummaryApi.hasOnlySummary()) {
+        selectedCellSummary.Only = this.calculateOnly(distinctCount, allValues);
+      }
+      if (this.blotter.api.cellSummaryApi.hasVWAPSummary()) {
+        selectedCellSummary.VWAP = this.calculateVwap(numericValues, numericColumns);
+      }
     }
     return selectedCellSummary;
   }
 
   private sumNumberArray(numericValues: number[]): number {
-    return numericValues.reduce(function(a, b) {
-      return a + b;
-    }, 0);
+    if (numericValues.length) {
+      let sum = numericValues.reduce(function(a, b) {
+        return a + b;
+      });
+      return sum;
+    } else {
+      return 0;
+    }
   }
 
   private meanNumberArray(numericValues: number[]): number {
-    return this.sumNumberArray(numericValues) / numericValues.length;
+    // dividing by 0 will return Infinity
+    // arr must contain at least 1 element to use reduce
+    if (numericValues.length) {
+      let sum = this.sumNumberArray(numericValues);
+      return sum / numericValues.length;
+    } else {
+      return 0;
+    }
   }
 
   private medianNumberArray(numericValues: number[]): number {
@@ -120,27 +137,35 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     return median;
   }
 
-  private calculateOnly(distinctCount: number, allValues: any[]): any {
-    if (
-      ArrayExtensions.NotContainsItem(
-        this.blotter.api.cellSummaryApi.getCellSummaryState().OptionalSummaryOperations,
-        CellSummaryOptionalOperation.Only
-      )
-    ) {
-      return null;
+  private modeNumberArray(numbers: number[]): number {
+    if (numbers.length === 0) {
+      return 0;
     }
+
+    const m = numbers
+      .reduce((items, current) => {
+        const item = items.length === 0 ? null : items.find(x => x.value === current);
+        item ? item.occurrence++ : items.push({ value: current, occurrence: 1 });
+        return items;
+      }, [])
+      .sort((a, b) => {
+        if (a.occurrence < b.occurrence) {
+          return 1;
+        } else if (a.occurrence > b.occurrence || a.value < b.value) {
+          return -1;
+        } else {
+          return a.value === b.value ? 0 : 1;
+        }
+      });
+
+    return m[0].value;
+  }
+
+  private calculateOnly(distinctCount: number, allValues: any[]): any {
     return distinctCount == 1 ? allValues[0] : '';
   }
 
   private calculateVwap(numericValues: number[], numericColumns: string[]): any {
-    if (
-      ArrayExtensions.NotContainsItem(
-        this.blotter.api.cellSummaryApi.getCellSummaryState().OptionalSummaryOperations,
-        CellSummaryOptionalOperation.VWAP
-      )
-    ) {
-      return null;
-    }
     if (numericColumns.length == 2) {
       return '';
     }

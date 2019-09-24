@@ -2757,23 +2757,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public setVendorGridInfo(vendorGridInfo: VendorGridInfo): void {
     if (vendorGridInfo) {
-      const columnState: any = JSON.parse(vendorGridInfo.ColumnState);
-      if (columnState) {
-        this.setColumnState(this.gridOptions.columnApi, columnState, 'api');
-      }
-
-      const groupedState: any = vendorGridInfo.GroupState;
-      if (groupedState) {
-        // assume for now its just a number
-        const column: Column = this.gridOptions.columnApi!.getColumn('ag-Grid-AutoColumn');
-        if (column) {
-          this.gridOptions.columnApi!.setColumnWidth(column, groupedState, true);
+      if (vendorGridInfo.ColumnState) {
+        const columnState: any = JSON.parse(vendorGridInfo.ColumnState);
+        if (columnState) {
+          this.setColumnState(this.gridOptions.columnApi, columnState, 'api');
         }
       }
 
-      const columnGroupState: any = vendorGridInfo.ColumnGroupState;
-      if (columnGroupState) {
-        this.gridOptions.columnApi.setColumnGroupState(JSON.parse(columnGroupState));
+      if (vendorGridInfo.GroupState) {
+        const groupedState: any = vendorGridInfo.GroupState;
+        if (groupedState) {
+          // assume for now its just a number
+          const column: Column = this.gridOptions.columnApi!.getColumn('ag-Grid-AutoColumn');
+          if (column) {
+            this.gridOptions.columnApi!.setColumnWidth(column, groupedState, true);
+          }
+        }
+      }
+
+      if (vendorGridInfo.ColumnGroupState) {
+        const columnGroupState: any = vendorGridInfo.ColumnGroupState;
+        if (columnGroupState) {
+          this.gridOptions.columnApi.setColumnGroupState(JSON.parse(columnGroupState));
+        }
       }
 
       if (vendorGridInfo.InPivotMode && vendorGridInfo.InPivotMode == true) {

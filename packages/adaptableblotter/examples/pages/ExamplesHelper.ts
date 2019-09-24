@@ -830,7 +830,7 @@ export class ExamplesHelper {
       suppressMenuHide: true,
       sideBar: true,
       rowSelection: 'multiple',
-      pivotMode: true,
+      pivotMode: false,
       columnTypes: {
         abColDefNumber: {},
         abColDefString: {},

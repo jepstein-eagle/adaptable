@@ -1,12 +1,9 @@
 import * as Redux from 'redux';
 import { PartnerConfigState } from '../../PredefinedConfig/RunTimeState/PartnerConfigstate';
 
-export interface PartnerConfigSetAction extends Redux.Action {
-  PartnerConfigs: string[];
-}
-
 const initialFilterState: PartnerConfigState = {
   pushPullConfig: null,
+  glue42Config: null,
 };
 
 export const PartnerConfigReducer: Redux.Reducer<PartnerConfigState> = (

@@ -85,7 +85,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
 
     let shouldDisable: boolean =
       this.props.AccessLevel == AccessLevel.ReadOnly ||
-      this.props.Blotter.api.gridApi.IsGridInPivotMode();
+      this.props.Blotter.api.gridApi.IsGridInPivotMode() ||
+      this.props.CellSummary == null;
 
     let content = (
       <Flex
@@ -102,7 +103,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
         >
           {this.props.CellSummaryOperation}
         </DropdownButton>
-        {this.props.CellSummary != null && (
+        {!shouldDisable && (
           <>
             <Flex
               flex={1}
@@ -150,6 +151,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
         return this.props.CellSummary.Average;
       case CellSummaryOperation.Median:
         return this.props.CellSummary.Median;
+      case CellSummaryOperation.Mode:
+        return this.props.CellSummary.Mode;
       case CellSummaryOperation.Max:
         return this.props.CellSummary.Max;
       case CellSummaryOperation.Min:

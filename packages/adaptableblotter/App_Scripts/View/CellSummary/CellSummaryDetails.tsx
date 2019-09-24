@@ -33,6 +33,9 @@ export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps,
         this.createRow(colItems, CellSummaryOperation.Median, this.props.CellSummary.Median)
       );
       rowElements.push(
+        this.createRow(colItems, CellSummaryOperation.Mode, this.props.CellSummary.Mode)
+      );
+      rowElements.push(
         this.createRow(colItems, CellSummaryOperation.Distinct, this.props.CellSummary.Distinct)
       );
       rowElements.push(

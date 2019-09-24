@@ -453,6 +453,7 @@ export function CreateEmptyCellSummmary(): ICellSummmary {
     Sum: null,
     Average: null,
     Median: null,
+    Mode: null,
     Distinct: null,
     Max: null,
     Min: null,
