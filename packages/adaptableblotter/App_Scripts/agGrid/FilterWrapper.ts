@@ -1,5 +1,8 @@
 import { IFilterComp, IDoesFilterPassParams, IFilterParams, Column } from 'ag-grid-community';
 import * as ReactDOM from 'react-dom';
+import * as React from 'react';
+import { ThemeProvider } from 'styled-components';
+import theme from '../theme';
 import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContext';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
@@ -55,7 +58,11 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
         ShowCloseButton: params != null && params.hidePopup != null,
       };
       blotter.hideFilterFormPopup = params ? params.hidePopup : null;
-      ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
+
+      ReactDOM.render(
+        React.createElement(ThemeProvider, { theme }, FilterFormReact(filterContext)),
+        this.filterContainer
+      );
     }
 
     destroy(): void {

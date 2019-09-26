@@ -1,4 +1,6 @@
 import * as ReactDOM from 'react-dom';
+import * as React from 'react';
+
 import {
   IFloatingFilterComp,
   IFloatingFilterParams,
@@ -7,6 +9,9 @@ import {
 } from 'ag-grid-community';
 import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContext';
 import { AdaptableBlotter } from './AdaptableBlotter';
+
+import { ThemeProvider } from 'styled-components';
+import theme from '../theme';
 
 import { QuickFilterFormReact } from '../View/Components/FilterForm/QuickFilterForm';
 import { IColumn } from '../Utilities/Interface/IColumn';
@@ -39,7 +44,10 @@ export const FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) =>
         ColumnWidth: width,
         ShowCloseButton: false,
       };
-      ReactDOM.render(QuickFilterFormReact(filterContext), this.filterContainer);
+      ReactDOM.render(
+        React.createElement(ThemeProvider, { theme }, QuickFilterFormReact(filterContext)),
+        this.filterContainer
+      );
     }
 
     getGui(): HTMLElement {
