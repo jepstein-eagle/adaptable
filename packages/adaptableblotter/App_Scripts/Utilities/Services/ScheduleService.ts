@@ -1,4 +1,3 @@
-import * as NodeSchedule from 'node-schedule';
 import { IScheduleService } from './Interface/IScheduleService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -10,15 +9,48 @@ import { Schedule } from '../../PredefinedConfig/Common/Schedule';
 import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
 
+interface ScheduleJob {
+  cancel: () => any;
+}
+
+const dateTimeouts: { [key: number]: number } = {};
+
+const NodeSchedule = {
+  scheduleJob: (date: Date, fn: () => any): ScheduleJob => {
+    const timestamp: number = +date;
+
+    const now = Date.now();
+    const timeUntilDate = timestamp - now;
+
+    if (timeUntilDate > 0) {
+      const timeoutId = +setTimeout(() => {
+        fn();
+      }, timeUntilDate);
+
+      dateTimeouts[timestamp] = timeoutId;
+    }
+
+    return {
+      cancel: () => {
+        const theTimeout = dateTimeouts[timestamp];
+
+        if (theTimeout != undefined) {
+          clearTimeout(theTimeout);
+        }
+      },
+    } as ScheduleJob;
+  },
+};
+
 /**
  * This class is used for managing scheduling of Reports and Reminders
  * It uses node-schedule (via a strongly typed NodeSchedule) and creates standard jobs
  * It also createsa daily job to run at midnight that will refresh the Blotter - this is so that date-based schedules can jump to the new day
  */
 export class ScheduleService implements IScheduleService {
-  private alertJobs: NodeSchedule.Job[];
+  private alertJobs: ScheduleJob[];
 
-  private exportJobs: NodeSchedule.Job[];
+  private exportJobs: ScheduleJob[];
 
   private reminderState: ReminderState;
 
@@ -41,7 +73,7 @@ export class ScheduleService implements IScheduleService {
 
     const date: Date = this.getDateFromSchedule(reloadSchedule);
     if (date != null) {
-      var refreshGridJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
+      var refreshGridJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
         this.blotter.reloadGrid();
       });
     }
@@ -70,7 +102,7 @@ export class ScheduleService implements IScheduleService {
   public AddReminderSchedule(reminder: Reminder): void {
     const date: Date = this.getDateFromSchedule(reminder.Schedule);
     if (date != null) {
-      var alertJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
+      var alertJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
         this.blotter.api.alertApi.displayAlert(reminder.Alert);
       });
       this.alertJobs.push(alertJob);
@@ -81,7 +113,7 @@ export class ScheduleService implements IScheduleService {
     if (report.AutoExport) {
       const date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
       if (date != null) {
-        var exportJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
+        var exportJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
           this.blotter.api.exportApi.sendReport(report.Name, report.AutoExport.ExportDestination);
         });
         this.exportJobs.push(exportJob);
