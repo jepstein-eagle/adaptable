@@ -11,7 +11,6 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
   protected ReminderState: ReminderState;
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ReminderStrategyId, blotter);
-    //this.blotter.onGridReloaded().Subscribe(() => this.handleGridReloaded());
 
     this.blotter.on(GRID_RELOADED_EVENT, () => {
       this.scheduleReminders();
@@ -28,7 +27,7 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
 
   public scheduleReminders(): void {
     // just clear all jobs and recreate - simplest thing to do...
-    this.blotter.ScheduleService.ClearAllAlertJobs();
+    this.blotter.ScheduleService.ClearAllReminderJobs();
 
     this.blotter.api.reminderApi.getAllReminder().forEach(r => {
       this.blotter.ScheduleService.AddReminderSchedule(r);

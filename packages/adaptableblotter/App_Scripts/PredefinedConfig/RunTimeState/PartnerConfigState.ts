@@ -4,6 +4,6 @@ import { Scope } from '../Common/Scope';
 import { PushPullConfig } from '../DesignTimeState/PushPullConfig';
 
 export interface PartnerConfigState extends DesignTimeState {
-  pushPullConfig: PushPullConfig;
-  glue42Config: any; // presumably lets make glue 42 config
+  pushPullConfig?: PushPullConfig;
+  glue42Config?: string; // presumably lets make glue 42 config
 }

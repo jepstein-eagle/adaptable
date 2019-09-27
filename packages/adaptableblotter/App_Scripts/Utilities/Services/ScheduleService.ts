@@ -44,11 +44,11 @@ const NodeSchedule = {
 
 /**
  * This class is used for managing scheduling of Reports and Reminders
- * It uses node-schedule (via a strongly typed NodeSchedule) and creates standard jobs
+ * It listens to any changes in the Reminder or the Export state and tells the respective stragies to refresh
  * It also createsa daily job to run at midnight that will refresh the Blotter - this is so that date-based schedules can jump to the new day
  */
 export class ScheduleService implements IScheduleService {
-  private alertJobs: ScheduleJob[];
+  private reminderJobs: ScheduleJob[];
 
   private exportJobs: ScheduleJob[];
 
@@ -61,22 +61,10 @@ export class ScheduleService implements IScheduleService {
     this.blotter.adaptableBlotterStore.TheStore.subscribe(() =>
       this.listenToScheduleStoreChanges()
     );
-    this.alertJobs = [];
+    this.reminderJobs = [];
     this.exportJobs = [];
 
-    // create the midnight reload job
-    const reloadSchedule: Schedule = {
-      Hour: 0,
-      Minute: 1,
-      DaysOfWeek: [0, 1, 2, 3, 4, 5, 6],
-    };
-
-    const date: Date = this.getDateFromSchedule(reloadSchedule);
-    if (date != null) {
-      var refreshGridJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-        this.blotter.reloadGrid();
-      });
-    }
+    this.AddMidnightRefreshSchedule();
   }
 
   protected listenToScheduleStoreChanges(): void {
@@ -105,7 +93,7 @@ export class ScheduleService implements IScheduleService {
       var alertJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
         this.blotter.api.alertApi.displayAlert(reminder.Alert);
       });
-      this.alertJobs.push(alertJob);
+      this.reminderJobs.push(alertJob);
     }
   }
 
@@ -118,6 +106,21 @@ export class ScheduleService implements IScheduleService {
         });
         this.exportJobs.push(exportJob);
       }
+    }
+  }
+
+  private AddMidnightRefreshSchedule(): void {
+    const reloadSchedule: Schedule = {
+      Hour: 0,
+      Minute: 1,
+      DaysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+    };
+
+    const date: Date = this.getDateFromSchedule(reloadSchedule);
+    if (date != null) {
+      var refreshGridJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
+        this.blotter.reloadGrid();
+      });
     }
   }
 
@@ -146,13 +149,13 @@ export class ScheduleService implements IScheduleService {
     return null;
   }
 
-  public ClearAllAlertJobs(): void {
-    this.alertJobs.forEach(j => {
+  public ClearAllReminderJobs(): void {
+    this.reminderJobs.forEach(j => {
       if (j != null) {
         j.cancel();
       }
     });
-    this.alertJobs = [];
+    this.reminderJobs = [];
   }
 
   public ClearAllExportJobs(): void {

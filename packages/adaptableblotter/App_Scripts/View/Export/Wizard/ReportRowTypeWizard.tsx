@@ -17,6 +17,7 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import Radio from '../../../components/Radio';
 import { Flex } from 'rebass';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface ReportRowTypeWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportRowsWizardState {
@@ -35,39 +36,35 @@ export class ReportRowTypeWizard
   render() {
     return (
       <WizardPanel>
-        <Flex flexDirection="row" alignItems="center">
+        <Flex flexDirection="column" padding={2}>
+          <HelpBlock marginBottom={1}>
+            All rows in the datasource will be included in the report, whether visible or not at
+            time of export.
+          </HelpBlock>
           <Radio
             value="All"
             checked={this.state.ReportRowScope == ReportRowScope.AllRows}
             onChange={(_, e: any) => this.onScopeSelectChanged(e)}
             marginRight={3}
           >
-            All Rows in the Data Source
+            All Rows
           </Radio>{' '}
-          <AdaptablePopover
-            headerText={'Report: All Rows'}
-            bodyText={[
-              'All rows in the datasource will be included in the report, whether visible or not at time of export.',
-            ]}
-          />
-        </Flex>
-        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <HelpBlock marginBottom={1}>
+            Only rows that are visible at the time the Report is exported will be included in the
+            Export
+          </HelpBlock>
           <Radio
             value="Visible"
             checked={this.state.ReportRowScope == ReportRowScope.VisibleRows}
             onChange={(_, e: any) => this.onScopeSelectChanged(e)}
             marginRight={3}
           >
-            Visible Rows Only (at time that report is run)
+            Visible Rows Only
           </Radio>{' '}
-          <AdaptablePopover
-            headerText={'Report: Visible Rows'}
-            bodyText={[
-              'Only rows that are visible at the time the Report is exported will be included in the Export.',
-            ]}
-          />
-        </Flex>
-        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <HelpBlock marginBottom={1}>
+            Only the rows which match the Query (built in next step) will be exported - whether
+            visible or not.
+          </HelpBlock>
           <Radio
             value="Expression"
             checked={this.state.ReportRowScope == ReportRowScope.ExpressionRows}
@@ -76,10 +73,6 @@ export class ReportRowTypeWizard
           >
             By Query - built by you in next step
           </Radio>{' '}
-          <AdaptablePopover
-            headerText={'Report: Bespoke Rows'}
-            bodyText={['Only the rows which match the query will be exported (visible or not).']}
-          />
         </Flex>
       </WizardPanel>
     );

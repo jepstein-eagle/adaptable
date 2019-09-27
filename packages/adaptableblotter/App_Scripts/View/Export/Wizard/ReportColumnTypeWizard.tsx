@@ -13,6 +13,7 @@ import { ReportColumnScope, MessageType } from '../../../PredefinedConfig/Common
 import WizardPanel from '../../../components/WizardPanel';
 import Radio from '../../../components/Radio';
 import { Flex } from 'rebass';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface ReportColumnTypeWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportColumnsWizardState {
@@ -31,51 +32,42 @@ export class ReportColumnTypeWizard
   render() {
     return (
       <WizardPanel>
-        <Flex flexDirection="row" alignItems="center">
+        <Flex flexDirection="column" padding={2}>
+          <HelpBlock marginBottom={1}>
+            All columns in the datasource will be included in the report, whether visible or not at
+            time of export
+          </HelpBlock>
           <Radio
             value="All"
             checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns}
             onChange={(_, e: any) => this.onScopeSelectChanged(e)}
             marginRight={3}
           >
-            All Columns in the Data Source
+            All Columns
           </Radio>{' '}
-          <AdaptablePopover
-            headerText={'Report: All Columns'}
-            bodyText={[
-              'All columns in the datasource will be included in the report, whether visible or not at time of export.',
-            ]}
-          />
-        </Flex>
-        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <HelpBlock marginBottom={1}>
+            Only columns that are visible at the time the Report is exported will be included
+          </HelpBlock>
           <Radio
             value="Visible"
             checked={this.state.ReportColumnScope == ReportColumnScope.VisibleColumns}
             onChange={(_, e: any) => this.onScopeSelectChanged(e)}
             marginRight={3}
           >
-            Visible Columns Only (at time that report is run)
+            Visible Columns Only
           </Radio>{' '}
-          <AdaptablePopover
-            headerText={'Report: Visible Columns'}
-            bodyText={[
-              'Only columns that are visible at the time the Report is exported will be included in the Export.',
-            ]}
-          />
-        </Flex>
-        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <HelpBlock marginBottom={1}>
+            Only selected columns (which you will choose in the next step) will be exported -
+            whether visible or not
+          </HelpBlock>
           <Radio
             value="Bespoke"
             marginRight={3}
             checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns}
             onChange={(_, e: any) => this.onScopeSelectChanged(e)}
           >
-            Bespoke Columns - selected by you in next step
+            Bespoke Columns
           </Radio>{' '}
-          <AdaptablePopover
-            headerText={'Report: Bespoke Columns'}
-            bodyText={['Only the columns chosen in next step will be exported (visible or not).']}
-          />
         </Flex>
       </WizardPanel>
     );

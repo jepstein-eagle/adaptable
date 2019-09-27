@@ -5,6 +5,6 @@ export interface IScheduleService {
   AddReminderSchedule(reminder: Reminder): void;
   AddReportSchedule(report: Report): void;
 
-  ClearAllAlertJobs(): void;
+  ClearAllReminderJobs(): void;
   ClearAllExportJobs(): void;
 }

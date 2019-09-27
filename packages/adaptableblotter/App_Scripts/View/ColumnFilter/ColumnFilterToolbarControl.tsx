@@ -81,18 +81,16 @@ class ColumnFilterToolbarControlComponent extends React.Component<
             />
           </>
         )}
-
-        {!this.props.Blotter.api.gridApi.IsGridInPivotMode() && (
-          <CheckBox
-            marginLeft={3}
-            checked={this.props.IsQuickFilterActive}
-            onChange={(checked: boolean) => {
-              checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
-            }}
-          >
-            Quick Filter
-          </CheckBox>
-        )}
+        <CheckBox
+          disabled={this.props.Blotter.api.gridApi.IsGridInPivotMode()}
+          marginLeft={3}
+          checked={this.props.IsQuickFilterActive}
+          onChange={(checked: boolean) => {
+            checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
+          }}
+        >
+          Quick Filter
+        </CheckBox>
       </Flex>
     );
 

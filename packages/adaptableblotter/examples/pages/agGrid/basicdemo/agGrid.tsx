@@ -38,16 +38,21 @@ function InitAdaptableBlotter() {
   };
 
   adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
-    console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
+    //   console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
   };
   adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
     var data = event.data;
-    console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
+    //  console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
   };
   adaptableBlotterOptions.filterOptions = {
     autoApplyFilter: true,
     useVendorFilterFormStyle: true,
+    filterActionOnUserDataChange: {
+      RunFilter: 'Throttle',
+      ThrottleDelay: 20000,
+    },
   };
+
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
@@ -55,7 +60,11 @@ function InitAdaptableBlotter() {
   // global.adaptableblotter = adaptableblotter;
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  PartnerConfig: {
+    glue42Config: 'Hello ',
+  },
+};
 
 export default () => {
   useEffect(() => {

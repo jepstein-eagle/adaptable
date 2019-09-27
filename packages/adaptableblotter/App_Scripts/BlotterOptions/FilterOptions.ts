@@ -102,7 +102,7 @@ export interface FilterActionOnDataChange {
   RunFilter: 'Always' | 'Never' | 'Throttle';
 
   /**
-   * The delay used (when Filter is set to Throttle)
+   * The delay **in milliseconds** used (when Filter is set to Throttle)
    */
   ThrottleDelay?: number;
 }

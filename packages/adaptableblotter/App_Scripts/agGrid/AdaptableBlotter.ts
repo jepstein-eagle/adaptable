@@ -210,9 +210,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public isInitialised: boolean;
 
-  private throttleOnDataChangedUser: (() => void) & _.Cancelable;
+  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & _.Cancelable;
 
-  private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
+  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & _.Cancelable;
 
   public hasQuickFilter: boolean;
 
@@ -437,31 +437,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
 
-  private filterOnUserDataChange(): void {
+  private filterOnUserDataChange(rowNodes: RowNode[]): void {
     if (
       this.blotterOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
     ) {
-      this.applyDataChange();
+      this.applyDataChange(rowNodes);
     } else if (
       this.blotterOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
       FilterOnDataChangeOptions.Throttle
     ) {
-      this.throttleOnDataChangedUser();
+      this.throttleOnDataChangedUser(rowNodes);
     }
   }
 
-  private filterOnExternalDataChange(): void {
+  private filterOnExternalDataChange(rowNodes: RowNode[]): void {
     if (
       this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
     ) {
-      this.applyDataChange();
+      this.applyDataChange(rowNodes);
     } else if (
       this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
       FilterOnDataChangeOptions.Throttle
     ) {
-      this.throttleOnDataChangedExternal();
+      this.throttleOnDataChangedExternal(rowNodes);
     }
   }
 
@@ -493,9 +493,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.emit(GRID_REFRESHED_EVENT);
   }
 
-  private applyDataChange() {
-    this.gridOptions.api!.onFilterChanged();
-    this.emit(GRID_REFRESHED_EVENT);
+  private applyDataChange(rowNodes: RowNode[]) {
+    let itemsToUpdate: any[] = rowNodes.map((rowNode: RowNode) => {
+      return rowNode.data;
+    });
+    if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
+      this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
+      this.emit(GRID_REFRESHED_EVENT);
+    }
   }
 
   public clearGridFiltering() {
@@ -949,10 +954,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public setValue(gridCell: GridCell): void {
+    let updatedRowNode: RowNode;
     if (this.useRowNodeLookUp) {
       const rowNode: RowNode = this.gridOptions.api!.getRowNode(gridCell.primaryKeyValue);
       if (rowNode != null) {
         this.updateValue(gridCell, rowNode);
+        updatedRowNode = rowNode;
       }
     } else {
       let isUpdated: boolean = false;
@@ -961,12 +968,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (!isUpdated) {
           if (gridCell.primaryKeyValue == this.getPrimaryKeyValueFromRecord(rowNode)) {
             this.updateValue(gridCell, rowNode);
+            updatedRowNode = rowNode;
             isUpdated = true;
           }
         }
       });
     }
-    this.filterOnUserDataChange();
+    this.filterOnUserDataChange([updatedRowNode]);
     this.gridOptions.api!.clearRangeSelection();
   }
 
@@ -997,22 +1005,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     var dataChangedEvents: DataChangedInfo[] = [];
     const nodesToRefresh: RowNode[] = [];
-    const refreshColumnList: string[] = [];
-    const percentBars: PercentBar[] = this.api.percentBarApi.getAllPercentBar();
 
     // now two ways to do this - one using pk lookup and other using foreach on row node
     if (this.useRowNodeLookUp) {
       gridCellBatch.forEach((gridCell: GridCell) => {
         const rowNode: RowNode = this.gridOptions.api!.getRowNode(gridCell.primaryKeyValue);
         if (rowNode) {
-          this.updateBatchValue(
-            gridCell,
-            rowNode,
-            nodesToRefresh,
-            refreshColumnList,
-            dataChangedEvents,
-            percentBars
-          );
+          this.updateBatchValue(gridCell, rowNode, nodesToRefresh, dataChangedEvents);
         }
       });
     } else {
@@ -1021,14 +1020,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           x => x.primaryKeyValue == this.getPrimaryKeyValueFromRecord(rowNode)
         );
         if (gridCell) {
-          this.updateBatchValue(
-            gridCell,
-            rowNode,
-            nodesToRefresh,
-            refreshColumnList,
-            dataChangedEvents,
-            percentBars
-          );
+          this.updateBatchValue(gridCell, rowNode, nodesToRefresh, dataChangedEvents);
         }
       });
     }
@@ -1039,8 +1031,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents);
     dataChangedEvents.forEach(dc => this.DataService.CreateDataChangedEvent(dc));
 
-    this.filterOnUserDataChange();
-    this.refreshCells(nodesToRefresh, refreshColumnList);
+    this.filterOnUserDataChange(nodesToRefresh);
 
     // we want to reselect the cells that are selected so that users can repeat actions
     // we do this by gettng the selected cells, clearing the selection and then re-applying
@@ -1064,15 +1055,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     gridCell: GridCell,
     rowNode: RowNode,
     nodesToRefresh: RowNode[],
-    refreshColumnList: string[],
-    dataChangedEvents: DataChangedInfo[],
-    percentBars: PercentBar[]
+    dataChangedEvents: DataChangedInfo[]
   ): void {
     const colId: string = gridCell.columnId;
-    refreshColumnList.push(colId);
     nodesToRefresh.push(rowNode);
-
-    ArrayExtensions.AddItem(refreshColumnList, colId);
 
     const oldValue = this.gridOptions.api!.getValue(colId, rowNode);
 
@@ -1087,32 +1073,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       Record: rowNode,
     };
     dataChangedEvents.push(dataChangedEvent);
-
-    // check if any calc columns need to refresh
-    const columnList = this.calculatedColumnPathMap.get(colId);
-    if (columnList) {
-      columnList.forEach(calcColumn => {
-        ArrayExtensions.AddItem(refreshColumnList, calcColumn);
-      });
-    }
-
-    // see if we need to refresh any percent bars
-    percentBars.forEach(pb => {
-      refreshColumnList.forEach(changedColId => {
-        if (
-          StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) &&
-          pb.MaxValueColumnId == changedColId
-        ) {
-          ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-        }
-        if (
-          StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) &&
-          pb.MinValueColumnId == changedColId
-        ) {
-          ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-        }
-      });
-    });
   }
 
   public cancelEdit() {
@@ -2042,15 +2002,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       };
       this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
     });
-    this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, () => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
       // (<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
       this._currentEditor = null;
       // We refresh the filter so we get live search/filter when editing.
       // Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
 
       // if they have set to run filter after edit then lets do it
-      this.filterOnUserDataChange();
-      this.debouncedSetSelectedCells();
+      if (params.node) {
+        this.filterOnUserDataChange([params.node]);
+        this.debouncedSetSelectedCells();
+      }
     });
 
     const columnEventsThatTriggerSetRowSelection = [
@@ -2189,10 +2151,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           });
 
           // this is new  - giving users ability to filter on external data changes
-          this.filterOnExternalDataChange();
+          this.filterOnExternalDataChange([params.node]);
 
           // only if visible...
-          this.refreshCells([params.node], refreshColumnList);
+          //     this.refreshCells([params.node], refreshColumnList);
         }
       }
     );
