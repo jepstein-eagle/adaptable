@@ -43,6 +43,11 @@ const NodeSchedule = {
 };
 
 /**
+ * TODO - we need to implement a way to make sure that if the user doesn't reload the browser for 5 days and has a reminder for each of those days,
+ * we need to make sure all of those occurences are triggered
+ */
+
+/**
  * This class is used for managing scheduling of Reports and Reminders
  * It uses node-schedule (via a strongly typed NodeSchedule) and creates standard jobs
  * It also createsa daily job to run at midnight that will refresh the Blotter - this is so that date-based schedules can jump to the new day
