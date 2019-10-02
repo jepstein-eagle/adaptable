@@ -1,16 +1,20 @@
+input.ab-Input {
+  background: var(--ab-cmp-input__background);
+
+  &[disabled] {
+    background: var(--ab-cmp-input--disabled__background);
+  }
+}
 .ab-Input {
   padding: var(--ab-cmp-input__padding);
   color: var(--ab-cmp-input__color);
-  background: var(--ab-cmp-input__background) !important;
+
   border-radius: var(--ab-cmp-input__border-radius);
   border: var(--ab-cmp-input__border);
 
   font-family: var(--ab-cmp-input__font-family);
   font-size: var(--ab-cmp-input__font-size);
 
-  &[disabled] {
-    background: var(--ab-cmp-input--disabled__background) !important; 
-  }
 
   &:focus {
     box-shadow: var(--ab-focus__box-shadow);
