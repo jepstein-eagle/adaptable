@@ -92,7 +92,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     );
     return (
       <Panel
-        border="none"
+        border="var(--ab-cmp-dashboardpanel__border)"
         {...props}
         className={join('ab-DashboardPanel', props.className)}
         header={header}

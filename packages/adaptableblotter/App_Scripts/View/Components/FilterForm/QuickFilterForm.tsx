@@ -139,6 +139,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
           maxHeight: 20,
           fontSize: 'var(--ab-font-size-1)',
         }}
+        className="ab-QuickFilterFormInput"
         autoFocus={false}
         type={controlType}
         placeholder={this.state.placeholder}
