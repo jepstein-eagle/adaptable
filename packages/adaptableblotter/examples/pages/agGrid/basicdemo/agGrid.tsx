@@ -57,7 +57,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-  // global.adaptableblotter = adaptableblotter;
+  global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {

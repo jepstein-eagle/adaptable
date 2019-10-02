@@ -1506,7 +1506,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private forEachColumn = (fn: (columnDef: ColDef) => any) => {
-    forEachColumn(this.gridOptions.columnDefs, fn);
+    forEachColumn(this.getColumnDefs(), fn);
   };
 
   /**
@@ -1519,7 +1519,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   ) => {
     config = config || { removeEmpty: false };
 
-    let colDefs: (ColDef | ColGroupDef)[] = [...this.gridOptions.columnDefs];
+    let colDefs: (ColDef | ColGroupDef)[] = [...this.getColumnDefs()];
 
     forEachColumn(colDefs, (columnDef: ColDef, i, colDefs, parentColGroup) => {
       const result = fn(columnDef, i, colDefs);
@@ -1637,7 +1637,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
-    const colDefs: (ColDef | ColGroupDef)[] = [...(this.gridOptions.columnDefs || [])];
+    const colDefs: (ColDef | ColGroupDef)[] = [...(this.getColumnDefs() || [])];
 
     const cols: IColumn[] = this.api.gridApi.getColumns();
     const cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
@@ -1690,8 +1690,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.addSpecialColumnToState(calculatedColumn.Uuid, calculatedColumn.ColumnId, dataType);
   }
 
+  public getColumnDefs = (): (ColDef | ColGroupDef)[] => {
+    return (this.gridOptions.columnApi as any).columnController.columnDefs || [];
+  };
+
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
-    const colDefs: (ColDef | ColGroupDef)[] = [...(this.gridOptions.columnDefs || [])];
+    const colDefs: (ColDef | ColGroupDef)[] = [...this.getColumnDefs()];
     const newColDef: ColDef = {
       headerName: freeTextColumn.ColumnId,
       colId: freeTextColumn.ColumnId,
@@ -1702,10 +1706,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       resizable: true,
       cellEditor: 'agLargeTextCellEditor',
       valueSetter: (params: ValueSetterParams) => {
-        return (params.data.name = params.newValue);
+        return (params.data[freeTextColumn.ColumnId] = params.newValue);
       },
       valueGetter: (params: ValueGetterParams) =>
-        params.data.name ||
+        params.data[freeTextColumn.ColumnId] ||
         this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node),
     };
     colDefs.push(newColDef);
@@ -1716,7 +1720,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public addActionColumnToGrid(actionColumn: ActionColumn) {
-    const colDefs: (ColDef | ColGroupDef)[] = [...(this.gridOptions.columnDefs || [])];
+    const colDefs: (ColDef | ColGroupDef)[] = [...this.getColumnDefs()];
     const newColDef: ColDef = {
       headerName: actionColumn.ColumnId,
       colId: actionColumn.ColumnId,
