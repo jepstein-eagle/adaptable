@@ -24,6 +24,8 @@ import {
   ValueGetterParams,
   ColDef,
   ValueFormatterParams,
+  ColGroupDef,
+  ValueSetterParams,
 } from 'ag-grid-community/dist/lib/entities/colDef';
 import {
   GetMainMenuItemsParams,
@@ -164,6 +166,30 @@ type RuntimeConfig = {
 
 const RowNodeProto: any = RowNode.prototype as unknown;
 const RowNode_dispatchLocalEvent = RowNodeProto.dispatchLocalEvent;
+
+/**
+ * Since column definitions can be nested and have groups
+ * we use this forEachColumn function to call the passed-in `fn`
+ * which will be called with just ColDef (not ColGroupDef), so just column definitions, not group definitions
+ */
+const forEachColumn = (
+  cols: (ColDef | ColGroupDef)[],
+  fn: (
+    columnDef: ColDef,
+    i: number,
+    arr: (ColDef | ColGroupDef)[],
+    parentColGroup?: ColGroupDef
+  ) => any,
+  parentColGroup?: ColGroupDef
+) => {
+  cols.forEach((col, i, arr) => {
+    if ((col as ColGroupDef).children) {
+      forEachColumn((col as ColGroupDef).children, fn, col as ColGroupDef);
+    } else {
+      fn(col, i, arr, parentColGroup);
+    }
+  });
+};
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
@@ -1479,37 +1505,80 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api!.refreshCells(refreshCellParams);
   }
 
+  private forEachColumn = (fn: (columnDef: ColDef) => any) => {
+    forEachColumn(this.gridOptions.columnDefs, fn);
+  };
+
+  /**
+   * This creates a clone of the current column definitions. If config.removeEmpty is true, will also remove empty column groups
+   *
+   */
+  private mapColumnDefs = (
+    fn: (columnDef: ColDef, i: number, colDefs: ColDef[]) => ColDef | null,
+    config?: { removeEmpty: boolean }
+  ) => {
+    config = config || { removeEmpty: false };
+
+    let colDefs: (ColDef | ColGroupDef)[] = [...this.gridOptions.columnDefs];
+
+    forEachColumn(colDefs, (columnDef: ColDef, i, colDefs, parentColGroup) => {
+      const result = fn(columnDef, i, colDefs);
+
+      const parentArray = parentColGroup ? parentColGroup.children : colDefs;
+
+      parentArray[i] = result;
+
+      if (i === colDefs.length - 1 && config.removeEmpty) {
+        if (parentColGroup) {
+          parentColGroup.children = parentArray.filter(x => !!x);
+        }
+      }
+    });
+
+    if (config.removeEmpty) {
+      colDefs = colDefs.filter(x => !!x);
+    }
+
+    return colDefs;
+  };
+
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
     // the name of the column might have changed so lets get the column from store as that will be the 'old' one
     const cols: IColumn[] = this.api.gridApi.getColumns();
     const existingABColumn: IColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
+
+    let cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
+      calculatedColumn.ColumnExpression,
+      cols
+    );
+
     if (existingABColumn) {
       // now get the ag-Grid ColDef Index
-      const colDefs: ColDef[] = this.gridOptions.columnApi!.getAllColumns().map(x => x.getColDef());
-      const colDefIndex = colDefs.findIndex(x => x.headerName == existingABColumn.ColumnId);
+      const colDefs: ColDef[] = this.mapColumnDefs((colDef: ColDef) => {
+        if (colDef.headerName === existingABColumn.ColumnId) {
+          // clean the expression in case it got dirty
 
-      // clean the expression in case it got dirty
-      const cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
-        calculatedColumn.ColumnExpression,
-        cols
-      );
+          const newColDef: ColDef = { ...colDef };
+          //  change the value getter in the coldefs
+          newColDef.valueGetter = (params: ValueGetterParams) =>
+            Helper.RoundValueIfNumeric(
+              this.CalculatedColumnExpressionService.ComputeExpressionValue(
+                cleanedExpression,
+                params.node
+              ),
+              4
+            );
 
-      const newColDef: ColDef = colDefs[colDefIndex];
-      //  change the value getter in the coldefs
-      newColDef.valueGetter = (params: ValueGetterParams) =>
-        Helper.RoundValueIfNumeric(
-          this.CalculatedColumnExpressionService.ComputeExpressionValue(
-            cleanedExpression,
-            params.node
-          ),
-          4
-        );
+          // reset the name in case its changed
+          newColDef.headerName = calculatedColumn.ColumnId;
+          newColDef.colId = calculatedColumn.ColumnId;
 
-      // reset the name in case its changed
-      newColDef.headerName = calculatedColumn.ColumnId;
-      newColDef.colId = calculatedColumn.ColumnId;
+          return newColDef;
+        }
 
-      colDefs[colDefIndex] = newColDef;
+        return colDef;
+      });
+
       this.agGridHelper.safeSetColDefs(colDefs);
 
       // for column list its an itnernal map only so we can first delete
@@ -1541,11 +1610,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
-    const colDefs: ColDef[] = this.gridOptions.columnApi!.getAllColumns().map(x => x.getColDef());
-    const colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumnID);
-    if (colDefIndex > -1) {
-      colDefs.splice(colDefIndex, 1);
-      this.agGridHelper.safeSetColDefs(colDefs);
+    let foundColDef: boolean = false;
+    const newColDefs = this.mapColumnDefs(
+      (colDef: ColDef) => {
+        if (colDef.headerName === calculatedColumnID) {
+          foundColDef = true;
+
+          return null;
+        }
+
+        return colDef;
+      },
+      { removeEmpty: true }
+    );
+
+    if (foundColDef) {
+      this.agGridHelper.safeSetColDefs(newColDefs);
     }
     for (const columnList of this.calculatedColumnPathMap.values()) {
       const index = columnList.indexOf(calculatedColumnID);
@@ -1557,8 +1637,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
-    const venderCols = this.gridOptions.columnApi!.getAllColumns();
-    const colDefs: ColDef[] = venderCols.map(x => x.getColDef());
+    const colDefs: (ColDef | ColGroupDef)[] = [...(this.gridOptions.columnDefs || [])];
 
     const cols: IColumn[] = this.api.gridApi.getColumns();
     const cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
@@ -1612,8 +1691,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
-    const venderCols: Column[] = this.gridOptions.columnApi!.getAllColumns();
-    const colDefs: ColDef[] = venderCols.map(x => x.getColDef());
+    const colDefs: (ColDef | ColGroupDef)[] = [...(this.gridOptions.columnDefs || [])];
     const newColDef: ColDef = {
       headerName: freeTextColumn.ColumnId,
       colId: freeTextColumn.ColumnId,
@@ -1623,7 +1701,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       sortable: true,
       resizable: true,
       cellEditor: 'agLargeTextCellEditor',
+      valueSetter: (params: ValueSetterParams) => {
+        return (params.data.name = params.newValue);
+      },
       valueGetter: (params: ValueGetterParams) =>
+        params.data.name ||
         this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node),
     };
     colDefs.push(newColDef);
@@ -1634,8 +1716,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public addActionColumnToGrid(actionColumn: ActionColumn) {
-    const venderCols: Column[] = this.gridOptions.columnApi!.getAllColumns();
-    const colDefs: ColDef[] = venderCols.map(x => x.getColDef());
+    const colDefs: (ColDef | ColGroupDef)[] = [...(this.gridOptions.columnDefs || [])];
     const newColDef: ColDef = {
       headerName: actionColumn.ColumnId,
       colId: actionColumn.ColumnId,
@@ -2868,28 +2949,29 @@ import "adaptableblotter/themes/${themeName}.css"`);
     const editLookUpCols: EditLookUpColumn[] = this.api.userInterfaceApi.getUserInterfaceState()
       .EditLookUpColumns;
     if (ArrayExtensions.IsNotNullOrEmpty(editLookUpCols)) {
-      const colDefs: ColDef[] = this.gridOptions.columnApi!.getAllColumns().map(x => x.getColDef());
+      const colDefs: (ColDef | ColGroupDef)[] = this.mapColumnDefs((colDef: ColDef) => {
+        editLookUpCols.forEach((e: EditLookUpColumn) => {
+          if (colDef.field === e.ColumnId) {
+            colDef.cellEditor = 'agRichSelectCellEditor';
+            if (ArrayExtensions.IsNullOrEmpty(e.LookUpValues)) {
+              colDef.cellEditorParams = {
+                values: this.getColumnValueDisplayValuePairDistinctList(
+                  e.ColumnId,
+                  DistinctCriteriaPairValue.DisplayValue,
+                  false
+                ).map(t => t.DisplayValue),
+              };
+            } else {
+              colDef.cellEditorParams = {
+                values: e.LookUpValues,
+              };
+            }
+          }
+        });
 
-      editLookUpCols.forEach((e: EditLookUpColumn) => {
-        const colDefIndex = colDefs.findIndex(x => x.field == e.ColumnId);
-
-        const newColDef: ColDef = colDefs[colDefIndex];
-        newColDef.cellEditor = 'agRichSelectCellEditor';
-        if (ArrayExtensions.IsNullOrEmpty(e.LookUpValues)) {
-          newColDef.cellEditorParams = {
-            values: this.getColumnValueDisplayValuePairDistinctList(
-              e.ColumnId,
-              DistinctCriteriaPairValue.DisplayValue,
-              false
-            ).map(t => t.DisplayValue),
-          };
-        } else {
-          newColDef.cellEditorParams = {
-            values: e.LookUpValues,
-          };
-        }
-        colDefs[colDefIndex] = newColDef;
+        return colDef;
       });
+
       this.agGridHelper.safeSetColDefs(colDefs);
     }
 

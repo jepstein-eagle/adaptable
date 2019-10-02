@@ -808,6 +808,7 @@ export class ExamplesHelper {
       floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
+      rowHeight: 30,
       sideBar: true,
       rowSelection: 'multiple',
       columnTypes: {
