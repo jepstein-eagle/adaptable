@@ -589,7 +589,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public setColumnIntoStore() {
     // if pivotig and we have 'special' columns as a result then do nothing ...
-    if (this.gridOptions.columnApi.isPivotMode) {
+    if (this.gridOptions.columnApi.isPivotMode()) {
       if (ArrayExtensions.IsNotNullOrEmpty(this.gridOptions.columnApi.getPivotColumns())) {
         return;
       }
@@ -829,7 +829,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
     const selectedRows: GridRow[] = [];
 
-    if (this.gridOptions.columnApi.isPivotMode) {
+    if (this.gridOptions.columnApi.isPivotMode()) {
       //  console.log('cannot currently perform row selection in pivot mode');
       return;
     }
@@ -2004,7 +2004,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // I still wonder if we can do this nicer by using :   this.gridOptions.api!.getEditingCells();
       // must be a good reason why we don't use it
 
-      if (this.gridOptions.columnApi.isPivotMode) {
+      if (this.gridOptions.columnApi.isPivotMode()) {
         //  console.log('cannot edit when pivot');
         return;
       }
