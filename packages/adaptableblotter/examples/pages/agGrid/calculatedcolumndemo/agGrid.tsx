@@ -17,21 +17,17 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(100);
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeColumnGrouping(tradeData);
+  const tradeData: any = examplesHelper.getTrades(100000);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'grouping-demo'
+    `calculated column demo`
   );
-
-  //adaptableBlotterOptions.predefinedConfig = demoConfig;
+  adaptableBlotterOptions.predefinedConfig = demoConfig;
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-
-  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-  global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {
@@ -44,11 +40,12 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Layout: {
+    CurrentLayout: 'with calc cols',
     Layouts: [
       {
-        Columns: ['tradeId', 'country', 'counterparty', 'notional', 'price', 'bid', 'stars'],
+        Columns: ['tradeId', 'country', 'notional', 'Double Notional', 'stars', 'counterparty'],
         ColumnSorts: [],
-        Name: 'no calc cols',
+        Name: 'with calc cols',
       },
     ],
   },

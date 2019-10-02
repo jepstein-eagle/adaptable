@@ -1315,17 +1315,42 @@ export class ExamplesHelper {
         },
       ],
     });
+
     schema.push({
-      headerName: 'Country',
-      field: 'country',
-      editable: true,
-      filter: true,
-      sortable: true,
-      enableRowGroup: true,
-      type: 'abColDefString',
-      resizable: true,
-      //  tooltipField: 'country',
-      //  cellEditor: 'agLargeTextCellEditor',
+      headerName: 'Strings',
+      marryChildren: true,
+      children: [
+        {
+          headerName: 'Country',
+          field: 'country',
+          editable: true,
+          filter: true,
+          sortable: true,
+          enableRowGroup: true,
+          type: 'abColDefString',
+          resizable: true,
+        },
+        {
+          headerName: 'Counterparty',
+          field: 'counterparty',
+          editable: true,
+          enableRowGroup: true,
+          filter: true,
+          sortable: true,
+          type: 'abColDefString',
+          cellRenderer: 'agAnimateShowChangeCellRenderer',
+        },
+        {
+          headerName: 'Currency',
+          field: 'currency',
+          editable: true,
+          enableRowGroup: true,
+          sortable: true,
+          filter: 'agTextColumnFilter',
+          type: 'abColDefString',
+          resizable: true,
+        },
+      ],
     });
     schema.push({
       headerName: 'Notional',
@@ -1352,19 +1377,6 @@ export class ExamplesHelper {
     });
 
     schema.push({
-      headerName: 'Counterparty',
-      field: 'counterparty',
-      editable: true,
-      enableRowGroup: true,
-      filter: true,
-      sortable: true,
-      type: 'abColDefString',
-      cellRenderer: 'agAnimateShowChangeCellRenderer',
-      // resizable: true,
-      //  tooltipComponent: 'percentBarTooltip',
-    });
-
-    schema.push({
       headerName: 'Change',
       field: 'changeOnYear',
       filter: true,
@@ -1375,16 +1387,6 @@ export class ExamplesHelper {
       //  tooltipComponent: 'percentBarTooltip',
     });
 
-    schema.push({
-      headerName: 'Currency',
-      field: 'currency',
-      editable: true,
-      enableRowGroup: true,
-      sortable: true,
-      filter: 'agTextColumnFilter',
-      type: 'abColDefString',
-      resizable: true,
-    });
     schema.push({
       headerName: 'Status',
       field: 'status',

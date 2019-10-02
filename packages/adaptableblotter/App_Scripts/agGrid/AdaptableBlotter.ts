@@ -1586,7 +1586,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
 
     // if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
-    newColDef.tooltipField = 'changeOnYear';
+    // newColDef.tooltipField = 'changeOnYear';
     // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
     //  coldDef.tooltipComponent = PercentBarTooltip;
     // } else {
@@ -1627,6 +1627,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node),
     };
     colDefs.push(newColDef);
+
     this.agGridHelper.safeSetColDefs(colDefs);
 
     this.addSpecialColumnToState(freeTextColumn.Uuid, freeTextColumn.ColumnId, DataType.String);
