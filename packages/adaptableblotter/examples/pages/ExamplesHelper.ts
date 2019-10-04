@@ -1553,6 +1553,7 @@ export class ExamplesHelper {
       editable: true,
       type: 'abColDefNumber',
       sortable: true,
+      enableValue: true,
       //  tooltipField: 'changeOnYear',
       //  tooltipComponent: 'percentBarTooltip',
     });

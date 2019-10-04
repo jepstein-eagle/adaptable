@@ -1898,17 +1898,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       gridContainerElement.addEventListener('keydown', event => this.emit(KEY_DOWN_EVENT, event));
     }
 
-    // vendorGrid.api.addGlobalListener((type: string, event: any) => {
-    //     //console.log(event)
-    // });
-    // we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
-    // since there are many events and we want them to behave the same
     this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {
       if (params.visible && params.column) {
         this.updateQuickSearchRangeVisibleColumn(params.column.colId);
       }
     });
 
+    // we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
+    // since there are many events and we want them to behave the same
     const columnEventsThatTriggersStateChange = [
       Events.EVENT_COLUMN_MOVED,
       Events.EVENT_GRID_COLUMNS_CHANGED,
@@ -1931,7 +1928,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           // ignore
         } else {
           // set the column into the store
-          this.debouncedSetColumnIntoStore(); // was: this.setColumnIntoStore();
+          this.debouncedSetColumnIntoStore();
         }
         // refilter the grid if required
         this.debouncedFilterGrid();

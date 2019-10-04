@@ -44,6 +44,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      *  Chart Strategy - lots
      *  Custom Sort
      *  Percent Bar
+     *  Sparkline Column
      *  Theme
      */
   }
