@@ -653,6 +653,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
+  private safeSetColDefs(colDefs: (ColDef | ColGroupDef)[]) {
+    // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
+    this.gridOptions.api!.setColumnDefs([]);
+    this.gridOptions.api!.setColumnDefs(colDefs);
+
+    const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
+    vendorCols.forEach((vc: Column) => {
+      this.addFiltersToVendorColumn(vc);
+    });
+  }
+
   private getQuickSearchClassName(): string {
     const quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(
       this.api.quickSearchApi.getQuickSearchStyle().ClassName
@@ -1579,7 +1590,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return colDef;
       });
 
-      this.agGridHelper.safeSetColDefs(colDefs);
+      this.safeSetColDefs(colDefs);
 
       // for column list its an itnernal map only so we can first delete
       for (const columnList of this.calculatedColumnPathMap.values()) {
@@ -1625,7 +1636,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     );
 
     if (foundColDef) {
-      this.agGridHelper.safeSetColDefs(newColDefs);
+      this.safeSetColDefs(newColDefs);
     }
     for (const columnList of this.calculatedColumnPathMap.values()) {
       const index = columnList.indexOf(calculatedColumnID);
@@ -1673,7 +1684,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // }
 
     colDefs.push(newColDef);
-    this.agGridHelper.safeSetColDefs(colDefs);
+    this.safeSetColDefs(colDefs);
 
     const columnList = CalculatedColumnHelper.getColumnListFromExpression(cleanedExpression);
     for (const column of columnList) {
@@ -1714,7 +1725,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
     colDefs.push(newColDef);
 
-    this.agGridHelper.safeSetColDefs(colDefs);
+    this.safeSetColDefs(colDefs);
 
     this.addSpecialColumnToState(freeTextColumn.Uuid, freeTextColumn.ColumnId, DataType.String);
   }
@@ -1732,7 +1743,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       cellRenderer: ActionColumnRenderer,
     };
     colDefs.push(newColDef);
-    this.agGridHelper.safeSetColDefs(colDefs);
+    this.safeSetColDefs(colDefs);
 
     this.addSpecialColumnToState(actionColumn.Uuid, actionColumn.ColumnId, DataType.String);
   }
@@ -2973,7 +2984,7 @@ import "adaptableblotter/themes/${themeName}.css"`);
         return colDef;
       });
 
-      this.agGridHelper.safeSetColDefs(colDefs);
+      this.safeSetColDefs(colDefs);
     }
 
     // add the filter header style if required

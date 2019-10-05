@@ -61,7 +61,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
   filterOptions: {
     indicateFilteredColumns: true,
     useAdaptableBlotterFilterForm: true,
-    useVendorFilterFormStyle: false,
+    useVendorFilterFormStyle: true,
     useAdaptableBlotterQuickFilter: true,
     filterActionOnUserDataChange: {
       RunFilter: GeneralConstants.FILTER_ALWAYS,

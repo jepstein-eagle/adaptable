@@ -10,6 +10,7 @@ import {
   MenuItemDef,
   GetContextMenuItemsParams,
   ColGroupDef,
+  Column,
 } from 'ag-grid-community';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -267,12 +268,6 @@ export class agGridHelper {
       return this.getCleanValue(valueToRender);
     }
     return render({ value: valueToRender }) || '';
-  }
-
-  public safeSetColDefs(colDefs: (ColDef | ColGroupDef)[]) {
-    // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
-    this.gridOptions.api!.setColumnDefs([]);
-    this.gridOptions.api!.setColumnDefs(colDefs);
   }
 
   public createAdaptableBlotterSideBarDefs(
