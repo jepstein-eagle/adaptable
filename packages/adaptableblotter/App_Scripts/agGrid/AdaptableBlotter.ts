@@ -632,12 +632,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       Filterable: this.isColumnFilterable(colId),
       IsSparkline: this.api.sparklineColumnApi.isSparklineColumn(colId),
     };
-    this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
-    this.addStateToVendorColumn(vendorColumn);
+
+    this.applyStylingToColumn(vendorColumn, abColumn);
     return abColumn;
   }
 
-  private addStateToVendorColumn(vendorColumn: Column): void {
+  private applyStylingToColumn(vendorColumn: Column, abColumn: IColumn): void {
     if (
       vendorColumn.getColDef().filter &&
       this.blotterOptions!.filterOptions.useAdaptableBlotterFilterForm
@@ -650,10 +650,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     const quickSearchClassName = this.getQuickSearchClassName();
-    let abColumn: IColumn = ColumnHelper.getColumnFromId(
-      vendorColumn.getColId(),
-      this.api.gridApi.getColumns()
-    );
+    if (abColumn == null) {
+      abColumn = ColumnHelper.getColumnFromId(
+        vendorColumn.getColId(),
+        this.api.gridApi.getColumns()
+      );
+    }
     if (abColumn) {
       this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
     }
@@ -665,8 +667,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api!.setColumnDefs(colDefs);
 
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
-    vendorCols.forEach((vc: Column) => {
-      this.addStateToVendorColumn(vc);
+    vendorCols.forEach((vendorColumn: Column) => {
+      let abColumn: IColumn = ColumnHelper.getColumnFromId(
+        vendorColumn.getColId(),
+        this.api.gridApi.getColumns()
+      );
+      this.applyStylingToColumn(vendorColumn, abColumn);
     });
 
     this.redraw();
@@ -1779,7 +1785,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       this.dispatchAction(GridRedux.GridAddColumn(specialColumn));
 
-      this.addStateToVendorColumn(vendorColumn);
+      this.applyStylingToColumn(vendorColumn, specialColumn);
 
       if (this.isInitialised) {
         const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
