@@ -1719,9 +1719,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       valueSetter: (params: ValueSetterParams) => {
         return (params.data[freeTextColumn.ColumnId] = params.newValue);
       },
-      valueGetter: (params: ValueGetterParams) =>
-        params.data[freeTextColumn.ColumnId] ||
-        this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node),
+      valueGetter: (params: ValueGetterParams) => {
+        return this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node);
+      },
     };
     colDefs.push(newColDef);
 
