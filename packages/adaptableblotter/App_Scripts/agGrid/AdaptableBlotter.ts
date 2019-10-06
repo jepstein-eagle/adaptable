@@ -633,11 +633,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       IsSparkline: this.api.sparklineColumnApi.isSparklineColumn(colId),
     };
     this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
-    this.addFiltersToVendorColumn(vendorColumn);
+    this.addStateToVendorColumn(vendorColumn);
     return abColumn;
   }
 
-  private addFiltersToVendorColumn(vendorColumn: Column): void {
+  private addStateToVendorColumn(vendorColumn: Column): void {
     if (
       vendorColumn.getColDef().filter &&
       this.blotterOptions!.filterOptions.useAdaptableBlotterFilterForm
@@ -645,11 +645,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.createFilterWrapper(vendorColumn);
     }
 
-    if (
-      this.gridOptions.floatingFilter &&
-      this.blotterOptions!.filterOptions.useAdaptableBlotterQuickFilter
-    ) {
+    if (this.isQuickFilterActive()) {
       this.createQuickFilterWrapper(vendorColumn);
+    }
+
+    const quickSearchClassName = this.getQuickSearchClassName();
+    let abColumn: IColumn = ColumnHelper.getColumnFromId(
+      vendorColumn.getColId(),
+      this.api.gridApi.getColumns()
+    );
+    if (abColumn) {
+      this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
     }
   }
 
@@ -660,8 +666,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
     vendorCols.forEach((vc: Column) => {
-      this.addFiltersToVendorColumn(vc);
+      this.addStateToVendorColumn(vc);
     });
+
+    this.redraw();
   }
 
   private getQuickSearchClassName(): string {
@@ -1617,6 +1625,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         cleanedExpression
       );
       this.dispatchAction(GridRedux.GridAddColumn(existingABColumn));
+
+      this.redraw();
     }
   }
 
@@ -1716,6 +1726,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       sortable: true,
       resizable: true,
       cellEditor: 'agLargeTextCellEditor',
+      type: 'abColDefString',
       valueSetter: (params: ValueSetterParams) => {
         return (params.data[freeTextColumn.ColumnId] = params.newValue);
       },
@@ -1744,7 +1755,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
     colDefs.push(newColDef);
     this.safeSetColDefs(colDefs);
-
     this.addSpecialColumnToState(actionColumn.Uuid, actionColumn.ColumnId, DataType.String);
   }
 
@@ -1767,17 +1777,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         IsSparkline: dataType == DataType.NumberArray,
       };
 
-      if (this.isQuickFilterActive()) {
-        this.createQuickFilterWrapper(vendorColumn);
-        this.gridOptions.api!.refreshHeader();
-      }
-
       this.dispatchAction(GridRedux.GridAddColumn(specialColumn));
 
-      const quickSearchClassName = this.getQuickSearchClassName();
-      this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
-
-      this.addFiltersToVendorColumn(vendorColumn);
+      this.addStateToVendorColumn(vendorColumn);
 
       if (this.isInitialised) {
         const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
