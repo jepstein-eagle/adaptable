@@ -1577,6 +1577,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       cols
     );
 
+    const dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
+      cleanedExpression
+    );
+
+    let agGridDataType: string = dataType == DataType.Number ? 'abColDefNumber' : 'abColDefString';
+
     if (existingABColumn) {
       // now get the ag-Grid ColDef Index
       const colDefs: ColDef[] = this.mapColumnDefs((colDef: ColDef) => {
@@ -1593,6 +1599,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               ),
               4
             );
+          newColDef.type = agGridDataType;
 
           // reset the name in case its changed
           newColDef.headerName = calculatedColumn.ColumnId;
@@ -1627,12 +1634,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // finally the name of the column or the datatype might have changed so lets update the column in the store to be sure
       // re-apply the datatype in case it has been changed as a result of the expression changing
       existingABColumn.ColumnId = calculatedColumn.ColumnId;
-      existingABColumn.DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
-        cleanedExpression
-      );
+      existingABColumn.DataType = dataType;
       this.dispatchAction(GridRedux.GridAddColumn(existingABColumn));
-
-      this.redraw();
     }
   }
 
@@ -1672,6 +1675,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       cols
     );
 
+    const dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
+      cleanedExpression
+    );
+
+    let agGridDataType: string = dataType == DataType.Number ? 'abColDefNumber' : 'abColDefString';
+
     const newColDef: ColDef = {
       headerName: calculatedColumn.ColumnId,
       colId: calculatedColumn.ColumnId,
@@ -1681,6 +1690,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       filter: true,
       resizable: true,
       sortable: true,
+      type: agGridDataType,
       valueGetter: (params: ValueGetterParams) =>
         Helper.RoundValueIfNumeric(
           this.CalculatedColumnExpressionService.ComputeExpressionValue(
@@ -1711,9 +1721,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       childrenColumnList.push(calculatedColumn.ColumnId);
     }
-    const dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
-      cleanedExpression
-    );
+
     this.addSpecialColumnToState(calculatedColumn.Uuid, calculatedColumn.ColumnId, dataType);
   }
 
