@@ -9,44 +9,47 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
+import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { TickingDataHelper } from '../../TickingDataHelper';
 
+/*
+Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
+No JSON or anything complicated
+Nor do we create the ag-Grid
+*/
+
+LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(5000);
+  const tradeData: any = examplesHelper.getTrades(300);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeWithSparkline(tradeData);
-  const tickingDataHelper = new TickingDataHelper();
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    `sparklines-demo`
+    `sparklines` // ${Date.now()}`
   );
 
-  adaptableBlotterOptions.predefinedConfig = {
-    SparklineColumn: {
-      SparklineColumns: [
-        {
-          ColumnId: 'history',
-          SparklineType: 'Line',
-        },
-      ],
-    },
-  };
-  adaptableBlotterOptions.chartOptions = {
-    showModal: false,
-    displayOnStartUp: true,
-  };
+  adaptableBlotterOptions.predefinedConfig = demoConfig;
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
+  //  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
   global.adaptableblotter = adaptableblotter;
-
-  tickingDataHelper.startTickingDataagGridSetDataValue(gridOptions);
 }
+
+let demoConfig: PredefinedConfig = {
+  SparklineColumn: {
+    SparklineColumns: [
+      {
+        ColumnId: 'history',
+        SparklineType: 'Line',
+      },
+    ],
+  },
+};
 
 export default () => {
   useEffect(() => {

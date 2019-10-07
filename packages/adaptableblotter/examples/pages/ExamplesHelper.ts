@@ -788,6 +788,7 @@ export class ExamplesHelper {
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
       sideBar: undefined,
+      rowHeight: 30,
       rowSelection: 'multiple',
       columnTypes: {
         abColDefNumber: {},
