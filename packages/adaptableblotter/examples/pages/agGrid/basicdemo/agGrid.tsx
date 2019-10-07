@@ -45,12 +45,7 @@ function InitAdaptableBlotter() {
     //  console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
   };
   adaptableBlotterOptions.filterOptions = {
-    autoApplyFilter: true,
-    useVendorFilterFormStyle: true,
-    filterActionOnUserDataChange: {
-      RunFilter: 'Throttle',
-      ThrottleDelay: 20000,
-    },
+    autoApplyFilter: false,
   };
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);

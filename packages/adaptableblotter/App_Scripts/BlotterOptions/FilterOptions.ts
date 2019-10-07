@@ -79,9 +79,9 @@ export interface FilterOptions {
   /**
    * Whether to apply selected filters in the Filter Form as soon as they are clicked
    *
-   * If set to true (the default), clicking on a filter applies it immediately.
+   * If set to **true** (the default), clicking on a filter applies it immediately.
    *
-   * If set to False then an Apply Filter button is placeda at the bottom, and filters are only applied when that button is clicked.
+   * If set to **false** then an Apply Filter button is placed at the bottom of the form, and filters are only applied when that button is clicked.
    *
    * **Default Value: true**
    */
