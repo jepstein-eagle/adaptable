@@ -2885,8 +2885,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private isQuickFilterActive(): boolean {
     return (
-      this.gridOptions.floatingFilter != null &&
-      this.gridOptions.floatingFilter == true &&
+      this.gridOptions.floatingFilter === true &&
       this.blotterOptions!.filterOptions.useAdaptableBlotterQuickFilter
     );
   }

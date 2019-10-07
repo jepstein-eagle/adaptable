@@ -63,9 +63,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   componentDidUpdate(prevProps: any, prevState: QuickFilterFormState) {
-    if (JSON.stringify(this.state) === JSON.stringify(prevState)) {
-      return;
-    }
     this.reconcileFilters();
   }
 
@@ -86,7 +83,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
           this.props.Columns,
           false
         );
-        this.setState({
+        this.doUpdate({
           filterExpression: existingColumnFilter.Filter,
           placeholder: expressionDescription,
         });
@@ -99,7 +96,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             this.props.Columns,
             false
           );
-          this.setState({
+          this.doUpdate({
             filterExpression: existingColumnFilter.Filter,
             placeholder: expressionDescription,
             quickFilterFormText: '',
@@ -282,8 +279,16 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     }
   }
 
+  doUpdate(state: Partial<QuickFilterFormState>): void {
+    if (JSON.stringify(state) === JSON.stringify(this.state)) {
+      return;
+    }
+
+    this.setState(state as QuickFilterFormState);
+  }
+
   clearState(): void {
-    this.setState({
+    this.doUpdate({
       quickFilterFormText: '',
       filterExpression: ExpressionHelper.CreateEmptyExpression(),
       placeholder: '',
