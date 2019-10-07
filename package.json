@@ -1,6 +1,6 @@
 {
   "name": "@adaptabletools/adaptableblotter-monorepo",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "private": true,
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
