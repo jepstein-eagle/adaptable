@@ -23,9 +23,14 @@ export interface IInternalApi {
   getSystemReports(): Report[];
   getLiveReports(): ILiveReport[];
 
-  // Popup Redux
+  /**
+   * Shows a Confirmation Popup
+   */
   showPopupConfirmation(confirmation: IUIConfirmation): void;
 
+  /**
+   * Shows a Strategy Popup
+   */
   showPopupScreen(strategyId: string, componentName: string, popupParams?: StrategyParams): void;
 
   // for general store accessibilty - not sure that this is right but...
