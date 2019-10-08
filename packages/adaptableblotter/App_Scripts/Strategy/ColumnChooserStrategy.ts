@@ -3,7 +3,12 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+  MenuItemShowPopup,
+} from '../Utilities/MenuItem';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -13,6 +18,16 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnChooserStrategyName,
+      ComponentName: ScreenPopups.ColumnChooserPopup,
+      GlyphIcon: StrategyConstants.ColumnChooserGlyph,
+    });
+  }
+
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    return this.createMainMenuItemShowPopup({
+      Label: 'Show ' + StrategyConstants.ColumnChooserStrategyName,
       ComponentName: ScreenPopups.ColumnChooserPopup,
       GlyphIcon: StrategyConstants.ColumnChooserGlyph,
     });

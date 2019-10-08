@@ -11,6 +11,7 @@ import { Calendar } from '../PredefinedConfig/RunTimeState/CalendarState';
 import { ChartData } from '../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class InternalApi extends ApiBase implements IInternalApi {
   // System Redux Actions
@@ -49,6 +50,14 @@ export class InternalApi extends ApiBase implements IInternalApi {
   // Popup Redux Actions
   public showPopupConfirmation(confirmation: IUIConfirmation): void {
     this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
+  }
+
+  public showPopupScreen(
+    strategyId: string,
+    componentName: string,
+    popupParams?: StrategyParams
+  ): void {
+    this.dispatchAction(PopupRedux.PopupShowScreen(strategyId, componentName, popupParams));
   }
 
   // General way to get to store from inside the Blotter...

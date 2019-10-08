@@ -38,6 +38,7 @@ import { IActionColumnApi } from './IActionColumnApi';
 import { ISparklineColumnApi } from './ISparklineColumnApi';
 import { INamedFilterApi } from './INamedFilterApi';
 import { IPartnerConfigAPI } from './IPartnerConfigAPI';
+import { IColumnChooserAPI } from './IColumnChooserAPI';
 
 /**
  * The Blotter API (which implements the **IBlotterAPI** interface) provides developers with run-time access to the Adaptable Blotter.
@@ -122,6 +123,11 @@ export interface IBlotterApi {
    * Provides access to the *Column Caategory* function, the *Column Category* object and [Column Category State](_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html).
    */
   columnCategoryApi: IColumnCategoryApi;
+
+  /**
+   * Provides access to the *Column Caategory* function.
+   */
+  columnChooserApi: IColumnChooserAPI;
 
   /**
    * Provides access to the *Column Filter* function, the *Column Filter* object and [Column Filter State](_predefinedconfig_runtimestate_columnfilterstate_.columnfilterstate.html).

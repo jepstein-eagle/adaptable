@@ -39,6 +39,7 @@ function InitAdaptableBlotter() {
 
   adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
     //   console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
+    // adaptableblotter.api.columnChooserApi.showColumnChooserPopup();
   };
   adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
     var data = event.data;

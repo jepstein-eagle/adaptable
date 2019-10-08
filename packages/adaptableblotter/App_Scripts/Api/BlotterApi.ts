@@ -80,6 +80,8 @@ import { ISparklineColumnApi } from './Interface/ISparklineColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
 import { IPartnerConfigAPI } from './Interface/IPartnerConfigAPI';
 import { PartnerConfigAPI } from './PartnerConfigAPI';
+import { IColumnChooserAPI } from './Interface/IColumnChooserAPI';
+import { ColumnChooserAPI } from './ColumnChooserAPI';
 
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
@@ -94,6 +96,7 @@ export class BlotterApi implements IBlotterApi {
   public cellValidationApi: ICellValidationApi;
   public chartApi: IChartApi;
   public columnCategoryApi: IColumnCategoryApi;
+  public columnChooserApi: IColumnChooserAPI;
   public columnFilterApi: IColumnFilterApi;
   public conditionalStyleApi: IConditionalStyleApi;
   public configApi: IConfigApi;
@@ -137,6 +140,7 @@ export class BlotterApi implements IBlotterApi {
     this.cellValidationApi = new CellValidationApi(blotter);
     this.chartApi = new ChartApi(blotter);
     this.columnCategoryApi = new ColumnCategoryApi(blotter);
+    this.columnChooserApi = new ColumnChooserAPI(blotter);
     this.columnFilterApi = new ColumnFilterApi(blotter);
     this.conditionalStyleApi = new ConditionalStyleApi(blotter);
     this.configApi = new ConfigApi(blotter);

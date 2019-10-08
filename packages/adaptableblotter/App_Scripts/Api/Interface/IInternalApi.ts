@@ -7,6 +7,7 @@ import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
+import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 
 export interface IInternalApi {
   // System Redux
@@ -24,6 +25,8 @@ export interface IInternalApi {
 
   // Popup Redux
   showPopupConfirmation(confirmation: IUIConfirmation): void;
+
+  showPopupScreen(strategyId: string, componentName: string, popupParams?: StrategyParams): void;
 
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;
