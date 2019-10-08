@@ -9,6 +9,7 @@ import {
   MenuItemShowPopup,
 } from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -21,6 +22,14 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
       ComponentName: ScreenPopups.ColumnChooserPopup,
       GlyphIcon: StrategyConstants.ColumnChooserGlyph,
     });
+  }
+
+  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
+    return this.createColumnMenuItemShowPopup(
+      'Show ' + StrategyConstants.ColumnChooserStrategyName,
+      ScreenPopups.ColumnChooserPopup,
+      StrategyConstants.ColumnChooserGlyph
+    );
   }
 
   public addContextMenuItem(
