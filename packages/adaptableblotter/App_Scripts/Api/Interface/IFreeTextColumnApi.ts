@@ -9,4 +9,9 @@ export interface IFreeTextColumnApi {
   createFreeTextColumn(columnId: string, defaultValue: string): void;
   deleteFreeTextColumn(columnId: string): void;
   addEditFreeTextColumnStoredValue(freeTextColumn: FreeTextColumn, storedValue: any): void;
+
+  /**
+   * Opens the Free Text Column popup screen
+   */
+  showFreeTextColumnPopup(): void;
 }

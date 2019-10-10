@@ -9,4 +9,9 @@ export interface ICellSummaryApi {
   getCellSummaryOperation(): CellSummaryOperation | CellSummaryOptionalOperation;
   hasOnlySummary(): boolean;
   hasVWAPSummary(): boolean;
+
+  /**
+   * Opens the Cell Summary popup screen
+   */
+  showCellSummaryPopup(): void;
 }

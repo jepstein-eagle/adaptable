@@ -8,4 +8,9 @@ export interface ISmartEditApi {
   getSmartEditMathOperation(): string;
   setSmartEditValue(smartEditValue: number): void;
   getSmartEditValue(): number;
+
+  /**
+   * Opens the Smart Edit popup screen
+   */
+  showSmartEditPopup(): void;
 }

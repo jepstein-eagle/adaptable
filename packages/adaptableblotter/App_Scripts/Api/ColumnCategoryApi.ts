@@ -5,6 +5,8 @@ import {
   ColumnCategoryState,
   ColumnCategory,
 } from '../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
   public getColumnCategoryState(): ColumnCategoryState {
@@ -59,5 +61,12 @@ export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
       cc => cc.ColumnCategoryId == columnCategoryId
     );
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryDelete(columnCategory));
+  }
+
+  public showColumnCategoryPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.ColumnCategoryStrategyId,
+      ScreenPopups.ColumnCategoryPopup
+    );
   }
 }

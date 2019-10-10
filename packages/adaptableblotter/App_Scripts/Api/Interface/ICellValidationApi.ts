@@ -8,4 +8,9 @@ export interface ICellValidationApi {
   getAllCellValidation(): CellValidationRule[];
   addCellValidation(cellValidationRule: CellValidationRule): void;
   deleteCellValidation(cellValidationRule: CellValidationRule): void;
+
+  /**
+   * Opens the Cell Validation popup screen
+   */
+  showCellValidationPopup(): void;
 }

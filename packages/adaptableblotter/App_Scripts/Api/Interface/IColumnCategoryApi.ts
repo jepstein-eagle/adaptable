@@ -13,4 +13,9 @@ export interface IColumnCategoryApi {
   deleteColumnCategory(columnCategoryId: string): void;
   addColumnsToColumnCategory(columnCategoryId: string, columns: string[]): void;
   removeColumnsFromColumnCategory(columnCategoryId: string, columns: string[]): void;
+
+  /**
+   * Opens the Column Category popup screen
+   */
+  showColumnCategoryPopup(): void;
 }

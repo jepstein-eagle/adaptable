@@ -38,4 +38,9 @@ export interface ILayoutApi {
    * Saves the given layout
    */
   saveLayout(layoutToSave: Layout): void;
+
+  /**
+   * Opens the Layout popup screen
+   */
+  showLayoutPopup(): void;
 }

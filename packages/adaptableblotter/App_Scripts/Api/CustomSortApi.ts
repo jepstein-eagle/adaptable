@@ -3,6 +3,7 @@ import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux';
 import { ApiBase } from './ApiBase';
 import { ICustomSortApi } from './Interface/ICustomSortApi';
 import { CustomSortState, CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class CustomSortApi extends ApiBase implements ICustomSortApi {
   public getCustomSortState(): CustomSortState {
@@ -36,5 +37,12 @@ export class CustomSortApi extends ApiBase implements ICustomSortApi {
   public deleteCustomSort(column: string): void {
     let customSort: CustomSort = this.getCustomSortByColumn(column);
     this.dispatchAction(CustomSortRedux.CustomSortDelete(customSort));
+  }
+
+  public showCustomSortPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.CustomSortStrategyId,
+      ScreenPopups.CustomSortPopup
+    );
   }
 }

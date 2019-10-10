@@ -61,4 +61,9 @@ export interface IAlertApi {
    * @param showAsPopup Determines whether the Alert pops up in the middle of the screen or just in the Alert Toolbar.
    */
   showAlertError(alertHeader: string, alertMessage: string, showAsPopup: boolean): void;
+
+  /**
+   * Opens the Alert popup screen
+   */
+  showAlertPopup(): void;
 }

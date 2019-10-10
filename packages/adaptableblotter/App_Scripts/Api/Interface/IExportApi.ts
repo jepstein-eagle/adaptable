@@ -7,4 +7,9 @@ export interface IExportApi {
   getCurrentReportName(): string;
   getAllReports(): Report[];
   sendReport(reportName: string, destination: ExportDestination): void;
+
+  /**
+   * Opens the Export popup screen
+   */
+  showExportPopup(): void;
 }

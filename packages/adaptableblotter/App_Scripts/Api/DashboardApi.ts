@@ -3,6 +3,8 @@ import { ApiBase } from './ApiBase';
 import { Visibility } from '../PredefinedConfig/Common/Enums';
 import { IDashboardApi } from './Interface/IDashboardApi';
 import { DashboardState } from '../PredefinedConfig/RunTimeState/DashboardState';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class DashboardApi extends ApiBase implements IDashboardApi {
   public GetState(): DashboardState {
@@ -85,5 +87,12 @@ export class DashboardApi extends ApiBase implements IDashboardApi {
 
   public SetApplicationToolbarTitle(title: string): void {
     this.dispatchAction(DashboardRedux.DashboardSetApplicationToolbarTitle(title));
+  }
+
+  public showDashboardPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.DashboardStrategyId,
+      ScreenPopups.DashboardPopup
+    );
   }
 }

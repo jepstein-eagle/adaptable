@@ -16,4 +16,9 @@ export interface IFlashingCellApi {
    * Gets all Flashing Cells in the State
    */
   getAllFlashingCell(): FlashingCell[];
+
+  /**
+   * Opens the Flashing Cell popup screen
+   */
+  showFlashingCellPopup(): void;
 }

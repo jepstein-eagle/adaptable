@@ -1,4 +1,6 @@
 import * as ThemeRedux from '../Redux/ActionsReducers/ThemeRedux';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { IThemeApi } from './Interface/IThemeApi';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
@@ -53,5 +55,12 @@ export class ThemeApi extends ApiBase implements IThemeApi {
 
   public getAllTheme(): AdaptableBlotterTheme[] {
     return [...this.getAllSystemTheme(), ...this.getAllUserTheme()];
+  }
+
+  public showThemePopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.ThemeStrategyId,
+      ScreenPopups.ThemePopup
+    );
   }
 }

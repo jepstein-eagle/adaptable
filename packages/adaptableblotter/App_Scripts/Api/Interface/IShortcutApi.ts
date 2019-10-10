@@ -5,4 +5,9 @@ export interface IShortcutApi {
   addShortcut(shortcut: Shortcut): void;
   deleteShortcut(shortcut: Shortcut): void;
   deleteAllShortcut(): void;
+
+  /**
+   * Opens the Shortcut popup screen
+   */
+  showShortcutPopup(): void;
 }

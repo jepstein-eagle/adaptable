@@ -3,6 +3,7 @@ import { ApiBase } from './ApiBase';
 import { IFreeTextColumnApi } from './Interface/IFreeTextColumnApi';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import {
   FreeTextColumnState,
   FreeTextColumn,
@@ -43,5 +44,12 @@ export class FreeTextColumnApi extends ApiBase implements IFreeTextColumnApi {
     ) {
       this.dispatchAction(FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn));
     }
+  }
+
+  public showFreeTextColumnPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.FreeTextColumnStrategyId,
+      ScreenPopups.FreeTextColumnPopup
+    );
   }
 }

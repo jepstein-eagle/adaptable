@@ -6,6 +6,8 @@ import {
   CellSummaryOptionalOperation,
 } from '../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class CellSummaryApi extends ApiBase implements ICellSummaryApi {
   public getCellSummaryState(): CellSummaryState {
@@ -25,6 +27,13 @@ export class CellSummaryApi extends ApiBase implements ICellSummaryApi {
     return ArrayExtensions.ContainsItem(
       this.getCellSummaryState().OptionalSummaryOperations,
       CellSummaryOptionalOperation.VWAP
+    );
+  }
+
+  public showCellSummaryPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.CellSummaryStrategyId,
+      ScreenPopups.CellSummaryPopup
     );
   }
 }

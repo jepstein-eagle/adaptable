@@ -16,4 +16,9 @@ export interface IConditionalStyleApi {
    * Gets all Conditional Styles in the State
    */
   getAllConditionalStyle(): ConditionalStyle[];
+
+  /**
+   * Opens the Conditional Style popup screen
+   */
+  showConditionalStylePopup(): void;
 }

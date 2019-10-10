@@ -7,7 +7,8 @@ import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
 import { IAlertApi } from './Interface/IAlertApi';
 import { AlertState } from '../PredefinedConfig/RunTimeState/AlertState';
-import { create as createOpenFinNotification } from 'openfin-notifications';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import OpenfinHelper from '../Utilities/Helpers/OpenfinHelper';
 
 export class AlertApi extends ApiBase implements IAlertApi {
@@ -76,5 +77,12 @@ export class AlertApi extends ApiBase implements IAlertApi {
 
   public showAlertError(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
     this.showAlert(alertHeader, alertMessage, MessageType.Error, showAsPopup);
+  }
+
+  public showAlertPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.AlertStrategyId,
+      ScreenPopups.AlertPopup
+    );
   }
 }
