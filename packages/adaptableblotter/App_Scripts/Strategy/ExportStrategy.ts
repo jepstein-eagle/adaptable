@@ -239,6 +239,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       case ExportDestination.CSV:
         this.convertReportToCsv(report);
         break;
+      case ExportDestination.JSON:
+        this.convertReportToJSON(report);
+        break;
       case ExportDestination.OpenfinExcel:
         OpenfinHelper.initOpenFinExcel() //.then((workbook) => OpenfinHelper.addReportWorkSheet(workbook, ReportName))
           .then(workbookName => {
@@ -267,6 +270,17 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
   }
 
+  private convertReportToJSON(report: Report): void {
+    let reportAsArray: any[] = this.ConvertReportToArray(report);
+    if (reportAsArray) {
+      let reportAsJSON = JSON.stringify(reportAsArray);
+      if (reportAsJSON) {
+        let csvFileName: string = report.Name + '.json';
+        Helper.createDownloadedFile(reportAsJSON, csvFileName, 'application/json');
+      }
+    }
+  }
+
   private convertReportToCsv(report: Report): void {
     let csvContent: string = this.createCSVContent(report);
     if (csvContent) {
@@ -283,9 +297,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   private createCSVContent(report: Report): string {
-    let ReportAsArray: any[] = this.ConvertReportToArray(report);
-    if (ReportAsArray) {
-      return Helper.convertArrayToCsv(ReportAsArray, ',');
+    let reportAsArray: any[] = this.ConvertReportToArray(report);
+    if (reportAsArray) {
+      return Helper.convertArrayToCsv(reportAsArray, ',');
     }
     return null;
   }

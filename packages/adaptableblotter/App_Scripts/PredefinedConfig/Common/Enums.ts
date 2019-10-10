@@ -100,6 +100,7 @@ export enum ReportRowScope {
 export enum ExportDestination {
   CSV = 'CSV',
   Clipboard = 'Clipboard',
+  JSON = 'JSON',
   OpenfinExcel = 'OpenfinExcel',
   iPushPull = 'iPushPull',
   Glue42 = 'Glue42',

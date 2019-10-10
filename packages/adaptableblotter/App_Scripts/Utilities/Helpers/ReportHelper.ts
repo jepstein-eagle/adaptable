@@ -77,6 +77,7 @@ export function IsReportDestinationActive(exportDestination: ExportDestination):
   switch (exportDestination) {
     case ExportDestination.CSV:
     case ExportDestination.Clipboard:
+    case ExportDestination.JSON:
       return true;
     case ExportDestination.OpenfinExcel:
       return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
