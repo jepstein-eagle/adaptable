@@ -10,7 +10,7 @@ import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import AdaptableBlotter, { AdaptableBlotterWizard } from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
@@ -26,16 +26,16 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(30000);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
-    gridOptions,
-    `basic-demo1` // ${Date.now()}`
-  );
+  // console.log(tradeData);
+  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo Usersssssss',
+    blotterId: 'No Config Demo111!',
 
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.chartOptions = {
-    showModal: false,
-    displayOnStartUp: true,
+    // vendorGrid: gridOptions,
+    predefinedConfig: demoConfig,
   };
+
 
   adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
     //   console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);

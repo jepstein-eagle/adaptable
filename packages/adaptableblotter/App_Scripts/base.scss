@@ -91,7 +91,9 @@
 @import './components/SimpleButton/style.scss';
 @import './components/Textarea/style.scss';
 @import './components/Tooltip/style.scss';
-@import './View/Components/AdaptableObjectCollection//style.scss';
+@import './components/FileDroppable/style.scss';
+@import './View/Components/AdaptableObjectCollection/style.scss';
+@import './View/AdaptableBlotterWizardView/style.scss';
 @import './View/Components/Buttons/ButtonBase/style.scss';
 @import './View/Components/Panels/PanelDashboard/style.scss';
 @import './View/Components/ListBox/SingleListBox/style.scss';
@@ -115,11 +117,13 @@
 @import './components/SimpleButton/base.scss';
 @import './components/Textarea/base.scss';
 @import './components/Tooltip/base.scss';
+@import './components/FileDroppable/base.scss';
 @import './components/ChartContainer/base.scss';
 @import './components/WizardPanel/base.scss';
 @import './View/Components/AdaptableObjectCollection/base.scss';
 @import './View/Components/FilterForm/ListBoxFilterForm/base.scss';
 @import './View/AdaptablePopover/base.scss';
+@import './View/AdaptableBlotterWizardView/base.scss';
 @import './View/Components/ListBox/SingleListBox/base.scss';
 @import './View/Components/ListBox/base.scss';
 @import './View/Components/Buttons/ButtonBase/base.scss';

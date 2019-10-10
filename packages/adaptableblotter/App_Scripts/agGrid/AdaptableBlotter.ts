@@ -16,6 +16,7 @@ import 'ag-grid-enterprise';
 
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';
+import * as React from 'react';
 import * as _ from 'lodash';
 
 import { Events } from 'ag-grid-community/dist/lib/eventKeys';
@@ -158,6 +159,8 @@ import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../Utilities/MenuItem';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
+import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
+import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -3042,5 +3045,85 @@ import "adaptableblotter/themes/${themeName}.css"`);
   private dispatchAction(action: Action): void {
     // makes this slightly circular but at least it means that everything goes through the api
     this.api.internalApi.dispatchReduxAction(action);
+  }
+}
+
+type WizardInitFn = ({
+  gridOptions,
+  adaptableBlotterOptions,
+}: {
+  gridOptions: GridOptions;
+  adaptableBlotterOptions: AdaptableBlotterOptions;
+}) => AdaptableBlotter;
+
+interface AdaptableBlotterWizardOptions {
+  onInit?: WizardInitFn;
+  prepareData?: (
+    data: any,
+    file: File
+  ) => {
+    columns: string[];
+    data: any[];
+    primaryKey?: string;
+  };
+}
+
+export class AdaptableBlotterWizard {
+  private init: WizardInitFn;
+
+  private adaptableBlotterOptions: AdaptableBlotterOptions;
+  private extraOptions: AdaptableBlotterWizardOptions;
+
+  constructor(
+    adaptableBlotterOptions: AdaptableBlotterOptions,
+    extraOptions: AdaptableBlotterWizardOptions = {}
+  ) {
+    const defaultInit: WizardInitFn = ({ gridOptions, adaptableBlotterOptions }) => {
+      adaptableBlotterOptions.vendorGrid = gridOptions;
+
+      return new AdaptableBlotter(adaptableBlotterOptions);
+    };
+
+    this.adaptableBlotterOptions = adaptableBlotterOptions;
+    this.init = extraOptions.onInit || defaultInit;
+    this.extraOptions = extraOptions;
+
+    this.render();
+  }
+
+  render(container?: HTMLElement) {
+    let id: string = DefaultAdaptableBlotterOptions.containerOptions.adaptableBlotterContainer;
+
+    if (!container) {
+      if (this.adaptableBlotterOptions.containerOptions) {
+        id = this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer;
+      }
+    }
+
+    container = container || document.getElementById(id);
+
+    if (!container) {
+      throw new Error('Cannot find container where to render the AdaptableBlotterWizard');
+    }
+
+    ReactDOM.render(
+      React.createElement(AdaptableBlotterWizardView, {
+        adaptableBlotterOptions: this.adaptableBlotterOptions,
+        prepareData: this.extraOptions.prepareData,
+        onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => {
+          let adaptableBlotter: AdaptableBlotter;
+
+          ReactDOM.unmountComponentAtNode(container);
+
+          adaptableBlotter = this.init({
+            adaptableBlotterOptions,
+            gridOptions: adaptableBlotterOptions.vendorGrid,
+          });
+
+          adaptableBlotter = adaptableBlotter || new AdaptableBlotter(adaptableBlotterOptions);
+        },
+      }),
+      container
+    );
   }
 }

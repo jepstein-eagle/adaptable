@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactNode, useState, SyntheticEvent } from 'react';
+import { ReactNode, useState, SyntheticEvent, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Box, BoxProps } from 'rebass';
 import join from '../utils/join';
@@ -39,6 +39,7 @@ const CheckboxInput = styled.input`
   &:focus + svg {
     outline: 2px solid var(--ab-color-focus);
   }
+  &:indeterminate + svg rect,
   &:checked + svg rect,
   &:checked + svg polyline {
     stroke: currentColor;
@@ -52,6 +53,7 @@ const CheckboxInput = styled.input`
 
 type TypeProps = {
   checked?: boolean;
+  disabled?: boolean;
   as?: any;
   name?: string;
   value?: any;
@@ -70,6 +72,7 @@ const CheckBox = ({
   onChange,
   value,
   name,
+  disabled,
   variant = 'default',
   gapDistance = 'var(--ab-space-1)',
   childrenPosition = 'end',
@@ -102,11 +105,18 @@ const CheckBox = ({
   const after = childrenPosition === 'end' ? children : null;
   const afterGap = childrenPosition === 'end' ? gap : null;
 
+  let indeterminate = computedChecked === null;
+
+  const checkboxRef = useRef<HTMLInputElement>();
+  React.useEffect(() => {
+    checkboxRef.current.indeterminate = indeterminate;
+  }, [indeterminate]);
+
   return (
     <Box
       my={2}
       {...props}
-      className={join('ab-CheckBox', props.className)}
+      className={join('ab-CheckBox', disabled ? 'ab-CheckBox--disabled' : '', props.className)}
       style={{
         display: 'inline-flex',
         flexFlow: 'row',
@@ -120,7 +130,9 @@ const CheckBox = ({
       {before}
       {beforeGap}
       <CheckboxInput
-        checked={computedChecked}
+        ref={checkboxRef}
+        disabled={disabled}
+        checked={!!computedChecked}
         type="checkbox"
         name={name}
         value={value}
@@ -137,7 +149,12 @@ const CheckBox = ({
       {variant !== 'agGrid' ? (
         <CheckSvg viewBox="0 0 40 40" height={getSize(19)}>
           <rect x="2" y="2" width="36" height="36" />
-          <polyline points="9,22 18,30 33,14" />
+
+          {indeterminate ? (
+            <rect x="10" y="10" width="20" height="20" style={{ fill: 'currentColor' }}></rect>
+          ) : (
+            <polyline points="9,22 18,30 33,14" />
+          )}
         </CheckSvg>
       ) : (
         <span className={`ag-icon ag-icon-checkbox-${computedChecked ? 'checked' : 'unchecked'}`} />

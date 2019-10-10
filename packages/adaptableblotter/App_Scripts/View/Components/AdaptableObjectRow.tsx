@@ -1,8 +1,8 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { IColItem } from '../UIInterfaces';
 import { Flex, Text, Box } from 'rebass';
 import styled from 'styled-components';
+import { IColItem } from '../UIInterfaces';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
   colItems: IColItem[];
@@ -24,19 +24,23 @@ const Row = styled.div`
 
 export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps, {}> {
   render(): any {
-    let colItems = this.props.colItems.map((colItem: IColItem, index: number) => {
-      return (
-        <Text
-          key={index}
-          fontSize={'var(--ab-font-size-3)'}
-          style={{ flex: colItem.Size }}
-          paddingLeft={1}
-          paddingRight={1}
-        >
-          {colItem.Content}
-        </Text>
-      );
-    });
+    const colItems = this.props.colItems.map((colItem: IColItem, index: number) => (
+      <Text
+        key={index}
+        fontSize={'var(--ab-font-size-3)'}
+        title={typeof colItem.Content === 'string' ? colItem.Content : null}
+        style={{
+          flex: colItem.Size,
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+        }}
+        paddingLeft={1}
+        paddingRight={1}
+      >
+        {colItem.Content}
+      </Text>
+    ));
 
     return (
       <Row onClick={this.props.onClick} style={this.props.style}>

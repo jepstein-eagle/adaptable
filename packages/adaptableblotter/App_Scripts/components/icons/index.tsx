@@ -9,6 +9,7 @@ import ArrowLeft from './arrow-left';
 import TriangleUp from './triangle-up';
 import TriangleDown from './triangle-down';
 import Check from './check';
+import AttachFile from './attach-file';
 import Plus from './plus';
 import Clear from './clear';
 import Search from './search';
@@ -139,6 +140,7 @@ const allIcons = {
   clear: Clear,
   'import-export': ImportExport,
   'color-fill': colorFill,
+  'attach-file': AttachFile,
   info: Info,
   'info-sign': Info,
   add: Plus,
@@ -160,6 +162,7 @@ export const Icon = ({
 }: {
   style?: React.CSSProperties;
   name: string;
+  size?: number;
   props?: React.SVGProps<SVGElement>;
 }) => {
   const IconCmp = (allIcons[name] || null) as ReactComponentLike;

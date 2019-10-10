@@ -1,0 +1,17 @@
+:root {
+  --ab-cmp-file-droppable__padding: var(--ab-space-5);
+  --ab-cmp-file-droppable__margin: var(--ab-space-1);
+
+  --ab-cmp-file-droppable__background: var(--ab-color-primary);
+  --ab-cmp-file-droppable__color: var(--ab-color-text-on-primary);
+  
+  --ab-cmp-file-droppable__outline: 2px dashed var(--ab-cmp-file-droppable__color);
+  --ab-cmp-file-droppable__outline-offset: -10px;
+
+  --ab-cmp-file-droppable--drag-over__background: var(--ab-color-secondary);
+  --ab-cmp-file-droppable--drag-over__color: var(--ab-color-text-on-secondary);
+  --ab-cmp-file-droppable--drag-over__outline-offset: -20px;
+  --ab-cmp-file-droppable--drag-over__outline: 2px dashed var(--ab-cmp-file-droppable--drag-over__color);
+
+  
+}
