@@ -169,6 +169,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
               case MathOperation.Divide:
                 newValue = Number(selectedCell.value) / smartEditValue;
                 break;
+              case MathOperation.Replace:
+                newValue = smartEditValue;
+                break;
             }
             //avoid the 0.0000000000x
             newValue = parseFloat(newValue.toFixed(12));
