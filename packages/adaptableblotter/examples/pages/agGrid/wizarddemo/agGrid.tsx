@@ -19,8 +19,8 @@ Basic demo of wizard that allow d&d of a json with an array contents
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
-    primaryKey: 'tradeId',
-    userName: 'Demo User',
+    primaryKey: '', // will be added later ...
+    userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
   new AdaptableBlotterWizard(adaptableBlotterOptions, {
