@@ -32,10 +32,9 @@ function InitAdaptableBlotter() {
     userName: 'Demo Usersssssss',
     blotterId: 'No Config Demo111!',
 
-    // vendorGrid: gridOptions,
+    vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
-
 
   adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
     //   console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
