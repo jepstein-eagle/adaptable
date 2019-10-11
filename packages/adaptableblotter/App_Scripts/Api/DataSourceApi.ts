@@ -1,4 +1,5 @@
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as DataSourceRedux from '../Redux/ActionsReducers/DataSourceRedux';
 import { ApiBase } from './ApiBase';
 import { IDataSourceApi } from './Interface/IDataSourceApi';
@@ -47,5 +48,12 @@ export class DataSourceApi extends ApiBase implements IDataSourceApi {
 
   public clearDataSource(): void {
     this.dispatchAction(DataSourceRedux.DataSourceSelect(''));
+  }
+
+  public showDataSourcePopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.DataSourceStrategyId,
+      ScreenPopups.DataSourcePopup
+    );
   }
 }

@@ -32,4 +32,9 @@ export interface IDataSourceApi {
    * Clears the currently selected DataSource
    */
   clearDataSource(): void;
+
+  /**
+   * Opens the Data Source popup screen
+   */
+  showDataSourcePopup(): void;
 }

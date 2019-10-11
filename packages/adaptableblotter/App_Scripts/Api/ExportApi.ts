@@ -3,6 +3,8 @@ import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { IExportApi } from './Interface/IExportApi';
 import { ExportState, Report } from '../PredefinedConfig/RunTimeState/ExportState';
 import { ApiBase } from './ApiBase';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class ExportApi extends ApiBase implements IExportApi {
   public getExportState(): ExportState {
@@ -33,5 +35,12 @@ export class ExportApi extends ApiBase implements IExportApi {
     if (this.checkItemExists(report, reportName, 'Report')) {
       this.dispatchAction(ExportRedux.ExportApply(report, destination));
     }
+  }
+
+  public showExportPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.ExportStrategyId,
+      ScreenPopups.ExportPopup
+    );
   }
 }

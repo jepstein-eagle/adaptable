@@ -8,4 +8,9 @@ export interface ICustomSortApi {
   createCustomSort(column: string, values: string[]): void;
   editCustomSort(column: string, values: string[]): void;
   deleteCustomSort(column: string): void;
+
+  /**
+   * Opens the Custom Sort popup screen
+   */
+  showCustomSortPopup(): void;
 }

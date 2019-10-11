@@ -1,4 +1,5 @@
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux';
 import { ApiBase } from './ApiBase';
 import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';
@@ -110,5 +111,12 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
       searches = [];
     }
     return searches;
+  }
+
+  public showAdvancedSearchPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.AdvancedSearchStrategyId,
+      ScreenPopups.AdvancedSearchPopup
+    );
   }
 }

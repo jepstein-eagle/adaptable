@@ -2,6 +2,8 @@ import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux';
 import { ApiBase } from './ApiBase';
 import { IPercentBarApi } from './Interface/IPercentBarApi';
 import { PercentBarState, PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class PercentBarApi extends ApiBase implements IPercentBarApi {
   public getPercentBarState(): PercentBarState {
@@ -82,5 +84,12 @@ export class PercentBarApi extends ApiBase implements IPercentBarApi {
   public deletePercentBar(columnId: string): void {
     let percentBar: PercentBar = this.getAllPercentBar().find(pcb => pcb.ColumnId == columnId);
     this.dispatchAction(PercentBarRedux.PercentBarDelete(percentBar));
+  }
+
+  public showPercentBarPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.PercentBarStrategyId,
+      ScreenPopups.PercentBarPopup
+    );
   }
 }

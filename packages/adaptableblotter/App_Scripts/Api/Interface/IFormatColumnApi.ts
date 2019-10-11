@@ -44,4 +44,9 @@ export interface IFormatColumnApi {
    * Deletes **all** Format Columns in the State
    */
   deleteAllFormatColumn(): void;
+
+  /**
+   * Opens the Format Column popup screen
+   */
+  showFormatColumnPopup(): void;
 }

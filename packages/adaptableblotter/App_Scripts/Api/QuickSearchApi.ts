@@ -1,6 +1,8 @@
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { DisplayAction } from '../PredefinedConfig/Common/Enums';
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { IQuickSearchApi } from './Interface/IQuickSearchApi';
 import { QuickSearchState } from '../PredefinedConfig/RunTimeState/QuickSearchState';
@@ -52,5 +54,12 @@ export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
 
   public setQuickSearchStyle(style: IStyle): void {
     this.dispatchAction(QuickSearchRedux.QuickSearchSetStyle(style));
+  }
+
+  public showQuickSearchPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.QuickSearchStrategyId,
+      ScreenPopups.QuickSearchPopup
+    );
   }
 }

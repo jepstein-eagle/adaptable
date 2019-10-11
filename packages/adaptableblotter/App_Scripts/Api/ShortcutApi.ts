@@ -1,4 +1,6 @@
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { IShortcutApi } from './Interface/IShortcutApi';
 import { ShortcutState, Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
@@ -24,5 +26,12 @@ export class ShortcutApi extends ApiBase implements IShortcutApi {
     this.getAllShortcut().forEach(s => {
       this.deleteShortcut(s);
     });
+  }
+
+  public showShortcutPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.ShortcutStrategyId,
+      ScreenPopups.ShortcutPopup
+    );
   }
 }

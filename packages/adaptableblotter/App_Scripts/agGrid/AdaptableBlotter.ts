@@ -3175,7 +3175,7 @@ export class AdaptableBlotterWizard {
     container = container || document.getElementById(id);
 
     if (!container) {
-      throw new Error('Cannot find container where to render the AdaptableBlotterWizard');
+      throw new Error('Cannot find container in which to render the AdaptableBlotterWizard');
     }
 
     ReactDOM.render(

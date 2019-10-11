@@ -26,4 +26,9 @@ export interface IDashboardApi {
   SetHomeToolbarTitle(title: string): void;
   SetApplicationToolbarTitle(title: string): void;
   Minimise(): void;
+
+  /**
+   * Opens the Dashboard popup screen
+   */
+  showDashboardPopup(): void;
 }

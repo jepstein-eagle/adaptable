@@ -7,8 +7,7 @@ export class ColumnChooserAPI extends ApiBase implements IColumnChooserAPI {
   public showColumnChooserPopup(): void {
     this.blotter.api.internalApi.showPopupScreen(
       StrategyConstants.ColumnChooserStrategyId,
-      ScreenPopups.ColumnChooserPopup,
-      null
+      ScreenPopups.ColumnChooserPopup
     );
   }
 }

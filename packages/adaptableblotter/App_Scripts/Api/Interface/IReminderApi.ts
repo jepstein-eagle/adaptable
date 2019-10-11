@@ -2,4 +2,9 @@ import { ReminderState, Reminder } from '../../PredefinedConfig/RunTimeState/Rem
 export interface IReminderApi {
   getReminderState(): ReminderState;
   getAllReminder(): Reminder[];
+
+  /**
+   * Opens the Reminder popup screen
+   */
+  showReminderPopup(): void;
 }

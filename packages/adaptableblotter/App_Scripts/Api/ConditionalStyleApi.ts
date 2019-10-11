@@ -4,6 +4,8 @@ import {
   ConditionalStyleState,
   ConditionalStyle,
 } from '../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class ConditionalStyleApi extends ApiBase implements IConditionalStyleApi {
   public getConditionalStyleState(): ConditionalStyleState {
@@ -12,5 +14,12 @@ export class ConditionalStyleApi extends ApiBase implements IConditionalStyleApi
 
   public getAllConditionalStyle(): ConditionalStyle[] {
     return this.getConditionalStyleState().ConditionalStyles;
+  }
+
+  public showConditionalStylePopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.ConditionalStyleStrategyId,
+      ScreenPopups.ConditionalStylePopup
+    );
   }
 }

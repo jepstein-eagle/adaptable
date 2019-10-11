@@ -62,4 +62,9 @@ export interface IThemeApi {
    * Retrieves all Themes - both System Theme and User Theme - in the State
    */
   getAllTheme(): AdaptableBlotterTheme[];
+
+  /**
+   * Opens the Theme popup screen
+   */
+  showThemePopup(): void;
 }

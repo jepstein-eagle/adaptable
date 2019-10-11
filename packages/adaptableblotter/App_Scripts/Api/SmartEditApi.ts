@@ -1,4 +1,6 @@
 import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { MathOperation } from '../PredefinedConfig/Common/Enums';
 import { ISmartEditApi } from './Interface/ISmartEditApi';
@@ -25,5 +27,12 @@ export class SmartEditApi extends ApiBase implements ISmartEditApi {
 
   public getSmartEditValue(): number {
     return this.getBlotterState().SmartEdit.SmartEditValue;
+  }
+
+  public showSmartEditPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.SmartEditStrategyId,
+      ScreenPopups.SmartEditPopup
+    );
   }
 }

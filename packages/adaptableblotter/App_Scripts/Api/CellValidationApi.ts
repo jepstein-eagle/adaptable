@@ -5,6 +5,8 @@ import {
   CellValidationState,
   CellValidationRule,
 } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class CellValidationApi extends ApiBase implements ICellValidationApi {
   public getCellValidationState(): CellValidationState {
@@ -21,5 +23,12 @@ export class CellValidationApi extends ApiBase implements ICellValidationApi {
 
   public deleteCellValidation(cellValidationRule: CellValidationRule): void {
     this.dispatchAction(CellValidationRedux.CellValidationDelete(cellValidationRule));
+  }
+
+  public showCellValidationPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.CellValidationStrategyId,
+      ScreenPopups.CellValidationPopup
+    );
   }
 }

@@ -6,6 +6,8 @@ import {
   FormatColumnState,
   FormatColumn,
 } from '../PredefinedConfig/RunTimeState/FormatColumnState';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 
 export class FormatColumnApi extends ApiBase implements IFormatColumnApi {
   public getFormatColumnState(): FormatColumnState {
@@ -34,5 +36,12 @@ export class FormatColumnApi extends ApiBase implements IFormatColumnApi {
     this.getAllFormatColumn().forEach(fc => {
       this.deleteFormatColumn(fc);
     });
+  }
+
+  public showFormatColumnPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.FormatColumnStrategyId,
+      ScreenPopups.FormatColumnPopup
+    );
   }
 }

@@ -94,4 +94,9 @@ export interface IAdvancedSearchApi {
    * Returns all the Advanced Searches in the State
    */
   getAllAdvancedSearch(): AdvancedSearch[];
+
+  /**
+   * Opens the Advanced Search popup screen
+   */
+  showAdvancedSearchPopup(): void;
 }

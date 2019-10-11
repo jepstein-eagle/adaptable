@@ -53,4 +53,9 @@ export interface IQuickSearchApi {
    * @param style the style to use
    */
   setQuickSearchStyle(style: IStyle): void;
+
+  /**
+   * Opens the Quick Search popup screen
+   */
+  showQuickSearchPopup(): void;
 }

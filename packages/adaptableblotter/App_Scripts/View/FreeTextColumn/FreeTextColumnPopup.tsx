@@ -113,7 +113,7 @@ class FreeTextColumnPopupComponent extends React.Component<
           infoBody={infoBody}
         >
           {this.props.FreeTextColumns.length == 0 ? (
-            <EmptyContent>Click 'New' to create a new column FreeText.</EmptyContent>
+            <EmptyContent>Click 'New' to create a new Free Text Column.</EmptyContent>
           ) : (
             <AdaptableObjectCollection colItems={colItems} items={freeTextColumns} />
           )}

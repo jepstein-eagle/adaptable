@@ -19,4 +19,9 @@ export interface IPercentBarApi {
   editPercentBarNegativeColor(negativeColor: string, columnId: string): void;
   editPercentBarShowValue(showValue: boolean, columnId: string): void;
   deletePercentBar(columnId: string): void;
+
+  /**
+   * Opens the Percent Bar popup screen
+   */
+  showPercentBarPopup(): void;
 }

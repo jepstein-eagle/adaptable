@@ -13,4 +13,9 @@ export interface IBulkUpdateApi {
    * Returns the current Bulk Update value
    */
   getBulkUpdateValue(): string;
+
+  /**
+   * Opens the Bulk Update popup screen
+   */
+  showBulkUpdatePopup(): void;
 }

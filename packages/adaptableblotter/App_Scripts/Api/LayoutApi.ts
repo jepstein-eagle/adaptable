@@ -1,5 +1,6 @@
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../Utilities/Interface/IColumn';
@@ -72,5 +73,12 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
 
   public saveLayout(layoutToSave: Layout): void {
     this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
+  }
+
+  public showLayoutPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.LayoutStrategyId,
+      ScreenPopups.LayoutPopup
+    );
   }
 }
