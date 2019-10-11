@@ -1,3 +1,4 @@
+import startCase from 'lodash/startCase';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { LoggingHelper } from './LoggingHelper';
 
@@ -12,13 +13,16 @@ export function objectNotExists(item: any): boolean {
 export function getStringRepresentionFromKey(event: KeyboardEvent | any): string {
   if (event.key == null) {
     return event.char; // IE
-  } else {
-    return event.key;
   }
+  return event.key;
 }
 
 export function cloneObject(obj: any): any {
   return JSON.parse(JSON.stringify(obj));
+}
+
+export function humanize(s: string): string {
+  return startCase(s);
 }
 
 export function capitalize(string: string) {
@@ -35,7 +39,7 @@ function replacer(b: string, c: string) {
 // converts an array (or an array of arrays) to CSV
 export function convertArrayToCsv(array: any[], separator: string = " ' "): string {
   var csvContent = '';
-  array.forEach(function(infoArray, index) {
+  array.forEach((infoArray, index) => {
     var line = [];
     var item: any;
     var i;
@@ -44,11 +48,11 @@ export function convertArrayToCsv(array: any[], separator: string = " ' "): stri
       if (separator == ',') {
         if (item != null && item != undefined) {
           if (item.indexOf(',') !== -1 || item.indexOf('"') !== -1) {
-            item = '"' + item.replace(/"/g, '""') + '"';
+            item = `"${item.replace(/"/g, '""')}"`;
           }
           // bit of a hack but we have a user where they have "+2502+S" as a value which Excel then thinks is a formula
           if (item.indexOf('+') == 0) {
-            item = "'" + item + "'";
+            item = `'${item}'`;
           }
         }
       }
@@ -72,7 +76,7 @@ export function createDownloadedFile(content: any, fileName: string, mimeType: s
       fileName
     );
   } else if (URL && 'download' in a) {
-    //html5 A[download]
+    // html5 A[download]
     a.href = URL.createObjectURL(
       new Blob([content], {
         type: mimeType,
@@ -83,7 +87,7 @@ export function createDownloadedFile(content: any, fileName: string, mimeType: s
     a.click();
     document.body.removeChild(a);
   } else {
-    location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+    location.href = `data:application/octet-stream,${encodeURIComponent(content)}`; // only this mime type is supported
   }
 }
 
@@ -121,17 +125,19 @@ export function copyToClipboard(text: string) {
 
 export function ReturnItemCount(items: any[], itemName: string): string {
   if (items.length == 0) {
-    return 'No ' + itemName + 's';
+    return `No ${itemName}s`;
   }
-  return items.length == 1 ? '1 ' + itemName : items.length + ' ' + itemName + 's';
+  return items.length == 1 ? `1 ${itemName}` : `${items.length} ${itemName}s`;
 }
 
 export function IsInputNullOrEmpty(itemToCheck: any) {
-  if (typeof itemToCheck == 'string') {
+  if (typeof itemToCheck === 'string') {
     return StringExtensions.IsNullOrEmpty(itemToCheck);
-  } else if (typeof itemToCheck == 'number') {
+  }
+  if (typeof itemToCheck === 'number') {
     return StringExtensions.IsNullOrEmpty(itemToCheck.toString());
-  } else if (itemToCheck instanceof Date) {
+  }
+  if (itemToCheck instanceof Date) {
     return StringExtensions.IsNullOrEmpty(itemToCheck.toString());
   }
   return itemToCheck == null;
@@ -155,30 +161,30 @@ export function areObjectsEqual(obj1: any, obj2: any) {
     return false;
   }
 
-  //Loop through properties in object 1
+  // Loop through properties in object 1
   for (var p in obj1) {
-    //Check property exists on both objects
+    // Check property exists on both objects
     if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
       return false;
     }
 
     switch (typeof obj1[p]) {
-      //Deep compare objects
+      // Deep compare objects
       case 'object':
         if (!areObjectsEqual(obj1[p], obj2[p])) {
           return false;
         }
         break;
-      //Compare function code
+      // Compare function code
       case 'function':
         if (
-          typeof obj2[p] == 'undefined' ||
+          typeof obj2[p] === 'undefined' ||
           (p != 'compare' && obj1[p].toString() != obj2[p].toString())
         ) {
           return false;
         }
         break;
-      //Compare values
+      // Compare values
       default:
         if (obj1[p] != obj2[p]) {
           return false;
@@ -186,9 +192,9 @@ export function areObjectsEqual(obj1: any, obj2: any) {
         break;
     }
 
-    //Check object 2 for any extra properties
-    for (let p2 in obj2) {
-      if (typeof obj1[p2] == 'undefined') {
+    // Check object 2 for any extra properties
+    for (const p2 in obj2) {
+      if (typeof obj1[p2] === 'undefined') {
         return false;
       }
     }
@@ -199,9 +205,8 @@ export function areObjectsEqual(obj1: any, obj2: any) {
 export function StringifyValue(value: any): string {
   if (!isNaN(Number(value))) {
     return Number(value).toString();
-  } else {
-    return value;
   }
+  return value;
 }
 
 export function RoundNumber(numberToRound: any, decimalPlaces: number): number {

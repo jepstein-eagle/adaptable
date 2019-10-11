@@ -3,6 +3,7 @@ import FormLayout, { FormRow } from '../../../components/FormLayout';
 import { AdaptableBlotterOptions } from '../../../types';
 import CheckBox from '../../../components/CheckBox';
 import { DefaultAdaptableBlotterOptions } from '../../../Utilities/Defaults/DefaultAdaptableBlotterOptions';
+import { FilterOptions } from '../../../BlotterOptions/FilterOptions';
 
 interface ConfigurationFormOptions {
   adaptableBlotterOptions: AdaptableBlotterOptions;
@@ -11,7 +12,7 @@ interface ConfigurationFormOptions {
 const ConfigurationForm = (props: ConfigurationFormOptions) => {
   let abOptions = props.adaptableBlotterOptions;
 
-  const filterOptions = {
+  const filterOptions: FilterOptions = {
     ...DefaultAdaptableBlotterOptions.filterOptions,
     ...abOptions.filterOptions,
   };

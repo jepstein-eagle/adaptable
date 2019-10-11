@@ -52,7 +52,7 @@ import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
 import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ReminderPopup } from './Reminder/ReminderPopup';
-import { ConnectedComponent } from 'react-redux';
+import { ConnectedComponentClass } from 'react-redux';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -96,7 +96,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 };
 
 // here we put the dashboard control for each strategy
-export const AdaptableDashboardViewFactory = new Map<string, ConnectedComponent<any, any>>([
+export const AdaptableDashboardViewFactory = new Map<string, ConnectedComponentClass<any, any>>([
   [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],
   [StrategyConstants.QuickSearchStrategyId, QuickSearchToolbarControl],
@@ -114,7 +114,7 @@ export const AdaptableDashboardViewFactory = new Map<string, ConnectedComponent<
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<
   string,
-  ConnectedComponent<any, any>
+  ConnectedComponentClass<any, any>
 >([[StrategyConstants.HomeStrategyId, HomeToolbarControl]]);
 
 export interface IAdaptableViewFactory {

@@ -11,6 +11,7 @@ import ColumnsList from './ColumnsList';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import Input from '../../../components/Input';
 import ConfigurationForm from './ConfigurationForm';
+import { humanize } from '../../../Utilities/Helpers/Helper';
 
 interface ConfigurationDialogProps extends React.HTMLProps<HTMLElement> {
   adaptableBlotterOptions: AdaptableBlotterOptions;
@@ -49,8 +50,17 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
   const onFinish = () => {
     const newABOptions = { ...abOptions };
     newABOptions.vendorGrid = { ...abOptions.vendorGrid };
-    newABOptions.vendorGrid.columnDefs = columnsHandle.current.getColumns();
-    newABOptions.primaryKey = columnsHandle.current.getPrimaryKey();
+    newABOptions.vendorGrid.columnDefs = columnsHandle.current!.getColumns().map(c => {
+      const col = {
+        ...c,
+        headerName: c.caption || humanize(c.field),
+      };
+
+      delete col.caption;
+
+      return col;
+    });
+    newABOptions.primaryKey = columnsHandle.current!.getPrimaryKey();
     setABOptions(newABOptions);
 
     props.onFinish(newABOptions);

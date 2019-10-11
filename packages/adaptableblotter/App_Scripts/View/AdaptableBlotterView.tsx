@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
-import { Provider, connect, ConnectedComponent } from 'react-redux';
+import { Provider, connect, ConnectedComponentClass } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
@@ -33,7 +33,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
   ) => PopupRedux.PopupShowScreenAction;
   onCloseScreenPopup: () => PopupRedux.PopupHideScreenAction;
   onCloseAlertPopup: () => PopupRedux.PopupHideAlertAction;
-  onConfirmPromptPopup: () => PopupRedux.PopupConfirmPromptAction;
+  onConfirmPromptPopup: (input: string) => PopupRedux.PopupConfirmPromptAction;
   onClosePromptPopup: () => PopupRedux.PopupHidePromptAction;
   onConfirmConfirmationPopup: (comment: string) => PopupRedux.PopupConfirmConfirmationAction;
   onCancelConfirmationPopup: () => PopupRedux.PopupCancelConfirmationAction;
@@ -147,7 +147,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-let AdaptableBlotterWrapper: ConnectedComponent<typeof AdaptableBlotterView, any> = connect(
+let AdaptableBlotterWrapper: ConnectedComponentClass<typeof AdaptableBlotterView, any> = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AdaptableBlotterView);

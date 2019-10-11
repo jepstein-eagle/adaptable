@@ -9,7 +9,7 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { LicenseManager } from 'ag-grid-enterprise';
-import { AdaptableBlotterWizard } from '../../../../App_Scripts/agGrid';
+import AdaptableBlotter, { AdaptableBlotterWizard } from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 
 /*
@@ -24,15 +24,15 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
   new AdaptableBlotterWizard(adaptableBlotterOptions, {
-    // onInit: ({ adaptableBlotterOptions, gridOptions }) => {
-    //   adaptableBlotterOptions.filterOptions = adaptableBlotterOptions.filterOptions || {};
-    //   adaptableBlotterOptions.filterOptions.useAdaptableBlotterQuickFilter = false;
-    //   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-    //   // examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-    //   // adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-    //   // global.adaptableblotter = adaptableblotter;
-    //   return adaptableblotter;
-    // }
+    onInit: ({ adaptableBlotterOptions, gridOptions }) => {
+      adaptableBlotterOptions.filterOptions = adaptableBlotterOptions.filterOptions || {};
+      adaptableBlotterOptions.filterOptions.autoApplyFilter = false;
+      // const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+      //   // examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
+      //   // adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
+      //   // global.adaptableblotter = adaptableblotter;
+      // return adaptableblotter;
+    },
   });
 }
 
