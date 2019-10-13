@@ -26,8 +26,11 @@ export type EmitterCallback = (data?: any) => any;
 
 /**
  *  The only interface for the AdaptableBlotter
+ *
  *  Contains all the properties and methods that each implemenation must include
+ *
  *  Each implemenation has a constructor that contains an AdaptableBlotterOptions object.
+ *
  *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
  */
 export interface IAdaptableBlotter {
