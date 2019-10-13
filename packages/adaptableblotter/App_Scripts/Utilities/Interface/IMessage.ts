@@ -5,7 +5,7 @@ import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPo
 export interface IAdaptableAlert {
   Header: string;
   Msg: string;
-  MessageType: MessageType;
+  MessageType: 'Info' | 'Success' | 'Warning' | 'Error';
   ShowAsPopup?: boolean;
 }
 

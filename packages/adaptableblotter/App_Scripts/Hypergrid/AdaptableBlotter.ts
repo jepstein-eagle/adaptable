@@ -38,7 +38,6 @@ import {
   SortOrder,
   FilterOnDataChangeOptions,
 } from '../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter, EmitterCallback } from '../Utilities/Interface/IAdaptableBlotter';
 import { CustomSortDataSource } from './CustomSortDataSource';
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
@@ -114,6 +113,7 @@ import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserI
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
 // do I need this in both places??
 type RuntimeConfig = {

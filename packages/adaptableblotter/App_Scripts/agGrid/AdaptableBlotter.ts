@@ -37,7 +37,6 @@ import { Action } from 'redux';
 import Emitter from '../Utilities/Emitter';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import { iconToString } from '../components/icons';
-import { IAdaptableBlotter, EmitterCallback } from '../Utilities/Interface/IAdaptableBlotter';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
@@ -162,6 +161,7 @@ import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultS
 import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
+import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
 // do I need this in both places??
 type RuntimeConfig = {
