@@ -11,6 +11,7 @@ import './index.css';
 import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter, { AdaptableBlotterWizard } from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { IAdaptableBlotterWizard } from '../../../../App_Scripts/BlotterInterfaces/IAdaptableBlotterWizard';
 
 /*
 Basic demo of wizard that allow d&d of a json with an array contents
@@ -23,7 +24,7 @@ function InitAdaptableBlotter() {
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
-  new AdaptableBlotterWizard(adaptableBlotterOptions, {
+  let abWizard: IAdaptableBlotterWizard = new AdaptableBlotterWizard(adaptableBlotterOptions, {
     onInit: ({ adaptableBlotterOptions, gridOptions }) => {
       adaptableBlotterOptions.filterOptions = adaptableBlotterOptions.filterOptions || {};
       adaptableBlotterOptions.filterOptions.autoApplyFilter = false;
