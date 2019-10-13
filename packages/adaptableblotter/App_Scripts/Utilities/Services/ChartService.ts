@@ -1,8 +1,8 @@
 import { IChartService } from './Interface/IChartService';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 
 import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
@@ -36,7 +36,7 @@ export class ChartService implements IChartService {
 
   public BuildCategoryChartData(
     chartDefinition: CategoryChartDefinition,
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): ChartData {
     // NOTE this method is need only when we using Segmented column(s) otherwise,
     // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
@@ -86,7 +86,7 @@ export class ChartService implements IChartService {
 
   public BuildSparklinesChartData(
     chartDefinition: SparklinesChartDefinition,
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): ChartData {
     let values: number[];
     // TODO - is this correct?
@@ -150,7 +150,7 @@ export class ChartService implements IChartService {
     chartDefinition: ChartDefinition,
     yAxisColumn: string,
     kvps: IKeyValuePair[],
-    columns: IColumn[],
+    columns: AdaptableBlotterColumn[],
     showAverageTotal: boolean
   ): number {
     let columnValueExpressions: ColumnValueExpression[] = kvps.map(kvp => {
@@ -212,7 +212,7 @@ export class ChartService implements IChartService {
   // Gets the unique values in the (horizontal) X Axis column - either through an expression or getting the distinct values
   private getXAxisColumnValues(
     chartDefinition: CategoryChartDefinition,
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): string[] {
     let xAxisColValues: string[] = [];
     if (ExpressionHelper.IsNullOrEmptyExpression(chartDefinition.XAxisExpression)) {
@@ -242,7 +242,7 @@ export class ChartService implements IChartService {
 
   private addXAxisFromExpression(
     chartDefinition: CategoryChartDefinition,
-    columns: IColumn[],
+    columns: AdaptableBlotterColumn[],
     row: any,
     xAxisColValues: string[]
   ): void {
@@ -297,7 +297,7 @@ export class ChartService implements IChartService {
 
     let dataItems: PieChartDataItem[] = [];
 
-    let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+    let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
     let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
 
@@ -422,7 +422,7 @@ export class ChartService implements IChartService {
   private shouldUseRange(
     dataCounter: Map<any, number>,
     chartDefinition: PieChartDefinition,
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): boolean {
     let returnValue: boolean = false;
     if (dataCounter.size > 15) {

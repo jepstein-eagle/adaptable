@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -16,7 +16,7 @@ import Dropdown from '../../components/Dropdown';
 
 export interface CellValidationEntityRowProps
   extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
-  Column: IColumn;
+  Column: AdaptableBlotterColumn;
   onChangeActionMode: (cellValidationRule: CellValidationRule, ActionMode: ActionMode) => void;
 }
 

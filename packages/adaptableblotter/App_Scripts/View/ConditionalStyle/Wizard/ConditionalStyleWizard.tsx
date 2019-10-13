@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard';
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard';

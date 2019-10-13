@@ -11,7 +11,7 @@ import { IColItem } from '../UIInterfaces';
 import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 
 export class ConditionalStyleEntityRow extends React.Component<
   SharedEntityExpressionRowProps<ConditionalStyleEntityRow>,
@@ -20,7 +20,7 @@ export class ConditionalStyleEntityRow extends React.Component<
   render(): any {
     let conditionalStyle: ConditionalStyle = this.props.AdaptableBlotterObject as ConditionalStyle;
 
-    let column: IColumn | undefined =
+    let column: AdaptableBlotterColumn | undefined =
       conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column
         ? ColumnHelper.getColumnFromId(conditionalStyle.ColumnId!, this.props.Columns)
         : undefined;

@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { ILayoutApi } from './Interface/ILayoutApi';
 import { LayoutState, Layout, ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
 
@@ -55,7 +55,9 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
       );
       if (currentLayoutObject) {
         let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
-        let visibleColumns: IColumn[] = this.getBlotterState().Grid.Columns.filter(c => c.Visible);
+        let visibleColumns: AdaptableBlotterColumn[] = this.getBlotterState().Grid.Columns.filter(
+          c => c.Visible
+        );
         let columSorts: ColumnSort[] = this.getBlotterState().Grid.ColumnSorts;
 
         let layoutToSave: Layout = {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { UIHelper } from '../../UIHelper';
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import Dialog from '../../../components/Dialog';
 import { Flex, Box } from 'rebass';

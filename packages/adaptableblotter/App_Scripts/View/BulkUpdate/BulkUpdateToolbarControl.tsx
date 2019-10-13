@@ -26,7 +26,7 @@ import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import { Flex } from 'rebass';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 
 interface BulkUpdateToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
@@ -63,7 +63,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   render() {
     let statusColour: StatusColour = this.getStatusColour();
 
-    let selectedColumn: IColumn = this.props.BulkUpdateValidationResult.Column;
+    let selectedColumn: AdaptableBlotterColumn = this.props.BulkUpdateValidationResult.Column;
 
     let previewPanel = (
       <PreviewResultsPanel

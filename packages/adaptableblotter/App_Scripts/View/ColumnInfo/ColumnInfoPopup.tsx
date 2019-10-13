@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Flex, Box } from 'rebass';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
@@ -39,7 +39,7 @@ interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupCom
 }
 
 export interface ColumnInfoState {
-  SelectedColumn: IColumn;
+  SelectedColumn: AdaptableBlotterColumn;
   ShowSelector: boolean;
 }
 
@@ -402,7 +402,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     );
   }
 
-  private onColumnSelectedChanged(columns: IColumn[]) {
+  private onColumnSelectedChanged(columns: AdaptableBlotterColumn[]) {
     this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null });
   }
 

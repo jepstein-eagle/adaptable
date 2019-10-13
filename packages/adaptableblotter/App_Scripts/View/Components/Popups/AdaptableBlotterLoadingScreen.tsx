@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import * as React from 'react';
 
 import { UIHelper } from '../../UIHelper';

@@ -13,9 +13,9 @@ import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { LayoutHelper } from '../Helpers/LayoutHelper';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { SearchChangedEventArgs } from '../../Api/Events/SearchChanged/SearchChangedEventArgs';
 import { BlotterSearchState } from '../../Api/Events/SearchChanged/BlotterSearchState';
 import { BlotterSortState } from '../../Api/Events/SearchChanged/BlotterSortState';
@@ -37,7 +37,7 @@ export class SearchService implements ISearchService {
 
   private columnSorts: ColumnSort[];
 
-  private columns: IColumn[];
+  private columns: AdaptableBlotterColumn[];
 
   constructor(blotter: IAdaptableBlotter) {
     this.blotter = blotter;
@@ -157,7 +157,7 @@ export class SearchService implements ISearchService {
     return this.blotter.api.userFilterApi.getUserFilterState();
   }
 
-  private getGridColumns(): IColumn[] {
+  private getGridColumns(): AdaptableBlotterColumn[] {
     return this.blotter.api.gridApi.getColumns();
   }
 

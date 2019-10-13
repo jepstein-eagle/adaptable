@@ -13,7 +13,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { MessageType, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { AlertsPanel } from './AlertsPanel';
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 import { Flex } from 'rebass';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
@@ -21,7 +21,7 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
   AlertDefinitions: AlertDefinition[];
-  Alerts: IAdaptableAlert[];
+  Alerts: AdaptableAlert[];
 
   onDeleteAlert: (index: number) => SystemRedux.SystemAlertDeleteAction;
   onDeleteAllAlert: () => SystemRedux.SystemAlertDeleteAllAction;
@@ -29,7 +29,7 @@ interface AlertToolbarControlProps
 
 interface AlertToolbarState {
   ShowMessage: boolean;
-  Alerts: IAdaptableAlert[];
+  Alerts: AdaptableAlert[];
 }
 
 class AlertToolbarControlComponent extends React.Component<

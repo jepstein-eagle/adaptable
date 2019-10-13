@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 
 import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
 import {
@@ -23,9 +23,9 @@ import DropdownButtonItem from '../../components/DropdownButton/DropdownButtonIt
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges
   extends React.ClassAttributes<ExpressionBuilderRanges> {
-  SelectedColumn: IColumn;
+  SelectedColumn: AdaptableBlotterColumn;
   Ranges: Array<QueryRange>;
-  Columns: Array<IColumn>;
+  Columns: Array<AdaptableBlotterColumn>;
   onRangesChange: (Ranges: Array<QueryRange>) => void;
 }
 
@@ -225,7 +225,7 @@ export class ExpressionBuilderRanges extends React.Component<
     this.props.onRangesChange(rangeCol);
   }
 
-  private onColumnOperand1SelectedChanged(index: number, columns: IColumn[]) {
+  private onColumnOperand1SelectedChanged(index: number, columns: AdaptableBlotterColumn[]) {
     let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : '';
@@ -233,7 +233,7 @@ export class ExpressionBuilderRanges extends React.Component<
     this.props.onRangesChange(rangeCol);
   }
 
-  private onColumnOperand2SelectedChanged(index: number, columns: IColumn[]) {
+  private onColumnOperand2SelectedChanged(index: number, columns: AdaptableBlotterColumn[]) {
     let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : '';

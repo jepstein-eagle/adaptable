@@ -18,7 +18,7 @@ import {
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import * as React from 'react';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
 import { DefaultCategoryChartProperties } from '../../../Utilities/Defaults/DefaultCategoryChartProperties';
 
@@ -27,7 +27,7 @@ import { DefaultCategoryChartProperties } from '../../../Utilities/Defaults/Defa
 
 export function setChartDisplayPopupState(
   chartDefinition: CategoryChartDefinition,
-  columns: IColumn[]
+  columns: AdaptableBlotterColumn[]
 ): CategoryChartComponentState {
   let categoryChartProperties: CategoryChartProperties = Object.assign(
     {},
@@ -68,7 +68,7 @@ export function setChartDisplayPopupState(
 
 function isDefaultYAxisTitle(
   chartDefinition: CategoryChartDefinition,
-  columns: IColumn[]
+  columns: AdaptableBlotterColumn[]
 ): boolean {
   let categoryChartProperties: CategoryChartProperties = chartDefinition.ChartProperties as CategoryChartProperties;
   return (
@@ -79,7 +79,7 @@ function isDefaultYAxisTitle(
 
 function isDefaultXAxisTitle(
   chartDefinition: CategoryChartDefinition,
-  columns: IColumn[]
+  columns: AdaptableBlotterColumn[]
 ): boolean {
   let categoryChartProperties: CategoryChartProperties = chartDefinition.ChartProperties as CategoryChartProperties;
   return (
@@ -90,7 +90,7 @@ function isDefaultXAxisTitle(
 
 export function createDefaultYAxisTitle(
   chartDefinition: CategoryChartDefinition,
-  columns: IColumn[]
+  columns: AdaptableBlotterColumn[]
 ): string {
   return chartDefinition.YAxisColumnIds.map(c => {
     return ColumnHelper.getFriendlyNameFromColumnId(c, columns);
@@ -99,7 +99,7 @@ export function createDefaultYAxisTitle(
 
 export function createDefaultXAxisTitle(
   chartDefinition: CategoryChartDefinition,
-  columns: IColumn[]
+  columns: AdaptableBlotterColumn[]
 ): string {
   return ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
 }

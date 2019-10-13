@@ -1,4 +1,4 @@
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,

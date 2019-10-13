@@ -2,7 +2,7 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 
-export interface IAdaptableAlert {
+export interface AdaptableAlert {
   Header: string;
   Msg: string;
   MessageType: 'Info' | 'Success' | 'Warning' | 'Error';

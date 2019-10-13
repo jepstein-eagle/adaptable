@@ -10,7 +10,7 @@ import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup
 import { ChartState } from '../PredefinedConfig/RunTimeState/ChartState';
 import { PopupState } from '../PredefinedConfig/InternalState/PopupState';
 import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt';
 import { Dashboard } from './Dashboard/Dashboard';

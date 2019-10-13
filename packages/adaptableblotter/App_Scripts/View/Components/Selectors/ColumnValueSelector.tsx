@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { SortOrder, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
 import FieldWrap from '../../../components/FieldWrap';
@@ -12,7 +12,7 @@ import Input from '../../../components/Input';
 import LoggingHelper from '../../../Utilities/Helpers/LoggingHelper';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
-  SelectedColumn: IColumn;
+  SelectedColumn: AdaptableBlotterColumn;
   SelectedColumnValue: string;
   onColumnValueChange: (columnvalue: any) => void;
   Blotter: IAdaptableBlotter;

@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { SortOrder, AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 import { GridSortRow } from '../GridSortRow';
@@ -111,7 +111,7 @@ export class LayoutGridSortWizard
     );
   }
 
-  private onColumnSelectedChanged(index: number, column: IColumn) {
+  private onColumnSelectedChanged(index: number, column: AdaptableBlotterColumn) {
     let sorts: ColumnSort[] = [].concat(this.state.ColumnSorts);
     let sort: ColumnSort = sorts[index];
     sort.Column = column ? column.ColumnId : '';

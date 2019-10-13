@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -16,7 +16,7 @@ import Input from '../../components/Input';
 
 export interface PlusMinusEntityRowProps
   extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
-  Column: IColumn;
+  Column: AdaptableBlotterColumn;
   onColumnDefaultNudgeValueChange: (
     plusMinusRule: PlusMinusRule,
     event: React.FormEvent<any>

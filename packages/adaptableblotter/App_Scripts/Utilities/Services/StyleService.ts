@@ -1,7 +1,7 @@
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';

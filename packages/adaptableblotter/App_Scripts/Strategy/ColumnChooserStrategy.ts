@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
 import {
   AdaptableBlotterMenuItem,
@@ -9,7 +9,7 @@ import {
   MenuItemShowPopup,
 } from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -24,7 +24,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     });
   }
 
-  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
     return this.createColumnMenuItemShowPopup(
       'Show ' + StrategyConstants.ColumnChooserStrategyName,
       ScreenPopups.ColumnChooserPopup,

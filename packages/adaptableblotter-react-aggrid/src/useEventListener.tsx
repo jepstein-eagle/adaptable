@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { IAdaptableBlotter } from '../../adaptableblotter/App_Scripts/Utilities/Interface/IAdaptableBlotter';
 import { IEvent } from '../../adaptableblotter/App_Scripts/Utilities/Interface/IEvent';
 import { IEventApi } from '../../adaptableblotter/App_Scripts/Api/Interface/IEventApi';
+import { IAdaptableBlotter } from '../../adaptableblotter/App_Scripts/BlotterInterfaces/IAdaptableBlotter';
 
 const useEventListener = (
   fn: undefined | ((...args: any[]) => void),

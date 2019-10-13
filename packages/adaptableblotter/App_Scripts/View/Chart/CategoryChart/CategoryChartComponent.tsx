@@ -33,7 +33,7 @@ import {
 } from '../../../PredefinedConfig/RunTimeState/ChartState';
 import { CategoryChartUIHelper } from './CategoryChartUIHelper';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 
 import Dropdown from '../../../components/Dropdown';
 import Input from '../../../components/Input';
@@ -49,7 +49,7 @@ As we add other chart types we will need to rethink this and some of the assumpt
 interface CategoryChartComponentProps {
   CurrentChartDefinition: CategoryChartDefinition;
   ChartData: ChartData;
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   ColorPalette: string[];
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }

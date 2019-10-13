@@ -1,13 +1,13 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
 import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 
 export function assignBlotterOptions(
   blotterOptions: AdaptableBlotterOptions
@@ -71,8 +71,11 @@ export function assignBlotterOptions(
   return returnBlotterOptions;
 }
 
-export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: IColumn[]): boolean {
-  const pkColumn: IColumn = ColumnHelper.getColumnFromId(
+export function isValidPrimaryKey(
+  blotter: IAdaptableBlotter,
+  columns: AdaptableBlotterColumn[]
+): boolean {
+  const pkColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
     blotter.blotterOptions.primaryKey,
     columns
   );

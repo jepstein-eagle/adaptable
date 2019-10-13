@@ -1,9 +1,8 @@
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy } from './Interface/IStrategy';
 import { Action } from 'redux';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 
 import { Entitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -13,6 +12,7 @@ import {
   MenuItemShowPopup,
   MenuItemDoReduxAction,
 } from '../Utilities/MenuItem';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
@@ -54,7 +54,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     return undefined;
   }
 
-  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
     // base class implementation which is empty
     return undefined;
   }
@@ -134,7 +134,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   canCreateColumnMenuItem(
-    column: IColumn,
+    column: AdaptableBlotterColumn,
     blotter: IAdaptableBlotter,
     functionType: string = ''
   ): boolean {

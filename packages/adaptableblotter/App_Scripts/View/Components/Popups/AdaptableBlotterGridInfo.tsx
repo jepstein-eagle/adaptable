@@ -8,9 +8,9 @@ import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AdaptableBlotterOptions } from '../../../BlotterOptions/AdaptableBlotterOptions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ColumnFilterHelper } from '../../../Utilities/Helpers/ColumnFilterHelper';
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { UIHelper } from '../../UIHelper';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { PanelWithButton } from '../Panels/PanelWithButton';
 import { ButtonMaximise } from '../Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
@@ -425,7 +425,7 @@ export class AdaptableBlotterGridInfo extends React.Component<
       let calcColumns: string[] = this.props.AdaptableBlotter.api.calculatedColumnApi
         .getAllCalculatedColumn()
         .map(c => c.ColumnId);
-      let columns: IColumn[] = this.props.AdaptableBlotter.api.gridApi.getColumns();
+      let columns: AdaptableBlotterColumn[] = this.props.AdaptableBlotter.api.gridApi.getColumns();
       let columnFilterDescription: string = ColumnFilterHelper.getColumnFiltersDescription(
         this.props.AdaptableBlotter.api.columnFilterApi.getAllColumnFilter(),
         columns,

@@ -5,7 +5,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IExportStrategy } from './Interface/IExportStrategy';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
@@ -15,7 +15,7 @@ import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import {
   CELLS_SELECTED_EVENT,
   GRID_RELOADED_EVENT,
@@ -263,8 +263,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         break;
       case ExportDestination.Glue42:
         let data: any[] = this.ConvertReportToArray(report);
-        let gridColumns: IColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState().Grid
-          .Columns;
+        let gridColumns: AdaptableBlotterColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState()
+          .Grid.Columns;
         Glue42Helper.exportData(data, gridColumns, this.blotter);
         break;
     }

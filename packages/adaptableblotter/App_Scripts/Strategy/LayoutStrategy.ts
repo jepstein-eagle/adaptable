@@ -2,7 +2,7 @@ import { ILayoutStrategy } from './Interface/ILayoutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { LayoutState } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';

@@ -3,7 +3,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
@@ -12,7 +12,7 @@ import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortSta
 import WizardPanel from '../../../components/WizardPanel';
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<CustomSort> {
-  SortedColumns: IColumn[];
+  SortedColumns: AdaptableBlotterColumn[];
 }
 
 export interface CustomSortColumnWizardState {
@@ -40,7 +40,7 @@ export class CustomSortColumnWizard
     );
   }
 
-  private onColumnSelectedChanged(columns: IColumn[]) {
+  private onColumnSelectedChanged(columns: AdaptableBlotterColumn[]) {
     this.setState({ SelectedColumnId: columns.length > 0 ? columns[0].ColumnId : '' }, () =>
       this.props.UpdateGoBackState()
     );

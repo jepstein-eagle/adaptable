@@ -6,7 +6,7 @@ import theme from '../theme';
 import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContext';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
@@ -48,7 +48,7 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
     afterGuiAttached?(params?: { hidePopup?: Function }): void {
       //we always unmount first so the autofocus from the form works... in other grids we unmount when hidden
       ReactDOM.unmountComponentAtNode(this.filterContainer);
-      let column: IColumn = ColumnHelper.getColumnFromId(
+      let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
         this.column.getColId(),
         blotter.api.gridApi.getColumns()
       );

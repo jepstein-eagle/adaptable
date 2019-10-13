@@ -10,17 +10,17 @@ There are 4 main ways that developers / users 'interact' with the code in the Ad
 
 - Using the **Blotter API** (at runtime) which gives full access to all the Adaptable Blotter functionality and state through code.
 
-## Blotter Interfaces
+## Blotter Instantiation
 
 There are 2 ways to instantiate a new Adaptable Blotter:
 
-- By creating an Adaptable Blotter directly by implementing the IAdaptableBlotter Interface which will return an AdaptableBlotter object suitable for whichever vendor grid you have chosen to use (and created yourself).
+- **By creating an Adaptable Blotter directly** by implementing the IAdaptableBlotter Interface which will return an AdaptableBlotter object suitable for whichever vendor grid you have chosen to use (and previously created yourself).
 
-[IAdaptableBlotter Interface](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotter_.iadaptableblotter.html)
+[See IAdaptableBlotter Interface](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotter_.iadaptableblotter.html)
 
-- By using the Adaptable Blotter Wizard which will accept a JSON file and create dynamically both the Adaptable Blotter instance and the underlying vendor grid instance.
+- **By using the Adaptable Blotter Wizard** which will accept a JSON file via drag and drop and then create dynamically both the Adaptable Blotter instance and the underlying vendor grid instance.
 
-[IAdaptableBlotterWizard Interface](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotterwizard_.iadaptableblotterwizard.html)
+[See IAdaptableBlotterWizard Interface](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotterwizard_.iadaptableblotterwizard.html)
 
 
 ## Blotter Options

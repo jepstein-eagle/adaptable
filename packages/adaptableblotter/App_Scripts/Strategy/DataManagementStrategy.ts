@@ -2,7 +2,7 @@ import { IDataManagementStrategy } from './Interface/IDataManagementStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 

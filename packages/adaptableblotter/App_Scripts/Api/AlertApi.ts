@@ -4,7 +4,7 @@ import { ApiBase } from './ApiBase';
 import { MessageType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
+import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { IAlertApi } from './Interface/IAlertApi';
 import { AlertState } from '../PredefinedConfig/RunTimeState/AlertState';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
@@ -16,7 +16,7 @@ export class AlertApi extends ApiBase implements IAlertApi {
     return this.getBlotterState().Alert;
   }
 
-  public displayAlert(alertToShow: IAdaptableAlert): void {
+  public displayAlert(alertToShow: AdaptableAlert): void {
     let maxAlerts: number = this.getBlotterState().Alert.MaxAlertsInStore;
 
     this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts));
@@ -32,7 +32,10 @@ export class AlertApi extends ApiBase implements IAlertApi {
       }
     }
     this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, { alert: alertToShow });
-    LoggingHelper.LogAlert(alertToShow.Header + ': ' + alertToShow.Msg, alertToShow.MessageType);
+    LoggingHelper.LogAlert(
+      alertToShow.Header + ': ' + alertToShow.Msg,
+      alertToShow.MessageType as MessageType
+    );
   }
 
   public showAlert(
@@ -42,7 +45,7 @@ export class AlertApi extends ApiBase implements IAlertApi {
     showAsPopup: boolean
   ): void {
     let MessageTypeEnum = MessageType as MessageType;
-    let alertToShow: IAdaptableAlert = {
+    let alertToShow: AdaptableAlert = {
       Header: alertHeader,
       Msg: alertMessage,
       MessageType: MessageTypeEnum,

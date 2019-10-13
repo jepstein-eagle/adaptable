@@ -3,10 +3,10 @@ import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { UIHelper } from '../../UIHelper';
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { Flex, Text } from 'rebass';
 import Dialog from '../../../components/Dialog';
 import SimpleButton from '../../../components/SimpleButton';
+import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 
 /**
  * The most simple of the alert type popups - just shows a message with a close button.  No user action required.

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -174,7 +174,7 @@ export class ConditionalStyleScopeWizard
     );
   }
 
-  private onColumnSelectedChanged(columns: IColumn[]) {
+  private onColumnSelectedChanged(columns: AdaptableBlotterColumn[]) {
     this.setState(
       {
         ColumnId: columns.length > 0 ? columns[0].ColumnId : '',

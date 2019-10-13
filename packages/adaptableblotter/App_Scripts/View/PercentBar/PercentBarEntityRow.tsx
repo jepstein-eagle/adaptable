@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
@@ -15,7 +15,7 @@ import Input from '../../components/Input';
 
 export interface PercentBarEntityRowProps
   extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
-  Column: IColumn;
+  Column: AdaptableBlotterColumn;
   ColorPalette: string[];
   onMinimumValueChanged: (PercentBar: PercentBar, minimumValue: number) => void;
   onMaximumValueChanged: (PercentBar: PercentBar, maximumValue: number) => void;

@@ -45,7 +45,7 @@ import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
 import * as PartnerConfigRedux from '../ActionsReducers/PartnerConfigRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
 import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy';
@@ -67,7 +67,7 @@ import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColu
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import {
   DEFAULT_LAYOUT,
@@ -2139,7 +2139,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             if (currentLayout) {
               let gridState: GridState = middlewareAPI.getState().Grid;
               // set columns
-              let blotterColumns: IColumn[] = [];
+              let blotterColumns: AdaptableBlotterColumn[] = [];
               currentLayout.Columns.forEach(c => {
                 let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
                 if (column) {

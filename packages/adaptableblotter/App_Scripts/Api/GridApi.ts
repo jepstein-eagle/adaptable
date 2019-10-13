@@ -1,6 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { IGridApi } from './Interface/IGridApi';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { GridState } from '../PredefinedConfig/InternalState/GridState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
@@ -18,7 +18,7 @@ export class GridApi extends ApiBase implements IGridApi {
     this.blotter.setGridData(dataSource);
   }
 
-  public getColumns(): IColumn[] {
+  public getColumns(): AdaptableBlotterColumn[] {
     return this.getGridState().Columns;
   }
 
@@ -30,15 +30,15 @@ export class GridApi extends ApiBase implements IGridApi {
     return this.getGridState().SelectedRowInfo;
   }
 
-  public getVisibleColumns(): IColumn[] {
+  public getVisibleColumns(): AdaptableBlotterColumn[] {
     return this.getColumns().filter(c => c.Visible);
   }
 
-  public getNumericColumns(): IColumn[] {
+  public getNumericColumns(): AdaptableBlotterColumn[] {
     return this.getColumns().filter(c => c.DataType == DataType.Number);
   }
 
-  public getDateColumns(): IColumn[] {
+  public getDateColumns(): AdaptableBlotterColumn[] {
     return this.getColumns().filter(c => c.DataType == DataType.Date);
   }
 

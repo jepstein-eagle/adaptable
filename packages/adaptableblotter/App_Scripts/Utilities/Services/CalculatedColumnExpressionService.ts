@@ -1,9 +1,9 @@
 import { ICalculatedColumnExpressionService } from './Interface/ICalculatedColumnExpressionService';
 import * as math from 'mathjs';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { CalculatedColumnHelper } from '../Helpers/CalculatedColumnHelper';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
@@ -36,7 +36,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
   IsExpressionValid(expression: string): { IsValid: Boolean; ErrorMsg?: string } {
     try {
-      let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
       let cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
         expression,
         columns

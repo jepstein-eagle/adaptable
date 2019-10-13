@@ -2,9 +2,9 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as GlyphConstants from '../Utilities/Constants/GlyphConstants';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { GRID_RELOADED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
@@ -19,7 +19,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     });
   }
 
-  public addBaseColumnMenuItems(column: IColumn): AdaptableBlotterMenuItem[] {
+  public addBaseColumnMenuItems(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem[] {
     let baseMenuItems: AdaptableBlotterMenuItem[] = [];
 
     if (this.canCreateColumnMenuItem(column, this.blotter, 'quickfilter')) {

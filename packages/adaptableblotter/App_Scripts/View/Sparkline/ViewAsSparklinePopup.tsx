@@ -7,7 +7,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 
 import {
@@ -231,7 +231,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
     }
   }
 
-  private onDataColumnChanged(columns: IColumn[]) {
+  private onDataColumnChanged(columns: AdaptableBlotterColumn[]) {
     let columnId = this.state.SparklinesChartDefinition.ColumnId;
     if (columns.length > 0) {
       columnId = columns[0].ColumnId;

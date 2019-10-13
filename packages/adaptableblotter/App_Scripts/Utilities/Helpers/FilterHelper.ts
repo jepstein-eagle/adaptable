@@ -1,7 +1,7 @@
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { Helper } from './Helper';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
@@ -52,7 +52,10 @@ export function GetUserFilters(userFilters: UserFilter[], userFilterNames: strin
   return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null);
 }
 
-export function GetSystemFiltersForColumn(column: IColumn, systemFilters: string[]): string[] {
+export function GetSystemFiltersForColumn(
+  column: AdaptableBlotterColumn,
+  systemFilters: string[]
+): string[] {
   let appropriateSystemFilters: string[] = [];
   if (column != null) {
     systemFilters.forEach((systemFilter: string) => {
@@ -68,7 +71,10 @@ export function GetSystemFiltersForColumn(column: IColumn, systemFilters: string
   return appropriateSystemFilters;
 }
 
-export function GetUserFiltersForColumn(column: IColumn, userFilters: UserFilter[]): UserFilter[] {
+export function GetUserFiltersForColumn(
+  column: AdaptableBlotterColumn,
+  userFilters: UserFilter[]
+): UserFilter[] {
   let appropriateUserFilters: UserFilter[] = [];
   if (column != null) {
     userFilters.forEach((userFilter: UserFilter) => {
@@ -81,7 +87,7 @@ export function GetUserFiltersForColumn(column: IColumn, userFilters: UserFilter
 }
 
 export function GetNamedFiltersForColumn(
-  column: IColumn,
+  column: AdaptableBlotterColumn,
   namedFilters: NamedFilter[],
   columnCategories: ColumnCategory[]
 ): NamedFilter[] {
@@ -114,7 +120,7 @@ export function GetNamedFiltersForColumn(
 export function ShowUserFilterForColumn(
   UserFilters: UserFilter[],
   name: string,
-  column: IColumn
+  column: AdaptableBlotterColumn
 ): boolean {
   let userFilter: UserFilter = UserFilters.find(f => f.Name == name);
   return userFilter.ColumnId == column.ColumnId;

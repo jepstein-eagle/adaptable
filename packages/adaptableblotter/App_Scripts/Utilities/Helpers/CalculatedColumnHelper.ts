@@ -1,5 +1,5 @@
 import { ColumnHelper } from './ColumnHelper';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 
 export function getColumnListFromExpression(expression: string): string[] {
   let columnList: string[] = [];
@@ -12,7 +12,10 @@ export function getColumnListFromExpression(expression: string): string[] {
   return columnList;
 }
 
-export function cleanExpressionColumnNames(expression: string, columns: IColumn[]): string {
+export function cleanExpressionColumnNames(
+  expression: string,
+  columns: AdaptableBlotterColumn[]
+): string {
   let newExpression: string = expression;
   let columnNameList: string[] = [];
   let regEx: RegExp = /\b(?:Col\(")([a-zA-Z0-9 ]+)(?:"\))/g;
@@ -21,7 +24,7 @@ export function cleanExpressionColumnNames(expression: string, columns: IColumn[
     let columnId: any = match[1];
 
     // check if its a column name
-    let col: IColumn = ColumnHelper.getColumnFromId(columnId, columns, false);
+    let col: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(columnId, columns, false);
     if (!col) {
       // no column so lets see if they are using FriendlyName
       col = ColumnHelper.getColumnFromFriendlyName(columnId, columns, false);
@@ -41,7 +44,7 @@ export function cleanExpressionColumnNames(expression: string, columns: IColumn[
   return newExpression;
 }
 
-export function getExpressionString(expression: string, columns: IColumn[]): string {
+export function getExpressionString(expression: string, columns: AdaptableBlotterColumn[]): string {
   let cleanExpression: string = cleanExpressionColumnNames(expression, columns);
   let columnIds: string[] = getColumnListFromExpression(cleanExpression);
   columnIds.forEach(c => {

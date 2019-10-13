@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { SelectionMode, SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
@@ -12,7 +12,7 @@ import Dropdown from '../../components/Dropdown';
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
   ColumnSort: ColumnSort;
-  onColumnSortColumnChanged: (column: IColumn) => void;
+  onColumnSortColumnChanged: (column: AdaptableBlotterColumn) => void;
   onColumnSortOrderChanged: (sortOrder: SortOrder) => void;
   onDeleteColumnSort: () => void;
 }
@@ -65,8 +65,8 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
     return <AdaptableObjectRow colItems={colItems} />;
   }
 
-  private onColumnSelectedChanged(columns: IColumn[]): any {
-    let column: IColumn = columns[0];
+  private onColumnSelectedChanged(columns: AdaptableBlotterColumn[]): any {
+    let column: AdaptableBlotterColumn = columns[0];
 
     this.props.onColumnSortColumnChanged(column);
   }

@@ -1,4 +1,4 @@
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertState } from '../../PredefinedConfig/RunTimeState/AlertState';
 
 /**
@@ -14,7 +14,7 @@ export interface IAlertApi {
    * Displays a (fully formed) inputted Alert to the User
    * @param alertToShow The Alert which should be displayed
    */
-  displayAlert(alertToShow: IAdaptableAlert): void;
+  displayAlert(alertToShow: AdaptableAlert): void;
 
   /**
    * Creates an Alert formed from the inputted values and then displays it.

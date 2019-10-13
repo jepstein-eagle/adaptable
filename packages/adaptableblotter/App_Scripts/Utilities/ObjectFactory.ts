@@ -34,7 +34,7 @@ import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties'
 import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
 import { CalculatedColumn } from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { PlusMinusRule } from '../PredefinedConfig/RunTimeState/PlusMinusState';
-import { IAdaptableAlert } from './Interface/IMessage';
+import { AdaptableAlert } from './Interface/IMessage';
 import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
 import { AdvancedSearch } from '../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
@@ -44,7 +44,7 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { UserFilter } from '../PredefinedConfig/RunTimeState/UserFilterState';
 import { Report, AutoExport } from '../PredefinedConfig/RunTimeState/ExportState';
-import { IColumn } from './Interface/IColumn';
+import { AdaptableBlotterColumn } from './Interface/AdaptableBlotterColumn';
 import { FlashingCell } from '../PredefinedConfig/RunTimeState/FlashingCellState';
 import { Reminder } from '../PredefinedConfig/RunTimeState/ReminderState';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
@@ -128,7 +128,7 @@ export function CreateEmptyPlusMinusRule(): PlusMinusRule {
   };
 }
 
-export function CreateEmptyAlert(): IAdaptableAlert {
+export function CreateEmptyAlert(): AdaptableAlert {
   return {
     Header: EMPTY_STRING,
     Msg: EMPTY_STRING,
@@ -251,7 +251,7 @@ export function CreateEmptyReport(): Report {
 }
 
 export function CreateDefaultFlashingCell(
-  column: IColumn,
+  column: AdaptableBlotterColumn,
   upColor: string,
   downColor: string,
   duration: 250 | 500 | 750 | 1000
@@ -308,7 +308,7 @@ export function CreateCellValidationMessage(
   CellValidation: CellValidationRule,
   blotter: IAdaptableBlotter
 ): string {
-  let columns: IColumn[] = blotter.api.gridApi.getColumns();
+  let columns: AdaptableBlotterColumn[] = blotter.api.gridApi.getColumns();
   let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
     CellValidation.ColumnId,
     columns
@@ -355,7 +355,7 @@ export function CreateEmptyFreeTextColumn(): FreeTextColumn {
 }
 
 export function CreateLayout(
-  columns: IColumn[],
+  columns: AdaptableBlotterColumn[],
   columnSorts: ColumnSort[],
   vendorGridInfo: VendorGridInfo,
   name: string

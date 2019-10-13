@@ -6,8 +6,8 @@ import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
@@ -40,7 +40,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     });
   }
 
-  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (column && column.DataType == DataType.Number) {
         let popupParam: StrategyParams = {
@@ -89,7 +89,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     side: number
   ): boolean {
     let shouldApplyPlusMinus = false;
-    let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+    let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
     let successfulValues: GridCell[] = [];
     let failedPreventEdits: CellValidationRule[] = [];
     let failedWarningEdits: CellValidationRule[] = [];
@@ -101,7 +101,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(rulesForColumn)) {
-        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(selectedCell.columnId, columns);
+        let selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+          selectedCell.columnId,
+          columns
+        );
         if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
           //for aggrid as we are getting strings sometimes
           if (typeof selectedCell.value != 'number') {

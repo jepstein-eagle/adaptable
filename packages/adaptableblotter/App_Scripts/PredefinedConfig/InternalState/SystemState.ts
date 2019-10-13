@@ -3,7 +3,7 @@ import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../Common/ChartEnums';
 import { Expression } from '../Common/Expression/Expression';
 import { InternalState } from './InternalState';
@@ -18,7 +18,7 @@ import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyAc
 
 export interface SystemState extends InternalState {
   SystemStatus: ISystemStatus;
-  Alerts: IAdaptableAlert[];
+  Alerts: AdaptableAlert[];
   AvailableCalendars: Calendar[];
   CurrentLiveReports: ILiveReport[];
   IsValidSmartEditSelection: boolean;

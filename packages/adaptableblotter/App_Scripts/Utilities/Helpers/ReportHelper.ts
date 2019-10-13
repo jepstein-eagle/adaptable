@@ -2,14 +2,14 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { SelectedCellInfo } from '../Interface/Selection/SelectedCellInfo';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import {
   ReportColumnScope,
   MessageType,
   ReportRowScope,
   ExportDestination,
 } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import ColumnHelper from './ColumnHelper';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
@@ -35,7 +35,10 @@ export function IsSystemReport(Report: Report): boolean {
   );
 }
 
-export function GetReportColumnsDescription(report: Report, cols: IColumn[]): string {
+export function GetReportColumnsDescription(
+  report: Report,
+  cols: AdaptableBlotterColumn[]
+): string {
   switch (report.ReportColumnScope) {
     case ReportColumnScope.AllColumns:
       return '[All Columns]';
@@ -48,7 +51,10 @@ export function GetReportColumnsDescription(report: Report, cols: IColumn[]): st
   }
 }
 
-export function GetReportExpressionDescription(Report: Report, cols: IColumn[]): string {
+export function GetReportExpressionDescription(
+  Report: Report,
+  cols: AdaptableBlotterColumn[]
+): string {
   if (IsSystemReport(Report)) {
     if (Report.Name == ALL_DATA_REPORT) {
       return '[All Blotter Data]';
@@ -94,8 +100,8 @@ export function ConvertReportToArray(
   blotter: IAdaptableBlotter,
   Report: Report
 ): IStrategyActionReturn<any[]> {
-  let ReportColumns: IColumn[] = [];
-  let gridColumns: IColumn[] = blotter.api.gridApi.getColumns();
+  let ReportColumns: AdaptableBlotterColumn[] = [];
+  let gridColumns: AdaptableBlotterColumn[] = blotter.api.gridApi.getColumns();
 
   // first get the cols depending on the Column Scope
   switch (Report.ReportColumnScope) {
@@ -206,7 +212,11 @@ export function ConvertReportToArray(
   return { ActionReturn: dataToExport };
 }
 
-function getRowValues(row: any, ReportColumns: IColumn[], blotter: IAdaptableBlotter): any[] {
+function getRowValues(
+  row: any,
+  ReportColumns: AdaptableBlotterColumn[],
+  blotter: IAdaptableBlotter
+): any[] {
   let newRow: any[] = [];
   ReportColumns.forEach(col => {
     let columnValue: any = blotter.getDisplayValueFromRecord(row, col.ColumnId);

@@ -5,13 +5,13 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from '../UIInterfaces';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { CalculatedColumnHelper } from '../../Utilities/Helpers/CalculatedColumnHelper';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 
 interface CalculatedColumnEntityRowProps<CalculatedColumnEntityRow>
   extends SharedEntityRowProps<CalculatedColumnEntityRow> {
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
 }
 
 export class CalculatedColumnEntityRow extends React.Component<

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { UIHelper } from '../UIHelper';
 import ButtonPreviewDelete from '../Components/Buttons/ButtonPreviewDelete';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AccessLevel, MessageType } from '../../PredefinedConfig/Common/Enums';
+import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { Flex, Text } from 'rebass';
 import icons from '../../components/icons';
@@ -13,7 +13,7 @@ import ListGroup from '../../components/List/ListGroup';
 import SimpleButton from '../../components/SimpleButton';
 
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
-  Alerts: IAdaptableAlert[];
+  Alerts: AdaptableAlert[];
   ShowPanel: boolean;
 
   ShowHeader: boolean;
@@ -28,15 +28,15 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
   }
 
   render(): any {
-    let alerts = this.props.Alerts.map((alert: IAdaptableAlert, index: number) => {
+    let alerts = this.props.Alerts.map((alert: AdaptableAlert, index: number) => {
       let alertHasheader: boolean = StringExtensions.IsNotNullOrEmpty(alert.Header);
 
-      const textColor = UIHelper.getColorByMessageType(alert.MessageType);
+      const textColor = UIHelper.getColorByMessageType(alert.MessageType as MessageType);
       const textStyle = {
         color: textColor,
         fill: textColor,
       };
-      const iconName = UIHelper.getGlyphByMessageType(alert.MessageType);
+      const iconName = UIHelper.getGlyphByMessageType(alert.MessageType as MessageType);
       const IconCmp = icons[iconName] as ReactComponentLike;
       const icon = IconCmp ? <IconCmp /> : null;
 

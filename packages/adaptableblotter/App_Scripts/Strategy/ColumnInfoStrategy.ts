@@ -1,9 +1,9 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import {
   AdaptableBlotterMenuItem,
   ContextMenuInfo,
@@ -25,7 +25,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     });
   }
 
-  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,

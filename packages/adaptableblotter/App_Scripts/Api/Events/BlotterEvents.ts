@@ -1,4 +1,4 @@
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
@@ -19,7 +19,7 @@ export interface ColumnStateChangedEventArgs {
 }
 
 export interface AlertFiredEventArgs {
-  alert: IAdaptableAlert;
+  alert: AdaptableAlert;
 }
 
 export interface ActionColumnClickedEventArgs {

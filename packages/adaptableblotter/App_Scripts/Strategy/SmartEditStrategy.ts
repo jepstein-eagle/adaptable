@@ -8,7 +8,7 @@ import {
   StateChangedTrigger,
 } from '../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
@@ -24,7 +24,7 @@ import {
   AdaptableBlotterMenuItem,
   ContextMenuInfo,
 } from '../Utilities/MenuItem';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -112,7 +112,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       };
     }
 
-    let column: IColumn = selectedCellInfo.Columns[0];
+    let column: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
     if (column) {
       if (column.DataType != DataType.Number) {
         return {
@@ -150,7 +150,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
     if (!this.blotter.api.gridApi.IsGridInPivotMode()) {
       if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
-        let column: IColumn = selectedCellInfo.Columns[0];
+        let column: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
         if (column) {
           columnId = column.ColumnId;
 

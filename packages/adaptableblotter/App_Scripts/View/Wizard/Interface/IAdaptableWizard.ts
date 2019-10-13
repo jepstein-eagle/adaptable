@@ -1,5 +1,5 @@
-import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
+import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
@@ -18,7 +18,7 @@ export interface AdaptableWizardStepProps<T> {
   Data?: T;
   UpdateGoBackState?(): void;
   Blotter?: IAdaptableBlotter;
-  Columns?: IColumn[];
+  Columns?: AdaptableBlotterColumn[];
 }
 
 // props for an Expression Wizard Page
@@ -32,7 +32,7 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
 // props for a wizard that wraps a config entity that contans an Expression
 export interface AdaptableBlotterObjectExpressionAdaptableWizardProps<View>
   extends AdaptableBlotterObjectAdaptableWizardProps<View> {
-  Columns: Array<IColumn>;
+  Columns: Array<AdaptableBlotterColumn>;
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];

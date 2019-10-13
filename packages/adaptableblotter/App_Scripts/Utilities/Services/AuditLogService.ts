@@ -10,7 +10,7 @@ import {
   AuditLogEventArgs,
 } from '../../Api/Events/AuditEvents';
 import { AuditDestinationOptions, AuditOptions } from '../../BlotterOptions/AuditOptions';
-import { IAdaptableAlert } from '../Interface/IMessage';
+import { AdaptableAlert } from '../Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import ColumnHelper from '../Helpers/ColumnHelper';
 
@@ -447,7 +447,7 @@ export class AuditLogService implements IAuditLogService {
   }
 
   showAlert(header: string, message: string) {
-    let alert: IAdaptableAlert = {
+    let alert: AdaptableAlert = {
       Header: header,
       Msg: message,
       MessageType: this.blotter.blotterOptions.auditOptions!.alertMessageType as MessageType,

@@ -10,7 +10,7 @@ import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
 import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
@@ -21,7 +21,6 @@ import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
-
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -105,7 +104,7 @@ export interface IAdaptableBlotter {
 
   // column related
   setColumnIntoStore(): void;
-  setNewColumnListOrder(visibleColumnList: Array<IColumn>): void;
+  setNewColumnListOrder(visibleColumnList: Array<AdaptableBlotterColumn>): void;
 
   // getting records and keys
   getPrimaryKeyValueFromRecord(record: any): any;

@@ -1,5 +1,5 @@
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../../Utilities/MenuItem';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 
 /**
  * This is the interface that all Strategies implement (as well as all deriving from AdaptableStrategyBase).
@@ -19,7 +19,7 @@ export interface IStrategy {
   Id: string;
   addMainMenuItem(): AdaptableBlotterMenuItem | undefined;
   initializeWithRedux(): void;
-  addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined;
+  addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined;
   addContextMenuItem(contextMenuInfo: ContextMenuInfo): AdaptableBlotterMenuItem | undefined;
   setStrategyEntitlement(): void;
 }

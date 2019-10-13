@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { Flex } from 'rebass';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 
@@ -33,7 +33,7 @@ export interface ExpressionBuilderPreviewProps
   Expression: Expression;
   UserFilters: UserFilter[];
   onSelectedColumnChange: (ColumnId: string, tab: QueryTab) => void;
-  ColumnsList: Array<IColumn>;
+  ColumnsList: Array<AdaptableBlotterColumn>;
   DeleteRange: (ColumnId: string, index: number) => void;
   DeleteUserFilterExpression: (ColumnId: string, index: number) => void;
   DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void;
@@ -309,7 +309,9 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
   private getOperand1Value(range: QueryRange): string {
     if (range.Operand1Type == RangeOperandType.Column) {
-      let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand1);
+      let col: AdaptableBlotterColumn = this.props.ColumnsList.find(
+        c => c.ColumnId == range.Operand1
+      );
       return col ? '[' + col.FriendlyName + ']' : '';
     } else {
       return range.Operand1;
@@ -318,7 +320,9 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
   private getOperand2Value(range: QueryRange): string {
     if (range.Operand2Type == RangeOperandType.Column) {
-      let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand2);
+      let col: AdaptableBlotterColumn = this.props.ColumnsList.find(
+        c => c.ColumnId == range.Operand2
+      );
       return col ? '[' + col.FriendlyName + ']' : '';
     } else {
       return range.Operand2;
