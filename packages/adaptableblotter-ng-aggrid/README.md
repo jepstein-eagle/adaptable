@@ -33,7 +33,7 @@ it should display the username you received from use as the current login on the
 
 5. install the Angular wrapper of the Adaptable Blotter
 
-```npm i @adaptabletools/adaptableblotter-ng-aggrid```
+```npm i @adaptabletools/adaptableblotter-angular-aggrid```
 
 
 ## Usage
