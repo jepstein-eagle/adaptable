@@ -1,5 +1,5 @@
 import * as React from 'react';
-import isPlainObject from 'lodash/isPlainObject';
+import { isPlainObject } from 'lodash';
 import DropdownButtonItem from './DropdownButtonItem';
 
 type Params = {
