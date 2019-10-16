@@ -15,7 +15,7 @@ export interface WizardDataSourceInfo {
  * so if we receive v2, we transform it to 1
  * @param json
  */
-export const prepareDataSource = (json: any): WizardDataSourceInfo => {
+export const prepareDataSource = (json: any, _file?: File): WizardDataSourceInfo => {
   if (!Array.isArray(json) || !json.length) {
     return {
       primaryKey: undefined,
