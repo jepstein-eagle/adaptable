@@ -1,5 +1,5 @@
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 
 export function getDistinctColumnValues(blotter: IAdaptableBlotter, columnId: string): number[] {
   let distinctColumnsValues: number[] = blotter

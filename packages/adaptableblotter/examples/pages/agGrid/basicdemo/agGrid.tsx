@@ -10,8 +10,12 @@ import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter, { AdaptableBlotterWizard } from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import {
+  AdaptableBlotterOptions,
+  PredefinedConfig,
+  IAdaptableBlotter,
+} from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*
@@ -23,7 +27,7 @@ Nor do we create the ag-Grid
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(30000);
+  const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
@@ -36,19 +40,18 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
+  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function() {
     //   console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
     // adaptableblotter.api.columnChooserApi.showColumnChooserPopup();
   };
   adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
-    var data = event.data;
     //  console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
   };
   adaptableBlotterOptions.filterOptions = {
     autoApplyFilter: false,
   };
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   //gridOptions.api!.ensureIndexVisible(200);
   //adaptableblotter.api.userFilterApi.showUserFilterPopup();
@@ -62,6 +65,16 @@ function InitAdaptableBlotter() {
 let demoConfig: PredefinedConfig = {
   PartnerConfig: {
     glue42Config: 'Hello ',
+  },
+  Layout: {
+    CurrentLayout: 'test',
+    Layouts: [
+      {
+        Columns: ['tradeId', 'country', 'notional', 'stars', 'currency', 'ask', 'bid'],
+        ColumnSorts: [{ Column: 'country', SortOrder: 'Ascending' }],
+        Name: 'test',
+      },
+    ],
   },
 };
 

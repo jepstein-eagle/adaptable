@@ -1,4 +1,4 @@
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
@@ -26,22 +26,22 @@ export interface IGridApi {
    *
    * Each column has a number of properties such as Visiblity and Data Type
    */
-  getColumns(): IColumn[];
+  getColumns(): AdaptableBlotterColumn[];
 
   /**
    * Returns all the visible columns in the Adaptable Blotter
    */
-  getVisibleColumns(): IColumn[];
+  getVisibleColumns(): AdaptableBlotterColumn[];
 
   /**
    * Returns all the numeric columns in the Adaptable Blotter
    */
-  getNumericColumns(): IColumn[];
+  getNumericColumns(): AdaptableBlotterColumn[];
 
   /**
    * Returns all the Date columns in the Adaptable Blotter
    */
-  getDateColumns(): IColumn[];
+  getDateColumns(): AdaptableBlotterColumn[];
 
   /**
    * Returns all the current Column Sort information in the Adaptable Blotter

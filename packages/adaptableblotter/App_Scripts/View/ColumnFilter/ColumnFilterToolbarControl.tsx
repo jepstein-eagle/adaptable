@@ -5,7 +5,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
@@ -35,7 +35,7 @@ interface ColumnFilterToolbarControlComponentProps
   onHideQuickFilterBar: () => GridRedux.QuickFilterBarHideAction;
   onShowQuickFilterBar: () => GridRedux.QuickFilterBarShowAction;
   ColumnFilters: ColumnFilter[];
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   UserFilters: UserFilter[];
   Entitlements: Entitlement[];
   IsQuickFilterActive: boolean;

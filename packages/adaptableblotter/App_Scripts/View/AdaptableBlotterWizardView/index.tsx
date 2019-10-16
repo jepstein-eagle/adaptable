@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { useReducer, Reducer, useState } from 'react';
+import { useReducer, Reducer, useState, useEffect, ReactNode } from 'react';
 import { GridOptions } from 'ag-grid-community';
 import theme from '../../theme';
 import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
@@ -12,13 +12,16 @@ import FileDroppable from '../../components/FileDroppable';
 
 import { prepareDataSource, WizardDataSourceInfo, prepareGridOptions } from './helper';
 import ConfigurationDialog from './AdaptableBlotterConfigurationDialog';
+import { Flex } from 'rebass';
 
 interface AdaptableBlotterWizardViewProps {
   adaptableBlotterOptions: AdaptableBlotterOptions;
   onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => any;
+  loadingMessage?: ReactNode;
+  fetchData?: () => Promise<any>;
   prepareData?: (
     data: any,
-    file: File
+    file?: File
   ) => {
     columns: string[];
     data: any[];
@@ -105,7 +108,7 @@ const Wizard = (props: AdaptableBlotterWizardViewProps) => {
 
   const [droppableKey, setDroppableKey] = useState(Date.now());
 
-  const onDropSuccess = (array: any, file: File) => {
+  const onDropSuccess = (array: any, file?: File) => {
     const dataSourceInfo: WizardDataSourceInfo = (props.prepareData || prepareDataSource)(
       array,
       file
@@ -123,15 +126,22 @@ const Wizard = (props: AdaptableBlotterWizardViewProps) => {
 
     const adaptableBlotterOptions = { ...props.adaptableBlotterOptions };
 
-    adaptableBlotterOptions.blotterId = adaptableBlotterOptions.blotterId || file.name;
+    adaptableBlotterOptions.blotterId =
+      adaptableBlotterOptions.blotterId || (file ? file.name : '');
+
     adaptableBlotterOptions.vendorGrid = gridOptions;
     if (dataSourceInfo.primaryKey) {
       adaptableBlotterOptions.primaryKey = dataSourceInfo.primaryKey;
     }
-    dispatch({
-      type: 'DROPPED',
-      payload: adaptableBlotterOptions,
-    });
+
+    if (props.fetchData) {
+      props.onInit(adaptableBlotterOptions);
+    } else {
+      dispatch({
+        type: 'DROPPED',
+        payload: adaptableBlotterOptions,
+      });
+    }
   };
 
   let wizard;
@@ -155,16 +165,37 @@ const Wizard = (props: AdaptableBlotterWizardViewProps) => {
     );
   }
 
+  const ddEnabled = !props.fetchData;
+
+  useEffect(() => {
+    if (props.fetchData) {
+      props.fetchData().then((data: any) => {
+        onDropSuccess(data);
+      });
+    }
+  }, []);
+
   return (
     <>
-      <FileDroppable
-        key={droppableKey}
-        className={join('ab-Wizard')}
-        alignItems="center"
-        justifyContent="center"
-        message={state.error}
-        onDropSuccess={onDropSuccess}
-      ></FileDroppable>
+      {ddEnabled ? (
+        <FileDroppable
+          key={droppableKey}
+          className={join('ab-Wizard')}
+          alignItems="center"
+          justifyContent="center"
+          message={state.error}
+          onDropSuccess={onDropSuccess}
+        ></FileDroppable>
+      ) : (
+        <Flex
+          className={join('ab-Wizard')}
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+        >
+          {props.loadingMessage || 'Loading ...'}
+        </Flex>
+      )}
       {wizard}
     </>
   );

@@ -1,13 +1,13 @@
 import { ExpressionHelper } from './ExpressionHelper';
 import { ColumnHelper } from './ColumnHelper';
 import { DataType, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 
 export function createAlertDescription(
   alertDefinition: AlertDefinition,
-  columns: IColumn[]
+  columns: AdaptableBlotterColumn[]
 ): string {
   let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
     alertDefinition.ColumnId,

@@ -1,10 +1,10 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISparklineColumnStrategy } from './Interface/ISparklineColumnStrategy';
 
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { SparklineColumnState } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
@@ -26,7 +26,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'sparkline')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,

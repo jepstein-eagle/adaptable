@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -44,7 +44,7 @@ export class SparklineColumnSelectColumnWizard
     );
   }
 
-  private onColumnSelectedChanged(columns: IColumn[]) {
+  private onColumnSelectedChanged(columns: AdaptableBlotterColumn[]) {
     if (columns.length > 0) {
       // let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
       //   columns[0].ColumnId,

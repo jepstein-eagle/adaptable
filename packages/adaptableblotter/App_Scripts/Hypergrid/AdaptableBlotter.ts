@@ -38,7 +38,6 @@ import {
   SortOrder,
   FilterOnDataChangeOptions,
 } from '../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter, EmitterCallback } from '../Utilities/Interface/IAdaptableBlotter';
 import { CustomSortDataSource } from './CustomSortDataSource';
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
@@ -103,7 +102,7 @@ import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogServi
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { CalculatedColumn } from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/RunTimeState/FreeTextColumnState';
@@ -114,6 +113,7 @@ import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserI
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -374,11 +374,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public setColumnIntoStore() {
-    // let columns: IColumn[] = this.hyperGrid.behavior.columns.map((x: any) => {
-    let activeColumns: IColumn[] = this.hyperGrid.behavior
+    // let columns: AdaptableBlotterColumn[] = this.hyperGrid.behavior.columns.map((x: any) => {
+    let activeColumns: AdaptableBlotterColumn[] = this.hyperGrid.behavior
       .getActiveColumns()
       .map((x: any, index: number) => {
-        let existingColumn: IColumn = ColumnHelper.getColumnFromId(
+        let existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
           x.name,
           this.getState().Grid.Columns
         );
@@ -399,28 +399,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name), // TODO: can we manage by column
         };
       });
-    let hiddenColumns: IColumn[] = this.hyperGrid.behavior.getHiddenColumns().map((x: any) => {
-      let existingColumn: IColumn = ColumnHelper.getColumnFromId(
-        x.name,
-        this.getState().Grid.Columns
-      );
-      return {
-        ColumnId: existingColumn ? existingColumn.ColumnId : x.name ? x.name : 'Unknown Column',
-        FriendlyName: existingColumn
-          ? existingColumn.FriendlyName
-          : x.header
-          ? x.header
-          : x.name
-          ? x.name
-          : 'Unknown Column',
-        DataType: existingColumn ? existingColumn.DataType : this.getColumnDataType(x),
-        Visible: false,
-        Index: -1,
-        ReadOnly: false, // not great but doesnt matter as it will update when made visible....this.isColumnReadonly(x.name),
-        Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
-        Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name),
-      };
-    });
+    let hiddenColumns: AdaptableBlotterColumn[] = this.hyperGrid.behavior
+      .getHiddenColumns()
+      .map((x: any) => {
+        let existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+          x.name,
+          this.getState().Grid.Columns
+        );
+        return {
+          ColumnId: existingColumn ? existingColumn.ColumnId : x.name ? x.name : 'Unknown Column',
+          FriendlyName: existingColumn
+            ? existingColumn.FriendlyName
+            : x.header
+            ? x.header
+            : x.name
+            ? x.name
+            : 'Unknown Column',
+          DataType: existingColumn ? existingColumn.DataType : this.getColumnDataType(x),
+          Visible: false,
+          Index: -1,
+          ReadOnly: false, // not great but doesnt matter as it will update when made visible....this.isColumnReadonly(x.name),
+          Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
+          Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name),
+        };
+      });
     this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(
       GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns))
     );
@@ -433,7 +435,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.filterContainer.style.visibility = 'hidden';
   }
 
-  public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableBlotterColumn>): void {
     VisibleColumnList.forEach((column, index) => {
       //we use allcolumns so we can show previously hidden columns
       let oldcolindex = this.hyperGrid.behavior.allColumns.findIndex(
@@ -543,7 +545,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   //If the selection mode is row it will returns nothing - use the setSelectedRows() method
   public setSelectedCells(): void {
     let selected: Array<any> = this.hyperGrid.selectionModel.getSelections();
-    let columns: IColumn[] = [];
+    let columns: AdaptableBlotterColumn[] = [];
     let selectedCells: GridCell[] = [];
     for (let rectangle of selected) {
       //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
@@ -553,7 +555,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         columnIndex++
       ) {
         let column = this.hyperGrid.behavior.getActiveColumns()[columnIndex];
-        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(
+        let selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
           column.name,
           this.adaptableBlotterStore.TheStore.getState().Grid.Columns
         );
@@ -1402,7 +1404,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
           let colId: string = e.detail.primitiveEvent.column.name;
 
-          let column: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
+          let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+            colId,
+            this.getState().Grid.Columns
+          );
           if (column != null) {
             this.strategies.forEach(s => {
               s.addColumnMenuItem(column);

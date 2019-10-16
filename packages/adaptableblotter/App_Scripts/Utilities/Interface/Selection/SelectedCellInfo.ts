@@ -1,6 +1,6 @@
-import { IColumn } from '../IColumn';
+import { AdaptableBlotterColumn } from '../AdaptableBlotterColumn';
 import { GridCell } from './GridCell';
 export interface SelectedCellInfo {
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   GridCells: GridCell[];
 }

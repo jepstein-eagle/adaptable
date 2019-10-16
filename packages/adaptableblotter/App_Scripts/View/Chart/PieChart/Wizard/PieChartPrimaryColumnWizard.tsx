@@ -12,7 +12,7 @@ import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
-import { IColumn } from '../../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../../Utilities/Interface/AdaptableBlotterColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common/ChartEnums';
@@ -57,7 +57,7 @@ export class PieChartPrimaryColumnWizard
     );
   }
 
-  private onPrimaryColumnChanged(columns: IColumn[]) {
+  private onPrimaryColumnChanged(columns: AdaptableBlotterColumn[]) {
     let isColumn: boolean = ArrayExtensions.IsNotNullOrEmpty(columns);
     this.setState(
       {

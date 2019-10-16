@@ -6,7 +6,7 @@ import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterR
 import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux';
 import * as GridRedux from '../../../Redux/ActionsReducers/GridRedux';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Utilities/Helpers/FilterHelper';
@@ -33,7 +33,7 @@ import { Waiting } from './Waiting';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxMenu } from './ListBoxMenu';
 
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { FilterFormPanel } from '../Panels/FilterFormPanel';
 import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
@@ -44,9 +44,9 @@ import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCat
 import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
-  CurrentColumn: IColumn;
+  CurrentColumn: AdaptableBlotterColumn;
   Blotter: IAdaptableBlotter;
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];

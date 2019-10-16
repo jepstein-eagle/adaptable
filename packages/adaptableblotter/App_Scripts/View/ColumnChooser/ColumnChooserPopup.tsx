@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -15,7 +15,9 @@ import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCatego
 import { Flex } from 'rebass';
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
-  onNewColumnListOrder: (VisibleColumnList: IColumn[]) => SystemRedux.SetNewColumnListOrderAction;
+  onNewColumnListOrder: (
+    VisibleColumnList: AdaptableBlotterColumn[]
+  ) => SystemRedux.SetNewColumnListOrderAction;
   ColumnCategories: Array<ColumnCategory>;
 }
 
@@ -76,7 +78,10 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
   }
 
   private ColumnListChange(columnList: Array<string>) {
-    let cols: IColumn[] = ColumnHelper.getColumnsFromFriendlyNames(columnList, this.props.Columns);
+    let cols: AdaptableBlotterColumn[] = ColumnHelper.getColumnsFromFriendlyNames(
+      columnList,
+      this.props.Columns
+    );
     this.props.onNewColumnListOrder(cols);
   }
 }
@@ -89,7 +94,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onNewColumnListOrder: (VisibleColumnList: IColumn[]) =>
+    onNewColumnListOrder: (VisibleColumnList: AdaptableBlotterColumn[]) =>
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
   };
 }

@@ -52,7 +52,7 @@ const CheckboxInput = styled.input`
 `;
 
 type TypeProps = {
-  checked?: boolean;
+  checked?: boolean | null;
   disabled?: boolean;
   as?: any;
   name?: string;
@@ -109,7 +109,7 @@ const CheckBox = ({
 
   const checkboxRef = useRef<HTMLInputElement>();
   React.useEffect(() => {
-    checkboxRef.current.indeterminate = indeterminate;
+    checkboxRef.current!.indeterminate = indeterminate;
   }, [indeterminate]);
 
   return (

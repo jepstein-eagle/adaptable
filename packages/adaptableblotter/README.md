@@ -54,7 +54,7 @@ for the React wrapper, use
 
 for the Angular wrapper, use
 
-```npm i @adaptabletools/adaptableblotter-ng-aggrid```
+```npm i @adaptabletools/adaptableblotter-angular-aggrid```
 
 ## Styling
 

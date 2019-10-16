@@ -13,8 +13,8 @@ import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterSta
 import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
+import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
@@ -26,10 +26,10 @@ import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCat
 import { Column } from 'ag-grid-community';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
-  CurrentColumn: IColumn;
+  CurrentColumn: AdaptableBlotterColumn;
   ColumnWidth: number;
   Blotter: IAdaptableBlotter;
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];

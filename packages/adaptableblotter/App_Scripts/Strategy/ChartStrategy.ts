@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import {
   ChartState,
@@ -18,7 +18,7 @@ import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 
 import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { SEARCH_APPLIED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
@@ -300,7 +300,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     return this.blotter.api.chartApi.getChartState();
   }
 
-  private GetColumnState(): IColumn[] {
+  private GetColumnState(): AdaptableBlotterColumn[] {
     return this.blotter.api.gridApi.getColumns();
   }
 

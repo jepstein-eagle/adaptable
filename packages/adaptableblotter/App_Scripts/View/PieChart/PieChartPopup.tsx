@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { IgrItemLegendModule } from 'igniteui-react-charts/ES2015/igr-item-legend-module';
 import { IgrItemLegend } from 'igniteui-react-charts/ES2015/igr-item-legend';
 import { IgrDoughnutChartModule } from 'igniteui-react-charts/ES2015/igr-doughnut-chart-module';
@@ -382,7 +382,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     );
   }
 
-  private onDataValueColumnChanged(columns: IColumn[]) {
+  private onDataValueColumnChanged(columns: AdaptableBlotterColumn[]) {
     let valueColumn: string = null;
     let labelColumn = this.state.PieChartDefinition.PrimaryColumnId;
     if (columns.length > 0) {
@@ -391,7 +391,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     this.updateDataSource(valueColumn, labelColumn);
   }
 
-  private onDataGroupColumnChanged(columns: IColumn[]) {
+  private onDataGroupColumnChanged(columns: AdaptableBlotterColumn[]) {
     let valueColumn = this.state.PieChartDefinition.SecondaryColumnId;
     let labelColumn: string = null;
     if (columns.length > 0) {

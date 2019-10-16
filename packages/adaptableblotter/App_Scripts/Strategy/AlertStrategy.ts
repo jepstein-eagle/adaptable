@@ -2,8 +2,8 @@ import { IAlertStrategy } from './Interface/IAlertStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -32,7 +32,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
     let alertDefinitions: AlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
-      let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
       alertDefinitions.forEach(fr => {
         // might be better to do a single alert with all the messages?
         this.blotter.api.alertApi.showAlert(
@@ -51,7 +51,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
       .AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
     let triggeredAlerts: AlertDefinition[] = [];
     if (relatedAlertDefinitions.length > 0) {
-      let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
       let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
@@ -91,14 +91,17 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   private IsAlertTriggered(
     alert: AlertDefinition,
     dataChangedEvent: DataChangedInfo,
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): boolean {
     // if its any change then alert triggers immediately
     if (alert.Range.Operator == LeafExpressionOperator.AnyChange) {
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: IColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
+    let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      dataChangedEvent.ColumnId,
+      columns
+    );
     let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
       alert.Range,
       dataChangedEvent.NewValue,

@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IPieChartStrategy } from './Interface/IPieChartStrategy';
 import {
   MenuItemShowPopup,
@@ -10,7 +10,7 @@ import {
 } from '../Utilities/MenuItem';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -25,7 +25,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
     });
   }
 
-  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
     if (
       this.canCreateColumnMenuItem(column, this.blotter) &&
       column.DataType !== DataType.NumberArray

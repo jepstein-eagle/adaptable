@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -30,13 +30,13 @@ export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
 export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
 
 export interface GridSetColumnsAction extends Redux.Action {
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
 }
 export interface GridAddColumnAction extends Redux.Action {
-  Column: IColumn;
+  Column: AdaptableBlotterColumn;
 }
 export interface GridEditColumnAction extends Redux.Action {
-  Column: IColumn;
+  Column: AdaptableBlotterColumn;
 }
 export interface GridHideColumnAction extends Redux.Action {
   ColumnId: string;
@@ -91,17 +91,17 @@ export interface SetPivotModeOnAction extends Redux.Action {}
 
 export interface SetPivotModeOffAction extends Redux.Action {}
 
-export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
+export const GridSetColumns = (Columns: AdaptableBlotterColumn[]): GridSetColumnsAction => ({
   type: GRID_SET_COLUMNS,
   Columns,
 });
 
-export const GridAddColumn = (Column: IColumn): GridAddColumnAction => ({
+export const GridAddColumn = (Column: AdaptableBlotterColumn): GridAddColumnAction => ({
   type: GRID_ADD_COLUMN,
   Column,
 });
 
-export const GridEditColumn = (Column: IColumn): GridEditColumnAction => ({
+export const GridEditColumn = (Column: AdaptableBlotterColumn): GridEditColumnAction => ({
   type: GRID_EDIT_COLUMN,
   Column,
 });
@@ -216,7 +216,7 @@ export const GridReducer: Redux.Reducer<GridState> = (
       columns.push(actionTypedAdd.Column);
       return Object.assign({}, state, { Columns: columns });
     case GRID_EDIT_COLUMN:
-      const actioncolumn: IColumn = (action as GridEditColumnAction).Column;
+      const actioncolumn: AdaptableBlotterColumn = (action as GridEditColumnAction).Column;
       return {
         ...state,
         Columns: state.Columns.map(abObject =>

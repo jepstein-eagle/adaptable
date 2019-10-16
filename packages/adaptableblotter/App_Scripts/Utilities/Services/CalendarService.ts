@@ -1,5 +1,5 @@
 import * as CalendarConstants from '../../Utilities/Constants/CalendarConstants';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ICalendarService } from './Interface/ICalendarService';
 import { CalendarState } from '../../PredefinedConfig/RunTimeState/CalendarState';
 

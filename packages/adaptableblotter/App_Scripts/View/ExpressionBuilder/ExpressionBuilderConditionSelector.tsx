@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues';
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter';
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges';
@@ -24,7 +24,7 @@ import { Expression } from '../../PredefinedConfig/Common/Expression/Expression'
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 import { Waiting } from '../Components/FilterForm/Waiting';
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
@@ -36,7 +36,7 @@ import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCatego
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
-  ColumnsList: Array<IColumn>;
+  ColumnsList: Array<AdaptableBlotterColumn>;
   Expression: Expression;
   ExpressionMode: ExpressionMode;
   onExpressionChange: (Expression: Expression) => void;
@@ -276,7 +276,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     let column = StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)
       ? null
       : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-    let selectedColumn: IColumn = column;
+    let selectedColumn: AdaptableBlotterColumn = column;
     let selectedColumnFriendlyName: string = selectedColumn ? selectedColumn.FriendlyName : '';
 
     // get filter names
@@ -570,7 +570,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     } as ExpressionBuilderConditionSelectorState);
   }
 
-  private onColumnSelectChange(columns: IColumn[]) {
+  private onColumnSelectChange(columns: AdaptableBlotterColumn[]) {
     this.props.onSelectedColumnChange(
       columns.length > 0 ? columns[0].ColumnId : '',
       QueryTab.ColumnValue

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';

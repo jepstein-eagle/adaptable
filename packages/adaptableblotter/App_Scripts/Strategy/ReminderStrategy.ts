@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IReminderStrategy } from './Interface/IReminderStrategy';
 import { ReminderState } from '../PredefinedConfig/RunTimeState/ReminderState';
 import { GRID_RELOADED_EVENT } from '../Utilities/Constants/GeneralConstants';

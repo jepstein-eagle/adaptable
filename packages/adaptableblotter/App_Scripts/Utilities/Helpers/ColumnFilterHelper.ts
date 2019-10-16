@@ -1,18 +1,18 @@
 import { ExpressionHelper } from './ExpressionHelper';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { ColumnHelper } from './ColumnHelper';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 
 export function convertColumnFiltersToKVPArray(
   columnFilters: ColumnFilter[],
-  columns: IColumn[]
+  columns: AdaptableBlotterColumn[]
 ): IKeyValuePair[] {
   let infoBody: IKeyValuePair[] = [];
   columnFilters.forEach(x => {
-    let column: IColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
+    let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
     if (column) {
       let expression: string = ExpressionHelper.ConvertExpressionToString(x.Filter, columns, false);
       infoBody.push({
@@ -26,7 +26,7 @@ export function convertColumnFiltersToKVPArray(
 
 export function getColumnFiltersDescription(
   columnFilters: ColumnFilter[],
-  columns: IColumn[],
+  columns: AdaptableBlotterColumn[],
   blotter: IAdaptableBlotter
 ): string {
   if (ArrayExtensions.IsNullOrEmpty(columnFilters)) {

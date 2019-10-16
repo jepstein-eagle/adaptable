@@ -1,4 +1,4 @@
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { InternalState } from './InternalState';
@@ -7,7 +7,7 @@ import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRow
 import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
 
 export interface GridState extends InternalState {
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   ColumnSorts: ColumnSort[];
   SelectedCellInfo: SelectedCellInfo;
   SelectedRowInfo: SelectedRowInfo;

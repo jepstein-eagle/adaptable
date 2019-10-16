@@ -1,7 +1,7 @@
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { Helper } from './Helper';
 import { ColumnHelper } from './ColumnHelper';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from './ExpressionHelper';
@@ -47,7 +47,11 @@ export function isRunningGlue42(): boolean {
   return false; // typeof window !== "undefined" && "glue42gd" in window && "Glue4Office" in window;
 }
 
-export async function exportData(data: any[], gridColumns: IColumn[], blotter: IAdaptableBlotter) {
+export async function exportData(
+  data: any[],
+  gridColumns: AdaptableBlotterColumn[],
+  blotter: IAdaptableBlotter
+) {
   let exportColumns: any[] = data[0];
   let exportData: any[] = createData(data, exportColumns);
   let sentRows: any[] = Helper.cloneObject(exportData);
@@ -81,7 +85,10 @@ export async function exportData(data: any[], gridColumns: IColumn[], blotter: I
           let returnedValue = returnedRow[col];
           let originalValue = sentRow[col];
           if (returnedValue != originalValue) {
-            let column: IColumn = ColumnHelper.getColumnFromFriendlyName(col, gridColumns);
+            let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromFriendlyName(
+              col,
+              gridColumns
+            );
             let primaryKeyValue: any = returnedRow[primaryKeyColumnFriendlyName];
             if (
               isValidEdit(
@@ -116,14 +123,14 @@ export async function exportData(data: any[], gridColumns: IColumn[], blotter: I
 }
 
 function isValidEdit(
-  column: IColumn,
+  column: AdaptableBlotterColumn,
   originalValue: any,
   returnedValue: any,
   primaryKeyValue: any,
   rowIndex: number,
   columnIndex: number,
   errors: IGlue42ExportError[],
-  columns: IColumn[],
+  columns: AdaptableBlotterColumn[],
   blotter: IAdaptableBlotter
 ): boolean {
   if (column.ReadOnly) {

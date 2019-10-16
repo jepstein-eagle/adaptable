@@ -11,7 +11,7 @@ import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 
 import {
@@ -24,7 +24,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
 import Checkbox from '../../components/CheckBox';
 import SimpleButton from '../../components/SimpleButton';
@@ -39,14 +39,16 @@ interface HomeToolbarComponentProps
   extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
   GridState: GridState;
   DashboardState: DashboardState;
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   SystemStatus: ISystemStatus;
   HeaderText: string;
   DashboardSize: DashboardSize;
-  onNewColumnListOrder: (VisibleColumnList: IColumn[]) => SystemRedux.SetNewColumnListOrderAction;
+  onNewColumnListOrder: (
+    VisibleColumnList: AdaptableBlotterColumn[]
+  ) => SystemRedux.SetNewColumnListOrderAction;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
   onSetToolbarVisibility: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction;
-  onShowStatusMessage: (alert: IAdaptableAlert) => PopupRedux.PopupShowAlertAction;
+  onShowStatusMessage: (alert: AdaptableAlert) => PopupRedux.PopupShowAlertAction;
   onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
 
@@ -89,7 +91,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         ),
       },
     ];
-    this.props.Columns.forEach((col: IColumn, index) => {
+    this.props.Columns.forEach((col: AdaptableBlotterColumn, index) => {
       colItems.push({
         id: col.ColumnId,
         onClick: (e: React.SyntheticEvent) => {
@@ -289,7 +291,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let messageType: MessageType = this.props.SystemStatus.StatusType as MessageType;
     switch (messageType) {
       case MessageType.Success:
-        let success: IAdaptableAlert = {
+        let success: AdaptableAlert = {
           Header: 'System Status',
           Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage)
             ? this.props.SystemStatus.StatusMessage
@@ -300,7 +302,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         this.props.onShowStatusMessage(success);
         return;
       case MessageType.Info:
-        let info: IAdaptableAlert = {
+        let info: AdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
           MessageType: MessageType.Info,
@@ -309,7 +311,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         this.props.onShowStatusMessage(info);
         return;
       case MessageType.Warning:
-        let warning: IAdaptableAlert = {
+        let warning: AdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
           MessageType: MessageType.Warning,
@@ -318,7 +320,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         this.props.onShowStatusMessage(warning);
         return;
       case MessageType.Error:
-        let error: IAdaptableAlert = {
+        let error: AdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
           MessageType: MessageType.Error,
@@ -333,9 +335,12 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   onSetColumnVisibility(name: string) {
-    let changedColumn: IColumn = ColumnHelper.getColumnFromId(name, this.props.Columns);
+    let changedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      name,
+      this.props.Columns
+    );
 
-    let columns: IColumn[] = [].concat(this.props.Columns);
+    let columns: AdaptableBlotterColumn[] = [].concat(this.props.Columns);
     changedColumn = Object.assign({}, changedColumn, {
       Visible: !changedColumn.Visible,
     });
@@ -375,13 +380,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.DashboardPopup)
       ),
-    onNewColumnListOrder: (VisibleColumnList: IColumn[]) =>
+    onNewColumnListOrder: (VisibleColumnList: AdaptableBlotterColumn[]) =>
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetDashboardVisibility: (visibility: Visibility) =>
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
     onSetToolbarVisibility: (strategyIds: string[]) =>
       dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
-    onShowStatusMessage: (alert: IAdaptableAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
+    onShowStatusMessage: (alert: AdaptableAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
     onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };
 }

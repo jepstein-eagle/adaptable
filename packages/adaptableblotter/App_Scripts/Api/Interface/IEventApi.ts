@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
 import { SearchChangedEventArgs } from '../Events/SearchChanged/SearchChangedEventArgs';
 import {

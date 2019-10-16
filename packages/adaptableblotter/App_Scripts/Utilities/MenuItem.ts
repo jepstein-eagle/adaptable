@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { GridCell } from './Interface/Selection/GridCell';
-import { IColumn } from './Interface/IColumn';
+import { AdaptableBlotterColumn } from './Interface/AdaptableBlotterColumn';
 
 /*
 The Adaptable Blotter provides 3 menus:
@@ -40,7 +40,7 @@ export interface ContextMenuInfo {
   // the cell that has been clicked
   gridCell: GridCell;
   // the column in which the cell was clicked
-  column: IColumn;
+  column: AdaptableBlotterColumn;
   // whether or not the cell clicked is one that is currently selected.
   // important for strategies like Smart Edit where we act on more than one cell
   // our assumption is that we will only do things if the cell clicked is also selected

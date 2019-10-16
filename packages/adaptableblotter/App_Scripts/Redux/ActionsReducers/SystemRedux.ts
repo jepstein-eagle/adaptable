@@ -12,11 +12,11 @@ import {
   SYSTEM_DEFAULT_CHART_VISIBILITY,
   EMPTY_STRING,
 } from '../../Utilities/Constants/GeneralConstants';
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
@@ -80,7 +80,7 @@ export interface SystemSetHealthStatusAction extends Redux.Action {
 export interface SystemClearHealthStatusAction extends Redux.Action {}
 
 export interface SystemAlertAddAction extends Redux.Action {
-  Alert: IAdaptableAlert;
+  Alert: AdaptableAlert;
   MaxAlerts: number;
 }
 
@@ -156,7 +156,7 @@ export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Acti
 export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Action {}
 
 export interface SetNewColumnListOrderAction extends Redux.Action {
-  VisibleColumnList: Array<IColumn>;
+  VisibleColumnList: Array<AdaptableBlotterColumn>;
 }
 
 export const SystemSetHealthStatus = (
@@ -170,10 +170,7 @@ export const SystemClearHealthStatus = (): SystemClearHealthStatusAction => ({
   type: SYSTEM_CLEAR_HEALTH_STATUS,
 });
 
-export const SystemAlertAdd = (
-  Alert: IAdaptableAlert,
-  MaxAlerts: number
-): SystemAlertAddAction => ({
+export const SystemAlertAdd = (Alert: AdaptableAlert, MaxAlerts: number): SystemAlertAddAction => ({
   type: SYSTEM_ALERT_ADD,
   Alert,
   MaxAlerts,
@@ -299,7 +296,7 @@ export const QuickSearchClearVisibleColumnExpressions = (): QuickSearchClearVisi
 });
 
 export const SetNewColumnListOrder = (
-  VisibleColumnList: Array<IColumn>
+  VisibleColumnList: Array<AdaptableBlotterColumn>
 ): SetNewColumnListOrderAction => ({
   type: SET_NEW_COLUMN_LIST_ORDER,
   VisibleColumnList,
@@ -328,7 +325,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
   state: SystemState = initialSystemState,
   action: Redux.Action
 ): SystemState => {
-  let alerts: IAdaptableAlert[];
+  let alerts: AdaptableAlert[];
   switch (action.type) {
     case SYSTEM_SET_HEALTH_STATUS:
       return Object.assign({}, state, {

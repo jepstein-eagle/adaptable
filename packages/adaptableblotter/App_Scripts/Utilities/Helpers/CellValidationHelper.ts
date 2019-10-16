@@ -1,7 +1,7 @@
 import { ExpressionHelper } from './ExpressionHelper';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { LeafExpressionOperator, DataType, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IUIConfirmation } from '../Interface/IMessage';
 import * as Redux from 'redux';
@@ -9,7 +9,7 @@ import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellVali
 
 export function createCellValidationDescription(
   cellValidationRule: CellValidationRule,
-  columns: IColumn[]
+  columns: AdaptableBlotterColumn[]
 ): string {
   if (cellValidationRule.Range.Operator == LeafExpressionOperator.PrimaryKeyDuplicate) {
     return 'Primary Key column cannot contain duplicate values';

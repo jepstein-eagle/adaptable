@@ -4,15 +4,18 @@ import {
   PieChartDefinition,
   SparklinesChartDefinition,
 } from '../../../PredefinedConfig/RunTimeState/ChartState';
-import { IColumn } from '../../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Interface/AdaptableBlotterColumn';
 
 export interface IChartService {
-  BuildCategoryChartData(chartDefinition: CategoryChartDefinition, columns: IColumn[]): ChartData;
+  BuildCategoryChartData(
+    chartDefinition: CategoryChartDefinition,
+    columns: AdaptableBlotterColumn[]
+  ): ChartData;
 
   BuildPieChartData(chartDefinition: PieChartDefinition): ChartData;
 
   BuildSparklinesChartData(
     chartDefinition: SparklinesChartDefinition,
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): ChartData;
 }

@@ -1,5 +1,5 @@
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { BlotterFactoryAgGrid } from '../agGrid/BlotterFactoryAgGrid';
 import { BlotterFactoryHypergrid } from '../Hypergrid/BlotterFactoryHypergrid';
 

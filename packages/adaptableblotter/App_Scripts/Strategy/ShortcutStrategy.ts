@@ -4,10 +4,10 @@ import * as Redux from 'redux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { DataType, MathOperation, ActionMode } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
@@ -46,7 +46,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     if (!activeCell) {
       return;
     }
-    let selectedColumn: IColumn = ColumnHelper.getColumnFromId(
+    let selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
       activeCell.columnId,
       this.blotter.api.gridApi.getColumns()
     );

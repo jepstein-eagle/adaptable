@@ -37,7 +37,6 @@ import { Action } from 'redux';
 import Emitter from '../Utilities/Emitter';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import { iconToString } from '../components/icons';
-import { IAdaptableBlotter, EmitterCallback } from '../Utilities/Interface/IAdaptableBlotter';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
@@ -82,7 +81,7 @@ import {
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
@@ -161,6 +160,8 @@ import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineCo
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
+import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
+import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -557,7 +558,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableBlotterColumn>): void {
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
     let startIndex: number = 0;
 
@@ -597,15 +598,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return;
       }
     }
-    const allColumns: IColumn[] = [];
-    const existingColumns: IColumn[] = this.api.gridApi.getColumns();
+    const allColumns: AdaptableBlotterColumn[] = [];
+    const existingColumns: AdaptableBlotterColumn[] = this.api.gridApi.getColumns();
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
     const quickSearchClassName = this.getQuickSearchClassName();
 
     vendorCols.forEach(vendorColumn => {
       const colId: string = vendorColumn.getColId();
       if (!ColumnHelper.isSpecialColumn(colId)) {
-        let existingColumn: IColumn = ColumnHelper.getColumnFromId(colId, existingColumns);
+        let existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+          colId,
+          existingColumns
+        );
         if (existingColumn) {
           existingColumn.Visible = vendorColumn.isVisible();
           if (existingColumn.DataType == DataType.Unknown) {
@@ -622,9 +626,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     LayoutHelper.autoSaveLayout(this);
   }
 
-  private createColumn(vendorColumn: Column, quickSearchClassName: string): IColumn {
+  private createColumn(vendorColumn: Column, quickSearchClassName: string): AdaptableBlotterColumn {
     const colId: string = vendorColumn.getColId();
-    const abColumn: IColumn = {
+    const abColumn: AdaptableBlotterColumn = {
       Uuid: createUuid(),
       ColumnId: colId,
       FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
@@ -640,7 +644,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return abColumn;
   }
 
-  private applyStylingToColumn(vendorColumn: Column, abColumn: IColumn): void {
+  private applyStylingToColumn(vendorColumn: Column, abColumn: AdaptableBlotterColumn): void {
     if (
       vendorColumn.getColDef().filter &&
       this.blotterOptions!.filterOptions.useAdaptableBlotterFilterForm
@@ -671,7 +675,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
     vendorCols.forEach((vendorColumn: Column) => {
-      let abColumn: IColumn = ColumnHelper.getColumnFromId(
+      let abColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
         vendorColumn.getColId(),
         this.api.gridApi.getColumns()
       );
@@ -690,7 +694,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return quickSearchClassName;
   }
 
-  private addQuickSearchStyleToColumn(col: IColumn, quickSearchClassName: string): void {
+  private addQuickSearchStyleToColumn(
+    col: AdaptableBlotterColumn,
+    quickSearchClassName: string
+  ): void {
     const blotter = this;
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
@@ -799,7 +806,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   // If the selection mode is row it will returns nothing - use the setSelectedRows() method
   public setSelectedCells(): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
-    const columns: IColumn[] = [];
+    const columns: AdaptableBlotterColumn[] = [];
     const selectedCells: GridCell[] = [];
 
     if (this.api.gridApi.IsGridInPivotMode()) {
@@ -818,7 +825,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           if (column != null) {
             const colId: string = column.getColId();
             if (index == 0) {
-              const selectedColumn: IColumn = ColumnHelper.getColumnFromId(
+              const selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
                 colId,
                 this.api.gridApi.getColumns()
               );
@@ -895,7 +902,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     // get the column type if already in store (and not unknown)
-    const existingColumn: IColumn = ColumnHelper.getColumnFromId(
+    const existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
       column.getId(),
       this.api.gridApi.getColumns()
     );
@@ -1572,8 +1579,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
     // the name of the column might have changed so lets get the column from store as that will be the 'old' one
-    const cols: IColumn[] = this.api.gridApi.getColumns();
-    const existingABColumn: IColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
+    const cols: AdaptableBlotterColumn[] = this.api.gridApi.getColumns();
+    const existingABColumn: AdaptableBlotterColumn = cols.find(
+      c => c.Uuid == calculatedColumn.Uuid
+    );
 
     let cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
       calculatedColumn.ColumnExpression,
@@ -1672,7 +1681,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
     const colDefs: (ColDef | ColGroupDef)[] = [...(this.getColumnDefs() || [])];
 
-    const cols: IColumn[] = this.api.gridApi.getColumns();
+    const cols: AdaptableBlotterColumn[] = this.api.gridApi.getColumns();
     const cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
       calculatedColumn.ColumnExpression,
       cols
@@ -1782,7 +1791,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     if (vendorColumn) {
       const vendorColDef: ColDef = vendorColumn.getColDef();
-      const specialColumn: IColumn = {
+      const specialColumn: AdaptableBlotterColumn = {
         Uuid: uuid,
         ColumnId: columnId,
         FriendlyName: columnId,
@@ -1799,10 +1808,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.applyStylingToColumn(vendorColumn, specialColumn);
 
       if (this.isInitialised) {
+        // if blotter initialised then init any conditional styles
         const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
           StrategyConstants.ConditionalStyleStrategyId
         ) as IConditionalStyleStrategy;
         conditionalStyleagGridStrategy.initStyles();
+
+        // and reload the existing layout if its not default
+        let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
+        if (currentlayout != DEFAULT_LAYOUT) {
+          this.api.layoutApi.setLayout(currentlayout);
+        }
       }
     }
   }
@@ -2399,7 +2415,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
 
-      const column: IColumn = ColumnHelper.getColumnFromId(colId, this.api.gridApi.getColumns());
+      const column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+        colId,
+        this.api.gridApi.getColumns()
+      );
       if (column != null) {
         this.strategies.forEach(s => {
           let menuItem: AdaptableBlotterMenuItem = s.addColumnMenuItem(column);
@@ -2449,7 +2468,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
         const agGridColumn: Column = params.column;
         if (agGridColumn) {
-          const adaptableColumn: IColumn = ColumnHelper.getColumnFromId(
+          const adaptableColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
             agGridColumn.getColId(),
             this.api.gridApi.getColumns()
           );
@@ -2737,7 +2756,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
       ) {
         const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
-        const column: IColumn = ColumnHelper.getColumnFromId(
+        const column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
           columnId,
           this.api.gridApi.getColumns()
         );
@@ -3054,13 +3073,15 @@ type WizardInitFn = ({
 }: {
   gridOptions: GridOptions;
   adaptableBlotterOptions: AdaptableBlotterOptions;
-}) => AdaptableBlotter;
+}) => AdaptableBlotter | void;
 
 interface AdaptableBlotterWizardOptions {
   onInit?: WizardInitFn;
+  fetchData?: () => Promise<any>;
+  loadingMessage?: string | null;
   prepareData?: (
     data: any,
-    file: File
+    file?: File
   ) => {
     columns: string[];
     data: any[];
@@ -3068,12 +3089,15 @@ interface AdaptableBlotterWizardOptions {
   };
 }
 
-export class AdaptableBlotterWizard {
+export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
   private init: WizardInitFn;
 
   private adaptableBlotterOptions: AdaptableBlotterOptions;
   private extraOptions: AdaptableBlotterWizardOptions;
 
+  /**
+   * @param {AdaptableBlotterOptions} adaptableBlotterOptions
+   */
   constructor(
     adaptableBlotterOptions: AdaptableBlotterOptions,
     extraOptions: AdaptableBlotterWizardOptions = {}
@@ -3091,12 +3115,16 @@ export class AdaptableBlotterWizard {
     this.render();
   }
 
-  render(container?: HTMLElement) {
-    let id: string = DefaultAdaptableBlotterOptions.containerOptions.adaptableBlotterContainer;
+  render(container?: HTMLElement | null) {
+    let id: string =
+      DefaultAdaptableBlotterOptions.containerOptions!.adaptableBlotterContainer ||
+      'adaptableBlotter';
 
     if (!container) {
       if (this.adaptableBlotterOptions.containerOptions) {
-        id = this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer;
+        id =
+          this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer ||
+          'adaptableBlotter';
       }
     }
 
@@ -3110,10 +3138,12 @@ export class AdaptableBlotterWizard {
       React.createElement(AdaptableBlotterWizardView, {
         adaptableBlotterOptions: this.adaptableBlotterOptions,
         prepareData: this.extraOptions.prepareData,
+        loadingMessage: this.extraOptions.loadingMessage,
+        fetchData: this.extraOptions.fetchData,
         onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => {
-          let adaptableBlotter: AdaptableBlotter;
+          let adaptableBlotter: AdaptableBlotter | void;
 
-          ReactDOM.unmountComponentAtNode(container);
+          ReactDOM.unmountComponentAtNode(container!);
 
           adaptableBlotter = this.init({
             adaptableBlotterOptions,

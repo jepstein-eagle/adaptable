@@ -1,7 +1,7 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from 'redux';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
@@ -27,12 +27,12 @@ export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
 
 // Expression props
 export interface ExpressionEntityRowProps<View> extends BaseEntityRowProps<View> {
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   UserFilters: UserFilter[];
 }
 
 // Shared and Expression Props
 export interface SharedEntityExpressionRowProps<View> extends SharedEntityRowProps<View> {
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   UserFilters: UserFilter[];
 }

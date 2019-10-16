@@ -7,6 +7,9 @@ import Radio from '../../../components/Radio';
 import { AdaptableObjectRow } from '../../Components/AdaptableObjectRow';
 import { AdaptableObjectCollection } from '../../Components/AdaptableObjectCollection';
 import Dropdown from '../../../components/Dropdown';
+import Input from '../../../components/Input';
+import { humanize } from '../../../Utilities/Helpers/Helper';
+import { useRef, useState } from 'react';
 
 const dataTypes = [
   {
@@ -23,6 +26,22 @@ const dataTypes = [
     label: 'Boolean',
   },
 ];
+
+const inputStyle = { width: '100%', minWidth: 50, textAlign: 'start' as 'start' };
+
+interface Column {
+  field: string;
+  type: string;
+  caption?: string;
+}
+
+const useForceRender = () => {
+  const [, setNow] = useState(Date.now());
+  return () => {
+    setNow(Date.now());
+  };
+};
+
 const ColumnsList = ({
   columns: cols,
   handle,
@@ -30,14 +49,28 @@ const ColumnsList = ({
 }: {
   onValidityChange: (valid: boolean) => any;
   handle: React.MutableRefObject<any>;
-  columns: ({ field: string; type: string })[];
+  columns: Column[];
 }) => {
-  const [columns, setColumns] = React.useState(cols);
+  const rerender = useForceRender();
+  const columnsRef = useRef(cols);
+
+  const silentSetColumns = (columns: Column[]) => {
+    columnsRef.current = columns;
+  };
+
+  const setColumns = (columns: Column[]) => {
+    silentSetColumns(columns);
+    rerender();
+  };
+
+  const getColumns = () => columnsRef.current;
+
+  const columns = columnsRef.current;
 
   const onColumnChange = (col: any, value: Boolean, property: string) => {
     col = { ...col, [property]: value };
 
-    const cols = columns.map(c => {
+    const cols = getColumns().map(c => {
       if (c.field === col.field) {
         return col;
       }
@@ -48,13 +81,26 @@ const ColumnsList = ({
   };
 
   const onColumnBatchChange = (value: boolean, property: string) => {
-    const cols = columns.map(c => ({ ...c, [property]: value }));
+    const cols = getColumns().map(c => ({ ...c, [property]: value }));
 
     setColumns(cols);
   };
 
-  const onColumnTypeChange = (col: { field: string; type: string }, type: string) => {
-    const cols = columns.map(c => {
+  const setColumnCaption = (caption: string, field: string) => {
+    const cols = getColumns().map(c => {
+      if (c.field === field) {
+        const newCol = { ...c, caption };
+
+        return newCol;
+      }
+      return c;
+    });
+
+    silentSetColumns(cols);
+  };
+
+  const onColumnTypeChange = (col: Column, type: string) => {
+    const cols = getColumns().map(c => {
       if (c.field === col.field) {
         return { ...c, type };
       }
@@ -77,7 +123,7 @@ const ColumnsList = ({
   } = useSelection(columns, true, null);
 
   handle.current = {
-    getColumns: () => columns.filter(col => isIncludedColumn(col.field)),
+    getColumns: () => getColumns().filter(col => isIncludedColumn(col.field)),
     getPrimaryKey: () => primaryKeyField,
   };
 
@@ -261,7 +307,7 @@ const ColumnsList = ({
     },
   ];
 
-  const items = columns.map((col: { field: string; type: string }, i: number) => {
+  const items = columns.map((col: Column) => {
     const isPrimaryKey = col.field === primaryKeyField;
     const cItems = colItems.map(c => ({
       ...c,
@@ -289,9 +335,20 @@ const ColumnsList = ({
       />
     );
 
-    cItems[2].Content = col.field;
+    const humanized = humanize(col.field);
+    cItems[2].Content = (
+      <Input
+        style={inputStyle}
+        defaultValue={col.caption != undefined ? col.caption : humanized}
+        placeholder={humanized}
+        onChange={(event: React.FormEvent) => {
+          setColumnCaption((event.target as any).value as string, col.field);
+        }}
+      />
+    );
     cItems[3].Content = (
       <Dropdown
+        style={inputStyle}
         showClearButton={false}
         options={dataTypes}
         value={col.type}
@@ -340,7 +397,7 @@ const ColumnsList = ({
 
   return (
     <AdaptableObjectCollection
-      style={{ display: 'flex', flexFlow: 'column', height: '100%' }}
+      style={{ display: 'flex', flexFlow: 'column', height: '100%', textAlign: 'center' }}
       colItems={colItems}
       items={items}
     ></AdaptableObjectCollection>

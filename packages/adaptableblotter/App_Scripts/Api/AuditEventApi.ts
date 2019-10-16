@@ -1,6 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { IEvent } from '../Utilities/Interface/IEvent';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IAuditEventApi } from './Interface/IAuditEventApi';
 import { EventDispatcher } from '../Utilities/EventDispatcher';
 import { AuditLogEventArgs } from './Events/AuditEvents';

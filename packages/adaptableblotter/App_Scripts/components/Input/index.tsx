@@ -6,7 +6,7 @@ import join from '../utils/join';
 
 export const baseClassName = 'ab-Input';
 
-export type InputProps = HTMLProps<HTMLElement> & {
+export type InputProps = HTMLProps<HTMLInputElement> & {
   placehoder?: string;
   type?: string;
   disabled?: boolean;
@@ -14,7 +14,7 @@ export type InputProps = HTMLProps<HTMLElement> & {
 } & BoxProps;
 
 const Input = (props: InputProps) => {
-  let {
+  const {
     disabled,
 
     className,

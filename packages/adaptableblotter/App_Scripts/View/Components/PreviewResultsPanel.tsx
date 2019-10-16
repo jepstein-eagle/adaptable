@@ -2,7 +2,7 @@ import * as React from 'react';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
@@ -15,9 +15,9 @@ import Panel from '../../components/Panel';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   PreviewInfo: IPreviewInfo;
-  Columns: IColumn[];
+  Columns: AdaptableBlotterColumn[];
   UserFilters: UserFilter[];
-  SelectedColumn: IColumn;
+  SelectedColumn: AdaptableBlotterColumn;
   ShowPanel: boolean;
   style?: React.CSSProperties;
   ShowHeader: boolean;
@@ -106,7 +106,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
 
   private getValidationErrorMessage(
     CellValidations: CellValidationRule[],
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): string {
     let returnString: string[] = [];
     for (let CellValidation of CellValidations) {

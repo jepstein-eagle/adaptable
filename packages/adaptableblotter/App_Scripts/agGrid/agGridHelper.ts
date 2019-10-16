@@ -52,14 +52,14 @@ import { ThemeStrategy } from '../Strategy/ThemeStrategy';
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
 import { iconToString } from '../components/icons';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ContextMenuInfo, AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import Helper from '../Utilities/Helpers/Helper';
@@ -421,7 +421,10 @@ export class agGridHelper {
     this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
   }
 
-  public getContextMenuInfo(params: GetContextMenuItemsParams, column: IColumn): ContextMenuInfo {
+  public getContextMenuInfo(
+    params: GetContextMenuItemsParams,
+    column: AdaptableBlotterColumn
+  ): ContextMenuInfo {
     // lets build a picture of what has been right clicked.  Will take time to get right but lets start
 
     const colId = params.column.getColId();

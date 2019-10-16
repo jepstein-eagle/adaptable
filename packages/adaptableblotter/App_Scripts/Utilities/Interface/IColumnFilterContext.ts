@@ -1,7 +1,8 @@
-import { IAdaptableBlotter } from './IAdaptableBlotter';
-import { IColumn } from './IColumn';
+import { AdaptableBlotterColumn } from './AdaptableBlotterColumn';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+
 export interface IColumnFilterContext {
-  Column: IColumn;
+  Column: AdaptableBlotterColumn;
   Blotter: IAdaptableBlotter;
   ColumnWidth?: number;
   ShowCloseButton: boolean;

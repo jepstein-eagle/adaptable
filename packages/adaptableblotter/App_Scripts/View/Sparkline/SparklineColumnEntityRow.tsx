@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
@@ -17,7 +17,7 @@ import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 
 export interface SparklineColumnEntityRowProps
   extends SharedEntityExpressionRowProps<SparklineColumnEntityRow> {
-  Column: IColumn;
+  Column: AdaptableBlotterColumn;
   ColorPalette: string[];
 
   onSparklineTypeChange: (

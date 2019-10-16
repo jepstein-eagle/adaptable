@@ -11,7 +11,7 @@ import {
   IAlertPopup,
   ILoadingPopup,
   IGridInfoPopup,
-  IAdaptableAlert,
+  AdaptableAlert,
 } from '../../Utilities/Interface/IMessage';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 
@@ -48,7 +48,7 @@ export interface PopupShowGridInfoAction extends Redux.Action {}
 export interface PopupHideGridInfoAction extends Redux.Action {}
 
 export interface PopupShowAlertAction extends Redux.Action {
-  Alert: IAdaptableAlert;
+  Alert: AdaptableAlert;
 }
 
 export interface PopupHideAlertAction extends Redux.Action {}
@@ -90,7 +90,7 @@ export const PopupHideScreen = (): PopupHideScreenAction => ({
   type: POPUP_HIDE_SCREEN,
 });
 
-export const PopupShowAlert = (Alert: IAdaptableAlert): PopupShowAlertAction => {
+export const PopupShowAlert = (Alert: AdaptableAlert): PopupShowAlertAction => {
   return {
     type: POPUP_SHOW_ALERT,
     Alert,
@@ -299,7 +299,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (
         ShowAlertPopup: true,
         Header: showAlertAction.Alert.Header,
         Msg: showAlertAction.Alert.Msg,
-        MessageType: showAlertAction.Alert.MessageType,
+        MessageType: showAlertAction.Alert.MessageType as MessageType,
       };
       return Object.assign({}, state, { AlertPopup: newAlertPopup });
     }

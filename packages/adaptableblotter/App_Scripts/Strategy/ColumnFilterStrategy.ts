@@ -3,8 +3,8 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
@@ -20,7 +20,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     });
   }
 
-  public addColumnMenuItem(column: IColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'columnfilter')) {
       let existingColumnFilter = this.blotter.api.columnFilterApi
         .getAllColumnFilter()

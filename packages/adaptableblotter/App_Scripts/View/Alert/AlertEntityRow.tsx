@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
@@ -15,7 +15,7 @@ import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState'
 import Dropdown from '../../components/Dropdown';
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
-  Column: IColumn;
+  Column: AdaptableBlotterColumn;
   onChangeMessageType: (alertDefinition: AlertDefinition, Type: MessageType) => void;
 }
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { Flex } from 'rebass';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -15,7 +15,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import SimpleButton from '../../components/SimpleButton';
 import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
@@ -29,7 +29,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   // these all need to be ptional because of wizard compatibility - todo: fix...
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
-  Columns?: Array<IColumn>;
+  Columns?: Array<AdaptableBlotterColumn>;
   Blotter?: IAdaptableBlotter;
 }
 

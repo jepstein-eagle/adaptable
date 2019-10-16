@@ -1,13 +1,13 @@
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 
 export interface IStrategyActionReturn<T> {
   ActionReturn?: T;
-  Alert?: IAdaptableAlert;
+  Alert?: AdaptableAlert;
 }
 
 export interface BulkUpdateValidationResult {
   IsValid: boolean;
-  Column?: IColumn;
-  Alert?: IAdaptableAlert;
+  Column?: AdaptableBlotterColumn;
+  Alert?: AdaptableAlert;
 }

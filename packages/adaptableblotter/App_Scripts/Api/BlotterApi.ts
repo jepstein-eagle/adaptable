@@ -25,7 +25,7 @@ import { ISystemFilterApi } from './Interface/ISystemFilterApi';
 import { ISystemStatusApi } from './Interface/ISystemStatusApi';
 import { IThemeApi } from './Interface/IThemeApi';
 import { IUserInterfaceApi } from './Interface/IUserInterfaceApi';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdvancedSearchApi } from './AdvancedSearchApi';
 import { AlertApi } from './AlertApi';
 import { CalendarApi } from './CalendarApi';

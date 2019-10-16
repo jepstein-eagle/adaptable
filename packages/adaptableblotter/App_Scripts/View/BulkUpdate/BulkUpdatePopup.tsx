@@ -13,7 +13,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UIHelper } from '../UIHelper';
-import { IColumn } from '../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';
@@ -69,7 +69,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
       'Edits that break Cell Validation Rules will be flagged and prevented.',
     ];
 
-    let col: IColumn | undefined = this.props.BulkUpdateValidationResult.Column;
+    let col: AdaptableBlotterColumn | undefined = this.props.BulkUpdateValidationResult.Column;
 
     let hasDataTypeError = false;
     let dataTypeErrorMessage = '';

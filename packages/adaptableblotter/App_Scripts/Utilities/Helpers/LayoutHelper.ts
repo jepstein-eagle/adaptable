@@ -1,12 +1,12 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 
-export function getLayoutDescription(layout: Layout, columns: IColumn[]): string {
+export function getLayoutDescription(layout: Layout, columns: AdaptableBlotterColumn[]): string {
   let returnString: string = '';
   returnString += layout.Columns.length + ' Columns; ';
   returnString += '\n';
@@ -14,7 +14,10 @@ export function getLayoutDescription(layout: Layout, columns: IColumn[]): string
   return returnString;
 }
 
-export function getColumnSort(columnSorts: ColumnSort[], columns: IColumn[]): string {
+export function getColumnSort(
+  columnSorts: ColumnSort[],
+  columns: AdaptableBlotterColumn[]
+): string {
   if (columnSorts.length == 0) {
     return 'None';
   }
@@ -42,7 +45,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
       let layout = blotter.api.layoutApi.getCurrentLayout();
       if (layout != null) {
         let gridState: GridState = blotter.api.gridApi.getGridState();
-        let visibleColumns: IColumn[] = gridState.Columns.filter(c => c.Visible);
+        let visibleColumns: AdaptableBlotterColumn[] = gridState.Columns.filter(c => c.Visible);
         let gridVendorState: any = blotter.getVendorGridInfo(
           visibleColumns.map(vc => vc.ColumnId),
           false

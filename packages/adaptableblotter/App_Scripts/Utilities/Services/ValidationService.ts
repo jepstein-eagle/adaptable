@@ -5,7 +5,7 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import {
   DistinctCriteriaPairValue,
   LeafExpressionOperator,
@@ -13,7 +13,7 @@ import {
   ActionMode,
   DisplayAction,
 } from '../../PredefinedConfig/Common/Enums';
-import { IColumn } from '../Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import {
   CellValidationState,
   CellValidationRule,
@@ -71,7 +71,7 @@ export class ValidationService implements IValidationService {
     );
 
     if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
-      let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
       let expressionRules: CellValidationRule[] = editingRules.filter(r =>
@@ -142,14 +142,17 @@ export class ValidationService implements IValidationService {
   private IsCellValidationRuleBroken(
     cellValidationRule: CellValidationRule,
     dataChangedEvent: DataChangedInfo,
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): boolean {
     // if its any change then validation fails immediately
     if (cellValidationRule.Range.Operator == LeafExpressionOperator.AnyChange) {
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: IColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
+    let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      dataChangedEvent.ColumnId,
+      columns
+    );
     let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
       cellValidationRule.Range,
       dataChangedEvent.NewValue,

@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { DataType, MessageType } from '../PredefinedConfig/Common/Enums';
 import { BulkUpdateValidationResult } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
@@ -15,7 +15,7 @@ import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { IColumn } from '../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
@@ -84,7 +84,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       };
     }
 
-    let selectedColumn: IColumn = selectedCellInfo.Columns[0];
+    let selectedColumn: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
     if (selectedColumn && selectedColumn.ReadOnly) {
       return {
         IsValid: false,

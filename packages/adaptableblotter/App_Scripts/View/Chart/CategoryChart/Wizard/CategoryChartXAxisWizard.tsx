@@ -9,7 +9,7 @@ import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper
 
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
-import { IColumn } from '../../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../../Utilities/Interface/AdaptableBlotterColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 import { Flex, Box, Text } from 'rebass';
@@ -105,7 +105,7 @@ export class CategoryChartXAxisWizard
     );
   }
 
-  private onXAxisColumnChanged(columns: IColumn[]) {
+  private onXAxisColumnChanged(columns: AdaptableBlotterColumn[]) {
     let isColumn: boolean = ArrayExtensions.IsNotNullOrEmpty(columns);
     this.setState(
       {

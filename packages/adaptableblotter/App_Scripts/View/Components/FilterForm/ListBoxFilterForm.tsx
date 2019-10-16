@@ -11,7 +11,7 @@ import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterFormControlTextClear';
 
 import { UIHelper } from '../../UIHelper';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 
 import ListGroupItem from '../../../components/List/ListGroupItem';
@@ -25,8 +25,8 @@ import CheckBox, { CheckBoxProps } from '../../../components/CheckBox';
 import join from '../../../components/utils/join';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
-  CurrentColumn: IColumn;
-  Columns: IColumn[];
+  CurrentColumn: AdaptableBlotterColumn;
+  Columns: AdaptableBlotterColumn[];
   useVendorStyle?: boolean;
   ColumnValuePairs: Array<IRawValueDisplayValuePair>;
   UserFilters: Array<IRawValueDisplayValuePair>;
@@ -303,7 +303,7 @@ export class ListBoxFilterForm extends React.Component<
   private getOperand1FormControl(): any {
     if (this.state.UiSelectedRange.Operand1Type == 'Column') {
       let availableColumns: any = this.props.Columns.filter(
-        (c: IColumn) =>
+        (c: AdaptableBlotterColumn) =>
           c != this.props.CurrentColumn && c.DataType == this.props.CurrentColumn.DataType
       ).map((column, index) => {
         return {
