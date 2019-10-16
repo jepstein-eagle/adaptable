@@ -27,7 +27,7 @@ Nor do we create the ag-Grid
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(30000);
+  const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
@@ -65,6 +65,16 @@ function InitAdaptableBlotter() {
 let demoConfig: PredefinedConfig = {
   PartnerConfig: {
     glue42Config: 'Hello ',
+  },
+  Layout: {
+    CurrentLayout: 'test',
+    Layouts: [
+      {
+        Columns: ['tradeId', 'country', 'notional', 'stars', 'currency', 'ask', 'bid'],
+        ColumnSorts: [{ Column: 'country', SortOrder: 'Ascending' }],
+        Name: 'test',
+      },
+    ],
   },
 };
 
