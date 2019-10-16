@@ -3096,7 +3096,7 @@ export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
   private extraOptions: AdaptableBlotterWizardOptions;
 
   /**
-   * @param {AdaptableBlotterOptions} adaptableBlotterOptions
+   * @param adaptableBlotterOptions
    */
   constructor(
     adaptableBlotterOptions: AdaptableBlotterOptions,
