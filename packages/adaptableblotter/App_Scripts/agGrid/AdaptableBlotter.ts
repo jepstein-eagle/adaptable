@@ -3070,9 +3070,11 @@ type WizardInitFn = ({
 
 interface AdaptableBlotterWizardOptions {
   onInit?: WizardInitFn;
+  fetchData?: () => Promise<any>;
+  loadingMessage?: string | null;
   prepareData?: (
     data: any,
-    file: File
+    file?: File
   ) => {
     columns: string[];
     data: any[];
@@ -3129,6 +3131,8 @@ export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
       React.createElement(AdaptableBlotterWizardView, {
         adaptableBlotterOptions: this.adaptableBlotterOptions,
         prepareData: this.extraOptions.prepareData,
+        loadingMessage: this.extraOptions.loadingMessage,
+        fetchData: this.extraOptions.fetchData,
         onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => {
           let adaptableBlotter: AdaptableBlotter | void;
 

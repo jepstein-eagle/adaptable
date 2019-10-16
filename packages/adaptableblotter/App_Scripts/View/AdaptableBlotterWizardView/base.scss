@@ -3,4 +3,11 @@
   & , *, *:before, *:after {
     box-sizing: border-box;
   }
+
+  padding: var(--ab-cmp-wizard__padding);
+  margin: var(--ab-cmp-wizard__margin);
+
+  background: var(--ab-cmp-wizard__background);
+  color: var(--ab-cmp-wizard__color);
+  
 }
