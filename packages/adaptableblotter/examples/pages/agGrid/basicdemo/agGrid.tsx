@@ -66,6 +66,16 @@ let demoConfig: PredefinedConfig = {
   PartnerConfig: {
     glue42Config: 'Hello ',
   },
+  Layout: {
+    CurrentLayout: 'test',
+    Layouts: [
+      {
+        Columns: ['tradeId', 'country', 'notional', 'stars', 'currency', 'ask', 'bid'],
+        ColumnSorts: [{ Column: 'country', SortOrder: 'Ascending' }],
+        Name: 'test',
+      },
+    ],
+  },
 };
 
 export default () => {

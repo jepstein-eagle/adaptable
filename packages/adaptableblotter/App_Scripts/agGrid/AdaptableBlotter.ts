@@ -1808,10 +1808,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.applyStylingToColumn(vendorColumn, specialColumn);
 
       if (this.isInitialised) {
+        // if blotter initialised then init any conditional styles
         const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
           StrategyConstants.ConditionalStyleStrategyId
         ) as IConditionalStyleStrategy;
         conditionalStyleagGridStrategy.initStyles();
+
+        // and reload the existing layout if its not default
+        let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
+        if (currentlayout != DEFAULT_LAYOUT) {
+          this.api.layoutApi.setLayout(currentlayout);
+        }
       }
     }
   }
