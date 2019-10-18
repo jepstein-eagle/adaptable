@@ -61,7 +61,7 @@ This makes both the `light` and the `dark` themes available. You can also write 
 
 A theme is basically a collection of css variables that the AdaptableBlotter exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
-When the AdaptableBlotter applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time.
+When the AdaptableBlotter applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
 
 ### Writing a theme
 
@@ -96,6 +96,8 @@ and you also need to make sure that the theme name is included in the UserThemes
     }  
   } as PredefinedConfig;
   ```
+
+> **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
   
 There are a number of css variables that are available for customizing a theme - see below (it's the contents of the dark theme)
 
