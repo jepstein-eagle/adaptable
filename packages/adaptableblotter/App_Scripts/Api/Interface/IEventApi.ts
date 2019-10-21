@@ -15,21 +15,21 @@ import { IEvent } from '../../Utilities/Interface/IEvent';
  *
  * These are:
  *
- * - onSearchChanged - fired when the state changes in any of the Search-related functions (e.g. Advanced Search, Quick Search, Filters, Data Source etc.)
+ * - **onSearchChanged** - fired when the state changes in any of the Search-related functions (e.g. Advanced Search, Quick Search, Filters, Data Source etc.)
  *
- * - onThemeChanged - fired when the Theme in the Blotter changes
+ * - **onThemeChanged** - fired when the Theme in the Blotter changes
  *
- * - onColumnStateChanged - fired when the Column visibility or order changes
+ * - **onColumnStateChanged** - fired when the Column visibility or order changes
  *
- * - onAlertFired - fired whenever an alert is triggered in the Adaptable Blotter
+ * - **onAlertFired** - fired whenever an alert is triggered in the Adaptable Blotter
  *
- * - onActionColumnClicked - fired when the button in an Action Column has been clicked
+ * - **onActionColumnClicked** - fired when the button in an Action Column has been clicked
  *
- * - onSelectionChanged - fired whenever the user changes the Cell or Rows seletion
+ * - **onSelectionChanged** - fired whenever the user changes the Cell or Rows seletion
  *
  * Each event contains the Adaptable Blotter and an EventArgs object that contains relevant information for the event.
  *
- * **Note: The previous onStateChanged event has been removed as that is now accessible by the much fuller onAuditStateChanged event ** - see [AuditStateChanged](/interfaces/_api_interface_iauditeventapi_.iauditeventapi.html#onauditstatechanged).
+ * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_interface_iauditeventapi_.iauditeventapi.html#onauditstatechanged).
  *
  * The way to subscribe to the events is as follows:
  *
