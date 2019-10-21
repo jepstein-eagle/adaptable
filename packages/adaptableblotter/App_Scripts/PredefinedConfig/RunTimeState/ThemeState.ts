@@ -72,4 +72,9 @@ export interface AdaptableBlotterTheme extends AdaptableBlotterObject {
    * Description of the Theme that will appear in the Dropdown (in the Theme Toolbar or the Theme Popup).
    */
   Description: string;
+
+  /**
+   * The css className to be applied on the vendor grid - this can be used to style the vendor grid with a theme that matches the current theme of the AdaptableBlotter
+   */
+  VendorGridClassName?: string;
 }

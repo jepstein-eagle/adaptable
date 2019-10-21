@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
-import { Provider, connect, ConnectedComponentClass } from 'react-redux';
+import { Provider, connect, ConnectedComponent } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
@@ -147,7 +147,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-let AdaptableBlotterWrapper: ConnectedComponentClass<typeof AdaptableBlotterView, any> = connect(
+let AdaptableBlotterWrapper: ConnectedComponent<typeof AdaptableBlotterView, any> = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AdaptableBlotterView);

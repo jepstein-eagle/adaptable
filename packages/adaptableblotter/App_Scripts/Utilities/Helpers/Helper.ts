@@ -1,4 +1,4 @@
-import startCase from 'lodash/startCase';
+import { startCase } from 'lodash';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { LoggingHelper } from './LoggingHelper';
 
