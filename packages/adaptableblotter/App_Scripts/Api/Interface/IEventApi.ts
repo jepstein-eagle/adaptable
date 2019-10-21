@@ -43,7 +43,9 @@ import { IEvent } from '../../Utilities/Interface/IEvent';
  */
 export interface IEventApi {
   /**
-   * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
+   * Event fired whenever **search criteria in the Adaptable Blotter changes**
+   *
+   * The event provides full details of what triggered the change and the current state of all Search and Filter related functions.
    *
    * Used in association with server searching.
    *
@@ -52,14 +54,14 @@ export interface IEventApi {
   onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs>;
 
   /**
-   * Event fired whenever the theme of the Blotter has been changed
+   * Event fired whenever the **selected theme of the Adaptable Blotter is changed**.
    *
    * @returns IEvent<IAdaptableBlotter, ThemeChangedEventArgs>
    */
   onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs>;
 
   /**
-   * Event fired whenever column order, visibility and sorts are changed in the Blotter.
+   * Event fired whenever **column order, visibility and sorts are changed in the Adaptable Blotter**.
    *
    * The event only fires when in a user (as opposed to the default) layout.
    *
@@ -68,7 +70,7 @@ export interface IEventApi {
   onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs>;
 
   /**
-   * Event fired whenever an Alert is raised.
+   * Event fired whenever an **Alert is triggered**.
    *
    * Contains the full Alert itself.
    *
@@ -77,7 +79,7 @@ export interface IEventApi {
   onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs>;
 
   /**
-   * Event fired whenever the Button in an Action Column is clicked.
+   * Event fired whenever the **Button in an Action Column is clicked**.
    *
    * The EventArgs contain the column that has been clicked and the rowData for that row.
    *
@@ -86,7 +88,7 @@ export interface IEventApi {
   onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>;
 
   /**
-   * Event fired whenever the Selection in the Adaptable Blotter changes.
+   * Event fired whenever the **Selection in the Adaptable Blotter changes**.
    *
    * The EventArgs contain both cell and row selection information.
    *
