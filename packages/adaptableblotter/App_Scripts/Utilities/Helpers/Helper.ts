@@ -32,6 +32,21 @@ export function capitalize(string: string) {
     .trim();
 }
 
+export const arrayToKeyMap = <T extends string | number | symbol>(
+  arr?: T[]
+): Record<T, boolean> => {
+  const defaultAccumulator = {} as Record<T, boolean>;
+
+  if (!arr || !Array.isArray(arr)) {
+    return defaultAccumulator;
+  }
+
+  return arr.reduce((acc, key: T) => {
+    acc[key] = true;
+    return acc;
+  }, defaultAccumulator);
+};
+
 function replacer(b: string, c: string) {
   return b.toUpperCase() + c;
 }

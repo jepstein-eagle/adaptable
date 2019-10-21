@@ -17,6 +17,7 @@ import {
   IAdaptableBlotter,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import ReactDOM from 'react-dom';
 
 /*
 Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
@@ -54,12 +55,34 @@ function InitAdaptableBlotter() {
   const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   //gridOptions.api!.ensureIndexVisible(200);
-  //adaptableblotter.api.userFilterApi.showUserFilterPopup();
+  // adaptableblotter.api.userFilterApi.showUserFilterPopup();
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   //  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
   global.adaptableblotter = adaptableblotter;
+
+  adaptableblotter.on('toolbar-show', toolbar => {
+    console.log('showing toolbar', toolbar);
+    if (toolbar === 'Application') {
+      ReactDOM.render(
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <button>xxx</button>
+          <button>yyy</button>
+          <button className="ab-SimpleButton">zzz</button>
+        </div>,
+        document.querySelector('.ab-ApplicationToolbar__contents')
+      );
+    }
+  });
+
+  adaptableblotter.on('toolbar-hide', toolbar => {
+    console.log(
+      'hiding toolbar',
+      toolbar,
+      document.querySelector('.ab-ApplicationToolbar__contents')
+    );
+  });
 }
 
 let demoConfig: PredefinedConfig = {

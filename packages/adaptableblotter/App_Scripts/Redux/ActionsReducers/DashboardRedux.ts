@@ -5,7 +5,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
-const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';
+export const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';
 const DASHBOARD_SHOW_TOOLBAR = 'DASHBOARD_SHOW_TOOLBAR';
 const DASHBOARD_HIDE_TOOLBAR = 'DASHBOARD_HIDE_TOOLBAR';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
@@ -228,6 +228,10 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
   let index: number;
   let dashboardControls: string[];
 
+  const setToolbars = (state: DashboardState, toolbars: string[]): DashboardState => {
+    return { ...state, VisibleToolbars: toolbars };
+  };
+
   switch (action.type) {
     case DASHBOARD_SET_AVAILABLE_TOOLBARS:
       return Object.assign({}, state, {
@@ -236,28 +240,30 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_SET_TOOLBARS: {
       const actionTyped = action as DashboardSetToolbarsAction;
       const dashboardToolbars = actionTyped.StrategyIds;
-      return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
+
+      return setToolbars(state, dashboardToolbars);
     }
     case DASHBOARD_MOVE_ITEM: {
       const actionTyped = action as DashboardMoveItemAction;
-      dashboardControls = [].concat(state.VisibleToolbars);
+      dashboardControls = [...state.VisibleToolbars!];
       index = dashboardControls.findIndex(a => a == actionTyped.StrategyId);
       ArrayExtensions.moveArray(dashboardControls, index, actionTyped.NewIndex);
-      return Object.assign({}, state, { VisibleToolbars: dashboardControls });
+      return setToolbars(state, dashboardControls);
     }
     case DASHBOARD_SHOW_TOOLBAR: {
       const actionTyped = action as DashboardShowToolbarAction;
-      const dashboardToolbars = [].concat(state.VisibleToolbars);
+      const dashboardToolbars = [...state.VisibleToolbars!];
       dashboardToolbars.push(actionTyped.StrategyId);
-      return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
+      return setToolbars(state, dashboardToolbars);
     }
     case DASHBOARD_HIDE_TOOLBAR: {
       const actionTyped = action as DashboardHideToolbarAction;
-      const dashboardToolbars = [].concat(state.VisibleToolbars);
-      index = dashboardToolbars.findIndex(a => a == actionTyped.StrategyId);
-      dashboardToolbars.splice(index, 1);
-      return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
+      const dashboardToolbars = (state.VisibleToolbars || []).filter(
+        a => a !== actionTyped.StrategyId
+      );
+      return setToolbars(state, dashboardToolbars);
     }
+
     case DASHBOARD_SET_FUNCTION_BUTTONS: {
       const actionTyped = action as DashboardSetFunctionButtonsAction;
       const dashboardFunctionButtons = actionTyped.StrategyIds;
