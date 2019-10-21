@@ -18,6 +18,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *    {
  *      Name:"blue",
  *      Description:"Blue Theme",
+ *      VendorGridClassName: 'ag-grid-balham-dark' // optional - sets the current theme of the underlying vendor grid to be used in association to the blue blotter theme
  *     }
  *  ],
  *  }

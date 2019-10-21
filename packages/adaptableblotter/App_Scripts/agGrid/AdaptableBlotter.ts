@@ -36,7 +36,6 @@ import {
 import { Action } from 'redux';
 import Emitter from '../Utilities/Emitter';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
-import { iconToString } from '../components/icons';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
@@ -97,7 +96,7 @@ import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { Helper } from '../Utilities/Helpers/Helper';
+import { Helper, arrayToKeyMap } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 // if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
@@ -163,6 +162,7 @@ import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAda
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
 import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { DASHBOARD_SET_TOOLBARS } from '../Redux/ActionsReducers/DashboardRedux';
 import { AlertProperties, AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
 
 // do I need this in both places??
@@ -270,6 +270,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.runtimeConfig = runtimeConfig;
 
     this.gridOptions = this.blotterOptions!.vendorGrid;
+    if (this.gridOptions.allowContextMenuWithControlKey === undefined) {
+      this.gridOptions.allowContextMenuWithControlKey = true;
+    }
     this.vendorGridName = 'agGrid';
     this.embedColumnMenu = true;
     this.isInitialised = false;
@@ -385,8 +388,45 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.adaptableBlotterStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
         this.emit(BLOTTER_READY_EVENT);
+
+        const state = this.adaptableBlotterStore.TheStore.getState();
+
+        onToolbarsChange({
+          state: {
+            ...state,
+            Dashboard: {
+              VisibleToolbars: [],
+            },
+          },
+          newState: state,
+        });
       }
     });
+
+    const onToolbarsChange = ({
+      state,
+      newState,
+    }: {
+      state: AdaptableBlotterState;
+      newState: AdaptableBlotterState;
+    }) => {
+      const oldVisibleToolbars = arrayToKeyMap(state.Dashboard.VisibleToolbars);
+      const newVisibleToolbars = arrayToKeyMap(newState.Dashboard.VisibleToolbars);
+
+      [...(newState.Dashboard.VisibleToolbars || [])].forEach((toolbar: string) => {
+        if (!oldVisibleToolbars[toolbar]) {
+          this.emit('toolbar-show', toolbar);
+        }
+      });
+
+      [...(state.Dashboard.VisibleToolbars || [])].forEach((toolbar: string) => {
+        if (!newVisibleToolbars[toolbar]) {
+          this.emit('toolbar-hide', toolbar);
+        }
+      });
+    };
+
+    this.adaptableBlotterStore.on(DASHBOARD_SET_TOOLBARS, onToolbarsChange);
   }
 
   private tryInstantiateAgGrid(): boolean {
@@ -1492,7 +1532,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           } // doing Alert - hope this is correct
           else if (type == 'Alert') {
             for (const prop in localCellClassRules) {
-              if (prop.includes(StrategyConstants.AlertStrategyId)) {
+              if (prop.includes('ab-alert--')) {
                 delete localCellClassRules[prop];
               }
             }

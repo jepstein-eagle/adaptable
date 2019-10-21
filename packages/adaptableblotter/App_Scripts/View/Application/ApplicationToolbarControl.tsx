@@ -9,7 +9,6 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 
 interface ApplicationToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
@@ -20,19 +19,23 @@ class ApplicationToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let headerText = StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitle)
+    const headerText = StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitle)
       ? this.props.ApplicationToolbarTitle
       : StrategyConstants.ApplicationStrategyName;
-    let minHeight = '22px';
 
     return (
       <PanelDashboard
+        className="ab-ApplicationToolbar"
         headerText={headerText}
         glyphicon={StrategyConstants.ApplicationGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ApplicationStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
-        <div className="ApplicationToolBarContents" style={{ minHeight: minHeight }} />
+        <div
+          className="ApplicationToolBarContents ab-ApplicationToolbar__contents ab-ApplicationToolbar__contents--render"
+          style={{ minHeight: 22 }}
+        />
+        <div className="ab-ApplicationToolbar__buttons" style={{ minHeight: 22 }} />
       </PanelDashboard>
     );
   }
@@ -58,7 +61,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let ApplicationToolbarControl = connect(
+export const ApplicationToolbarControl = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ApplicationToolbarControlComponent);
