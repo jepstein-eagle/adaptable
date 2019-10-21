@@ -111,8 +111,8 @@ export class StyleService {
     });
 
     // we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
-    const conditioonalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
-    conditioonalStyles
+    const conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    conditionalStyles
       .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
       .forEach(element => {
         const styleName = StyleHelper.CreateUniqueStyleName(
@@ -135,7 +135,7 @@ export class StyleService {
           }`
         );
       });
-    conditioonalStyles
+    conditionalStyles
       .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory)
       .forEach(element => {
         const styleName = StyleHelper.CreateUniqueStyleName(
@@ -158,7 +158,7 @@ export class StyleService {
           }`
         );
       });
-    conditioonalStyles
+    conditionalStyles
       .filter(cs => cs.ConditionalStyleScope == ConditionalStyleScope.Column)
       .forEach(element => {
         const styleName = StyleHelper.CreateUniqueStyleName(
@@ -206,20 +206,8 @@ export class StyleService {
       );
     }
 
-    // // alert
-    // const alertDefinitions: AlertDefinition[] = this.blotter.api.alertApi
-    //   .getAlertDefinitions()
-    //   .filter(ad => ad.AlertProperties.HighlightCell);
-
-    // alertDefinitions.forEach(element => {
-    //   const styleName = StyleHelper.CreateUniqueStyleName(
-    //     StrategyConstants.AlertStrategyId,
-    //     this.blotter,
-    //     element
-    //   );
-    //   let backColor = UIHelper.getColorByMessageType(element.MessageType as MessageType);
-    //   this.addCSSRule(`.${styleName}`, `background-color: ${backColor} !important;`);
-    // });
+    // alert
+    // nothing to do as it uses existing styles
 
     // we define last Flash since it has the highest priority
     this.blotter.api.flashingCellApi.getAllFlashingCell().forEach(element => {
@@ -241,9 +229,6 @@ export class StyleService {
   }
 
   private addCSSRule(selector: string, rules: string) {
-    console.log('in style service -adding rule');
-    console.log(selector);
-    console.log(rules);
     this.style.innerHTML += `${selector}{${rules}}` + '\n';
   }
 
@@ -286,18 +271,18 @@ export class StyleService {
       this.createAdaptableBlotterFunctionStyles();
     });
 
-    // Alert Definition
+    // Alert Definition (note we dont need to create styles)
     this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
       this.setUpAlerts();
-      this.createAdaptableBlotterFunctionStyles();
+      // this.createAdaptableBlotterFunctionStyles();
     });
     this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
       this.setUpAlerts();
-      this.createAdaptableBlotterFunctionStyles();
+      // this.createAdaptableBlotterFunctionStyles();
     });
     this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
       this.setUpAlerts();
-      this.createAdaptableBlotterFunctionStyles();
+      //  this.createAdaptableBlotterFunctionStyles();
     });
 
     // Flashing Cell
