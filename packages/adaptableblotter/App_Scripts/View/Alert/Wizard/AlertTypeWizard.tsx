@@ -8,6 +8,7 @@ import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertSta
 import { Box } from 'rebass';
 import Radio from '../../../components/Radio';
 import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
@@ -28,6 +29,9 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     return (
       <>
         <WizardPanel border="none">
+          <HelpBlock>
+            {'Define what type of message will be shown when the Alert is triggered.'}
+          </HelpBlock>
           <Box>
             <Radio
               value="Info"

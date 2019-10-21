@@ -32,6 +32,7 @@ import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { Icon } from '../../components/icons';
 import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
+import ObjectFactory from '../../Utilities/ObjectFactory';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -296,8 +297,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage)
             ? this.props.SystemStatus.StatusMessage
             : 'No issues',
-          MessageType: MessageType.Success,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Success
+          ),
         };
         this.props.onShowStatusMessage(success);
         return;
@@ -305,8 +307,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let info: AdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
-          MessageType: MessageType.Info,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(MessageType.Info),
         };
         this.props.onShowStatusMessage(info);
         return;
@@ -314,8 +315,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let warning: AdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
-          MessageType: MessageType.Warning,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Warning
+          ),
         };
         this.props.onShowStatusMessage(warning);
         return;
@@ -323,8 +325,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let error: AdaptableAlert = {
           Header: 'System Status',
           Msg: this.props.SystemStatus.StatusMessage,
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
         };
         this.props.onShowStatusMessage(error);
         return;

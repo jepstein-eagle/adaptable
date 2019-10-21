@@ -77,6 +77,7 @@ import {
   DistinctCriteriaPairValue,
   FilterOnDataChangeOptions,
   LeafExpressionOperator,
+  MessageType,
 } from '../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
@@ -162,6 +163,7 @@ import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAda
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
 import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { AlertProperties, AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -1452,7 +1454,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setCellClassRules(
     cellClassRules: any,
     columnId: string,
-    type: 'ConditionalStyle' | 'QuickSearch' | 'FlashingCell' | 'FormatColumn'
+    type: 'ConditionalStyle' | 'QuickSearch' | 'FlashingCell' | 'FormatColumn' | 'Alert'
   ) {
     const vendorColumn: Column = this.gridOptions.columnApi!.getColumn(columnId);
     if (vendorColumn) {
@@ -1484,6 +1486,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           else if (type == 'QuickSearch') {
             for (const prop in localCellClassRules) {
               if (prop.includes(StrategyConstants.QuickSearchStrategyId)) {
+                delete localCellClassRules[prop];
+              }
+            }
+          } // doing Alert - hope this is correct
+          else if (type == 'Alert') {
+            for (const prop in localCellClassRules) {
+              if (prop.includes(StrategyConstants.AlertStrategyId)) {
                 delete localCellClassRules[prop];
               }
             }
@@ -1527,13 +1536,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.emit(GRID_REFRESHED_EVENT);
   }
 
-  public testredrawRow(rowNode: RowNode) {
-    this.gridOptions.api!.redrawRows({ rowNodes: [rowNode] });
+  public redrawRow(row: any) {
+    this.gridOptions.api!.redrawRows({ rowNodes: [row] });
   }
 
-  public refreshCells(rows: RowNode[], columnIds: string[]) {
+  public refreshCells(rows: any[], columnIds: string[]) {
     const refreshCellParams: RefreshCellsParams = {
-      rowNodes: rows,
+      rowNodes: rows as RowNode[],
       columns: columnIds,
       force: true,
     };
@@ -2087,7 +2096,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               failedRules[0],
               this
             );
-            this.api.alertApi.showAlertError('Validation Error', errorMessage, true);
+            this.api.alertApi.showAlertError('Validation Error', errorMessage);
             return true;
           }
           let warningMessage: string = '';

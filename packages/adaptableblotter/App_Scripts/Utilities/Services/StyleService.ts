@@ -4,7 +4,7 @@ import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/Conditiona
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
+import { ConditionalStyleScope, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IFormatColumnStrategy } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
@@ -12,9 +12,13 @@ import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditional
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
+import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux';
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import { BLOTTER_READY_EVENT } from '../Constants/GeneralConstants';
+import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
+import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import UIHelper from '../../View/UIHelper';
 
 // Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
@@ -42,6 +46,7 @@ export class StyleService {
     // need to check that its all initiliased - perhps onready is better?
     this.setUpFormatColumn();
     this.setUpFlashingCells();
+    this.setUpAlerts();
     this.setUpConditionalStyle();
     this.createAdaptableBlotterFunctionStyles();
   }
@@ -58,6 +63,13 @@ export class StyleService {
       StrategyConstants.FlashingCellsStrategyId
     ) as IFlashingCellsStrategy;
     flashingCellsStrategy.initStyles();
+  }
+
+  private setUpAlerts() {
+    const alertStrategy = this.blotter.strategies.get(
+      StrategyConstants.AlertStrategyId
+    ) as IAlertStrategy;
+    alertStrategy.initStyles();
   }
 
   private setUpConditionalStyle() {
@@ -193,6 +205,22 @@ export class StyleService {
         }`
       );
     }
+
+    // alert
+    const alertDefinitions: AlertDefinition[] = this.blotter.api.alertApi
+      .getAlertDefinitions()
+      .filter(ad => ad.AlertProperties.HighlightCell);
+
+    alertDefinitions.forEach(element => {
+      const styleName = StyleHelper.CreateUniqueStyleName(
+        StrategyConstants.AlertStrategyId,
+        this.blotter,
+        element
+      );
+      let backColor = UIHelper.getColorByMessageType(element.MessageType as MessageType);
+      this.addCSSRule(`.${styleName}`, `background-color: ${backColor} !important;`);
+    });
+
     // we define last Flash since it has the highest priority
     this.blotter.api.flashingCellApi.getAllFlashingCell().forEach(element => {
       if (element.IsLive) {
@@ -213,6 +241,9 @@ export class StyleService {
   }
 
   private addCSSRule(selector: string, rules: string) {
+    console.log('in style service -adding rule');
+    console.log(selector);
+    console.log(rules);
     this.style.innerHTML += `${selector}{${rules}}` + '\n';
   }
 
@@ -252,6 +283,20 @@ export class StyleService {
     });
     this.blotter.adaptableBlotterStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE, () => {
       this.setUpConditionalStyle();
+      this.createAdaptableBlotterFunctionStyles();
+    });
+
+    // Alert Definition
+    this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
+      this.setUpAlerts();
+      this.createAdaptableBlotterFunctionStyles();
+    });
+    this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
+      this.setUpAlerts();
+      this.createAdaptableBlotterFunctionStyles();
+    });
+    this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
+      this.setUpAlerts();
       this.createAdaptableBlotterFunctionStyles();
     });
 

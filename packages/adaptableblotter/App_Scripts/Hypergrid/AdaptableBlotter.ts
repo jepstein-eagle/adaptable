@@ -114,6 +114,7 @@ import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnSt
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -216,7 +217,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       StrategyConstants.AdvancedSearchStrategyId,
       new AdvancedSearchStrategy(this)
     );
-    this.strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this));
+    //  this.strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this));
     this.strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this));
     this.strategies.set(
       StrategyConstants.CalculatedColumnStrategyId,
@@ -1454,7 +1455,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             failedRules[0],
             this
           );
-          this.api.alertApi.showAlertError('Validation Error', errorMessage, true);
+
+          this.api.alertApi.showAlertError('Validation Error', errorMessage);
           event.preventDefault();
         } else {
           let warningMessage: string = '';
@@ -1681,6 +1683,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.hyperGrid.addEventListener('fin-column-changed-event', () => {
       setTimeout(() => this.setColumnIntoStore(), 5);
     });
+  }
+
+  public redrawRow(row: any) {
+    // todo
+  }
+
+  public refreshCells(rows: any[], columnIds: string[]) {
+    // TODO
   }
 
   public getRowCount(): number {

@@ -2,7 +2,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { ApiBase } from './ApiBase';
 import { IInternalApi } from './Interface/IInternalApi';
-import { IUIConfirmation } from '../Utilities/Interface/IMessage';
+import { IUIConfirmation, AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 import { Report } from '../PredefinedConfig/RunTimeState/ExportState';
@@ -45,6 +45,10 @@ export class InternalApi extends ApiBase implements IInternalApi {
 
   public getLiveReports(): ILiveReport[] {
     return this.getSystemState().CurrentLiveReports;
+  }
+
+  public getAdaptableAlerts(): AdaptableAlert[] {
+    return this.getSystemState().AdaptableAlerts;
   }
 
   // Popup Redux Actions

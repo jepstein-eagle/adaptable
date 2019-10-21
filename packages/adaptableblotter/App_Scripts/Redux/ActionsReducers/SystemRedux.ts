@@ -85,10 +85,12 @@ export interface SystemAlertAddAction extends Redux.Action {
 }
 
 export interface SystemAlertDeleteAction extends Redux.Action {
-  Index: number;
+  Alert: AdaptableAlert;
 }
 
-export interface SystemAlertDeleteAllAction extends Redux.Action {}
+export interface SystemAlertDeleteAllAction extends Redux.Action {
+  Alerts: AdaptableAlert[];
+}
 
 export interface ReportStartLiveAction extends Redux.Action {
   Report: Report;
@@ -176,13 +178,14 @@ export const SystemAlertAdd = (Alert: AdaptableAlert, MaxAlerts: number): System
   MaxAlerts,
 });
 
-export const SystemAlertDelete = (Index: number): SystemAlertDeleteAction => ({
+export const SystemAlertDelete = (Alert: AdaptableAlert): SystemAlertDeleteAction => ({
   type: SYSTEM_ALERT_DELETE,
-  Index,
+  Alert,
 });
 
-export const SystemAlertDeleteAll = (): SystemAlertDeleteAllAction => ({
+export const SystemAlertDeleteAll = (Alerts: AdaptableAlert[]): SystemAlertDeleteAllAction => ({
   type: SYSTEM_ALERT_DELETE_ALL,
+  Alerts,
 });
 
 export const ReportStartLive = (
@@ -304,7 +307,7 @@ export const SetNewColumnListOrder = (
 
 const initialSystemState: SystemState = {
   SystemStatus: { StatusMessage: 'All good', StatusType: MessageType.Success }, // SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE
-  Alerts: EMPTY_ARRAY,
+  AdaptableAlerts: EMPTY_ARRAY,
   AvailableCalendars: CalendarHelper.getSystemCalendars(),
   CurrentLiveReports: EMPTY_ARRAY,
   IsValidSmartEditSelection: false,
@@ -337,22 +340,25 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       });
     case SYSTEM_ALERT_ADD: {
       const actionTypedAdd = action as SystemAlertAddAction;
-      alerts = [].concat(state.Alerts);
+      alerts = [].concat(state.AdaptableAlerts);
       if (alerts.length == actionTypedAdd.MaxAlerts) {
         // we have hit the maximum so remove first item (oldest)
         alerts.splice(0, 1);
       }
       alerts.push(actionTypedAdd.Alert);
-      return Object.assign({}, state, { Alerts: alerts });
+      return Object.assign({}, state, { AdaptableAlerts: alerts });
     }
     case SYSTEM_ALERT_DELETE: {
-      const actionTypedDelete = action as SystemAlertDeleteAction;
-      alerts = [].concat(state.Alerts);
-      alerts.splice(actionTypedDelete.Index, 1);
-      return Object.assign({}, state, { Alerts: alerts });
+      const adaptableAlert: AdaptableAlert = (action as SystemAlertDeleteAction).Alert;
+      return {
+        ...state,
+        AdaptableAlerts: state.AdaptableAlerts.filter(
+          abObject => abObject.Uuid !== adaptableAlert.Uuid
+        ),
+      };
     }
     case SYSTEM_ALERT_DELETE_ALL: {
-      return Object.assign({}, state, { Alerts: [] });
+      return Object.assign({}, state, { AdaptableAlerts: [] });
     }
     case REPORT_START_LIVE: {
       const actionTyped = action as ReportStartLiveAction;

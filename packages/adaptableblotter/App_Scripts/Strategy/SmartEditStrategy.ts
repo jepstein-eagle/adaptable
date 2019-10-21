@@ -25,6 +25,7 @@ import {
   ContextMenuInfo,
 } from '../Utilities/MenuItem';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import ObjectFactory from '../Utilities/ObjectFactory';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -85,8 +86,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         Alert: {
           Header: 'Smart Edit Error',
           Msg: 'Cannot edit while Grid is in Pivot Mode.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
         },
       };
     }
@@ -95,8 +97,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         Alert: {
           Header: 'Smart Edit Error',
           Msg: 'No cells are selected.\nPlease select some cells.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
         },
       };
     }
@@ -106,8 +109,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         Alert: {
           Header: 'Smart Edit Error',
           Msg: 'Smart Edit only supports single column edit.\nPlease adjust cell selection.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
         },
       };
     }
@@ -120,8 +124,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             Header: 'Smart Edit Error',
             Msg:
               'Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection.',
-            MessageType: MessageType.Error,
-            ShowAsPopup: true,
+            AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+              MessageType.Error
+            ),
           },
         };
       }
@@ -131,8 +136,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             Header: 'Smart Edit Error',
             Msg:
               'Smart Edit is not permitted on readonly columns.\nPlease adjust the cell selection.',
-            MessageType: MessageType.Error,
-            ShowAsPopup: true,
+            AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+              MessageType.Error
+            ),
           },
         };
       }

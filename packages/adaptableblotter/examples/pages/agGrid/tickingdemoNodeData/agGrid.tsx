@@ -80,7 +80,9 @@ let json: PredefinedConfig = {
           Operand2Type: 'Value',
           Operator: 'AnyChange',
         },
-        ShowAsPopup: false,
+        AlertProperties: {
+          ShowPopup: false,
+        },
       },
     ],
     AlertPopupDiv: '',

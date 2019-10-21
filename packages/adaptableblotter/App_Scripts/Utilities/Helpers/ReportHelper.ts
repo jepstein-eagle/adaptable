@@ -19,6 +19,7 @@ import { GridRow } from '../Interface/Selection/GridRow';
 import OpenfinHelper from './OpenfinHelper';
 import iPushPullHelper from './iPushPullHelper';
 import Glue42Helper from './Glue42Helper';
+import ObjectFactory from '../ObjectFactory';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -121,8 +122,9 @@ export function ConvertReportToArray(
           Alert: {
             Header: 'Export Error',
             Msg: 'No cells are selected',
-            MessageType: MessageType.Error,
-            ShowAsPopup: true,
+            AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+              MessageType.Error
+            ),
           },
         };
       }

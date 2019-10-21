@@ -38,7 +38,14 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
         Value: AlertHelper.createAlertDescription(alertDefinition, this.props.Columns),
       },
       { Key: 'Alert Type', Value: alertDefinition.MessageType },
-      { Key: 'Show as Popup', Value: alertDefinition.ShowAsPopup ? 'True' : 'False' },
+      {
+        Key: 'Show Popup',
+        Value: alertDefinition.AlertProperties.ShowPopup ? 'True' : 'False',
+      },
+      {
+        Key: 'Highlight Cell',
+        Value: alertDefinition.AlertProperties.HighlightCell ? 'True' : 'False',
+      },
       {
         Key: 'Query',
         Value: ExpressionHelper.IsNotNullOrEmptyExpression(alertDefinition.Expression)

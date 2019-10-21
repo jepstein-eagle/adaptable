@@ -7,11 +7,13 @@ import {
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
 import Checkbox from '../../../components/CheckBox';
 import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface AlertScopeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
 export interface AlertScopeWizardState {
-  ShowAsPopup: boolean;
+  ShowPopup: boolean;
+  HighlightCell: boolean;
 }
 
 export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, AlertScopeWizardState>
@@ -19,7 +21,8 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
   constructor(props: AlertScopeWizardProps) {
     super(props);
     this.state = {
-      ShowAsPopup: this.props.Data!.ShowAsPopup,
+      ShowPopup: this.props.Data!.AlertProperties.ShowPopup,
+      HighlightCell: this.props.Data!.AlertProperties.HighlightCell,
     };
   }
 
@@ -27,20 +30,38 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
     return (
       <>
         <WizardPanel border="none">
+          <HelpBlock>
+            {
+              'All Alerts - when triggered - will appear in the Alert toolbar.  However, additionally they can:'
+            }
+          </HelpBlock>
+
           <Checkbox
             marginLeft={2}
-            checked={this.state.ShowAsPopup == true}
-            onChange={this.onShowAsPopupChanged}
+            checked={this.state.ShowPopup == true}
+            onChange={this.onShowPopupChanged}
           >
             Show as Popup
+          </Checkbox>
+          <Checkbox
+            marginLeft={2}
+            checked={this.state.HighlightCell == true}
+            onChange={this.onHighlightCellChanged}
+          >
+            Highight Cell
           </Checkbox>
         </WizardPanel>
       </>
     );
   }
 
-  private onShowAsPopupChanged = (checked: boolean) => {
-    this.setState({ ShowAsPopup: checked } as AlertScopeWizardState, () =>
+  private onShowPopupChanged = (checked: boolean) => {
+    this.setState({ ShowPopup: checked } as AlertScopeWizardState, () =>
+      this.props.UpdateGoBackState()
+    );
+  };
+  private onHighlightCellChanged = (checked: boolean) => {
+    this.setState({ HighlightCell: checked } as AlertScopeWizardState, () =>
       this.props.UpdateGoBackState()
     );
   };
@@ -53,7 +74,8 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
     return true;
   }
   public Next(): void {
-    this.props.Data!.ShowAsPopup = this.state.ShowAsPopup;
+    this.props.Data!.AlertProperties.ShowPopup = this.state.ShowPopup;
+    this.props.Data!.AlertProperties.HighlightCell = this.state.HighlightCell;
   }
 
   public Back(): void {

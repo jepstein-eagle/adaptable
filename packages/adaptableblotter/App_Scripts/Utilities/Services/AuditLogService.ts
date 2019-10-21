@@ -13,6 +13,7 @@ import { AuditDestinationOptions, AuditOptions } from '../../BlotterOptions/Audi
 import { AdaptableAlert } from '../Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import ColumnHelper from '../Helpers/ColumnHelper';
+import ObjectFactory from '../ObjectFactory';
 
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<AuditLogEntry>;
@@ -450,8 +451,10 @@ export class AuditLogService implements IAuditLogService {
     let alert: AdaptableAlert = {
       Header: header,
       Msg: message,
-      MessageType: this.blotter.blotterOptions.auditOptions!.alertMessageType as MessageType,
-      ShowAsPopup: this.blotter.blotterOptions.auditOptions!.alertShowAsPopup as boolean,
+      AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+        MessageType.Error,
+        this.blotter.blotterOptions.auditOptions!.alertShowAsPopup as boolean
+      ),
     };
     this.blotter.api.alertApi.displayAlert(alert);
   }

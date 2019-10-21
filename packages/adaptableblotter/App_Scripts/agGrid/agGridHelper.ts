@@ -65,6 +65,7 @@ import { ContextMenuInfo, AdaptableBlotterMenuItem } from '../Utilities/MenuItem
 import Helper from '../Utilities/Helpers/Helper';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
+import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -90,7 +91,7 @@ export class agGridHelper {
   public setUpStrategies(): Map<string, IStrategy> {
     const strategies = new Map<string, IStrategy>();
     const blotter = this.blotter as AdaptableBlotter;
-    strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(blotter));
+    strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(blotter));
     strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(blotter));
     strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(blotter));
     strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(blotter));
@@ -451,6 +452,7 @@ export class agGridHelper {
       isSelectedCell: isSelectedCell,
       gridCell: clickedCell,
       column: column,
+      record: params.node,
       isSingleSelectedColumn: isSingleSelectedColumn,
     };
   }

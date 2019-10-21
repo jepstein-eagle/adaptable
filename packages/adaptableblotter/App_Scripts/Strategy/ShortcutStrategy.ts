@@ -20,6 +20,7 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -191,8 +192,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
   private ShowErrorPreventMessage(failedRule: CellValidationRule): void {
     this.blotter.api.alertApi.showAlertError(
       'Shortcut Failed',
-      ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter),
-      true
+      ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter)
     );
   }
 

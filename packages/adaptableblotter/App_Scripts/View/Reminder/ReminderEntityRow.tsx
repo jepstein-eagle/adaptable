@@ -20,7 +20,7 @@ export class ReminderEntityRow extends React.Component<
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={reminder.Alert.Msg} />;
-    colItems[1].Content = <EntityRowItem Content={reminder.Alert.MessageType} />;
+    colItems[1].Content = <EntityRowItem Content={reminder.Alert.AlertDefinition.MessageType} />;
     colItems[2].Content = (
       <EntityRowItem Content={UIHelper.getScheduleDescription(reminder.Schedule)} />
     );

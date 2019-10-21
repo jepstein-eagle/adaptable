@@ -41,7 +41,9 @@ import { QueryRange } from '../Common/Expression/QueryRange';
  *        Operand2Type: 'Value',
  *        Operator: 'GreaterThan',
  *      },
- *      ShowAsPopup: true,
+ *      AlertProperties: {
+ *       ShowPopup: true,
+ *      },
  *    },
  *    {
  *      ColumnId: 'ItemCount',
@@ -53,7 +55,9 @@ import { QueryRange } from '../Common/Expression/QueryRange';
  *        Operand2Type: 'Value',
  *        Operator: 'PercentChange',
  *      },
- *      ShowAsPopup: false,
+ *      AlertProperties: {
+ *       ShowPopup: true,
+ *      },
  *     },
  *   ],
  * },
@@ -86,7 +90,7 @@ export interface AlertState extends RunTimeState {
    *
    * Leave blank if you want them to show using the main Adaptable Blotter popup.
    *
-   * **This property is only used if the Alert itself has showAsPopup set to true**.
+   * **This property is only used if the Alert itself has ShowPopup set to true**.
    *
    * **Default Value**:  Empty string
    */
@@ -124,5 +128,10 @@ export interface AlertDefinition extends AdaptableBlotterObject {
   /**
    * Whether to show the Alert when it is triggered as a popup.  All alerts will display in the Alerts toolbar.
    */
-  ShowAsPopup: boolean;
+  AlertProperties?: AlertProperties;
+}
+
+export interface AlertProperties {
+  ShowPopup?: boolean;
+  HighlightCell?: boolean;
 }
