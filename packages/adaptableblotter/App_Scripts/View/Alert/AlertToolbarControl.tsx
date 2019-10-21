@@ -21,10 +21,10 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
   AlertDefinitions: AlertDefinition[];
-  Alerts: AdaptableAlert[];
+  AdaptableAlerts: AdaptableAlert[];
 
-  onDeleteAlert: (index: number) => SystemRedux.SystemAlertDeleteAction;
-  onDeleteAllAlert: () => SystemRedux.SystemAlertDeleteAllAction;
+  onDeleteAlert: (alert: AdaptableAlert) => SystemRedux.SystemAlertDeleteAction;
+  onDeleteAllAlert: (alerts: AdaptableAlert[]) => SystemRedux.SystemAlertDeleteAllAction;
 }
 
 interface AlertToolbarState {
@@ -40,20 +40,20 @@ class AlertToolbarControlComponent extends React.Component<
     super(props);
     this.state = {
       ShowMessage: false,
-      Alerts: this.props.Alerts,
+      Alerts: this.props.AdaptableAlerts,
     };
   }
 
   componentDidUpdate() {
-    if (this.state.Alerts.length != this.props.Alerts.length) {
-      this.setState({ ShowMessage: true, Alerts: this.props.Alerts });
+    if (this.state.Alerts.length != this.props.AdaptableAlerts.length) {
+      this.setState({ ShowMessage: true, Alerts: this.props.AdaptableAlerts });
     }
   }
 
   render() {
     let alertsPanel = (
       <AlertsPanel
-        Alerts={this.props.Alerts}
+        Alerts={this.props.AdaptableAlerts}
         ShowPanel={true}
         ShowHeader={false}
         onClearAlert={this.props.onDeleteAlert}
@@ -63,16 +63,16 @@ class AlertToolbarControlComponent extends React.Component<
     );
 
     let collapsedText =
-      this.props.Alerts.length == 0
+      this.props.AdaptableAlerts.length == 0
         ? '0 Alerts'
-        : this.props.Alerts.length == 1
+        : this.props.AdaptableAlerts.length == 1
         ? '1 Alert'
-        : this.props.Alerts.length + ' Alerts';
+        : this.props.AdaptableAlerts.length + ' Alerts';
 
-    let buttonColor: string = ArrayExtensions.IsNotNullOrEmpty(this.props.Alerts)
+    let buttonColor: string = ArrayExtensions.IsNotNullOrEmpty(this.props.AdaptableAlerts)
       ? 'secondary'
       : 'primary';
-    let buttonTextColor: string = ArrayExtensions.IsNotNullOrEmpty(this.props.Alerts)
+    let buttonTextColor: string = ArrayExtensions.IsNotNullOrEmpty(this.props.AdaptableAlerts)
       ? 'text-on-secondary'
       : 'text-on-primary';
 
@@ -90,7 +90,7 @@ class AlertToolbarControlComponent extends React.Component<
           {collapsedText}
         </Flex>
 
-        {this.props.Alerts.length > 0 && (
+        {this.props.AdaptableAlerts.length > 0 && (
           <Flex alignItems="center">
             <AdaptablePopover
               headerText=""
@@ -119,10 +119,16 @@ class AlertToolbarControlComponent extends React.Component<
   }
 
   private getMessageType(): MessageType {
-    if (this.props.Alerts.find(a => a.MessageType == MessageType.Error) != null) {
+    if (
+      this.props.AdaptableAlerts.find(a => a.AlertDefinition.MessageType == MessageType.Error) !=
+      null
+    ) {
       return MessageType.Error;
     }
-    if (this.props.Alerts.find(a => a.MessageType == MessageType.Warning) != null) {
+    if (
+      this.props.AdaptableAlerts.find(a => a.AlertDefinition.MessageType == MessageType.Warning) !=
+      null
+    ) {
       return MessageType.Warning;
     }
     return MessageType.Info;
@@ -132,14 +138,15 @@ class AlertToolbarControlComponent extends React.Component<
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
     AlertDefinitions: state.Alert.AlertDefinitions,
-    Alerts: state.System.Alerts,
+    AdaptableAlerts: state.System.AdaptableAlerts,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onDeleteAlert: (index: number) => dispatch(SystemRedux.SystemAlertDelete(index)),
-    onDeleteAllAlert: () => dispatch(SystemRedux.SystemAlertDeleteAll()),
+    onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
+    onDeleteAllAlert: (alerts: AdaptableAlert[]) =>
+      dispatch(SystemRedux.SystemAlertDeleteAll(alerts)),
     onClose: (dashboardControl: string) =>
       dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
     onConfigure: () =>
@@ -153,13 +160,3 @@ export let AlertToolbarControl = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AlertToolbarControlComponent);
-
-let smallFormControlStyle: React.CSSProperties = {
-  fontSize: 'xsmall',
-  height: '22px',
-  width: '80px',
-};
-
-let standardFormControlStyle: React.CSSProperties = {
-  width: '80px',
-};

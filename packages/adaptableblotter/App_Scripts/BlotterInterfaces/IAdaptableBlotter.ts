@@ -101,6 +101,8 @@ export interface IAdaptableBlotter {
   setGridData(dataSource: any): void;
   reloadGrid(): void;
   redraw(): void;
+  redrawRow(row: any): void;
+  refreshCells(rows: any[], columnIds: string[]): void;
 
   // cell / column selection
   getActiveCell(): GridCell;

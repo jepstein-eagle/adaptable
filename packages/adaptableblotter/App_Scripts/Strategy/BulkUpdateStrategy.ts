@@ -17,6 +17,7 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import ObjectFactory from '../Utilities/ObjectFactory';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -54,8 +55,9 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         Alert: {
           Header: 'Bulk Update Error',
           Msg: 'Cannot edit while Grid is in Pivot Mode.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
         },
       };
     }
@@ -66,8 +68,9 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         Alert: {
           Header: 'Bulk Update Error',
           Msg: 'No cells are selected.\nPlease select some cells.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
         },
       };
     }
@@ -78,8 +81,9 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         Alert: {
           Header: 'Bulk Update Error',
           Msg: 'Bulk Update only supports single column edit.\nPlease adjust cell selection.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
         },
       };
     }
@@ -92,8 +96,9 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
           Header: 'Bulk Update Error',
           Msg:
             'Bulk Update is not permitted on readonly columns.\nPlease adjust the cell selection.',
-          MessageType: MessageType.Error,
-          ShowAsPopup: true,
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
         },
       };
     }

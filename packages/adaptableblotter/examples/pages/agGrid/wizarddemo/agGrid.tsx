@@ -24,16 +24,16 @@ LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'dtmKey', // will be added later ...
-    blotterId: 'Position Monitor',
+    //blotterId: 'Position Monitor',
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
   let abWizard: IAdaptableBlotterWizard = new AdaptableBlotterWizard(adaptableBlotterOptions, {
-    fetchData: () => {
-      return fetch(
-        'https://dl.dropboxusercontent.com/s/effei2a3g7bc4dt/positionMonitor_ARBITRAGE-ALPHA-STRAT.json?dl=0'
-      ).then(response => response.json());
-    },
+    //  fetchData: () => {
+    //    return fetch(
+    //      'https://dl.dropboxusercontent.com/s/effei2a3g7bc4dt/positionMonitor_ARBITRAGE-ALPHA-STRAT.json?dl=0'
+    //    ).then(response => response.json());
+    //  },
     onInit: ({ adaptableBlotterOptions, gridOptions }) => {
       adaptableBlotterOptions.filterOptions = adaptableBlotterOptions.filterOptions || {};
       adaptableBlotterOptions.filterOptions.autoApplyFilter = false;
@@ -63,7 +63,9 @@ let demoConfig: PredefinedConfig = {
           Header: "Run 'All Data' Report",
           MessageType: 'Info',
           Msg: "Run the 'All Data' report so MO have full view of activity",
-          ShowAsPopup: true,
+          AlertProperties: {
+            ShowPopup: false,
+          },
         },
         Schedule: {
           DaysOfWeek: [1, 2, 3, 4, 5],

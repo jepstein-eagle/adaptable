@@ -22,6 +22,7 @@ import {
   GRID_REFRESHED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private ExportState: ExportState;
@@ -172,8 +173,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 );
                 this.blotter.api.alertApi.showAlertError(
                   'Live Excel Error',
-                  'Failed to send data for [' + cle.Report + ']. This live export has been stopped',
-                  true
+                  'Failed to send data for [' + cle.Report + ']. This live export has been stopped'
                 );
               })
           );
@@ -207,8 +207,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 );
                 this.blotter.api.alertApi.showAlertError(
                   'Live Excel Error',
-                  'Failed to send data for [' + cle.Report + ']. This live export has been stopped',
-                  true
+                  'Failed to send data for [' + cle.Report + ']. This live export has been stopped'
                 );
               })
           );

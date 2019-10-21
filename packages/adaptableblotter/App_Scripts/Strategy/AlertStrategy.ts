@@ -11,15 +11,23 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+  MenuItemShowPopup,
+} from '../Utilities/MenuItem';
+import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 
-export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
+export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.AlertStrategyId, blotter);
     this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
       this.handleDataSourceChanged(eventText)
     );
   }
+
+  public abstract initStyles(): void;
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
@@ -29,28 +37,56 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     });
   }
 
-  protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
-    let alertDefinitions: AlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    if (contextMenuInfo.column && contextMenuInfo.record) {
+      let currentAlerts: AdaptableAlert[] = this.blotter.api.internalApi
+        .getAdaptableAlerts()
+        .filter(a => a.DataChangedInfo && a.AlertDefinition.AlertProperties.HighlightCell);
+      if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
+        let relevantAlert: AdaptableAlert = currentAlerts.find(
+          a =>
+            a.AlertDefinition.ColumnId == contextMenuInfo.column.ColumnId &&
+            a.DataChangedInfo.Record == contextMenuInfo.record
+        );
+        if (relevantAlert) {
+          menuItemShowPopup = this.createColumnMenuItemReduxAction(
+            'Clear Alert',
+            StrategyConstants.AlertGlyph,
+            SystemRedux.SystemAlertDelete(relevantAlert)
+          );
+        }
+      }
+    }
+    return menuItemShowPopup;
+  }
+
+  protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
+    let alertDefinitions: AlertDefinition[] = this.getAlertDefinitionsForDataChange(
+      dataChangedInfo
+    );
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
       let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
-      alertDefinitions.forEach(fr => {
+      alertDefinitions.forEach((alertDefintion: AlertDefinition) => {
         // might be better to do a single alert with all the messages?
         this.blotter.api.alertApi.showAlert(
-          ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns),
-          AlertHelper.createAlertDescription(fr, columns),
-          fr.MessageType,
-          fr.ShowAsPopup
+          ColumnHelper.getFriendlyNameFromColumnId(alertDefintion.ColumnId, columns),
+          AlertHelper.createAlertDescription(alertDefintion, columns),
+          alertDefintion,
+          dataChangedInfo
         );
       });
     }
   }
 
-  public CheckDataChanged(dataChangedEvent: DataChangedInfo): AlertDefinition[] {
+  private getAlertDefinitionsForDataChange(dataChangedEvent: DataChangedInfo): AlertDefinition[] {
     let relatedAlertDefinitions = this.blotter.api.alertApi
-      .getAlertState()
-      .AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
+      .getAlertDefinitions()
+      .filter(v => v.ColumnId == dataChangedEvent.ColumnId);
     let triggeredAlerts: AlertDefinition[] = [];
-    if (relatedAlertDefinitions.length > 0) {
+    if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
       let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
@@ -58,19 +94,19 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
       );
 
-      if (expressionAlertDefinitions.length > 0) {
-        for (let expressionRule of expressionAlertDefinitions) {
+      if (ArrayExtensions.IsNotNullOrEmpty(expressionAlertDefinitions)) {
+        for (let expressionAlertDefinition of expressionAlertDefinitions) {
           let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(
-            expressionRule.Expression,
+            expressionAlertDefinition.Expression,
             dataChangedEvent.IdentifierValue,
             columns,
             this.blotter
           );
           if (
             isSatisfiedExpression &&
-            this.IsAlertTriggered(expressionRule, dataChangedEvent, columns)
+            this.isAlertTriggered(expressionAlertDefinition, dataChangedEvent, columns)
           ) {
-            triggeredAlerts.push(expressionRule);
+            triggeredAlerts.push(expressionAlertDefinition);
           }
         }
       }
@@ -80,7 +116,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
-        if (this.IsAlertTriggered(noExpressionRule, dataChangedEvent, columns)) {
+        if (this.isAlertTriggered(noExpressionRule, dataChangedEvent, columns)) {
           triggeredAlerts.push(noExpressionRule);
         }
       }
@@ -88,7 +124,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     return triggeredAlerts;
   }
 
-  private IsAlertTriggered(
+  private isAlertTriggered(
     alert: AlertDefinition,
     dataChangedEvent: DataChangedInfo,
     columns: AdaptableBlotterColumn[]

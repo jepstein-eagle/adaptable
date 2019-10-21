@@ -22,8 +22,11 @@ export class ReminderSummaryWizard extends React.Component<ReminderSummaryWizard
     let keyValuePairs: IKeyValuePair[] = [
       { Key: 'Header', Value: this.props.Data.Alert.Header },
       { Key: 'Message', Value: this.props.Data.Alert.Msg },
-      { Key: 'Message Type', Value: this.props.Data.Alert.MessageType },
-      { Key: 'Show as Popup', Value: this.props.Data.Alert.ShowAsPopup ? 'True' : 'False' },
+      { Key: 'Message Type', Value: this.props.Data.Alert.AlertDefinition.MessageType },
+      {
+        Key: 'Show as Popup',
+        Value: this.props.Data.Alert.AlertDefinition.AlertProperties.ShowPopup ? 'True' : 'False',
+      },
       { Key: 'Schedule', Value: UIHelper.getScheduleDescription(this.props.Data.Schedule) },
     ];
 

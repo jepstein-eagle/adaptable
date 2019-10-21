@@ -48,6 +48,8 @@ export interface ContextMenuInfo {
   // whether or not the column that has been clicked is the ONLY column with selected cells
   // important as some strategies will only do stuff if there is just one selected column (e.g. Pie chart) but others dont mind (e.g. cell summary)
   isSingleSelectedColumn: boolean;
+  // this will be the node
+  record: any;
 }
 
 // A menu item which performs a Redux Action when it is clicke

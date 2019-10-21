@@ -28,14 +28,14 @@ Nor do we create the ag-Grid
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(500);
+  const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo Usersssssss',
-    blotterId: 'No Config Demo111!',
+    blotterId: 'With Some Spaces',
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,

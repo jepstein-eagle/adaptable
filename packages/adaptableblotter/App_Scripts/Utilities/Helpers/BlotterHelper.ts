@@ -8,6 +8,7 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { AlertProperties } from '../../PredefinedConfig/RunTimeState/AlertState';
 
 export function assignBlotterOptions(
   blotterOptions: AdaptableBlotterOptions
@@ -84,7 +85,7 @@ export function isValidPrimaryKey(
     const errorMessage: string = `The PK Column '${blotter.blotterOptions.primaryKey}' does not exist.  This will affect many functions in the Adaptable Blotter.`;
     if (blotter.blotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) {
       // show an alert if that is the option
-      blotter.api.alertApi.showAlertError('No Primary Key', errorMessage, true);
+      blotter.api.alertApi.showAlertError('No Primary Key', errorMessage);
     } else {
       // otherwise just log it
       LoggingHelper.LogAdaptableBlotterError(errorMessage);

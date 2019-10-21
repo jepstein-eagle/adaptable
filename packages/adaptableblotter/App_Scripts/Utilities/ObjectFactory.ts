@@ -18,10 +18,10 @@ import {
   EMPTY_STRING,
   CHART_DEFAULT_YAXIS_TOTAL,
   PLUS_MINUS_DEFAULT_NUDGE_VALUE,
-  ALERT_DEFAULT_SHOW_AS_POPUP,
   ALERT_DEFAULT_OPERATOR,
   ALERT_DEFAULT_RANGE_OPERAND_TYPE,
   ALERT_DEFAULT_MESSAGE_TYPE,
+  ALERT_DEFAULT_SHOW_POPUP,
 } from './Constants/GeneralConstants';
 import { DataSource } from '../PredefinedConfig/RunTimeState/DataSourceState';
 import {
@@ -64,6 +64,8 @@ import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
 import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
+import { AlertDefinitionDeleteAction } from '../Redux/ActionsReducers/AlertRedux';
+import { DataChangedInfo } from './Interface/DataChangedInfo';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -130,10 +132,25 @@ export function CreateEmptyPlusMinusRule(): PlusMinusRule {
 
 export function CreateEmptyAlert(): AdaptableAlert {
   return {
+    Uuid: createUuid(),
     Header: EMPTY_STRING,
     Msg: EMPTY_STRING,
-    MessageType: MessageType.Info,
-    ShowAsPopup: ALERT_DEFAULT_SHOW_AS_POPUP,
+    AlertDefinition: CreateInternalAlertDefinitionForMessages(MessageType.Info),
+  };
+}
+
+export function CreateAlert(
+  alertHeader: string,
+  alertMessage: string,
+  alertDefinition: AlertDefinition,
+  dataChangedInfo: DataChangedInfo
+): AdaptableAlert {
+  return {
+    Uuid: createUuid(),
+    Header: alertHeader,
+    Msg: alertMessage,
+    AlertDefinition: alertDefinition,
+    DataChangedInfo: dataChangedInfo,
   };
 }
 
@@ -150,7 +167,25 @@ export function CreateEmptyAlertDefinition(): AlertDefinition {
     },
     Expression: null,
     MessageType: ALERT_DEFAULT_MESSAGE_TYPE,
-    ShowAsPopup: ALERT_DEFAULT_SHOW_AS_POPUP,
+    AlertProperties: {
+      ShowPopup: ALERT_DEFAULT_SHOW_POPUP,
+    },
+  };
+}
+
+export function CreateInternalAlertDefinitionForMessages(
+  messageType: MessageType,
+  showPopup?: boolean
+): AlertDefinition {
+  return {
+    Uuid: createUuid(),
+    ColumnId: EMPTY_STRING,
+    Range: null,
+    Expression: null,
+    MessageType: messageType,
+    AlertProperties: {
+      ShowPopup: showPopup ? showPopup : ALERT_DEFAULT_SHOW_POPUP,
+    },
   };
 }
 
@@ -472,7 +507,9 @@ export const ObjectFactory = {
   CreateEmptyCalculatedColumn,
   CreateEmptyPlusMinusRule,
   CreateEmptyAlert,
+  CreateAlert,
   CreateEmptyAlertDefinition,
+  CreateInternalAlertDefinitionForMessages,
   CreateEmptyAdvancedSearch,
   CreateEmptyColumnCategory,
   CreateEmptyRange,

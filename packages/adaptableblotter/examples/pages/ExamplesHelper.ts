@@ -1105,7 +1105,7 @@ export class ExamplesHelper {
       filter: true,
       sortable: true,
       type: 'abColDefString',
-      cellRenderer: 'agAnimateShowChangeCellRenderer',
+      //   cellRenderer: 'agAnimateShowChangeCellRenderer',
       // resizable: true,
       //  tooltipComponent: 'percentBarTooltip',
     });

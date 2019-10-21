@@ -1,4 +1,4 @@
-import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
+import { IUIConfirmation, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { SystemState } from '../../PredefinedConfig/InternalState/SystemState';
@@ -22,7 +22,7 @@ export interface IInternalApi {
   setChartVisibility(chartVisbility: ChartVisibility): void;
   getSystemReports(): Report[];
   getLiveReports(): ILiveReport[];
-
+  getAdaptableAlerts(): AdaptableAlert[];
   /**
    * Shows a Confirmation Popup
    */

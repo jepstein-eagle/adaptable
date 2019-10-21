@@ -299,7 +299,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (
         ShowAlertPopup: true,
         Header: showAlertAction.Alert.Header,
         Msg: showAlertAction.Alert.Msg,
-        MessageType: showAlertAction.Alert.MessageType as MessageType,
+        MessageType: showAlertAction.Alert.AlertDefinition.MessageType as MessageType,
       };
       return Object.assign({}, state, { AlertPopup: newAlertPopup });
     }

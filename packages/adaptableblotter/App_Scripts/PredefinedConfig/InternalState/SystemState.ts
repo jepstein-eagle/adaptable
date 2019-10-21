@@ -18,7 +18,7 @@ import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyAc
 
 export interface SystemState extends InternalState {
   SystemStatus: ISystemStatus;
-  Alerts: AdaptableAlert[];
+  AdaptableAlerts: AdaptableAlert[];
   AvailableCalendars: Calendar[];
   CurrentLiveReports: ILiveReport[];
   IsValidSmartEditSelection: boolean;

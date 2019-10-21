@@ -97,7 +97,7 @@ import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
-import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage';
+import { IUIConfirmation, InputAction, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
   IStrategyActionReturn,
@@ -371,8 +371,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             PopupRedux.PopupShowAlert({
               Header: 'Configuration',
               Msg: 'Error loading your configuration:' + e,
-              MessageType: MessageType.Error,
-              ShowAsPopup: true,
+              AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                MessageType.Error
+              ),
             })
           );
         }
@@ -1964,6 +1965,47 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
 
           /*******************
+           * ALERT ACTIONS
+           *******************/
+
+          /**
+           * Use Case: User has deleted a System Alert which has a Highlight Cell
+           * Action: Refresh the cell (to clear the style)
+           */
+          case SystemRedux.SYSTEM_ALERT_DELETE: {
+            const actionTyped = action as SystemRedux.SystemAlertDeleteAction;
+
+            let ret = next(action);
+            if (
+              actionTyped.Alert.AlertDefinition.AlertProperties.HighlightCell &&
+              actionTyped.Alert.DataChangedInfo
+            ) {
+              let record = actionTyped.Alert.DataChangedInfo.Record;
+              blotter.refreshCells([record], [actionTyped.Alert.DataChangedInfo.ColumnId]);
+            }
+            return ret;
+          }
+
+          /**
+           * Use Case: User has deleted all System Alerts some of which have a Highlight Cell
+           * Action: Refresh the cell (to clear the style)
+           */
+          case SystemRedux.SYSTEM_ALERT_DELETE_ALL: {
+            const actionTyped = action as SystemRedux.SystemAlertDeleteAllAction;
+
+            let ret = next(action);
+            let alerts: AdaptableAlert[] = actionTyped.Alerts;
+            alerts.forEach(alert => {
+              if (alert.AlertDefinition.AlertProperties.HighlightCell && alert.DataChangedInfo) {
+                let record = alert.DataChangedInfo.Record;
+                blotter.refreshCells([record], [alert.DataChangedInfo.ColumnId]);
+              }
+            });
+
+            return ret;
+          }
+
+          /*******************
            * CALCULATED COLUMN ACTIONS
            *******************/
 
@@ -2534,8 +2576,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                     PopupRedux.PopupShowAlert({
                       Header: 'Team Sharing Error',
                       Msg: "Couldn't share item: " + xhr.statusText,
-                      MessageType: MessageType.Error,
-                      ShowAsPopup: true,
+                      AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                        MessageType.Error
+                      ),
                     })
                   );
                 } else {
@@ -2543,8 +2586,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                     PopupRedux.PopupShowAlert({
                       Header: 'Team Sharing',
                       Msg: 'Item Shared Successfully',
-                      MessageType: MessageType.Info,
-                      ShowAsPopup: true,
+                      AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                        MessageType.Info
+                      ),
                     })
                   );
                 }
@@ -2741,8 +2785,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowAlert({
                   Header: 'Team Sharing',
                   Msg: 'Item Successfully Imported',
-                  MessageType: MessageType.Info,
-                  ShowAsPopup: true,
+                  AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                    MessageType.Info
+                  ),
                 })
               );
             } else {
@@ -2751,8 +2796,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowAlert({
                   Header: 'Team Sharing Error:',
                   Msg: 'Item not recognized. Cannot import',
-                  MessageType: MessageType.Error,
-                  ShowAsPopup: true,
+                  AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                    MessageType.Error
+                  ),
                 })
               );
             }
@@ -2798,6 +2844,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             middlewareAPI.dispatch(GridRedux.GridSetCellSummary(apiSummaryReturn));
             return returnAction;
+          }
+
+          case GridRedux.GRID_REFRESH_CELLS: {
+            const actionTyped = action as GridRedux.GridRefreshCellsAction;
+
+            let ret = next(action);
+            blotter.refreshCells(actionTyped.rows, actionTyped.columnIds);
+
+            return ret;
           }
 
           /*******************
@@ -2960,6 +3015,7 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_SET_SELECTED_CELLS,
     GridRedux.GRID_CREATE_CELLS_SUMMARY,
     GridRedux.GRID_SET_CELLS_SUMMARY,
+    GridRedux.GRID_REFRESH_CELLS,
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
     GridRedux.SET_MAIN_MENUITEMS,

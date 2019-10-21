@@ -21,7 +21,7 @@ export interface ReminderMessageWizardState {
   Header: string;
   Msg: string;
   MessageType: MessageType;
-  ShowAsPopup: boolean;
+  ShowPopup: boolean;
 }
 
 export class ReminderMessageWizard
@@ -32,8 +32,8 @@ export class ReminderMessageWizard
     this.state = {
       Header: this.props.Data.Alert.Header,
       Msg: this.props.Data.Alert.Msg,
-      MessageType: this.props.Data.Alert.MessageType as MessageType,
-      ShowAsPopup: this.props.Data.Alert.ShowAsPopup,
+      MessageType: this.props.Data.Alert.AlertDefinition.MessageType as MessageType,
+      ShowPopup: this.props.Data.Alert.AlertDefinition.AlertProperties.ShowPopup,
     };
   }
 
@@ -97,7 +97,7 @@ export class ReminderMessageWizard
               <Box style={{ flex: 7 }}>
                 <Checkbox
                   marginLeft={2}
-                  checked={this.state.ShowAsPopup == true}
+                  checked={this.state.ShowPopup == true}
                   onChange={(checked: boolean) => this.onShowAsPopupChanged(checked)}
                 >
                   Show the Reminder as a Popup
@@ -131,7 +131,7 @@ export class ReminderMessageWizard
   }
 
   private onShowAsPopupChanged(checked: boolean) {
-    this.setState({ ShowAsPopup: checked } as ReminderMessageWizardState, () =>
+    this.setState({ ShowPopup: checked } as ReminderMessageWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
@@ -146,8 +146,8 @@ export class ReminderMessageWizard
   public Next(): void {
     this.props.Data.Alert.Header = this.state.Header;
     this.props.Data.Alert.Msg = this.state.Msg;
-    this.props.Data.Alert.MessageType = this.state.MessageType;
-    this.props.Data.Alert.ShowAsPopup = this.state.ShowAsPopup;
+    this.props.Data.Alert.AlertDefinition.MessageType = this.state.MessageType;
+    this.props.Data.Alert.AlertDefinition.AlertProperties.ShowPopup = this.state.ShowPopup;
   }
 
   public Back(): void {

@@ -6,7 +6,6 @@ import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
-import { fixMarkup } from 'highlight.js';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {

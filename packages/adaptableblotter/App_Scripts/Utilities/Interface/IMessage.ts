@@ -1,12 +1,16 @@
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
+import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { DataChangedInfo } from './DataChangedInfo';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
-export interface AdaptableAlert {
+export interface AdaptableAlert extends AdaptableBlotterObject {
   Header: string;
   Msg: string;
-  MessageType: 'Info' | 'Success' | 'Warning' | 'Error';
-  ShowAsPopup?: boolean;
+  AlertDefinition: AlertDefinition;
+  DataChangedInfo?: DataChangedInfo;
 }
 
 export interface IUIConfirmation {

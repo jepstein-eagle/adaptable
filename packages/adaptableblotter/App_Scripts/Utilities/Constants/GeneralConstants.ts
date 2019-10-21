@@ -73,7 +73,9 @@ export const PLUS_MINUS_DEFAULT_NUDGE_VALUE: number = 1;
 export const ALERT_DEFAULT_OPERATOR: LeafExpressionOperator = LeafExpressionOperator.AnyChange;
 export const ALERT_DEFAULT_RANGE_OPERAND_TYPE: 'Value' | 'Column' = 'Column';
 export const ALERT_DEFAULT_MESSAGE_TYPE: 'Success' | 'Info' | 'Warning' | 'Error' = 'Error';
-export const ALERT_DEFAULT_SHOW_AS_POPUP: boolean = true;
+export const ALERT_DEFAULT_SHOW_POPUP: boolean = true;
+export const ALERT_DEFAULT_HIGHLIGHT_CELL: boolean = true;
+export const ALERT_DEFAULT_HIGHLIGHT_ROW: boolean = true;
 
 /**
  * Constants for State (primarily for audit property events) - good idea?

@@ -45,7 +45,9 @@ let demoConfig: PredefinedConfig = {
           Operand2Type: 'Value',
           Operator: 'PercentChange',
         },
-        ShowAsPopup: false,
+        AlertProperties: {
+          ShowPopup: false,
+        },
       },
     ],
     AlertPopupDiv: '',

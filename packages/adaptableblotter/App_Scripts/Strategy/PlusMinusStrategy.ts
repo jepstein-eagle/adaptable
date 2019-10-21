@@ -22,6 +22,7 @@ import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -201,11 +202,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
           failedMessages.push(failedMessage);
         }
       });
-      this.blotter.api.alertApi.showAlertError(
-        'Nudge(s) failed rule',
-        failedMessages.toString(),
-        true
-      );
+
+      this.blotter.api.alertApi.showAlertError('Nudge(s) failed rule', failedMessages.toString());
     }
   }
 

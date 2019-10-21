@@ -17,8 +17,8 @@ export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
   ShowPanel: boolean;
 
   ShowHeader: boolean;
-  onClearAlert: (index: number) => void;
-  onClearAllAlerts: () => void;
+  onClearAlert: (alert: AdaptableAlert) => void;
+  onClearAllAlerts: (alerts: AdaptableAlert[]) => void;
   onRender: () => void;
 }
 
@@ -31,12 +31,14 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
     let alerts = this.props.Alerts.map((alert: AdaptableAlert, index: number) => {
       let alertHasheader: boolean = StringExtensions.IsNotNullOrEmpty(alert.Header);
 
-      const textColor = UIHelper.getColorByMessageType(alert.MessageType as MessageType);
+      const textColor = UIHelper.getColorByMessageType(alert.AlertDefinition
+        .MessageType as MessageType);
       const textStyle = {
         color: textColor,
         fill: textColor,
       };
-      const iconName = UIHelper.getGlyphByMessageType(alert.MessageType as MessageType);
+      const iconName = UIHelper.getGlyphByMessageType(alert.AlertDefinition
+        .MessageType as MessageType);
       const IconCmp = icons[iconName] as ReactComponentLike;
       const icon = IconCmp ? <IconCmp /> : null;
 
@@ -52,7 +54,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
             )}
 
             <ButtonPreviewDelete
-              onClick={() => this.props.onClearAlert(index)}
+              onClick={() => this.props.onClearAlert(alert)}
               tooltip="Clear Alert"
               disabled={false}
               style={{ float: 'left' }}
@@ -69,7 +71,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
 
     let clearAllButton = (
       <SimpleButton
-        onClick={() => this.props.onClearAllAlerts()}
+        onClick={() => this.props.onClearAllAlerts(this.props.Alerts)}
         variant="raised"
         tone="neutral"
         AccessLevel={AccessLevel.Full}

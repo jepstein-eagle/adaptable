@@ -22,6 +22,7 @@ export const GRID_CREATE_CELLS_SUMMARY = 'GRID_CREATE_CELLS_SUMMARY';
 export const GRID_SET_CELLS_SUMMARY = 'GRID_SET_CELLS_SUMMARY';
 export const GRID_QUICK_FILTER_BAR_SHOW = 'GRID_QUICK_FILTER_BAR_SHOW';
 export const GRID_QUICK_FILTER_BAR_HIDE = 'GRID_QUICK_FILTER_BAR_HIDE';
+export const GRID_REFRESH_CELLS = 'GRID_REFRESH_CELLS';
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
 export const SET_GLUE42_ON = 'SET_GLUE42_ON';
@@ -71,6 +72,11 @@ export interface GridCreateCellSummaryAction extends Redux.Action {}
 
 export interface GridSetCellSummaryAction extends Redux.Action {
   CellSummary: ICellSummmary;
+}
+
+export interface GridRefreshCellsAction extends Redux.Action {
+  rows: any[];
+  columnIds: string[];
 }
 
 export interface QuickFilterBarShowAction extends Redux.Action {}
@@ -151,6 +157,12 @@ export const GridCreateCellSummary = (): GridCreateCellSummaryAction => ({
 export const GridSetCellSummary = (CellSummary: ICellSummmary): GridSetCellSummaryAction => ({
   type: GRID_SET_CELLS_SUMMARY,
   CellSummary,
+});
+
+export const GridRefreshCells = (rows: any[], columnIds: string[]): GridRefreshCellsAction => ({
+  type: GRID_REFRESH_CELLS,
+  rows,
+  columnIds,
 });
 
 export const QuickFilterBarShow = (): QuickFilterBarShowAction => ({

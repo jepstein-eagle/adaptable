@@ -14,25 +14,50 @@ export interface FDC3Schema {
   version: string;
 }
 
+/**
+ * Event Args used as part of the **onColumnStateChanged** event.
+ *
+ * Includes just the name of the new selected Layout.
+ */
 export interface ColumnStateChangedEventArgs {
   currentLayout: string;
 }
 
+/**
+ * Event Args used as part of the **onAlertFired** event.
+ *
+ * Includes the Alert has been fired - this will contain details of the Alert Definition that triggered the Alert, and (optionally) what Data Change was responsible.
+ */
 export interface AlertFiredEventArgs {
   alert: AdaptableAlert;
 }
 
+/**
+ * Event Args used as part of the **onActionColumnClicked** event.
+ *
+ * Includes the Action Column that was clicked, the row that contained the cell that was clicked (and its Primary Key value).
+ */
 export interface ActionColumnClickedEventArgs {
   actionColumn: ActionColumn;
   primaryKeyValue: any;
   rowData: any;
 }
 
+/**
+ * Event Args used as part of the **onSelectionChanged** event.
+ *
+ * Includes full details of all Selected Cells and Rows (if the latter has been activated).
+ */
 export interface SelectionChangedEventArgs {
   selectedCellInfo: SelectedCellInfo;
   selectedRowInfo: SelectedRowInfo;
 }
 
+/**
+ * Event Args used as part of the **onThemeChanged** event.
+ *
+ * Includes just the name of the new selected theme.
+ */
 export interface ThemeChangedEventArgs {
   themeName: string;
 }
