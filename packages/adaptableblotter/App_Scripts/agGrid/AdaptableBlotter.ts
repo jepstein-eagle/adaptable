@@ -268,6 +268,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.runtimeConfig = runtimeConfig;
 
     this.gridOptions = this.blotterOptions!.vendorGrid;
+    if (this.gridOptions.allowContextMenuWithControlKey === undefined) {
+      this.gridOptions.allowContextMenuWithControlKey = true;
+    }
     this.vendorGridName = 'agGrid';
     this.embedColumnMenu = true;
     this.isInitialised = false;
