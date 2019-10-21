@@ -113,7 +113,7 @@ and you also need to make sure that the theme name is included in the UserThemes
         {
           Name:"blue",
           Description:"Blue Theme",
-          VendorGridClassName: 'ag-grid-balham-dark'
+          VendorGridClassName: 'ag-theme-blue'
         }
       ],
       CurrentTheme: 'blue'
