@@ -29,11 +29,13 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
 
         if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
           alertDefinitions.forEach((alertDefinition: AlertDefinition) => {
-            let styleName: string = StyleHelper.CreateUniqueStyleName(
-              StrategyConstants.AlertStrategyId,
-              this.blotter,
-              alertDefinition
-            );
+            // let styleName: string = StyleHelper.CreateUniqueStyleName(
+            //   StrategyConstants.AlertStrategyId,
+            //   this.blotter,
+            //   alertDefinition
+            // );
+
+            let styleName = `ab-alert--${alertDefinition.MessageType.toLowerCase()}`;
 
             console.log('in strategy');
             console.log(styleName);
@@ -42,15 +44,20 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
             cellClassRules[styleName] = function(params: any) {
               let currentAlerts: AdaptableAlert[] = theBlotter.api.internalApi.getAdaptableAlerts();
               if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
-                let relevantAlerts: AdaptableAlert[] = currentAlerts.filter(
-                  aa =>
+                let relevantAlerts: AdaptableAlert[] = currentAlerts.filter(aa => {
+                  // const result = aa.AlertDefinition.Uuid === alertDefinition.Uuid;
+                  const result =
                     aa.AlertDefinition.AlertProperties.HighlightCell &&
                     aa.AlertDefinition.ColumnId == col.ColumnId &&
+                    aa.AlertDefinition.MessageType == alertDefinition.MessageType &&
                     aa.DataChangedInfo &&
                     aa.DataChangedInfo.IdentifierValue ==
-                      theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                );
-                return ArrayExtensions.IsNotNullOrEmpty(relevantAlerts);
+                      theBlotter.getPrimaryKeyValueFromRecord(params.node);
+
+                  return result;
+                });
+
+                return relevantAlerts.length > 0;
               }
               return false;
             };

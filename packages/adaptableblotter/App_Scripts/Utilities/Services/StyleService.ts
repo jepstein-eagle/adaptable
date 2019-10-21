@@ -206,20 +206,20 @@ export class StyleService {
       );
     }
 
-    // alert
-    const alertDefinitions: AlertDefinition[] = this.blotter.api.alertApi
-      .getAlertDefinitions()
-      .filter(ad => ad.AlertProperties.HighlightCell);
+    // // alert
+    // const alertDefinitions: AlertDefinition[] = this.blotter.api.alertApi
+    //   .getAlertDefinitions()
+    //   .filter(ad => ad.AlertProperties.HighlightCell);
 
-    alertDefinitions.forEach(element => {
-      const styleName = StyleHelper.CreateUniqueStyleName(
-        StrategyConstants.AlertStrategyId,
-        this.blotter,
-        element
-      );
-      let backColor = UIHelper.getColorByMessageType(element.MessageType as MessageType);
-      this.addCSSRule(`.${styleName}`, `background-color: ${backColor} !important;`);
-    });
+    // alertDefinitions.forEach(element => {
+    //   const styleName = StyleHelper.CreateUniqueStyleName(
+    //     StrategyConstants.AlertStrategyId,
+    //     this.blotter,
+    //     element
+    //   );
+    //   let backColor = UIHelper.getColorByMessageType(element.MessageType as MessageType);
+    //   this.addCSSRule(`.${styleName}`, `background-color: ${backColor} !important;`);
+    // });
 
     // we define last Flash since it has the highest priority
     this.blotter.api.flashingCellApi.getAllFlashingCell().forEach(element => {

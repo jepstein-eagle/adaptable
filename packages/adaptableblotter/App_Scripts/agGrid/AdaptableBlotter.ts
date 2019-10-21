@@ -1532,7 +1532,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           } // doing Alert - hope this is correct
           else if (type == 'Alert') {
             for (const prop in localCellClassRules) {
-              if (prop.includes(StrategyConstants.AlertStrategyId)) {
+              if (prop.includes('ab-alert--')) {
                 delete localCellClassRules[prop];
               }
             }

@@ -132,6 +132,21 @@
 @import './View/Dashboard/base.scss';
 
 
+.ab-alert--error {
+  background: var(--ab-color-error);
+}
+.ab-alert--success {
+  background: var(--ab-color-success);
+}
+.ab-alert--warn,
+.ab-alert--warning {
+  background: var(--ab-color-warn);
+}
+.ab-alert--info {
+  background: var(--ab-color-info);
+}
+
+
 // TODO do we need this?
 .popover-content {
   padding: 1px;
