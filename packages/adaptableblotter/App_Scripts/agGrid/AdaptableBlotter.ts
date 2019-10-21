@@ -2932,16 +2932,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public applyBlotterTheme(theme: AdaptableBlotterTheme | string) {
     const themeName = typeof theme === 'string' ? theme : theme.Name;
 
-    const themesToRemove: string[] = [];
+    const themeNamesToRemove: string[] = [];
+    const themesToRemove: AdaptableBlotterTheme[] = [];
+
+    const allThemes = this.api.themeApi.getAllTheme();
+    const allThemesMap = allThemes.reduce(
+      (acc: Record<string, AdaptableBlotterTheme>, theme: AdaptableBlotterTheme) => {
+        acc[theme.Name] = theme;
+        return acc;
+      },
+      {}
+    );
+
+    const themePrefix = 'ab--theme-';
     const el: HTMLElement = document.documentElement;
     el.classList.forEach((cssClassName: string) => {
-      if (cssClassName.indexOf('ab--theme-') === 0) {
-        themesToRemove.push(cssClassName);
+      const index = cssClassName.indexOf(themePrefix);
+      if (index === 0) {
+        themeNamesToRemove.push(cssClassName);
+        const themeName = cssClassName.substring(themePrefix.length);
+        if (allThemesMap[themeName]) {
+          themesToRemove.push(allThemesMap[themeName]);
+        }
       }
     });
 
-    themesToRemove.forEach(cssClassName => el.classList.remove(cssClassName));
+    themeNamesToRemove.forEach(cssClassName => el.classList.remove(cssClassName));
 
+    const newTheme = allThemesMap[themeName];
     const newThemeClassName = `ab--theme-${themeName}`;
 
     el.classList.add(newThemeClassName);
@@ -2958,18 +2976,49 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     const systemThemes = this.api.themeApi.getAllSystemTheme();
     const isSystemTheme = !!systemThemes.filter(t => t.Name === themeName)[0];
-    if (isSystemTheme) {
-      const container = this.getGridContainerElement();
-      if (container != null) {
-        const vendorLight = this.agGridHelper.getVendorLightThemeName();
-        const vendorDark = this.agGridHelper.getVendorDarkThemeName();
 
-        container.classList.remove(vendorLight);
-        container.classList.remove(vendorDark);
+    const container = this.getGridContainerElement();
 
-        container.classList.add(themeName === LIGHT_THEME ? vendorLight : vendorDark);
+    if (newTheme && isSystemTheme) {
+      if (themeName === LIGHT_THEME) {
+        newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
+      }
+      if (themeName === DARK_THEME) {
+        newTheme.VendorGridClassName = this.agGridHelper.getVendorDarkThemeName();
       }
     }
+
+    if (!newTheme.VendorGridClassName) {
+      // default the vendor grid to the light theme
+      newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
+    }
+
+    if (container != null) {
+      if (themesToRemove.length) {
+        themesToRemove.forEach(theme => {
+          if (theme.VendorGridClassName) {
+            container.classList.remove(theme.VendorGridClassName);
+          }
+        });
+      }
+
+      if (newTheme && newTheme.VendorGridClassName) {
+        container.classList.add(newTheme.VendorGridClassName);
+      }
+    }
+
+    // if (isSystemTheme) {
+    //   const container = this.getGridContainerElement();
+    //   if (container != null) {
+    //     const vendorLight = this.agGridHelper.getVendorLightThemeName();
+    //     const vendorDark = this.agGridHelper.getVendorDarkThemeName();
+
+    //     container.classList.remove(vendorLight);
+    //     container.classList.remove(vendorDark);
+
+    //     container.classList.add(themeName === LIGHT_THEME ? vendorLight : vendorDark);
+    //   }
+    // }
 
     if (abLoaded !== '777') {
       LoggingHelper.LogError(
