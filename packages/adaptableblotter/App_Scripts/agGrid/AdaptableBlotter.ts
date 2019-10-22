@@ -2985,12 +2985,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const themesToRemove: AdaptableBlotterTheme[] = [];
 
     const allThemes = this.api.themeApi.getAllTheme();
-    const allThemesMap = allThemes.reduce(
+    const allThemesMap: Record<string, AdaptableBlotterTheme> = allThemes.reduce(
       (acc: Record<string, AdaptableBlotterTheme>, theme: AdaptableBlotterTheme) => {
         acc[theme.Name] = theme;
         return acc;
       },
-      {}
+      {} as Record<string, AdaptableBlotterTheme>
     );
 
     const themePrefix = 'ab--theme-';
