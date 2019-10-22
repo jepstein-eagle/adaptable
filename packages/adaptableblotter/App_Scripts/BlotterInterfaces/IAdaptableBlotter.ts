@@ -93,7 +93,6 @@ export interface IAdaptableBlotter {
 
   // Used for internal events...
   on(eventName: string, callback: EmitterCallback): () => void;
-  onAny(callback: EmitterCallback): () => void;
   emit(eventName: string, data?: any): Promise<any>;
 
   // General
