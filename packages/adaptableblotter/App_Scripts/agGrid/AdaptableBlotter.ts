@@ -3008,7 +3008,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     themeNamesToRemove.forEach(cssClassName => el.classList.remove(cssClassName));
 
-    const newTheme = allThemesMap[themeName];
+    const newTheme: AdaptableBlotterTheme = allThemesMap[themeName];
     const newThemeClassName = `ab--theme-${themeName}`;
 
     el.classList.add(newThemeClassName);
