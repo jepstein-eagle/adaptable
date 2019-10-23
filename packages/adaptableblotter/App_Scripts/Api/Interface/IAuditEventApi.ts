@@ -12,7 +12,8 @@ import { IEvent } from '../../Utilities/Interface/IEvent';
  *
  * - **onAuditFunctionApplied**: fired when a Function has been run
  *
- * **These events are only fired if the Audit Options have been configured with the property *auditAsEvent* set to true**
+ * These events are **only fired if the Audit Log** has been configured with the property *auditAsEvent* set to **true** in [Audit Options](_blotteroptions_auditoptions_.auditoptions.html).
+ *
  */
 export interface IAuditEventApi {
   _onAuditStateChanged: EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>;
