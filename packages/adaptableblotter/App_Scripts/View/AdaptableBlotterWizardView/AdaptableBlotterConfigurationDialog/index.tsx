@@ -103,7 +103,7 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
       <Panel header={'Configure blotter'} border="none" style={{ flex: 1, overflow: 'auto' }}>
         <ConfigurationForm
           adaptableBlotterOptions={abOptions}
-          onChange={abOptions => {
+          onChangeBlotterOptions={abOptions => {
             setABOptions(abOptions);
           }}
         />

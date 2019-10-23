@@ -144,6 +144,9 @@ const getFilterIcon = (state: boolean) => {
 };
 
 export class AdaptableBlotter implements IAdaptableBlotter {
+  onAny(callback: EmitterCallback): () => void {
+    throw new Error('Method not implemented.');
+  }
   public api: IBlotterApi;
   public strategies: IStrategyCollection;
   public adaptableBlotterStore: IAdaptableBlotterStore;
@@ -1761,10 +1764,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.hyperGrid.behavior.reindex();
   }
 
-  public setGridData(data: any): void {
+  public setDataSource(data: any): void {
     let schema = this.hyperGrid.behavior.dataModel.dataSource.schema;
     this.hyperGrid.behavior.dataModel.dataSource.setData(data, schema);
     this.ReindexAndRepaint();
+  }
+
+  public addRows(dataRows: any[]): void {
+    // todo
+  }
+  public updateRows(dataRows: any[]): void {
+    // todo
+  }
+  public deleteRows(dataRows: any[]): void {
+    // todo
   }
 
   public getVendorGridInfo(): VendorGridInfo {

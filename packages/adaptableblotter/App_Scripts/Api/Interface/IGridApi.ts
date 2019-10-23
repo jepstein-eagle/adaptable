@@ -22,6 +22,17 @@ export interface IGridApi {
    */
   setGridData(data: any): void;
 
+  /**
+   * Updates the Adaptable Blotter (and underlying grid) with rows that have changed.
+   *
+   * @param dataRows the rows which have been updated.  Send the whole row and the Adaptable Blotter and underlying grid will take care of the rest.
+   */
+  updateGridData(dataRows: any[]): void;
+
+  addGridData(dataRows: any[]): void;
+
+  deleteGridData(dataRows: any[]): void;
+
   /** Returns all the columns in the Adaptable Blotter
    *
    * Each column has a number of properties such as Visiblity and Data Type

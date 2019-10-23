@@ -198,6 +198,9 @@ const forEachColumn = (
 };
 
 export class AdaptableBlotter implements IAdaptableBlotter {
+  onAny(callback: EmitterCallback): () => void {
+    throw new Error('Method not implemented.');
+  }
   public api: IBlotterApi;
 
   public strategies: IStrategyCollection;
@@ -2792,8 +2795,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api!.onSortChanged();
   }
 
-  public setGridData(dataSource: any) {
+  public setDataSource(dataSource: any) {
     this.gridOptions.api!.setRowData(dataSource);
+  }
+
+  public updateRows(dataRows: any[]): void {
+    this.gridOptions.api!.updateRowData({ update: dataRows });
+  }
+
+  public addRows(dataRows: any[]): void {
+    this.gridOptions.api!.updateRowData({ add: dataRows });
+  }
+
+  public deleteRows(dataRows: any[]): void {
+    this.gridOptions.api!.updateRowData({ remove: dataRows });
   }
 
   private updateQuickSearchRangeVisibleColumn(columnId: string): void {

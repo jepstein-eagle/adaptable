@@ -16,6 +16,7 @@ import { Entitlement } from '../../PredefinedConfig/DesignTimeState/Entitlements
 import { Box, Flex, Text } from 'rebass';
 import { StateChangedTrigger } from '../../PredefinedConfig/Common/Enums';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
+import HelpBlock from '../../components/HelpBlock';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
@@ -88,38 +89,39 @@ class DashboardPopupComponent extends React.Component<
     ).map(x => x.Label);
 
     let individualHomeToolbarOptions = (
-      <Flex margin={3} flexDirection="column">
+      <Flex margin={2} flexDirection="column">
+        <HelpBlock>{'Select which items should be visible in the Home Toolbar.'}</HelpBlock>
         <Checkbox
           onChange={checked => this.onShowFunctionsDropdownChanged(checked)}
           checked={this.props.DashboardState.ShowFunctionsDropdown}
         >
-          Show Functions Dropdown
+          Functions Dropdown
         </Checkbox>
         <Checkbox
           onChange={checked => this.onShowColumnsDropdownChanged(checked)}
           checked={this.props.DashboardState.ShowColumnsDropdown}
         >
-          Show Columns Dropdown
+          Columns Dropdown
         </Checkbox>
         <Checkbox
           onChange={checked => this.onShowToolbarsDropdownChanged(checked)}
           checked={this.props.DashboardState.ShowToolbarsDropdown}
         >
-          Show Toolbars Dropdown
+          Toolbars Dropdown
         </Checkbox>
 
         <Checkbox
           onChange={checked => this.onShowSystemStatusButtonChanged(checked)}
           checked={this.props.DashboardState.ShowSystemStatusButton}
         >
-          Show System Status Button
+          System Status Button
         </Checkbox>
 
         <Checkbox
           onChange={checked => this.onShowGridInfoButtonChanged(checked)}
           checked={this.props.DashboardState.ShowGridInfoButton}
         >
-          Show GridInfo Button
+          About (Grid) Button
         </Checkbox>
       </Flex>
     );

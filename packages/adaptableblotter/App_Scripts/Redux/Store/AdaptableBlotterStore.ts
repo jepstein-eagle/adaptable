@@ -238,6 +238,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       state.SmartEdit = undefined;
       state.CellSummary = undefined;
       state.Theme = undefined;
+      state.PartnerConfig = undefined;
       break;
     case LOAD_STATE:
       const { State } = action as LoadStateAction;

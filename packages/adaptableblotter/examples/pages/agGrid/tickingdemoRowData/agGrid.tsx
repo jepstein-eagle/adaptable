@@ -5,7 +5,11 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import {
+  AdaptableBlotterOptions,
+  PredefinedConfig,
+  IAdaptableBlotter,
+} from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
@@ -17,20 +21,20 @@ This uses the agGrid updateRowData method which does NOT call cell value changed
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeData: any = examplesHelper.getTrades(5);
-
+  const tradeData: any = examplesHelper.getTrades(25);
+  console.log(tradeData);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-
+  alert('hello');
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'ticking demo row '
+    'ticking demo row demo '
   );
   adaptableBlotterOptions.predefinedConfig = flashingJson;
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   // turn on mimicing ticking data
-  tickingDataHelper.startTickingDataagGridThroughRowData(gridOptions, tradeData);
+  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData);
 }
 
 let flashingJson: PredefinedConfig = {

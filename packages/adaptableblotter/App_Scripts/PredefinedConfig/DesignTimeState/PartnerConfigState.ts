@@ -1,7 +1,7 @@
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
-import { DesignTimeState } from '../DesignTimeState/DesignTimeState';
+import { DesignTimeState } from './DesignTimeState';
 import { Scope } from '../Common/Scope';
-import { PushPullConfig } from '../DesignTimeState/PushPullConfig';
+import { PushPullConfig } from './PushPullConfig';
 
 export interface PartnerConfigState extends DesignTimeState {
   pushPullConfig?: PushPullConfig;

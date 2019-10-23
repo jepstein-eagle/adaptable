@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { PartnerConfigState } from '../../PredefinedConfig/RunTimeState/PartnerConfigstate';
+import { PartnerConfigState } from '../../PredefinedConfig/DesignTimeState/PartnerConfigState';
 
 const initialFilterState: PartnerConfigState = {
   pushPullConfig: null,

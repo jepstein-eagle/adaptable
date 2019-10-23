@@ -120,12 +120,12 @@ export interface IBlotterApi {
   chartApi: IChartApi;
 
   /**
-   * Provides access to the *Column Caategory* function, the *Column Category* object and [Column Category State](_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html).
+   * Provides access to the *Column Category* function, the *Column Category* object and [Column Category State](_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html).
    */
   columnCategoryApi: IColumnCategoryApi;
 
   /**
-   * Provides access to the *Column Caategory* function.
+   * Provides access to the *Column Chooser* function.
    */
   columnChooserApi: IColumnChooserAPI;
 

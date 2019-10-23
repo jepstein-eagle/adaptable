@@ -37,7 +37,7 @@ import { SystemFilterState } from '../../../PredefinedConfig/DesignTimeState/Sys
 import { ActionColumnState } from '../../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { SparklineColumnState } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { NamedFilterState } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { PartnerConfigState } from '../../../PredefinedConfig/RunTimeState/PartnerConfigstate';
+import { PartnerConfigState } from '../../../PredefinedConfig/DesignTimeState/PartnerConfigState';
 
 export interface AdaptableBlotterState {
   [s: string]: ConfigState;

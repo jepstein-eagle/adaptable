@@ -15,7 +15,19 @@ export class GridApi extends ApiBase implements IGridApi {
   }
 
   public setGridData(dataSource: any): void {
-    this.blotter.setGridData(dataSource);
+    this.blotter.setDataSource(dataSource);
+  }
+
+  public updateGridData(dataRows: any[]): void {
+    this.blotter.updateRows(dataRows);
+  }
+
+  public addGridData(dataRows: any[]): void {
+    this.blotter.addRows(dataRows);
+  }
+
+  public deleteGridData(dataRows: any[]): void {
+    this.blotter.deleteRows(dataRows);
   }
 
   public getColumns(): AdaptableBlotterColumn[] {

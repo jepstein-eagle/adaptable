@@ -18,6 +18,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
+import { TickingDataHelper } from '../../TickingDataHelper';
 
 /*
 Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
@@ -28,7 +29,8 @@ Nor do we create the ag-Grid
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(100);
+  const tickingDataHelper = new TickingDataHelper();
+  const tradeData: any = examplesHelper.getTrades(25);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
@@ -83,14 +85,20 @@ function InitAdaptableBlotter() {
       document.querySelector('.ab-ApplicationToolbar__contents')
     );
   });
+
+  // tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData);
 }
 
 let demoConfig: PredefinedConfig = {
   PartnerConfig: {
     glue42Config: 'Hello ',
   },
+  FlashingCell: {
+    DefaultUpColor: '#462376',
+    DefautDownColor: '#07456d',
+  },
   Layout: {
-    CurrentLayout: 'test',
+    //  CurrentLayout: 'test',
     Layouts: [
       {
         Columns: ['tradeId', 'country', 'notional', 'stars', 'currency', 'ask', 'bid'],
