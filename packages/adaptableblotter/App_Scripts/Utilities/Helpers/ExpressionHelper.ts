@@ -154,9 +154,9 @@ export function checkForExpression(
 ): boolean {
   return IsSatisfied(
     Expression,
-    blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // this value raw
-    blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value display
-    blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // other column value
+    blotter.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // this value raw
+    blotter.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value display
+    blotter.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // other column value
     columns,
     blotter.api.userFilterApi.getAllUserFilter(),
     blotter.api.systemFilterApi.getAllSystemFilter(),
@@ -165,23 +165,26 @@ export function checkForExpression(
   );
 }
 
-export function checkForExpressionFromRecord(
+export function checkForExpressionFromRowNode(
   Expression: Expression,
-  record: any,
+  rowNode: any,
   columns: AdaptableBlotterColumn[],
   blotter: IAdaptableBlotter
 ): boolean {
   return IsSatisfied(
     Expression,
-    blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // this value
-    blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.DisplayValue), // this value
-    blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // other column value
+    blotter.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // this value
+    blotter.getRowNodeIsSatisfiedFunctionFromRowNode(
+      rowNode,
+      DistinctCriteriaPairValue.DisplayValue
+    ), // this value
+    blotter.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // other column value
     columns,
     blotter.api.userFilterApi.getAllUserFilter(),
     blotter.api.systemFilterApi.getAllSystemFilter(),
     blotter.api.namedFilterApi.getAllNamedFilter(),
     blotter,
-    record
+    rowNode
   );
 }
 
@@ -196,7 +199,7 @@ export function IsSatisfied(
   systemFilters: string[],
   namedFilters: NamedFilter[],
   blotter: IAdaptableBlotter,
-  record?: any
+  rowNode?: any
 ): boolean {
   let expressionColumnList = GetColumnListFromExpression(Expression);
   for (let columnId of expressionColumnList) {
@@ -285,7 +288,7 @@ export function IsSatisfied(
                 );
                 if (namedFilterFunction) {
                   let satisfyFunction = namedFilterFunction.func;
-                  isColumnSatisfied = satisfyFunction(record, columnId, columnValue);
+                  isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
                   if (isColumnSatisfied) {
                     break;
                   }
@@ -884,7 +887,7 @@ export const ExpressionHelper = {
   ConvertExpressionToString,
   ConvertRangeToString,
   checkForExpression,
-  checkForExpressionFromRecord,
+  checkForExpressionFromRowNode,
   IsSatisfied,
   OperatorToOneCharacterString,
   OperatorToShortFriendlyString,

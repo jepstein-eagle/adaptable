@@ -64,7 +64,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           }
           if (listOfColumnsToRefresh.length > 0) {
             let theBlotter = this.blotter as AdaptableBlotter;
-            theBlotter.refreshCells([dataChangedEvent.Record], listOfColumnsToRefresh);
+            theBlotter.refreshCells([dataChangedEvent.RowNode], listOfColumnsToRefresh);
           }
         }
       }
@@ -98,7 +98,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             cs.ColumnId == column.ColumnId
           ) {
             cellClassRules[styleName] = function(params: any) {
-              return ExpressionHelper.checkForExpressionFromRecord(
+              return ExpressionHelper.checkForExpressionFromRowNode(
                 cs.Expression,
                 params.node,
                 columns,
@@ -112,7 +112,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             if (columnCategory) {
               if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
                 cellClassRules[styleName] = function(params: any) {
-                  return ExpressionHelper.checkForExpressionFromRecord(
+                  return ExpressionHelper.checkForExpressionFromRowNode(
                     cs.Expression,
                     params.node,
                     columns,
@@ -123,7 +123,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             }
           } else if (cs.ConditionalStyleScope == ConditionalStyleScope.Row) {
             cellClassRules[styleName] = function(params: any) {
-              return ExpressionHelper.checkForExpressionFromRecord(
+              return ExpressionHelper.checkForExpressionFromRowNode(
                 cs.Expression,
                 params.node,
                 columns,

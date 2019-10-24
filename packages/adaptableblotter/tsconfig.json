@@ -16,8 +16,7 @@
   },
   "include": [
     "App_Scripts/**/*",
-    "Hypergrid/**/*",
-    "agGrid/**/*",
+     "agGrid/**/*",
     "agGrid.ts",
     "types.ts",
     "version.ts"

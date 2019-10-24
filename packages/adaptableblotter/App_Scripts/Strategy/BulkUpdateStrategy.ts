@@ -49,7 +49,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
   public CheckCorrectCellSelection(): BulkUpdateValidationResult {
     let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-    if (this.blotter.api.gridApi.IsGridInPivotMode()) {
+    if (this.blotter.api.gridApi.isGridInPivotMode()) {
       return {
         IsValid: false,
         Alert: {
@@ -113,7 +113,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
     let columnId: string = '';
-    if (!this.blotter.api.gridApi.IsGridInPivotMode()) {
+    if (!this.blotter.api.gridApi.isGridInPivotMode()) {
       if (selectedCellInfo != null && selectedCellInfo.Columns.length > 0) {
         columnId = selectedCellInfo.Columns[0].ColumnId;
         let typedBulkUpdateValue: any;
@@ -135,7 +135,6 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             NewValue: typedBulkUpdateValue,
             ColumnId: selectedCell.columnId,
             IdentifierValue: selectedCell.primaryKeyValue,
-            Record: null,
           };
 
           let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(

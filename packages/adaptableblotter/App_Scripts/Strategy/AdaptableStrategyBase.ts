@@ -155,10 +155,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       } else if (functionType == 'columnfilter') {
         return column.Filterable;
       } else if (functionType == 'quickfilter') {
-        return (
-          blotter.hasQuickFilter &&
-          blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
-        );
+        return blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter;
       }
     }
     return true;

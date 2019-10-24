@@ -15,14 +15,6 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   }
   private currentFlashing: Map<any, number>;
 
-  protected shouldHandleDataSourceChanged(): boolean {
-    return false;
-  }
-
-  protected FlashCell(dataChangedInfo: DataChangedInfo, flashingCell: FlashingCell): void {
-    // dont handle
-  }
-
   public initStyles(): void {
     let numericColumns = ColumnHelper.getNumericColumns(this.blotter.api.gridApi.getColumns());
     let theBlotter = this.blotter as AdaptableBlotter;
@@ -33,7 +25,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
       let cellClassRules: any = {};
       if (fc) {
         cellClassRules[StyleConstants.FLASH_UP_STYLE + '-' + fc.Uuid] = function(params: any) {
-          let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
+          let primaryKey = theBlotter.getPrimaryKeyValueFromRowNode(params.node);
           let key = primaryKey + col.ColumnId + 'up';
           let currentFlashTimer = currentFlashing.get(key);
           if (currentFlashTimer) {
@@ -62,7 +54,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
         };
 
         cellClassRules[StyleConstants.FLASH_DOWN_STYLE + '-' + fc.Uuid] = function(params: any) {
-          let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
+          let primaryKey = theBlotter.getPrimaryKeyValueFromRowNode(params.node);
           let key = primaryKey + col.ColumnId + 'down';
           let currentFlashTimer = currentFlashing.get(key);
           if (currentFlashTimer) {

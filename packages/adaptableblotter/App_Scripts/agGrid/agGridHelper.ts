@@ -183,10 +183,10 @@ export class agGridHelper {
       }
 
       const maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId)
-        ? this.blotter.getRawValueFromRecord(params.node, pcr.MaxValueColumnId)
+        ? this.blotter.getRawValueFromRowNode(params.node, pcr.MaxValueColumnId)
         : pcr.MaxValue;
       const minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId)
-        ? this.blotter.getRawValueFromRecord(params.node, pcr.MinValueColumnId)
+        ? this.blotter.getRawValueFromRowNode(params.node, pcr.MinValueColumnId)
         : pcr.MinValue;
 
       if (isNegativeValue) {
@@ -429,7 +429,7 @@ export class agGridHelper {
     // lets build a picture of what has been right clicked.  Will take time to get right but lets start
 
     const colId = params.column.getColId();
-    const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRecord(params.node);
+    const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRowNode(params.node);
     let isSingleSelectedColumn: boolean = false;
     let clickedCell: GridCell = {
       columnId: colId,
@@ -452,7 +452,7 @@ export class agGridHelper {
       isSelectedCell: isSelectedCell,
       gridCell: clickedCell,
       column: column,
-      record: params.node,
+      rowNode: params.node,
       isSingleSelectedColumn: isSingleSelectedColumn,
     };
   }

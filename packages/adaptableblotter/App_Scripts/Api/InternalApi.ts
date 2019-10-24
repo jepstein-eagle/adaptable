@@ -56,6 +56,14 @@ export class InternalApi extends ApiBase implements IInternalApi {
     this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
   }
 
+  public showLoadingScreen(): void {
+    this.dispatchAction(PopupRedux.PopupShowLoading());
+  }
+
+  public hideLoadingScreen(): void {
+    this.dispatchAction(PopupRedux.PopupHideLoading());
+  }
+
   public showPopupScreen(
     strategyId: string,
     componentName: string,

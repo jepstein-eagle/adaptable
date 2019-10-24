@@ -1,7 +1,6 @@
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { BlotterFactoryAgGrid } from '../agGrid/BlotterFactoryAgGrid';
-import { BlotterFactoryHypergrid } from '../Hypergrid/BlotterFactoryHypergrid';
 
 /**
  * We would like to get rid of this annoying class.
@@ -17,7 +16,7 @@ export module BlotterFactory {
       case 'agGrid':
         return BlotterFactoryAgGrid.CreateAdaptableBlotter(adaptableBlotterOptions, false);
       case 'Hypergrid':
-        return BlotterFactoryHypergrid.CreateAdaptableBlotter(adaptableBlotterOptions, false);
+        return null;
     }
   }
 }

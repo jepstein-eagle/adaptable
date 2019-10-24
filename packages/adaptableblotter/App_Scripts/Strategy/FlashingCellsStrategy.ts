@@ -18,11 +18,6 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.FlashingCellsStrategyId, blotter);
-    if (this.shouldHandleDataSourceChanged()) {
-      this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
-        this.handleDataSourceChanged(eventText)
-      );
-    }
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
@@ -72,17 +67,4 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   }
 
   public abstract initStyles(): void;
-
-  protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo) {
-    let flashingCell: FlashingCell = this.blotter.api.flashingCellApi
-      .getAllFlashingCell()
-      .find(f => f.ColumnId == dataChangedInfo.ColumnId);
-    if (flashingCell && flashingCell.IsLive) {
-      this.FlashCell(dataChangedInfo, flashingCell);
-    }
-  }
-
-  protected abstract shouldHandleDataSourceChanged(): boolean;
-
-  protected abstract FlashCell(dataChangedInfo: DataChangedInfo, flashingCell: FlashingCell): void;
 }

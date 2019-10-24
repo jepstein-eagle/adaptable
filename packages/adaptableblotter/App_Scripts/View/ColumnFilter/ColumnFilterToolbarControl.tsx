@@ -82,7 +82,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
           </>
         )}
         <CheckBox
-          disabled={this.props.Blotter.api.gridApi.IsGridInPivotMode()}
+          disabled={this.props.Blotter.api.gridApi.isGridInPivotMode()}
           marginLeft={3}
           checked={this.props.IsQuickFilterActive}
           onChange={(checked: boolean) => {

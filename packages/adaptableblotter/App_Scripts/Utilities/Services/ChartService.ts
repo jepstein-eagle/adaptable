@@ -95,21 +95,21 @@ export class ChartService implements IChartService {
       values = [];
       const forEach = (row: any) => {
         if (
-          ExpressionHelper.checkForExpressionFromRecord(
+          ExpressionHelper.checkForExpressionFromRowNode(
             chartDefinition.Expression,
             row,
             columns,
             this.blotter
           )
         ) {
-          let columnValue = this.blotter.getRawValueFromRecord(row, chartDefinition.ColumnId);
+          let columnValue = this.blotter.getRawValueFromRowNode(row, chartDefinition.ColumnId);
           values.push(columnValue);
         }
       };
       if (chartDefinition.VisibleRowsOnly) {
-        this.blotter.forAllVisibleRecordsDo(forEach);
+        this.blotter.forAllVisibleRowNodesDo(forEach);
       } else {
-        this.blotter.forAllRecordsDo(forEach);
+        this.blotter.forAllRowNodesDo(forEach);
       }
     } else {
       values = [];
@@ -172,9 +172,9 @@ export class ChartService implements IChartService {
     let returnedRecordCount: number = 0;
 
     if (chartDefinition.VisibleRowsOnly) {
-      this.blotter.forAllVisibleRecordsDo(row => {
+      this.blotter.forAllVisibleRowNodesDo(row => {
         if (
-          ExpressionHelper.checkForExpressionFromRecord(
+          ExpressionHelper.checkForExpressionFromRowNode(
             completedExpression,
             row,
             columns,
@@ -182,14 +182,14 @@ export class ChartService implements IChartService {
           )
         ) {
           returnedRecordCount++;
-          let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn);
+          let columnValue = this.blotter.getRawValueFromRowNode(row, yAxisColumn);
           finalTotal += Number(columnValue);
         }
       });
     } else {
-      this.blotter.forAllRecordsDo(row => {
+      this.blotter.forAllRowNodesDo(row => {
         if (
-          ExpressionHelper.checkForExpressionFromRecord(
+          ExpressionHelper.checkForExpressionFromRowNode(
             completedExpression,
             row,
             columns,
@@ -197,7 +197,7 @@ export class ChartService implements IChartService {
           )
         ) {
           returnedRecordCount++;
-          let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn);
+          let columnValue = this.blotter.getRawValueFromRowNode(row, yAxisColumn);
           finalTotal += Number(columnValue);
         }
       });
@@ -228,11 +228,11 @@ export class ChartService implements IChartService {
         });
     } else {
       if (chartDefinition.VisibleRowsOnly) {
-        this.blotter.forAllVisibleRecordsDo(row => {
+        this.blotter.forAllVisibleRowNodesDo(row => {
           this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
         });
       } else {
-        this.blotter.forAllRecordsDo(row => {
+        this.blotter.forAllRowNodesDo(row => {
           this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
         });
       }
@@ -247,14 +247,14 @@ export class ChartService implements IChartService {
     xAxisColValues: string[]
   ): void {
     if (
-      ExpressionHelper.checkForExpressionFromRecord(
+      ExpressionHelper.checkForExpressionFromRowNode(
         chartDefinition.XAxisExpression,
         row,
         columns,
         this.blotter
       )
     ) {
-      let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId);
+      let columnValue = this.blotter.getDisplayValueFromRowNode(row, chartDefinition.XAxisColumnId);
       ArrayExtensions.AddItem(xAxisColValues, columnValue);
     }
   }
@@ -276,18 +276,18 @@ export class ChartService implements IChartService {
 
     if (ArrayExtensions.IsNotNullOrEmpty(chartDefinition.PrimaryKeyValues)) {
       // if doing Primary Key Values then we know that we have no secondary column and no need to worry about visible rows
-      this.blotter.getRecordsForPrimaryKeys(chartDefinition.PrimaryKeyValues).forEach(row => {
+      this.blotter.getRowNodesForPrimaryKeys(chartDefinition.PrimaryKeyValues).forEach(row => {
         this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
       });
     } else {
       if (chartDefinition.VisibleRowsOnly) {
-        this.blotter.forAllVisibleRecordsDo(row => {
+        this.blotter.forAllVisibleRowNodesDo(row => {
           valueTotal = hasSecondaryColumn
             ? this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
             : this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
         });
       } else {
-        this.blotter.forAllRecordsDo(row => {
+        this.blotter.forAllRowNodesDo(row => {
           valueTotal = hasSecondaryColumn
             ? this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
             : this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
@@ -440,8 +440,11 @@ export class ChartService implements IChartService {
     dataCounter: Map<any, number>,
     valueTotal: number
   ): number {
-    let primaryCellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
-    let secondaryCellValue = this.blotter.getRawValueFromRecord(
+    let primaryCellValue = this.blotter.getRawValueFromRowNode(
+      row,
+      chartDefinition.PrimaryColumnId
+    );
+    let secondaryCellValue = this.blotter.getRawValueFromRowNode(
       row,
       chartDefinition.SecondaryColumnId
     );
@@ -474,7 +477,7 @@ export class ChartService implements IChartService {
     dataCounter: Map<any, number>,
     valueTotal: number
   ): number {
-    let cellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
+    let cellValue = this.blotter.getRawValueFromRowNode(row, chartDefinition.PrimaryColumnId);
     if (Helper.objectNotExists(cellValue)) {
       return valueTotal;
     }

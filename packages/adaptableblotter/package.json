@@ -77,7 +77,6 @@
     "eslint-plugin-import": "^2.16.0",
     "express": "^4.16.3",
     "file-loader": "^0.11.2",
-    "fin-hypergrid-data-source-base": "^0.4.11",
     "html-webpack-plugin": "^2.28.0",
     "increase-memory-limit": "^1.0.6",
     "node-sass": "^4.12.0",
@@ -125,7 +124,6 @@
     "data",
     "table",
     "openfin",
-    "hypergrid",
     "ag-grid",
     "blotter"
   ],

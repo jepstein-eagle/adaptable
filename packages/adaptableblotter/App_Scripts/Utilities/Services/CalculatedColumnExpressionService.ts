@@ -17,7 +17,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
   GetCalculatedColumnDataType(expression: string): DataType {
     try {
-      let firstRecord = this.blotter.getFirstRecord();
+      let firstRecord = this.blotter.getFirstRowNode();
       let firstRowValue: any = math.eval(expression, {
         Col: (columnId: string) => {
           try {
@@ -41,7 +41,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
         expression,
         columns
       );
-      let firstRecord = this.blotter.getFirstRecord();
+      let firstRecord = this.blotter.getFirstRowNode();
       math.eval(cleanedExpression, {
         Col: (columnId: string) => {
           try {
@@ -60,7 +60,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
   ComputeExpressionValue(expression: string, record: any): any {
     try {
-      if (this.blotter.isGroupRecord(record)) {
+      if (this.blotter.isGroupRowNode(record)) {
         return undefined;
       }
       return math.eval(expression, {

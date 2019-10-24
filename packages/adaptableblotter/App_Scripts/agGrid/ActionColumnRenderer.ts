@@ -51,7 +51,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
       this.eventListener = function() {
         let eventArgs: ActionColumnClickedEventArgs = {
           actionColumn: actionCol as ActionColumn,
-          primaryKeyValue: blotter.getPrimaryKeyValueFromRecord(params.node),
+          primaryKeyValue: blotter.getPrimaryKeyValueFromRowNode(params.node),
           rowData: params.data,
         };
         blotter.api.eventApi._onActionColumnClicked.Dispatch(blotter, eventArgs);

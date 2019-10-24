@@ -305,7 +305,7 @@ export class AuditLogService implements IAuditLogService {
         column_id: dataChangedInfo.ColumnId,
         previous_value: String(dataChangedInfo.OldValue),
         new_value: String(dataChangedInfo.NewValue),
-        row_data: this.blotter.getDataRowFromRecord(dataChangedInfo.Record),
+        row_data: this.blotter.getDataRowFromRowNode(dataChangedInfo.RowNode),
       },
     };
   }

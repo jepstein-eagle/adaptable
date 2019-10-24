@@ -41,7 +41,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     contextMenuInfo: ContextMenuInfo
   ): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (contextMenuInfo.column && contextMenuInfo.record) {
+    if (contextMenuInfo.column && contextMenuInfo.rowNode) {
       let currentAlerts: AdaptableAlert[] = this.blotter.api.internalApi
         .getAdaptableAlerts()
         .filter(a => a.DataChangedInfo && a.AlertDefinition.AlertProperties.HighlightCell);
@@ -49,7 +49,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
         let relevantAlert: AdaptableAlert = currentAlerts.find(
           a =>
             a.AlertDefinition.ColumnId == contextMenuInfo.column.ColumnId &&
-            a.DataChangedInfo.Record == contextMenuInfo.record
+            a.DataChangedInfo.RowNode == contextMenuInfo.rowNode
         );
         if (relevantAlert) {
           menuItemShowPopup = this.createColumnMenuItemReduxAction(

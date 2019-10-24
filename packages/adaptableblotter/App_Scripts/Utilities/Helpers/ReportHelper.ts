@@ -146,14 +146,14 @@ export function ConvertReportToArray(
   // now populate the rest of the rows
   switch (Report.ReportRowScope) {
     case ReportRowScope.AllRows:
-      blotter.forAllRecordsDo(row => {
+      blotter.forAllRowNodesDo(row => {
         let newRow = getRowValues(row, ReportColumns, blotter);
         dataToExport.push(newRow);
       });
       break;
 
     case ReportRowScope.VisibleRows:
-      blotter.forAllVisibleRecordsDo(row => {
+      blotter.forAllVisibleRowNodesDo(row => {
         let newRow = getRowValues(row, ReportColumns, blotter);
         dataToExport.push(newRow);
       });
@@ -162,9 +162,9 @@ export function ConvertReportToArray(
     case ReportRowScope.ExpressionRows:
       let expressionToCheck: Expression = Report.Expression;
 
-      blotter.forAllRecordsDo(row => {
+      blotter.forAllRowNodesDo(row => {
         if (
-          ExpressionHelper.checkForExpressionFromRecord(
+          ExpressionHelper.checkForExpressionFromRowNode(
             expressionToCheck,
             row,
             ReportColumns,
@@ -217,13 +217,13 @@ export function ConvertReportToArray(
 }
 
 function getRowValues(
-  row: any,
+  rowNode: any,
   ReportColumns: AdaptableBlotterColumn[],
   blotter: IAdaptableBlotter
 ): any[] {
   let newRow: any[] = [];
   ReportColumns.forEach(col => {
-    let columnValue: any = blotter.getDisplayValueFromRecord(row, col.ColumnId);
+    let columnValue: any = blotter.getDisplayValueFromRowNode(rowNode, col.ColumnId);
     newRow.push(columnValue);
   });
   return newRow;

@@ -133,8 +133,8 @@ export interface IAdaptableBlotter {
   setColumnIntoStore(): void;
   setNewColumnListOrder(visibleColumnList: Array<AdaptableBlotterColumn>): void;
 
-  // getting records and keys
-  getPrimaryKeyValueFromRecord(record: any): any;
+  // getting rowNode and keys
+  getPrimaryKeyValueFromRowNode(rowNode: any): any;
   getColumnValueDisplayValuePairList(
     columnId: string,
     visibleRowsOnly: boolean,
@@ -146,19 +146,19 @@ export interface IAdaptableBlotter {
     visibleRowsOnly: boolean
   ): Array<IRawValueDisplayValuePair>;
   getDisplayValue(id: any, columnId: string): string;
-  getDisplayValueFromRecord(row: any, columnId: string): string;
-  getRawValueFromRecord(row: any, columnId: string): any;
-  getRecordIsSatisfiedFunction(
+  getDisplayValueFromRowNode(rowwNode: any, columnId: string): string;
+  getRawValueFromRowNode(rowwNode: any, columnId: string): any;
+  getRowNodeIsSatisfiedFunction(
     id: any,
     distinctCriteria: DistinctCriteriaPairValue
   ): (columnId: string) => any;
-  getRecordIsSatisfiedFunctionFromRecord(
-    record: any,
+  getRowNodeIsSatisfiedFunctionFromRowNode(
+    rowNode: any,
     distinctCriteria: DistinctCriteriaPairValue
   ): (columnId: string) => any;
   getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
-  getDataRowFromRecord(record: any): any;
-  getRecordsForPrimaryKeys(primaryKeyValues: any[]): any[];
+  getDataRowFromRowNode(rowNode: any): any;
+  getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
 
   // editing related
   setValue(gridCell: GridCell): void;
@@ -168,10 +168,10 @@ export interface IAdaptableBlotter {
   getCurrentCellEditValue(): any;
 
   // Row Methods
-  getFirstRecord(): any;
-  forAllRecordsDo(func: (record: any) => any): void;
-  forAllVisibleRecordsDo(func: (record: any) => any): void;
-  isGroupRecord(record: any): boolean;
+  getFirstRowNode(): any;
+  forAllRowNodesDo(func: (rowNode: any) => any): void;
+  forAllVisibleRowNodesDo(func: (rowNode: any) => any): void;
+  isGroupRowNode(rowNode: any): boolean;
 
   //  Sort
   setCustomSort(columnId: string, comparer: Function): void;
@@ -222,7 +222,6 @@ export interface IAdaptableBlotter {
   isSelectable(): boolean;
 
   // quick filter
-  hasQuickFilter: boolean;
   showQuickFilter(): void;
   hideQuickFilter(): void;
 

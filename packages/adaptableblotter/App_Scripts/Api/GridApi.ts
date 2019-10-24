@@ -8,6 +8,7 @@ import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
+import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {
@@ -70,13 +71,34 @@ export class GridApi extends ApiBase implements IGridApi {
     this.blotter.setValue(gridCell);
   }
 
+  public setColumns(columns: AdaptableBlotterColumn[]): void {
+    this.dispatchAction(GridRedux.GridSetColumns(columns));
+  }
+
   public setGridCellBatch(gridCells: GridCell[]): void {
     this.blotter.setValueBatch(gridCells);
+  }
+
+  public setMainMenuItems(menuItems: AdaptableBlotterMenuItem[]): void {
+    this.dispatchAction(GridRedux.SetMainMenuItems(menuItems));
+  }
+
+  public setSelectedCells(selectedCellInfo: SelectedCellInfo): void {
+    this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCellInfo));
+  }
+
+  public setSelectedRows(selectedRowInfo: SelectedRowInfo): void {
+    this.dispatchAction(GridRedux.GridSetSelectedRows(selectedRowInfo));
+  }
+
+  public showQuickFilterBar(): void {
+    this.dispatchAction(GridRedux.QuickFilterBarShow());
   }
 
   public setGlue42On(): void {
     this.dispatchAction(GridRedux.SetGlue42On());
   }
+
   public setGlue42Off(): void {
     this.dispatchAction(GridRedux.SetGlue42Off());
   }
@@ -89,7 +111,15 @@ export class GridApi extends ApiBase implements IGridApi {
     this.dispatchAction(GridRedux.SetPivotModeOff());
   }
 
-  public IsGridInPivotMode(): boolean {
+  public isGridInPivotMode(): boolean {
     return this.getGridState().IsGridInPivotMode;
+  }
+
+  public addAdaptableBlotterColumn(adaptableBlotterColumn: AdaptableBlotterColumn): void {
+    this.dispatchAction(GridRedux.GridAddColumn(adaptableBlotterColumn));
+  }
+
+  public setColumnSorts(columnSorts: ColumnSort[]): void {
+    this.dispatchAction(GridRedux.GridSetSort(columnSorts));
   }
 }

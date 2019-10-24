@@ -1981,7 +1981,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               actionTyped.Alert.AlertDefinition.AlertProperties.HighlightCell &&
               actionTyped.Alert.DataChangedInfo
             ) {
-              let record = actionTyped.Alert.DataChangedInfo.Record;
+              let record = actionTyped.Alert.DataChangedInfo.RowNode;
               blotter.refreshCells([record], [actionTyped.Alert.DataChangedInfo.ColumnId]);
             }
             return ret;
@@ -1998,7 +1998,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let alerts: AdaptableAlert[] = actionTyped.Alerts;
             alerts.forEach(alert => {
               if (alert.AlertDefinition.AlertProperties.HighlightCell && alert.DataChangedInfo) {
-                let record = alert.DataChangedInfo.Record;
+                let record = alert.DataChangedInfo.RowNode;
                 blotter.refreshCells([record], [alert.DataChangedInfo.ColumnId]);
               }
             });

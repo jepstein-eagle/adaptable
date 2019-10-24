@@ -157,7 +157,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             NewValue: newValue.value,
             ColumnId: selectedCell.columnId,
             IdentifierValue: selectedCell.primaryKeyValue,
-            Record: null,
           };
 
           let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(

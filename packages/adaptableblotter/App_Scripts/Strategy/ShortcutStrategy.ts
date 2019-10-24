@@ -106,7 +106,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
           NewValue: valueToReplace,
           ColumnId: activeCell.columnId,
           IdentifierValue: activeCell.primaryKeyValue,
-          Record: null,
         };
 
         let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(

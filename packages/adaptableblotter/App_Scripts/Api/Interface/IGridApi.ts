@@ -4,6 +4,7 @@ import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCe
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
 
 /**
  * Provides access to important elements of the Adaptable Blotter like columns, sorting, selected cells etc.
@@ -90,6 +91,16 @@ export interface IGridApi {
    */
   setGridCellBatch(gridCells: GridCell[]): void;
 
+  setColumns(columns: AdaptableBlotterColumn[]): void;
+
+  setMainMenuItems(menuItems: AdaptableBlotterMenuItem[]): void;
+
+  setSelectedCells(selectedCellInfo: SelectedCellInfo): void;
+
+  setSelectedRows(selectedRowInfo: SelectedRowInfo): void;
+
+  showQuickFilterBar(): void;
+
   setGlue42On(): void;
 
   setGlue42Off(): void;
@@ -98,5 +109,9 @@ export interface IGridApi {
 
   setPivotModeOff(): void;
 
-  IsGridInPivotMode(): boolean;
+  isGridInPivotMode(): boolean;
+
+  addAdaptableBlotterColumn(adaptableBlotterColumn: AdaptableBlotterColumn): void;
+
+  setColumnSorts(columnSorts: ColumnSort[]): void;
 }

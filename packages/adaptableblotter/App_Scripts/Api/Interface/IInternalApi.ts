@@ -28,6 +28,9 @@ export interface IInternalApi {
    */
   showPopupConfirmation(confirmation: IUIConfirmation): void;
 
+  showLoadingScreen(): void;
+  hideLoadingScreen(): void;
+
   /**
    * Shows a Strategy Popup
    */

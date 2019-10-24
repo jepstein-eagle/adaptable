@@ -6,7 +6,6 @@ module.exports = {
     './App_Scripts/agGrid/**/*',
     './App_Scripts/View/**/*',
     './App_Scripts/components/**/*',
-    './App_Scripts/Hypergrid/**/*',
     './App_Scripts/Redux/**/*',
     './App_Scripts/Strategy/**/*',
     './App_Scripts/Utilities/**/*',

@@ -81,7 +81,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
     let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
-    if (this.blotter.api.gridApi.IsGridInPivotMode()) {
+    if (this.blotter.api.gridApi.isGridInPivotMode()) {
       return {
         Alert: {
           Header: 'Smart Edit Error',
@@ -154,7 +154,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     let previewResults: IPreviewResult[] = [];
     let columnId: string = '';
 
-    if (!this.blotter.api.gridApi.IsGridInPivotMode()) {
+    if (!this.blotter.api.gridApi.isGridInPivotMode()) {
       if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
         let column: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
         if (column) {
@@ -187,7 +187,6 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
               NewValue: newValue,
               ColumnId: selectedCell.columnId,
               IdentifierValue: selectedCell.primaryKeyValue,
-              Record: null,
             };
 
             let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(

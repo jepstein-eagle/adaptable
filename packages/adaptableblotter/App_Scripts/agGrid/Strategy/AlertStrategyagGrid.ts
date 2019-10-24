@@ -29,13 +29,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
 
         if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
           alertDefinitions.forEach((alertDefinition: AlertDefinition) => {
-            // let styleName: string = StyleHelper.CreateUniqueStyleName(
-            //   StrategyConstants.AlertStrategyId,
-            //   this.blotter,
-            //   alertDefinition
-            // );
-
-            let styleName = `ab-alert--${alertDefinition.MessageType.toLowerCase()}`;
+            let styleName = StyleConstants.ALERT_STYLE + alertDefinition.MessageType.toLowerCase();
 
             cellClassRules[styleName] = function(params: any) {
               let currentAlerts: AdaptableAlert[] = theBlotter.api.internalApi.getAdaptableAlerts();
@@ -47,7 +41,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
                     aa.AlertDefinition.MessageType == alertDefinition.MessageType &&
                     aa.DataChangedInfo &&
                     aa.DataChangedInfo.IdentifierValue ==
-                      theBlotter.getPrimaryKeyValueFromRecord(params.node)
+                      theBlotter.getPrimaryKeyValueFromRowNode(params.node)
 
                   //   return result;
                 );

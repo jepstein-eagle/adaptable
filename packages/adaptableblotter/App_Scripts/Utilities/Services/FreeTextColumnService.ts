@@ -15,11 +15,11 @@ export class FreeTextColumnService implements IFreeTextColumnService {
 
   GetFreeTextValue(freeTextColumn: FreeTextColumn, record: any): any {
     try {
-      if (this.blotter.isGroupRecord(record)) {
+      if (this.blotter.isGroupRowNode(record)) {
         return null;
       }
       if (ArrayExtensions.IsNotNullOrEmpty(freeTextColumn.FreeTextStoredValues)) {
-        let pkValue: any = this.blotter.getPrimaryKeyValueFromRecord(record);
+        let pkValue: any = this.blotter.getPrimaryKeyValueFromRowNode(record);
         let freeTextStoredValue:
           | FreeTextStoredValue
           | undefined = freeTextColumn.FreeTextStoredValues.find(fdx => fdx.PrimaryKey == pkValue);
