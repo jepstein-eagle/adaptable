@@ -86,7 +86,7 @@ function InitAdaptableBlotter() {
     );
   });
 
-  // tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData);
+  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData);
 }
 
 let demoConfig: PredefinedConfig = {
@@ -97,6 +97,7 @@ let demoConfig: PredefinedConfig = {
     DefaultUpColor: '#462376',
     DefautDownColor: '#07456d',
   },
+  /*
   Layout: {
     //  CurrentLayout: 'test',
     Layouts: [
@@ -107,6 +108,7 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
+  */
 };
 
 export default () => {

@@ -1,6 +1,7 @@
 import {
   FlashingCellState,
   FlashingCell,
+  FlashingRow,
 } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import * as Redux from 'redux';
 import {
@@ -10,12 +11,17 @@ import {
 } from '../../Utilities/Constants/GeneralConstants';
 import { getHexForName, DARK_GREEN, DARK_RED, RED, LIGHT_BLUE } from '../../View/UIHelper';
 
+export const FLASHING_ROW_ENABLE_DISABLE = 'FLASHING_ROW_ENABLE_DISABLE';
+
 export const FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';
 export const FLASHING_CELL_SELECT_ALL = 'FLASHING_CELL_SELECT_ALL';
 export const FLASHING_CELL_CHANGE_UP_COLOR = 'FLASHING_CELL_CHANGE_UP_COLOR';
 export const FLASHING_CELL_CHANGE_DOWN_COLOR = 'FLASHING_CELL_CHANGE_DOWN_COLOR';
 export const FLASHING_CELL_CHANGE_DURATION = 'FLASHING_CELL_CHANGE_DURATION';
 
+export interface FlashingRowEnableDisableAction extends Redux.Action {
+  shouldEnable: boolean;
+}
 export interface FlashingCellSelectAction extends Redux.Action {
   FlashingCell: FlashingCell;
 }
@@ -39,6 +45,13 @@ export interface FlashingCellChangeDownColorAction extends Redux.Action {
   FlashingCell: FlashingCell;
   DownColor: string;
 }
+
+export const FlashingRowEnableDisable = (
+  shouldEnable: boolean
+): FlashingRowEnableDisableAction => ({
+  type: FLASHING_ROW_ENABLE_DISABLE,
+  shouldEnable,
+});
 
 export const FlashingCellSelect = (FlashingCell: FlashingCell): FlashingCellSelectAction => ({
   type: FLASHING_CELL_SELECT,
@@ -100,6 +113,15 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
   action: Redux.Action
 ): FlashingCellState => {
   switch (action.type) {
+    case FLASHING_ROW_ENABLE_DISABLE: {
+      let shouldEnable = (action as FlashingRowEnableDisableAction).shouldEnable;
+      let flashingRow: FlashingRow = state.FlashingRow;
+      flashingRow.EnableFlashingRow = shouldEnable;
+      return Object.assign({}, state, {
+        FlashingRow: flashingRow,
+      });
+    }
+
     case FLASHING_CELL_SELECT: {
       let selectedFlashingCell = (action as FlashingCellSelectAction).FlashingCell;
       let items: Array<FlashingCell> = [].concat(state.FlashingCells);
