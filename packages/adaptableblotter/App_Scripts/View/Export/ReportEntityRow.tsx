@@ -87,10 +87,11 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
+      ReportHelper.IsReportDestinationActive(ExportDestination.OpenfinExcel, null) &&
         openfinExcelMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.iPushPull) && iPushPullExcelMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.Glue42) && glue42MenuItem,
+      ReportHelper.IsReportDestinationActive(ExportDestination.iPushPull, null) &&
+        iPushPullExcelMenuItem,
+      ReportHelper.IsReportDestinationActive(ExportDestination.Glue42, null) && glue42MenuItem,
     ].filter(x => !!x);
 
     let exportButton = (

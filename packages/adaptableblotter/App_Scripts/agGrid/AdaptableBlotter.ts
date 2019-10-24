@@ -129,7 +129,6 @@ import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/A
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
-import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { QuickSearchState } from '../PredefinedConfig/RunTimeState/QuickSearchState';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
@@ -164,6 +163,7 @@ import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterW
 import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { DASHBOARD_SET_TOOLBARS } from '../Redux/ActionsReducers/DashboardRedux';
 import { AlertProperties, AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
+import { IGlue42Service, Glue42Service } from '../Utilities/Services/Glue42Service';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -230,6 +230,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public ScheduleService: IScheduleService;
 
   public SearchService: ISearchService;
+
+  public Glue42Service: IGlue42Service;
 
   public embedColumnMenu: boolean;
 
@@ -304,6 +306,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.FreeTextColumnService = new FreeTextColumnService(this);
     this.ScheduleService = new ScheduleService(this);
     this.SearchService = new SearchService(this);
+    this.Glue42Service = new Glue42Service(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
       this,
       (columnId, record) => this.gridOptions.api!.getValue(columnId, record)
