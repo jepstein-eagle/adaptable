@@ -12,6 +12,10 @@ import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { Glue42Config } from '../../PredefinedConfig/DesignTimeState/Glue42Config';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import LoggingHelper, {
+  LogAdaptableBlotterError,
+  LogAdaptableBlotterWarning,
+} from '../Helpers/LoggingHelper';
 
 export interface IGlue42ExportError {
   row: number;
@@ -58,22 +62,11 @@ export class Glue42Service implements IGlue42Service {
     try {
       let glue42PartnerConfig: Glue42Config = this.blotter.api.partnerConfigApi.getPartnerConfigState()
         .glue42Config;
-      //HACK: Remove this once PartnerConfigRedux fixed:
-      //      glue42PartnerConfig = {
-      //        application: 'AdaptableBlotterDemo',
-      //        gateway: {
-      //          protocolVersion: 3,
-      //          ws: 'ws://localhost:8385',
-      //        },
-      //        auth: {
-      //          username: 'demouser', // TODO: Change the username to 'demouser' berofe committing the changes
-      //          password: 'demopassword',
-      //        },
-      //      };
+      console.log('in glue 42 service init ' + glue42PartnerConfig);
 
       if (!glue42PartnerConfig) {
         this.blotter.api.gridApi.setGlue42Off();
-        console.log('Glue42 config is null or empty');
+        LogAdaptableBlotterWarning('No Glue42 config was provided');
         return;
       }
 
@@ -85,16 +78,13 @@ export class Glue42Service implements IGlue42Service {
       this.glue4ExcelInstance = glue4OfficeInstance.excel as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
       this.blotter.api.gridApi.setGlue42On();
-
-      // NOTE by Jonny, 18/9/19:  you will need to set this to true here if you want it to work
-      // something like blotter.api.gridApi.setGlue42On();
     } catch (error) {
-      console.log(error);
+      LogAdaptableBlotterError(error);
       this.blotter.api.gridApi.setGlue42Off();
     }
   }
 
-  async exportData(data: any[], gridColumns: IColumn[], blotter: IAdaptableBlotter) {
+  async exportData(data: any[], gridColumns: AdaptableBlotterColumn[], blotter: IAdaptableBlotter) {
     if (!this.glueInstance) {
       return;
     }
@@ -132,7 +122,7 @@ export class Glue42Service implements IGlue42Service {
    * Walks through the delta.
    */
   private getSheetChangeHandler(
-    gridColumns: IColumn[],
+    gridColumns: AdaptableBlotterColumn[],
     sentRows: any[],
     exportColumns: any[]
   ): SheetChangeCallback {
@@ -242,14 +232,14 @@ export class Glue42Service implements IGlue42Service {
   }
 
   private isValidEdit(
-    column: IColumn,
+    column: AdaptableBlotterColumn,
     originalValue: any,
     returnedValue: any,
     primaryKeyValue: any,
     rowIndex: number,
     columnIndex: number,
     errors: IGlue42ExportError[],
-    columns: IColumn[]
+    columns: AdaptableBlotterColumn[]
   ): boolean {
     if (column.ReadOnly) {
       errors.push(

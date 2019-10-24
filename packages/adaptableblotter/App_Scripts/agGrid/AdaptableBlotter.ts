@@ -361,6 +361,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.applyFinalRendering();
         this.isInitialised = true;
         this.dispatchAction(PopupRedux.PopupHideLoading());
+        this.testAsync();
       });
 
     if (renderGrid) {
@@ -381,6 +382,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.applyDataChange,
       this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
     );
+  }
+
+  public async testAsync() {
+    await this.Glue42Service.init();
   }
 
   public on = (eventName: string, callback: EmitterCallback): (() => void) =>

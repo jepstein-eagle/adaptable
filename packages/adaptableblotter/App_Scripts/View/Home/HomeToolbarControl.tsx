@@ -60,7 +60,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   async componentDidMount() {
-    await this.props.Blotter.Glue42Service.init();
+    // await this.props.Blotter.Glue42Service.init();
   }
 
   render() {

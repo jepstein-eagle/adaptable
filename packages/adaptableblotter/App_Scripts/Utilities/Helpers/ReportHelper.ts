@@ -93,8 +93,7 @@ export function IsReportDestinationActive(
     case ExportDestination.iPushPull:
       return iPushPullHelper.isIPushPullLoaded();
     case ExportDestination.Glue42:
-      // TODO: Detect the running state:
-      return true; // blotter.api.gridApi.getGridState().IsGlue42Running;
+      return blotter.api.gridApi.getGridState().IsGlue42Running;
   }
 
   return false;

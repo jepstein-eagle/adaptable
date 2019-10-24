@@ -54,19 +54,21 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
+  QuickSearch: {
+    QuickSearchText: 'F*',
+  },
   PartnerConfig: {
-    //    glue42Config: {
-    //      application: 'AdaptableBlotterDemo',
-    //      gateway: {
-    //        protocolVersion: 3,
-    //        ws: 'ws://localhost:8385',
-    //      },
-    //      auth: {
-    //        username: 'demouser',
-    //        password: 'demopassword',
-    //      },
-    //    },
-    test: 'Hello, World!',
+    glue42Config: {
+      application: 'AdaptableBlotterDemo',
+      gateway: {
+        protocolVersion: 3,
+        ws: 'ws://localhost:8385',
+      },
+      auth: {
+        username: 'demouser',
+        password: 'demopassword',
+      },
+    },
   },
 };
 

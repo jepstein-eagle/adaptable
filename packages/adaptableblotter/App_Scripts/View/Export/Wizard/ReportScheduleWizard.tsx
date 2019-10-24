@@ -57,7 +57,9 @@ export class ReportScheduleWizard
   }
   render(): any {
     let destinations = EnumExtensions.getNames(ExportDestination)
-      .filter(type => ReportHelper.IsReportDestinationActive(type as ExportDestination))
+      .filter(type =>
+        ReportHelper.IsReportDestinationActive(type as ExportDestination, this.props.Blotter)
+      )
       .map(type => {
         return {
           label: type,

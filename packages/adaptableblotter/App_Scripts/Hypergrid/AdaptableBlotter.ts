@@ -115,6 +115,7 @@ import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
+import { IGlue42Service, Glue42Service } from '../Utilities/Services/Glue42Service';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -160,6 +161,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public FreeTextColumnService: IFreeTextColumnService;
   public ScheduleService: IScheduleService;
   public SearchService: ISearchService;
+  public Glue42Service: IGlue42Service;
 
   public blotterOptions: AdaptableBlotterOptions;
   public vendorGridName: any;
@@ -212,6 +214,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     );
     this.FreeTextColumnService = new FreeTextColumnService(this);
     this.ScheduleService = new ScheduleService(this);
+    this.Glue42Service = new Glue42Service(this);
 
     //we build the list of strategies
     //maybe we don't need to have a map and just an array is fine..... dunno'
