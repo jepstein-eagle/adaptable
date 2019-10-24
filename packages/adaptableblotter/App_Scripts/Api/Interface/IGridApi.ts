@@ -9,7 +9,8 @@ import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
 /**
  * Provides access to important elements of the Adaptable Blotter like columns, sorting, selected cells etc.
  *
- * Many of the methods deal with internal Grid state - i.e. things like column or sort collections that are created at run-time and never persisted as part of user state.
+ * It also provides a set of useful methods to add / edit / delete rows in the Grid and, indeed, to reset the DataSource.
+ *
  */
 export interface IGridApi {
   /**
@@ -30,8 +31,18 @@ export interface IGridApi {
    */
   updateGridData(dataRows: any[]): void;
 
+  /**
+   * Adds the given rows to the Adaptable Blotter (and underlying grid).
+   *
+   * @param dataRows the rows which should be added.  Its your responsibility to ensure that all 'mandatory' fields are included and that the Primary Key stays unique.
+   */
   addGridData(dataRows: any[]): void;
 
+  /**
+   * Deletes the given rows from the Adaptable Blotter (and underlying grid).
+   *
+   * @param dataRows the rows which should be deleted.
+   */
   deleteGridData(dataRows: any[]): void;
 
   /** Returns all the columns in the Adaptable Blotter

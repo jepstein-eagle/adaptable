@@ -16,9 +16,9 @@ import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRow
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
 
 /**
- * This api is designed for **internal use of the Adaptable Blotter** only.
+ * This set of api methods is designed for **internal use of the Adaptable Blotter** only.
  *
- * None of these methods should need to be used by users of the Adaptable Blotter and no guarantee is made that the methods will work in all circumstances in the same way that other methods in the Blotter API do.
+ * None of these methods should be invoked by users of the Adaptable Blotter and no guarantee is made regarding performance or any after affects if used 'externally'.
  */
 export interface IInternalApi {
   // System Redux
