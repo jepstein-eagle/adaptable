@@ -86,12 +86,17 @@ function InitAdaptableBlotter() {
     );
   });
 
-  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData);
+  // tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData);
 }
 
 let demoConfig: PredefinedConfig = {
-  PartnerConfig: {
-    glue42Config: 'Hello ',
+  Entitlements: {
+    FunctionEntitlements: [
+      {
+        FunctionName: 'StateManagement',
+        AccessLevel: 'ReadOnly',
+      },
+    ],
   },
   FlashingCell: {
     DefaultUpColor: '#462376',

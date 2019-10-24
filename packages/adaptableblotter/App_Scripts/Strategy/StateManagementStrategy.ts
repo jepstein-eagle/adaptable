@@ -1,25 +1,22 @@
-import { IDataManagementStrategy } from './Interface/IDataManagementStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { IStateManagementStrategy } from './Interface/IStateManagementStrategy';
 
-export class DataManagementStrategy extends AdaptableStrategyBase
-  implements IDataManagementStrategy {
+export class StateManagementStrategy extends AdaptableStrategyBase
+  implements IStateManagementStrategy {
   constructor(blotter: IAdaptableBlotter) {
-    super(StrategyConstants.DataManagementStrategyId, blotter);
+    super(StrategyConstants.StateManagementStrategyId, blotter);
   }
 
   public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
-    if ('production' == process.env.NODE_ENV && !BlotterHelper.isDemoSite()) {
-      return undefined;
-    }
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.DataManagementStrategyName,
-      ComponentName: ScreenPopups.DataManagementPopup,
-      GlyphIcon: StrategyConstants.DataManagementGlyph,
+      Label: StrategyConstants.StateManagementStrategyName,
+      ComponentName: ScreenPopups.StateManagementPopup,
+      GlyphIcon: StrategyConstants.StateManagementGlyph,
     });
   }
 }

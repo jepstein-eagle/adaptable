@@ -31,7 +31,7 @@ import { IPushPullLogin } from './Export/IPushPullLogin';
 import { HomeToolbarControl } from './Home/HomeToolbarControl';
 import { ApplicationPopup } from './Application/ApplicationPopup';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
-import { DataManagementPopup } from './DataManagement/DataManagementPopup';
+import { StateManagementPopup } from './StateManagement/StateManagementPopup';
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { CalculatedColumnPopup } from './CalculatedColumn/CalculatedColumnPopup';
@@ -69,7 +69,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ConditionalStylePopup,
   CustomSortPopup,
   DashboardPopup,
-  DataManagementPopup,
+  StateManagementPopup,
   DataSourcePopup,
   ExportPopup,
   FlashingCellsPopup,

@@ -12,16 +12,18 @@ import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex, Box } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
 
-interface DataManagementPopupProps extends StrategyViewPopupProps<DataManagementPopupComponent> {}
+interface StateManagementPopupProps extends StrategyViewPopupProps<StateManagementPopupComponent> {}
 
-class DataManagementPopupComponent extends React.Component<DataManagementPopupProps, {}> {
-  constructor(props: DataManagementPopupProps) {
+class StateManagementPopupComponent extends React.Component<StateManagementPopupProps, {}> {
+  constructor(props: StateManagementPopupProps) {
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
 
   render() {
-    let infoBody: any[] = ['Function that clears user config - for development use only.'];
+    let infoBody: any[] = [
+      'Function that clears user config - advisable for development use only.',
+    ];
 
     let clearButton = (
       <SimpleButton
@@ -39,20 +41,23 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.DataManagementStrategyName}
+          headerText={StrategyConstants.StateManagementStrategyName}
           button={null}
-          glyphicon={StrategyConstants.DataManagementGlyph}
+          glyphicon={StrategyConstants.StateManagementGlyph}
           infoBody={infoBody}
         >
           <Box>
-            Click below to clear all current state.
-            <br />
-            <br />
-            When you restart / refresh the Blotter any state that you have previously created will
-            be lost and only the 'predefined config' will be re-added.
-            <br />
-            <br />
-            <b>This option only appears in non production builds.</b>
+            <p>Click below to clear all current user state that has been applied.</p>
+            <p>
+              When you restart / refresh the Blotter any state that you have previously created will
+              be lost.
+            </p>
+            <p>
+              However your <i>predefined config</i> will be re-added.
+            </p>
+            <p>
+              <b>This option should ideally only appear in non production builds.</b>
+            </p>
           </Box>
 
           {clearButton}
@@ -74,7 +79,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   return {};
 }
 
-export let DataManagementPopup = connect(
+export let StateManagementPopup = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DataManagementPopupComponent);
+)(StateManagementPopupComponent);

@@ -114,10 +114,6 @@ export function BlotterObjectExistsInState(
   return array.findIndex(abObject => abObject.Uuid == itemToCheck.Uuid) > -1;
 }
 
-export function isDemoSite(): boolean {
-  return window.location.hostname == 'demo.adaptableblotter.com';
-}
-
 // perform any checks that are necessary here
 // for now just blotterId
 export function CheckBlotterOptions(blotterOptions: AdaptableBlotterOptions): void {
@@ -131,7 +127,6 @@ export function CheckBlotterOptions(blotterOptions: AdaptableBlotterOptions): vo
 }
 
 export const BlotterHelper = {
-  isDemoSite,
   assignBlotterOptions,
   isValidPrimaryKey,
   isConfigServerEnabled,

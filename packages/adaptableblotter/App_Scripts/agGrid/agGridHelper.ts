@@ -30,7 +30,7 @@ import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
 import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { DashboardStrategy } from '../Strategy/DashboardStrategy';
-import { DataManagementStrategy } from '../Strategy/DataManagementStrategy';
+import { StateManagementStrategy } from '../Strategy/StateManagementStrategy';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import { ExportStrategy } from '../Strategy/ExportStrategy';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
@@ -111,7 +111,6 @@ export class agGridHelper {
     );
     strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid(blotter));
     strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(blotter));
-    strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(blotter));
     strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(blotter));
     strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(blotter));
     strategies.set(
@@ -132,6 +131,10 @@ export class agGridHelper {
     strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(blotter));
     strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(blotter));
     strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(blotter));
+    strategies.set(
+      StrategyConstants.StateManagementStrategyId,
+      new StateManagementStrategy(blotter)
+    );
     strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(blotter));
     strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(blotter));
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter));
