@@ -14,7 +14,6 @@ import { ExportState, Report } from '../PredefinedConfig/RunTimeState/ExportStat
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import {
   CELLS_SELECTED_EVENT,
@@ -262,9 +261,22 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         break;
       case ExportDestination.Glue42:
         let data: any[] = this.ConvertReportToArray(report);
+
         let gridColumns: AdaptableBlotterColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState()
           .Grid.Columns;
-        Glue42Helper.exportData(data, gridColumns, this.blotter);
+
+        try {
+          if (data) {
+            this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
+              data,
+              gridColumns,
+              this.blotter,
+            ]);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+
         break;
     }
   }

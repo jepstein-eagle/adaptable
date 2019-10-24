@@ -27,7 +27,6 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 
-import { Glue42Helper } from '../../Utilities/Helpers/Glue42Helper';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 
@@ -145,10 +144,12 @@ class ExportToolbarControlComponent extends React.Component<
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
+      ReportHelper.IsReportDestinationActive(ExportDestination.OpenfinExcel, this.props.Blotter) &&
         openfinExcelMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.iPushPull) && iPushPullExcelMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.Glue42) && glue42MenuItem,
+      ReportHelper.IsReportDestinationActive(ExportDestination.iPushPull, this.props.Blotter) &&
+        iPushPullExcelMenuItem,
+      ReportHelper.IsReportDestinationActive(ExportDestination.Glue42, this.props.Blotter) &&
+        glue42MenuItem,
     ].filter(x => !!x);
 
     let content = (

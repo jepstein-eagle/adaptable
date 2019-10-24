@@ -21,6 +21,7 @@ import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
+import { IGlue42Service } from '../Utilities/Services/Glue42Service';
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -104,6 +105,7 @@ export interface IAdaptableBlotter {
   ChartService: IChartService;
   ScheduleService: IScheduleService;
   SearchService: ISearchService;
+  Glue42Service: IGlue42Service;
 
   // Used for internal events...
   on(eventName: string, callback: EmitterCallback): () => void;

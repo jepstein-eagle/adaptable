@@ -8,6 +8,9 @@ import { PartnerConfigState } from '../PredefinedConfig/DesignTimeState/PartnerC
 
 export class PartnerConfigAPI extends ApiBase implements IPartnerConfigAPI {
   public getPartnerConfigState(): PartnerConfigState {
-    return this.getBlotterState().PartnerConfig;
+    const test = this.getBlotterState().PartnerConfig;
+    console.dir(test);
+    return test;
+    //    return this.getBlotterState().PartnerConfig;
   }
 }

@@ -1,0 +1,366 @@
+import { ArrayExtensions } from '../Extensions/ArrayExtensions';
+import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { GridCell } from '../Interface/Selection/GridCell';
+
+import Glue4Office, { Glue42Office } from '@glue42/office';
+import Glue, { Glue42 } from '@glue42/desktop';
+import Helper from '../Helpers/Helper';
+import ColumnHelper from '../Helpers/ColumnHelper';
+import ExpressionHelper from '../Helpers/ExpressionHelper';
+import { Glue42Config } from '../../PredefinedConfig/DesignTimeState/Glue42Config';
+import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+
+export interface IGlue42ExportError {
+  row: number;
+  column: number;
+  description: string;
+  foregroundColor: string;
+  backgroundColor: string;
+}
+
+export interface IGlue42ColumnInfo {
+  header: string;
+  fieldName: string;
+}
+
+export interface IExcelStatus {
+  msg: string;
+  isResolved: boolean;
+}
+export interface IGlue42Service {
+  init(): void;
+  exportData(data: any[], gridColumns: AdaptableBlotterColumn[], blotter: IAdaptableBlotter): void;
+}
+
+type SheetChangeCallback = (
+  data: object[],
+  errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
+  doneCallback: () => void,
+  delta: Glue42Office.Excel.DeltaItem[]
+) => void;
+
+export class Glue42Service implements IGlue42Service {
+  private glue4ExcelInstance!: Glue42Office.Excel.API;
+  private glueInstance!: Glue42.Glue;
+  private isExcelStatus: IExcelStatus = {
+    msg: '[Excel] Not checked, changed the addin status 0 times!',
+    isResolved: false,
+  };
+
+  constructor(private blotter: IAdaptableBlotter) {
+    this.blotter = blotter;
+  }
+
+  async init(): Promise<void> {
+    try {
+      let glue42PartnerConfig: Glue42Config = this.blotter.api.partnerConfigApi.getPartnerConfigState()
+        .glue42Config;
+      //HACK: Remove this once PartnerConfigRedux fixed:
+      //      glue42PartnerConfig = {
+      //        application: 'AdaptableBlotterDemo',
+      //        gateway: {
+      //          protocolVersion: 3,
+      //          ws: 'ws://localhost:8385',
+      //        },
+      //        auth: {
+      //          username: 'demouser', // TODO: Change the username to 'demouser' berofe committing the changes
+      //          password: 'demopassword',
+      //        },
+      //      };
+
+      if (!glue42PartnerConfig) {
+        this.blotter.api.gridApi.setGlue42Off();
+        console.log('Glue42 config is null or empty');
+        return;
+      }
+
+      //TODO: Add another conversion from AdaptableBlotter -> Glue42Config to Glue42.Config here if needed:
+      const glue42Config = glue42PartnerConfig as Glue42Config;
+      this.glueInstance = await Glue(glue42Config);
+      (glue42Config as Glue42Office.Config).glue = this.glueInstance;
+      const glue4OfficeInstance = await Glue4Office(glue42Config);
+      this.glue4ExcelInstance = glue4OfficeInstance.excel as Glue42Office.Excel.API;
+      this.subscribeToAddinStatusChanges();
+      this.blotter.api.gridApi.setGlue42On();
+
+      // NOTE by Jonny, 18/9/19:  you will need to set this to true here if you want it to work
+      // something like blotter.api.gridApi.setGlue42On();
+    } catch (error) {
+      console.log(error);
+      this.blotter.api.gridApi.setGlue42Off();
+    }
+  }
+
+  async exportData(data: any[], gridColumns: IColumn[], blotter: IAdaptableBlotter) {
+    if (!this.glueInstance) {
+      return;
+    }
+
+    try {
+      if (!this.isExcelStatus.isResolved) {
+        try {
+          await this.glueInstance.appManager.application('excel').start();
+        } catch (error) {}
+      }
+
+      let exportColumns: any[] = data[0];
+      let exportData: any[] = this.createData(data, exportColumns);
+      let sentRows: any[] = Helper.cloneObject(exportData);
+
+      const sheetData = {
+        columnConfig: this.createColumns(data),
+        data: exportData,
+        options: {
+          workbook: 'Glue42 Excel Integration Demo',
+          worksheet: 'Data Sheet',
+          updateTrigger: ['row'],
+        },
+      };
+
+      const sheet = await this.glue4ExcelInstance.openSheet(sheetData);
+      sheet.onChanged(this.getSheetChangeHandler(gridColumns, sentRows, exportColumns));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * Returns a callback, handling the Sheet Changed event.
+   * Walks through the delta.
+   */
+  private getSheetChangeHandler(
+    gridColumns: IColumn[],
+    sentRows: any[],
+    exportColumns: any[]
+  ): SheetChangeCallback {
+    return (
+      data: any[],
+      errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
+      doneCallback: () => void,
+      delta: Glue42Office.Excel.DeltaItem[]
+    ) => {
+      let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(
+        this.blotter.blotterOptions.primaryKey,
+        gridColumns
+      );
+
+      let cellInfos: GridCell[] = [];
+      const errors: IGlue42ExportError[] = [];
+
+      delta.forEach(deltaItem => {
+        if (deltaItem.action === 'modified') {
+          deltaItem.row.forEach((change, changeIndex) => {
+            if (change !== null) {
+              const column = ColumnHelper.getColumnFromFriendlyName(
+                exportColumns[changeIndex],
+                gridColumns
+              );
+
+              const originalRow = sentRows[deltaItem.rowBeforeIndex - 1];
+              const originalValue = originalRow[exportColumns[changeIndex]];
+              const primaryKeyValue = originalRow[primaryKeyColumnFriendlyName];
+
+              var isValidEdit = this.isValidEdit(
+                column,
+                originalValue,
+                change,
+                primaryKeyValue,
+                deltaItem.rowBeforeIndex - 1,
+                changeIndex,
+                errors,
+                gridColumns
+              );
+              if (isValidEdit) {
+                let cellInfo: GridCell = {
+                  primaryKeyValue: primaryKeyValue,
+                  columnId: column.ColumnId,
+                  value: change,
+                };
+                cellInfos.push(cellInfo);
+              }
+            }
+          });
+        } else {
+          let msg = '';
+          if (deltaItem.action === 'deleted') {
+            msg = 'Deletion from Excel is not supported in this demo';
+          }
+          if (deltaItem.action === 'inserted') {
+            msg = 'Insertion of new data to Excel is not supported in this demo';
+          }
+          errors.push({
+            row: deltaItem.rowBeforeIndex - 1,
+            column: 0,
+            description: msg,
+            foregroundColor: 'white',
+            backgroundColor: 'red',
+          } as IGlue42ExportError);
+        }
+      });
+      this.blotter.setValueBatch(cellInfos);
+
+      if (ArrayExtensions.IsNullOrEmpty(errors)) {
+        doneCallback();
+      } else {
+        errorCallback(errors);
+      }
+    };
+  }
+
+  /**
+   * Checks if Excel is running, if not starts it
+   */
+  private subscribeToAddinStatusChanges(): void {
+    //check if Excel is running
+    try {
+      this.glue4ExcelInstance.onAddinStatusChanged((connected: any) => {
+        if (connected) {
+          this.isExcelStatus = {
+            msg: 'Excel is running',
+            isResolved: true,
+          };
+
+          return;
+        }
+
+        this.isExcelStatus = {
+          msg: 'Excel is not running',
+          isResolved: false,
+        };
+
+        console.log("[Excel] Application isn't running!");
+      });
+    } catch (error) {
+      this.isExcelStatus = {
+        msg: 'Error in isExcelRunning',
+        isResolved: false,
+      };
+    }
+  }
+
+  private isValidEdit(
+    column: IColumn,
+    originalValue: any,
+    returnedValue: any,
+    primaryKeyValue: any,
+    rowIndex: number,
+    columnIndex: number,
+    errors: IGlue42ExportError[],
+    columns: IColumn[]
+  ): boolean {
+    if (column.ReadOnly) {
+      errors.push(
+        this.addValidationError(
+          rowIndex + 1,
+          columnIndex + 1,
+          column.FriendlyName + ' is read only'
+        )
+      );
+      return false;
+    }
+
+    // check for type -- do properly in due course, but for now just check numbers...
+    if (column.DataType == DataType.Number) {
+      if (isNaN(Number(returnedValue))) {
+        errors.push(
+          this.addValidationError(
+            rowIndex + 1,
+            columnIndex + 1,
+            column.FriendlyName + ' is numeric'
+          )
+        );
+        return false;
+      }
+    }
+
+    let dataChangedInfo: DataChangedInfo = {
+      OldValue: originalValue,
+      NewValue: returnedValue,
+      ColumnId: column.ColumnId,
+      IdentifierValue: primaryKeyValue,
+      Record: null,
+    };
+
+    // check for any validation issues
+    let cellValidationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+      dataChangedInfo
+    );
+    if (ArrayExtensions.IsNotNullOrEmpty(cellValidationRules)) {
+      cellValidationRules.forEach((cv: CellValidationRule) => {
+        let failedvalidationMessage: string =
+          'Validation failed for ' +
+          column.FriendlyName +
+          ': ' +
+          ExpressionHelper.ConvertRangeToString(cv.Range, columns);
+        if (cv.ActionMode == ActionMode.StopEdit) {
+          errors.push(
+            this.addValidationError(rowIndex + 1, columnIndex + 1, failedvalidationMessage)
+          );
+        } else {
+          errors.push(
+            this.addValidationWarning(rowIndex + 1, columnIndex + 1, failedvalidationMessage)
+          );
+        }
+      });
+      return false;
+    }
+    return true;
+  }
+
+  private addValidationWarning(
+    rowIndex: number,
+    columnIndex: number,
+    errorDescription: string
+  ): IGlue42ExportError {
+    return {
+      row: rowIndex,
+      column: columnIndex,
+      description: errorDescription,
+      foregroundColor: 'orange',
+      backgroundColor: 'white',
+    };
+  }
+
+  private addValidationError(
+    rowIndex: number,
+    columnIndex: number,
+    errorDescription: string
+  ): IGlue42ExportError {
+    return {
+      row: rowIndex,
+      column: columnIndex,
+      description: errorDescription,
+      foregroundColor: 'red',
+      backgroundColor: 'white',
+    };
+  }
+
+  createColumns(data: any[]): IGlue42ColumnInfo[] {
+    let firstRow: string[] = data[0];
+    let headers: IGlue42ColumnInfo[] = [];
+    firstRow.forEach((element: any) => {
+      headers.push({
+        header: element.replace(' ', ''),
+        fieldName: element,
+      });
+    });
+    return headers;
+  }
+
+  createData(data: any[], headers: any[]): any {
+    let returnArray: any[] = [];
+
+    for (let i = 1; i < data.length; i++) {
+      let row: any[] = data[i];
+      let returnItem: any = {};
+      for (let j = 0; j < headers.length; j++) {
+        returnItem[headers[j]] = row[j];
+      }
+      returnArray.push(returnItem);
+    }
+    return returnArray;
+  }
+}

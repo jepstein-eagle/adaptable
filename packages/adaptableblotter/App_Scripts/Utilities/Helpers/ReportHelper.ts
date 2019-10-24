@@ -18,7 +18,6 @@ import { SelectedRowInfo } from '../Interface/Selection/SelectedRowInfo';
 import { GridRow } from '../Interface/Selection/GridRow';
 import OpenfinHelper from './OpenfinHelper';
 import iPushPullHelper from './iPushPullHelper';
-import Glue42Helper from './Glue42Helper';
 import ObjectFactory from '../ObjectFactory';
 
 export const ALL_DATA_REPORT = 'All Data';
@@ -80,7 +79,10 @@ export function GetReportExpressionDescription(
   }
 }
 
-export function IsReportDestinationActive(exportDestination: ExportDestination): boolean {
+export function IsReportDestinationActive(
+  exportDestination: ExportDestination,
+  blotter: IAdaptableBlotter
+): boolean {
   switch (exportDestination) {
     case ExportDestination.CSV:
     case ExportDestination.Clipboard:
@@ -91,7 +93,8 @@ export function IsReportDestinationActive(exportDestination: ExportDestination):
     case ExportDestination.iPushPull:
       return iPushPullHelper.isIPushPullLoaded();
     case ExportDestination.Glue42:
-      return Glue42Helper.isRunningGlue42();
+      // TODO: Detect the running state:
+      return true; // blotter.api.gridApi.getGridState().IsGlue42Running;
   }
 
   return false;
