@@ -65,7 +65,7 @@ export class Glue42Service implements IGlue42Service {
       console.log('in glue 42 service init ' + glue42PartnerConfig);
 
       if (!glue42PartnerConfig) {
-        this.blotter.api.gridApi.setGlue42Off();
+        this.blotter.api.internalApi.setGlue42Off();
         LogAdaptableBlotterWarning('No Glue42 config was provided');
         return;
       }
@@ -77,10 +77,10 @@ export class Glue42Service implements IGlue42Service {
       const glue4OfficeInstance = await Glue4Office(glue42Config);
       this.glue4ExcelInstance = glue4OfficeInstance.excel as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
-      this.blotter.api.gridApi.setGlue42On();
+      this.blotter.api.internalApi.setGlue42On();
     } catch (error) {
       LogAdaptableBlotterError(error);
-      this.blotter.api.gridApi.setGlue42Off();
+      this.blotter.api.internalApi.setGlue42Off();
     }
   }
 
@@ -271,7 +271,6 @@ export class Glue42Service implements IGlue42Service {
       NewValue: returnedValue,
       ColumnId: column.ColumnId,
       IdentifierValue: primaryKeyValue,
-      Record: null,
     };
 
     // check for any validation issues

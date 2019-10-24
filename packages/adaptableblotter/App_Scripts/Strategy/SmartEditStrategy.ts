@@ -76,12 +76,12 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
 
-    this.blotter.api.gridApi.setGridCellBatch(newValues);
+    this.blotter.api.internalApi.setGridCellBatch(newValues);
   }
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
     let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
-    if (this.blotter.api.gridApi.isGridInPivotMode()) {
+    if (this.blotter.api.internalApi.isGridInPivotMode()) {
       return {
         Alert: {
           Header: 'Smart Edit Error',
@@ -154,7 +154,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     let previewResults: IPreviewResult[] = [];
     let columnId: string = '';
 
-    if (!this.blotter.api.gridApi.isGridInPivotMode()) {
+    if (!this.blotter.api.internalApi.isGridInPivotMode()) {
       if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
         let column: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
         if (column) {

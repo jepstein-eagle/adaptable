@@ -43,13 +43,13 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       };
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
-    this.blotter.api.gridApi.setGridCellBatch(newValues);
+    this.blotter.api.internalApi.setGridCellBatch(newValues);
   }
 
   public CheckCorrectCellSelection(): BulkUpdateValidationResult {
     let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-    if (this.blotter.api.gridApi.isGridInPivotMode()) {
+    if (this.blotter.api.internalApi.isGridInPivotMode()) {
       return {
         IsValid: false,
         Alert: {
@@ -113,7 +113,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
     let columnId: string = '';
-    if (!this.blotter.api.gridApi.isGridInPivotMode()) {
+    if (!this.blotter.api.internalApi.isGridInPivotMode()) {
       if (selectedCellInfo != null && selectedCellInfo.Columns.length > 0) {
         columnId = selectedCellInfo.Columns[0].ColumnId;
         let typedBulkUpdateValue: any;

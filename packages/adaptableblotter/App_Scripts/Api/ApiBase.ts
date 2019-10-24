@@ -35,7 +35,7 @@ export abstract class ApiBase {
    * Base api Helper method that dispatches a *Redux Action* to the Store
    * @param action the Redux Action to be dispatched
    */
-  public dispatchAction(action: Action): void {
+  protected dispatchAction(action: Action): void {
     this.blotter.adaptableBlotterStore.TheStore.dispatch(action);
   }
 

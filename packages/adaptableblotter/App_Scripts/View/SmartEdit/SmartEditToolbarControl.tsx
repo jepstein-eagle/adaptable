@@ -104,7 +104,7 @@ class SmartEditToolbarControlComponent extends React.Component<
     let shouldDisable: boolean =
       this.props.AccessLevel == AccessLevel.ReadOnly ||
       !this.props.IsValidSelection ||
-      this.props.Blotter.api.gridApi.isGridInPivotMode();
+      this.props.Blotter.api.internalApi.isGridInPivotMode();
 
     let content = (
       <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>

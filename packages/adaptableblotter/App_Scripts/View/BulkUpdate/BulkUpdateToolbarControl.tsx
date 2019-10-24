@@ -79,7 +79,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     let shouldDisable: boolean =
       this.props.AccessLevel == AccessLevel.ReadOnly ||
       !this.props.BulkUpdateValidationResult.IsValid ||
-      this.props.Blotter.api.gridApi.isGridInPivotMode();
+      this.props.Blotter.api.internalApi.isGridInPivotMode();
 
     const applyStyle = {
       color: statusColour,

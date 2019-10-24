@@ -609,7 +609,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
     let startIndex: number = 0;
 
-    if (this.api.gridApi.isGridInPivotMode()) {
+    if (this.api.internalApi.isGridInPivotMode()) {
       return;
     }
     //  this is not quite right as it assumes that only the first column can be grouped
@@ -668,7 +668,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         allColumns.push(existingColumn);
       }
     });
-    this.api.gridApi.setColumns(allColumns);
+    this.api.internalApi.setColumns(allColumns);
     // Save the layout if required
     LayoutHelper.autoSaveLayout(this);
   }
@@ -800,7 +800,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     });
     // store the main menu as we will re-use (and it never changes)
-    this.api.gridApi.setMainMenuItems(menuItems);
+    this.api.internalApi.setMainMenuItems(menuItems);
   }
 
   public getPrimaryKeyValueFromRowNode(rowNode: RowNode): any {
@@ -856,7 +856,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const columns: AdaptableBlotterColumn[] = [];
     const selectedCells: GridCell[] = [];
 
-    if (this.api.gridApi.isGridInPivotMode()) {
+    if (this.api.internalApi.isGridInPivotMode()) {
       //  LoggingHelper.LogAdaptableBlotterWarning(
       //    'cannot currently perform cell selection in pivot mode'
       //  );
@@ -900,7 +900,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       });
     }
     const selectedCellInfo: SelectedCellInfo = { Columns: columns, GridCells: selectedCells };
-    this.api.gridApi.setSelectedCells(selectedCellInfo);
+    this.api.internalApi.setSelectedCells(selectedCellInfo);
 
     this.emit(CELLS_SELECTED_EVENT);
 
@@ -934,7 +934,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       });
     }
     const selectedRowInfo: SelectedRowInfo = { GridRows: selectedRows };
-    this.api.gridApi.setSelectedRows(selectedRowInfo);
+    this.api.internalApi.setSelectedRows(selectedRowInfo);
 
     this.emit(ROWS_SELECTED_EVENT);
     this.agGridHelper.fireSelectionChangedEvent();
@@ -1700,7 +1700,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // re-apply the datatype in case it has been changed as a result of the expression changing
       existingABColumn.ColumnId = calculatedColumn.ColumnId;
       existingABColumn.DataType = dataType;
-      this.api.gridApi.addAdaptableBlotterColumn(existingABColumn);
+      this.api.internalApi.addAdaptableBlotterColumn(existingABColumn);
     }
   }
 
@@ -1856,7 +1856,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         IsSparkline: dataType == DataType.NumberArray,
       };
 
-      this.api.gridApi.addAdaptableBlotterColumn(specialColumn);
+      this.api.internalApi.addAdaptableBlotterColumn(specialColumn);
 
       this.applyStylingToColumn(vendorColumn, specialColumn);
 
@@ -2052,9 +2052,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           params.columnApi.columnController.pivotMode == true
         ) {
           //   console.log('pivoting on');
-          this.api.gridApi.setPivotModeOn();
+          this.api.internalApi.setPivotModeOn();
         } else {
-          this.api.gridApi.setPivotModeOff();
+          this.api.internalApi.setPivotModeOff();
         }
       }
     );
@@ -2749,7 +2749,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
       }
     }
-    this.api.gridApi.setColumnSorts(columnSorts);
+    this.api.internalApi.setColumnSorts(columnSorts);
   }
 
   public getRowCount(): number {
@@ -3147,7 +3147,7 @@ import "adaptableblotter/themes/${themeName}.css"`);
 
     // sometimes the header row looks wrong when using quick filter so to be sure...
     if (this.isQuickFilterActive()) {
-      this.api.gridApi.showQuickFilterBar();
+      this.api.internalApi.showQuickFilterBar();
       this.gridOptions.api!.refreshHeader();
     }
 
