@@ -2,6 +2,7 @@ import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { Visibility } from '../../PredefinedConfig/Common/Enums';
 
 /**
  * The main object used when publishing events.

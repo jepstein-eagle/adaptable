@@ -120,3 +120,6 @@ export const SEARCH_APPLIED_EVENT: string = 'SearchApplied';
 export const GRID_REFRESHED_EVENT: string = 'GridRefreshed';
 export const GRID_RELOADED_EVENT: string = 'GridReloaded';
 export const KEY_DOWN_EVENT: string = 'KeyDown';
+export const TOOLBAR_VISIBLE_EVENT: string = 'ToolbarVisible';
+export const TOOLBAR_HIDDEN_EVENT: string = 'ToolbarHidden';
+export const DASHBOARD_BUTTON_CLICKED_EVENT: string = 'DashboardButtonClicked';

@@ -39,6 +39,7 @@ import { ISparklineColumnApi } from './ISparklineColumnApi';
 import { INamedFilterApi } from './INamedFilterApi';
 import { IPartnerConfigAPI } from './IPartnerConfigAPI';
 import { IColumnChooserAPI } from './IColumnChooserAPI';
+import { IApplicationApi } from './IApplicationAPI';
 
 /**
  * The Blotter API (which implements the **IBlotterAPI** interface) provides developers with run-time access to the Adaptable Blotter.
@@ -57,6 +58,11 @@ import { IColumnChooserAPI } from './IColumnChooserAPI';
  */
 
 export interface IBlotterApi {
+  /**
+   * Enables use of the Application Function which lets developers render their own toolbar and screen (if required).
+   */
+  applicationApi: IApplicationApi;
+
   /**
    * Provides access to the Action Column functionality, the *ActionColumn* object.
    */

@@ -161,9 +161,8 @@ import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAda
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
 import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { DASHBOARD_SET_TOOLBARS } from '../Redux/ActionsReducers/DashboardRedux';
-import { AlertProperties, AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
 import { IGlue42Service, Glue42Service } from '../Utilities/Services/Glue42Service';
+import { ApplicationToolbarButton } from '../PredefinedConfig/DesignTimeState/ApplicationState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -198,9 +197,6 @@ const forEachColumn = (
 };
 
 export class AdaptableBlotter implements IAdaptableBlotter {
-  onAny(callback: EmitterCallback): () => void {
-    throw new Error('Method not implemented.');
-  }
   public api: IBlotterApi;
 
   public strategies: IStrategyCollection;
@@ -258,6 +254,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private runtimeConfig?: RuntimeConfig;
 
   private emitter: Emitter;
+
+  public on = (eventName: string, callback: EmitterCallback): (() => void) =>
+    this.emitter.on(eventName, callback);
+
+  onAny(callback: EmitterCallback): () => void {
+    throw new Error('Method not implemented.');
+  }
+
+  public emit = (eventName: string, data?: any): Promise<any> => this.emitter.emit(eventName, data);
 
   constructor(
     blotterOptions: AdaptableBlotterOptions,
@@ -359,7 +364,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.applyFinalRendering();
         this.isInitialised = true;
         this.api.internalApi.hideLoadingScreen();
-        await this.Glue42Service.init();
+        //  await this.Glue42Service.init();
       });
 
     if (renderGrid) {
@@ -382,56 +387,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     );
   }
 
-  public on = (eventName: string, callback: EmitterCallback): (() => void) =>
-    this.emitter.on(eventName, callback);
-
-  public emit = (eventName: string, data?: any): Promise<any> => this.emitter.emit(eventName, data);
-
   private initStore() {
     this.adaptableBlotterStore = new AdaptableBlotterStore(this);
 
     this.adaptableBlotterStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
         this.emit(BLOTTER_READY_EVENT);
-
-        const state = this.adaptableBlotterStore.TheStore.getState();
-
-        onToolbarsChange({
-          state: {
-            ...state,
-            Dashboard: {
-              VisibleToolbars: [],
-            },
-          },
-          newState: state,
-        });
       }
     });
-
-    const onToolbarsChange = ({
-      state,
-      newState,
-    }: {
-      state: AdaptableBlotterState;
-      newState: AdaptableBlotterState;
-    }) => {
-      const oldVisibleToolbars = arrayToKeyMap(state.Dashboard.VisibleToolbars);
-      const newVisibleToolbars = arrayToKeyMap(newState.Dashboard.VisibleToolbars);
-
-      [...(newState.Dashboard.VisibleToolbars || [])].forEach((toolbar: string) => {
-        if (!oldVisibleToolbars[toolbar]) {
-          this.emit('toolbar-show', toolbar);
-        }
-      });
-
-      [...(state.Dashboard.VisibleToolbars || [])].forEach((toolbar: string) => {
-        if (!newVisibleToolbars[toolbar]) {
-          this.emit('toolbar-hide', toolbar);
-        }
-      });
-    };
-
-    this.adaptableBlotterStore.on(DASHBOARD_SET_TOOLBARS, onToolbarsChange);
   }
 
   private tryInstantiateAgGrid(): boolean {
@@ -3134,6 +3097,11 @@ import "adaptableblotter/themes/${themeName}.css"`);
       });
 
       this.safeSetColDefs(colDefs);
+    }
+
+    const applicationToolbarButtons: ApplicationToolbarButton[] = this.api.applicationApi.getApplicationToolbarButtons();
+    if (ArrayExtensions.IsNotNullOrEmpty(applicationToolbarButtons)) {
+      //   this.api.applicationApi.RenderButtons(applicationToolbarButtons);
     }
 
     // add the filter header style if required

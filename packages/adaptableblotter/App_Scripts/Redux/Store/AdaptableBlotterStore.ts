@@ -31,6 +31,7 @@ import * as ReminderRedux from '../ActionsReducers/ReminderRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
 import * as ActionColumnRedux from '../ActionsReducers/ActionColumnRedux';
+import * as ApplicationRedux from '../ActionsReducers/ApplicationRedux';
 import * as SparklineColumnRedux from '../ActionsReducers/SparklineColumnRedux';
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux';
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux';
@@ -140,6 +141,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 
   // Reducers for Persisted State
   ActionColumn: ActionColumnRedux.ActionColumnReducer,
+  Application: ApplicationRedux.ApplicationReducer,
   SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
   AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
   Alert: AlertRedux.AlertReducer,

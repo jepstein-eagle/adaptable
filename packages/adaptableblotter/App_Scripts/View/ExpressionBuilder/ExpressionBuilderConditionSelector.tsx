@@ -198,12 +198,25 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
     if (shouldGetColumnValues) {
       let columnValuePairs: IRawValueDisplayValuePair[] = [];
+
+      /*
+        NOTE: We have a big bug here.  If we try to get the values from the function provided by the dev (see below)
+        then we never seem to reload the page with the new state and so the listbox is never populated and the waiting message is never removed
+      */
+
+      // There are 2 ways to get column values to show in the dropdown
+      // 1. By invoking the function provided by the dev at design-time in getColumnValues property of Query Options
+      // Note: if we invoke this function and the result is null then we get the distinct values for the column
+      // 2. If the property above is not set then instead, we get the distinct values for the column
       if (props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
+        // The dev has provided us with a function to call that will retrieve the column values
         newState = { ShowWaitingMessage: true };
-        props.Blotter.blotterOptions.queryOptions.getColumnValues(props.SelectedColumnId).then(
-          result => {
+        props.Blotter.blotterOptions.queryOptions
+          .getColumnValues(props.SelectedColumnId)
+          .then(result => {
+            // we have got the result back from the function we've invoked; if the return value is null then lets get distinct values instead
             if (result == null) {
-              // if nothing returned then default to normal
+              //  nothing returned so get the distinct column values via the Blotter method
               columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
                 props.SelectedColumnId,
                 DistinctCriteriaPairValue.DisplayValue,
@@ -221,7 +234,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                 SelectedColumnId: props.SelectedColumnId,
               };
             } else {
-              // get the distinct items and make sure within max items that can be displayed
+              // we have return values from our function so lets populate the state with them
+              // make sure that we only return within max items that can be displayed
               let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
                 0,
                 props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
@@ -245,12 +259,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                 distinctItems
               );
             }
-          },
-          function() {
-            //    this.setState({ name: error });
-          }
-        );
+          });
+        return newState;
       } else {
+        // the developer hasnt given us a property that we need to invoke to get column values, so lets get the distinct values for the column instead
         columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
           props.SelectedColumnId,
           DistinctCriteriaPairValue.DisplayValue,

@@ -82,9 +82,12 @@ import { IPartnerConfigAPI } from './Interface/IPartnerConfigAPI';
 import { PartnerConfigAPI } from './PartnerConfigAPI';
 import { IColumnChooserAPI } from './Interface/IColumnChooserAPI';
 import { ColumnChooserAPI } from './ColumnChooserAPI';
+import { IApplicationApi } from './Interface/IApplicationAPI';
+import { ApplicationApi } from './AppplicationAPI';
 
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
+  public applicationApi: IApplicationApi;
   public sparklineColumnApi: ISparklineColumnApi;
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
@@ -129,7 +132,7 @@ export class BlotterApi implements IBlotterApi {
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     this.actionColumnApi = new ActionColumnApi(blotter);
-    this.sparklineColumnApi = new SparklineColumnApi(blotter);
+    this.applicationApi = new ApplicationApi(blotter);
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
     this.auditEventApi = new AuditEventApi(blotter);
@@ -161,6 +164,7 @@ export class BlotterApi implements IBlotterApi {
     this.reminderApi = new ReminderApi(blotter);
     this.shortcutApi = new ShortcutApi(blotter);
     this.smartEditApi = new SmartEditApi(blotter);
+    this.sparklineColumnApi = new SparklineColumnApi(blotter);
     this.systemFilterApi = new SystemFilterApi(blotter);
     this.systemStatusApi = new SystemStatusApi(blotter);
     this.themeApi = new ThemeApi(blotter);

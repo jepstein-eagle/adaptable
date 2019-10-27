@@ -274,7 +274,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             ]);
           }
         } catch (error) {
-          console.log(error);
+          LoggingHelper.LogAdaptableBlotterError(error);
         }
 
         break;

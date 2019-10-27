@@ -9,6 +9,14 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { buttonStyle } from 'styled-system';
+import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+import SimpleButton from '../../components/SimpleButton';
+import {
+  TOOLBAR_VISIBLE_EVENT,
+  DASHBOARD_BUTTON_CLICKED_EVENT,
+} from '../../Utilities/Constants/GeneralConstants';
+import { IDashboardStrategy } from '../../Strategy/Interface/IDashboardStrategy';
 
 interface ApplicationToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
@@ -23,6 +31,12 @@ class ApplicationToolbarControlComponent extends React.Component<
       ? this.props.ApplicationToolbarTitle
       : StrategyConstants.ApplicationStrategyName;
 
+    const buttons = this.props.Blotter.api.applicationApi.getApplicationToolbarButtons();
+
+    const dashboardStrategy: IDashboardStrategy = this.props.Blotter.strategies.get(
+      StrategyConstants.ConditionalStyleStrategyId
+    ) as IDashboardStrategy;
+
     return (
       <PanelDashboard
         className="ab-ApplicationToolbar"
@@ -35,7 +49,25 @@ class ApplicationToolbarControlComponent extends React.Component<
           className="ApplicationToolBarContents ab-ApplicationToolbar__contents ab-ApplicationToolbar__contents--render"
           style={{ minHeight: 22 }}
         />
-        <div className="ab-ApplicationToolbar__buttons" style={{ minHeight: 22 }} />
+        <div
+          id="ab-ApplicationToolbar__buttons"
+          className="ab-ApplicationToolbar__buttons"
+          style={{ minHeight: 22 }}
+        >
+          {buttons.map((button: ApplicationToolbarButton, index: number) => {
+            return (
+              <SimpleButton
+                style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
+                key={button.ButtonText}
+                onClick={() => {
+                  this.props.Blotter.emit(DASHBOARD_BUTTON_CLICKED_EVENT, button.ButtonText);
+                }}
+              >
+                {button.ButtonText}
+              </SimpleButton>
+            );
+          })}
+        </div>
       </PanelDashboard>
     );
   }

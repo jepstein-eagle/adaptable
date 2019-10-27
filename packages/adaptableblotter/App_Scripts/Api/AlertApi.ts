@@ -24,7 +24,7 @@ export class AlertApi extends ApiBase implements IAlertApi {
   }
 
   public getAlertDefinitions(): AlertDefinition[] {
-    return this.getBlotterState().Alert.AlertDefinitions;
+    return this.getAlertState().AlertDefinitions;
   }
 
   public displayAlert(alertToShow: AdaptableAlert): void {

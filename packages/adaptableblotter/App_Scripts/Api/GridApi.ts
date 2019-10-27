@@ -5,10 +5,7 @@ import { GridState } from '../PredefinedConfig/InternalState/GridState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
-import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {
