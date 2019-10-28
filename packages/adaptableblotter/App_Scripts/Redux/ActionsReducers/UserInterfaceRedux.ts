@@ -140,13 +140,10 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
         PermittedColumnValues: permittedColumnValues,
       });
     case ROW_STYLES_CLEAR:
-      console.log('clear styles');
       return Object.assign({}, state, {
         RowStyles: EMPTY_ARRAY,
       });
     case ROW_STYLES_SET:
-      console.log('set styles');
-      console.log((action as RowStylesSetAction).rowStyles);
       return Object.assign({}, state, {
         RowStyles: (action as RowStylesSetAction).rowStyles,
       });

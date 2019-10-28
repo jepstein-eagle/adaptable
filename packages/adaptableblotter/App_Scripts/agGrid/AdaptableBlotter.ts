@@ -2966,9 +2966,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public applyBlotterTheme(theme: AdaptableBlotterTheme | string) {
-    console.log('applying theme: ');
-    console.log(theme);
-
     const themeName = typeof theme === 'string' ? theme : theme.Name;
 
     const themeNamesToRemove: string[] = [];
@@ -3029,7 +3026,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     if (!newTheme.VendorGridClassName) {
       // default the vendor grid to the light theme
-      console.log('here');
       newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
     }
 
