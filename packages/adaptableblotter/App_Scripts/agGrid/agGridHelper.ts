@@ -339,10 +339,18 @@ export class agGridHelper {
     }
   }
 
+  public clearRowStyles(): void {
+    this.gridOptions.rowStyle = undefined;
+    this.gridOptions.rowClass = undefined;
+    this.gridOptions.getRowClass = undefined;
+    this.gridOptions.getRowStyle = undefined;
+  }
+
   public setUpRowStyles(): void {
     const rowStyles: RowStyle[] = this.blotter.api.userInterfaceApi.getUserInterfaceState()
       .RowStyles;
     if (ArrayExtensions.IsNotNullOrEmpty(rowStyles)) {
+      console.log('we have row styles');
       // First lets deal with Alls - we will get the first one and then get out
       const allRowStyle = rowStyles.find(rs => rs.RowType == 'All');
       if (allRowStyle) {

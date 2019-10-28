@@ -64,6 +64,8 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
+  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData);
+
   adaptableblotter.api.eventApi
     .onThemeChanged()
     .Subscribe((sender, themeChangedEventArgs) => listenToThemeChanged(themeChangedEventArgs));

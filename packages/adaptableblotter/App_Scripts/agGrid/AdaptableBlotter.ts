@@ -1836,6 +1836,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           this.api.layoutApi.setLayout(currentlayout);
         }
       }
+      // if grid is initialised then emit the Blotter Ready event so we can reapply any styles
+      // and reapply any specially rendered columns
+      if (this.isInitialised) {
+        this.emit(BLOTTER_READY_EVENT);
+        this.addSpecialRendereredColumns();
+      }
     }
   }
 
@@ -2416,12 +2422,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
 
     // add any special renderers
-    this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
-      this.addPercentBar(pcr);
-    });
-    this.api.sparklineColumnApi.getAllSparklineColumn().forEach(sparklineColumn => {
-      this.addSparkline(sparklineColumn);
-    });
+    this.addSpecialRendereredColumns();
 
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -2517,6 +2518,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       return colMenuItems;
     };
+  }
+
+  private addSpecialRendereredColumns(): void {
+    this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
+      this.addPercentBar(pcr);
+    });
+    this.api.sparklineColumnApi.getAllSparklineColumn().forEach(sparklineColumn => {
+      this.addSparkline(sparklineColumn);
+    });
   }
 
   public addSparkline(sparklineColumn: SparklineColumn): void {
@@ -2956,6 +2966,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public applyBlotterTheme(theme: AdaptableBlotterTheme | string) {
+    console.log('applying theme: ');
+    console.log(theme);
+
     const themeName = typeof theme === 'string' ? theme : theme.Name;
 
     const themeNamesToRemove: string[] = [];
@@ -3016,6 +3029,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     if (!newTheme.VendorGridClassName) {
       // default the vendor grid to the light theme
+      console.log('here');
       newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
     }
 
@@ -3062,11 +3076,18 @@ import "adaptableblotter/themes/${themeName}.css"`);
     }
   }
 
+  public setUpRowStyles() {
+    this.agGridHelper.setUpRowStyles();
+  }
+
+  public clearRowStyles() {
+    this.agGridHelper.clearRowStyles();
+  }
   // Method called after we have rendered the grid
   // where we apply our stuff but also any ag-Grid props that we control
   private applyFinalRendering(): void {
     // Apply row styles here?  weird that it cannot find the method in Helper.
-    this.agGridHelper.setUpRowStyles();
+    this.setUpRowStyles();
 
     // not sure if this is the right place here.
     // perhaps we need some onDataLoaded event??

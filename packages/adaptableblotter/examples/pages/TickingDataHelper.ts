@@ -130,13 +130,14 @@ export class TickingDataHelper {
           trade.ask = ask;
           trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
           trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
-          trade.notional = trade.notional === undefined ? 34 : 4;
-          trade.changeOnYear = trade.changeOnYear > 0 ? -100 : 100;
+          trade.notional = this.generateRandomInt(1, 200); //trade.notional === undefined ? 34 : 4;
+          trade.changeOnYear =
+            trade.changeOnYear > 0 ? trade.changeOnYear + 50 : trade.changeOnYear - 50;
 
           blotter.api.gridApi.updateGridData([trade]);
           //   gridOptions.api!.updateRowData({ update: [trade] });
         }
-      }, 2000);
+      }, 1000);
     }
   }
 

@@ -227,4 +227,6 @@ export interface IAdaptableBlotter {
 
   // Theme
   applyBlotterTheme(theme: AdaptableBlotterTheme | string): void;
+  setUpRowStyles(): void; // not sure about this...
+  clearRowStyles(): void; // not sure about this...
 }

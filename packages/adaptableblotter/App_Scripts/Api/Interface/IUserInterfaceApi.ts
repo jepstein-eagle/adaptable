@@ -2,6 +2,7 @@ import {
   UserInterfaceState,
   PermittedColumnValues,
   EditLookUpColumn,
+  RowStyle,
 } from '../../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 export interface IUserInterfaceApi {
@@ -48,4 +49,8 @@ export interface IUserInterfaceApi {
   getEditLookUpColumnForColumn(columnId: string): EditLookUpColumn;
 
   isEditLookUpColumn(columnId: string): boolean;
+
+  clearRowStyles(): void;
+
+  setRowStyles(rowStyles: RowStyle[]): void;
 }

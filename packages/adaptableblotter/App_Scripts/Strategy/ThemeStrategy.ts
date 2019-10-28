@@ -35,9 +35,6 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     if (this.ThemeState != this.blotter.api.themeApi.getThemeState()) {
       this.ThemeState = this.blotter.api.themeApi.getThemeState();
 
-      // publish the theme changed event even on initialization
-      this.publishThemeChanged(this.ThemeState);
-
       const allThemeNames = [
         ...(this.ThemeState.SystemThemes || []),
         ...(this.ThemeState.UserThemes || []),
@@ -54,6 +51,9 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
       }
 
       this.blotter.applyBlotterTheme(currentTheme);
+
+      // publish the theme changed event even on initialization
+      this.publishThemeChanged(this.ThemeState);
     }
   }
 }
