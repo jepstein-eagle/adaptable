@@ -270,7 +270,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
               data,
               gridColumns,
-              this.blotter,
             ]);
           }
         } catch (error) {

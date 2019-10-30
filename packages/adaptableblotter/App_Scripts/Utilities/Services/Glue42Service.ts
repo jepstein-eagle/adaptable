@@ -12,6 +12,7 @@ import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { Glue42Config } from '../../PredefinedConfig/DesignTimeState/Glue42Config';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+
 import LoggingHelper, {
   LogAdaptableBlotterError,
   LogAdaptableBlotterWarning,
@@ -36,7 +37,7 @@ export interface IExcelStatus {
 }
 export interface IGlue42Service {
   init(): void;
-  exportData(data: any[], gridColumns: AdaptableBlotterColumn[], blotter: IAdaptableBlotter): void;
+  exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys?: any[]): void;
 }
 
 type SheetChangeCallback = (
@@ -60,8 +61,9 @@ export class Glue42Service implements IGlue42Service {
 
   async init(): Promise<void> {
     try {
-      let glue42PartnerConfig: Glue42Config = this.blotter.api.partnerConfigApi.getPartnerConfigState()
-        .glue42Config;
+      let glue42PartnerConfig:
+        | Glue42Config
+        | undefined = this.blotter.api.partnerConfigApi.getPartnerConfigState().glue42Config;
       console.log('in glue 42 service init ' + glue42PartnerConfig);
 
       if (!glue42PartnerConfig) {
@@ -70,10 +72,9 @@ export class Glue42Service implements IGlue42Service {
         return;
       }
 
-      //TODO: Add another conversion from AdaptableBlotter -> Glue42Config to Glue42.Config here if needed:
       const glue42Config = glue42PartnerConfig as Glue42Config;
       this.glueInstance = await Glue(glue42Config);
-      (glue42Config as Glue42Office.Config).glue = this.glueInstance;
+      (glue42Config as any).glue = this.glueInstance;
       const glue4OfficeInstance = await Glue4Office(glue42Config);
       this.glue4ExcelInstance = glue4OfficeInstance.excel as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
@@ -84,7 +85,7 @@ export class Glue42Service implements IGlue42Service {
     }
   }
 
-  async exportData(data: any[], gridColumns: AdaptableBlotterColumn[], blotter: IAdaptableBlotter) {
+  async exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys?: any[]) {
     if (!this.glueInstance) {
       return;
     }
@@ -92,7 +93,9 @@ export class Glue42Service implements IGlue42Service {
     try {
       if (!this.isExcelStatus.isResolved) {
         try {
-          await this.glueInstance.appManager.application('excel').start();
+          if (this.glueInstance.appManager) {
+            await this.glueInstance.appManager.application('excel').start();
+          }
         } catch (error) {}
       }
 
@@ -110,8 +113,10 @@ export class Glue42Service implements IGlue42Service {
         },
       };
 
-      const sheet = await this.glue4ExcelInstance.openSheet(sheetData);
-      sheet.onChanged(this.getSheetChangeHandler(gridColumns, sentRows, exportColumns));
+      const sheet = await this.glue4ExcelInstance.openSheet(sheetData as any);
+      sheet.onChanged(
+        this.getSheetChangeHandler(gridColumns, sentRows, exportColumns, primaryKeys)
+      );
     } catch (error) {
       console.error(error);
     }
@@ -124,10 +129,11 @@ export class Glue42Service implements IGlue42Service {
   private getSheetChangeHandler(
     gridColumns: AdaptableBlotterColumn[],
     sentRows: any[],
-    exportColumns: any[]
+    exportColumns: any[],
+    primaryKeys: any[]
   ): SheetChangeCallback {
     return (
-      data: any[],
+      allData: any[],
       errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
       doneCallback: () => void,
       delta: Glue42Office.Excel.DeltaItem[]
@@ -141,6 +147,7 @@ export class Glue42Service implements IGlue42Service {
       const errors: IGlue42ExportError[] = [];
 
       delta.forEach(deltaItem => {
+        console.log(deltaItem);
         if (deltaItem.action === 'modified') {
           deltaItem.row.forEach((change, changeIndex) => {
             if (change !== null) {
@@ -151,7 +158,13 @@ export class Glue42Service implements IGlue42Service {
 
               const originalRow = sentRows[deltaItem.rowBeforeIndex - 1];
               const originalValue = originalRow[exportColumns[changeIndex]];
-              const primaryKeyValue = originalRow[primaryKeyColumnFriendlyName];
+
+              let primaryKeyValue: any;
+              if (primaryKeys) {
+                primaryKeyValue = primaryKeys[deltaItem.rowBeforeIndex - 1];
+              } else {
+                primaryKeyValue = originalRow[primaryKeyColumnFriendlyName];
+              }
 
               var isValidEdit = this.isValidEdit(
                 column,
