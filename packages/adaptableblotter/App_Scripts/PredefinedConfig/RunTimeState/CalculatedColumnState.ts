@@ -18,7 +18,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * [Calculated Column Demo](https://demo.adaptableblotter.com/column/aggridcalculatedcolumndemo/)
  *
- * [Calculated Column Blotter API](_api_interface_icalculatedcolumnapi_.icalculatedcolumnpi.html)
+ * [Calculated Column API](_api_interface_icalculatedcolumnapi_.icalculatedcolumnpi.html)
  *
  * [Calculated Column FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078351-Calculated-Column-FAQ)
  *

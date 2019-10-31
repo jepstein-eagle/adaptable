@@ -12,11 +12,11 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * [Custom Sort Demo](hhttps://demo.adaptableblotter.com/gridmanagement/aggridcustomsortdemo/)
  *
- * [Custom Sort Blotter API](_api_interface_icustomsortapi_.icustomsortapi.html)
+ * [Custom Sort API](_api_interface_icustomsortapi_.icustomsortapi.html)
  *
  * [Custom Sort FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170297-Custom-Sort-FAQ)
  *
- * [Custom Sort Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005167931-Advanced-Search)
+ * [Custom Sort Help](hhttps://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  * **Custom Sort Predefined Config Example**
  *
