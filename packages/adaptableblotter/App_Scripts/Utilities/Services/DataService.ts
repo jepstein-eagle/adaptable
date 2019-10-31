@@ -3,6 +3,7 @@ import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { IEvent } from '../Interface/IEvent';
+import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 // Used to be the Audit Service - now much reduced
 // Doesnt store any data (other than for flashing cell) - simply responsible for publishing DataChanged Events
@@ -56,7 +57,7 @@ export class DataService implements IDataService {
             return null;
           }
           break;
-        case ChangeDirection.Ignore:
+        case ChangeDirection.Neutral:
           // do nothing
           break;
       }

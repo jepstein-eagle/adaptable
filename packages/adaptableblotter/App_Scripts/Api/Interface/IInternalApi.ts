@@ -14,6 +14,7 @@ import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 
 /**
  * This set of api methods is designed for **internal use of the Adaptable Blotter** only.
@@ -85,6 +86,14 @@ export interface IInternalApi {
   addAdaptableBlotterColumn(adaptableBlotterColumn: AdaptableBlotterColumn): void;
 
   setColumnSorts(columnSorts: ColumnSort[]): void;
+
+  getUpdatedRowInfos(): any[];
+
+  addUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
+
+  deleteUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
+
+  isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean;
 
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;

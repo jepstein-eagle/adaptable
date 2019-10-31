@@ -17,27 +17,23 @@ import {
   IAdaptableBlotter,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { IServerColumnValues } from '../../../../App_Scripts/BlotterOptions/QueryOptions';
-
-/*
-Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
-No JSON or anything complicated
-Nor do we create the ag-Grid
-*/
+import { TickingDataHelper } from '../../TickingDataHelper';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(25);
+  const tradeData: any = examplesHelper.getTrades(30);
+  const tickingDataHelper = new TickingDataHelper();
+
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Server Lookup Demo',
+    blotterId: 'Updated Rows Demo',
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
@@ -47,48 +43,25 @@ function InitAdaptableBlotter() {
     autoApplyFilter: false,
   };
 
-  adaptableBlotterOptions.queryOptions = {
-    getColumnValues: (columnName: string) => {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(getValuesForColumn(columnName)), 500);
-      });
-    },
-  };
-
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-
-  //gridOptions.api!.ensureIndexVisible(200);
-  // adaptableblotter.api.userFilterApi.showUserFilterPopup();
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
+  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 5000);
+
   //  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-  global.adaptableblotter = adaptableblotter;
+  // global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout', 'ColumnFilter'],
+  UpdatedRow: {
+    EnableUpdatedRow: true,
+    JumpToRow: true,
+    UpColor: '#32CD32', // lime green
+    DownColor: '#FFA500', // orange
+    NeutralColor: '#FFFF00', // yellow
   },
 };
-
-function getValuesForColumn(columnName: string): IServerColumnValues | undefined {
-  let returnVals: string[] = [];
-
-  if (columnName === 'country') {
-    returnVals = ['Jonny'];
-  } else if (columnName === 'currency') {
-    returnVals = ['REadu'];
-  } else if (columnName === 'counterparty') {
-    returnVals = ['First', 'Second', 'Citi', 'UBS'];
-  } else {
-    return undefined; // not nice and we need to fix
-  }
-  return {
-    DistinctCriteriaPairValue: 'DisplayValue',
-    ColumnValues: returnVals,
-  };
-}
 
 export default () => {
   useEffect(() => {

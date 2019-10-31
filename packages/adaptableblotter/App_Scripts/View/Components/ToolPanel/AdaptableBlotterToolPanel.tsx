@@ -2,18 +2,25 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
 import * as QuickSearchRedux from '../../../Redux/ActionsReducers/QuickSearchRedux';
+import * as DashboardRedux from '../../../Redux/ActionsReducers/DashboardRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { IAdaptableBlotterToolPanelContext } from '../../../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
 import { render } from 'react-dom';
+import { Visibility } from '../../../PredefinedConfig/Common/Enums';
+import Dropdown from '../../../components/Dropdown';
+import EnumExtensions from '../../../Utilities/Extensions/EnumExtensions';
+import { Text, Flex } from 'rebass';
 
 interface AdaptableBlotterToolPanelProps
   extends StrategyViewPopupProps<AdaptableBlotterToolPanelComponent> {
-  QuickSearchText: string;
+  QuickSearchText: string | undefined;
+  DashboardVisibility: Visibility;
 
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
+  onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
 }
 
 export interface AdaptableBlotterToolPanelState {
@@ -44,7 +51,32 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
   );
 
   render(): any {
-    return null;
+    let visibilityOptions = EnumExtensions.getNames(Visibility).map(type => {
+      return {
+        value: type,
+        label: type,
+      };
+    });
+
+    return (
+      <Flex flexDirection="column" justifyContent="center" padding={2} style={{ width: '100%' }}>
+        <Text marginTop={3} marginBottom={2}>
+          Dashboard{' '}
+        </Text>
+        <Dropdown
+          placeholder="select"
+          showEmptyItem={false}
+          showClearButton={false}
+          value={this.props.DashboardVisibility}
+          onChange={(value: any) => this.onDashboardVisibilityChanged(value)}
+          options={visibilityOptions}
+        ></Dropdown>
+      </Flex>
+    );
+  }
+
+  onDashboardVisibilityChanged(visibility: any) {
+    this.props.onSetDashboardVisibility(visibility);
   }
 
   onUpdateQuickSearchText(searchText: string) {
@@ -69,9 +101,10 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
   return {
     QuickSearchText: state.QuickSearch.QuickSearchText,
+    DashboardVisibility: state.Dashboard.DashboardVisibility as Visibility,
   };
 }
 
@@ -79,6 +112,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   return {
     onRunQuickSearch: (newQuickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
+    onSetDashboardVisibility: (visibility: Visibility) =>
+      dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
   };
 }
 
@@ -110,7 +145,7 @@ export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableBlotterToolPanel
       );
 
       if (params && params.api) {
-        params.api.addEventListener('modelUpdated', (newModel: any) => {
+        params.api.addEventListener('modelUpdated', () => {
           //    console.log('Model updated', newModel);
         });
       }

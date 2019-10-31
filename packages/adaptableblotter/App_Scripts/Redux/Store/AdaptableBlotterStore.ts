@@ -19,6 +19,7 @@ import * as SystemRedux from '../ActionsReducers/SystemRedux';
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux';
 import * as ExportRedux from '../ActionsReducers/ExportRedux';
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux';
+import * as UpdatedRowRedux from '../ActionsReducers/UpdatedRowRedux';
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux';
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux';
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux';
@@ -125,6 +126,7 @@ import Emitter from '../../Utilities/Emitter';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
+import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -159,6 +161,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Entitlements: EntitlementsRedux.EntitlementsReducer,
   Export: ExportRedux.ExportReducer,
   FlashingCell: FlashingCellsRedux.FlashingCellReducer,
+  UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
   FormatColumn: FormatColumnRedux.FormatColumnReducer,
   FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
   Layout: LayoutRedux.LayoutReducer,
@@ -2003,6 +2006,44 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 let record = alert.DataChangedInfo.RowNode;
                 blotter.refreshCells([record], [alert.DataChangedInfo.ColumnId]);
               }
+            });
+
+            return ret;
+          }
+
+          /*******************
+           * UPDATED ROW ACTIONS
+           *******************/
+
+          /**
+           * Use Case: User has deleted a Updated Row
+           * Action: Refresh the row (to clear the style)
+           */
+          case SystemRedux.SYSTEM_UPDATED_ROW_DELETE: {
+            const actionTyped = action as SystemRedux.SystemUpdatedRowDeleteAction;
+
+            let ret = next(action);
+
+            let rowNode: any[] = blotter.getRowNodeForPrimaryKey(
+              actionTyped.updatedRowInfo.primaryKeyValue
+            );
+            blotter.redrawRow(rowNode);
+
+            return ret;
+          }
+
+          /**
+           * Use Case: User has deleted all Updated Rows
+           * Action: Refresh the rows (to clear the style)
+           */
+          case SystemRedux.SYSTEM_UPDATED_ROW_DELETE_ALL: {
+            const actionTyped = action as SystemRedux.SystemUpdatedRowDeleteAllAction;
+
+            let ret = next(action);
+            let updatedRowInfos: UpdatedRowInfo[] = actionTyped.updatedRowInfos;
+            updatedRowInfos.forEach(uri => {
+              let rowNode: any[] = blotter.getRowNodeForPrimaryKey(uri.primaryKeyValue);
+              blotter.redrawRow(rowNode);
             });
 
             return ret;

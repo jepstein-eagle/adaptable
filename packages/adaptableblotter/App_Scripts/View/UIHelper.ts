@@ -37,6 +37,7 @@ export const LIGHT_YELLOW: string = 'LightYellow';
 export const DARK_BLUE: string = 'DarkBlue';
 export const BLUE: string = 'Blue';
 export const LIGHT_BLUE: string = 'LightBlue';
+//xport const LIGHT_GREEN: string = 'LightGreen';
 export const CYAN: string = 'Cyan';
 export const MAGENTA: string = 'Magenta';
 

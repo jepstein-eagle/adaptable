@@ -1,0 +1,189 @@
+import * as React from 'react';
+import * as Redux from 'redux';
+import { connect } from 'react-redux';
+import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
+import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
+import Checkbox from '../../components/CheckBox';
+import { Flex, Box, Text } from 'rebass';
+import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
+import HelpBlock from '../../components/HelpBlock';
+import { ColorPicker } from '../ColorPicker';
+
+interface UpdatedRowPopupProps extends StrategyViewPopupProps<UpdatedRowPopupComponent> {
+  UpdatedRowState: UpdatedRowState;
+  onEnableDisableUpdatedRow: (
+    shouldEnable: boolean
+  ) => UpdatedRowRedux.UpdatedRowEnableDisableAction;
+  onEnableDisableJumpToRow: (shouldEnable: boolean) => UpdatedRowRedux.JumpToRowEnableDisableAction;
+  onSetUpColor: (upColor: string) => UpdatedRowRedux.UpColorSetAction;
+  onSetDownColor: (downColor: string) => UpdatedRowRedux.DownColorSetAction;
+  onSetNeutralColor: (neutralColor: string) => UpdatedRowRedux.NeutralColorSetAction;
+}
+
+interface UpdatedRowPopupState {
+  EnableUpdatedRow: boolean | undefined;
+  JumpToRow: boolean | undefined;
+  UpColor: string;
+  DownColor: string;
+  NeutralColor: string;
+}
+
+class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, UpdatedRowPopupState> {
+  constructor(props: UpdatedRowPopupProps) {
+    super(props);
+    this.state = {
+      EnableUpdatedRow: this.props.UpdatedRowState.EnableUpdatedRow,
+      JumpToRow: this.props.UpdatedRowState.JumpToRow,
+      UpColor: this.props.UpdatedRowState.UpColor,
+      DownColor: this.props.UpdatedRowState.DownColor,
+      NeutralColor: this.props.UpdatedRowState.NeutralColor,
+    };
+  }
+
+  render() {
+    let infoBody: any[] = [
+      'Highlight updated rows by selecting the back color (depending on direction)',
+      <br />,
+      <br />,
+      "Choose whether the grid should 'jump' to the row that has changed.",
+      <br />,
+      <br />,
+      'Clear any updated rows through the Context Menu.',
+    ];
+
+    let enableUpdatedRowOption = (
+      <Box>
+        <Checkbox
+          marginLeft={2}
+          onChange={() => this.onenableUpdatedRowChanged()}
+          checked={this.state.EnableUpdatedRow}
+        >
+          Enable Updated Row
+        </Checkbox>
+      </Box>
+    );
+
+    let enableJumpToRowOption = (
+      <Box>
+        <Checkbox
+          marginLeft={2}
+          onChange={() => this.onEnableJumpToRowChanged()}
+          checked={this.state.JumpToRow}
+        >
+          Jump to Changed Row
+        </Checkbox>
+      </Box>
+    );
+
+    return (
+      <Flex flex={1} flexDirection="column">
+        <PanelWithImage
+          variant="primary"
+          header={StrategyConstants.UpdatedRowStrategyName}
+          glyphicon={StrategyConstants.UpdatedRowGlyph}
+          infoBody={infoBody}
+          bodyProps={{ padding: 0 }}
+        >
+          {enableUpdatedRowOption}
+          {enableJumpToRowOption}
+
+          <Flex flexDirection="column" margin={1}>
+            <HelpBlock>
+              Select the back colour for an updated row. Select colours for when the change in value
+              is up, down and non-directional.
+            </HelpBlock>
+
+            <Flex flexDirection="row" alignItems="center" margin={2}>
+              <Text marginRight={4}>Up Direction Change Color:</Text>
+
+              <ColorPicker
+                ColorPalette={this.props.ColorPalette}
+                value={this.state.UpColor}
+                onChange={x => this.onUpColorSelectChange(x)}
+              />
+            </Flex>
+
+            <Flex flexDirection="row" alignItems="center" margin={2}>
+              <Text marginRight={3}>Down Direction Change Color:</Text>
+
+              <ColorPicker
+                ColorPalette={this.props.ColorPalette}
+                value={this.state.DownColor}
+                onChange={x => this.onDownColorSelectChange(x)}
+              />
+            </Flex>
+            <Flex flexDirection="row" alignItems="center" margin={2}>
+              <Text marginRight={4}>No Direction Change Color:</Text>
+
+              <ColorPicker
+                ColorPalette={this.props.ColorPalette}
+                value={this.state.NeutralColor}
+                onChange={x => this.onNeutralColorSelectChange(x)}
+              />
+            </Flex>
+          </Flex>
+        </PanelWithImage>
+      </Flex>
+    );
+  }
+
+  private onenableUpdatedRowChanged() {
+    let newEnabledValue = !this.state.EnableUpdatedRow;
+    this.setState({ EnableUpdatedRow: newEnabledValue } as UpdatedRowPopupState);
+    this.props.onEnableDisableUpdatedRow(newEnabledValue);
+  }
+
+  private onEnableJumpToRowChanged() {
+    let newEnabledValue = !this.state.JumpToRow;
+    this.setState({ JumpToRow: newEnabledValue } as UpdatedRowPopupState);
+    this.props.onEnableDisableJumpToRow(newEnabledValue);
+  }
+
+  private onUpColorSelectChange(event: React.FormEvent<ColorPicker>) {
+    let e = event.target as HTMLInputElement;
+    let upColor = e.value;
+    this.setState({ UpColor: upColor } as UpdatedRowPopupState);
+    this.props.onSetUpColor(upColor);
+  }
+
+  private onDownColorSelectChange(event: React.FormEvent<ColorPicker>) {
+    let e = event.target as HTMLInputElement;
+    let downColor = e.value;
+    this.setState({ DownColor: downColor } as UpdatedRowPopupState);
+    this.props.onSetDownColor(downColor);
+  }
+
+  private onNeutralColorSelectChange(event: React.FormEvent<ColorPicker>) {
+    let e = event.target as HTMLInputElement;
+    let neutralColor = e.value;
+    this.setState({ NeutralColor: neutralColor } as UpdatedRowPopupState);
+    this.props.onSetNeutralColor(neutralColor);
+  }
+}
+
+function mapStateToProps(state: AdaptableBlotterState) {
+  return {
+    UpdatedRowState: state.UpdatedRow,
+  };
+}
+
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+  return {
+    onEnableDisableUpdatedRow: (shouldEnable: boolean) =>
+      dispatch(UpdatedRowRedux.UpdatedRowEnableDisable(shouldEnable)),
+    onEnableDisableJumpToRow: (shouldEnable: boolean) =>
+      dispatch(UpdatedRowRedux.JumpToRowEnableDisable(shouldEnable)),
+    onSetUpColor: (upColor: string) => dispatch(UpdatedRowRedux.UpColorSet(upColor)),
+    onSetDownColor: (downColor: string) => dispatch(UpdatedRowRedux.DownColorSet(downColor)),
+    onSetNeutralColor: (neutralColor: string) =>
+      dispatch(UpdatedRowRedux.NeutralColorSet(neutralColor)),
+  };
+}
+
+export let UpdatedRowPopup = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UpdatedRowPopupComponent);

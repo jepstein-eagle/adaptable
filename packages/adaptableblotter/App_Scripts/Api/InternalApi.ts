@@ -19,6 +19,9 @@ import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import { UpdatedRowInfo, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
+import Helper from '../Utilities/Helpers/Helper';
 
 export class InternalApi extends ApiBase implements IInternalApi {
   // System Redux Actions
@@ -142,6 +145,25 @@ export class InternalApi extends ApiBase implements IInternalApi {
 
   public setColumnSorts(columnSorts: ColumnSort[]): void {
     this.dispatchAction(GridRedux.GridSetSort(columnSorts));
+  }
+
+  public getUpdatedRowInfos(): any[] {
+    return this.getSystemState().UpdatedRowInfos;
+  }
+
+  public addUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void {
+    this.dispatchAction(SystemRedux.SystemUpdatedRowAdd(updatedRowInfo));
+  }
+
+  public deleteUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void {
+    this.dispatchAction(SystemRedux.SystemUpdatedRowDelete(updatedRowInfo));
+  }
+
+  public isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean {
+    let foundUpdatedRowInfo: UpdatedRowInfo = this.getSystemState().UpdatedRowInfos.find(
+      uri => uri.primaryKeyValue == primaryKeyValue && uri.changeDirection == changeDirection
+    );
+    return Helper.objectExists(foundUpdatedRowInfo);
   }
 
   // General way to get to store from inside the Blotter...

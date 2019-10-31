@@ -116,8 +116,11 @@ export interface IAdaptableBlotter {
   createMainMenu(): void;
   reloadGrid(): void;
   redraw(): void;
-  redrawRow(row: any): void;
-  refreshCells(rows: any[], columnIds: string[]): void;
+  redrawRow(rowNode: any): void;
+  refreshCells(rowNodes: any[], columnIds: string[]): void;
+  jumpToRow(rowNode: any): void;
+  jumpToColumn(columnId: string): void;
+  jumpToCell(columnId: string, rowNode: any): void;
 
   // DataSource Management
   setDataSource(dataSource: any): void;
@@ -159,6 +162,7 @@ export interface IAdaptableBlotter {
   getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
   getDataRowFromRowNode(rowNode: any): any;
   getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
+  getRowNodeForPrimaryKey(primaryKeyValue: any): any;
 
   // editing related
   setValue(gridCell: GridCell): void;

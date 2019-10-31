@@ -12,5 +12,9 @@ export interface IApplicationApi {
 
   getApplicationToolbarButtons(): ApplicationToolbarButton[];
 
-  RenderToolbar(toolbarContents: any): void;
+  // RenderToolbar(toolbarContents: any): void;
+
+  getApplicationToolbarContentsDivId(): string;
+
+  getApplicationToolbarContentsDiv(): HTMLElement | null;
 }

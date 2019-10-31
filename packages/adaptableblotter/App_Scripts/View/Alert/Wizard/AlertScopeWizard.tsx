@@ -14,6 +14,7 @@ export interface AlertScopeWizardProps extends AdaptableWizardStepProps<AlertDef
 export interface AlertScopeWizardState {
   ShowPopup: boolean;
   HighlightCell: boolean;
+  JumpToCell: boolean;
 }
 
 export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, AlertScopeWizardState>
@@ -23,6 +24,7 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
     this.state = {
       ShowPopup: this.props.Data!.AlertProperties.ShowPopup,
       HighlightCell: this.props.Data!.AlertProperties.HighlightCell,
+      JumpToCell: this.props.Data!.AlertProperties.JumpToCell,
     };
   }
 
@@ -50,6 +52,13 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
           >
             Highight Cell
           </Checkbox>
+          <Checkbox
+            marginLeft={2}
+            checked={this.state.JumpToCell == true}
+            onChange={this.onJumpToCellChanged}
+          >
+            Jump To Cell
+          </Checkbox>
         </WizardPanel>
       </>
     );
@@ -65,6 +74,11 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
       this.props.UpdateGoBackState()
     );
   };
+  private onJumpToCellChanged = (checked: boolean) => {
+    this.setState({ JumpToCell: checked } as AlertScopeWizardState, () =>
+      this.props.UpdateGoBackState()
+    );
+  };
 
   public canNext(): boolean {
     return true;
@@ -76,6 +90,7 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
   public Next(): void {
     this.props.Data!.AlertProperties.ShowPopup = this.state.ShowPopup;
     this.props.Data!.AlertProperties.HighlightCell = this.state.HighlightCell;
+    this.props.Data!.AlertProperties.JumpToCell = this.state.JumpToCell;
   }
 
   public Back(): void {

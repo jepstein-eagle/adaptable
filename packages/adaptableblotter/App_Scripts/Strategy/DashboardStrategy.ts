@@ -14,6 +14,7 @@ import {
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   private visibleToolbars: string[];
+  private dashboardVisibility: Visibility;
 
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.DashboardStrategyId, blotter);
@@ -29,7 +30,11 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
       [...(this.blotter.api.dashboardApi.GetState().VisibleToolbars || [])].forEach(
         (toolbar: string) => {
           if (!oldVisibleToolbars[toolbar]) {
-            this.blotter.emit(TOOLBAR_VISIBLE_EVENT, toolbar);
+            if (
+              this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Visible
+            ) {
+              this.blotter.emit(TOOLBAR_VISIBLE_EVENT, toolbar);
+            }
           }
         }
       );
@@ -40,6 +45,23 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         }
       });
       this.visibleToolbars = this.blotter.api.dashboardApi.GetState().VisibleToolbars;
+    }
+
+    if (this.dashboardVisibility != this.blotter.api.dashboardApi.GetState().DashboardVisibility) {
+      this.dashboardVisibility = this.blotter.api.dashboardApi.GetState()
+        .DashboardVisibility as Visibility;
+
+      if (this.dashboardVisibility == Visibility.Visible) {
+        [...(this.blotter.api.dashboardApi.GetState().VisibleToolbars || [])].forEach(
+          (toolbar: string) => {
+            if (
+              this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Visible
+            ) {
+              this.blotter.emit(TOOLBAR_VISIBLE_EVENT, toolbar);
+            }
+          }
+        );
+      }
     }
   }
 

@@ -84,6 +84,8 @@ import { IColumnChooserAPI } from './Interface/IColumnChooserAPI';
 import { ColumnChooserAPI } from './ColumnChooserAPI';
 import { IApplicationApi } from './Interface/IApplicationAPI';
 import { ApplicationApi } from './AppplicationAPI';
+import { IUpdatedRowApi } from './Interface/IUpdatedRowApi';
+import { UpdatedRowApi } from './UpdatedRowApi';
 
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
@@ -110,6 +112,7 @@ export class BlotterApi implements IBlotterApi {
   public eventApi: IEventApi;
   public exportApi: IExportApi;
   public flashingCellApi: IFlashingCellApi;
+  public updatedRowApi: IUpdatedRowApi;
   public formatColumnApi: IFormatColumnApi;
   public freeTextColumnApi: IFreeTextColumnApi;
   public gridApi: IGridApi;
@@ -154,6 +157,7 @@ export class BlotterApi implements IBlotterApi {
     this.eventApi = new EventApi(blotter);
     this.exportApi = new ExportApi(blotter);
     this.flashingCellApi = new FlashingCellApi(blotter);
+    this.updatedRowApi = new UpdatedRowApi(blotter);
     this.formatColumnApi = new FormatColumnApi(blotter);
     this.freeTextColumnApi = new FreeTextColumnApi(blotter);
     this.gridApi = new GridApi(blotter);

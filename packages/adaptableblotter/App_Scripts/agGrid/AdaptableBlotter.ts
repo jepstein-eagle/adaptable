@@ -1435,6 +1435,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return rowNode != null && rowNode != undefined ? rowNode.data : undefined;
   }
 
+  public getRowNodeForPrimaryKey(primaryKeyValue: any): any {
+    if (this.useRowNodeLookUp) {
+      return this.gridOptions.api!.getRowNode(primaryKeyValue);
+    } else {
+      this.gridOptions.api!.getModel().forEachNode(rowNode => {
+        if (primaryKeyValue == this.getPrimaryKeyValueFromRowNode(rowNode)) {
+          return rowNode;
+        }
+      });
+    }
+  }
+
   public getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[] {
     let rowNodes: RowNode[] = [];
     if (this.useRowNodeLookUp) {
@@ -1461,7 +1473,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setCellClassRules(
     cellClassRules: any,
     columnId: string,
-    type: 'ConditionalStyle' | 'QuickSearch' | 'FlashingCell' | 'FormatColumn' | 'Alert'
+    type:
+      | 'ConditionalStyle'
+      | 'QuickSearch'
+      | 'FlashingCell'
+      | 'FormatColumn'
+      | 'Alert'
+      | 'UpdatedRow'
   ) {
     const vendorColumn: Column = this.gridOptions.columnApi!.getColumn(columnId);
     if (vendorColumn) {
@@ -1503,14 +1521,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 delete localCellClassRules[prop];
               }
             }
+          } else if (type == 'UpdatedRow') {
+            for (const prop in localCellClassRules) {
+              if (prop.includes(StyleConstants.UPDATED_ROW_NEUTRAL_STYLE)) {
+                delete localCellClassRules[prop];
+              }
+            }
           }
           // Is initialized in Flash
           else if (type == 'FlashingCell') {
             for (const prop in localCellClassRules) {
-              if (prop.includes(StyleConstants.FLASH_UP_STYLE)) {
+              if (prop.includes(StyleConstants.FLASH_CELL_UP_STYLE)) {
                 delete localCellClassRules[prop];
               }
-              if (prop.includes(StyleConstants.FLASH_DOWN_STYLE)) {
+              if (prop.includes(StyleConstants.FLASH_CELL_DOWN_STYLE)) {
                 delete localCellClassRules[prop];
               }
             }
@@ -1543,17 +1567,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.emit(GRID_REFRESHED_EVENT);
   }
 
-  public redrawRow(row: any) {
-    this.gridOptions.api!.redrawRows({ rowNodes: [row] });
+  public redrawRow(rowNode: any) {
+    this.gridOptions.api!.redrawRows({ rowNodes: [rowNode] });
   }
 
-  public refreshCells(rows: any[], columnIds: string[]) {
+  public refreshCells(rowNodes: any[], columnIds: string[]) {
     const refreshCellParams: RefreshCellsParams = {
-      rowNodes: rows as RowNode[],
+      rowNodes: rowNodes,
       columns: columnIds,
       force: true,
     };
     this.gridOptions.api!.refreshCells(refreshCellParams);
+  }
+
+  public jumpToRow(rowNode: any): void {
+    this.gridOptions.api!.ensureNodeVisible(rowNode, 'middle');
+  }
+
+  public jumpToColumn(columnId: string): void {
+    this.gridOptions.api!.ensureColumnVisible(columnId);
+  }
+
+  public jumpToCell(columnId: string, rowNode: any): void {
+    this.jumpToRow(rowNode);
+    this.jumpToColumn(columnId);
   }
 
   private forEachColumn = (fn: (columnDef: ColDef) => any) => {

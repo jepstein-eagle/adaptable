@@ -17,6 +17,7 @@ import { DashboardState } from './RunTimeState/DashboardState';
 import { DataSourceState } from './RunTimeState/DataSourceState';
 import { ExportState } from './RunTimeState/ExportState';
 import { FlashingCellState } from './RunTimeState/FlashingCellState';
+import { UpdatedRowState } from './RunTimeState/UpdatedRowState';
 import { FormatColumnState } from './RunTimeState/FormatColumnState';
 import { FreeTextColumnState } from './RunTimeState/FreeTextColumnState';
 import { LayoutState } from './RunTimeState/LayoutState';
@@ -350,6 +351,11 @@ export interface PredefinedConfig {
    * Supplies a collection of *FlashingCell* objects to set up which columns should flash when their contents change and how.  Also includes default values to facilitiate creating new flashing cell columns.
    */
   FlashingCell?: FlashingCellState;
+
+  /**
+   * Sets whether rows should display differently when they update.  A different color is used depending on the direction of the change.
+   */
+  UpdatedRow?: UpdatedRowState;
 
   /**
    * Supplies a collection of *FormatColumn* objects that will style an entire column in a single way (and not subject to a rule like with Conditional Style).

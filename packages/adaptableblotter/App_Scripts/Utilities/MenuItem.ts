@@ -50,6 +50,8 @@ export interface ContextMenuInfo {
   isSingleSelectedColumn: boolean;
   // this will be the node
   rowNode: any;
+
+  primaryKeyValue: any;
 }
 
 // A menu item which performs a Redux Action when it is clicke

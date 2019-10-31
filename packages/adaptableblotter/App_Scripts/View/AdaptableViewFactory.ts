@@ -7,6 +7,7 @@ import { ColumnChooserPopup } from './ColumnChooser/ColumnChooserPopup';
 import { ColumnInfoPopup } from './ColumnInfo/ColumnInfoPopup';
 import { ExportPopup } from './Export/ExportPopup';
 import { FlashingCellsPopup } from './FlashingCells/FlashingCellsPopup';
+import { UpdatedRowPopup } from './UpdatedRow/UpdatedRowPopup';
 import { CalendarsPopup } from './Calendars/CalendarsPopup';
 import { ConditionalStylePopup } from './ConditionalStyle/ConditionalStylePopup';
 import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup';
@@ -73,6 +74,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   DataSourcePopup,
   ExportPopup,
   FlashingCellsPopup,
+  UpdatedRowPopup,
   FormatColumnPopup,
   FreeTextColumnPopup,
   IPushPullLogin,

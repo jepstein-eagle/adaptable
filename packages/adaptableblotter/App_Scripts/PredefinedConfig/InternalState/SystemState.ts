@@ -12,6 +12,7 @@ import { ChartData } from '../RunTimeState/ChartState';
 import { Report } from '../RunTimeState/ExportState';
 import { QueryRange } from '../Common/Expression/QueryRange';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
+import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 /**
  * SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
  */
@@ -19,6 +20,7 @@ import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyAc
 export interface SystemState extends InternalState {
   SystemStatus: ISystemStatus;
   AdaptableAlerts: AdaptableAlert[];
+  UpdatedRowInfos: UpdatedRowInfo[];
   AvailableCalendars: Calendar[];
   CurrentLiveReports: ILiveReport[];
   IsValidSmartEditSelection: boolean;

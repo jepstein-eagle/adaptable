@@ -101,7 +101,11 @@ export class TickingDataHelper {
   }
 
   // This DOES NOT update the AB as agGrid fires an event
-  startTickingDataagGridThroughRowData(blotter: IAdaptableBlotter, rowData: any) {
+  startTickingDataagGridThroughRowData(
+    blotter: IAdaptableBlotter,
+    rowData: any,
+    tickingFrequency: number
+  ) {
     let gridOptions: GridOptions = blotter.blotterOptions.vendorGrid as GridOptions;
     let myRowData = gridOptions.rowData;
     if (
@@ -137,7 +141,7 @@ export class TickingDataHelper {
           blotter.api.gridApi.updateGridData([trade]);
           //   gridOptions.api!.updateRowData({ update: [trade] });
         }
-      }, 1000);
+      }, tickingFrequency);
     }
   }
 

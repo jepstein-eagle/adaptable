@@ -13,7 +13,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 
-import { FlashingCell, FlashingRow } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
@@ -21,12 +21,8 @@ import Checkbox from '../../components/CheckBox';
 import { Flex, Box } from 'rebass';
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
-  FlashingCells: FlashingCell[];
-  FlashingRow: FlashingRow;
-  CalculatedColumns: CalculatedColumn[];
-  onEnableDisableFlashingRow: (
-    shouldEnable: boolean
-  ) => FlashingCellsRedux.FlashingRowEnableDisableAction;
+  FlashingCells: FlashingCell[] | undefined;
+  CalculatedColumns: CalculatedColumn[] | undefined;
   onSelectColumn: (flashingCell: FlashingCell) => FlashingCellsRedux.FlashingCellSelectAction;
   onSelectAllColumns: (
     shouldTurnOn: boolean,
@@ -46,19 +42,9 @@ interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPo
   ) => FlashingCellsRedux.FlashingCellChangeUpColorAction;
 }
 
-interface FlashingCellsPopupState {
-  EnableFlashingRow: boolean;
-}
-
-class FlashingCellsPopupComponent extends React.Component<
-  FlashingCellsPopupProps,
-  FlashingCellsPopupState
-> {
+class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProps, {}> {
   constructor(props: FlashingCellsPopupProps) {
     super(props);
-    this.state = {
-      EnableFlashingRow: this.props.FlashingRow.EnableFlashingRow,
-    };
   }
 
   render() {
@@ -142,18 +128,6 @@ class FlashingCellsPopupComponent extends React.Component<
       );
     });
 
-    let enableFlashingRowOption = (
-      <Box>
-        <Checkbox
-          marginLeft={2}
-          onChange={() => this.onEnableFlashingRowChanged()}
-          checked={this.state.EnableFlashingRow}
-        >
-          Enable Flashing Row
-        </Checkbox>
-      </Box>
-    );
-
     let areAllLive: boolean = allPotentialFlashingCells.every(f => f.IsLive);
     let setAllOption = (
       <Box>
@@ -176,7 +150,6 @@ class FlashingCellsPopupComponent extends React.Component<
           infoBody={infoBody}
           bodyProps={{ padding: 0 }}
         >
-          {enableFlashingRowOption}
           {setAllOption}
           <AdaptableObjectCollection
             colItems={colItems}
@@ -187,26 +160,17 @@ class FlashingCellsPopupComponent extends React.Component<
       </Flex>
     );
   }
-
-  private onEnableFlashingRowChanged() {
-    let newEnabledValue = !this.state.EnableFlashingRow;
-    this.setState({ EnableFlashingRow: newEnabledValue } as FlashingCellsPopupState);
-    this.props.onEnableDisableFlashingRow(newEnabledValue);
-  }
 }
 
 function mapStateToProps(state: AdaptableBlotterState) {
   return {
     FlashingCells: state.FlashingCell.FlashingCells,
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-    FlashingRow: state.FlashingCell.FlashingRow,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onEnableDisableFlashingRow: (shouldEnable: boolean) =>
-      dispatch(FlashingCellsRedux.FlashingRowEnableDisable(shouldEnable)),
     onSelectColumn: (flashingCell: FlashingCell) =>
       dispatch(FlashingCellsRedux.FlashingCellSelect(flashingCell)),
     onSelectAllColumns: (shouldTurnOn: boolean, numericColumns: FlashingCell[]) =>

@@ -40,6 +40,7 @@ import { INamedFilterApi } from './INamedFilterApi';
 import { IPartnerConfigAPI } from './IPartnerConfigAPI';
 import { IColumnChooserAPI } from './IColumnChooserAPI';
 import { IApplicationApi } from './IApplicationAPI';
+import { IUpdatedRowApi } from './IUpdatedRowApi';
 
 /**
  * The Blotter API (which implements the **IBlotterAPI** interface) provides developers with run-time access to the Adaptable Blotter.
@@ -184,6 +185,11 @@ export interface IBlotterApi {
    * Provides access to the *Flashing Cell* function, the *Flashing Cell* object and [Flashing Cell State](_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
    */
   flashingCellApi: IFlashingCellApi;
+
+  /**
+   * Provides access to the *Updated Row* function and [Updated Row State](_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
+   */
+  updatedRowApi: IUpdatedRowApi;
 
   /**
    * Provides access to the *Format Column* function, the *Format Column* object and [Format Column State](_predefinedconfig_runtimestate_formatcolumnstate_.formatcolumnstate.html).

@@ -42,8 +42,6 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
                     aa.DataChangedInfo &&
                     aa.DataChangedInfo.IdentifierValue ==
                       theBlotter.getPrimaryKeyValueFromRowNode(params.node)
-
-                  //   return result;
                 );
 
                 return relevantAlerts.length > 0;

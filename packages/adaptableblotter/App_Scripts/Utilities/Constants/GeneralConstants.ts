@@ -49,7 +49,7 @@ export const QUICK_SEARCH_DEFAULT_BACK_COLOR: string = getHexForName(LIGHT_YELLO
 export const QUICK_SEARCH_DEFAULT_FORE_COLOR: string = getHexForName(BLACK);
 // Flashing Cells
 export const FLASHING_CELLS_DEFAULT_DURATION: 250 | 500 | 750 | 1000 = 500;
-export const FLASHING_ROWS_DEFAULT_DURATION: 250 | 500 | 750 | 1000 = 1000;
+export const UPDATED_ROWS_DEFAULT_DURATION: 250 | 500 | 750 | 1000 = 1000;
 // Selected Cells
 export const SMART_EDIT_DEFAULT_VALUE: number = 1;
 export const SMART_EDIT_DEFAULT_OPERATION: Exclude<MathOperation, MathOperation.Replace> =
@@ -122,4 +122,4 @@ export const GRID_RELOADED_EVENT: string = 'GridReloaded';
 export const KEY_DOWN_EVENT: string = 'KeyDown';
 export const TOOLBAR_VISIBLE_EVENT: string = 'ToolbarVisible';
 export const TOOLBAR_HIDDEN_EVENT: string = 'ToolbarHidden';
-export const DASHBOARD_BUTTON_CLICKED_EVENT: string = 'DashboardButtonClicked';
+export const APPLICATION_BUTTON_CLICKED_EVENT: string = 'ApplicationButtonClicked';

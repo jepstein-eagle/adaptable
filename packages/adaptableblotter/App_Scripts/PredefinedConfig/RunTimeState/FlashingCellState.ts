@@ -1,6 +1,10 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 
+/**
+ * The Predefined Configuration for the Flashing Cell function
+ *
+ */
 export interface FlashingCellState extends RunTimeState {
   /**
    * Collection of Flashing Cell objects which define how a single cell will flash when it is changed.
@@ -29,17 +33,6 @@ export interface FlashingCellState extends RunTimeState {
    * If not provided then 500 is used as the default value.
    */
   DefaultDuration?: 250 | 500 | 750 | 1000;
-
-  // doing it like this - not great but best of bad bunch
-  FlashingRow?: FlashingRow;
-}
-
-export interface FlashingRow {
-  EnableFlashingRow?: boolean;
-  UpColor?: string;
-  DownColor?: string;
-  NeutralColor?: string;
-  FlashingRowDuration?: 250 | 500 | 750 | 1000 | 'Always';
 }
 
 export interface FlashingCell extends AdaptableBlotterObject {

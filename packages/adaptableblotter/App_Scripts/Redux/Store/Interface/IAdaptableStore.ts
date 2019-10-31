@@ -39,6 +39,7 @@ import { SparklineColumnState } from '../../../PredefinedConfig/DesignTimeState/
 import { NamedFilterState } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 import { PartnerConfigState } from '../../../PredefinedConfig/DesignTimeState/PartnerConfigState';
 import { ApplicationState } from '../../../PredefinedConfig/DesignTimeState/ApplicationState';
+import { UpdatedRowState } from '../../../PredefinedConfig/RunTimeState/UpdatedRowState';
 
 export interface AdaptableBlotterState {
   [s: string]: ConfigState;
@@ -72,6 +73,7 @@ export interface AdaptableBlotterState {
   DataSource: DataSourceState;
   Export: ExportState;
   FlashingCell: FlashingCellState;
+  UpdatedRow: UpdatedRowState;
   FormatColumn: FormatColumnState;
   FreeTextColumn: FreeTextColumnState;
   Layout: LayoutState;

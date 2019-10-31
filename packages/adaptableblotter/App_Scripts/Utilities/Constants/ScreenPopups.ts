@@ -18,6 +18,7 @@ export const DashboardPopup: string = 'DashboardPopup';
 export const DataSourcePopup: string = 'DataSourcePopup';
 export const ExportPopup: string = 'ExportPopup';
 export const FlashingCellsPopup: string = 'FlashingCellsPopup';
+export const UpdatedRowPopup: string = 'UpdatedRowPopup';
 export const FormatColumnPopup: string = 'FormatColumnPopup';
 export const FreeTextColumnPopup: string = 'FreeTextColumnPopup';
 export const LayoutPopup: string = 'LayoutPopup';

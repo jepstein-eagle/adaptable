@@ -66,6 +66,8 @@ import Helper from '../Utilities/Helpers/Helper';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
 import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
+import { UpdatedRowStrategy } from '../Strategy/UpdatedRowStrategy';
+import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -117,6 +119,7 @@ export class agGridHelper {
       StrategyConstants.FlashingCellsStrategyId,
       new FlashingCellStrategyagGrid(blotter)
     );
+    strategies.set(StrategyConstants.UpdatedRowStrategyId, new UpdatedRowStrategyagGrid(blotter));
     strategies.set(
       StrategyConstants.FormatColumnStrategyId,
       new FormatColumnStrategyagGrid(blotter)
@@ -350,7 +353,6 @@ export class agGridHelper {
     const rowStyles: RowStyle[] = this.blotter.api.userInterfaceApi.getUserInterfaceState()
       .RowStyles;
     if (ArrayExtensions.IsNotNullOrEmpty(rowStyles)) {
-      console.log('we have row styles');
       // First lets deal with Alls - we will get the first one and then get out
       const allRowStyle = rowStyles.find(rs => rs.RowType == 'All');
       if (allRowStyle) {
@@ -465,6 +467,7 @@ export class agGridHelper {
       column: column,
       rowNode: params.node,
       isSingleSelectedColumn: isSingleSelectedColumn,
+      primaryKeyValue: primaryKeyValue,
     };
   }
 

@@ -34,7 +34,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   // turn on mimicing ticking data
-  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData);
+  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000);
 }
 
 let flashingJson: PredefinedConfig = {

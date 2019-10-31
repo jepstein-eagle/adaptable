@@ -56,6 +56,18 @@ export class AlertApi extends ApiBase implements IAlertApi {
         this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow));
       }
     }
+
+    if (
+      alertToShow.AlertDefinition &&
+      alertToShow.AlertDefinition.AlertProperties != undefined &&
+      alertToShow.AlertDefinition.AlertProperties.JumpToCell &&
+      alertToShow.DataChangedInfo
+    ) {
+      this.blotter.jumpToCell(
+        alertToShow.DataChangedInfo.ColumnId,
+        alertToShow.DataChangedInfo.RowNode
+      );
+    }
   }
 
   public showAlert(

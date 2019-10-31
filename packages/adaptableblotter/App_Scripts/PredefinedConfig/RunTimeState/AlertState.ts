@@ -134,4 +134,5 @@ export interface AlertDefinition extends AdaptableBlotterObject {
 export interface AlertProperties {
   ShowPopup?: boolean;
   HighlightCell?: boolean;
+  JumpToCell?: boolean;
 }
