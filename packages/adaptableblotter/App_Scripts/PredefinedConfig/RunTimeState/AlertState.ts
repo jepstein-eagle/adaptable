@@ -14,8 +14,6 @@ import { QueryRange } from '../Common/Expression/QueryRange';
  *
  * **Further Resources**
  *
- * [Alert Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360017055491-Alerts)
- *
  * [Alert Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895731-Alerts-Videos)
  *
  * [Alert Demo](https://demo.adaptableblotter.com/alertsmessages/aggridalertdemo/)
@@ -23,6 +21,8 @@ import { QueryRange } from '../Common/Expression/QueryRange';
  * [Alert Blotter API](_api_interface_ialertapi_.ialertapi.html)
  *
  * [Alert FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ)
+ *
+ * [Alert Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  * **Alert Predefined Config Example**
  *

@@ -12,8 +12,6 @@ import { IStyle } from '../Common/IStyle';
  *
  * **Further Resources**
  *
- * [Conditional Style Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005113372-Conditional-Styles)
- *
  * [Conditional Style Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030602892-Conditional-Style-Videos)
  *
  * [Conditional Style Demo](https://demo.adaptableblotter.com/style/aggridconditionalstyledemo/)
@@ -21,6 +19,8 @@ import { IStyle } from '../Common/IStyle';
  * [Conditional Style Blotter API](_api_interface_iconditionalstyleapi_.iconditionalstyleapi.html)
  *
  * [Conditional Style FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029742932-Conditional-Styles-FAQ)
+ *
+ * [Conditional Style Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
  *
  * **Conditional Style Predefined Config Example**
  *

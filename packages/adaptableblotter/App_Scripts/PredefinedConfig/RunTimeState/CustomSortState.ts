@@ -8,15 +8,15 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * **Further Resources**
  *
+ * [Custom Sort Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078431-Custom-Sort-Videos)
+ *
+ * [Custom Sort Demo](hhttps://demo.adaptableblotter.com/gridmanagement/aggridcustomsortdemo/)
+ *
+ * [Custom Sort Blotter API](_api_interface_icustomsortapi_.icustomsortapi.html)
+ *
+ * [Custom Sort FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170297-Custom-Sort-FAQ)
+ *
  * [Custom Sort Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005167931-Advanced-Search)
- *
- * [Custom Sort Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos)
- *
- * [Custom Sort Demo](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/)
- *
- * [Custom Sort Blotter API](_api_interface_iadvancedsearchapi_.iadvancedsearchapi.html)
- *
- * [Custom Sort FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ)
  *
  * **Custom Sort Predefined Config Example**
  *
