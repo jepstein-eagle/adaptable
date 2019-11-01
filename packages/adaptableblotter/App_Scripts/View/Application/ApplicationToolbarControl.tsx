@@ -51,12 +51,12 @@ class ApplicationToolbarControlComponent extends React.Component<
                 return (
                   <SimpleButton
                     style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
-                    key={button.ButtonText}
+                    key={button.Name}
                     onClick={() => {
-                      this.props.Blotter.emit(APPLICATION_BUTTON_CLICKED_EVENT, button.ButtonText);
+                      this.props.Blotter.emit(APPLICATION_BUTTON_CLICKED_EVENT, button);
                     }}
                   >
-                    {button.ButtonText}
+                    {button.Caption}
                   </SimpleButton>
                 );
               }

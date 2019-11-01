@@ -23,6 +23,7 @@ import {
   TOOLBAR_HIDDEN_EVENT,
   APPLICATION_BUTTON_CLICKED_EVENT,
 } from '../../../../App_Scripts/Utilities/Constants/GeneralConstants';
+import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/ApplicationState';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
@@ -51,15 +52,15 @@ function InitAdaptableBlotter() {
         <div style={{ display: 'flex' }}>
           <button
             className="ab-SimpleButton ab-SimpleButton--variant-outlined"
-            onClick={myFunction}
+            onClick={onNewTradeClicked}
             style={{ marginRight: '3px' }}
           >
-            Content Button
+            Create New Trade
           </button>
-          <select className="ab-Dropdown " style={{ marginRight: '3px' }}>
-            <option>content drop</option>
-            <option>second</option>
-            <option>third</option>
+          <select className="ab-Dropdown" style={{ marginRight: '3px' }}>
+            <option>Book 1</option>
+            <option>Book 2</option>
+            <option>Book 3</option>
           </select>
         </div>
       );
@@ -71,8 +72,9 @@ function InitAdaptableBlotter() {
     }
   });
 
-  adaptableblotter.on(APPLICATION_BUTTON_CLICKED_EVENT, button => {
-    alert('the button clicked was: ' + button);
+  adaptableblotter.on(APPLICATION_BUTTON_CLICKED_EVENT, (button: ApplicationToolbarButton) => {
+    alert('name: ' + button.Name);
+    alert('caption: ' + button.Caption);
   });
 
   adaptableblotter.on(TOOLBAR_HIDDEN_EVENT, toolbar => {
@@ -84,8 +86,8 @@ function InitAdaptableBlotter() {
   });
 }
 
-function myFunction() {
-  alert('You clicked the Rendered button');
+function onNewTradeClicked() {
+  alert('lets create a trade');
 }
 
 let demoConfig: PredefinedConfig = {
@@ -95,10 +97,12 @@ let demoConfig: PredefinedConfig = {
   Application: {
     ApplicationToolbarButtons: [
       {
-        ButtonText: 'Button 1',
+        Name: 'btnNewTrade',
+        Caption: 'New Trade',
       },
       {
-        ButtonText: 'Button 2',
+        Name: 'btnRefreshGrid',
+        Caption: 'Refresh Grid',
       },
     ],
   },
