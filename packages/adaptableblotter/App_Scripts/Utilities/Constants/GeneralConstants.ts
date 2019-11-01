@@ -112,16 +112,29 @@ export const SYSTEM_THEMES: Array<AdaptableBlotterTheme> = [
 ];
 
 // these are the internal events that the AB fires that other strategies and classes listen to
-// put in another file?
+// this is NOT quite right as we need to define each one twice but its not a big problem
+// and at least we are able to listen to the events nicely
+export type PRIVATE_CELLS_SELECTED_EVENT = 'CellsSelected';
+export const PRIVATE_CELLS_SELECTED_EVENT: string = 'CellsSelected';
+export type PRIVATE_ROWS_SELECTED_EVENT = 'RowsSelected';
+export const PRIVATE_ROWS_SELECTED_EVENT: string = 'RowsSelected';
+export type PRIVATE_SEARCH_APPLIED_EVENT = 'SearchApplied';
+export const PRIVATE_SEARCH_APPLIED_EVENT: string = 'SearchApplied';
+export type PRIVATE_GRID_REFRESHED_EVENT = 'GridRefreshed';
+export const PRIVATE_GRID_REFRESHED_EVENT: string = 'GridRefreshed';
+export type PRIVATE_GRID_RELOADED_EVENT = 'GridReloaded';
+export const PRIVATE_GRID_RELOADED_EVENT: string = 'GridReloaded';
+export type PRIVATE_KEY_DOWN_EVENT = 'KeyDown';
+export const PRIVATE_KEY_DOWN_EVENT: string = 'KeyDown';
+
+// these are now external events that will replace the current event model
+export type BLOTTER_READY_EVENT = 'BlotterReady';
 export const BLOTTER_READY_EVENT: string = 'BlotterReady';
-export const CELLS_SELECTED_EVENT: string = 'CellsSelected';
-export const ROWS_SELECTED_EVENT: string = 'RowsSelected';
-export const SEARCH_APPLIED_EVENT: string = 'SearchApplied';
-export const GRID_REFRESHED_EVENT: string = 'GridRefreshed';
-export const GRID_RELOADED_EVENT: string = 'GridReloaded';
-export const KEY_DOWN_EVENT: string = 'KeyDown';
+export type TOOLBAR_VISIBLE_EVENT = 'ToolbarVisible';
 export const TOOLBAR_VISIBLE_EVENT: string = 'ToolbarVisible';
+export type TOOLBAR_HIDDEN_EVENT = 'ToolbarHidden';
 export const TOOLBAR_HIDDEN_EVENT: string = 'ToolbarHidden';
+export type APPLICATION_BUTTON_CLICKED_EVENT = 'ApplicationButtonClicked';
 export const APPLICATION_BUTTON_CLICKED_EVENT: string = 'ApplicationButtonClicked';
 
-export const APPLICATION_TOOLBAR: string = 'ApplicationToolbar';
+//export const APPLICATION_TOOLBAR: string = 'ApplicationToolbar';

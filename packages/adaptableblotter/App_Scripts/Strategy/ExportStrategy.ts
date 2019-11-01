@@ -16,9 +16,8 @@ import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import {
-  CELLS_SELECTED_EVENT,
-  GRID_RELOADED_EVENT,
-  GRID_REFRESHED_EVENT,
+  TOOLBAR_HIDDEN_EVENT,
+  APPLICATION_BUTTON_CLICKED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
@@ -35,9 +34,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ExportStrategyId, blotter);
-    //  this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
 
-    this.blotter.on(GRID_RELOADED_EVENT, () => {
+    this.blotter._on('GridReloaded', () => {
       this.scheduleReports();
     });
 
@@ -81,11 +79,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     this.blotter.DataService.OnDataSourceChanged().Subscribe(() => {
       this.throttledRecomputeAndSendLiveExcelEvent();
     });
-    this.blotter.on(GRID_REFRESHED_EVENT, () => {
+    this.blotter._on('GridRefreshed', () => {
       this.throttledRecomputeAndSendLiveExcelEvent();
     });
 
-    this.blotter.on(CELLS_SELECTED_EVENT, () => {
+    this.blotter._on('CellsSelected', () => {
       if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
         let liveReport = this.blotter.api.internalApi
           .getLiveReports()

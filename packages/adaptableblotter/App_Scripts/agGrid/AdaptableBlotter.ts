@@ -110,14 +110,14 @@ import {
   DEFAULT_LAYOUT,
   HALF_SECOND,
   BLOTTER_READY_EVENT,
-  CELLS_SELECTED_EVENT,
-  GRID_RELOADED_EVENT,
-  SEARCH_APPLIED_EVENT,
-  GRID_REFRESHED_EVENT,
-  KEY_DOWN_EVENT,
+  PRIVATE_GRID_RELOADED_EVENT,
+  PRIVATE_SEARCH_APPLIED_EVENT,
+  PRIVATE_GRID_REFRESHED_EVENT,
+  PRIVATE_KEY_DOWN_EVENT,
   LIGHT_THEME,
   DARK_THEME,
-  ROWS_SELECTED_EVENT,
+  PRIVATE_ROWS_SELECTED_EVENT,
+  PRIVATE_CELLS_SELECTED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { IEvent } from '../Utilities/Interface/IEvent';
@@ -255,9 +255,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private emitter: Emitter;
 
-  public on = (eventName: string, callback: EmitterCallback): (() => void) =>
+  // only for our public events - private events should listen to the internalemitter
+  on = (eventName: string, callback: EmitterCallback): (() => void) =>
     this.emitter.on(eventName, callback);
-
+  _on = (eventName: string, callback: EmitterCallback): (() => void) =>
+    this.emitter.on(eventName, callback);
   onAny(callback: EmitterCallback): () => void {
     throw new Error('Method not implemented.');
   }
@@ -392,7 +394,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     this.adaptableBlotterStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
-        this.emit(BLOTTER_READY_EVENT);
+        this.emit(BLOTTER_READY_EVENT, this.blotterOptions.blotterId);
       }
     });
   }
@@ -524,13 +526,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private _currentEditor: ICellEditor;
 
   public reloadGrid(): void {
-    this.emit(GRID_RELOADED_EVENT);
+    this.emit(PRIVATE_GRID_RELOADED_EVENT);
   }
 
   public applyGridFiltering() {
     this.gridOptions.api!.onFilterChanged();
-    this.emit(SEARCH_APPLIED_EVENT);
-    this.emit(GRID_REFRESHED_EVENT);
+    this.emit(PRIVATE_SEARCH_APPLIED_EVENT);
+    this.emit(PRIVATE_GRID_REFRESHED_EVENT);
   }
 
   private applyDataChange(rowNodes: RowNode[]) {
@@ -539,7 +541,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
       this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
-      this.emit(GRID_REFRESHED_EVENT);
+      this.emit(PRIVATE_GRID_REFRESHED_EVENT);
     }
   }
 
@@ -865,7 +867,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const selectedCellInfo: SelectedCellInfo = { Columns: columns, GridCells: selectedCells };
     this.api.internalApi.setSelectedCells(selectedCellInfo);
 
-    this.emit(CELLS_SELECTED_EVENT);
+    this.emit(PRIVATE_CELLS_SELECTED_EVENT);
 
     this.agGridHelper.fireSelectionChangedEvent();
   }
@@ -899,7 +901,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const selectedRowInfo: SelectedRowInfo = { GridRows: selectedRows };
     this.api.internalApi.setSelectedRows(selectedRowInfo);
 
-    this.emit(ROWS_SELECTED_EVENT);
+    this.emit(PRIVATE_ROWS_SELECTED_EVENT);
     this.agGridHelper.fireSelectionChangedEvent();
   }
 
@@ -1564,7 +1566,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public redraw() {
     this.gridOptions.api!.redrawRows();
     this.gridOptions.api!.refreshHeader();
-    this.emit(GRID_REFRESHED_EVENT);
+    this.emit(PRIVATE_GRID_REFRESHED_EVENT);
   }
 
   public redrawRow(rowNode: any) {
@@ -1999,7 +2001,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     const gridContainerElement = this.getGridContainerElement();
     if (gridContainerElement) {
-      gridContainerElement.addEventListener('keydown', event => this.emit(KEY_DOWN_EVENT, event));
+      gridContainerElement.addEventListener('keydown', event =>
+        this.emit(PRIVATE_KEY_DOWN_EVENT, event)
+      );
     }
 
     this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {

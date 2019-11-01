@@ -18,12 +18,6 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
-import {
-  TOOLBAR_VISIBLE_EVENT,
-  TOOLBAR_HIDDEN_EVENT,
-  APPLICATION_BUTTON_CLICKED_EVENT,
-} from '../../../../App_Scripts/Utilities/Constants/GeneralConstants';
-import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/ApplicationState';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
@@ -46,7 +40,7 @@ function InitAdaptableBlotter() {
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions); // global.adaptableblotter = adaptableblotter;
 
-  adaptableblotter.on(TOOLBAR_VISIBLE_EVENT, toolbar => {
+  adaptableblotter.on('ToolbarVisible', toolbar => {
     if (toolbar === 'Application') {
       let toolbarContents: any = (
         <div style={{ display: 'flex' }}>
@@ -71,13 +65,14 @@ function InitAdaptableBlotter() {
       );
     }
   });
+  //adaptableblotter._on()
 
-  adaptableblotter.on(APPLICATION_BUTTON_CLICKED_EVENT, (button: ApplicationToolbarButton) => {
+  adaptableblotter.on('ApplicationButtonClicked', button => {
     alert('name: ' + button.Name);
     alert('caption: ' + button.Caption);
   });
 
-  adaptableblotter.on(TOOLBAR_HIDDEN_EVENT, toolbar => {
+  adaptableblotter.on('ToolbarHidden', toolbar => {
     console.log(
       'hiding toolbar',
       toolbar,

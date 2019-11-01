@@ -38,7 +38,7 @@ export class StyleService {
     document.head.appendChild(this.style);
 
     this.setUpStoreListeners();
-    this.blotter.on(BLOTTER_READY_EVENT, () => {
+    this.blotter.on('BlotterReady', () => {
       this.setUpFirstUsage();
     });
   }

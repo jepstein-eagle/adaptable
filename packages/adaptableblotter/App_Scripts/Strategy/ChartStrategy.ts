@@ -20,7 +20,6 @@ import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnum
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { SEARCH_APPLIED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
@@ -35,7 +34,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
       this.handleDataSourceChanged(eventText)
     );
 
-    this.blotter.on(SEARCH_APPLIED_EVENT, () => {
+    this.blotter._on('SearchApplied', () => {
       this.handleSearchChanged();
     });
 

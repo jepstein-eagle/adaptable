@@ -17,16 +17,15 @@ import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper'
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
-import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
-import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ShortcutStrategyId, blotter);
-    this.blotter.on(KEY_DOWN_EVENT, keyEvent => {
-      this.handleKeyDown(keyEvent);
+
+    this.blotter._on('KeyDown', keyDownEvent => {
+      this.handleKeyDown(keyDownEvent);
     });
   }
 

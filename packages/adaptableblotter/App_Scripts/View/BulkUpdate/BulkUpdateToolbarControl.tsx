@@ -23,7 +23,6 @@ import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import { Flex } from 'rebass';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
@@ -54,7 +53,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   }
   public componentDidMount() {
     if (this.props.Blotter) {
-      this.props.Blotter.on(CELLS_SELECTED_EVENT, () => {
+      this.props.Blotter._on('CellsSelected', () => {
         this.checkSelectedCells();
       });
     }

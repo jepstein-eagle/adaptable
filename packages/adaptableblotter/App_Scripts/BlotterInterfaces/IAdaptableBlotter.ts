@@ -22,6 +22,21 @@ import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineCo
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Glue42Service';
+import Emitter from '../Utilities/Emitter';
+import { ApplicationToolbarButton } from '../PredefinedConfig/DesignTimeState/ApplicationState';
+
+import {
+  APPLICATION_BUTTON_CLICKED_EVENT,
+  TOOLBAR_HIDDEN_EVENT,
+  BLOTTER_READY_EVENT,
+  TOOLBAR_VISIBLE_EVENT,
+  PRIVATE_CELLS_SELECTED_EVENT,
+  PRIVATE_ROWS_SELECTED_EVENT,
+  PRIVATE_SEARCH_APPLIED_EVENT,
+  PRIVATE_GRID_REFRESHED_EVENT,
+  PRIVATE_GRID_RELOADED_EVENT,
+  PRIVATE_KEY_DOWN_EVENT,
+} from '../Utilities/Constants/GeneralConstants';
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -107,10 +122,28 @@ export interface IAdaptableBlotter {
   SearchService: ISearchService;
   Glue42Service: IGlue42Service;
 
-  // Used for internal events...
-  on(eventName: string, callback: EmitterCallback): () => void;
+  // These are the public events that we publish
+  // In time we need to copy over the other events that we are using too :(
+  on(eventName: BLOTTER_READY_EVENT, callback: () => void): () => void;
+  on(
+    eventName: APPLICATION_BUTTON_CLICKED_EVENT,
+    callback: (button: ApplicationToolbarButton) => void
+  ): () => void;
+  on(eventName: TOOLBAR_VISIBLE_EVENT, callback: (toolbar: string) => void): () => void;
+  on(eventName: TOOLBAR_HIDDEN_EVENT, callback: (toolbar: string) => void): () => void;
+
+  // These are private events
+  _on(eventName: PRIVATE_CELLS_SELECTED_EVENT, callback: () => void): () => void;
+  _on(eventName: PRIVATE_ROWS_SELECTED_EVENT, callback: () => void): () => void;
+  _on(eventName: PRIVATE_SEARCH_APPLIED_EVENT, callback: () => void): () => void;
+  _on(eventName: PRIVATE_GRID_REFRESHED_EVENT, callback: () => void): () => void;
+  _on(eventName: PRIVATE_GRID_RELOADED_EVENT, callback: () => void): () => void;
+  _on(eventName: PRIVATE_KEY_DOWN_EVENT, callback: (keyDownEvent: any) => void): () => void;
+
   onAny(callback: EmitterCallback): () => void;
   emit(eventName: string, data?: any): Promise<any>;
+
+  // export const APPLICATION_BUTTON_CLICKED_EVENT: string = 'ApplicationButtonClicked';
 
   // General
   createMainMenu(): void;

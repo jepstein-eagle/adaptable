@@ -23,7 +23,6 @@ import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 
@@ -48,7 +47,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
   }
   public componentDidMount() {
     if (this.props.Blotter) {
-      this.props.Blotter.on(CELLS_SELECTED_EVENT, () => {
+      this.props.Blotter._on('CellsSelected', () => {
         this.props.onCreateCellSummary();
       });
     }
