@@ -10,9 +10,9 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * It contains 2 divs
  *
- * - one div for you to **render any content that you want**; its your responsibilty to make sure that the div is populated and uses the correct styles.
+ * - a div for you to **render any content that you want**; its your responsibilty to make sure that the div is populated and uses the correct styles.
  *
- * * - one div which will **display any buttons that you provide** in the **ApplicationToolbarButtons** property of the Application state (see below).
+ * - a div which will **display any buttons that you provide** in the **ApplicationToolbarButtons** property of the Application state (see below).
  *
  * **Rendering Content**
  *
@@ -44,6 +44,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *      </div>
  *    );
  *
+ *
  *  ReactDOM.render(
  *   toolbarContents,
  *  adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
@@ -51,18 +52,20 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *  }
  * });
  *
+ *  ......
+ *
  * function onNewTradeClicked() {
  *    // react as required...
  *  }
  * ```
  *
- * **Providing buttons**
+ * **Providing Buttons**
  *
- * You provide in the Application State details of the buttons that should appear in the Application toolbar.
+ * In the Application State you provide details of the buttons to appear in the Application toolbar.
  *
- * When one of these buttons is clicked the **APPLICATION_BUTTON_CLICKED_EVENT** will fire providing details of the name of the button clicked so you can react as necessary.
+ * When one of these buttons is clicked the **APPLICATION_BUTTON_CLICKED_EVENT** will fire providing details of the button clicked so you can react as necessary.
  *
- * In the intial implementation you can only provide a button name and caption (text that is displayed), but in future releases you will be able to provide images and also to control the rendering and other aspects of these buttons.
+ * Note: in the intial implementation you can only provide a button name and caption (text that is displayed), but in future releases you will be able to provide images and also to control the rendering and other aspects of these buttons.
  *
  * * **Application Button Predefined Config Example**
  *
@@ -81,6 +84,8 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *    ],
  *  }
  * } as PredefinedConfig;
+ *
+ *  ......
  *
  *  adaptableblotter.on(APPLICATION_BUTTON_CLICKED_EVENT, (button: (button: ApplicationToolbarButton) )  => {
  *      // respond as appropriate - the button argument is the ApplicationToolbarButton we provided in the state
