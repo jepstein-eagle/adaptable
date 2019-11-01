@@ -16,7 +16,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * The Adaptable Blotter provides the [applicationAPI](_api_interface_iapplicationapi_.iapplicationapi.html) **getApplicationToolbarContentsDiv** method that returns the name of the Div in which you should render the contents.
  *
- * You can listen to the **TOOLBAR_VISIBLE_EVENT** event published by the Adaptable Blotter which provides the name of toolbar which has been made visible; if its the Application Toolbar then render as required.
+ * You can listen to the **ToolbarVisible** event published by the Adaptable Blotter which provides the name of toolbar which has been made visible; if its the Application Toolbar then render as required.
  *
  * The list of potential values for the Toolbar name are: "AdvancedSearch", "Alert", "Application", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "QuickSearch" and "Theme"
  *
@@ -61,7 +61,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * In the Application State you provide details of the buttons to appear in the Application toolbar.
  *
- * When one of these buttons is clicked the **APPLICATION_BUTTON_CLICKED_EVENT** will fire providing details of the button clicked so you can react as necessary.
+ * When one of these buttons is clicked the **ApplicationButtonClicked** event will fire providing details of the button clicked so you can react as necessary.
  *
  * Note: in the intial implementation you can only provide a button name and caption (text that is displayed), but in future releases you will be able to provide images and also to control the rendering and other aspects of these buttons.
  *
@@ -85,7 +85,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  *  ......
  *
- *  adaptableblotter.on(APPLICATION_BUTTON_CLICKED_EVENT, (button: (button: ApplicationToolbarButton) )  => {
+ *  adaptableblotter.on('ApplicationButtonClicked', (button: (button: ApplicationToolbarButton) )  => {
  *      // respond as appropriate - the button argument is the ApplicationToolbarButton we provided in the state
  *  });
  * ```
