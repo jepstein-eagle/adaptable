@@ -12,6 +12,10 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * - one div for you to **render any content that you want**; its your responsibilty to make sure that the div is populated and uses the correct styles.
  *
+ * * - one div which will **display any buttons that you provide** in the **ApplicationToolbarButtons** property of the Application state (see below).
+ *
+ * **Rendering Content**
+ *
  * The Adaptable Blotter provides the applicationAPI **getApplicationToolbarContentsDiv** method that returns the name of the Div in which you should render the contents.
  *
  * You listen to the **TOOLBAR_VISIBLE_EVENT** event published by the Adaptable Blotter which provides the name of toolbar which has been made visible; if its the Application Toolbar then render as required.
@@ -50,10 +54,11 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  * function onNewTradeClicked() {
  *    // react as required...
  *  }
- *
  * ```
  *
- * - one div which will **display any buttons that you provide** in the **ApplicationToolbarButtons** property of the Application state (see below).
+ * **Providing buttons**
+ *
+ * You provide in the Application State details of the buttons that should appear in the Application toolbar.
  *
  * When one of these buttons is clicked the **APPLICATION_BUTTON_CLICKED_EVENT** will fire providing details of the name of the button clicked so you can react as necessary.
  *
