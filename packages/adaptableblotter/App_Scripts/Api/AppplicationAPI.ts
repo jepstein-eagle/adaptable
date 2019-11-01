@@ -21,11 +21,6 @@ export class ApplicationApi extends ApiBase implements IApplicationApi {
    *
    * @param element the element to be rendered - presumably a <div> but can be anything which is easily renderable.
    */
-  //  public RenderToolbar(element: any): void {
-  // assumes that we receive jsx so need to think again....
-  //   ReactDOM.render(element, document.getElementById('.ab-ApplicationToolbar__contents'));
-  //}
-
   public getApplicationToolbarContentsDivId(): string {
     return 'ab-ApplicationToolbar__contents';
   }
