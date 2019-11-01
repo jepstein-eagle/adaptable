@@ -57,7 +57,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * When one of these buttons is clicked the **APPLICATION_BUTTON_CLICKED_EVENT** will fire providing details of the name of the button clicked so you can react as necessary.
  *
- * Currently you can only provide a button name and caption (text that is displayed), but in future releases you will be able to control the rendering and other aspects of these buttons.
+ * In the intial implementation you can only provide a button name and caption (text that is displayed), but in future releases you will be able to provide images and also to control the rendering and other aspects of these buttons.
  *
  * * **Application Button Predefined Config Example**
  *
