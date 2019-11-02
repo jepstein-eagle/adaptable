@@ -11,6 +11,7 @@ import {
   SelectionChangedEventArgs,
 } from './Events/BlotterEvents';
 import { IEventApi } from './Interface/IEventApi';
+import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
 
 export class EventApi extends ApiBase implements IEventApi {
   public _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
@@ -38,25 +39,43 @@ export class EventApi extends ApiBase implements IEventApi {
   }
 
   public onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs> {
+    LoggingHelper.LogAdaptableBlotterWarning(
+      'The onSearchChanged event in the Event API is deprecated - please use the On("SearchChanged") event instead.'
+    );
     return this._onSearchChanged;
   }
 
   public onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs> {
+    LoggingHelper.LogAdaptableBlotterWarning(
+      'The onThemeChanged event in the Event API is deprecated - please use the On("ThemeChanged") event instead.'
+    );
     return this._onThemeChanged;
   }
 
   public onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs> {
+    LoggingHelper.LogAdaptableBlotterWarning(
+      'The onColumnStateChanged event in the Event API is deprecated - please use the On("ColumnStateChanged") event instead.'
+    );
     return this._onColumnStateChanged;
   }
 
   public onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs> {
+    LoggingHelper.LogAdaptableBlotterWarning(
+      'The onAlertFired event in the Event API is deprecated - please use the On("AlertFired") event instead.'
+    );
     return this._onAlertFired;
   }
 
   public onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs> {
+    LoggingHelper.LogAdaptableBlotterWarning(
+      'The onActionColumnClicked event in the Event API is deprecated - please use the On("ActionColumnClicked") event instead.'
+    );
     return this._onActionColumnClicked;
   }
   public onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs> {
+    LoggingHelper.LogAdaptableBlotterWarning(
+      'The onSelectionChanged event in the Event API is deprecated - please use the On("SelectionChanged") event instead.'
+    );
     return this._onSelectionChanged;
   }
 }

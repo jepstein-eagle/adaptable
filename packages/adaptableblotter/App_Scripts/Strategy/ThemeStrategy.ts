@@ -6,6 +6,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 import { ThemeChangedEventArgs } from '../Api/Events/BlotterEvents';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { THEME_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
   private ThemeState: ThemeState;
@@ -25,10 +26,13 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
   publishThemeChanged(themeState: ThemeState) {
     const themeName = themeState.CurrentTheme;
 
-    const themeChangedInfo: ThemeChangedEventArgs = {
+    const themeChangedEventArgs: ThemeChangedEventArgs = {
       themeName,
     };
-    this.blotter.api.eventApi._onThemeChanged.Dispatch(this.blotter, themeChangedInfo);
+    // now depprecated and shortly to be removed...
+    this.blotter.api.eventApi._onThemeChanged.Dispatch(this.blotter, themeChangedEventArgs);
+    // new way (and soon only way)
+    this.blotter.emit(THEME_CHANGED_EVENT, themeChangedEventArgs);
   }
 
   protected InitState() {

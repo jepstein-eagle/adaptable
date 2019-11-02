@@ -1,4 +1,11 @@
-import { IBlotterApi, AdaptableBlotterOptions } from '../types';
+import {
+  IBlotterApi,
+  AdaptableBlotterOptions,
+  SearchChangedEventArgs,
+  ThemeChangedEventArgs,
+  ColumnStateChangedEventArgs,
+  AlertFiredEventArgs,
+} from '../types';
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
@@ -36,7 +43,17 @@ import {
   PRIVATE_GRID_REFRESHED_EVENT,
   PRIVATE_GRID_RELOADED_EVENT,
   PRIVATE_KEY_DOWN_EVENT,
+  SEARCH_CHANGED_EVENT,
+  THEME_CHANGED_EVENT,
+  COLUMN_STATE_CHANGED_EVENT,
+  ALERT_FIRED_EVENT,
+  ACTION_COLUMN_CLICKED_EVENT,
+  SELECTION_CHANGED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
+import {
+  ActionColumnClickedEventArgs,
+  SelectionChangedEventArgs,
+} from '../Api/Events/BlotterEvents';
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -131,6 +148,30 @@ export interface IAdaptableBlotter {
   ): () => void;
   on(eventName: TOOLBAR_VISIBLE_EVENT, callback: (toolbar: string) => void): () => void;
   on(eventName: TOOLBAR_HIDDEN_EVENT, callback: (toolbar: string) => void): () => void;
+  on(
+    eventName: SEARCH_CHANGED_EVENT,
+    callback: (searchChangedEventArgs: SearchChangedEventArgs) => void
+  ): () => void;
+  on(
+    eventName: THEME_CHANGED_EVENT,
+    callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
+  ): () => void;
+  on(
+    eventName: COLUMN_STATE_CHANGED_EVENT,
+    callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
+  ): () => void;
+  on(
+    eventName: ALERT_FIRED_EVENT,
+    callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
+  ): () => void;
+  on(
+    eventName: ACTION_COLUMN_CLICKED_EVENT,
+    callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
+  ): () => void;
+  on(
+    eventName: SELECTION_CHANGED_EVENT,
+    callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
+  ): () => void;
 
   // These are private events
   _on(eventName: PRIVATE_CELLS_SELECTED_EVENT, callback: () => void): () => void;

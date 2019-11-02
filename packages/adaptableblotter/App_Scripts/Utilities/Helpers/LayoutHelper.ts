@@ -5,6 +5,8 @@ import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { GridState } from '../../PredefinedConfig/InternalState/GridState';
+import { COLUMN_STATE_CHANGED_EVENT } from '../../Utilities/Constants/GeneralConstants';
+import { ColumnStateChangedEventArgs } from '../../Api/Events/BlotterEvents';
 
 export function getLayoutDescription(layout: Layout, columns: AdaptableBlotterColumn[]): string {
   let returnString: string = '';
@@ -61,9 +63,14 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
         blotter.api.layoutApi.saveLayout(layoutToSave);
       }
     }
-    blotter.api.eventApi._onColumnStateChanged.Dispatch(blotter, {
+
+    let columnStateChangedEventArgs: ColumnStateChangedEventArgs = {
       currentLayout: layoutState.CurrentLayout,
-    });
+    };
+    // now depprecated and shortly to be removed...
+    blotter.api.eventApi._onColumnStateChanged.Dispatch(blotter, columnStateChangedEventArgs);
+    // new way (and soon only way)
+    blotter.emit(COLUMN_STATE_CHANGED_EVENT, columnStateChangedEventArgs);
   }
 }
 

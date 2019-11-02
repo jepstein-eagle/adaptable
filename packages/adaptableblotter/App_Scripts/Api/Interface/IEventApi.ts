@@ -50,6 +50,8 @@ export interface IEventApi {
    * Used in association with server searching.
    *
    * @returns IEvent<IAdaptableBlotter, SearchChangedEventArgs>
+   *
+   * **This event is deprecated - please use the new On('SearchChanged') event instead which returns the same SearchChangedEventArgs**
    */
   onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs>;
 
@@ -57,6 +59,8 @@ export interface IEventApi {
    * Event fired whenever the **selected theme of the Adaptable Blotter is changed**.
    *
    * @returns IEvent<IAdaptableBlotter, ThemeChangedEventArgs>
+   *
+   * **This event is deprecated - please use the new On('ThemeChanged') event instead which returns the same ThemeChangedEventArgs**
    */
   onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs>;
 
@@ -66,6 +70,8 @@ export interface IEventApi {
    * The event only fires when in a user (as opposed to the default) layout.
    *
    * @returns Column State Changed args - which at present just return the name of the current layout.
+   *
+   * **This event is deprecated - please use the new On('ColumnStateChanged') event instead which returns the same ColumnStateChangedEventArgs**
    */
   onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs>;
 
@@ -75,6 +81,8 @@ export interface IEventApi {
    * Contains the full Alert itself.
    *
    * @returns IEvent<IAdaptableBlotter, IAlertFiredEventArgs>
+   *
+   * **This event is deprecated - please use the new On('AlertFired') event instead which returns the same AlertFiredEventArgs**
    */
   onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs>;
 
@@ -84,6 +92,8 @@ export interface IEventApi {
    * The EventArgs contain the column that has been clicked and the rowData for that row.
    *
    * @returns IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>
+   *
+   * **This event is deprecated - please use the new On('ActionColumnClicked') event instead which returns the same ActionColumnClickedEventArgs**
    */
   onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>;
 
@@ -93,6 +103,8 @@ export interface IEventApi {
    * The EventArgs contain both cell and row selection information.
    *
    * @returns IEvent<IAdaptableBlotter, SelectionChangedEventArgs>
+   *
+   * **This event is deprecated - please use the new On('SelectionChangedEventArgs') event instead which returns the same SelectionChangedEventArgs**
    */
   onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs>;
 

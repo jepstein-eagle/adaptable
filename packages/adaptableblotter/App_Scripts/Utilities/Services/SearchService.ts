@@ -21,6 +21,7 @@ import { BlotterSearchState } from '../../Api/Events/SearchChanged/BlotterSearch
 import { BlotterSortState } from '../../Api/Events/SearchChanged/BlotterSortState';
 import { SearchChangedInfo } from '../../Api/Events/SearchChanged/SearchChangedInfo';
 import { SearchEventData } from '../../Api/Events/SearchChanged/SearchEventData';
+import { SEARCH_CHANGED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;
@@ -61,7 +62,7 @@ export class SearchService implements ISearchService {
         setTimeout(() => this.blotter.applyGridFiltering(), 5);
         if (
           this.blotter.blotterOptions.generalOptions!.serverSearchOption == 'AllSearch' ||
-          'AllSearchandSort'
+          this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearchandSort'
         ) {
           this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
         }
@@ -90,7 +91,7 @@ export class SearchService implements ISearchService {
 
         if (
           this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearch' ||
-          'AllSearchandSort'
+          this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearchandSort'
         ) {
           this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
         }
@@ -207,7 +208,11 @@ export class SearchService implements ISearchService {
         version: '1.0.0',
         data: [searchEventData],
       };
+
+      // now depprecated and shortly to be removed...
       this.blotter.api.eventApi._onSearchChanged.Dispatch(this.blotter, searchChangedArgs);
+      // new way (and soon only way)
+      this.blotter.emit(SEARCH_CHANGED_EVENT, searchChangedArgs);
     }
   }
 }

@@ -57,7 +57,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *  }
  * ```
  *
- * **Providing Buttons**
+ * **Providing Buttons Through Predefined Config**
  *
  * In the Application State you provide details of the buttons to appear in the Application toolbar.
  *

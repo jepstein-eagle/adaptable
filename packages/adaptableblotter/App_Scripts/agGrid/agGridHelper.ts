@@ -69,6 +69,8 @@ import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 import { UpdatedRowStrategy } from '../Strategy/UpdatedRowStrategy';
 import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
 
+import { SELECTION_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
+
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
  * So lets put some of the more obvious 'Helper' functions here
@@ -432,7 +434,10 @@ export class agGridHelper {
       selectedCellInfo: this.blotter.api.gridApi.getGridState().SelectedCellInfo,
       selectedRowInfo: this.blotter.api.gridApi.getGridState().SelectedRowInfo,
     };
+    // now depprecated and shortly to be removed...
     this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
+    // new way (and soon only way)
+    this.blotter.emit(SELECTION_CHANGED_EVENT, selectionChangedArgs);
   }
 
   public getContextMenuInfo(
