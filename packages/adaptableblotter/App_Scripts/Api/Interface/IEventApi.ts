@@ -83,21 +83,11 @@ export interface IEventApi {
    */
 
   /**
-   *
-   * @param eventName
-   * @param callback
+   * Fired when the Blotter is up and running - has no arguments.
+   * @param eventName BlotterReady
+   * @param callback (none)
    */
   on(eventName: BLOTTER_READY_EVENT, callback: () => void): () => void;
-
-  /**
-   * Event fired whenever **when a button in the Application Toolbar is clicked**
-   *
-   * The event provides the Adap
-   *
-   * Used in association with server searching.
-   *
-   * @returns ApplicationToolbarButtonClickedEventArgs containing details of which button was clicked
-   */
 
   /**
    * Event fired whenever **when a button in the Application Toolbar is clicked**
