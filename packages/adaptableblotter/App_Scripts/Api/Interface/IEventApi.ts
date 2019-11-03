@@ -15,7 +15,7 @@ import {
   SELECTION_CHANGED_EVENT,
   BLOTTER_READY_EVENT,
   APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
-  TOOLBAR_VISIBLE_EVENT,
+  TOOLBAR_VISIBILITY_CHANGED_EVENT,
   SEARCH_CHANGED_EVENT,
   THEME_CHANGED_EVENT,
   COLUMN_STATE_CHANGED_EVENT,
@@ -31,21 +31,21 @@ import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState
  *
  * - **SearchChanged** - fired when the state changes in any of the Search-related functions (e.g. Advanced Search, Quick Search, Filters, Data Source etc.)
  *
- * - **ThemeChanged** - fired when the Theme in the Blotter changes
+ * - **SelectionChanged** - fired whenever the user changes the Cell or Rows selection
  *
- * - **ColumnStateChanged** - fired when the Column visibility or order changes
+ * - **ThemeChanged** - fired when the Theme in the Blotter changes
  *
  * - **AlertFired** - fired whenever an alert is triggered in the Adaptable Blotter
  *
  * - **ActionColumnClicked** - fired when the button in an Action Column has been clicked
  *
- * - **SelectionChanged** - fired whenever the user changes the Cell or Rows selection
- *
- * - **BlotterReady** - fired whenever the Blotter is initialised and ready for use
+ * - **ColumnStateChanged** - fired when the Column visibility or order changes
  *
  * - **ApplicationToolbarButtonClicked** - when a button is clicked in the Application toolbar
  *
- * - **ToolbarVisible** - when a toolbar comes into view (useful for rendering the Application toolbar)
+ * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering the Application toolbar)
+ *
+ * - **BlotterReady** - fired whenever the Blotter is initialised and ready for use
  *
  * Each event contains the Adaptable Blotter and an EventArgs object that contains relevant information for the event.
  *
@@ -77,20 +77,83 @@ import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState
  */
 export interface IEventApi {
   /**
-   * Fired when the Blotter is up and running - has no arguments.
+   * Event fired whenever **search criteria in the Adaptable Blotter changes**
    *
-   * @param eventName BlotterReady
+   * @param eventName SearchChanged - use as: adaptableblotter.api.eventApi.on('SearchChanged', (args: SearchChangedEventArgs) => { .....[do stuff]...})
    *
-   * @param callback (none)
+   * @param callback SearchChangedEventArgs which includes full details of what triggered the change and the current state of all Search and Filter related functions.
    */
-  on(eventName: BLOTTER_READY_EVENT, callback: () => void): () => void;
+  on(
+    eventName: SEARCH_CHANGED_EVENT,
+    callback: (searchChangedEventArgs: SearchChangedEventArgs) => void
+  ): () => void;
+
+  /**
+   * Event fired whenever the **Selection in the Adaptable Blotter changes**.
+   *
+   * @param eventName SelectionChanged - use as: adaptableblotter.api.eventApi.on('SelectionChanged', (args: SelectionChangedEventArgs) => { .....[do stuff]...})
+   *
+   * @param callback SelectionChangedEventArgs which contains information of any cells or rows that are selected.
+   */
+  on(
+    eventName: SELECTION_CHANGED_EVENT,
+    callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
+  ): () => void;
+
+  /**
+   * Event fired whenever the **selected theme of the Adaptable Blotter is changed**.
+   *
+   * @param eventName ThemeChanged- use as: adaptableblotter.api.eventApi.on('ThemeChanged', (args: ThemeChangedEventArgs) => { .....[do stuff]...})
+   *
+   * @param callback ThemeChangedEventArgs which just contains the name of the current Theme
+   */
+  on(
+    eventName: THEME_CHANGED_EVENT,
+    callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
+  ): () => void;
+
+  /**
+   * Event fired whenever an **Alert is triggered**.
+   *
+   * @param eventName AlertFired - use as: adaptableblotter.api.eventApi.on('AlertFired', (args: AlertFiredEventArgs) => { .....[do stuff]...})
+   *
+   * @param callback AlertFiredEventArgs which wrap the Alert that was fired
+   */
+  on(
+    eventName: ALERT_FIRED_EVENT,
+    callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
+  ): () => void;
+
+  /**
+   * Event fired whenever the **Button in an Action Column is clicked**.
+   *
+   * @param eventName ActionColumnClicked - use as: adaptableblotter.api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => { .....[do stuff]...})
+   *
+   * @param callback ActionColumnClickedEventArgs which includes details of the ActionColumn
+   */
+  on(
+    eventName: ACTION_COLUMN_CLICKED_EVENT,
+    callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
+  ): () => void;
+
+  /**
+   * Event fired whenever **column order, visibility and sorts are changed in the Adaptable Blotter**.
+   *
+   * @param eventName ColumnStateChanged - use as: adaptableblotter.api.eventApi.on('ColumnStateChanged', (args: ColumnStateChangedEventArgs) => { .....[do stuff]...})
+   *
+   * @param callback ColumnStateChangedEventArgs which includes just the name of the currently selected Layout.
+   */
+  on(
+    eventName: COLUMN_STATE_CHANGED_EVENT,
+    callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
+  ): () => void;
 
   /**
    * Event fired whenever **when a button in the Application Toolbar is clicked**
    *
    * Used when the Application State contains an ApplicationToolbarButton that has been clicked.
    *
-   * @param eventName ApplicationToolbarButtonClicked
+   * @param eventName ApplicationToolbarButtonClicked - use as: adaptableblotter.api.eventApi.on('ApplicationToolbarButtonClicked', (args: ApplicationToolbarButtonClickedEventArgs) => { .....[do stuff]...})
    *
    * @param callback  ApplicationToolbarButtonClickedEventArgs which provides details of the button that was clicked.
    */
@@ -106,86 +169,23 @@ export interface IEventApi {
    *
    * Primarily used for rendering the Application toolbar (which is deliberately created empty for this purpose).
    *
-   * @param eventName ToolbarVisible
+   * @param eventName ToolbarVisibilityChanged - use as: adaptableblotter.api.eventApi.on('ToolbarVisibilityChanged', (args: ToolbarVisibilityChangedEventArgs) => { .....[do stuff]...})
    *
    * @param callback ToolbarVisibilityChangedEventArgs which includes just the name of the toolbar that has become visible.
    */
   on(
-    eventName: TOOLBAR_VISIBLE_EVENT,
+    eventName: TOOLBAR_VISIBILITY_CHANGED_EVENT,
     callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
   ): () => void;
 
   /**
-   * Event fired whenever **search criteria in the Adaptable Blotter changes**
+   * Fired when the Blotter is up and running - has no arguments.
    *
-   * @param eventName SearchChanged
+   * @param eventName BlotterReady
    *
-   * @param callback SearchChangedEventArgs which includes full details of what triggered the change and the current state of all Search and Filter related functions.
+   * @param callback (none)
    */
-  on(
-    eventName: SEARCH_CHANGED_EVENT,
-    callback: (searchChangedEventArgs: SearchChangedEventArgs) => void
-  ): () => void;
-
-  /**
-   * Event fired whenever the **selected theme of the Adaptable Blotter is changed**.
-   *
-   * @param eventName ThemeChanged
-   *
-   * @param callback ThemeChangedEventArgs which just contains the name of the current Theme
-   */
-  on(
-    eventName: THEME_CHANGED_EVENT,
-    callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
-  ): () => void;
-
-  /**
-   * Event fired whenever **column order, visibility and sorts are changed in the Adaptable Blotter**.
-   *
-   * @param eventName ColumnStateChanged
-   *
-   * @param callback ColumnStateChangedEventArgs which includes just the name of the currently selected Layout.
-   */
-  on(
-    eventName: COLUMN_STATE_CHANGED_EVENT,
-    callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
-  ): () => void;
-
-  /**
-   * Event fired whenever an **Alert is triggered**.
-   *
-   * @param eventName AlertFiredEvent - use as: adaptableblotter.api.eventApi.on('AlertFired', (args: AlertFiredEventArgs) => { .....[do stuff]...})
-   *
-   * @param callback AlertFiredEventArgs which wrap the Alert that was fired
-   */
-  on(
-    eventName: ALERT_FIRED_EVENT,
-    callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
-  ): () => void;
-
-  /**
-   * Event fired whenever the **Button in an Action Column is clicked**.
-  
-   * @param eventName ActionColumnClicked
-    * 
-    * @param callback ActionColumnClickedEventArgs which includes details of the ActionColumn
-    */
-  on(
-    eventName: ACTION_COLUMN_CLICKED_EVENT,
-    callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
-  ): () => void;
-
-  /**
-   * Event fired whenever the **Selection in the Adaptable Blotter changes**.
-   *
-   * @param eventName SelectionChanged
-   *
-   * @param callback SelectionChangedEventArgs which contains information of any cells or rows that are selected.
-   */
-  on(
-    eventName: SELECTION_CHANGED_EVENT,
-    callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
-  ): () => void;
+  on(eventName: BLOTTER_READY_EVENT, callback: () => void): () => void;
 
   /**
    * **This event is deprecated - please use the new On('SearchChanged') event instead which returns the same SearchChangedEventArgs**

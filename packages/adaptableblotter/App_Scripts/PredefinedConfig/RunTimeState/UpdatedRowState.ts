@@ -5,6 +5,10 @@ import { RunTimeState } from './RunTimeState';
  *
  * The Updated Row function enables you to easily see which rows have changed.
  *
+ * You are able to change the Up, Down and Neutral colours if you are not happy with the defaults (Green, Red and Gray respectively).
+ *
+ * Currently updated rows stay with the new colour until you clear them - either by clicking in the row in the Context Menu or by Clearing them all (via the Column Menu).
+ *
  * ```ts
  * export default {
  * UpdatedRow: {

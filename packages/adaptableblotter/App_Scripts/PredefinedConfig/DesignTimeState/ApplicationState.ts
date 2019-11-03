@@ -16,14 +16,14 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * The Adaptable Blotter provides the [applicationAPI](_api_interface_iapplicationapi_.iapplicationapi.html) **getApplicationToolbarContentsDiv** method that returns the name of the Div in which you should render the contents.
  *
- * You can listen to the **ToolbarVisible** event published by the Adaptable Blotter which provides the name of toolbar which has been made visible; if its the Application Toolbar then render as required.
+ * You can listen to the **ToolbarVisibilityChanged** event published by the Adaptable Blotter which provides the name of toolbar which has been made visible; if its the Application Toolbar then render as required.
  *
  * The list of potential values for the Toolbar name are: "AdvancedSearch", "Alert", "Application", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "QuickSearch" and "Theme"
  *
  * **Application Rendering Example** (Using React)
  *
  *  ```ts
- * adaptableblotter.on('ToolbarVisible', toolbar => {
+ * adaptableblotter.on('ToolbarVisibilityChanged', toolbar => {
  *  if (toolbar === 'Application') {
  *  let toolbarContents: any = (
  *      <div style={{ display: 'flex' }}>

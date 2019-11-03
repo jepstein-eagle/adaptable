@@ -40,31 +40,34 @@ function InitAdaptableBlotter() {
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions); // global.adaptableblotter = adaptableblotter;
 
-  adaptableblotter.api.eventApi.on('ToolbarVisible', toolbarVisibilityChangedEventArgs => {
-    if (toolbarVisibilityChangedEventArgs.toolbar === 'Application') {
-      let toolbarContents: any = (
-        <div style={{ display: 'flex' }}>
-          <button
-            className="ab-SimpleButton ab-SimpleButton--variant-outlined"
-            onClick={onNewTradeClicked}
-            style={{ marginRight: '3px' }}
-          >
-            Create New Trade
-          </button>
-          <select className="ab-Dropdown" style={{ marginRight: '3px' }}>
-            <option>Book 1</option>
-            <option>Book 2</option>
-            <option>Book 3</option>
-          </select>
-        </div>
-      );
+  adaptableblotter.api.eventApi.on(
+    'ToolbarVisibilityChanged',
+    toolbarVisibilityChangedEventArgs => {
+      if (toolbarVisibilityChangedEventArgs.toolbar === 'Application') {
+        let toolbarContents: any = (
+          <div style={{ display: 'flex' }}>
+            <button
+              className="ab-SimpleButton ab-SimpleButton--variant-outlined"
+              onClick={onNewTradeClicked}
+              style={{ marginRight: '3px' }}
+            >
+              Create New Trade
+            </button>
+            <select className="ab-Dropdown" style={{ marginRight: '3px' }}>
+              <option>Book 1</option>
+              <option>Book 2</option>
+              <option>Book 3</option>
+            </select>
+          </div>
+        );
 
-      ReactDOM.render(
-        toolbarContents,
-        adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
-      );
+        ReactDOM.render(
+          toolbarContents,
+          adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
+        );
+      }
     }
-  });
+  );
   //adaptableblotter._on()
 
   adaptableblotter.api.eventApi.on(

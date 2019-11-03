@@ -123,7 +123,7 @@ function InitAdaptableBlotter() {
     );
 
     adaptableblotter.api.eventApi.on(
-      'ToolbarVisible',
+      'ToolbarVisibilityChanged',
       (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
         if (toolbarVisibilityChangedEventArgs.toolbar === 'Application') {
           let toolbarContents: any = (

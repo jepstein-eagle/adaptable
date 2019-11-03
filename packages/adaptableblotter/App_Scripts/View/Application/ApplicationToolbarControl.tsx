@@ -12,6 +12,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
 import SimpleButton from '../../components/SimpleButton';
 import { APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT } from '../../Utilities/Constants/GeneralConstants';
+import { ApplicationToolbarButtonClickedEventArgs } from '../../Api/Events/BlotterEvents';
 
 interface ApplicationToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
@@ -48,6 +49,9 @@ class ApplicationToolbarControlComponent extends React.Component<
           {this.props.ApplicationToolbarButtons &&
             this.props.ApplicationToolbarButtons.map(
               (button: ApplicationToolbarButton, index: number) => {
+                let args: ApplicationToolbarButtonClickedEventArgs = {
+                  applicationToolbarButton: button,
+                };
                 return (
                   <SimpleButton
                     style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
@@ -55,7 +59,7 @@ class ApplicationToolbarControlComponent extends React.Component<
                     onClick={() => {
                       this.props.Blotter.api.eventApi.emit(
                         APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
-                        button
+                        args
                       );
                     }}
                   >

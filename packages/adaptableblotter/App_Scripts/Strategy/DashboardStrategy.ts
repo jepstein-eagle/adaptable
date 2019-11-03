@@ -7,7 +7,7 @@ import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
-import { TOOLBAR_VISIBLE_EVENT } from '../Utilities/Constants/GeneralConstants';
+import { TOOLBAR_VISIBILITY_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { ToolbarVisibilityChangedEventArgs } from '../Api/Events/BlotterEvents';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
@@ -32,7 +32,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
                 toolbar: toolbar,
               };
               this.blotter.api.eventApi.emit(
-                TOOLBAR_VISIBLE_EVENT,
+                TOOLBAR_VISIBILITY_CHANGED_EVENT,
                 toolbarVisibilityChangedEventArgs
               );
             }
@@ -56,7 +56,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
                 toolbar: toolbar,
               };
               this.blotter.api.eventApi.emit(
-                TOOLBAR_VISIBLE_EVENT,
+                TOOLBAR_VISIBILITY_CHANGED_EVENT,
                 toolbarVisibilityChangedEventArgs
               );
             }

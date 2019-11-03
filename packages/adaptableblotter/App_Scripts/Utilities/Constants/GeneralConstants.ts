@@ -130,8 +130,8 @@ export const PRIVATE_KEY_DOWN_EVENT: string = 'KeyDown';
 // these are now external events that will replace the current event model
 export type BLOTTER_READY_EVENT = 'BlotterReady';
 export const BLOTTER_READY_EVENT: string = 'BlotterReady';
-export type TOOLBAR_VISIBLE_EVENT = 'ToolbarVisible';
-export const TOOLBAR_VISIBLE_EVENT: string = 'ToolbarVisible';
+export type TOOLBAR_VISIBILITY_CHANGED_EVENT = 'ToolbarVisibilityChanged';
+export const TOOLBAR_VISIBILITY_CHANGED_EVENT: string = 'ToolbarVisibilityChanged';
 export type SEARCH_CHANGED_EVENT = 'SearchChanged';
 export const SEARCH_CHANGED_EVENT: string = 'SearchChanged';
 export type APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT = 'ApplicationToolbarButtonClicked';
