@@ -40,8 +40,8 @@ function InitAdaptableBlotter() {
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions); // global.adaptableblotter = adaptableblotter;
 
-  adaptableblotter.api.eventApi.on('ToolbarVisible', toolbar => {
-    if (toolbar === 'Application') {
+  adaptableblotter.api.eventApi.on('ToolbarVisible', toolbarVisibilityChangedEventArgs => {
+    if (toolbarVisibilityChangedEventArgs.toolbar === 'Application') {
       let toolbarContents: any = (
         <div style={{ display: 'flex' }}>
           <button
@@ -67,10 +67,15 @@ function InitAdaptableBlotter() {
   });
   //adaptableblotter._on()
 
-  adaptableblotter.api.eventApi.on('ApplicationToolbarButtonClicked', button => {
-    alert('name: ' + button.Name);
-    alert('caption: ' + button.Caption);
-  });
+  adaptableblotter.api.eventApi.on(
+    'ApplicationToolbarButtonClicked',
+    applicationToolbarButtonClickedEventArgs => {
+      alert('name: ' + applicationToolbarButtonClickedEventArgs.applicationToolbarButton.Name);
+      alert(
+        'caption: ' + applicationToolbarButtonClickedEventArgs.applicationToolbarButton.Caption
+      );
+    }
+  );
 }
 
 function onNewTradeClicked() {

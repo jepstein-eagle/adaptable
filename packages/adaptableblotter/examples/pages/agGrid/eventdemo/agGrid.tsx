@@ -18,6 +18,8 @@ import {
   ActionColumnClickedEventArgs,
   SelectionChangedEventArgs,
   ThemeChangedEventArgs,
+  ApplicationToolbarButtonClickedEventArgs,
+  ToolbarVisibilityChangedEventArgs,
 } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 import ReactDOM from 'react-dom';
 import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/ApplicationState';
@@ -109,29 +111,36 @@ function InitAdaptableBlotter() {
 
     adaptableblotter.api.eventApi.on(
       'ApplicationToolbarButtonClicked',
-      (button: ApplicationToolbarButton) => {
+      (applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs) => {
         console.log('Application Toolbar Button Clicked');
-        console.log('name: ' + button.Name);
-        console.log('caption: ' + button.Caption);
+        console.log(
+          'name: ' + applicationToolbarButtonClickedEventArgs.applicationToolbarButton.Name
+        );
+        console.log(
+          'caption: ' + applicationToolbarButtonClickedEventArgs.applicationToolbarButton.Caption
+        );
       }
     );
 
-    adaptableblotter.api.eventApi.on('ToolbarVisible', (toolbar: string) => {
-      if (toolbar === 'Application') {
-        let toolbarContents: any = (
-          <div style={{ display: 'flex' }}>
-            <button onClick={onTestRenderClicked} style={{ marginRight: '3px' }}>
-              Render Test
-            </button>
-          </div>
-        );
+    adaptableblotter.api.eventApi.on(
+      'ToolbarVisible',
+      (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
+        if (toolbarVisibilityChangedEventArgs.toolbar === 'Application') {
+          let toolbarContents: any = (
+            <div style={{ display: 'flex' }}>
+              <button onClick={onTestRenderClicked} style={{ marginRight: '3px' }}>
+                Render Test
+              </button>
+            </div>
+          );
 
-        ReactDOM.render(
-          toolbarContents,
-          adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
-        );
+          ReactDOM.render(
+            toolbarContents,
+            adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
+          );
+        }
       }
-    });
+    );
   }
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }

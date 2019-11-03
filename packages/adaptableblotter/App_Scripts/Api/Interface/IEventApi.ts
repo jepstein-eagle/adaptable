@@ -7,6 +7,8 @@ import {
   AlertFiredEventArgs,
   ActionColumnClickedEventArgs,
   SelectionChangedEventArgs,
+  ToolbarVisibilityChangedEventArgs,
+  ApplicationToolbarButtonClickedEventArgs,
 } from '../Events/BlotterEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 import {
@@ -49,7 +51,7 @@ import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState
  *
  * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_interface_iauditeventapi_.iauditeventapi.html#onauditstatechanged).
  *
- * There are currentl 2 ways to subsribe to these events.
+ * There are currently 2 ways to subscribe to these events.
  *
  * The preferred way is as follows:
  *
@@ -61,7 +63,7 @@ import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState
  *  );
  * ```
  *
- * However we also have an older, now deprecated, way of listening to the evnets as follows;
+ * However we also have an older, now deprecated, way of listening to the events as follows;
  *
  * **note: this event model will be removed in Adaptable Blotter v.6**
  *
@@ -74,13 +76,59 @@ import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState
  * ```
  */
 export interface IEventApi {
-  // New methods
+  /**
+   * This is the general event
+   * @param eventName
+   * @param callback
+   */
+
+  /**
+   *
+   * @param eventName
+   * @param callback
+   */
   on(eventName: BLOTTER_READY_EVENT, callback: () => void): () => void;
+
+  /**
+   * Event fired whenever **when a button in the Application Toolbar is clicked**
+   *
+   * The event provides the Adap
+   *
+   * Used in association with server searching.
+   *
+   * @returns ApplicationToolbarButtonClickedEventArgs containing details of which button was clicked
+   */
+
+  /**
+   * Event fired whenever **when a button in the Application Toolbar is clicked**
+   *
+   * The event provides the Adap
+   *
+   * Used in association with server searching.
+   *
+   * @param eventName APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT
+   * @param callback ApplicationToolbarButtonClickedEventArgs
+   */
   on(
     eventName: APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
-    callback: (button: ApplicationToolbarButton) => void
+    callback: (
+      applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs
+    ) => void
   ): () => void;
-  on(eventName: TOOLBAR_VISIBLE_EVENT, callback: (toolbar: string) => void): () => void;
+
+  /**
+   * Event fired whenever **a toolbar in the Adaptable Blotter becomes visible**
+   *
+   * The event provides the nae of the toolbar that is visible.
+   *
+   * Primarily used for rendering the Application toolbar (which is deliberately created empty for this purpose).
+   *
+   * @returns ToolbarVisibilityChangedEventArgs containing the name of the toolbar which has become visible
+   */
+  on(
+    eventName: TOOLBAR_VISIBLE_EVENT,
+    callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
+  ): () => void;
 
   /**
    * Event fired whenever **search criteria in the Adaptable Blotter changes**
@@ -117,14 +165,38 @@ export interface IEventApi {
     eventName: COLUMN_STATE_CHANGED_EVENT,
     callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
   ): () => void;
+
+  /**
+   * Event fired whenever an **Alert is triggered**.
+   *
+   * Contains the full Alert itself.
+   *
+   * @returns IAlertFiredEventArgs
+   */
   on(
     eventName: ALERT_FIRED_EVENT,
     callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
   ): () => void;
+
+  /**
+   * Event fired whenever the **Button in an Action Column is clicked**.
+   *
+   * The EventArgs contain the column that has been clicked and the rowData for that row.
+   *
+   * @returns ActionColumnClickedEventArgs
+   */
   on(
     eventName: ACTION_COLUMN_CLICKED_EVENT,
     callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
   ): () => void;
+
+  /**
+   * Event fired whenever the **Selection in the Adaptable Blotter changes**.
+   *
+   * The EventArgs contain both cell and row selection information.
+   *
+   * @returns SelectionChangedEventArgs
+   */
   on(
     eventName: SELECTION_CHANGED_EVENT,
     callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
@@ -146,34 +218,16 @@ export interface IEventApi {
   onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs>;
 
   /**
-   * Event fired whenever an **Alert is triggered**.
-   *
-   * Contains the full Alert itself.
-   *
-   * @returns IEvent<IAdaptableBlotter, IAlertFiredEventArgs>
-   *
    * **This event is deprecated - please use the new On('AlertFired') event instead which returns the same AlertFiredEventArgs**
    */
   onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs>;
 
   /**
-   * Event fired whenever the **Button in an Action Column is clicked**.
-   *
-   * The EventArgs contain the column that has been clicked and the rowData for that row.
-   *
-   * @returns IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>
-   *
    * **This event is deprecated - please use the new On('ActionColumnClicked') event instead which returns the same ActionColumnClickedEventArgs**
    */
   onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>;
 
   /**
-   * Event fired whenever the **Selection in the Adaptable Blotter changes**.
-   *
-   * The EventArgs contain both cell and row selection information.
-   *
-   * @returns IEvent<IAdaptableBlotter, SelectionChangedEventArgs>
-   *
    * **This event is deprecated - please use the new On('SelectionChangedEventArgs') event instead which returns the same SelectionChangedEventArgs**
    */
   onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs>;
