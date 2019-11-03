@@ -154,7 +154,7 @@ export interface IEventApi {
   /**
    * Event fired whenever an **Alert is triggered**.
    *
-   * @param eventName AlertFired
+   * @param eventName AlertFiredEvent - use as: adaptableblotter.api.eventApi.on('AlertFired', (args: AlertFiredEventArgs) => { .....[do stuff]...})
    *
    * @param callback AlertFiredEventArgs which wrap the Alert that was fired
    */
