@@ -177,6 +177,10 @@ export interface IEventApi {
    *
    * @returns IAlertFiredEventArgs
    */
+
+  /**
+   * Just this
+   */
   on(
     eventName: ALERT_FIRED_EVENT,
     callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
