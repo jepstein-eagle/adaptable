@@ -12,6 +12,7 @@ import {
 } from './Events/BlotterEvents';
 import { IEventApi } from './Interface/IEventApi';
 import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
+import Emitter, { EmitterCallback } from '../Utilities/Emitter';
 
 export class EventApi extends ApiBase implements IEventApi {
   public _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
@@ -23,6 +24,8 @@ export class EventApi extends ApiBase implements IEventApi {
 
   constructor(blotter: IAdaptableBlotter) {
     super(blotter);
+
+    this.emitter = new Emitter();
 
     this._onSearchChanged = new EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>();
     this._onThemeChanged = new EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>();
@@ -78,4 +81,11 @@ export class EventApi extends ApiBase implements IEventApi {
     );
     return this._onSelectionChanged;
   }
+
+  // new way of doing this - much cleaner
+  private emitter: Emitter;
+  on = (eventName: string, callback: EmitterCallback): (() => void) =>
+    this.emitter.on(eventName, callback);
+
+  public emit = (eventName: string, data?: any): Promise<any> => this.emitter.emit(eventName, data);
 }

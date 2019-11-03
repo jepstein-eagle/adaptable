@@ -136,8 +136,8 @@ export type TOOLBAR_HIDDEN_EVENT = 'ToolbarHidden';
 export const TOOLBAR_HIDDEN_EVENT: string = 'ToolbarHidden';
 export type SEARCH_CHANGED_EVENT = 'SearchChanged';
 export const SEARCH_CHANGED_EVENT: string = 'SearchChanged';
-export type APPLICATION_BUTTON_CLICKED_EVENT = 'ApplicationButtonClicked';
-export const APPLICATION_BUTTON_CLICKED_EVENT: string = 'ApplicationButtonClicked';
+export type APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT = 'ApplicationToolbarButtonClicked';
+export const APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT: string = 'ApplicationToolbarButtonClicked';
 
 export type THEME_CHANGED_EVENT = 'ThemeChanged';
 export const THEME_CHANGED_EVENT: string = 'ThemeChanged';
@@ -149,3 +149,8 @@ export type ACTION_COLUMN_CLICKED_EVENT = 'ActionColumnClicked';
 export const ACTION_COLUMN_CLICKED_EVENT: string = 'ActionColumnClicked';
 export type SELECTION_CHANGED_EVENT = 'SelectionChanged';
 export const SELECTION_CHANGED_EVENT: string = 'SelectionChanged';
+
+export const ALL_DATA_REPORT = 'All Data';
+export const VISIBLE_DATA_REPORT = 'Visible Data';
+export const SELECTED_CELLS_REPORT = 'Selected Cells';
+export const SELECTED_ROWS_REPORT = 'Selected Rows';

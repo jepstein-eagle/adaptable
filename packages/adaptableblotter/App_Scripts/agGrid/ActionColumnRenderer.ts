@@ -58,7 +58,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
         // now depprecated and shortly to be removed...
         blotter.api.eventApi._onActionColumnClicked.Dispatch(blotter, eventArgs);
         // new way (and soon only way)
-        blotter.emit(ACTION_COLUMN_CLICKED_EVENT, eventArgs);
+        blotter.api.eventApi.emit(ACTION_COLUMN_CLICKED_EVENT, eventArgs);
       };
       this.eGui.addEventListener('click', this.eventListener);
     }

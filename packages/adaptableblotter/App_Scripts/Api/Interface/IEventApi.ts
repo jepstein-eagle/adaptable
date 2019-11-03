@@ -9,6 +9,19 @@ import {
   SelectionChangedEventArgs,
 } from '../Events/BlotterEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
+import {
+  SELECTION_CHANGED_EVENT,
+  BLOTTER_READY_EVENT,
+  APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
+  TOOLBAR_VISIBLE_EVENT,
+  TOOLBAR_HIDDEN_EVENT,
+  SEARCH_CHANGED_EVENT,
+  THEME_CHANGED_EVENT,
+  COLUMN_STATE_CHANGED_EVENT,
+  ALERT_FIRED_EVENT,
+  ACTION_COLUMN_CLICKED_EVENT,
+} from '../../Utilities/Constants/GeneralConstants';
+import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
 
 /**
  * The Adaptable Blotter publishes 6 events that users can subscribe to as required.
@@ -114,4 +127,39 @@ export interface IEventApi {
   _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
   _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnClickedEventArgs>;
   _onSelectionChanged: EventDispatcher<IAdaptableBlotter, SelectionChangedEventArgs>;
+
+  // New methods
+  on(eventName: BLOTTER_READY_EVENT, callback: () => void): () => void;
+  on(
+    eventName: APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
+    callback: (button: ApplicationToolbarButton) => void
+  ): () => void;
+  on(eventName: TOOLBAR_VISIBLE_EVENT, callback: (toolbar: string) => void): () => void;
+  on(eventName: TOOLBAR_HIDDEN_EVENT, callback: (toolbar: string) => void): () => void;
+  on(
+    eventName: SEARCH_CHANGED_EVENT,
+    callback: (searchChangedEventArgs: SearchChangedEventArgs) => void
+  ): () => void;
+  on(
+    eventName: THEME_CHANGED_EVENT,
+    callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
+  ): () => void;
+  on(
+    eventName: COLUMN_STATE_CHANGED_EVENT,
+    callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
+  ): () => void;
+  on(
+    eventName: ALERT_FIRED_EVENT,
+    callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
+  ): () => void;
+  on(
+    eventName: ACTION_COLUMN_CLICKED_EVENT,
+    callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
+  ): () => void;
+  on(
+    eventName: SELECTION_CHANGED_EVENT,
+    callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
+  ): () => void;
+
+  emit(eventName: string, data?: any): Promise<any>;
 }

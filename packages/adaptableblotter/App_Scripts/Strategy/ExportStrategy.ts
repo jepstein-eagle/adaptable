@@ -7,7 +7,6 @@ import { IExportStrategy } from './Interface/IExportStrategy';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
 import { ExportState, Report } from '../PredefinedConfig/RunTimeState/ExportState';
@@ -15,15 +14,10 @@ import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import {
-  TOOLBAR_HIDDEN_EVENT,
-  APPLICATION_BUTTON_CLICKED_EVENT,
-} from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
-import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
+import { SELECTED_CELLS_REPORT } from '../Utilities/Constants/GeneralConstants';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
-  private ExportState: ExportState;
   private isSendingData = false;
   private workAroundOpenfinExcelDataDimension: Map<string, { x: number; y: number }> = new Map();
 
@@ -87,7 +81,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
         let liveReport = this.blotter.api.internalApi
           .getLiveReports()
-          .find(x => x.Report.Name == ReportHelper.SELECTED_CELLS_REPORT);
+          .find(x => x.Report.Name == SELECTED_CELLS_REPORT);
         if (liveReport) {
           this.throttledRecomputeAndSendLiveExcelEvent();
         }
@@ -322,7 +316,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
   private ConvertReportToArray(report: Report): any[] {
-    let actionReturnObj = ReportHelper.ConvertReportToArray(this.blotter, report);
+    let actionReturnObj = this.blotter.ReportService.ConvertReportToArray(report);
     if (actionReturnObj.Alert) {
       // assume that the MessageType is error - if not then refactor
       this.blotter.adaptableBlotterStore.TheStore.dispatch(

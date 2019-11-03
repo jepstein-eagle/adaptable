@@ -19,8 +19,16 @@ import {
   SelectionChangedEventArgs,
   ThemeChangedEventArgs,
 } from '../../../../App_Scripts/Api/Events/BlotterEvents';
+import ReactDOM from 'react-dom';
+import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/ApplicationState';
 
 var adaptableblotter: IAdaptableBlotter;
+
+/*
+This example runs all the events we fire.
+It tests both the 'old' event syntax and the new one with an option to switch between them.
+Goign forward, new events wil ONLY use the new syntax.
+*/
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -29,7 +37,7 @@ function InitAdaptableBlotter() {
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'state listen demo'
+    'event handling demo'
   );
   adaptableBlotterOptions.generalOptions = {
     serverSearchOption: 'AllSearchandSort',
@@ -65,35 +73,75 @@ function InitAdaptableBlotter() {
       );
   } else {
     // new way
-    adaptableblotter.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
-      listenToThemeChanged(themeChangedEventArgs);
-    });
-    adaptableblotter.on(
+    adaptableblotter.api.eventApi.on(
+      'ThemeChanged',
+      (themeChangedEventArgs: ThemeChangedEventArgs) => {
+        listenToThemeChanged(themeChangedEventArgs);
+      }
+    );
+    adaptableblotter.api.eventApi.on(
       'ColumnStateChanged',
       (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => {
         listenToColumnStateChange(columnStateChangedEventArgs);
       }
     );
-    adaptableblotter.on('AlertFired', (alertFiredArgs: AlertFiredEventArgs) => {
+    adaptableblotter.api.eventApi.on('AlertFired', (alertFiredArgs: AlertFiredEventArgs) => {
       listenToAlertFired(alertFiredArgs);
     });
-    adaptableblotter.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-      listenToSearchChange(searchChangedArgs);
-    });
-    adaptableblotter.on(
+    adaptableblotter.api.eventApi.on(
+      'SearchChanged',
+      (searchChangedArgs: SearchChangedEventArgs) => {
+        listenToSearchChange(searchChangedArgs);
+      }
+    );
+    adaptableblotter.api.eventApi.on(
       'ActionColumnClicked',
       (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
         listenToActionColumnClicked(actionColumnEventArgs);
       }
     );
-    adaptableblotter.on(
+    adaptableblotter.api.eventApi.on(
       'SelectionChanged',
       (selectionChangedEventArgs: SelectionChangedEventArgs) => {
         listenToSelectionChanged(selectionChangedEventArgs);
       }
     );
+
+    adaptableblotter.api.eventApi.on(
+      'ApplicationToolbarButtonClicked',
+      (button: ApplicationToolbarButton) => {
+        console.log('Application Toolbar Button Clicked');
+        console.log('name: ' + button.Name);
+        console.log('caption: ' + button.Caption);
+      }
+    );
+
+    adaptableblotter.api.eventApi.on('ToolbarVisible', (toolbar: string) => {
+      if (toolbar === 'Application') {
+        let toolbarContents: any = (
+          <div style={{ display: 'flex' }}>
+            <button onClick={onTestRenderClicked} style={{ marginRight: '3px' }}>
+              Render Test
+            </button>
+          </div>
+        );
+
+        ReactDOM.render(
+          toolbarContents,
+          adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
+        );
+      }
+    });
+
+    adaptableblotter.api.eventApi.on('ToolbarHidden', (toolbar: string) => {
+      console.log('hiding toolbar', toolbar);
+    });
   }
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
+}
+
+function onTestRenderClicked() {
+  alert('Ive been clicked');
 }
 
 function listenToColumnStateChange(columnChangedArgs: ColumnStateChangedEventArgs) {
@@ -125,6 +173,17 @@ function listenToThemeChanged(themeChangedEventArgs: ThemeChangedEventArgs) {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Theme', 'Export', 'Layout', 'Application'],
+  },
+  Application: {
+    ApplicationToolbarButtons: [
+      {
+        Name: 'btnTestEvent',
+        Caption: 'State Test',
+      },
+    ],
+  },
   ActionColumn: {
     ActionColumns: [
       {

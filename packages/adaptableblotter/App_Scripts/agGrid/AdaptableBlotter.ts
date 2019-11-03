@@ -34,7 +34,7 @@ import {
   GetContextMenuItemsParams,
 } from 'ag-grid-community/dist/lib/entities/gridOptions';
 import { Action } from 'redux';
-import Emitter from '../Utilities/Emitter';
+import Emitter, { EmitterCallback } from '../Utilities/Emitter';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
@@ -160,9 +160,11 @@ import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultS
 import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
-import { EmitterCallback, IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IGlue42Service, Glue42Service } from '../Utilities/Services/Glue42Service';
 import { ApplicationToolbarButton } from '../PredefinedConfig/DesignTimeState/ApplicationState';
+import { IReportService } from '../Utilities/Services/Interface/IReportService';
+import { ReportService } from '../Utilities/Services/ReportService';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -228,6 +230,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public SearchService: ISearchService;
 
   public Glue42Service: IGlue42Service;
+  public ReportService: IReportService;
 
   public embedColumnMenu: boolean;
 
@@ -255,16 +258,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private emitter: Emitter;
 
-  // only for our public events - private events should listen to the internalemitter
-  on = (eventName: string, callback: EmitterCallback): (() => void) =>
-    this.emitter.on(eventName, callback);
+  // only for our private / internal events as public events are emitted through the EventApi
   _on = (eventName: string, callback: EmitterCallback): (() => void) =>
     this.emitter.on(eventName, callback);
   onAny(callback: EmitterCallback): () => void {
     throw new Error('Method not implemented.');
   }
-
-  public emit = (eventName: string, data?: any): Promise<any> => this.emitter.emit(eventName, data);
+  private emit = (eventName: string, data?: any): Promise<any> =>
+    this.emitter.emit(eventName, data);
 
   constructor(
     blotterOptions: AdaptableBlotterOptions,
@@ -312,6 +313,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.ScheduleService = new ScheduleService(this);
     this.SearchService = new SearchService(this);
     this.Glue42Service = new Glue42Service(this);
+    this.ReportService = new ReportService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
       this,
       (columnId, rowNode) => this.gridOptions.api!.getValue(columnId, rowNode)
@@ -394,7 +396,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     this.adaptableBlotterStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
-        this.emit(BLOTTER_READY_EVENT, this.blotterOptions.blotterId);
+        this.api.eventApi.emit(BLOTTER_READY_EVENT, this.blotterOptions.blotterId);
       }
     });
   }
@@ -1878,7 +1880,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // if grid is initialised then emit the Blotter Ready event so we can reapply any styles
       // and reapply any specially rendered columns
       if (this.isInitialised) {
-        this.emit(BLOTTER_READY_EVENT);
+        this.api.eventApi.emit(BLOTTER_READY_EVENT);
         this.addSpecialRendereredColumns();
       }
     }

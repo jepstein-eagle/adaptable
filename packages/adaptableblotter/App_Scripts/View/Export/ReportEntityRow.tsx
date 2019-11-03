@@ -1,11 +1,8 @@
 import * as React from 'react';
 
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
-import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
-import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
@@ -15,10 +12,12 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 import icons from '../../components/icons';
 import { ReactComponentLike } from 'prop-types';
 import DropdownButton from '../../components/DropdownButton';
+import { IReportService } from '../../Utilities/Services/Interface/IReportService';
 
 const ExportIcon = icons.export as ReactComponentLike;
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
   LiveReports: ILiveReport[];
+  ReportService: IReportService;
   onExport: (exportDestination: ExportDestination) => void;
   onReportStopLive: (
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
@@ -68,18 +67,21 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     };
 
     // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
-    let isSystemReport: boolean = ReportHelper.IsSystemReport(report);
+    let isSystemReport: boolean = this.props.ReportService.IsSystemReport(report);
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={report.Name} />;
     colItems[1].Content = (
       <EntityRowItem
-        Content={ReportHelper.GetReportColumnsDescription(report, this.props.Columns)}
+        Content={this.props.ReportService.GetReportColumnsDescription(report, this.props.Columns)}
       />
     );
     colItems[2].Content = (
       <EntityRowItem
-        Content={ReportHelper.GetReportExpressionDescription(report, this.props.Columns)}
+        Content={this.props.ReportService.GetReportExpressionDescription(
+          report,
+          this.props.Columns
+        )}
       />
     );
 
@@ -87,11 +89,12 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.OpenfinExcel, null) &&
+      this.props.ReportService.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
         openfinExcelMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.iPushPull, null) &&
+      this.props.ReportService.IsReportDestinationActive(ExportDestination.iPushPull) &&
         iPushPullExcelMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.Glue42, null) && glue42MenuItem,
+      this.props.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
+        glue42MenuItem,
     ].filter(x => !!x);
 
     let exportButton = (

@@ -110,6 +110,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
             AccessLevel={this.props.AccessLevel}
+            ReportService={this.props.Blotter.ReportService}
           />
         );
       }

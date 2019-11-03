@@ -11,7 +11,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
 import SimpleButton from '../../components/SimpleButton';
-import { APPLICATION_BUTTON_CLICKED_EVENT } from '../../Utilities/Constants/GeneralConstants';
+import { APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 
 interface ApplicationToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
@@ -53,7 +53,10 @@ class ApplicationToolbarControlComponent extends React.Component<
                     style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
                     key={button.Name}
                     onClick={() => {
-                      this.props.Blotter.emit(APPLICATION_BUTTON_CLICKED_EVENT, button);
+                      this.props.Blotter.api.eventApi.emit(
+                        APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
+                        button
+                      );
                     }}
                   >
                     {button.Caption}

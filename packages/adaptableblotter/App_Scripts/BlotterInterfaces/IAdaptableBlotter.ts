@@ -1,11 +1,4 @@
-import {
-  IBlotterApi,
-  AdaptableBlotterOptions,
-  SearchChangedEventArgs,
-  ThemeChangedEventArgs,
-  ColumnStateChangedEventArgs,
-  AlertFiredEventArgs,
-} from '../types';
+import { IBlotterApi, AdaptableBlotterOptions } from '../types';
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
@@ -29,33 +22,17 @@ import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineCo
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Glue42Service';
-import Emitter from '../Utilities/Emitter';
-import { ApplicationToolbarButton } from '../PredefinedConfig/DesignTimeState/ApplicationState';
 
 import {
-  APPLICATION_BUTTON_CLICKED_EVENT,
-  TOOLBAR_HIDDEN_EVENT,
-  BLOTTER_READY_EVENT,
-  TOOLBAR_VISIBLE_EVENT,
   PRIVATE_CELLS_SELECTED_EVENT,
   PRIVATE_ROWS_SELECTED_EVENT,
   PRIVATE_SEARCH_APPLIED_EVENT,
   PRIVATE_GRID_REFRESHED_EVENT,
   PRIVATE_GRID_RELOADED_EVENT,
   PRIVATE_KEY_DOWN_EVENT,
-  SEARCH_CHANGED_EVENT,
-  THEME_CHANGED_EVENT,
-  COLUMN_STATE_CHANGED_EVENT,
-  ALERT_FIRED_EVENT,
-  ACTION_COLUMN_CLICKED_EVENT,
-  SELECTION_CHANGED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
-import {
-  ActionColumnClickedEventArgs,
-  SelectionChangedEventArgs,
-} from '../Api/Events/BlotterEvents';
-
-export type EmitterCallback = (data?: any) => any;
+import { EmitterCallback } from '../Utilities/Emitter';
+import { IReportService } from '../Utilities/Services/Interface/IReportService';
 
 /**
  *  The only interface for the AdaptableBlotter
@@ -138,42 +115,9 @@ export interface IAdaptableBlotter {
   ScheduleService: IScheduleService;
   SearchService: ISearchService;
   Glue42Service: IGlue42Service;
+  ReportService: IReportService;
 
-  // These are the public events that we publish
-  // In time we need to copy over the other events that we are using too :(
-  on(eventName: BLOTTER_READY_EVENT, callback: () => void): () => void;
-  on(
-    eventName: APPLICATION_BUTTON_CLICKED_EVENT,
-    callback: (button: ApplicationToolbarButton) => void
-  ): () => void;
-  on(eventName: TOOLBAR_VISIBLE_EVENT, callback: (toolbar: string) => void): () => void;
-  on(eventName: TOOLBAR_HIDDEN_EVENT, callback: (toolbar: string) => void): () => void;
-  on(
-    eventName: SEARCH_CHANGED_EVENT,
-    callback: (searchChangedEventArgs: SearchChangedEventArgs) => void
-  ): () => void;
-  on(
-    eventName: THEME_CHANGED_EVENT,
-    callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
-  ): () => void;
-  on(
-    eventName: COLUMN_STATE_CHANGED_EVENT,
-    callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
-  ): () => void;
-  on(
-    eventName: ALERT_FIRED_EVENT,
-    callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
-  ): () => void;
-  on(
-    eventName: ACTION_COLUMN_CLICKED_EVENT,
-    callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
-  ): () => void;
-  on(
-    eventName: SELECTION_CHANGED_EVENT,
-    callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
-  ): () => void;
-
-  // These are private events
+  // These are private events only
   _on(eventName: PRIVATE_CELLS_SELECTED_EVENT, callback: () => void): () => void;
   _on(eventName: PRIVATE_ROWS_SELECTED_EVENT, callback: () => void): () => void;
   _on(eventName: PRIVATE_SEARCH_APPLIED_EVENT, callback: () => void): () => void;
@@ -182,9 +126,7 @@ export interface IAdaptableBlotter {
   _on(eventName: PRIVATE_KEY_DOWN_EVENT, callback: (keyDownEvent: any) => void): () => void;
 
   onAny(callback: EmitterCallback): () => void;
-  emit(eventName: string, data?: any): Promise<any>;
-
-  // export const APPLICATION_BUTTON_CLICKED_EVENT: string = 'ApplicationButtonClicked';
+  //emit(eventName: string, data?: any): Promise<any>;
 
   // General
   createMainMenu(): void;

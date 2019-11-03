@@ -33,7 +33,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             if (
               this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Visible
             ) {
-              this.blotter.emit(TOOLBAR_VISIBLE_EVENT, toolbar);
+              this.blotter.api.eventApi.emit(TOOLBAR_VISIBLE_EVENT, toolbar);
             }
           }
         }
@@ -41,7 +41,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
       [...(this.visibleToolbars || [])].forEach((toolbar: string) => {
         if (!newVisibleToolbars[toolbar]) {
-          this.blotter.emit(TOOLBAR_HIDDEN_EVENT, toolbar);
+          this.blotter.api.eventApi.emit(TOOLBAR_HIDDEN_EVENT, toolbar);
         }
       });
       this.visibleToolbars = this.blotter.api.dashboardApi.GetState().VisibleToolbars;
@@ -57,7 +57,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             if (
               this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Visible
             ) {
-              this.blotter.emit(TOOLBAR_VISIBLE_EVENT, toolbar);
+              this.blotter.api.eventApi.emit(TOOLBAR_VISIBLE_EVENT, toolbar);
             }
           }
         );

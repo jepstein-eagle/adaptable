@@ -61,7 +61,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * In the Application State you provide details of the buttons to appear in the Application toolbar.
  *
- * When one of these buttons is clicked the **ApplicationButtonClicked** event will fire providing details of the button clicked so you can react as necessary.
+ * When one of these buttons is clicked the **ApplicationToolbarButtonClicked** event will fire providing details of the button clicked so you can react as necessary.
  *
  * Note: in the intial implementation you can only provide a button name and caption (text that is displayed), but in future releases you will be able to provide images and also to control the rendering and other aspects of these buttons.
  *
@@ -85,7 +85,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  *  ......
  *
- *  adaptableblotter.on('ApplicationButtonClicked', (button: (button: ApplicationToolbarButton) )  => {
+ *  adaptableblotter.on('ApplicationToolbarButtonClicked', (button: (button: ApplicationToolbarButton) )  => {
  *      // respond as appropriate - the button argument is the ApplicationToolbarButton we provided in the state
  *  });
  * ```

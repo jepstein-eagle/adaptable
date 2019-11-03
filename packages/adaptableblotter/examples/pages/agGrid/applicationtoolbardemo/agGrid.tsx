@@ -67,7 +67,7 @@ function InitAdaptableBlotter() {
   });
   //adaptableblotter._on()
 
-  adaptableblotter.on('ApplicationButtonClicked', button => {
+  adaptableblotter.on('ApplicationToolbarButtonClicked', button => {
     alert('name: ' + button.Name);
     alert('caption: ' + button.Caption);
   });

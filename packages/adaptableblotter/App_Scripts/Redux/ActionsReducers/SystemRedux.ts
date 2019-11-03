@@ -13,7 +13,6 @@ import {
   EMPTY_STRING,
 } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
@@ -21,8 +20,8 @@ import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -357,7 +356,7 @@ const initialSystemState: SystemState = {
   ChartVisibility: SYSTEM_DEFAULT_CHART_VISIBILITY,
   CalculatedColumnErrorMessage: EMPTY_STRING,
   IPPDomainsPages: EMPTY_ARRAY,
-  SystemReports: ReportHelper.CreateSystemReports(),
+  SystemReports: ObjectFactory.CreateSystemReports(),
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
   QuickSearchVisibleColumnExpressions: EMPTY_ARRAY,

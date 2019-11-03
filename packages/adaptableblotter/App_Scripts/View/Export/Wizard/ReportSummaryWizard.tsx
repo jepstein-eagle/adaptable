@@ -6,8 +6,6 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
-import { ReportHelper } from '../../../Utilities/Helpers/ReportHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { UIHelper } from '../../UIHelper';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
@@ -30,11 +28,17 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
       { Key: 'Name', Value: this.props.Data.Name },
       {
         Key: 'Columns',
-        Value: ReportHelper.GetReportColumnsDescription(this.props.Data, this.props.Columns),
+        Value: this.props.Blotter!.ReportService.GetReportColumnsDescription(
+          this.props.Data,
+          this.props.Columns
+        ),
       },
       {
         Key: 'Rows',
-        Value: ReportHelper.GetReportExpressionDescription(this.props.Data, this.props.Columns),
+        Value: this.props.Blotter!.ReportService.GetReportExpressionDescription(
+          this.props.Data,
+          this.props.Columns
+        ),
       },
       { Key: 'Schedule', Value: scheduleDescription },
     ];

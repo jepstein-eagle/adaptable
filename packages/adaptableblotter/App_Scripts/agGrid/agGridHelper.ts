@@ -437,7 +437,8 @@ export class agGridHelper {
     // now depprecated and shortly to be removed...
     this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
     // new way (and soon only way)
-    this.blotter.emit(SELECTION_CHANGED_EVENT, selectionChangedArgs);
+    this.blotter.api.eventApi.emit(SELECTION_CHANGED_EVENT, selectionChangedArgs);
+    //  this.blotter.api.eventApi.emit()
   }
 
   public getContextMenuInfo(
