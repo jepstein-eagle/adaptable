@@ -92,12 +92,10 @@ export interface IEventApi {
   /**
    * Event fired whenever **when a button in the Application Toolbar is clicked**
    *
-   * The event provides the Adap
+   * Used when the Application State contains an ApplicationToolbarButton that has been clicked.
    *
-   * Used in association with server searching.
-   *
-   * @param eventName APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT
-   * @param callback ApplicationToolbarButtonClickedEventArgs
+   * @param eventName ApplicationToolbarButtonClicked
+   * @param callback The ApplicationToolbarButtonClickedEventArgs which provides details of the button that was clicked.
    */
   on(
     eventName: APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
@@ -115,6 +113,16 @@ export interface IEventApi {
    *
    * @returns ToolbarVisibilityChangedEventArgs containing the name of the toolbar which has become visible
    */
+
+  /**
+   * Event fired whenever **a toolbar in the Adaptable Blotter becomes visible**
+   *
+   * Primarily used for rendering the Application toolbar (which is deliberately created empty for this purpose).
+   *
+   * @param eventName ToolbarVisible
+   *
+   * @param callback ToolbarVisibilityChangedEventArgs which includes just the name of the toolbar that has become visible.
+   */
   on(
     eventName: TOOLBAR_VISIBLE_EVENT,
     callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
@@ -128,6 +136,12 @@ export interface IEventApi {
    * Used in association with server searching.
    *
    * @returns SearchChangedEventArgs
+   */
+
+  /**
+   *
+   * @param eventName
+   * @param callback
    */
   on(
     eventName: SEARCH_CHANGED_EVENT,
