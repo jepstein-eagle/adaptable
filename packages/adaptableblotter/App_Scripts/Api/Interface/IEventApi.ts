@@ -95,10 +95,24 @@ export interface IEventApi {
     eventName: SEARCH_CHANGED_EVENT,
     callback: (searchChangedEventArgs: SearchChangedEventArgs) => void
   ): () => void;
+
+  /**
+   * Event fired whenever the **selected theme of the Adaptable Blotter is changed**.
+   *
+   * @returns ThemeChangedEventArgs
+   */
   on(
     eventName: THEME_CHANGED_EVENT,
     callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
   ): () => void;
+
+  /**
+   * Event fired whenever **column order, visibility and sorts are changed in the Adaptable Blotter**.
+   *
+   * The event only fires when in a user (as opposed to the default) layout.
+   *
+   * @returns ColumnStateChangedEventArgs - which at present just return the name of the current layout.
+   */
   on(
     eventName: COLUMN_STATE_CHANGED_EVENT,
     callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
@@ -117,34 +131,16 @@ export interface IEventApi {
   ): () => void;
 
   /**
-   * Event fired whenever **search criteria in the Adaptable Blotter changes**
-   *
-   * The event provides full details of what triggered the change and the current state of all Search and Filter related functions.
-   *
-   * Used in association with server searching.
-   *
-   * @returns IEvent<IAdaptableBlotter, SearchChangedEventArgs>
-   *
    * **This event is deprecated - please use the new On('SearchChanged') event instead which returns the same SearchChangedEventArgs**
    */
   onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs>;
 
   /**
-   * Event fired whenever the **selected theme of the Adaptable Blotter is changed**.
-   *
-   * @returns IEvent<IAdaptableBlotter, ThemeChangedEventArgs>
-   *
    * **This event is deprecated - please use the new On('ThemeChanged') event instead which returns the same ThemeChangedEventArgs**
    */
   onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs>;
 
   /**
-   * Event fired whenever **column order, visibility and sorts are changed in the Adaptable Blotter**.
-   *
-   * The event only fires when in a user (as opposed to the default) layout.
-   *
-   * @returns Column State Changed args - which at present just return the name of the current layout.
-   *
    * **This event is deprecated - please use the new On('ColumnStateChanged') event instead which returns the same ColumnStateChangedEventArgs**
    */
   onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs>;
