@@ -21,7 +21,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnInfoStrategyName,
       ComponentName: ScreenPopups.ColumnInfoPopup,
-      GlyphIcon: StrategyConstants.ColumnInfoGlyph,
+      Icon: StrategyConstants.ColumnInfoGlyph,
     });
   }
 
@@ -51,7 +51,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
         menuItemShowPopup = this.createMainMenuItemShowPopup({
           Label: StrategyConstants.ColumnInfoStrategyName,
           ComponentName: ScreenPopups.ColumnInfoPopup,
-          GlyphIcon: StrategyConstants.ColumnInfoGlyph,
+          Icon: StrategyConstants.ColumnInfoGlyph,
           PopupParams: popupParam,
         });
       }

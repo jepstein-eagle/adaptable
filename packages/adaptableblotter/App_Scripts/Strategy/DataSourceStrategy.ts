@@ -14,7 +14,7 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.DataSourceStrategyName,
       ComponentName: ScreenPopups.DataSourcePopup,
-      GlyphIcon: StrategyConstants.DataSourceGlyph,
+      Icon: StrategyConstants.DataSourceGlyph,
     });
   }
 }

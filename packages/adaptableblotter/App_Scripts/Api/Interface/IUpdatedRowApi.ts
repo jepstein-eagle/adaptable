@@ -1,4 +1,5 @@
 import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 
 /**
  * Provides full and comprehensive run-time access to the Updated Row function and associated state.
@@ -55,4 +56,10 @@ export interface IUpdatedRowApi {
    * @param neutralColor the color to set
    */
   setNeutralColor(neutralColor: string): void;
+
+  addUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
+
+  deleteUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
+
+  deleteAllUpdatedRowInfo(): void;
 }

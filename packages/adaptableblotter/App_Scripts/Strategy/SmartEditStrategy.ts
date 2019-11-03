@@ -36,7 +36,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SmartEditStrategyName,
       ComponentName: ScreenPopups.SmartEditPopup,
-      GlyphIcon: StrategyConstants.SmartEditGlyph,
+      Icon: StrategyConstants.SmartEditGlyph,
     });
   }
 
@@ -58,7 +58,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: StrategyConstants.SmartEditStrategyName,
         ComponentName: ScreenPopups.SmartEditPopup,
-        GlyphIcon: StrategyConstants.SmartEditGlyph,
+        Icon: StrategyConstants.SmartEditGlyph,
       });
     }
     return menuItemShowPopup;

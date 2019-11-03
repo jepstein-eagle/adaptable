@@ -17,7 +17,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CellValidationStrategyName,
       ComponentName: ScreenPopups.CellValidationPopup,
-      GlyphIcon: StrategyConstants.CellValidationGlyph,
+      Icon: StrategyConstants.CellValidationGlyph,
     });
   }
 

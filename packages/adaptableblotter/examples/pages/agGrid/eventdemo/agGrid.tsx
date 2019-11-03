@@ -132,10 +132,6 @@ function InitAdaptableBlotter() {
         );
       }
     });
-
-    adaptableblotter.api.eventApi.on('ToolbarHidden', (toolbar: string) => {
-      console.log('hiding toolbar', toolbar);
-    });
   }
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }

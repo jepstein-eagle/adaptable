@@ -21,7 +21,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PieChartStrategyName,
       ComponentName: ScreenPopups.PieChartPopup,
-      GlyphIcon: StrategyConstants.PieChartGlyph,
+      Icon: StrategyConstants.PieChartGlyph,
     });
   }
 
@@ -65,7 +65,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'See as Pie Chart',
         ComponentName: ScreenPopups.PieChartPopup,
-        GlyphIcon: StrategyConstants.PieChartGlyph,
+        Icon: StrategyConstants.PieChartGlyph,
         PopupParams: popUpParams,
       });
     }

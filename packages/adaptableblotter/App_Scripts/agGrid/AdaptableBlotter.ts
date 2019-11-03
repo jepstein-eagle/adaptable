@@ -144,6 +144,7 @@ import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import {
   PermittedColumnValues,
   EditLookUpColumn,
+  UserMenuItem,
 } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
@@ -2504,23 +2505,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       colMenuItems.push('separator');
 
       adaptableBlotterMenuItems.forEach((adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-        let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(adaptableBlotterMenuItem);
+        let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+          adaptableBlotterMenuItem
+        );
         colMenuItems.push(menuItem);
       });
+
+      let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
+      if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
+        userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
+          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+            userMenuItem
+          );
+          colMenuItems.push(menuItem);
+        });
+      }
+
       return colMenuItems;
     };
 
     // Build the CONTEXT MENU.  Again we do this each time a cell is right clicked as its context-sensitive
     const originalgetContextMenuItems = this.gridOptions.getContextMenuItems;
     this.gridOptions.getContextMenuItems = (params: GetContextMenuItemsParams) => {
-      let colMenuItems: (string | MenuItemDef)[];
+      let contextMenuItems: (string | MenuItemDef)[];
       // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
       // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
       if (originalgetContextMenuItems) {
         const originalContexttems = originalgetContextMenuItems(params);
-        colMenuItems = originalContexttems.slice(0);
+        contextMenuItems = originalContexttems.slice(0);
       } else {
-        colMenuItems = params.defaultItems.slice(0);
+        contextMenuItems = params.defaultItems.slice(0);
       }
 
       // keep it simple for now - if its a grouped cell then do nothing
@@ -2547,19 +2561,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           }
 
           if (ArrayExtensions.IsNotNullOrEmpty(adaptableBlotterMenuItems)) {
-            colMenuItems.push('separator');
+            contextMenuItems.push('separator');
             adaptableBlotterMenuItems.forEach(
               (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDef(
+                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
                   adaptableBlotterMenuItem
                 );
-                colMenuItems.push(menuItem);
+                contextMenuItems.push(menuItem);
               }
             );
           }
+
+          let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
+            .ContextMenuItems;
+          if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
+            contextMenuItems.push('separator');
+            userContextMenuItems.forEach((userMenuItem: UserMenuItem) => {
+              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                userMenuItem
+              );
+              contextMenuItems.push(menuItem);
+            });
+          }
         }
       }
-      return colMenuItems;
+      return contextMenuItems;
     };
   }
 

@@ -25,7 +25,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CustomSortStrategyName,
       ComponentName: ScreenPopups.CustomSortPopup,
-      GlyphIcon: StrategyConstants.CustomSortGlyph,
+      Icon: StrategyConstants.CustomSortGlyph,
     });
   }
 

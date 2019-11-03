@@ -93,7 +93,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ExportStrategyName,
       ComponentName: ScreenPopups.ExportPopup,
-      GlyphIcon: StrategyConstants.ExportGlyph,
+      Icon: StrategyConstants.ExportGlyph,
     });
   }
 

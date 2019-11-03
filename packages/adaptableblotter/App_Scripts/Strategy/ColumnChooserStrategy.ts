@@ -20,7 +20,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnChooserStrategyName,
       ComponentName: ScreenPopups.ColumnChooserPopup,
-      GlyphIcon: StrategyConstants.ColumnChooserGlyph,
+      Icon: StrategyConstants.ColumnChooserGlyph,
     });
   }
 
@@ -38,7 +38,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     return this.createMainMenuItemShowPopup({
       Label: 'Show ' + StrategyConstants.ColumnChooserStrategyName,
       ComponentName: ScreenPopups.ColumnChooserPopup,
-      GlyphIcon: StrategyConstants.ColumnChooserGlyph,
+      Icon: StrategyConstants.ColumnChooserGlyph,
     });
   }
 }

@@ -40,7 +40,7 @@ function InitAdaptableBlotter() {
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions); // global.adaptableblotter = adaptableblotter;
 
-  adaptableblotter.on('ToolbarVisible', toolbar => {
+  adaptableblotter.api.eventApi.on('ToolbarVisible', toolbar => {
     if (toolbar === 'Application') {
       let toolbarContents: any = (
         <div style={{ display: 'flex' }}>
@@ -67,17 +67,9 @@ function InitAdaptableBlotter() {
   });
   //adaptableblotter._on()
 
-  adaptableblotter.on('ApplicationToolbarButtonClicked', button => {
+  adaptableblotter.api.eventApi.on('ApplicationToolbarButtonClicked', button => {
     alert('name: ' + button.Name);
     alert('caption: ' + button.Caption);
-  });
-
-  adaptableblotter.on('ToolbarHidden', toolbar => {
-    console.log(
-      'hiding toolbar',
-      toolbar,
-      document.querySelector('.ab-ApplicationToolbar__contents')
-    );
   });
 }
 

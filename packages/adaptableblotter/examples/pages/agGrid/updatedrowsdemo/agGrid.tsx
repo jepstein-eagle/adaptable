@@ -18,6 +18,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
+import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/ApplicationState';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
@@ -49,8 +50,9 @@ function InitAdaptableBlotter() {
 
   tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 5000);
 
-  //  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-  // global.adaptableblotter = adaptableblotter;
+  adaptableblotter.api.eventApi.on('ApplicationToolbarButtonClicked', () => {
+    adaptableblotter.api.updatedRowApi.deleteAllUpdatedRowInfo();
+  });
 }
 
 let demoConfig: PredefinedConfig = {
@@ -60,6 +62,14 @@ let demoConfig: PredefinedConfig = {
     UpColor: '#32CD32', // lime green
     DownColor: '#FFA500', // orange
     NeutralColor: '#FFFF00', // yellow
+  },
+  Application: {
+    ApplicationToolbarButtons: [
+      {
+        Name: 'btnClearUpdatedRows',
+        Caption: 'Clear Updated Rows',
+      },
+    ],
   },
 };
 

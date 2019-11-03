@@ -151,14 +151,6 @@ export class InternalApi extends ApiBase implements IInternalApi {
     return this.getSystemState().UpdatedRowInfos;
   }
 
-  public addUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void {
-    this.dispatchAction(SystemRedux.SystemUpdatedRowAdd(updatedRowInfo));
-  }
-
-  public deleteUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void {
-    this.dispatchAction(SystemRedux.SystemUpdatedRowDelete(updatedRowInfo));
-  }
-
   public isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean {
     let foundUpdatedRowInfo: UpdatedRowInfo = this.getSystemState().UpdatedRowInfos.find(
       uri => uri.primaryKeyValue == primaryKeyValue && uri.changeDirection == changeDirection

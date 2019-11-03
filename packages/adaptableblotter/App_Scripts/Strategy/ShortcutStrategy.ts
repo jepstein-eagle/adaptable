@@ -33,7 +33,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ShortcutStrategyName,
       ComponentName: ScreenPopups.ShortcutPopup,
-      GlyphIcon: StrategyConstants.ShortcutGlyph,
+      Icon: StrategyConstants.ShortcutGlyph,
     });
   }
 

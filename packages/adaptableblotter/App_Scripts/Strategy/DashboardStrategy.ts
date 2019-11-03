@@ -7,10 +7,7 @@ import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
-import {
-  TOOLBAR_VISIBLE_EVENT,
-  TOOLBAR_HIDDEN_EVENT,
-} from '../Utilities/Constants/GeneralConstants';
+import { TOOLBAR_VISIBLE_EVENT } from '../Utilities/Constants/GeneralConstants';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   private visibleToolbars: string[];
@@ -23,9 +20,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   protected InitState() {
     if (this.visibleToolbars != this.blotter.api.dashboardApi.GetState().VisibleToolbars) {
       const oldVisibleToolbars = arrayToKeyMap(this.visibleToolbars);
-      const newVisibleToolbars = arrayToKeyMap(
-        this.blotter.api.dashboardApi.GetState().VisibleToolbars
-      );
 
       [...(this.blotter.api.dashboardApi.GetState().VisibleToolbars || [])].forEach(
         (toolbar: string) => {
@@ -38,12 +32,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
           }
         }
       );
-
-      [...(this.visibleToolbars || [])].forEach((toolbar: string) => {
-        if (!newVisibleToolbars[toolbar]) {
-          this.blotter.api.eventApi.emit(TOOLBAR_HIDDEN_EVENT, toolbar);
-        }
-      });
       this.visibleToolbars = this.blotter.api.dashboardApi.GetState().VisibleToolbars;
     }
 
@@ -69,7 +57,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.DashboardStrategyName,
       ComponentName: ScreenPopups.DashboardPopup,
-      GlyphIcon: StrategyConstants.DashboardGlyph,
+      Icon: StrategyConstants.DashboardGlyph,
     });
   }
 

@@ -89,10 +89,6 @@ export interface IInternalApi {
 
   getUpdatedRowInfos(): any[];
 
-  addUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
-
-  deleteUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
-
   isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean;
 
   // for general store accessibilty - not sure that this is right but...

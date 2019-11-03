@@ -18,12 +18,12 @@ function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  gridOptions.getContextMenuItems = getContextMenuItems;
+  // gridOptions.getContextMenuItems = getContextMenuItems;
 
   //gridOptions.singleClickEdit = true;
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'context menu demo'
+    'user menu demo'
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 
@@ -31,7 +31,48 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  UserInterface: {
+    ColumnMenuItems: [
+      {
+        Label: 'Column Menu 1',
+      },
+      {
+        Label: 'Column Menu 1',
+      },
+      {
+        Label: 'Column Menu 3',
+        SubMenuItems: [
+          {
+            Label: 'Column Sub Menu 1',
+          },
+          {
+            Label: 'Column Sub Menu 2',
+          },
+        ],
+      },
+    ],
+    ContextMenuItems: [
+      {
+        Label: 'Context Menu 1',
+      },
+      {
+        Label: 'Context Menu 2',
+      },
+      {
+        Label: 'Context Menu 3',
+        SubMenuItems: [
+          {
+            Label: 'Column Sub Menu 1',
+          },
+          {
+            Label: 'Column Sub Menu 2',
+          },
+        ],
+      },
+    ],
+  },
+};
 
 function getContextMenuItems(params: any) {
   var result = [

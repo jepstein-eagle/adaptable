@@ -32,7 +32,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.UpdatedRowStrategyName,
       ComponentName: ScreenPopups.UpdatedRowPopup,
-      GlyphIcon: StrategyConstants.UpdatedRowGlyph,
+      Icon: StrategyConstants.UpdatedRowGlyph,
     });
   }
 
@@ -59,7 +59,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
         );
         if (updatedRowInfo) {
           menuItemShowPopup = this.createColumnMenuItemReduxAction(
-            'Clear Row Update',
+            'Clear Updated Row',
             StrategyConstants.UpdatedRowGlyph,
             SystemRedux.SystemUpdatedRowDelete(updatedRowInfo)
           );
@@ -79,7 +79,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
           primaryKeyValue: dataChangedInfo.IdentifierValue,
           changeDirection: this.getChangeDirection(dataChangedInfo),
         };
-        this.blotter.api.internalApi.addUpdatedRowInfo(updatedRowInfo);
+        this.blotter.api.updatedRowApi.addUpdatedRowInfo(updatedRowInfo);
 
         if (updatedRowState.JumpToRow) {
           this.blotter.jumpToRow(dataChangedInfo.RowNode);

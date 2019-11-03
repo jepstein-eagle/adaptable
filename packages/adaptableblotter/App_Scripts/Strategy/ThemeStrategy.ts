@@ -19,7 +19,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ThemeStrategyName,
       ComponentName: ScreenPopups.ThemePopup,
-      GlyphIcon: StrategyConstants.ThemeGlyph,
+      Icon: StrategyConstants.ThemeGlyph,
     });
   }
 

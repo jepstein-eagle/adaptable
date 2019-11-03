@@ -65,6 +65,10 @@ export interface UserInterfaceState extends DesignTimeState {
    * **note if this is left empty (the default) then the row style in the Grid theme will be used**
    */
   RowStyles?: RowStyle[];
+
+  ColumnMenuItems?: UserMenuItem[];
+
+  ContextMenuItems?: UserMenuItem[];
 }
 
 /**
@@ -190,4 +194,11 @@ export interface RowStyle {
    * **Note: if you have any 'All' RowTypes then 'Odd' and 'Even' RowTypes will be ignored.**
    */
   RowType: 'All' | 'Odd' | 'Even';
+}
+
+export interface UserMenuItem {
+  Label: string;
+  Action?: () => void;
+  Icon?: string;
+  SubMenuItems?: UserMenuItem[];
 }

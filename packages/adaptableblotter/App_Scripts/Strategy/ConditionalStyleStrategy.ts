@@ -23,7 +23,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ConditionalStyleStrategyName,
       ComponentName: ScreenPopups.ConditionalStylePopup,
-      GlyphIcon: StrategyConstants.ConditionalStyleGlyph,
+      Icon: StrategyConstants.ConditionalStyleGlyph,
     });
   }
 

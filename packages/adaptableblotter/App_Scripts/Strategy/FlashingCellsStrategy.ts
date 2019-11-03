@@ -24,7 +24,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.FlashingCellsStrategyName,
       ComponentName: ScreenPopups.FlashingCellsPopup,
-      GlyphIcon: StrategyConstants.FlashingCellGlyph,
+      Icon: StrategyConstants.FlashingCellGlyph,
     });
   }
 

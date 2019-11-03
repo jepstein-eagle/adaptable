@@ -21,7 +21,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.QuickSearchStrategyName,
       ComponentName: ScreenPopups.QuickSearchPopup,
-      GlyphIcon: StrategyConstants.QuickSearchGlyph,
+      Icon: StrategyConstants.QuickSearchGlyph,
     });
   }
 

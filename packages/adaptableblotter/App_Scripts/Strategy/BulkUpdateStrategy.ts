@@ -28,7 +28,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.BulkUpdateStrategyName,
       ComponentName: ScreenPopups.BulkUpdatePopup,
-      GlyphIcon: StrategyConstants.BulkUpdateGlyph,
+      Icon: StrategyConstants.BulkUpdateGlyph,
     });
   }
 

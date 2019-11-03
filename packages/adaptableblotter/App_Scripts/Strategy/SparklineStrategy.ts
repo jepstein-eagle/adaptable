@@ -53,7 +53,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'See as Sparkline',
         ComponentName: ScreenPopups.ViewAsSparklinesPopup,
-        GlyphIcon: StrategyConstants.SparklinesGlyph,
+        Icon: StrategyConstants.SparklinesGlyph,
         PopupParams: popUpParams,
       });
     }

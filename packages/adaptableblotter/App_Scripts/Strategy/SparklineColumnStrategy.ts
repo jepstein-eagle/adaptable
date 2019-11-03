@@ -22,7 +22,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SparklineColumnStrategyName,
       ComponentName: ScreenPopups.SparklineColumnPopup,
-      GlyphIcon: StrategyConstants.SparklineColumnGlyph,
+      Icon: StrategyConstants.SparklineColumnGlyph,
     });
   }
 

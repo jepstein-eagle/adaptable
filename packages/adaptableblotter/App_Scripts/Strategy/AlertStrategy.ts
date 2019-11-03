@@ -33,7 +33,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.AlertStrategyName,
       ComponentName: ScreenPopups.AlertPopup,
-      GlyphIcon: StrategyConstants.AlertGlyph,
+      Icon: StrategyConstants.AlertGlyph,
     });
   }
 

@@ -15,7 +15,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.AdvancedSearchStrategyName,
       ComponentName: ScreenPopups.AdvancedSearchPopup,
-      GlyphIcon: StrategyConstants.AdvancedSearchGlyph,
+      Icon: StrategyConstants.AdvancedSearchGlyph,
     });
   }
 }

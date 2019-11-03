@@ -17,7 +17,7 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.FreeTextColumnStrategyName,
       ComponentName: ScreenPopups.FreeTextColumnPopup,
-      GlyphIcon: StrategyConstants.FreeTextColumnGlyph,
+      Icon: StrategyConstants.FreeTextColumnGlyph,
     });
   }
 

@@ -46,7 +46,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ChartStrategyName,
       ComponentName: ScreenPopups.ChartPopup,
-      GlyphIcon: StrategyConstants.ChartGlyph,
+      Icon: StrategyConstants.ChartGlyph,
     });
   }
 

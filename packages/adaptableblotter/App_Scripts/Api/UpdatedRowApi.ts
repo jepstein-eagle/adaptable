@@ -2,6 +2,8 @@ import { ApiBase } from './ApiBase';
 import { UpdatedRowState } from '../PredefinedConfig/RunTimeState/UpdatedRowState';
 import { IUpdatedRowApi } from './Interface/IUpdatedRowApi';
 import * as UpdatedRowRedux from '../Redux/ActionsReducers/UpdatedRowRedux';
+import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
+import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 
 export class UpdatedRowApi extends ApiBase implements IUpdatedRowApi {
   public getUpdatedRowState(): UpdatedRowState {
@@ -34,5 +36,18 @@ export class UpdatedRowApi extends ApiBase implements IUpdatedRowApi {
 
   public setNeutralColor(neutralColor: string): void {
     this.dispatchAction(UpdatedRowRedux.NeutralColorSet(neutralColor));
+  }
+
+  public addUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void {
+    this.dispatchAction(SystemRedux.SystemUpdatedRowAdd(updatedRowInfo));
+  }
+
+  public deleteUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void {
+    this.dispatchAction(SystemRedux.SystemUpdatedRowDelete(updatedRowInfo));
+  }
+
+  public deleteAllUpdatedRowInfo(): void {
+    let updatedRowInfos: UpdatedRowInfo[] = this.blotter.api.internalApi.getUpdatedRowInfos();
+    this.dispatchAction(SystemRedux.SystemUpdatedRowDeleteAll(updatedRowInfos));
   }
 }

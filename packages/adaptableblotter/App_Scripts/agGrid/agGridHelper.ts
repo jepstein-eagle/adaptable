@@ -55,7 +55,7 @@ import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
-import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+import { RowStyle, UserMenuItem } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
 import { iconToString } from '../components/icons';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
@@ -477,15 +477,28 @@ export class agGridHelper {
     };
   }
 
-  public createAgGridMenuDef(x: AdaptableBlotterMenuItem): MenuItemDef {
+  public createAgGridMenuDefFromAdaptableMenu(x: AdaptableBlotterMenuItem): MenuItemDef {
     return {
       name: x.Label,
       action: () => this.blotter.api.internalApi.dispatchReduxAction(x.Action),
-      icon: iconToString(x.GlyphIcon, {
+      icon: iconToString(x.Icon, {
         style: {
           fill: 'var(--ab-color-text-on-primary)',
         },
       }),
+    };
+  }
+
+  public createAgGridMenuDefFromUsereMenu(x: UserMenuItem): MenuItemDef {
+    return {
+      name: x.Label,
+      action: () => x.Action,
+      icon: x.Icon,
+      subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
+        ? null
+        : x.SubMenuItems.map(s => {
+            return this.createAgGridMenuDefFromUsereMenu(s);
+          }),
     };
   }
 }

@@ -14,7 +14,7 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CalendarStrategyName,
       ComponentName: ScreenPopups.CalendarsPopup,
-      GlyphIcon: StrategyConstants.CalendarGlyph,
+      Icon: StrategyConstants.CalendarGlyph,
     });
   }
 }

@@ -24,7 +24,7 @@ export class ListBoxMenu extends React.Component<ListBoxMenuProps, ListBoxMenuSt
     let menuItems = this.props.MenuItems.map((menuItem: AdaptableBlotterMenuItem) => {
       return (
         <ListGroupItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
-          <Icon name={menuItem.GlyphIcon} /> {menuItem.Label}
+          <Icon name={menuItem.Icon} /> {menuItem.Label}
         </ListGroupItem>
       );
     });

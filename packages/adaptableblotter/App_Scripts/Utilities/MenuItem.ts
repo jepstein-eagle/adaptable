@@ -33,7 +33,7 @@ export interface AdaptableBlotterMenuItem {
   StrategyId: string;
   Action: Redux.Action;
   IsVisible: boolean;
-  GlyphIcon: string;
+  Icon: string;
 }
 
 export interface ContextMenuInfo {
@@ -60,13 +60,13 @@ export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {
     label: string,
     strategyId: string,
     action: Redux.Action,
-    glyphIcon: string,
+    icon: string,
     isVisible: boolean
   ) {
     this.Label = label;
     this.StrategyId = strategyId;
     this.IsVisible = isVisible;
-    this.GlyphIcon = glyphIcon;
+    this.Icon = icon;
     this.Action = action;
   }
 
@@ -74,7 +74,7 @@ export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {
   public Label: string;
   public StrategyId: string;
   public IsVisible: boolean;
-  public GlyphIcon: string;
+  public Icon: string;
 }
 
 // A menu item which shows a popup screen when it is clieked
@@ -83,19 +83,19 @@ export class MenuItemShowPopup implements AdaptableBlotterMenuItem {
     label: string,
     strategyId: string,
     componentName: string,
-    glyphIcon: string,
+    icon: string,
     isVisible: boolean,
     popupParams?: StrategyParams
   ) {
     this.Label = label;
     this.StrategyId = strategyId;
     this.IsVisible = isVisible;
-    this.GlyphIcon = glyphIcon;
+    this.Icon = icon;
     this.Action = PopupRedux.PopupShowScreen(strategyId, componentName, popupParams);
   }
   public Action: Redux.Action;
   public Label: string;
   public StrategyId: string;
   public IsVisible: boolean;
-  public GlyphIcon: string;
+  public Icon: string;
 }
