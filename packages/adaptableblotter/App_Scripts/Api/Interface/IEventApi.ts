@@ -188,32 +188,32 @@ export interface IEventApi {
   on(eventName: 'BlotterReady', callback: () => void): () => void;
 
   /**
-   * **This event is deprecated - please use the new On('SearchChanged') event instead which returns the same SearchChangedEventArgs**
+   * **This event is deprecated - please use the new on('SearchChanged') event instead which returns the same SearchChangedEventArgs**
    */
   onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs>;
 
   /**
-   * **This event is deprecated - please use the new On('ThemeChanged') event instead which returns the same ThemeChangedEventArgs**
+   * **This event is deprecated - please use the new on('ThemeChanged') event instead which returns the same ThemeChangedEventArgs**
    */
   onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs>;
 
   /**
-   * **This event is deprecated - please use the new On('ColumnStateChanged') event instead which returns the same ColumnStateChangedEventArgs**
+   * **This event is deprecated - please use the new on('ColumnStateChanged') event instead which returns the same ColumnStateChangedEventArgs**
    */
   onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs>;
 
   /**
-   * **This event is deprecated - please use the new On('AlertFired') event instead which returns the same AlertFiredEventArgs**
+   * **This event is deprecated - please use the new on('AlertFired') event instead which returns the same AlertFiredEventArgs**
    */
   onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs>;
 
   /**
-   * **This event is deprecated - please use the new On('ActionColumnClicked') event instead which returns the same ActionColumnClickedEventArgs**
+   * **This event is deprecated - please use the new on('ActionColumnClicked') event instead which returns the same ActionColumnClickedEventArgs**
    */
   onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>;
 
   /**
-   * **This event is deprecated - please use the new On('SelectionChangedEventArgs') event instead which returns the same SelectionChangedEventArgs**
+   * **This event is deprecated - please use the new on('SelectionChangedEventArgs') event instead which returns the same SelectionChangedEventArgs**
    */
   onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs>;
 
