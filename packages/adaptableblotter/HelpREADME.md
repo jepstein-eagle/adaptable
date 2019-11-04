@@ -8,7 +8,7 @@ There are 4 main ways that developers / users 'interact' with the code in the Ad
 
 - **Pre-populating** the Adaptable Blotter with the objects it requires at startup with all the objects it requires through writing [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
-- **Accessing** all the Adaptable Blotter functionality and state through code (at runtime) via the [Adaptable Blotter API](interfaces/_api_interface_iblotterapi_.iblotterapi.html).
+- **Accessing all the functionality and state** in the Adaptable Blotter through code (at runtime) via the [Adaptable Blotter API](interfaces/_api_interface_iblotterapi_.iblotterapi.html).
 
 ## Blotter Instantiation
 
