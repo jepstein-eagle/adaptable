@@ -4,7 +4,7 @@ There are 4 main ways that developers / users 'interact' with the code in the Ad
 
 - **Instantianting** the Adaptable Blotter by either implementing the [Adaptable Blotter Interface](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotter_.iadaptableblotter.html) or by using the no-code [Adaptable Blotter Wizard](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotterwizard_.iadaptableblotterwizard.html)
 
-- **Setting up** the Adaptalble Blotter through configuring [Blotter Options](./interfaces/_blotteroptions_adaptableblotteroptions_.adaptableblotteroptions.html) which are passed in to the Adaptable Blotter implementation
+- **Setting up** the Adaptable Blotter through configuring [Blotter Options](./interfaces/_blotteroptions_adaptableblotteroptions_.adaptableblotteroptions.html) which are passed in to the Adaptable Blotter implementation
 
 - **Pre-populating** the Adaptable Blotter with the objects it requires at startup with all the objects it requires through writing [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
