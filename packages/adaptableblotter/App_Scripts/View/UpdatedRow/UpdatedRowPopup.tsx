@@ -73,7 +73,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
           onChange={() => this.onEnableJumpToRowChanged()}
           checked={this.state.JumpToRow}
         >
-          Jump to Changed Row
+          Jump to Updated Row in Grid (after update)
         </Checkbox>
       </Box>
     );
@@ -93,7 +93,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
           <Flex flexDirection="column" margin={1}>
             <HelpBlock>
               Select the back colour for an updated row. Select colours for when the change in value
-              is up, down and non-directional.
+              is <b>Up</b>, <b>Down</b> and <b>non-directional</b>.
             </HelpBlock>
 
             <Flex flexDirection="row" alignItems="center" margin={2}>
