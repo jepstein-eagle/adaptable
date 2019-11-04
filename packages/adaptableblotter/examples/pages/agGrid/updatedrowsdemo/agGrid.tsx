@@ -25,7 +25,7 @@ var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(30);
+  const tradeData: any = examplesHelper.getTrades(3000);
   const tickingDataHelper = new TickingDataHelper();
 
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);

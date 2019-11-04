@@ -42,6 +42,11 @@ function InitAdaptableBlotter() {
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
+
+  adaptableBlotterOptions.generalOptions = {
+    showAdaptableBlotterToolPanel: true,
+  };
+
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   //tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000);

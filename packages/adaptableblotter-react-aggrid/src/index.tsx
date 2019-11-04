@@ -161,7 +161,7 @@ const AdaptableBlotterReact = ({
         agGridReactWrapperInstance,
       });
       if (onBlotterReady) {
-        blotter.on(BLOTTER_READY_EVENT, () => {
+        blotter.api.eventApi.on('BlotterReady', () => {
           onBlotterReady(blotter.api);
         });
       }

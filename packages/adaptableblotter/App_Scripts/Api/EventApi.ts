@@ -43,41 +43,41 @@ export class EventApi extends ApiBase implements IEventApi {
 
   public onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs> {
     LoggingHelper.LogAdaptableBlotterWarning(
-      'The onSearchChanged event in the Event API is deprecated - please use the On("SearchChanged") event instead.'
+      'The onSearchChanged event in the Event API is deprecated - please use the on("SearchChanged") event instead.'
     );
     return this._onSearchChanged;
   }
 
   public onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs> {
     LoggingHelper.LogAdaptableBlotterWarning(
-      'The onThemeChanged event in the Event API is deprecated - please use the On("ThemeChanged") event instead.'
+      'The onThemeChanged event in the Event API is deprecated - please use the on("ThemeChanged") event instead.'
     );
     return this._onThemeChanged;
   }
 
   public onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs> {
     LoggingHelper.LogAdaptableBlotterWarning(
-      'The onColumnStateChanged event in the Event API is deprecated - please use the On("ColumnStateChanged") event instead.'
+      'The onColumnStateChanged event in the Event API is deprecated - please use the on("ColumnStateChanged") event instead.'
     );
     return this._onColumnStateChanged;
   }
 
   public onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs> {
     LoggingHelper.LogAdaptableBlotterWarning(
-      'The onAlertFired event in the Event API is deprecated - please use the On("AlertFired") event instead.'
+      'The onAlertFired event in the Event API is deprecated - please use the on("AlertFired") event instead.'
     );
     return this._onAlertFired;
   }
 
   public onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs> {
     LoggingHelper.LogAdaptableBlotterWarning(
-      'The onActionColumnClicked event in the Event API is deprecated - please use the On("ActionColumnClicked") event instead.'
+      'The onActionColumnClicked event in the Event API is deprecated - please use the on("ActionColumnClicked") event instead.'
     );
     return this._onActionColumnClicked;
   }
   public onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs> {
     LoggingHelper.LogAdaptableBlotterWarning(
-      'The onSelectionChanged event in the Event API is deprecated - please use the On("SelectionChanged") event instead.'
+      'The onSelectionChanged event in the Event API is deprecated - please use the on("SelectionChanged") event instead.'
     );
     return this._onSelectionChanged;
   }
