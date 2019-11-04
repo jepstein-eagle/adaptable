@@ -2,7 +2,7 @@
 
 There are 4 main ways that developers / users 'interact' with the code in the Adaptable Blotter:
 
-- Implementing one of the **Blotter Interfaces** when instantianting the Adaptable Blotter
+- Instantianting the Adaptable Blotter by either implementing the **[Adaptable Blotter Interface]**(https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotter_.iadaptableblotter.html) or by using the no-code **[Adaptable Blotter Wizard**]**(https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotterwizard_.iadaptableblotterwizard.html)
 
 - Setting **Blotter Options** which are then passed in to the Adaptable Blotter implementation
 
