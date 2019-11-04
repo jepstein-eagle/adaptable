@@ -2,17 +2,32 @@ import { EventDispatcher } from '../../Utilities/EventDispatcher';
 import { IAdaptableBlotter } from '../../types';
 import { AuditLogEventArgs } from '../Events/AuditEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
+import {
+  AUDIT_STATE_CHANGED_EVENT,
+  AUDIT_CELL_EDITED_EVENT,
+  AUDIT_FUNCTION_APPLIED_EVENT,
+} from '../../Utilities/Constants/GeneralConstants';
 
 /**
  * The Adaptable Blotter publishes 3 Audit Events that users can subscribe to as needed.
  *
- * - **onAuditStateChanged**: fired when the Internal or User state of the Application has changed
+ * - **AuditStateChanged**: fired when the Internal or User state of the Application has changed
  *
- * - **onAuditCellEdited**: fired when a cell has been edited by the user
+ * - **AuditCellEdited**: fired when a cell has been edited by the user
  *
- * - **onAuditFunctionApplied**: fired when a Function has been run
+ * - **AuditFunctionApplied**: fired when a Function has been run
  *
  * These events are **only fired if the Audit Log** has been configured with the property *auditAsEvent* set to **true** in [Audit Options](_blotteroptions_auditoptions_.auditoptions.html).
+ *
+ * The preferred way is as follows:
+ *
+ *  ```ts
+ * adaptableblotter.api.auditEventApi
+ *    .on('AuditCellEdited', auditLogEventArgs => {
+ *        // listen to audit event as required
+ *    }
+ *  );
+ * ```
  *
  */
 export interface IAuditEventApi {
@@ -42,4 +57,24 @@ export interface IAuditEventApi {
    * For example its fired when a Smart Edit or Quick Search is performed or an Export takes place.
    */
   onAuditFunctionApplied(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
+
+  on(
+    eventName: 'AuditStateChanged',
+    callback: (auditStateChangedArgs: AuditLogEventArgs) => void
+  ): () => void;
+
+  on(
+    eventName: 'AuditCellEdited',
+    callback: (auditCellEditedArgs: AuditLogEventArgs) => void
+  ): () => void;
+
+  on(
+    eventName: 'AuditFunctionApplied',
+    callback: (auditFunctionAppliedArgs: AuditLogEventArgs) => void
+  ): () => void;
+
+  emit(
+    eventName: AUDIT_STATE_CHANGED_EVENT | AUDIT_CELL_EDITED_EVENT | AUDIT_FUNCTION_APPLIED_EVENT,
+    data?: any
+  ): Promise<any>;
 }

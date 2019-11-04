@@ -475,20 +475,29 @@ export class AuditLogService implements IAuditLogService {
 
     switch (auditLogType) {
       case AuditLogType.CellEdit:
+        // old way
         this.blotter.api.auditEventApi._onAuditCellEdited.Dispatch(this.blotter, stateChangedArgs);
+        // new way
+        this.blotter.api.auditEventApi.emit('AuditCellEdited', stateChangedArgs);
         break;
       case AuditLogType.FunctionApplied:
+        // old way
         this.blotter.api.auditEventApi._onAuditFunctionApplied.Dispatch(
           this.blotter,
           stateChangedArgs
         );
+        // new way
+        this.blotter.api.auditEventApi.emit('AuditFunctionApplied', stateChangedArgs);
         break;
       case AuditLogType.InternalStateChange:
       case AuditLogType.UserStateChange:
+        // old way
         this.blotter.api.auditEventApi._onAuditStateChanged.Dispatch(
           this.blotter,
           stateChangedArgs
         );
+        // new way
+        this.blotter.api.auditEventApi.emit('AuditStateChanged', stateChangedArgs);
         break;
     }
   }

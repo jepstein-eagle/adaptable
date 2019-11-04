@@ -27,13 +27,13 @@ function InitAdaptableBlotter() {
 
     auditOptions: {
       auditInternalStateChanges: {
-        //  auditAsEvent: true,
+        auditAsEvent: true,
       },
       auditUserStateChanges: {
-        //   auditAsEvent: true,
+        auditAsEvent: true,
       },
       auditCellEdits: {
-        auditToConsole: true,
+        auditAsEvent: true,
       },
     },
   };
@@ -42,14 +42,30 @@ function InitAdaptableBlotter() {
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
-  adaptableblotter.api.auditEventApi
-    .onAuditStateChanged()
-    .Subscribe((sender, auditLogEventArgs) => listenToAuditLogEvent(auditLogEventArgs));
+  let runNewEvents: boolean = true;
+
+  if (!runNewEvents) {
+    adaptableblotter.api.auditEventApi
+      .onAuditStateChanged()
+      .Subscribe((sender, auditLogEventArgs) =>
+        listenToAuditLogEvent('audit state', auditLogEventArgs)
+      );
+  } else {
+    adaptableblotter.api.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
+      listenToAuditLogEvent('cell edit', auditLogEventArgs);
+    });
+    adaptableblotter.api.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
+      listenToAuditLogEvent('function applied', auditLogEventArgs);
+    });
+    adaptableblotter.api.auditEventApi.on('AuditStateChanged', auditLogEventArgs => {
+      listenToAuditLogEvent('state changed', auditLogEventArgs);
+    });
+  }
 }
 
-function listenToAuditLogEvent(auditLogEventArgs: AuditLogEventArgs) {
-  console.log('audit event received');
-  console.log(auditLogEventArgs);
+function listenToAuditLogEvent(auditType: string, auditLogEventArgs: AuditLogEventArgs) {
+  console.log('audit event received: ' + auditType);
+  console.log(auditLogEventArgs.data[0].id);
 }
 
 export default () => {
