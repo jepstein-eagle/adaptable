@@ -2,18 +2,18 @@
 
 There are 4 main ways that developers / users 'interact' with the code in the Adaptable Blotter:
 
-- Instantianting the Adaptable Blotter by either implementing the **[Adaptable Blotter Interface]**(https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotter_.iadaptableblotter.html) or by using the no-code **[Adaptable Blotter Wizard**]**(https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotterwizard_.iadaptableblotterwizard.html)
+- **Instantianting** the Adaptable Blotter by either implementing the [Adaptable Blotter Interface](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotter_.iadaptableblotter.html) or by using the no-code [Adaptable Blotter Wizard](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotterwizard_.iadaptableblotterwizard.html)
 
-- Setting **Blotter Options** which are then passed in to the Adaptable Blotter implementation
+- **Setting up** the Adaptalble Blotter through configuring [Blotter Options](./interfaces/_blotteroptions_adaptableblotteroptions_.adaptableblotteroptions.html) which are passed in to the Adaptable Blotter implementation
 
-- Providing the Adaptable Blotter at startup with **Predefined Configuration**
+- **Pre-populating** the Adaptable Blotter with the objects it requires at startup with all the objects it requires through writing [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
-- Using the **Blotter API** (at runtime) which gives full access to all the Adaptable Blotter functionality and state through code.
+- **Accessing** all the Adaptable Blotter functionality and state through code (at runtime) via the [Adaptable Blotter API](interfaces/_api_interface_iblotterapi_.iblotterapi.html).
 
 ## Blotter Instantiation
 
 There are 2 ways to instantiate a new Adaptable Blotter:
-
+ 
 - **By creating an Adaptable Blotter directly** by implementing the IAdaptableBlotter Interface which will return an AdaptableBlotter object suitable for whichever vendor grid you have chosen to use (and previously created yourself).
 
 [See IAdaptableBlotter Interface](https://api.adaptableblotter.com/interfaces/_blotterinterfaces_iadaptableblotter_.iadaptableblotter.html)
