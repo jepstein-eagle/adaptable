@@ -4,7 +4,7 @@ import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interf
 /**
  * Provides full and comprehensive run-time access to the Updated Row function and associated state.
  *
- * The Updated Row function enables you to easily see which rows have changed.
+ * The Updated Row function enables you to easily see when rows have changed.
  */
 export interface IUpdatedRowApi {
   /**
@@ -57,9 +57,22 @@ export interface IUpdatedRowApi {
    */
   setNeutralColor(neutralColor: string): void;
 
+  /**
+   * Adds a new Updated Row
+   *
+   * @param updatedRowInfo the *UpdatedRowInfo* object to add
+   */
   addUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
 
+  /**
+   * Deletes (clears) an updated row - so that the row is no longer styled differentnly
+   *
+   * @param updatedRowInfo the *UpdatedRowInfo* object to delete
+   */
   deleteUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
 
+  /**
+   * Deletes all updated rows
+   */
   deleteAllUpdatedRowInfo(): void;
 }

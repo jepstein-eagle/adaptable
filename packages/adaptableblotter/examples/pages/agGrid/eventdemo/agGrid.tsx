@@ -125,7 +125,10 @@ function InitAdaptableBlotter() {
     adaptableblotter.api.eventApi.on(
       'ToolbarVisibilityChanged',
       (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
-        if (toolbarVisibilityChangedEventArgs.toolbar === 'Application') {
+        if (
+          toolbarVisibilityChangedEventArgs.toolbar === 'Application' &&
+          toolbarVisibilityChangedEventArgs.visibility == 'Visible'
+        ) {
           let toolbarContents: any = (
             <div style={{ display: 'flex' }}>
               <button onClick={onTestRenderClicked} style={{ marginRight: '3px' }}>

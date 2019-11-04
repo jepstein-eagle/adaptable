@@ -43,7 +43,7 @@ export class AlertApi extends ApiBase implements IAlertApi {
     // now depprecated and shortly to be removed...
     this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, alertFiredArgs);
     // new way (and soon only way)
-    this.blotter.api.eventApi.emit(ALERT_FIRED_EVENT, alertFiredArgs);
+    this.blotter.api.eventApi.emit('AlertFired', alertFiredArgs);
 
     // 3. Log it to the Console
     LoggingHelper.LogAlert(alertToShow.Header + ': ' + alertToShow.Msg, alertToShow.AlertDefinition

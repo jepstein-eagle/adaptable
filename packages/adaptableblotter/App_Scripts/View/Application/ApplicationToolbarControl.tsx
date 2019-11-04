@@ -57,10 +57,7 @@ class ApplicationToolbarControlComponent extends React.Component<
                     style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
                     key={button.Name}
                     onClick={() => {
-                      this.props.Blotter.api.eventApi.emit(
-                        APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
-                        args
-                      );
+                      this.props.Blotter.api.eventApi.emit('ApplicationToolbarButtonClicked', args);
                     }}
                   >
                     {button.Caption}

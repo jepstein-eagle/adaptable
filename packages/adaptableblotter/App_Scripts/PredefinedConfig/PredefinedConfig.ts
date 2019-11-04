@@ -353,7 +353,7 @@ export interface PredefinedConfig {
   FlashingCell?: FlashingCellState;
 
   /**
-   * Sets whether rows should display differently when they update.  A different color is used depending on the direction of the change.
+   * Sets whether rows should display differently when a value in the row updates.  A different color is used depending on the direction of the change.
    */
   UpdatedRow?: UpdatedRowState;
 

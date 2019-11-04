@@ -70,7 +70,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
     // now depprecated and shortly to be removed...
     blotter.api.eventApi._onColumnStateChanged.Dispatch(blotter, columnStateChangedEventArgs);
     // new way (and soon only way)
-    blotter.api.eventApi.emit(COLUMN_STATE_CHANGED_EVENT, columnStateChangedEventArgs);
+    blotter.api.eventApi.emit('ColumnStateChanged', columnStateChangedEventArgs);
   }
 }
 

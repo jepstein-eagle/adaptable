@@ -23,8 +23,11 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  * **Application Rendering Example** (Using React)
  *
  *  ```ts
- * adaptableblotter.on('ToolbarVisibilityChanged', toolbar => {
- *  if (toolbar === 'Application') {
+ * adaptableblotter.on('ToolbarVisibilityChanged',  (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
+ * if (
+ *   toolbarVisibilityChangedEventArgs.toolbar === 'Application' &&
+ *   toolbarVisibilityChangedEventArgs.visibility == 'Visible'
+ * ) {
  *  let toolbarContents: any = (
  *      <div style={{ display: 'flex' }}>
  *       <button

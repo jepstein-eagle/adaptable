@@ -109,7 +109,6 @@ import { BlotterApi } from '../Api/BlotterApi';
 import {
   DEFAULT_LAYOUT,
   HALF_SECOND,
-  BLOTTER_READY_EVENT,
   PRIVATE_GRID_RELOADED_EVENT,
   PRIVATE_SEARCH_APPLIED_EVENT,
   PRIVATE_GRID_REFRESHED_EVENT,
@@ -397,7 +396,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     this.adaptableBlotterStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
-        this.api.eventApi.emit(BLOTTER_READY_EVENT, this.blotterOptions.blotterId);
+        this.api.eventApi.emit('BlotterReady', this.blotterOptions.blotterId);
       }
     });
   }
@@ -1881,7 +1880,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // if grid is initialised then emit the Blotter Ready event so we can reapply any styles
       // and reapply any specially rendered columns
       if (this.isInitialised) {
-        this.api.eventApi.emit(BLOTTER_READY_EVENT);
+        this.api.eventApi.emit('BlotterReady');
         this.addSpecialRendereredColumns();
       }
     }

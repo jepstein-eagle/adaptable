@@ -66,6 +66,7 @@ export interface ThemeChangedEventArgs {
 
 export interface ToolbarVisibilityChangedEventArgs {
   toolbar: string;
+  visibility: 'Visible' | 'Hidden';
 }
 
 export interface ApplicationToolbarButtonClickedEventArgs {

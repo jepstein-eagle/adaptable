@@ -16,7 +16,6 @@ import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux';
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
-import { BLOTTER_READY_EVENT } from '../Constants/GeneralConstants';
 import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
 import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
 import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';

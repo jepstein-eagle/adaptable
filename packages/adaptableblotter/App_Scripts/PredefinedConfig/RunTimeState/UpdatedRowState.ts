@@ -3,7 +3,7 @@ import { RunTimeState } from './RunTimeState';
 /**
  * The Predefined Configuration for the Updated Row function
  *
- * The Updated Row function enables you to easily see which rows have changed.
+ * The Updated Row function enables you to easily see when rows have changed.
  *
  * You are able to change the Up, Down and Neutral colours if you are not happy with the defaults (Green, Red and Gray respectively).
  *
@@ -53,7 +53,7 @@ export interface UpdatedRowState extends RunTimeState {
   /**
    * How long the row will stay updated for.
    *
-   * **note** this property is not currently used and ALL row updates will remain in place until the user clears them (through the context or column menus)
+   * **note: this property is not currently used** - The value is always 'Always', meaning ALL row updates will remain in place until the user clears them (through the context or column menus)
    */
   UpdatedRowDuration?: 250 | 500 | 750 | 1000 | 'Always';
 

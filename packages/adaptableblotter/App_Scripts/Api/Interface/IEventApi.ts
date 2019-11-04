@@ -84,7 +84,7 @@ export interface IEventApi {
    * @param callback SearchChangedEventArgs which includes full details of what triggered the change and the current state of all Search and Filter related functions.
    */
   on(
-    eventName: SEARCH_CHANGED_EVENT,
+    eventName: 'SearchChanged',
     callback: (searchChangedEventArgs: SearchChangedEventArgs) => void
   ): () => void;
 
@@ -96,7 +96,7 @@ export interface IEventApi {
    * @param callback SelectionChangedEventArgs which contains information of any cells or rows that are selected.
    */
   on(
-    eventName: SELECTION_CHANGED_EVENT,
+    eventName: 'SelectionChangedsss',
     callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
   ): () => void;
 
@@ -108,7 +108,7 @@ export interface IEventApi {
    * @param callback ThemeChangedEventArgs which just contains the name of the current Theme
    */
   on(
-    eventName: THEME_CHANGED_EVENT,
+    eventName: 'ThemeChanged',
     callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
   ): () => void;
 
@@ -120,7 +120,7 @@ export interface IEventApi {
    * @param callback AlertFiredEventArgs which wrap the Alert that was fired
    */
   on(
-    eventName: ALERT_FIRED_EVENT,
+    eventName: 'AlertFired',
     callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
   ): () => void;
 
@@ -132,7 +132,7 @@ export interface IEventApi {
    * @param callback ActionColumnClickedEventArgs which includes details of the ActionColumn
    */
   on(
-    eventName: ACTION_COLUMN_CLICKED_EVENT,
+    eventName: 'ActionColumnClicked',
     callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
   ): () => void;
 
@@ -144,7 +144,7 @@ export interface IEventApi {
    * @param callback ColumnStateChangedEventArgs which includes just the name of the currently selected Layout.
    */
   on(
-    eventName: COLUMN_STATE_CHANGED_EVENT,
+    eventName: 'ColumnStateChanged',
     callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
   ): () => void;
 
@@ -158,7 +158,7 @@ export interface IEventApi {
    * @param callback  ApplicationToolbarButtonClickedEventArgs which provides details of the button that was clicked.
    */
   on(
-    eventName: APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
+    eventName: 'ApplicationToolbarButtonClicked',
     callback: (
       applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs
     ) => void
@@ -174,7 +174,7 @@ export interface IEventApi {
    * @param callback ToolbarVisibilityChangedEventArgs which includes just the name of the toolbar that has become visible.
    */
   on(
-    eventName: TOOLBAR_VISIBILITY_CHANGED_EVENT,
+    eventName: 'ToolbarVisibilityChanged',
     callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
   ): () => void;
 
@@ -185,7 +185,7 @@ export interface IEventApi {
    *
    * @param callback (none)
    */
-  on(eventName: BLOTTER_READY_EVENT, callback: () => void): () => void;
+  on(eventName: 'BlotterReady', callback: () => void): () => void;
 
   /**
    * **This event is deprecated - please use the new On('SearchChanged') event instead which returns the same SearchChangedEventArgs**
@@ -224,5 +224,18 @@ export interface IEventApi {
   _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnClickedEventArgs>;
   _onSelectionChanged: EventDispatcher<IAdaptableBlotter, SelectionChangedEventArgs>;
 
-  emit(eventName: string, data?: any): Promise<any>;
+  emit(
+    eventName:
+      | SELECTION_CHANGED_EVENT
+      | SEARCH_CHANGED_EVENT
+      | ACTION_COLUMN_CLICKED_EVENT
+      | THEME_CHANGED_EVENT
+      | ALERT_FIRED_EVENT
+      | ACTION_COLUMN_CLICKED_EVENT
+      | COLUMN_STATE_CHANGED_EVENT
+      | APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT
+      | TOOLBAR_VISIBILITY_CHANGED_EVENT
+      | BLOTTER_READY_EVENT,
+    data?: any
+  ): Promise<any>;
 }

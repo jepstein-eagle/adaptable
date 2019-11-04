@@ -129,24 +129,24 @@ export const PRIVATE_KEY_DOWN_EVENT: string = 'KeyDown';
 
 // these are now external events that will replace the current event model
 export type BLOTTER_READY_EVENT = 'BlotterReady';
-export const BLOTTER_READY_EVENT: string = 'BlotterReady';
+//export const BLOTTER_READY_EVENT: string = 'BlotterReady';
 export type TOOLBAR_VISIBILITY_CHANGED_EVENT = 'ToolbarVisibilityChanged';
-export const TOOLBAR_VISIBILITY_CHANGED_EVENT: string = 'ToolbarVisibilityChanged';
+//export const TOOLBAR_VISIBILITY_CHANGED_EVENT: string = 'ToolbarVisibilityChanged';
 export type SEARCH_CHANGED_EVENT = 'SearchChanged';
-export const SEARCH_CHANGED_EVENT: string = 'SearchChanged';
+//export const SEARCH_CHANGED_EVENT: string = 'SearchChanged';
 export type APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT = 'ApplicationToolbarButtonClicked';
-export const APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT: string = 'ApplicationToolbarButtonClicked';
+//export const APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT: string = 'ApplicationToolbarButtonClicked';
 
 export type THEME_CHANGED_EVENT = 'ThemeChanged';
-export const THEME_CHANGED_EVENT: string = 'ThemeChanged';
+//export const THEME_CHANGED_EVENT: string = 'ThemeChanged';
 export type COLUMN_STATE_CHANGED_EVENT = 'ColumnStateChanged';
-export const COLUMN_STATE_CHANGED_EVENT: string = 'ColumnStateChanged';
+//export const COLUMN_STATE_CHANGED_EVENT: string = 'ColumnStateChanged';
 export type ALERT_FIRED_EVENT = 'AlertFired';
-export const ALERT_FIRED_EVENT: string = 'AlertFired';
+//export const ALERT_FIRED_EVENT: string = 'AlertFired';
 export type ACTION_COLUMN_CLICKED_EVENT = 'ActionColumnClicked';
-export const ACTION_COLUMN_CLICKED_EVENT: string = 'ActionColumnClicked';
+//export const ACTION_COLUMN_CLICKED_EVENT: string = 'ActionColumnClicked';
 export type SELECTION_CHANGED_EVENT = 'SelectionChanged';
-export const SELECTION_CHANGED_EVENT: string = 'SelectionChanged';
+//export const SELECTION_CHANGED_EVENT: string = 'SelectionChanged';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';

@@ -21,6 +21,9 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   protected InitState() {
     if (this.visibleToolbars != this.blotter.api.dashboardApi.GetState().VisibleToolbars) {
       const oldVisibleToolbars = arrayToKeyMap(this.visibleToolbars);
+      const newVisibleToolbars = arrayToKeyMap(
+        this.blotter.api.dashboardApi.GetState().VisibleToolbars
+      );
 
       [...(this.blotter.api.dashboardApi.GetState().VisibleToolbars || [])].forEach(
         (toolbar: string) => {
@@ -30,15 +33,30 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             ) {
               let toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = {
                 toolbar: toolbar,
+                visibility: Visibility.Visible,
               };
               this.blotter.api.eventApi.emit(
-                TOOLBAR_VISIBILITY_CHANGED_EVENT,
+                'ToolbarVisibilityChanged',
                 toolbarVisibilityChangedEventArgs
               );
             }
           }
         }
       );
+
+      [...(this.visibleToolbars || [])].forEach((toolbar: string) => {
+        if (!newVisibleToolbars[toolbar]) {
+          let toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = {
+            toolbar: toolbar,
+            visibility: Visibility.Hidden,
+          };
+          this.blotter.api.eventApi.emit(
+            'ToolbarVisibilityChanged',
+            toolbarVisibilityChangedEventArgs
+          );
+        }
+      });
+
       this.visibleToolbars = this.blotter.api.dashboardApi.GetState().VisibleToolbars;
     }
 
@@ -54,9 +72,10 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             ) {
               let toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = {
                 toolbar: toolbar,
+                visibility: Visibility.Visible,
               };
               this.blotter.api.eventApi.emit(
-                TOOLBAR_VISIBILITY_CHANGED_EVENT,
+                'ToolbarVisibilityChanged',
                 toolbarVisibilityChangedEventArgs
               );
             }
