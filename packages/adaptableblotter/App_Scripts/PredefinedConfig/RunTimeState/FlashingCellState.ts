@@ -16,21 +16,21 @@ export interface FlashingCellState extends RunTimeState {
   /**
    * The default colour to use for flashing when the numeric change in value is **up**.
    *
-   * If not provided then **dark green** is used as the default value.
+   * **Default Value: dark green**
    */
   DefaultUpColor?: string;
 
   /**
    * The default colour to use for flashing when the numeric change in value is **down**.
    *
-   * If not provided then **red** is used as the default value.
+   * **Default Value: red**
    */
   DefautDownColor?: string;
 
   /**
    * The default duration (in miliseconds) that a cell will flash when it has changed
    *
-   * If not provided then 500 is used as the default value.
+   * **Default Value: 500**
    */
   DefaultDuration?: 250 | 500 | 750 | 1000;
 }

@@ -16,7 +16,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * The Adaptable Blotter provides the [applicationAPI](_api_interface_iapplicationapi_.iapplicationapi.html) **getApplicationToolbarContentsDiv** method that returns the name of the Div in which you should render the contents.
  *
- * You can listen to the **ToolbarVisibilityChanged** event published by the Adaptable Blotter which provides the name of toolbar which has been made visible; if its the Application Toolbar then render as required.
+ * You can listen to the **ToolbarVisibilityChanged** event published by the Adaptable Blotter which provides the name of relevant toolbar and its new visibility; if its the Application Toolbar then render as required.
  *
  * The list of potential values for the Toolbar name are: "AdvancedSearch", "Alert", "Application", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "QuickSearch" and "Theme"
  *
@@ -93,11 +93,32 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *  });
  * ```
  **/
+
+/**
+ * The Predefined Configuration for the Application function
+ *
+ */
 export interface ApplicationState extends DesignTimeState {
+  /**
+   * An array of Application Toolbar Buttons - each of which is rendered as a button in the Applicaton Toolbar.
+   *
+   * When one of these buttons is clicked the on('ApplicationToolbarButtonClicked') event is fired.
+   */
   ApplicationToolbarButtons?: ApplicationToolbarButton[];
 }
 
 export interface ApplicationToolbarButton extends AdaptableBlotterObject {
+  /**
+   * The name of the button
+   *
+   * **this should be a name that is valid as an HTML element**
+   */
   Name: string;
+
+  /**
+   * What text will appear on the button
+   *
+   * *Currently you cannot provide an image for this button but that will be made available in a forthcoming release*
+   */
   Caption: string;
 }

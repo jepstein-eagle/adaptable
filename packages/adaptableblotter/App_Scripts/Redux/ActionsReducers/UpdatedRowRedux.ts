@@ -58,7 +58,7 @@ const initialUpdatedRowState: UpdatedRowState = {
   UpColor: getHexForName(GREEN),
   DownColor: getHexForName(RED),
   NeutralColor: getHexForName(GRAY),
-  UpdatedRowDuration: UPDATED_ROWS_DEFAULT_DURATION,
+  Duration: UPDATED_ROWS_DEFAULT_DURATION,
   JumpToRow: false,
 };
 
