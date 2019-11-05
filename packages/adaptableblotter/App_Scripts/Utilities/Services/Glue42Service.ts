@@ -4,8 +4,8 @@ import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 import { GridCell } from '../Interface/Selection/GridCell';
 
-import Glue4Office, { Glue42Office } from '@glue42/office';
-import Glue, { Glue42 } from '@glue42/desktop';
+// import Glue4Office, { Glue42Office } from '@glue42/office';
+// import Glue, { Glue42 } from '@glue42/desktop';
 import Helper from '../Helpers/Helper';
 import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
@@ -40,16 +40,16 @@ export interface IGlue42Service {
   exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys?: any[]): void;
 }
 
-type SheetChangeCallback = (
-  data: object[],
-  errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
-  doneCallback: () => void,
-  delta: Glue42Office.Excel.DeltaItem[]
-) => void;
+// type SheetChangeCallback = (
+//   data: object[],
+//   errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
+//   doneCallback: () => void,
+//   delta: Glue42Office.Excel.DeltaItem[]
+// ) => void;
 
 export class Glue42Service implements IGlue42Service {
-  private glue4ExcelInstance!: Glue42Office.Excel.API;
-  private glueInstance!: Glue42.Glue;
+  // private glue4ExcelInstance!: Glue42Office.Excel.API;
+  // private glueInstance!: Glue42.Glue;
   private isExcelStatus: IExcelStatus = {
     msg: '[Excel] Not checked, changed the addin status 0 times!',
     isResolved: false,
@@ -60,309 +60,303 @@ export class Glue42Service implements IGlue42Service {
   }
 
   async init(): Promise<void> {
-    try {
-      let glue42PartnerConfig:
-        | Glue42Config
-        | undefined = this.blotter.api.partnerConfigApi.getPartnerConfigState().glue42Config;
-      console.log('in glue 42 service init ' + glue42PartnerConfig);
-
-      if (!glue42PartnerConfig) {
-        this.blotter.api.internalApi.setGlue42Off();
-        LogAdaptableBlotterWarning('No Glue42 config was provided');
-        return;
-      }
-
-      const glue42Config = glue42PartnerConfig as Glue42Config;
-      this.glueInstance = await Glue(glue42Config);
-      (glue42Config as any).glue = this.glueInstance;
-      const glue4OfficeInstance = await Glue4Office(glue42Config);
-      this.glue4ExcelInstance = glue4OfficeInstance.excel as Glue42Office.Excel.API;
-      this.subscribeToAddinStatusChanges();
-      this.blotter.api.internalApi.setGlue42On();
-    } catch (error) {
-      LogAdaptableBlotterError(error);
-      this.blotter.api.internalApi.setGlue42Off();
-    }
+    // try {
+    //   let glue42PartnerConfig:
+    //     | Glue42Config
+    //     | undefined = this.blotter.api.partnerConfigApi.getPartnerConfigState().glue42Config;
+    //   console.log('in glue 42 service init ' + glue42PartnerConfig);
+    //   if (!glue42PartnerConfig) {
+    //     this.blotter.api.internalApi.setGlue42Off();
+    //     LogAdaptableBlotterWarning('No Glue42 config was provided');
+    //     return;
+    //   }
+    //   const glue42Config = glue42PartnerConfig as Glue42Config;
+    //   this.glueInstance = await Glue(glue42Config);
+    //   (glue42Config as any).glue = this.glueInstance;
+    //   const glue4OfficeInstance = await Glue4Office(glue42Config);
+    //   this.glue4ExcelInstance = glue4OfficeInstance.excel as Glue42Office.Excel.API;
+    //   this.subscribeToAddinStatusChanges();
+    //   this.blotter.api.internalApi.setGlue42On();
+    // } catch (error) {
+    //   LogAdaptableBlotterError(error);
+    //   this.blotter.api.internalApi.setGlue42Off();
+    // }
   }
 
   async exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys?: any[]) {
-    if (!this.glueInstance) {
-      return;
-    }
-
-    try {
-      if (!this.isExcelStatus.isResolved) {
-        try {
-          if (this.glueInstance.appManager) {
-            await this.glueInstance.appManager.application('excel').start();
-          }
-        } catch (error) {}
-      }
-
-      let exportColumns: any[] = data[0];
-      let exportData: any[] = this.createData(data, exportColumns);
-      let sentRows: any[] = Helper.cloneObject(exportData);
-
-      const sheetData = {
-        columnConfig: this.createColumns(data),
-        data: exportData,
-        options: {
-          workbook: 'Glue42 Excel Integration Demo',
-          worksheet: 'Data Sheet',
-          updateTrigger: ['row'],
-        },
-      };
-
-      const sheet = await this.glue4ExcelInstance.openSheet(sheetData as any);
-      sheet.onChanged(
-        this.getSheetChangeHandler(gridColumns, sentRows, exportColumns, primaryKeys)
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    // if (!this.glueInstance) {
+    //   return;
+    // }
+    // try {
+    //   if (!this.isExcelStatus.isResolved) {
+    //     try {
+    //       if (this.glueInstance.appManager) {
+    //         await this.glueInstance.appManager.application('excel').start();
+    //       }
+    //     } catch (error) {}
+    //   }
+    //   let exportColumns: any[] = data[0];
+    //   let exportData: any[] = this.createData(data, exportColumns);
+    //   let sentRows: any[] = Helper.cloneObject(exportData);
+    //   const sheetData = {
+    //     columnConfig: this.createColumns(data),
+    //     data: exportData,
+    //     options: {
+    //       workbook: 'Glue42 Excel Integration Demo',
+    //       worksheet: 'Data Sheet',
+    //       updateTrigger: ['row'],
+    //     },
+    //   };
+    //   const sheet = await this.glue4ExcelInstance.openSheet(sheetData as any);
+    //   sheet.onChanged(
+    //     this.getSheetChangeHandler(gridColumns, sentRows, exportColumns, primaryKeys)
+    //   );
+    // } catch (error) {
+    //   console.error(error);
+    // }
   }
 
   /**
    * Returns a callback, handling the Sheet Changed event.
    * Walks through the delta.
    */
-  private getSheetChangeHandler(
-    gridColumns: AdaptableBlotterColumn[],
-    sentRows: any[],
-    exportColumns: any[],
-    primaryKeys: any[]
-  ): SheetChangeCallback {
-    return (
-      allData: any[],
-      errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
-      doneCallback: () => void,
-      delta: Glue42Office.Excel.DeltaItem[]
-    ) => {
-      let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(
-        this.blotter.blotterOptions.primaryKey,
-        gridColumns
-      );
+  // private getSheetChangeHandler(
+  //   gridColumns: AdaptableBlotterColumn[],
+  //   sentRows: any[],
+  //   exportColumns: any[],
+  //   primaryKeys: any[]
+  // ): SheetChangeCallback {
+  //   return (
+  //     allData: any[],
+  //     errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
+  //     doneCallback: () => void,
+  //     delta: Glue42Office.Excel.DeltaItem[]
+  //   ) => {
+  //     let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(
+  //       this.blotter.blotterOptions.primaryKey,
+  //       gridColumns
+  //     );
 
-      let cellInfos: GridCell[] = [];
-      const errors: IGlue42ExportError[] = [];
+  //     let cellInfos: GridCell[] = [];
+  //     const errors: IGlue42ExportError[] = [];
 
-      delta.forEach(deltaItem => {
-        console.log(deltaItem);
-        if (deltaItem.action === 'modified') {
-          deltaItem.row.forEach((change, changeIndex) => {
-            if (change !== null) {
-              const column = ColumnHelper.getColumnFromFriendlyName(
-                exportColumns[changeIndex],
-                gridColumns
-              );
+  //     delta.forEach(deltaItem => {
+  //       console.log(deltaItem);
+  //       if (deltaItem.action === 'modified') {
+  //         deltaItem.row.forEach((change, changeIndex) => {
+  //           if (change !== null) {
+  //             const column = ColumnHelper.getColumnFromFriendlyName(
+  //               exportColumns[changeIndex],
+  //               gridColumns
+  //             );
 
-              const originalRow = sentRows[deltaItem.rowBeforeIndex - 1];
-              const originalValue = originalRow[exportColumns[changeIndex]];
+  //             const originalRow = sentRows[deltaItem.rowBeforeIndex - 1];
+  //             const originalValue = originalRow[exportColumns[changeIndex]];
 
-              let primaryKeyValue: any;
-              if (primaryKeys) {
-                primaryKeyValue = primaryKeys[deltaItem.rowBeforeIndex - 1];
-              } else {
-                primaryKeyValue = originalRow[primaryKeyColumnFriendlyName];
-              }
+  //             let primaryKeyValue: any;
+  //             if (primaryKeys) {
+  //               primaryKeyValue = primaryKeys[deltaItem.rowBeforeIndex - 1];
+  //             } else {
+  //               primaryKeyValue = originalRow[primaryKeyColumnFriendlyName];
+  //             }
 
-              var isValidEdit = this.isValidEdit(
-                column,
-                originalValue,
-                change,
-                primaryKeyValue,
-                deltaItem.rowBeforeIndex - 1,
-                changeIndex,
-                errors,
-                gridColumns
-              );
-              if (isValidEdit) {
-                let cellInfo: GridCell = {
-                  primaryKeyValue: primaryKeyValue,
-                  columnId: column.ColumnId,
-                  value: change,
-                };
-                cellInfos.push(cellInfo);
-              }
-            }
-          });
-        } else {
-          let msg = '';
-          if (deltaItem.action === 'deleted') {
-            msg = 'Deletion from Excel is not supported in this demo';
-          }
-          if (deltaItem.action === 'inserted') {
-            msg = 'Insertion of new data to Excel is not supported in this demo';
-          }
-          errors.push({
-            row: deltaItem.rowBeforeIndex - 1,
-            column: 0,
-            description: msg,
-            foregroundColor: 'white',
-            backgroundColor: 'red',
-          } as IGlue42ExportError);
-        }
-      });
-      this.blotter.setValueBatch(cellInfos);
+  //             var isValidEdit = this.isValidEdit(
+  //               column,
+  //               originalValue,
+  //               change,
+  //               primaryKeyValue,
+  //               deltaItem.rowBeforeIndex - 1,
+  //               changeIndex,
+  //               errors,
+  //               gridColumns
+  //             );
+  //             if (isValidEdit) {
+  //               let cellInfo: GridCell = {
+  //                 primaryKeyValue: primaryKeyValue,
+  //                 columnId: column.ColumnId,
+  //                 value: change,
+  //               };
+  //               cellInfos.push(cellInfo);
+  //             }
+  //           }
+  //         });
+  //       } else {
+  //         let msg = '';
+  //         if (deltaItem.action === 'deleted') {
+  //           msg = 'Deletion from Excel is not supported in this demo';
+  //         }
+  //         if (deltaItem.action === 'inserted') {
+  //           msg = 'Insertion of new data to Excel is not supported in this demo';
+  //         }
+  //         errors.push({
+  //           row: deltaItem.rowBeforeIndex - 1,
+  //           column: 0,
+  //           description: msg,
+  //           foregroundColor: 'white',
+  //           backgroundColor: 'red',
+  //         } as IGlue42ExportError);
+  //       }
+  //     });
+  //     this.blotter.setValueBatch(cellInfos);
 
-      if (ArrayExtensions.IsNullOrEmpty(errors)) {
-        doneCallback();
-      } else {
-        errorCallback(errors);
-      }
-    };
-  }
+  //     if (ArrayExtensions.IsNullOrEmpty(errors)) {
+  //       doneCallback();
+  //     } else {
+  //       errorCallback(errors);
+  //     }
+  //   };
+  // }
 
   /**
    * Checks if Excel is running, if not starts it
    */
-  private subscribeToAddinStatusChanges(): void {
-    //check if Excel is running
-    try {
-      this.glue4ExcelInstance.onAddinStatusChanged((connected: any) => {
-        if (connected) {
-          this.isExcelStatus = {
-            msg: 'Excel is running',
-            isResolved: true,
-          };
+  // private subscribeToAddinStatusChanges(): void {
+  //   //check if Excel is running
+  //   try {
+  //     this.glue4ExcelInstance.onAddinStatusChanged((connected: any) => {
+  //       if (connected) {
+  //         this.isExcelStatus = {
+  //           msg: 'Excel is running',
+  //           isResolved: true,
+  //         };
 
-          return;
-        }
+  //         return;
+  //       }
 
-        this.isExcelStatus = {
-          msg: 'Excel is not running',
-          isResolved: false,
-        };
+  //       this.isExcelStatus = {
+  //         msg: 'Excel is not running',
+  //         isResolved: false,
+  //       };
 
-        console.log("[Excel] Application isn't running!");
-      });
-    } catch (error) {
-      this.isExcelStatus = {
-        msg: 'Error in isExcelRunning',
-        isResolved: false,
-      };
-    }
-  }
+  //       console.log("[Excel] Application isn't running!");
+  //     });
+  //   } catch (error) {
+  //     this.isExcelStatus = {
+  //       msg: 'Error in isExcelRunning',
+  //       isResolved: false,
+  //     };
+  //   }
+  // }
 
-  private isValidEdit(
-    column: AdaptableBlotterColumn,
-    originalValue: any,
-    returnedValue: any,
-    primaryKeyValue: any,
-    rowIndex: number,
-    columnIndex: number,
-    errors: IGlue42ExportError[],
-    columns: AdaptableBlotterColumn[]
-  ): boolean {
-    if (column.ReadOnly) {
-      errors.push(
-        this.addValidationError(
-          rowIndex + 1,
-          columnIndex + 1,
-          column.FriendlyName + ' is read only'
-        )
-      );
-      return false;
-    }
+  // private isValidEdit(
+  //   column: AdaptableBlotterColumn,
+  //   originalValue: any,
+  //   returnedValue: any,
+  //   primaryKeyValue: any,
+  //   rowIndex: number,
+  //   columnIndex: number,
+  //   errors: IGlue42ExportError[],
+  //   columns: AdaptableBlotterColumn[]
+  // ): boolean {
+  //   if (column.ReadOnly) {
+  //     errors.push(
+  //       this.addValidationError(
+  //         rowIndex + 1,
+  //         columnIndex + 1,
+  //         column.FriendlyName + ' is read only'
+  //       )
+  //     );
+  //     return false;
+  //   }
 
-    // check for type -- do properly in due course, but for now just check numbers...
-    if (column.DataType == DataType.Number) {
-      if (isNaN(Number(returnedValue))) {
-        errors.push(
-          this.addValidationError(
-            rowIndex + 1,
-            columnIndex + 1,
-            column.FriendlyName + ' is numeric'
-          )
-        );
-        return false;
-      }
-    }
+  //   // check for type -- do properly in due course, but for now just check numbers...
+  //   if (column.DataType == DataType.Number) {
+  //     if (isNaN(Number(returnedValue))) {
+  //       errors.push(
+  //         this.addValidationError(
+  //           rowIndex + 1,
+  //           columnIndex + 1,
+  //           column.FriendlyName + ' is numeric'
+  //         )
+  //       );
+  //       return false;
+  //     }
+  //   }
 
-    let dataChangedInfo: DataChangedInfo = {
-      OldValue: originalValue,
-      NewValue: returnedValue,
-      ColumnId: column.ColumnId,
-      IdentifierValue: primaryKeyValue,
-    };
+  //   let dataChangedInfo: DataChangedInfo = {
+  //     OldValue: originalValue,
+  //     NewValue: returnedValue,
+  //     ColumnId: column.ColumnId,
+  //     IdentifierValue: primaryKeyValue,
+  //   };
 
-    // check for any validation issues
-    let cellValidationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
-      dataChangedInfo
-    );
-    if (ArrayExtensions.IsNotNullOrEmpty(cellValidationRules)) {
-      cellValidationRules.forEach((cv: CellValidationRule) => {
-        let failedvalidationMessage: string =
-          'Validation failed for ' +
-          column.FriendlyName +
-          ': ' +
-          ExpressionHelper.ConvertRangeToString(cv.Range, columns);
-        if (cv.ActionMode == ActionMode.StopEdit) {
-          errors.push(
-            this.addValidationError(rowIndex + 1, columnIndex + 1, failedvalidationMessage)
-          );
-        } else {
-          errors.push(
-            this.addValidationWarning(rowIndex + 1, columnIndex + 1, failedvalidationMessage)
-          );
-        }
-      });
-      return false;
-    }
-    return true;
-  }
+  //   // check for any validation issues
+  //   let cellValidationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+  //     dataChangedInfo
+  //   );
+  //   if (ArrayExtensions.IsNotNullOrEmpty(cellValidationRules)) {
+  //     cellValidationRules.forEach((cv: CellValidationRule) => {
+  //       let failedvalidationMessage: string =
+  //         'Validation failed for ' +
+  //         column.FriendlyName +
+  //         ': ' +
+  //         ExpressionHelper.ConvertRangeToString(cv.Range, columns);
+  //       if (cv.ActionMode == ActionMode.StopEdit) {
+  //         errors.push(
+  //           this.addValidationError(rowIndex + 1, columnIndex + 1, failedvalidationMessage)
+  //         );
+  //       } else {
+  //         errors.push(
+  //           this.addValidationWarning(rowIndex + 1, columnIndex + 1, failedvalidationMessage)
+  //         );
+  //       }
+  //     });
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
-  private addValidationWarning(
-    rowIndex: number,
-    columnIndex: number,
-    errorDescription: string
-  ): IGlue42ExportError {
-    return {
-      row: rowIndex,
-      column: columnIndex,
-      description: errorDescription,
-      foregroundColor: 'orange',
-      backgroundColor: 'white',
-    };
-  }
+  // private addValidationWarning(
+  //   rowIndex: number,
+  //   columnIndex: number,
+  //   errorDescription: string
+  // ): IGlue42ExportError {
+  //   return {
+  //     row: rowIndex,
+  //     column: columnIndex,
+  //     description: errorDescription,
+  //     foregroundColor: 'orange',
+  //     backgroundColor: 'white',
+  //   };
+  // }
 
-  private addValidationError(
-    rowIndex: number,
-    columnIndex: number,
-    errorDescription: string
-  ): IGlue42ExportError {
-    return {
-      row: rowIndex,
-      column: columnIndex,
-      description: errorDescription,
-      foregroundColor: 'red',
-      backgroundColor: 'white',
-    };
-  }
+  // private addValidationError(
+  //   rowIndex: number,
+  //   columnIndex: number,
+  //   errorDescription: string
+  // ): IGlue42ExportError {
+  //   return {
+  //     row: rowIndex,
+  //     column: columnIndex,
+  //     description: errorDescription,
+  //     foregroundColor: 'red',
+  //     backgroundColor: 'white',
+  //   };
+  // }
 
-  createColumns(data: any[]): IGlue42ColumnInfo[] {
-    let firstRow: string[] = data[0];
-    let headers: IGlue42ColumnInfo[] = [];
-    firstRow.forEach((element: any) => {
-      headers.push({
-        header: element.replace(' ', ''),
-        fieldName: element,
-      });
-    });
-    return headers;
-  }
+  // createColumns(data: any[]): IGlue42ColumnInfo[] {
+  //   let firstRow: string[] = data[0];
+  //   let headers: IGlue42ColumnInfo[] = [];
+  //   firstRow.forEach((element: any) => {
+  //     headers.push({
+  //       header: element.replace(' ', ''),
+  //       fieldName: element,
+  //     });
+  //   });
+  //   return headers;
+  // }
 
-  createData(data: any[], headers: any[]): any {
-    let returnArray: any[] = [];
+  // createData(data: any[], headers: any[]): any {
+  //   let returnArray: any[] = [];
 
-    for (let i = 1; i < data.length; i++) {
-      let row: any[] = data[i];
-      let returnItem: any = {};
-      for (let j = 0; j < headers.length; j++) {
-        returnItem[headers[j]] = row[j];
-      }
-      returnArray.push(returnItem);
-    }
-    return returnArray;
-  }
+  //   for (let i = 1; i < data.length; i++) {
+  //     let row: any[] = data[i];
+  //     let returnItem: any = {};
+  //     for (let j = 0; j < headers.length; j++) {
+  //       returnItem[headers[j]] = row[j];
+  //     }
+  //     returnArray.push(returnItem);
+  //   }
+  //   return returnArray;
+  // }
 }
