@@ -13,11 +13,13 @@ import { Visibility } from '../../../PredefinedConfig/Common/Enums';
 import Dropdown from '../../../components/Dropdown';
 import EnumExtensions from '../../../Utilities/Extensions/EnumExtensions';
 import { Text, Flex } from 'rebass';
+import { IAdaptableBlotter } from '../../../types';
 
-interface AdaptableBlotterToolPanelProps
-  extends StrategyViewPopupProps<AdaptableBlotterToolPanelComponent> {
+interface AdaptableBlotterToolPanelProps {
   QuickSearchText: string | undefined;
   DashboardVisibility: Visibility;
+  Blotter: IAdaptableBlotter;
+  TeamSharingActivated?: boolean;
 
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;

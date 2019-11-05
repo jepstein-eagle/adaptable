@@ -3034,18 +3034,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public applyBlotterTheme(theme: AdaptableBlotterTheme | string) {
-    const themeName = typeof theme === 'string' ? theme : theme.Name;
+    const themeName: string = typeof theme === 'string' ? theme : theme.Name;
 
     const themeNamesToRemove: string[] = [];
     const themesToRemove: AdaptableBlotterTheme[] = [];
 
     const allThemes = this.api.themeApi.getAllTheme();
-    const allThemesMap = allThemes.reduce(
+    const allThemesMap: Record<string, AdaptableBlotterTheme> = allThemes.reduce(
       (acc: Record<string, AdaptableBlotterTheme>, theme: AdaptableBlotterTheme) => {
         acc[theme.Name] = theme;
         return acc;
       },
-      {}
+      {} as Record<string, AdaptableBlotterTheme>
     );
 
     // const themePrefix = 'ab--theme-'
@@ -3063,8 +3063,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     themeNamesToRemove.forEach(cssClassName => el.classList.remove(cssClassName));
 
-    const newTheme = allThemesMap[themeName];
-    const newThemeClassName = StyleConstants.THEME_STYLE + themeName;
+    const newTheme: AdaptableBlotterTheme = allThemesMap[themeName];
+    const newThemeClassName: string = StyleConstants.THEME_STYLE + themeName;
 
     el.classList.add(newThemeClassName);
 

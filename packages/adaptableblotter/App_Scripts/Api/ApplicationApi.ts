@@ -1,7 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { IApplicationApi } from './Interface/IApplicationApi';
 
-import ReactDOM from 'react-dom';
 import {
   ApplicationToolbarButton,
   ApplicationState,
