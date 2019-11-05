@@ -30,6 +30,9 @@ export default () => (
     onBlotterReady={api => {
       console.log('blotter ready!!!', api);
     }}
+    onSelectionChanged={selargs => {
+      console.log(selargs);
+    }}
     gridOptions={{
       columnDefs: examplesHelper.getTradeSchema().map(c => {
         if (c.field === 'status') {
@@ -38,6 +41,7 @@ export default () => (
 
         return c;
       }),
+      rowHeight: 50,
       rowData: examplesHelper.getTrades(500),
       enableRangeSelection: true,
       floatingFilter: true,
@@ -45,7 +49,7 @@ export default () => (
     }}
     blotterOptions={{
       primaryKey: 'tradeId',
-      blotterId: 'BYOP demo',
+      blotterId: 'BYOP demos',
     }}
   />
 );

@@ -11,7 +11,6 @@ import { IBlotterApi } from '../../adaptableblotter/types';
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 
 import {
-  IEventApi,
   AdaptableBlotterOptions,
   SearchChangedEventArgs,
   ThemeChangedEventArgs,
@@ -19,12 +18,13 @@ import {
   AlertFiredEventArgs,
 } from '../../adaptableblotter/types';
 
-import useEventListener from './useEventListener';
-import { BLOTTER_READY_EVENT } from '../../adaptableblotter/App_Scripts/Utilities/Constants/GeneralConstants';
 import {
   ActionColumnClickedEventArgs,
   SelectionChangedEventArgs,
+  ToolbarVisibilityChangedEventArgs,
+  ApplicationToolbarButtonClickedEventArgs,
 } from '../../adaptableblotter/App_Scripts/Api/Events/BlotterEvents';
+import { AuditLogEventArgs } from '../../adaptableblotter/App_Scripts/Api/Events/AuditEvents';
 
 export * from '../../adaptableblotter/types';
 
@@ -126,23 +126,40 @@ const AdaptableBlotterReact = ({
   render,
   onSearchChanged,
   onThemeChanged,
+  onApplicationToolbarButtonClicked,
   onColumnStateChanged,
   onAlertFired,
   onActionColumnClicked,
   onSelectionChanged,
+  onToolbarVisibilityChanged,
+  onAuditStateChanged,
+  onAuditCellEdited,
+  onAuditFunctionApplied,
   onBlotterReady,
   ...props
 }: {
   agGridTheme?: string;
   blotterOptions: AdaptableBlotterOptions;
   gridOptions: AgGrid.GridOptions;
-  onSearchChanged?: (blotter: AdaptableBlotter, args: SearchChangedEventArgs) => void;
-  onThemeChanged?: (blotter: AdaptableBlotter, args: ThemeChangedEventArgs) => void;
-  onColumnStateChanged?: (blotter: AdaptableBlotter, args: ColumnStateChangedEventArgs) => void;
-  onAlertFired?: (blotter: AdaptableBlotter, args: AlertFiredEventArgs) => void;
-  onActionColumnClicked?: (blotter: AdaptableBlotter, args: ActionColumnClickedEventArgs) => void;
-  onSelectionChanged?: (blotter: AdaptableBlotter, args: SelectionChangedEventArgs) => void;
+
   onBlotterReady?: (api: IBlotterApi) => void;
+  onToolbarVisibilityChanged?: (
+    toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs
+  ) => void;
+  onSearchChanged?: (searchChangedEventArgs: SearchChangedEventArgs) => void;
+  onApplicationToolbarButtonClicked?: (
+    applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs
+  ) => void;
+  onThemeChanged?: (themeChangedEventArgs: ThemeChangedEventArgs) => void;
+  onColumnStateChanged?: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void;
+  onAlertFired?: (alertFiredEventArgs: AlertFiredEventArgs) => void;
+  onActionColumnClicked?: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void;
+  onSelectionChanged?: (selectionChangedEventArgs: SelectionChangedEventArgs) => void;
+
+  onAuditStateChanged?: (auditStateChangedArgs: AuditLogEventArgs) => void;
+  onAuditCellEdited?: (auditCellEditedArgs: AuditLogEventArgs) => void;
+  onAuditFunctionApplied?: (auditFunctionAppliedArgs: AuditLogEventArgs) => void;
+
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
   const seedId = useMemo(() => `${getRandomInt(1000)}-${Date.now()}`, []);
@@ -166,6 +183,42 @@ const AdaptableBlotterReact = ({
         });
       }
 
+      if (onToolbarVisibilityChanged) {
+        blotter.api.eventApi.on('ToolbarVisibilityChanged', onToolbarVisibilityChanged);
+      }
+      if (onSearchChanged) {
+        blotter.api.eventApi.on('SearchChanged', onSearchChanged);
+      }
+      if (onApplicationToolbarButtonClicked) {
+        blotter.api.eventApi.on(
+          'ApplicationToolbarButtonClicked',
+          onApplicationToolbarButtonClicked
+        );
+      }
+      if (onThemeChanged) {
+        blotter.api.eventApi.on('ThemeChanged', onThemeChanged);
+      }
+      if (onColumnStateChanged) {
+        blotter.api.eventApi.on('ColumnStateChanged', onColumnStateChanged);
+      }
+      if (onAlertFired) {
+        blotter.api.eventApi.on('AlertFired', onAlertFired);
+      }
+      if (onActionColumnClicked) {
+        blotter.api.eventApi.on('ActionColumnClicked', onActionColumnClicked);
+      }
+      if (onSelectionChanged) {
+        blotter.api.eventApi.on('SelectionChanged', onSelectionChanged);
+      }
+      if (onAuditStateChanged) {
+        blotter.api.auditEventApi.on('AuditStateChanged', onAuditStateChanged);
+      }
+      if (onAuditCellEdited) {
+        blotter.api.auditEventApi.on('AuditCellEdited', onAuditCellEdited);
+      }
+      if (onAuditFunctionApplied) {
+        blotter.api.auditEventApi.on('AuditFunctionApplied', onAuditFunctionApplied);
+      }
       setBlotter(blotter);
       return blotter;
     };
@@ -212,20 +265,6 @@ const AdaptableBlotterReact = ({
       grid: gridWrapperNode,
     });
   }
-
-  useEventListener(onSearchChanged, blotter, (eventApi: IEventApi) => eventApi.onSearchChanged());
-  useEventListener(onThemeChanged, blotter, (eventApi: IEventApi) => eventApi.onThemeChanged());
-  useEventListener(onColumnStateChanged, blotter, (eventApi: IEventApi) =>
-    eventApi.onColumnStateChanged()
-  );
-  useEventListener(onAlertFired, blotter, (eventApi: IEventApi) => eventApi.onAlertFired());
-  useEventListener(onActionColumnClicked, blotter, (eventApi: IEventApi) =>
-    eventApi.onActionColumnClicked()
-  );
-  useEventListener(onSelectionChanged, blotter, (eventApi: IEventApi) =>
-    eventApi.onSelectionChanged()
-  );
-
   return (
     <TagName
       {...props}
