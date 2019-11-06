@@ -93,11 +93,6 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *  });
  * ```
  **/
-
-/**
- * The Predefined Configuration for the Application function
- *
- */
 export interface ApplicationState extends DesignTimeState {
   /**
    * An array of Application Toolbar Buttons - each of which is rendered as a button in the Application Toolbar.
