@@ -19,12 +19,12 @@ export interface IApplicationApi {
   getApplicationToolbarButtons(): ApplicationToolbarButton[];
 
   /**
-   * Returns the id of the <div> in the Application Toolbar that is assigned for uses to render themselves
+   * Returns the id of the 'div' element in the Application Toolbar that is assigned for uses to render themselves
    */
   getApplicationToolbarContentsDivId(): string;
 
   /**
-   * Returns the <div> in the Application Toolbar that is assigned for uses to render themselves
+   * Returns the 'div' element in the Application Toolbar that is assigned for uses to render themselves
    */
   getApplicationToolbarContentsDiv(): HTMLElement | null;
 }

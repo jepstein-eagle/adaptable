@@ -7,7 +7,11 @@ import { RunTimeState } from './RunTimeState';
  *
  * You are able to change the Up, Down and Neutral colours if you are not happy with the defaults (Green, Red and Gray respectively).
  *
- * Currently updated rows stay with the new colour until you clear them - either by clicking in the row in the Context Menu or by Clearing them all (via the Column Menu).
+ * Newly updated rows will display with the new colour until they are explicitly cleared.  This can be done in two ways:
+ *
+ *  - Clicking the 'Clear Updated Row' menu item in the Context Menu.  This option will only appear in cells in Updated Rows and will clear just that Updated Row.
+ *
+ *  - Clicking the 'Clear Updated Rows' option in the Column Header Menu.  This option will only appear if there are Updated Rows and will clear all Updated Rows.
  *
  * ```ts
  * export default {
