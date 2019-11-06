@@ -91,7 +91,7 @@
     "ts-loader": "^2.2.1",
     "ts-node": "^4.1.0",
     "typedoc": "^0.14.2",
-    "typescript": "^3.0.1",
+    "typescript": "3.6.2",
     "url-loader": "^0.5.9",
     "util-deprecate": "^1.0.2",
     "webpack": "^1.15.0",

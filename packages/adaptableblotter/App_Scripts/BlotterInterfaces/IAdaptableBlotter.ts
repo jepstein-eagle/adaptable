@@ -125,7 +125,7 @@ export interface IAdaptableBlotter {
   _on(eventName: PRIVATE_GRID_RELOADED_EVENT, callback: () => void): () => void;
   _on(eventName: PRIVATE_KEY_DOWN_EVENT, callback: (keyDownEvent: any) => void): () => void;
 
-  onAny(callback: EmitterCallback): () => void;
+  // onAny(callback: EmitterCallback): () => void;
   //emit(eventName: string, data?: any): Promise<any>;
 
   // General
