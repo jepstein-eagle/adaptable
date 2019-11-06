@@ -96,7 +96,7 @@ export interface IEventApi {
    * @param callback SelectionChangedEventArgs which contains information of any cells or rows that are selected.
    */
   on(
-    eventName: 'SelectionChangedsss',
+    eventName: 'SelectionChanged',
     callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
   ): () => void;
 

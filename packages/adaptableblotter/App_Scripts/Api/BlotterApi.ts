@@ -82,8 +82,8 @@ import { IPartnerConfigAPI } from './Interface/IPartnerConfigAPI';
 import { PartnerConfigAPI } from './PartnerConfigAPI';
 import { IColumnChooserAPI } from './Interface/IColumnChooserAPI';
 import { ColumnChooserAPI } from './ColumnChooserAPI';
-import { IApplicationApi } from './Interface/IApplicationAPI';
-import { ApplicationApi } from './AppplicationAPI';
+import { IApplicationApi } from './Interface/IApplicationApi';
+import { ApplicationApi } from './ApplicationApi';
 import { IUpdatedRowApi } from './Interface/IUpdatedRowApi';
 import { UpdatedRowApi } from './UpdatedRowApi';
 

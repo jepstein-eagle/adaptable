@@ -21,7 +21,6 @@ import { BlotterSearchState } from '../../Api/Events/SearchChanged/BlotterSearch
 import { BlotterSortState } from '../../Api/Events/SearchChanged/BlotterSortState';
 import { SearchChangedInfo } from '../../Api/Events/SearchChanged/SearchChangedInfo';
 import { SearchEventData } from '../../Api/Events/SearchChanged/SearchEventData';
-import { SEARCH_CHANGED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;
