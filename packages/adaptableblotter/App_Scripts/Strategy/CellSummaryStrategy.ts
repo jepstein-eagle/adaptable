@@ -34,7 +34,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (contextMenuInfo.column && contextMenuInfo.isSelectedCell) {
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CellSummaryStrategyName,
+        Label: 'See Cell Summary',
         ComponentName: ScreenPopups.CellSummaryPopup,
         Icon: StrategyConstants.CellSummaryGlyph,
       });

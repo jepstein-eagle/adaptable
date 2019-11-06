@@ -56,7 +56,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       contextMenuInfo.isSingleSelectedColumn
     ) {
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.SmartEditStrategyName,
+        Label: 'Apply ' + StrategyConstants.SmartEditStrategyName,
         ComponentName: ScreenPopups.SmartEditPopup,
         Icon: StrategyConstants.SmartEditGlyph,
       });

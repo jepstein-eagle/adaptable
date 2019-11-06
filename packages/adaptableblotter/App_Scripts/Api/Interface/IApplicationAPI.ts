@@ -9,7 +9,7 @@ import {
  */
 export interface IApplicationApi {
   /**
-   * Retrieves the Application state - currently just like a list of Application Toolbar butons
+   * Retrieves the Application section from the Adaptable Blotter State - currently just a list of Application Toolbar butons
    */
   getApplicationState(): ApplicationState;
 

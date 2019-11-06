@@ -11,12 +11,12 @@ import {
  */
 export interface IFormatColumnApi {
   /**
-   * Retrieves the Format Column State
+   * Retrieves the Format Column section from the Adaptable Blotter State
    */
   getFormatColumnState(): FormatColumnState;
 
   /**
-   * Gets all Format Columns in the State
+   * Gets all Format Columns in the Adaptable Blotter State
    */
   getAllFormatColumn(): FormatColumn[];
 

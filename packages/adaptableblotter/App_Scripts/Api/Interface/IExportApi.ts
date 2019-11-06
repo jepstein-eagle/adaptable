@@ -6,7 +6,7 @@ import { ExportState, Report } from '../../PredefinedConfig/RunTimeState/ExportS
  */
 export interface IExportApi {
   /**
-   * Retrieves the Export State
+   * Retrieves the Export section from the Adaptable Blotter State
    */
   getExportState(): ExportState;
 

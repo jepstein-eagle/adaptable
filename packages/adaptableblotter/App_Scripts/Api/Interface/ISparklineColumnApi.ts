@@ -8,12 +8,12 @@ import {
  */
 export interface ISparklineColumnApi {
   /**
-   * Retrieves the SparklineColumn State
+   * Retrieves the SparklineColumn section from the Adaptable Blotter State
    */
   getSparklineColumnState(): SparklineColumnState;
 
   /**
-   * Returns all the Sparkline columns in the State
+   * Returns all the Sparkline columns in the Adaptable Blotter State
    */
   getAllSparklineColumn(): SparklineColumn[];
 

@@ -24,7 +24,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
         columnId: column.ColumnId,
       };
       return this.createColumnMenuItemShowPopup(
-        'See as Sparkline',
+        'View as Sparkline',
         ScreenPopups.ViewAsSparklinesPopup,
         StrategyConstants.SparklinesGlyph,
         popUpParams
@@ -51,7 +51,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
       };
 
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'See as Sparkline',
+        Label: 'View as Sparkline',
         ComponentName: ScreenPopups.ViewAsSparklinesPopup,
         Icon: StrategyConstants.SparklinesGlyph,
         PopupParams: popUpParams,

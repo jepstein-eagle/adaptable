@@ -14,7 +14,7 @@ import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
-import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
+import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 
 /**
  * This set of api methods is designed for **internal use of the Adaptable Blotter** only.

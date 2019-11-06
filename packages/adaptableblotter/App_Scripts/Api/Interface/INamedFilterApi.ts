@@ -8,12 +8,12 @@ import {
  */
 export interface INamedFilterApi {
   /**
-   * Retrieves the Named Filter State
+   * Retrieves the Named Filter section from the Adaptable Blotter State
    */
   getNamedFilterState(): NamedFilterState;
 
   /**
-   * Returns all the Named Filters in the State
+   * Returns all the Named Filters in the Adaptable Blotter State
    */
   getAllNamedFilter(): NamedFilter[];
 

@@ -100,7 +100,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  */
 export interface ApplicationState extends DesignTimeState {
   /**
-   * An array of Application Toolbar Buttons - each of which is rendered as a button in the Applicaton Toolbar.
+   * An array of Application Toolbar Buttons - each of which is rendered as a button in the Application Toolbar.
    *
    * When one of these buttons is clicked the on('ApplicationToolbarButtonClicked') event is fired.
    */
@@ -111,7 +111,7 @@ export interface ApplicationToolbarButton extends AdaptableBlotterObject {
   /**
    * The name of the button
    *
-   * **this should be a name that is valid as an HTML element**
+   * **This should be a name that is valid as an HTML element**
    */
   Name: string;
 

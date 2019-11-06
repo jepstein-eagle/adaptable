@@ -3,7 +3,7 @@ import { RunTimeState } from './RunTimeState';
 /**
  * The Predefined Configuration for the Updated Row function
  *
- * The Updated Row function enables you to easily see when rows have changed.
+ * The Updated Row function enables you to easily see when data in a row has changed.
  *
  * You are able to change the Up, Down and Neutral colours if you are not happy with the defaults (Green, Red and Gray respectively).
  *

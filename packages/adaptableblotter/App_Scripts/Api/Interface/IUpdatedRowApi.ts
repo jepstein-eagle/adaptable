@@ -1,34 +1,36 @@
 import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
-import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
+import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 
 /**
  * Provides full and comprehensive run-time access to the Updated Row function and associated state.
  *
- * The Updated Row function enables you to easily see when rows have changed.
+ * The Updated Row function enables you to easily see when data in a row has changed.
  */
 export interface IUpdatedRowApi {
   /**
-   * Retrieves the Updated Row State
+   * Retrieves the Updated Row section from the Adaptable Blotter State
+   *
+   * This provides details of how the Updated Row function has been configured but **not** of which rows are currently coloured differently as a result of being updated.
    */
   getUpdatedRowState(): UpdatedRowState;
 
   /**
-   * Enable the Update Row so the grid will visually indicate when  a row has changed.
+   * Enables the Update Row function so the grid will visually indicate when  a row has changed.
    */
   updatedRowEnable(): void;
 
   /**
-   * Disable the Update Row so the grid will not visually indicate when  a row has changed.
+   * Disables the Update Row function so the grid will not visually indicate when  a row has changed.
    */
   updatedRowDisable(): void;
 
   /**
-   * Enable the 'Jump To Row' options where the Adaptable Blotter updates its scroll position to ensure the updated row is visible.
+   * Enables the 'Jump To Row' option where the Adaptable Blotter updates its scroll position to ensure the updated row is visible.
    */
   jumpToRowEnable(): void;
 
   /**
-   * Disable the 'Jump To Row' options so that the Adaptable Blotter will no not update its scroll position to ensure the updated row is visible.
+   * Disables the 'Jump To Row' option so that the Adaptable Blotter will no not update its scroll position to ensure the updated row is visible.
    */
   jumpToRowDisable(): void;
 
@@ -72,7 +74,7 @@ export interface IUpdatedRowApi {
   deleteUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void;
 
   /**
-   * Deletes all updated rows
+   * Deletes all updated rows so that no rows have their back colour displayed differently
    */
   deleteAllUpdatedRowInfo(): void;
 }

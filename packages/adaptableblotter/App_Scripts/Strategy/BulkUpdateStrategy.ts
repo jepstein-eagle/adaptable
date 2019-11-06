@@ -16,7 +16,11 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+  MenuItemShowPopup,
+} from '../Utilities/MenuItem';
 import ObjectFactory from '../Utilities/ObjectFactory';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
@@ -30,6 +34,29 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       ComponentName: ScreenPopups.BulkUpdatePopup,
       Icon: StrategyConstants.BulkUpdateGlyph,
     });
+  }
+
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    // not sure if this is right but logic is that
+    // if the context cell is one of a selection taht can have smart edit applied
+    // then open the smart edit screen
+    // perhaps this is faulty logic though?
+    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    if (
+      contextMenuInfo.column &&
+      !contextMenuInfo.column.ReadOnly &&
+      contextMenuInfo.isSelectedCell &&
+      contextMenuInfo.isSingleSelectedColumn
+    ) {
+      menuItemShowPopup = this.createMainMenuItemShowPopup({
+        Label: 'Apply ' + StrategyConstants.BulkUpdateStrategyName,
+        ComponentName: ScreenPopups.BulkUpdatePopup,
+        Icon: StrategyConstants.BulkUpdateGlyph,
+      });
+    }
+    return menuItemShowPopup;
   }
 
   public ApplyBulkUpdate(newValues: GridCell[]): void {

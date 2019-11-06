@@ -9,7 +9,7 @@ import { TypeUuid } from '../../PredefinedConfig/Uuid';
  */
 export interface IAdvancedSearchApi {
   /**
-   * Retrieves the Advanced Search State
+   * Retrieves the Advanced Search section from the Adaptable Blotter State
    */
   getAdvancedSearchState(): AdvancedSearchState;
 
@@ -17,15 +17,17 @@ export interface IAdvancedSearchApi {
    * Replaces the current Advanced Search state with the inputted one
    *
    * **warning: use this method very carefully!**
-   * @param advancedSearchState
+   *
+   * @param advancedSearchState the Advanced Search State to set
    */
   setAdvancedSearchState(advancedSearchState: AdvancedSearchState): void;
 
   /**
    * Applies the Advanced Search function using the given Advanced Search name
    *
-   * **note: the name provided must be in one of the Advanced Searches currently in the State**
-   * @param advancedSearchName
+   * **note: the name provided must be in one of the Advanced Searches currently in the Adaptable Blotter State**
+   *
+   * @param advancedSearchName the name of the Advanced Search that should be applied
    */
   setAdvancedSearch(advancedSearchName: string): void;
 
@@ -37,7 +39,8 @@ export interface IAdvancedSearchApi {
   clearAdvancedSearch(): void;
 
   /**
-   * Adds a new Advanced Search to the State
+   * Adds a new Advanced Search to the Advanced Search State
+   *
    * @param advancedSearch advanced search to add
    */
   addAdvancedSearch(advancedSearch: AdvancedSearch): void;
@@ -46,25 +49,29 @@ export interface IAdvancedSearchApi {
    * Updates (essentially) an existing Advanced Search with the provided alternative.
    *
    * The comparison will be on Uuid not *Name*, which allows you to change the name of an Advanced Search.
-   * @param advancedSearch
+   *
+   * @param advancedSearch the Advanced Search object
    */
   editAdvancedSearch(advancedSearch: AdvancedSearch): void;
 
   /**
    *Deletes the advanced search from the State
-   * @param advancedSearch
+   *
+   * @param advancedSearch the Advanced Search object to delete
    */
   deleteAdvancedSearch(advancedSearch: AdvancedSearch): void;
 
   /**
    *Deletes the advanced search with the given name from the State
-   * @param advancedSearchName
+   *
+   * @param advancedSearchName the name of the Advanced Search object to delete
    */
   deleteAdvancedSearchByName(advancedSearchName: string): void;
 
   /**
    *Deletes the advanced search with the given Uuid from the State
-   * @param uuid
+   *
+   * @param uuid the uuid of the Advanced Search to retrieve
    */
   deleteAdvancedSearchByUuid(uuid: TypeUuid): void;
 
@@ -80,12 +87,14 @@ export interface IAdvancedSearchApi {
 
   /**
    * Returns the Advanced Search in the State which has the inputted uuid
+   *
    * @param uuid the uuid of the Advanced Search to retrieve
    */
   getAdvancedSearchByUuid(uuid: TypeUuid): AdvancedSearch | undefined;
 
   /**
    * Returns the Advanced Search in the State which has the inputted name
+   *
    * @param advancedSearchName the name of the Advanced Search to retrieve
    */
   getAdvancedSearchByName(advancedSearchName: string): AdvancedSearch | undefined;

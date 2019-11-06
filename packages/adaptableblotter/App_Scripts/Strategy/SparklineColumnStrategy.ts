@@ -7,7 +7,11 @@ import { ISparklineColumnStrategy } from './Interface/ISparklineColumnStrategy';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { SparklineColumnState } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+  MenuItemShowPopup,
+} from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class SparklineColumnStrategy extends AdaptableStrategyBase
@@ -38,6 +42,23 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
         popUpParams
       );
     }
+  }
+
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    if (
+      contextMenuInfo.column &&
+      this.canCreateColumnMenuItem(contextMenuInfo.column, this.blotter, 'sparkline')
+    ) {
+      menuItemShowPopup = this.createMainMenuItemShowPopup({
+        Label: 'Edit Sparkline Column',
+        ComponentName: ScreenPopups.SparklineColumnPopup,
+        Icon: StrategyConstants.SparklineColumnGlyph,
+      });
+    }
+    return menuItemShowPopup;
   }
 
   protected InitState() {

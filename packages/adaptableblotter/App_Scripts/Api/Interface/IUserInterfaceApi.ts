@@ -7,27 +7,37 @@ import {
 
 export interface IUserInterfaceApi {
   /**
-   * Gets all the User Interface state from the Store
+   * Retrieves the User Interface section from the Adaptable Blotter State
    */
   getUserInterfaceState(): UserInterfaceState;
 
   /**
    * Sets the Color Palette - when creating functions that use the [Style Object](https://api.adaptableblotter.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) (e.g. Conditional Style, Format Column).
    *
-   * @param colorPalette
+   * @param colorPalette the colours to put in the Color Palette
    */
   setColorPalette(colorPalette: string[]): void;
 
   /**
+   * Adds **extra colours** to the Colour Palette
    *
    * @param styleClassNames Make sure that you provide a Css Style of the same name in your css.
    */
   addColorsToPalette(colorPalette: string[]): void;
 
+  /**
+   * Adds StyleClass names to the User Interface section of the Adaptable Blotter State.
+   *
+   * You can then reference these style class names in functions like Conditional Style instead of having to create a Style object
+   *
+   * @param styleClassNames The names of the styles.  **Make sure that you provide a Css Style of the same name in your css**.
+   */
   addStyleClassNames(styleClassNames: string[]): void;
 
   /**
-   * This replaces any existing permitted values for the column.  It is ​​not​​ an additive function.
+   * Sets (and replaces any existing) Permitted Values for a given column
+   *
+   * **note:  This replaces any existing permitted values for the column.  It is ​​not​​ an additive function.**
    * @param column
    * @param permittedValues
    */

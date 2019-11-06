@@ -8,12 +8,12 @@ import {
  */
 export interface IConditionalStyleApi {
   /**
-   * Retrieves the Conditional Style State
+   * Retrieves the Conditional Style section from the Adaptable Blotter State
    */
   getConditionalStyleState(): ConditionalStyleState;
 
   /**
-   * Gets all Conditional Styles in the State
+   * Gets all Conditional Styles in the Adaptable Blotter State
    */
   getAllConditionalStyle(): ConditionalStyle[];
 

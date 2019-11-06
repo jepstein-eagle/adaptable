@@ -1,12 +1,12 @@
 import { ShortcutState, Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
 export interface IShortcutApi {
   /**
-   * Retrieves the Format Column State
+   * Retrieves the Shortcut section from the Adaptable Blotter State
    */
   getShortcutState(): ShortcutState;
 
   /**
-   * Gets all Shortcuts in the State
+   * Gets all Shortcuts in the Adaptable Blotter State
    */
   getAllShortcut(): Shortcut[];
 
@@ -23,7 +23,7 @@ export interface IShortcutApi {
   deleteShortcut(shortcut: Shortcut): void;
 
   /**
-   * Deletes all shortcuts in the state
+   * Deletes all shortcuts in the Adaptable Blotter State
    */
   deleteAllShortcut(): void;
 
