@@ -18,7 +18,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.FormatColumnStrategyName,
       ComponentName: ScreenPopups.FormatColumnPopup,
-      GlyphIcon: StrategyConstants.FormatColumnGlyph,
+      Icon: StrategyConstants.FormatColumnGlyph,
     });
   }
 

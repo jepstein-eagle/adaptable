@@ -18,10 +18,8 @@ import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
-
 import { Flex, Box, Text } from 'rebass';
 import Input from '../../../components/Input';
-import ReportHelper from '../../../Utilities/Helpers/ReportHelper';
 
 export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<Report> {}
 
@@ -40,12 +38,12 @@ export class ReportScheduleWizard
   implements AdaptableWizardStep {
   constructor(props: ReportScheduleWizardProps) {
     super(props);
-    let autoExport: AutoExport = this.props.Data.AutoExport
-      ? this.props.Data.AutoExport
+    let autoExport: AutoExport = this.props.Data!.AutoExport
+      ? this.props.Data!.AutoExport
       : ObjectFactory.CreateEmptyAutoExport();
 
     this.state = {
-      HasAutoExport: this.props.Data.AutoExport != null,
+      HasAutoExport: this.props.Data!.AutoExport != null,
       IsRecurringDate: autoExport.Schedule.OneOffDate == null ? true : false,
       Hour: autoExport.Schedule.Hour,
       Minute: autoExport.Schedule.Minute,
@@ -57,7 +55,9 @@ export class ReportScheduleWizard
   }
   render(): any {
     let destinations = EnumExtensions.getNames(ExportDestination)
-      .filter(type => ReportHelper.IsReportDestinationActive(type as ExportDestination))
+      .filter(type =>
+        this.props.Blotter!.ReportService.IsReportDestinationActive(type as ExportDestination)
+      )
       .map(type => {
         return {
           label: type,
@@ -376,9 +376,9 @@ export class ReportScheduleWizard
         Schedule: schedule,
         ExportDestination: this.state.ExportDestination,
       };
-      this.props.Data.AutoExport = autoExport;
+      this.props.Data!.AutoExport = autoExport;
     } else {
-      this.props.Data.AutoExport = null;
+      this.props.Data!.AutoExport = undefined;
     }
   }
 
@@ -390,6 +390,6 @@ export class ReportScheduleWizard
     return 1;
   }
   public GetIndexStepDecrement() {
-    return this.props.Data.ReportRowScope == ReportRowScope.ExpressionRows ? 1 : 2;
+    return this.props.Data!.ReportRowScope == ReportRowScope.ExpressionRows ? 1 : 2;
   }
 }

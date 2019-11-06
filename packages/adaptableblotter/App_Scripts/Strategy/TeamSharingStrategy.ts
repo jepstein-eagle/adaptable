@@ -16,7 +16,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.TeamSharingStrategyName,
         ComponentName: ScreenPopups.TeamSharingPopup,
-        GlyphIcon: StrategyConstants.TeamSharingGlyph,
+        Icon: StrategyConstants.TeamSharingGlyph,
       });
     }
   }

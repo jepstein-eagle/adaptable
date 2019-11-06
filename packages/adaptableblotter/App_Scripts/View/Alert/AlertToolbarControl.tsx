@@ -17,6 +17,7 @@ import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 import { Flex } from 'rebass';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import UIHelper from '../UIHelper';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
@@ -51,6 +52,10 @@ class AlertToolbarControlComponent extends React.Component<
   }
 
   render() {
+    let messageType: MessageType = this.getMessageType();
+
+    let messageTypeColor: string = UIHelper.getColorByMessageType(messageType);
+
     let alertsPanel = (
       <AlertsPanel
         Alerts={this.props.AdaptableAlerts}
@@ -70,7 +75,7 @@ class AlertToolbarControlComponent extends React.Component<
         : this.props.AdaptableAlerts.length + ' Alerts';
 
     let buttonColor: string = ArrayExtensions.IsNotNullOrEmpty(this.props.AdaptableAlerts)
-      ? 'secondary'
+      ? messageTypeColor
       : 'primary';
     let buttonTextColor: string = ArrayExtensions.IsNotNullOrEmpty(this.props.AdaptableAlerts)
       ? 'text-on-secondary'
@@ -96,7 +101,7 @@ class AlertToolbarControlComponent extends React.Component<
               headerText=""
               // tooltipText="Alerts"
               bodyText={[alertsPanel]}
-              MessageType={this.getMessageType()}
+              MessageType={messageType}
               useButton={true}
               showEvent={'focus'}
               hideEvent="blur"
@@ -130,6 +135,12 @@ class AlertToolbarControlComponent extends React.Component<
       null
     ) {
       return MessageType.Warning;
+    }
+    if (
+      this.props.AdaptableAlerts.find(a => a.AlertDefinition.MessageType == MessageType.Success) !=
+      null
+    ) {
+      return MessageType.Success;
     }
     return MessageType.Info;
   }

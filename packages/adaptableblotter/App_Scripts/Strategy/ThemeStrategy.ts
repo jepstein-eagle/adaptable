@@ -6,6 +6,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 import { ThemeChangedEventArgs } from '../Api/Events/BlotterEvents';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { THEME_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
   private ThemeState: ThemeState;
@@ -18,25 +19,25 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ThemeStrategyName,
       ComponentName: ScreenPopups.ThemePopup,
-      GlyphIcon: StrategyConstants.ThemeGlyph,
+      Icon: StrategyConstants.ThemeGlyph,
     });
   }
 
   publishThemeChanged(themeState: ThemeState) {
     const themeName = themeState.CurrentTheme;
 
-    const themeChangedInfo: ThemeChangedEventArgs = {
+    const themeChangedEventArgs: ThemeChangedEventArgs = {
       themeName,
     };
-    this.blotter.api.eventApi._onThemeChanged.Dispatch(this.blotter, themeChangedInfo);
+    // now depprecated and shortly to be removed...
+    this.blotter.api.eventApi._onThemeChanged.Dispatch(this.blotter, themeChangedEventArgs);
+    // new way (and soon only way)
+    this.blotter.api.eventApi.emit('ThemeChanged', themeChangedEventArgs);
   }
 
   protected InitState() {
     if (this.ThemeState != this.blotter.api.themeApi.getThemeState()) {
       this.ThemeState = this.blotter.api.themeApi.getThemeState();
-
-      // publish the theme changed event even on initialization
-      this.publishThemeChanged(this.ThemeState);
 
       const allThemeNames = [
         ...(this.ThemeState.SystemThemes || []),
@@ -54,6 +55,9 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
       }
 
       this.blotter.applyBlotterTheme(currentTheme);
+
+      // publish the theme changed event even on initialization
+      this.publishThemeChanged(this.ThemeState);
     }
   }
 }

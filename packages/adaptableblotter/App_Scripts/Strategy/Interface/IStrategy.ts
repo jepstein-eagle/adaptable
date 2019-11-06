@@ -9,7 +9,7 @@ import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlott
  * Application
  * Columnchooser
  * ColumnInfo
- * DataManagement
+ * StateManagement
  * Piechart
  * TeamSharing
  * Plus there is one 'special' strategy that the user cannot hide called the HomeStrategy which has important functions that need to be called (e.g. creates Team Sharing and other menu items)

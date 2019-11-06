@@ -11,15 +11,15 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * **Further Resources**
  *
- * [Advanced Search Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005167931-Advanced-Search)
- *
  * [Advanced Search Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos)
  *
  * [Advanced Search Demo](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/)
  *
- * [Advanced Search Blotter API](_api_interface_iadvancedsearchapi_.iadvancedsearchapi.html)
+ * [Advanced Search API](_api_interface_iadvancedsearchapi_.iadvancedsearchapi.html)
  *
  * [Advanced Search FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ)
+ *
+ *  [Advanced Search Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
  *
  * **Advanced Search Predefined Config Example**
  *

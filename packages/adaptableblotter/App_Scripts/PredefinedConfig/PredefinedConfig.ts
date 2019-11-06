@@ -17,6 +17,7 @@ import { DashboardState } from './RunTimeState/DashboardState';
 import { DataSourceState } from './RunTimeState/DataSourceState';
 import { ExportState } from './RunTimeState/ExportState';
 import { FlashingCellState } from './RunTimeState/FlashingCellState';
+import { UpdatedRowState } from './RunTimeState/UpdatedRowState';
 import { FormatColumnState } from './RunTimeState/FormatColumnState';
 import { FreeTextColumnState } from './RunTimeState/FreeTextColumnState';
 import { LayoutState } from './RunTimeState/LayoutState';
@@ -32,7 +33,7 @@ import { ChartState } from './RunTimeState/ChartState';
 import { ActionColumnState } from './DesignTimeState/ActionColumnState';
 import { SparklineColumnState } from './DesignTimeState/SparklineColumnState';
 import { NamedFilterState } from './RunTimeState/NamedFilterState';
-import { PartnerConfigState } from './RunTimeState/PartnerConfigstate';
+import { PartnerConfigState } from './DesignTimeState/PartnerConfigState';
 
 /**
  * This is the main Predefined Config interface which users will populate if they wish to ship their Adaptable Botter instance with initial state.
@@ -350,6 +351,11 @@ export interface PredefinedConfig {
    * Supplies a collection of *FlashingCell* objects to set up which columns should flash when their contents change and how.  Also includes default values to facilitiate creating new flashing cell columns.
    */
   FlashingCell?: FlashingCellState;
+
+  /**
+   * Sets whether rows should display differently when a value in the row updates.  A different color is used depending on the direction of the change.
+   */
+  UpdatedRow?: UpdatedRowState;
 
   /**
    * Supplies a collection of *FormatColumn* objects that will style an entire column in a single way (and not subject to a rule like with Conditional Style).

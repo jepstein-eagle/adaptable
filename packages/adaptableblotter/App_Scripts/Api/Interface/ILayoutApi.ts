@@ -1,5 +1,13 @@
 import { LayoutState, Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
+
+/**
+ * Provides full and comprehensive run-time access to the Layout function and associated Layout state (from Predefined Config).
+ *
+ */
 export interface ILayoutApi {
+  /**
+   * Retrieves the Layout section from the Adaptable Blotter State
+   */
   getLayoutState(): LayoutState;
   /**
    * Selects the layout
@@ -8,6 +16,8 @@ export interface ILayoutApi {
   setLayout(layoutName: string): void;
   /**
    * Clears the currently selected layout
+   *
+   * This will make the initial 'default' layout appear.
    */
   clearLayout(): void;
   /**

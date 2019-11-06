@@ -36,9 +36,9 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   // turn on mimicing adding rows
-  tickingDataHelper.startTickingDataagGridAddRow(gridOptions, tradeData, rowCount);
+  tickingDataHelper.startTickingDataagGridAddRow(adaptableblotter, tradeData, rowCount);
   // turn on mimicing removing rows
-  tickingDataHelper.startTickingDataagGridDeleteRow(gridOptions, tradeData, rowCount);
+  tickingDataHelper.startTickingDataagGridDeleteRow(adaptableblotter, tradeData, rowCount);
 }
 
 let json: PredefinedConfig = {};

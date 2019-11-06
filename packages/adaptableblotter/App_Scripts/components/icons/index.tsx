@@ -22,6 +22,7 @@ import Home from './home';
 import Justify from './justify';
 import Err from './error';
 import Export from './export';
+import SystemUpdate from './system-update';
 import Build from './build';
 import Warning from './warning';
 import ConditionalStyle from './conditional-style';
@@ -141,6 +142,7 @@ const allIcons = {
   'import-export': ImportExport,
   'color-fill': colorFill,
   'attach-file': AttachFile,
+  'system-update': SystemUpdate,
   info: Info,
   'info-sign': Info,
   add: Plus,

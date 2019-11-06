@@ -8,12 +8,12 @@ import {
  */
 export interface IFlashingCellApi {
   /**
-   * Retrieves the Flashing Cell State
+   * Retrieves the Flashing Cell section from the Adaptable Blotter State
    */
   getFlashingCellState(): FlashingCellState;
 
   /**
-   * Gets all Flashing Cells in the State
+   * Gets all Flashing Cell objects in the State
    */
   getAllFlashingCell(): FlashingCell[];
 

@@ -78,7 +78,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
     let infoBody: any[] = ['See all the values in the selected column as a sparkline chart'];
 
     let settingsBlock = (
-      <Panel header={'Settings'} bodyScroll>
+      <Panel header={'Sparkline Settings'} marginTop={2} bodyScroll>
         <FormLayout columns={[1, 2]}>
           <FormRow>
             <label>Sparkline type</label>

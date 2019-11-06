@@ -2,6 +2,7 @@ import * as Redux from 'redux';
 import {
   UserInterfaceState,
   PermittedColumnValues,
+  RowStyle,
 } from '../../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { UIHelper } from '../../View/UIHelper';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -11,6 +12,8 @@ export const COLOR_PALETTE_ADD = 'COLOR_PALETTE_ADD';
 export const STYLE_CLASSNAMES_ADD = 'STYLE_CLASSNAMES_ADD';
 export const PERMITTED_COLUMNVALUES_SET = 'PERMITTED_COLUMNVALUES_SET';
 export const PERMITTED_COLUMNVALUES_DELETE = 'PERMITTED_COLUMNVALUES_DELETE';
+export const ROW_STYLES_CLEAR = 'ROW_STYLES_CLEAR';
+export const ROW_STYLES_SET = 'ROW_STYLES_SET';
 
 export interface ColorPaletteSetAction extends Redux.Action {
   ColorPalette: string[];
@@ -30,6 +33,12 @@ export interface PermittedColumnValuesSetAction extends Redux.Action {
 
 export interface PermittedColumnValuesDeleteAction extends Redux.Action {
   Column: string;
+}
+
+export interface RowStylesClearAction extends Redux.Action {}
+
+export interface RowStylesSetAction extends Redux.Action {
+  rowStyles: RowStyle[];
 }
 
 export const ColorPaletteSet = (ColorPalette: string[]): ColorPaletteSetAction => ({
@@ -59,6 +68,15 @@ export const PermittedColumnValuesDelete = (Column: string): PermittedColumnValu
   Column,
 });
 
+export const RowStylesClear = (): RowStylesClearAction => ({
+  type: ROW_STYLES_CLEAR,
+});
+
+export const RowStylesSet = (rowStyles: RowStyle[]): RowStylesSetAction => ({
+  type: ROW_STYLES_SET,
+  rowStyles,
+});
+
 //export const PermittedColumnValuesAdd = (ColumnValues: string[]): PermittedColumnValuesAddAction => ({
 //    type: PERMITTED_COLUMNVALUES_ADD,
 //    ColumnValues
@@ -69,6 +87,7 @@ const initialUserInterfaceState: UserInterfaceState = {
   StyleClassNames: EMPTY_ARRAY,
   PermittedColumnValues: EMPTY_ARRAY,
   EditLookUpColumns: EMPTY_ARRAY,
+  RowStyles: EMPTY_ARRAY,
 };
 
 export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
@@ -119,6 +138,14 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
       permittedColumnValues.splice(index, 1);
       return Object.assign({}, state, {
         PermittedColumnValues: permittedColumnValues,
+      });
+    case ROW_STYLES_CLEAR:
+      return Object.assign({}, state, {
+        RowStyles: EMPTY_ARRAY,
+      });
+    case ROW_STYLES_SET:
+      return Object.assign({}, state, {
+        RowStyles: (action as RowStylesSetAction).rowStyles,
       });
     default:
       return state;

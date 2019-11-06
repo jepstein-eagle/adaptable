@@ -4,6 +4,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IAuditEventApi } from './Interface/IAuditEventApi';
 import { EventDispatcher } from '../Utilities/EventDispatcher';
 import { AuditLogEventArgs } from './Events/AuditEvents';
+import Emitter, { EmitterCallback } from '../Utilities/Emitter';
 
 export class AuditEventApi extends ApiBase implements IAuditEventApi {
   public _onAuditStateChanged: EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>;
@@ -12,6 +13,9 @@ export class AuditEventApi extends ApiBase implements IAuditEventApi {
 
   constructor(blotter: IAdaptableBlotter) {
     super(blotter);
+
+    this.emitter = new Emitter();
+
     this._onAuditStateChanged = new EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>();
     this._onAuditCellEdited = new EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>();
     this._onAuditFunctionApplied = new EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>();
@@ -26,4 +30,11 @@ export class AuditEventApi extends ApiBase implements IAuditEventApi {
   public onAuditFunctionApplied(): IEvent<IAdaptableBlotter, AuditLogEventArgs> {
     return this._onAuditFunctionApplied;
   }
+
+  // new way of doing this - much cleaner
+  private emitter: Emitter;
+  on = (eventName: string, callback: EmitterCallback): (() => void) =>
+    this.emitter.on(eventName, callback);
+
+  public emit = (eventName: string, data?: any): Promise<any> => this.emitter.emit(eventName, data);
 }

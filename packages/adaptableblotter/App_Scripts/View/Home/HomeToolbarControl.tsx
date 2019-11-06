@@ -59,6 +59,10 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     this.state = { configMenuItems: [] };
   }
 
+  async componentDidMount() {
+    // await this.props.Blotter.Glue42Service.init();
+  }
+
   render() {
     const functionsGlyph: any = <Icon name={'home'} />;
     const colsGlyph: any = <Icon name={'list'} />;
@@ -75,7 +79,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       return {
         disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
         onClick: () => this.onClick(menuItem),
-        icon: <Icon name={menuItem.GlyphIcon} />,
+        icon: <Icon name={menuItem.Icon} />,
         label: menuItem.Label,
       };
     });
@@ -238,7 +242,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           return (
             <SimpleButton
               key={menuItem.Label}
-              icon={menuItem.GlyphIcon}
+              icon={menuItem.Icon}
               variant="text"
               tooltip={menuItem.Label}
               disabled={this.props.AccessLevel == AccessLevel.ReadOnly}

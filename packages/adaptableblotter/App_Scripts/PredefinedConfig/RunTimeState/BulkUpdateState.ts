@@ -6,8 +6,6 @@ import { RunTimeState } from './RunTimeState';
  *
  * **Further Resources**
  *
- * [Bulk Update Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005168071-Bulk-Update)
- *
  * [Bulk Update Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028638032-Bulk-Update-Videos)
  *
  * [Bulk Update Demo](https://demo.adaptableblotter.com/edit/aggridbulkupdatedemo/)
@@ -15,6 +13,8 @@ import { RunTimeState } from './RunTimeState';
  * [Bulk Update Blotter API](https://api.adaptableblotter.com/interfaces/_api_interface_ibulkupdateapi_.ibulkupdateapi.html)
  *
  * [Bulk Update FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029742872-Bulk-Update-FAQ)
+ *
+ * [Bulk Update Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754698-Edit-Functions)
  *
  **/
 export interface BulkUpdateState extends RunTimeState {

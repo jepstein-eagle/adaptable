@@ -11,7 +11,7 @@ import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
  */
 export interface IAlertApi {
   /**
-   * Retrieves the Alert State
+   * Retrieves the Alert section from the Adaptable Blotter State
    */
   getAlertState(): AlertState;
 

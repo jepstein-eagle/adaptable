@@ -18,7 +18,6 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
-import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -28,8 +27,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.PlusMinusStrategyId, blotter);
 
-    this.blotter.on(KEY_DOWN_EVENT, keyEvent => {
-      this.handleKeyDown(keyEvent);
+    this.blotter._on('KeyDown', keyDownEvent => {
+      this.handleKeyDown(keyDownEvent);
     });
   }
 
@@ -37,7 +36,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PlusMinusStrategyName,
       ComponentName: ScreenPopups.PlusMinusPopup,
-      GlyphIcon: StrategyConstants.PlusMinusGlyph,
+      Icon: StrategyConstants.PlusMinusGlyph,
     });
   }
 
@@ -157,7 +156,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             NewValue: newValue.value,
             ColumnId: selectedCell.columnId,
             IdentifierValue: selectedCell.primaryKeyValue,
-            Record: null,
           };
 
           let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
@@ -184,7 +182,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       this.ShowWarningMessages(failedWarningEdits, warningValues, successfulValues);
     } else {
       if (ArrayExtensions.IsNotNullOrEmpty(successfulValues)) {
-        this.blotter.api.gridApi.setGridCellBatch(successfulValues);
+        this.blotter.api.internalApi.setGridCellBatch(successfulValues);
       }
     }
 

@@ -26,6 +26,11 @@ export class AppComponent {
       vendorContainer: 'adaptableBlotter',
     },
     predefinedConfig: {},
+    auditOptions: {
+      auditCellEdits: {
+        auditAsEvent: true,
+      },
+    },
   };
   constructor() {
     this.gridOptions = {
@@ -55,5 +60,9 @@ export class AppComponent {
 
   onBlotterReady(api: IBlotterApi) {
     console.log('blotter ready!!!', api);
+
+    api.auditEventApi.on('AuditCellEdited', function(args) {
+      console.warn(args, '!!!!!');
+    });
   }
 }

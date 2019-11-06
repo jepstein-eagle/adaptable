@@ -24,7 +24,6 @@ import { UIHelper } from '../UIHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
-import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
@@ -63,7 +62,7 @@ class SmartEditToolbarControlComponent extends React.Component<
   }
   public componentDidMount() {
     if (this.props.Blotter) {
-      this.props.Blotter.on(CELLS_SELECTED_EVENT, () => {
+      this.props.Blotter._on('CellsSelected', () => {
         this.props.onSmartEditCheckSelectedCells();
       });
     }
@@ -104,7 +103,7 @@ class SmartEditToolbarControlComponent extends React.Component<
     let shouldDisable: boolean =
       this.props.AccessLevel == AccessLevel.ReadOnly ||
       !this.props.IsValidSelection ||
-      this.props.Blotter.api.gridApi.IsGridInPivotMode();
+      this.props.Blotter.api.internalApi.isGridInPivotMode();
 
     let content = (
       <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>

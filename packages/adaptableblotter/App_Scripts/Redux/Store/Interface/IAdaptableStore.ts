@@ -37,7 +37,9 @@ import { SystemFilterState } from '../../../PredefinedConfig/DesignTimeState/Sys
 import { ActionColumnState } from '../../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { SparklineColumnState } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { NamedFilterState } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { PartnerConfigState } from '../../../PredefinedConfig/RunTimeState/PartnerConfigstate';
+import { PartnerConfigState } from '../../../PredefinedConfig/DesignTimeState/PartnerConfigState';
+import { ApplicationState } from '../../../PredefinedConfig/DesignTimeState/ApplicationState';
+import { UpdatedRowState } from '../../../PredefinedConfig/RunTimeState/UpdatedRowState';
 
 export interface AdaptableBlotterState {
   [s: string]: ConfigState;
@@ -51,6 +53,7 @@ export interface AdaptableBlotterState {
   Entitlements: EntitlementsState;
   UserInterface: UserInterfaceState;
   SystemFilter: SystemFilterState;
+  Application: ApplicationState;
   ActionColumn: ActionColumnState;
   SparklineColumn: SparklineColumnState;
   PartnerConfig: PartnerConfigState;
@@ -70,6 +73,7 @@ export interface AdaptableBlotterState {
   DataSource: DataSourceState;
   Export: ExportState;
   FlashingCell: FlashingCellState;
+  UpdatedRow: UpdatedRowState;
   FormatColumn: FormatColumnState;
   FreeTextColumn: FreeTextColumnState;
   Layout: LayoutState;

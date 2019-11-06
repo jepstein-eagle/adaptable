@@ -24,7 +24,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CellSummaryStrategyName,
       ComponentName: ScreenPopups.CellSummaryPopup,
-      GlyphIcon: StrategyConstants.CellSummaryGlyph,
+      Icon: StrategyConstants.CellSummaryGlyph,
     });
   }
 
@@ -34,9 +34,9 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (contextMenuInfo.column && contextMenuInfo.isSelectedCell) {
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CellSummaryStrategyName,
+        Label: 'See Cell Summary',
         ComponentName: ScreenPopups.CellSummaryPopup,
-        GlyphIcon: StrategyConstants.CellSummaryGlyph,
+        Icon: StrategyConstants.CellSummaryGlyph,
       });
     }
     return menuItemShowPopup;

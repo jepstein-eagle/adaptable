@@ -15,10 +15,10 @@ export const ColumnInfoStrategyId: string = 'ColumnInfo';
 export const ConditionalStyleStrategyId: string = 'ConditionalStyle';
 export const CustomSortStrategyId: string = 'CustomSort';
 export const DashboardStrategyId: string = 'Dashboard';
-export const DataManagementStrategyId: string = 'DataManagement';
 export const DataSourceStrategyId: string = 'DataSource';
 export const ExportStrategyId: string = 'Export';
 export const FlashingCellsStrategyId: string = 'FlashingCells';
+export const UpdatedRowStrategyId: string = 'Updated Row';
 export const FormatColumnStrategyId: string = 'FormatColumn';
 export const FreeTextColumnStrategyId: string = 'FreeTextColumn';
 export const HomeStrategyId: string = 'Home';
@@ -32,6 +32,7 @@ export const QuickSearchStrategyId: string = 'QuickSearch';
 export const ReminderStrategyId: string = 'Reminder';
 export const ShortcutStrategyId: string = 'Shortcut';
 export const SmartEditStrategyId: string = 'SmartEdit';
+export const StateManagementStrategyId: string = 'StateManagement';
 export const TeamSharingStrategyId: string = 'TeamSharing';
 export const ThemeStrategyId: string = 'Theme';
 export const UserFilterStrategyId: string = 'UserFilter';
@@ -53,10 +54,10 @@ export const ColumnInfoStrategyName: string = 'Column Information';
 export const ConditionalStyleStrategyName: string = 'Conditional Style';
 export const CustomSortStrategyName: string = 'Custom Sort';
 export const DashboardStrategyName: string = 'Dashboard';
-export const DataManagementStrategyName: string = 'Manage State';
 export const DataSourceStrategyName: string = 'Data Source';
 export const ExportStrategyName: string = 'Export';
 export const FlashingCellsStrategyName: string = 'Flashing Cells';
+export const UpdatedRowStrategyName: string = 'Updated Row';
 export const FormatColumnStrategyName: string = 'Format Column';
 export const FreeTextColumnStrategyName: string = 'Free Text Column';
 export const LayoutStrategyName: string = 'Layout';
@@ -69,6 +70,7 @@ export const QuickSearchStrategyName: string = 'Quick Search';
 export const ReminderStrategyName: string = 'Reminder';
 export const ShortcutStrategyName: string = 'Shortcut';
 export const SmartEditStrategyName: string = 'Smart Edit';
+export const StateManagementStrategyName: string = 'Manage State';
 export const TeamSharingStrategyName: string = 'Team Sharing';
 export const ThemeStrategyName: string = 'Theme';
 export const UserFilterStrategyName: string = 'User Filter';
@@ -90,10 +92,10 @@ export const ColumnInfoGlyph: string = 'column-info';
 export const ConditionalStyleGlyph: string = 'conditional-style';
 export const CustomSortGlyph: string = 'swap-vert';
 export const DashboardGlyph: string = 'dashboard';
-export const DataManagementGlyph: string = 'assignment';
 export const DataSourceGlyph: string = 'data-source';
 export const ExportGlyph: string = 'export';
 export const FlashingCellGlyph: string = 'flash';
+export const UpdatedRowGlyph: string = 'system-update';
 export const FormatColumnGlyph: string = 'color-lens';
 export const FreeTextColumnGlyph: string = 'short-text';
 export const FunctionsGlyph: string = 'home';
@@ -107,6 +109,7 @@ export const QuickSearchGlyph: string = 'page-view';
 export const ReminderGlyph: string = 'alarm';
 export const ShortcutGlyph: string = 'link';
 export const SmartEditGlyph: string = 'edit';
+export const StateManagementGlyph: string = 'assignment';
 export const TeamSharingGlyph: string = 'share';
 export const ThemeGlyph: string = 'color-fill';
 export const UserFilterGlyph: string = 'person';
@@ -143,8 +146,6 @@ export function getIdForStrategyName(strategyName: string) {
       return CustomSortStrategyId;
     case DashboardStrategyName:
       return DashboardStrategyId;
-    case DataManagementStrategyName:
-      return DataManagementStrategyId;
     case DataSourceStrategyName:
       return DataSourceStrategyId;
     case ExportStrategyName:
@@ -177,6 +178,8 @@ export function getIdForStrategyName(strategyName: string) {
       return ShortcutStrategyId;
     case SmartEditStrategyName:
       return SmartEditStrategyId;
+    case StateManagementStrategyName:
+      return StateManagementStrategyId;
     case TeamSharingStrategyName:
       return TeamSharingStrategyId;
     case ThemeStrategyName:
@@ -218,8 +221,6 @@ export function getNameForStrategyId(strategyID: string) {
       return CustomSortStrategyName;
     case DashboardStrategyId:
       return DashboardStrategyName;
-    case DataManagementStrategyId:
-      return DataManagementStrategyName;
     case DataSourceStrategyId:
       return DataSourceStrategyName;
     case ExportStrategyId:
@@ -254,6 +255,8 @@ export function getNameForStrategyId(strategyID: string) {
       return ShortcutStrategyName;
     case SmartEditStrategyId:
       return SmartEditStrategyName;
+    case StateManagementStrategyId:
+      return StateManagementStrategyName;
     case TeamSharingStrategyId:
       return TeamSharingStrategyName;
     case ThemeStrategyId:
@@ -293,8 +296,6 @@ export function getGhyphiconForStrategyId(strategyID: string) {
       return ConditionalStyleGlyph;
     case CustomSortStrategyId:
       return CustomSortGlyph;
-    case DataManagementStrategyId:
-      return DataManagementGlyph;
     case ExportStrategyId:
       return ExportGlyph;
     case FlashingCellsStrategyId:
@@ -325,6 +326,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
       return CellSummaryGlyph;
     case SmartEditStrategyId:
       return SmartEditGlyph;
+    case StateManagementStrategyName:
+      return StateManagementGlyph;
     case TeamSharingStrategyId:
       return TeamSharingGlyph;
     case ThemeStrategyId:

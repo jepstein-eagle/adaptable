@@ -16,7 +16,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.UserFilterStrategyName,
       ComponentName: ScreenPopups.UserFilterPopup,
-      GlyphIcon: StrategyConstants.UserFilterGlyph,
+      Icon: StrategyConstants.UserFilterGlyph,
     });
   }
 

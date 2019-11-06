@@ -17,16 +17,15 @@ import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper'
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
-import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
-import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ShortcutStrategyId, blotter);
-    this.blotter.on(KEY_DOWN_EVENT, keyEvent => {
-      this.handleKeyDown(keyEvent);
+
+    this.blotter._on('KeyDown', keyDownEvent => {
+      this.handleKeyDown(keyDownEvent);
     });
   }
 
@@ -34,7 +33,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ShortcutStrategyName,
       ComponentName: ScreenPopups.ShortcutPopup,
-      GlyphIcon: StrategyConstants.ShortcutGlyph,
+      Icon: StrategyConstants.ShortcutGlyph,
     });
   }
 
@@ -106,7 +105,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
           NewValue: valueToReplace,
           ColumnId: activeCell.columnId,
           IdentifierValue: activeCell.primaryKeyValue,
-          Record: null,
         };
 
         let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
@@ -167,7 +165,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     newValue: any,
     keyEventString: string
   ): void {
-    this.blotter.api.gridApi.setGridCellBatch([
+    this.blotter.api.internalApi.setGridCellBatch([
       {
         primaryKeyValue: activeCell.primaryKeyValue,
         columnId: activeCell.columnId,

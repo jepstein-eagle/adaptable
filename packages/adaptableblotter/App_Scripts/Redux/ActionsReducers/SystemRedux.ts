@@ -13,7 +13,6 @@ import {
   EMPTY_STRING,
 } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
@@ -21,6 +20,8 @@ import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
+import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -36,6 +37,11 @@ export const SYSTEM_CLEAR_HEALTH_STATUS = 'SYSTEM_CLEAR_HEALTH_STATUS';
 export const SYSTEM_ALERT_ADD = 'SYSTEM_ALERT_ADD';
 export const SYSTEM_ALERT_DELETE = 'SYSTEM_ALERT_DELETE';
 export const SYSTEM_ALERT_DELETE_ALL = 'SYSTEM_ALERT_DELETE_ALL';
+
+// Updated Row
+export const SYSTEM_UPDATED_ROW_ADD = 'SYSTEM_UPDATED_ROW_ADD';
+export const SYSTEM_UPDATED_ROW_DELETE = 'SYSTEM_UPDATED_ROW_DELETE';
+export const SYSTEM_UPDATED_ROW_DELETE_ALL = 'SYSTEM_UPDATED_ROW_DELETE_ALL';
 
 // Live Reports
 export const REPORT_START_LIVE = 'REPORT_START_LIVE';
@@ -90,6 +96,18 @@ export interface SystemAlertDeleteAction extends Redux.Action {
 
 export interface SystemAlertDeleteAllAction extends Redux.Action {
   Alerts: AdaptableAlert[];
+}
+
+export interface SystemUpdatedRowAddAction extends Redux.Action {
+  updatedRowInfo: UpdatedRowInfo;
+}
+
+export interface SystemUpdatedRowDeleteAction extends Redux.Action {
+  updatedRowInfo: UpdatedRowInfo;
+}
+
+export interface SystemUpdatedRowDeleteAllAction extends Redux.Action {
+  updatedRowInfos: UpdatedRowInfo[];
 }
 
 export interface ReportStartLiveAction extends Redux.Action {
@@ -186,6 +204,25 @@ export const SystemAlertDelete = (Alert: AdaptableAlert): SystemAlertDeleteActio
 export const SystemAlertDeleteAll = (Alerts: AdaptableAlert[]): SystemAlertDeleteAllAction => ({
   type: SYSTEM_ALERT_DELETE_ALL,
   Alerts,
+});
+
+export const SystemUpdatedRowAdd = (updatedRowInfo: UpdatedRowInfo): SystemUpdatedRowAddAction => ({
+  type: SYSTEM_UPDATED_ROW_ADD,
+  updatedRowInfo,
+});
+
+export const SystemUpdatedRowDelete = (
+  updatedRowInfo: UpdatedRowInfo
+): SystemUpdatedRowDeleteAction => ({
+  type: SYSTEM_UPDATED_ROW_DELETE,
+  updatedRowInfo,
+});
+
+export const SystemUpdatedRowDeleteAll = (
+  updatedRowInfos: UpdatedRowInfo[]
+): SystemUpdatedRowDeleteAllAction => ({
+  type: SYSTEM_UPDATED_ROW_DELETE_ALL,
+  updatedRowInfos,
 });
 
 export const ReportStartLive = (
@@ -308,6 +345,7 @@ export const SetNewColumnListOrder = (
 const initialSystemState: SystemState = {
   SystemStatus: { StatusMessage: 'All good', StatusType: MessageType.Success }, // SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE
   AdaptableAlerts: EMPTY_ARRAY,
+  UpdatedRowInfos: EMPTY_ARRAY,
   AvailableCalendars: CalendarHelper.getSystemCalendars(),
   CurrentLiveReports: EMPTY_ARRAY,
   IsValidSmartEditSelection: false,
@@ -318,7 +356,7 @@ const initialSystemState: SystemState = {
   ChartVisibility: SYSTEM_DEFAULT_CHART_VISIBILITY,
   CalculatedColumnErrorMessage: EMPTY_STRING,
   IPPDomainsPages: EMPTY_ARRAY,
-  SystemReports: ReportHelper.CreateSystemReports(),
+  SystemReports: ObjectFactory.CreateSystemReports(),
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
   QuickSearchVisibleColumnExpressions: EMPTY_ARRAY,
@@ -360,6 +398,36 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     case SYSTEM_ALERT_DELETE_ALL: {
       return Object.assign({}, state, { AdaptableAlerts: [] });
     }
+
+    case SYSTEM_UPDATED_ROW_ADD: {
+      const actionTypedAdd = action as SystemUpdatedRowAddAction;
+      let updatedRowPrimaryKeyValues: UpdatedRowInfo[] = [].concat(state.UpdatedRowInfos);
+      let existingItem: UpdatedRowInfo = updatedRowPrimaryKeyValues.find(
+        ur => ur.primaryKeyValue == actionTypedAdd.updatedRowInfo.primaryKeyValue
+      );
+      if (existingItem) {
+        existingItem.changeDirection = actionTypedAdd.updatedRowInfo.changeDirection;
+      } else {
+        updatedRowPrimaryKeyValues.push(actionTypedAdd.updatedRowInfo);
+      }
+      return Object.assign({}, state, { UpdatedRowInfos: updatedRowPrimaryKeyValues });
+    }
+    case SYSTEM_UPDATED_ROW_DELETE: {
+      const primaryKeyValue: any = (action as SystemUpdatedRowDeleteAction).updatedRowInfo
+        .primaryKeyValue;
+      let updatedRowPrimaryKeyValues = state.UpdatedRowInfos.filter(
+        pkValue => pkValue.primaryKeyValue !== primaryKeyValue
+      );
+      return {
+        ...state,
+        UpdatedRowInfos: updatedRowPrimaryKeyValues,
+      };
+    }
+
+    case SYSTEM_UPDATED_ROW_DELETE_ALL: {
+      return Object.assign({}, state, { UpdatedRowInfos: [] });
+    }
+
     case REPORT_START_LIVE: {
       const actionTyped = action as ReportStartLiveAction;
       const currentLiveReports: ILiveReport[] = [].concat(state.CurrentLiveReports);

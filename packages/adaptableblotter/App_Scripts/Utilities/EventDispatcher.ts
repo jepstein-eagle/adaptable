@@ -1,4 +1,5 @@
 import { IEvent } from './Interface/IEvent';
+import LoggingHelper from './Helpers/LoggingHelper';
 
 export class EventDispatcher<TSender, TArgs> implements IEvent<TSender, TArgs> {
   private _subscriptions: Array<(sender: TSender, args: TArgs) => void> = new Array<

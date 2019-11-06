@@ -16,7 +16,8 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import OpenfinHelper from '../Utilities/Helpers/OpenfinHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import ObjectFactory from '../Utilities/ObjectFactory';
-import { createUuid } from '../PredefinedConfig/Uuid';
+import { AlertFiredEventArgs } from './Events/BlotterEvents';
+import { ALERT_FIRED_EVENT } from '../Utilities/Constants/GeneralConstants';
 
 export class AlertApi extends ApiBase implements IAlertApi {
   public getAlertState(): AlertState {
@@ -24,7 +25,7 @@ export class AlertApi extends ApiBase implements IAlertApi {
   }
 
   public getAlertDefinitions(): AlertDefinition[] {
-    return this.getBlotterState().Alert.AlertDefinitions;
+    return this.getAlertState().AlertDefinitions;
   }
 
   public displayAlert(alertToShow: AdaptableAlert): void {
@@ -35,7 +36,14 @@ export class AlertApi extends ApiBase implements IAlertApi {
     this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts));
 
     // 2. Publish the Alert Fired Event
-    this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, { alert: alertToShow });
+
+    let alertFiredArgs: AlertFiredEventArgs = {
+      alert: alertToShow,
+    };
+    // now depprecated and shortly to be removed...
+    this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, alertFiredArgs);
+    // new way (and soon only way)
+    this.blotter.api.eventApi.emit('AlertFired', alertFiredArgs);
 
     // 3. Log it to the Console
     LoggingHelper.LogAlert(alertToShow.Header + ': ' + alertToShow.Msg, alertToShow.AlertDefinition
@@ -55,6 +63,18 @@ export class AlertApi extends ApiBase implements IAlertApi {
       } else {
         this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow));
       }
+    }
+
+    if (
+      alertToShow.AlertDefinition &&
+      alertToShow.AlertDefinition.AlertProperties != undefined &&
+      alertToShow.AlertDefinition.AlertProperties.JumpToCell &&
+      alertToShow.DataChangedInfo
+    ) {
+      this.blotter.jumpToCell(
+        alertToShow.DataChangedInfo.ColumnId,
+        alertToShow.DataChangedInfo.RowNode
+      );
     }
   }
 

@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+//import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+//import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
@@ -17,7 +17,7 @@ import {
   IAdaptableBlotter,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import ReactDOM from 'react-dom';
+import { TickingDataHelper } from '../../TickingDataHelper';
 
 /*
 Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
@@ -26,78 +26,39 @@ Nor do we create the ag-Grid
 */
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
+var adaptableblotter: IAdaptableBlotter;
+
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(100);
+  const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
-    userName: 'Demo Usersssssss',
-    blotterId: 'With Some Spaces',
+    userName: 'Demo User',
+    blotterId: 'Basic Demo',
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function() {
-    //   console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
-    // adaptableblotter.api.columnChooserApi.showColumnChooserPopup();
-  };
-  adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
-    //  console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
-  };
-  adaptableBlotterOptions.filterOptions = {
-    autoApplyFilter: false,
+  adaptableBlotterOptions.generalOptions = {
+    showAdaptableBlotterToolPanel: true,
   };
 
-  const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
+  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  //gridOptions.api!.ensureIndexVisible(200);
-  // adaptableblotter.api.userFilterApi.showUserFilterPopup();
+  //tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000);
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
-  //  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-  global.adaptableblotter = adaptableblotter;
-
-  adaptableblotter.on('toolbar-show', toolbar => {
-    console.log('showing toolbar', toolbar);
-    if (toolbar === 'Application') {
-      ReactDOM.render(
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <button>xxx</button>
-          <button>yyy</button>
-          <button className="ab-SimpleButton">zzz</button>
-        </div>,
-        document.querySelector('.ab-ApplicationToolbar__contents')
-      );
-    }
-  });
-
-  adaptableblotter.on('toolbar-hide', toolbar => {
-    console.log(
-      'hiding toolbar',
-      toolbar,
-      document.querySelector('.ab-ApplicationToolbar__contents')
-    );
-  });
+  // global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {
-  PartnerConfig: {
-    glue42Config: 'Hello ',
-  },
-  Layout: {
-    CurrentLayout: 'test',
-    Layouts: [
-      {
-        Columns: ['tradeId', 'country', 'notional', 'stars', 'currency', 'ask', 'bid'],
-        ColumnSorts: [{ Column: 'country', SortOrder: 'Ascending' }],
-        Name: 'test',
-      },
-    ],
+  Dashboard: {
+    VisibleToolbars: ['Theme', 'Export', 'Layout'],
   },
 };
 

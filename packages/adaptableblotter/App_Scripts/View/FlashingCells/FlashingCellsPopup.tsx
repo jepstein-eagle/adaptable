@@ -21,8 +21,8 @@ import Checkbox from '../../components/CheckBox';
 import { Flex, Box } from 'rebass';
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
-  FlashingCells: FlashingCell[];
-  CalculatedColumns: CalculatedColumn[];
+  FlashingCells: FlashingCell[] | undefined;
+  CalculatedColumns: CalculatedColumn[] | undefined;
   onSelectColumn: (flashingCell: FlashingCell) => FlashingCellsRedux.FlashingCellSelectAction;
   onSelectAllColumns: (
     shouldTurnOn: boolean,
@@ -43,6 +43,10 @@ interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPo
 }
 
 class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProps, {}> {
+  constructor(props: FlashingCellsPopupProps) {
+    super(props);
+  }
+
   render() {
     let infoBody: any[] = [
       'Make numeric cells flash briefly as their value changes',

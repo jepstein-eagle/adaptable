@@ -2,6 +2,8 @@ import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { Visibility } from '../../PredefinedConfig/Common/Enums';
+import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
 
 /**
  * The main object used when publishing events.
@@ -60,6 +62,15 @@ export interface SelectionChangedEventArgs {
  */
 export interface ThemeChangedEventArgs {
   themeName: string;
+}
+
+export interface ToolbarVisibilityChangedEventArgs {
+  toolbar: string;
+  visibility: 'Visible' | 'Hidden';
+}
+
+export interface ApplicationToolbarButtonClickedEventArgs {
+  applicationToolbarButton: ApplicationToolbarButton;
 }
 
 export interface AdaptableBlotterEventData {

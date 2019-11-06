@@ -5,7 +5,7 @@ import { ThemeState, AdaptableBlotterTheme } from '../../PredefinedConfig/RunTim
  */
 export interface IThemeApi {
   /**
-   * Retrieves all the Theme State
+   * Retrieves all the Theme section from the Adaptable Blotter State
    */
   getThemeState(): ThemeState;
 

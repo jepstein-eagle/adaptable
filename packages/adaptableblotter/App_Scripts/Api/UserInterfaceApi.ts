@@ -6,6 +6,7 @@ import {
   UserInterfaceState,
   PermittedColumnValues,
   EditLookUpColumn,
+  RowStyle,
 } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
@@ -64,5 +65,17 @@ export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
   public isEditLookUpColumn(columnId: string): boolean {
     let editLookUpColumnIds: string[] = this.getAllEditLookUpColumns().map(c => c.ColumnId);
     return ArrayExtensions.ContainsItem(editLookUpColumnIds, columnId);
+  }
+
+  public clearRowStyles(): void {
+    this.dispatchAction(UserInterfaceRedux.RowStylesClear());
+    this.blotter.clearRowStyles();
+    this.blotter.redraw();
+  }
+
+  public setRowStyles(rowStyles: RowStyle[]): void {
+    this.dispatchAction(UserInterfaceRedux.RowStylesSet(rowStyles));
+    this.blotter.setUpRowStyles();
+    this.blotter.redraw();
   }
 }

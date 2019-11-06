@@ -82,9 +82,14 @@ import { IPartnerConfigAPI } from './Interface/IPartnerConfigAPI';
 import { PartnerConfigAPI } from './PartnerConfigAPI';
 import { IColumnChooserAPI } from './Interface/IColumnChooserAPI';
 import { ColumnChooserAPI } from './ColumnChooserAPI';
+import { IApplicationApi } from './Interface/IApplicationApi';
+import { ApplicationApi } from './ApplicationApi';
+import { IUpdatedRowApi } from './Interface/IUpdatedRowApi';
+import { UpdatedRowApi } from './UpdatedRowApi';
 
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
+  public applicationApi: IApplicationApi;
   public sparklineColumnApi: ISparklineColumnApi;
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
@@ -107,6 +112,7 @@ export class BlotterApi implements IBlotterApi {
   public eventApi: IEventApi;
   public exportApi: IExportApi;
   public flashingCellApi: IFlashingCellApi;
+  public updatedRowApi: IUpdatedRowApi;
   public formatColumnApi: IFormatColumnApi;
   public freeTextColumnApi: IFreeTextColumnApi;
   public gridApi: IGridApi;
@@ -129,7 +135,7 @@ export class BlotterApi implements IBlotterApi {
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     this.actionColumnApi = new ActionColumnApi(blotter);
-    this.sparklineColumnApi = new SparklineColumnApi(blotter);
+    this.applicationApi = new ApplicationApi(blotter);
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
     this.auditEventApi = new AuditEventApi(blotter);
@@ -151,6 +157,7 @@ export class BlotterApi implements IBlotterApi {
     this.eventApi = new EventApi(blotter);
     this.exportApi = new ExportApi(blotter);
     this.flashingCellApi = new FlashingCellApi(blotter);
+    this.updatedRowApi = new UpdatedRowApi(blotter);
     this.formatColumnApi = new FormatColumnApi(blotter);
     this.freeTextColumnApi = new FreeTextColumnApi(blotter);
     this.gridApi = new GridApi(blotter);
@@ -161,6 +168,7 @@ export class BlotterApi implements IBlotterApi {
     this.reminderApi = new ReminderApi(blotter);
     this.shortcutApi = new ShortcutApi(blotter);
     this.smartEditApi = new SmartEditApi(blotter);
+    this.sparklineColumnApi = new SparklineColumnApi(blotter);
     this.systemFilterApi = new SystemFilterApi(blotter);
     this.systemStatusApi = new SystemStatusApi(blotter);
     this.themeApi = new ThemeApi(blotter);

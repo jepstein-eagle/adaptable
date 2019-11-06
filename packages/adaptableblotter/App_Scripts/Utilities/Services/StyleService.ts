@@ -4,7 +4,7 @@ import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/Conditiona
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
-import { ConditionalStyleScope, MessageType } from '../../PredefinedConfig/Common/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IFormatColumnStrategy } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
@@ -14,11 +14,11 @@ import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedu
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux';
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
+import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
-import { BLOTTER_READY_EVENT } from '../Constants/GeneralConstants';
 import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
-import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
-import UIHelper from '../../View/UIHelper';
+import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';
 
 // Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
@@ -37,7 +37,7 @@ export class StyleService {
     document.head.appendChild(this.style);
 
     this.setUpStoreListeners();
-    this.blotter.on(BLOTTER_READY_EVENT, () => {
+    this.blotter.api.eventApi.on('BlotterReady', () => {
       this.setUpFirstUsage();
     });
   }
@@ -46,6 +46,7 @@ export class StyleService {
     // need to check that its all initiliased - perhps onready is better?
     this.setUpFormatColumn();
     this.setUpFlashingCells();
+    this.setUpUpdatedRow();
     this.setUpAlerts();
     this.setUpConditionalStyle();
     this.createAdaptableBlotterFunctionStyles();
@@ -63,6 +64,13 @@ export class StyleService {
       StrategyConstants.FlashingCellsStrategyId
     ) as IFlashingCellsStrategy;
     flashingCellsStrategy.initStyles();
+  }
+
+  private setUpUpdatedRow() {
+    const updatedRowStrategy = this.blotter.strategies.get(
+      StrategyConstants.UpdatedRowStrategyId
+    ) as IUpdatedRowStrategy;
+    updatedRowStrategy.initStyles();
   }
 
   private setUpAlerts() {
@@ -182,6 +190,23 @@ export class StyleService {
         );
       });
 
+    // next we do Updated Rows - still not quite sure how this will work...
+    const updatedRowState: UpdatedRowState = this.blotter.api.updatedRowApi.getUpdatedRowState();
+    if (updatedRowState.EnableUpdatedRow) {
+      this.addCSSRule(
+        `.${StyleConstants.UPDATED_ROW_UP_STYLE}`,
+        `background-color: ${updatedRowState.UpColor} !important`
+      );
+      this.addCSSRule(
+        `.${StyleConstants.UPDATED_ROW_DOWN_STYLE}`,
+        `background-color: ${updatedRowState.DownColor} !important`
+      );
+      this.addCSSRule(
+        `.${StyleConstants.UPDATED_ROW_NEUTRAL_STYLE}`,
+        `background-color: ${updatedRowState.NeutralColor} !important`
+      );
+    }
+
     // quick search
     const quickSearchStyle: IStyle = this.blotter.api.quickSearchApi.getQuickSearchStyle();
     if (StringExtensions.IsNullOrEmpty(quickSearchStyle.ClassName)) {
@@ -213,11 +238,11 @@ export class StyleService {
     this.blotter.api.flashingCellApi.getAllFlashingCell().forEach(element => {
       if (element.IsLive) {
         this.addCSSRule(
-          `.${StyleConstants.FLASH_UP_STYLE}-${element.Uuid}`,
+          `.${StyleConstants.FLASH_CELL_UP_STYLE}-${element.Uuid}`,
           `background-color: ${element.UpColor} !important`
         );
         this.addCSSRule(
-          `.${StyleConstants.FLASH_DOWN_STYLE}-${element.Uuid}`,
+          `.${StyleConstants.FLASH_CELL_DOWN_STYLE}-${element.Uuid}`,
           `background-color: ${element.DownColor} !important`
         );
       }
@@ -283,6 +308,24 @@ export class StyleService {
     this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
       this.setUpAlerts();
       //  this.createAdaptableBlotterFunctionStyles();
+    });
+
+    // Updated Row
+    this.blotter.adaptableBlotterStore.on(UpdatedRowRedux.UPDATED_ROW_ENABLE_DISABLE, () => {
+      this.setUpUpdatedRow();
+      this.createAdaptableBlotterFunctionStyles();
+    });
+    this.blotter.adaptableBlotterStore.on(UpdatedRowRedux.UP_COLOR_SET, () => {
+      this.setUpUpdatedRow();
+      this.createAdaptableBlotterFunctionStyles();
+    });
+    this.blotter.adaptableBlotterStore.on(UpdatedRowRedux.DOWN_COLOR_SET, () => {
+      this.setUpUpdatedRow();
+      this.createAdaptableBlotterFunctionStyles();
+    });
+    this.blotter.adaptableBlotterStore.on(UpdatedRowRedux.NEUTRAL_COLOR_SET, () => {
+      this.setUpUpdatedRow();
+      this.createAdaptableBlotterFunctionStyles();
     });
 
     // Flashing Cell

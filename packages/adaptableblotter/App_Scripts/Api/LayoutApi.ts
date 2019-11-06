@@ -6,6 +6,7 @@ import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { ILayoutApi } from './Interface/ILayoutApi';
 import { LayoutState, Layout, ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
+import StringExtensions from '../Utilities/Extensions/StringExtensions';
 
 export class LayoutApi extends ApiBase implements ILayoutApi {
   public getLayoutState(): LayoutState {
@@ -13,9 +14,11 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
   }
 
   public setLayout(layoutName: string): void {
-    let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
-    if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
-      this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
+    if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
+      let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
+      if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
+        this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
+      }
     }
   }
 
@@ -37,9 +40,11 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
   }
 
   public getLayoutByName(layoutName: string): Layout {
-    let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
-    if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
-      return layout;
+    if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
+      let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
+      if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
+        return layout;
+      }
     }
   }
 

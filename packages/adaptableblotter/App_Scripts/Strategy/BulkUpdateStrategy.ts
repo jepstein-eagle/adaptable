@@ -16,7 +16,11 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import {
+  AdaptableBlotterMenuItem,
+  ContextMenuInfo,
+  MenuItemShowPopup,
+} from '../Utilities/MenuItem';
 import ObjectFactory from '../Utilities/ObjectFactory';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
@@ -28,8 +32,31 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.BulkUpdateStrategyName,
       ComponentName: ScreenPopups.BulkUpdatePopup,
-      GlyphIcon: StrategyConstants.BulkUpdateGlyph,
+      Icon: StrategyConstants.BulkUpdateGlyph,
     });
+  }
+
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    // not sure if this is right but logic is that
+    // if the context cell is one of a selection taht can have smart edit applied
+    // then open the smart edit screen
+    // perhaps this is faulty logic though?
+    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    if (
+      contextMenuInfo.column &&
+      !contextMenuInfo.column.ReadOnly &&
+      contextMenuInfo.isSelectedCell &&
+      contextMenuInfo.isSingleSelectedColumn
+    ) {
+      menuItemShowPopup = this.createMainMenuItemShowPopup({
+        Label: 'Apply ' + StrategyConstants.BulkUpdateStrategyName,
+        ComponentName: ScreenPopups.BulkUpdatePopup,
+        Icon: StrategyConstants.BulkUpdateGlyph,
+      });
+    }
+    return menuItemShowPopup;
   }
 
   public ApplyBulkUpdate(newValues: GridCell[]): void {
@@ -43,13 +70,13 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       };
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
-    this.blotter.api.gridApi.setGridCellBatch(newValues);
+    this.blotter.api.internalApi.setGridCellBatch(newValues);
   }
 
   public CheckCorrectCellSelection(): BulkUpdateValidationResult {
     let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-    if (this.blotter.api.gridApi.IsGridInPivotMode()) {
+    if (this.blotter.api.internalApi.isGridInPivotMode()) {
       return {
         IsValid: false,
         Alert: {
@@ -113,7 +140,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
     let columnId: string = '';
-    if (!this.blotter.api.gridApi.IsGridInPivotMode()) {
+    if (!this.blotter.api.internalApi.isGridInPivotMode()) {
       if (selectedCellInfo != null && selectedCellInfo.Columns.length > 0) {
         columnId = selectedCellInfo.Columns[0].ColumnId;
         let typedBulkUpdateValue: any;
@@ -135,7 +162,6 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             NewValue: typedBulkUpdateValue,
             ColumnId: selectedCell.columnId,
             IdentifierValue: selectedCell.primaryKeyValue,
-            Record: null,
           };
 
           let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(

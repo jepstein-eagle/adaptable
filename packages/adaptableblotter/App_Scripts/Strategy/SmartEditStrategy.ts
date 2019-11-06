@@ -36,7 +36,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SmartEditStrategyName,
       ComponentName: ScreenPopups.SmartEditPopup,
-      GlyphIcon: StrategyConstants.SmartEditGlyph,
+      Icon: StrategyConstants.SmartEditGlyph,
     });
   }
 
@@ -56,9 +56,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       contextMenuInfo.isSingleSelectedColumn
     ) {
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.SmartEditStrategyName,
+        Label: 'Apply ' + StrategyConstants.SmartEditStrategyName,
         ComponentName: ScreenPopups.SmartEditPopup,
-        GlyphIcon: StrategyConstants.SmartEditGlyph,
+        Icon: StrategyConstants.SmartEditGlyph,
       });
     }
     return menuItemShowPopup;
@@ -76,12 +76,12 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
 
-    this.blotter.api.gridApi.setGridCellBatch(newValues);
+    this.blotter.api.internalApi.setGridCellBatch(newValues);
   }
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
     let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
-    if (this.blotter.api.gridApi.IsGridInPivotMode()) {
+    if (this.blotter.api.internalApi.isGridInPivotMode()) {
       return {
         Alert: {
           Header: 'Smart Edit Error',
@@ -154,7 +154,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     let previewResults: IPreviewResult[] = [];
     let columnId: string = '';
 
-    if (!this.blotter.api.gridApi.IsGridInPivotMode()) {
+    if (!this.blotter.api.internalApi.isGridInPivotMode()) {
       if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
         let column: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
         if (column) {
@@ -187,7 +187,6 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
               NewValue: newValue,
               ColumnId: selectedCell.columnId,
               IdentifierValue: selectedCell.primaryKeyValue,
-              Record: null,
             };
 
             let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(

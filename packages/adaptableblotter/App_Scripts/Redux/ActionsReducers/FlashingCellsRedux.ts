@@ -7,7 +7,7 @@ import {
   FLASHING_CELLS_DEFAULT_DURATION,
   EMPTY_ARRAY,
 } from '../../Utilities/Constants/GeneralConstants';
-import { getHexForName, DARK_GREEN, DARK_RED, RED } from '../../View/UIHelper';
+import { getHexForName, DARK_GREEN, RED } from '../../View/UIHelper';
 
 export const FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';
 export const FLASHING_CELL_SELECT_ALL = 'FLASHING_CELL_SELECT_ALL';
@@ -80,7 +80,7 @@ export const FlashingCellChangeDownColor = (
   DownColor,
 });
 
-const initialShortcutState: FlashingCellState = {
+const initialFlashingCellState: FlashingCellState = {
   FlashingCells: EMPTY_ARRAY,
   DefaultUpColor: getHexForName(DARK_GREEN),
   DefautDownColor: getHexForName(RED),
@@ -88,7 +88,7 @@ const initialShortcutState: FlashingCellState = {
 };
 
 export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
-  state: FlashingCellState = initialShortcutState,
+  state: FlashingCellState = initialFlashingCellState,
   action: Redux.Action
 ): FlashingCellState => {
   switch (action.type) {

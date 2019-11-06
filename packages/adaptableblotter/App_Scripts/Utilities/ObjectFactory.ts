@@ -22,6 +22,10 @@ import {
   ALERT_DEFAULT_RANGE_OPERAND_TYPE,
   ALERT_DEFAULT_MESSAGE_TYPE,
   ALERT_DEFAULT_SHOW_POPUP,
+  ALL_DATA_REPORT,
+  VISIBLE_DATA_REPORT,
+  SELECTED_CELLS_REPORT,
+  SELECTED_ROWS_REPORT,
 } from './Constants/GeneralConstants';
 import { DataSource } from '../PredefinedConfig/RunTimeState/DataSourceState';
 import {
@@ -498,6 +502,47 @@ export function CreateEmptyCellSummmary(): ICellSummmary {
   };
 }
 
+export function CreateSystemReports(): Array<Report> {
+  let _systemReports: Report[] = [];
+
+  _systemReports.push({
+    Uuid: createUuid(),
+    Name: ALL_DATA_REPORT,
+    ReportColumnScope: ReportColumnScope.AllColumns,
+    ReportRowScope: ReportRowScope.AllRows,
+    ColumnIds: [],
+    Expression: ExpressionHelper.CreateEmptyExpression(),
+  });
+
+  _systemReports.push({
+    Uuid: createUuid(),
+    Name: VISIBLE_DATA_REPORT,
+    ReportColumnScope: ReportColumnScope.VisibleColumns,
+    ReportRowScope: ReportRowScope.VisibleRows,
+    ColumnIds: [],
+    Expression: ExpressionHelper.CreateEmptyExpression(),
+  });
+
+  _systemReports.push({
+    Uuid: createUuid(),
+    Name: SELECTED_CELLS_REPORT,
+    ReportColumnScope: ReportColumnScope.SelectedColumns,
+    ReportRowScope: ReportRowScope.SelectedCells,
+    ColumnIds: [],
+    Expression: ExpressionHelper.CreateEmptyExpression(),
+  });
+
+  _systemReports.push({
+    Uuid: createUuid(),
+    Name: SELECTED_ROWS_REPORT,
+    ReportColumnScope: ReportColumnScope.VisibleColumns,
+    ReportRowScope: ReportRowScope.SelectedRows,
+    ColumnIds: [],
+    Expression: ExpressionHelper.CreateEmptyExpression(),
+  });
+  return _systemReports;
+}
+
 export const ObjectFactory = {
   CreateEmptyCustomSort,
   CreateEmptyDataSource,
@@ -536,5 +581,6 @@ export const ObjectFactory = {
   CreateCellValidationRule,
   CreateEmptyStyle,
   CreateEmptyCellSummmary,
+  CreateSystemReports,
 };
 export default ObjectFactory;

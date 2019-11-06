@@ -39,6 +39,8 @@ import { ISparklineColumnApi } from './ISparklineColumnApi';
 import { INamedFilterApi } from './INamedFilterApi';
 import { IPartnerConfigAPI } from './IPartnerConfigAPI';
 import { IColumnChooserAPI } from './IColumnChooserAPI';
+import { IApplicationApi } from './IApplicationApi';
+import { IUpdatedRowApi } from './IUpdatedRowApi';
 
 /**
  * The Blotter API (which implements the **IBlotterAPI** interface) provides developers with run-time access to the Adaptable Blotter.
@@ -57,6 +59,11 @@ import { IColumnChooserAPI } from './IColumnChooserAPI';
  */
 
 export interface IBlotterApi {
+  /**
+   * Enables use of the Application Function which lets developers render their own toolbar and screen (if required).
+   */
+  applicationApi: IApplicationApi;
+
   /**
    * Provides access to the Action Column functionality, the *ActionColumn* object.
    */
@@ -120,12 +127,12 @@ export interface IBlotterApi {
   chartApi: IChartApi;
 
   /**
-   * Provides access to the *Column Caategory* function, the *Column Category* object and [Column Category State](_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html).
+   * Provides access to the *Column Category* function, the *Column Category* object and [Column Category State](_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html).
    */
   columnCategoryApi: IColumnCategoryApi;
 
   /**
-   * Provides access to the *Column Caategory* function.
+   * Provides access to the *Column Chooser* function.
    */
   columnChooserApi: IColumnChooserAPI;
 
@@ -178,6 +185,11 @@ export interface IBlotterApi {
    * Provides access to the *Flashing Cell* function, the *Flashing Cell* object and [Flashing Cell State](_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
    */
   flashingCellApi: IFlashingCellApi;
+
+  /**
+   * Provides access to the *Updated Row* function and [Updated Row State](_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
+   */
+  updatedRowApi: IUpdatedRowApi;
 
   /**
    * Provides access to the *Format Column* function, the *Format Column* object and [Format Column State](_predefinedconfig_runtimestate_formatcolumnstate_.formatcolumnstate.html).

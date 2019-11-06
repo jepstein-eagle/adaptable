@@ -83,6 +83,7 @@ function getContextMenuItems(params: any) {
           action: function() {
             console.log('Niall was pressed');
           },
+          icon: createFlagImg('fr'),
         },
         {
           name: 'Sean',

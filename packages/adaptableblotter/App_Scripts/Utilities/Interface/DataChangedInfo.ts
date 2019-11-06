@@ -3,5 +3,5 @@ export interface DataChangedInfo {
   NewValue: any;
   ColumnId: string;
   IdentifierValue: any;
-  Record: any;
+  RowNode?: any;
 }

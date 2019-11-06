@@ -17,7 +17,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CalculatedColumnStrategyName,
       ComponentName: ScreenPopups.CalculatedColumnPopup,
-      GlyphIcon: StrategyConstants.CalculatedColumnGlyph,
+      Icon: StrategyConstants.CalculatedColumnGlyph,
     });
   }
 

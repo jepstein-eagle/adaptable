@@ -305,7 +305,7 @@ export class AuditLogService implements IAuditLogService {
         column_id: dataChangedInfo.ColumnId,
         previous_value: String(dataChangedInfo.OldValue),
         new_value: String(dataChangedInfo.NewValue),
-        row_data: this.blotter.getDataRowFromRecord(dataChangedInfo.Record),
+        row_data: this.blotter.getDataRowFromRowNode(dataChangedInfo.RowNode),
       },
     };
   }
@@ -475,20 +475,29 @@ export class AuditLogService implements IAuditLogService {
 
     switch (auditLogType) {
       case AuditLogType.CellEdit:
+        // old way
         this.blotter.api.auditEventApi._onAuditCellEdited.Dispatch(this.blotter, stateChangedArgs);
+        // new way
+        this.blotter.api.auditEventApi.emit('AuditCellEdited', stateChangedArgs);
         break;
       case AuditLogType.FunctionApplied:
+        // old way
         this.blotter.api.auditEventApi._onAuditFunctionApplied.Dispatch(
           this.blotter,
           stateChangedArgs
         );
+        // new way
+        this.blotter.api.auditEventApi.emit('AuditFunctionApplied', stateChangedArgs);
         break;
       case AuditLogType.InternalStateChange:
       case AuditLogType.UserStateChange:
+        // old way
         this.blotter.api.auditEventApi._onAuditStateChanged.Dispatch(
           this.blotter,
           stateChangedArgs
         );
+        // new way
+        this.blotter.api.auditEventApi.emit('AuditStateChanged', stateChangedArgs);
         break;
     }
   }

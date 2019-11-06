@@ -30,7 +30,7 @@ import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
 import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { DashboardStrategy } from '../Strategy/DashboardStrategy';
-import { DataManagementStrategy } from '../Strategy/DataManagementStrategy';
+import { StateManagementStrategy } from '../Strategy/StateManagementStrategy';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import { ExportStrategy } from '../Strategy/ExportStrategy';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
@@ -55,7 +55,7 @@ import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
-import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+import { RowStyle, UserMenuItem } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
 import { iconToString } from '../components/icons';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
@@ -66,6 +66,8 @@ import Helper from '../Utilities/Helpers/Helper';
 import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
 import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
 import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
+import { UpdatedRowStrategy } from '../Strategy/UpdatedRowStrategy';
+import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -111,13 +113,13 @@ export class agGridHelper {
     );
     strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid(blotter));
     strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(blotter));
-    strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(blotter));
     strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(blotter));
     strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(blotter));
     strategies.set(
       StrategyConstants.FlashingCellsStrategyId,
       new FlashingCellStrategyagGrid(blotter)
     );
+    strategies.set(StrategyConstants.UpdatedRowStrategyId, new UpdatedRowStrategyagGrid(blotter));
     strategies.set(
       StrategyConstants.FormatColumnStrategyId,
       new FormatColumnStrategyagGrid(blotter)
@@ -132,6 +134,10 @@ export class agGridHelper {
     strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(blotter));
     strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(blotter));
     strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(blotter));
+    strategies.set(
+      StrategyConstants.StateManagementStrategyId,
+      new StateManagementStrategy(blotter)
+    );
     strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(blotter));
     strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(blotter));
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter));
@@ -183,10 +189,10 @@ export class agGridHelper {
       }
 
       const maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId)
-        ? this.blotter.getRawValueFromRecord(params.node, pcr.MaxValueColumnId)
+        ? this.blotter.getRawValueFromRowNode(params.node, pcr.MaxValueColumnId)
         : pcr.MaxValue;
       const minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId)
-        ? this.blotter.getRawValueFromRecord(params.node, pcr.MinValueColumnId)
+        ? this.blotter.getRawValueFromRowNode(params.node, pcr.MinValueColumnId)
         : pcr.MinValue;
 
       if (isNegativeValue) {
@@ -336,6 +342,13 @@ export class agGridHelper {
     }
   }
 
+  public clearRowStyles(): void {
+    this.gridOptions.rowStyle = undefined;
+    this.gridOptions.rowClass = undefined;
+    this.gridOptions.getRowClass = undefined;
+    this.gridOptions.getRowStyle = undefined;
+  }
+
   public setUpRowStyles(): void {
     const rowStyles: RowStyle[] = this.blotter.api.userInterfaceApi.getUserInterfaceState()
       .RowStyles;
@@ -419,7 +432,10 @@ export class agGridHelper {
       selectedCellInfo: this.blotter.api.gridApi.getGridState().SelectedCellInfo,
       selectedRowInfo: this.blotter.api.gridApi.getGridState().SelectedRowInfo,
     };
+    // now depprecated and shortly to be removed...
     this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
+    // new way (and soon only way)
+    this.blotter.api.eventApi.emit('SelectionChanged', selectionChangedArgs);
   }
 
   public getContextMenuInfo(
@@ -429,7 +445,7 @@ export class agGridHelper {
     // lets build a picture of what has been right clicked.  Will take time to get right but lets start
 
     const colId = params.column.getColId();
-    const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRecord(params.node);
+    const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRowNode(params.node);
     let isSingleSelectedColumn: boolean = false;
     let clickedCell: GridCell = {
       columnId: colId,
@@ -452,20 +468,34 @@ export class agGridHelper {
       isSelectedCell: isSelectedCell,
       gridCell: clickedCell,
       column: column,
-      record: params.node,
+      rowNode: params.node,
       isSingleSelectedColumn: isSingleSelectedColumn,
+      primaryKeyValue: primaryKeyValue,
     };
   }
 
-  public createAgGridMenuDef(x: AdaptableBlotterMenuItem): MenuItemDef {
+  public createAgGridMenuDefFromAdaptableMenu(x: AdaptableBlotterMenuItem): MenuItemDef {
     return {
       name: x.Label,
       action: () => this.blotter.api.internalApi.dispatchReduxAction(x.Action),
-      icon: iconToString(x.GlyphIcon, {
+      icon: iconToString(x.Icon, {
         style: {
           fill: 'var(--ab-color-text-on-primary)',
         },
       }),
+    };
+  }
+
+  public createAgGridMenuDefFromUsereMenu(x: UserMenuItem): MenuItemDef {
+    return {
+      name: x.Label,
+      action: () => x.Action,
+      icon: x.Icon,
+      subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
+        ? null
+        : x.SubMenuItems.map(s => {
+            return this.createAgGridMenuDefFromUsereMenu(s);
+          }),
     };
   }
 }

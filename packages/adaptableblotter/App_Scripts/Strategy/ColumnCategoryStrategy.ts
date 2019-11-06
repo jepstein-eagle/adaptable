@@ -15,7 +15,7 @@ export class ColumnCategoryStrategy extends AdaptableStrategyBase
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnCategoryStrategyName,
       ComponentName: ScreenPopups.ColumnCategoryPopup,
-      GlyphIcon: StrategyConstants.ColumnCategoryGlyph,
+      Icon: StrategyConstants.ColumnCategoryGlyph,
     });
   }
 }

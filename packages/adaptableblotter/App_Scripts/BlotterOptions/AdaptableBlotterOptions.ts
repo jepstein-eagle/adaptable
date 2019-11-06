@@ -8,6 +8,7 @@ import { GeneralOptions } from './GeneralOptions';
 import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { AdvancedOptions } from './AdvancedOptions';
+import { FlashingUpdateOptions } from './FlashingUpdateOptions';
 
 /**
  * AdaptableBlotterOptions is the class injected into the Adaptable Blotter at startup.
@@ -34,7 +35,7 @@ export interface AdaptableBlotterOptions {
    *
    * Note: if you are using the *React Wrapper* or the *Angular Wrapper* then you do **not** need to populate this property (as *gridOptions* is a separate parameter).
    *
-   * **Default value: N/A**
+   * **Default Value: N/A**
    */
   vendorGrid?: any;
 
@@ -47,7 +48,7 @@ export interface AdaptableBlotterOptions {
    *
    * Note: The column does not need to be visible but it does need to exist in the grid's data source.
    *
-   * **Default value: N/A**
+   * **Default Value: N/A**
    */
   primaryKey: string;
 
@@ -60,7 +61,7 @@ export interface AdaptableBlotterOptions {
    *
    * The value provided here is also that used to name the *Home Toolbar* (the first toolbar that appears in the Dashboard).
    *
-   * **Default value: adaptable_blotter_id**
+   * **Default Value: adaptable_blotter_id**
    */
   blotterId?: string;
 
@@ -71,7 +72,7 @@ export interface AdaptableBlotterOptions {
    *
    * Also used in Audit Log to identify the current user who has made edits or changed state.
    *
-   * **Default value: anonymous**
+   * **Default Value: anonymous**
    */
   userName?: string;
 
@@ -86,7 +87,7 @@ export interface AdaptableBlotterOptions {
    *
    * See full details at [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
    *
-   * **Default value: null**
+   * **Default Value: null**
    */
   predefinedConfig?: PredefinedConfig | string;
 
@@ -162,6 +163,8 @@ export interface AdaptableBlotterOptions {
    * Includes options for managing Server Searching, themes and how to manage Primary Keys.
    */
   generalOptions?: GeneralOptions;
+
+  //  flashingUpdateOptions?: FlashingUpdateOptions;
 
   /**
    * A set of advanced options for the Adaptable Blotter.

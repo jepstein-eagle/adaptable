@@ -92,32 +92,25 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   createMainMenuItemShowPopup({
     Label,
     ComponentName,
-    GlyphIcon,
+    Icon,
     PopupParams,
   }: {
     Label: string;
     ComponentName: string;
-    GlyphIcon: string;
+    Icon: string;
     PopupParams?: StrategyParams;
   }): MenuItemShowPopup {
-    return new MenuItemShowPopup(
-      Label,
-      this.Id,
-      ComponentName,
-      GlyphIcon,
-      this.isVisible,
-      PopupParams
-    );
+    return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, this.isVisible, PopupParams);
   }
 
   // direct actions called by the column menu - invisible if strategy is hidden or readonly
   createColumnMenuItemReduxAction(
     Label: string,
-    GlyphIcon: string,
+    Icon: string,
     Action: Action
   ): MenuItemDoReduxAction {
     if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemDoReduxAction(Label, this.Id, Action, GlyphIcon, true);
+      return new MenuItemDoReduxAction(Label, this.Id, Action, Icon, true);
     }
   }
 
@@ -125,11 +118,11 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   createColumnMenuItemShowPopup(
     Label: string,
     ComponentName: string,
-    GlyphIcon: string,
+    Icon: string,
     PopupParams?: StrategyParams
   ): MenuItemShowPopup {
     if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, true, PopupParams);
+      return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
     }
   }
 
@@ -155,10 +148,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       } else if (functionType == 'columnfilter') {
         return column.Filterable;
       } else if (functionType == 'quickfilter') {
-        return (
-          blotter.hasQuickFilter &&
-          blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
-        );
+        return blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter;
       }
     }
     return true;

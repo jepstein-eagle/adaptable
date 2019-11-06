@@ -14,15 +14,15 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * **Further Resources**
  *
- * [Calculated Column Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005113212-Calculated-Columns)
- *
- * [Calculated Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078491-Calculated-Column-Videos)
+ * [Calculated Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *
  * [Calculated Column Demo](https://demo.adaptableblotter.com/column/aggridcalculatedcolumndemo/)
  *
- * [Calculated Column Blotter API](_api_interface_icalculatedcolumnapi_.icalculatedcolumnpi.html)
+ * [Calculated Column API](_api_interface_icalculatedcolumnapi_.icalculatedcolumnpi.html)
  *
  * [Calculated Column FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078351-Calculated-Column-FAQ)
+ *
+ * [Calculated Column Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005113212-Calculated-Columns)
  *
  **/
 export interface CalculatedColumnState extends RunTimeState {

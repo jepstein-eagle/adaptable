@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-community/dist/styles/ag-theme-blue.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
@@ -29,8 +30,18 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Theme', 'Export', 'Layout', 'CellSummary'],
+  },
   Theme: {
-    CurrentTheme: 'Dark Theme',
+    CurrentTheme: 'dark',
+    UserThemes: [
+      {
+        Name: 'BlueTheme',
+        Description: 'Blue theme',
+        VendorGridClassName: 'ag-theme-blue',
+      },
+    ],
   },
 };
 

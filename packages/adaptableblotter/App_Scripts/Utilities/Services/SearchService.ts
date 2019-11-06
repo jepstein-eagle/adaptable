@@ -61,7 +61,7 @@ export class SearchService implements ISearchService {
         setTimeout(() => this.blotter.applyGridFiltering(), 5);
         if (
           this.blotter.blotterOptions.generalOptions!.serverSearchOption == 'AllSearch' ||
-          'AllSearchandSort'
+          this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearchandSort'
         ) {
           this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
         }
@@ -90,7 +90,7 @@ export class SearchService implements ISearchService {
 
         if (
           this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearch' ||
-          'AllSearchandSort'
+          this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearchandSort'
         ) {
           this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
         }
@@ -207,7 +207,11 @@ export class SearchService implements ISearchService {
         version: '1.0.0',
         data: [searchEventData],
       };
+
+      // now depprecated and shortly to be removed...
       this.blotter.api.eventApi._onSearchChanged.Dispatch(this.blotter, searchChangedArgs);
+      // new way (and soon only way)
+      this.blotter.api.eventApi.emit('SearchChanged', searchChangedArgs);
     }
   }
 }

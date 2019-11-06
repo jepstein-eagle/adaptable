@@ -15,22 +15,14 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-
-import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
-import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
-import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
-
-import { Glue42Helper } from '../../Utilities/Helpers/Glue42Helper';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
-
 import Dropdown from '../../components/Dropdown';
 import DropdownButton from '../../components/DropdownButton';
 import icons from '../../components/icons';
@@ -52,9 +44,9 @@ interface ExportToolbarControlComponentProps
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ) => SystemRedux.ReportStopLiveAction;
   Columns: AdaptableBlotterColumn[];
-  Reports: Report[];
-  SystemReports: Report[];
-  CurrentReport: string;
+  Reports: Report[] | undefined;
+  SystemReports: Report[] | undefined;
+  CurrentReport: string | undefined;
   LiveReports: ILiveReport[];
 }
 
@@ -64,18 +56,17 @@ class ExportToolbarControlComponent extends React.Component<
 > {
   render(): any {
     const selectReportString: string = 'Select a Report';
-    let allReports: Report[] = this.props.SystemReports.concat(this.props.Reports);
+    let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
 
     let currentReport: Report = this.props.Blotter.api.exportApi.getCurrentReport();
 
-    let savedReport: Report = allReports.find(s => s.Name == this.props.CurrentReport);
-    let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
+    let savedReport: Report | undefined = allReports.find(s => s.Name == this.props.CurrentReport);
 
     let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport)
       ? selectReportString
       : this.props.CurrentReport;
 
-    let availableReports: any[] = allReports.map((report, index) => {
+    let availableReports: any[] = allReports.map(report => {
       return {
         label: report.Name,
         value: report.Name,
@@ -145,10 +136,12 @@ class ExportToolbarControlComponent extends React.Component<
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
+      this.props.Blotter.ReportService.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
         openfinExcelMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.iPushPull) && iPushPullExcelMenuItem,
-      ReportHelper.IsReportDestinationActive(ExportDestination.Glue42) && glue42MenuItem,
+      this.props.Blotter.ReportService.IsReportDestinationActive(ExportDestination.iPushPull) &&
+        iPushPullExcelMenuItem,
+      this.props.Blotter.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
+        glue42MenuItem,
     ].filter(x => !!x);
 
     let content = (
@@ -181,7 +174,9 @@ class ExportToolbarControlComponent extends React.Component<
           <ButtonEdit
             onClick={() => this.props.onEditReport()}
             tooltip="Edit Report"
-            disabled={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
+            disabled={
+              savedReport == null || this.props.Blotter.ReportService.IsSystemReport(savedReport)
+            }
             AccessLevel={this.props.AccessLevel}
           />
 
@@ -195,8 +190,10 @@ class ExportToolbarControlComponent extends React.Component<
 
           <ButtonDelete
             tooltip="Delete Report"
-            disabled={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
-            ConfirmAction={ExportRedux.ReportDelete(savedReport)}
+            disabled={
+              savedReport == null || this.props.Blotter.ReportService.IsSystemReport(savedReport)
+            }
+            ConfirmAction={ExportRedux.ReportDelete(savedReport as Report)}
             ConfirmationMsg={deleteMessage}
             ConfirmationTitle={'Delete Report'}
             AccessLevel={this.props.AccessLevel}
@@ -222,7 +219,7 @@ class ExportToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
   return {
     CurrentReport: state.Export.CurrentReport,
     Reports: state.Export.Reports,

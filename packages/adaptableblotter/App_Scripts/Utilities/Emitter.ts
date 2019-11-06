@@ -1,10 +1,12 @@
 /** based on emittery npm package, which is MIT */
 
+export type EmitterCallback = (data?: any) => any;
+
 const anyMap = new WeakMap();
 const eventsMap = new WeakMap();
 const resolvedPromise = Promise.resolve();
 
-type EmitterCallback = (data?: any) => any;
+//type EmitterCallback = (data?: any) => any;
 
 function assertEventName(eventName: string) {
   if (typeof eventName !== 'string') {

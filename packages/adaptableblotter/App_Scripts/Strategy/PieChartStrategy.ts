@@ -21,7 +21,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PieChartStrategyName,
       ComponentName: ScreenPopups.PieChartPopup,
-      GlyphIcon: StrategyConstants.PieChartGlyph,
+      Icon: StrategyConstants.PieChartGlyph,
     });
   }
 
@@ -35,7 +35,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
       };
 
       return this.createColumnMenuItemShowPopup(
-        'See as Pie Chart',
+        'View as Pie Chart',
         ScreenPopups.PieChartPopup,
         StrategyConstants.PieChartGlyph,
         popUpParams
@@ -63,9 +63,9 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
         primaryKeyValues: pkValues,
       };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'See as Pie Chart',
+        Label: 'View as Pie Chart',
         ComponentName: ScreenPopups.PieChartPopup,
-        GlyphIcon: StrategyConstants.PieChartGlyph,
+        Icon: StrategyConstants.PieChartGlyph,
         PopupParams: popUpParams,
       });
     }

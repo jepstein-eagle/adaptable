@@ -7,25 +7,17 @@ import { IExportStrategy } from './Interface/IExportStrategy';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
 import { ExportState, Report } from '../PredefinedConfig/RunTimeState/ExportState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import {
-  CELLS_SELECTED_EVENT,
-  GRID_RELOADED_EVENT,
-  GRID_REFRESHED_EVENT,
-} from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
-import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
+import { SELECTED_CELLS_REPORT } from '../Utilities/Constants/GeneralConstants';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
-  private ExportState: ExportState;
   private isSendingData = false;
   private workAroundOpenfinExcelDataDimension: Map<string, { x: number; y: number }> = new Map();
 
@@ -36,9 +28,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ExportStrategyId, blotter);
-    //  this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
 
-    this.blotter.on(GRID_RELOADED_EVENT, () => {
+    this.blotter._on('GridReloaded', () => {
       this.scheduleReports();
     });
 
@@ -82,15 +73,15 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     this.blotter.DataService.OnDataSourceChanged().Subscribe(() => {
       this.throttledRecomputeAndSendLiveExcelEvent();
     });
-    this.blotter.on(GRID_REFRESHED_EVENT, () => {
+    this.blotter._on('GridRefreshed', () => {
       this.throttledRecomputeAndSendLiveExcelEvent();
     });
 
-    this.blotter.on(CELLS_SELECTED_EVENT, () => {
+    this.blotter._on('CellsSelected', () => {
       if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
         let liveReport = this.blotter.api.internalApi
           .getLiveReports()
-          .find(x => x.Report.Name == ReportHelper.SELECTED_CELLS_REPORT);
+          .find(x => x.Report.Name == SELECTED_CELLS_REPORT);
         if (liveReport) {
           this.throttledRecomputeAndSendLiveExcelEvent();
         }
@@ -102,7 +93,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ExportStrategyName,
       ComponentName: ScreenPopups.ExportPopup,
-      GlyphIcon: StrategyConstants.ExportGlyph,
+      Icon: StrategyConstants.ExportGlyph,
     });
   }
 
@@ -262,9 +253,21 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         break;
       case ExportDestination.Glue42:
         let data: any[] = this.ConvertReportToArray(report);
+
         let gridColumns: AdaptableBlotterColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState()
           .Grid.Columns;
-        Glue42Helper.exportData(data, gridColumns, this.blotter);
+
+        try {
+          if (data) {
+            this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
+              data,
+              gridColumns,
+            ]);
+          }
+        } catch (error) {
+          LoggingHelper.LogAdaptableBlotterError(error);
+        }
+
         break;
     }
   }
@@ -313,7 +316,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
   private ConvertReportToArray(report: Report): any[] {
-    let actionReturnObj = ReportHelper.ConvertReportToArray(this.blotter, report);
+    let actionReturnObj = this.blotter.ReportService.ConvertReportToArray(report);
     if (actionReturnObj.Alert) {
       // assume that the MessageType is error - if not then refactor
       this.blotter.adaptableBlotterStore.TheStore.dispatch(

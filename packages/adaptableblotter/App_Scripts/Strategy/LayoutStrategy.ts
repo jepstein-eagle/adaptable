@@ -19,7 +19,7 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.LayoutStrategyName,
       ComponentName: ScreenPopups.LayoutPopup,
-      GlyphIcon: StrategyConstants.LayoutGlyph,
+      Icon: StrategyConstants.LayoutGlyph,
     });
   }
 }

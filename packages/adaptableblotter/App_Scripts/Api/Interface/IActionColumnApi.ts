@@ -8,12 +8,12 @@ import {
  */
 export interface IActionColumnApi {
   /**
-   * Retrieves the Action Column State
+   * Retrieves the Action Column section from the Adaptable Blotter State
    */
   getActionColumnState(): ActionColumnState;
 
   /**
-   * Returns all the Advanced Searches in the State
+   * Returns all the Advanced Searches in the Adaptable Blotter State
    */
   getAllActionColumn(): ActionColumn[];
 }

@@ -6,7 +6,7 @@ import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
 import { ActionColumnClickedEventArgs } from '../Api/Events/BlotterEvents';
 import AdaptableBlotter from '../../agGrid';
-
+import { ACTION_COLUMN_CLICKED_EVENT } from '../Utilities/Constants/GeneralConstants';
 export class ActionColumnRenderer implements ICellRendererComp {
   private eGui: any;
   private eventListener: any;
@@ -51,10 +51,14 @@ export class ActionColumnRenderer implements ICellRendererComp {
       this.eventListener = function() {
         let eventArgs: ActionColumnClickedEventArgs = {
           actionColumn: actionCol as ActionColumn,
-          primaryKeyValue: blotter.getPrimaryKeyValueFromRecord(params.node),
+          primaryKeyValue: blotter.getPrimaryKeyValueFromRowNode(params.node),
           rowData: params.data,
         };
+
+        // now depprecated and shortly to be removed...
         blotter.api.eventApi._onActionColumnClicked.Dispatch(blotter, eventArgs);
+        // new way (and soon only way)
+        blotter.api.eventApi.emit('ActionColumnClicked', eventArgs);
       };
       this.eGui.addEventListener('click', this.eventListener);
     }

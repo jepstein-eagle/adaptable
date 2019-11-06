@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
-import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues';
+import {
+  ExpressionBuilderColumnValues,
+  ExpressionBuilderColumnValuesProps,
+} from './ExpressionBuilderColumnValues';
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter';
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges';
 import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
@@ -198,59 +201,23 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
     if (shouldGetColumnValues) {
       let columnValuePairs: IRawValueDisplayValuePair[] = [];
+
+      /*
+        NOTE: We have a big bug here.  If we try to get the values from the function provided by the dev (see below)
+        then we never seem to reload the page with the new state and so the listbox is never populated and the waiting message is never removed
+      */
+
+      // There are 2 ways to get column values to show in the dropdown
+      // 1. By invoking the function provided by the dev at design-time in getColumnValues property of Query Options
+      // Note: if we invoke this function and the result is null then we get the distinct values for the column
+      // 2. If the property above is not set then instead, we get the distinct values for the column
+
       if (props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
+        // The dev has provided us with a function to call that will retrieve the column values
+
         newState = { ShowWaitingMessage: true };
-        props.Blotter.blotterOptions.queryOptions.getColumnValues(props.SelectedColumnId).then(
-          result => {
-            if (result == null) {
-              // if nothing returned then default to normal
-              columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
-                props.SelectedColumnId,
-                DistinctCriteriaPairValue.DisplayValue,
-                false
-              );
-              columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-                SortOrder.Ascending,
-                columnValuePairs,
-                DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
-              );
-              newState = {
-                ...newState,
-                ColumnRawValueDisplayValuePairs: columnValuePairs,
-                ShowWaitingMessage: false,
-                SelectedColumnId: props.SelectedColumnId,
-              };
-            } else {
-              // get the distinct items and make sure within max items that can be displayed
-              let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
-                0,
-                props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
-              );
-              distinctItems.forEach(di => {
-                let displayValue = props.Blotter.getDisplayValueFromRawValue(
-                  props.SelectedColumnId,
-                  di
-                );
-                columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
-              });
-              newState = {
-                ...newState,
-                ColumnRawValueDisplayValuePairs: columnValuePairs,
-                ShowWaitingMessage: false,
-                SelectedColumnId: props.SelectedColumnId,
-              };
-              // set the UIPermittedValues for this column to what has been sent
-              props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
-                props.SelectedColumnId,
-                distinctItems
-              );
-            }
-          },
-          function() {
-            //    this.setState({ name: error });
-          }
-        );
       } else {
+        // the developer hasnt given us a property that we need to invoke to get column values, so lets get the distinct values for the column instead
         columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
           props.SelectedColumnId,
           DistinctCriteriaPairValue.DisplayValue,
@@ -271,6 +238,82 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     }
     return newState;
   }
+
+  componentDidMount() {
+    if (this.props.Blotter!.blotterOptions.queryOptions.getColumnValues) {
+      this.setStateForColumnValues();
+    }
+  }
+
+  setStateForColumnValues(props = this.props) {
+    this.lazyLoadColumnValues(props).then(state => {
+      this.setState(state);
+    });
+  }
+
+  componentDidUpdate(_prevState: any, prevProps: any) {
+    if (
+      this.props.SelectedColumnId != prevProps.SelectedColumnId &&
+      this.props.Blotter!.blotterOptions.queryOptions.getColumnValues
+    ) {
+      this.setStateForColumnValues();
+    }
+  }
+
+  lazyLoadColumnValues = async (props: ExpressionBuilderConditionSelectorProps) => {
+    return props
+      .Blotter!.blotterOptions.queryOptions.getColumnValues(props.SelectedColumnId)
+      .then(result => {
+        let newState = {};
+        let columnValuePairs: IRawValueDisplayValuePair[] = [];
+        // we have got the result back from the function we've invoked; if the return value is null then lets get distinct values instead
+        if (result == null) {
+          //  nothing returned so get the distinct column values via the Blotter method
+          columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
+            props.SelectedColumnId,
+            DistinctCriteriaPairValue.DisplayValue,
+            false
+          );
+          columnValuePairs = ArrayExtensions.sortArrayWithProperty(
+            SortOrder.Ascending,
+            columnValuePairs,
+            DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
+          );
+          newState = {
+            ...newState,
+            ColumnRawValueDisplayValuePairs: columnValuePairs,
+            ShowWaitingMessage: false,
+            SelectedColumnId: props.SelectedColumnId,
+          };
+        } else {
+          // we have return values from our function so lets populate the state with them
+          // make sure that we only return within max items that can be displayed
+          let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
+            0,
+            props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
+          );
+          distinctItems.forEach(di => {
+            let displayValue = props.Blotter.getDisplayValueFromRawValue(
+              props.SelectedColumnId,
+              di
+            );
+            columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
+          });
+          newState = {
+            ...newState,
+            ColumnRawValueDisplayValuePairs: columnValuePairs,
+            ShowWaitingMessage: false,
+            SelectedColumnId: props.SelectedColumnId,
+          };
+          // set the UIPermittedValues for this column to what has been sent
+          props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
+            props.SelectedColumnId,
+            distinctItems
+          );
+        }
+        return newState;
+      });
+  };
 
   render() {
     let column = StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)

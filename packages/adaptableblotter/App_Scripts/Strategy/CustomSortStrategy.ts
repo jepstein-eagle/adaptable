@@ -25,7 +25,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CustomSortStrategyName,
       ComponentName: ScreenPopups.CustomSortPopup,
-      GlyphIcon: StrategyConstants.CustomSortGlyph,
+      Icon: StrategyConstants.CustomSortGlyph,
     });
   }
 
@@ -68,11 +68,11 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
   public getComparerFunction(customSort: CustomSort, blotter: IAdaptableBlotter): Function {
     return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
       let firstElementValueString = blotter.getDisplayValue(
-        blotter.getPrimaryKeyValueFromRecord(firstElement),
+        blotter.getPrimaryKeyValueFromRowNode(firstElement),
         customSort.ColumnId
       ); //firstElement[customSort.ColumnId];
       let secondElementValueString = blotter.getDisplayValue(
-        blotter.getPrimaryKeyValueFromRecord(secondElement),
+        blotter.getPrimaryKeyValueFromRowNode(secondElement),
         customSort.ColumnId
       ); //secondElement[customSort.ColumnId];
       let firstElementValue = firstElement[customSort.ColumnId];

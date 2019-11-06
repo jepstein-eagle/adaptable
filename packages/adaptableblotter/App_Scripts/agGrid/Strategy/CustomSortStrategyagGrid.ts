@@ -15,8 +15,8 @@ export class CustomSortStrategyagGrid extends CustomSortStrategy {
       nodeB?: RowNode,
       isInverted?: boolean
     ): number {
-      let firstElementValueString = blotter.getDisplayValueFromRecord(nodeA, customSort.ColumnId);
-      let secondElementValueString = blotter.getDisplayValueFromRecord(nodeB, customSort.ColumnId);
+      let firstElementValueString = blotter.getDisplayValueFromRowNode(nodeA, customSort.ColumnId);
+      let secondElementValueString = blotter.getDisplayValueFromRowNode(nodeB, customSort.ColumnId);
       let firstElementValue = valueA;
       let secondElementValue = valueB;
       let indexFirstElement = customSort.SortedValues.indexOf(firstElementValueString);

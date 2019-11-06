@@ -5,7 +5,17 @@
  *
  * And it has no ability to access this data: any data sent to the Audit Log is known only to our users, and is accessible only by them.​​
  *
- * Each Audit event can be sent to an HTTP stream, the Console or fired as an Audit Event (or any combination thereof).
+ * Each Audit event can be:
+ *
+ * - published to an HTTP stream
+ *
+ * - logged to the Console
+ *
+ * - fired as an Audit Event
+ *
+ * - shown as an Alert
+ *
+ * (or any combination thereof).
  *
  * **The default for each option for each Audit Type is false** - meaning that audit is only triggered if you set some values to true.
  *

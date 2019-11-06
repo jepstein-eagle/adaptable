@@ -5,7 +5,6 @@ import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { GRID_RELOADED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
 // This is a special strategy that the user can never remove but which is useful to us
@@ -14,7 +13,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.HomeStrategyId, blotter);
     // useful for when grid reloads (e.g. at midnight);
-    this.blotter.on(GRID_RELOADED_EVENT, () => {
+    this.blotter._on('GridReloaded', () => {
       this.blotter.applyGridFiltering();
     });
   }

@@ -4,7 +4,12 @@ import { IEvent } from '../../Interface/IEvent';
 export enum ChangeDirection {
   Up = 'Up',
   Down = 'Down',
-  Ignore = 'Ignore',
+  Neutral = 'Neutral',
+}
+
+export interface UpdatedRowInfo {
+  primaryKeyValue: any;
+  changeDirection: ChangeDirection;
 }
 
 export interface IDataService {

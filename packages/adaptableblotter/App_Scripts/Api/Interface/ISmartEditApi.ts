@@ -2,7 +2,7 @@ import { SmartEditState } from '../../PredefinedConfig/RunTimeState/SmartEditSta
 
 export interface ISmartEditApi {
   /**
-   * Retrieves the Format Column State
+   * Retrieves the Smart Edit section from the Adaptable Blotter State
    */
   getSmartEditState(): SmartEditState;
 
