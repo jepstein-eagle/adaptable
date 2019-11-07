@@ -21,6 +21,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { RowStyle } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/UserInterfaceState';
+var adaptableblotter: IAdaptableBlotter;
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
@@ -34,19 +35,20 @@ function InitAdaptableBlotter() {
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
-  adaptableblotter.api.eventApi
-    .onThemeChanged()
-    .Subscribe((sender, themeChangedEventArgs) =>
-      listenToThemeChanged(sender, themeChangedEventArgs)
-    );
+  adaptableblotter.api.eventApi.on(
+    'ThemeChanged',
+    (themeChangedEventArgs: ThemeChangedEventArgs) => {
+      listenToThemeChanged(themeChangedEventArgs);
+    }
+  );
 
   adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
 }
 
-function listenToThemeChanged(blotter: IAdaptableBlotter, args: ThemeChangedEventArgs) {
+function listenToThemeChanged(args: ThemeChangedEventArgs) {
   if (args.themeName === 'wimbledon-theme') {
     let rowStyles: RowStyle[] = [];
     let evenStyle: RowStyle = {
@@ -67,9 +69,9 @@ function listenToThemeChanged(blotter: IAdaptableBlotter, args: ThemeChangedEven
     };
     rowStyles.push(evenStyle);
     rowStyles.push(oddStyle);
-    blotter.api.userInterfaceApi.setRowStyles(rowStyles);
+    adaptableblotter.api.userInterfaceApi.setRowStyles(rowStyles);
   } else {
-    blotter.api.userInterfaceApi.clearRowStyles();
+    adaptableblotter.api.userInterfaceApi.clearRowStyles();
   }
 }
 
@@ -94,28 +96,6 @@ let demoConfig: PredefinedConfig = {
       },
     ],
     CurrentTheme: 'wimbledon-theme',
-  },
-  UserInterface: {
-    /*
-    RowStyles: [
-      {
-        Style: {
-          ForeColor: 'white',
-          BackColor: '#462376',
-          FontWeight: 'Bold',
-        },
-        RowType: 'Even',
-      },
-      {
-        Style: {
-          ForeColor: 'white',
-          BackColor: '#0e6537',
-          FontStyle: 'Italic',
-        },
-        RowType: 'Odd',
-      },
-    ],
-     */
   },
 };
 
