@@ -1,4 +1,4 @@
-import { IBlotterApi, AdaptableBlotterOptions } from '../types';
+import { AdaptableBlotterOptions } from '../types';
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
@@ -33,6 +33,7 @@ import {
 } from '../Utilities/Constants/GeneralConstants';
 import { EmitterCallback } from '../Utilities/Emitter';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
+import { BlotterApi } from '../Api/BlotterApi';
 
 /**
  *  The only interface for the AdaptableBlotter
@@ -53,7 +54,7 @@ export interface IAdaptableBlotter {
    *
    * Likewise ALL access to methods in the Blotter by external developers should be via the API
    */
-  api: IBlotterApi;
+  api: BlotterApi;
 
   /**
    * The main configuration object which contains all the options that users needs to set up the Blotter.

@@ -82,7 +82,6 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
@@ -105,7 +104,7 @@ import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
-import { BlotterApi } from '../Api/Implementation/BlotterApi';
+import { BlotterApiImpl } from '../Api/Implementation/BlotterApiImpl';
 import {
   DEFAULT_LAYOUT,
   HALF_SECOND,
@@ -165,6 +164,7 @@ import { IGlue42Service, Glue42Service } from '../Utilities/Services/Glue42Servi
 import { ApplicationToolbarButton } from '../PredefinedConfig/DesignTimeState/ApplicationState';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
+import { BlotterApi } from '../types';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -199,7 +199,7 @@ const forEachColumn = (
 };
 
 export class AdaptableBlotter implements IAdaptableBlotter {
-  public api: IBlotterApi;
+  public api: BlotterApi;
 
   public strategies: IStrategyCollection;
 
@@ -288,7 +288,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
 
     // get the api ready
-    this.api = new BlotterApi(this);
+    this.api = new BlotterApiImpl(this);
 
     // data source needs to be created before Audit Log Service
     this.DataService = new DataService(this);

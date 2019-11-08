@@ -1,4 +1,4 @@
-import { IEventApi } from './Api/Interface/IEventApi';
+import { EventApi } from './Api/EventApi';
 import {
   ThemeChangedEventArgs,
   ColumnStateChangedEventArgs,
@@ -8,11 +8,11 @@ import { SearchChangedEventArgs } from './Api/Events/SearchChanged/SearchChanged
 
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { IAdaptableBlotter } from './BlotterInterfaces/IAdaptableBlotter';
-export { IBlotterApi } from './Api/Interface/IBlotterApi';
+export { BlotterApi } from './Api/BlotterApi';
 export { AdaptableBlotterOptions } from './BlotterOptions/AdaptableBlotterOptions';
 
 export {
-  IEventApi,
+  EventApi,
   SearchChangedEventArgs,
   ThemeChangedEventArgs,
   ColumnStateChangedEventArgs,

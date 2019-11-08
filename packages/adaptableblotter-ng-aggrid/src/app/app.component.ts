@@ -4,7 +4,7 @@ import { GridOptions } from 'ag-grid-community';
 import rowData from './rowData';
 import columns from './columns';
 import { AdaptableBlotterOptions } from '../../../adaptableblotter/types';
-import { IBlotterApi } from '../../../adaptableblotter/types';
+import { BlotterApi } from '../../../adaptableblotter/types';
 
 @Component({
   selector: 'app-root',
@@ -58,7 +58,7 @@ export class AppComponent {
     };
   }
 
-  onBlotterReady(api: IBlotterApi) {
+  onBlotterReady(api: BlotterApi) {
     console.log('blotter ready!!!', api);
 
     api.auditEventApi.on('AuditCellEdited', function(args) {

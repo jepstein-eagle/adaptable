@@ -4,7 +4,7 @@ import { AdaptableBlotterOptions } from '../adaptableblotter/types';
 
 import { GridOptions } from 'ag-grid-community';
 import blotterFactory from './createBlotter';
-import { IBlotterApi } from '../adaptableblotter/types';
+import { BlotterApi } from '../adaptableblotter/types';
 
 const getRandomInt = (max: number): number =>
   Math.floor(Math.random() * Math.floor(max));
@@ -48,7 +48,7 @@ export class AdaptableBlotterAngularAgGridComponent implements OnInit {
   @Input() blotterOptions: AdaptableBlotterOptions;
   @Input() gridOptions: GridOptions;
   @Input() agGridContainerClassName: string;
-  @Input() onBlotterReady?: (api: IBlotterApi) => void;
+  @Input() onBlotterReady?: (api: BlotterApi) => void;
 
   public blotterContainerId: string;
   public gridContainerId: string;

@@ -231,7 +231,7 @@ However, you might want to style icons differently - in this case, you can custo
 
 #### Optional
 
-- onBlotterReady: (blotterApi: IBlotterApi) - gives you access to the blotter api object
+- onBlotterReady: (blotterApi: BlotterApi) - gives you access to the blotter api object
 
 ## Licences
 

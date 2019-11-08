@@ -6,7 +6,7 @@ import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 
 import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
 import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
-import { IBlotterApi } from '../../adaptableblotter/types';
+import { BlotterApi } from '../../adaptableblotter/types';
 
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 
@@ -142,7 +142,7 @@ const AdaptableBlotterReact = ({
   blotterOptions: AdaptableBlotterOptions;
   gridOptions: AgGrid.GridOptions;
 
-  onBlotterReady?: (api: IBlotterApi) => void;
+  onBlotterReady?: (api: BlotterApi) => void;
   onToolbarVisibilityChanged?: (
     toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs
   ) => void;
