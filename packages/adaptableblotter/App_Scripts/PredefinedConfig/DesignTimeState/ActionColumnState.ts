@@ -4,7 +4,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 /**
  * The Predefined Configuration for Action Columns
  *
- * An Action Column is one which shows a button that when clicked fires an onActionColumnClicked event (see [Event Api](https://api.adaptableblotter.com/interfaces/_api_interface_ieventapi_.ieventapi.html))
+ * An Action Column is one which shows a button that when clicked fires an onActionColumnClicked event (see [Event Api](https://api.adaptableblotter.com/interfaces/_api_interface_eventapi_.eventapi.html))
  *
  * You can choose to render the cell contents yourself (via the *RenderFunctionName* property).
  *

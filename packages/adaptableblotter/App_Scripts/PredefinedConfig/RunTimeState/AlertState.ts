@@ -18,7 +18,7 @@ import { QueryRange } from '../Common/Expression/QueryRange';
  *
  * [Alert Demo](https://demo.adaptableblotter.com/alertsmessages/aggridalertdemo/)
  *
- * [Alert API](_api_interface_ialertapi_.ialertapi.html)
+ * [Alert API](_api_interface_alertapi_.alertapi.html)
  *
  * [Alert FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ)
  *

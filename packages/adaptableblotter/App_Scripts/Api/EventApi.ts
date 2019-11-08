@@ -49,7 +49,7 @@ import { ApplicationToolbarButton } from '../PredefinedConfig/DesignTimeState/Ap
  *
  * Each event contains the Adaptable Blotter and an EventArgs object that contains relevant information for the event.
  *
- * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_interface_iauditeventapi_.iauditeventapi.html#onauditstatechanged).
+ * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_interface_auditeventapi_.auditeventapi.html#onauditstatechanged).
  *
  * There are currently 2 ways to subscribe to these events.
  *

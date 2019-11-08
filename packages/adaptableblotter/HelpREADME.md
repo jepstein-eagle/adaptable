@@ -8,7 +8,7 @@ There are 4 main ways that developers / users 'interact' with the code in the Ad
 
 - **Pre-populating** the Adaptable Blotter with the objects it requires at startup with all the objects it requires through writing [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
-- **Accessing all the functionality and state** in the Adaptable Blotter through code (at runtime) via the [Adaptable Blotter API](interfaces/_api_interface_iblotterapi_.iblotterapi.html).
+- **Accessing all the functionality and state** in the Adaptable Blotter through code (at runtime) via the [Adaptable Blotter API](interfaces/_api_interface_blotterapi_.blotterapi.html).
 
 ## Blotter Instantiation
 
@@ -40,7 +40,7 @@ You can provide the Adaptable Blotter at start-up with _Predefined Configuration
 
 The Adaptable Blotter API provides full safe, run-time access - through code - to all the functionality and state of the Adaptable Blotter. This allows you to create, save and delete Adaptable Blotter objects in your our screens bypassing the Blotter's UI, or to access the Store in a safe non-mutable manner.
 
-[See Adaptable Blotter API Code](interfaces/_api_interface_iblotterapi_.iblotterapi.html)
+[See Adaptable Blotter API Code](interfaces/_api_interface_blotterapi_.blotterapi.html)
 
 
 # Additional Resources

@@ -12,7 +12,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * [Custom Sort Demo](hhttps://demo.adaptableblotter.com/gridmanagement/aggridcustomsortdemo/)
  *
- * [Custom Sort API](_api_interface_icustomsortapi_.icustomsortapi.html)
+ * [Custom Sort API](_api_interface_customsortapi_.customsortapi.html)
  *
  * [Custom Sort FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170297-Custom-Sort-FAQ)
  *
