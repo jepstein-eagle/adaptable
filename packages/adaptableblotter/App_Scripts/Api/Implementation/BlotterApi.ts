@@ -90,7 +90,6 @@ import { ApplicationApiImpl } from './ApplicationApiImpl';
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
   public applicationApi: ApplicationApi;
-  public sparklineColumnApi: ISparklineColumnApi;
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
   public auditEventApi: IAuditEventApi;
@@ -124,6 +123,7 @@ export class BlotterApi implements IBlotterApi {
   public reminderApi: IReminderApi;
   public shortcutApi: IShortcutApi;
   public smartEditApi: ISmartEditApi;
+  public sparklineColumnApi: ISparklineColumnApi;
   public systemFilterApi: ISystemFilterApi;
   public systemStatusApi: ISystemStatusApi;
   public themeApi: IThemeApi;
