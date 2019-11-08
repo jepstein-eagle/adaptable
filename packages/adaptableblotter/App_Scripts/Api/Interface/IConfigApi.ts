@@ -23,6 +23,10 @@ import { AdvancedSearchState } from '../../PredefinedConfig/RunTimeState/Advance
 import { RunTimeState } from '../../PredefinedConfig/RunTimeState/RunTimeState';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { PlusMinusState } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
+import { ActionColumnState } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ApplicationState } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { SparklineColumnState } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 export interface IConfigApi {
   configInit(): void;
@@ -57,11 +61,14 @@ export interface IConfigApi {
 
   configGetUserStateByFunction(
     functionName:
+      | 'ActionColumn'
       | 'AdvancedSearch'
       | 'Alert'
+      | 'Application'
       | 'BulkUpdate'
       | 'CalculatedColumn'
       | 'Calendar'
+      | 'CellSummary'
       | 'CellValidation'
       | 'Chart'
       | 'ColumnFilter'
@@ -75,10 +82,10 @@ export interface IConfigApi {
       | 'Layout'
       | 'PlusMinus'
       | 'QuickSearch'
-      | 'CellSummary'
       | 'Shortcut'
       | 'SmartEdit'
       | 'Theme'
+      | 'UpdatedRow'
       | 'UserFilter',
     returnJson: boolean
   ): RunTimeState;
@@ -91,8 +98,10 @@ By default the method (and all those below) will return the actual object that w
 However if you pass in true for the returnJson parameter, then the method will return a JSON string.
 
   */
+  configGetActionColumnState(returnJson: boolean): ActionColumnState;
   configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;
-  configGetAlertSearchState(returnJson: boolean): AlertState;
+  configGetAlertState(returnJson: boolean): AlertState;
+  configGetApplicationState(returnJson: boolean): ApplicationState;
   configGetBulkUpdateState(returnJson: boolean): BulkUpdateState;
   configGetCalculatedColumnState(returnJson: boolean): CalculatedColumnState;
   configGetCalendarState(returnJson: boolean): CalendarState;
@@ -112,6 +121,8 @@ However if you pass in true for the returnJson parameter, then the method will r
   configGetCellSummaryState(returnJson: boolean): CellSummaryState;
   configGetShortcutState(returnJson: boolean): ShortcutState;
   configGetSmartEditState(returnJson: boolean): SmartEditState;
+  configGetSparklineColumnState(returnJson: boolean): SparklineColumnState;
   configGetThemeState(returnJson: boolean): ThemeState;
+  configGetUpdatedRowState(returnJson: boolean): UpdatedRowState;
   configGetUserFilterState(returnJson: boolean): UserFilterState;
 }

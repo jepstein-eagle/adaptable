@@ -1,12 +1,12 @@
 import { ApiBase } from './ApiBase';
-import { IApplicationApi } from '../Interface/IApplicationApi';
 
 import {
   ApplicationToolbarButton,
   ApplicationState,
 } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+import { ApplicationApi } from '../ApplicationAPI';
 
-export class ApplicationApi extends ApiBase implements IApplicationApi {
+export class ApplicationApiImpl extends ApiBase implements ApplicationApi {
   public getApplicationState(): ApplicationState {
     return this.getBlotterState().Application;
   }

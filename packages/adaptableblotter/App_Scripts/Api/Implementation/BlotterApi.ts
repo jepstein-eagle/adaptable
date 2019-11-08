@@ -82,14 +82,14 @@ import { IPartnerConfigAPI } from '../Interface/IPartnerConfigAPI';
 import { PartnerConfigAPI } from './PartnerConfigAPI';
 import { IColumnChooserAPI } from '../Interface/IColumnChooserAPI';
 import { ColumnChooserAPI } from './ColumnChooserAPI';
-import { IApplicationApi } from '../Interface/IApplicationApi';
-import { ApplicationApi } from './ApplicationApi';
 import { IUpdatedRowApi } from '../Interface/IUpdatedRowApi';
 import { UpdatedRowApi } from './UpdatedRowApi';
+import { ApplicationApi } from '../ApplicationAPI';
+import { ApplicationApiImpl } from './ApplicationApiImpl';
 
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
-  public applicationApi: IApplicationApi;
+  public applicationApi: ApplicationApi;
   public sparklineColumnApi: ISparklineColumnApi;
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
@@ -135,7 +135,7 @@ export class BlotterApi implements IBlotterApi {
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     this.actionColumnApi = new ActionColumnApi(blotter);
-    this.applicationApi = new ApplicationApi(blotter);
+    this.applicationApi = new ApplicationApiImpl(blotter);
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
     this.auditEventApi = new AuditEventApi(blotter);

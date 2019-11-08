@@ -28,6 +28,10 @@ import { StateChangedTrigger } from '../../PredefinedConfig/Common/Enums';
 import { ApiBase } from './ApiBase';
 import { IConfigApi } from '../Interface/IConfigApi';
 import Helper from '../../Utilities/Helpers/Helper';
+import { ActionColumnState } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ApplicationState } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { SparklineColumnState } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
 
 export class ConfigApi extends ApiBase implements IConfigApi {
   public configInit(): void {
@@ -86,6 +90,7 @@ export class ConfigApi extends ApiBase implements IConfigApi {
       'SelectedCells',
       'Shortcut',
       'SmartEdit',
+      'SparklineColumn',
       'Theme',
       'UserFilter',
     ];
@@ -108,11 +113,14 @@ export class ConfigApi extends ApiBase implements IConfigApi {
 
   public configGetUserStateByFunction(
     functionName:
+      | 'ActionColumn'
       | 'AdvancedSearch'
       | 'Alert'
+      | 'Application'
       | 'BulkUpdate'
       | 'CalculatedColumn'
       | 'Calendar'
+      | 'CellSummary'
       | 'CellValidation'
       | 'Chart'
       | 'ColumnFilter'
@@ -126,14 +134,19 @@ export class ConfigApi extends ApiBase implements IConfigApi {
       | 'Layout'
       | 'PlusMinus'
       | 'QuickSearch'
-      | 'CellSummary'
       | 'Shortcut'
       | 'SmartEdit'
+      | 'SparklineColumn'
       | 'Theme'
+      | 'UpdatedRow'
       | 'UserFilter',
     returnJson: boolean = false
   ): RunTimeState {
     switch (functionName as StateChangedTrigger) {
+      case StateChangedTrigger.ActionColumn:
+        return returnJson
+          ? JSON.stringify(this.getBlotterState().ActionColumn)
+          : this.getBlotterState().ActionColumn;
       case StateChangedTrigger.AdvancedSearch:
         return returnJson
           ? JSON.stringify(this.getBlotterState().AdvancedSearch)
@@ -142,6 +155,10 @@ export class ConfigApi extends ApiBase implements IConfigApi {
         return returnJson
           ? JSON.stringify(this.getBlotterState().Alert)
           : this.getBlotterState().Alert;
+      case StateChangedTrigger.Application:
+        return returnJson
+          ? JSON.stringify(this.getBlotterState().Application)
+          : this.getBlotterState().Application;
       case StateChangedTrigger.BulkUpdate:
         return returnJson
           ? JSON.stringify(this.getBlotterState().BulkUpdate)
@@ -218,15 +235,30 @@ export class ConfigApi extends ApiBase implements IConfigApi {
         return returnJson
           ? JSON.stringify(this.getBlotterState().SmartEdit)
           : this.getBlotterState().SmartEdit;
+      case StateChangedTrigger.SparklineColumn:
+        return returnJson
+          ? JSON.stringify(this.getBlotterState().SparklineColumn)
+          : this.getBlotterState().SparklineColumn;
       case StateChangedTrigger.Theme:
         return returnJson
           ? JSON.stringify(this.getBlotterState().Theme)
           : this.getBlotterState().Theme;
+      case StateChangedTrigger.UpdatedRow:
+        return returnJson
+          ? JSON.stringify(this.getBlotterState().UpdatedRow)
+          : this.getBlotterState().UpdatedRow;
       case StateChangedTrigger.UserFilter:
         return returnJson
           ? JSON.stringify(this.getBlotterState().UserFilter)
           : this.getBlotterState().UserFilter;
     }
+  }
+
+  public configGetActionColumnState(returnJson: boolean = false): ActionColumnState {
+    return this.configGetUserStateByFunction(
+      StateChangedTrigger.ActionColumn,
+      returnJson
+    ) as ActionColumnState;
   }
 
   public configGetAdvancedSearchState(returnJson: boolean = false): AdvancedSearchState {
@@ -235,8 +267,14 @@ export class ConfigApi extends ApiBase implements IConfigApi {
       returnJson
     ) as AdvancedSearchState;
   }
-  public configGetAlertSearchState(returnJson: boolean = false): AlertState {
+  public configGetAlertState(returnJson: boolean = false): AlertState {
     return this.configGetUserStateByFunction(StateChangedTrigger.Alert, returnJson) as AlertState;
+  }
+  public configGetApplicationState(returnJson: boolean = false): ApplicationState {
+    return this.configGetUserStateByFunction(
+      StateChangedTrigger.Application,
+      returnJson
+    ) as ApplicationState;
   }
   public configGetBulkUpdateState(returnJson: boolean = false): BulkUpdateState {
     return this.configGetUserStateByFunction(
@@ -343,8 +381,20 @@ export class ConfigApi extends ApiBase implements IConfigApi {
       returnJson
     ) as SmartEditState;
   }
+  public configGetSparklineColumnState(returnJson: boolean = false): SparklineColumnState {
+    return this.configGetUserStateByFunction(
+      StateChangedTrigger.SparklineColumn,
+      returnJson
+    ) as SparklineColumnState;
+  }
   public configGetThemeState(returnJson: boolean = false): ThemeState {
     return this.configGetUserStateByFunction(StateChangedTrigger.Theme, returnJson) as ThemeState;
+  }
+  public configGetUpdatedRowState(returnJson: boolean = false): UpdatedRowState {
+    return this.configGetUserStateByFunction(
+      StateChangedTrigger.UpdatedRow,
+      returnJson
+    ) as UpdatedRowState;
   }
   public configGetUserFilterState(returnJson: boolean = false): UserFilterState {
     return this.configGetUserStateByFunction(

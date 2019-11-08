@@ -60,6 +60,14 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Theme', 'Export', 'Layout'],
   },
+  Entitlements: {
+    FunctionEntitlements: [
+      {
+        FunctionName: 'CellValidation',
+        AccessLevel: 'ReadOnly',
+      },
+    ],
+  },
 };
 
 export default () => {

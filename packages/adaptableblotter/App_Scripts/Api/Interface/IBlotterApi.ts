@@ -39,7 +39,7 @@ import { ISparklineColumnApi } from './ISparklineColumnApi';
 import { INamedFilterApi } from './INamedFilterApi';
 import { IPartnerConfigAPI } from './IPartnerConfigAPI';
 import { IColumnChooserAPI } from './IColumnChooserAPI';
-import { IApplicationApi } from './IApplicationApi';
+import { IApplicationApi } from '../ApplicationAPI';
 import { IUpdatedRowApi } from './IUpdatedRowApi';
 
 /**

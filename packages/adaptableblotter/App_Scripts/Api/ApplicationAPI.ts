@@ -1,13 +1,13 @@
 import {
   ApplicationToolbarButton,
   ApplicationState,
-} from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+} from '../PredefinedConfig/DesignTimeState/ApplicationState';
 
 /**
  * Provides access to an empty Toolbar and Popup, allowing developers to populate it as they wish.
  *
  */
-export interface IApplicationApi {
+export interface ApplicationApi {
   /**
    * Retrieves the Application section from the Adaptable Blotter State - currently just a list of Application Toolbar butons
    */

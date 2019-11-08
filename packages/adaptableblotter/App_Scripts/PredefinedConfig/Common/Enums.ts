@@ -176,8 +176,10 @@ export enum SearchChangedTrigger {
 }
 
 export enum StateChangedTrigger {
+  ActionColumn = 'ActionColumn',
   AdvancedSearch = 'AdvancedSearch',
   Alert = 'Alert',
+  Application = 'Application',
   BulkUpdate = 'BulkUpdate',
   CalculatedColumn = 'CalculatedColumn',
   Calendar = 'Calendar',
@@ -201,7 +203,9 @@ export enum StateChangedTrigger {
   Reminder = 'Reminder',
   Shortcut = 'Shortcut',
   SmartEdit = 'SmartEdit',
+  SparklineColumn = 'SparklineColumn',
   Theme = 'Theme',
+  UpdatedRow = 'UpdatedRow',
   UserFilter = 'UserFilter',
 }
 
