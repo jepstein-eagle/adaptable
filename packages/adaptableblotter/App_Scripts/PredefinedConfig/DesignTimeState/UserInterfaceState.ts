@@ -10,7 +10,7 @@ import { IStyle } from '../Common/IStyle';
  *
  * [User Interface Demo](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/)
  *
- * [User Interface API](_api_interface_userinterfaceapi_.userinterfaceapi.html)
+ * [User Interface API](_api_userinterfaceapi_.userinterfaceapi.html)
  *
  * [Advanced Search FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004951-Advanced-Search-FAQ)
  **/

@@ -10,7 +10,7 @@ import { RunTimeState } from './RunTimeState';
  *
  * [Bulk Update Demo](https://demo.adaptableblotter.com/edit/aggridbulkupdatedemo/)
  *
- * [Bulk Update Blotter API](https://api.adaptableblotter.com/interfaces/_api_interface_bulkupdateapi_.bulkupdateapi.html)
+ * [Bulk Update Blotter API](https://api.adaptableblotter.com/interfaces/_api_bulkupdateapi_.bulkupdateapi.html)
  *
  * [Bulk Update FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029742872-Bulk-Update-FAQ)
  *

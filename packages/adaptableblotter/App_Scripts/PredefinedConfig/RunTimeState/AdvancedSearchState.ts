@@ -15,7 +15,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * [Advanced Search Demo](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/)
  *
- * [Advanced Search API](_api_interface_advancedsearchapi_.advancedsearchapi.html)
+ * [Advanced Search API](_api_advancedsearchapi_.advancedsearchapi.html)
  *
  * [Advanced Search FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ)
  *

@@ -14,7 +14,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * **Rendering Content**
  *
- * The Adaptable Blotter provides the [applicationAPI](_api_interface_applicationapi_.applicationapi.html) **getApplicationToolbarContentsDiv** method that returns the name of the Div in which you should render the contents.
+ * The Adaptable Blotter provides the [applicationAPI](_api_applicationapi_.applicationapi.html) **getApplicationToolbarContentsDiv** method that returns the name of the Div in which you should render the contents.
  *
  * You can listen to the **ToolbarVisibilityChanged** event published by the Adaptable Blotter which provides the name of relevant toolbar and its new visibility; if its the Application Toolbar then render as required.
  *

@@ -16,7 +16,7 @@ import { IStyle } from '../Common/IStyle';
  *
  * [Conditional Style Demo](https://demo.adaptableblotter.com/style/aggridconditionalstyledemo/)
  *
- * [Conditional Style API](_api_interface_conditionalstyleapi_.conditionalstyleapi.html)
+ * [Conditional Style API](_api_conditionalstyleapi_.conditionalstyleapi.html)
  *
  * [Conditional Style FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029742932-Conditional-Styles-FAQ)
  *
