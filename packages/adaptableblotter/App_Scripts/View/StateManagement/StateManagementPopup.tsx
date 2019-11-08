@@ -11,6 +11,7 @@ import { UIHelper } from '../UIHelper';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex, Box } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
+import HelpBlock from '../../components/HelpBlock';
 
 interface StateManagementPopupProps extends StrategyViewPopupProps<StateManagementPopupComponent> {}
 
@@ -27,7 +28,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
 
     let clearButton = (
       <SimpleButton
-        onClick={() => this.onClear()}
+        onClick={() => this.onClearLocalStorage()}
         tooltip="Clear User Data"
         tone="error"
         variant="raised"
@@ -35,6 +36,34 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
         AccessLevel={AccessLevel.Full}
       >
         Clear User Data
+      </SimpleButton>
+    );
+
+    let copyAllButton = (
+      <SimpleButton
+        onClick={() => this.onCopyAllStateToClipboard()}
+        tooltip="Copy All Data to Clipboard"
+        tone="neutral"
+        variant="raised"
+        marginTop={2}
+        marginRight={3}
+        AccessLevel={AccessLevel.Full}
+      >
+        Copy All Data to Clipboard
+      </SimpleButton>
+    );
+
+    let copyUserStateButton = (
+      <SimpleButton
+        onClick={() => this.onCopyUserStateToClipboard()}
+        tooltip="Copy User State to Clipboard"
+        tone="neutral"
+        variant="raised"
+        marginTop={2}
+        marginRight={3}
+        AccessLevel={AccessLevel.Full}
+      >
+        Copy User Data to Clipboard
       </SimpleButton>
     );
 
@@ -47,27 +76,32 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
           infoBody={infoBody}
         >
           <Box>
-            <p>Click below to clear all current user state that has been applied.</p>
-            <p>
-              When you restart / refresh the Blotter any state that you have previously created will
-              be lost.
-            </p>
-            <p>
-              However your <i>predefined config</i> will be re-added.
-            </p>
-            <p>
-              <b>This option should ideally only appear in non production builds.</b>
-            </p>
+            <HelpBlock>
+              {
+                'Clear all current user state that has been applied.   When you restart / refresh the Blotter any state that you have previously created will be lost.  However your Predefined Config will then be re-applied.'
+              }
+            </HelpBlock>
+            {clearButton}
+            <HelpBlock marginTop={3}>
+              {'Copy either everything in the State, or just the User State, to the Clipboard.'}
+            </HelpBlock>
+            {copyAllButton}
+            {copyUserStateButton}
           </Box>
-
-          {clearButton}
         </PanelWithButton>
       </Flex>
     );
   }
 
-  onClear() {
+  onClearLocalStorage() {
     this.props.Blotter.api.configApi.configDeleteLocalStorage();
+  }
+
+  onCopyAllStateToClipboard() {
+    this.props.Blotter.api.configApi.configCopyAllStateToClipboard();
+  }
+  onCopyUserStateToClipboard() {
+    this.props.Blotter.api.configApi.configCopyUserStateToClipboard();
   }
 }
 

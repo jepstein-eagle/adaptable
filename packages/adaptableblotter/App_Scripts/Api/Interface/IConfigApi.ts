@@ -36,6 +36,9 @@ export interface IConfigApi {
 
   configDeleteLocalStorage(): void;
 
+  configCopyAllStateToClipboard(): void;
+  configCopyUserStateToClipboard(): void;
+
   /**
    * Loads the user state that is supplied.
    *

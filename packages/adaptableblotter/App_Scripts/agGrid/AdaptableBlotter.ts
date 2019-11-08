@@ -105,7 +105,7 @@ import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
-import { BlotterApi } from '../Api/BlotterApi';
+import { BlotterApi } from '../Api/Implementation/BlotterApi';
 import {
   DEFAULT_LAYOUT,
   HALF_SECOND,
