@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
+import { Reminder } from '../../../PredefinedConfig/ReminderState';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import Dropdown from '../../../components/Dropdown';

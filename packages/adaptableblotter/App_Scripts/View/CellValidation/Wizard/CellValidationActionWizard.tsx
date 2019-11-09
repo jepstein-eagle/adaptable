@@ -7,7 +7,7 @@ import {
 import { ActionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
-import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 
 import { Flex, Box } from 'rebass';
 import WizardPanel from '../../../components/WizardPanel';

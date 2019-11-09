@@ -1,7 +1,4 @@
-import {
-  FlashingCellState,
-  FlashingCell,
-} from '../PredefinedConfig/RunTimeState/FlashingCellState';
+import { FlashingCellState, FlashingCell } from '../PredefinedConfig/FlashingCellState';
 
 /**
  * Provides full and comprehensive run-time access to the Flashing Cell function and associated state.

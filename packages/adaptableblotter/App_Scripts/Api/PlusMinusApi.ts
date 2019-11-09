@@ -1,4 +1,4 @@
-import { PlusMinusState, PlusMinusRule } from '../PredefinedConfig/RunTimeState/PlusMinusState';
+import { PlusMinusState, PlusMinusRule } from '../PredefinedConfig/PlusMinusState';
 
 export interface PlusMinusApi {
   getPlusMinusState(): PlusMinusState;

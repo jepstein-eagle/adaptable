@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 
-import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { getHexForName, RED, GREEN, GRAY } from '../../View/UIHelper';
 import { UPDATED_ROWS_DEFAULT_DURATION } from '../../Utilities/Constants/GeneralConstants';
 

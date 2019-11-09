@@ -19,7 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
+import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {

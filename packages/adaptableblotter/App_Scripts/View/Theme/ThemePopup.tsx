@@ -8,7 +8,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
-import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
 import { Flex, Box, Text } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 

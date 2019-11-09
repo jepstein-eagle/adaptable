@@ -11,8 +11,8 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { StateChangedTrigger } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
-import { QuickSearchState } from '../../../../App_Scripts/PredefinedConfig/RunTimeState/QuickSearchState';
-import { AdvancedSearchState } from '../../../../App_Scripts/PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { QuickSearchState } from '../../../../App_Scripts/PredefinedConfig/QuickSearchState';
+import { AdvancedSearchState } from '../../../../App_Scripts/PredefinedConfig/AdvancedSearchState';
 import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
 
 var adaptableblotter1: IAdaptableBlotter;

@@ -1,7 +1,4 @@
-import {
-  ApplicationToolbarButton,
-  ApplicationState,
-} from '../PredefinedConfig/DesignTimeState/ApplicationState';
+import { ApplicationToolbarButton, ApplicationState } from '../PredefinedConfig/ApplicationState';
 
 /**
  * Provides access to an empty Toolbar and Popup, allowing developers to populate it as they wish.

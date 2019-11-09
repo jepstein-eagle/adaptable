@@ -10,7 +10,7 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Input from '../../components/Input';
-import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../../PredefinedConfig/SparklineColumnState';
 import { SparklineTypeDropdown } from './Wizard/SparklineColumnSettingsWizard';
 import { ColorPicker } from '../ColorPicker';
 import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';

@@ -11,7 +11,7 @@ import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import Dropdown from '../../components/Dropdown';
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {

@@ -12,7 +12,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
-import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
 import DropdownButton from '../../components/DropdownButton';
 
 interface ThemeToolbarControlComponentProps

@@ -2,7 +2,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux';
 import { ApiBase } from './ApiBase';
 import { CustomSortApi } from '../CustomSortApi';
-import { CustomSortState, CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
+import { CustomSortState, CustomSort } from '../../PredefinedConfig/CustomSortState';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class CustomSortApiImpl extends ApiBase implements CustomSortApi {

@@ -1,7 +1,7 @@
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
-import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { DataChangedInfo } from './DataChangedInfo';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';

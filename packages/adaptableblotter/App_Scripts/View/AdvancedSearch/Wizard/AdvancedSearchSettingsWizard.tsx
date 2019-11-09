@@ -8,7 +8,7 @@ import Panel from '../../../components/Panel';
 import Input from '../../../components/Input';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AdvancedSearch } from '../../../PredefinedConfig/AdvancedSearchState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 import { Flex, Box } from 'rebass';

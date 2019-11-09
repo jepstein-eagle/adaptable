@@ -10,7 +10,7 @@ import WizardPanel from '../../../components/WizardPanel';
 import Panel from '../../../components/Panel';
 import Radio from '../../../components/Radio';
 import Input from '../../../components/Input';
-import { SparklineColumn } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../../../PredefinedConfig/SparklineColumnState';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import Dropdown, { DropdownProps } from '../../../components/Dropdown';
 import CheckBox from '../../../components/CheckBox';

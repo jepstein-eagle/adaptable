@@ -21,7 +21,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
+import { PercentBar } from '../../PredefinedConfig/PercentBarState';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 import PercentBarHelper from '../../Utilities/Helpers/PercentBarHelper';
 

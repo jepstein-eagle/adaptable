@@ -5,7 +5,7 @@ import { CustomSortValuesWizard } from './CustomSortValuesWizard';
 import { CustomSortSummaryWizard } from './CustomSortSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
+import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
 
 export interface CustomSortWizardProps
   extends AdaptableBlotterObjectExpressionAdaptableWizardProps<CustomSortWizard> {}

@@ -7,7 +7,7 @@ import {
 
 import { AdaptablePopover } from '../../AdaptablePopover';
 
-import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
+import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
 import { ColorPicker } from '../../ColorPicker';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import WizardPanel from '../../../components/WizardPanel';

@@ -1,4 +1,4 @@
-import { PartnerConfigState } from '../PredefinedConfig/DesignTimeState/PartnerConfigState';
+import { PartnerConfigState } from '../PredefinedConfig/PartnerConfigState';
 
 export interface PartnerConfigAPI {
   getPartnerConfigState(): PartnerConfigState;

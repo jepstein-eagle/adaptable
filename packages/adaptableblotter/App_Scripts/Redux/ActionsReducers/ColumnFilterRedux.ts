@@ -1,8 +1,5 @@
 import * as Redux from 'redux';
-import {
-  ColumnFilterState,
-  ColumnFilter,
-} from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { ColumnFilterState, ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 

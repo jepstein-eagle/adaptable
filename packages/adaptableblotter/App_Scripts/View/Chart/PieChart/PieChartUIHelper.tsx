@@ -3,7 +3,7 @@ import {
   PieChartProperties,
   ChartData,
   PieChartDataItem,
-} from '../../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../../PredefinedConfig/ChartState';
 import { PieChartComponentState } from './PieChartComponentState';
 import { SliceSortOption } from '../../../PredefinedConfig/Common/ChartEnums';
 import { DefaultPieChartProperties } from '../../../Utilities/Defaults/DefaultPieChartProperties';

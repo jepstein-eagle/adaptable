@@ -2,9 +2,9 @@ import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { Helper } from './Helper';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
-import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
+import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 
 // String, Numeric and Date
 export const BLANKS_SYSTEM_FILTER = 'Blanks';

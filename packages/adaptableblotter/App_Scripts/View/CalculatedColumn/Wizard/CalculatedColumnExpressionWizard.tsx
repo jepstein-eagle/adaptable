@@ -5,7 +5,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
 import ErrorBox from '../../../components/ErrorBox';
 import Textarea from '../../../components/Textarea';
 import WizardPanel from '../../../components/WizardPanel';

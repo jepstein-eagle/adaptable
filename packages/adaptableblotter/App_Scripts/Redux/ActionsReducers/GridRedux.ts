@@ -1,10 +1,10 @@
 import * as Redux from 'redux';
-import { GridState } from '../../PredefinedConfig/InternalState/GridState';
+import { GridState } from '../../PredefinedConfig/GridState';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';

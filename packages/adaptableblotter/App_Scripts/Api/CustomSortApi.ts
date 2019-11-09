@@ -1,4 +1,4 @@
-import { CustomSortState, CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
+import { CustomSortState, CustomSort } from '../PredefinedConfig/CustomSortState';
 
 export interface CustomSortApi {
   getCustomSortState(): CustomSortState;

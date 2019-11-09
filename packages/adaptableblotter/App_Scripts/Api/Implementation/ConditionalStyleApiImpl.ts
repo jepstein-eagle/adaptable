@@ -3,7 +3,7 @@ import { ConditionalStyleApi } from '../ConditionalStyleApi';
 import {
   ConditionalStyleState,
   ConditionalStyle,
-} from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+} from '../../PredefinedConfig/ConditionalStyleState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

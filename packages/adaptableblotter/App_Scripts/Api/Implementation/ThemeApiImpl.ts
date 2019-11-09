@@ -3,7 +3,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { ThemeApi } from '../ThemeApi';
-import { ThemeState, AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { ThemeState, AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
 
 export class ThemeApiImpl extends ApiBase implements ThemeApi {
   public getThemeState(): ThemeState {

@@ -1,4 +1,4 @@
-import { DashboardState } from '../PredefinedConfig/RunTimeState/DashboardState';
+import { DashboardState } from '../PredefinedConfig/DashboardState';
 
 export interface DashboardApi {
   GetState(): DashboardState;

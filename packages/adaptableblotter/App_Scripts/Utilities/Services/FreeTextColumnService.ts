@@ -2,10 +2,7 @@ import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { IAdaptableBlotter } from '../../types';
-import {
-  FreeTextColumn,
-  FreeTextStoredValue,
-} from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { FreeTextColumn, FreeTextStoredValue } from '../../PredefinedConfig/FreeTextColumnState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 export class FreeTextColumnService implements IFreeTextColumnService {

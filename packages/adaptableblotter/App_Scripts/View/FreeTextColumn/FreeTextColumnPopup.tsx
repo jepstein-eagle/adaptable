@@ -20,7 +20,7 @@ import {
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 

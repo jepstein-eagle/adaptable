@@ -2,7 +2,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ApiBase } from './ApiBase';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import { DashboardApi } from '../DashboardApi';
-import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
+import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

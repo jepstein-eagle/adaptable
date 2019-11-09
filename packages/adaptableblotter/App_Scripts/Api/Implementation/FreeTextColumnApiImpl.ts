@@ -8,7 +8,7 @@ import {
   FreeTextColumnState,
   FreeTextColumn,
   FreeTextStoredValue,
-} from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+} from '../../PredefinedConfig/FreeTextColumnState';
 
 export class FreeTextColumnApiImpl extends ApiBase implements FreeTextColumnApi {
   public getFreeTextColumnState(): FreeTextColumnState {

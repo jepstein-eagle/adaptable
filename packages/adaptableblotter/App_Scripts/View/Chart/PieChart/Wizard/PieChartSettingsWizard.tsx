@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { PieChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { PieChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';

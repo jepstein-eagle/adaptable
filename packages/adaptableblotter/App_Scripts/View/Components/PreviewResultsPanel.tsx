@@ -3,10 +3,10 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
-import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 
 import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';

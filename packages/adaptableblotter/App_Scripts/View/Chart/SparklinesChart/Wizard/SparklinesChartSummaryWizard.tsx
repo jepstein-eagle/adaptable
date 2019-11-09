@@ -5,7 +5,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { SparklinesChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { SparklinesChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import ColumnHelper from '../../../../Utilities/Helpers/ColumnHelper';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';
 import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';

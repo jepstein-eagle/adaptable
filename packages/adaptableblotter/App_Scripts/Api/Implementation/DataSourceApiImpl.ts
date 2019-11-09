@@ -3,7 +3,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
 import { ApiBase } from './ApiBase';
 import { DataSourceApi } from '../DataSourceApi';
-import { DataSourceState, DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceState';
 
 export class DataSourceApiImpl extends ApiBase implements DataSourceApi {
   public getDataSourceState(): DataSourceState {

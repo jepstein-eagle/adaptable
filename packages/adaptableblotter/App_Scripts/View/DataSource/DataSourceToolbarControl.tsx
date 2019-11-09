@@ -11,7 +11,7 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
-import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { DataSourceParamsPopover } from './DataSourceParamsPopover';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';

@@ -5,7 +5,7 @@ import { ColumnCategoryColumnsWizard } from './ColumnCategoryColumnsWizard';
 import { ColumnCategorySummaryWizard } from './ColumnCategorySummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 
 export interface ColumnCategoryWizardProps
   extends AdaptableBlotterObjectExpressionAdaptableWizardProps<ColumnCategoryWizard> {

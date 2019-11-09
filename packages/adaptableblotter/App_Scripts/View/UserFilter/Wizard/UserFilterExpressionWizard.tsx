@@ -4,7 +4,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { UIHelper } from '../../UIHelper';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export class UserFilterExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {

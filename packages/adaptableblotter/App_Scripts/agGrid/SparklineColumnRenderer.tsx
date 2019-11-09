@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 
 import { ICellRendererParams, ICellRendererFunc } from 'ag-grid-community';
 import SparklineChart from '../components/SparklineChart';
-import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { SparklineTypeEnum } from '../PredefinedConfig/Common/ChartEnums';
 
 export const getSparklineRendererForColumn = (

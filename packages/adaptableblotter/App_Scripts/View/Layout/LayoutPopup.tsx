@@ -23,7 +23,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { Layout } from '../../PredefinedConfig/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';

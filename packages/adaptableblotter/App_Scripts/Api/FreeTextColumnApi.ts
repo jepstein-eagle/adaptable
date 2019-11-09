@@ -2,7 +2,7 @@ import {
   FreeTextColumnState,
   FreeTextColumn,
   FreeTextStoredValue,
-} from '../PredefinedConfig/RunTimeState/FreeTextColumnState';
+} from '../PredefinedConfig/FreeTextColumnState';
 /**
  * Provides full and comprehensive run-time access to the Free Text Column function and associated state.
  *

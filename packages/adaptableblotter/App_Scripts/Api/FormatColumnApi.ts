@@ -1,8 +1,5 @@
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
-import {
-  FormatColumnState,
-  FormatColumn,
-} from '../PredefinedConfig/RunTimeState/FormatColumnState';
+import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColumnState';
 
 /**
  * Provides full and comprehensive run-time access to the Format Column function and associated state.

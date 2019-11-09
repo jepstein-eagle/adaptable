@@ -8,7 +8,7 @@ import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import * as CalendarConstants from '../../../Utilities/Constants/CalendarConstants';
-import { Shortcut } from '../../../PredefinedConfig/RunTimeState/ShortcutState';
+import { Shortcut } from '../../../PredefinedConfig/ShortcutState';
 import WizardPanel from '../../../components/WizardPanel';
 import Dropdown from '../../../components/Dropdown';
 import { Flex, Text } from 'rebass';

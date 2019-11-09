@@ -3,7 +3,7 @@ import { ApiBase } from './ApiBase';
 import {
   ApplicationToolbarButton,
   ApplicationState,
-} from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+} from '../../PredefinedConfig/ApplicationState';
 import { ApplicationApi } from '../ApplicationAPI';
 
 export class ApplicationApiImpl extends ApiBase implements ApplicationApi {

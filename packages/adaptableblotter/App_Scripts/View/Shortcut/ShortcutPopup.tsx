@@ -25,7 +25,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import Helper from '../../Utilities/Helpers/Helper';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
+import { Shortcut } from '../../PredefinedConfig/ShortcutState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {

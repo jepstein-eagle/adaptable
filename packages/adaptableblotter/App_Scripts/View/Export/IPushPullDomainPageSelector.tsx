@@ -12,7 +12,7 @@ import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../PredefinedConfig/ExportState';
 import ListGroupItem from '../../components/List/ListGroupItem';
 import ListGroup from '../../components/List/ListGroup';
 import ErrorBox from '../../components/ErrorBox';

@@ -1,5 +1,5 @@
 import { ApiBase } from './ApiBase';
-import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { UpdatedRowApi } from '../UpdatedRowApi';
 import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';

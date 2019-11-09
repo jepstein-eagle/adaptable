@@ -2,7 +2,7 @@ import {
   ChartDefinition,
   ChartProperties,
   CategoryChartProperties,
-} from '../../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../../PredefinedConfig/ChartState';
 
 // dont normally do this but Component was getting so bid and unwieldy...
 

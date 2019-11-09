@@ -15,8 +15,8 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
-import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
-import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import { Shortcut } from '../PredefinedConfig/ShortcutState';
+import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 

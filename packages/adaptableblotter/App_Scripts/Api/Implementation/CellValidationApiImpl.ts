@@ -4,7 +4,7 @@ import { CellValidationApi } from '../CellValidationApi';
 import {
   CellValidationState,
   CellValidationRule,
-} from '../../PredefinedConfig/RunTimeState/CellValidationState';
+} from '../../PredefinedConfig/CellValidationState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

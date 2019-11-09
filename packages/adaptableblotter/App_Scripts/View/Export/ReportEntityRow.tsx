@@ -6,7 +6,7 @@ import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../PredefinedConfig/ExportState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 import icons from '../../components/icons';

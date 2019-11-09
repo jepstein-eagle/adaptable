@@ -1,7 +1,7 @@
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { GridState } from '../PredefinedConfig/InternalState/GridState';
+import { GridState } from '../PredefinedConfig/GridState';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
+import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';

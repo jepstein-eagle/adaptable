@@ -1,4 +1,4 @@
-import { LayoutState, Layout } from '../PredefinedConfig/RunTimeState/LayoutState';
+import { LayoutState, Layout } from '../PredefinedConfig/LayoutState';
 
 /**
  * Provides full and comprehensive run-time access to the Layout function and associated Layout state (from Predefined Config).

@@ -5,7 +5,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { QuickSearchApi } from '../QuickSearchApi';
-import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
+import { QuickSearchState } from '../../PredefinedConfig/QuickSearchState';
 
 export class QuickSearchApiImpl extends ApiBase implements QuickSearchApi {
   public getQuickSearchState(): QuickSearchState {

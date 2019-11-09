@@ -7,7 +7,7 @@ import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { SHORTCUT_ADD } from '../../../Redux/ActionsReducers/ShortcutRedux';
-import { Layout } from '../../../PredefinedConfig/RunTimeState/LayoutState';
+import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';

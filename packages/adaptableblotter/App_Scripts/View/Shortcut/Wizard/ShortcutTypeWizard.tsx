@@ -1,4 +1,4 @@
-import { Shortcut } from '../../../PredefinedConfig/RunTimeState/ShortcutState';
+import { Shortcut } from '../../../PredefinedConfig/ShortcutState';
 /// <reference path="../../typings/index.d.ts" />
 import * as React from 'react';
 

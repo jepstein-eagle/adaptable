@@ -1,9 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { ActionColumnApi } from '../ActionColumnApi';
-import {
-  ActionColumnState,
-  ActionColumn,
-} from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ActionColumnState, ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 
 export class ActionColumnApiImpl extends ApiBase implements ActionColumnApi {
   public getActionColumnState(): ActionColumnState {

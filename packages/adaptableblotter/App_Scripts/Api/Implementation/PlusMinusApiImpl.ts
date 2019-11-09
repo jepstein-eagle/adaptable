@@ -1,5 +1,5 @@
 import { ApiBase } from './ApiBase';
-import { PlusMinusState, PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
+import { PlusMinusState, PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import { PlusMinusApi } from '../PlusMinusApi';
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';

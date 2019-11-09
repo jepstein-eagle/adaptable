@@ -15,7 +15,7 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
-import { Layout, ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
+import { Layout, ColumnSort } from '../../../PredefinedConfig/LayoutState';
 import SimpleButton from '../../../components/SimpleButton';
 
 import EmptyContent from '../../../components/EmptyContent';

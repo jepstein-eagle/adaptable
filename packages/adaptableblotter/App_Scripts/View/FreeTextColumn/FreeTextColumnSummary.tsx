@@ -19,7 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 export interface FreeTextColumnSummaryProps

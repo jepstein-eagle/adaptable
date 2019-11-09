@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
-import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../../PredefinedConfig/ExportState';
 import { UIHelper } from '../../UIHelper';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

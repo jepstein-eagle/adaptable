@@ -9,7 +9,7 @@ import {
   PieChartDefinition,
   ChartData,
   SparklinesChartDefinition,
-} from '../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../PredefinedConfig/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonClose } from '../Components/Buttons/ButtonClose';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';

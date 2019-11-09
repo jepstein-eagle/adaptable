@@ -6,7 +6,7 @@ import {
 import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
-import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../../PredefinedConfig/ExportState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 

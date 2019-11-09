@@ -16,10 +16,10 @@ import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
-import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { NamedFilterFunction } from '../../BlotterOptions/AdvancedOptions';
 
 export interface IRangeEvaluation {

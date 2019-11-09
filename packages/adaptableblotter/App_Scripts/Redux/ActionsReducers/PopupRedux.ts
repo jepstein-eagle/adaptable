@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { PopupState } from '../../PredefinedConfig/InternalState/PopupState';
+import { PopupState } from '../../PredefinedConfig/PopupState';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import {
   InputAction,

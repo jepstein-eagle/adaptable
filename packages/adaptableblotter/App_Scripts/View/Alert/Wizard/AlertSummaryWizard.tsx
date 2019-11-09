@@ -10,8 +10,8 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../../../Utilities/Helpers/AlertHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {
   UserFilters: UserFilter[];

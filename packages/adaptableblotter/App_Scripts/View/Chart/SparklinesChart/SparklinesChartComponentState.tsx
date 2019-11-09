@@ -1,4 +1,4 @@
-import { SparklineChartProperties } from '../../../PredefinedConfig/RunTimeState/ChartState';
+import { SparklineChartProperties } from '../../../PredefinedConfig/ChartState';
 
 export interface SparklinesChartComponentState {
   IsChartSettingsVisible: boolean;

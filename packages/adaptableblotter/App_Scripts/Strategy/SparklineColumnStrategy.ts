@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISparklineColumnStrategy } from './Interface/ISparklineColumnStrategy';
 
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { SparklineColumnState } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import {
   AdaptableBlotterMenuItem,

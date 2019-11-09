@@ -1,5 +1,5 @@
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
-import { QuickSearchState } from '../PredefinedConfig/RunTimeState/QuickSearchState';
+import { QuickSearchState } from '../PredefinedConfig/QuickSearchState';
 export interface QuickSearchApi {
   /**
    * Retrieves all the Quick Search section from the Adaptable Blotter State

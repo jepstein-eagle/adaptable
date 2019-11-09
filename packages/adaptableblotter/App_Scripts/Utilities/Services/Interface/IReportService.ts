@@ -1,4 +1,4 @@
-import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../../PredefinedConfig/ExportState';
 import { AdaptableBlotterColumn } from '../../Interface/AdaptableBlotterColumn';
 import { ExportDestination } from '../../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../../types';

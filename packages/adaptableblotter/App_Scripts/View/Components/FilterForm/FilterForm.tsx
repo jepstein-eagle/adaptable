@@ -18,8 +18,8 @@ import {
   ColumnMenuTab,
   AccessLevel,
 } from '../../../PredefinedConfig/Common/Enums';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
-import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
@@ -39,8 +39,8 @@ import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import HelpBlock from '../../../components/HelpBlock';
-import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
+import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {

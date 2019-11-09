@@ -4,7 +4,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from '../UIInterfaces';
-import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Checkbox from '../../components/CheckBox';

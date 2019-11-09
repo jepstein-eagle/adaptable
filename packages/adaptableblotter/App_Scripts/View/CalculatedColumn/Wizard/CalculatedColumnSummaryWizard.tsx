@@ -7,7 +7,7 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { CalculatedColumnHelper } from '../../../Utilities/Helpers/CalculatedColumnHelper';
-import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
 
 export interface CalculatedColumnSummaryWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {}

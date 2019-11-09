@@ -8,7 +8,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import WizardPanel from '../../../components/WizardPanel';
 
 export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}

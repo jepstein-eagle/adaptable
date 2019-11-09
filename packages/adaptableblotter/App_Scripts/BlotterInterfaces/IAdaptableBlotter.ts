@@ -13,14 +13,14 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
-import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
-import { FreeTextColumn } from '../PredefinedConfig/RunTimeState/FreeTextColumnState';
-import { CalculatedColumn } from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
-import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
-import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
-import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/LayoutState';
+import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
+import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
+import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
+import { PercentBar } from '../PredefinedConfig/PercentBarState';
+import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
-import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
+import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Glue42Service';
 
 import {

@@ -1,4 +1,4 @@
-import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
+import { Reminder } from '../../../PredefinedConfig/ReminderState';
 import * as React from 'react';
 
 import {

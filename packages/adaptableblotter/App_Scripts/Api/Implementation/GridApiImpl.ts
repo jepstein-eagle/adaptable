@@ -1,10 +1,10 @@
 import { ApiBase } from './ApiBase';
 import { DataGridApi } from '../DataGridApi';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
-import { GridState } from '../../PredefinedConfig/InternalState/GridState';
+import { GridState } from '../../PredefinedConfig/GridState';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
-import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 
 export class GridApiImpl extends ApiBase implements DataGridApi {

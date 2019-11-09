@@ -16,14 +16,14 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
-import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
 

@@ -4,7 +4,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import { Box, Flex } from 'rebass';
 import Radio from '../../../components/Radio';
 import WizardPanel from '../../../components/WizardPanel';

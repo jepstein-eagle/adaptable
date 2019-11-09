@@ -1,4 +1,4 @@
-import { PercentBarState, PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
+import { PercentBarState, PercentBar } from '../PredefinedConfig/PercentBarState';
 
 /**
  * Provides full and comprehensive run-time access to the Percent Bar function and associated Percent Bar state (from Predefined Config).

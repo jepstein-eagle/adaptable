@@ -7,7 +7,7 @@ import {
   CellSummaryOptionalOperation,
 } from '../../PredefinedConfig/Common/Enums';
 import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common/ChartEnums';
-import { AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
 import { LIGHT_YELLOW, BLACK, getHexForName } from '../../View/UIHelper';
 
 export const MISSING_COLUMN: string = ' [MISSING]';

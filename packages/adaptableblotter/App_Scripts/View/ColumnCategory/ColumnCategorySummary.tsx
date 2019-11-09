@@ -18,7 +18,7 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyProfile } from '../Components/StrategyProfile';
 

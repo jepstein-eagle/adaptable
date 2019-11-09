@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { PartnerConfigState } from '../../PredefinedConfig/DesignTimeState/PartnerConfigState';
+import { PartnerConfigState } from '../../PredefinedConfig/PartnerConfigState';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 const initialFilterState: PartnerConfigState = {

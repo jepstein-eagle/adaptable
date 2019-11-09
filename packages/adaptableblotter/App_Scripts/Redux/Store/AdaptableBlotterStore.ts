@@ -58,16 +58,16 @@ import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
-import { LayoutState } from '../../PredefinedConfig/RunTimeState/LayoutState';
-import { GridState } from '../../PredefinedConfig/InternalState/GridState';
+import { LayoutState } from '../../PredefinedConfig/LayoutState';
+import { GridState } from '../../PredefinedConfig/GridState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
-import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
-import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
-import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
-import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
-import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
+import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
+import { Layout } from '../../PredefinedConfig/LayoutState';
+import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
+import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
+import { Report } from '../../PredefinedConfig/ExportState';
+import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -107,12 +107,12 @@ import {
 } from '../../Strategy/Interface/IStrategyActionReturn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
-import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
-import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
-import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
-import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
-import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
-import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
+import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
+import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
+import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
+import { Shortcut } from '../../PredefinedConfig/ShortcutState';
+import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import {
   StatePropertyChangedDetails,
@@ -123,8 +123,8 @@ import {
 } from '../../Api/Events/AuditEvents';
 
 import Emitter from '../../Utilities/Emitter';
-import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
-import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ChartDefinition } from '../../PredefinedConfig/ChartState';
+import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 

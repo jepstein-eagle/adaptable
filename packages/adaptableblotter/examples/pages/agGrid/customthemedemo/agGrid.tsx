@@ -20,7 +20,7 @@ import {
   IAdaptableBlotter,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { RowStyle } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/UserInterfaceState';
+import { RowStyle } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
 var adaptableblotter: IAdaptableBlotter;
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);

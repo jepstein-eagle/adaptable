@@ -10,9 +10,9 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 
-import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 import { Box, Flex, Text } from 'rebass';
 import Radio from '../../../components/Radio';
 import Dropdown from '../../../components/Dropdown';

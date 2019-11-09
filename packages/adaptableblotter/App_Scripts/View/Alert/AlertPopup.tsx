@@ -24,7 +24,7 @@ import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import EmptyContent from '../../components/EmptyContent';
 import SimpleButton from '../../components/SimpleButton';

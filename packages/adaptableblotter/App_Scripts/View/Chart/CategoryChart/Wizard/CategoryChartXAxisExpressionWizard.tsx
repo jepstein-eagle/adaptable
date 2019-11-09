@@ -3,7 +3,7 @@ import {
   AdaptableWizardStep,
   ExpressionWizardProps,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { UIHelper } from '../../../UIHelper';
 
 export class CategoryChartXAxisExpressionWizard extends ExpressionBuilderPage

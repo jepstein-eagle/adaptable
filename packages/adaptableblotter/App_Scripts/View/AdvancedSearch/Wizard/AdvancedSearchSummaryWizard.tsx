@@ -7,9 +7,9 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AdvancedSearch } from '../../../PredefinedConfig/AdvancedSearchState';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<AdvancedSearch> {
   UserFilters: UserFilter[];

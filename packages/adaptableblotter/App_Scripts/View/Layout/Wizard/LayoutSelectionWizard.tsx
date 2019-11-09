@@ -7,7 +7,7 @@ import {
 import { LayoutSource } from '../../../PredefinedConfig/Common/Enums';
 
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { Layout, ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
+import { Layout, ColumnSort } from '../../../PredefinedConfig/LayoutState';
 
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';

@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { SparklineColumn } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../../../PredefinedConfig/SparklineColumnState';
 import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';

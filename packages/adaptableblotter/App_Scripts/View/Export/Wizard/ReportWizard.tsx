@@ -7,7 +7,7 @@ import { ReportSettingsWizard } from './ReportSettingsWizard';
 import { ReportSummaryWizard } from './ReportSummaryWizard';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../../PredefinedConfig/ExportState';
 import { ReportRowTypeWizard } from './ReportRowTypeWizard';
 import { ReportScheduleWizard } from './ReportScheduleWizard';
 

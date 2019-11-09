@@ -1,4 +1,4 @@
-import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
+import { Calendar } from '../../PredefinedConfig/CalendarState';
 
 export function getSystemCalendars(): Calendar[] {
   return [

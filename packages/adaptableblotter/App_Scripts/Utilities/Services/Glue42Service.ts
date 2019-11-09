@@ -1,7 +1,7 @@
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
-import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import { GridCell } from '../Interface/Selection/GridCell';
 
 import Glue4Office, { Glue42Office } from '@glue42/office';
@@ -9,7 +9,7 @@ import Glue, { Glue42 } from '@glue42/desktop';
 import Helper from '../Helpers/Helper';
 import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
-import { Glue42Config } from '../../PredefinedConfig/DesignTimeState/Glue42Config';
+import { Glue42Config } from '../../PredefinedConfig/Glue42Config';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { cloneDeep } from 'lodash';

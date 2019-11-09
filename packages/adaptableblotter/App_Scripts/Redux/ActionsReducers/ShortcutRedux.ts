@@ -1,4 +1,4 @@
-import { ShortcutState, Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
+import { ShortcutState, Shortcut } from '../../PredefinedConfig/ShortcutState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

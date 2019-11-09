@@ -7,7 +7,7 @@ import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWi
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {

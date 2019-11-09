@@ -4,7 +4,7 @@ import { CalculatedColumnApi } from '../CalculatedColumnApi';
 import {
   CalculatedColumnState,
   CalculatedColumn,
-} from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+} from '../../PredefinedConfig/CalculatedColumnState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

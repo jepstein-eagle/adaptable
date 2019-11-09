@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
 import { Flex, Box, Text } from 'rebass';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';

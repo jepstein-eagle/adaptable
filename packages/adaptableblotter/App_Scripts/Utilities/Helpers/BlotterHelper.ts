@@ -8,7 +8,7 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { AlertProperties } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertProperties } from '../../PredefinedConfig/AlertState';
 
 export function assignBlotterOptions(
   blotterOptions: AdaptableBlotterOptions

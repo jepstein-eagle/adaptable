@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { DataSource } from '../../../PredefinedConfig/RunTimeState/DataSourceState';
+import { DataSource } from '../../../PredefinedConfig/DataSourceState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';

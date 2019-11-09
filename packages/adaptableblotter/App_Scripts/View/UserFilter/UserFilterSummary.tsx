@@ -18,7 +18,7 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {

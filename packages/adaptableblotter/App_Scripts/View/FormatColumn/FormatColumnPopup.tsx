@@ -21,7 +21,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
+import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 

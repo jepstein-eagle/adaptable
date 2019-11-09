@@ -1,6 +1,6 @@
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
@@ -17,7 +17,7 @@ import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRe
 import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
-import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';
 
 // Somehow all the CSSRules do not work so I end up just forcing the innerHTML......

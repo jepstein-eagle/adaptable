@@ -1,7 +1,7 @@
 import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
 
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
 import { ActionColumnClickedEventArgs } from '../Api/Events/BlotterEvents';

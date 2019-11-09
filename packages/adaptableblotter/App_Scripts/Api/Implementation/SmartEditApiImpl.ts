@@ -4,7 +4,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { MathOperation } from '../../PredefinedConfig/Common/Enums';
 import { SmartEditApi } from '../SmartEditApi';
-import { SmartEditState } from '../../PredefinedConfig/RunTimeState/SmartEditState';
+import { SmartEditState } from '../../PredefinedConfig/SmartEditState';
 
 export class SmartEditApiImpl extends ApiBase implements SmartEditApi {
   public getSmartEditState(): SmartEditState {

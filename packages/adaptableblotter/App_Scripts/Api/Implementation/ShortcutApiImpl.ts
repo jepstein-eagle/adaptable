@@ -3,7 +3,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { ShortcutApi } from '../ShortcutApi';
-import { ShortcutState, Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
+import { ShortcutState, Shortcut } from '../../PredefinedConfig/ShortcutState';
 
 export class ShortcutApiImpl extends ApiBase implements ShortcutApi {
   public getShortcutState(): ShortcutState {

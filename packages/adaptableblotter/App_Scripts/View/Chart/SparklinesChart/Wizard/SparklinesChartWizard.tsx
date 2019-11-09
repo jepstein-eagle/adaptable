@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { SparklinesChartColumnWizard } from './SparklinesChartColumnWizard';
 import { SparklinesChartExpressionColumnWizard } from './SparklinesChartExpressionColumnWizard';

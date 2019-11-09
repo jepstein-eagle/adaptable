@@ -7,7 +7,7 @@ import {
   PermittedColumnValues,
   EditLookUpColumn,
   RowStyle,
-} from '../../PredefinedConfig/DesignTimeState/UserInterfaceState';
+} from '../../PredefinedConfig/UserInterfaceState';
 
 export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
   public getUserInterfaceState(): UserInterfaceState {

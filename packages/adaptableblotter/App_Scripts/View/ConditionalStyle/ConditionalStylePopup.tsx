@@ -24,8 +24,8 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
-import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
+import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 

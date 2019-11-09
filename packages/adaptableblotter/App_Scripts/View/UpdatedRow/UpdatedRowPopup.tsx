@@ -6,7 +6,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
 import Checkbox from '../../components/CheckBox';
 import { Flex, Box, Text } from 'rebass';
-import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import HelpBlock from '../../components/HelpBlock';

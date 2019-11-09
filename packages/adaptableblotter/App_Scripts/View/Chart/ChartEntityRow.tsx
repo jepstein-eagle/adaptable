@@ -4,10 +4,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from '../UIInterfaces';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import {
-  ChartDefinition,
-  CategoryChartDefinition,
-} from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartDefinition, CategoryChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { EntityRowItem } from '../Components/EntityRowItem';

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   SparklinesChartDefinition,
   SparklineChartProperties,
-} from '../../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../../PredefinedConfig/ChartState';
 import { SparklinesChartComponentState } from './SparklinesChartComponentState';
 import { DefaultSparklinesChartProperties } from '../../../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { SparklineTypeEnum } from '../../../PredefinedConfig/Common/ChartEnums';

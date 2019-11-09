@@ -1,7 +1,4 @@
-import {
-  CalculatedColumnState,
-  CalculatedColumn,
-} from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { CalculatedColumnState, CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 
 export interface CalculatedColumnApi {
   getCalculatedColumnState(): CalculatedColumnState;

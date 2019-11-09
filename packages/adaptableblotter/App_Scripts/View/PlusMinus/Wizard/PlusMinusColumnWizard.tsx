@@ -7,7 +7,7 @@ import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBl
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { PlusMinusRule } from '../../../PredefinedConfig/RunTimeState/PlusMinusState';
+import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
 import WizardPanel from '../../../components/WizardPanel';
 
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {

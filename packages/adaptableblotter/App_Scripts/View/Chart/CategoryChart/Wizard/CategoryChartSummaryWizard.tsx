@@ -4,7 +4,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';

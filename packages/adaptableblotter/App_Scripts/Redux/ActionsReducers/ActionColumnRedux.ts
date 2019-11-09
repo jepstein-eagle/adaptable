@@ -1,9 +1,6 @@
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import {
-  ActionColumnState,
-  ActionColumn,
-} from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ActionColumnState, ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 
 export const ACTION_COLUMNS_SET = 'ACTION_COLUMNS_SET';
 

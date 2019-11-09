@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { SystemState } from '../../PredefinedConfig/InternalState/SystemState';
+import { SystemState } from '../../PredefinedConfig/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
@@ -16,8 +16,8 @@ import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
-import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
-import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { Report } from '../../PredefinedConfig/ExportState';
+import { ChartData } from '../../PredefinedConfig/ChartState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';

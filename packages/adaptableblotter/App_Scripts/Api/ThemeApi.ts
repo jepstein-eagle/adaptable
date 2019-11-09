@@ -1,4 +1,4 @@
-import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
+import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 
 /**
  * Provides full and comprehensive run-time access to the Theme function and associated state.

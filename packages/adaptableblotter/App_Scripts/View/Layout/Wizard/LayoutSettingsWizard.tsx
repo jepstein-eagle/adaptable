@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-import { Layout } from '../../../PredefinedConfig/RunTimeState/LayoutState';
+import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';

@@ -20,7 +20,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
-import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 
 export interface CellValidationSummaryProps
   extends StrategySummaryProps<CellValidationSummaryComponent> {

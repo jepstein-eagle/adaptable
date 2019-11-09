@@ -20,7 +20,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';

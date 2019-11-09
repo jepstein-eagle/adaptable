@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
-import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
+import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { DualListBoxEditor, DisplaySize } from '../Components/ListBox/DualListBoxEditor';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -12,10 +12,10 @@ import Checkbox from '../../components/CheckBox';
 import Radio from '../../components/Radio';
 import Input from '../../components/Input';
 
-import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { Box, Flex, Text } from 'rebass';
 import { StateChangedTrigger } from '../../PredefinedConfig/Common/Enums';
-import { GridState } from '../../PredefinedConfig/InternalState/GridState';
+import { GridState } from '../../PredefinedConfig/GridState';
 import HelpBlock from '../../components/HelpBlock';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {

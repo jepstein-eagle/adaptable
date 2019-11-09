@@ -1,8 +1,8 @@
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
-import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
 
 /**
  * The main object used when publishing events.

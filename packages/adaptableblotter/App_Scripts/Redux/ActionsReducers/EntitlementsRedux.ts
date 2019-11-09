@@ -1,7 +1,4 @@
-import {
-  EntitlementsState,
-  Entitlement,
-} from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { EntitlementsState, Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 

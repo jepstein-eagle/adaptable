@@ -1,4 +1,4 @@
-import { BulkUpdateState } from '../PredefinedConfig/RunTimeState/BulkUpdateState';
+import { BulkUpdateState } from '../PredefinedConfig/BulkUpdateState';
 
 /**
  * Provides full and comprehensive run-time access to the Bulk Update function and associated state.

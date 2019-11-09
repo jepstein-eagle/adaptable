@@ -7,7 +7,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
+import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import PercentBarHelper from '../../../Utilities/Helpers/PercentBarHelper';

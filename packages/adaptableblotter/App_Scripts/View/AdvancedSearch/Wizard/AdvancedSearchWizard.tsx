@@ -5,7 +5,7 @@ import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard
 import { AdvancedSearchSummaryWizard } from './AdvancedSearchSummaryWizard';
 import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AdvancedSearch } from '../../../PredefinedConfig/AdvancedSearchState';
 
 export class AdvancedSearchWizard extends React.Component<
   AdaptableBlotterObjectExpressionAdaptableWizardProps<AdvancedSearchWizard>,

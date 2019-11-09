@@ -1,9 +1,5 @@
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
-import {
-  AlertState,
-  AlertProperties,
-  AlertDefinition,
-} from '../PredefinedConfig/RunTimeState/AlertState';
+import { AlertState, AlertProperties, AlertDefinition } from '../PredefinedConfig/AlertState';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 
 /**

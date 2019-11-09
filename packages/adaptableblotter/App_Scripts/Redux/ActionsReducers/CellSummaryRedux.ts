@@ -1,4 +1,4 @@
-import { CellSummaryState } from '../../PredefinedConfig/RunTimeState/CellSummaryState';
+import { CellSummaryState } from '../../PredefinedConfig/CellSummaryState';
 import {
   CellSummaryOperation,
   CellSummaryOptionalOperation,

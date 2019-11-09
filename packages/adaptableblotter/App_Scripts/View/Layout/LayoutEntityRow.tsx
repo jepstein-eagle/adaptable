@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from '../UIInterfaces';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { LayoutHelper } from '../../Utilities/Helpers/LayoutHelper';
-import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { Layout } from '../../PredefinedConfig/LayoutState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Radio from '../../components/Radio';
 

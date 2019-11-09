@@ -1,7 +1,4 @@
-import {
-  ConditionalStyleState,
-  ConditionalStyle,
-} from '../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ConditionalStyleState, ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 
 /**
  * Provides full and comprehensive run-time access to the Conditional Style function and associated state.

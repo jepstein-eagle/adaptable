@@ -11,7 +11,7 @@ import { ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import Dropdown from '../../components/Dropdown';
 
 export interface CellValidationEntityRowProps

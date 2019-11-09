@@ -6,7 +6,7 @@ import {
 import { StyleComponent } from '../../Components/StyleComponent';
 import { UIHelper } from '../../UIHelper';
 import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
-import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 
 export interface ConditionalStyleStyleWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {

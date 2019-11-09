@@ -1,7 +1,7 @@
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { UserFilterApi } from '../UserFilterApi';
-import { UserFilterState, UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilterState, UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { ApiBase } from './ApiBase';
 
 export class UserFilterApiImpl extends ApiBase implements UserFilterApi {

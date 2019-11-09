@@ -12,7 +12,7 @@ import {
   ChartProperties,
   ChartData,
   SparklineChartProperties,
-} from '../../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../../PredefinedConfig/ChartState';
 import { SparklinesChartUIHelper } from './SparklinesChartUIHelper';
 import { SparklinesChartComponentState } from './SparklinesChartComponentState';
 

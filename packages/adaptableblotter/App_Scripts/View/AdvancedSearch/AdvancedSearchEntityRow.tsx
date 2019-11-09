@@ -7,7 +7,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColItem } from '../UIInterfaces';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import Radio from '../../components/Radio';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 

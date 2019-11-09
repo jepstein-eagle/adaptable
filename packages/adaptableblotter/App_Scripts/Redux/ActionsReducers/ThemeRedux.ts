@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { ThemeState, AdaptableBlotterTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { ThemeState, AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
 import {
   EMPTY_ARRAY,
   THEME_DEFAULT_CURRENT_THEME,

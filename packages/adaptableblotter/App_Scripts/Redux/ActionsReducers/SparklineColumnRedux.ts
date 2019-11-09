@@ -2,10 +2,7 @@ import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import {
-  SparklineColumnState,
-  SparklineColumn,
-} from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumnState, SparklineColumn } from '../../PredefinedConfig/SparklineColumnState';
 
 export const SPARKLINE_COLUMNS_SET = 'SPARKLINE_COLUMNS_SET';
 export const SPARKLINE_COLUMNS_ADD = 'SPARKLINE_COLUMNS_ADD';

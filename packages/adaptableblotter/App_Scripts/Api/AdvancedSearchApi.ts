@@ -1,7 +1,4 @@
-import {
-  AdvancedSearchState,
-  AdvancedSearch,
-} from '../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AdvancedSearchState, AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
 import { TypeUuid } from '../PredefinedConfig/Uuid';
 
 /**

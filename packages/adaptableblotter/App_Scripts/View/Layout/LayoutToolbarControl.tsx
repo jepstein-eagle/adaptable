@@ -14,7 +14,7 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { Layout } from '../../PredefinedConfig/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import Dropdown from '../../components/Dropdown';

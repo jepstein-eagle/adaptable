@@ -12,7 +12,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';

@@ -1,8 +1,5 @@
 import * as Redux from 'redux';
-import {
-  AdvancedSearchState,
-  AdvancedSearch,
-} from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 

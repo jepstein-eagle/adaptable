@@ -13,12 +13,12 @@ import {
 } from '../../PredefinedConfig/Common/Enums';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import SimpleButton from '../../components/SimpleButton';
-import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
   UserFilters: Array<UserFilter>;

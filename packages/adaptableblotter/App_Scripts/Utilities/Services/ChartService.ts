@@ -21,7 +21,7 @@ import {
   PieChartDefinition,
   PieChartDataItem,
   SparklinesChartDefinition,
-} from '../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../PredefinedConfig/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
 
 /*

@@ -1,4 +1,4 @@
-import { ConditionalStyleState } from '../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ConditionalStyleState } from '../PredefinedConfig/ConditionalStyleState';
 import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';

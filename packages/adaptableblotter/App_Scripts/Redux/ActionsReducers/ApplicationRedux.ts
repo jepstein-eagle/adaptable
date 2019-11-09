@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { ApplicationState } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+import { ApplicationState } from '../../PredefinedConfig/ApplicationState';
 
 const initialFilterState: ApplicationState = {
   ApplicationToolbarButtons: EMPTY_ARRAY,

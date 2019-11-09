@@ -1,7 +1,4 @@
-import {
-  ColumnCategoryState,
-  ColumnCategory,
-} from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategoryState, ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

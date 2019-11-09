@@ -1,7 +1,4 @@
-import {
-  ActionColumnState,
-  ActionColumn,
-} from '../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColumnState';
 
 /**
  * Provides full and comprehensive run-time access to the Advanced Search function and associated state.

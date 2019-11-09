@@ -6,7 +6,7 @@ import {
 import {
   CategoryChartDefinition,
   PieChartDefinition,
-} from '../../../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../../../PredefinedConfig/ChartState';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';

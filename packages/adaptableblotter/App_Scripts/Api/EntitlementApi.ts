@@ -1,7 +1,4 @@
-import {
-  EntitlementsState,
-  Entitlement,
-} from '../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { EntitlementsState, Entitlement } from '../PredefinedConfig/EntitlementsState';
 
 export interface EntitlementApi {
   getEntitlementState(): EntitlementsState;

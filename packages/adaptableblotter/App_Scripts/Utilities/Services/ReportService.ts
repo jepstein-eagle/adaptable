@@ -10,7 +10,7 @@ import {
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../PredefinedConfig/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { SelectedRowInfo } from '../Interface/Selection/SelectedRowInfo';
 import { GridRow } from '../Interface/Selection/GridRow';

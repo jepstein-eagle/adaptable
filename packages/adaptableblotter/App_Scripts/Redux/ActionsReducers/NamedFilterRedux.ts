@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { NamedFilterState } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { NamedFilterState } from '../../PredefinedConfig/NamedFilterState';
 
 export const NAMED_FILTER_SET = 'NAMED_FILTER_SET';
 

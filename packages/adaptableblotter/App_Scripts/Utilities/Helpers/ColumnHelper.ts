@@ -4,7 +4,7 @@ import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 
 // Single place for all column mapping functions so can be dealt with consistetly re error handling
 

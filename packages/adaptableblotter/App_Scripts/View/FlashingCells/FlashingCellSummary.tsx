@@ -10,9 +10,9 @@ import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRed
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { IColItem } from '../UIInterfaces';
-import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { FlashingCellState } from '../../PredefinedConfig/FlashingCellState';
 import SimpleButton from '../../components/SimpleButton';
 
 export interface FlashingCellSummaryProps

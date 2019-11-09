@@ -4,7 +4,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
+import { Reminder } from '../../PredefinedConfig/ReminderState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { UIHelper } from '../UIHelper';
 

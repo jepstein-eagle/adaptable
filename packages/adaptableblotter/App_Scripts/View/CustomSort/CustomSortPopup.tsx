@@ -24,7 +24,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
+import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';

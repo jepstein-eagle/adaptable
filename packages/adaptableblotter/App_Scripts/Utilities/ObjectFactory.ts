@@ -13,7 +13,7 @@ import {
   FontWeight,
   FontStyle,
 } from '../PredefinedConfig/Common/Enums';
-import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
+import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import {
   EMPTY_STRING,
   CHART_DEFAULT_YAXIS_TOTAL,
@@ -27,45 +27,45 @@ import {
   SELECTED_CELLS_REPORT,
   SELECTED_ROWS_REPORT,
 } from './Constants/GeneralConstants';
-import { DataSource } from '../PredefinedConfig/RunTimeState/DataSourceState';
+import { DataSource } from '../PredefinedConfig/DataSourceState';
 import {
   PieChartDefinition,
   CategoryChartDefinition,
   SparklinesChartDefinition,
-} from '../PredefinedConfig/RunTimeState/ChartState';
+} from '../PredefinedConfig/ChartState';
 import { SecondaryColumnOperation, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
 import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
-import { CalculatedColumn } from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
-import { PlusMinusRule } from '../PredefinedConfig/RunTimeState/PlusMinusState';
+import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
+import { PlusMinusRule } from '../PredefinedConfig/PlusMinusState';
 import { AdaptableAlert } from './Interface/IMessage';
-import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
-import { AdvancedSearch } from '../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AlertDefinition } from '../PredefinedConfig/AlertState';
+import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { ColumnCategory } from '../PredefinedConfig/RunTimeState/ColumnCategoryState';
-import { ColumnSort, VendorGridInfo, Layout } from '../PredefinedConfig/RunTimeState/LayoutState';
-import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
-import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
-import { UserFilter } from '../PredefinedConfig/RunTimeState/UserFilterState';
-import { Report, AutoExport } from '../PredefinedConfig/RunTimeState/ExportState';
+import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
+import { ColumnSort, VendorGridInfo, Layout } from '../PredefinedConfig/LayoutState';
+import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
+import { PercentBar } from '../PredefinedConfig/PercentBarState';
+import { UserFilter } from '../PredefinedConfig/UserFilterState';
+import { Report, AutoExport } from '../PredefinedConfig/ExportState';
 import { AdaptableBlotterColumn } from './Interface/AdaptableBlotterColumn';
-import { FlashingCell } from '../PredefinedConfig/RunTimeState/FlashingCellState';
-import { Reminder } from '../PredefinedConfig/RunTimeState/ReminderState';
+import { FlashingCell } from '../PredefinedConfig/FlashingCellState';
+import { Reminder } from '../PredefinedConfig/ReminderState';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
-import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
+import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { IAdaptableBlotter } from '../types';
 import ColumnHelper from './Helpers/ColumnHelper';
 import CellValidationHelper from './Helpers/CellValidationHelper';
-import { ConditionalStyle } from '../PredefinedConfig/RunTimeState/ConditionalStyleState';
-import { FormatColumn } from '../PredefinedConfig/RunTimeState/FormatColumnState';
-import { FreeTextColumn } from '../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
+import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
+import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
-import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ICellSummmary } from './Interface/Selection/ICellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
-import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
 import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
 import { AlertDefinitionDeleteAction } from '../Redux/ActionsReducers/AlertRedux';

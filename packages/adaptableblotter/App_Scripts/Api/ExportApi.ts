@@ -1,5 +1,5 @@
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
-import { ExportState, Report } from '../PredefinedConfig/RunTimeState/ExportState';
+import { ExportState, Report } from '../PredefinedConfig/ExportState';
 
 /**
  * Provides full and comprehensive run-time access to the Export function and associated Report state (from Predefined Config).

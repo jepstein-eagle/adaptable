@@ -28,9 +28,9 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
-import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
-import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;

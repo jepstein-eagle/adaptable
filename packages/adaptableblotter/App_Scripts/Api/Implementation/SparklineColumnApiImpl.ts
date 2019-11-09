@@ -1,9 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { SparklineColumnApi } from '../SparklineColumnApi';
-import {
-  SparklineColumnState,
-  SparklineColumn,
-} from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumnState, SparklineColumn } from '../../PredefinedConfig/SparklineColumnState';
 
 export class SparklineColumnApiImpl extends ApiBase implements SparklineColumnApi {
   public getSparklineColumnState(): SparklineColumnState {

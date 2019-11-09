@@ -1,7 +1,4 @@
-import {
-  CellValidationState,
-  CellValidationRule,
-} from '../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationState, CellValidationRule } from '../PredefinedConfig/CellValidationState';
 
 export interface CellValidationApi {
   getCellValidationState(): CellValidationState;

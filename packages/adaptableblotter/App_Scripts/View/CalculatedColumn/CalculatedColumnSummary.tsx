@@ -16,7 +16,7 @@ import {
 import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 
 export interface CalculatedColumnSummaryProps
   extends StrategySummaryProps<CalculatedColumnSummaryComponent> {

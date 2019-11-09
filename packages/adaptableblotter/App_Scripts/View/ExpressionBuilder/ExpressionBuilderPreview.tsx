@@ -8,7 +8,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import {
   QueryTab,
   LeafExpressionOperator,

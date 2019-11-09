@@ -1,5 +1,5 @@
 import { ApiBase } from './ApiBase';
-import { BulkUpdateState } from '../../PredefinedConfig/RunTimeState/BulkUpdateState';
+import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import { BulkUpdateApi } from '../BulkUpdateApi';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';

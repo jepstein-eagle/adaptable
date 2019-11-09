@@ -1,6 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { ReminderApi } from '../ReminderApi';
-import { ReminderState, Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
+import { ReminderState, Reminder } from '../../PredefinedConfig/ReminderState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

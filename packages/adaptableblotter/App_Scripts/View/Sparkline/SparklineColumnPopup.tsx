@@ -19,7 +19,7 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { SparklineColumn } from '../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../../PredefinedConfig/SparklineColumnState';
 import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 import { SparklineColumnEntityRow } from './SparklineColumnEntityRow';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';

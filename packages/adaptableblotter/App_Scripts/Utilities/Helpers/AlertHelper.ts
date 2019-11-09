@@ -3,7 +3,7 @@ import { ColumnHelper } from './ColumnHelper';
 import { DataType, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 
 export function createAlertDescription(
   alertDefinition: AlertDefinition,

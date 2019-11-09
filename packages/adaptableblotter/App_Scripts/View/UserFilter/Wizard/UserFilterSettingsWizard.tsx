@@ -7,7 +7,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import ErrorBox from '../../../components/ErrorBox';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';

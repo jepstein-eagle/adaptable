@@ -4,7 +4,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { SparklinesChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { SparklinesChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import WizardPanel from '../../../../components/WizardPanel';
 import FormLayout, { FormRow } from '../../../../components/FormLayout';
 import Input from '../../../../components/Input';

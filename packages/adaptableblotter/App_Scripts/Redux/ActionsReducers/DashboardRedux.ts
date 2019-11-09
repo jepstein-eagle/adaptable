@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
+import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';

@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { SparklinesChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { SparklinesChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterColumn } from '../../../../Utilities/Interface/AdaptableBlotterColumn';

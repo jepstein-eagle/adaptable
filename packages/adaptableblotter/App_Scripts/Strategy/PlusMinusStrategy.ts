@@ -1,4 +1,4 @@
-import { PlusMinusRule } from '../PredefinedConfig/RunTimeState/PlusMinusState';
+import { PlusMinusRule } from '../PredefinedConfig/PlusMinusState';
 import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as Redux from 'redux';
@@ -17,11 +17,11 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AlertProperties } from '../PredefinedConfig/RunTimeState/AlertState';
+import { AlertProperties } from '../PredefinedConfig/AlertState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {

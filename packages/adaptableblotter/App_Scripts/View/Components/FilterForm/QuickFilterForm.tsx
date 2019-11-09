@@ -9,8 +9,8 @@ import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilter
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
-import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
@@ -21,8 +21,8 @@ import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import Input from '../../../components/Input';
-import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
+import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { Column } from 'ag-grid-community';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {

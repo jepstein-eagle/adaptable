@@ -11,7 +11,7 @@ import { CalendarsEntryRow } from './CalendarsEntryRow';
 import { CalendarEntryItem } from './CalendarEntryItem';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { Calendar, CalendarEntry } from '../../PredefinedConfig/RunTimeState/CalendarState';
+import { Calendar, CalendarEntry } from '../../PredefinedConfig/CalendarState';
 import ListGroup from '../../components/List/ListGroup';
 import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';

@@ -9,7 +9,7 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ApplicationToolbarButton } from '../../PredefinedConfig/DesignTimeState/ApplicationState';
+import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
 import SimpleButton from '../../components/SimpleButton';
 import { APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import { ApplicationToolbarButtonClickedEventArgs } from '../../Api/Events/BlotterEvents';

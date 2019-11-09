@@ -1,9 +1,9 @@
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
-import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
+import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 
 export interface AdaptableWizardStep {
   canNext(): boolean;

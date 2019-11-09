@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
+import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 

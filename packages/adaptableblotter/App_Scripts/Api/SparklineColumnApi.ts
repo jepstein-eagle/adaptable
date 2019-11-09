@@ -1,7 +1,4 @@
-import {
-  SparklineColumnState,
-  SparklineColumn,
-} from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumnState, SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 
 /**
  * Provides full and comprehensive run-time access to the Advanced Search function and associated state.

@@ -1,5 +1,5 @@
-import { ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
-import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
+import { ColumnSort } from '../../../PredefinedConfig/LayoutState';
+import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
 
 /**
  * Overview of the current sorting state in the grid

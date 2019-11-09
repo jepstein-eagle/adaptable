@@ -5,7 +5,7 @@ import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { LayoutApi } from '../LayoutApi';
-import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/LayoutState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export class LayoutApiImpl extends ApiBase implements LayoutApi {

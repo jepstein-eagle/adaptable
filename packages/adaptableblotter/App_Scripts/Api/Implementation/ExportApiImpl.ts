@@ -1,7 +1,7 @@
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ExportApi } from '../ExportApi';
-import { ExportState, Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { ExportState, Report } from '../../PredefinedConfig/ExportState';
 import { ApiBase } from './ApiBase';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';

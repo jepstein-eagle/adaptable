@@ -1,4 +1,4 @@
-import { SmartEditState } from '../PredefinedConfig/RunTimeState/SmartEditState';
+import { SmartEditState } from '../PredefinedConfig/SmartEditState';
 
 export interface SmartEditApi {
   /**

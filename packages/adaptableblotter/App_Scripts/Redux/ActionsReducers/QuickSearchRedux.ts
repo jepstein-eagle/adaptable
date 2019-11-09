@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
+import { QuickSearchState } from '../../PredefinedConfig/QuickSearchState';
 import { DisplayAction } from '../../PredefinedConfig/Common/Enums';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import {

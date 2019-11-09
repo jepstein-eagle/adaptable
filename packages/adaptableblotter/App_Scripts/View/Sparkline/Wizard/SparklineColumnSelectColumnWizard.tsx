@@ -9,7 +9,7 @@ import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
-import { SparklineColumn } from '../../../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../../../PredefinedConfig/SparklineColumnState';
 
 export interface SparklineColumnSelectColumnWizardProps
   extends AdaptableWizardStepProps<SparklineColumn> {}

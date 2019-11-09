@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { DataSourceParams } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { DataSourceParams } from '../../PredefinedConfig/DataSourceState';
 import Panel from '../../components/Panel';
 
 export interface DataSourceParamsPopoverProps

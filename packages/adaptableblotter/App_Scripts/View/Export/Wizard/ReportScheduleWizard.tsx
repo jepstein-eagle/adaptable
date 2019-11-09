@@ -1,4 +1,4 @@
-import { Report, AutoExport } from '../../../PredefinedConfig/RunTimeState/ExportState';
+import { Report, AutoExport } from '../../../PredefinedConfig/ExportState';
 import * as React from 'react';
 import Panel from '../../../components/Panel';
 import WizardPanel from '../../../components/WizardPanel';

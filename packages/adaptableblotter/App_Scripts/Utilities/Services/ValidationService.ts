@@ -17,7 +17,7 @@ import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import {
   CellValidationState,
   CellValidationRule,
-} from '../../PredefinedConfig/RunTimeState/CellValidationState';
+} from '../../PredefinedConfig/CellValidationState';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 

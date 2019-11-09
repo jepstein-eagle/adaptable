@@ -5,7 +5,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
-import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {

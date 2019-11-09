@@ -8,7 +8,7 @@ import {
   AxisAngle,
   AxisScale,
 } from '../../PredefinedConfig/Common/ChartEnums';
-import { CategoryChartProperties } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { CategoryChartProperties } from '../../PredefinedConfig/ChartState';
 
 export const DefaultCategoryChartProperties: CategoryChartProperties = {
   // General

@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 

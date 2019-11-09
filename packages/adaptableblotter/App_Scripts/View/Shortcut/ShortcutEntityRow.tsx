@@ -8,7 +8,7 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from '../UIInterfaces';
 
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
+import { Shortcut } from '../../PredefinedConfig/ShortcutState';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 

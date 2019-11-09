@@ -7,11 +7,11 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { CellValidationHelper } from '../../../Utilities/Helpers/CellValidationHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export interface CellValidationSummaryWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {

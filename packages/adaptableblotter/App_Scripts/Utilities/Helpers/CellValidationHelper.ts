@@ -5,7 +5,7 @@ import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { LeafExpressionOperator, DataType, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IUIConfirmation } from '../Interface/IMessage';
 import * as Redux from 'redux';
-import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 
 export function createCellValidationDescription(
   cellValidationRule: CellValidationRule,

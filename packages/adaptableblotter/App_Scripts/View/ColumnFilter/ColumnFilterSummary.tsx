@@ -14,8 +14,8 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
-import { Entitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { Column } from 'ag-grid-community';
 
 export interface ColumnFilterSummaryProps

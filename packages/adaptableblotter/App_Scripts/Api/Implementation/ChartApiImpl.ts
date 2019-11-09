@@ -1,6 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { ChartApi } from '../ChartApi';
-import { ChartState } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartState } from '../../PredefinedConfig/ChartState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

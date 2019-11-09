@@ -1,7 +1,7 @@
 import { UpdatedRowStrategy } from '../../Strategy/UpdatedRowStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';
-import { UpdatedRowState } from '../../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';

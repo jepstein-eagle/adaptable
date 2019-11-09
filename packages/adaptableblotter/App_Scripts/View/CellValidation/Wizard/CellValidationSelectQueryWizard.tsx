@@ -4,7 +4,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 
 import { AdaptablePopover } from '../../AdaptablePopover';
 

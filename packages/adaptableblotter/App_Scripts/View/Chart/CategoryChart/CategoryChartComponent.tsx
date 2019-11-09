@@ -30,7 +30,7 @@ import {
   CategoryChartProperties,
   ChartProperties,
   ChartData,
-} from '../../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../../PredefinedConfig/ChartState';
 import { CategoryChartUIHelper } from './CategoryChartUIHelper';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';

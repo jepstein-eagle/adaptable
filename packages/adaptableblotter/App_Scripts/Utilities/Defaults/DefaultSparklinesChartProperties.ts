@@ -1,4 +1,4 @@
-import { SparklineChartProperties } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { SparklineChartProperties } from '../../PredefinedConfig/ChartState';
 import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 
 export const DefaultSparklinesChartProperties: SparklineChartProperties = {

@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-import { FreeTextColumn } from '../../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { FreeTextColumn } from '../../../PredefinedConfig/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 import { Box, Text, Flex } from 'rebass';

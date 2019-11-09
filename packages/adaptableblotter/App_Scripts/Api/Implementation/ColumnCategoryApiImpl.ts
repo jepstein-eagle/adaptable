@@ -1,10 +1,7 @@
 import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategoryRedux';
 import { ApiBase } from './ApiBase';
 import { ColumnCategoryApi } from '../ColumnCategoryApi';
-import {
-  ColumnCategoryState,
-  ColumnCategory,
-} from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategoryState, ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

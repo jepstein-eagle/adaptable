@@ -43,7 +43,7 @@ let demoConfig: PredefinedConfig = {
         AccessLevel: 'Hidden',
       },
       {
-        FunctionName: 'AdvancedSearch',
+        FunctionName: 'ColumnChooser',
         AccessLevel: 'Hidden',
       },
       {

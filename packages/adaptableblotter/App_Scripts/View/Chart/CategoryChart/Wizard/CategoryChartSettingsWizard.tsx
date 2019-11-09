@@ -6,7 +6,7 @@ import {
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
-import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import WizardPanel from '../../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';
 import Radio from '../../../../components/Radio';

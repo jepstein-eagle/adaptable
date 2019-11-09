@@ -1,4 +1,4 @@
-import { ReminderState, Reminder } from '../PredefinedConfig/RunTimeState/ReminderState';
+import { ReminderState, Reminder } from '../PredefinedConfig/ReminderState';
 export interface ReminderApi {
   getReminderState(): ReminderState;
   getAllReminder(): Reminder[];

@@ -7,7 +7,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { CalculatedColumnHelper } from '../../Utilities/Helpers/CalculatedColumnHelper';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 
 interface CalculatedColumnEntityRowProps<CalculatedColumnEntityRow>
   extends SharedEntityRowProps<CalculatedColumnEntityRow> {

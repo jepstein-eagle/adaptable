@@ -1,9 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { FlashingCellApi } from '../FlashingCellApi';
-import {
-  FlashingCellState,
-  FlashingCell,
-} from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { FlashingCellState, FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

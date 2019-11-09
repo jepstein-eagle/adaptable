@@ -25,7 +25,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../PredefinedConfig/ExportState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ReportWizard } from './Wizard/ReportWizard';
 import {

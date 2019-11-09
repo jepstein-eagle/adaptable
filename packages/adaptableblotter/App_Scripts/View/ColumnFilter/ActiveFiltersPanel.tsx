@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
-import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';

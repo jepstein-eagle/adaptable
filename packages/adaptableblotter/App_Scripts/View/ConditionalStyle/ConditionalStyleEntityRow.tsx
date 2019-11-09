@@ -8,7 +8,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';

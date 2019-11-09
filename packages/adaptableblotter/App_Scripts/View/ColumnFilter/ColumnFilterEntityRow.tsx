@@ -4,7 +4,7 @@ import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntity
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
-import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';

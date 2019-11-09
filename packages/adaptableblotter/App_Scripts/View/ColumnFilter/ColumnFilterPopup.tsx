@@ -14,7 +14,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import EmptyContent from '../../components/EmptyContent';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';

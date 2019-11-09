@@ -1,5 +1,5 @@
 import { LIGHT_THEME, DARK_THEME } from '../Utilities/Constants/GeneralConstants';
-import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
+import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 
 export const StaticThemes: Array<AdaptableBlotterTheme> = [
   {

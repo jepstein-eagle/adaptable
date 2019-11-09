@@ -14,7 +14,7 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { MessageType, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { AlertsPanel } from './AlertsPanel';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { Flex } from 'rebass';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import UIHelper from '../UIHelper';

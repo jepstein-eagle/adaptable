@@ -1,4 +1,4 @@
-import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 
 export interface IPreviewInfo {
   ColumnId: string;

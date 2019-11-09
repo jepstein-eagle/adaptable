@@ -1,9 +1,5 @@
 import * as Redux from 'redux';
-import {
-  ChartState,
-  ChartDefinition,
-  ChartProperties,
-} from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartState, ChartDefinition, ChartProperties } from '../../PredefinedConfig/ChartState';
 import {
   EMPTY_STRING,
   CHART_DEFAULT_REFRESH_RATE,

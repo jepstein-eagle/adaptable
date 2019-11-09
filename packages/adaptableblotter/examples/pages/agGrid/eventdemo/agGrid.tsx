@@ -22,7 +22,7 @@ import {
   ToolbarVisibilityChangedEventArgs,
 } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 import ReactDOM from 'react-dom';
-import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/ApplicationState';
+import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/ApplicationState';
 
 var adaptableblotter: IAdaptableBlotter;
 

@@ -13,10 +13,10 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 
-import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
-import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { FlashingCellState } from '../../PredefinedConfig/FlashingCellState';
+import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import Checkbox from '../../components/CheckBox';
 import { Flex, Box } from 'rebass';
 

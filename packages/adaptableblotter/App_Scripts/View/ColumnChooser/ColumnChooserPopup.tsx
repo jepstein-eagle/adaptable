@@ -11,7 +11,7 @@ import { DualListBoxEditor } from '../Components/ListBox/DualListBoxEditor';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IMasterChildren } from '../../Utilities/Interface/IMasterChildren';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { Flex } from 'rebass';
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {

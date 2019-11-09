@@ -11,8 +11,8 @@ import {
   PieChartDefinition,
   ChartData,
   SparklinesChartDefinition,
-} from '../PredefinedConfig/RunTimeState/ChartState';
-import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
+} from '../PredefinedConfig/ChartState';
+import { SystemState } from '../PredefinedConfig/SystemState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 

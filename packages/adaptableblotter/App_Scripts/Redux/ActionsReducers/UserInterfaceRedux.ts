@@ -3,7 +3,7 @@ import {
   UserInterfaceState,
   PermittedColumnValues,
   RowStyle,
-} from '../../PredefinedConfig/DesignTimeState/UserInterfaceState';
+} from '../../PredefinedConfig/UserInterfaceState';
 import { UIHelper } from '../../View/UIHelper';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 

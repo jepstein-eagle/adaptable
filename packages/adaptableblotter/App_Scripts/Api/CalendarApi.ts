@@ -1,4 +1,4 @@
-import { CalendarState } from '../PredefinedConfig/RunTimeState/CalendarState';
+import { CalendarState } from '../PredefinedConfig/CalendarState';
 
 export interface CalendarApi {
   getCalendarState(): CalendarState;

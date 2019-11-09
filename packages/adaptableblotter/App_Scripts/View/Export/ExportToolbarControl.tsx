@@ -20,7 +20,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { Report } from '../../PredefinedConfig/ExportState';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';

@@ -7,7 +7,7 @@ import {
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
-import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
+import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';

@@ -1,4 +1,4 @@
-import { ChartState } from '../PredefinedConfig/RunTimeState/ChartState';
+import { ChartState } from '../PredefinedConfig/ChartState';
 
 export interface ChartApi {
   getChartState(): ChartState;

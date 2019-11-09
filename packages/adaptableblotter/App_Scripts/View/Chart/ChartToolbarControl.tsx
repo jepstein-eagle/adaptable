@@ -14,7 +14,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';

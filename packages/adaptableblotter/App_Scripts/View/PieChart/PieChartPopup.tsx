@@ -21,11 +21,7 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import {
-  PieChartDefinition,
-  PieChartDataItem,
-  ChartData,
-} from '../../PredefinedConfig/RunTimeState/ChartState';
+import { PieChartDefinition, PieChartDataItem, ChartData } from '../../PredefinedConfig/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import {
   PieChartLabelPosition,

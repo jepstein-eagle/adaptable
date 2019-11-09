@@ -21,7 +21,7 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
+import { Reminder } from '../../PredefinedConfig/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';

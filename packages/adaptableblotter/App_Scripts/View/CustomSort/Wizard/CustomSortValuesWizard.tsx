@@ -7,7 +7,7 @@ import {
 import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
+import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
 
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import HelpBlock from '../../../components/HelpBlock';

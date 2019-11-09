@@ -22,7 +22,7 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';

@@ -1,7 +1,4 @@
-import {
-  NamedFilter,
-  NamedFilterState,
-} from '../PredefinedConfig/RunTimeState/NamedFilterState';
+import { NamedFilter, NamedFilterState } from '../PredefinedConfig/NamedFilterState';
 
 /**
  * Provides full and comprehensive run-time access to the Named Filter function and associated state.

@@ -10,10 +10,7 @@ import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 
-import {
-  ChartData,
-  SparklinesChartDefinition,
-} from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartData, SparklinesChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { Flex, Text } from 'rebass';
 import ErrorBox from '../../components/ErrorBox';

@@ -1,7 +1,7 @@
 import * as CalendarConstants from '../../Utilities/Constants/CalendarConstants';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ICalendarService } from './Interface/ICalendarService';
-import { CalendarState } from '../../PredefinedConfig/RunTimeState/CalendarState';
+import { CalendarState } from '../../PredefinedConfig/CalendarState';
 
 // Similar service to the one in WPF version
 // This service is responsible for reading the calendars and for making them available and also for doing data calculations

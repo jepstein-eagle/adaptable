@@ -4,7 +4,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 
-import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import Checkbox from '../../../components/CheckBox';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';

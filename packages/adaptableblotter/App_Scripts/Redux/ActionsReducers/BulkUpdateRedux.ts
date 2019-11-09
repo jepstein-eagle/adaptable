@@ -1,4 +1,4 @@
-import { BulkUpdateState } from '../../PredefinedConfig/RunTimeState/BulkUpdateState';
+import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import * as Redux from 'redux';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 

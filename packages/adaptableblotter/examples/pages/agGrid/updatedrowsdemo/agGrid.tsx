@@ -18,7 +18,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
-import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/DesignTimeState/ApplicationState';
+import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/ApplicationState';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;

@@ -1,20 +1,17 @@
 import { ISearchService } from './Interface/ISearchService';
 import * as StrategyConstants from '../Constants/StrategyConstants';
 import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Common/Enums';
-import { UserFilterState } from '../../PredefinedConfig/RunTimeState/UserFilterState';
-import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
-import { DataSourceState, DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
-import { ColumnFilterState } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
-import {
-  AdvancedSearchState,
-  AdvancedSearch,
-} from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { UserFilterState } from '../../PredefinedConfig/UserFilterState';
+import { QuickSearchState } from '../../PredefinedConfig/QuickSearchState';
+import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceState';
+import { ColumnFilterState } from '../../PredefinedConfig/ColumnFilterState';
+import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { LayoutHelper } from '../Helpers/LayoutHelper';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
-import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { SearchChangedEventArgs } from '../../Api/Events/SearchChanged/SearchChangedEventArgs';
 import { BlotterSearchState } from '../../Api/Events/SearchChanged/BlotterSearchState';

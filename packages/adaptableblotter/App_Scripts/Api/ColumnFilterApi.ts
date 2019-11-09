@@ -1,7 +1,4 @@
-import {
-  ColumnFilterState,
-  ColumnFilter,
-} from '../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { ColumnFilterState, ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 
 export interface ColumnFilterApi {
   getColumnFilterState(): ColumnFilterState;

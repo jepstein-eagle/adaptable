@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { PieChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { PieChartDefinition } from '../../../../PredefinedConfig/ChartState';
 
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode, DataType } from '../../../../PredefinedConfig/Common/Enums';

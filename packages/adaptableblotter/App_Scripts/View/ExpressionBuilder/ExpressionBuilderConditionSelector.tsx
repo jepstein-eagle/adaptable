@@ -28,14 +28,14 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
-import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {

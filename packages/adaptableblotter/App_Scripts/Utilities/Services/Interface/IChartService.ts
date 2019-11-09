@@ -3,7 +3,7 @@ import {
   ChartData,
   PieChartDefinition,
   SparklinesChartDefinition,
-} from '../../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../../PredefinedConfig/ChartState';
 import { AdaptableBlotterColumn } from '../../Interface/AdaptableBlotterColumn';
 
 export interface IChartService {

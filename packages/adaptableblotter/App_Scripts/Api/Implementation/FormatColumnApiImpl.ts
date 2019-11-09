@@ -2,10 +2,7 @@ import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux';
 import { ApiBase } from './ApiBase';
 import { FormatColumnApi } from '../FormatColumnApi';
-import {
-  FormatColumnState,
-  FormatColumn,
-} from '../../PredefinedConfig/RunTimeState/FormatColumnState';
+import { FormatColumnState, FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

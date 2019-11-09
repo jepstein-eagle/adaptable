@@ -22,7 +22,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';

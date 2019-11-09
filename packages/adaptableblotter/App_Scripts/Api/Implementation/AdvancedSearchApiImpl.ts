@@ -3,10 +3,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
 import { ApiBase } from './ApiBase';
 import { AdvancedSearchApi } from '../AdvancedSearchApi';
-import {
-  AdvancedSearchState,
-  AdvancedSearch,
-} from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';

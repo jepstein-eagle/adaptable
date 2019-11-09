@@ -1,4 +1,4 @@
-import { UserFilterState, UserFilter } from '../PredefinedConfig/RunTimeState/UserFilterState';
+import { UserFilterState, UserFilter } from '../PredefinedConfig/UserFilterState';
 
 /**
  * Provides full and comprehensive run-time access to the User Filter function and associated state.

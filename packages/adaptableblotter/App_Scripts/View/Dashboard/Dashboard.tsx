@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
+import { DashboardState } from '../../PredefinedConfig/DashboardState';
 
 import {
   AdaptableDashboardViewFactory,
@@ -17,10 +17,7 @@ import { Visibility, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
-import {
-  EntitlementsState,
-  Entitlement,
-} from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { EntitlementsState, Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';

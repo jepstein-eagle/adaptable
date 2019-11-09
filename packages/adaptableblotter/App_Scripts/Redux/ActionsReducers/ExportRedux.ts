@@ -1,4 +1,4 @@
-import { ExportState, Report, AutoExport } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { ExportState, Report, AutoExport } from '../../PredefinedConfig/ExportState';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';

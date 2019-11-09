@@ -1,7 +1,7 @@
 import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux';
 import { ApiBase } from './ApiBase';
 import { PercentBarApi } from '../PercentBarApi';
-import { PercentBarState, PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
+import { PercentBarState, PercentBar } from '../../PredefinedConfig/PercentBarState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 

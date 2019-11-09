@@ -12,7 +12,7 @@ import {
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { UpdatedRowState } from '../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { UpdatedRowInfo, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';

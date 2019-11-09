@@ -1,4 +1,4 @@
-import { ShortcutState, Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
+import { ShortcutState, Shortcut } from '../PredefinedConfig/ShortcutState';
 export interface ShortcutApi {
   /**
    * Retrieves the Shortcut section from the Adaptable Blotter State

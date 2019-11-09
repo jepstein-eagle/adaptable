@@ -3,7 +3,7 @@ import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import StyleHelper from '../../Utilities/Helpers/StyleHelper';

@@ -3,7 +3,7 @@ import {
   AdaptableWizardStep,
   ExpressionWizardProps,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { SparklinesChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { SparklinesChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { UIHelper } from '../../../UIHelper';
 
 export class SparklinesChartExpressionColumnWizard extends ExpressionBuilderPage

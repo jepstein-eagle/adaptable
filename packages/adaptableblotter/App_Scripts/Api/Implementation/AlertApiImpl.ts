@@ -6,11 +6,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertApi } from '../AlertApi';
-import {
-  AlertState,
-  AlertProperties,
-  AlertDefinition,
-} from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertState, AlertProperties, AlertDefinition } from '../../PredefinedConfig/AlertState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import OpenfinHelper from '../../Utilities/Helpers/OpenfinHelper';

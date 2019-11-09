@@ -3,8 +3,8 @@ import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
-import { GridState } from '../../PredefinedConfig/InternalState/GridState';
+import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/LayoutState';
+import { GridState } from '../../PredefinedConfig/GridState';
 import { COLUMN_STATE_CHANGED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import { ColumnStateChangedEventArgs } from '../../Api/Events/BlotterEvents';
 

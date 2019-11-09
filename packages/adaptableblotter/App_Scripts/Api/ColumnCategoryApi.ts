@@ -1,7 +1,4 @@
-import {
-  ColumnCategoryState,
-  ColumnCategory,
-} from '../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategoryState, ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
 
 export interface ColumnCategoryApi {
   getColumnCategoryState(): ColumnCategoryState;

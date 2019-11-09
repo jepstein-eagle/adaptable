@@ -1,4 +1,4 @@
-import { PlusMinusState, PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
+import { PlusMinusState, PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

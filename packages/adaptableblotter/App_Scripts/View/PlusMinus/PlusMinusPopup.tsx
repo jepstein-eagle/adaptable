@@ -24,7 +24,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
+import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';

@@ -127,41 +127,41 @@ import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/A
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
-import { QuickSearchState } from '../PredefinedConfig/RunTimeState/QuickSearchState';
+import { QuickSearchState } from '../PredefinedConfig/QuickSearchState';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
-import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
-import { CalculatedColumn } from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
-import { FreeTextColumn } from '../PredefinedConfig/RunTimeState/FreeTextColumnState';
-import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
-import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState';
-import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
-import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
+import { PercentBar } from '../PredefinedConfig/PercentBarState';
+import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
+import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
+import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
+import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
+import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/LayoutState';
+import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import {
   PermittedColumnValues,
   EditLookUpColumn,
   UserMenuItem,
-} from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+} from '../PredefinedConfig/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
-import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 
 import { ActionColumnRenderer } from './ActionColumnRenderer';
-import { AdaptableBlotterTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
+import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../Utilities/MenuItem';
-import { SparklineColumn } from '../PredefinedConfig/DesignTimeState/SparklineColumnState';
+import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IGlue42Service, Glue42Service } from '../Utilities/Services/Glue42Service';
-import { ApplicationToolbarButton } from '../PredefinedConfig/DesignTimeState/ApplicationState';
+import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { BlotterApi } from '../types';

@@ -1,4 +1,4 @@
-import { UpdatedRowState } from '../PredefinedConfig/RunTimeState/UpdatedRowState';
+import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 
 /**

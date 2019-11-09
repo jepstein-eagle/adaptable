@@ -1,10 +1,10 @@
 import { IUIConfirmation, AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
-import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
-import { Report } from '../PredefinedConfig/RunTimeState/ExportState';
-import { Calendar } from '../PredefinedConfig/RunTimeState/CalendarState';
-import { ChartData } from '../PredefinedConfig/RunTimeState/ChartState';
+import { SystemState } from '../PredefinedConfig/SystemState';
+import { Report } from '../PredefinedConfig/ExportState';
+import { Calendar } from '../PredefinedConfig/CalendarState';
+import { ChartData } from '../PredefinedConfig/ChartState';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -13,7 +13,7 @@ import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterC
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
-import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
+import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 
 /**

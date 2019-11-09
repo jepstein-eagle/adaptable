@@ -17,7 +17,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';

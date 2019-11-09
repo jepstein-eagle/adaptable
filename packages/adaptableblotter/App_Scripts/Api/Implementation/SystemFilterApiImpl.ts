@@ -3,8 +3,8 @@ import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import { ApiBase } from './ApiBase';
 import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
 import { SystemFilterApi } from '../SystemFilterApi';
-import { SystemFilterState } from '../../PredefinedConfig/DesignTimeState/SystemFilterState';
-import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { SystemFilterState } from '../../PredefinedConfig/SystemFilterState';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 
 export class SystemFilterApiImpl extends ApiBase implements SystemFilterApi {
   public getSystemFilterState(): SystemFilterState {

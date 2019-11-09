@@ -12,7 +12,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import Radio from '../../../components/Radio';
 import HelpBlock from '../../../components/HelpBlock';
 import { Box, Flex } from 'rebass';

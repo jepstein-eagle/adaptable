@@ -1,4 +1,4 @@
-import { DataSourceState, DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

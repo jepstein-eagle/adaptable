@@ -1,7 +1,7 @@
 import {
   CategoryChartDefinition,
   CategoryChartProperties,
-} from '../../../PredefinedConfig/RunTimeState/ChartState';
+} from '../../../PredefinedConfig/ChartState';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import {
   HorizontalAlignment,

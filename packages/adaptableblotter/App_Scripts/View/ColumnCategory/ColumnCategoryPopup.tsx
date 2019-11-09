@@ -20,7 +20,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow';
 import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard';

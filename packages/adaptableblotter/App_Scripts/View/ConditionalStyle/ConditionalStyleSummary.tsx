@@ -22,8 +22,8 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
-import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
+import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 
 export interface ConditionalStyleSummaryProps
   extends StrategySummaryProps<ConditionalStyleSummaryComponent> {

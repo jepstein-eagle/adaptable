@@ -8,7 +8,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
-import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { Flex, Box, Text } from 'rebass';
