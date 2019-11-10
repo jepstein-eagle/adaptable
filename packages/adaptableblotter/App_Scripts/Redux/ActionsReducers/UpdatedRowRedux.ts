@@ -2,7 +2,10 @@ import * as Redux from 'redux';
 
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { getHexForName, RED, GREEN, GRAY } from '../../View/UIHelper';
-import { UPDATED_ROWS_DEFAULT_DURATION } from '../../Utilities/Constants/GeneralConstants';
+import {
+  UPDATED_ROWS_DEFAULT_DURATION,
+  UPDATED_ROW_DEFAULT_MAX_ALERTS_IN_STORE,
+} from '../../Utilities/Constants/GeneralConstants';
 
 export const UPDATED_ROW_ENABLE_DISABLE = 'UPDATED_ROW_ENABLE_DISABLE';
 export const JUMP_TO_ROW_ENABLE_DISABLE = 'JUMP_TO_ROW_ENABLE_DISABLE';
@@ -60,6 +63,7 @@ const initialUpdatedRowState: UpdatedRowState = {
   NeutralColor: getHexForName(GRAY),
   Duration: UPDATED_ROWS_DEFAULT_DURATION,
   JumpToRow: false,
+  MaxUpdatedRowsInStore: UPDATED_ROW_DEFAULT_MAX_ALERTS_IN_STORE,
 };
 
 export const UpdatedRowReducer: Redux.Reducer<UpdatedRowState> = (

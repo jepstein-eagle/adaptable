@@ -30,7 +30,8 @@ var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(250);
+  const tradeCount: number = 250;
+  const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
@@ -49,7 +50,7 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  //tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000);
+  //tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000, tradeCount);
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 

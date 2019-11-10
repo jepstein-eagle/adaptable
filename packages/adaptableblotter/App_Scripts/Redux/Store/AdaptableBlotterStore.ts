@@ -2021,7 +2021,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            */
           case SystemRedux.SYSTEM_UPDATED_ROW_DELETE: {
             const actionTyped = action as SystemRedux.SystemUpdatedRowDeleteAction;
-
             let ret = next(action);
 
             let rowNode: any[] = blotter.getRowNodeForPrimaryKey(

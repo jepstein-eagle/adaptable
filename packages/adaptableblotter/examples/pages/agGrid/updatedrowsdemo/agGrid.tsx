@@ -18,14 +18,14 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
-import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/ApplicationState';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(3000);
+  const tradeCount: number = 25;
+  const tradeData: any = examplesHelper.getTrades(tradeCount);
   const tickingDataHelper = new TickingDataHelper();
 
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -48,7 +48,12 @@ function InitAdaptableBlotter() {
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
-  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 5000);
+  tickingDataHelper.startTickingDataagGridThroughRowData(
+    adaptableblotter,
+    tradeData,
+    5000,
+    tradeCount
+  );
 
   adaptableblotter.api.eventApi.on('ApplicationToolbarButtonClicked', () => {
     adaptableblotter.api.updatedRowApi.deleteAllUpdatedRowInfo();
@@ -62,6 +67,7 @@ let demoConfig: PredefinedConfig = {
     UpColor: '#32CD32', // lime green
     DownColor: '#FFA500', // orange
     NeutralColor: '#FFFF00', // yellow
+    MaxUpdatedRowsInStore: 5,
   },
   Application: {
     ApplicationToolbarButtons: [

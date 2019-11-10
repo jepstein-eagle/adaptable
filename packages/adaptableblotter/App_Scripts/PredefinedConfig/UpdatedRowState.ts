@@ -67,4 +67,14 @@ export interface UpdatedRowState extends RunTimeState {
    * **Default Value: false**
    */
   JumpToRow?: boolean;
+
+  /**
+   * How many updated rows to hold in the State at any one time (and therefore to display).
+   *
+   * If you reacch this limit then we remove the oldest updated row each time a new one needs to be displayed.
+   *
+   * **Default Value**:  Infinity
+   *
+   */
+  MaxUpdatedRowsInStore?: number;
 }

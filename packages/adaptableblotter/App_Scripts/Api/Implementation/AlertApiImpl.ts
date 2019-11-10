@@ -25,7 +25,7 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
   }
 
   public displayAlert(alertToShow: AdaptableAlert): void {
-    let maxAlerts: number = this.getBlotterState().Alert.MaxAlertsInStore;
+    let maxAlerts: number = this.getAlertState().MaxAlertsInStore;
 
     // 3 things we always do with an alert are:
     // 1. Dispatch the Alert (so it appears in the toolbar)

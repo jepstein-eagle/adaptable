@@ -4,6 +4,7 @@ import { UpdatedRowApi } from '../UpdatedRowApi';
 import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
+import { Thickness } from 'igniteui-react-core/ES5/Thickness';
 /**
  * Provides full and comprehensive run-time access to the Updated Rows function (which colours rows as they change based on a scheme set by the user).
  *
@@ -43,6 +44,19 @@ export class UpdatedRowApiImpl extends ApiBase implements UpdatedRowApi {
   }
 
   public addUpdatedRowInfo(updatedRowInfo: UpdatedRowInfo): void {
+    let maxUpdatedRowsInStore: number = this.getUpdatedRowState().MaxUpdatedRowsInStore;
+    // if we exceed the amount allowed then we need to delete oldest item first
+    // we do it here (and not in Redux) so that the store can listen and refresh the row.
+    if (maxUpdatedRowsInStore != Infinity) {
+      let updatedRowInfos: UpdatedRowInfo[] = this.getBlotterState().System.UpdatedRowInfos;
+      if (updatedRowInfos.length > maxUpdatedRowsInStore) {
+        // need to delete the oldest one
+        let oldestUpdatedRowInfo: UpdatedRowInfo = updatedRowInfos[0];
+        this.deleteUpdatedRowInfo(oldestUpdatedRowInfo);
+      }
+    }
+
+    // now add
     this.dispatchAction(SystemRedux.SystemUpdatedRowAdd(updatedRowInfo));
   }
 

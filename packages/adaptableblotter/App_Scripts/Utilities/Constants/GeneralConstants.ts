@@ -65,7 +65,8 @@ export const SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE: 'Error' | 'Warning' | 'Success' 
   MessageType.Info;
 // theme
 export const THEME_DEFAULT_CURRENT_THEME: string = LIGHT_THEME;
-
+// Updated Row
+export const UPDATED_ROW_DEFAULT_MAX_ALERTS_IN_STORE: number = Infinity;
 /**
  * Object Factory
  */

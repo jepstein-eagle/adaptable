@@ -21,7 +21,8 @@ This uses the agGrid updateRowData method which does NOT call cell value changed
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeData: any = examplesHelper.getTrades(25);
+  const tradeCount: number = 30;
+  const tradeData: any = examplesHelper.getTrades(tradeCount);
   console.log(tradeData);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   alert('hello');
@@ -34,7 +35,12 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   // turn on mimicing ticking data
-  tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000);
+  tickingDataHelper.startTickingDataagGridThroughRowData(
+    adaptableblotter,
+    tradeData,
+    1000,
+    tradeCount
+  );
 }
 
 let flashingJson: PredefinedConfig = {

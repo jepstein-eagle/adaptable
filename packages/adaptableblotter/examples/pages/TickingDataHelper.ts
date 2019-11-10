@@ -104,7 +104,8 @@ export class TickingDataHelper {
   startTickingDataagGridThroughRowData(
     blotter: IAdaptableBlotter,
     rowData: any,
-    tickingFrequency: number
+    tickingFrequency: number,
+    tradeCount: number
   ) {
     let gridOptions: GridOptions = blotter.blotterOptions.vendorGrid as GridOptions;
     let myRowData = gridOptions.rowData;
@@ -116,7 +117,7 @@ export class TickingDataHelper {
       myRowData != undefined
     ) {
       setInterval(() => {
-        const tradeId = this.generateRandomInt(0, 25);
+        const tradeId = this.generateRandomInt(0, tradeCount);
         // NOTE:  You need to make a COPY of the data that you are changing...
         const trade: ITrade = { ...gridOptions.rowData[tradeId] };
         if (trade) {
