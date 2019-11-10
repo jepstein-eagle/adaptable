@@ -9,17 +9,9 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *
  * Advanced Search use an [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
  *
- * **Further Resources**
+ *  **Further Resources**
  *
- * [Advanced Search Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos)
- *
- * [Advanced Search Demo](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/)
- *
- * [Advanced Search API](_api_advancedsearchapi_.advancedsearchapi.html)
- *
- * [Advanced Search FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ)
- *
- *  [Advanced Search Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
+ * [Demo Site](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/) | [Blotter API](_api_advancedsearchapi_.advancedsearchapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
  *
  * **Advanced Search Predefined Config Example**
  *
