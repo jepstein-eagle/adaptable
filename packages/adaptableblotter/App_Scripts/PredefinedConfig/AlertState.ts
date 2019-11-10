@@ -14,15 +14,7 @@ import { QueryRange } from './Common/Expression/QueryRange';
  *
  * **Further Resources**
  *
- * [Alert Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895731-Alerts-Videos)
- *
- * [Alert Demo](https://demo.adaptableblotter.com/alertsmessages/aggridalertdemo/)
- *
- * [Alert API](_api_alertapi_.alertapi.html)
- *
- * [Alert FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ)
- *
- * [Alert Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridalertdemo/) | [API](_api_alertapi_.alertapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895731-Alerts-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  * **Alert Predefined Config Example**
  *
