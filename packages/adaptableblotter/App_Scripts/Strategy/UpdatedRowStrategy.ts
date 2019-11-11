@@ -91,6 +91,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   }
 
   private getChangeDirection(dataChangedInfo: DataChangedInfo): ChangeDirection {
+    console.log(dataChangedInfo);
     if (
       dataChangedInfo.OldValue == null ||
       dataChangedInfo.NewValue == null ||
@@ -105,6 +106,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
     );
 
     if (columnDataType != DataType.Number && columnDataType != DataType.Date) {
+      console.log('bingo');
       return ChangeDirection.Neutral;
     }
 

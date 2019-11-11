@@ -49,7 +49,7 @@ export class UpdatedRowApiImpl extends ApiBase implements UpdatedRowApi {
     // we do it here (and not in Redux) so that the store can listen and refresh the row.
     if (maxUpdatedRowsInStore != Infinity) {
       let updatedRowInfos: UpdatedRowInfo[] = this.getBlotterState().System.UpdatedRowInfos;
-      if (updatedRowInfos.length > maxUpdatedRowsInStore) {
+      if (updatedRowInfos.length === maxUpdatedRowsInStore) {
         // need to delete the oldest one
         let oldestUpdatedRowInfo: UpdatedRowInfo = updatedRowInfos[0];
         this.deleteUpdatedRowInfo(oldestUpdatedRowInfo);

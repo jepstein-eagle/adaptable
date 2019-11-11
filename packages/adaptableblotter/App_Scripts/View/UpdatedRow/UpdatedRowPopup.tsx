@@ -11,6 +11,8 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import HelpBlock from '../../components/HelpBlock';
 import { ColorPicker } from '../ColorPicker';
+import Input from '../../components/Input';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 interface UpdatedRowPopupProps extends StrategyViewPopupProps<UpdatedRowPopupComponent> {
   UpdatedRowState: UpdatedRowState;
@@ -21,6 +23,7 @@ interface UpdatedRowPopupProps extends StrategyViewPopupProps<UpdatedRowPopupCom
   onSetUpColor: (upColor: string) => UpdatedRowRedux.UpColorSetAction;
   onSetDownColor: (downColor: string) => UpdatedRowRedux.DownColorSetAction;
   onSetNeutralColor: (neutralColor: string) => UpdatedRowRedux.NeutralColorSetAction;
+  onSetMaxItems: (maxItems: number) => UpdatedRowRedux.MaxItemsSetAction;
 }
 
 interface UpdatedRowPopupState {
@@ -29,6 +32,7 @@ interface UpdatedRowPopupState {
   UpColor: string;
   DownColor: string;
   NeutralColor: string;
+  MaxItems: number;
 }
 
 class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, UpdatedRowPopupState> {
@@ -40,6 +44,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
       UpColor: this.props.UpdatedRowState.UpColor,
       DownColor: this.props.UpdatedRowState.DownColor,
       NeutralColor: this.props.UpdatedRowState.NeutralColor,
+      MaxItems: this.props.UpdatedRowState.MaxUpdatedRowsInStore,
     };
   }
 
@@ -124,6 +129,26 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
                 onChange={x => this.onNeutralColorSelectChange(x)}
               />
             </Flex>
+            <HelpBlock>
+              Set the maximum number of updated rows that can be displayed at any time. Leave empty
+              to be infinite.
+            </HelpBlock>
+            <Flex flexDirection="row" alignItems="center" margin={2}>
+              <Text style={{ flex: 2 }} marginRight={2}>
+                Max Updated Rows:
+              </Text>
+
+              <Flex flex={7} flexDirection="row" alignItems="center">
+                <Input
+                  style={{ flex: 1 }}
+                  type="number"
+                  placeholder="Enter Number"
+                  onChange={(x: any) => this.onMaxItemsChanged(x)}
+                  value={this.state.MaxItems}
+                  marginRight={3}
+                />
+              </Flex>
+            </Flex>
           </Flex>
         </PanelWithImage>
       </Flex>
@@ -162,6 +187,14 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
     this.setState({ NeutralColor: neutralColor } as UpdatedRowPopupState);
     this.props.onSetNeutralColor(neutralColor);
   }
+
+  private onMaxItemsChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    let maxItems = StringExtensions.IsNullOrEmpty(e.value) ? Infinity : parseInt(e.value);
+    console.log(maxItems);
+    this.setState({ MaxItems: maxItems } as UpdatedRowPopupState);
+    this.props.onSetMaxItems(maxItems);
+  }
 }
 
 function mapStateToProps(state: AdaptableBlotterState) {
@@ -180,6 +213,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onSetDownColor: (downColor: string) => dispatch(UpdatedRowRedux.DownColorSet(downColor)),
     onSetNeutralColor: (neutralColor: string) =>
       dispatch(UpdatedRowRedux.NeutralColorSet(neutralColor)),
+    onSetMaxItems: (maxItems: number) => dispatch(UpdatedRowRedux.MaxItemsSet(maxItems)),
   };
 }
 

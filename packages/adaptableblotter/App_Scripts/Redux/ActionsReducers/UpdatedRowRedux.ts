@@ -12,6 +12,7 @@ export const JUMP_TO_ROW_ENABLE_DISABLE = 'JUMP_TO_ROW_ENABLE_DISABLE';
 export const UP_COLOR_SET = 'UP_COLOR_SET';
 export const DOWN_COLOR_SET = 'DOWN_COLOR_SET';
 export const NEUTRAL_COLOR_SET = 'NEUTRAL_COLOR_SET';
+export const MAX_ITEMS_SET = 'MAX_ITEMS_SET';
 
 export interface UpdatedRowEnableDisableAction extends Redux.Action {
   shouldEnable: boolean;
@@ -29,6 +30,10 @@ export interface DownColorSetAction extends Redux.Action {
 }
 export interface NeutralColorSetAction extends Redux.Action {
   neutralColor: string;
+}
+
+export interface MaxItemsSetAction extends Redux.Action {
+  maxItems: number;
 }
 
 export const UpdatedRowEnableDisable = (shouldEnable: boolean): UpdatedRowEnableDisableAction => ({
@@ -54,6 +59,11 @@ export const DownColorSet = (downColor: string): DownColorSetAction => ({
 export const NeutralColorSet = (neutralColor: string): NeutralColorSetAction => ({
   type: NEUTRAL_COLOR_SET,
   neutralColor,
+});
+
+export const MaxItemsSet = (maxItems: number): MaxItemsSetAction => ({
+  type: MAX_ITEMS_SET,
+  maxItems,
 });
 
 const initialUpdatedRowState: UpdatedRowState = {
@@ -102,6 +112,12 @@ export const UpdatedRowReducer: Redux.Reducer<UpdatedRowState> = (
       let neutralColor = (action as NeutralColorSetAction).neutralColor;
       return Object.assign({}, state, {
         NeutralColor: neutralColor,
+      });
+    }
+    case MAX_ITEMS_SET: {
+      let maxItems: number = (action as MaxItemsSetAction).maxItems;
+      return Object.assign({}, state, {
+        MaxUpdatedRowsInStore: maxItems,
       });
     }
 

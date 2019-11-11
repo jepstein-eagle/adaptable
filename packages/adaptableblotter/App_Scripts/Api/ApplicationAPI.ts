@@ -3,6 +3,10 @@ import { ApplicationToolbarButton, ApplicationState } from '../PredefinedConfig/
 /**
  * Provides access to an empty Toolbar and Popup, allowing developers to populate it as they wish.
  *
+ *  **Further Resources**
+ *
+ * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardapplicationtoolbardemo/) | [State](_predefinedconfig_applicationstate_.applicationstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos] To come | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
+ *
  */
 export interface ApplicationApi {
   /**

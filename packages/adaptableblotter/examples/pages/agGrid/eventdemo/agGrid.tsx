@@ -22,7 +22,6 @@ import {
   ToolbarVisibilityChangedEventArgs,
 } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 import ReactDOM from 'react-dom';
-import { ApplicationToolbarButton } from '../../../../App_Scripts/PredefinedConfig/ApplicationState';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -47,7 +46,7 @@ function InitAdaptableBlotter() {
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  let runNewEvents: boolean = true;
+  let runNewEvents: boolean = false;
 
   if (!runNewEvents) {
     // old way

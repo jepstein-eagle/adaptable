@@ -24,7 +24,7 @@ var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 25;
+  const tradeCount: number = 15;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const tickingDataHelper = new TickingDataHelper();
 
@@ -48,10 +48,10 @@ function InitAdaptableBlotter() {
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
-  tickingDataHelper.startTickingDataagGridThroughRowData(
+  tickingDataHelper.startTickingDataagGridTradesUpdateData(
+    gridOptions,
     adaptableblotter,
-    tradeData,
-    5000,
+    3000,
     tradeCount
   );
 
@@ -61,22 +61,16 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
+  /*
   UpdatedRow: {
     EnableUpdatedRow: true,
     JumpToRow: true,
     UpColor: '#32CD32', // lime green
     DownColor: '#FFA500', // orange
     NeutralColor: '#FFFF00', // yellow
-    MaxUpdatedRowsInStore: 5,
+    MaxUpdatedRowsInStore: 2,
   },
-  Application: {
-    ApplicationToolbarButtons: [
-      {
-        Name: 'btnClearUpdatedRows',
-        Caption: 'Clear Updated Rows',
-      },
-    ],
-  },
+  */
 };
 
 export default () => {

@@ -146,6 +146,42 @@ export class TickingDataHelper {
     }
   }
 
+  public startTickingDataagGridTradesUpdateData(
+    gridOptions: any,
+    blotter: IAdaptableBlotter,
+    tickingFrequency: number,
+    tradeCount: number
+  ) {
+    if (gridOptions != null && gridOptions.api != null) {
+      setInterval(() => {
+        let tradeId = this.generateRandomInt(1, tradeCount);
+
+        const trade: ITrade = { ...gridOptions.rowData[tradeId] };
+
+        let numberToAdd: number = this.generateRandomInt(1, 3);
+
+        if (numberToAdd == 1) {
+          // if 1 then update a number up
+          trade.price = trade.price + 1;
+        } else if (numberToAdd == 2) {
+          // if 2 then update a number down
+          trade.price = trade.price - 1;
+        } else if (numberToAdd == 3) {
+          // if 3 then update a currency
+          let curentValue = blotter.getDisplayValue(trade.tradeId, 'currency');
+          let isCurrency: boolean = curentValue == 'JPY';
+          if (isCurrency) {
+            trade.currency = 'ABC';
+          } else {
+            trade.currency = 'JPY';
+          }
+        }
+
+        blotter.api.gridApi.updateGridData([trade]);
+      }, tickingFrequency);
+    }
+  }
+
   startTickingDataagGridAddRow(blotter: IAdaptableBlotter, rowData: any, rowCount: number) {
     let gridOptions: GridOptions = blotter.blotterOptions.vendorGrid as GridOptions;
     if (

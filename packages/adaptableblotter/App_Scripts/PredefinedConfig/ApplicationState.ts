@@ -12,6 +12,10 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *
  * - a div which will **display any buttons that you provide** via the *ApplicationToolbarButtons* property of the Application state (see below).
  *
+ *  **Further Resources**
+ *
+ * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardapplicationtoolbardemo/) | [API](_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos] To come | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
+ *
  * **Rendering Content**
  *
  * The Adaptable Blotter provides the [applicationAPI](_api_applicationapi_.applicationapi.html) **getApplicationToolbarContentsDiv** method that returns the name of the Div in which you should render the contents.
