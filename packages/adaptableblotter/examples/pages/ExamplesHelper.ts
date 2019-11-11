@@ -767,7 +767,7 @@ export class ExamplesHelper {
       suppressMenuHide: true,
       rowHeight: 30,
       sideBar: 'columns',
-      // rowSelection: 'multiple',
+      rowSelection: 'multiple',
       columnTypes: {
         abColDefNumber: {},
         abColDefString: {},

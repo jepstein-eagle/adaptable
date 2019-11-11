@@ -14,4 +14,6 @@ export interface IReportService {
   IsReportDestinationActive(exportDestination: ExportDestination): boolean;
 
   ConvertReportToArray(report: Report): IStrategyActionReturn<any[]>;
+
+  GetPrimaryKeysForReport(report: Report): any[];
 }

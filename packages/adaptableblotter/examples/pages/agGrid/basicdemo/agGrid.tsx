@@ -33,7 +33,7 @@ function InitAdaptableBlotter() {
   const tradeCount: number = 250;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-
+  //gridOptions.rowSelection = true;
   // console.log(tradeData);
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',

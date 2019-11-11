@@ -96,59 +96,66 @@ export class ReportService implements IReportService {
     return false;
   }
 
-  public ConvertReportToArray(report: Report): IStrategyActionReturn<any[]> {
-    let ReportColumns: AdaptableBlotterColumn[] = [];
+  private getReportColumnsForReport(report: Report): any {
+    let reportColumns: AdaptableBlotterColumn[] = [];
     let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
 
     // first get the cols depending on the Column Scope
     switch (report.ReportColumnScope) {
       case ReportColumnScope.AllColumns:
-        ReportColumns = gridColumns;
+        reportColumns = gridColumns;
         break;
       case ReportColumnScope.VisibleColumns:
-        ReportColumns = gridColumns.filter(c => c.Visible);
+        reportColumns = gridColumns.filter(c => c.Visible);
         break;
       case ReportColumnScope.SelectedColumns:
         let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-        if (ArrayExtensions.IsNullOrEmpty(selectedCellInfo.Columns)) {
-          // some way of saying we cannot export anything
-          return {
-            ActionReturn: dataToExport,
-            Alert: {
-              Header: 'Export Error',
-              Msg: 'No cells are selected',
-              AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-                MessageType.Error
-              ),
-            },
-          };
-        }
-
         // otherwise get columns
-        ReportColumns = selectedCellInfo.Columns;
+        reportColumns = selectedCellInfo.Columns;
         break;
       case ReportColumnScope.BespokeColumns:
-        ReportColumns = report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
+        reportColumns = report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
         break;
+    }
+    return reportColumns;
+  }
+
+  public ConvertReportToArray(report: Report): IStrategyActionReturn<any[]> {
+    //let ReportColumns: AdaptableBlotterColumn[] = [];
+    //  let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+
+    let reportColumns: AdaptableBlotterColumn[] = this.getReportColumnsForReport(report);
+    if (ArrayExtensions.IsNullOrEmpty(reportColumns)) {
+      // some way of saying we cannot export anything
+      return {
+        ActionReturn: dataToExport,
+        Alert: {
+          Header: 'Export Error',
+          Msg: 'No cells are selected',
+          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+            MessageType.Error
+          ),
+        },
+      };
     }
 
     // populate the first row
     var dataToExport: any[] = [];
-    dataToExport[0] = ReportColumns.map(c => c.FriendlyName);
+    dataToExport[0] = reportColumns.map(c => c.FriendlyName);
 
     // now populate the rest of the rows
     switch (report.ReportRowScope) {
       case ReportRowScope.AllRows:
         this.blotter.forAllRowNodesDo(row => {
-          let newRow = this.getRowValues(row, ReportColumns);
+          let newRow = this.getRowValues(row, reportColumns);
           dataToExport.push(newRow);
         });
         break;
 
       case ReportRowScope.VisibleRows:
         this.blotter.forAllVisibleRowNodesDo(row => {
-          let newRow = this.getRowValues(row, ReportColumns);
+          let newRow = this.getRowValues(row, reportColumns);
           dataToExport.push(newRow);
         });
         break;
@@ -161,11 +168,11 @@ export class ReportService implements IReportService {
             ExpressionHelper.checkForExpressionFromRowNode(
               expressionToCheck,
               row,
-              ReportColumns,
+              reportColumns,
               this.blotter
             )
           ) {
-            let newRow = this.getRowValues(row, ReportColumns);
+            let newRow = this.getRowValues(row, reportColumns);
             dataToExport.push(newRow);
           }
         });
@@ -191,7 +198,7 @@ export class ReportService implements IReportService {
       case ReportRowScope.SelectedRows:
         const selectedRowInfo: SelectedRowInfo = this.blotter.api.gridApi.getSelectedRowInfo();
         if (selectedRowInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedRowInfo.GridRows)) {
-          let columnIds: string[] = ReportColumns.map(rc => rc.ColumnId);
+          let columnIds: string[] = reportColumns.map(rc => rc.ColumnId);
           selectedRowInfo.GridRows.filter(gr => gr.rowInfo.isGroup == false).forEach(
             (gridRow: GridRow) => {
               let rowData: any = gridRow.rowData;
@@ -208,6 +215,75 @@ export class ReportService implements IReportService {
     }
 
     return { ActionReturn: dataToExport };
+  }
+
+  public GetPrimaryKeysForReport(report: Report): any[] {
+    let pkValues: any[] = [];
+    let reportColumns: AdaptableBlotterColumn[] = this.getReportColumnsForReport(report);
+
+    switch (report.ReportRowScope) {
+      case ReportRowScope.AllRows:
+        this.blotter.forAllRowNodesDo(row => {
+          let pkValue: any = this.blotter.getPrimaryKeyValueFromRowNode(row);
+          pkValues.push(pkValue);
+        });
+        break;
+
+      case ReportRowScope.VisibleRows:
+        this.blotter.forAllVisibleRowNodesDo(row => {
+          let pkValue: any = this.blotter.getPrimaryKeyValueFromRowNode(row);
+          pkValues.push(pkValue);
+        });
+        break;
+
+      case ReportRowScope.ExpressionRows:
+        let expressionToCheck: Expression = report.Expression;
+
+        this.blotter.forAllRowNodesDo(row => {
+          if (
+            ExpressionHelper.checkForExpressionFromRowNode(
+              expressionToCheck,
+              row,
+              reportColumns,
+              this.blotter
+            )
+          ) {
+            let pkValue: any = this.blotter.getPrimaryKeyValueFromRowNode(row);
+            pkValues.push(pkValue);
+          }
+        });
+        break;
+
+      case ReportRowScope.SelectedCells:
+        const selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+
+        const { Columns, GridCells } = selectedCellInfo;
+        const colCount = Columns.length;
+        const rowCount = GridCells.length / colCount;
+
+        for (let i = 0; i < rowCount; i++) {
+          for (let j = 0; j < colCount; j++) {
+            const index = i + j * rowCount;
+            let pkValue: any = GridCells[index].primaryKeyValue;
+            ArrayExtensions.AddItem(pkValues, pkValue);
+          }
+        }
+
+        break;
+      case ReportRowScope.SelectedRows:
+        const selectedRowInfo: SelectedRowInfo = this.blotter.api.gridApi.getSelectedRowInfo();
+        if (selectedRowInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedRowInfo.GridRows)) {
+          let columnIds: string[] = reportColumns.map(rc => rc.ColumnId);
+          selectedRowInfo.GridRows.filter(gr => gr.rowInfo.isGroup == false).forEach(
+            (gridRow: GridRow) => {
+              pkValues.push(gridRow.primaryKeyValue);
+            }
+          );
+        }
+        break;
+    }
+
+    return pkValues;
   }
 
   private getRowValues(rowNode: any, reportColumns: AdaptableBlotterColumn[]): any[] {

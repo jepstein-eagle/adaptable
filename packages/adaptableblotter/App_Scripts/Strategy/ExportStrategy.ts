@@ -257,12 +257,16 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         let gridColumns: AdaptableBlotterColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState()
           .Grid.Columns;
 
+        // for glue42 we need to pass in the pk values of the data also
+        let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(report);
+
         try {
           if (data) {
-            this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
-              data,
-              gridColumns,
-            ]);
+            //       this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
+            //        data,
+            //       gridColumns,
+            //      primaryKeyValues,
+            //    ]);
           }
         } catch (error) {
           LoggingHelper.LogAdaptableBlotterError(error);

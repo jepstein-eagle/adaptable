@@ -59,10 +59,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     this.state = { configMenuItems: [] };
   }
 
-  async componentDidMount() {
-    // await this.props.Blotter.Glue42Service.init();
-  }
-
   render() {
     const functionsGlyph: any = <Icon name={'home'} />;
     const colsGlyph: any = <Icon name={'list'} />;
