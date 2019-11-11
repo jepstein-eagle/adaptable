@@ -60,7 +60,7 @@ class AgGridReactOverride extends AgGridReact {
     };
 
     let gridOptions = this.props.gridOptions || {};
-    if ((AgGridColumn as any).hasChildColumns(this.props)) {
+    if (AgGridColumn && (AgGridColumn as any).hasChildColumns(this.props)) {
       gridOptions.columnDefs = (AgGridColumn as any).mapChildColumnDefs(this.props);
     }
 
