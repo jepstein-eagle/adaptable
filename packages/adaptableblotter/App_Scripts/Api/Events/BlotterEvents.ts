@@ -30,7 +30,7 @@ export interface AdaptableBlotterEventData {
  *
  * Includes just the name of the new selected Layout.
  */
-export interface ColumnStateChangedEventArgs extends FDC3Schema {
+export interface ColumnStateChangedEventArgs extends BlotterEventArgs {
   data: ColumnStateChangedEventData[];
 }
 
@@ -47,7 +47,7 @@ export interface ColumnStateChangedInfo {
  *
  * Includes the Alert has been fired - this will contain details of the Alert Definition that triggered the Alert, and (optionally) what Data Change was responsible.
  */
-export interface AlertFiredEventArgs extends FDC3Schema {
+export interface AlertFiredEventArgs extends BlotterEventArgs {
   data: AlertFiredEventData[];
 }
 
@@ -64,7 +64,7 @@ export interface AlertFiredInfo {
  *
  * Includes the Action Column that was clicked, the row that contained the cell that was clicked (and its Primary Key value).
  */
-export interface ActionColumnClickedEventArgs extends FDC3Schema {
+export interface ActionColumnClickedEventArgs extends BlotterEventArgs {
   data: ActionColumnClickedEventData[];
 }
 
@@ -83,7 +83,7 @@ export interface ActionColumnClickedInfo {
  *
  * Includes full details of all Selected Cells and Rows (if the latter has been activated).
  */
-export interface SelectionChangedEventArgs extends FDC3Schema {
+export interface SelectionChangedEventArgs extends BlotterEventArgs {
   data: SelectionChangedEventData[];
 }
 
@@ -101,7 +101,7 @@ export interface SelectionChangedInfo {
  *
  * Includes just the name of the new selected theme.
  */
-export interface ThemeChangedEventArgs extends FDC3Schema {
+export interface ThemeChangedEventArgs extends BlotterEventArgs {
   data: ThemeChangedEventData[];
 }
 
@@ -113,7 +113,7 @@ export interface ThemeChangedInfo {
   themeName: string;
 }
 
-export interface ToolbarVisibilityChangedEventArgs extends FDC3Schema {
+export interface ToolbarVisibilityChangedEventArgs extends BlotterEventArgs {
   data: ToolbarVisibilityChangedEventData[];
 }
 
@@ -126,7 +126,7 @@ export interface ToolbarVisibilityChangedInfo {
   visibility: 'Visible' | 'Hidden';
 }
 
-export interface ApplicationToolbarButtonClickedEventArgs extends FDC3Schema {
+export interface ApplicationToolbarButtonClickedEventArgs extends BlotterEventArgs {
   data: ApplicationToolbarButtonClickedEventData[];
 }
 
