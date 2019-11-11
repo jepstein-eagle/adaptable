@@ -7,6 +7,7 @@ import join from '../../components/utils/join';
 import contains from '../../components/utils/contains';
 import SimpleButton from '../SimpleButton';
 import { Icon } from '../icons';
+import HelpBlock from '../HelpBlock';
 
 interface FileDroppableProps extends FlexProps {
   buttonText?: React.ReactNode;
@@ -166,10 +167,10 @@ const FileDroppable = (props: FileDroppableProps) => {
       <SimpleButton style={{ cursor: 'pointer' }} variant="text">
         <div>
           {state.dragOver ? (
-            <b>Drop it like it's hot</b>
+            <b>Drop file here to start Adaptable Blotter Wizard</b>
           ) : (
             <div>
-              <b>Choose a file</b> or drag it here
+              <b>Click here to select a JSON file to load </b> or drag it here
             </div>
           )}
         </div>
@@ -214,7 +215,12 @@ const FileDroppable = (props: FileDroppableProps) => {
     >
       {props.children}
       <Flex flexDirection="column">
-        <Icon name="attach-file" size={48} />
+        <Flex flexDirection="column" alignItems="center" margin={2}>
+          <HelpBlock>The Adaptable Blotter No Code Version</HelpBlock>
+        </Flex>
+        <Flex flexDirection="column" alignItems="center" margin={2}>
+          <Icon name="attach-file" size={48} />
+        </Flex>
       </Flex>
 
       {msg}

@@ -36,7 +36,6 @@ function InitAdaptableBlotter() {
     //  },
     onInit: ({ adaptableBlotterOptions, gridOptions }) => {
       adaptableBlotterOptions.filterOptions = adaptableBlotterOptions.filterOptions || {};
-      adaptableBlotterOptions.filterOptions.autoApplyFilter = false;
       gridOptions.columnDefs = gridOptions.columnDefs!.map(c => {
         return {
           ...c,
@@ -61,10 +60,12 @@ let demoConfig: PredefinedConfig = {
       {
         Alert: {
           Header: "Run 'All Data' Report",
-          MessageType: 'Info',
           Msg: "Run the 'All Data' report so MO have full view of activity",
-          AlertProperties: {
-            ShowPopup: false,
+          AlertDefinition: {
+            MessageType: 'Info',
+            AlertProperties: {
+              ShowPopup: false,
+            },
           },
         },
         Schedule: {
