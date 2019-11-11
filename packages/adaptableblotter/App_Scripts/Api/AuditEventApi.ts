@@ -19,12 +19,17 @@ import {
  *
  * These events are **only fired if the Audit Log** has been configured with the property *auditAsEvent* set to **true** in [Audit Options](_blotteroptions_auditoptions_.auditoptions.html).
  *
+ *  The Adaptable Blotter uses **FDC3 Standard for messaging** so to get the full audit datea you will need to get the auditLogEventArgs.data[0].id property, e.g.:
+ *
+ *  `ts
+ *  const firedAlert: Alert = alertFiredArgs.data[0].id.alert
+ *  ```
  * The preferred way is as follows:
  *
  *  ```ts
- * adaptableblotter.api.auditEventApi
- *    .on('AuditCellEdited', auditLogEventArgs => {
+ * adaptableblotter.api.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
  *        // listen to audit event as required
+ *        const auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id
  *    }
  *  );
  * ```
@@ -36,11 +41,29 @@ export interface AuditEventApi {
   _onAuditFunctionApplied: EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>;
 
   /**
+   * **This event is deprecated - please use the new on('AuditStateChanged') event instead which returns the same AuditLogEventArgs**
+   */
+  onAuditStateChanged(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
+
+  /**
+   * **This event is deprecated - please use the new on('AuditCellEdited') event instead which returns the same AuditLogEventArgs**
+   */
+  onAuditCellEdited(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
+
+  /**
+   * **This event is deprecated - please use the new on('AuditFunctionApplied') event instead which returns the same AuditLogEventArgs**
+   */
+  onAuditFunctionApplied(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
+
+  /**
    * Fired whenever the Redux state changes.
    *
    * This can be configured in **AuditOptions** to fire for User State changes, Internal State changes or both.
    */
-  onAuditStateChanged(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
+  on(
+    eventName: 'AuditStateChanged',
+    callback: (auditStateChangedArgs: AuditLogEventArgs) => void
+  ): () => void;
 
   /**
    * Fired whenever a cell is edited in the Blotter.
@@ -49,30 +72,26 @@ export interface AuditEventApi {
    *
    * N.B. You are able to listen to ticking data changes via **other Audit options**
    */
-  onAuditCellEdited(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
+  on(
+    eventName: 'AuditCellEdited',
+    callback: (auditCellEditedArgs: AuditLogEventArgs) => void
+  ): () => void;
 
   /**
    * Fired whenever a function is directly applied by a User.
    *
    * For example its fired when a Smart Edit or Quick Search is performed or an Export takes place.
    */
-  onAuditFunctionApplied(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
-
-  on(
-    eventName: 'AuditStateChanged',
-    callback: (auditStateChangedArgs: AuditLogEventArgs) => void
-  ): () => void;
-
-  on(
-    eventName: 'AuditCellEdited',
-    callback: (auditCellEditedArgs: AuditLogEventArgs) => void
-  ): () => void;
-
   on(
     eventName: 'AuditFunctionApplied',
     callback: (auditFunctionAppliedArgs: AuditLogEventArgs) => void
   ): () => void;
 
+  /**
+   * The emit function used internally to fire the events
+   * @param eventName
+   * @param data
+   */
   emit(
     eventName: AUDIT_STATE_CHANGED_EVENT | AUDIT_CELL_EDITED_EVENT | AUDIT_FUNCTION_APPLIED_EVENT,
     data?: any

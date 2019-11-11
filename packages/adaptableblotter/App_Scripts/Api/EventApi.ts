@@ -45,9 +45,9 @@ import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
  *
  * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering the Application toolbar)
  *
- * - **BlotterReady** - fired whenever the Blotter is initialised and ready for use
+ * - **BlotterReady** - fired whenever the Blotter is initialised and ready for use (has no Args class)
  *
- * E ach event contains and EventArgs object that wraps relevant information for the event.
+ * Each event contains an *xxxEventArgs* object that wraps relevant information for the event.
  *
  * The Adaptable Blotter uses **FDC3 Standard for messaging** so to get the data you will need to get the xxxArgs.data[0].id property, e.g.:
  *
@@ -64,7 +64,7 @@ import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
  *  ```ts
  * adaptableblotter.api.eventApi
  *    .on('ActionColumnClicked', (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
- *        onActionColumnClickedListener(actionColumnEventArgs)
+ *        onActionColumnClickedListener(actionColumnEventArgs.data[0].id)
  *    }
  *  );
  * ```
