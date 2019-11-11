@@ -49,7 +49,7 @@ import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
  *
  * Each event contains an *xxxEventArgs* object that wraps relevant information for the event.
  *
- * The Adaptable Blotter uses **FDC3 Standard for messaging** so to get the data you will need to get the xxxArgs.data[0].id property, e.g.:
+ * The Adaptable Blotter uses **FDC3 Standard for messaging** so to get hold of the data packaged in the event, you will need to access the xxxArgs.data[0].id property e.g.:
  *
  *   ```ts
  *  const firedAlert: Alert = alertFiredArgs.data[0].id.alert

@@ -19,12 +19,13 @@ import {
  *
  * These events are **only fired if the Audit Log** has been configured with the property *auditAsEvent* set to **true** in [Audit Options](_blotteroptions_auditoptions_.auditoptions.html).
  *
- *  The Adaptable Blotter uses **FDC3 Standard for messaging** so to get the full audit datea you will need to get the auditLogEventArgs.data[0].id property, e.g.:
+ *  The Adaptable Blotter uses **FDC3 Standard for messaging** so to get the full audit data, you will need to access the auditLogEventArgs.data[0].id property e.g.:
  *
- *  `ts
- *  const firedAlert: Alert = alertFiredArgs.data[0].id.alert
+ *  ```ts
+ *  const auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id
  *  ```
- * The preferred way is as follows:
+ *
+ * The preferred way to listen to the Audit Event is as follows:
  *
  *  ```ts
  * adaptableblotter.api.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
