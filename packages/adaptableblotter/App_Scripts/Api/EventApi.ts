@@ -217,12 +217,12 @@ export interface EventApi {
    */
   onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs>;
 
-  /// _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
-  //_onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
-  //_onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
-  //_onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
-  //_onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnClickedEventArgs>;
-  //_onSelectionChanged: EventDispatcher<IAdaptableBlotter, SelectionChangedEventArgs>;
+  _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
+  _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
+  _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
+  _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
+  _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnClickedEventArgs>;
+  _onSelectionChanged: EventDispatcher<IAdaptableBlotter, SelectionChangedEventArgs>;
 
   emit(
     eventName:
