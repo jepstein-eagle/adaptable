@@ -1,66 +1,47 @@
-import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
-import { DataChangedInfo } from '../Interface/DataChangedInfo';
-import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-import { GridCell } from '../Interface/Selection/GridCell';
-
-import Glue4Office, { Glue42Office } from '@glue42/office';
-import Glue, { Glue42 } from '@glue42/desktop';
-import Helper from '../Helpers/Helper';
-import ColumnHelper from '../Helpers/ColumnHelper';
-import ExpressionHelper from '../Helpers/ExpressionHelper';
-import { Glue42Config } from '../../PredefinedConfig/Glue42Config';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
-import { cloneDeep } from 'lodash';
-
-import LoggingHelper, {
-  LogAdaptableBlotterError,
-  LogAdaptableBlotterWarning,
-} from '../Helpers/LoggingHelper';
 
 export interface IGlue42ExportError {
-  row: number;
-  column: number;
-  description: string;
-  foregroundColor: string;
-  backgroundColor: string;
+  // row: number;
+  //  column: number;
+  //  description: string;
+  //  foregroundColor: string;
+  //  backgroundColor: string;
 }
 
 export interface IGlue42ColumnInfo {
-  header: string;
-  fieldName: string;
+  //  header: string;
+  // fieldName: string;
 }
 
 export interface IExcelStatus {
-  msg: string;
-  isResolved: boolean;
+  // msg: string;
+  //  isResolved: boolean;
 }
 export interface IGlue42Service {
-  init(): void;
-  exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys?: any[]): void;
+  // init(): void;
+  // exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys?: any[]): void;
 }
 
-type SheetChangeCallback = (
-  data: object[],
-  errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
-  doneCallback: () => void,
-  delta: Glue42Office.Excel.DeltaItem[]
-) => void;
+//type SheetChangeCallback = (
+//  data: object[],
+//  errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
+//  doneCallback: () => void,
+//  delta: Glue42Office.Excel.DeltaItem[]
+//) => void;
 
 export class Glue42Service implements IGlue42Service {
-  private glue4ExcelInstance!: Glue42Office.Excel.API;
-  private glueInstance!: Glue42.Glue;
-  private excelSyncTimeout?: number;
-  private isExcelStatus: IExcelStatus = {
-    msg: '[Excel] Not checked, changed the addin status 0 times!',
-    isResolved: false,
-  };
+  //  private glue4ExcelInstance!: Glue42Office.Excel.API;
+  //  private glueInstance!: Glue42.Glue;
+  //  private excelSyncTimeout?: number;
+  //  private isExcelStatus: IExcelStatus = {
+  //    msg: '[Excel] Not checked, changed the addin status 0 times!',
+  //    isResolved: false,
+  //  };
 
-  constructor(private blotter: IAdaptableBlotter) {
-    this.blotter = blotter;
+  constructor(blotter: IAdaptableBlotter) {
+    //  this.blotter = blotter;
   }
-
+  /*
   async init(): Promise<void> {
     try {
       let glue42PartnerConfig:
@@ -136,11 +117,13 @@ export class Glue42Service implements IGlue42Service {
       console.error(error);
     }
   }
-
+*/
   /**
    * Returns a callback, handling the Sheet Changed event.
    * Walks through the delta.
    */
+
+  /*
   private getSheetChangeHandler(
     gridColumns: AdaptableBlotterColumn[],
     sentRows: any[],
@@ -226,10 +209,13 @@ export class Glue42Service implements IGlue42Service {
       }
     };
   }
+*/
 
   /**
    * Checks if Excel is running, if not starts it
    */
+
+  /*
   private subscribeToAddinStatusChanges(): void {
     //check if Excel is running
     try {
@@ -379,4 +365,5 @@ export class Glue42Service implements IGlue42Service {
     }
     return returnArray;
   }
+  */
 }

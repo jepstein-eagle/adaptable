@@ -129,26 +129,6 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
                 onChange={x => this.onNeutralColorSelectChange(x)}
               />
             </Flex>
-            <HelpBlock>
-              Set the maximum number of updated rows that can be displayed at any time. Leave empty
-              to be infinite.
-            </HelpBlock>
-            <Flex flexDirection="row" alignItems="center" margin={2}>
-              <Text style={{ flex: 2 }} marginRight={2}>
-                Max Updated Rows:
-              </Text>
-
-              <Flex flex={7} flexDirection="row" alignItems="center">
-                <Input
-                  style={{ flex: 1 }}
-                  type="number"
-                  placeholder="Enter Number"
-                  onChange={(x: any) => this.onMaxItemsChanged(x)}
-                  value={this.state.MaxItems}
-                  marginRight={3}
-                />
-              </Flex>
-            </Flex>
           </Flex>
         </PanelWithImage>
       </Flex>
@@ -191,7 +171,6 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
   private onMaxItemsChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let maxItems = StringExtensions.IsNullOrEmpty(e.value) ? Infinity : parseInt(e.value);
-    console.log(maxItems);
     this.setState({ MaxItems: maxItems } as UpdatedRowPopupState);
     this.props.onSetMaxItems(maxItems);
   }
@@ -221,3 +200,29 @@ export let UpdatedRowPopup = connect(
   mapStateToProps,
   mapDispatchToProps
 )(UpdatedRowPopupComponent);
+
+/*
+took out as not working properly
+
+ <HelpBlock>
+              Set the maximum number of updated rows that can be displayed at any time. Leave empty
+              to be infinite.
+            </HelpBlock>
+<Flex flexDirection="row" alignItems="center" margin={2}>
+              <Text style={{ flex: 2 }} marginRight={2}>
+                Max Updated Rows:
+              </Text>
+
+              <Flex flex={7} flexDirection="row" alignItems="center">
+                <Input
+                  style={{ flex: 1 }}
+                  type="number"
+                  placeholder="Enter Number"
+                  onChange={(x: any) => this.onMaxItemsChanged(x)}
+                  value={this.state.MaxItems}
+                  marginRight={3}
+                />
+              </Flex>
+            </Flex>
+
+            */
