@@ -12,8 +12,9 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import OpenfinHelper from '../../Utilities/Helpers/OpenfinHelper';
 import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import ObjectFactory from '../../Utilities/ObjectFactory';
-import { AlertFiredEventArgs } from '../Events/BlotterEvents';
+import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/BlotterEvents';
 import { ALERT_FIRED_EVENT } from '../../Utilities/Constants/GeneralConstants';
+import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
 
 export class AlertApiImpl extends ApiBase implements AlertApi {
   public getAlertState(): AlertState {
@@ -33,9 +34,14 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
 
     // 2. Publish the Alert Fired Event
 
-    let alertFiredArgs: AlertFiredEventArgs = {
+    let alertFiredInfo: AlertFiredInfo = {
       alert: alertToShow,
     };
+    const alertFiredArgs: AlertFiredEventArgs = BlotterHelper.createFDC3Message(
+      'Alert Fired Args',
+      alertFiredInfo
+    );
+
     // now depprecated and shortly to be removed...
     this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, alertFiredArgs);
     // new way (and soon only way)

@@ -7,8 +7,11 @@ import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
-import { TOOLBAR_VISIBILITY_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
-import { ToolbarVisibilityChangedEventArgs } from '../Api/Events/BlotterEvents';
+import {
+  ToolbarVisibilityChangedEventArgs,
+  ToolbarVisibilityChangedInfo,
+} from '../Api/Events/BlotterEvents';
+import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   private visibleToolbars: string[];
@@ -31,14 +34,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             if (
               this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Visible
             ) {
-              let toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = {
-                toolbar: toolbar,
-                visibility: Visibility.Visible,
-              };
-              this.blotter.api.eventApi.emit(
-                'ToolbarVisibilityChanged',
-                toolbarVisibilityChangedEventArgs
-              );
+              this.fireToolbarVisibilityChangedEvent(toolbar);
             }
           }
         }
@@ -46,14 +42,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
       [...(this.visibleToolbars || [])].forEach((toolbar: string) => {
         if (!newVisibleToolbars[toolbar]) {
-          let toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = {
-            toolbar: toolbar,
-            visibility: Visibility.Hidden,
-          };
-          this.blotter.api.eventApi.emit(
-            'ToolbarVisibilityChanged',
-            toolbarVisibilityChangedEventArgs
-          );
+          this.fireToolbarVisibilityChangedEvent(toolbar);
         }
       });
 
@@ -70,14 +59,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             if (
               this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Visible
             ) {
-              let toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = {
-                toolbar: toolbar,
-                visibility: Visibility.Visible,
-              };
-              this.blotter.api.eventApi.emit(
-                'ToolbarVisibilityChanged',
-                toolbarVisibilityChangedEventArgs
-              );
+              this.fireToolbarVisibilityChangedEvent(toolbar);
             }
           }
         );
@@ -108,5 +90,18 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         DashboardRedux.DashboardSetVisibility(Visibility.Hidden)
       );
     }
+  }
+
+  private fireToolbarVisibilityChangedEvent(toolbar: string): void {
+    let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo = {
+      toolbar: toolbar,
+      visibility: Visibility.Visible,
+    };
+    const toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = BlotterHelper.createFDC3Message(
+      'Toolbar Visibility Changed Args',
+      toolbarVisibilityChangedInfo
+    );
+
+    this.blotter.api.eventApi.emit('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs);
   }
 }

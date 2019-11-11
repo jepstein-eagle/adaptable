@@ -1,15 +1,14 @@
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import { UIHelper } from '../../UIHelper';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
-import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
+import BlotterHelper from '../../../Utilities/Helpers/BlotterHelper';
 
 /*
 The Chart popup or Div.
@@ -46,7 +45,7 @@ export class AdaptableBlotterChart extends React.Component<
         document,
         this.props.showModal
       ),
-      accessLevel: StrategyHelper.getEntitlementAccessLevelForStrategy(
+      accessLevel: BlotterHelper.getEntitlementAccessLevelForStrategy(
         this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().Entitlements
           .FunctionEntitlements,
         StrategyConstants.ChartStrategyId

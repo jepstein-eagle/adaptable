@@ -27,10 +27,10 @@ import { ColumnCategorySummary } from '../ColumnCategory/ColumnCategorySummary';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
-import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;
@@ -415,7 +415,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   private getAccessLevel(strategyId: string): AccessLevel {
-    return StrategyHelper.getEntitlementAccessLevelForStrategy(
+    return BlotterHelper.getEntitlementAccessLevelForStrategy(
       this.props.FunctionEntitlements,
       strategyId
     );

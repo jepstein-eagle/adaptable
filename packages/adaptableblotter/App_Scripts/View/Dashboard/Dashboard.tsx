@@ -16,11 +16,11 @@ import { Visibility, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
 import { EntitlementsState, Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';
+import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -49,7 +49,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     ); //.filter(dc => dc.IsVisible);
 
     let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
-      let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(
+      let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
         this.props.EntitlementsState.FunctionEntitlements,
         control
       );

@@ -18,6 +18,7 @@ import { BlotterSearchState } from '../../Api/Events/SearchChanged/BlotterSearch
 import { BlotterSortState } from '../../Api/Events/SearchChanged/BlotterSortState';
 import { SearchChangedInfo } from '../../Api/Events/SearchChanged/SearchChangedInfo';
 import { SearchEventData } from '../../Api/Events/SearchChanged/SearchEventData';
+import BlotterHelper from '../Helpers/BlotterHelper';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;
@@ -192,18 +193,10 @@ export class SearchService implements ISearchService {
         searchAsAtDate: new Date(),
       };
 
-      const searchEventData: SearchEventData = {
-        name: 'Adaptable Blotter',
-        type: 'Search Args',
-        id: searchChangedInfo,
-      };
-
-      const searchChangedArgs: SearchChangedEventArgs = {
-        object: 'fdc3-context',
-        definition: 'https://fdc3.org/context/1.0.0/',
-        version: '1.0.0',
-        data: [searchEventData],
-      };
+      const searchChangedArgs: SearchChangedEventArgs = BlotterHelper.createFDC3Message(
+        'Search Changed Args',
+        searchChangedInfo
+      );
 
       // now depprecated and shortly to be removed...
       this.blotter.api.eventApi._onSearchChanged.Dispatch(this.blotter, searchChangedArgs);

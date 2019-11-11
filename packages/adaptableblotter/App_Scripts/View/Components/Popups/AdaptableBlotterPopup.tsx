@@ -5,7 +5,6 @@ import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { StrategyViewPopupProps, StrategyParams } from '../SharedProps/StrategyViewPopupProps';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
-import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
 import { UIHelper } from '../../UIHelper';
 import Dialog from '../../../components/Dialog';
@@ -32,7 +31,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       this.props.Blotter.blotterOptions,
       document
     );
-    let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(
+    let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
       this.props.Blotter.adaptableBlotterStore.TheStore.getState().Entitlements
         .FunctionEntitlements,
       this.props.ComponentStrategy

@@ -2,8 +2,12 @@ import { useEffect } from 'react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
+import '../../../../App_Scripts/themes/dark.scss';
+
 import {
   IAdaptableBlotter,
   AdaptableBlotterOptions,
@@ -46,7 +50,7 @@ function InitAdaptableBlotter() {
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  let runNewEvents: boolean = false;
+  let runNewEvents: boolean = true;
 
   if (!runNewEvents) {
     // old way
@@ -113,10 +117,12 @@ function InitAdaptableBlotter() {
       (applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs) => {
         console.log('Application Toolbar Button Clicked');
         console.log(
-          'name: ' + applicationToolbarButtonClickedEventArgs.applicationToolbarButton.Name
+          'name: ' +
+            applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Name
         );
         console.log(
-          'caption: ' + applicationToolbarButtonClickedEventArgs.applicationToolbarButton.Caption
+          'caption: ' +
+            applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Caption
         );
       }
     );
@@ -125,8 +131,8 @@ function InitAdaptableBlotter() {
       'ToolbarVisibilityChanged',
       (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
         if (
-          toolbarVisibilityChangedEventArgs.toolbar === 'Application' &&
-          toolbarVisibilityChangedEventArgs.visibility == 'Visible'
+          toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Application' &&
+          toolbarVisibilityChangedEventArgs.data[0].id.visibility == 'Visible'
         ) {
           let toolbarContents: any = (
             <div style={{ display: 'flex' }}>
@@ -153,7 +159,7 @@ function onTestRenderClicked() {
 
 function listenToColumnStateChange(columnChangedArgs: ColumnStateChangedEventArgs) {
   console.log('column state changed received');
-  console.log(columnChangedArgs.currentLayout);
+  console.log(columnChangedArgs.data[0].id.currentLayout);
 }
 
 function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
@@ -163,7 +169,7 @@ function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
 
 function listenToAlertFired(alertFiredArgs: AlertFiredEventArgs) {
   console.log('alert fired event received');
-  console.log(alertFiredArgs.alert);
+  console.log(alertFiredArgs.data[0].id.alert);
 }
 
 function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedEventArgs) {

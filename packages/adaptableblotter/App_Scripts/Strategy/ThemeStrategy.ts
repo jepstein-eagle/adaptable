@@ -4,9 +4,10 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IThemeStrategy } from './Interface/IThemeStrategy';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
-import { ThemeChangedEventArgs } from '../Api/Events/BlotterEvents';
+import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/BlotterEvents';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { THEME_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
+import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
   private ThemeState: ThemeState;
@@ -26,9 +27,14 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
   publishThemeChanged(themeState: ThemeState) {
     const themeName = themeState.CurrentTheme;
 
-    const themeChangedEventArgs: ThemeChangedEventArgs = {
-      themeName,
+    let themeChangedInfo: ThemeChangedInfo = {
+      themeName: themeState.CurrentTheme,
     };
+    const themeChangedEventArgs: ThemeChangedEventArgs = BlotterHelper.createFDC3Message(
+      'Theme Changed Args',
+      themeChangedInfo
+    );
+
     // now depprecated and shortly to be removed...
     this.blotter.api.eventApi._onThemeChanged.Dispatch(this.blotter, themeChangedEventArgs);
     // new way (and soon only way)

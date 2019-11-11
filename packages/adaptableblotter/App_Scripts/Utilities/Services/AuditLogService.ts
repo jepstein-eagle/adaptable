@@ -14,6 +14,7 @@ import { AdaptableAlert } from '../Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import ColumnHelper from '../Helpers/ColumnHelper';
 import ObjectFactory from '../ObjectFactory';
+import BlotterHelper from '../Helpers/BlotterHelper';
 
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<AuditLogEntry>;
@@ -460,18 +461,10 @@ export class AuditLogService implements IAuditLogService {
   }
 
   publishStateChanged(auditLogEntry: AuditLogEntry, auditLogType: AuditLogType): void {
-    let stateEventData: AuditLogEventData = {
-      name: 'Adaptable Blotter',
-      type: 'Audit Log Event',
-      id: auditLogEntry,
-    };
-
-    let stateChangedArgs: AuditLogEventArgs = {
-      object: 'fdc3-context',
-      definition: 'https://fdc3.org/context/1.0.0/',
-      version: '1.0.0',
-      data: [stateEventData],
-    };
+    const stateChangedArgs: AuditLogEventArgs = BlotterHelper.createFDC3Message(
+      'Audit Log Event',
+      auditLogEntry
+    );
 
     switch (auditLogType) {
       case AuditLogType.CellEdit:

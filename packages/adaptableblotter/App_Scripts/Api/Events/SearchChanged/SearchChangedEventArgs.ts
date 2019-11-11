@@ -1,4 +1,4 @@
-import { FDC3Schema } from '../BlotterEvents';
+import { FDC3Schema, BlotterEventArgs } from '../BlotterEvents';
 import { SearchEventData } from './SearchEventData';
 
 /**
@@ -8,6 +8,6 @@ import { SearchEventData } from './SearchEventData';
  *
  * It also includes a SearchChangedTrigger which tells you **which function** was responsible for the change in Search state.
  */
-export interface SearchChangedEventArgs extends FDC3Schema {
+export interface SearchChangedEventArgs extends BlotterEventArgs {
   data: SearchEventData[];
 }

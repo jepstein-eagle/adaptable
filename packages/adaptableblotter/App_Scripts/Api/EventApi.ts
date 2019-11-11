@@ -47,7 +47,13 @@ import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
  *
  * - **BlotterReady** - fired whenever the Blotter is initialised and ready for use
  *
- * Each event contains the Adaptable Blotter and an EventArgs object that contains relevant information for the event.
+ * E ach event contains and EventArgs object that wraps relevant information for the event.
+ *
+ * The Adaptable Blotter uses **FDC3 Standard for messaging** so to get the data you will need to get the xxxArgs.data[0].id property, e.g.:
+ *
+ *   ```ts
+ *  const firedAlert: Alert = alertFiredArgs.data[0].id.alert
+ *  ```
  *
  * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_auditeventapi_.auditeventapi.html#onauditstatechanged).
  *

@@ -12,7 +12,11 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
 import SimpleButton from '../../components/SimpleButton';
 import { APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT } from '../../Utilities/Constants/GeneralConstants';
-import { ApplicationToolbarButtonClickedEventArgs } from '../../Api/Events/BlotterEvents';
+import {
+  ApplicationToolbarButtonClickedEventArgs,
+  ApplicationToolbarButtonClickedInfo,
+} from '../../Api/Events/BlotterEvents';
+import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
 
 interface ApplicationToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
@@ -49,15 +53,23 @@ class ApplicationToolbarControlComponent extends React.Component<
           {this.props.ApplicationToolbarButtons &&
             this.props.ApplicationToolbarButtons.map(
               (button: ApplicationToolbarButton, index: number) => {
-                let args: ApplicationToolbarButtonClickedEventArgs = {
+                let applicationToolbarButtonClickedInfo: ApplicationToolbarButtonClickedInfo = {
                   applicationToolbarButton: button,
                 };
+                const applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs = BlotterHelper.createFDC3Message(
+                  'Application Toolbar Button Clicked Args',
+                  applicationToolbarButtonClickedInfo
+                );
+
                 return (
                   <SimpleButton
                     style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
                     key={button.Name}
                     onClick={() => {
-                      this.props.Blotter.api.eventApi.emit('ApplicationToolbarButtonClicked', args);
+                      this.props.Blotter.api.eventApi.emit(
+                        'ApplicationToolbarButtonClicked',
+                        applicationToolbarButtonClickedEventArgs
+                      );
                     }}
                   >
                     {button.Caption}

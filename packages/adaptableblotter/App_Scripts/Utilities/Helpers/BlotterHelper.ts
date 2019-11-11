@@ -8,7 +8,10 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { AlertProperties } from '../../PredefinedConfig/AlertState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import ArrayExtensions from '../Extensions/ArrayExtensions';
+import { AdaptableBlotterEventData, BlotterEventArgs } from '../../Api/Events/BlotterEvents';
 
 export function assignBlotterOptions(
   blotterOptions: AdaptableBlotterOptions
@@ -126,11 +129,41 @@ export function CheckBlotterOptions(blotterOptions: AdaptableBlotterOptions): vo
   }
 }
 
+export function getEntitlementAccessLevelForStrategy(
+  entitlements: Entitlement[],
+  strategyId: string
+): AccessLevel {
+  if (ArrayExtensions.IsNotNullOrEmpty(entitlements)) {
+    let entitlement: Entitlement = entitlements.find(e => e.FunctionName == strategyId);
+    if (entitlement) {
+      return entitlement.AccessLevel as AccessLevel;
+    }
+  }
+  return AccessLevel.Full;
+}
+
+export function createFDC3Message(type: string, id: any): BlotterEventArgs {
+  let eventData: AdaptableBlotterEventData = {
+    name: 'Adaptable Blotter',
+    type: type,
+    id: id,
+  };
+
+  return {
+    object: 'fdc3-context',
+    definition: 'https://fdc3.org/context/1.0.0/',
+    version: '1.0.0',
+    data: [eventData],
+  };
+}
+
 export const BlotterHelper = {
   assignBlotterOptions,
   isValidPrimaryKey,
   isConfigServerEnabled,
   BlotterObjectExistsInState,
   CheckBlotterOptions,
+  getEntitlementAccessLevelForStrategy,
+  createFDC3Message,
 };
 export default BlotterHelper;

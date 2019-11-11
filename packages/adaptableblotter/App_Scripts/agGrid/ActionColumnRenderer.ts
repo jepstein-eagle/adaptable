@@ -4,9 +4,10 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
-import { ActionColumnClickedEventArgs } from '../Api/Events/BlotterEvents';
+import { ActionColumnClickedEventArgs, ActionColumnClickedInfo } from '../Api/Events/BlotterEvents';
 import AdaptableBlotter from '../../agGrid';
 import { ACTION_COLUMN_CLICKED_EVENT } from '../Utilities/Constants/GeneralConstants';
+import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 export class ActionColumnRenderer implements ICellRendererComp {
   private eGui: any;
   private eventListener: any;
@@ -49,16 +50,20 @@ export class ActionColumnRenderer implements ICellRendererComp {
 
       // add event listener to button
       this.eventListener = function() {
-        let eventArgs: ActionColumnClickedEventArgs = {
+        let actionColumnClickedInfo: ActionColumnClickedInfo = {
           actionColumn: actionCol as ActionColumn,
           primaryKeyValue: blotter.getPrimaryKeyValueFromRowNode(params.node),
           rowData: params.data,
         };
+        const actionColumnClickedEventArgs: ActionColumnClickedEventArgs = BlotterHelper.createFDC3Message(
+          'Action Column Clicked Args',
+          actionColumnClickedInfo
+        );
 
         // now depprecated and shortly to be removed...
-        blotter.api.eventApi._onActionColumnClicked.Dispatch(blotter, eventArgs);
+        blotter.api.eventApi._onActionColumnClicked.Dispatch(blotter, actionColumnClickedEventArgs);
         // new way (and soon only way)
-        blotter.api.eventApi.emit('ActionColumnClicked', eventArgs);
+        blotter.api.eventApi.emit('ActionColumnClicked', actionColumnClickedEventArgs);
       };
       this.eGui.addEventListener('click', this.eventListener);
     }

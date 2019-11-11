@@ -29,8 +29,8 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *  ```ts
  * adaptableblotter.on('ToolbarVisibilityChanged',  (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
  * if (
- *   toolbarVisibilityChangedEventArgs.toolbar === 'Application' &&
- *   toolbarVisibilityChangedEventArgs.visibility == 'Visible'
+ *   toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Application' &&
+ *   toolbarVisibilityChangedEventArgs.data[0].id.visibility == 'Visible'
  * ) {
  *  let toolbarContents: any = (
  *      <div style={{ display: 'flex' }}>
@@ -92,7 +92,7 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *
  *  ......
  *
- *  adaptableblotter.on('ApplicationToolbarButtonClicked', (button: (button: ApplicationToolbarButton) )  => {
+ *  adaptableblotter.on('ApplicationToolbarButtonClicked', applicationToolbarButtonClickedEventArgs)  => {
  *      // respond as appropriate - the button argument is the ApplicationToolbarButton we provided in the state
  *  });
  * ```

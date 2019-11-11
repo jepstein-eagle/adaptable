@@ -10,6 +10,7 @@ import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scri
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
+import { AuditLogEntry } from '../../../../App_Scripts/Utilities/Interface/AuditLogEntry';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -66,6 +67,7 @@ function InitAdaptableBlotter() {
 function listenToAuditLogEvent(auditType: string, auditLogEventArgs: AuditLogEventArgs) {
   console.log('audit event received: ' + auditType);
   console.log(auditLogEventArgs.data[0].id);
+  let auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id;
 }
 
 export default () => {

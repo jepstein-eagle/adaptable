@@ -6,7 +6,11 @@ import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { COLUMN_STATE_CHANGED_EVENT } from '../../Utilities/Constants/GeneralConstants';
-import { ColumnStateChangedEventArgs } from '../../Api/Events/BlotterEvents';
+import {
+  ColumnStateChangedEventArgs,
+  ColumnStateChangedInfo,
+} from '../../Api/Events/BlotterEvents';
+import BlotterHelper from './BlotterHelper';
 
 export function getLayoutDescription(layout: Layout, columns: AdaptableBlotterColumn[]): string {
   let returnString: string = '';
@@ -64,9 +68,14 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
       }
     }
 
-    let columnStateChangedEventArgs: ColumnStateChangedEventArgs = {
+    let columnStateChangedInfo: ColumnStateChangedInfo = {
       currentLayout: layoutState.CurrentLayout,
     };
+    const columnStateChangedEventArgs: ColumnStateChangedEventArgs = BlotterHelper.createFDC3Message(
+      'Column State Changed Args',
+      columnStateChangedInfo
+    );
+
     // now depprecated and shortly to be removed...
     blotter.api.eventApi._onColumnStateChanged.Dispatch(blotter, columnStateChangedEventArgs);
     // new way (and soon only way)

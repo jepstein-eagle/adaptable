@@ -43,7 +43,7 @@ function InitAdaptableBlotter() {
   adaptableblotter.api.eventApi.on(
     'ToolbarVisibilityChanged',
     toolbarVisibilityChangedEventArgs => {
-      if (toolbarVisibilityChangedEventArgs.toolbar === 'Application') {
+      if (toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Application') {
         let toolbarContents: any = (
           <div style={{ display: 'flex' }}>
             <button
@@ -73,9 +73,12 @@ function InitAdaptableBlotter() {
   adaptableblotter.api.eventApi.on(
     'ApplicationToolbarButtonClicked',
     applicationToolbarButtonClickedEventArgs => {
-      alert('name: ' + applicationToolbarButtonClickedEventArgs.applicationToolbarButton.Name);
       alert(
-        'caption: ' + applicationToolbarButtonClickedEventArgs.applicationToolbarButton.Caption
+        'name: ' + applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Name
+      );
+      alert(
+        'caption: ' +
+          applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Caption
       );
     }
   );

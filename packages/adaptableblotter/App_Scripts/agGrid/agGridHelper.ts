@@ -56,7 +56,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
-import { SelectionChangedEventArgs } from '../Api/Events/BlotterEvents';
+import { SelectionChangedEventArgs, SelectionChangedInfo } from '../Api/Events/BlotterEvents';
 import { iconToString } from '../components/icons';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
@@ -68,6 +68,7 @@ import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
 import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 import { UpdatedRowStrategy } from '../Strategy/UpdatedRowStrategy';
 import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
+import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -428,10 +429,15 @@ export class agGridHelper {
   }
 
   public fireSelectionChangedEvent(): void {
-    const selectionChangedArgs: SelectionChangedEventArgs = {
+    let selectionChangedInfo: SelectionChangedInfo = {
       selectedCellInfo: this.blotter.api.gridApi.getGridState().SelectedCellInfo,
       selectedRowInfo: this.blotter.api.gridApi.getGridState().SelectedRowInfo,
     };
+    const selectionChangedArgs: SelectionChangedEventArgs = BlotterHelper.createFDC3Message(
+      'Selection Changed Args',
+      selectionChangedInfo
+    );
+
     // now depprecated and shortly to be removed...
     this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
     // new way (and soon only way)
