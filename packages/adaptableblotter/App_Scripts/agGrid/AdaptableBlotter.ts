@@ -309,7 +309,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.FreeTextColumnService = new FreeTextColumnService(this);
     this.ScheduleService = new ScheduleService(this);
     this.SearchService = new SearchService(this);
-    //  this.Glue42Service = new Glue42Service(this);
+    this.Glue42Service = new Glue42Service(this);
     this.ReportService = new ReportService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
       this,

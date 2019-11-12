@@ -262,11 +262,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
         try {
           if (data) {
-            //       this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
-            //        data,
-            //       gridColumns,
-            //      primaryKeyValues,
-            //    ]);
+            this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
+              data,
+              gridColumns,
+              primaryKeyValues,
+            ]);
           }
         } catch (error) {
           LoggingHelper.LogAdaptableBlotterError(error);
