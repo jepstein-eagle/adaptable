@@ -32,9 +32,9 @@ export interface LayoutOptions {
   autoSaveLayouts?: boolean;
 
   /**
-   * Whether columns should be auto-sized Default Layout (the initial view show if now layouts have been created or provided in Predefined Config)
+   * Whether columns should be auto-sized in the Default Layout (the initial view shown if no layouts have been created or provided in Predefined Config)
    *
-   * Note: in ag-Grid if you have the GridOptions *suppressColumnVirtualisation* property set to true, then only the **visible** columns will be auto sized.
+   * Note: in ag-Grid if you have the GridOptions *suppressColumnVirtualisation* property set to true, then **only the visible columns will be auto sized**.
    *
    * **Default Value: false**
    */
