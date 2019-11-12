@@ -43,7 +43,7 @@ function InitAdaptableBlotter() {
         };
       });
       // const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-      //   // examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
+      //   //
       //   // adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
       //   // global.adaptableblotter = adaptableblotter;
       // return adaptableblotter;
@@ -55,6 +55,7 @@ let demoConfig: PredefinedConfig = {
   Theme: {
     CurrentTheme: 'dark',
   },
+  /*
   Reminder: {
     Reminders: [
       {
@@ -62,12 +63,17 @@ let demoConfig: PredefinedConfig = {
           Header: "Run 'All Data' Report",
           Msg: "Run the 'All Data' report so MO have full view of activity",
           AlertDefinition: {
+            ColumnId: '',
+            Range: {
+              
+            }
             MessageType: 'Info',
             AlertProperties: {
               ShowPopup: false,
             },
           },
         },
+
         Schedule: {
           DaysOfWeek: [1, 2, 3, 4, 5],
           Hour: 11,
@@ -76,6 +82,7 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
+  */
 };
 
 export default () => {

@@ -41,8 +41,6 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-
   let runNewEvents: boolean = true;
 
   if (!runNewEvents) {

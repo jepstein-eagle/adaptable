@@ -21,7 +21,6 @@ function InitAdaptableBlotter() {
     'ftse demo'
   );
   const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
 export default () => {

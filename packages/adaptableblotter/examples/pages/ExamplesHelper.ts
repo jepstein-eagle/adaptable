@@ -763,7 +763,7 @@ export class ExamplesHelper {
       rowData,
       enableRangeSelection: true,
       floatingFilter: true,
-      suppressColumnVirtualisation: false,
+      suppressColumnVirtualisation: true,
       suppressMenuHide: true,
       rowHeight: 30,
       sideBar: 'columns',
@@ -1802,17 +1802,6 @@ export class ExamplesHelper {
     }
     return null;
   };
-
-  public autoSizeDefaultLayoutColumns(blotter: IAdaptableBlotter, gridOptions: GridOptions): void {
-    setTimeout(() => {
-      if (
-        blotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout ===
-        'Ab_Default_Layout'
-      ) {
-        gridOptions.columnApi!.autoSizeAllColumns();
-      }
-    });
-  }
 
   public getCommunityLicenceKey(): string {
     return process.env.COMMUNITY_LICENSE as string;

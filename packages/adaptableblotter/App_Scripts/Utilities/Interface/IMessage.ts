@@ -4,7 +4,6 @@ import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPo
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { DataChangedInfo } from './DataChangedInfo';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
-import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
 export interface AdaptableAlert extends AdaptableBlotterObject {
   Header: string;

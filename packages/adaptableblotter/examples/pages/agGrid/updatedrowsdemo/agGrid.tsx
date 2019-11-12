@@ -46,8 +46,6 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-
   tickingDataHelper.startTickingDataagGridTradesUpdateData(
     gridOptions,
     adaptableblotter,

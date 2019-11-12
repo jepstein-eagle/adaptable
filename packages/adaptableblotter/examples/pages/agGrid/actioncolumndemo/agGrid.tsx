@@ -53,8 +53,6 @@ function InitAdaptableBlotter() {
 
     (adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions));
 
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-
   adaptableblotter.api.eventApi
     .onActionColumnClicked()
     .Subscribe((sender, actionColumnEventArgs) => onActionColumnClicked(actionColumnEventArgs));

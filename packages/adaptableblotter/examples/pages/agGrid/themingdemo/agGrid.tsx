@@ -49,8 +49,6 @@ function InitAdaptableBlotter() {
 
   //gridOptions.api!.ensureIndexVisible(200);
   //adaptableblotter.api.userFilterApi.showUserFilterPopup();
-
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
 let demoConfig: PredefinedConfig = {

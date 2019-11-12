@@ -38,7 +38,7 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions); // global.adaptableblotter = adaptableblotter;
+  // global.adaptableblotter = adaptableblotter;
 
   adaptableblotter.api.eventApi.on(
     'ToolbarVisibilityChanged',

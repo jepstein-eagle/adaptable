@@ -309,7 +309,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.FreeTextColumnService = new FreeTextColumnService(this);
     this.ScheduleService = new ScheduleService(this);
     this.SearchService = new SearchService(this);
-    //  this.Glue42Service = new Glue42Service(this);
+    this.Glue42Service = new Glue42Service(this);
     this.ReportService = new ReportService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
       this,
@@ -3208,6 +3208,16 @@ import "adaptableblotter/themes/${themeName}.css"`);
       ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.getAllPercentBar())
     ) {
       this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
+    }
+
+    // if default layout and autoSizeColumnsInDefaultLayout is set to true then set the columns
+    if (
+      currentlayout == DEFAULT_LAYOUT &&
+      this.blotterOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout == true
+    ) {
+      setTimeout(() => {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      });
     }
 
     // at the end so load the current layout

@@ -22,7 +22,6 @@ import {
   ALERT_FIRED_EVENT,
   ACTION_COLUMN_CLICKED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
-import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
 
 /**
  * The Adaptable Blotter publishes a large number of events to which users can subscribe as required.

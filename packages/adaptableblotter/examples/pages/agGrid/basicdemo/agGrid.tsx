@@ -48,11 +48,15 @@ function InitAdaptableBlotter() {
     showAdaptableBlotterToolPanel: true,
   };
 
+  adaptableBlotterOptions.layoutOptions = {
+    autoSizeColumnsInDefaultLayout: true,
+  };
+
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   //tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000, tradeCount);
 
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
+  //
 
   // global.adaptableblotter = adaptableblotter;
 }

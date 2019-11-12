@@ -60,8 +60,6 @@ function InitAdaptableBlotter() {
   //gridOptions.api!.ensureIndexVisible(200);
   // adaptableblotter.api.userFilterApi.showUserFilterPopup();
 
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-
   //  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
   global.adaptableblotter = adaptableblotter;
 }

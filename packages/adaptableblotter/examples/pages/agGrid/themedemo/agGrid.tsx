@@ -26,7 +26,6 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
 let demoConfig: PredefinedConfig = {

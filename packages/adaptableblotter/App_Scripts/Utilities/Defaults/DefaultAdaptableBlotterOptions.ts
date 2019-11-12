@@ -57,6 +57,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
   layoutOptions: {
     includeVendorStateInLayouts: true,
     autoSaveLayouts: true,
+    autoSizeColumnsInDefaultLayout: false,
   },
   filterOptions: {
     indicateFilteredColumns: true,

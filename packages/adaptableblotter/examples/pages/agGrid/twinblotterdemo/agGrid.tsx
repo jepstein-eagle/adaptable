@@ -33,7 +33,6 @@ function InitAdaptableBlotter() {
     vendorContainer: 'grid1',
   };
   adaptableblotter1 = new AdaptableBlotter(adaptableBlotterOptions1);
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter1, gridOptions1);
 
   // second blotter
   const tradeData2: any = examplesHelper.getTrades(500);
@@ -47,7 +46,6 @@ function InitAdaptableBlotter() {
     vendorContainer: 'grid2',
   };
   adaptableblotter2 = new AdaptableBlotter(adaptableBlotterOptions2);
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter2, gridOptions2);
 
   // adaptableblotter2.syncWithBlotter(adaptableblotter1);
 

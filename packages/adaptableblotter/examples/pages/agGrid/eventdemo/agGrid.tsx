@@ -150,7 +150,6 @@ function InitAdaptableBlotter() {
       }
     );
   }
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
 function onTestRenderClicked() {

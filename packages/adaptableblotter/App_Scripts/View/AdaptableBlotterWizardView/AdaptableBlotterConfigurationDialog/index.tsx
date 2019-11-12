@@ -50,6 +50,8 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
   const onFinish = () => {
     const newABOptions = { ...abOptions };
     newABOptions.vendorGrid = { ...abOptions.vendorGrid };
+    // do the auto size??
+
     newABOptions.vendorGrid.columnDefs = columnsHandle.current!.getColumns().map(c => {
       const col = {
         ...c,

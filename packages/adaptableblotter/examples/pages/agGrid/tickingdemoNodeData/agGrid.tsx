@@ -32,7 +32,6 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = json;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 
   // turn on mimicing ticking data
   tickingDataHelper.startTickingDataagGridRowNodeSetData(gridOptions, tradeData);

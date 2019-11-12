@@ -11,8 +11,8 @@ import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
-import Glue4Office, { Glue42Office } from '@glue42/office';
-import Glue, { Glue42 } from '@glue42/desktop';
+//import Glue4Office, { Glue42Office } from '@glue42/office';
+////import Glue, { Glue42 } from '@glue42/desktop';
 
 export interface IGlue42ExportError {
   row: number;
@@ -35,17 +35,18 @@ export interface IGlue42Service {
   init(): void;
   exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys: any[]): void;
 }
-
+/*
 type SheetChangeCallback = (
   data: object[],
   errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
   doneCallback: () => void,
   delta: Glue42Office.Excel.DeltaItem[]
 ) => void;
+*/
 
 export class Glue42Service implements IGlue42Service {
-  private glue4ExcelInstance!: Glue42Office.Excel.API;
-  private glueInstance!: Glue42.Glue;
+  //  private glue4ExcelInstance!: Glue42Office.Excel.API;
+  //  private glueInstance!: Glue42.Glue;
   private excelSyncTimeout?: number;
   private isExcelStatus: IExcelStatus = {
     msg: '[Excel] Not checked, changed the addin status 0 times!',
@@ -57,6 +58,7 @@ export class Glue42Service implements IGlue42Service {
   }
 
   async init(): Promise<void> {
+    /*
     try {
       let glue42PartnerConfig:
         | Glue42Config
@@ -85,9 +87,11 @@ export class Glue42Service implements IGlue42Service {
       LogAdaptableBlotterError(error);
       this.blotter.api.internalApi.setGlue42Off();
     }
+    */
   }
 
   async exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys: any[]) {
+    /*
     if (!this.glueInstance) {
       return;
     }
@@ -130,6 +134,7 @@ export class Glue42Service implements IGlue42Service {
     } catch (error) {
       console.error(error);
     }
+    */
   }
 
   /**
@@ -142,7 +147,9 @@ export class Glue42Service implements IGlue42Service {
     sentRows: any[],
     exportColumns: any[],
     primaryKeys?: any[]
-  ): SheetChangeCallback {
+  ): any {
+    // was SheetChangeCallback
+    /*
     return (
       allData: any[],
       errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
@@ -221,6 +228,7 @@ export class Glue42Service implements IGlue42Service {
         errorCallback(errors);
       }
     };
+    */
   }
 
   /**
@@ -229,6 +237,7 @@ export class Glue42Service implements IGlue42Service {
 
   private subscribeToAddinStatusChanges(): void {
     //check if Excel is running
+    /*
     try {
       this.glue4ExcelInstance.onAddinStatusChanged((connected: any) => {
         if (connected) {
@@ -253,6 +262,7 @@ export class Glue42Service implements IGlue42Service {
         isResolved: false,
       };
     }
+    */
   }
 
   private isValidEdit(
