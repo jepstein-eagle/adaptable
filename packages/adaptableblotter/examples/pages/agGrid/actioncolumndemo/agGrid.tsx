@@ -30,21 +30,15 @@ function InitAdaptableBlotter() {
     blotterId: 'action column demo',
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
+  adaptableBlotterOptions.layoutOptions = {
+    autoSizeColumnsInDefaultLayout: true,
+  };
+
   (adaptableBlotterOptions.advancedOptions = {
     userFunctions: {
       actionColumnFunctions: [
         {
           name: 'RenderActionFunc',
-          func: (params, blotter) => {
-            let data: number = params.data.notional;
-            if (params.data.counterparty == 'BNP') {
-              return '';
-            }
-
-            return data > 100
-              ? '<button class="doublebutton">Double</button>'
-              : '<button class="treblebutton">Treble</button>';
-          },
         },
       ],
     },
@@ -52,17 +46,29 @@ function InitAdaptableBlotter() {
     // userFunctions
 
     (adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions));
+  let runNewEvents: boolean = true;
 
-  adaptableblotter.api.eventApi
-    .onActionColumnClicked()
-    .Subscribe((sender, actionColumnEventArgs) => onActionColumnClicked(actionColumnEventArgs));
+  if (runNewEvents) {
+    adaptableblotter.api.eventApi.on(
+      'ActionColumnClicked',
+      (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
+        listenToActionColumnClicked(actionColumnEventArgs);
+      }
+    );
+  } else {
+    adaptableblotter.api.eventApi
+      .onActionColumnClicked()
+      .Subscribe((sender, actionColumnEventArgs) =>
+        listenToActionColumnClicked(actionColumnEventArgs)
+      );
+  }
 }
 
-function onActionColumnClicked(actionColumnEventArgs: ActionColumnClickedEventArgs) {
+function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedEventArgs) {
   console.log('alert fired event received');
-  console.log(actionColumnEventArgs);
+  console.log(actionColumnEventArgs.data[0].id.actionColumn.FriendlyName);
 
-  let rowData = actionColumnEventArgs.rowData;
+  let rowData = actionColumnEventArgs.data[0].id.rowData;
   let multiplier: number = rowData.notional > 100 ? 2 : 3;
   let newNotional = rowData.notional * multiplier;
   adaptableblotter.api.internalApi.setValue(rowData.tradeId, 'notional', newNotional);
@@ -74,10 +80,19 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'Action',
         ButtonText: 'Click',
-        RenderFunctionName: 'RenderActionFunc',
+        RenderFunction: params => {
+          let data: number = params.rowData.notional;
+          if (params.rowData.counterparty == 'BNP') {
+            return '';
+          }
+          return data > 100
+            ? '<button class="doublebutton">Double</button>'
+            : '<button class="treblebutton">Treble</button>';
+        },
       },
       {
         ColumnId: 'Plus',
+        FriendlyName: 'Adding',
         ButtonText: '+',
       },
       {
@@ -90,7 +105,15 @@ let demoConfig: PredefinedConfig = {
     Layouts: [
       {
         ColumnSorts: [],
-        Columns: ['tradeId', 'Triple Notional', 'notional', 'counterparty', 'Action'],
+        Columns: [
+          'tradeId',
+          'Triple Notional',
+          'notional',
+          'counterparty',
+          'Action',
+          'Plus',
+          'Minus',
+        ],
         Name: 'With Button',
       },
     ],

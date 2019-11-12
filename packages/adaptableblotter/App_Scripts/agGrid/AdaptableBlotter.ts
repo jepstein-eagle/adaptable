@@ -1824,7 +1824,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public addActionColumnToGrid(actionColumn: ActionColumn) {
     const colDefs: (ColDef | ColGroupDef)[] = [...this.getColumnDefs()];
     const newColDef: ColDef = {
-      headerName: actionColumn.ColumnId,
+      headerName: actionColumn.FriendlyName ? actionColumn.FriendlyName : actionColumn.ColumnId,
       colId: actionColumn.ColumnId,
       editable: false,
       hide: false,

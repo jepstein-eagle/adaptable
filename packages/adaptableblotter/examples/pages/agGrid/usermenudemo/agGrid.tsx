@@ -10,10 +10,16 @@ import '../../../../App_Scripts/themes/dark.scss';
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import {
+  AdaptableBlotterOptions,
+  PredefinedConfig,
+  IAdaptableBlotter,
+} from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
+
+var adaptableblotter: IAdaptableBlotter;
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
@@ -27,7 +33,7 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {
@@ -35,9 +41,14 @@ let demoConfig: PredefinedConfig = {
     ColumnMenuItems: [
       {
         Label: 'Column Menu 1',
+        OnMenuItemClickedFunction: () => {
+          alert('Ive been clicked');
+        },
+        Icon:
+          '<img border="0" width="15" height="10" src="https://flags.fmcdn.net/data/flags/mini/gb.png"/>',
       },
       {
-        Label: 'Column Menu 1',
+        Label: 'Column Menu 2',
       },
       {
         Label: 'Column Menu 3',
@@ -65,7 +76,10 @@ let demoConfig: PredefinedConfig = {
             Label: 'Column Sub Menu 1',
           },
           {
-            Label: 'Column Sub Menu 2',
+            Label: 'Open Column Chooser',
+            OnMenuItemClickedFunction: () => {
+              adaptableblotter.api.columnChooserApi.showColumnChooserPopup();
+            },
           },
         ],
       },

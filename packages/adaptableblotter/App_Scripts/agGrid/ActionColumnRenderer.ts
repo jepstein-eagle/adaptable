@@ -1,13 +1,14 @@
 import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
 
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
+import { ActionColumn, ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
 import { ActionColumnClickedEventArgs, ActionColumnClickedInfo } from '../Api/Events/BlotterEvents';
 import AdaptableBlotter from '../../agGrid';
 import { ACTION_COLUMN_CLICKED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import Helper from '../Utilities/Helpers/Helper';
 export class ActionColumnRenderer implements ICellRendererComp {
   private eGui: any;
   private eventListener: any;
@@ -25,22 +26,34 @@ export class ActionColumnRenderer implements ICellRendererComp {
       this.eGui = document.createElement('div');
       this.eGui.style.display = 'inline-block';
 
-      let renderFunc: ActionColumnFunction | undefined;
-      if (StringExtensions.IsNotNullOrEmpty(actionCol.RenderFunctionName)) {
-        if (
-          ArrayExtensions.IsNotNullOrEmpty(
-            blotter.blotterOptions.advancedOptions!.userFunctions!.actionColumnFunctions!
-          )
-        ) {
-          renderFunc = blotter.blotterOptions.advancedOptions!.userFunctions!.actionColumnFunctions!.find(
-            acf => acf.name == actionCol!.RenderFunctionName
-          );
+      // bit complicated for the moment until we get rid of deprecated options rendering
+      // first we try to get the render func from the object; if that doesnt work we get from Advanced Options
+      let renderFunc: any = actionCol.RenderFunction;
+
+      if (Helper.objectNotExists(renderFunc)) {
+        if (StringExtensions.IsNotNullOrEmpty(actionCol.RenderFunctionName)) {
+          if (
+            ArrayExtensions.IsNotNullOrEmpty(
+              blotter.blotterOptions.advancedOptions!.userFunctions!.actionColumnFunctions!
+            )
+          ) {
+            let actionColumnFunction: ActionColumnFunction = blotter.blotterOptions.advancedOptions!.userFunctions!.actionColumnFunctions!.find(
+              acf => acf.name == actionCol!.RenderFunctionName
+            );
+            renderFunc = actionColumnFunction.func;
+          }
         }
       }
 
+      // If we have a render Func then we use that, otherwise we use the name of the Button Text
       if (renderFunc) {
-        let satisfyFunction = renderFunc.func;
-        this.eGui.innerHTML = satisfyFunction(params, blotter);
+        let actionColumnRenderParams: ActionColumnRenderParams = {
+          column: actionCol,
+          rowData: params.data,
+          rowNode: params.node,
+        };
+
+        this.eGui.innerHTML = renderFunc(actionColumnRenderParams);
       } else {
         this.eGui.innerHTML =
           '<span class="my-css-class"><button class="btn-simple">' +

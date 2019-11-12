@@ -12,6 +12,39 @@ import { DesignTimeState } from './DesignTimeState';
  * b. *columnId* - the column which contains the Named Filter
  *
  * c.  *cellValue* - the value being tested
+ *
+ * **Advanced Search Predefined Config Example**
+ *
+ * ```ts
+ *
+ * export default {
+ *  NamedFilter: {
+ *   NamedFilters: [
+ *     {
+ *       Name: '$ Trades',
+ *       Scope: {
+ *         DataType: 'Number',
+ *         ColumnIds: ['currency'],
+ *       },
+ *       PredicateFunction: (_record, _columnId, cellValue) => {
+ *         return cellValue === 'USD';
+ *       },
+ *     },
+ *     {
+ *       Name: 'Biz Year',
+ *       Scope: {
+ *         DataType: 'Date',
+ *       },
+ *       PredicateFunction: (_record, _columnId, cellValue) => {
+ *         let dateToTest = cellValue as Date;
+ *         let startBusinesssYear = new Date('2019-04-05');
+ *         return dateToTest > startBusinesssYear;
+ *       },
+ *      },
+ *   ],
+ * },
+ * } as PredefinedConfig;
+ * ```
  */
 export interface NamedFilterState extends DesignTimeState {
   /**
@@ -43,9 +76,12 @@ export interface NamedFilter extends AdaptableBlotterObject {
   Scope: Scope;
 
   /**
-   * The name of the Predicate Function that will be run each time the Named Filter is applied.
-   *
-   * **Note**:  You do not provide the actual function here (as it cannot be stored with JSON).  Instead you provide it in the **userFunctions** property of [Advanced Options](../interfaces/_blotteroptions_advancedoptions_.advancedoptions.html)
+   * **This property is deprecated; instead provide the full function using the *PredicateFunction* property below**
    */
-  PredicateName: string;
+  PredicateName?: string;
+
+  /**
+   * The name of the Predicate Function that will be run each time the Named Filter is applied.
+   */
+  PredicateFunction?: (record: any, columnId: string, cellValue: any) => boolean;
 }

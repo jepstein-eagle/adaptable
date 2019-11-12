@@ -495,11 +495,11 @@ export class agGridHelper {
   public createAgGridMenuDefFromUsereMenu(x: UserMenuItem): MenuItemDef {
     return {
       name: x.Label,
-      action: () => x.Action,
+      action: x.OnMenuItemClickedFunction,
       icon: x.Icon,
       subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
-        ? null
-        : x.SubMenuItems.map(s => {
+        ? undefined
+        : x.SubMenuItems!.map(s => {
             return this.createAgGridMenuDefFromUsereMenu(s);
           }),
     };

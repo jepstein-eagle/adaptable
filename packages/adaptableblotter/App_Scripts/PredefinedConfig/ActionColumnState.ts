@@ -60,18 +60,25 @@ export interface ActionColumn extends AdaptableBlotterObject {
   /**
    * The text to put on the button.
    *
-   * Leave blank if you wish to render the Button separately (using the *RenderFunctionName* property).
+   * Leave blank if you wish to render the Button separately (using the *RenderFunction* property).
    */
   ButtonText?: string;
 
   /**
-   * A function - provided by you - that will render the Action Column according to your requirements.
-   *
-   * Provide here the name of the function, and supply the function itself in the *actionColumnFunctions* property of *userFunctions* in [Advanced Options](https://api.adaptableblotter.com/interfaces/_blotteroptions_advancedoptions_.advancedoptions.html)
-   *
-   * (This is done because we cannot save a function in JSON).
+   * **This property is deprecated; instead provide the full function using the *PredicateFunction* property below**
+   */
+  RenderFunctionName?: string;
+
+  /**
+   * The name of the Predicate Function that will be run each time the Action Column is clicked.
    *
    * If this property is left empty, then a button will appear in the column with the caption of the *ButtonText* property.
    */
-  RenderFunctionName?: string;
+  RenderFunction?: (params: ActionColumnRenderParams) => string;
+}
+
+export interface ActionColumnRenderParams {
+  column: ActionColumn;
+  rowData: any;
+  rowNode: any;
 }

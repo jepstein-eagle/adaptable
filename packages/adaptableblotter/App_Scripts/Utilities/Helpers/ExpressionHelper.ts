@@ -275,22 +275,32 @@ export function IsSatisfied(
             filtersForColumn.Filters.find(u => u == f.Name)
           );
           for (let namedFilter of filteredNamedFilters) {
-            let funcName: string = namedFilter.PredicateName;
+            // see if there is a predicate function in the object itself - the new way
+            let satisfyFunction = namedFilter.PredicateFunction;
+            if (satisfyFunction != null) {
+              isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
+              if (isColumnSatisfied) {
+                break;
+              }
+            } else {
+              // there is no predicate function in the object so lets get from the deprecated AdvancedOptions
+              let funcName: string = namedFilter.PredicateName;
 
-            if (StringExtensions.IsNotNullOrEmpty(funcName)) {
-              if (
-                ArrayExtensions.IsNotNullOrEmpty(
-                  blotter.blotterOptions.advancedOptions.userFunctions.namedFilterFunctions
-                )
-              ) {
-                let namedFilterFunction: NamedFilterFunction = blotter.blotterOptions.advancedOptions.userFunctions.namedFilterFunctions.find(
-                  nff => nff.name == funcName
-                );
-                if (namedFilterFunction) {
-                  let satisfyFunction = namedFilterFunction.func;
-                  isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
-                  if (isColumnSatisfied) {
-                    break;
+              if (StringExtensions.IsNotNullOrEmpty(funcName)) {
+                if (
+                  ArrayExtensions.IsNotNullOrEmpty(
+                    blotter.blotterOptions.advancedOptions.userFunctions.namedFilterFunctions
+                  )
+                ) {
+                  let namedFilterFunction: NamedFilterFunction = blotter.blotterOptions.advancedOptions.userFunctions.namedFilterFunctions.find(
+                    nff => nff.name == funcName
+                  );
+                  if (namedFilterFunction) {
+                    let satisfyFunction = namedFilterFunction.func;
+                    isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
+                    if (isColumnSatisfied) {
+                      break;
+                    }
                   }
                 }
               }

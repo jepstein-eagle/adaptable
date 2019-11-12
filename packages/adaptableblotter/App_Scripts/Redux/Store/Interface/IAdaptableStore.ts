@@ -50,13 +50,14 @@ export interface AdaptableBlotterState {
   System: SystemState;
 
   // Set at design time only
-  Entitlements: EntitlementsState;
-  UserInterface: UserInterfaceState;
-  SystemFilter: SystemFilterState;
   Application: ApplicationState;
   ActionColumn: ActionColumnState;
-  SparklineColumn: SparklineColumnState;
+  Entitlements: EntitlementsState;
   PartnerConfig: PartnerConfigState;
+  NamedFilter: NamedFilterState;
+  SparklineColumn: SparklineColumnState;
+  SystemFilter: SystemFilterState;
+  UserInterface: UserInterfaceState;
 
   // Set at design time and / or run time => only state is persisted
   AdvancedSearch: AdvancedSearchState;
@@ -64,8 +65,10 @@ export interface AdaptableBlotterState {
   BulkUpdate: BulkUpdateState;
   CalculatedColumn: CalculatedColumnState;
   Calendar: CalendarState;
+  CellSummary: CellSummaryState;
   CellValidation: CellValidationState;
   Chart: ChartState;
+  ColumnCategory: ColumnCategoryState;
   ColumnFilter: ColumnFilterState;
   ConditionalStyle: ConditionalStyleState;
   CustomSort: CustomSortState;
@@ -73,22 +76,19 @@ export interface AdaptableBlotterState {
   DataSource: DataSourceState;
   Export: ExportState;
   FlashingCell: FlashingCellState;
-  UpdatedRow: UpdatedRowState;
   FormatColumn: FormatColumnState;
   FreeTextColumn: FreeTextColumnState;
   Layout: LayoutState;
-  ColumnCategory: ColumnCategoryState;
-  NamedFilter: NamedFilterState;
   PercentBar: PercentBarState;
   PlusMinus: PlusMinusState;
   QuickSearch: QuickSearchState;
-  CellSummary: CellSummaryState;
+  Reminder: ReminderState;
   Shortcut: ShortcutState;
   SmartEdit: SmartEditState;
   TeamSharing: TeamSharingState;
   Theme: ThemeState;
+  UpdatedRow: UpdatedRowState;
   UserFilter: UserFilterState;
-  Reminder: ReminderState;
 }
 
 export interface IAdaptableBlotterStore {

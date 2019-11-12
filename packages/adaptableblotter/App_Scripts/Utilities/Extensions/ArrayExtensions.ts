@@ -49,7 +49,7 @@ export function IsNotEmpty(arrayToCheck: any[]): boolean {
   return !ArrayExtensions.IsEmpty(arrayToCheck);
 }
 
-export function IsNullOrEmpty(arrayToCheck: any[]): boolean {
+export function IsNullOrEmpty(arrayToCheck: any[] | undefined | null): boolean {
   return ArrayExtensions.IsNull(arrayToCheck) || ArrayExtensions.IsEmpty(arrayToCheck);
 }
 

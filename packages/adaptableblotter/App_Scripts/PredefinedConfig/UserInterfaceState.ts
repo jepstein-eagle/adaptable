@@ -198,7 +198,7 @@ export interface RowStyle {
 
 export interface UserMenuItem {
   Label: string;
-  Action?: () => void;
+  OnMenuItemClickedFunction?: () => void;
   Icon?: string;
   SubMenuItems?: UserMenuItem[];
 }

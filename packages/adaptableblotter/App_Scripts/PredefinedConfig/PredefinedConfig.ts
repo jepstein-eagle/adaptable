@@ -228,6 +228,18 @@ import { PartnerConfigState } from './PartnerConfigState';
  */
 export interface PredefinedConfig {
   /**
+   * Columns that contain buttons which, when clicked, fire an event giving detials of the button and the row in which its placed.
+   *
+   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   */
+  ActionColumn?: ActionColumnState;
+  /**
+   * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of the Adaptable Blotter state.
+   *
+   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   */
+  Application?: ApplicationState;
+  /**
    * Defines which Functions are available to the User and whether as *Full*, *ReadOnly* or *Hidden*.
    *
    * The default is that all functions are fully availalbe so apply Entitlements Config if you wish to restrict access.
@@ -235,16 +247,24 @@ export interface PredefinedConfig {
    * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
   Entitlements?: EntitlementsState;
-
   /**
-   * State that manages UI elements in the Adaptable Blotter e.g. which colours to put in the default palette.
+   *  Filters defined by Developers at design time which include a predicate function that is called by the Adaptable Blotter each time the filter is evaluated.
    *
-   * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
-   *
-   *  **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
-  UserInterface?: UserInterfaceState;
-
+  NamedFilter?: NamedFilterState;
+  /**
+   * Config required to run features provided by partners of the Adaptable Blotter such as iPushPull and Glue42.
+   *
+   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   */
+  PartnerConfig?: PartnerConfigState;
+  /**
+   * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
+   *
+   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   */
+  SparklineColumn?: SparklineColumnState;
   /**
    * List of which System Filters should be available to users - see the list at [Adaptable Blotter Help](http://www.bbc.co.uk)
    *
@@ -253,24 +273,14 @@ export interface PredefinedConfig {
    *  **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
   SystemFilter?: SystemFilterState;
-
   /**
-   * Columns that contain buttons which, when clicked, fire an event giving detials of the button and the row in which its placed.
+   * State that manages UI elements in the Adaptable Blotter e.g. which colours to put in the default palette.
    *
-   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
-   */
-  ActionColumn?: ActionColumnState;
-
-  /**
-   * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
-   */
-  SparklineColumn?: SparklineColumnState;
-  /**
-   * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of the Adaptable Blotter state.
+   * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
    *
-   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   *  **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
-  Application?: ApplicationState;
+  UserInterface?: UserInterfaceState;
 
   /**
    * Supplies a collection of *AdvancedSearch* objects, to provide saveable cross-column searching, and the selection of the Current Advanced Search.
@@ -411,8 +421,4 @@ export interface PredefinedConfig {
    * Supplies a collection of *UserFilter* objects which can be used to create Column Filters and in other Functions.
    */
   UserFilter?: UserFilterState;
-
-  NamedFilter?: NamedFilterState;
-
-  PartnerConfig?: PartnerConfigState;
 }

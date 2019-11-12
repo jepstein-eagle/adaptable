@@ -137,19 +137,26 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   AdaptableBlotterState
 >({
   //  Reducers for Non-Persisted State
-  Popup: PopupRedux.ShowPopupReducer,
+  Popup: PopupRedux.PopupReducer,
   System: SystemRedux.SystemReducer,
   Grid: GridRedux.GridReducer,
 
-  // Reducers for Persisted State
-  ActionColumn: ActionColumnRedux.ActionColumnReducer,
+  Entitlements: EntitlementsRedux.EntitlementsReducer,
+  UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
+  SystemFilter: SystemFilterRedux.SystemFilterReducer,
   Application: ApplicationRedux.ApplicationReducer,
+  ActionColumn: ActionColumnRedux.ActionColumnReducer,
   SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
+  PartnerConfig: PartnerConfigRedux.PartnerConfigReducer,
+  NamedFilter: NamedFilterRedux.NamedFilterReducer,
+
+  // Reducers for Persisted State
   AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
   Alert: AlertRedux.AlertReducer,
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
   CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
   Calendar: CalendarRedux.CalendarReducer,
+  CellSummary: CellSummaryRedux.CellSummaryReducer,
   CellValidation: CellValidationRedux.CellValidationReducer,
   Chart: ChartRedux.ChartReducer,
   ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
@@ -158,27 +165,21 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   CustomSort: CustomSortRedux.CustomSortReducer,
   Dashboard: DashboardRedux.DashboardReducer,
   DataSource: DataSourceRedux.DataSourceReducer,
-  Entitlements: EntitlementsRedux.EntitlementsReducer,
   Export: ExportRedux.ExportReducer,
   FlashingCell: FlashingCellsRedux.FlashingCellReducer,
-  UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
   FormatColumn: FormatColumnRedux.FormatColumnReducer,
   FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
   Layout: LayoutRedux.LayoutReducer,
-  NamedFilter: NamedFilterRedux.NamedFilterReducer,
   PercentBar: PercentBarRedux.PercentBarReducer,
   PlusMinus: PlusMinusRedux.PlusMinusReducer,
   QuickSearch: QuickSearchRedux.QuickSearchReducer,
-  CellSummary: CellSummaryRedux.CellSummaryReducer,
+  Reminder: ReminderRedux.ReminderReducer,
   Shortcut: ShortcutRedux.ShortcutReducer,
   SmartEdit: SmartEditRedux.SmartEditReducer,
-  SystemFilter: SystemFilterRedux.SystemFilterReducer,
-  Reminder: ReminderRedux.ReminderReducer,
   TeamSharing: TeamSharingRedux.TeamSharingReducer,
   Theme: ThemeRedux.ThemeReducer,
+  UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
   UserFilter: UserFilterRedux.UserFilterReducer,
-  UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
-  PartnerConfig: PartnerConfigRedux.PartnerConfigReducer,
 });
 
 export const RESET_STATE = 'RESET_STATE';
@@ -306,6 +307,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
       ConfigConstants.APPLICATION,
+      // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
+      ConfigConstants.NAMED_FILTER,
+      ConfigConstants.ACTION_COLUMN,
     ];
 
     // this is now VERY BADLY NAMED!

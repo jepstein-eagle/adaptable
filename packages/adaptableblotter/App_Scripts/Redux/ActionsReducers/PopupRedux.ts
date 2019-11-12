@@ -191,7 +191,7 @@ const initialPopupState: PopupState = {
   },
 };
 
-export const ShowPopupReducer: Redux.Reducer<PopupState> = (
+export const PopupReducer: Redux.Reducer<PopupState> = (
   state: PopupState = initialPopupState,
   action: Redux.Action
 ): PopupState => {
