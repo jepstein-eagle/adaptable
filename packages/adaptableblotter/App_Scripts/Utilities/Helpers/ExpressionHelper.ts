@@ -21,6 +21,7 @@ import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeE
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { NamedFilterFunction } from '../../BlotterOptions/AdvancedOptions';
+import Helper from './Helper';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -204,9 +205,6 @@ export function IsSatisfied(
   let expressionColumnList = GetColumnListFromExpression(Expression);
   for (let columnId of expressionColumnList) {
     let columnValue = getColumnValue(columnId);
-    if (!columnValue) {
-      return false;
-    }
 
     //we need either a column value or user filter expression or range to match the column
     let isColumnSatisfied = false;
@@ -313,13 +311,14 @@ export function IsSatisfied(
     // Check for ranges if column and user filter expressions have failed
     if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.RangeExpressions)) {
       let columnRanges = Expression.RangeExpressions.find(x => x.ColumnId == columnId);
+      // console.log(columnRanges);
       if (columnRanges) {
         let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnId);
-
+        let colValue = getColumnValue(columnRanges.ColumnId);
         for (let range of columnRanges.Ranges) {
           let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
             range,
-            getColumnValue(columnRanges.ColumnId),
+            colValue,
             null,
             column,
             blotter,
@@ -766,7 +765,7 @@ export function TestRangeEvaluation(
   rangeEvaluation: IRangeEvaluation,
   blotter: IAdaptableBlotter
 ): boolean {
-  if (rangeEvaluation.newValue == null) {
+  if (Helper.objectNotExists(rangeEvaluation.newValue)) {
     return false;
   }
   switch (rangeEvaluation.operator) {

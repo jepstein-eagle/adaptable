@@ -30,7 +30,7 @@ var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 250;
+  const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   //gridOptions.rowSelection = true;

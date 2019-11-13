@@ -47,6 +47,8 @@ export interface InternalApi {
    * @param id the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Blotter Options)
    * @param columnId the column to update
    * @param newValue the new value to use
+   *
+   * ** this is deprecated  - please use the same method in DataGrid API**
    */
   setValue(id: any, columnId: string, newValue: any): void;
 

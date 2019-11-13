@@ -1178,7 +1178,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     distinctCriteria: DistinctCriteriaPairValue
   ): (columnId: string) => any {
     if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-      return (columnId: string) => this.gridOptions.api!.getValue(columnId, rowwNode);
+      let testreturnvalue: any = (columnId: string) =>
+        this.gridOptions.api!.getValue(columnId, rowwNode);
+      return testreturnvalue;
     }
     return (columnId: string) => this.getDisplayValueFromRowNode(rowwNode, columnId);
   }

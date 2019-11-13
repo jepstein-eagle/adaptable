@@ -6,6 +6,7 @@ import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 
 export class GridApiImpl extends ApiBase implements DataGridApi {
   public getGridState(): GridState {
@@ -54,5 +55,14 @@ export class GridApiImpl extends ApiBase implements DataGridApi {
 
   public getColumnSorts(): ColumnSort[] {
     return this.getGridState().ColumnSorts;
+  }
+
+  public setValue(id: any, columnId: string, newValue: any): void {
+    let gridCell: GridCell = {
+      primaryKeyValue: id,
+      columnId: columnId,
+      value: newValue,
+    };
+    this.blotter.api.internalApi.setGridCell(gridCell);
   }
 }

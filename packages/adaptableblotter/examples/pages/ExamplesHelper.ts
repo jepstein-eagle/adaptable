@@ -582,13 +582,15 @@ export class ExamplesHelper {
       'Morgan Stanley',
       'BNP',
       'UBS',
+      'Credit Suisse',
+      'Nomura',
+      undefined,
+      null,
       //   "Lloyds TSB",
       //   "MUFJ",
       //   "Rabobank",
       //   "RBC",
       //   "Deutsche Bank",
-      'Credit Suisse',
-      'Nomura',
     ];
     return counterparties;
   }
@@ -1005,6 +1007,18 @@ export class ExamplesHelper {
       cellRenderer: 'agAnimateShowChangeCellRenderer',
     });
     schema.push({
+      headerName: 'Counterparty',
+      field: 'counterparty',
+      editable: true,
+      enableRowGroup: true,
+      filter: true,
+      sortable: true,
+      type: 'abColDefString',
+      //   cellRenderer: 'agAnimateShowChangeCellRenderer',
+      // resizable: true,
+      //  tooltipComponent: 'percentBarTooltip',
+    });
+    schema.push({
       headerName: 'Country',
       field: 'country',
       editable: true,
@@ -1095,19 +1109,6 @@ export class ExamplesHelper {
       columnGroupShow: 'closed',
       cellClass: 'number-cell',
       type: 'abColDefNumber',
-    });
-
-    schema.push({
-      headerName: 'Counterparty',
-      field: 'counterparty',
-      editable: true,
-      enableRowGroup: true,
-      filter: true,
-      sortable: true,
-      type: 'abColDefString',
-      //   cellRenderer: 'agAnimateShowChangeCellRenderer',
-      // resizable: true,
-      //  tooltipComponent: 'percentBarTooltip',
     });
 
     schema.push({
