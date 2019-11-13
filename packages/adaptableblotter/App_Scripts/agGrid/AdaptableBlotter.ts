@@ -365,7 +365,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.applyFinalRendering();
         this.isInitialised = true;
         this.api.internalApi.hideLoadingScreen();
-        //  await this.Glue42Service.init();
+        await this.Glue42Service.init();
       });
 
     if (renderGrid) {
