@@ -54,6 +54,11 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
+  let clickEvent: any = () => {
+    alert('Ive been clicked');
+  };
+  adaptableblotter.api.userInterfaceApi.createContextMenuItem('click me', clickEvent);
+
   //tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000, tradeCount);
 
   //

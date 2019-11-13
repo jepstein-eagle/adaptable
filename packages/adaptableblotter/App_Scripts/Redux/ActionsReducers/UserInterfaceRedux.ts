@@ -3,6 +3,7 @@ import {
   UserInterfaceState,
   PermittedColumnValues,
   RowStyle,
+  UserMenuItem,
 } from '../../PredefinedConfig/UserInterfaceState';
 import { UIHelper } from '../../View/UIHelper';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -14,6 +15,7 @@ export const PERMITTED_COLUMNVALUES_SET = 'PERMITTED_COLUMNVALUES_SET';
 export const PERMITTED_COLUMNVALUES_DELETE = 'PERMITTED_COLUMNVALUES_DELETE';
 export const ROW_STYLES_CLEAR = 'ROW_STYLES_CLEAR';
 export const ROW_STYLES_SET = 'ROW_STYLES_SET';
+export const CONTEXT_MENU_ITEM_ADD = 'CONTEXT_MENU_ITEM_ADD';
 
 export interface ColorPaletteSetAction extends Redux.Action {
   ColorPalette: string[];
@@ -39,6 +41,10 @@ export interface RowStylesClearAction extends Redux.Action {}
 
 export interface RowStylesSetAction extends Redux.Action {
   rowStyles: RowStyle[];
+}
+
+export interface ContextMenuItemAddAction extends Redux.Action {
+  contextMenuItem: UserMenuItem;
 }
 
 export const ColorPaletteSet = (ColorPalette: string[]): ColorPaletteSetAction => ({
@@ -77,6 +83,11 @@ export const RowStylesSet = (rowStyles: RowStyle[]): RowStylesSetAction => ({
   rowStyles,
 });
 
+export const ContextMenuItemAdd = (contextMenuItem: UserMenuItem): ContextMenuItemAddAction => ({
+  type: CONTEXT_MENU_ITEM_ADD,
+  contextMenuItem,
+});
+
 //export const PermittedColumnValuesAdd = (ColumnValues: string[]): PermittedColumnValuesAddAction => ({
 //    type: PERMITTED_COLUMNVALUES_ADD,
 //    ColumnValues
@@ -88,6 +99,8 @@ const initialUserInterfaceState: UserInterfaceState = {
   PermittedColumnValues: EMPTY_ARRAY,
   EditLookUpColumns: EMPTY_ARRAY,
   RowStyles: EMPTY_ARRAY,
+  ColumnMenuItems: EMPTY_ARRAY,
+  ContextMenuItems: EMPTY_ARRAY,
 };
 
 export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
@@ -147,6 +160,13 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
       return Object.assign({}, state, {
         RowStyles: (action as RowStylesSetAction).rowStyles,
       });
+
+    case CONTEXT_MENU_ITEM_ADD:
+      const contextMenuItemAdd = action as ContextMenuItemAddAction;
+      let contextMenuItems = [].concat(state.ContextMenuItems);
+      contextMenuItems.push(contextMenuItemAdd.contextMenuItem);
+      return Object.assign({}, state, { ContextMenuItems: contextMenuItems });
+
     default:
       return state;
   }

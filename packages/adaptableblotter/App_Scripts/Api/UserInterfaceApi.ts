@@ -3,6 +3,7 @@ import {
   PermittedColumnValues,
   EditLookUpColumn,
   RowStyle,
+  UserMenuItem,
 } from '../PredefinedConfig/UserInterfaceState';
 
 export interface UserInterfaceApi {
@@ -63,4 +64,13 @@ export interface UserInterfaceApi {
   clearRowStyles(): void;
 
   setRowStyles(rowStyles: RowStyle[]): void;
+
+  addContextMenuItem(contextMenuItem: UserMenuItem): void;
+
+  createContextMenuItem(
+    label: string,
+    onMenuItemClickedFunction?: () => void,
+    icon?: string,
+    subMenuItems?: UserMenuItem[]
+  ): void;
 }

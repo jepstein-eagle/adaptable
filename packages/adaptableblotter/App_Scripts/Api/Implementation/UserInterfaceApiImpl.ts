@@ -7,6 +7,7 @@ import {
   PermittedColumnValues,
   EditLookUpColumn,
   RowStyle,
+  UserMenuItem,
 } from '../../PredefinedConfig/UserInterfaceState';
 
 export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
@@ -77,5 +78,24 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     this.dispatchAction(UserInterfaceRedux.RowStylesSet(rowStyles));
     this.blotter.setUpRowStyles();
     this.blotter.redraw();
+  }
+
+  public addContextMenuItem(contextMenuItem: UserMenuItem): void {
+    this.dispatchAction(UserInterfaceRedux.ContextMenuItemAdd(contextMenuItem));
+  }
+
+  public createContextMenuItem(
+    label: string,
+    onMenuItemClickedFunction?: () => void,
+    icon?: string,
+    subMenuItems?: UserMenuItem[]
+  ): void {
+    let contextMenuItem: UserMenuItem = {
+      Label: label,
+      OnMenuItemClickedFunction: onMenuItemClickedFunction,
+      Icon: icon,
+      SubMenuItems: subMenuItems,
+    };
+    this.addContextMenuItem(contextMenuItem);
   }
 }

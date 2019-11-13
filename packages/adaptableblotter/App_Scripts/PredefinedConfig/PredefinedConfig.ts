@@ -230,13 +230,17 @@ export interface PredefinedConfig {
   /**
    * Columns that contain buttons which, when clicked, fire an event giving detials of the button and the row in which its placed.
    *
-   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   *
+   * (Note: Action Column State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   ActionColumn?: ActionColumnState;
   /**
    * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of the Adaptable Blotter state.
    *
-   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   *
+   * (Note: Application State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   Application?: ApplicationState;
   /**
@@ -244,25 +248,33 @@ export interface PredefinedConfig {
    *
    * The default is that all functions are fully availalbe so apply Entitlements Config if you wish to restrict access.
    *
-   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   *
+   * (Note: Entitlement State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   Entitlements?: EntitlementsState;
   /**
    *  Filters defined by Developers at design time which include a predicate function that is called by the Adaptable Blotter each time the filter is evaluated.
    *
-   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   *
+   * (Note: Named Filter State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   NamedFilter?: NamedFilterState;
   /**
    * Config required to run features provided by partners of the Adaptable Blotter such as iPushPull and Glue42.
    *
-   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   *
+   * (Note: Partner Config State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   PartnerConfig?: PartnerConfigState;
   /**
    * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
    *
-   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   *
+   * (Note: Sparkline Column State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   SparklineColumn?: SparklineColumnState;
   /**
@@ -270,7 +282,7 @@ export interface PredefinedConfig {
    *
    * If no values are listed, then **all System Filters** are available.
    *
-   *  **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
    */
   SystemFilter?: SystemFilterState;
   /**
@@ -278,7 +290,9 @@ export interface PredefinedConfig {
    *
    * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
    *
-   *  **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   *
+   * (Note: User Interface State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   UserInterface?: UserInterfaceState;
 
