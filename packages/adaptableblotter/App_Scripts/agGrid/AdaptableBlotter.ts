@@ -230,6 +230,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public SearchService: ISearchService;
 
   public Glue42Service: IGlue42Service;
+
   public ReportService: IReportService;
 
   public embedColumnMenu: boolean;

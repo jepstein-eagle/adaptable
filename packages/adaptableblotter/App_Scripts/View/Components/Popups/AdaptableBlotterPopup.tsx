@@ -32,8 +32,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       document
     );
     let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
-      this.props.Blotter.adaptableBlotterStore.TheStore.getState().Entitlements
-        .FunctionEntitlements,
+      this.props.Blotter.api.entitlementApi.getAllEntitlement(),
       this.props.ComponentStrategy
     );
 
@@ -48,21 +47,15 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         TeamSharingActivated: BlotterHelper.isConfigServerEnabled(
           this.props.Blotter.blotterOptions
         ),
-        Columns: this.props.Blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns,
-        UserFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().UserFilter
-          .UserFilters,
-        SystemFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().SystemFilter
-          .SystemFilters,
-        NamedFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().NamedFilter
-          .NamedFilters,
-        ColumnFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().ColumnFilter
-          .ColumnFilters,
+        Columns: this.props.Blotter.api.gridApi.getColumns(),
+        UserFilters: this.props.Blotter.api.userFilterApi.getAllUserFilter(),
+        SystemFilters: this.props.Blotter.api.systemFilterApi.getAllSystemFilter(),
+        NamedFilters: this.props.Blotter.api.namedFilterApi.getAllNamedFilter(),
+        ColumnFilters: this.props.Blotter.api.columnFilterApi.getAllColumnFilter(),
         ModalContainer: modalContainer,
-        ColumnCategories: this.props.Blotter.adaptableBlotterStore.TheStore.getState()
-          .ColumnCategory.ColumnCategories,
-        ColorPalette: this.props.Blotter.adaptableBlotterStore.TheStore.getState().UserInterface
-          .ColorPalette,
-        ColumnSorts: this.props.Blotter.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts,
+        ColumnCategories: this.props.Blotter.api.columnCategoryApi.getAllColumnCategory(),
+        ColorPalette: this.props.Blotter.api.userInterfaceApi.getColorPalette(),
+        ColumnSorts: this.props.Blotter.api.gridApi.getColumnSorts(),
         AccessLevel: accessLevel,
         Blotter: this.props.Blotter,
       };

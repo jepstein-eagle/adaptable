@@ -80,6 +80,10 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     }
   }
 
+  public displayMessageAlertPopup(alertToDisplayAsPopup: AdaptableAlert): void {
+    this.dispatchAction(PopupRedux.PopupShowAlert(alertToDisplayAsPopup));
+  }
+
   public showAlert(
     alertHeader: string,
     alertMessage: string,

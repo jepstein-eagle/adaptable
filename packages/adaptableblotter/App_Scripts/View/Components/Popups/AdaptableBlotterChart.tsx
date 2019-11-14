@@ -46,8 +46,7 @@ export class AdaptableBlotterChart extends React.Component<
         this.props.showModal
       ),
       accessLevel: BlotterHelper.getEntitlementAccessLevelForStrategy(
-        this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().Entitlements
-          .FunctionEntitlements,
+        this.props.AdaptableBlotter.api.entitlementApi.getAllEntitlement(),
         StrategyConstants.ChartStrategyId
       ),
       isValidUserChartContainer: UIHelper.isValidUserChartContainer(
@@ -64,17 +63,12 @@ export class AdaptableBlotterChart extends React.Component<
       onClose: this.props.onClose,
       ShowModal: this.props.showModal,
       Blotter: this.props.AdaptableBlotter,
-      UserFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().UserFilter
-        .UserFilters,
-      SystemFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
-        .SystemFilter.SystemFilters,
-      NamedFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
-        .NamedFilter.NamedFilters,
-      ColumnCategories: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
-        .ColumnCategory.ColumnCategories,
+      UserFilters: this.props.AdaptableBlotter.api.userFilterApi.getAllUserFilter(),
+      SystemFilters: this.props.AdaptableBlotter.api.systemFilterApi.getAllSystemFilter(),
+      NamedFilters: this.props.AdaptableBlotter.api.namedFilterApi.getAllNamedFilter(),
+      ColumnCategories: this.props.AdaptableBlotter.api.columnCategoryApi.getAllColumnCategory(),
       ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.getAllColumnFilter(),
-      ColorPalette: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState()
-        .UserInterface.ColorPalette,
+      ColorPalette: this.props.AdaptableBlotter.api.userInterfaceApi.getColorPalette(),
       AccessLevel: this.state.accessLevel,
     };
 

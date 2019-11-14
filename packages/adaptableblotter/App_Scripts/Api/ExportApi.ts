@@ -26,6 +26,11 @@ export interface ExportApi {
   getAllReports(): Report[];
 
   /**
+   * Retrieves all Reports in the State which have a schedule
+   */
+  getScheduledReports(): Report[];
+
+  /**
    * Sends a report to a given destination.
    *
    * @param reportName the name of the report to send

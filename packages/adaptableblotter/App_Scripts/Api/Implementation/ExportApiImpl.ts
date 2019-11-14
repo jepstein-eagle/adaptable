@@ -30,6 +30,10 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
       .concat(this.getBlotterState().Export.Reports);
   }
 
+  public getScheduledReports(): Report[] {
+    return this.getBlotterState().Export.Reports.filter(r => r.AutoExport);
+  }
+
   public sendReport(reportName: string, destination: ExportDestination): void {
     let report: Report = this.getReportByName(reportName);
     if (this.checkItemExists(report, reportName, 'Report')) {

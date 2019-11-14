@@ -12,6 +12,8 @@ export interface UserInterfaceApi {
    */
   getUserInterfaceState(): UserInterfaceState;
 
+  getColorPalette(): string[];
+
   /**
    * Sets the Color Palette - when creating functions that use the [Style Object](https://api.adaptableblotter.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) (e.g. Conditional Style, Format Column).
    *

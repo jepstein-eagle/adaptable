@@ -18,6 +18,8 @@ export interface AlertApi {
 
   getAlertDefinitions(): AlertDefinition[];
 
+  displayMessageAlertPopup(alertToDisplayAsPopup: AdaptableAlert): void;
+
   /**
    * Displays a (fully formed) inputted Alert to the User
    * @param alertToShow The Alert which should be displayed

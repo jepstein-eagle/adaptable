@@ -15,6 +15,10 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     return this.getBlotterState().UserInterface;
   }
 
+  public getColorPalette(): string[] {
+    return this.getBlotterState().UserInterface.ColorPalette;
+  }
+
   public setColorPalette(colorPalette: string[]): void {
     this.dispatchAction(UserInterfaceRedux.ColorPaletteSet(colorPalette));
   }

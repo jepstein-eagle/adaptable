@@ -254,8 +254,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       case ExportDestination.Glue42:
         let data: any[] = this.ConvertReportToArray(report);
 
-        let gridColumns: AdaptableBlotterColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState()
-          .Grid.Columns;
+        let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
 
         // for glue42 we need to pass in the pk values of the data also
         let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(report);
@@ -322,10 +321,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   private ConvertReportToArray(report: Report): any[] {
     let actionReturnObj = this.blotter.ReportService.ConvertReportToArray(report);
     if (actionReturnObj.Alert) {
-      // assume that the MessageType is error - if not then refactor
-      this.blotter.adaptableBlotterStore.TheStore.dispatch(
-        PopupRedux.PopupShowAlert(actionReturnObj.Alert)
-      );
+      this.blotter.api.alertApi.displayMessageAlertPopup(actionReturnObj.Alert);
       return null;
     }
     return actionReturnObj.ActionReturn;
@@ -335,12 +331,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     // just clear all jobs and recreate - simplest thing to do...
     this.blotter.ScheduleService.ClearAllExportJobs();
 
-    this.blotter.adaptableBlotterStore.TheStore.getState().Export.Reports.forEach(
-      (report: Report) => {
-        if (report.AutoExport) {
-          this.blotter.ScheduleService.AddReportSchedule(report);
-        }
-      }
-    );
+    this.blotter.api.exportApi.getScheduledReports().forEach((report: Report) => {
+      this.blotter.ScheduleService.AddReportSchedule(report);
+    });
   }
 }
