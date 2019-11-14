@@ -86,7 +86,7 @@ export interface UserInterfaceApi {
    *
    * @param label the text of the menu item
    * @param onMenuItemClickedFunction the function to call when the menu item is clicked
-   * @param icon an optional image to show for the menu item
+   * @param icon an image to show for the menu item
    * @param subMenuItems any submenu items to add to the menu
    */
   createContextMenuItem(
