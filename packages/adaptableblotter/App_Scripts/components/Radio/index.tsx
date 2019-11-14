@@ -1,36 +1,6 @@
 import * as React from 'react';
 import { ReactNode, useState, SyntheticEvent } from 'react';
-import styled, { keyframes } from 'styled-components';
 import { Box, BoxProps } from 'rebass';
-
-const checked = keyframes`
-  100% {
-    stroke-dashoffset: 0;
-  }
-`;
-
-const RadioInput = styled.input`
-  &:focus + svg rect {
-    stroke: var(--ab-color-accent);
-    stroke-width: 2;
-  }
-  &:focus + svg {
-    outline: 2px solid var(--ab-color-accent);
-  }
-  &:checked + svg rect,
-  &:checked + svg polyline {
-    stroke: currentColor;
-  }
-  &:checked + svg polyline {
-    animation: ${checked} 0.5s ease forwards;
-    stroke-dasharray: 50;
-    stroke-dashoffset: 50;
-  }
-  & input:focus {
-    box-shadow: var(--ab-focus__box-shadow);
-    outline: var(--ab-focus__outline);
-  }
-`;
 
 type TypeProps = {
   checked?: boolean;
@@ -83,6 +53,7 @@ const Radio = ({
 
   return (
     <Box
+      className="ab-Radio"
       my={2}
       {...props}
       style={{
@@ -96,7 +67,8 @@ const Radio = ({
     >
       {before}
       {beforeGap}
-      <RadioInput
+      <input
+        className="ab-Radio-input"
         id={id}
         checked={computedChecked}
         type="radio"

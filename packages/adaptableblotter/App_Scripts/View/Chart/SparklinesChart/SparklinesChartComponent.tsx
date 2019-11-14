@@ -16,7 +16,7 @@ import {
 import { SparklinesChartUIHelper } from './SparklinesChartUIHelper';
 import { SparklinesChartComponentState } from './SparklinesChartComponentState';
 
-import ChartContainer from '../../../components/ChartContainer';
+import {ChartContainer} from '../../../components/ChartContainer';
 import SparklineChart from '../../../components/SparklineChart';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import Radio from '../../../components/Radio';

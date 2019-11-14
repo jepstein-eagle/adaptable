@@ -40,7 +40,7 @@ import Input from '../../../components/Input';
 
 import Checkbox from '../../../components/CheckBox';
 import FormLayout, { FormRow, FormLayoutColumn } from '../../../components/FormLayout';
-import ChartContainer from '../../../components/ChartContainer';
+import {ChartContainer} from '../../../components/ChartContainer';
 
 /*
 This is really only going to be for Category Charts.

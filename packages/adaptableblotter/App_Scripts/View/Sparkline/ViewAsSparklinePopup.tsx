@@ -15,7 +15,7 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { Flex, Text } from 'rebass';
 import ErrorBox from '../../components/ErrorBox';
 import Panel from '../../components/Panel';
-import ChartContainer from '../../components/ChartContainer';
+import { ChartContainer } from '../../components/ChartContainer';
 import SparklineChart from '../../components/SparklineChart';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import FormLayout, { FormRow } from '../../components/FormLayout';

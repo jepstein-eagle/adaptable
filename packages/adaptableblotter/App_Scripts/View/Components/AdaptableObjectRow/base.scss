@@ -1,0 +1,10 @@
+.ab-AdaptableObjectRow {
+  background: var(--ab-cmp-listgroupitem__background);
+  color: var(--ab-cmp-listgroupitem__color);
+  border-radius: var(--ab-cmp-listgroupitem__border-radius);
+
+  &:nth-child(2n + 1) {
+    background: var(--ab-cmp-listgroupitem--odd__background);
+    color: var(--ab-cmp-listgroupitem--odd__color);
+  }
+}

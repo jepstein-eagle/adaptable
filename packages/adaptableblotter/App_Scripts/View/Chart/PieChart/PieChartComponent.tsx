@@ -46,7 +46,7 @@ import Panel from '../../../components/Panel';
 import Checkbox from '../../../components/CheckBox';
 
 import SizedContainer from '../../../components/SizedContainer';
-import ChartContainer from '../../../components/ChartContainer';
+import {ChartContainer} from '../../../components/ChartContainer';
 
 interface PieChartComponentProps {
   CurrentChartDefinition: PieChartDefinition;

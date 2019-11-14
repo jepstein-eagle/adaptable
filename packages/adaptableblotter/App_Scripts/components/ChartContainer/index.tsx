@@ -41,3 +41,5 @@ const ChartContainer = (props: ChartContainerProps) => (
 );
 
 export default ChartContainer;
+
+export { ChartContainer };

@@ -37,7 +37,7 @@ import Checkbox from '../../components/CheckBox';
 import Panel from '../../components/Panel';
 import Dropdown from '../../components/Dropdown';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import ChartContainer from '../../components/ChartContainer';
+import {ChartContainer} from '../../components/ChartContainer';
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}
 
