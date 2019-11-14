@@ -103,9 +103,9 @@
     "mathjs": "^5.1.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "ag-grid-community": ">=21.0.0",
-    "ag-grid-enterprise": ">=21.0.0",
-    "ag-grid-react": ">=21.0.0"
+    "ag-grid-community": "^21.0.0",
+    "ag-grid-enterprise": "^21.0.0",
+    "ag-grid-react": "^21.0.0"
   },
   "scripts": {
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
