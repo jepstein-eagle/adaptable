@@ -12,6 +12,9 @@ export interface UserInterfaceApi {
    */
   getUserInterfaceState(): UserInterfaceState;
 
+  /**
+   * Retrieves the Color Palette currently being used
+   */
   getColorPalette(): string[];
 
   /**
@@ -67,8 +70,25 @@ export interface UserInterfaceApi {
 
   setRowStyles(rowStyles: RowStyle[]): void;
 
+  /**
+   * Adds a menu item to the Context Menu
+   *
+   * @param contextMenuItem Context Menu to add
+   *
+   * **note: this will NOT get persisted to the State at the end of the session**
+   */
   addContextMenuItem(contextMenuItem: UserMenuItem): void;
 
+  /**
+   * Creates a new Context Menu Item
+   *
+   * **note: this will NOT get persisted to the State at the end of the session**
+   *
+   * @param label the text of the menu item
+   * @param onMenuItemClickedFunction the function to call when the menu item is clicked
+   * @param icon an optional image to show for the menu item
+   * @param subMenuItems any submenu items to add to the menu
+   */
   createContextMenuItem(
     label: string,
     onMenuItemClickedFunction?: () => void,
