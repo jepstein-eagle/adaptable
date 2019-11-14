@@ -1,55 +1,8 @@
 import * as React from 'react';
 import { ReactNode, useState, SyntheticEvent, useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
 import { Box, BoxProps } from 'rebass';
 import join from '../utils/join';
 import { getSize } from '../icons/DefaultIcon';
-
-const checked = keyframes`
-  100% {
-    stroke-dashoffset: 0;
-  }
-`;
-
-const CheckSvg = styled.svg`
-  position: relative;
-  z-index: 1;
-
-  pointer-events: none;
-
-  color: var(--ab-color-inputcolor);
-  background: var(--ab-color-defaultbackground);
-
-  rect,
-  polyline {
-    fill: none;
-    stroke-width: 4;
-  }
-  rect {
-    stroke: currentColor;
-  }
-`;
-
-const CheckboxInput = styled.input`
-  width: 0;
-  &:focus + svg rect {
-    stroke: var(--ab-color-inputcolor);
-    stroke-width: 2;
-  }
-  &:focus + svg {
-    outline: 2px solid var(--ab-color-focus);
-  }
-  &:indeterminate + svg rect,
-  &:checked + svg rect,
-  &:checked + svg polyline {
-    stroke: currentColor;
-  }
-  &:checked + svg polyline {
-    animation: ${checked} 0.5s ease forwards;
-    stroke-dasharray: 50;
-    stroke-dashoffset: 50;
-  }
-`;
 
 type TypeProps = {
   checked?: boolean | null;
@@ -129,7 +82,8 @@ const CheckBox = ({
     >
       {before}
       {beforeGap}
-      <CheckboxInput
+      <input
+        className="ab-CheckBox-input"
         ref={checkboxRef}
         disabled={disabled}
         checked={!!computedChecked}
@@ -147,7 +101,7 @@ const CheckBox = ({
       />
 
       {variant !== 'agGrid' ? (
-        <CheckSvg viewBox="0 0 40 40" height={getSize(19)}>
+        <svg viewBox="0 0 40 40" height={getSize(19)} className="ab-CheckBox-svg">
           <rect x="2" y="2" width="36" height="36" />
 
           {indeterminate ? (
@@ -155,7 +109,7 @@ const CheckBox = ({
           ) : (
             <polyline points="9,22 18,30 33,14" />
           )}
-        </CheckSvg>
+        </svg>
       ) : (
         <span className={`ag-icon ag-icon-checkbox-${computedChecked ? 'checked' : 'unchecked'}`} />
       )}

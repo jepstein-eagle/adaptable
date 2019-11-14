@@ -1,3 +1,49 @@
 .ab-CheckBox--disabled {
   opacity: 0.5;
 }
+.ab-CheckBox-svg {
+  position: relative;
+  z-index: 1;
+
+  pointer-events: none;
+
+  color: var(--ab-color-inputcolor);
+  background: var(--ab-color-defaultbackground);
+
+  rect,
+  polyline {
+    fill: none;
+    stroke-width: 4;
+  }
+
+  rect {
+    stroke: currentColor;
+  }
+}
+
+.ab-CheckBox-input {
+  width: 0;
+  &:focus + svg rect {
+    stroke: var(--ab-color-inputcolor);
+    stroke-width: 2;
+  }
+  &:focus + svg {
+    outline: 2px solid var(--ab-color-focus);
+  }
+  &:indeterminate + svg rect,
+  &:checked + svg rect,
+  &:checked + svg polyline {
+    stroke: currentColor;
+  }
+  &:checked + svg polyline {
+    animation: abCheckboxCheckAnimation 0.5s ease forwards;
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+  }
+}
+
+@keyframes abCheckboxCheckAnimation {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
