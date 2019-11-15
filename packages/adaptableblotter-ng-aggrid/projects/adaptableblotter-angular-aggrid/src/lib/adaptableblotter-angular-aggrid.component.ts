@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AdaptableBlotterOptions } from '../adaptableblotter/types';
 
 import { GridOptions } from 'ag-grid-community';
-import blotterFactory from './createBlotter';
+import { createBlotter as blotterFactory } from './createBlotter';
 import { BlotterApi } from '../adaptableblotter/types';
 
 const getRandomInt = (max: number): number =>
