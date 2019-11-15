@@ -45,7 +45,7 @@ import { UserFilterApiImpl } from './UserFilterApiImpl';
 import { NamedFilterApiImpl } from './NamedFilterApiImpl';
 import { InternalApiImpl } from './InternalApiImpl';
 import { PartnerConfigApiImpl } from './PartnerConfigApiImpl';
-import { ColumnChooserApiImpl } from './ColumnChooserAPIImpl';
+import { ColumnChooserApiImpl } from './ColumnChooserApiImpl';
 import { BlotterApi } from '../../types';
 import { ActionColumnApi } from '../ActionColumnApi';
 import { AdvancedSearchApi } from '../AdvancedSearchApi';
