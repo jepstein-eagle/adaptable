@@ -4,6 +4,10 @@ import { RunTimeState } from './RunTimeState';
 /**
  * The Predefined Configuration for the Application function
  *
+ * The Application function is designed to allow developers to provide the Adaptable Blotter with appliation-specific data and UI elements.
+ *
+ * ** Application Toolbar **
+ *
  * The Application function provides an **deliberately empty toolbar** (called *Application*) which users can leverage and populate with their own content.
  *
  * It contains 2 divs (to cater for 2 different scenarios):
@@ -97,7 +101,9 @@ import { RunTimeState } from './RunTimeState';
  *  });
  * ```
  *
- * The Applicaation State also provides an ApplicationDataEntries array.
+ * ** The Application Data Entries**
+ *
+ * The Application State also provides an ApplicationDataEntries array.
  *
  * This enables you to provide the Adaptable Blotter with your own data (which needs to be provided in key / value form) that the Adaptable Blotter will then store in its State.
  *
