@@ -4,7 +4,7 @@ import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
-import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
+import { SystemStatus } from '../../Utilities/Interface/SystemStatus';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -80,7 +80,7 @@ export const QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS =
 export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';
 
 export interface SystemSetHealthStatusAction extends Redux.Action {
-  SystemStatus: ISystemStatus;
+  SystemStatus: SystemStatus;
 }
 
 export interface SystemClearHealthStatusAction extends Redux.Action {}
@@ -179,9 +179,7 @@ export interface SetNewColumnListOrderAction extends Redux.Action {
   VisibleColumnList: Array<AdaptableBlotterColumn>;
 }
 
-export const SystemSetHealthStatus = (
-  SystemStatus: ISystemStatus
-): SystemSetHealthStatusAction => ({
+export const SystemSetHealthStatus = (SystemStatus: SystemStatus): SystemSetHealthStatusAction => ({
   type: SYSTEM_SET_HEALTH_STATUS,
   SystemStatus,
 });

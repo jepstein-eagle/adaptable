@@ -10,7 +10,7 @@ import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBl
 import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {
   UserFilters: UserFilter[];
@@ -22,7 +22,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
     super(props);
   }
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Name',
         Value: ColumnHelper.getFriendlyNameFromColumnId(

@@ -1,6 +1,6 @@
 import { ExpressionHelper } from './ExpressionHelper';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
-import { IKeyValuePair } from '../Interface/IKeyValuePair';
+import { KeyValuePair } from '../Interface/KeyValuePair';
 import { ColumnHelper } from './ColumnHelper';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
@@ -9,8 +9,8 @@ import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 export function convertColumnFiltersToKVPArray(
   columnFilters: ColumnFilter[],
   columns: AdaptableBlotterColumn[]
-): IKeyValuePair[] {
-  let infoBody: IKeyValuePair[] = [];
+): KeyValuePair[] {
+  let infoBody: KeyValuePair[] = [];
   columnFilters.forEach(x => {
     let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
     if (column) {

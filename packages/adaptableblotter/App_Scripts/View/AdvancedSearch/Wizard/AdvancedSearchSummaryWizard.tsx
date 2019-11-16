@@ -8,7 +8,7 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdvancedSearch } from '../../../PredefinedConfig/AdvancedSearchState';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<AdvancedSearch> {
@@ -22,7 +22,7 @@ export class AdvancedSearchSummaryWizard
     super(props);
   }
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       {
         Key: 'Query',

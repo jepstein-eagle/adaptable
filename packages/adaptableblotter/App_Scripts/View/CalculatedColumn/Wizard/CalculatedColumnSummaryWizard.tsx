@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { CalculatedColumnHelper } from '../../../Utilities/Helpers/CalculatedColumnHelper';
 import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
 
@@ -20,7 +20,7 @@ export class CalculatedColumnSummaryWizard
     this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null };
   }
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.ColumnId },
       {
         Key: 'Expression',

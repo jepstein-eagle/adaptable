@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
@@ -20,7 +20,7 @@ export class ColumnCategorySummaryWizard
     super(props);
   }
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.ColumnCategoryId },
       { Key: 'Columns', Value: this.getColumnNames() },
     ];

@@ -306,7 +306,6 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
-      ConfigConstants.APPLICATION,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.ACTION_COLUMN,

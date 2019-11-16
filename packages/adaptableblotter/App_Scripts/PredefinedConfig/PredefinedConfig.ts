@@ -34,6 +34,7 @@ import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
 import { PartnerConfigState } from './PartnerConfigState';
+import { KeyValuePairState } from './KeyValuePairState';
 
 /**
  * This is the main Predefined Config interface which users will populate if they wish to ship their Adaptable Botter instance with initial state.

@@ -50,7 +50,7 @@ export interface AdaptableBlotterState {
   System: SystemState;
 
   // Set at design time only
-  Application: ApplicationState;
+
   ActionColumn: ActionColumnState;
   Entitlements: EntitlementsState;
   PartnerConfig: PartnerConfigState;
@@ -60,6 +60,7 @@ export interface AdaptableBlotterState {
   UserInterface: UserInterfaceState;
 
   // Set at design time and / or run time => only state is persisted
+  Application: ApplicationState;
   AdvancedSearch: AdvancedSearchState;
   Alert: AlertState;
   BulkUpdate: BulkUpdateState;

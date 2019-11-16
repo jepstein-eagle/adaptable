@@ -7,7 +7,7 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { SparklineColumn } from '../../../PredefinedConfig/SparklineColumnState';
 import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
@@ -28,7 +28,7 @@ export class SparklineColumnSummaryWizard
     lineColorStyle.BackColor = this.props.Data!.LineColor;
     lineColorStyle.ForeColor = this.props.Data!.LineColor;
 
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
         Value: ColumnHelper.getFriendlyNameFromColumnId(

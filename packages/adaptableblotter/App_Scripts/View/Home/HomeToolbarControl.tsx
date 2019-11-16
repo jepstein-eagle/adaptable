@@ -23,7 +23,7 @@ import {
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
+import { SystemStatus } from '../../Utilities/Interface/SystemStatus';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
 import Checkbox from '../../components/CheckBox';
@@ -41,7 +41,7 @@ interface HomeToolbarComponentProps
   GridState: GridState;
   DashboardState: DashboardState;
   Columns: AdaptableBlotterColumn[];
-  SystemStatus: ISystemStatus;
+  SystemStatus: SystemStatus;
   HeaderText: string;
   DashboardSize: DashboardSize;
   onNewColumnListOrder: (

@@ -2,11 +2,11 @@ import * as React from 'react';
 import { IColItem } from '../UIInterfaces';
 import { WizardSummaryRow } from './WizardSummaryRow';
 import { AdaptableObjectCollection } from './AdaptableObjectCollection';
-import { IKeyValuePair } from '../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../Utilities/Interface/KeyValuePair';
 import WizardPanel from '../../components/WizardPanel';
 
 export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSummaryPage> {
-  KeyValuePairs: IKeyValuePair[];
+  KeyValuePairs: KeyValuePair[];
   header: string;
 }
 

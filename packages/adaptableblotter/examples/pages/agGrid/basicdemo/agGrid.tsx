@@ -17,7 +17,6 @@ import {
   IAdaptableBlotter,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { TickingDataHelper } from '../../TickingDataHelper';
 
 /*
 Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
@@ -58,10 +57,6 @@ function InitAdaptableBlotter() {
     alert('Ive been clicked');
   };
   adaptableblotter.api.userInterfaceApi.createContextMenuItem('click me', clickEvent);
-
-  //tickingDataHelper.startTickingDataagGridThroughRowData(adaptableblotter, tradeData, 1000, tradeCount);
-
-  //
 
   // global.adaptableblotter = adaptableblotter;
 }

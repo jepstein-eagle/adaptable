@@ -7,7 +7,7 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { Reminder } from '../../../PredefinedConfig/ReminderState';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UIHelper } from '../../UIHelper';
 
 export interface ReminderSummaryWizardProps extends AdaptableWizardStepProps<Reminder> {}
@@ -19,7 +19,7 @@ export class ReminderSummaryWizard extends React.Component<ReminderSummaryWizard
   }
 
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Header', Value: this.props.Data.Alert.Header },
       { Key: 'Message', Value: this.props.Data.Alert.Msg },
       { Key: 'Message Type', Value: this.props.Data.Alert.AlertDefinition.MessageType },

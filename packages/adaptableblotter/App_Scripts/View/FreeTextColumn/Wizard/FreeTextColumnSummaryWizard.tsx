@@ -9,7 +9,7 @@ import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBl
 import { FreeTextColumn } from '../../../PredefinedConfig/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 
 export interface FreeTextColumnSummaryWizardProps
   extends AdaptableWizardStepProps<FreeTextColumn> {}
@@ -22,7 +22,7 @@ export class FreeTextColumnSummaryWizard
   }
 
   render() {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.ColumnId },
       {
         Key: 'Default Value',

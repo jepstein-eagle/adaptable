@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../../../Utilities/Helpers/AlertHelper';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
@@ -25,7 +25,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
 
   render(): any {
     let alertDefinition: AlertDefinition = this.props.Data as AlertDefinition;
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
         Value: ColumnHelper.getFriendlyNameFromColumnId(

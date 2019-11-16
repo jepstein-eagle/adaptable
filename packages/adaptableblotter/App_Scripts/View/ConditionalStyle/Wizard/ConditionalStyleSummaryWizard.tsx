@@ -11,7 +11,7 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyleScope } from '../../../PredefinedConfig/Common/Enums';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export interface ConditionalStyleSummaryWizardProps
@@ -27,7 +27,7 @@ export class ConditionalStyleSummaryWizard
   }
 
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Scope', Value: this.getScope() },
       { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
       {

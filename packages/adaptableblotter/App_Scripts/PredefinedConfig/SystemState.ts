@@ -1,4 +1,4 @@
-import { ISystemStatus } from '../Utilities/Interface/ISystemStatus';
+import { SystemStatus } from '../Utilities/Interface/SystemStatus';
 
 import { IPPDomain } from '../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
@@ -18,7 +18,7 @@ import { Report } from './ExportState';
  */
 
 export interface SystemState extends InternalState {
-  SystemStatus: ISystemStatus;
+  SystemStatus: SystemStatus;
   AdaptableAlerts: AdaptableAlert[];
   UpdatedRowInfos: UpdatedRowInfo[];
   AvailableCalendars: Calendar[];

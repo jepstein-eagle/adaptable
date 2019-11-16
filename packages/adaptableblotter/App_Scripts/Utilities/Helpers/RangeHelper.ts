@@ -1,4 +1,4 @@
-import { IKeyValuePair } from '../Interface/IKeyValuePair';
+import { KeyValuePair } from '../Interface/KeyValuePair';
 import { LeafExpressionOperator, DataType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
@@ -18,7 +18,7 @@ export function CreateValueRange(
     Operand2Type: 'Value',
   };
 }
-export function GetNumberOperatorPairs(): IKeyValuePair[] {
+export function GetNumberOperatorPairs(): KeyValuePair[] {
   return [
     { Key: '<>', Value: LeafExpressionOperator.NotEquals },
     { Key: '>=', Value: LeafExpressionOperator.GreaterThanOrEqual },
@@ -33,7 +33,7 @@ export function GetNumberOperatorPairs(): IKeyValuePair[] {
   ];
 }
 
-export function GetStringOperatorPairs(): IKeyValuePair[] {
+export function GetStringOperatorPairs(): KeyValuePair[] {
   return [
     { Key: '*', Value: LeafExpressionOperator.StartsWith },
     { Key: '%', Value: LeafExpressionOperator.Contains },
@@ -41,7 +41,7 @@ export function GetStringOperatorPairs(): IKeyValuePair[] {
     { Key: '=', Value: LeafExpressionOperator.Equals },
   ];
 }
-export function GetDateOperatorPairs(): IKeyValuePair[] {
+export function GetDateOperatorPairs(): KeyValuePair[] {
   return [];
 }
 
@@ -70,7 +70,7 @@ export function CreateValueRangeFromOperand(rangeText: string): QueryRange {
   // we have an operator AND text so create the appropriate range
   // NOTE:  This fails unless the text is > 5.  not working for 5:7 at the moment..
 
-  let opKVP: IKeyValuePair = GetNumberOperatorPairs().find(kvp => kvp.Key == operatorText);
+  let opKVP: KeyValuePair = GetNumberOperatorPairs().find(kvp => kvp.Key == operatorText);
   if (opKVP == null) {
     // no number so lets try a string -- not sure we need this now as all strings are in numbers (need to rethink that)
     opKVP = GetStringOperatorPairs().find(kvp => kvp.Key == operatorText);

@@ -1,4 +1,8 @@
-import { ApplicationToolbarButton, ApplicationState } from '../PredefinedConfig/ApplicationState';
+import {
+  ApplicationToolbarButton,
+  ApplicationState,
+  ApplicationDataEntry,
+} from '../PredefinedConfig/ApplicationState';
 
 /**
  * Provides access to an empty Toolbar and Popup, allowing developers to populate it as they wish.
@@ -28,4 +32,15 @@ export interface ApplicationApi {
    * Returns the 'div' element in the Application Toolbar that is assigned for uses to render themselves
    */
   getApplicationToolbarContentsDiv(): HTMLElement | null;
+
+  /**
+   * Retrieves all the Key Value Pairs in the Application state
+   */
+  getApplicationDataEntries(): ApplicationDataEntry[];
+  addApplicationDataEntry(applicationDataEntry: ApplicationDataEntry): void;
+  createApplicationDataEntry(key: string, value: any): void;
+  editApplicationDataEntry(applicationDataEntry: ApplicationDataEntry): void;
+  deleteApplicationDataEntry(applicationDataEntry: ApplicationDataEntry): void;
+  getApplicationDataEntryByKey(key: string): ApplicationDataEntry | undefined;
+  getApplicationDataEntriesByValue(value: any): ApplicationDataEntry[];
 }

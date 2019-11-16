@@ -10,7 +10,7 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { CellValidationHelper } from '../../../Utilities/Helpers/CellValidationHelper';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export interface CellValidationSummaryWizardProps
@@ -26,7 +26,7 @@ export class CellValidationSummaryWizard
   }
 
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
         Value: ColumnHelper.getFriendlyNameFromColumnId(

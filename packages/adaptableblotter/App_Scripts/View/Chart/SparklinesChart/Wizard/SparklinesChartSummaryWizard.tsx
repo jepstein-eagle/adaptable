@@ -8,7 +8,7 @@ import {
 import { SparklinesChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import ColumnHelper from '../../../../Utilities/Helpers/ColumnHelper';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';
-import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../../Utilities/Interface/KeyValuePair';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import ExpressionHelper from '../../../../Utilities/Helpers/ExpressionHelper';
 
@@ -22,7 +22,7 @@ export class SparklinesChartSummaryWizard
     super(props);
   }
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       { Key: 'Description', Value: this.props.Data.Description },
       {

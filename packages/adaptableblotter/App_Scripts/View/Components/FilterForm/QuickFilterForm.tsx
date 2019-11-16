@@ -17,7 +17,7 @@ import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBl
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import Input from '../../../components/Input';
@@ -43,9 +43,9 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
 export interface QuickFilterFormState {
   quickFilterFormText: string;
   filterExpression: Expression;
-  numberOperatorPairs: IKeyValuePair[];
-  stringOperatorPairs: IKeyValuePair[];
-  dateOperatorPairs: IKeyValuePair[];
+  numberOperatorPairs: KeyValuePair[];
+  stringOperatorPairs: KeyValuePair[];
+  dateOperatorPairs: KeyValuePair[];
   placeholder: string;
 }
 
@@ -200,7 +200,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     }
   }
 
-  createRangeExpression(operatorKVP: IKeyValuePair, searchText: string): void {
+  createRangeExpression(operatorKVP: KeyValuePair, searchText: string): void {
     if (searchText.trim() == operatorKVP.Key) {
       // its operator only so do nothing (but set placeholder to ensure not wiped)
       this.clearExpressionState(searchText);
@@ -232,7 +232,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     // first check for existing operators and handle those
     let isRangeExpression: boolean = false;
 
-    let operators: IKeyValuePair[];
+    let operators: KeyValuePair[];
     switch (this.props.CurrentColumn.DataType) {
       case DataType.Number:
         operators = this.state.numberOperatorPairs;
@@ -271,7 +271,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         this.createColumnFilter(expression, searchText);
       } else {
         // if just a single, non-operator, value then do an "Equals" range
-        let equalOperatorPair: IKeyValuePair = this.state.numberOperatorPairs.find(
+        let equalOperatorPair: KeyValuePair = this.state.numberOperatorPairs.find(
           op => op.Value == LeafExpressionOperator.Contains
         );
         this.createRangeExpression(equalOperatorPair, searchText);

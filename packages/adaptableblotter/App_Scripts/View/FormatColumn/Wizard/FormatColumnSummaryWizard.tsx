@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 export class FormatColumnSummaryWizard extends React.Component<FormatColumnSummaryWizardProps, {}>
@@ -20,7 +20,7 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   }
 
   render() {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
         Value: ColumnHelper.getFriendlyNameFromColumnId(

@@ -5,7 +5,7 @@ import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
-import { IKeyValuePair } from '../Interface/IKeyValuePair';
+import { KeyValuePair } from '../Interface/KeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
@@ -57,7 +57,7 @@ export class ChartService implements IChartService {
 
       chartItem[xAxisColumnName] = cv;
       let showAverageTotal: boolean = chartDefinition.YAxisTotal == AxisTotal.Average;
-      let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv };
+      let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv };
 
       chartDefinition.YAxisColumnIds.forEach(colID => {
         let total = this.buildYAxisTotal(
@@ -149,7 +149,7 @@ export class ChartService implements IChartService {
   private buildYAxisTotal(
     chartDefinition: ChartDefinition,
     yAxisColumn: string,
-    kvps: IKeyValuePair[],
+    kvps: KeyValuePair[],
     columns: AdaptableBlotterColumn[],
     showAverageTotal: boolean
   ): number {

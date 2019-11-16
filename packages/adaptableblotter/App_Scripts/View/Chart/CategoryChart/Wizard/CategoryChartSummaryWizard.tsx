@@ -6,7 +6,7 @@ import {
 } from '../../../Wizard/Interface/IAdaptableWizard';
 import { CategoryChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
-import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../../Utilities/Interface/KeyValuePair';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
@@ -23,7 +23,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
     let friendlyNames = this.props.Data.YAxisColumnIds.map(c => {
       return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns);
     });
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       { Key: 'Description', Value: this.props.Data.Description },
       { Key: 'Y Axis Column(s)', Value: friendlyNames.join(', ') },

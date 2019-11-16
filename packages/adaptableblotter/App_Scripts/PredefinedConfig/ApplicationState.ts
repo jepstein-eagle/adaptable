@@ -1,5 +1,5 @@
-import { DesignTimeState } from './DesignTimeState';
 import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { RunTimeState } from './RunTimeState';
 
 /**
  * The Predefined Configuration for the Application function
@@ -92,20 +92,64 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *
  *  ......
  *
- *  adaptableblotter.on('ApplicationToolbarButtonClicked', applicationToolbarButtonClickedEventArgs)  => {
+ *  adaptableblotter.api.eventApi.on('ApplicationToolbarButtonClicked', applicationToolbarButtonClickedEventArgs)  => {
  *      // respond as appropriate - the button argument is the ApplicationToolbarButton we provided in the state
  *  });
  * ```
+ *
+ * The Applicaation State also provides an ApplicationDataEntries array.
+ *
+ * This enables you to provide the Adaptable Blotter with your own data (which needs to be provided in key / value form) that the Adaptable Blotter will then store in its State.
+ *
+ *  **note: because this is stored as JSON the value must be something that is capable of being 'stringified'**
+ *
+ * **Application Button Predefined Config Example**
+ *
+ *  ```ts
+ * export default {
+ * Application: {
+ *  ApplicationDataEntries:[
+ *    {
+ *      Key: 'Name',
+ *      Value: 'John Smith',
+ *    },
+ *    {
+ *      Key: 'Employee Number',
+ *      Value: 20283728,
+ *    },
+ *    {
+ *      Key: 'Joined Date',
+ *      Value: new Date(2017, 13, 7),
+ *    },
+ *    ],
+ *  }
+ * } as PredefinedConfig;
+ * ```
+ *
  **/
-export interface ApplicationState extends DesignTimeState {
+export interface ApplicationState extends RunTimeState {
   /**
    * An array of Application Toolbar Buttons - each of which is rendered as a button in the Application Toolbar.
    *
    * When one of these buttons is clicked the on('ApplicationToolbarButtonClicked') event is fired.
    */
   ApplicationToolbarButtons?: ApplicationToolbarButton[];
+
+  /**
+   * An array of Application Data Entries (essentially Key / Value pairs) enabling you to provide the Adaptable Blotter with your own data.
+   *
+   * That data will then be persisted by Adaptable Blotter in its own State.
+   */
+  ApplicationDataEntries?: ApplicationDataEntry[];
 }
 
+/**
+ * Defines an Application Toolbar Button that is specified at design time by users and rendered dynamically by the Adaptable Blotter at run-time.
+ *
+ * It is hosted in the Application Toolbar
+ *
+ * When an Application Toolbar Button is clicked, the Adaptable Blotter will fire an *ApplicationToolbarButtonClicked* event to which you can subscribe via the Event API.
+ */
 export interface ApplicationToolbarButton extends AdaptableBlotterObject {
   /**
    * The name of the button
@@ -120,4 +164,16 @@ export interface ApplicationToolbarButton extends AdaptableBlotterObject {
    * *Currently you cannot provide an image for this button but that will be made available in a forthcoming release*
    */
   Caption: string;
+}
+
+/**
+ * Defines a simple Key / Value pair object.
+ *
+ * This can be used to store any inforrmation that is particular to your application in the Adaptable Blotter state.
+ *
+ * **note: because this is stored as JSON the value must be something that is capable of being 'stringified'**
+ */
+export interface ApplicationDataEntry {
+  Key: string;
+  Value: any;
 }

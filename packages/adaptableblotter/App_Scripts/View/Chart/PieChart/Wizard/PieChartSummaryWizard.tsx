@@ -6,7 +6,7 @@ import {
 } from '../../../Wizard/Interface/IAdaptableWizard';
 import { PieChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
-import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../../Utilities/Interface/KeyValuePair';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 
@@ -39,7 +39,7 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
 
     let rowsDescription: string = this.props.Data.VisibleRowsOnly ? 'Visible Rows' : 'All Rows';
 
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       { Key: 'Description', Value: this.props.Data.Description },
       { Key: 'Primary Column', Value: primaryColumnFriendlyName },

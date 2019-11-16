@@ -6,7 +6,7 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { DataSource } from '../../../PredefinedConfig/DataSourceState';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 
 export interface DataSourceSummaryWizardProps extends AdaptableWizardStepProps<DataSource> {}
 
@@ -17,7 +17,7 @@ export class DataSourceSummaryWizard extends React.Component<DataSourceSummaryWi
   }
 
   render() {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       { Key: 'Description', Value: this.props.Data.Description },
     ];

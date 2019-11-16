@@ -10,7 +10,7 @@ import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
 export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<PercentBar> {}
@@ -29,7 +29,7 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
     negativeStyle.BackColor = this.props.Data.NegativeColor;
     negativeStyle.ForeColor = this.props.Data.NegativeColor;
 
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
         Value: ColumnHelper.getFriendlyNameFromColumnId(

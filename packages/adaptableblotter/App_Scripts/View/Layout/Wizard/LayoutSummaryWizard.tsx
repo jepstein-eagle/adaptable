@@ -9,7 +9,7 @@ import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBl
 import { LayoutHelper } from '../../../Utilities/Helpers/LayoutHelper';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<Layout> {}
 
@@ -19,7 +19,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
     super(props);
   }
   render(): any {
-    let keyValuePairs: IKeyValuePair[] = [
+    let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       { Key: 'Columns', Value: this.getColumnNames() },
       {
