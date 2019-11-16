@@ -115,6 +115,10 @@ let demoConfig: PredefinedConfig = {
         Key: 'Joined Date',
         Value: new Date(2017, 13, 7),
       },
+      {
+        Key: 'Super User',
+        Value: false,
+      },
     ],
   },
   Entitlements: {

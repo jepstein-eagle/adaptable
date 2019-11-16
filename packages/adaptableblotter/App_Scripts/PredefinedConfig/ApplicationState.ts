@@ -6,6 +6,10 @@ import { RunTimeState } from './RunTimeState';
  *
  * The Application function is designed to allow developers to provide the Adaptable Blotter with appliation-specific data and UI elements.
  *
+ *  **Further Resources**
+ *
+ * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardapplicationtoolbardemo/) | [API](_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
+ *
  * ** Application Toolbar **
  *
  * The Application function provides an **deliberately empty toolbar** (called *Application*) which users can leverage and populate with their own content.
@@ -16,11 +20,8 @@ import { RunTimeState } from './RunTimeState';
  *
  * - a div which will **display any buttons that you provide** via the *ApplicationToolbarButtons* property of the Application state (see below).
  *
- *  **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardapplicationtoolbardemo/) | [API](_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos] To come | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
- *
- * **Rendering Content**
+ * **Rendering Bespoke Content**
  *
  * The Adaptable Blotter provides the [applicationAPI](_api_applicationapi_.applicationapi.html) **getApplicationToolbarContentsDiv** method that returns the name of the Div in which you should render the contents.
  *
@@ -31,7 +32,8 @@ import { RunTimeState } from './RunTimeState';
  * **Application Rendering Example** (Using React)
  *
  *  ```ts
- * adaptableblotter.on('ToolbarVisibilityChanged',  (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
+ * adaptableblotter.api.eventApi.on('ToolbarVisibilityChanged',
+ *  (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
  * if (
  *   toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Application' &&
  *   toolbarVisibilityChangedEventArgs.data[0].id.visibility == 'Visible'
@@ -107,9 +109,9 @@ import { RunTimeState } from './RunTimeState';
  *
  * This enables you to provide the Adaptable Blotter with your own data (which needs to be provided in key / value form) that the Adaptable Blotter will then store in its State.
  *
- *  **note: because this is stored as JSON the value must be something that is capable of being 'stringified'**
+ *  **Because these entries are stored as JSON, the value must be something that is capable of being 'stringified'**
  *
- * **Application Button Predefined Config Example**
+ * **Application Data Entries Predefined Config Example**
  *
  *  ```ts
  * export default {
@@ -126,6 +128,10 @@ import { RunTimeState } from './RunTimeState';
  *    {
  *      Key: 'Joined Date',
  *      Value: new Date(2017, 13, 7),
+ *    },
+ *    {
+ *      Key: 'Super User',
+ *      Value: false,
  *    },
  *    ],
  *  }
