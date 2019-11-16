@@ -274,7 +274,7 @@ export function IsSatisfied(
           );
           for (let namedFilter of filteredNamedFilters) {
             // see if there is a predicate function in the object itself - the new way
-            let satisfyFunction = namedFilter.PredicateFunction;
+            let satisfyFunction = namedFilter.FilterPredicate;
             if (satisfyFunction != null) {
               isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
               if (isColumnSatisfied) {

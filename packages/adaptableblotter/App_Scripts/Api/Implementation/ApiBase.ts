@@ -31,6 +31,14 @@ export abstract class ApiBase {
     return true;
   }
 
+  protected checkArrayExists(array: any): boolean {
+    if (!Array.isArray(array)) {
+      LoggingHelper.LogAdaptableBlotterError(`Item passed to API function was not an array`);
+      return false;
+    }
+    return true;
+  }
+
   /**
    * Base api Helper method that dispatches a *Redux Action* to the Store
    * @param action the Redux Action to be dispatched

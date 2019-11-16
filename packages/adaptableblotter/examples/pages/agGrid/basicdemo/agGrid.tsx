@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-//import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../App_Scripts/index.scss';
-//import '../../../../App_Scripts/themes/dark.scss';
+
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
@@ -17,6 +16,8 @@ import {
   IAdaptableBlotter,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
+import { ActionColumnRenderParams } from '../../../../App_Scripts/PredefinedConfig/ActionColumnState';
 
 /*
 Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
@@ -29,11 +30,10 @@ var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 100;
+  const tradeCount: number = 1000;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  //gridOptions.rowSelection = true;
-  // console.log(tradeData);
+
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
@@ -53,23 +53,28 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  let clickEvent: any = () => {
-    alert('Ive been clicked');
-  };
-  adaptableblotter.api.userInterfaceApi.createContextMenuItem('click me', clickEvent);
-
-  // global.adaptableblotter = adaptableblotter;
+  adaptableblotter.api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
+    adaptableblotter.api.gridApi.deleteGridData([args.data[0].id.rowData]);
+  });
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Theme', 'Export', 'Layout'],
   },
-  Entitlements: {
-    FunctionEntitlements: [
+  ActionColumn: {
+    ActionColumns: [
       {
-        FunctionName: 'CellValidation',
-        AccessLevel: 'ReadOnly',
+        ColumnId: 'Delete',
+        ButtonText: 'Delete Trade',
+        ShouldRenderPredicate: (params: ActionColumnRenderParams) => {
+          return params.rowData.tradeDate < Date.now();
+        },
+        RenderFunction: (params: ActionColumnRenderParams) => {
+          return params.rowData.currency === 'USD'
+            ? '<button style="color:blue; font-weight:bold">Delete Row</button>'
+            : '<button style="color:red; font-weight:bold">Delete Row</button>';
+        },
       },
     ],
   },

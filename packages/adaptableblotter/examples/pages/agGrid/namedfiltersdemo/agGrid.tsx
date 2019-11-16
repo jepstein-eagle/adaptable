@@ -41,7 +41,7 @@ let demoConfig: PredefinedConfig = {
           DataType: 'Number',
           ColumnIds: ['currency'],
         },
-        PredicateFunction: (_record, _columnId, cellValue) => {
+        FilterPredicate: (_record, _columnId, cellValue) => {
           return cellValue === 'USD';
         },
       },
@@ -50,7 +50,7 @@ let demoConfig: PredefinedConfig = {
         Scope: {
           DataType: 'Number',
         },
-        PredicateFunction: (_record, _columnId, cellValue) => {
+        FilterPredicate: (_record, _columnId, cellValue) => {
           let currency: string = _record.data.currency;
           if (currency === 'USD') {
             return cellValue > 1000;
@@ -66,7 +66,7 @@ let demoConfig: PredefinedConfig = {
         Scope: {
           DataType: 'Date',
         },
-        PredicateFunction: (_record, _columnId, cellValue) => {
+        FilterPredicate: (_record, _columnId, cellValue) => {
           let dateToTest = cellValue as Date;
           let startBusinesssYear = new Date('2019-04-05');
           return dateToTest > startBusinesssYear;

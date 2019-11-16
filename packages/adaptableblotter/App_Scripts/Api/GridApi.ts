@@ -12,7 +12,7 @@ import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
  * It also provides a set of useful methods to add / edit / delete rows in the Grid and, indeed, to reset the DataSource.
  *
  */
-export interface DataGridApi {
+export interface GridApi {
   /**
    * Returns the whole of the current Grid State
    */

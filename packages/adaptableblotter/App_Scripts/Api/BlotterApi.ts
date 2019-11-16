@@ -40,7 +40,7 @@ import { UserInterfaceApi } from './UserInterfaceApi';
 import { UserFilterApi } from './UserFilterApi';
 import { InternalApi } from './InternalApi';
 import { NamedFilterApi } from './NamedFilterApi';
-import { DataGridApi } from './DataGridApi';
+import { GridApi } from './GridApi';
 
 /**
  * The Blotter API provides developers with run-time access to the Adaptable Blotter.
@@ -204,7 +204,7 @@ export interface BlotterApi {
   /**
    * Provides methods for managing the Grid directly e.g. setGridData which will replace the current DataSource with the one provided.
    */
-  gridApi: DataGridApi;
+  gridApi: GridApi;
 
   /**
    * Provides access to the *Layout* function, the *Layout* object and [Layout State](_predefinedconfig_runtimestate_layoutstate_.layoutstate.html).

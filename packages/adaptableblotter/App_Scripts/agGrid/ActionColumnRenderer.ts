@@ -26,6 +26,21 @@ export class ActionColumnRenderer implements ICellRendererComp {
       this.eGui = document.createElement('div');
       this.eGui.style.display = 'inline-block';
 
+      let actionColumnRenderParams: ActionColumnRenderParams = {
+        column: actionCol,
+        rowData: params.data,
+        rowNode: params.node,
+      };
+
+      // if there is a shouldRender function then run it and if returns false then do nothing
+      let shouldRenderPredicate: any = actionCol.ShouldRenderPredicate;
+      if (shouldRenderPredicate) {
+        if (!shouldRenderPredicate(actionColumnRenderParams)) {
+          this.eGui.innerHTML = '';
+          return;
+        }
+      }
+
       // bit complicated for the moment until we get rid of deprecated options rendering
       // first we try to get the render func from the object; if that doesnt work we get from Advanced Options
       let renderFunc: any = actionCol.RenderFunction;
@@ -47,12 +62,6 @@ export class ActionColumnRenderer implements ICellRendererComp {
 
       // If we have a render Func then we use that, otherwise we use the name of the Button Text
       if (renderFunc) {
-        let actionColumnRenderParams: ActionColumnRenderParams = {
-          column: actionCol,
-          rowData: params.data,
-          rowNode: params.node,
-        };
-
         this.eGui.innerHTML = renderFunc(actionColumnRenderParams);
       } else {
         this.eGui.innerHTML =

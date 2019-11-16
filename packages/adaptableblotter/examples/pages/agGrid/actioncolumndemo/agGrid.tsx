@@ -80,11 +80,11 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'Action',
         ButtonText: 'Click',
+        ShouldRenderPredicate: params => {
+          return params.rowData.counterparty != 'BNP';
+        },
         RenderFunction: params => {
           let data: number = params.rowData.notional;
-          if (params.rowData.counterparty == 'BNP') {
-            return '';
-          }
           return data > 100
             ? '<button class="doublebutton">Double</button>'
             : '<button class="treblebutton">Treble</button>';

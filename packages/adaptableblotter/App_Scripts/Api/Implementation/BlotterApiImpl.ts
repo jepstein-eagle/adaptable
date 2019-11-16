@@ -88,7 +88,7 @@ import { UserFilterApi } from '../UserFilterApi';
 import { NamedFilterApi } from '../NamedFilterApi';
 import { PartnerConfigAPI } from '../PartnerConfigAPI';
 import { ThemeApi } from '../ThemeApi';
-import { DataGridApi } from '../DataGridApi';
+import { DataGridApi } from '../GridApi';
 
 export class BlotterApiImpl implements BlotterApi {
   public actionColumnApi: ActionColumnApi;

@@ -1,5 +1,5 @@
 import { ApiBase } from './ApiBase';
-import { DataGridApi } from '../DataGridApi';
+import { GridApi } from '../GridApi';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
@@ -8,7 +8,7 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 
-export class GridApiImpl extends ApiBase implements DataGridApi {
+export class GridApiImpl extends ApiBase implements GridApi {
   public getGridState(): GridState {
     return this.getBlotterState().Grid;
   }
@@ -26,7 +26,9 @@ export class GridApiImpl extends ApiBase implements DataGridApi {
   }
 
   public deleteGridData(dataRows: any[]): void {
-    this.blotter.deleteRows(dataRows);
+    if (this.checkArrayExists(dataRows)) {
+      this.blotter.deleteRows(dataRows);
+    }
   }
 
   public getColumns(): AdaptableBlotterColumn[] {

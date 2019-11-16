@@ -13,7 +13,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * c.  *cellValue* - the value being tested
  *
- * **Advanced Search Predefined Config Example**
+ * **Named Filter Predefined Config Example**
  *
  * ```ts
  *
@@ -26,7 +26,7 @@ import { DesignTimeState } from './DesignTimeState';
  *         DataType: 'Number',
  *         ColumnIds: ['currency'],
  *       },
- *       PredicateFunction: (_record, _columnId, cellValue) => {
+ *       FilterPredicate: (_record, _columnId, cellValue) => {
  *         return cellValue === 'USD';
  *       },
  *     },
@@ -35,7 +35,7 @@ import { DesignTimeState } from './DesignTimeState';
  *       Scope: {
  *         DataType: 'Date',
  *       },
- *       PredicateFunction: (_record, _columnId, cellValue) => {
+ *       FilterPredicate: (_record, _columnId, cellValue) => {
  *         let dateToTest = cellValue as Date;
  *         let startBusinesssYear = new Date('2019-04-05');
  *         return dateToTest > startBusinesssYear;
@@ -76,12 +76,12 @@ export interface NamedFilter extends AdaptableBlotterObject {
   Scope: Scope;
 
   /**
-   * **This property is deprecated; instead provide the full function using the *PredicateFunction* property below**
+   * **This property is deprecated; instead provide the full function using the *FilterPredicate* property below**
    */
   PredicateName?: string;
 
   /**
    * The name of the Predicate Function that will be run each time the Named Filter is applied.
    */
-  PredicateFunction?: (record: any, columnId: string, cellValue: any) => boolean;
+  FilterPredicate?: (record: any, columnId: string, cellValue: any) => boolean;
 }
