@@ -60,10 +60,11 @@
   "scripts": {
     "ng": "ng",
     "link-core": "npm run --prefix ./projects/adaptableblotter-angular-aggrid link-core",
-    "start": "npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng serve --prod --sourceMap=false",
+    "start": "npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng serve --aot --sourceMap=false",
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i && npm run clean-deps-projects",
     "clean-deps-projects": "rimraf projects/adaptableblotter-angular-aggrid/yarn.lock && rimraf projects/adaptableblotter-angular-aggrid/package-lock.json && rimraf projects/adaptableblotter-angular-aggrid/node_modules && npm --prefix projects/adaptableblotter-angular-aggrid/ i",
     "build": "npm run clean-deps && rimraf dist && npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng build adaptableblotter-angular-aggrid && npm run build-package-json && npm run sass && npm run copy-assets",
+    "just-build": "node --max-old-space-size=4096 ./node_modules/.bin/ng build adaptableblotter-angular-aggrid && npm run build-package-json && npm run sass && npm run copy-assets",
     "test": "ng test",
     "lint": "ng lint",
     "tsc": "tsc",

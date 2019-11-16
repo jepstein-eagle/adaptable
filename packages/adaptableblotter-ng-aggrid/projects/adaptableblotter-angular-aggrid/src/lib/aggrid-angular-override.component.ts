@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewEncapsulation,
+  ElementRef,
+  ViewContainerRef,
+  ComponentFactoryResolver,
+} from '@angular/core';
 
 import { ComponentUtil, Grid } from 'ag-grid-community';
 
@@ -16,12 +24,28 @@ import { BlotterApi } from '../adaptableblotter/types';
   template: '',
   providers: [AngularFrameworkOverrides, AngularFrameworkComponentWrapper],
   // tell angular we don't want view encapsulation, we don't want a shadow root
-  // encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AgGridOverrideComponent extends AgGridAngular {
   @Input() blotterFactory: (...args: any) => AdaptableBlotter;
   @Input() gridContainerId: string;
   @Input() onBlotterReady?: (api: BlotterApi) => void;
+
+  constructor(
+    elementDef: ElementRef,
+    viewContainerRef: ViewContainerRef,
+    angularFrameworkOverrides: AngularFrameworkOverrides,
+    frameworkComponentWrapper: AngularFrameworkComponentWrapper,
+    _componentFactoryResolver: ComponentFactoryResolver
+  ) {
+    super(
+      elementDef,
+      viewContainerRef,
+      angularFrameworkOverrides,
+      frameworkComponentWrapper,
+      _componentFactoryResolver
+    );
+  }
 
   ngAfterViewInit(): void {
     (this as any).checkForDeprecatedEvents();
