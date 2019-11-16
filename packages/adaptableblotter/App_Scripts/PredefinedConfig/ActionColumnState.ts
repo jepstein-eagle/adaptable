@@ -4,7 +4,9 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
 /**
  * The Predefined Configuration for Action Columns
  *
- * An Action Column is one which shows a button that when clicked fires an onActionColumnClicked event (see [Event Api](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html))
+ * An Action Column is one which dynamically displays a button.
+ *
+ * When that button is clicked, the Adaptable Blotter fires an *ActionColumnClicked* event (see [Event Api](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html))
  *
  *  **Further Resources**
  *
@@ -12,9 +14,9 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *
  * **Action Column Predefined Config Example**
  *
- * In this example we create a column called 'Delete' which we render only in rows where the value in the 'tradeDate' column is before now.
+ * In this example we create a column called 'Delete' which we render only in rows where the value in the 'tradeDate' column is before today.
  *
- * We also provide our render function and render the column differently for rows where the currency is 'USD'.
+ * We also provide a custom render function which will render the column differently for rows where the currency is 'USD'.
  *
  * ```ts
  * export default {
@@ -27,8 +29,8 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *        },
  *      RenderFunction: (params: ActionColumnRenderParams) => {
  *          return params.rowData.currency === 'USD'
- *            ? '<button style="color:blue; font-weight:bold">Delete Row</button>'
- *            : '<button style="color:red; font-weight:bold">Delete Row</button>';
+ *            ? '<button style="color:blue; font-weight:bold">Delete Trade</button>'
+ *            : '<button style="color:red; font-weight:bold">Delete Trade</button>';
  *        },
  *   },
  *  ],
@@ -37,7 +39,8 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *
  *  --------------
  *
- * // delete the row when the button is clicked by listening to the ActionColumnClicked event
+ * // in our code we will use the eventAPI (in Blotter API) to listen to the ActionColumnClicked event
+ * // and we will delete the row using the deleteGridData method in gridApi (also in Blotter API)
  *  adaptableblotter.api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
  *    adaptableblotter.api.gridApi.deleteGridData([args.data[0].id.rowData]);
  * });
@@ -47,7 +50,7 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  */
 export interface ActionColumnState extends DesignTimeState {
   /**
-   * The Action Columns you wish to provide.
+   * The Action Columns which the Adaptable Blotter should dynamically render.
    */
   ActionColumns?: ActionColumn[];
 }
@@ -101,8 +104,24 @@ export interface ActionColumn extends AdaptableBlotterObject {
   RenderFunctionName?: string;
 }
 
+/**
+ * The params used in the *RenderFunction* and *ShouldRenderPredicate* properties of Action Column.
+ *
+ * Provides details of the column itself and the row (and row node) that is being rendered.
+ */
 export interface ActionColumnRenderParams {
+  /**
+   * The Action Column being rendered
+   */
   column: ActionColumn;
+
+  /**
+   * The data in the row being rendered
+   */
   rowData: any;
+
+  /**
+   * The row node being rendered (this will be different depending on which underling DataGrid you are using).
+   */
   rowNode: any;
 }
