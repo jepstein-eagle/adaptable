@@ -2,13 +2,12 @@ import { useEffect } from 'react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-
+import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import '../../../../App_Scripts/index.scss';
-
+import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import {
   AdaptableBlotterOptions,
@@ -25,7 +24,6 @@ No JSON or anything complicated
 Nor do we create the ag-Grid
 */
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
@@ -60,20 +58,19 @@ function InitAdaptableBlotter() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout'],
+    VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
   },
   ActionColumn: {
     ActionColumns: [
       {
         ColumnId: 'Delete',
-        ButtonText: 'Delete Trade',
         ShouldRenderPredicate: (params: ActionColumnRenderParams) => {
           return params.rowData.tradeDate < Date.now();
         },
         RenderFunction: (params: ActionColumnRenderParams) => {
           return params.rowData.currency === 'USD'
-            ? '<button style="color:blue; font-weight:bold">Delete Row</button>'
-            : '<button style="color:red; font-weight:bold">Delete Row</button>';
+            ? '<button style="color:red; font-weight:bold">Delete Trade</button>'
+            : '<button style="color:blue; font-weight:bold">Delete Trade</button>';
         },
       },
     ],

@@ -121,7 +121,7 @@ export interface ActionColumnRenderParams {
   rowData: any;
 
   /**
-   * The row node being rendered (this will be different depending on which underling DataGrid you are using).
+   * The row node being rendered (this object will vary depending on which underling DataGrid is being used).
    */
   rowNode: any;
 }
