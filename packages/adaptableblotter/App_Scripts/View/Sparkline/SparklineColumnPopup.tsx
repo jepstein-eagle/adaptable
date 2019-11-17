@@ -122,11 +122,7 @@ class SparklineColumnPopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={SparklineItems} />
           ) : (
             <EmptyContent>
-              <p>Click 'New' to start creating Sparkline Columns.</p>
-              <p>
-                Visualise numeric array columns as a sparkline in order better to see their
-                contents.
-              </p>
+              <p>You do not have any Sparkline Columns in your Grid.</p>
             </EmptyContent>
           )}
 

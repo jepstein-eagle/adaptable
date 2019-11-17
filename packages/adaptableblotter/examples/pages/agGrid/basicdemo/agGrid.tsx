@@ -64,14 +64,15 @@ let demoConfig: PredefinedConfig = {
     ActionColumns: [
       {
         ColumnId: 'Delete',
+        ButtonText: 'Delete Row',
         ShouldRenderPredicate: (params: ActionColumnRenderParams) => {
-          return params.rowData.tradeDate < Date.now();
+          return true; //return params.rowData.tradeDate < Date.now();
         },
-        RenderFunction: (params: ActionColumnRenderParams) => {
-          return params.rowData.currency === 'USD'
-            ? '<button style="color:red; font-weight:bold">Delete Trade</button>'
-            : '<button style="color:blue; font-weight:bold">Delete Trade</button>';
-        },
+        //  RenderFunction: (params: ActionColumnRenderParams) => {
+        //    return params.rowData.currency === 'USD'
+        //      ? '<button style="color:red; font-weight:bold">Delete Trade</button>'
+        //      : '<button style="color:blue; font-weight:bold">Delete Trade</button>';
+        //  },
       },
     ],
   },

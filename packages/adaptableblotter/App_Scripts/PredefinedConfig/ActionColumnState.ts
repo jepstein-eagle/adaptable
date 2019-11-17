@@ -39,8 +39,8 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  *
  *  --------------
  *
- * // in our code we will use the eventAPI (in Blotter API) to listen to the ActionColumnClicked event
- * // and we will delete the row using the deleteGridData method in gridApi (also in Blotter API)
+ * // we listen to the ActionColumnClicked event (via the eventAPI in Blotter API) and
+ * // delete the row using *deleteGridData* method in gridAPI (also in Blotter API)
  *  adaptableblotter.api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
  *    adaptableblotter.api.gridApi.deleteGridData([args.data[0].id.rowData]);
  * });
@@ -50,7 +50,7 @@ import { AdaptableBlotterObject } from './AdaptableBlotterObject';
  */
 export interface ActionColumnState extends DesignTimeState {
   /**
-   * The Action Columns which the Adaptable Blotter should dynamically render.
+   * An array of Action Columns which the Adaptable Blotter should dynamically render.
    */
   ActionColumns?: ActionColumn[];
 }
@@ -60,41 +60,41 @@ export interface ActionColumnState extends DesignTimeState {
  */
 export interface ActionColumn extends AdaptableBlotterObject {
   /**
-   * The id of the Column
+   * The id of the Action Column
    *
-   * If no value is set for the *FriendlyName* property, then this will be the name of the Column also (e.g. what appears in the Column Header)
+   * If no value is set for the *FriendlyName* property, then this will also be the name of the Column (e.g. what appears in the Column Header)
    */
   ColumnId: string;
   /**
-   * The name of the Column ie. what appears in the Column Header and elswewhere that the Column is listed in the UI.
+   * The name of the Column, ie. what appears in the Column Header and elswewhere where the Column is referenced in the UI.
    *
    * If no value is set here then the *ColumnId* property is used.
    */
   FriendlyName?: string;
   /**
-   * The text to put on the button.
+   * The text to display on the button (its caption).
    *
-   * Leave blank if you wish to render the Button separately (using the *RenderFunction* property).
+   * Don't set this property if you are rendering the Button yourself (using *RenderFunction*).
    */
   ButtonText?: string;
 
   /**
    * A function that returns a string giving the full render contents of the Button that should display in the cell.
    *
-   * The Action Column Render Params provides details of the Row, the Row Node and the Column.
+   * The *ActionColumnRenderParams* provides details of the Row, the Row Node and the Column.
    *
-   * If this property is left empty, then a regular button will appear in the column with the caption of the *ButtonText* property.
+   * If this property is not set, then a regular button will appear in the column with the caption of the *ButtonText* property.
    */
   RenderFunction?: (params: ActionColumnRenderParams) => string;
 
   /**
-   * A Predicate Function that will return a boolean value indicating whether the Action Column should display a button.
+   * A Predicate function returning a boolean value indicating whether the Action Column should display a button.
    *
-   * The Action Column Render Params provides details of the Row, the Row Node and the Column.
+   * The *ActionColumnRenderParams* provides details of the Row, the Row Node and the Column.
    *
    * If the predicate function returns false, then nothing is displayed for that cell in the column.
    *
-   * If this property is left empty, or if the function returns true, then the cell **will render** (using either the ButtonText or RenderFuntion values).
+   * If this property is not set, or if the function returns true, then the cell **will render** (using either the ButtonText or RenderFuntion values).
    */
   ShouldRenderPredicate?: (params: ActionColumnRenderParams) => boolean;
 

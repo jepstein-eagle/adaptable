@@ -186,6 +186,15 @@ export interface ApplicationToolbarButton extends AdaptableBlotterObject {
  * **note: because this is stored as JSON the value must be something that is capable of being 'stringified'**
  */
 export interface ApplicationDataEntry {
+  /**
+   * The key of the Key / Value pair - always stored as a string
+   */
   Key: string;
+
+  /**
+   * The actual piece of data or object being stored.
+   *
+   * The only limiitation is that it needs to be something that can be stringified as it will be converted to JSON.
+   */
   Value: any;
 }

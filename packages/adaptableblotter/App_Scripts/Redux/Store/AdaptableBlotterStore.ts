@@ -137,22 +137,23 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   AdaptableBlotterState
 >({
   //  Reducers for Non-Persisted State
+  Grid: GridRedux.GridReducer,
   Popup: PopupRedux.PopupReducer,
   System: SystemRedux.SystemReducer,
-  Grid: GridRedux.GridReducer,
+  TeamSharing: TeamSharingRedux.TeamSharingReducer,
 
-  Entitlements: EntitlementsRedux.EntitlementsReducer,
-  UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
-  SystemFilter: SystemFilterRedux.SystemFilterReducer,
-  Application: ApplicationRedux.ApplicationReducer,
   ActionColumn: ActionColumnRedux.ActionColumnReducer,
-  SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
-  PartnerConfig: PartnerConfigRedux.PartnerConfigReducer,
+  Entitlements: EntitlementsRedux.EntitlementsReducer,
   NamedFilter: NamedFilterRedux.NamedFilterReducer,
+  PartnerConfig: PartnerConfigRedux.PartnerConfigReducer,
+  SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
+  SystemFilter: SystemFilterRedux.SystemFilterReducer,
+  UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
 
   // Reducers for Persisted State
   AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
   Alert: AlertRedux.AlertReducer,
+  Application: ApplicationRedux.ApplicationReducer,
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
   CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
   Calendar: CalendarRedux.CalendarReducer,
@@ -176,7 +177,6 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Reminder: ReminderRedux.ReminderReducer,
   Shortcut: ShortcutRedux.ShortcutReducer,
   SmartEdit: SmartEditRedux.SmartEditReducer,
-  TeamSharing: TeamSharingRedux.TeamSharingReducer,
   Theme: ThemeRedux.ThemeReducer,
   UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
   UserFilter: UserFilterRedux.UserFilterReducer,
@@ -300,15 +300,17 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       // Non Persisted State
       ConfigConstants.SYSTEM,
       ConfigConstants.GRID,
-      ConfigConstants.MENU,
       ConfigConstants.POPUP,
       ConfigConstants.TEAM_SHARING,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
+      ConfigConstants.SYSTEM_FILTER,
+      ConfigConstants.PARTNER_CONFIG,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.ACTION_COLUMN,
+      ConfigConstants.SPARKLINE_COLUMN,
     ];
 
     // this is now VERY BADLY NAMED!
@@ -392,7 +394,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
 // this function checks for any differences in the state and sends it to AUDIT LOGGER (for use in Audit Log)
 // we now allow users to differentiate between user and internal state so we check for both
-// NOTE:  the Audit Logger is also responsible for firing AuditEventApi changes if that has been set
+// NOTE: the Audit Logger is also responsible for firing AuditEventApi changes if that has been set
 var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<
@@ -1933,7 +1935,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
   };
 
 // this is the main function for dealing with Redux Actions which require additional functionality to be triggered.
-// Please document each use case where we have to use the Store
+// Please document each use case where we have to use the Store rather than a strategy or a popup screen
 var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<
@@ -1983,7 +1985,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            */
           case SystemRedux.SYSTEM_ALERT_DELETE: {
             const actionTyped = action as SystemRedux.SystemAlertDeleteAction;
-
             let ret = next(action);
             if (
               actionTyped.Alert.AlertDefinition.AlertProperties.HighlightCell &&
@@ -2025,12 +2026,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           case SystemRedux.SYSTEM_UPDATED_ROW_DELETE: {
             const actionTyped = action as SystemRedux.SystemUpdatedRowDeleteAction;
             let ret = next(action);
-
             let rowNode: any[] = blotter.getRowNodeForPrimaryKey(
               actionTyped.updatedRowInfo.primaryKeyValue
             );
             blotter.redrawRow(rowNode);
-
             return ret;
           }
 
@@ -2040,14 +2039,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            */
           case SystemRedux.SYSTEM_UPDATED_ROW_DELETE_ALL: {
             const actionTyped = action as SystemRedux.SystemUpdatedRowDeleteAllAction;
-
             let ret = next(action);
             let updatedRowInfos: UpdatedRowInfo[] = actionTyped.updatedRowInfos;
             updatedRowInfos.forEach(uri => {
               let rowNode: any[] = blotter.getRowNodeForPrimaryKey(uri.primaryKeyValue);
               blotter.redrawRow(rowNode);
             });
-
             return ret;
           }
 
@@ -2108,11 +2105,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           /**
            * Use Case: User has edited an existing calculated column
            * If the name has changed in the Calculated Column (rare but possible):
-           * Action (1):  Tell the blotter to delete the calculated column
-           * Action (2):  Tell the blotter to add a new calculated column
-           * Action (3):  Set a new column list order so it appears as a new column
-           * If the name has not changed:
-           * Action:  Tell the blotter so it can do what it needs
+           * Action (1):  Tell the blotter to edit the calculated column
+           * Action (2):  Set a new column list order so it appears as a new column
            */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
@@ -2126,6 +2120,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           /*******************
            * FREE TEXT COLUMN ACTIONS
            *******************/
+
+          /**
+           * Use Case: User has created a Free Text column
+           * Action:  Tell the blotter so it can do what it needs
+           */
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
             let returnAction = next(action);
             let freeTextColumn: FreeTextColumn = (<FreeTextColumnRedux.FreeTextColumnAddAction>(
@@ -2135,6 +2134,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             return returnAction;
           }
 
+          /**
+           * Use Case: User has created a Free Text column
+           * Action:  Tell the blotter so it can do what it needs
+           */
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
             // not too sure what I need to do - perhaps just refresh everything?
             let returnAction = next(action);
@@ -3020,9 +3023,14 @@ export function getNonPersistedReduxActions(): string[] {
 
     SystemRedux.SYSTEM_SET_HEALTH_STATUS,
     SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS,
+
     SystemRedux.SYSTEM_ALERT_ADD,
     SystemRedux.SYSTEM_ALERT_DELETE,
     SystemRedux.SYSTEM_ALERT_DELETE_ALL,
+
+    SystemRedux.SYSTEM_UPDATED_ROW_ADD,
+    SystemRedux.SYSTEM_UPDATED_ROW_DELETE,
+    SystemRedux.SYSTEM_UPDATED_ROW_DELETE_ALL,
 
     SystemRedux.REPORT_START_LIVE,
     SystemRedux.REPORT_STOP_LIVE,
@@ -3051,22 +3059,26 @@ export function getNonPersistedReduxActions(): string[] {
 
     SystemRedux.SET_NEW_COLUMN_LIST_ORDER,
 
+    GridRedux.GRID_SELECT_COLUMN,
     GridRedux.GRID_SET_COLUMNS,
     GridRedux.GRID_ADD_COLUMN,
     GridRedux.GRID_EDIT_COLUMN,
     GridRedux.GRID_HIDE_COLUMN,
     GridRedux.GRID_SET_VALUE_LIKE_EDIT,
-    GridRedux.GRID_SELECT_COLUMN,
     GridRedux.GRID_SET_SORT,
     GridRedux.GRID_SET_SELECTED_CELLS,
+    GridRedux.GRID_SET_SELECTED_ROWS,
     GridRedux.GRID_CREATE_CELLS_SUMMARY,
     GridRedux.GRID_SET_CELLS_SUMMARY,
     GridRedux.GRID_REFRESH_CELLS,
+    GridRedux.FILTER_FORM_HIDE,
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
     GridRedux.SET_MAIN_MENUITEMS,
     GridRedux.SET_GLUE42_ON,
     GridRedux.SET_GLUE42_OFF,
+    GridRedux.SET_PIVOT_MODE_ON,
+    GridRedux.SET_PIVOT_MODE_OFF,
 
     PopupRedux.POPUP_SHOW_SCREEN,
     PopupRedux.POPUP_HIDE_SCREEN,
@@ -3088,8 +3100,8 @@ export function getNonPersistedReduxActions(): string[] {
 
 export function getFunctionAppliedReduxActions(): string[] {
   // NOTE: We have an issue with how we have built Smart Edit and Bulk Update that we are not able to capture the Apply
-  // Due to poor coding the Apply method only has warnings
-  // As few users currently audit functions and few have editable grids its not an urgent problemb but one that we should fix
+  // Due to poor coding the Apply method only has warnings (though we mitigate by doing the same thing via the API)
+  // As few users currently audit functions and few have editable grids its not an urgent problem but one that we should fix
 
   // We need to add:  Chart, Pie Chart, Custom Sort ???, Export, Layout
   return [
