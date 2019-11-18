@@ -12,6 +12,8 @@ import {
   ColGroupDef,
   Column,
 } from 'ag-grid-community';
+import * as Redux from 'redux';
+import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
@@ -69,6 +71,11 @@ import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 import { UpdatedRowStrategy } from '../Strategy/UpdatedRowStrategy';
 import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
+import ObjectFactory from '../Utilities/ObjectFactory';
+import { IUIConfirmation } from '../Utilities/Interface/IMessage';
+import CellValidationHelper from '../Utilities/Helpers/CellValidationHelper';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy

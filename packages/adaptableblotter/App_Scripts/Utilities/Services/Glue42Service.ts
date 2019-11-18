@@ -154,7 +154,7 @@ export class Glue42Service implements IGlue42Service {
         gridColumns
       );
 
-      let cellInfos: GridCell[] = [];
+      let dataChangedInfos: DataChangedInfo[] = [];
       const errors: IGlue42ExportError[] = [];
 
       delta.forEach(deltaItem => {
@@ -187,12 +187,13 @@ export class Glue42Service implements IGlue42Service {
                 gridColumns
               );
               if (isValidEdit) {
-                let cellInfo: GridCell = {
-                  primaryKeyValue: primaryKeyValue,
-                  columnId: column.ColumnId,
-                  value: change,
+                let dataChangedInfo: DataChangedInfo = {
+                  OldValue: originalValue,
+                  NewValue: change,
+                  ColumnId: column.ColumnId,
+                  IdentifierValue: primaryKeyValue,
                 };
-                cellInfos.push(cellInfo);
+                dataChangedInfos.push(dataChangedInfo);
               }
             }
           });
@@ -213,7 +214,7 @@ export class Glue42Service implements IGlue42Service {
           } as IGlue42ExportError);
         }
       });
-      this.blotter.setValueBatch(cellInfos);
+      this.blotter.setValueBatch(dataChangedInfos);
 
       if (ArrayExtensions.IsNullOrEmpty(errors)) {
         doneCallback();
@@ -297,7 +298,7 @@ export class Glue42Service implements IGlue42Service {
     };
 
     // check for any validation issues
-    let cellValidationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+    let cellValidationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
       dataChangedInfo
     );
     if (ArrayExtensions.IsNotNullOrEmpty(cellValidationRules)) {

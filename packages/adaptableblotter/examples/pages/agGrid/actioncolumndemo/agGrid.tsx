@@ -71,7 +71,7 @@ function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedE
   let rowData = actionColumnEventArgs.data[0].id.rowData;
   let multiplier: number = rowData.notional > 100 ? 2 : 3;
   let newNotional = rowData.notional * multiplier;
-  adaptableblotter.api.internalApi.setValue(rowData.tradeId, 'notional', newNotional);
+  adaptableblotter.api.gridApi.setCellValue(rowData.tradeId, 'notional', newNotional);
 }
 
 let demoConfig: PredefinedConfig = {

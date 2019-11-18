@@ -5,6 +5,7 @@ import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 
 /**
  * Provides access to important elements of the Adaptable Blotter like columns, sorting, selected cells etc.
@@ -45,6 +46,28 @@ export interface GridApi {
    */
   deleteGridData(dataRows: any[]): void;
 
+  /**
+   * Updates a cell in the Adaptable Blotter
+   * @param id the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Blotter Options)
+   * @param columnId the column to update
+   * @param newValue the new value to use
+   *
+   */
+  setCellValue(id: any, columnId: string, newValue: any, performCellValidation: boolean): void;
+
+  /**
+   * Replaces an existing cell value in the Adaptable Blotter with that contained in this inputted Grid Cell
+   * @param gridCell the new cell
+   */
+
+  setGridCell(gridCell: GridCell, performCellValidation: boolean): void;
+
+  /**
+   * Replaces a batch of existing cell values in the Adaptable Blotter with those contained in the inputted Grid Cells
+   * @param gridCells the new cells
+   */
+  setGridCells(gridCells: GridCell[], performCellValidation: boolean): void;
+
   /** Returns all the columns in the Adaptable Blotter
    *
    * Each column has a number of properties such as Visiblity and Data Type
@@ -80,12 +103,4 @@ export interface GridApi {
    * Returns all the current Selected Rows in the Adaptable Blotter
    */
   getSelectedRowInfo(): SelectedRowInfo;
-
-  /**
-   * Updates a cell in the Adaptable Blotter
-   * @param id the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Blotter Options)
-   * @param columnId the column to update
-   * @param newValue the new value to use
-   */
-  setValue(id: any, columnId: string, newValue: any): void;
 }

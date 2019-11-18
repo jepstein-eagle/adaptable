@@ -46,14 +46,4 @@ export class FreeTextColumnService implements IFreeTextColumnService {
       );
     }
   }
-
-  CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: DataChangedInfo[]): void {
-    if (
-      ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.freeTextColumnApi.getAllFreeTextColumn())
-    ) {
-      dataChangedEvents.forEach(dc => {
-        this.CheckIfDataChangingColumnIsFreeText(dc);
-      });
-    }
-  }
 }

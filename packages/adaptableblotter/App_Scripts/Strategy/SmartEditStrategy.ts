@@ -1,12 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import {
-  MathOperation,
-  DataType,
-  MessageType,
-  StateChangedTrigger,
-} from '../PredefinedConfig/Common/Enums';
+import { MathOperation, DataType, MessageType } from '../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
@@ -75,8 +70,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       };
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
-
-    this.blotter.api.internalApi.setGridCellBatch(newValues);
+    this.blotter.api.gridApi.setGridCells(newValues, false);
   }
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
@@ -189,7 +183,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
               IdentifierValue: selectedCell.primaryKeyValue,
             };
 
-            let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+            let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
               dataChangedEvent
             );
 

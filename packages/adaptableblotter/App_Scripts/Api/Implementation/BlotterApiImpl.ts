@@ -3,7 +3,6 @@ import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ApplicationApi } from '../ApplicationAPI';
 import { ApplicationApiImpl } from './ApplicationApiImpl';
 
-import { GridApi } from 'ag-grid-community';
 import { ActionColumnApiImpl } from './ActionColumnApiImpl';
 import { AdvancedSearchApiImpl } from './AdvancedSearchApiImpl';
 import { AlertApiImpl } from './AlertApiImpl';
@@ -88,7 +87,7 @@ import { UserFilterApi } from '../UserFilterApi';
 import { NamedFilterApi } from '../NamedFilterApi';
 import { PartnerConfigAPI } from '../PartnerConfigAPI';
 import { ThemeApi } from '../ThemeApi';
-import { DataGridApi } from '../GridApi';
+import { GridApi } from '../GridApi';
 
 export class BlotterApiImpl implements BlotterApi {
   public actionColumnApi: ActionColumnApi;
@@ -117,7 +116,7 @@ export class BlotterApiImpl implements BlotterApi {
   public updatedRowApi: UpdatedRowApi;
   public formatColumnApi: FormatColumnApi;
   public freeTextColumnApi: FreeTextColumnApi;
-  public gridApi: DataGridApi;
+  public gridApi: GridApi;
   public internalApi: InternalApi;
   public layoutApi: LayoutApi;
   public plusMinusApi: PlusMinusApi;

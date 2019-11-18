@@ -8,6 +8,7 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
+import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
@@ -15,6 +16,7 @@ export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
 export const GRID_EDIT_COLUMN = 'GRID_EDIT_COLUMN';
 export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
+export const GRID_SET_VALUE_LIKE_EDIT_BATCH = 'GRID_SET_VALUE_LIKE_EDIT_BATCH';
 export const GRID_SET_SORT = 'GRID_SET_SORT';
 export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
 export const GRID_SET_SELECTED_ROWS = 'GRID_SET_SELECTED_ROWS';
@@ -44,8 +46,11 @@ export interface GridHideColumnAction extends Redux.Action {
 }
 
 export interface GridSetValueLikeEditAction extends Redux.Action {
-  GridCell: GridCell;
-  OldValue: any;
+  DataChangedInfo: DataChangedInfo;
+}
+
+export interface GridSetValueLikeEditBatchAction extends Redux.Action {
+  DataChangedInfoBatch: DataChangedInfo[];
 }
 
 export interface GridSelectColumnAction extends Redux.Action {
@@ -118,12 +123,17 @@ export const GridHideColumn = (ColumnId: string): GridHideColumnAction => ({
 });
 
 export const GridSetValueLikeEdit = (
-  GridCell: GridCell,
-  OldValue: any
+  DataChangedInfo: DataChangedInfo
 ): GridSetValueLikeEditAction => ({
   type: GRID_SET_VALUE_LIKE_EDIT,
-  GridCell,
-  OldValue,
+  DataChangedInfo,
+});
+
+export const GridSetValueLikeEditBatch = (
+  DataChangedInfoBatch: DataChangedInfo[]
+): GridSetValueLikeEditBatchAction => ({
+  type: GRID_SET_VALUE_LIKE_EDIT_BATCH,
+  DataChangedInfoBatch,
 });
 
 export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({

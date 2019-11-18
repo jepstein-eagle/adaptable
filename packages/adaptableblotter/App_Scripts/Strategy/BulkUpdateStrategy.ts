@@ -70,7 +70,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       };
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
-    this.blotter.api.internalApi.setGridCellBatch(newValues);
+    this.blotter.api.gridApi.setGridCells(newValues, false);
   }
 
   public CheckCorrectCellSelection(): BulkUpdateValidationResult {
@@ -164,7 +164,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             IdentifierValue: selectedCell.primaryKeyValue,
           };
 
-          let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+          let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
             dataChangedEvent
           );
           let previewResult: IPreviewResult = {

@@ -127,6 +127,8 @@ import { ChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
+import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
+import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2452,7 +2454,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             // in which case we just need to apply the values to the Grid
             const actionTyped = action as PlusMinusRedux.PlusMinusApplyAction;
             if (ArrayExtensions.IsNotNullOrEmpty(actionTyped.GridCells)) {
-              blotter.setValueBatch(actionTyped.GridCells);
+              let dataChangedInfos: DataChangedInfo[] = actionTyped.GridCells.map(gc => {
+                return {
+                  OldValue: blotter.getDisplayValue(gc.primaryKeyValue, gc.columnId),
+                  NewValue: gc.value,
+                  ColumnId: gc.columnId,
+                  IdentifierValue: gc.primaryKeyValue,
+                };
+              });
+              blotter.setValueBatch(dataChangedInfos);
             }
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             return next(action);
@@ -2864,9 +2874,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
           case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
             const actionTyped = action as GridRedux.GridSetValueLikeEditAction;
-            blotter.setValue(actionTyped.GridCell);
+            blotter.setValue(actionTyped.DataChangedInfo);
             return next(action);
           }
+
+          case GridRedux.GRID_SET_VALUE_LIKE_EDIT_BATCH: {
+            const actionTyped = action as GridRedux.GridSetValueLikeEditBatchAction;
+            blotter.setValueBatch(actionTyped.DataChangedInfoBatch);
+            return next(action);
+          }
+
           case GridRedux.GRID_HIDE_COLUMN: {
             const actionTyped = action as GridRedux.GridHideColumnAction;
             let columnList = [].concat(

@@ -42,29 +42,6 @@ export interface InternalApi {
 
   showPopupScreen(strategyId: string, componentName: string, popupParams?: StrategyParams): void;
 
-  /**
-   * Updates a cell in the Adaptable Blotter
-   * @param id the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Blotter Options)
-   * @param columnId the column to update
-   * @param newValue the new value to use
-   *
-   * ** this is deprecated  - please use the same method in DataGrid API**
-   */
-  setValue(id: any, columnId: string, newValue: any): void;
-
-  /**
-   * Replaces an existing cell value in the Adaptable Blotter with that contained in this inputted Grid Cell
-   * @param gridCell the new cell
-   */
-
-  setGridCell(gridCell: GridCell): void;
-
-  /**
-   * Replaces a batch of existing cell values in the Adaptable Blotter with those contained in the inputted Grid Cells
-   * @param gridCells the new cells
-   */
-  setGridCellBatch(gridCells: GridCell[]): void;
-
   setColumns(columns: AdaptableBlotterColumn[]): void;
 
   setMainMenuItems(menuItems: AdaptableBlotterMenuItem[]): void;

@@ -5,6 +5,4 @@ export interface IFreeTextColumnService {
   GetFreeTextValue(column: FreeTextColumn, record: any): any;
 
   CheckIfDataChangingColumnIsFreeText(dataChangedEvent: DataChangedInfo): void;
-
-  CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: DataChangedInfo[]): void;
 }

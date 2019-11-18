@@ -1,3 +1,5 @@
+import * as Redux from 'redux';
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
@@ -20,6 +22,8 @@ import {
 } from '../../PredefinedConfig/CellValidationState';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
+import { IUIConfirmation } from '../Interface/IMessage';
+import CellValidationHelper from '../Helpers/CellValidationHelper';
 
 export class ValidationService implements IValidationService {
   constructor(private blotter: IAdaptableBlotter) {
@@ -27,7 +31,7 @@ export class ValidationService implements IValidationService {
   }
 
   // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
-  public ValidateCellChanging(dataChangedEvent: DataChangedInfo): CellValidationRule[] {
+  public GetValidationRulesForDataChange(dataChangedEvent: DataChangedInfo): CellValidationRule[] {
     let failedWarningRules: CellValidationRule[] = [];
     // if the new value is the same as the old value then we can get out as we dont see it as an edit?
     if (dataChangedEvent.OldValue == dataChangedEvent.NewValue) {
@@ -136,6 +140,41 @@ export class ValidationService implements IValidationService {
       });
     }
     return failedWarningRules;
+  }
+
+  public ValidateDataChange(dataChangedInfo: DataChangedInfo): boolean {
+    const failedRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
+      dataChangedInfo
+    );
+    if (failedRules.length > 0) {
+      // first see if its an error = should only be one item in array if so
+      if (failedRules[0].ActionMode == 'Stop Edit') {
+        const errorMessage: string = ObjectFactory.CreateCellValidationMessage(
+          failedRules[0],
+          this.blotter
+        );
+        this.blotter.api.alertApi.showAlertError('Validation Error', errorMessage);
+        return false;
+      }
+      let warningMessage: string = '';
+      failedRules.forEach(f => {
+        warningMessage = `${warningMessage +
+          ObjectFactory.CreateCellValidationMessage(f, this.blotter)}\n`;
+      });
+      const confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(dataChangedInfo);
+      const cancelAction: Redux.Action = null;
+      const confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
+        confirmAction,
+        cancelAction,
+        warningMessage
+      );
+
+      this.blotter.api.internalApi.showPopupConfirmation(confirmation);
+      // we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+      // we need urgently to test that this does all the post edit functionality
+      return false;
+    }
+    return true;
   }
 
   // changing this so that it now checks the opposite!

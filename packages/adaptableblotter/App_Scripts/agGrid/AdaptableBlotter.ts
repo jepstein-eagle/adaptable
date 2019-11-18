@@ -1026,91 +1026,73 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public setValue(gridCell: GridCell): void {
-    let updatedRowNode: RowNode;
-    if (this.useRowNodeLookUp) {
-      const rowNode: RowNode = this.gridOptions.api!.getRowNode(gridCell.primaryKeyValue);
-      if (rowNode != null) {
-        this.updateValue(gridCell, rowNode);
-        updatedRowNode = rowNode;
-      }
+  public setValue(dataChangedInfo: DataChangedInfo): void {
+    // if we have the row node then just update it
+    if (dataChangedInfo.RowNode) {
+      dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
     } else {
-      let isUpdated: boolean = false;
-      // prefer not to use this method but if we do then at least we can prevent further lookups once we find
-      this.gridOptions.api!.getModel().forEachNode(rowNode => {
-        if (!isUpdated) {
-          if (gridCell.primaryKeyValue == this.getPrimaryKeyValueFromRowNode(rowNode)) {
-            this.updateValue(gridCell, rowNode);
-            updatedRowNode = rowNode;
-            isUpdated = true;
-          }
+      if (this.useRowNodeLookUp) {
+        const rowNode: RowNode = this.gridOptions.api!.getRowNode(dataChangedInfo.IdentifierValue);
+        if (rowNode != null) {
+          rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+          dataChangedInfo.RowNode = rowNode;
         }
-      });
+      } else {
+        let isUpdated: boolean = false;
+        // prefer not to use this method but if we do then at least we can prevent further lookups once we find
+        this.gridOptions.api!.getModel().forEachNode(rowNode => {
+          if (!isUpdated) {
+            if (dataChangedInfo.IdentifierValue == this.getPrimaryKeyValueFromRowNode(rowNode)) {
+              //  dataChangedInfo = this.updateValue(gridCell, rowNode);
+              rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+              dataChangedInfo.RowNode = rowNode;
+              isUpdated = true;
+            }
+          }
+        });
+      }
     }
-    this.filterOnUserDataChange([updatedRowNode]);
-    this.gridOptions.api!.clearRangeSelection();
-  }
-
-  private updateValue(gridCell: GridCell, rowNode: RowNode): void {
-    const oldValue = this.gridOptions.api!.getValue(gridCell.columnId, rowNode);
-    rowNode.setDataValue(gridCell.columnId, gridCell.value);
-
-    const dataChangedEvent: DataChangedInfo = {
-      OldValue: oldValue,
-      NewValue: gridCell.value,
-      ColumnId: gridCell.columnId,
-      IdentifierValue: gridCell.primaryKeyValue,
-      RowNode: rowNode,
-    };
-    if (this.AuditLogService.isAuditCellEditsEnabled) {
-      this.AuditLogService.addEditCellAuditLog(dataChangedEvent);
-    }
-    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
-    this.DataService.CreateDataChangedEvent(dataChangedEvent);
+    this.performPostEditChecks([dataChangedInfo]);
   }
 
   // this is used by strategies to update the grid
   // not sure why do it this way and not just get it updated through the event
-  public setValueBatch(gridCellBatch: GridCell[]): void {
-    if (ArrayExtensions.IsNullOrEmpty(gridCellBatch)) {
+  public setValueBatch(dataChangedInfoBatch: DataChangedInfo[]): void {
+    if (ArrayExtensions.IsNullOrEmpty(dataChangedInfoBatch)) {
       return;
     }
 
-    var dataChangedEvents: DataChangedInfo[] = [];
-    const nodesToRefresh: RowNode[] = [];
-
-    // now two ways to do this - one using pk lookup and other using foreach on row node
-    if (this.useRowNodeLookUp) {
-      gridCellBatch.forEach((gridCell: GridCell) => {
-        const rowNode: RowNode = this.gridOptions.api!.getRowNode(gridCell.primaryKeyValue);
-        if (rowNode) {
-          this.updateBatchValue(gridCell, rowNode, nodesToRefresh, dataChangedEvents);
+    dataChangedInfoBatch.forEach((dataChangedInfo: DataChangedInfo) => {
+      if (dataChangedInfo.RowNode) {
+        dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+      } else {
+        // now two ways to do this - one using pk lookup and other using foreach on row node
+        if (this.useRowNodeLookUp) {
+          const rowNode: RowNode = this.gridOptions.api!.getRowNode(
+            dataChangedInfo.IdentifierValue
+          );
+          if (rowNode) {
+            rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+            dataChangedInfo.RowNode = rowNode;
+          }
+        } else {
+          this.gridOptions.api!.getModel().forEachNode((rowNode: RowNode) => {
+            if (this.getPrimaryKeyValueFromRowNode(rowNode) == dataChangedInfo.IdentifierValue) {
+              rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+              dataChangedInfo.RowNode = rowNode;
+            }
+          });
         }
-      });
-    } else {
-      this.gridOptions.api!.getModel().forEachNode((rowNode: RowNode) => {
-        const gridCell: GridCell = gridCellBatch.find(
-          x => x.primaryKeyValue == this.getPrimaryKeyValueFromRowNode(rowNode)
-        );
-        if (gridCell) {
-          this.updateBatchValue(gridCell, rowNode, nodesToRefresh, dataChangedEvents);
-        }
-      });
-    }
+      }
+    });
 
-    if (this.AuditLogService.isAuditCellEditsEnabled) {
-      this.AuditLogService.addEditCellAuditLogBatch(dataChangedEvents);
-    }
-    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents);
-    dataChangedEvents.forEach(dc => this.DataService.CreateDataChangedEvent(dc));
-
-    this.filterOnUserDataChange(nodesToRefresh);
+    this.performPostEditChecks(dataChangedInfoBatch);
 
     // we want to reselect the cells that are selected so that users can repeat actions
     // we do this by gettng the selected cells, clearing the selection and then re-applying
     //  agGridHelper.reselectSelectedCells();
+    // need to do it first
     const selectedCellRanges: CellRange[] = this.gridOptions.api!.getCellRanges();
-
     if (ArrayExtensions.CorrectLength(selectedCellRanges, 1)) {
       const selectedCellRange: CellRange = selectedCellRanges[0];
       const cellRangeParams: CellRangeParams = {
@@ -1122,30 +1104,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       this.gridOptions.api!.addCellRange(cellRangeParams);
     }
-  }
-
-  private updateBatchValue(
-    gridCell: GridCell,
-    rowNode: RowNode,
-    nodesToRefresh: RowNode[],
-    dataChangedEvents: DataChangedInfo[]
-  ): void {
-    const colId: string = gridCell.columnId;
-    nodesToRefresh.push(rowNode);
-
-    const oldValue = this.gridOptions.api!.getValue(colId, rowNode);
-
-    var data: any = rowNode.data;
-    data[colId] = gridCell.value;
-
-    const dataChangedEvent: DataChangedInfo = {
-      OldValue: oldValue,
-      NewValue: gridCell.value,
-      ColumnId: colId,
-      IdentifierValue: gridCell.primaryKeyValue,
-      RowNode: rowNode,
-    };
-    dataChangedEvents.push(dataChangedEvent);
   }
 
   public cancelEdit() {
@@ -2110,9 +2068,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // TODO: Jo: This is a workaround as we are accessing private members of agGrid.
       // I still wonder if we can do this nicer by using :   this.gridOptions.api!.getEditingCells();
       // must be a good reason why we don't use it
-
       if (this.gridOptions.columnApi.isPivotMode()) {
-        //  console.log('cannot edit when pivot');
         return;
       }
       const editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex]
@@ -2141,55 +2097,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           RowNode: params.node,
         };
 
-        const failedRules: CellValidationRule[] = this.ValidationService.ValidateCellChanging(
-          dataChangedInfo
-        );
-        if (failedRules.length > 0) {
-          // first see if its an error = should only be one item in array if so
-          if (failedRules[0].ActionMode == 'Stop Edit') {
-            const errorMessage: string = ObjectFactory.CreateCellValidationMessage(
-              failedRules[0],
-              this
-            );
-            this.api.alertApi.showAlertError('Validation Error', errorMessage);
-            return true;
-          }
-          let warningMessage: string = '';
-          failedRules.forEach(f => {
-            warningMessage = `${warningMessage +
-              ObjectFactory.CreateCellValidationMessage(f, this)}\n`;
-          });
-          const gridCell: GridCell = {
-            primaryKeyValue: dataChangedInfo.IdentifierValue,
-            columnId: dataChangedInfo.ColumnId,
-            value: dataChangedInfo.NewValue,
-          };
-
-          const confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(
-            gridCell,
-            this.gridOptions.api!.getValue(params.column.getColId(), params.node)
-          );
-          const cancelAction: Redux.Action = null;
-          const confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
-            confirmAction,
-            cancelAction,
-            warningMessage
-          );
-
-          this.api.internalApi.showPopupConfirmation(confirmation);
-          // we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+        // check if the edit passes validation; if it doesnt then return true (which means we need to cancel)
+        let isProposedEditValid = this.ValidationService.ValidateDataChange(dataChangedInfo);
+        if (!isProposedEditValid) {
           return true;
         }
+
         const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
         if (!whatToReturn) {
-          // audit the cell event if needed
-          if (this.AuditLogService.isAuditCellEditsEnabled) {
-            this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
-          }
-          // it might be a free text column so we need to update the values
-          this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
-
-          // do we need to also refresh calculated columns?
+          this.performPostEditChecks([dataChangedInfo], false);
         }
         return whatToReturn;
       };
@@ -2197,6 +2113,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     });
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
       // (<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
+
       this._currentEditor = null;
       // We refresh the filter so we get live search/filter when editing.
       // Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
@@ -2263,7 +2180,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       dataChanged: (event: any) =>
         this.onRowDataChanged({
           //  myevent: event,
-          node: event.node,
+          rowNode: event.node,
           oldData: event.oldData,
           newData: event.newData,
         }),
@@ -2271,20 +2188,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     /**
      * AgGrid does not expose Events.EVENT_ROW_DATA_CHANGED
-     *
      * so we have to override `dispatchLocalEvent`
      * and hook our own functionality into it
      *
      */
     RowNodeProto.dispatchLocalEvent = function(event: any) {
       const result = RowNode_dispatchLocalEvent.apply(this, arguments);
-
       const fn = rowListeners[event.type];
-
       if (fn) {
         fn(event);
       }
-
       return result;
     };
 
@@ -2677,11 +2590,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private onRowDataChanged({
-    node,
+    rowNode,
     oldData,
     newData,
   }: {
-    node: RowNode;
+    rowNode: RowNode;
     oldData: any;
     newData: any;
   }): void {
@@ -2694,7 +2607,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       return;
     }
 
-    const identifierValue = this.getPrimaryKeyValueFromRowNode(node);
+    if (oldData == newData) {
+      return;
+    }
+
+    const identifierValue = this.getPrimaryKeyValueFromRowNode(rowNode);
 
     Object.keys(oldData).forEach((key: string) => {
       const oldValue = oldData[key];
@@ -2706,15 +2623,40 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           NewValue: newValue,
           ColumnId: key,
           IdentifierValue: identifierValue,
-          RowNode: node,
+          RowNode: rowNode,
         };
 
-        this.DataService.CreateDataChangedEvent(dataChangedInfo);
-
-        // todo - same stuff with percent bars and calculated columns
-        // need to refactor into an afterDataChangedEventCreated method so we do it once
+        // we cannot check here for cell validation as it will be too late
+        // so we have to hope that its been done already
+        // if we have gone through the Blotter API we will be fine but not if they update ag-Grid directly
+        // but we can perform the POST EDIT checks
+        this.performPostEditChecks([dataChangedInfo]);
       }
     });
+  }
+
+  /**
+   * There are a few things that we need to do AFTER we edit a cell and it makes sense to put them in one place
+   */
+  private performPostEditChecks(
+    dataChangedInfos: DataChangedInfo[],
+    applyFilter: boolean = true
+  ): void {
+    dataChangedInfos.forEach((dataChangedInfo: DataChangedInfo) => {
+      if (this.AuditLogService.isAuditCellEditsEnabled) {
+        this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
+      }
+      this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
+      this.DataService.CreateDataChangedEvent(dataChangedInfo);
+    });
+
+    if (applyFilter) {
+      let rowNodes = dataChangedInfos.map(dc => {
+        return dc.RowNode;
+      });
+      this.filterOnUserDataChange(rowNodes);
+      // this.gridOptions.api!.clearRangeSelection();
+    }
   }
 
   public removePercentBar(pcr: PercentBar): void {
@@ -2840,6 +2782,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public updateRows(dataRows: any[]): void {
+    //  fdasfdafdsfdsafdsafsdafafsd
     this.gridOptions.api!.updateRowData({ update: dataRows });
   }
 

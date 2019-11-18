@@ -107,7 +107,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
           IdentifierValue: activeCell.primaryKeyValue,
         };
 
-        let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+        let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
           dataChangedEvent
         );
         let hasErrorPrevent: boolean =
@@ -165,13 +165,15 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     newValue: any,
     keyEventString: string
   ): void {
-    this.blotter.api.internalApi.setGridCellBatch([
+    //apply the shortcut - we have already performed cell validation so no need to do it again
+    this.blotter.api.gridApi.setGridCell(
       {
         primaryKeyValue: activeCell.primaryKeyValue,
         columnId: activeCell.columnId,
         value: newValue,
       },
-    ]);
+      false
+    );
 
     let functionAppliedDetails: FunctionAppliedDetails = {
       name: StrategyConstants.ShortcutStrategyId,

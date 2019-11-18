@@ -131,12 +131,6 @@ export class AuditLogService implements IAuditLogService {
     }
   }
 
-  public addEditCellAuditLogBatch(dataChangedEvents: DataChangedInfo[]) {
-    dataChangedEvents.forEach(dce => {
-      this.addEditCellAuditLog(dce);
-    });
-  }
-
   public addEditCellAuditLog(dataChangedInfo: DataChangedInfo) {
     if (this.isAuditCellEditsEnabled) {
       let auditLogEntry = this.createAuditLogEntryFromDataChangedInfo(

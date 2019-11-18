@@ -34,6 +34,7 @@ import {
 import { EmitterCallback } from '../Utilities/Emitter';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { BlotterApi } from '../Api/BlotterApi';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 
 /**
  *  The only interface for the AdaptableBlotter
@@ -182,8 +183,8 @@ export interface IAdaptableBlotter {
   getRowNodeForPrimaryKey(primaryKeyValue: any): any;
 
   // editing related
-  setValue(gridCell: GridCell): void;
-  setValueBatch(gridCellBatch: GridCell[]): void;
+  setValue(dataChangedInfo: DataChangedInfo): void;
+  setValueBatch(dataChangedInfoBatch: DataChangedInfo[]): void;
   cancelEdit(): any;
   gridHasCurrentEditValue(): boolean;
   getCurrentCellEditValue(): any;

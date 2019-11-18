@@ -22,6 +22,8 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
+import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
+import { grid } from 'styled-system';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions
@@ -82,25 +84,8 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(PopupRedux.PopupShowScreen(strategyId, componentName, popupParams));
   }
 
-  public setValue(id: any, columnId: string, newValue: any): void {
-    let gridCell: GridCell = {
-      primaryKeyValue: id,
-      columnId: columnId,
-      value: newValue,
-    };
-    this.setGridCell(gridCell);
-  }
-
-  public setGridCell(gridCell: GridCell): void {
-    this.blotter.setValue(gridCell);
-  }
-
   public setColumns(columns: AdaptableBlotterColumn[]): void {
     this.dispatchAction(GridRedux.GridSetColumns(columns));
-  }
-
-  public setGridCellBatch(gridCells: GridCell[]): void {
-    this.blotter.setValueBatch(gridCells);
   }
 
   public setMainMenuItems(menuItems: AdaptableBlotterMenuItem[]): void {

@@ -158,7 +158,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             IdentifierValue: selectedCell.primaryKeyValue,
           };
 
-          let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+          let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
             dataChangedEvent
           );
 
@@ -182,7 +182,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       this.ShowWarningMessages(failedWarningEdits, warningValues, successfulValues);
     } else {
       if (ArrayExtensions.IsNotNullOrEmpty(successfulValues)) {
-        this.blotter.api.internalApi.setGridCellBatch(successfulValues);
+        this.blotter.api.gridApi.setGridCells(successfulValues, false);
       }
     }
 
