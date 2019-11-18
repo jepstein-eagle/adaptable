@@ -12,11 +12,11 @@ import Check from './check';
 import AttachFile from './attach-file';
 import Plus from './plus';
 import Clear from './clear';
-import Search from './search';
+import AdvancedSearch from './advancedsearch';
 import Info from './info';
 import Alert from './alert';
 import List from './list';
-import Edit from './edit';
+import SmartEdit from './smart-edit';
 import ViewColumns from './view-columns';
 import Home from './home';
 import Justify from './justify';
@@ -38,45 +38,61 @@ import ColorDrop from './color-drop';
 import CheckCircle from './check-circle';
 import Refresh from './refresh';
 import Save from './save';
-import BarChart from './bar-chart';
-import laptop from './laptop';
-import update from './update';
+import Chart from './chart';
+import Application from './application';
+import BulkUpdate from './bulk-update';
 import ImportExport from './import-export';
 import { ReactComponentLike } from 'prop-types';
 import phoneSetup from './phone-setup';
-import viewModule from './view-module';
+import CellSummary from './cell-summary';
 import flag from './flag';
 import tableChart from './table-chart';
-import filterList from './filter-list';
+import ColumnFilter from './column-filter';
 import columnInfo from './column-info';
 import swapVert from './swap-vert';
-import dataSource from './data-source';
+import DataSource from './data-source';
 import flashOn from './flash-on';
+import edit from './edit';
 import colorLens from './color-lens';
 import shortText from './short-text';
 import comment from './comment';
-import apps from './apps';
+import Layout from './layout';
 import assignment from './assignment';
 import linearScale from './linear-scale';
 import pieChart from './pie-chart';
 import addCircle from './add-circle';
-import pageView from './page-view';
+import QuickSearch from './quick-search';
 import alarm from './alarm';
 import link from './link';
 import person from './person';
 import alignJustify from './align-justify';
-import colorFill from './color-fill';
+import Theme from './theme';
 import checkBox from './check-box';
 import checkBoxOutline from './check-box-outline';
 import tabUnselected from './tab-unselected';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 const allIcons = {
+  // toolbars - we have changed these as they are most likely to get used externally
+  'advanced-search': AdvancedSearch, // original icon is search
+  application: Application, // original icon is   laptop,
+  alert: Alert,
+  'bulk-update': BulkUpdate, // original icon is update,
+  chart: Chart, // original icon is bar-chartexport: Export,
+  'cell-summary': CellSummary, // original icon is view-module
+  'column-filter': ColumnFilter, // original icon is filter-list
+  'data-source': DataSource,
+  export: Export,
+  layout: Layout, // original icon is apps,
+  'quick-search': QuickSearch, // original icon is page-view
+  'smart-edit': SmartEdit, // original icon is edit
+  theme: Theme, // original icon is color-fill
+
   assignment,
   'linear-scale': linearScale,
   'pie-chart': pieChart,
   'add-circle': addCircle,
-  'page-view': pageView,
+  edit: edit,
   'tab-unselected': tabUnselected,
   'check-box': checkBox,
   'check-box-outline': checkBoxOutline,
@@ -93,22 +109,20 @@ const allIcons = {
   'color-lens': colorLens,
   'short-text': shortText,
   'arrow-left': ArrowLeft,
-  'bar-chart': BarChart,
+
   'color-drop': ColorDrop,
   'column-info': columnInfo,
   'check-circle': CheckCircle,
   'view-columns': ViewColumns,
   'conditional-style': ConditionalStyle,
-  apps,
-  'filter-list': filterList,
+
   comment,
   list: List,
   undo: Undo,
   'table-chart': tableChart,
   flag,
-  update,
   'phone-setup': phoneSetup,
-  'view-module': viewModule,
+
   delete: Delete,
   build: Build,
   save: Save,
@@ -120,8 +134,7 @@ const allIcons = {
   'fast-forward': FastForward,
   'fast-backward': FastBackward,
   warning: Warning,
-  alert: Alert,
-  laptop,
+
   'notification-important': Alert,
   'warning-sign': Warning,
   justify: Justify,
@@ -134,13 +147,13 @@ const allIcons = {
   'sort-asc': SortAsc,
   'sort-desc': SortDesc,
   'swap-vert': swapVert,
-  'data-source': dataSource,
+
   dashboard: Dashboard,
   'align-justify': alignJustify,
-  edit: Edit,
+
   clear: Clear,
   'import-export': ImportExport,
-  'color-fill': colorFill,
+
   'attach-file': AttachFile,
   'system-update': SystemUpdate,
   info: Info,
@@ -148,8 +161,6 @@ const allIcons = {
   add: Plus,
   'flash-on': flashOn,
   flash: flashOn,
-  export: Export,
-  search: Search,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

@@ -8,7 +8,7 @@ import { ReactComponentLike } from 'prop-types';
 import { Flex, Text } from 'rebass';
 import { PanelProps } from '../../../components/Panel';
 
-const ChartIcon = icons['bar-chart'] as ReactComponentLike;
+const ChartIcon = icons['chart'] as ReactComponentLike;
 
 export interface PanelWithImageThreeButtonsProps extends PanelProps {
   firstButton?: React.ReactElement<any>;
