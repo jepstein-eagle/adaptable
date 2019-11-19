@@ -55,7 +55,7 @@ export interface EditOptions {
   /**
    * Used when you want to check an Edit made in the Adaptable Blotter on your Server
    *
-   * The argument provided is the **DataChangedInfo** which provides the old and new values, the column, and also the node in which the cell lives.
+   * The argument provided is the [DataChangedInfo](_blotteroptions_commonobjects_datachangedinfo_.datachangedinfo.html) object which provides the old and new values, the column, and also the node in which the cell lives.
    *
    * The property returns a promise that includes a Validation Result
    *
