@@ -7,6 +7,13 @@ import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
  *
  * **EditOptions Example**
  *
+ * In this example we run Server Editing.
+ *
+ * For the Amount column the (slightly contrived) logic is that any edit > 100 will return 100, any edit < 20 will return 20 and if edit is 50 its rejected.
+ *
+ *
+ * Any edits that dont break those rules - or which are not for the 'amount' column - we ignore (so they will be processed normally)
+ *
  * ```ts
  * adaptableBlotterOptions.editOptions = {
  *     validateOnServer: (dataChangedInfo: DataChangedInfo) => {
@@ -61,6 +68,9 @@ export interface EditOptions {
    *  **Default Value: null**
    */
   validateOnServer?: (dataChangedInfo: DataChangedInfo) => Promise<ValidationResult>;
+
+  showAlert?: boolean;
+  showAlertasPopup?: boolean;
 }
 
 /**
@@ -75,6 +85,17 @@ export interface EditOptions {
  * The values returned (through a Promise) will populate the Column Filter, Column Values section in Query Builder and Bulk Update.
  */
 export interface ValidationResult {
+  /**
+   * A message to send with validation.  It will be logged and, if Audit Log is switched on, sent to audit.
+   */
   ValidationMessage?: string;
+
+  /**
+   * The value which should be used for the edit instead of the one keyed in by the user.
+   *
+   * If you want to reject the edit then set this to the DataChangedInfo.oldValue property (which will effectively leave the cell unchanged) or send back a different value.
+   *
+   * If you are happy with the edit then leave it free.
+   */
   NewValue?: any;
 }

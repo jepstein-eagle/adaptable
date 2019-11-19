@@ -102,10 +102,15 @@ export class ValidationService implements IValidationService {
           ) {
             // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
             if (expressionRule.ActionMode == 'Stop Edit') {
-              this.logAuditValidationEvent('Validating Cell Edit', 'Failed', {
-                Errors: [expressionRule],
-                DataChangingEvent: dataChangedInfo,
-              });
+              this.logAuditValidationEvent(
+                StrategyConstants.CellValidationStrategyName,
+                'Validating Cell Edit',
+                'Failed',
+                {
+                  Errors: [expressionRule],
+                  DataChangingEvent: dataChangedInfo,
+                }
+              );
               return [expressionRule];
             } else {
               failedWarningRules.push(expressionRule);
@@ -121,10 +126,15 @@ export class ValidationService implements IValidationService {
       for (let noExpressionRule of noExpressionRules) {
         if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo, columns)) {
           if (noExpressionRule.ActionMode == 'Stop Edit') {
-            this.logAuditValidationEvent('Validating Cell Edit', 'Failed', {
-              Errors: [noExpressionRule],
-              DataChangingEvent: dataChangedInfo,
-            });
+            this.logAuditValidationEvent(
+              StrategyConstants.CellValidationStrategyName,
+              'Validating Cell Edit',
+              'Failed',
+              {
+                Errors: [noExpressionRule],
+                DataChangingEvent: dataChangedInfo,
+              }
+            );
             return [noExpressionRule];
           } else {
             failedWarningRules.push(noExpressionRule);
@@ -133,14 +143,24 @@ export class ValidationService implements IValidationService {
       }
     }
     if (failedWarningRules.length > 0) {
-      this.logAuditValidationEvent('Validating Cell Edit', 'Warning Shown', {
-        Warnings: failedWarningRules,
-        DataChangingEvent: dataChangedInfo,
-      });
+      this.logAuditValidationEvent(
+        StrategyConstants.CellValidationStrategyName,
+        'Validating Cell Edit',
+        'Warning Shown',
+        {
+          Warnings: failedWarningRules,
+          DataChangingEvent: dataChangedInfo,
+        }
+      );
     } else {
-      this.logAuditValidationEvent('Validating Cell Edit', 'Success', {
-        DataChangingEvent: dataChangedInfo,
-      });
+      this.logAuditValidationEvent(
+        StrategyConstants.CellValidationStrategyName,
+        'Validating Cell Edit',
+        'Success',
+        {
+          DataChangingEvent: dataChangedInfo,
+        }
+      );
     }
     return failedWarningRules;
   }
@@ -208,10 +228,10 @@ export class ValidationService implements IValidationService {
     return this.blotter.api.cellValidationApi.getCellValidationState();
   }
 
-  private logAuditValidationEvent(action: string, info: string, data?: any): void {
+  private logAuditValidationEvent(name: string, action: string, info: string, data?: any): void {
     if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
       let functionAppliedDetails: FunctionAppliedDetails = {
-        name: StrategyConstants.CellValidationStrategyId,
+        name: name,
         action: action,
         info: info,
         data: data,
@@ -237,7 +257,14 @@ export class ValidationService implements IValidationService {
             dataChangedInfo.NewValue = validationResult.NewValue;
             this.blotter.setValue(dataChangedInfo);
 
-            LoggingHelper.LogAdaptableBlotterInfo('Server Validation Result', validationResult);
+            this.logAuditValidationEvent(
+              'Server Validation',
+              'Validating Cell Edit on Server',
+              validationResult.ValidationMessage,
+              {
+                DataChangingEvent: dataChangedInfo,
+              }
+            );
           }
           config.onServerValidationCompleted();
         });

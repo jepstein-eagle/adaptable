@@ -136,7 +136,7 @@ export interface AdaptableBlotterOptions {
   /**
    * Options related to Editing the Adaptable Blotter.
    *
-   * Includes a function enabling you to perform custom validation when a cell changes valueå.
+   * Includes a function enabling you to perform custom validation when a cell changes values.
    */
   editOptions?: EditOptions;
 
