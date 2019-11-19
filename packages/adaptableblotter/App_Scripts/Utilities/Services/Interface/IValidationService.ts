@@ -9,7 +9,7 @@ export interface IValidationService {
   PerformServerValidation(
     dataChangedInfo: DataChangedInfo,
     config: {
-      onEditSuccess: () => void;
+      onServerValidationCompleted: () => void;
     }
   ): () => boolean;
 }

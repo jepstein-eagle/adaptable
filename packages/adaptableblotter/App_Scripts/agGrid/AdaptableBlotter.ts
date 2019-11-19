@@ -2047,7 +2047,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           return true;
         }
 
-        const onEditSuccess = () => {
+        const onServerValidationCompleted = () => {
           const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
           if (!whatToReturn) {
             this.performPostEditChecks(dataChangedInfo, false);
@@ -2057,9 +2057,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         const isCancelAfterEnd = this.blotterOptions.editOptions.validateOnServer
           ? this.ValidationService.PerformServerValidation(dataChangedInfo, {
-              onEditSuccess,
+              onServerValidationCompleted,
             })
-          : onEditSuccess;
+          : onServerValidationCompleted;
 
         return isCancelAfterEnd();
       };

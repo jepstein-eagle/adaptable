@@ -24,7 +24,7 @@ import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 import { IUIConfirmation } from '../Interface/IMessage';
 import CellValidationHelper from '../Helpers/CellValidationHelper';
-import { Validation } from '../../BlotterOptions/EditOptions';
+import { ValidationResult } from '../../BlotterOptions/EditOptions';
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
 
@@ -222,34 +222,24 @@ export class ValidationService implements IValidationService {
 
   public PerformServerValidation(
     dataChangedInfo: DataChangedInfo,
-    config: { onEditSuccess: () => void }
+    config: { onServerValidationCompleted: () => void }
   ) {
     return (): boolean => {
       this.blotter.blotterOptions.editOptions
         .validateOnServer(dataChangedInfo)
-        .then((validationResult: Validation) => {
+        .then((validationResult: ValidationResult) => {
           if (validationResult.NewValue === undefined) {
             validationResult.NewValue = dataChangedInfo.NewValue;
           }
-          console.log('get here');
-          console.log(dataChangedInfo);
-          console.log(validationResult);
           // If they have changed the return value then we should update the grid, log the function change
           // otherwise the value will persist
           if (validationResult.NewValue !== dataChangedInfo.NewValue) {
             dataChangedInfo.NewValue = validationResult.NewValue;
-            console.log(dataChangedInfo);
-            // not sure whether to validate as what happens if it fails?
-            //  if (this.validateOnServer(dataChangedInfo)) {
             this.blotter.setValue(dataChangedInfo);
-            //  }
 
-            LoggingHelper.LogAdaptableBlotterInfo(
-              'Cell Edit Failed Server Validation',
-              validationResult
-            );
+            LoggingHelper.LogAdaptableBlotterInfo('Server Validation Result', validationResult);
           }
-          config.onEditSuccess();
+          config.onServerValidationCompleted();
         });
 
       return false;

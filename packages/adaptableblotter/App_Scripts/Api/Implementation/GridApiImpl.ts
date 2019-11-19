@@ -60,15 +60,15 @@ export class GridApiImpl extends ApiBase implements GridApi {
       }
     }
 
-    const onEditSuccess = () => {
+    const onServerValidationCompleted = () => {
       this.blotter.setValue(dataChangedInfo);
     };
 
     const mimicPromise = this.blotter.blotterOptions.editOptions.validateOnServer
       ? this.blotter.ValidationService.PerformServerValidation(dataChangedInfo, {
-          onEditSuccess,
+          onServerValidationCompleted,
         })
-      : onEditSuccess;
+      : onServerValidationCompleted;
 
     mimicPromise();
   }

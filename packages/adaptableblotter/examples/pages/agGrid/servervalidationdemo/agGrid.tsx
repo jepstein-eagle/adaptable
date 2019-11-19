@@ -18,7 +18,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 import { GridCell } from '../../../../App_Scripts/Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../../../App_Scripts/Utilities/Interface/DataChangedInfo';
-import { Validation } from '../../../../App_Scripts/BlotterOptions/EditOptions';
+import { ValidationResult } from '../../../../App_Scripts/BlotterOptions/EditOptions';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -46,7 +46,7 @@ function InitAdaptableBlotter() {
     adaptableBlotterOptions.editOptions = {
       validateOnServer: (dataChangedInfo: DataChangedInfo) => {
         return new Promise((resolve, reject) => {
-          setTimeout(() => resolve(getServerEditResponse(dataChangedInfo)), 200);
+          setTimeout(() => resolve(getServerEditResponse(dataChangedInfo)), 2000);
         });
       },
     };
@@ -71,7 +71,7 @@ function InitAdaptableBlotter() {
   });
 }
 
-function getServerEditResponse(dataChangedInfo: DataChangedInfo): Validation {
+function getServerEditResponse(dataChangedInfo: DataChangedInfo): ValidationResult {
   if (dataChangedInfo.ColumnId == 'counterparty') {
     if (dataChangedInfo.NewValue == 'Hello') {
       return {
