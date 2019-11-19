@@ -16,7 +16,7 @@ export class AppComponent {
     height: '100vh',
   };
 
-  private gridOptions: GridOptions;
+  public gridOptions: GridOptions;
 
   theOptions: AdaptableBlotterOptions = {
     primaryKey: 'OrderId',
@@ -61,7 +61,7 @@ export class AppComponent {
   onBlotterReady(api: BlotterApi) {
     console.log('blotter ready!!!', api);
 
-    api.auditEventApi.on('AuditCellEdited', function(args) {
+    api.auditEventApi.on('AuditCellEdited', function (args) {
       console.warn(args, '!!!!!');
     });
   }
