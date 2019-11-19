@@ -28,6 +28,8 @@ export interface GridApi {
   /**
    * Updates the Adaptable Blotter (and underlying grid) with rows that have changed.
    *
+   * Note: this method simply updates the data set; **it does not take edit validation into account** - for that you should use *setCellVallue* or *setGriddCell*
+   *
    * @param dataRows the rows which have been updated.  Send the whole row and the Adaptable Blotter and underlying grid will take care of the rest.
    */
   updateGridData(dataRows: any[]): void;
@@ -48,25 +50,28 @@ export interface GridApi {
 
   /**
    * Updates a cell in the Adaptable Blotter
+   *
+   * Note: this update **will be validated** against any existing Cell or Server Validation
+   *
    * @param id the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Blotter Options)
    * @param columnId the column to update
    * @param newValue the new value to use
    *
    */
-  setCellValue(id: any, columnId: string, newValue: any, performCellValidation: boolean): void;
+  setCellValue(id: any, columnId: string, newValue: any, validateChange: boolean): void;
 
   /**
    * Replaces an existing cell value in the Adaptable Blotter with that contained in this inputted Grid Cell
    * @param gridCell the new cell
    */
 
-  setGridCell(gridCell: GridCell, performCellValidation: boolean): void;
+  setGridCell(gridCell: GridCell, validateChange: boolean): void;
 
   /**
    * Replaces a batch of existing cell values in the Adaptable Blotter with those contained in the inputted Grid Cells
    * @param gridCells the new cells
    */
-  setGridCells(gridCells: GridCell[], performCellValidation: boolean): void;
+  setGridCells(gridCells: GridCell[], validateChange: boolean): void;
 
   /** Returns all the columns in the Adaptable Blotter
    *

@@ -214,7 +214,9 @@ export class Glue42Service implements IGlue42Service {
           } as IGlue42ExportError);
         }
       });
-      this.blotter.setValueBatch(dataChangedInfos);
+      dataChangedInfos.forEach(dc => {
+        this.blotter.setValue(dc);
+      });
 
       if (ArrayExtensions.IsNullOrEmpty(errors)) {
         doneCallback();

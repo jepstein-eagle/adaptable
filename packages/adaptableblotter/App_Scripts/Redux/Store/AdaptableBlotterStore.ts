@@ -2462,7 +2462,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   IdentifierValue: gc.primaryKeyValue,
                 };
               });
-              blotter.setValueBatch(dataChangedInfos);
+              dataChangedInfos.forEach(dc => {
+                blotter.setValue(dc);
+              });
             }
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             return next(action);
@@ -2880,7 +2882,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
           case GridRedux.GRID_SET_VALUE_LIKE_EDIT_BATCH: {
             const actionTyped = action as GridRedux.GridSetValueLikeEditBatchAction;
-            blotter.setValueBatch(actionTyped.DataChangedInfoBatch);
+            actionTyped.DataChangedInfoBatch.forEach(dc => {
+              blotter.setValue(dc);
+            });
+
             return next(action);
           }
 

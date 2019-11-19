@@ -2,7 +2,14 @@ import { DataChangedInfo } from '../../Interface/DataChangedInfo';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 
 export interface IValidationService {
-  GetValidationRulesForDataChange(dataChangedEvent: DataChangedInfo): CellValidationRule[];
+  GetValidationRulesForDataChange(dataChangedInfo: DataChangedInfo): CellValidationRule[];
 
-  ValidateDataChange(dataChangedInfo: DataChangedInfo): boolean;
+  PerformCellValidation(dataChangedInfo: DataChangedInfo): boolean;
+
+  PerformServerValidation(
+    dataChangedInfo: DataChangedInfo,
+    config: {
+      onEditSuccess: () => void;
+    }
+  ): () => boolean;
 }

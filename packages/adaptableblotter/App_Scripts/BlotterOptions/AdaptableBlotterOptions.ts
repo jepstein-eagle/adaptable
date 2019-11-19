@@ -9,6 +9,7 @@ import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { AdvancedOptions } from './AdvancedOptions';
 import { FlashingUpdateOptions } from './FlashingUpdateOptions';
+import { EditOptions } from './EditOptions';
 
 /**
  * AdaptableBlotterOptions is the class injected into the Adaptable Blotter at startup.
@@ -133,7 +134,14 @@ export interface AdaptableBlotterOptions {
   queryOptions?: QueryOptions;
 
   /**
-   * Options related to  Layouts (ie. saveable views of column order, visibility and sort).
+   * Options related to Editing the Adaptable Blotter.
+   *
+   * Includes a function enabling you to perform custom validation when a cell changes valueå.
+   */
+  editOptions?: EditOptions;
+
+  /**
+   * Options related to Layouts (ie. saveable views of column order, visibility and sort).
    *
    * Includes properties for whether to include vendor state in the Layout (e.g. Column Grouping) and whether layouts shoudl save automatically on clicking save.
    */

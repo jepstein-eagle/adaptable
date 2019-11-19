@@ -10,8 +10,6 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
-import * as DeepDiff from 'deep-diff';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
@@ -27,60 +25,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
   }
 
   public updateGridData(dataRows: any[]): void {
-    // need to do better as there might be multiple validation issues but...
-
-    // only want to do this if we have any validation rows - likely we wont...
-    if (
-      ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.cellValidationApi.getAllCellValidation())
-    ) {
-      let successfulValues: DataChangedInfo[] = [];
-      let failedPreventEdits: CellValidationRule[] = [];
-      let failedWarningEdits: CellValidationRule[] = [];
-      let warningValues: DataChangedInfo[] = [];
-
-      dataRows.forEach(dataRow => {
-        //let test = this.blotter.getDataRowFromRowNode
-        let pkValue = dataRow[this.blotter.blotterOptions.primaryKey];
-        let currentRowNode = this.blotter.getRowNodeForPrimaryKey(pkValue);
-        let currentRow = this.blotter.getDataRowFromRowNode(currentRowNode);
-        let differences: deepDiff.IDiff[] = DeepDiff.diff(dataRow, currentRow);
-        if (ArrayExtensions.IsNotNullOrEmpty(differences)) {
-          differences.forEach(diff => {
-            let dataChangedInfo: DataChangedInfo = {
-              OldValue: diff.rhs,
-              NewValue: diff.lhs,
-              ColumnId: diff.path[0],
-              IdentifierValue: pkValue,
-            };
-
-            let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
-              dataChangedInfo
-            );
-
-            if (validationRules.length > 0) {
-              if (validationRules[0].ActionMode == 'Stop Edit') {
-                failedPreventEdits.push(validationRules[0]);
-              } else {
-                failedWarningEdits.push(validationRules[0]);
-                warningValues.push(dataChangedInfo);
-              }
-            } else {
-              successfulValues.push(dataChangedInfo);
-            }
-          });
-        }
-      });
-
-      if (failedPreventEdits.length > 0) {
-        this.ShowErrorPreventMessage(failedPreventEdits);
-      } else if (failedWarningEdits.length > 0) {
-        this.ShowWarningMessages(failedWarningEdits, warningValues, successfulValues);
-      } else {
-        this.blotter.updateRows(dataRows);
-      }
-    } else {
-      this.blotter.updateRows(dataRows);
-    }
+    this.blotter.updateRows(dataRows);
   }
 
   public addGridData(dataRows: any[]): void {
@@ -97,47 +42,54 @@ export class GridApiImpl extends ApiBase implements GridApi {
     primaryKeyValue: any,
     columnId: string,
     newValue: any,
-    performCellValidation: boolean = true
+    validateChange: boolean = true
   ): void {
     let gridCell: GridCell = {
       primaryKeyValue: primaryKeyValue,
       columnId: columnId,
       value: newValue,
     };
-    this.setGridCell(gridCell, performCellValidation);
+    this.setGridCell(gridCell, validateChange);
   }
 
-  public setGridCell(gridCell: GridCell, performCellValidation: boolean = true): void {
+  public setGridCell(gridCell: GridCell, validateChange: boolean = true): void {
     let dataChangedInfo: DataChangedInfo = this.createDataChangedInfoFromGridCell(gridCell);
-    if (performCellValidation) {
-      if (this.blotter.ValidationService.ValidateDataChange(dataChangedInfo)) {
-        this.blotter.setValue(dataChangedInfo);
+    if (validateChange) {
+      if (!this.blotter.ValidationService.PerformCellValidation(dataChangedInfo)) {
+        return;
       }
-    } else {
-      this.blotter.setValue(dataChangedInfo);
     }
+
+    const onEditSuccess = () => {
+      this.blotter.setValue(dataChangedInfo);
+    };
+
+    const mimicPromise = this.blotter.blotterOptions.editOptions.validateOnServer
+      ? this.blotter.ValidationService.PerformServerValidation(dataChangedInfo, {
+          onEditSuccess,
+        })
+      : onEditSuccess;
+
+    mimicPromise();
   }
 
   private createDataChangedInfoFromGridCell(gridCell: GridCell): DataChangedInfo {
     let currentValue = this.blotter.getDisplayValue(gridCell.primaryKeyValue, gridCell.columnId);
+    let currentRowNode = this.blotter.getRowNodeForPrimaryKey(gridCell.primaryKeyValue);
     let dataChangedInfo: DataChangedInfo = {
       OldValue: currentValue,
       NewValue: gridCell.value,
       ColumnId: gridCell.columnId,
       IdentifierValue: gridCell.primaryKeyValue,
+      RowNode: currentRowNode,
     };
     return dataChangedInfo;
   }
 
-  public setGridCells(gridCells: GridCell[], performCellValidation: boolean): void {
-    let dataChangedInfos: DataChangedInfo[] = gridCells.map(gc => {
-      return this.createDataChangedInfoFromGridCell(gc);
+  public setGridCells(gridCells: GridCell[], validateChange: boolean): void {
+    gridCells.forEach(gc => {
+      this.setGridCell(gc, validateChange);
     });
-    if (performCellValidation) {
-      // not sure here what we do.  probably similar to what we did in other one.
-    } else {
-      this.blotter.setValueBatch(dataChangedInfos);
-    }
   }
 
   public getColumns(): AdaptableBlotterColumn[] {

@@ -42,6 +42,11 @@ export function assignBlotterOptions(
     DefaultAdaptableBlotterOptions.queryOptions,
     blotterOptions.queryOptions
   );
+  returnBlotterOptions.editOptions = Object.assign(
+    {},
+    DefaultAdaptableBlotterOptions.editOptions,
+    blotterOptions.editOptions
+  );
   returnBlotterOptions.containerOptions = Object.assign(
     {},
     DefaultAdaptableBlotterOptions.containerOptions,

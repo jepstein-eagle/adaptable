@@ -24,6 +24,9 @@ import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 import { IUIConfirmation } from '../Interface/IMessage';
 import CellValidationHelper from '../Helpers/CellValidationHelper';
+import { Validation } from '../../BlotterOptions/EditOptions';
+import LoggingHelper from '../Helpers/LoggingHelper';
+import { GridCell } from '../Interface/Selection/GridCell';
 
 export class ValidationService implements IValidationService {
   constructor(private blotter: IAdaptableBlotter) {
@@ -31,35 +34,35 @@ export class ValidationService implements IValidationService {
   }
 
   // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
-  public GetValidationRulesForDataChange(dataChangedEvent: DataChangedInfo): CellValidationRule[] {
+  public GetValidationRulesForDataChange(dataChangedInfo: DataChangedInfo): CellValidationRule[] {
     let failedWarningRules: CellValidationRule[] = [];
     // if the new value is the same as the old value then we can get out as we dont see it as an edit?
-    if (dataChangedEvent.OldValue == dataChangedEvent.NewValue) {
+    if (dataChangedInfo.OldValue == dataChangedInfo.NewValue) {
       return failedWarningRules;
     }
 
     // first check that if primary key change, the new value is unique
-    if (dataChangedEvent.ColumnId == this.blotter.blotterOptions.primaryKey) {
+    if (dataChangedInfo.ColumnId == this.blotter.blotterOptions.primaryKey) {
       if (this.blotter.blotterOptions.generalOptions!.preventDuplicatePrimaryKeyValues) {
-        if (dataChangedEvent.OldValue != dataChangedEvent.NewValue) {
+        if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {
           let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(
-            dataChangedEvent.ColumnId,
+            dataChangedInfo.ColumnId,
             DistinctCriteriaPairValue.DisplayValue,
             false
           );
           let existingItem = displayValuePair.find(
-            dv => dv.DisplayValue == dataChangedEvent.NewValue
+            dv => dv.DisplayValue == dataChangedInfo.NewValue
           );
           if (existingItem) {
             let range = ObjectFactory.CreateRange(
               LeafExpressionOperator.PrimaryKeyDuplicate,
-              dataChangedEvent.ColumnId,
+              dataChangedInfo.ColumnId,
               null,
               RangeOperandType.Column,
               null
             );
             let cellValidationRule: CellValidationRule = ObjectFactory.CreateCellValidationRule(
-              dataChangedEvent.ColumnId,
+              dataChangedInfo.ColumnId,
               range,
               ActionMode.StopEdit,
               ExpressionHelper.CreateEmptyExpression()
@@ -71,7 +74,7 @@ export class ValidationService implements IValidationService {
     }
 
     let editingRules = this.GetCellValidationState().CellValidations.filter(
-      v => v.ColumnId == dataChangedEvent.ColumnId
+      v => v.ColumnId == dataChangedInfo.ColumnId
     );
 
     if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
@@ -89,19 +92,19 @@ export class ValidationService implements IValidationService {
         for (let expressionRule of expressionRules) {
           let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(
             expressionRule.Expression,
-            dataChangedEvent.IdentifierValue,
+            dataChangedInfo.IdentifierValue,
             columns,
             this.blotter
           );
           if (
             isSatisfiedExpression &&
-            this.IsCellValidationRuleBroken(expressionRule, dataChangedEvent, columns)
+            this.IsCellValidationRuleBroken(expressionRule, dataChangedInfo, columns)
           ) {
             // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
             if (expressionRule.ActionMode == 'Stop Edit') {
               this.logAuditValidationEvent('Validating Cell Edit', 'Failed', {
                 Errors: [expressionRule],
-                DataChangingEvent: dataChangedEvent,
+                DataChangingEvent: dataChangedInfo,
               });
               return [expressionRule];
             } else {
@@ -116,11 +119,11 @@ export class ValidationService implements IValidationService {
         ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
-        if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {
+        if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo, columns)) {
           if (noExpressionRule.ActionMode == 'Stop Edit') {
             this.logAuditValidationEvent('Validating Cell Edit', 'Failed', {
               Errors: [noExpressionRule],
-              DataChangingEvent: dataChangedEvent,
+              DataChangingEvent: dataChangedInfo,
             });
             return [noExpressionRule];
           } else {
@@ -132,17 +135,17 @@ export class ValidationService implements IValidationService {
     if (failedWarningRules.length > 0) {
       this.logAuditValidationEvent('Validating Cell Edit', 'Warning Shown', {
         Warnings: failedWarningRules,
-        DataChangingEvent: dataChangedEvent,
+        DataChangingEvent: dataChangedInfo,
       });
     } else {
       this.logAuditValidationEvent('Validating Cell Edit', 'Success', {
-        DataChangingEvent: dataChangedEvent,
+        DataChangingEvent: dataChangedInfo,
       });
     }
     return failedWarningRules;
   }
 
-  public ValidateDataChange(dataChangedInfo: DataChangedInfo): boolean {
+  public PerformCellValidation(dataChangedInfo: DataChangedInfo): boolean {
     const failedRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
       dataChangedInfo
     );
@@ -171,13 +174,11 @@ export class ValidationService implements IValidationService {
 
       this.blotter.api.internalApi.showPopupConfirmation(confirmation);
       // we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
-      // we need urgently to test that this does all the post edit functionality
       return false;
     }
     return true;
   }
 
-  // changing this so that it now checks the opposite!
   private IsCellValidationRuleBroken(
     cellValidationRule: CellValidationRule,
     dataChangedEvent: DataChangedInfo,
@@ -217,5 +218,41 @@ export class ValidationService implements IValidationService {
       };
       this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
+  }
+
+  public PerformServerValidation(
+    dataChangedInfo: DataChangedInfo,
+    config: { onEditSuccess: () => void }
+  ) {
+    return (): boolean => {
+      this.blotter.blotterOptions.editOptions
+        .validateOnServer(dataChangedInfo)
+        .then((validationResult: Validation) => {
+          if (validationResult.NewValue === undefined) {
+            validationResult.NewValue = dataChangedInfo.NewValue;
+          }
+          console.log('get here');
+          console.log(dataChangedInfo);
+          console.log(validationResult);
+          // If they have changed the return value then we should update the grid, log the function change
+          // otherwise the value will persist
+          if (validationResult.NewValue !== dataChangedInfo.NewValue) {
+            dataChangedInfo.NewValue = validationResult.NewValue;
+            console.log(dataChangedInfo);
+            // not sure whether to validate as what happens if it fails?
+            //  if (this.validateOnServer(dataChangedInfo)) {
+            this.blotter.setValue(dataChangedInfo);
+            //  }
+
+            LoggingHelper.LogAdaptableBlotterInfo(
+              'Cell Edit Failed Server Validation',
+              validationResult
+            );
+          }
+          config.onEditSuccess();
+        });
+
+      return false;
+    };
   }
 }

@@ -80,6 +80,9 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     getColumnValues: undefined,
     ignoreCaseInQueries: true,
   },
+  editOptions: {
+    validateOnServer: undefined,
+  },
   chartOptions: {
     displayOnStartUp: false,
     showModal: false,

@@ -95,7 +95,7 @@ import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { Helper, arrayToKeyMap } from '../Utilities/Helpers/Helper';
+import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 // if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
@@ -118,9 +118,6 @@ import {
   PRIVATE_CELLS_SELECTED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
-import { IEvent } from '../Utilities/Interface/IEvent';
-import { IUIConfirmation } from '../Utilities/Interface/IMessage';
-import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { agGridHelper } from './agGridHelper';
 import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
@@ -134,7 +131,6 @@ import { SearchService } from '../Utilities/Services/SearchService';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
-import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/LayoutState';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
@@ -164,7 +160,7 @@ import { IGlue42Service, Glue42Service } from '../Utilities/Services/Glue42Servi
 import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
-import { BlotterApi } from '../types';
+import { BlotterApi } from '../Api/BlotterApi';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -1052,58 +1048,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
       }
     }
-    this.performPostEditChecks([dataChangedInfo]);
-  }
-
-  // this is used by strategies to update the grid
-  // not sure why do it this way and not just get it updated through the event
-  public setValueBatch(dataChangedInfoBatch: DataChangedInfo[]): void {
-    if (ArrayExtensions.IsNullOrEmpty(dataChangedInfoBatch)) {
-      return;
-    }
-
-    dataChangedInfoBatch.forEach((dataChangedInfo: DataChangedInfo) => {
-      if (dataChangedInfo.RowNode) {
-        dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
-      } else {
-        // now two ways to do this - one using pk lookup and other using foreach on row node
-        if (this.useRowNodeLookUp) {
-          const rowNode: RowNode = this.gridOptions.api!.getRowNode(
-            dataChangedInfo.IdentifierValue
-          );
-          if (rowNode) {
-            rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
-            dataChangedInfo.RowNode = rowNode;
-          }
-        } else {
-          this.gridOptions.api!.getModel().forEachNode((rowNode: RowNode) => {
-            if (this.getPrimaryKeyValueFromRowNode(rowNode) == dataChangedInfo.IdentifierValue) {
-              rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
-              dataChangedInfo.RowNode = rowNode;
-            }
-          });
-        }
-      }
-    });
-
-    this.performPostEditChecks(dataChangedInfoBatch);
-
-    // we want to reselect the cells that are selected so that users can repeat actions
-    // we do this by gettng the selected cells, clearing the selection and then re-applying
-    //  agGridHelper.reselectSelectedCells();
-    // need to do it first
-    const selectedCellRanges: CellRange[] = this.gridOptions.api!.getCellRanges();
-    if (ArrayExtensions.CorrectLength(selectedCellRanges, 1)) {
-      const selectedCellRange: CellRange = selectedCellRanges[0];
-      const cellRangeParams: CellRangeParams = {
-        rowStartIndex: selectedCellRange.startRow.rowIndex,
-        rowEndIndex: selectedCellRange.endRow.rowIndex,
-        columns: selectedCellRange.columns,
-      };
-      this.gridOptions.api!.clearRangeSelection();
-
-      this.gridOptions.api!.addCellRange(cellRangeParams);
-    }
+    this.performPostEditChecks(dataChangedInfo);
   }
 
   public cancelEdit() {
@@ -2088,7 +2033,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       // if there was already an implementation set by the dev we keep the reference to it and execute it at the end
       const oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
-      const isCancelAfterEnd = () => {
+
+      this._currentEditor.isCancelAfterEnd = () => {
         const dataChangedInfo: DataChangedInfo = {
           OldValue: this.gridOptions.api!.getValue(params.column.getColId(), params.node),
           NewValue: this._currentEditor.getValue(),
@@ -2097,19 +2043,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           RowNode: params.node,
         };
 
-        // check if the edit passes validation; if it doesnt then return true (which means we need to cancel)
-        let isProposedEditValid = this.ValidationService.ValidateDataChange(dataChangedInfo);
-        if (!isProposedEditValid) {
+        if (!this.ValidationService.PerformCellValidation(dataChangedInfo)) {
           return true;
         }
 
-        const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
-        if (!whatToReturn) {
-          this.performPostEditChecks([dataChangedInfo], false);
-        }
-        return whatToReturn;
+        const onEditSuccess = () => {
+          const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
+          if (!whatToReturn) {
+            this.performPostEditChecks(dataChangedInfo, false);
+          }
+          return whatToReturn;
+        };
+
+        const isCancelAfterEnd = this.blotterOptions.editOptions.validateOnServer
+          ? this.ValidationService.PerformServerValidation(dataChangedInfo, {
+              onEditSuccess,
+            })
+          : onEditSuccess;
+
+        return isCancelAfterEnd();
       };
-      this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
     });
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
       // (<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
@@ -2630,7 +2583,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // so we have to hope that its been done already
         // if we have gone through the Blotter API we will be fine but not if they update ag-Grid directly
         // but we can perform the POST EDIT checks
-        this.performPostEditChecks([dataChangedInfo]);
+        this.performPostEditChecks(dataChangedInfo);
       }
     });
   }
@@ -2639,23 +2592,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
    * There are a few things that we need to do AFTER we edit a cell and it makes sense to put them in one place
    */
   private performPostEditChecks(
-    dataChangedInfos: DataChangedInfo[],
+    dataChangedInfo: DataChangedInfo,
     applyFilter: boolean = true
   ): void {
-    dataChangedInfos.forEach((dataChangedInfo: DataChangedInfo) => {
-      if (this.AuditLogService.isAuditCellEditsEnabled) {
-        this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
-      }
-      this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
-      this.DataService.CreateDataChangedEvent(dataChangedInfo);
-    });
-
+    if (this.AuditLogService.isAuditCellEditsEnabled) {
+      this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
+    }
+    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
+    this.DataService.CreateDataChangedEvent(dataChangedInfo);
+    this.agGridHelper.reselectSelectedCells();
     if (applyFilter) {
-      let rowNodes = dataChangedInfos.map(dc => {
-        return dc.RowNode;
-      });
-      this.filterOnUserDataChange(rowNodes);
-      // this.gridOptions.api!.clearRangeSelection();
+      this.filterOnUserDataChange([dataChangedInfo.RowNode]);
     }
   }
 

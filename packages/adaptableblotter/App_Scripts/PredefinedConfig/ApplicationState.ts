@@ -194,7 +194,7 @@ export interface ApplicationDataEntry {
   /**
    * The actual piece of data or object being stored.
    *
-   * The only limiitation is that it needs to be something that can be stringified as it will be converted to JSON.
+   * The only limitation is that it needs to be something that can be stringified as it will be converted to JSON.
    */
   Value: any;
 }

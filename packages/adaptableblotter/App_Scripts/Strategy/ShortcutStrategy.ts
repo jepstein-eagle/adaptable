@@ -1,22 +1,16 @@
 import { IShortcutStrategy } from './Interface/IShortcutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as Redux from 'redux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { DataType, MathOperation, ActionMode } from '../PredefinedConfig/Common/Enums';
+import { DataType, MathOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
-import { ObjectFactory } from '../Utilities/ObjectFactory';
-import { IUIConfirmation } from '../Utilities/Interface/IMessage';
-import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
-import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 
@@ -100,42 +94,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       }
 
       if (activeShortcut) {
-        let dataChangedEvent: DataChangedInfo = {
-          OldValue: activeCell.value,
-          NewValue: valueToReplace,
-          ColumnId: activeCell.columnId,
-          IdentifierValue: activeCell.primaryKeyValue,
-        };
-
-        let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
-          dataChangedEvent
-        );
-        let hasErrorPrevent: boolean =
-          validationRules.length > 0 && validationRules[0].ActionMode == ActionMode.StopEdit;
-        let hasErrorWarning: boolean =
-          validationRules.length > 0 && validationRules[0].ActionMode == ActionMode.WarnUser;
-
-        //   this.AuditFunctionAction("HandleKeyDown",                     "Key Pressed: " + keyEventString,                     { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
-
         //We cancel the edit before doing anything so there is no issue when showing a popup or performing the shortcut
         this.blotter.cancelEdit();
 
-        if (hasErrorPrevent) {
-          this.ShowErrorPreventMessage(validationRules[0]);
-        } else {
-          if (hasErrorWarning) {
-            this.ShowWarningMessages(
-              validationRules,
-              activeShortcut,
-              activeCell,
-              keyEventString,
-              valueToReplace
-            );
-          } else {
-            this.applyShortcut(activeShortcut, activeCell, valueToReplace, keyEventString);
-          }
-        }
-        // useful feature - prevents the main thing happening you want to on the keypress.
+        this.applyShortcut(activeShortcut, activeCell, valueToReplace, keyEventString);
         keyEvent.preventDefault();
       }
     }
@@ -165,14 +127,13 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     newValue: any,
     keyEventString: string
   ): void {
-    //apply the shortcut - we have already performed cell validation so no need to do it again
     this.blotter.api.gridApi.setGridCell(
       {
         primaryKeyValue: activeCell.primaryKeyValue,
         columnId: activeCell.columnId,
         value: newValue,
       },
-      false
+      true
     );
 
     let functionAppliedDetails: FunctionAppliedDetails = {
@@ -187,40 +148,5 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       },
     };
     this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
-  }
-
-  private ShowErrorPreventMessage(failedRule: CellValidationRule): void {
-    this.blotter.api.alertApi.showAlertError(
-      'Shortcut Failed',
-      ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter)
-    );
-  }
-
-  private ShowWarningMessages(
-    failedRules: CellValidationRule[],
-    shortcut: Shortcut,
-    activeCell: GridCell,
-    keyEventString: string,
-    newValue: any
-  ): void {
-    let warningMessage: string = '';
-    failedRules.forEach(f => {
-      warningMessage =
-        warningMessage + ObjectFactory.CreateCellValidationMessage(f, this.blotter) + '\n';
-    });
-
-    let confirmAction: Redux.Action = ShortcutRedux.ShortcutApply(
-      shortcut,
-      activeCell,
-      keyEventString,
-      newValue
-    );
-    let cancelAction: Redux.Action = null;
-    let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
-      confirmAction,
-      cancelAction,
-      warningMessage
-    );
-    this.blotter.api.internalApi.showPopupConfirmation(confirmation);
   }
 }

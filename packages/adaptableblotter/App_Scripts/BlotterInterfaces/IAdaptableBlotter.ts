@@ -184,7 +184,6 @@ export interface IAdaptableBlotter {
 
   // editing related
   setValue(dataChangedInfo: DataChangedInfo): void;
-  setValueBatch(dataChangedInfoBatch: DataChangedInfo[]): void;
   cancelEdit(): any;
   gridHasCurrentEditValue(): boolean;
   getCurrentCellEditValue(): any;

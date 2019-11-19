@@ -345,7 +345,6 @@ export class agGridHelper {
         columns: selectedCellRange.columns,
       };
       this.gridOptions.api!.clearRangeSelection();
-
       this.gridOptions.api!.addCellRange(cellRangeParams);
     }
   }
