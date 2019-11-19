@@ -54,7 +54,7 @@ export class AdaptableBlotterAngularAgGridComponent implements OnInit {
   public blotterContainerId: string;
   public gridContainerId: string;
 
-  public wrapperClassName: string = 'ab__ng-wrapper';
+  public wrapperClassName = 'ab__ng-wrapper';
 
   public blotterFactory: any;
 
