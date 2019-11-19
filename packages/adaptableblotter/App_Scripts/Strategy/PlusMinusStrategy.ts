@@ -12,7 +12,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
@@ -155,7 +155,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             OldValue: Number(selectedCell.value),
             NewValue: newValue.value,
             ColumnId: selectedCell.columnId,
-            IdentifierValue: selectedCell.primaryKeyValue,
+            PrimaryKeyValue: selectedCell.primaryKeyValue,
           };
 
           let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(

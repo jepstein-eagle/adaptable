@@ -69,7 +69,7 @@ import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
 import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
 import { AlertDefinitionDeleteAction } from '../Redux/ActionsReducers/AlertRedux';
-import { DataChangedInfo } from './Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };

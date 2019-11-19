@@ -1,4 +1,4 @@
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from './CommonObjects/DataChangedInfo';
 
 /**
  * Options related to Editing in the Adaptable Blotter.
@@ -69,6 +69,13 @@ export interface EditOptions {
    */
   validateOnServer?: (dataChangedInfo: DataChangedInfo) => Promise<ValidationResult>;
 
+  /**
+   * Whether or not to display a message after Server Validation.
+   *
+   * If set to true then an Info Message will appear with any ValidationMessage sent by ServerValidation; if there is no Validation Message then no popup is displayed.
+   *
+   * **Default Value: true**
+   */
   displayServerValidationMessages?: boolean;
 }
 
@@ -97,10 +104,4 @@ export interface ValidationResult {
    * If you are happy with the edit then leave it free.
    */
   NewValue?: any;
-}
-
-export interface ValidationMessageProperties {
-  FireAlert?: boolean;
-  ShowPopup?: boolean;
-  LogToConsole?: boolean;
 }

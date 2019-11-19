@@ -1,6 +1,6 @@
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { AlertState, AlertProperties, AlertDefinition } from '../PredefinedConfig/AlertState';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 
 /**
  * Provides full and comprehensive run-time access to the Alert function and associated state.

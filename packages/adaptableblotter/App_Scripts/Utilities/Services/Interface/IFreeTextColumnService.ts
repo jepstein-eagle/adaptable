@@ -1,4 +1,4 @@
-import { DataChangedInfo } from '../../Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { FreeTextColumn } from '../../../PredefinedConfig/FreeTextColumnState';
 
 export interface IFreeTextColumnService {

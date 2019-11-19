@@ -20,7 +20,7 @@ import {
   CellValidationState,
   CellValidationRule,
 } from '../../PredefinedConfig/CellValidationState';
-import { DataChangedInfo } from '../Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 import { IUIConfirmation, AdaptableAlert } from '../Interface/IMessage';
 import CellValidationHelper from '../Helpers/CellValidationHelper';
@@ -93,7 +93,7 @@ export class ValidationService implements IValidationService {
         for (let expressionRule of expressionRules) {
           let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(
             expressionRule.Expression,
-            dataChangedInfo.IdentifierValue,
+            dataChangedInfo.PrimaryKeyValue,
             columns,
             this.blotter
           );

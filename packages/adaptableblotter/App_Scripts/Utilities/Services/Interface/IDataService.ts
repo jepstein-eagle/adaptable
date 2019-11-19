@@ -1,4 +1,4 @@
-import { DataChangedInfo } from '../../Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { IEvent } from '../../Interface/IEvent';
 
 export enum ChangeDirection {

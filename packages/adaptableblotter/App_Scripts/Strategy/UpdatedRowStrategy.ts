@@ -9,7 +9,7 @@ import {
   ContextMenuInfo,
   MenuItemShowPopup,
 } from '../Utilities/MenuItem';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
@@ -76,7 +76,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
 
       if (ArrayExtensions.IsNotNullOrEmpty(colsToRefresh)) {
         let updatedRowInfo: UpdatedRowInfo = {
-          primaryKeyValue: dataChangedInfo.IdentifierValue,
+          primaryKeyValue: dataChangedInfo.PrimaryKeyValue,
           changeDirection: this.getChangeDirection(dataChangedInfo),
         };
         this.blotter.api.updatedRowApi.addUpdatedRowInfo(updatedRowInfo);

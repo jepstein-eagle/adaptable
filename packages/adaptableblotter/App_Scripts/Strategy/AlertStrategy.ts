@@ -9,7 +9,7 @@ import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import {
@@ -98,7 +98,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
         for (let expressionAlertDefinition of expressionAlertDefinitions) {
           let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(
             expressionAlertDefinition.Expression,
-            dataChangedEvent.IdentifierValue,
+            dataChangedEvent.PrimaryKeyValue,
             columns,
             this.blotter
           );

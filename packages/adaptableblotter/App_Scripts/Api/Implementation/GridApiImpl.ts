@@ -9,7 +9,7 @@ import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCe
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
-import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
@@ -80,7 +80,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
       OldValue: currentValue,
       NewValue: gridCell.value,
       ColumnId: gridCell.columnId,
-      IdentifierValue: gridCell.primaryKeyValue,
+      PrimaryKeyValue: gridCell.primaryKeyValue,
       RowNode: currentRowNode,
     };
     return dataChangedInfo;

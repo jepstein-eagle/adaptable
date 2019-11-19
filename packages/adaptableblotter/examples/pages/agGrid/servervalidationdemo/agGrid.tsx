@@ -17,7 +17,7 @@ import {
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 import { GridCell } from '../../../../App_Scripts/Utilities/Interface/Selection/GridCell';
-import { DataChangedInfo } from '../../../../App_Scripts/Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../../../App_Scripts/BlotterOptions/CommonObjects/DataChangedInfo';
 import { ValidationResult } from '../../../../App_Scripts/BlotterOptions/EditOptions';
 
 var adaptableblotter: IAdaptableBlotter;
@@ -55,13 +55,6 @@ function InitAdaptableBlotter() {
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   adaptableblotter.api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
-    const rowDataNew = Object.assign({}, args.data[0].id.rowData);
-    rowDataNew.notional = 200;
-    rowDataNew.counterparty = 'Hello';
-    rowDataNew.country = 'Disneyland';
-    //   adaptableblotter.api.gridApi.updateGridData([rowDataNew]);
-    // gridOptions.api!.updateRowData({ update: [rowDataNew] });
-
     let gridCell: GridCell = {
       columnId: 'amount',
       value: 50,
@@ -114,7 +107,7 @@ let demoConfig: PredefinedConfig = {
     ActionColumns: [
       {
         ColumnId: 'Test',
-        ButtonText: 'Test Updates',
+        ButtonText: 'Test with API',
       },
     ],
   },

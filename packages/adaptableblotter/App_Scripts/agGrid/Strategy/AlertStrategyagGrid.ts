@@ -40,7 +40,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
                     aa.AlertDefinition.ColumnId == col.ColumnId &&
                     aa.AlertDefinition.MessageType == alertDefinition.MessageType &&
                     aa.DataChangedInfo &&
-                    aa.DataChangedInfo.IdentifierValue ==
+                    aa.DataChangedInfo.PrimaryKeyValue ==
                       theBlotter.getPrimaryKeyValueFromRowNode(params.node)
                 );
 

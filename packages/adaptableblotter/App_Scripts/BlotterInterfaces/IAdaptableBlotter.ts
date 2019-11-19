@@ -34,7 +34,7 @@ import {
 import { EmitterCallback } from '../Utilities/Emitter';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { BlotterApi } from '../Api/BlotterApi';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 
 /**
  *  The only interface for the AdaptableBlotter

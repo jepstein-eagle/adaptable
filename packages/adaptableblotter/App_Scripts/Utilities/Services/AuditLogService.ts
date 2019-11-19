@@ -1,5 +1,5 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { DataChangedInfo } from '../Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AuditLogEntry, AuditLogType } from '../Interface/AuditLogEntry';
 import { IAuditLogService } from './Interface/IAuditLogService';
 import { IAdaptableBlotter } from '../../types';
@@ -156,7 +156,7 @@ export class AuditLogService implements IAuditLogService {
             this.blotter.api.gridApi.getColumns()
           ) +
           '.  Identifier: ' +
-          dataChangedInfo.IdentifierValue +
+          dataChangedInfo.PrimaryKeyValue +
           '.  Old Value: ' +
           dataChangedInfo.OldValue +
           '.  New Value: ' +
@@ -275,7 +275,7 @@ export class AuditLogService implements IAuditLogService {
             this.blotter.api.gridApi.getColumns()
           ) +
           '.  Identifier: ' +
-          dataChangedInfo.IdentifierValue +
+          dataChangedInfo.PrimaryKeyValue +
           '.  Old Value: ' +
           dataChangedInfo.OldValue +
           '.  New Value: ' +
@@ -295,7 +295,7 @@ export class AuditLogService implements IAuditLogService {
       username: this.blotter.blotterOptions.userName!,
       blotter_id: this.blotter.blotterOptions.blotterId!,
       data_change_details: {
-        primarykey_column_value: String(dataChangedInfo.IdentifierValue),
+        primarykey_column_value: String(dataChangedInfo.PrimaryKeyValue),
         primarykey_column_id: this.blotter.blotterOptions.primaryKey,
         column_id: dataChangedInfo.ColumnId,
         previous_value: String(dataChangedInfo.OldValue),

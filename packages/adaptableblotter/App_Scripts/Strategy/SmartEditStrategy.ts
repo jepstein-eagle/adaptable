@@ -6,7 +6,7 @@ import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
@@ -180,7 +180,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
               OldValue: Number(selectedCell.value),
               NewValue: newValue,
               ColumnId: selectedCell.columnId,
-              IdentifierValue: selectedCell.primaryKeyValue,
+              PrimaryKeyValue: selectedCell.primaryKeyValue,
             };
 
             let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(

@@ -8,7 +8,7 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
-import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';

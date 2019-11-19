@@ -1,7 +1,7 @@
 import { EventDispatcher } from '../EventDispatcher';
 import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { DataChangedInfo } from '../Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { IEvent } from '../Interface/IEvent';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 

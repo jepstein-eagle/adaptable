@@ -1,6 +1,6 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
-import { DataChangedInfo } from '../Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { IAdaptableBlotter } from '../../types';
 import { FreeTextColumn, FreeTextStoredValue } from '../../PredefinedConfig/FreeTextColumnState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
@@ -37,7 +37,7 @@ export class FreeTextColumnService implements IFreeTextColumnService {
       .find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
     if (freeTextColumn) {
       let freeTextStoredValue: FreeTextStoredValue = {
-        PrimaryKey: dataChangedEvent.IdentifierValue,
+        PrimaryKey: dataChangedEvent.PrimaryKeyValue,
         FreeText: dataChangedEvent.NewValue,
       };
       this.blotter.api.freeTextColumnApi.addEditFreeTextColumnStoredValue(

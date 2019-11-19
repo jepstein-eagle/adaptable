@@ -128,7 +128,7 @@ import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
-import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2459,7 +2459,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   OldValue: blotter.getDisplayValue(gc.primaryKeyValue, gc.columnId),
                   NewValue: gc.value,
                   ColumnId: gc.columnId,
-                  IdentifierValue: gc.primaryKeyValue,
+                  PrimaryKeyValue: gc.primaryKeyValue,
                 };
               });
               dataChangedInfos.forEach(dc => {

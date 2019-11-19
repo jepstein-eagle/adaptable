@@ -71,7 +71,7 @@ import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 import { UpdatedRowStrategy } from '../Strategy/UpdatedRowStrategy';
 import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';

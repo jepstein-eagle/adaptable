@@ -8,7 +8,7 @@ import ColumnHelper from '../Helpers/ColumnHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
-import { DataChangedInfo } from '../Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import Glue4Office, { Glue42Office } from '@glue42/office';
@@ -191,7 +191,7 @@ export class Glue42Service implements IGlue42Service {
                   OldValue: originalValue,
                   NewValue: change,
                   ColumnId: column.ColumnId,
-                  IdentifierValue: primaryKeyValue,
+                  PrimaryKeyValue: primaryKeyValue,
                 };
                 dataChangedInfos.push(dataChangedInfo);
               }
@@ -296,7 +296,7 @@ export class Glue42Service implements IGlue42Service {
       OldValue: originalValue,
       NewValue: returnedValue,
       ColumnId: column.ColumnId,
-      IdentifierValue: primaryKeyValue,
+      PrimaryKeyValue: primaryKeyValue,
     };
 
     // check for any validation issues

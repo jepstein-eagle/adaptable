@@ -14,7 +14,7 @@ import {
 } from '../PredefinedConfig/ChartState';
 import { SystemState } from '../PredefinedConfig/SystemState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 
 import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';

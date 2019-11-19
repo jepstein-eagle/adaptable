@@ -22,7 +22,7 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { grid } from 'styled-system';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {

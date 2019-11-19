@@ -6,7 +6,7 @@ import { BulkUpdateValidationResult } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
@@ -161,7 +161,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             OldValue: selectedCell.value,
             NewValue: typedBulkUpdateValue,
             ColumnId: selectedCell.columnId,
-            IdentifierValue: selectedCell.primaryKeyValue,
+            PrimaryKeyValue: selectedCell.primaryKeyValue,
           };
 
           let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(

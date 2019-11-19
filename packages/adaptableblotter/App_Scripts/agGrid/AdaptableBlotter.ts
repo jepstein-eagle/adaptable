@@ -103,7 +103,7 @@ import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
-import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { BlotterApiImpl } from '../Api/Implementation/BlotterApiImpl';
 import {
   DEFAULT_LAYOUT,
@@ -1028,7 +1028,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
     } else {
       if (this.useRowNodeLookUp) {
-        const rowNode: RowNode = this.gridOptions.api!.getRowNode(dataChangedInfo.IdentifierValue);
+        const rowNode: RowNode = this.gridOptions.api!.getRowNode(dataChangedInfo.PrimaryKeyValue);
         if (rowNode != null) {
           rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
           dataChangedInfo.RowNode = rowNode;
@@ -1038,7 +1038,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // prefer not to use this method but if we do then at least we can prevent further lookups once we find
         this.gridOptions.api!.getModel().forEachNode(rowNode => {
           if (!isUpdated) {
-            if (dataChangedInfo.IdentifierValue == this.getPrimaryKeyValueFromRowNode(rowNode)) {
+            if (dataChangedInfo.PrimaryKeyValue == this.getPrimaryKeyValueFromRowNode(rowNode)) {
               //  dataChangedInfo = this.updateValue(gridCell, rowNode);
               rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
               dataChangedInfo.RowNode = rowNode;
@@ -2039,7 +2039,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           OldValue: this.gridOptions.api!.getValue(params.column.getColId(), params.node),
           NewValue: this._currentEditor.getValue(),
           ColumnId: params.column.getColId(),
-          IdentifierValue: this.getPrimaryKeyValueFromRowNode(params.node),
+          PrimaryKeyValue: this.getPrimaryKeyValueFromRowNode(params.node),
           RowNode: params.node,
         };
 
@@ -2167,7 +2167,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             OldValue: params.oldValue,
             NewValue: params.newValue,
             ColumnId: colId,
-            IdentifierValue: identifierValue,
+            PrimaryKeyValue: identifierValue,
             RowNode: params.node,
           };
 
@@ -2183,7 +2183,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 OldValue: params.oldValue,
                 NewValue: this.gridOptions.api!.getValue(columnId, params.node),
                 ColumnId: columnId,
-                IdentifierValue: identifierValue,
+                PrimaryKeyValue: identifierValue,
                 RowNode: params.node,
               };
               this.DataService.CreateDataChangedEvent(dataChangedInfo);
@@ -2575,7 +2575,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           OldValue: oldValue,
           NewValue: newValue,
           ColumnId: key,
-          IdentifierValue: identifierValue,
+          PrimaryKeyValue: identifierValue,
           RowNode: rowNode,
         };
 

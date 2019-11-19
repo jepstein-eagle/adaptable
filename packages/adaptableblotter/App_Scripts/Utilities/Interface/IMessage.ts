@@ -2,7 +2,7 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
-import { DataChangedInfo } from './DataChangedInfo';
+import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 export interface AdaptableAlert extends AdaptableBlotterObject {
