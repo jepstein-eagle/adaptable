@@ -150,6 +150,41 @@
           }
         }
       }
+    },
+    "blotter-angular-aggrid": {
+      "projectType": "library",
+      "root": "projects/blotter-angular-aggrid",
+      "sourceRoot": "projects/blotter-angular-aggrid/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/blotter-angular-aggrid/tsconfig.lib.json",
+            "project": "projects/blotter-angular-aggrid/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/blotter-angular-aggrid/src/test.ts",
+            "tsConfig": "projects/blotter-angular-aggrid/tsconfig.spec.json",
+            "karmaConfig": "projects/blotter-angular-aggrid/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/blotter-angular-aggrid/tsconfig.lib.json",
+              "projects/blotter-angular-aggrid/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "adaptableblotter-ng-aggrid"

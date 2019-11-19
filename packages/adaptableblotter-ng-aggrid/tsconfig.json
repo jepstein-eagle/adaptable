@@ -8,16 +8,28 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,    
-    "lib": ["es2018", "dom"],
+    "importHelpers": true,
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
       "adaptableblotter-angular-aggrid": [
         "dist/adaptableblotter-angular-aggrid"
       ],
       "adaptableblotter-angular-aggrid/*": [
         "dist/adaptableblotter-angular-aggrid/*"
+      ],
+      "blotter-angular-aggrid": [
+        "dist/blotter-angular-aggrid"
+      ],
+      "blotter-angular-aggrid/*": [
+        "dist/blotter-angular-aggrid/*"
       ]
     }
   },
-  "include": ["src/**/*", "../adaptableblotter/App_Scripts/**/*"]
+  "include": [
+    "src/**/*",
+    "../adaptableblotter/App_Scripts/**/*"
+  ]
 }

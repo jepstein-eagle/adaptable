@@ -65,6 +65,7 @@
     "clean-deps-projects": "rimraf projects/adaptableblotter-angular-aggrid/yarn.lock && rimraf projects/adaptableblotter-angular-aggrid/package-lock.json && rimraf projects/adaptableblotter-angular-aggrid/node_modules && npm --prefix projects/adaptableblotter-angular-aggrid/ i",
     "build": "npm run clean-deps && rimraf dist && npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng build --prod adaptableblotter-angular-aggrid && npm run build-package-json && npm run sass && npm run copy-assets",
     "just-build": "node --max-old-space-size=4096 ./node_modules/.bin/ng build adaptableblotter-angular-aggrid && npm run build-package-json && npm run sass && npm run copy-assets",
+    "build-blotter": "node --max-old-space-size=4096 ./node_modules/.bin/ng build blotter-angular-aggrid",
     "test": "ng test",
     "lint": "ng lint",
     "tsc": "tsc",
