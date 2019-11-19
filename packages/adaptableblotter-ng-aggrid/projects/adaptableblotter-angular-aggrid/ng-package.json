@@ -2,6 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/adaptableblotter-angular-aggrid",
   "lib": {
-    "entryFile": "src/adaptableblotter-angular-aggrid.module.ts"
+    "entryFile": "src/public-api.ts"
   }
 }

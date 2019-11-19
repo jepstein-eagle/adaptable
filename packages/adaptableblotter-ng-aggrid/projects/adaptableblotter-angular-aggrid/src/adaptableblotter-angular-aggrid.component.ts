@@ -6,8 +6,9 @@ import { GridOptions } from 'ag-grid-community';
 import { createBlotter as blotterFactory } from './createBlotter';
 import { BlotterApi } from './adaptableblotter/types';
 
-const getRandomInt = (max: number): number =>
-  Math.floor(Math.random() * Math.floor(max));
+function getRandomInt(max: number): number {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 @Component({
   entryComponents: [],
