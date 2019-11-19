@@ -19,12 +19,6 @@
       ],
       "adaptableblotter-angular-aggrid/*": [
         "dist/adaptableblotter-angular-aggrid/*"
-      ],
-      "blotter-angular-aggrid": [
-        "dist/blotter-angular-aggrid"
-      ],
-      "blotter-angular-aggrid/*": [
-        "dist/blotter-angular-aggrid/*"
       ]
     }
   },
