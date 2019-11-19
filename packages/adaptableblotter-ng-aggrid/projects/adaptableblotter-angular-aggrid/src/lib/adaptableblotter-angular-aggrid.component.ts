@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { AdaptableBlotterOptions } from './adaptableblotter/types';
+import { AdaptableBlotterOptions } from '../adaptableblotter/types';
 
 import { GridOptions } from 'ag-grid-community';
 import { createBlotter as blotterFactory } from './createBlotter';
-import { BlotterApi } from './adaptableblotter/types';
+import { BlotterApi } from '../adaptableblotter/types';
 
 function getRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max));

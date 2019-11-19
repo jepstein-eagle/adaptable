@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "target": "es5",
+    "module": "esnext",
     "importHelpers": false,
     "declaration": true,
     "inlineSources": true,

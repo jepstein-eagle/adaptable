@@ -16,10 +16,7 @@
  */
 
 // export * from './lib/adaptableblotter-angular-aggrid.service';
-import { AdaptableBlotterAngularAgGridComponent } from './adaptableblotter-angular-aggrid.component';
-export * from './adaptableblotter-angular-aggrid.component';
-export * from './adaptableblotter-angular-aggrid.module';
-export * from './adaptableblotter/App_Scripts/types';
 
-export { AdaptableBlotterAngularAgGridComponent } from './adaptableblotter-angular-aggrid.component';
-export default AdaptableBlotterAngularAgGridComponent;
+export * from './lib/adaptableblotter-angular-aggrid.component';
+export * from './lib/adaptableblotter-angular-aggrid.module';
+export * from './adaptableblotter/App_Scripts/types';
