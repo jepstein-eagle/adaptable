@@ -1,6 +1,6 @@
-import { AdaptableBlotterOptions } from '../adaptableblotter/types';
+import { AdaptableBlotterOptions } from './adaptableblotter/types';
 
-import AdaptableBlotter from '../adaptableblotter/App_Scripts/agGrid';
+import AdaptableBlotter from './adaptableblotter/App_Scripts/agGrid';
 import { Grid, GridOptions } from 'ag-grid-community';
 
 export const createBlotter = ({

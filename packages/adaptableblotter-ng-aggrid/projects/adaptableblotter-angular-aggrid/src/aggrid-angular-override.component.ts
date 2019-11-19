@@ -8,8 +8,8 @@ import {
   AngularFrameworkComponentWrapper,
   AgGridColumn,
 } from 'ag-grid-angular';
-import AdaptableBlotter from '../adaptableblotter/App_Scripts/agGrid';
-import { BlotterApi } from '../adaptableblotter/types';
+import AdaptableBlotter from './adaptableblotter/App_Scripts/agGrid';
+import { BlotterApi } from './adaptableblotter/types';
 
 @Component({
   selector: 'ag-grid-override',
