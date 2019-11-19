@@ -3,7 +3,7 @@ import { AdaptableBlotterOptions } from './adaptableblotter/types';
 import AdaptableBlotter from './adaptableblotter/App_Scripts/agGrid';
 import { Grid, GridOptions } from 'ag-grid-community';
 
-export const createBlotter = ({
+export function createBlotter({
   blotterOptions,
 
   blotterContainerId,
@@ -13,7 +13,7 @@ export const createBlotter = ({
 
   blotterContainerId: string;
   gridContainerId: string;
-}) => {
+}) {
   return (gridOptions: GridOptions, gridParams: any) => {
     return new AdaptableBlotter(
       {
@@ -33,4 +33,4 @@ export const createBlotter = ({
       }
     );
   };
-};
+}
