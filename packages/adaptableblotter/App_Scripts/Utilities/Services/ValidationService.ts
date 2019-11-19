@@ -22,11 +22,12 @@ import {
 } from '../../PredefinedConfig/CellValidationState';
 import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
-import { IUIConfirmation } from '../Interface/IMessage';
+import { IUIConfirmation, AdaptableAlert } from '../Interface/IMessage';
 import CellValidationHelper from '../Helpers/CellValidationHelper';
 import { ValidationResult } from '../../BlotterOptions/EditOptions';
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
+import StringExtensions from '../Extensions/StringExtensions';
 
 export class ValidationService implements IValidationService {
   constructor(private blotter: IAdaptableBlotter) {
@@ -265,6 +266,15 @@ export class ValidationService implements IValidationService {
                 DataChangingEvent: dataChangedInfo,
               }
             );
+            if (
+              StringExtensions.IsNotNullOrEmpty(validationResult.ValidationMessage) &&
+              this.blotter.blotterOptions.editOptions.displayServerValidationMessages
+            ) {
+              this.blotter.api.alertApi.showAlertInfo(
+                'Server Validation Message',
+                validationResult.ValidationMessage
+              );
+            }
           }
           config.onServerValidationCompleted();
         });

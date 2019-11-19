@@ -69,8 +69,7 @@ export interface EditOptions {
    */
   validateOnServer?: (dataChangedInfo: DataChangedInfo) => Promise<ValidationResult>;
 
-  showAlert?: boolean;
-  showAlertasPopup?: boolean;
+  displayServerValidationMessages?: boolean;
 }
 
 /**
@@ -98,4 +97,10 @@ export interface ValidationResult {
    * If you are happy with the edit then leave it free.
    */
   NewValue?: any;
+}
+
+export interface ValidationMessageProperties {
+  FireAlert?: boolean;
+  ShowPopup?: boolean;
+  LogToConsole?: boolean;
 }

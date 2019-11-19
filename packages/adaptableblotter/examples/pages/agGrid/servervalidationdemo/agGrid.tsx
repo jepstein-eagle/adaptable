@@ -46,7 +46,7 @@ function InitAdaptableBlotter() {
     adaptableBlotterOptions.editOptions = {
       validateOnServer: (dataChangedInfo: DataChangedInfo) => {
         return new Promise((resolve, reject) => {
-          setTimeout(() => resolve(getServerEditResponse(dataChangedInfo)), 2000);
+          setTimeout(() => resolve(getServerEditResponse(dataChangedInfo)), 500);
         });
       },
     };
@@ -63,7 +63,7 @@ function InitAdaptableBlotter() {
     // gridOptions.api!.updateRowData({ update: [rowDataNew] });
 
     let gridCell: GridCell = {
-      columnId: 'notional',
+      columnId: 'amount',
       value: 50,
       primaryKeyValue: args.data[0].id.primaryKeyValue,
     };
@@ -85,21 +85,21 @@ function getServerEditResponse(dataChangedInfo: DataChangedInfo): ValidationResu
       };
     }
   }
-  if (dataChangedInfo.ColumnId == 'notional') {
+  if (dataChangedInfo.ColumnId == 'amount') {
     if (dataChangedInfo.NewValue == 50) {
       return {
         NewValue: dataChangedInfo.OldValue,
-        ValidationMessage: 'Cannot set it to 50',
+        ValidationMessage: 'Cannot set Amount to 50',
       };
     } else if (dataChangedInfo.NewValue > 100) {
       return {
         NewValue: 100,
-        ValidationMessage: 'Cannot be greater than 100',
+        ValidationMessage: 'Amount cannot be greater than 100',
       };
     } else if (dataChangedInfo.NewValue < 20) {
       return {
         NewValue: 20,
-        ValidationMessage: 'Cannot  be less than  20',
+        ValidationMessage: 'Amount cannot  be less than  20',
       };
     }
   }
@@ -108,7 +108,7 @@ function getServerEditResponse(dataChangedInfo: DataChangedInfo): ValidationResu
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
+    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'Alert'],
   },
   ActionColumn: {
     ActionColumns: [
@@ -122,7 +122,7 @@ let demoConfig: PredefinedConfig = {
     Layouts: [
       {
         ColumnSorts: [],
-        Columns: ['tradeId', 'notional', 'country', 'starts', 'change', 'counterparty', 'Test'],
+        Columns: ['tradeId', 'amount', 'country', 'starts', 'change', 'counterparty', 'Test'],
         Name: 'Server Edit',
       },
     ],

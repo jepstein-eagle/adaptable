@@ -261,7 +261,7 @@ export class ExamplesHelper {
       country: this.getRandomItem(this.getCountries()),
       changeOnYear: this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
       stars: this.generateRandomInt(1, 5),
-      amount: this.getRandomItem(this.getAmounts()),
+      amount: this.generateRandomInt(20, 100), //this.getRandomItem(this.getAmounts()),
       price,
       bid,
       ask,
@@ -1042,7 +1042,13 @@ export class ExamplesHelper {
       filter: true,
       resizable: true,
     });
-
+    schema.push({
+      headerName: 'Amount',
+      field: 'amount',
+      editable: true,
+      filter: 'text',
+      type: 'abColDefNumber',
+    });
     schema.push({
       headerName: 'Stars',
       field: 'stars',

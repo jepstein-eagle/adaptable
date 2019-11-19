@@ -82,8 +82,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
   },
   editOptions: {
     validateOnServer: undefined,
-    showAlert: false,
-    showAlertasPopup: false,
+    displayServerValidationMessages: true,
   },
   chartOptions: {
     displayOnStartUp: false,
