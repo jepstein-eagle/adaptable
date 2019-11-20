@@ -82,7 +82,7 @@ function getServerEditResponse(dataChangedInfo: DataChangedInfo): ValidationResu
     if (dataChangedInfo.NewValue == 50) {
       return {
         NewValue: dataChangedInfo.OldValue,
-        ValidationMessage: 'Cannot set Amount to 50',
+        //   ValidationMessage: 'Cannot set Amount to 50',
       };
     } else if (dataChangedInfo.NewValue > 100) {
       return {

@@ -1661,6 +1661,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       editable: false,
       filter: true,
       resizable: true,
+      enableRowGroup: true,
       sortable: true,
       type: agGridDataType,
       valueGetter: (params: ValueGetterParams) =>

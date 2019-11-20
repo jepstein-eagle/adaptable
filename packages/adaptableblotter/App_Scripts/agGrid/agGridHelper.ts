@@ -501,7 +501,7 @@ export class agGridHelper {
   public createAgGridMenuDefFromUsereMenu(x: UserMenuItem): MenuItemDef {
     return {
       name: x.Label,
-      action: x.OnMenuItemClickedFunction,
+      action: x.UserMenuItemClickedFunction,
       icon: x.Icon,
       subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
         ? undefined

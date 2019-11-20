@@ -15,6 +15,7 @@ import {
   IAdaptableBlotter,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { PlusMinusSummaryComponent } from '../../../../App_Scripts/View/PlusMinus/PlusMinusSummary';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -27,7 +28,7 @@ function InitAdaptableBlotter() {
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Validation Demo',
+    blotterId: 'Basic Demo',
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
@@ -40,8 +41,16 @@ function InitAdaptableBlotter() {
   adaptableBlotterOptions.layoutOptions = {
     autoSizeColumnsInDefaultLayout: true,
   };
+  adaptableBlotterOptions.queryOptions = {
+    columnValuesOnlyInQueries: true,
+  };
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+
+  adaptableblotter.api.eventApi.on('SearchChanged', args => {
+    console.log(args);
+    /// do stuf
+  });
 }
 
 let demoConfig: PredefinedConfig = {

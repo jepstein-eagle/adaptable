@@ -90,13 +90,13 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
 
   public createContextMenuItem(
     label: string,
-    onMenuItemClickedFunction?: () => void,
+    userMenuItemClickedFunction?: () => void,
     icon?: string,
     subMenuItems?: UserMenuItem[]
   ): void {
     let contextMenuItem: UserMenuItem = {
       Label: label,
-      OnMenuItemClickedFunction: onMenuItemClickedFunction,
+      UserMenuItemClickedFunction: userMenuItemClickedFunction,
       Icon: icon,
       SubMenuItems: subMenuItems,
     };

@@ -41,7 +41,7 @@ let demoConfig: PredefinedConfig = {
     ColumnMenuItems: [
       {
         Label: 'Column Menu 1',
-        OnMenuItemClickedFunction: () => {
+        UserMenuItemClickedFunction: () => {
           alert('Ive been clicked');
         },
         Icon:
@@ -77,9 +77,10 @@ let demoConfig: PredefinedConfig = {
           },
           {
             Label: 'Open Column Chooser',
-            OnMenuItemClickedFunction: () => {
+            UserMenuItemClickedFunction: () => {
               adaptableblotter.api.columnChooserApi.showColumnChooserPopup();
             },
+            Icon: '<img src="./test.png"/>',
           },
         ],
       },
