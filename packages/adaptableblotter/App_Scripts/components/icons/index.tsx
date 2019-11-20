@@ -17,12 +17,12 @@ import Info from './info';
 import Alert from './alert';
 import List from './list';
 import SmartEdit from './smart-edit';
-import ViewColumns from './view-columns';
+import ColumnChooser from './column-chooser';
 import Home from './home';
 import Justify from './justify';
 import Err from './error';
 import Export from './export';
-import SystemUpdate from './system-update';
+import SystemUpdate from './updated-row';
 import Build from './build';
 import Warning from './warning';
 import ConditionalStyle from './conditional-style';
@@ -43,28 +43,31 @@ import Application from './application';
 import BulkUpdate from './bulk-update';
 import ImportExport from './import-export';
 import { ReactComponentLike } from 'prop-types';
-import phoneSetup from './phone-setup';
+import CalculatedColumn from './calculated-column';
 import CellSummary from './cell-summary';
-import flag from './flag';
-import tableChart from './table-chart';
+import CellValidation from './cell-validation';
+import ColumnCategory from './column-category';
 import ColumnFilter from './column-filter';
-import columnInfo from './column-info';
-import swapVert from './swap-vert';
+import ColumnInformation from './column-info';
+import CustomSort from './custom-sort';
 import DataSource from './data-source';
-import flashOn from './flash-on';
+import FlashingCell from './flashing-cell';
 import edit from './edit';
-import colorLens from './color-lens';
-import shortText from './short-text';
+import FormatColumn from './format-column';
+import FreetextColumn from './freetext-column';
 import comment from './comment';
 import Layout from './layout';
-import assignment from './assignment';
-import linearScale from './linear-scale';
-import pieChart from './pie-chart';
-import addCircle from './add-circle';
+import StateManagement from './state-management';
+import PercentBar from './percent-bar';
+import Sparkline from './spark-line';
+import PieChart from './pie-chart';
+import PlusMinus from './plus-minus';
 import QuickSearch from './quick-search';
-import alarm from './alarm';
-import link from './link';
-import person from './person';
+import Reminder from './reminder';
+import Shortcut from './shortcut';
+import TeamShare from './team-share';
+import UpdatedRow from './updated-row';
+import UserFilter from './user-filter';
 import alignJustify from './align-justify';
 import Theme from './theme';
 import checkBox from './check-box';
@@ -73,12 +76,12 @@ import tabUnselected from './tab-unselected';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 const allIcons = {
-  // toolbars - we have changed these as they are most likely to get used externally
+  // toolbars
   'advanced-search': AdvancedSearch, // original icon is search
   application: Application, // original icon is   laptop,
   alert: Alert,
   'bulk-update': BulkUpdate, // original icon is update,
-  chart: Chart, // original icon is bar-chartexport: Export,
+  chart: Chart, // original icon is bar-chart
   'cell-summary': CellSummary, // original icon is view-module
   'column-filter': ColumnFilter, // original icon is filter-list
   'data-source': DataSource,
@@ -88,41 +91,48 @@ const allIcons = {
   'smart-edit': SmartEdit, // original icon is edit
   theme: Theme, // original icon is color-fill
 
-  assignment,
-  'linear-scale': linearScale,
-  'pie-chart': pieChart,
-  'add-circle': addCircle,
+  // non toolbar strategy images
+  'calculated-column': CalculatedColumn, // original icon is phone-setup
+  calendar: Calendar,
+  'cell-validation': CellValidation, // original icon is flag,
+  'column-category': ColumnCategory, // original icon was table-chart
+  'column-chooser': ColumnChooser, // original icon was view-columns
+  'conditional-style': ConditionalStyle,
+  'column-info': ColumnInformation,
+  'custom-sort': CustomSort, // was swap-vert
+  dashboard: Dashboard,
+  'flashing-cell': FlashingCell, // flashOn,
+  'format-column': FormatColumn, /// color-lens
+  'freetext-column': FreetextColumn, //  short-text
+  'percent-bar': PercentBar, // linear-scale
+  'spark-line': Sparkline, //    show-chart
+  'pie-chart': PieChart,
+  'plus-minus': PlusMinus, //add-circle
+  reminder: Reminder, // alarm
+  shortcut: Shortcut, // link
+  'state-management': StateManagement, //   assignment,
+  'team-share': TeamShare, // folder-shared
+  'updated-row': UpdatedRow, //   system-update
+  'user-filter': UserFilter, // person
+
+  // others
   edit: edit,
   'tab-unselected': tabUnselected,
   'check-box': checkBox,
   'check-box-outline': checkBoxOutline,
   unchecked: checkBoxOutline,
   checked: checkBox,
-  alarm,
-  person,
-  link,
   'arrow-right': ArrowRight,
   'arrow-up': ArrowUp,
   'triangle-up': TriangleUp,
   'arrow-down': ArrowDown,
   'triangle-down': TriangleDown,
-  'color-lens': colorLens,
-  'short-text': shortText,
   'arrow-left': ArrowLeft,
-
   'color-drop': ColorDrop,
-  'column-info': columnInfo,
   'check-circle': CheckCircle,
-  'view-columns': ViewColumns,
-  'conditional-style': ConditionalStyle,
-
   comment,
   list: List,
   undo: Undo,
-  'table-chart': tableChart,
-  flag,
-  'phone-setup': phoneSetup,
-
   delete: Delete,
   build: Build,
   save: Save,
@@ -134,7 +144,6 @@ const allIcons = {
   'fast-forward': FastForward,
   'fast-backward': FastBackward,
   warning: Warning,
-
   'notification-important': Alert,
   'warning-sign': Warning,
   justify: Justify,
@@ -142,25 +151,16 @@ const allIcons = {
   ok: Check,
   'ok-sign': Check,
   plus: Plus,
-  calendar: Calendar,
   home: Home,
   'sort-asc': SortAsc,
   'sort-desc': SortDesc,
-  'swap-vert': swapVert,
-
-  dashboard: Dashboard,
   'align-justify': alignJustify,
-
   clear: Clear,
   'import-export': ImportExport,
-
   'attach-file': AttachFile,
-  'system-update': SystemUpdate,
   info: Info,
   'info-sign': Info,
   add: Plus,
-  'flash-on': flashOn,
-  flash: flashOn,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {
