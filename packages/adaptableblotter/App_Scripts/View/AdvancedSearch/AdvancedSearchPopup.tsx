@@ -52,16 +52,18 @@ class AdvancedSearchPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams && this.props.PopupParams.action) {
-      if (this.props.PopupParams.action == 'New') {
-        this.onNew();
-      }
-      if (this.props.PopupParams.action == 'Edit') {
-        let currentAdvancedSearch = this.props.AdvancedSearches.find(
-          as => as.Name == this.props.CurrentAdvancedSearchName
-        );
-        if (currentAdvancedSearch) {
-          this.onEdit(currentAdvancedSearch);
+    if (this.props.PopupParams) {
+      if (this.props.PopupParams.action) {
+        if (this.props.PopupParams.action == 'New') {
+          this.onNew();
+        }
+        if (this.props.PopupParams.action == 'Edit') {
+          let currentAdvancedSearch = this.props.AdvancedSearches.find(
+            as => as.Name == this.props.CurrentAdvancedSearchName
+          );
+          if (currentAdvancedSearch) {
+            this.onEdit(currentAdvancedSearch);
+          }
         }
       }
     }
@@ -181,6 +183,20 @@ class AdvancedSearchPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+
+    // if we've come from the Toolbar and the Searches are identical then close the main popup
+    if (
+      this.props.PopupParams &&
+      this.props.PopupParams.source &&
+      this.props.PopupParams.source == 'Toolbar'
+    ) {
+      if (
+        this.props.AdvancedSearches ===
+        this.props.Blotter.api.advancedSearchApi.getAllAdvancedSearch()
+      ) {
+        this.props.onClosePopup();
+      }
+    }
   }
 
   onFinishWizard() {
@@ -207,6 +223,7 @@ class AdvancedSearchPopupComponent extends React.Component<
       // or if we are editing the current search - but might have changed the name
       this.props.onSelectAdvancedSearch(clonedObject.Name);
     }
+    //   this.ClosePopupOnWizardCancelTest = false;
   }
 
   canFinishWizard() {

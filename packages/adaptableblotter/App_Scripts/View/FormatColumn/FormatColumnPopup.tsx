@@ -60,6 +60,9 @@ class FormatColumnPopupComponent extends React.Component<
           this.onEdit(editFormatColumn);
         }
       }
+      if (this.props.PopupParams.source) {
+        alert(this.props.PopupParams.source);
+      }
     }
   }
 

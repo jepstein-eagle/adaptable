@@ -60,6 +60,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     this.state = UIHelper.getEmptyConfigState();
   }
 
+  shouldClosePopupOnFinishWizard: boolean = false;
+
   componentDidMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action) {
@@ -73,6 +75,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
           this.onEdit(selectedReport);
         }
       }
+      this.shouldClosePopupOnFinishWizard =
+        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
     }
   }
 
@@ -171,6 +175,10 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {
@@ -186,6 +194,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

@@ -19,12 +19,6 @@ import {
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { IServerColumnValues } from '../../../../App_Scripts/BlotterOptions/QueryOptions';
 
-/*
-Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
-No JSON or anything complicated
-Nor do we create the ag-Grid
-*/
-
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
 

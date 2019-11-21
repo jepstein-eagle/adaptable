@@ -34,6 +34,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     if (this.canCreateColumnMenuItem(column, this.blotter, 'sparkline')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
+        source: 'ColumnMenu',
       };
       return this.createColumnMenuItemShowPopup(
         'Edit Sparkline Column',
@@ -52,10 +53,14 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
       contextMenuInfo.column &&
       this.canCreateColumnMenuItem(contextMenuInfo.column, this.blotter, 'sparkline')
     ) {
+      let popUpParams: StrategyParams = {
+        source: 'ContextMenu',
+      };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'Edit Sparkline Column',
         ComponentName: ScreenPopups.SparklineColumnPopup,
         Icon: StrategyConstants.SparklineColumnGlyph,
+        PopupParams: popUpParams,
       });
     }
     return menuItemShowPopup;

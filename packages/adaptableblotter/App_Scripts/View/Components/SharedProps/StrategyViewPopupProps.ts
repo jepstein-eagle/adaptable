@@ -8,6 +8,7 @@ export interface StrategyViewPopupProps<View> extends BaseProps<View> {
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
   TeamSharingActivated: boolean;
   ColumnSorts: ColumnSort[]; // we should get rid of this!
+  onClosePopup: () => void;
 }
 
 // The params object that is, optionally, passed into each popup.  contains useful information
@@ -16,4 +17,5 @@ export interface StrategyParams {
   action?: 'New' | 'Edit';
   value?: any;
   primaryKeyValues?: any[];
+  source: 'Toolbar' | 'FunctionMenu' | 'ColumnMenu' | 'ContextMenu' | 'Other'; // api??
 }

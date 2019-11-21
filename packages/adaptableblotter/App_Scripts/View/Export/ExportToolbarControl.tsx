@@ -241,12 +241,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup, {
           action: 'New',
+          source: 'Toolbar',
         })
       ),
     onEditReport: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup, {
           action: 'Edit',
+          source: 'Toolbar',
         })
       ),
     onClose: (dashboardControl: string) =>

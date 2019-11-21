@@ -31,6 +31,7 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
         let popupParam: StrategyParams = {
           columnId: column.ColumnId,
           action: 'Edit',
+          source: 'ColumnMenu',
         };
         return this.createColumnMenuItemShowPopup(
           'Edit ' + StrategyConstants.FreeTextColumnStrategyName,

@@ -31,6 +31,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
         let popupParam: StrategyParams = {
           columnId: column.ColumnId,
           action: 'Edit',
+          source: 'ColumnMenu',
         };
 
         return this.createColumnMenuItemShowPopup(

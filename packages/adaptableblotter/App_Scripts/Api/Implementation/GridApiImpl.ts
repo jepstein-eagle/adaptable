@@ -39,9 +39,9 @@ export class GridApiImpl extends ApiBase implements GridApi {
   }
 
   public setCellValue(
-    primaryKeyValue: any,
     columnId: string,
     newValue: any,
+    primaryKeyValue: any,
     validateChange: boolean = true
   ): void {
     let gridCell: GridCell = {
@@ -53,7 +53,11 @@ export class GridApiImpl extends ApiBase implements GridApi {
   }
 
   public setGridCell(gridCell: GridCell, validateChange: boolean = true): void {
+    console.log('here');
+    console.log(gridCell);
     let dataChangedInfo: DataChangedInfo = this.createDataChangedInfoFromGridCell(gridCell);
+    console.log('here');
+    console.log(dataChangedInfo);
     if (validateChange) {
       if (!this.blotter.ValidationService.PerformCellValidation(dataChangedInfo)) {
         return;
@@ -64,7 +68,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
       this.blotter.setValue(dataChangedInfo);
     };
 
-    const mimicPromise = this.blotter.blotterOptions.editOptions.validateOnServer
+    const mimicPromise = this.blotter.blotterOptions.editOptions!.validateOnServer
       ? this.blotter.ValidationService.PerformServerValidation(dataChangedInfo, {
           onServerValidationCompleted,
         })
@@ -118,49 +122,5 @@ export class GridApiImpl extends ApiBase implements GridApi {
 
   public getColumnSorts(): ColumnSort[] {
     return this.getGridState().ColumnSorts;
-  }
-
-  private ShowErrorPreventMessage(failedRules: CellValidationRule[]): void {
-    let failedMessages: string[] = [];
-    failedRules.forEach(fr => {
-      let failedMessage: string =
-        ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + '\n';
-      let existingMessage = failedMessages.find(f => f == failedMessage);
-      if (existingMessage == null) {
-        failedMessages.push(failedMessage);
-      }
-    });
-    this.blotter.api.alertApi.showAlertError('Data Update failed rule', failedMessages.toString());
-  }
-
-  private ShowWarningMessages(
-    failedRules: CellValidationRule[],
-    warningValues: DataChangedInfo[],
-    successfulValues: DataChangedInfo[]
-  ): void {
-    if (failedRules.length > 0) {
-      let allValues = warningValues.concat(...successfulValues);
-
-      let warningMessages: string[] = [];
-      failedRules.forEach(fr => {
-        let warningMessage: string =
-          ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + '\n';
-        let existingMessage = warningMessages.find(w => w == warningMessage);
-        if (existingMessage == null) {
-          warningMessages.push(warningMessage);
-        }
-      });
-      let warningMessage: string =
-        failedRules.length + ' Data Update failed rule:\n' + warningMessages.toString();
-
-      let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEditBatch(allValues);
-      let cancelAction: Redux.Action = GridRedux.GridSetValueLikeEditBatch(successfulValues);
-      let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
-        confirmAction,
-        cancelAction,
-        warningMessage
-      );
-      this.blotter.api.internalApi.showPopupConfirmation(confirmation);
-    }
   }
 }

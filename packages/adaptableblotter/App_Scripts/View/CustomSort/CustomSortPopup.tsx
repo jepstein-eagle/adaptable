@@ -60,6 +60,9 @@ class CustomSortPopupComponent extends React.Component<
           this.onEdit(editCustomSort);
         }
       }
+      if (this.props.PopupParams.source) {
+        alert(this.props.PopupParams.source);
+      }
     }
   }
 

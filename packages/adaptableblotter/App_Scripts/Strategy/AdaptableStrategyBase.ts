@@ -100,6 +100,11 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string;
     PopupParams?: StrategyParams;
   }): MenuItemShowPopup {
+    if (!PopupParams) {
+      PopupParams = {
+        source: 'FunctionMenu',
+      };
+    }
     return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, this.isVisible, PopupParams);
   }
 

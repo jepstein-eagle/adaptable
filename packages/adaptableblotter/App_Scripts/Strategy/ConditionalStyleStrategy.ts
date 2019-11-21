@@ -32,6 +32,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
+        source: 'ColumnMenu',
       };
       return this.createColumnMenuItemShowPopup(
         'Create ' + StrategyConstants.ConditionalStyleStrategyName,

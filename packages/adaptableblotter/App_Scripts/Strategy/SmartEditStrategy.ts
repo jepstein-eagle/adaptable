@@ -21,6 +21,7 @@ import {
 } from '../Utilities/MenuItem';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import ObjectFactory from '../Utilities/ObjectFactory';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -50,10 +51,14 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       contextMenuInfo.isSelectedCell &&
       contextMenuInfo.isSingleSelectedColumn
     ) {
+      let popUpParams: StrategyParams = {
+        source: 'ContextMenu',
+      };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'Apply ' + StrategyConstants.SmartEditStrategyName,
         ComponentName: ScreenPopups.SmartEditPopup,
         Icon: StrategyConstants.SmartEditGlyph,
+        PopupParams: popUpParams,
       });
     }
     return menuItemShowPopup;

@@ -252,6 +252,18 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    // if we've come from the Toolbar and the Searches are identical then close the main popup
+    if (
+      this.props.PopupParams &&
+      this.props.PopupParams.source &&
+      this.props.PopupParams.source == 'Toolbar'
+    ) {
+      if (
+        this.props.ChartDefinitions === this.props.Blotter.api.chartApi.getAllChartDefinitions()
+      ) {
+        this.props.onClosePopup();
+      }
+    }
   }
 
   onFinishWizard() {

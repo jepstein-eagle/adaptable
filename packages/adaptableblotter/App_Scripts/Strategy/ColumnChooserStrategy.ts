@@ -35,10 +35,14 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
   public addContextMenuItem(
     contextMenuInfo: ContextMenuInfo
   ): AdaptableBlotterMenuItem | undefined {
+    let popUpParams: StrategyParams = {
+      source: 'ContextMenu',
+    };
     return this.createMainMenuItemShowPopup({
       Label: 'Show ' + StrategyConstants.ColumnChooserStrategyName,
       ComponentName: ScreenPopups.ColumnChooserPopup,
       Icon: StrategyConstants.ColumnChooserGlyph,
+      PopupParams: popUpParams,
     });
   }
 }

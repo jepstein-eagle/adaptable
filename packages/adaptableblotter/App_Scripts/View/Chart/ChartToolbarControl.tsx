@@ -69,6 +69,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         this.props.onNewChartDefinition({
           value: ChartType.CategoryChart,
           action: 'New',
+          source: 'Toolbar',
         }),
       label: 'Category Chart',
     };
@@ -78,6 +79,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         this.props.onNewChartDefinition({
           value: ChartType.PieChart,
           action: 'New',
+          source: 'Toolbar',
         }),
       label: 'Pie Chart',
     };
@@ -87,6 +89,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         this.props.onNewChartDefinition({
           value: ChartType.SparklinesChart,
           action: 'New',
+          source: 'Toolbar',
         }),
       label: 'Sparkline',
     };
@@ -132,6 +135,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
               this.props.onNewChartDefinition({
                 value: 'CategoryChart',
                 action: 'New',
+                source: 'Toolbar',
               })
             }
             tooltip="Edit Chart Definition"

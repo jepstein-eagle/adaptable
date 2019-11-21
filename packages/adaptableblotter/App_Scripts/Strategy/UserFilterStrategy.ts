@@ -25,6 +25,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
+        source: 'ColumnMenu',
       };
 
       return this.createColumnMenuItemShowPopup(

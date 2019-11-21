@@ -22,6 +22,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
     if (this.canCreateColumnMenuItem(column, this.blotter, 'numeric')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
+        source: 'ColumnMenu',
       };
       return this.createColumnMenuItemShowPopup(
         'View as Sparkline',
@@ -48,6 +49,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
       let popUpParams: StrategyParams = {
         columnId: contextMenuInfo.column.ColumnId,
         primaryKeyValues: pkValues,
+        source: 'ContextMenu',
       };
 
       menuItemShowPopup = this.createMainMenuItemShowPopup({

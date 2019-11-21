@@ -46,6 +46,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         let popupParam: StrategyParams = {
           columnId: column.ColumnId,
           action: 'New',
+          source: 'ColumnMenu',
         };
         return this.createColumnMenuItemShowPopup(
           'Create Plus/Minus Rule',

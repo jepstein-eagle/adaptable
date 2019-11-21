@@ -130,6 +130,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           ScreenPopups.AdvancedSearchPopup,
           {
             action: 'New',
+            source: 'Toolbar',
           }
         )
       ),
@@ -140,6 +141,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           ScreenPopups.AdvancedSearchPopup,
           {
             action: 'Edit',
+            source: 'Toolbar',
           }
         )
       ),

@@ -17,6 +17,7 @@ import { UpdatedRowInfo, ChangeDirection } from '../Utilities/Services/Interface
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 import { DataType } from '../PredefinedConfig/Common/Enums';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   implements IUpdatedRowStrategy {

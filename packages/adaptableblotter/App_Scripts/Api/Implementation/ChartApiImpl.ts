@@ -1,12 +1,16 @@
 import { ApiBase } from './ApiBase';
 import { ChartApi } from '../ChartApi';
-import { ChartState } from '../../PredefinedConfig/ChartState';
+import { ChartState, ChartDefinition } from '../../PredefinedConfig/ChartState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class ChartApiImpl extends ApiBase implements ChartApi {
   public getChartState(): ChartState {
     return this.getBlotterState().Chart;
+  }
+
+  public getAllChartDefinitions(): ChartDefinition[] {
+    return this.getChartState().ChartDefinitions;
   }
 
   public showChartPopup(): void {

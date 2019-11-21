@@ -39,7 +39,6 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
   onEditCellValidation: (
     cellValidationRule: CellValidationRule
   ) => CellValidationRedux.CellValidationEditAction;
-
   onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -51,6 +50,7 @@ class CellValidationPopupComponent extends React.Component<
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
+
   componentDidMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
@@ -199,10 +199,9 @@ class CellValidationPopupComponent extends React.Component<
     } else {
       this.props.onEditCellValidation(cellValidationRule);
     }
-
     this.setState({
       EditedAdaptableBlotterObject: null,
-      WizardStartIndex: 0,
+      WizardStartIndex: 5,
       WizardStatus: WizardStatus.None,
     });
   }

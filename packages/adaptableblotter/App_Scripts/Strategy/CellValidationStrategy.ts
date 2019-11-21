@@ -26,6 +26,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
+        source: 'ColumnMenu',
       };
       return this.createColumnMenuItemShowPopup(
         'Create Cell Validation Rule',

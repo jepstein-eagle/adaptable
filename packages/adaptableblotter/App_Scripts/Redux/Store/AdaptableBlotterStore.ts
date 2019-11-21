@@ -2485,6 +2485,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             ) {
               let params: StrategyParams = {
                 value: actionTyped.Report.Name,
+                source: 'Other',
               };
 
               middlewareAPI.dispatch(
@@ -2511,6 +2512,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 });
               let params: StrategyParams = {
                 value: actionTyped.Report.Name,
+                source: 'Other',
               };
               middlewareAPI.dispatch(
                 PopupRedux.PopupShowScreen(

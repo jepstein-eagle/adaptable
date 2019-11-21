@@ -38,6 +38,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: percentBarExists ? 'Edit' : 'New',
+        source: 'ColumnMenu',
       };
 
       return this.createColumnMenuItemShowPopup(
@@ -58,10 +59,14 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       contextMenuInfo.column.ColumnId
     );
     if (contextMenuInfo.column && percentBarExists) {
+      let popUpParams: StrategyParams = {
+        source: 'ContextMenu',
+      };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'Edit Percent Bar',
         ComponentName: ScreenPopups.PercentBarPopup,
         Icon: StrategyConstants.PercentBarGlyph,
+        PopupParams: popUpParams,
       });
     }
     return menuItemShowPopup;

@@ -14,6 +14,7 @@ import {
   ContextMenuInfo,
   MenuItemShowPopup,
 } from '../Utilities/MenuItem';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -32,11 +33,15 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     contextMenuInfo: ContextMenuInfo
   ): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
+    let popUpParams: StrategyParams = {
+      source: 'ContextMenu',
+    };
     if (contextMenuInfo.column && contextMenuInfo.isSelectedCell) {
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'See Cell Summary',
         ComponentName: ScreenPopups.CellSummaryPopup,
         Icon: StrategyConstants.CellSummaryGlyph,
+        PopupParams: popUpParams,
       });
     }
     return menuItemShowPopup;

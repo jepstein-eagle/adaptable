@@ -202,6 +202,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
           action: 'New',
+          source: 'Toolbar',
         })
       ),
     onClose: (dashboardControl: string) =>

@@ -44,6 +44,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () =>
           this.props.onClearPopupParams ? this.props.onClearPopupParams() : null,
+        onClosePopup: () => this.props.onHide(),
         TeamSharingActivated: BlotterHelper.isConfigServerEnabled(
           this.props.Blotter.blotterOptions
         ),

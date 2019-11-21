@@ -53,12 +53,18 @@ export interface GridApi {
    *
    * Note: this update **will be validated** against any existing Cell or Server Validation
    *
-   * @param id the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Blotter Options)
    * @param columnId the column to update
    * @param newValue the new value to use
+   * @param primaryKeyValue the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Blotter Options)
+   * @param validateChange whether to perform validation on the cell edit; optional value which defaults to **true** if not supplied
    *
    */
-  setCellValue(id: any, columnId: string, newValue: any, validateChange: boolean): void;
+  setCellValue(
+    columnId: string,
+    newValue: any,
+    primaryKeyValue: any,
+    validateChange?: boolean
+  ): void;
 
   /**
    * Replaces an existing cell value in the Adaptable Blotter with that contained in this inputted Grid Cell

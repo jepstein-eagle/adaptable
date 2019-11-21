@@ -22,6 +22,7 @@ import {
   MenuItemShowPopup,
 } from '../Utilities/MenuItem';
 import ObjectFactory from '../Utilities/ObjectFactory';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -50,10 +51,14 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       contextMenuInfo.isSelectedCell &&
       contextMenuInfo.isSingleSelectedColumn
     ) {
+      let popUpParams: StrategyParams = {
+        source: 'ContextMenu',
+      };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'Apply ' + StrategyConstants.BulkUpdateStrategyName,
         ComponentName: ScreenPopups.BulkUpdatePopup,
         Icon: StrategyConstants.BulkUpdateGlyph,
+        PopupParams: popUpParams,
       });
     }
     return menuItemShowPopup;

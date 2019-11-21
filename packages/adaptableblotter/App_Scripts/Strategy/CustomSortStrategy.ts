@@ -37,6 +37,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: customSort ? 'Edit' : 'New',
+        source: 'ColumnMenu',
       };
 
       return this.createColumnMenuItemShowPopup(

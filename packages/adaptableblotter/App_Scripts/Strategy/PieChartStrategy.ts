@@ -32,6 +32,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
     ) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
+        source: 'ColumnMenu',
       };
 
       return this.createColumnMenuItemShowPopup(
@@ -61,6 +62,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
       let popUpParams: StrategyParams = {
         columnId: contextMenuInfo.column.ColumnId,
         primaryKeyValues: pkValues,
+        source: 'ContextMenu',
       };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'View as Pie Chart',

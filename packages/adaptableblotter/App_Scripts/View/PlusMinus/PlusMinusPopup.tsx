@@ -64,6 +64,9 @@ class PlusMinusPopupComponent extends React.Component<
           });
         }
       }
+      if (this.props.PopupParams.source) {
+        alert(this.props.PopupParams.source);
+      }
     }
   }
 

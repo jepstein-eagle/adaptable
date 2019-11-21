@@ -69,6 +69,9 @@ class PercentBarPopupComponent extends React.Component<
           this.onEdit(editPercentRender);
         }
       }
+      if (this.props.PopupParams.source) {
+        alert(this.props.PopupParams.source);
+      }
     }
   }
 

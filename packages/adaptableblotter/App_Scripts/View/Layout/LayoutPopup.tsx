@@ -42,7 +42,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
-
+  shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action) {
@@ -51,6 +51,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         }
       }
     }
+    this.shouldClosePopupOnFinishWizard =
+      this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
   }
 
   render() {
@@ -164,6 +166,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {
@@ -185,6 +191,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       // its new so make it the selected layout or name has changed.
       this.props.onSelectLayout(clonedObject.Name);
     }
+    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

@@ -16,7 +16,6 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
-import { GridCell } from '../../../../App_Scripts/Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../../../App_Scripts/BlotterOptions/CommonObjects/DataChangedInfo';
 import { ValidationResult } from '../../../../App_Scripts/BlotterOptions/EditOptions';
 
@@ -28,7 +27,7 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const testServerEdit: boolean = true;
+  const runServerValidation: boolean = true;
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
@@ -38,11 +37,7 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.generalOptions = {
-    showAdaptableBlotterToolPanel: true,
-  };
-
-  if (testServerEdit) {
+  if (runServerValidation) {
     adaptableBlotterOptions.editOptions = {
       validateOnServer: (dataChangedInfo: DataChangedInfo) => {
         return new Promise((resolve, reject) => {
@@ -55,39 +50,21 @@ function InitAdaptableBlotter() {
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   adaptableblotter.api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
-    let gridCell: GridCell = {
-      columnId: 'amount',
-      value: 50,
-      primaryKeyValue: args.data[0].id.primaryKeyValue,
-    };
-    adaptableblotter.api.gridApi.setGridCell(gridCell, true);
+    adaptableblotter.api.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue);
   });
 }
 
 function getServerEditResponse(dataChangedInfo: DataChangedInfo): ValidationResult {
-  if (dataChangedInfo.ColumnId == 'counterparty') {
-    if (dataChangedInfo.NewValue == 'Hello') {
-      return {
-        NewValue: dataChangedInfo.OldValue,
-        ValidationMessage: 'Please say "hi" instead',
-      };
-    } else if (dataChangedInfo.NewValue == 'World') {
-      return {
-        NewValue: 'Universe',
-        ValidationMessage: 'Should be universe',
-      };
-    }
-  }
-  if (dataChangedInfo.ColumnId == 'amount') {
+  if (dataChangedInfo.ColumnId === 'amount') {
     if (dataChangedInfo.NewValue == 50) {
       return {
         NewValue: dataChangedInfo.OldValue,
-        //   ValidationMessage: 'Cannot set Amount to 50',
+        ValidationMessage: 'Cannot set Amount to 50',
       };
     } else if (dataChangedInfo.NewValue > 100) {
       return {
         NewValue: 100,
-        ValidationMessage: 'Amount cannot be greater than 100',
+        //  ValidationMessage: 'Amount cannot be greater than 100',
       };
     } else if (dataChangedInfo.NewValue < 20) {
       return {

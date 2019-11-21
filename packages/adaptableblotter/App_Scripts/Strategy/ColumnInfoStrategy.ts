@@ -29,6 +29,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
+        source: 'ColumnMenu',
       };
       return this.createColumnMenuItemShowPopup(
         StrategyConstants.ColumnInfoStrategyName,
@@ -46,6 +47,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     if (this.canCreateColumnMenuItem(contextMenuInfo.column, this.blotter)) {
       let popupParam: StrategyParams = {
         columnId: contextMenuInfo.column.ColumnId,
+        source: 'ContextMenu',
       };
       if (contextMenuInfo.column) {
         menuItemShowPopup = this.createMainMenuItemShowPopup({
