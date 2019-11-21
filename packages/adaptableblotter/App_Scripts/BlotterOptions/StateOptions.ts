@@ -122,7 +122,7 @@ export interface StateOptions {
    *
    * NOTE: This function should be a synchronous function.
    *
-   * **Default implementation: (state) => state
+   * **Default implementation: (state) => state**
    */
   applyState?: (state: any) => any;
 }

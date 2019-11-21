@@ -20,7 +20,7 @@ var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 50;
+  const tradeCount: number = 5000;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -39,9 +39,6 @@ function InitAdaptableBlotter() {
 
   adaptableBlotterOptions.layoutOptions = {
     autoSizeColumnsInDefaultLayout: true,
-  };
-  adaptableBlotterOptions.queryOptions = {
-    columnValuesOnlyInQueries: true,
   };
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
