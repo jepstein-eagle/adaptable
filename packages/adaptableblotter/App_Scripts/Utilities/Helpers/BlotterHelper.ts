@@ -62,6 +62,11 @@ export function assignBlotterOptions(
     DefaultAdaptableBlotterOptions.chartOptions,
     blotterOptions.chartOptions
   );
+  returnBlotterOptions.stateOptions = Object.assign(
+    {},
+    DefaultAdaptableBlotterOptions.stateOptions,
+    blotterOptions.stateOptions
+  );
 
   const { predefinedConfig } = returnBlotterOptions;
   if (predefinedConfig) {

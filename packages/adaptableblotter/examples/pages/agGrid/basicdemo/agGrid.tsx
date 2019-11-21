@@ -32,6 +32,28 @@ function InitAdaptableBlotter() {
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
+    stateOptions: {
+      saveState: state => {
+        return {
+          ...state,
+          name: 'atest',
+        };
+      },
+      applyState: state => {
+        const { name, ...rest } = state;
+
+        console.log(name, '!!!');
+        return rest;
+      },
+      loadState: () => {
+        const state = JSON.parse(localStorage.getItem('xxxxx') || '');
+        return Promise.resolve(state);
+      },
+      persistState: state => {
+        localStorage.setItem('xxxxx', JSON.stringify(state));
+        return Promise.resolve(true);
+      },
+    },
   };
 
   adaptableBlotterOptions.generalOptions = {

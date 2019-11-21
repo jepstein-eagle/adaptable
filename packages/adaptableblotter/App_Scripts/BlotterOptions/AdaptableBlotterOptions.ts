@@ -10,6 +10,7 @@ import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { AdvancedOptions } from './AdvancedOptions';
 import { FlashingUpdateOptions } from './FlashingUpdateOptions';
 import { EditOptions } from './EditOptions';
+import { StateOptions } from './StateOptions';
 
 /**
  * AdaptableBlotterOptions is the class injected into the Adaptable Blotter at startup.
@@ -179,7 +180,18 @@ export interface AdaptableBlotterOptions {
    *
    * The properties in this section are used for more advanced scenarios.
    *
-   * Currently it contains properties for managing fumctions which developers provide (that cannot be stored in the 'normal' way with JSON).
+   * Currently it contains properties for managing functions which developers provide (that cannot be stored in the 'normal' way with JSON).
    */
   advancedOptions?: AdvancedOptions;
+
+
+/**
+ * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
+ *
+ * By default, the adaptable blotter state is persisted in the local storage of the user browser, under the `blotterId` key.
+ *
+ * Using various state options allows you to change this default behavior and also add custom properties in the persisted state.
+ *
+ */
+  stateOptions?: StateOptions;
 }

@@ -103,4 +103,8 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
       actionColumnFunctions: [],
     },
   },
+  stateOptions: {
+    applyState: state => state,
+    saveState: state => state,
+  },
 };

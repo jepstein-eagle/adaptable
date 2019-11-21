@@ -100,3 +100,14 @@ export interface IAdaptableBlotterStore {
   onAny: (callback: (data?: any) => any) => () => void;
   emit: (eventName: string, data: any) => Promise<any>;
 }
+
+export interface AdaptableBlotterPersistState {
+  (
+    state: Partial<AdaptableBlotterState>,
+    { blotterId, userName, url }: { blotterId: string; userName: string; url?: string }
+  ): Promise<any>;
+}
+
+export interface AdaptableBlotterLoadState {
+  (config: { blotterId: string; userName: string; url?: string }): Promise<any>;
+}
