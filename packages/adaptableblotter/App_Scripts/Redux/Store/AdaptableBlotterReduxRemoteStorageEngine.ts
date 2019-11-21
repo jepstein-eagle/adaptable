@@ -3,10 +3,9 @@ import { debounce } from 'lodash';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import IStorageEngine from './Interface/IStorageEngine';
 import {
-  AdaptableBlotterState,
-  AdaptableBlotterPersistState,
-  AdaptableBlotterLoadState,
-} from './Interface/IAdaptableStore';
+  AdaptableBlotterLoadStateFunction,
+  AdaptableBlotterPersistStateFunction,
+} from '../../BlotterOptions/StateOptions';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -20,7 +19,7 @@ const checkStatus = (response: Response) => {
   throw error;
 };
 
-const persistState: AdaptableBlotterPersistState = (
+const persistState: AdaptableBlotterPersistStateFunction = (
   state: any,
   config: { blotterId?: string; userName?: string; url?: string }
 ): Promise<any> => {
@@ -38,7 +37,7 @@ const persistState: AdaptableBlotterPersistState = (
   return fetch(config.url, saveOptions).then(checkStatus);
 };
 
-const loadState: AdaptableBlotterLoadState = ({ userName, blotterId, url }) => {
+const loadState: AdaptableBlotterLoadStateFunction = ({ userName, blotterId, url }) => {
   const loadOptions = {
     headers: {
       ab_username: userName,
@@ -54,15 +53,15 @@ class AdaptableBlotterRemoteStorageEngine implements IStorageEngine {
   private url: string;
   private userName: string;
   private blotterId: string;
-  private loadState?: AdaptableBlotterLoadState;
-  private persistState?: AdaptableBlotterPersistState;
+  private loadState?: AdaptableBlotterLoadStateFunction;
+  private persistState?: AdaptableBlotterPersistStateFunction;
 
   constructor(config: {
     url: string;
     userName: string;
     blotterId: string;
-    loadState?: AdaptableBlotterLoadState;
-    persistState?: AdaptableBlotterPersistState;
+    loadState?: AdaptableBlotterLoadStateFunction;
+    persistState?: AdaptableBlotterPersistStateFunction;
   }) {
     this.url = config.url;
     this.userName = config.userName;
@@ -103,8 +102,8 @@ export function createEngine({
   userName: string;
   blotterId: string;
 
-  persistState?: AdaptableBlotterPersistState;
-  loadState?: AdaptableBlotterLoadState;
+  persistState?: AdaptableBlotterPersistStateFunction;
+  loadState?: AdaptableBlotterLoadStateFunction;
 }): IStorageEngine {
   return new AdaptableBlotterRemoteStorageEngine({
     url,

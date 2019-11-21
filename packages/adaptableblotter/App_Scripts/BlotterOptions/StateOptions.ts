@@ -1,19 +1,17 @@
-import {
-  AdaptableBlotterState,
-  AdaptableBlotterLoadState,
-  AdaptableBlotterPersistState,
-} from '../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 
 /**
- * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
+ * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading with custom functionality.
  *
- * By default, the adaptable blotter state is persisted in the local storage of the user browser, under the `blotterId` key.
+ * By default, AdaptableBlotterState is persisted in the local storage of the user browser, under the `blotterId` key.
  *
- * Using various state options allows you to change this default behavior and also add custom properties in the persisted state.
+ * (Or if you are using [Config Server](_blotteroptions_configserveroptions_.configserveroptions.html) in the location specified by the configServerUrl property).
  *
- * The AdaptableBlotter state flow is the following:
+ * The various state-management functions provided here allow you to change this default behaviour, and also to add custom properties in the persisted state.
  *
- * USER LOADS PAGE --> loadState(): state1 -> applyState(state1): state2 ------- NOW BLOTTER IS READY WITH STATE (state2) ------ USER UPDATES STATE ------ saveState(state3): state4  -> persistState(state4)
+ * The AdaptableBlotterState flow is the following:
+ *
+ * **User Loads Page** --> loadState(): state1 -> applyState(state1): state2 ---- BLOTTER NOW READY WITH STATE (state2) ---- **User Updates State** ------ saveState(state3): state4  -> persistState(state4)
  *
  */
 export interface StateOptions {
@@ -22,7 +20,7 @@ export interface StateOptions {
    *
    * This function can be used to change this behavior, throttle state persistence, etc.
    *
-   * If defined, most likely it should be used in conjunction to `stateOptions.loadState`, which is the other side of the persistence mechanism.
+   * If defined, most likely it should be used in conjunction with `stateOptions.loadState`, which is the other side of the persistence mechanism.
    *
    * The persistence (dehydration) flow is the following: `saveState` -> `persistState`.
    *
@@ -30,15 +28,18 @@ export interface StateOptions {
    *
    * **Default Implementation: stringifies the state and puts it into the localStorage using the `blotterId` key**
    */
-  persistState?: AdaptableBlotterPersistState;
+  persistState?: AdaptableBlotterPersistStateFunction;
 
   /**
    * Allows the customization of state loading.
    *
-   * By default, it reads the state that was persisted from localStorage (at the `blotterId` key) and returns it, if config server is not defined. If a config server was specified, the default implementation fetches the config server url and returns the resulting object
+   * By default, it reads the state that was persisted from localStorage (at the `blotterId` key) and returns it.
    *
-   * If defined, most likely it is used in conjunction to `stateOptions.persistState`, which is the other side of the persistence mechanism.
-   * For example, loadState could be used to load the blotter state from the browser window object or from a remote location altogether.
+   * (If Remote Config Server has been set up, then the default implementation fetches the config server url and returns the resulting object).
+   *
+   * If defined, most likely it is used in conjunction with `stateOptions.persistState`, which is the other side of the persistence mechanism.
+   *
+   * For example, `loadState` could be used to load the blotter state from the browser window object or from a remote location altogether.
    *
    * The hydration flow is the following: `loadState` -> `applyState`
    *
@@ -48,7 +49,7 @@ export interface StateOptions {
    *
    *
    */
-  loadState?: AdaptableBlotterLoadState;
+  loadState?: AdaptableBlotterLoadStateFunction;
 
   /**
    * Allows the customization of the state that is going to be persisted.
@@ -69,21 +70,19 @@ export interface StateOptions {
    * }
    * ```
    *
-   * In this case, you might find it useful to also define `applyState` which hooks into state hydration, and gives you access to the
-   * persisted custom properties, so you can use them later in the app.
+   * In this case, you might find it useful to also define `applyState` which hooks into state hydration, and gives you access to the persisted custom properties, so you can use them later in the app.
    *
    * If you also want to modify the persistence behavior, you have to implement the `persistState` as well.
    *
    * The persistence (dehydration) flow is the following: `saveState` -> `persistState`.
    *
-   * NOTE: You have to make sure that the returned object is serializable with JSON.stringify - it case it's not, you could define `persistState` to do a custom serialization of the object.
+   * NOTE: You have to make sure that the returned object is serializable with JSON.stringify - in case that it's not, you could define `persistState` to do a custom serialization of the object.
    *
    * NOTE: This function should be a synchronous function.
    *
-   * NOTE: If you used `saveState` to add custom app-specific properties on the top-level object you returned,
-   * it's a good practice to clear these properties and just return the blotter state from the `applyState` function.
+   * NOTE: If you used `saveState` to add custom app-specific properties on the top-level object you returned, it's a good practice to clear these properties and just return the blotter state from the `applyState` function.
    *
-   * **Default implementation: (state) => state
+   * **Default implementation: (state) => state**
    */
   saveState?: (state: AdaptableBlotterState) => Partial<AdaptableBlotterState>;
 
@@ -92,8 +91,7 @@ export interface StateOptions {
    *
    * This function determines what state is (re)applied on the blotter when the blotter is initialized.
    *
-   * NOTE: If you used `saveState` to add custom app-specific properties on the top-level object you returned,
-   * it's a good practice to clear these properties and just return the blotter state from the `applyState` function.
+   * NOTE: If you used `saveState` to add custom app-specific properties on the top-level object you returned, it's a good practice to clear these properties and just return the blotter state from the `applyState` function.
    *
    * ```ts
    * blotterOptions = {
@@ -125,4 +123,25 @@ export interface StateOptions {
    * **Default implementation: (state) => state**
    */
   applyState?: (state: any) => any;
+}
+
+/**
+ * Allows the customization of state persistence.
+ *
+ * Userd by the `persistState` function property in StateOptions
+ */
+export interface AdaptableBlotterPersistStateFunction {
+  (
+    state: Partial<AdaptableBlotterState>,
+    { blotterId, userName, url }: { blotterId: string; userName: string; url?: string }
+  ): Promise<any>;
+}
+
+/**
+ * Allows the customization of state loading.
+ *
+ * Userd by the `loadState` function property in StateOptions
+ */
+export interface AdaptableBlotterLoadStateFunction {
+  (config: { blotterId: string; userName: string; url?: string }): Promise<any>;
 }

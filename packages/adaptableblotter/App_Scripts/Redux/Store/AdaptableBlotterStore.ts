@@ -2,7 +2,7 @@ import { ExportDestination, MathOperation, MessageType } from '../../PredefinedC
 import * as Redux from 'redux';
 import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createEngine as createEngineRemote } from './IAdaptableBlotterReduxRemoteStorageEngine';
+import { createEngine as createEngineRemote } from './AdaptableBlotterReduxRemoteStorageEngine';
 import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
 import { mergeReducer } from './AdaptableBlotterReduxMerger';
 
@@ -287,7 +287,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
     // not sure we can do this as we need to be backwardly compatible with existing users so need to stick with blotter id (which should be unique)
     // const localStorageKey =  'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey;
-    
+
     if (BlotterHelper.isConfigServerEnabled(blotter.blotterOptions)) {
       storageEngine = createEngineRemote({
         url: blotter.blotterOptions.configServerOptions.configServerUrl,
@@ -375,7 +375,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       .load()
       .then(storedState => {
         if (storedState && this.loadStartOnStartup) {
-          this.TheStore.dispatch(LoadState(blotter.blotterOptions.stateOptions.applyState(storedState)));
+          this.TheStore.dispatch(
+            LoadState(blotter.blotterOptions.stateOptions.applyState(storedState))
+          );
         }
       })
       .then(
@@ -2329,7 +2331,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<
+              boolean
+            > = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
