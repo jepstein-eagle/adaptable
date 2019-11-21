@@ -31,17 +31,35 @@ function InitAdaptableBlotter() {
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
-  };
-
-  adaptableBlotterOptions.generalOptions = {
-    showAdaptableBlotterToolPanel: true,
-  };
-
-  adaptableBlotterOptions.layoutOptions = {
-    autoSizeColumnsInDefaultLayout: true,
-  };
-  adaptableBlotterOptions.queryOptions = {
-    columnValuesOnlyInQueries: true,
+    stateOptions: {
+      saveState: state => {
+        console.log('in save state');
+        return {
+          ...state,
+          name: 'Jonny',
+        };
+      },
+      applyState: state => {
+        const { name, ...rest } = state;
+        console.log('in apply state name is:', name);
+        return rest;
+      },
+      loadState: () => {
+        let state = localStorage.getItem('TestingState');
+        if (state != null) {
+          state = JSON.parse(state);
+        }
+        console.log('in load state:', state);
+        return Promise.resolve(state);
+      },
+      persistState: state => {
+        localStorage.setItem('TestingState', JSON.stringify(state));
+        return Promise.resolve(true);
+      },
+    },
+    layoutOptions: {
+      autoSizeColumnsInDefaultLayout: true,
+    },
   };
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
