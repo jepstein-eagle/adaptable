@@ -45,16 +45,15 @@ class ColumnCategoryPopupComponent extends React.Component<
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
-
+  shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action == 'New') {
         this.onNew();
       }
     }
-    if (this.props.PopupParams.source) {
-      alert(this.props.PopupParams.source);
-    }
+    this.shouldClosePopupOnFinishWizard =
+      this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
   }
 
   render() {
@@ -159,6 +158,9 @@ class ColumnCategoryPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {
@@ -173,6 +175,7 @@ class ColumnCategoryPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

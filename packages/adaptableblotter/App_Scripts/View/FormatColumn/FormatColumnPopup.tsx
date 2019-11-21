@@ -45,7 +45,7 @@ class FormatColumnPopupComponent extends React.Component<
       WizardStatus: WizardStatus.None,
     };
   }
-
+  shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
@@ -60,9 +60,8 @@ class FormatColumnPopupComponent extends React.Component<
           this.onEdit(editFormatColumn);
         }
       }
-      if (this.props.PopupParams.source) {
-        alert(this.props.PopupParams.source);
-      }
+      this.shouldClosePopupOnFinishWizard =
+        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
     }
   }
 
@@ -178,6 +177,9 @@ class FormatColumnPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {
@@ -188,6 +190,7 @@ class FormatColumnPopupComponent extends React.Component<
       this.props.onAddFormatColumn(formatColumn);
     }
     this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
+    this.shouldClosePopupOnFinishWizard = false;
   }
   canFinishWizard() {
     let formatColumn = this.state.EditedAdaptableBlotterObject as FormatColumn;

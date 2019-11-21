@@ -50,6 +50,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
+  shouldClosePopupOnFinishWizard: boolean = false;
 
   componentDidMount() {
     if (this.props.PopupParams) {
@@ -67,6 +68,8 @@ class AdvancedSearchPopupComponent extends React.Component<
         }
       }
     }
+    this.shouldClosePopupOnFinishWizard =
+      this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
   }
 
   render() {
@@ -197,6 +200,9 @@ class AdvancedSearchPopupComponent extends React.Component<
         this.props.onClosePopup();
       }
     }
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {
@@ -223,7 +229,7 @@ class AdvancedSearchPopupComponent extends React.Component<
       // or if we are editing the current search - but might have changed the name
       this.props.onSelectAdvancedSearch(clonedObject.Name);
     }
-    //   this.ClosePopupOnWizardCancelTest = false;
+    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

@@ -47,7 +47,7 @@ class PercentBarPopupComponent extends React.Component<
       WizardStatus: WizardStatus.None,
     };
   }
-
+  shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
@@ -69,9 +69,8 @@ class PercentBarPopupComponent extends React.Component<
           this.onEdit(editPercentRender);
         }
       }
-      if (this.props.PopupParams.source) {
-        alert(this.props.PopupParams.source);
-      }
+      this.shouldClosePopupOnFinishWizard =
+        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
     }
   }
 
@@ -229,6 +228,9 @@ class PercentBarPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {
@@ -243,6 +245,7 @@ class PercentBarPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard(): boolean {

@@ -50,7 +50,7 @@ class CellValidationPopupComponent extends React.Component<
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
-
+  shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
@@ -64,6 +64,8 @@ class CellValidationPopupComponent extends React.Component<
           });
         }
       }
+      this.shouldClosePopupOnFinishWizard =
+        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
     }
   }
   render() {
@@ -187,6 +189,10 @@ class CellValidationPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {
@@ -204,6 +210,7 @@ class CellValidationPopupComponent extends React.Component<
       WizardStartIndex: 5,
       WizardStatus: WizardStatus.None,
     });
+    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

@@ -50,7 +50,7 @@ class PlusMinusPopupComponent extends React.Component<
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
-
+  shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
@@ -64,9 +64,8 @@ class PlusMinusPopupComponent extends React.Component<
           });
         }
       }
-      if (this.props.PopupParams.source) {
-        alert(this.props.PopupParams.source);
-      }
+      this.shouldClosePopupOnFinishWizard =
+        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
     }
   }
 
@@ -185,6 +184,9 @@ class PlusMinusPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {
@@ -199,6 +201,7 @@ class PlusMinusPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
+    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
