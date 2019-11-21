@@ -287,15 +287,23 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
     // not sure we can do this as we need to be backwardly compatible with existing users so need to stick with blotter id (which should be unique)
     // const localStorageKey =  'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey;
-    const localStorageKey = blotter.blotterOptions.blotterId;
+    
     if (BlotterHelper.isConfigServerEnabled(blotter.blotterOptions)) {
-      storageEngine = createEngineRemote(
-        blotter.blotterOptions.configServerOptions.configServerUrl,
-        blotter.blotterOptions.userName,
-        blotter.blotterOptions.blotterId
-      );
+      storageEngine = createEngineRemote({
+        url: blotter.blotterOptions.configServerOptions.configServerUrl,
+        userName: blotter.blotterOptions.userName,
+        blotterId: blotter.blotterOptions.blotterId,
+        loadState: blotter.blotterOptions.stateOptions.loadState,
+        persistState: blotter.blotterOptions.stateOptions.persistState,
+      });
     } else {
-      storageEngine = createEngineLocal(localStorageKey, blotter.blotterOptions.predefinedConfig);
+      storageEngine = createEngineLocal({
+        blotterId: blotter.blotterOptions.blotterId,
+        userName: blotter.blotterOptions.userName,
+        predefinedConfig: blotter.blotterOptions.predefinedConfig,
+        loadState: blotter.blotterOptions.stateOptions.loadState,
+        persistState: blotter.blotterOptions.stateOptions.persistState,
+      });
     }
 
     const nonPersistentReduxKeys = [
@@ -344,7 +352,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
           delete storageState[key];
         });
 
-        storageEngine.save(storageState);
+        storageEngine.save(blotter.blotterOptions.stateOptions.saveState(storageState));
       }
 
       return newState;
@@ -367,7 +375,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       .load()
       .then(storedState => {
         if (storedState && this.loadStartOnStartup) {
-          this.TheStore.dispatch(LoadState(storedState));
+          this.TheStore.dispatch(LoadState(blotter.blotterOptions.stateOptions.applyState(storedState)));
         }
       })
       .then(
@@ -460,7 +468,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
         );
 
         switch (action.type) {
-          /* 
+          /*
           **********************
            ADVANCED SEARCH
           **********************
@@ -519,7 +527,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
            ALERT
           **********************
@@ -563,7 +571,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
            BULK UPDATE
           **********************
@@ -583,7 +591,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
 
-          /* 
+          /*
           **********************
            CALCULATED COLUMN
           **********************
@@ -627,7 +635,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
            CALENDAR
           **********************
@@ -646,7 +654,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
            CELL SUMMARY
           **********************
@@ -665,7 +673,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
            CELL VALIDATION
           **********************
@@ -709,7 +717,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
            CHART
           **********************
@@ -767,7 +775,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           COLUMN CATEGORY
           **********************
@@ -868,7 +876,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
 
-          /* 
+          /*
           **********************
           CONDITIONAL STYLE
           **********************
@@ -912,7 +920,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           CUSTOM SORT
           **********************
@@ -958,7 +966,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           DATA SOURCE
           **********************
@@ -1016,7 +1024,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
            EXPORT
           **********************
@@ -1073,7 +1081,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
-          } /* 
+          } /*
           **********************
           FLASHING CELL
           **********************
@@ -1120,7 +1128,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           FORMAT COLUMN
           **********************
@@ -1164,7 +1172,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           FREE TEXT COLUMN
           **********************
@@ -1209,7 +1217,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
 
-          /* 
+          /*
           **********************
           LAYOUT
           **********************
@@ -1280,7 +1288,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           PERCENT BAR
           **********************
@@ -1325,7 +1333,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
 
-          /* 
+          /*
           **********************
           Sparklines
           **********************
@@ -1369,7 +1377,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           PLUS / MINUS
           **********************
@@ -1413,7 +1421,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           QUICK SEARCH
           **********************
@@ -1465,7 +1473,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             return ret;
           }
 
-          /* 
+          /*
           **********************
           REMINDER
           **********************
@@ -1509,7 +1517,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           SHORTCUT
           **********************
@@ -1553,7 +1561,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           SMART EDIT
           **********************
@@ -1586,7 +1594,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           THEME
           **********************
@@ -1606,7 +1614,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /* 
+          /*
           **********************
           USER FILTER
           **********************
@@ -2321,9 +2329,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
