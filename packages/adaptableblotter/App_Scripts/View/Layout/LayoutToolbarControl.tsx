@@ -2,7 +2,7 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';

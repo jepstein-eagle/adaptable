@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';

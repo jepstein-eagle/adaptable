@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
+
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 
 import { IUIConfirmation } from '../../../Utilities/Interface/IMessage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
+import { AdaptableBlotterState } from '../../../PredefinedConfig/AdaptableBlotterState';
 
 export interface DeleteButtonProps extends SimpleButtonProps {
   onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;

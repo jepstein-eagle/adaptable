@@ -18,7 +18,7 @@ import { IgrRingSeries } from 'igniteui-react-charts/ES2015/igr-ring-series';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { PieChartDefinition, PieChartDataItem, ChartData } from '../../PredefinedConfig/ChartState';
@@ -37,7 +37,7 @@ import Checkbox from '../../components/CheckBox';
 import Panel from '../../components/Panel';
 import Dropdown from '../../components/Dropdown';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import {ChartContainer} from '../../components/ChartContainer';
+import { ChartContainer } from '../../components/ChartContainer';
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}
 

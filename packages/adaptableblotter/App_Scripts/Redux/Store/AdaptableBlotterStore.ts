@@ -55,7 +55,7 @@ import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
-import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore';
+import { IAdaptableBlotterStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
 import { LayoutState } from '../../PredefinedConfig/LayoutState';
@@ -129,6 +129,7 @@ import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPo
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 
 type EmitterCallback = (data?: any) => any;
 /*

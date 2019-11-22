@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { Flex, Box } from 'rebass';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';

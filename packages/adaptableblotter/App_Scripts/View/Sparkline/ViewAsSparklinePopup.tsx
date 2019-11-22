@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 
 import { ChartData, SparklinesChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';

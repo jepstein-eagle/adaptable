@@ -5,7 +5,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';

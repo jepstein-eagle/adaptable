@@ -19,7 +19,7 @@ import { PanelWithImageThreeButtons } from '../Components/Panels/PanelWithIImage
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';

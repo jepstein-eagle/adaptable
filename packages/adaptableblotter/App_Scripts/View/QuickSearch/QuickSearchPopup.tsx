@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';

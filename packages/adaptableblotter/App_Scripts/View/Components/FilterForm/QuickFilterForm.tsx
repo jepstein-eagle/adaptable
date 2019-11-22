@@ -4,7 +4,7 @@ import * as Redux from 'redux';
 import * as _ from 'lodash';
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux';
 import { Provider, connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../../PredefinedConfig/AdaptableBlotterState';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 
@@ -23,7 +23,6 @@ import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRan
 import Input from '../../../components/Input';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
-import { Column } from 'ag-grid-community';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: AdaptableBlotterColumn;

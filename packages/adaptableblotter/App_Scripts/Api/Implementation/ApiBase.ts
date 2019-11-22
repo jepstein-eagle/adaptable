@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 
 import Helper from '../../Utilities/Helpers/Helper';

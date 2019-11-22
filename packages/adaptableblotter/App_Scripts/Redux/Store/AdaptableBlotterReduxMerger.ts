@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
-
-import { AdaptableBlotterState } from './Interface/IAdaptableStore';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 
 function customizer(objValue: any, srcValue: any) {
   if (_.isArray(objValue)) {

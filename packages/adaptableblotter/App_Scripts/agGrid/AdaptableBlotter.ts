@@ -40,10 +40,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 // redux / store
-import {
-  IAdaptableBlotterStore,
-  AdaptableBlotterState,
-} from '../Redux/Store/Interface/IAdaptableStore';
+import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterStore, INIT_STATE } from '../Redux/Store/AdaptableBlotterStore';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
@@ -161,6 +158,7 @@ import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { BlotterApi } from '../Api/BlotterApi';
+import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
 
 // do I need this in both places??
 type RuntimeConfig = {

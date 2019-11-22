@@ -5,7 +5,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { CellSummaryDetails } from './CellSummaryDetails';

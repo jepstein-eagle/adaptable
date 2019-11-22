@@ -11,7 +11,6 @@ import { ChartState } from '../PredefinedConfig/ChartState';
 import { PopupState } from '../PredefinedConfig/PopupState';
 import { SystemState } from '../PredefinedConfig/SystemState';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt';
 import { Dashboard } from './Dashboard/Dashboard';
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation';
@@ -20,6 +19,7 @@ import { AdaptableBlotterChart } from './Components/Popups/AdaptableBlotterChart
 import { AdaptableBlotterLoadingScreen } from './Components/Popups/AdaptableBlotterLoadingScreen';
 import { AdaptableBlotterGridInfo } from './Components/Popups/AdaptableBlotterGridInfo';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
+import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
   PopupState: PopupState;

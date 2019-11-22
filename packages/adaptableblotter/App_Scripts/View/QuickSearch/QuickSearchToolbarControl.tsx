@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';

@@ -21,12 +21,12 @@ import { BulkUpdateState } from '../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../PredefinedConfig/AlertState';
 import { AdvancedSearchState } from '../PredefinedConfig/AdvancedSearchState';
 import { RunTimeState } from '../PredefinedConfig/RunTimeState';
-import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { PlusMinusState } from '../PredefinedConfig/PlusMinusState';
 import { ActionColumnState } from '../PredefinedConfig/ActionColumnState';
 import { ApplicationState } from '../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
+import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
 
 export interface ConfigApi {
   configInit(): void;

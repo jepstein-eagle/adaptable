@@ -6,7 +6,7 @@ import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';

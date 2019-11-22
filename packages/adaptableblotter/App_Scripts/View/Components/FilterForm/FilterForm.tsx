@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { Provider, connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../../PredefinedConfig/AdaptableBlotterState';
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux';
 import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux';
 import * as GridRedux from '../../../Redux/ActionsReducers/GridRedux';

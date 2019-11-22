@@ -5,7 +5,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';

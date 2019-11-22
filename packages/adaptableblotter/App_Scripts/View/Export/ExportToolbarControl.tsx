@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';

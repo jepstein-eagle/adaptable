@@ -2,7 +2,7 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';

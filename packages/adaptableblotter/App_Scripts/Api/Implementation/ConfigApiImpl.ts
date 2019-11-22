@@ -22,7 +22,7 @@ import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../../PredefinedConfig/AlertState';
 import { AdvancedSearchState } from '../../PredefinedConfig/AdvancedSearchState';
 import { RunTimeState } from '../../PredefinedConfig/RunTimeState';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { ResetUserData, LoadState, InitState } from '../../Redux/Store/AdaptableBlotterStore';
 import { StateChangedTrigger } from '../../PredefinedConfig/Common/Enums';
 import { ApiBase } from './ApiBase';

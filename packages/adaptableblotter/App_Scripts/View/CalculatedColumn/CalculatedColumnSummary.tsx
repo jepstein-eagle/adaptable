@@ -4,7 +4,7 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';

@@ -8,7 +8,7 @@ import {
   AdaptableDashboardViewFactory,
   AdaptableDashboardPermanentToolbarFactory,
 } from '../AdaptableViewFactory';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';

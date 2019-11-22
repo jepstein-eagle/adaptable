@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -25,6 +24,7 @@ import { Flex } from 'rebass';
 import DropdownButton from '../../components/DropdownButton';
 import SimpleButton from '../../components/SimpleButton';
 import { SyntheticEvent } from 'react';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {

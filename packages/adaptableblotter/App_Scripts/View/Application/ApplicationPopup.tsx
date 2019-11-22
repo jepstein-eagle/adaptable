@@ -2,7 +2,7 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 
 interface ApplicationPopupComponentProps
   extends StrategyViewPopupProps<ApplicationPopupComponent> {}
