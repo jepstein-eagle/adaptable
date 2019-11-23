@@ -37,7 +37,7 @@ export interface GeneralOptions {
   /**
    * Whether or not to show a warning if the primary key column identified in the base Options does not exist.
    *
-   * **Recommended to set to true** (default) as a wrongly applied primary key can affect many functions
+   * **Recommended to set to true** (default) as a wrongly applied `primaryKey` can affect many functions
    *
    * **Default Value: true**
    */

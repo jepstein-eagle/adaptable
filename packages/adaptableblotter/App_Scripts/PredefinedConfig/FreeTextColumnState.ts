@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 
 /*
 A collection of Free Text Column objects. Each IFreeTextColumn contains a ColumnId, a default value and FreeTextStoredValues (which will typically be added by users at run time).

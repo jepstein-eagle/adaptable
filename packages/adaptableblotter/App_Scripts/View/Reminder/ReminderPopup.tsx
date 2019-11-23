@@ -20,7 +20,7 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { Reminder } from '../../PredefinedConfig/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';

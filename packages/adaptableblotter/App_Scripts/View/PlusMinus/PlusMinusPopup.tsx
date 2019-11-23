@@ -23,7 +23,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';

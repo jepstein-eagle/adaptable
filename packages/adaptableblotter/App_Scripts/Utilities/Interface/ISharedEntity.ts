@@ -1,4 +1,4 @@
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 
 export interface ISharedEntity {
   entity: AdaptableBlotterObject;

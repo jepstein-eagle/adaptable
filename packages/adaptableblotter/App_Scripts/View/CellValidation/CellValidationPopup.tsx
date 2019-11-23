@@ -25,7 +25,7 @@ import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';

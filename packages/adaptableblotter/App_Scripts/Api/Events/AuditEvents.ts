@@ -1,6 +1,6 @@
 import { FDC3Schema, AdaptableBlotterEventData, BlotterEventArgs } from './BlotterEvents';
 import { AuditLogEntry } from '../../Utilities/Interface/AuditLogEntry';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 
 export interface AuditLogEventArgs extends BlotterEventArgs {

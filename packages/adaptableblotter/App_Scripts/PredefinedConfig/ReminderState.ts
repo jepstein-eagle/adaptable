@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { Schedule } from './Common/Schedule';
 

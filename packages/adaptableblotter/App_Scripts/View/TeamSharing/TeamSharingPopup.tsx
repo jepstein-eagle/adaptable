@@ -14,7 +14,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { IColItem } from '../UIInterfaces';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';

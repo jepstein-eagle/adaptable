@@ -2,7 +2,7 @@ import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from 'redux';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';

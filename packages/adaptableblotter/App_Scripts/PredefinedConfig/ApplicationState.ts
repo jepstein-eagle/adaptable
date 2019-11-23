@@ -1,4 +1,4 @@
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 import { RunTimeState } from './RunTimeState';
 
 /**

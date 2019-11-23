@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 import { DataType } from './Common/Enums';
 export interface DataSourceState extends RunTimeState {
   DataSources?: DataSource[];

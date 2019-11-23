@@ -1,6 +1,6 @@
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { AB_HEADER } from '../../Utilities/Constants/StyleConstants';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 
 export function CreateStyleName(strategyId: string, blotter: IAdaptableBlotter): string {
   return (

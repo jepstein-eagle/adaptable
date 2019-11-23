@@ -22,7 +22,7 @@ import { UIHelper } from '../UIHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { Layout } from '../../PredefinedConfig/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';

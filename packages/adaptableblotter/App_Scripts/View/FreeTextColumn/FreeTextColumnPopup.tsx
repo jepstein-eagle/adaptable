@@ -19,7 +19,7 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';

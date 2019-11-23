@@ -13,7 +13,7 @@ import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { Column } from 'ag-grid-community';

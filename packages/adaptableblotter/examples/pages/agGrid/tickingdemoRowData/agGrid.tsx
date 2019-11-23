@@ -24,8 +24,7 @@ function InitAdaptableBlotter() {
   const tradeCount: number = 30;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   console.log(tradeData);
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  alert('hello');
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(null);
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'ticking demo row demo '
@@ -40,6 +39,10 @@ function InitAdaptableBlotter() {
     1000,
     tradeCount
   );
+
+  setTimeout(() => {
+    gridOptions.api!.setRowData(tradeData);
+  }, 5000);
 }
 
 let flashingJson: PredefinedConfig = {

@@ -1,4 +1,4 @@
-import { TypeUuid } from './Uuid';
+import { TypeUuid } from '../Uuid';
 
 /**
  * The base empty Adaptable Blotter Object interface which all other State-related interfaces should extend.

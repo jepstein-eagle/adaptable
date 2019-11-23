@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 import { IStyle } from './Common/IStyle';
 
 export interface FormatColumnState extends RunTimeState {

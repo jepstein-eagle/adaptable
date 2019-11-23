@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 
 export interface LayoutState extends RunTimeState {
   CurrentLayout?: string;

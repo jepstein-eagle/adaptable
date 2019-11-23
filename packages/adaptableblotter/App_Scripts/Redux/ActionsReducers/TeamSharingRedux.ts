@@ -2,7 +2,7 @@ import { TeamSharingState } from '../../PredefinedConfig/TeamSharingState';
 import * as Redux from 'redux';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 
 export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
 export const TEAMSHARING_SET = 'TEAMSHARING_SET';

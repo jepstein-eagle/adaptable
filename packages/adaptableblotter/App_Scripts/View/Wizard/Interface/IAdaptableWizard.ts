@@ -1,7 +1,7 @@
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
-import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 

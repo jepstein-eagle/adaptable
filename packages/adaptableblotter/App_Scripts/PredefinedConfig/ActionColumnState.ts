@@ -1,5 +1,5 @@
 import { DesignTimeState } from './DesignTimeState';
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 
 /**
  * The Predefined Configuration for Action Columns

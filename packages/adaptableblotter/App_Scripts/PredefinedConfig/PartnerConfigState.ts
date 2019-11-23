@@ -1,4 +1,4 @@
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 import { DesignTimeState } from './DesignTimeState';
 import { PushPullConfig } from './PushPullConfig';
 import { Glue42Config } from './Glue42Config';

@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 import { Expression } from './Common/Expression/Expression';
 import { ExportDestination } from './Common/Enums';
 import { Schedule } from './Common/Schedule';

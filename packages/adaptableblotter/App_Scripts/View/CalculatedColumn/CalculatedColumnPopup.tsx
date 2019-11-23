@@ -25,7 +25,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 

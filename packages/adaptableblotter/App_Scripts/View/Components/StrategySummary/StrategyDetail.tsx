@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { EntityListActionButtons } from '../Buttons/EntityListActionButtons';
 import { SummaryRowItem } from './SummaryRowItem';
-import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../../PredefinedConfig/Common/AdaptableBlotterObject';
 
 export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetail> {
   key: string;

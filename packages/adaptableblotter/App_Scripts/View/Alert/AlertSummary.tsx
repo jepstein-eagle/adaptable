@@ -18,7 +18,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
   Alerts: AlertDefinition[];

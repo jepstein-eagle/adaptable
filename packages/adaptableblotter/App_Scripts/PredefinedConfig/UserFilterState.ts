@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './AdaptableBlotterObject';
+import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 import { Expression } from './Common/Expression/Expression';
 export interface UserFilterState extends RunTimeState {
   UserFilters?: UserFilter[];

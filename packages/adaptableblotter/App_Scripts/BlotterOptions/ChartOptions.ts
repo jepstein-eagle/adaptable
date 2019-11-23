@@ -2,6 +2,7 @@
  * Options for managing Charts in the Adaptable Blotter
  *
  * Properties to set how and where charts are displayed
+ *
  * ```ts
  * chartOptions = {
  *  displayOnStartUp: true,

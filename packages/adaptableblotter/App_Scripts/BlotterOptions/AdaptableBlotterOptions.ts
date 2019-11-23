@@ -8,20 +8,19 @@ import { GeneralOptions } from './GeneralOptions';
 import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { AdvancedOptions } from './AdvancedOptions';
-import { FlashingUpdateOptions } from './FlashingUpdateOptions';
 import { EditOptions } from './EditOptions';
 import { StateOptions } from './StateOptions';
 
 /**
- * AdaptableBlotterOptions is the class injected into the Adaptable Blotter at startup.
+ * `AdaptableBlotterOptions` is the class injected into the Adaptable Blotter at startup.
  *
  * **This forms the only parameter requried by the Adaptable Blotter constructor.**
  *
- * AdaptableBlotterOptions provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
+ * `AdaptableBlotterOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
  *
- * The AdaptableBlotterOptions class contains a few *normal* properties of which 2 (*vendorGrid* and *primaryKey*) are mandatory - and a number of *xxxOptions* properties where the type is itself a collection of related properties.
+ * The `AdaptableBlotterOptions` class contains a few *normal* properties of which 2 (`vendorGrid` and `primaryKey`) are mandatory - and a number of `*xxxOptions` properties where the type is itself a collection of related properties.
  *
- * Typically users will ony populate a few of the properties in AdaptableBlotterOptions, and only a few properties in each class.
+ * Typically users will ony populate a few of the properties in `AdaptableBlotterOptions`, and only a few properties in each class.
  *
  * Any property that is not supplied by the user when populating the object, will use the default value (which is listed here for each property).
  */
@@ -33,9 +32,9 @@ export interface AdaptableBlotterOptions {
    *
    * Depending on the vendor it is either a Grid or an Options object.
    *
-   * The vendor Grid should contain all the column definitions and data sources required.
+   * The `vendorGrid` object should contain all the column definitions and data sources required.
    *
-   * Note: if you are using the *React Wrapper* or the *Angular Wrapper* then you do **not** need to populate this property (as *gridOptions* is a separate parameter).
+   * Note: if you are using the *React Wrapper* or the *Angular Wrapper* then **you do not need to populate this property** (as `gridOptions` is a separate parameter).
    *
    * **Default Value: N/A**
    */
@@ -61,7 +60,7 @@ export interface AdaptableBlotterOptions {
    *
    * **Note** it cannot contain a '.' (as this value is used to name styles which raises issues if it contains a full stop).
    *
-   * The value provided here is also that used to name the *Home Toolbar* (the first toolbar that appears in the Dashboard).
+   * The value provided here is also that used to name the *Home Toolbar* (the toolbar that appears first in the Dashboard on the left).
    *
    * **Default Value: adaptable_blotter_id**
    */
@@ -79,7 +78,7 @@ export interface AdaptableBlotterOptions {
   userName?: string;
 
   /**
-   * User State (a.ka. 'Predefined Configu) set at design-time and shipped with the Blotter for first use.
+   * User State (a.ka. `predefinedConfig`) set at design-time and shipped with the Blotter for first use.
    *
    * Contains a mixture of objects and properties.
    *
@@ -89,7 +88,7 @@ export interface AdaptableBlotterOptions {
    *
    * See full details at [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
    *
-   * **Default Value: null**
+   * **Default Value: undefined**
    */
   predefinedConfig?: PredefinedConfig | string;
 
@@ -99,7 +98,7 @@ export interface AdaptableBlotterOptions {
   licenceKey?: string;
 
   /**
-   * Options for setting the  *Div elements* in which the Adaptable Blotter and underlying grid are placed.
+   * Options for setting the *Div elements* in which the Adaptable Blotter and underlying grid are placed.
    *
    * Also allows you to set where popups appear relative to the page and where charts are displayed.
    */
@@ -184,14 +183,13 @@ export interface AdaptableBlotterOptions {
    */
   advancedOptions?: AdvancedOptions;
 
-
-/**
- * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
- *
- * By default, the adaptable blotter state is persisted in the local storage of the user browser, under the `blotterId` key.
- *
- * Using various state options allows you to change this default behavior and also add custom properties in the persisted state.
- *
- */
+  /**
+   * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
+   *
+   * By default, the adaptable blotter state is persisted in the local storage of the user browser, under the `blotterId` key.
+   *
+   * Using various state options allows you to change this default behavior and also add custom properties in the persisted state.
+   *
+   */
   stateOptions?: StateOptions;
 }
