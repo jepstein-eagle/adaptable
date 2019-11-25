@@ -9,23 +9,22 @@ import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
-import LayoutHelper from '../../../Utilities/Helpers/LayoutHelper';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
 
-export interface LayoutPivotGroupedColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
+export interface LayoutPivotColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
 
-export interface LayoutPivotGroupedColumnWizardProps extends AdaptableWizardStepProps<Layout> {
-  GroupableColumns: AdaptableBlotterColumn[];
+export interface LayoutPivotColumnWizardProps extends AdaptableWizardStepProps<Layout> {
+  PivotableColumns: AdaptableBlotterColumn[];
 }
 
-export interface LayoutPivotGroupedColumnWizardState {
+export interface LayoutPivotColumnWizardState {
   SelectedColumns: Array<string>;
 }
 
-export class LayoutPivotGroupedColumnWizard
-  extends React.Component<LayoutPivotGroupedColumnWizardProps, LayoutPivotGroupedColumnWizardState>
+export class LayoutPivotColumnWizard
+  extends React.Component<LayoutPivotColumnWizardProps, LayoutPivotColumnWizardState>
   implements AdaptableWizardStep {
-  constructor(props: LayoutPivotGroupedColumnWizardProps) {
+  constructor(props: LayoutPivotColumnWizardProps) {
     super(props);
     // is this right?
     if (this.props.Data.PivotDetails == null) {
@@ -33,7 +32,7 @@ export class LayoutPivotGroupedColumnWizard
     }
     this.state = {
       SelectedColumns: ColumnHelper.getFriendlyNamesFromColumnIds(
-        this.props.Data.PivotDetails.PivotGroupedColumns,
+        this.props.Data.PivotDetails.PivotColumns,
         this.props.Columns
       ),
     };
@@ -43,14 +42,14 @@ export class LayoutPivotGroupedColumnWizard
     return (
       <WizardPanel>
         <HelpBlock marginBottom={2}>
-          1. Choose which columns to <b>Group By</b> in the Pivot.
+          1. Choose which columns should form the <b>Pivot Header</b>.
         </HelpBlock>
         <DualListBoxEditor
           style={{ flex: 1, overflow: 'hidden' }}
-          AvailableValues={this.props.GroupableColumns.map(x => x.FriendlyName)}
+          AvailableValues={this.props.PivotableColumns.map(x => x.FriendlyName)}
           SelectedValues={this.state.SelectedColumns}
-          HeaderAvailable="Groupable Pivot Columns"
-          HeaderSelected="Grouped Pivot Columns in Layout"
+          HeaderAvailable="Available Pivot Header Columns"
+          HeaderSelected="Pivot Header Columns in Layout"
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
@@ -58,7 +57,7 @@ export class LayoutPivotGroupedColumnWizard
     );
   }
   OnSelectedValuesChange(newValues: Array<string>) {
-    this.setState({ SelectedColumns: newValues } as LayoutPivotGroupedColumnWizardState, () =>
+    this.setState({ SelectedColumns: newValues } as LayoutPivotColumnWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
@@ -70,7 +69,7 @@ export class LayoutPivotGroupedColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.PivotDetails.PivotGroupedColumns = ColumnHelper.getColumnIdsFromFriendlyNames(
+    this.props.Data.PivotDetails.PivotColumns = ColumnHelper.getColumnIdsFromFriendlyNames(
       this.state.SelectedColumns,
       this.props.Columns
     );

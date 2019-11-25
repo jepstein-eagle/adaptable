@@ -45,13 +45,8 @@ export class LayoutSetPivotingWizard
         </Flex>
         {this.state.IsPivotLayout && (
           <HelpBlock marginTop={2}>
-            There are 3 sets of columns that make up a Pivot Layout: <br />
+            There are 2 sets of columns that make up a Pivot Layout: <br />
             <ul>
-              <li>
-                <b>Groupable Columns</b>: These are colums which will be grouped in the pivot (on
-                the left hand side).
-                <br /> <br />
-              </li>
               <li>
                 <b>Header Columns</b>: These are the colums which will form the pivot header.
                 <br /> <br />
@@ -62,7 +57,7 @@ export class LayoutSetPivotingWizard
                 <br /> <br />
               </li>
             </ul>
-            These column sets can be created in the next wizard steps.
+            These 2 column sets can be created in the next wizard steps.
             <br />
             <br />
             At least one of these column sets must be provided for the Layout to open in Pivot View.
@@ -100,7 +95,7 @@ export class LayoutSetPivotingWizard
     /* no implementation */
   }
   public GetIndexStepIncrement() {
-    return this.state.IsPivotLayout ? 1 : 4;
+    return this.state.IsPivotLayout ? 1 : 3;
   }
   public GetIndexStepDecrement() {
     return 1;

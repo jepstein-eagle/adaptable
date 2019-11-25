@@ -121,11 +121,10 @@ let demoConfig: PredefinedConfig = {
       {
         Columns: ['bid', 'ask', 'price', 'tradeId', 'notional', 'counterparty'],
         Name: 'Pivoted',
-        GroupedColumns: [],
+        GroupedColumns: ['currency'],
         PivotDetails: {
-          PivotGroupedColumns: ['currency', 'country'],
-          PivotHeaderColumns: ['status', 'stars'],
-          PivotAggregationColumns: ['bid'],
+          PivotColumns: ['status', 'stars'],
+          AggregationColumns: ['bid'],
         },
       },
     ],

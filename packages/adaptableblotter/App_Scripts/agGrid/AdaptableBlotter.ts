@@ -2882,16 +2882,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       return;
     }
 
-    // we are in pivot mode so set up ag-Grid pivoting to match the pivot details
-    if (ArrayExtensions.IsNotNull(pivotDetails.PivotGroupedColumns)) {
-      this.gridOptions.columnApi.setRowGroupColumns(pivotDetails.PivotGroupedColumns);
-    }
-    if (ArrayExtensions.IsNotNull(pivotDetails.PivotHeaderColumns)) {
-      this.gridOptions.columnApi.setPivotColumns(pivotDetails.PivotHeaderColumns);
+    if (ArrayExtensions.IsNotNull(pivotDetails.PivotColumns)) {
+      this.gridOptions.columnApi.setPivotColumns(pivotDetails.PivotColumns);
     }
 
-    if (ArrayExtensions.IsNotNull(pivotDetails.PivotAggregationColumns)) {
-      this.gridOptions.columnApi.setValueColumns(pivotDetails.PivotAggregationColumns);
+    if (ArrayExtensions.IsNotNull(pivotDetails.AggregationColumns)) {
+      this.gridOptions.columnApi.setValueColumns(pivotDetails.AggregationColumns);
     }
 
     // a bit annoying but need to do it to force the grid to show the new stuff and we also auto size the columns

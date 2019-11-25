@@ -11,23 +11,20 @@ import HelpBlock from '../../../components/HelpBlock';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
 
-export interface LayoutPivotAggregationColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
+export interface LayoutAggregationColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
 
-export interface LayoutPivotAggregationColumnWizardProps extends AdaptableWizardStepProps<Layout> {
+export interface LayoutAggregationColumnWizardProps extends AdaptableWizardStepProps<Layout> {
   AggregetableColumns: AdaptableBlotterColumn[];
 }
 
-export interface LayoutPivotAggregationColumnWizardState {
+export interface LayoutAggregationColumnWizardState {
   SelectedColumns: Array<string>;
 }
 
-export class LayoutPivotAggregationColumnWizard
-  extends React.Component<
-    LayoutPivotAggregationColumnWizardProps,
-    LayoutPivotAggregationColumnWizardState
-  >
+export class LayoutAggregationColumnWizard
+  extends React.Component<LayoutAggregationColumnWizardProps, LayoutAggregationColumnWizardState>
   implements AdaptableWizardStep {
-  constructor(props: LayoutPivotAggregationColumnWizardProps) {
+  constructor(props: LayoutAggregationColumnWizardProps) {
     super(props);
     // is this right?
     if (this.props.Data.PivotDetails == null) {
@@ -35,7 +32,7 @@ export class LayoutPivotAggregationColumnWizard
     }
     this.state = {
       SelectedColumns: ColumnHelper.getFriendlyNamesFromColumnIds(
-        this.props.Data.PivotDetails.PivotAggregationColumns,
+        this.props.Data.PivotDetails.AggregationColumns,
         this.props.Columns
       ),
     };
@@ -45,7 +42,7 @@ export class LayoutPivotAggregationColumnWizard
     return (
       <WizardPanel>
         <HelpBlock marginBottom={2}>
-          3. Choose which columns should be <b>Aggregated</b> in the Pivot.
+          2. Choose which columns should be <b>Aggregated</b> in the Pivot.
         </HelpBlock>
         <DualListBoxEditor
           style={{ flex: 1, overflow: 'hidden' }}
@@ -60,7 +57,7 @@ export class LayoutPivotAggregationColumnWizard
     );
   }
   OnSelectedValuesChange(newValues: Array<string>) {
-    this.setState({ SelectedColumns: newValues } as LayoutPivotAggregationColumnWizardState, () =>
+    this.setState({ SelectedColumns: newValues } as LayoutAggregationColumnWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
@@ -72,7 +69,7 @@ export class LayoutPivotAggregationColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.PivotDetails.PivotAggregationColumns = ColumnHelper.getColumnIdsFromFriendlyNames(
+    this.props.Data.PivotDetails.AggregationColumns = ColumnHelper.getColumnIdsFromFriendlyNames(
       this.state.SelectedColumns,
       this.props.Columns
     );

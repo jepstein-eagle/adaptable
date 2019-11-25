@@ -103,7 +103,7 @@ export class LayoutSelectionWizard
     // todo
   }
   public GetIndexStepIncrement() {
-    return this.state.LayoutSource == LayoutSource.Existing ? 8 : 1;
+    return this.state.LayoutSource == LayoutSource.Existing ? 7 : 1;
   }
   public GetIndexStepDecrement() {
     return 1;

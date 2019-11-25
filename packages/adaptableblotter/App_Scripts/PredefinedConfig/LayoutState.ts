@@ -44,7 +44,6 @@ export interface BlotterGridInfo {
 }
 
 export interface PivotDetails {
-  PivotGroupedColumns?: string[];
-  PivotHeaderColumns?: string[];
-  PivotAggregationColumns?: string[];
+  PivotColumns?: string[];
+  AggregationColumns?: string[];
 }

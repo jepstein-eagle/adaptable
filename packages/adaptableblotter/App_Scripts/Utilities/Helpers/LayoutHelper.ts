@@ -94,9 +94,8 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
 export function isPivotedLayout(pivotDetails: PivotDetails): boolean {
   return (
     pivotDetails != null &&
-    (ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotGroupedColumns) ||
-      ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotHeaderColumns) ||
-      ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotAggregationColumns))
+    (ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotColumns) ||
+      ArrayExtensions.IsNotNullOrEmpty(pivotDetails.AggregationColumns))
   );
 }
 

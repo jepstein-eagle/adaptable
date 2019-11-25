@@ -429,9 +429,8 @@ export function CreateLayout(
 
 export function CreateEmptyPivotDetails(): PivotDetails {
   return {
-    PivotGroupedColumns: [],
-    PivotHeaderColumns: [],
-    PivotAggregationColumns: [],
+    PivotColumns: [],
+    AggregationColumns: [],
   };
 }
 

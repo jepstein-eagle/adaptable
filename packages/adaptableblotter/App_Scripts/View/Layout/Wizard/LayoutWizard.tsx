@@ -12,9 +12,8 @@ import { Layout, ColumnSort } from '../../../PredefinedConfig/LayoutState';
 import { LayoutGroupedColumnWizard } from './LayoutGroupedColumnWizard';
 import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
 import { LayoutSetPivotingWizard } from './LayoutSetPivotingWizard';
-import { LayoutPivotGroupedColumnWizard } from './LayoutPivotGroupedColumnWizard';
-import { LayoutPivotHeaderColumnWizard } from './LayoutPivotHeaderColumnWizard';
-import { LayoutPivotAggregationColumnWizard } from './LayoutPivotAggregationColumnWizard';
+import { LayoutPivotColumnWizard } from './LayoutPivotColumnWizard';
+import { LayoutAggregationColumnWizard } from './LayoutPivotAggregationColumnWizard';
 
 export interface LayoutWizardProps
   extends AdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
@@ -71,8 +70,8 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               StepName: 'Pivoting',
               Index: 5,
               Element: (
-                <LayoutPivotGroupedColumnWizard
-                  GroupableColumns={ColumnHelper.getGroupableColumns(this.props.Columns)}
+                <LayoutPivotColumnWizard
+                  PivotableColumns={ColumnHelper.getPivotableColumns(this.props.Columns)}
                 />
               ),
             },
@@ -80,28 +79,19 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               StepName: 'Pivoting',
               Index: 6,
               Element: (
-                <LayoutPivotHeaderColumnWizard
-                  PivotableColumns={ColumnHelper.getPivotableColumns(this.props.Columns)}
-                />
-              ),
-            },
-            {
-              StepName: 'Pivoting',
-              Index: 7,
-              Element: (
-                <LayoutPivotAggregationColumnWizard
+                <LayoutAggregationColumnWizard
                   AggregetableColumns={ColumnHelper.getAggregetableColumns(this.props.Columns)}
                 />
               ),
             },
             {
               StepName: 'Settings',
-              Index: 8,
+              Index: 7,
               Element: <LayoutSettingsWizard Layouts={layouts} />,
             },
             {
               StepName: 'Summary',
-              Index: 9,
+              Index: 8,
               Element: <LayoutSummaryWizard />,
             },
           ]}

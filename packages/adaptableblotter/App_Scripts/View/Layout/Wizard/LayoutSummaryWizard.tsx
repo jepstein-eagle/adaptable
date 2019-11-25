@@ -33,16 +33,12 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
     if (LayoutHelper.isPivotedLayout(this.props.Data.PivotDetails)) {
       pivotKeyValuePairs = [
         {
-          Key: 'Pivot Group Columns',
-          Value: this.getColumnNames(this.props.Data.PivotDetails.PivotGroupedColumns),
+          Key: 'Pivot Columns',
+          Value: this.getColumnNames(this.props.Data.PivotDetails.PivotColumns),
         },
         {
-          Key: 'Pivot Header Columns',
-          Value: this.getColumnNames(this.props.Data.PivotDetails.PivotHeaderColumns),
-        },
-        {
-          Key: 'Pivot Aggregation Columns',
-          Value: this.getColumnNames(this.props.Data.PivotDetails.PivotAggregationColumns),
+          Key: 'Aggregation Columns',
+          Value: this.getColumnNames(this.props.Data.PivotDetails.AggregationColumns),
         },
       ];
     }
