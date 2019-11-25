@@ -105,30 +105,47 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Layout: {
+    CurrentLayout: 'Pivoted Layout',
     Layouts: [
       {
+        Name: 'Simple Layout',
+        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+      },
+      {
+        Name: 'Sorting Layout',
         ColumnSorts: [
           {
-            Column: 'notional',
+            Column: 'counterparty',
+            SortOrder: 'Descending',
+          },
+          {
+            Column: 'currency',
             SortOrder: 'Descending',
           },
         ],
         Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
-        Name: 'Heree',
-        // GroupedColumns: ['currency'],
-        //  GroupedColumns: [],
       },
       {
-        Columns: ['bid', 'ask', 'price', 'tradeId', 'notional', 'counterparty'],
-        Name: 'Pivoted',
+        ColumnSorts: [
+          {
+            Column: 'currency',
+            SortOrder: 'Descending',
+          },
+        ],
+        GroupedColumns: ['currency', 'country'],
+        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+        Name: 'Grouping Layout',
+      },
+      {
+        Columns: ['bid', 'ask', 'price', 'counterparty', 'status', 'stars'],
+        Name: 'Pivoted Layout',
         GroupedColumns: ['currency'],
         PivotDetails: {
           PivotColumns: ['status', 'stars'],
-          AggregationColumns: ['bid'],
+          AggregationColumns: ['bid', 'ask'],
         },
       },
     ],
-    CurrentLayout: 'Pivoted',
   },
 };
 

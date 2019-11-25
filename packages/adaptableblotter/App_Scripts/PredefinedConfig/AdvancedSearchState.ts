@@ -74,7 +74,6 @@ import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
  *
  * - 'Big Dollar Notionals' (which uses both ColumnValues and **Ranges**) and is also set to be the Current Advanced Search.
  */
-
 export interface AdvancedSearchState extends RunTimeState {
   /**
    * A collection of AdvancedSearch objects - which will appear in the Advanced Search toolbar dropdown.
