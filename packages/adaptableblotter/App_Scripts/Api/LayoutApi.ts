@@ -48,6 +48,12 @@ export interface LayoutApi {
    * Saves the given layout
    */
   saveLayout(layoutToSave: Layout): void;
+  /**
+   * Restores the given layout
+   *
+   * Reloads it according to initial definition with all vendor grid state removed.
+   */
+  restorelayout(layoutToSave: Layout): void;
 
   /**
    * Opens the Layout popup screen

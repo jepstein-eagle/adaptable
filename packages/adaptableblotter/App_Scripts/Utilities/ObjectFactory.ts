@@ -43,7 +43,7 @@ import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
-import { ColumnSort, VendorGridInfo, Layout } from '../PredefinedConfig/LayoutState';
+import { ColumnSort, VendorGridInfo, Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { UserFilter } from '../PredefinedConfig/UserFilterState';
@@ -393,6 +393,19 @@ export function CreateEmptyFreeTextColumn(): FreeTextColumn {
   };
 }
 
+export function CreateEmptyLayout(): Layout {
+  return {
+    Uuid: createUuid(),
+    Columns: [],
+    ColumnSorts: [],
+    GroupedColumns: null,
+    PivotDetails: null,
+    Name: '',
+    VendorGridInfo: null,
+    BlotterGridInfo: null,
+  };
+}
+
 export function CreateLayout(
   columns: AdaptableBlotterColumn[],
   columnSorts: ColumnSort[],
@@ -403,8 +416,22 @@ export function CreateLayout(
     Uuid: createUuid(),
     Columns: columns ? columns.map(x => x.ColumnId) : [],
     ColumnSorts: columnSorts,
+    GroupedColumns: null,
+    PivotDetails: null,
     Name: name,
     VendorGridInfo: vendorGridInfo,
+    BlotterGridInfo: {
+      CurrentColumns: columns ? columns.map(x => x.ColumnId) : [],
+      CurrentColumnSorts: columnSorts,
+    },
+  };
+}
+
+export function CreateEmptyPivotDetails(): PivotDetails {
+  return {
+    PivotGroupedColumns: [],
+    PivotHeaderColumns: [],
+    PivotAggregationColumns: [],
   };
 }
 
@@ -573,7 +600,9 @@ export const ObjectFactory = {
   CreateEmptyConditionalStyle,
   CreateEmptyFormatColumn,
   CreateEmptyFreeTextColumn,
+  CreateEmptyLayout,
   CreateLayout,
+  CreateEmptyPivotDetails,
   CreateColumnFilter,
   CreateUserFilterFromColumnFilter,
   CreateRange,

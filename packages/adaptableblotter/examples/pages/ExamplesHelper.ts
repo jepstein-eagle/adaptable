@@ -2,6 +2,7 @@
 import { IAdaptableBlotter } from '../../App_Scripts/types';
 import { StarsCellRenderer } from './StarsCellRenderer';
 import LoggingHelper from '../../App_Scripts/Utilities/Helpers/LoggingHelper';
+import Helper from '../../App_Scripts/Utilities/Helpers/Helper';
 
 export interface ITrade {
   tradeId: number;
@@ -1011,6 +1012,7 @@ export class ExamplesHelper {
       field: 'counterparty',
       editable: true,
       enableRowGroup: true,
+      rowGroup: true,
       filter: true,
       sortable: true,
       type: 'abColDefString',
@@ -1025,6 +1027,7 @@ export class ExamplesHelper {
       filter: true,
       sortable: true,
       enableRowGroup: true,
+      enableValue: true, // what happerns
       type: 'abColDefString',
       resizable: true,
       //  tooltipField: 'country',
@@ -1058,6 +1061,7 @@ export class ExamplesHelper {
       cellRenderer: StarsCellRenderer,
       type: 'abColDefNumber',
       filter: true,
+      enablePivot: true,
       resizable: true,
     });
 
@@ -1090,6 +1094,8 @@ export class ExamplesHelper {
       filter: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
+      valueFormatter: this.fourDecimalPlaceFormatter,
+      enableValue: true,
     });
 
     schema.push({
@@ -1098,6 +1104,7 @@ export class ExamplesHelper {
       columnGroupShow: 'closed',
       cellClass: 'number-cell',
       type: 'abColDefNumber',
+      sortable: true,
     });
     schema.push({
       headerName: 'Ask',
@@ -1107,6 +1114,9 @@ export class ExamplesHelper {
       resizable: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
+      enableValue: true,
+      valueFormatter: this.fourDecimalPlaceFormatter,
+      //  aggFunc: 'sum',
     });
     schema.push({
       headerName: 'Bbg Ask',
@@ -1123,6 +1133,7 @@ export class ExamplesHelper {
       editable: true,
       enableRowGroup: true,
       sortable: true,
+      enablePivot: true,
       filter: 'agTextColumnFilter',
       type: 'abColDefString',
       resizable: true,
@@ -1134,6 +1145,8 @@ export class ExamplesHelper {
       filter: true,
       sortable: true,
       enableRowGroup: true,
+      enablePivot: true,
+      // pivot: true,
       type: 'abColDefString',
       resizable: true,
     });
@@ -1154,7 +1167,8 @@ export class ExamplesHelper {
       editable: true,
       enableValue: true,
       cellClass: 'number-cell',
-      enableRowGroup: true,
+      // enableRowGroup: true,
+      valueFormatter: this.fourDecimalPlaceFormatter,
       filter: 'agNumberColumnFilter',
       type: 'abColDefNumber',
     });
@@ -1808,6 +1822,10 @@ export class ExamplesHelper {
       );
     }
     return null;
+  };
+
+  private fourDecimalPlaceFormatter = (params: any) => {
+    return params.value ? this.roundTo4Dp(params.value) : null;
   };
 
   public getCommunityLicenceKey(): string {

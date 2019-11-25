@@ -3,7 +3,7 @@ import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/LayoutState';
+import { LayoutState, Layout, ColumnSort, PivotDetails } from '../../PredefinedConfig/LayoutState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { COLUMN_STATE_CHANGED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import {
@@ -11,6 +11,7 @@ import {
   ColumnStateChangedInfo,
 } from '../../Api/Events/BlotterEvents';
 import BlotterHelper from './BlotterHelper';
+import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 export function getLayoutDescription(layout: Layout, columns: AdaptableBlotterColumn[]): string {
   let returnString: string = '';
@@ -24,7 +25,7 @@ export function getColumnSort(
   columnSorts: ColumnSort[],
   columns: AdaptableBlotterColumn[]
 ): string {
-  if (columnSorts.length == 0) {
+  if (ArrayExtensions.IsNullOrEmpty(columnSorts)) {
     return 'None';
   }
 
@@ -50,9 +51,10 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
     ) {
       let layout = blotter.api.layoutApi.getCurrentLayout();
       if (layout != null) {
+        console.log('auto saving: ' + layout.Name);
         let gridState: GridState = blotter.api.gridApi.getGridState();
         let visibleColumns: AdaptableBlotterColumn[] = gridState.Columns.filter(c => c.Visible);
-        let gridVendorState: any = blotter.getVendorGridInfo(
+        let gridVendorState: any = blotter.getVendorGridLayoutInfo(
           visibleColumns.map(vc => vc.ColumnId),
           false
         );
@@ -60,9 +62,15 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
         let layoutToSave: Layout = {
           Uuid: layout.Uuid,
           Name: layoutState.CurrentLayout,
-          Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-          ColumnSorts: gridState.ColumnSorts,
+          Columns: layout.Columns,
+          ColumnSorts: layout.ColumnSorts,
+          GroupedColumns: layout.GroupedColumns,
+          PivotDetails: layout.PivotDetails,
           VendorGridInfo: gridVendorState,
+          BlotterGridInfo: {
+            CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
+            CurrentColumnSorts: gridState.ColumnSorts,
+          },
         };
         blotter.api.layoutApi.saveLayout(layoutToSave);
       }
@@ -83,10 +91,20 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
   }
 }
 
+export function isPivotedLayout(pivotDetails: PivotDetails): boolean {
+  return (
+    pivotDetails != null &&
+    (ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotGroupedColumns) ||
+      ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotHeaderColumns) ||
+      ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotAggregationColumns))
+  );
+}
+
 export const LayoutHelper = {
   getLayoutDescription,
   getColumnSort,
   getSortOrder,
   autoSaveLayout,
+  isPivotedLayout,
 };
 export default LayoutHelper;

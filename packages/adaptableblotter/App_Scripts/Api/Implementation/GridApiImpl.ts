@@ -53,11 +53,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
   }
 
   public setGridCell(gridCell: GridCell, validateChange: boolean = true): void {
-    console.log('here');
-    console.log(gridCell);
     let dataChangedInfo: DataChangedInfo = this.createDataChangedInfoFromGridCell(gridCell);
-    console.log('here');
-    console.log(dataChangedInfo);
     if (validateChange) {
       if (!this.blotter.ValidationService.PerformCellValidation(dataChangedInfo)) {
         return;

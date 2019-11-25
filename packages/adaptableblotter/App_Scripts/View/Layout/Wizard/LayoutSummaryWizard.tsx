@@ -10,6 +10,7 @@ import { LayoutHelper } from '../../../Utilities/Helpers/LayoutHelper';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<Layout> {}
 
@@ -21,16 +22,34 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
-      { Key: 'Columns', Value: this.getColumnNames() },
+      { Key: 'Columns', Value: this.getColumnNames(this.props.Data.Columns) },
       {
         Key: 'Column Sorts',
         Value: LayoutHelper.getColumnSort(this.props.Data.ColumnSorts, this.props.Columns),
       },
+      { Key: 'Grouped Columns', Value: this.getColumnNames(this.props.Data.GroupedColumns) },
     ];
+    let pivotKeyValuePairs: KeyValuePair[] = [];
+    if (LayoutHelper.isPivotedLayout(this.props.Data.PivotDetails)) {
+      pivotKeyValuePairs = [
+        {
+          Key: 'Pivot Group Columns',
+          Value: this.getColumnNames(this.props.Data.PivotDetails.PivotGroupedColumns),
+        },
+        {
+          Key: 'Pivot Header Columns',
+          Value: this.getColumnNames(this.props.Data.PivotDetails.PivotHeaderColumns),
+        },
+        {
+          Key: 'Pivot Aggregation Columns',
+          Value: this.getColumnNames(this.props.Data.PivotDetails.PivotAggregationColumns),
+        },
+      ];
+    }
 
     let summaryPage = (
       <WizardSummaryPage
-        KeyValuePairs={keyValuePairs}
+        KeyValuePairs={[...keyValuePairs, ...pivotKeyValuePairs]}
         header={StrategyConstants.LayoutStrategyName}
       />
     );
@@ -40,11 +59,10 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
     return true;
   }
 
-  private getColumnNames(): string {
-    return ColumnHelper.getFriendlyNamesFromColumnIds(
-      this.props.Data.Columns,
-      this.props.Columns
-    ).join(', ');
+  private getColumnNames(columns: string[]): string {
+    return ArrayExtensions.IsNotNullOrEmpty(columns)
+      ? ColumnHelper.getFriendlyNamesFromColumnIds(columns, this.props.Columns).join(', ')
+      : 'None';
   }
 
   public canBack(): boolean {

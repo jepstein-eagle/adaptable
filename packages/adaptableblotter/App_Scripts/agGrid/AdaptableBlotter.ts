@@ -129,7 +129,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
-import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/LayoutState';
+import { ColumnSort, VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import {
@@ -607,7 +607,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const allColumns: AdaptableBlotterColumn[] = [];
     const existingColumns: AdaptableBlotterColumn[] = this.api.gridApi.getColumns();
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
-    const quickSearchClassName = this.getQuickSearchClassName();
 
     vendorCols.forEach(vendorColumn => {
       const colId: string = vendorColumn.getColId();
@@ -622,7 +621,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             existingColumn.DataType = this.getColumnDataType(vendorColumn);
           }
         } else {
-          existingColumn = this.createColumn(vendorColumn, quickSearchClassName);
+          existingColumn = this.createColumn(vendorColumn);
         }
         allColumns.push(existingColumn);
       }
@@ -632,18 +631,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     LayoutHelper.autoSaveLayout(this);
   }
 
-  private createColumn(vendorColumn: Column, quickSearchClassName: string): AdaptableBlotterColumn {
+  private createColumn(vendorColumn: Column): AdaptableBlotterColumn {
     const colId: string = vendorColumn.getColId();
+    const colDef: ColDef = vendorColumn.getColDef();
     const abColumn: AdaptableBlotterColumn = {
       Uuid: createUuid(),
       ColumnId: colId,
       FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
       DataType: this.getColumnDataType(vendorColumn),
       Visible: vendorColumn.isVisible(),
-      ReadOnly: this.isColumnReadonly(colId),
-      Sortable: this.isColumnSortable(colId),
-      Filterable: this.isColumnFilterable(colId),
+      ReadOnly: this.agGridHelper.isColumnReadonly(colDef),
+      Sortable: this.agGridHelper.isColumnSortable(colDef),
+      Filterable: this.agGridHelper.isColumnFilterable(colDef),
       IsSparkline: this.api.sparklineColumnApi.isSparklineColumn(colId),
+      Groupable: this.agGridHelper.isColumnGroupable(colDef),
+      Pivotable: this.agGridHelper.isColumnPivotable(colDef),
+      Aggregatable: this.agGridHelper.isColumnAggregetable(colDef),
     };
 
     this.applyStylingToColumn(vendorColumn, abColumn);
@@ -1085,32 +1088,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       return testreturnvalue;
     }
     return (columnId: string) => this.getDisplayValueFromRowNode(rowwNode, columnId);
-  }
-
-  private isColumnReadonly(columnId: string): boolean {
-    // currently we do not support the fact that some rows are editable and some are not
-    // if editable is a function then we return that its not readonly since we assume that some rowNode will be editable
-    // that's wrong but we ll see if we face the issue later
-    const colDef = this.gridOptions.api!.getColumnDef(columnId);
-    if (colDef && typeof colDef.editable === 'boolean') {
-      return !colDef.editable;
-    }
-    return true;
-  }
-
-  private isColumnSortable(columnId: string): boolean {
-    // follow agGrid logic which is that ONLY if sortable explicitly set to false do you suppress sort
-    const colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
-    if (colDef && colDef.sortable != null) {
-      return colDef.sortable;
-    }
-    return true;
-  }
-
-  private isColumnFilterable(columnId: string): boolean {
-    // follow agGrid logic which is that ONLY filterable if one explicitly set
-    const colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
-    return colDef != null && colDef.filter != null && colDef.filter != false;
   }
 
   public setCustomSort(columnId: string, comparer: Function): void {
@@ -1756,9 +1733,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         FriendlyName: columnId,
         DataType: dataType,
         Visible: false,
-        ReadOnly: !vendorColDef.editable as boolean,
-        Sortable: vendorColDef.sortable as boolean,
-        Filterable: vendorColDef.filter as boolean,
+        ReadOnly: this.agGridHelper.isColumnReadonly(vendorColDef),
+        Sortable: this.agGridHelper.isColumnSortable(vendorColDef),
+        Filterable: this.agGridHelper.isColumnFilterable(vendorColDef),
+        Groupable: this.agGridHelper.isColumnGroupable(vendorColDef),
+        Pivotable: this.agGridHelper.isColumnPivotable(vendorColDef),
+        Aggregatable: this.agGridHelper.isColumnAggregetable(vendorColDef),
         IsSparkline: dataType == DataType.NumberArray,
       };
 
@@ -1980,6 +1960,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       Events.EVENT_COLUMN_PIVOT_CHANGED,
       Events.EVENT_COLUMN_PIVOT_MODE_CHANGED,
       Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
+      Events.EVENT_SORT_CHANGED,
     ];
     this.gridOptions.api!.addGlobalListener((type: string) => {
       if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
@@ -2715,10 +2696,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setColumnSort(columnSorts: ColumnSort[]): void {
     // get the sort model
     const sortModel: any[] = [];
-    columnSorts.forEach(gs => {
-      const sortDescription: string = gs.SortOrder == SortOrder.Ascending ? 'asc' : 'desc';
-      sortModel.push({ colId: gs.Column, sort: sortDescription });
-    });
+    if (ArrayExtensions.IsNotNullOrEmpty(columnSorts)) {
+      columnSorts.forEach(gs => {
+        const sortDescription: string = gs.SortOrder == SortOrder.Ascending ? 'asc' : 'desc';
+        sortModel.push({ colId: gs.Column, sort: sortDescription });
+      });
+    }
     this.gridOptions.api!.setSortModel(sortModel);
     this.gridOptions.api!.onSortChanged();
   }
@@ -2791,7 +2774,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public getVendorGridInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo {
+  public getVendorGridLayoutInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo {
     // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
     if (forceFetch) {
       return {
@@ -2842,7 +2825,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return null; // need this?
   }
 
-  public setVendorGridInfo(vendorGridInfo: VendorGridInfo): void {
+  public setVendorGridLayoutInfo(vendorGridInfo: VendorGridInfo): void {
     if (vendorGridInfo) {
       if (vendorGridInfo.ColumnState) {
         const columnState: any = JSON.parse(vendorGridInfo.ColumnState);
@@ -2875,6 +2858,50 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.columnApi.setPivotMode(false);
       }
     }
+  }
+
+  public setGroupedColumns(groupedCols: string[]): void {
+    // if empty array then clear but if null then do nothing
+    if (ArrayExtensions.IsNotNull(groupedCols)) {
+      if (ArrayExtensions.IsEmpty(groupedCols)) {
+        this.gridOptions.columnApi.setRowGroupColumns([]);
+      }
+    }
+
+    if (ArrayExtensions.IsNotNullOrEmpty(groupedCols)) {
+      this.gridOptions.columnApi.setRowGroupColumns(groupedCols);
+    }
+  }
+
+  public setPivoting(pivotDetails: PivotDetails): void {
+    let isPivotLayout = LayoutHelper.isPivotedLayout(pivotDetails);
+
+    // if its not a pivot layout then turn off pivot mode and get out
+    if (!isPivotLayout) {
+      this.gridOptions.columnApi.setPivotMode(false);
+      return;
+    }
+
+    // we are in pivot mode so set up ag-Grid pivoting to match the pivot details
+    if (ArrayExtensions.IsNotNull(pivotDetails.PivotGroupedColumns)) {
+      this.gridOptions.columnApi.setRowGroupColumns(pivotDetails.PivotGroupedColumns);
+    }
+    if (ArrayExtensions.IsNotNull(pivotDetails.PivotHeaderColumns)) {
+      this.gridOptions.columnApi.setPivotColumns(pivotDetails.PivotHeaderColumns);
+    }
+
+    if (ArrayExtensions.IsNotNull(pivotDetails.PivotAggregationColumns)) {
+      this.gridOptions.columnApi.setValueColumns(pivotDetails.PivotAggregationColumns);
+    }
+
+    // a bit annoying but need to do it to force the grid to show the new stuff and we also auto size the columns
+    setTimeout(() => {
+      this.gridOptions.columnApi.setPivotMode(false);
+      this.gridOptions.columnApi.setPivotMode(true);
+      if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      }
+    }, 2000);
   }
 
   // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to

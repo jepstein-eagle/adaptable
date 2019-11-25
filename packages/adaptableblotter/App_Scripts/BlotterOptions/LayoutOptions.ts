@@ -39,4 +39,6 @@ export interface LayoutOptions {
    * **Default Value: false**
    */
   autoSizeColumnsInDefaultLayout?: boolean;
+
+  autoSizeColumnsInPivotLayout?: boolean;
 }

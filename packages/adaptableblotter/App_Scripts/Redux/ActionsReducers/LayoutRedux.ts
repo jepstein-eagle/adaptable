@@ -8,6 +8,7 @@ export const LAYOUT_EDIT = 'LAYOUT_EDIT';
 export const LAYOUT_DELETE = 'LAYOUT_DELETE';
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 export const LAYOUT_SAVE = 'LAYOUT_SAVE';
+export const LAYOUT_RESTORE = 'LAYOUT_RESTORE';
 
 export interface LayoutAction extends Redux.Action {
   layout: Layout;
@@ -20,6 +21,8 @@ export interface LayoutEditAction extends LayoutAction {}
 export interface LayoutDeleteAction extends LayoutAction {}
 
 export interface LayoutSaveAction extends LayoutAction {}
+
+export interface LayoutRestoreAction extends LayoutAction {}
 
 export interface LayoutSelectAction extends Redux.Action {
   LayoutName: string;
@@ -51,6 +54,11 @@ export const LayoutSave = (layout: Layout): LayoutSaveAction => ({
 export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
   type: LAYOUT_SELECT,
   LayoutName,
+});
+
+export const LayoutRestore = (layout: Layout): LayoutRestoreAction => ({
+  type: LAYOUT_RESTORE,
+  layout,
 });
 
 const initialLayoutState: LayoutState = {

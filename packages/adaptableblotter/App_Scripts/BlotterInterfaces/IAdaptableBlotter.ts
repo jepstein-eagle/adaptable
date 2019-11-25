@@ -13,7 +13,7 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
-import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/LayoutState';
+import { ColumnSort, VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
@@ -236,8 +236,11 @@ export interface IAdaptableBlotter {
   getVisibleColumnCount(): number;
 
   // layout
-  getVendorGridInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo;
-  setVendorGridInfo(vendorGridInfo: VendorGridInfo): void;
+  getVendorGridLayoutInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo;
+  setVendorGridLayoutInfo(vendorGridInfo: VendorGridInfo): void;
+  setGroupedColumns(groupedCols: string[]): void;
+  setPivoting(pivotDetails: PivotDetails): void;
+  //setBlotterLayoutInfo(cols: string[]): any;
 
   // vendor grid related
   isSelectable(): boolean;

@@ -50,9 +50,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
           this.onNew();
         }
       }
+
+      this.shouldClosePopupOnFinishWizard =
+        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
     }
-    this.shouldClosePopupOnFinishWizard =
-      this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
   }
 
   render() {
@@ -144,7 +145,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateLayout([], [], null, ''),
+      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyLayout(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -174,7 +175,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onFinishWizard() {
     let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
-
+    console.log(clonedObject);
     this.props.onSaveLayout(clonedObject);
 
     let currentLayout = this.props.Layouts.find(l => l.Name == this.props.CurrentLayoutName);

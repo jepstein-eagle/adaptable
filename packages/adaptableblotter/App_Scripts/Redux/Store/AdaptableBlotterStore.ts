@@ -130,6 +130,7 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import layout from '../../components/icons/layout';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2241,10 +2242,25 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let layoutState = middlewareAPI.getState().Layout;
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
             if (currentLayout) {
+              console.log('selecting: ' + currentLayout.Name);
+
+              if (currentLayout.BlotterGridInfo == null) {
+                currentLayout.BlotterGridInfo = {
+                  CurrentColumns: currentLayout.Columns,
+                  CurrentColumnSorts: currentLayout.ColumnSorts,
+                  //   PivotDetails: currentLayout.PivotDetails,
+                };
+              }
+              if (currentLayout.VendorGridInfo == null) {
+                blotter.setGroupedColumns(currentLayout.GroupedColumns);
+                console.log('@@@@@ settting pivoting');
+                blotter.setPivoting(currentLayout.PivotDetails);
+              }
+
               let gridState: GridState = middlewareAPI.getState().Grid;
               // set columns
               let blotterColumns: AdaptableBlotterColumn[] = [];
-              currentLayout.Columns.forEach(c => {
+              currentLayout.BlotterGridInfo.CurrentColumns.forEach(c => {
                 let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
                 if (column) {
                   blotterColumns.push(column);
@@ -2254,9 +2270,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   );
                 }
               });
+              console.log('setting columns');
               middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(blotterColumns));
               // set sort
-              middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.ColumnSorts));
+              console.log('setting sorts');
+              middlewareAPI.dispatch(
+                GridRedux.GridSetSort(currentLayout.BlotterGridInfo.CurrentColumnSorts)
+              );
+              blotter.setColumnSort(currentLayout.BlotterGridInfo.CurrentColumnSorts);
+
               // set pivot
               if (
                 currentLayout.VendorGridInfo &&
@@ -2267,12 +2289,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               } else {
                 middlewareAPI.dispatch(GridRedux.SetPivotModeOff());
               }
-              blotter.setColumnSort(currentLayout.ColumnSorts);
+
               // set vendor specific info
-              blotter.setVendorGridInfo(currentLayout.VendorGridInfo);
+              blotter.setVendorGridLayoutInfo(currentLayout.VendorGridInfo);
             }
             return returnAction;
           }
+
           case LayoutRedux.LAYOUT_DELETE: {
             let returnAction = next(action);
             let layoutState = middlewareAPI.getState().Layout;
@@ -2287,9 +2310,24 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let returnAction = next(action);
             const actionTyped = action as LayoutRedux.LayoutSaveAction;
             let layout: Layout = Helper.cloneObject(actionTyped.layout);
+            if (layout.BlotterGridInfo == null) {
+              layout.BlotterGridInfo = {
+                CurrentColumns: layout.Columns,
+                CurrentColumnSorts: layout.ColumnSorts,
+                //    PivotDetails: layout.PivotDetails,
+              };
+            }
+            if (layout.VendorGridInfo == null) {
+              blotter.setGroupedColumns(layout.GroupedColumns);
+              blotter.setPivoting(layout.PivotDetails);
+            }
 
             let forceFetch = layout.Name == DEFAULT_LAYOUT;
-            layout.VendorGridInfo = blotter.getVendorGridInfo(layout.Columns, forceFetch);
+            layout.VendorGridInfo = blotter.getVendorGridLayoutInfo(
+              layout.BlotterGridInfo.CurrentColumns,
+              forceFetch
+            );
+
             let layoutState = middlewareAPI.getState().Layout;
             let isExistingLayout: boolean =
               layoutState.Layouts.find(l => l.Uuid == actionTyped.layout.Uuid) != null;
@@ -2303,12 +2341,31 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 isExistingLayout = true;
               }
             }
-
             if (isExistingLayout) {
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             } else {
+              console.log('******* adding: ' + layout.Name);
               middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
+              if (layout.Name != DEFAULT_LAYOUT) {
+                setTimeout(() => middlewareAPI.dispatch(LayoutRedux.LayoutRestore(layout)), 2000);
+              }
             }
+            return returnAction;
+          }
+          case LayoutRedux.LAYOUT_RESTORE: {
+            let returnAction = next(action);
+            const actionTyped = action as LayoutRedux.LayoutRestoreAction;
+            let layout: Layout = Helper.cloneObject(actionTyped.layout);
+            layout.VendorGridInfo = null;
+            layout.BlotterGridInfo = null;
+            if (layout.GroupedColumns == null) {
+              layout.GroupedColumns = [];
+            }
+            blotter.setGroupedColumns(layout.GroupedColumns);
+            // do something about pivoting?
+            console.log('restoring: ' + layout.Name);
+            middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
+            middlewareAPI.dispatch(LayoutRedux.LayoutSelect(layout.Name));
             return returnAction;
           }
 
@@ -3005,7 +3062,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let defaultLayout: Layout = ObjectFactory.CreateLayout(
               gridState.Columns,
               [],
-              blotter.getVendorGridInfo(visibleColumnNames, true),
+              blotter.getVendorGridLayoutInfo(visibleColumnNames, true),
               DEFAULT_LAYOUT
             );
             middlewareAPI.dispatch(LayoutRedux.LayoutSave(defaultLayout));

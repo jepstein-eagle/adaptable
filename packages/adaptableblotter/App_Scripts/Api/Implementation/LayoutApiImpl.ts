@@ -63,14 +63,20 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
         let visibleColumns: AdaptableBlotterColumn[] = this.getBlotterState().Grid.Columns.filter(
           c => c.Visible
         );
-        let columSorts: ColumnSort[] = this.getBlotterState().Grid.ColumnSorts;
+        let columnSorts: ColumnSort[] = this.getBlotterState().Grid.ColumnSorts;
 
         let layoutToSave: Layout = {
           Uuid: currentLayoutObject.Uuid,
           Name: currentLayoutName,
-          Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-          ColumnSorts: columSorts,
+          Columns: currentLayoutObject.Columns,
+          ColumnSorts: currentLayoutObject.ColumnSorts,
+          GroupedColumns: currentLayoutObject.GroupedColumns,
+          PivotDetails: currentLayoutObject.PivotDetails,
           VendorGridInfo: gridState,
+          BlotterGridInfo: {
+            CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
+            CurrentColumnSorts: columnSorts,
+          },
         };
 
         this.saveLayout(layoutToSave);
@@ -80,6 +86,10 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
 
   public saveLayout(layoutToSave: Layout): void {
     this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
+  }
+
+  public restorelayout(layoutToSave: Layout): void {
+    this.dispatchAction(LayoutRedux.LayoutRestore(layoutToSave));
   }
 
   public showLayoutPopup(): void {

@@ -34,18 +34,9 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInDefaultLayout: true,
   };
 
-  (adaptableBlotterOptions.advancedOptions = {
-    userFunctions: {
-      actionColumnFunctions: [
-        {
-          name: 'RenderActionFunc',
-        },
-      ],
-    },
-  }),
-    // userFunctions
+  // userFunctions
 
-    (adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions));
+  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   let runNewEvents: boolean = true;
 
   if (runNewEvents) {

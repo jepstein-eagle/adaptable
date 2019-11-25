@@ -12,4 +12,7 @@ export interface AdaptableBlotterColumn {
   Sortable: boolean;
   Filterable: boolean;
   IsSparkline: boolean;
+  Groupable: boolean;
+  Pivotable: boolean;
+  Aggregatable: boolean;
 }

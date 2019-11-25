@@ -510,4 +510,47 @@ export class agGridHelper {
           }),
     };
   }
+
+  public isColumnReadonly(colDef: ColDef): boolean {
+    // currently we do not support the fact that some rows are editable and some are not
+    // if editable is a function then we return that its not readonly since we assume that some rowNode will be editable
+    // that's wrong but we ll see if we face the issue later
+    if (colDef && typeof colDef.editable === 'boolean') {
+      return !colDef.editable;
+    }
+    return true;
+  }
+
+  public isColumnSortable(colDef: ColDef): boolean {
+    if (colDef && colDef.sortable != null) {
+      return colDef.sortable;
+    }
+    return false;
+  }
+
+  public isColumnGroupable(colDef: ColDef): boolean {
+    if (colDef && colDef.enableRowGroup != null) {
+      return colDef.enableRowGroup;
+    }
+    return false;
+  }
+
+  public isColumnPivotable(colDef: ColDef): boolean {
+    if (colDef && colDef.enablePivot != null) {
+      return colDef.enablePivot;
+    }
+    return false;
+  }
+
+  public isColumnAggregetable(colDef: ColDef): boolean {
+    if (colDef && colDef.enableValue != null) {
+      return colDef.enableValue;
+    }
+    return false;
+  }
+
+  public isColumnFilterable(colDef: ColDef): boolean {
+    // follow agGrid logic which is that ONLY filterable if one explicitly set
+    return colDef != null && colDef.filter != null && colDef.filter != false;
+  }
 }

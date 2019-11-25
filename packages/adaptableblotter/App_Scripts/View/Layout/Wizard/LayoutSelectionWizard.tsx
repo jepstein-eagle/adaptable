@@ -36,7 +36,10 @@ export class LayoutSelectionWizard
   render(): any {
     return (
       <WizardPanel>
-        <HelpBlock>Create a new layout using the Grid's current columns and sort order.</HelpBlock>
+        <HelpBlock>
+          Create a new layout using the Grid's current Columns and Sort Order (but not any Grouping
+          or Pivoting details).
+        </HelpBlock>
 
         <Flex alignItems="center" marginLeft={2} marginTop={2}>
           <Radio
@@ -50,8 +53,8 @@ export class LayoutSelectionWizard
         </Flex>
 
         <HelpBlock marginTop={2}>
-          Build a new layout from scratch. You will choose the columns (and sort order) in the
-          following steps.
+          Build a new layout from scratch. You will select the Columns, Sort Order, Grouping and
+          Pivoting in the following steps.
         </HelpBlock>
 
         <Flex alignItems="center" marginLeft={2} marginTop={2}>
@@ -100,7 +103,7 @@ export class LayoutSelectionWizard
     // todo
   }
   public GetIndexStepIncrement() {
-    return this.state.LayoutSource == LayoutSource.Existing ? 3 : 1;
+    return this.state.LayoutSource == LayoutSource.Existing ? 8 : 1;
   }
   public GetIndexStepDecrement() {
     return 1;

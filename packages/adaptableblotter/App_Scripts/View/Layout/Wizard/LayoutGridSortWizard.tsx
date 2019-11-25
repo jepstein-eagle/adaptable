@@ -20,7 +20,9 @@ import SimpleButton from '../../../components/SimpleButton';
 
 import EmptyContent from '../../../components/EmptyContent';
 
-export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<Layout> {}
+export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<Layout> {
+  SortableColumns: AdaptableBlotterColumn[];
+}
 
 export interface LayoutGridSortWizardState {
   ColumnSorts: ColumnSort[];
@@ -29,9 +31,6 @@ export interface LayoutGridSortWizardState {
 export class LayoutGridSortWizard
   extends React.Component<LayoutGridSortWizardProps, LayoutGridSortWizardState>
   implements AdaptableWizardStep {
-  onEdit(arg0: any): any {
-    throw new Error('Method not implemented.');
-  }
   constructor(props: LayoutGridSortWizardProps) {
     super(props);
 
@@ -40,6 +39,8 @@ export class LayoutGridSortWizard
     };
   }
   render(): any {
+    console.log('sortable cols');
+    console.log(this.props.SortableColumns);
     let addButton = (
       <SimpleButton
         icon="plus"
@@ -64,7 +65,7 @@ export class LayoutGridSortWizard
           key={index}
           AdaptableBlotterObject={null}
           colItems={colItems}
-          Columns={this.props.Columns}
+          Columns={this.props.SortableColumns}
           UserFilters={null}
           onEdit={null}
           onDeleteColumnSort={() => this.onDeleteGridSort(index)}
@@ -94,7 +95,7 @@ export class LayoutGridSortWizard
           />
         ) : (
           <EmptyContent>
-            <p>Click 'New' to add a Sort Order for a column in the layout.</p>
+            <p>Click 'Add Sort' if you wish to add Column Sort Orders in this layout.</p>
           </EmptyContent>
         )}
       </PanelWithButton>

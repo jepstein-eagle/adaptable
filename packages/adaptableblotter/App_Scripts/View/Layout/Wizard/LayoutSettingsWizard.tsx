@@ -12,6 +12,8 @@ import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
 
 import ErrorBox from '../../../components/ErrorBox';
+import LayoutHelper from '../../../Utilities/Helpers/LayoutHelper';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<Layout> {
   Layouts: Layout[];
@@ -33,12 +35,12 @@ export class LayoutSettingsWizard
     };
   }
   render(): any {
-    let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
-      ? null
-      : 'error';
-
     return (
       <WizardPanel>
+        <HelpBlock marginBottom={2}>
+          Choose a <b>Name</b> for the Layout. This is what will appear in the dropdown in the
+          Layout toolbar.
+        </HelpBlock>
         <Flex alignItems="center">
           <Text marginRight={2}>Layout Name: </Text>
 
@@ -92,6 +94,7 @@ export class LayoutSettingsWizard
     return 1;
   }
   public GetIndexStepDecrement() {
-    return 1;
+    // this is wrong as its only decrementing on pivot - but we need someway to know whether its ne or existing
+    return LayoutHelper.isPivotedLayout(this.props.Data.PivotDetails) ? 1 : 4;
   }
 }

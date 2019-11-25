@@ -204,6 +204,20 @@ export function getSortableColumns(columns: AdaptableBlotterColumn[]): Adaptable
   return columns.filter(c => c.Sortable);
 }
 
+export function getGroupableColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+  return columns.filter(c => c.Groupable);
+}
+
+export function getPivotableColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+  return columns.filter(c => c.Pivotable);
+}
+
+export function getAggregetableColumns(
+  columns: AdaptableBlotterColumn[]
+): AdaptableBlotterColumn[] {
+  return columns.filter(c => c.Aggregatable);
+}
+
 function LogMissingColumnWarning(columnId: string): void {
   if (!isSpecialColumn(columnId)) {
     LoggingHelper.LogAdaptableBlotterWarning(`No column found named '${columnId}'`);
@@ -228,6 +242,9 @@ export const ColumnHelper = {
   getBooleanColumns,
   getColumnCategoryFromColumnCategories,
   getSortableColumns,
+  getGroupableColumns,
+  getPivotableColumns,
+  getAggregetableColumns,
   getColumnIdFromFriendlyName,
   getColumnIdsFromFriendlyNames,
 };

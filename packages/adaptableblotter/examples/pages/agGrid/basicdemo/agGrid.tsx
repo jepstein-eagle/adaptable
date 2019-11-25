@@ -48,6 +48,18 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
   },
+  Layout: {
+    Layouts: [
+      {
+        ColumnSorts: [],
+        Columns: ['tradeId', 'notional', 'counterparty', 'country'],
+        Name: 'Testing',
+        // GroupedColumns: ['currency'],
+        GroupedColumns: [],
+      },
+    ],
+    CurrentLayout: 'Testing',
+  },
 };
 
 export default () => {

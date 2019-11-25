@@ -14,15 +14,17 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { Layout } from '../../PredefinedConfig/LayoutState';
+import { Layout, ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
+import Helper from '../../Utilities/Helpers/Helper';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
+  onRestoreLayout: (layout: Layout) => LayoutRedux.LayoutRestoreAction;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
@@ -42,7 +44,15 @@ class LayoutToolbarControlComponent extends React.Component<
     );
     let currentLayoutTitle = layoutEntity ? layoutEntity.Name : 'Select a Layout';
 
-    let availableLayouts: any = nonDefaultLayouts.filter(l => l.Name != currentLayoutTitle);
+    // let availableLayouts: any = nonDefaultLayouts.filter(l => l.Name != currentLayoutTitle);
+
+    // this is wrong at the moment an always returning true
+    // but not going to worry until we test with non autosavelayouts (that dont think anyone uses)
+    // but worth fixing and then making that save button enabled depending on whether this is true
+    let isModifiedLayout: boolean = this.isLayoutModified(layoutEntity);
+
+    let isManualSaveLayout: boolean =
+      this.props.Blotter.blotterOptions.layoutOptions.autoSaveLayouts == false;
 
     let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
       return {
@@ -51,10 +61,6 @@ class LayoutToolbarControlComponent extends React.Component<
         value: layout.Name,
       };
     });
-
-    if (this.isLayoutModified(layoutEntity)) {
-      currentLayoutTitle += ' (Modified)';
-    }
 
     let content = (
       <Flex flexDirection="row">
@@ -67,11 +73,11 @@ class LayoutToolbarControlComponent extends React.Component<
           options={availableLayoutOptions}
           onChange={(layoutName: any) => {
             if (layoutName) {
-              this.onLayoutChanged(layoutName as string);
+              this.onSelectedLayoutChanged(layoutName as string);
               return;
             }
 
-            this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT);
+            this.onSelectedLayoutChanged(GeneralConstants.DEFAULT_LAYOUT);
           }}
           clearButtonProps={{
             tooltip: 'Clear layout',
@@ -87,12 +93,14 @@ class LayoutToolbarControlComponent extends React.Component<
             this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
           }
         >
-          <ButtonSave
-            onClick={() => this.onSave()}
-            tooltip="Save Changes to Current Layout"
-            disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-            AccessLevel={this.props.AccessLevel}
-          />
+          {isManualSaveLayout && (
+            <ButtonSave
+              onClick={() => this.onSaveLayout()}
+              tooltip="Save Changes to Current Layout"
+              disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
+              AccessLevel={this.props.AccessLevel}
+            />
+          )}
 
           <ButtonNew
             children={null}
@@ -104,9 +112,13 @@ class LayoutToolbarControlComponent extends React.Component<
           />
 
           <ButtonUndo
-            onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
-            tooltip="Undo Layout Changes"
-            disabled={!currentLayoutTitle.endsWith('(Modified)')}
+            onClick={() =>
+              isManualSaveLayout
+                ? this.onSelectedLayoutChanged(this.props.CurrentLayout)
+                : this.onRestoreLayout()
+            }
+            disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
+            tooltip={isManualSaveLayout ? 'Undo Layout Changes' : 'Restore Layout'}
             AccessLevel={this.props.AccessLevel}
           />
 
@@ -156,16 +168,11 @@ class LayoutToolbarControlComponent extends React.Component<
     return false;
   }
 
-  private onLayoutChanged(layoutName: string): any {
+  private onSelectedLayoutChanged(layoutName: string): any {
     this.props.onSelectLayout(layoutName);
   }
 
-  private onSelectedLayoutChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.props.onSelectLayout(e.value);
-  }
-
-  private onSave() {
+  private onSaveLayout() {
     let currentLayoutObject: Layout = this.props.Layouts.find(
       l => l.Name == this.props.CurrentLayout
     );
@@ -175,15 +182,22 @@ class LayoutToolbarControlComponent extends React.Component<
     let layoutToSave: Layout = {
       Uuid: currentLayoutObject.Uuid,
       Name: this.props.CurrentLayout,
-      Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-      ColumnSorts: this.props.ColumnSorts,
+      Columns: currentLayoutObject.Columns,
+      ColumnSorts: currentLayoutObject.ColumnSorts,
       VendorGridInfo: gridState,
+      BlotterGridInfo: {
+        CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
+        CurrentColumnSorts: this.props.ColumnSorts,
+      },
     };
     this.props.onSaveLayout(layoutToSave);
   }
 
-  private onUndo() {
-    this.props.onSelectLayout(this.props.CurrentLayout);
+  private onRestoreLayout() {
+    let currentLayoutObject: Layout = this.props.Layouts.find(
+      l => l.Name == this.props.CurrentLayout
+    );
+    this.props.onRestoreLayout(currentLayoutObject);
   }
 }
 
@@ -198,6 +212,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
+    onRestoreLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutRestore(layout)),
     onNewLayout: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {

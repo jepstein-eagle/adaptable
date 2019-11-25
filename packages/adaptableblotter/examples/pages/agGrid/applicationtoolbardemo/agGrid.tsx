@@ -85,7 +85,7 @@ function InitAdaptableBlotter() {
 }
 
 function onNewTradeClicked() {
-  alert('lets create a trade');
+  adaptableblotter.api.layoutApi.restorelayout(adaptableblotter.api.layoutApi.getCurrentLayout());
 }
 
 let demoConfig: PredefinedConfig = {
@@ -103,6 +103,33 @@ let demoConfig: PredefinedConfig = {
         Caption: 'Refresh Grid',
       },
     ],
+  },
+  Layout: {
+    Layouts: [
+      {
+        ColumnSorts: [
+          {
+            Column: 'notional',
+            SortOrder: 'Descending',
+          },
+        ],
+        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+        Name: 'Heree',
+        // GroupedColumns: ['currency'],
+        //  GroupedColumns: [],
+      },
+      {
+        Columns: ['bid', 'ask', 'price', 'tradeId', 'notional', 'counterparty'],
+        Name: 'Pivoted',
+        GroupedColumns: [],
+        PivotDetails: {
+          PivotGroupedColumns: ['currency', 'country'],
+          PivotHeaderColumns: ['status', 'stars'],
+          PivotAggregationColumns: ['bid'],
+        },
+      },
+    ],
+    CurrentLayout: 'Pivoted',
   },
 };
 
