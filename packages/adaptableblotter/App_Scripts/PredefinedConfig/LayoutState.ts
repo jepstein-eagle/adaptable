@@ -6,11 +6,11 @@ import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
  *
  * Layouts are collections of Column visiblity, order and sorting.
  *
- * You can also specity which Columns should be grouped as well as pivoting information.
+ * You can also specify which Column grouping and pivoting information for the Layout.
  *
  *  **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/gridmanagement/aggridlayoutdemo/) | [API](_api_layoutapi_.layoutapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170317-Layouts-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743312-Layout-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptableblotter.com/gridmanagement/aggridlayoutdemo/) | [API](_api_layoutapi_.layoutapi.html) | [Options](_blotteroptions_layoutoptions_.layoutoptions.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170317-Layouts-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743312-Layout-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  * **Layout Predefined Config Example**
  *
@@ -38,19 +38,13 @@ import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
  *        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
  *      },
  *      {
- *        ColumnSorts: [
- *          {
- *            Column: 'currency',
- *            SortOrder: 'Descending',
- *          },
- *        ],
- *        GroupedColumns: ['currency', 'country'],
- *        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
  *        Name: 'Grouping Layout',
+ *        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+ *        GroupedColumns: ['currency', 'country'],
  *      },
  *      {
- *        Columns: ['bid', 'ask', 'price', 'counterparty', 'status', 'stars'],
  *        Name: 'Pivoted Layout',
+ *        Columns: ['bid', 'ask', 'price', 'counterparty', 'status', 'stars'],
  *        GroupedColumns: ['currency'],
  *        PivotDetails: {
  *          PivotColumns: ['status', 'stars'],
@@ -73,9 +67,9 @@ import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
  */
 export interface LayoutState extends RunTimeState {
   /**
-   * The name of the Layout which will be in use when the Blotter starts.
+   * The name of the Layout which will be in use when the Blotter starts / loads.
    *
-   * It will be the selected value in the Layout Toolbar and the Adaptable Blotter will apply it automatically.
+   * This will be the selected value in the Layout Toolbar and the Adaptable Blotter will apply it automatically.
    *
    * **Make sure that the value appears in the name property of one of the Layouts that you provide**
    *
@@ -94,7 +88,7 @@ export interface LayoutState extends RunTimeState {
 /**
  * The Layout object used in the Layout function.
  *
- * Contains all that is required to create a Layout - including Columns, Sorts, Grouping and Pivoting detaails.
+ * Contains all that is required to create a Layout - including Columns, Sorts, Grouping and Pivoting details.
  */
 export interface Layout extends AdaptableBlotterObject {
   /**
@@ -105,14 +99,14 @@ export interface Layout extends AdaptableBlotterObject {
   /**
    * Which columns should be visible in the Layout.  The name provided should match that you provide when you create your Columns in your vendor grid (e.g. `field` in ag-Grid).
    *
-   * When the Layout is first applied ony the Columns listed here will be visible in the order that they are shown here.
+   * When the Layout is first applied, only the Columns in this array will be visible - and in the order that they are listed here.
    */
   Columns: string[];
 
   /**
    * What sorting wil be applied in the Layout.
    *
-   * A ColumnSort takes a Column name and a Sort Order (e.g. 'Ascending' or 'Descending')
+   * A `ColumnSort` takes a Column name and a Sort Order (e.g. 'Ascending' or 'Descending')
    */
   ColumnSorts?: ColumnSort[];
 
@@ -126,11 +120,11 @@ export interface Layout extends AdaptableBlotterObject {
   /**
    * Whether pivoting should be applied to the Layout.
    *
-   * The Pivot Details contains 2 collections of Colummn Names:
+   * The `PivotDetails` object contains 2 collections of Colummn Names:
    *
-   * - `PivotColumns`: Which Columns will be pivoted (i.e. appear along the top)
+   * - `PivotColumns`: Which Columns will be **pivoted** (i.e. appear along the top)
    *
-   * - `AggregationColumns`: Which Columns will be aggregated in the pivot
+   * - `AggregationColumns`: Which Columns will be **aggregated** in the pivot
    *
    */
   PivotDetails?: PivotDetails;
@@ -151,7 +145,7 @@ export interface Layout extends AdaptableBlotterObject {
 }
 
 /**
- * Defines how a column is sorted.
+ * Defines how a Column is sorted.
  *
  *  Contains 2 properties:
  *
@@ -195,13 +189,13 @@ export interface BlotterGridInfo {
 }
 
 /**
- * Defines which pivoting will be included in a layout.
+ * Defines how pivoting will be applied in a Layout.
  *
- *  Contains 2 collections of Column Names:
+ *  Contains 2 collections of Column names:
  *
- * - `PivotColumns`: Which Columns will be pivoted (i.e. appear along the top)
+ * - `PivotColumns`: Which Columns will be pivoted (i.e. appear along the top when in pivot mode)
  *
- * - `AggregationColumns`: Which Columns will be aggregated in the pivot
+ * - `AggregationColumns`: Which Columns will be aggregated inside the pivot
  *
  */
 export interface PivotDetails {

@@ -124,6 +124,7 @@ let demoConfig: PredefinedConfig = {
           },
         ],
         Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+        GroupedColumns: [],
       },
       {
         ColumnSorts: [

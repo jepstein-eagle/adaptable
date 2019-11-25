@@ -239,7 +239,10 @@ export interface IAdaptableBlotter {
   getVendorGridLayoutInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo;
   setVendorGridLayoutInfo(vendorGridInfo: VendorGridInfo): void;
   setGroupedColumns(groupedCols: string[]): void;
-  setPivoting(pivotDetails: PivotDetails): void;
+  setPivotingDetails(pivotDetails: PivotDetails): void;
+  turnOnPivoting(): void;
+  turnOffPivoting(): void;
+  setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void;
   //setBlotterLayoutInfo(cols: string[]): any;
 
   // vendor grid related

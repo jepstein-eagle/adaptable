@@ -2862,18 +2862,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public setGroupedColumns(groupedCols: string[]): void {
     // if empty array then clear but if null then do nothing
-    if (ArrayExtensions.IsNotNull(groupedCols)) {
-      if (ArrayExtensions.IsEmpty(groupedCols)) {
-        this.gridOptions.columnApi.setRowGroupColumns([]);
-      }
-    }
+    //  if (ArrayExtensions.IsNotNull(groupedCols)) {
+    //    if (ArrayExtensions.IsEmpty(groupedCols)) {
+    //      this.gridOptions.columnApi.setRowGroupColumns([]);
+    //    }
+    //  }
 
     if (ArrayExtensions.IsNotNullOrEmpty(groupedCols)) {
       this.gridOptions.columnApi.setRowGroupColumns(groupedCols);
+    } else {
+      this.gridOptions.columnApi.setRowGroupColumns([]);
     }
   }
 
-  public setPivoting(pivotDetails: PivotDetails): void {
+  public setPivotingDetails(pivotDetails: PivotDetails): void {
     let isPivotLayout = LayoutHelper.isPivotedLayout(pivotDetails);
 
     // if its not a pivot layout then turn off pivot mode and get out
@@ -2889,15 +2891,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsNotNull(pivotDetails.AggregationColumns)) {
       this.gridOptions.columnApi.setValueColumns(pivotDetails.AggregationColumns);
     }
+  }
 
-    // a bit annoying but need to do it to force the grid to show the new stuff and we also auto size the columns
-    setTimeout(() => {
-      this.gridOptions.columnApi.setPivotMode(false);
-      this.gridOptions.columnApi.setPivotMode(true);
-      if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
-        this.gridOptions.columnApi!.autoSizeAllColumns();
+  public setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void {
+    if (vendorGridInfo == null) {
+      if (LayoutHelper.isPivotedLayout(pivotDetails)) {
+        this.turnOnPivoting();
+        if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
+          this.gridOptions.columnApi!.autoSizeAllColumns();
+        }
+      } else {
+        this.turnOffPivoting();
       }
-    }, 2000);
+    } else {
+      if (vendorGridInfo.InPivotMode && vendorGridInfo.InPivotMode == true) {
+        this.turnOnPivoting();
+      } else {
+        this.turnOffPivoting();
+      }
+    }
+  }
+
+  private turnOnPivoting(): void {
+    this.api.internalApi.setPivotModeOn();
+    this.gridOptions.columnApi.setPivotMode(true);
+  }
+
+  private turnOffPivoting(): void {
+    this.api.internalApi.setPivotModeOff();
+    this.gridOptions.columnApi.setPivotMode(false);
   }
 
   // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
@@ -3022,10 +3044,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         container.classList.add(newTheme.VendorGridClassName);
       }
 
-      container.classList.add('ab-Grid')
+      container.classList.add('ab-Grid');
 
       if (this.blotterOptions!.filterOptions!.indicateFilteredColumns) {
-        container.classList.add('ab-Grid--indicate-filtered-columns')
+        container.classList.add('ab-Grid--indicate-filtered-columns');
       }
     }
 
