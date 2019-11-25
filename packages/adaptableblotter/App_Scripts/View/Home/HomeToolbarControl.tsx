@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
+import { kebabCase } from 'lodash';
 import * as Redux from 'redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
@@ -161,6 +162,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let statusButton = (
       <SimpleButton
         variant="text"
+        className="ab-DashboardToolbar__Home__status"
         key={'systemstatus'}
         icon={UIHelper.getGlyphForMessageType(this.props.SystemStatus.StatusType as MessageType)}
         style={UIHelper.getStyleForMessageType(this.props.SystemStatus.StatusType as MessageType)}
@@ -177,6 +179,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         tooltip="Grid Info"
         icon={'info'}
         variant="text"
+        className="ab-DashboardToolbar__Home__info"
         onClick={() => this.onClickGridInfo()}
         AccessLevel={AccessLevel.Full}
       />
@@ -188,6 +191,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         variant="text"
         items={menuItems}
         tooltip="Grid Functions"
+        className="ab-DashboardToolbar__Home__functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
       >
@@ -202,6 +206,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         collapseOnItemClick={false}
         items={colItems}
         columns={['label']}
+        className="ab-DashboardToolbar__Home__columns"
         key={'dropdown-cols'}
         id={'dropdown-cols'}
         tooltip="Select Columns"
@@ -217,6 +222,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         collapseOnItemClick={false}
         key={'dropdown-toolbars'}
         id={'dropdown-toolbars'}
+        className="ab-DashboardToolbar__Home__toolbars"
         columns={['label']}
         items={toolbarItems}
         tooltip="Manage Toolbars"
@@ -240,6 +246,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
               key={menuItem.Label}
               icon={menuItem.Icon}
               variant="text"
+              className={`ab-DashboardToolbar__Home__${kebabCase(menuItem.Label)}`}
               tooltip={menuItem.Label}
               disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
               onClick={() => this.onClick(menuItem!)}
@@ -260,6 +267,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__Home"
         showCloseButton={false}
         showMinimiseButton={true}
         onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}

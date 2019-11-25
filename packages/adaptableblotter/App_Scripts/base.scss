@@ -74,6 +74,11 @@
   background: var(--ab-color-primarylight);
 }
 
+.ab-Grid.ab-Grid--indicate-filtered-columns .ag-header-cell-filtered {
+  font-style: italic;
+  font-weight: bolder;
+}
+
 @import './components/CheckBox/style.scss';
 @import './components/Radio/style.scss';
 @import './components/Table/style.scss';

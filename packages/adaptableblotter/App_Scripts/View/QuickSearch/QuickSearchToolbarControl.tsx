@@ -49,6 +49,7 @@ class QuickSearchToolbarControlComponent extends React.Component<
   render() {
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__QuickSearch"
         headerText={StrategyConstants.QuickSearchStrategyName}
         glyphicon={StrategyConstants.QuickSearchGlyph}
         onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
@@ -57,6 +58,7 @@ class QuickSearchToolbarControlComponent extends React.Component<
         <AdaptableBlotterFormControlTextClear
           type="text"
           placeholder="Search Text"
+          className="ab-DashboardToolbar__QuickSearch__text"
           value={this.state.EditedQuickSearchText}
           OnTextChange={x => this.onUpdateQuickSearchText(x)}
           style={{ height: '100%' }}

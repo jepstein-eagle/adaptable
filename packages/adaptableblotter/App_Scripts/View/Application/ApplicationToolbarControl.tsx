@@ -34,7 +34,7 @@ class ApplicationToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        className="ab-ApplicationToolbar"
+        className="ab-ApplicationToolbar ab-DashboardToolbar__Application"
         headerText={headerText}
         glyphicon={StrategyConstants.ApplicationGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ApplicationStrategyId)}

@@ -14,6 +14,7 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
   headerText?: string;
   showEvent?: string;
   hideEvent?: string;
+  className?: string;
   bodyText: any[];
   MessageType?: MessageType;
   triggerAction?: string;
@@ -61,7 +62,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     };
 
     return (
-      <Flex alignItems="center">
+      <Flex alignItems="center" className={this.props.className}>
         <OverlayTrigger
           showTriangle
           render={() => popoverClickRootClose}

@@ -155,6 +155,12 @@ html.ab--theme-dark {
   /* color for text displayed over the secondary color */
   --ab-color-text-on-secondary: #262d2f;
   --ab-color-text-on-secondarylight: #f7f7f7;
+
+  input[type="number"].ab-Input::-webkit-outer-spin-button,
+  input[type="number"].ab-Input::-webkit-inner-spin-button {
+    background: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"20\" viewBox=\"4 0 18 18\" version=\"1.1\"><path fill=\"%23f7f7f7\" d=\"M7 10l5 5 5-5z\" transform=\"translate(0, 2)\"/><path fill=\"%23f7f7f7\" d=\"M7 14l5-5 5 5z\" transform=\"translate(0, -6)\"/></svg>") no-repeat center center;
+  } /* change the fill of the paths in the svg to the correct color
+      the current value %23f7f7f7 is the escaped form for #f7f7f7 */
 }
 ```
 

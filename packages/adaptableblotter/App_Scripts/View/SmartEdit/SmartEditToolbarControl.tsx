@@ -108,6 +108,7 @@ class SmartEditToolbarControlComponent extends React.Component<
     let content = (
       <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>
         <DropdownButton
+          className="ab-DashboardToolbar__SmartEdit__select"
           marginRight={2}
           items={operationMenuItems}
           columns={['label']}
@@ -120,6 +121,7 @@ class SmartEditToolbarControlComponent extends React.Component<
           style={{
             width: '5rem',
           }}
+          className="ab-DashboardToolbar__SmartEdit__select-value"
           value={this.props.SmartEditValue.toString()}
           type="number"
           placeholder="Enter a Number"
@@ -133,6 +135,7 @@ class SmartEditToolbarControlComponent extends React.Component<
             marginLeft={2}
             onClick={() => this.onApplyClick()}
             style={applyButtonStyle}
+            className="ab-DashboardToolbar__SmartEdit__apply"
             tooltip="Apply Smart Edit"
             disabled={
               StringExtensions.IsNullOrEmpty(`${this.props.SmartEditValue}`) ||
@@ -146,6 +149,7 @@ class SmartEditToolbarControlComponent extends React.Component<
         {!shouldDisable && (
           <AdaptablePopover
             headerText="Preview Results"
+            className="ab-DashboardToolbar__SmartEdit__info"
             //  tooltipText="Preview Results"
             bodyText={[previewPanel]}
             MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
@@ -159,6 +163,7 @@ class SmartEditToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__SmartEdit"
         headerText={StrategyConstants.SmartEditStrategyName}
         glyphicon={StrategyConstants.SmartEditGlyph}
         onClose={() => this.props.onClose(StrategyConstants.SmartEditStrategyId)}
