@@ -20,6 +20,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<
     let closeButtonTooltip: string = this.props.value ? 'clear' : null;
     return (
       <FieldWrap
+        className={this.props.className}
         style={{
           background: 'var(--ab-color-defaultbackground)',
           overflow: 'visible',

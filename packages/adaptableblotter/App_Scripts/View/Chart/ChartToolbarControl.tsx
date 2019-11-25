@@ -95,8 +95,9 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     };
 
     let content = (
-      <Flex alignItems="stretch">
+      <Flex alignItems="stretch" className="ab-DashboardToolbar__Chart__wrap">
         <Dropdown
+          className="ab-DashboardToolbar__Chart__select"
           disabled={availablechartDefinitions.length == 0}
           style={{ minWidth: 160 }}
           marginRight={2}
@@ -116,6 +117,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
           }
         >
           <ButtonShowChart
+            className="ab-DashboardToolbar__Chart__show"
             onClick={() => this.onShowChart()}
             tooltip="Show Chart"
             disabled={currentChartDefinitionName == selectChartString}
@@ -123,6 +125,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
           />
           <DropdownButton
             columns={['label']}
+            className="ab-DashboardToolbar__Chart__select-type"
             mx={2}
             variant="text"
             items={[categoryChartMenuItem, pieChartMenuItem, sparkLineMenuItem]}
@@ -131,6 +134,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
           </DropdownButton>
 
           <ButtonEdit
+            className="ab-DashboardToolbar__Chart__edit"
             onClick={() =>
               this.props.onNewChartDefinition({
                 value: 'CategoryChart',
@@ -145,6 +149,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
           <ButtonDelete
             tooltip="Delete Chart"
+            className="ab-DashboardToolbar__Chart__delete"
             disabled={currentChartDefinitionName == selectChartString}
             ConfirmAction={ChartRedux.ChartDefinitionDelete(this.props.CurrentChartDefinition)}
             ConfirmationMsg={
@@ -159,6 +164,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__Chart"
         headerText={StrategyConstants.ChartStrategyName}
         glyphicon={StrategyConstants.ChartGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ChartStrategyId)}

@@ -59,11 +59,12 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     );
 
     let content = (
-      <Flex alignItems="stretch">
+      <Flex alignItems="stretch" className="ab-DashboardToolbar__ColumnFilter__wrap">
         {/*<Text mx={1}>{collapsedText}</Text>*/}
         {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
           <>
             <AdaptablePopover
+              className="ab-DashboardToolbar__ColumnFilter__info"
               headerText=""
               bodyText={[activeFiltersPanel]}
               //  tooltipText={'Show Filter Details'}
@@ -74,6 +75,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
             />
             <ButtonClear
               marginLeft={1}
+              className="ab-DashboardToolbar__ColumnFilter__clear"
               onClick={() => this.onClearFilters()}
               tooltip="Clear Column Filters"
               disabled={this.props.ColumnFilters.length == 0}
@@ -82,6 +84,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
           </>
         )}
         <CheckBox
+          className="ab-DashboardToolbar__ColumnFilter__active-check"
           disabled={this.props.Blotter.api.internalApi.isGridInPivotMode()}
           marginLeft={3}
           checked={this.props.IsQuickFilterActive}
@@ -96,6 +99,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__ColumnFilter"
         headerText={StrategyConstants.ColumnFilterStrategyName}
         glyphicon={StrategyConstants.ColumnFilterGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)}

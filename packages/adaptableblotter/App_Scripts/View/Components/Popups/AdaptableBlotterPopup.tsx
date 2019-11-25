@@ -95,7 +95,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
               </Flex>
             </Flex>
           </Flex>
-          <Flex padding={2} backgroundColor="primary">
+          <Flex padding={2} backgroundColor="primary" className="ab-Popup__footer">
             <SimpleButton onClick={() => this.props.onHide()} variant="text">
               CLOSE
             </SimpleButton>

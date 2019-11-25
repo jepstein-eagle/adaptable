@@ -72,8 +72,9 @@ class DataSourceToolbarControlComponent extends React.Component<
       );
 
     let content = (
-      <Flex alignItems="stretch">
+      <Flex alignItems="stretch" className="ab-DashboardToolbar__DataSource__wrap">
         <Dropdown
+          className="ab-DashboardToolbar__DataSource__select"
           disabled={availableDataSources.length == 0}
           style={{ minWidth: 160 }}
           placeholder="Select Data Source"
@@ -84,6 +85,7 @@ class DataSourceToolbarControlComponent extends React.Component<
         ></Dropdown>
 
         <ButtonApply
+          className="ab-DashboardToolbar__DataSource__apply"
           marginLeft={2}
           onClick={() => this.onApplyClick()}
           tooltip="Get Data Source"
@@ -95,7 +97,7 @@ class DataSourceToolbarControlComponent extends React.Component<
           <AdaptablePopover
             showDefaultStyle={this.props.UseSingleColourForButtons}
             size={this.props.DashboardSize}
-           
+
             headerText="Data Source Params"
             bodyText={[dataSourceParamsPopover]}
             tooltipText={'Get Data Source Params'}
@@ -109,6 +111,7 @@ class DataSourceToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__DataSource"
         headerText={StrategyConstants.DataSourceStrategyName}
         glyphicon={StrategyConstants.DataSourceGlyph}
         onClose={() => this.props.onClose(StrategyConstants.DataSourceStrategyId)}

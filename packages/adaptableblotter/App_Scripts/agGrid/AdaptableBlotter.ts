@@ -3025,6 +3025,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       if (newTheme && newTheme.VendorGridClassName) {
         container.classList.add(newTheme.VendorGridClassName);
       }
+
+      container.classList.add('ab-Grid')
+
+      if (this.blotterOptions!.filterOptions!.indicateFilteredColumns) {
+        container.classList.add('ab-Grid--indicate-filtered-columns')
+      }
     }
 
     // if (isSystemTheme) {
@@ -3103,15 +3109,6 @@ import "adaptableblotter/themes/${themeName}.css"`);
     const applicationToolbarButtons: ApplicationToolbarButton[] = this.api.applicationApi.getApplicationToolbarButtons();
     if (ArrayExtensions.IsNotNullOrEmpty(applicationToolbarButtons)) {
       //   this.api.applicationApi.RenderButtons(applicationToolbarButtons);
-    }
-
-    // add the filter header style if required
-    if (this.blotterOptions!.filterOptions!.indicateFilteredColumns == true) {
-      var css = document.createElement('style');
-      css.id = `${this.blotterOptions!.blotterId}_filtered-columns-style`;
-      css.type = 'text/css';
-      css.innerHTML = '.ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}';
-      document.body.appendChild(css);
     }
 
     // sometimes the header row looks wrong when using quick filter so to be sure...

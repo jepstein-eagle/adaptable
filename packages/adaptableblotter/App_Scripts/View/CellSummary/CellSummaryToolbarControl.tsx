@@ -97,6 +97,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
         <DropdownButton
           marginRight={2}
           columns={['label']}
+          className="ab-DashboardToolbar__CellSummary__select"
           items={[...operationMenuItems, ...operationOptionalMenuItems]}
           disabled={shouldDisable}
         >
@@ -108,12 +109,14 @@ class CellSummaryToolbarControlComponent extends React.Component<
               flex={1}
               marginRight={2}
               justifyContent="center"
+              className="ab-DashboardToolbar__CellSummary__value"
               color={'var(--ab-color-text-on-primary)'}
             >
               {this.getOperationValue()}
             </Flex>
             {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (
               <AdaptablePopover
+                className="ab-DashboardToolbar__CellSummary__info"
                 bodyText={[cellSummaryPopover]}
                 // tooltipText={'Show Cell Summary'}
                 useButton={true}
@@ -128,6 +131,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__CellSummary"
         headerText={StrategyConstants.CellSummaryStrategyName}
         glyphicon={StrategyConstants.CellSummaryGlyph}
         onClose={() => this.props.onClose(StrategyConstants.CellSummaryStrategyId)}

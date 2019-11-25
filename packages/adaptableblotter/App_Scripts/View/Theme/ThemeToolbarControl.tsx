@@ -14,6 +14,7 @@ import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
 import DropdownButton from '../../components/DropdownButton';
+import join from '../../components/utils/join';
 
 interface ThemeToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ThemeToolbarControlComponent> {
@@ -46,11 +47,13 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
 
     let content = (
       <div
-        className={
-          this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-        }
+        className={join(
+          this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : '',
+          'ab-DashboardToolbar__Theme__wrap'
+        )}
       >
         <DropdownButton
+          className="ab-DashboardToolbar__Theme__select"
           style={{
             maxWidth: '25rem',
             whiteSpace: 'nowrap',
@@ -67,6 +70,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__Theme"
         headerText={StrategyConstants.ThemeStrategyName}
         glyphicon={StrategyConstants.ThemeGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)}

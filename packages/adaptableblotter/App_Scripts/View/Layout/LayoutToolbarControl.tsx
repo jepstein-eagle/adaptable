@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
@@ -19,6 +19,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
+import join from '../../components/utils/join';
 import Helper from '../../Utilities/Helpers/Helper';
 
 interface LayoutToolbarControlComponentProps
@@ -68,6 +69,7 @@ class LayoutToolbarControlComponent extends React.Component<
           disabled={availableLayoutOptions.length == 0}
           style={{ minWidth: 160 }}
           marginRight={2}
+          className="ab-DashboardToolbar__Layout__select"
           placeholder="Select Layout"
           value={layoutEntity ? layoutEntity.Name : null}
           options={availableLayoutOptions}
@@ -89,12 +91,14 @@ class LayoutToolbarControlComponent extends React.Component<
 
         <Flex
           flexDirection="row"
-          className={
-            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-          }
+          className={join(
+            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : '',
+            'ab-DashboardToolbar__Layout__wrap'
+          )}
         >
           {isManualSaveLayout && (
             <ButtonSave
+              className="ab-DashboardToolbar__Layout__save"
               onClick={() => this.onSaveLayout()}
               tooltip="Save Changes to Current Layout"
               disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
@@ -106,12 +110,14 @@ class LayoutToolbarControlComponent extends React.Component<
             children={null}
             tone="none"
             variant="text"
+            className="ab-DashboardToolbar__Layout__new"
             onClick={() => this.props.onNewLayout()}
             tooltip="Create a new Layout"
             AccessLevel={this.props.AccessLevel}
           />
 
           <ButtonUndo
+            className="ab-DashboardToolbar__Layout__undo"        
             onClick={() =>
               isManualSaveLayout
                 ? this.onSelectedLayoutChanged(this.props.CurrentLayout)
@@ -124,6 +130,7 @@ class LayoutToolbarControlComponent extends React.Component<
 
           <ButtonDelete
             tooltip="Delete Layout"
+            className="ab-DashboardToolbar__Layout__delete"
             disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
             ConfirmAction={LayoutRedux.LayoutDelete(layoutEntity)}
             ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
@@ -136,6 +143,7 @@ class LayoutToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__Layout"
         headerText={StrategyConstants.LayoutStrategyName}
         glyphicon={StrategyConstants.LayoutGlyph}
         onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)}

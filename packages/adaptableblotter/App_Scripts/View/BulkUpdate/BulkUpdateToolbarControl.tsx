@@ -26,6 +26,7 @@ import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import join from '../../components/utils/join';
 
 interface BulkUpdateToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
@@ -85,13 +86,20 @@ class BulkUpdateToolbarControlComponent extends React.Component<
       fill: 'currentColor',
     };
     let content = (
-      <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>
+      <Flex
+        alignItems="stretch"
+        className={join(
+          shouldDisable ? GeneralConstants.READ_ONLY_STYLE : '',
+          'ab-DashboardToolbar__BulkUpdate__wrap'
+        )}
+      >
         <ColumnValueSelector
           newLabel="New"
           existingLabel="Existing"
           dropdownButtonProps={{
             listMinWidth: 150,
           }}
+          className="ab-DashboardToolbar__BulkUpdate__select"
           disabled={shouldDisable}
           SelectedColumnValue={this.props.BulkUpdateValue}
           SelectedColumn={selectedColumn}
@@ -102,6 +110,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
         {!shouldDisable && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
           <ButtonApply
             marginLeft={2}
+            className="ab-DashboardToolbar__BulkUpdate__apply"
             onClick={() => this.onApplyClick()}
             style={applyStyle}
             tooltip="Apply Bulk Update"
@@ -116,6 +125,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
 
         {!shouldDisable && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
           <AdaptablePopover
+            className="ab-DashboardToolbar__BulkUpdate__info"
             headerText="Preview Results"
             bodyText={[previewPanel]}
             MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
@@ -129,6 +139,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__BulkUpdate"
         headerText={StrategyConstants.BulkUpdateStrategyName}
         glyphicon={StrategyConstants.BulkUpdateGlyph}
         onClose={() => this.props.onClose(StrategyConstants.BulkUpdateStrategyId)}

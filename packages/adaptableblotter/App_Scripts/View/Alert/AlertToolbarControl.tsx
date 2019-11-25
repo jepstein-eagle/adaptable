@@ -82,9 +82,10 @@ class AlertToolbarControlComponent extends React.Component<
       : 'text-on-primary';
 
     let content = (
-      <Flex alignItems="stretch">
+      <Flex alignItems="stretch" className="ab-DashboardToolbar__Alert__wrap">
         <Flex
           style={{ borderRadius: 'var(--ab__border-radius)' }}
+          className="ab-DashboardToolbar__Alert__text"
           marginRight={2}
           padding={2}
           color={buttonTextColor}
@@ -98,6 +99,7 @@ class AlertToolbarControlComponent extends React.Component<
         {this.props.AdaptableAlerts.length > 0 && (
           <Flex alignItems="center">
             <AdaptablePopover
+              className="ab-DashboardToolbar__Alert__info"
               headerText=""
               // tooltipText="Alerts"
               bodyText={[alertsPanel]}
@@ -113,6 +115,7 @@ class AlertToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__Alert"
         headerText={StrategyConstants.AlertStrategyName}
         glyphicon={StrategyConstants.AlertGlyph}
         onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)}

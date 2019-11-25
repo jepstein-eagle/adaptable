@@ -171,11 +171,13 @@ Object.keys(allIcons).forEach(name => {
 export const Icon = ({
   name,
   style,
+  className,
   ...props
 }: {
   style?: React.CSSProperties;
   name: string;
   size?: number;
+  className?: string;
   props?: React.SVGProps<SVGElement>;
 }) => {
   const IconCmp = (allIcons[name] || null) as ReactComponentLike;
@@ -185,7 +187,7 @@ export const Icon = ({
     return <svg />;
   }
 
-  return <IconCmp {...props} style={style} name={name} />;
+  return <IconCmp {...props} style={style} name={name} className={className} />;
 };
 
 export const iconToString = (name: string, props?: any) =>

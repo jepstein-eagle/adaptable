@@ -1,6 +1,5 @@
 import * as React from 'react';
-import ArrowUp from '../icons/triangle-up';
-import ArrowDown from '../icons/triangle-down';
+import { Icon } from '../icons';
 
 const Arrows = () => {
   return (
@@ -17,8 +16,8 @@ const Arrows = () => {
         cursor: 'pointer',
       }}
     >
-      <ArrowUp size={24} style={{ position: 'relative', top: 7 }} />
-      <ArrowDown size={24} style={{ position: 'relative', top: -7 }} />
+      <Icon name="triangle-up" size={24} style={{ position: 'relative', top: 7 }} />
+      <Icon name="triangle-down" size={24} style={{ position: 'relative', top: -7 }} />
     </div>
   );
 };

@@ -36,7 +36,12 @@ const Input = (props: InputProps) => {
       {...inputProps}
       type={type}
       disabled={disabled}
-      className={join(className, baseClassName, disabled ? `${baseClassName}--disabled` : '')}
+      className={join(
+        className,
+        baseClassName,
+        type ? `${baseClassName}--type-${type}` : '',
+        disabled ? `${baseClassName}--disabled` : ''
+      )}
     />
   );
 };

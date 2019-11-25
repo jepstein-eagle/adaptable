@@ -55,48 +55,55 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
       };
     });
     let content = (
-      <Flex flexDirection="row" alignItems="stretch">
-        <Flex flexDirection="row" alignItems="stretch">
-          <Dropdown
-            disabled={availableSearches.length == 0}
-            style={{ minWidth: 160 }}
-            options={availableSearches}
-            value={this.props.CurrentAdvancedSearchName}
-            placeholder="Select Search"
-            onChange={searchName => this.onSelectedSearchChanged(searchName)}
-            marginRight={2}
-          ></Dropdown>
+      <Flex
+        flexDirection="row"
+        alignItems="stretch"
+        className="ab-DashboardToolbar__AdvancedSearch__wrap"
+      >
+        <Dropdown
+          className="ab-DashboardToolbar__AdvancedSearch__select"
+          disabled={availableSearches.length == 0}
+          style={{ minWidth: 160 }}
+          options={availableSearches}
+          value={this.props.CurrentAdvancedSearchName}
+          placeholder="Select Search"
+          onChange={searchName => this.onSelectedSearchChanged(searchName)}
+          marginRight={2}
+        ></Dropdown>
 
-          <ButtonEdit
-            onClick={() => this.props.onEditAdvancedSearch()}
-            tooltip="Edit Current Advanced Search"
-            disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
-            AccessLevel={this.props.AccessLevel}
-          />
-          <ButtonNew
-            variant="text"
-            onClick={() => this.props.onNewAdvancedSearch()}
-            tooltip="Create New Advanced Search"
-            AccessLevel={this.props.AccessLevel}
-            children={null}
-          />
+        <ButtonEdit
+          onClick={() => this.props.onEditAdvancedSearch()}
+          className="ab-DashboardToolbar__AdvancedSearch__edit"
+          tooltip="Edit Current Advanced Search"
+          disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
+          AccessLevel={this.props.AccessLevel}
+        />
+        <ButtonNew
+          variant="text"
+          className="ab-DashboardToolbar__AdvancedSearch__new"
+          onClick={() => this.props.onNewAdvancedSearch()}
+          tooltip="Create New Advanced Search"
+          AccessLevel={this.props.AccessLevel}
+          children={null}
+        />
 
-          <ButtonDelete
-            tooltip="Delete Advanced Search"
-            disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
-            ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
-            ConfirmationMsg={
-              "Are you sure you want to delete '" + !savedSearch ? '' : savedSearch.Name + "'?"
-            }
-            ConfirmationTitle={'Delete Advanced Search'}
-            AccessLevel={this.props.AccessLevel}
-          />
-        </Flex>
+        <ButtonDelete
+          tooltip="Delete Advanced Search"
+          className="ab-DashboardToolbar__AdvancedSearch__delete"
+          disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
+          ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
+          ConfirmationMsg={
+            "Are you sure you want to delete '" + !savedSearch ? '' : savedSearch.Name + "'?"
+          }
+          ConfirmationTitle={'Delete Advanced Search'}
+          AccessLevel={this.props.AccessLevel}
+        />
       </Flex>
     );
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__AdvancedSearch"
         headerText={StrategyConstants.AdvancedSearchStrategyName}
         glyphicon={StrategyConstants.AdvancedSearchGlyph}
         onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}

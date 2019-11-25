@@ -57,7 +57,11 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     let header = (
       <>
         {showMinimiseButton ? (
-          <ButtonMinimise onClick={() => (onMinimise ? onMinimise() : null)} marginRight={2} />
+          <ButtonMinimise
+            className="ab-DashboardPanel__header-minimise"
+            onClick={() => (onMinimise ? onMinimise() : null)}
+            marginRight={2}
+          />
         ) : null}
         {showGlyphIcon ? (
           <Icon
@@ -66,17 +70,24 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
               marginLeft: 'var(--ab-space-2)',
               color: 'var(--ab-cmp-dashboardpanel_header__fill)',
             }}
+            className="ab-DashboardPanel__header-icon"
             name={glyphicon}
           />
         ) : null}
 
-        <Flex flex={1} alignItems="center" marginLeft={showGlyphIcon || showMinimiseButton ? 2 : 0}>
+        <Flex
+          className="ab-DashboardPanel__header-text"
+          flex={1}
+          alignItems="center"
+          marginLeft={showGlyphIcon || showMinimiseButton ? 2 : 0}
+        >
           {headerText}
         </Flex>
         {showConfigureButton ? (
           <ButtonConfigure
             iconSize={16}
             marginLeft={2}
+            className="ab-DashboardPanel__header-configure-button"
             tooltip={'Configure ' + headerText}
             onClick={() => onConfigure()}
           />
@@ -84,6 +95,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
         {showCloseButton ? (
           <ButtonClose
             marginLeft={showConfigureButton ? 0 : 3}
+            className="ab-DashboardPanel__header-close-button"
             tooltip={'Close ' + headerText}
             onClick={() => onClose()}
           />

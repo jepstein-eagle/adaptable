@@ -67,7 +67,12 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             AccessLevel: accessLevel,
           });
           return (
-            <Box key={control} marginTop={1} marginRight={1} className="ab-Dashboard__container">
+            <Box
+              key={control}
+              marginTop={1}
+              marginRight={1}
+              className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
+            >
               {dashboardElememt}
             </Box>
           );
@@ -81,7 +86,12 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       StrategyConstants.HomeStrategyId
     );
     let homeToolbarElement = (
-      <Box key={'home'} marginTop={1} marginRight={1} className="ab-Dashboard__container">
+      <Box
+        key={'home'}
+        marginTop={1}
+        marginRight={1}
+        className="ab-Dashboard__container ab-Dashboard__container--Home"
+      >
         {React.createElement(homeToolbar, {
           Blotter: this.props.Blotter,
         })}
@@ -100,6 +110,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 py={1}
                 icon="arrow-down"
                 tooltip={showBlotterName}
+                className="ab-Dashboard__expand"
                 onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}
               >
                 {blotterName}
@@ -139,7 +150,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let Dashboard = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DashboardComponent);
+export let Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardComponent);

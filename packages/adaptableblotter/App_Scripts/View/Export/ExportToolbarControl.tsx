@@ -26,6 +26,7 @@ import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import DropdownButton from '../../components/DropdownButton';
 import icons from '../../components/icons';
+import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 
 const ExportIcon = icons.export as ReactComponentLike;
@@ -145,11 +146,12 @@ class ExportToolbarControlComponent extends React.Component<
     ].filter(x => !!x);
 
     let content = (
-      <Flex alignItems="stretch">
+      <Flex alignItems="stretch" className="ab-DashboardToolbar__Export__wrap">
         <Dropdown
           disabled={allReports.length == 0}
           style={{ minWidth: 160 }}
           options={availableReports}
+          className="ab-DashboardToolbar__Export__select"
           placeholder="Select Report"
           onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
           value={currentReport ? currentReport.Name : null}
@@ -158,6 +160,7 @@ class ExportToolbarControlComponent extends React.Component<
         ></Dropdown>
 
         <DropdownButton
+          className="ab-DashboardToolbar__Export__export"
           columns={['label']}
           variant="text"
           disabled={currentReportId == selectReportString}
@@ -166,14 +169,16 @@ class ExportToolbarControlComponent extends React.Component<
           <ExportIcon />
         </DropdownButton>
         <Flex
-          className={
-            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-          }
+          className={join(
+            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : '',
+            'ab-DashboardToolbar__Export__controls'
+          )}
           alignItems="stretch"
         >
           <ButtonEdit
             onClick={() => this.props.onEditReport()}
             tooltip="Edit Report"
+            className="ab-DashboardToolbar__Export__edit"
             disabled={
               savedReport == null || this.props.Blotter.ReportService.IsSystemReport(savedReport)
             }
@@ -182,6 +187,7 @@ class ExportToolbarControlComponent extends React.Component<
 
           <ButtonNew
             variant="text"
+            className="ab-DashboardToolbar__Export__new"
             children={null}
             onClick={() => this.props.onNewReport()}
             tooltip="Create New Report"
@@ -190,6 +196,7 @@ class ExportToolbarControlComponent extends React.Component<
 
           <ButtonDelete
             tooltip="Delete Report"
+            className="ab-DashboardToolbar__Export__delete"
             disabled={
               savedReport == null || this.props.Blotter.ReportService.IsSystemReport(savedReport)
             }
@@ -204,6 +211,7 @@ class ExportToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
+        className="ab-DashboardToolbar__Export"
         headerText={StrategyConstants.ExportStrategyName}
         glyphicon={StrategyConstants.ExportGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ExportStrategyId)}
