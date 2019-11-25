@@ -274,11 +274,11 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         </FormRow>
         <FormRow label="Auto Size Columns In Default Layout">
           <CheckBox
-            checked={layoutOptions.autoSizeColumnsInDefaultLayout}
-            onChange={(autoSizeColumnsInDefaultLayout: boolean) => {
+            checked={layoutOptions.autoSizeColumnsInLayout}
+            onChange={(autoSizeColumnsInLayout: boolean) => {
               abOptions = { ...abOptions };
               abOptions.layoutOptions = { ...abOptions.layoutOptions };
-              abOptions.layoutOptions.autoSizeColumnsInDefaultLayout = autoSizeColumnsInDefaultLayout;
+              abOptions.layoutOptions.autoSizeColumnsInLayout = autoSizeColumnsInLayout;
 
               props.onChangeBlotterOptions(abOptions);
             }}

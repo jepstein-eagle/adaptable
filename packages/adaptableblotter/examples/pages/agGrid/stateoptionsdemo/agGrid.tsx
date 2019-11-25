@@ -58,7 +58,7 @@ function InitAdaptableBlotter() {
       },
     },
     layoutOptions: {
-      autoSizeColumnsInDefaultLayout: true,
+      autoSizeColumnsInLayout: true,
     },
   };
 

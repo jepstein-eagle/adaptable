@@ -38,7 +38,7 @@ function InitAdaptableBlotter() {
   };
 
   adaptableBlotterOptions.layoutOptions = {
-    autoSizeColumnsInDefaultLayout: true,
+    autoSizeColumnsInLayout: true,
   };
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);

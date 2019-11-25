@@ -11,7 +11,7 @@ import '../../../../App_Scripts/themes/dark.scss';
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
@@ -25,15 +25,68 @@ function InitAdaptableBlotter() {
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'layout demo',
-
+    predefinedConfig: demoConfig,
     layoutOptions: {
       includeVendorStateInLayouts: true,
       autoSaveLayouts: true,
+      autoSizeColumnsInLayout: true,
+      autoSizeColumnsInPivotLayout: true,
     },
   };
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 }
+
+let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Theme', 'Export', 'Layout'],
+  },
+
+  Layout: {
+    CurrentLayout: 'Pivoted Layout',
+    Layouts: [
+      {
+        Name: 'Simple Layout',
+        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+      },
+      {
+        Name: 'Sorting Layout',
+        ColumnSorts: [
+          {
+            Column: 'counterparty',
+            SortOrder: 'Descending',
+          },
+          {
+            Column: 'currency',
+            SortOrder: 'Descending',
+          },
+        ],
+        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+        GroupedColumns: [],
+      },
+      {
+        ColumnSorts: [
+          {
+            Column: 'currency',
+            SortOrder: 'Descending',
+          },
+        ],
+        GroupedColumns: ['currency', 'country'],
+        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+        Name: 'Grouping Layout',
+      },
+      {
+        Columns: ['bid', 'ask', 'price', 'counterparty', 'status', 'stars'],
+        Name: 'Pivoted Layout',
+        GroupedColumns: ['currency'],
+        PivotDetails: {
+          PivotColumns: ['status', 'stars'],
+          AggregationColumns: ['bid', 'ask'],
+        },
+      },
+    ],
+  },
+};
 
 export default () => {
   useEffect(() => {
