@@ -61,15 +61,15 @@ import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
  *  }
  * } as PredefinedConfig;
  * ```
- * In this example we have created 4 Advanced Searches:
+ * I n this example we have created 4 Layouts:
  *
- * - 'Simple Layout' - a basic layout setting column visibility and order
+ * - *Simple Layout* - a basic Layout setting column visibility and order
  *
- * - 'Sorting Layout' - a layout that includes 2 sort orders
+ * - *Sorting Layout* - a Layout that includes 2 sort orders
  *
- * - 'Grouping Layout' - a layout which includes column grouping
+ * - *Grouping Layout* - a Layout which includes column grouping
  *
- * - 'Pivoted Layout' - a layout that includes Pivot details (so that the grid will be pivoted when the layout is selected)
+ * - *Pivoted Layout* - a Layout that includes Pivot details (so that the grid will be pivoted when the Layout is selected)
  */
 export interface LayoutState extends RunTimeState {
   /**
@@ -91,6 +91,11 @@ export interface LayoutState extends RunTimeState {
   Layouts?: Layout[];
 }
 
+/**
+ * The Layout object used in the Layout function.
+ *
+ * Contains all that is required to create a Layout - including Columns, Sorts, Grouping and Pivoting detaails.
+ */
 export interface Layout extends AdaptableBlotterObject {
   /**
    * The Name of the Layout - this is what will appear in the Layout toolbar.
@@ -132,15 +137,15 @@ export interface Layout extends AdaptableBlotterObject {
   /**
    * **Do not set this when creating a layout**
    *
-   *  This is state saved automatically by the Adaptable Blotter to manage layouts
+   *  This is state saved automatically by the Adaptable Blotter for internal use to manage layouts
    *
-   *  Note: This is only set if `includeVendorStateInLayouts` is set to true in [LayoutOptions](_blotteroptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
+   *  Note: This is only used if `includeVendorStateInLayouts` is set to true in [LayoutOptions](_blotteroptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
    */
   VendorGridInfo?: VendorGridInfo;
   /**
    * **Do not set this when creating a layout**
    *
-   *  This is state saved automatically by the Adaptable Blotter to manage layouts
+   *  This is state saved automatically by the Adaptable Blotter for internal use to manage layouts
    */
   BlotterGridInfo?: BlotterGridInfo;
 }
@@ -156,10 +161,22 @@ export interface Layout extends AdaptableBlotterObject {
  *
  */
 export interface ColumnSort {
+  /**
+   * The name of the Column being sorted
+   */
   Column: string;
+
+  /**
+   * How the column will be sorted (i.e. either 'Ascending' or 'Descending')
+   */
   SortOrder: 'Ascending' | 'Descending';
 }
 
+/**
+ * **Do not set use this property**
+ *
+ *  This is state saved automatically by the Adaptable Blotter for internal use to manage layouts
+ */
 export interface VendorGridInfo {
   GroupState?: any;
   ColumnState?: any;
@@ -167,12 +184,34 @@ export interface VendorGridInfo {
   InPivotMode?: boolean;
 }
 
+/**
+ * **Do not set use this property**
+ *
+ *  This is state saved automatically by the Adaptable Blotter for internal use to manage layouts
+ */
 export interface BlotterGridInfo {
   CurrentColumns?: string[];
   CurrentColumnSorts?: ColumnSort[];
 }
 
+/**
+ * Defines which pivoting will be included in a layout.
+ *
+ *  Contains 2 collections of Column Names:
+ *
+ * - `PivotColumns`: Which Columns will be pivoted (i.e. appear along the top)
+ *
+ * - `AggregationColumns`: Which Columns will be aggregated in the pivot
+ *
+ */
 export interface PivotDetails {
+  /**
+   * Which Columns will be **pivoted** (i.e. appear along the top) when the Grid is in Pivot View
+   */
   PivotColumns?: string[];
+
+  /**
+   * Which Columns will be **aggregated** when the Grid is in Pivot View
+   */
   AggregationColumns?: string[];
 }
