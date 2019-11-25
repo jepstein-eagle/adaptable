@@ -42,14 +42,14 @@ export class LayoutAggregationColumnWizard
     return (
       <WizardPanel>
         <HelpBlock marginBottom={2}>
-          2. Choose which columns should be <b>Aggregated</b> in the Pivot.
+          2. Select the <b>Aggregation Columns</b> (which are 'summed' in the pivot).
         </HelpBlock>
         <DualListBoxEditor
           style={{ flex: 1, overflow: 'hidden' }}
           AvailableValues={this.props.AggregetableColumns.map(x => x.FriendlyName)}
           SelectedValues={this.state.SelectedColumns}
-          HeaderAvailable="Available Pivot Aggregation Columns"
-          HeaderSelected="Pivot Aggregation Columns in Layout"
+          HeaderAvailable="Available Aggregation Columns"
+          HeaderSelected="Aggregation Columns in Layout"
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />

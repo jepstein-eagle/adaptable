@@ -48,11 +48,11 @@ export class LayoutSetPivotingWizard
             There are 2 sets of columns that make up a Pivot Layout: <br />
             <ul>
               <li>
-                <b>Header Columns</b>: These are the colums which will form the pivot header.
+                <b>Pivot Columns</b>: These are the colums which will form the pivot header.
                 <br /> <br />
               </li>
               <li>
-                <b>Aggregateable Columns</b>: These are (typically numeric) colums which will be
+                <b>Aggregation Columns</b>: These are (typically numeric) columns which will be
                 aggregated in the pivot.
                 <br /> <br />
               </li>

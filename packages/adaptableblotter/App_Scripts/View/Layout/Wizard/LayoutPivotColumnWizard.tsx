@@ -42,14 +42,14 @@ export class LayoutPivotColumnWizard
     return (
       <WizardPanel>
         <HelpBlock marginBottom={2}>
-          1. Choose which columns should form the <b>Pivot Header</b>.
+          1. Select the <b>Pivot Columns</b> (which appear along the top of the pivot).
         </HelpBlock>
         <DualListBoxEditor
           style={{ flex: 1, overflow: 'hidden' }}
           AvailableValues={this.props.PivotableColumns.map(x => x.FriendlyName)}
           SelectedValues={this.state.SelectedColumns}
-          HeaderAvailable="Available Pivot Header Columns"
-          HeaderSelected="Pivot Header Columns in Layout"
+          HeaderAvailable="Available Pivot Columns"
+          HeaderSelected="Pivot Columns in Layout"
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
