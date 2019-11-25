@@ -51,7 +51,6 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
     ) {
       let layout = blotter.api.layoutApi.getCurrentLayout();
       if (layout != null) {
-        console.log('auto saving: ' + layout.Name);
         let gridState: GridState = blotter.api.gridApi.getGridState();
         let visibleColumns: AdaptableBlotterColumn[] = gridState.Columns.filter(c => c.Visible);
         let gridVendorState: any = blotter.getVendorGridLayoutInfo(

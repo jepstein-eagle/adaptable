@@ -215,7 +215,7 @@ export function getPivotableColumns(columns: AdaptableBlotterColumn[]): Adaptabl
 export function getAggregetableColumns(
   columns: AdaptableBlotterColumn[]
 ): AdaptableBlotterColumn[] {
-  return columns.filter(c => c.Aggregatable);
+  return columns.filter(c => c.Aggregatable).filter(c => c.DataType == DataType.Number);
 }
 
 function LogMissingColumnWarning(columnId: string): void {

@@ -2242,18 +2242,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let layoutState = middlewareAPI.getState().Layout;
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
             if (currentLayout) {
-              console.log('selecting: ' + currentLayout.Name);
-
               if (currentLayout.BlotterGridInfo == null) {
                 currentLayout.BlotterGridInfo = {
                   CurrentColumns: currentLayout.Columns,
                   CurrentColumnSorts: currentLayout.ColumnSorts,
-                  //   PivotDetails: currentLayout.PivotDetails,
                 };
               }
               if (currentLayout.VendorGridInfo == null) {
                 blotter.setGroupedColumns(currentLayout.GroupedColumns);
-                console.log('@@@@@ settting pivoting');
                 blotter.setPivoting(currentLayout.PivotDetails);
               }
 
@@ -2270,10 +2266,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   );
                 }
               });
-              console.log('setting columns');
               middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(blotterColumns));
               // set sort
-              console.log('setting sorts');
               middlewareAPI.dispatch(
                 GridRedux.GridSetSort(currentLayout.BlotterGridInfo.CurrentColumnSorts)
               );
@@ -2344,11 +2338,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             if (isExistingLayout) {
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             } else {
-              console.log('******* adding: ' + layout.Name);
               middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
-              if (layout.Name != DEFAULT_LAYOUT) {
-                setTimeout(() => middlewareAPI.dispatch(LayoutRedux.LayoutRestore(layout)), 2000);
-              }
             }
             return returnAction;
           }
@@ -2362,8 +2352,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               layout.GroupedColumns = [];
             }
             blotter.setGroupedColumns(layout.GroupedColumns);
+            blotter.setPivoting(layout.PivotDetails);
             // do something about pivoting?
-            console.log('restoring: ' + layout.Name);
             middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             middlewareAPI.dispatch(LayoutRedux.LayoutSelect(layout.Name));
             return returnAction;

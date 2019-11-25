@@ -39,8 +39,6 @@ export class LayoutGridSortWizard
     };
   }
   render(): any {
-    console.log('sortable cols');
-    console.log(this.props.SortableColumns);
     let addButton = (
       <SimpleButton
         icon="plus"

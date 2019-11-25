@@ -37,7 +37,7 @@ export class LayoutGroupedColumnWizard
     return (
       <WizardPanel>
         <HelpBlock marginBottom={2}>
-          Select which Columns should be <b>Grouped</b> in the Layout. This is optional.
+          Select which Columns, if any, should be <b>Grouped</b> in the Layout.
         </HelpBlock>
         <DualListBoxEditor
           style={{ flex: 1, overflow: 'hidden' }}

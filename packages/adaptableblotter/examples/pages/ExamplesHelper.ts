@@ -1012,6 +1012,7 @@ export class ExamplesHelper {
       field: 'counterparty',
       editable: true,
       //  enableRowGroup: true,
+      enableValue: true,
       rowGroup: true,
       filter: true,
       sortable: true,

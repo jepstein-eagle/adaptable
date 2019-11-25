@@ -175,7 +175,6 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onFinishWizard() {
     let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
-    console.log(clonedObject);
     this.props.onSaveLayout(clonedObject);
 
     let currentLayout = this.props.Layouts.find(l => l.Name == this.props.CurrentLayoutName);
