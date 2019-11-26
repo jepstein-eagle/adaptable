@@ -11,8 +11,6 @@ import HelpBlock from '../../../components/HelpBlock';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
 
-export interface LayoutPivotColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
-
 export interface LayoutPivotColumnWizardProps extends AdaptableWizardStepProps<Layout> {
   PivotableColumns: AdaptableBlotterColumn[];
 }
