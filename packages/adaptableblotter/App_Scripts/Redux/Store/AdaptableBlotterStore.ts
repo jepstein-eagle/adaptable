@@ -2329,12 +2329,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               );
 
               layout.VendorGridInfo = currentGridVendorInfo;
-
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             } else {
               middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
             }
-
             return returnAction;
           }
           case LayoutRedux.LAYOUT_RESTORE: {

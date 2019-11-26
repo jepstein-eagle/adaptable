@@ -1938,20 +1938,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api!.addEventListener(
       Events.EVENT_COLUMN_PIVOT_MODE_CHANGED,
       (params: any) => {
-        //  console.log(params);
         if (
           params.type == 'columnPivotModeChanged' &&
           params.columnApi != null &&
           params.columnApi.columnController != null &&
           params.columnApi.columnController.pivotMode == true
         ) {
-          //   console.log('pivoting on');
+          if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
+            this.gridOptions.columnApi!.autoSizeAllColumns();
+          }
+
           this.api.internalApi.setPivotModeOn();
         } else {
           this.api.internalApi.setPivotModeOff();
         }
       }
     );
+    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_PIVOT_CHANGED, (params: any) => {
+      if (
+        params.type == 'columnPivotChanged' &&
+        params.columnApi != null &&
+        params.columnApi.columnController != null &&
+        params.columnApi.columnController.pivotMode == true
+      ) {
+        if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
+          this.gridOptions.columnApi!.autoSizeAllColumns();
+        }
+      }
+    });
 
     // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
     const columnEventsThatTriggersAutoLayoutSave = [
@@ -2894,9 +2908,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (vendorGridInfo == null) {
       if (LayoutHelper.isPivotedLayout(pivotDetails)) {
         this.turnOnPivoting();
-        if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
-          this.gridOptions.columnApi!.autoSizeAllColumns();
-        }
       } else {
         this.turnOffPivoting();
       }
@@ -2910,12 +2921,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private turnOnPivoting(): void {
-    this.api.internalApi.setPivotModeOn();
     this.gridOptions.columnApi.setPivotMode(true);
   }
 
   private turnOffPivoting(): void {
-    this.api.internalApi.setPivotModeOff();
     this.gridOptions.columnApi.setPivotMode(false);
   }
 

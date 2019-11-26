@@ -201,7 +201,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
               showClearButton={false}
               SelectedColumnIds={[this.state.SparklinesChartDefinition.ColumnId]}
               SelectionMode={SelectionMode.Single}
-              ColumnList={ColumnHelper.getNumericColumns(this.props.Columns)}
+              ColumnList={this.props.Blotter.api.gridApi.getNumericColumns()}
               onColumnChange={columns => this.onDataColumnChanged(columns)}
             />
           </Flex>

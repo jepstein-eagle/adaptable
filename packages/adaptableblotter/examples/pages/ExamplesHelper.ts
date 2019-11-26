@@ -1160,6 +1160,7 @@ export class ExamplesHelper {
       filter: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
+      valueFormatter: this.twoDecimalPlaceFormatter,
     });
     schema.push({
       headerName: 'Price',
@@ -1827,5 +1828,8 @@ export class ExamplesHelper {
 
   private fourDecimalPlaceFormatter = (params: any) => {
     return params.value ? this.roundTo4Dp(params.value) : null;
+  };
+  private twoDecimalPlaceFormatter = (params: any) => {
+    return params.value ? this.roundTo2Dp(params.value) : null;
   };
 }

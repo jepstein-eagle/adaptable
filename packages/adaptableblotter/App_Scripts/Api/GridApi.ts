@@ -6,6 +6,7 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 
 /**
  * Provides access to important elements of the Adaptable Blotter like columns, sorting, selected cells etc.
@@ -99,6 +100,23 @@ export interface GridApi {
    * Returns all the Date columns in the Adaptable Blotter
    */
   getDateColumns(): AdaptableBlotterColumn[];
+
+  /**
+   * Returns all the string columns in the Adaptable Blotter
+   */
+  getStringColumns(): AdaptableBlotterColumn[];
+
+  /**
+   * Returns all the boolean columns in the Adaptable Blotter
+   */
+  getBooleanColumns(): AdaptableBlotterColumn[];
+
+  /**
+   * Returns all the numeric array columns in the Adaptable Blotter
+   */
+  getNumericArrayColumns(): AdaptableBlotterColumn[];
+
+  getColumnsOfType(dataType: DataType): AdaptableBlotterColumn[];
 
   /**
    * Returns all the current Column Sort information in the Adaptable Blotter

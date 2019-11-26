@@ -16,7 +16,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   private currentFlashing: Map<any, number>;
 
   public initStyles(): void {
-    let numericColumns = ColumnHelper.getNumericColumns(this.blotter.api.gridApi.getColumns());
+    let numericColumns = this.blotter.api.gridApi.getNumericColumns();
     let theBlotter = this.blotter as AdaptableBlotter;
     let currentFlashing = this.currentFlashing;
     let flashingCells: FlashingCell[] = this.blotter.api.flashingCellApi.getAllFlashingCell();

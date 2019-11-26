@@ -241,7 +241,6 @@ export interface IAdaptableBlotter {
   setGroupedColumns(groupedCols: string[]): void;
   setPivotingDetails(pivotDetails: PivotDetails): void;
   setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void;
-  //setBlotterLayoutInfo(cols: string[]): any;
 
   // vendor grid related
   isSelectable(): boolean;

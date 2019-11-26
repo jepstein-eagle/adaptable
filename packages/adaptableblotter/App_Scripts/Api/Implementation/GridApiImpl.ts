@@ -112,8 +112,38 @@ export class GridApiImpl extends ApiBase implements GridApi {
     return this.getColumns().filter(c => c.DataType == DataType.Number);
   }
 
+  public getNumericArrayColumns(): AdaptableBlotterColumn[] {
+    return this.getColumns().filter(c => c.DataType == DataType.NumberArray);
+  }
+
   public getDateColumns(): AdaptableBlotterColumn[] {
     return this.getColumns().filter(c => c.DataType == DataType.Date);
+  }
+
+  public getStringColumns(): AdaptableBlotterColumn[] {
+    return this.getColumns().filter(c => c.DataType == DataType.String);
+  }
+
+  public getBooleanColumns(): AdaptableBlotterColumn[] {
+    return this.getColumns().filter(c => c.DataType == DataType.Boolean);
+  }
+
+  public getColumnsOfType(dataType: DataType): AdaptableBlotterColumn[] {
+    switch (dataType) {
+      case DataType.Boolean:
+        return this.getBooleanColumns();
+      case DataType.Date:
+        return this.getDateColumns();
+      case DataType.Number:
+        return this.getNumericColumns();
+      case DataType.NumberArray:
+        return this.getNumericArrayColumns();
+      case DataType.String:
+        return this.getStringColumns();
+      case DataType.All:
+      default:
+        return this.getColumns();
+    }
   }
 
   public getColumnSorts(): ColumnSort[] {
