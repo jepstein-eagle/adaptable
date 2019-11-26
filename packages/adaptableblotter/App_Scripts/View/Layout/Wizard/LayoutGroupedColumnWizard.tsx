@@ -10,8 +10,6 @@ import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 
-export interface LayoutGroupedColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
-
 export interface LayoutGroupedColumnWizardProps extends AdaptableWizardStepProps<Layout> {
   GroupableColumns: AdaptableBlotterColumn[];
 }
