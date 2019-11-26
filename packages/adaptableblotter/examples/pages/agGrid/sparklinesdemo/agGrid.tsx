@@ -20,7 +20,6 @@ No JSON or anything complicated
 Nor do we create the ag-Grid
 */
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(300);

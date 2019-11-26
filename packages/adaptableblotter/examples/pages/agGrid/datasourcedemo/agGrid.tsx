@@ -20,7 +20,6 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { BlotterSearchState } from '../../../../App_Scripts/Api/Events/SearchChanged/BlotterSearchState';
 import { SearchChangedInfo } from '../../../../App_Scripts/Api/Events/SearchChanged/SearchChangedInfo';
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   // const tradeData: any = examplesHelper.getTrades(100);

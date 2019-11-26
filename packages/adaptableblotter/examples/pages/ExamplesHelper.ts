@@ -1828,16 +1828,4 @@ export class ExamplesHelper {
   private fourDecimalPlaceFormatter = (params: any) => {
     return params.value ? this.roundTo4Dp(params.value) : null;
   };
-
-  public getCommunityLicenceKey(): string {
-    return process.env.COMMUNITY_LICENSE as string;
-  }
-
-  public getStandardLicenceKey(): string {
-    return process.env.STANDARD_LICENSE as string;
-  }
-
-  public getEnterpriseLicenceKey(): string {
-    return process.env.ENTERPRISE_LICENSE as string;
-  }
 }

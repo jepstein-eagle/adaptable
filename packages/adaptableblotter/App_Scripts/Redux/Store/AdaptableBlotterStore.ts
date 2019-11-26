@@ -58,7 +58,7 @@ import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { IAdaptableBlotterStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
-import { LayoutState } from '../../PredefinedConfig/LayoutState';
+import { LayoutState, VendorGridInfo } from '../../PredefinedConfig/LayoutState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
@@ -2322,10 +2322,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             }
             if (isExistingLayout) {
               let forceFetch = layout.Name == DEFAULT_LAYOUT;
-              layout.VendorGridInfo = blotter.getVendorGridLayoutInfo(
+
+              let currentGridVendorInfo = blotter.getVendorGridLayoutInfo(
                 layout.BlotterGridInfo.CurrentColumns,
                 forceFetch
               );
+
+              layout.VendorGridInfo = currentGridVendorInfo;
+
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             } else {
               middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));

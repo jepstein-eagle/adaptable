@@ -18,7 +18,6 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 Demo for checking alerts work
 */
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getMasterGridOptionsFTSE(200);

@@ -23,7 +23,6 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { RowStyle } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
 var adaptableblotter: IAdaptableBlotter;
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(5000);

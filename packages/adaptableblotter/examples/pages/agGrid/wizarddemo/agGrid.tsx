@@ -20,7 +20,6 @@ import { ColDef } from 'ag-grid-community';
 Basic demo of wizard that allow d&d of a json with an array contents
 */
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'dtmKey', // will be added later ...

@@ -19,7 +19,6 @@ import {
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { IServerColumnValues } from '../../../../App_Scripts/BlotterOptions/QueryOptions';
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {

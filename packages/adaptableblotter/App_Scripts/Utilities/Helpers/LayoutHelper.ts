@@ -3,7 +3,13 @@ import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { LayoutState, Layout, ColumnSort, PivotDetails } from '../../PredefinedConfig/LayoutState';
+import {
+  LayoutState,
+  Layout,
+  ColumnSort,
+  PivotDetails,
+  VendorGridInfo,
+} from '../../PredefinedConfig/LayoutState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { COLUMN_STATE_CHANGED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import {
@@ -12,6 +18,7 @@ import {
 } from '../../Api/Events/BlotterEvents';
 import BlotterHelper from './BlotterHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
+import * as DeepDiff from 'deep-diff';
 
 export function getLayoutDescription(layout: Layout, columns: AdaptableBlotterColumn[]): string {
   let returnString: string = '';
@@ -53,7 +60,8 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
       if (layout != null) {
         let gridState: GridState = blotter.api.gridApi.getGridState();
         let visibleColumns: AdaptableBlotterColumn[] = gridState.Columns.filter(c => c.Visible);
-        let gridVendorState: any = blotter.getVendorGridLayoutInfo(
+
+        let currentGridVendorInfo: VendorGridInfo = blotter.getVendorGridLayoutInfo(
           visibleColumns.map(vc => vc.ColumnId),
           false
         );
@@ -65,7 +73,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
           ColumnSorts: layout.ColumnSorts,
           GroupedColumns: layout.GroupedColumns,
           PivotDetails: layout.PivotDetails,
-          VendorGridInfo: gridVendorState,
+          VendorGridInfo: currentGridVendorInfo,
           BlotterGridInfo: {
             CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
             CurrentColumnSorts: gridState.ColumnSorts,

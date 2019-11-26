@@ -19,6 +19,7 @@ import { Layout, ColumnSort } from '../../../PredefinedConfig/LayoutState';
 import SimpleButton from '../../../components/SimpleButton';
 
 import EmptyContent from '../../../components/EmptyContent';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<Layout> {
   SortableColumns: AdaptableBlotterColumn[];
@@ -151,7 +152,9 @@ export class LayoutGridSortWizard
   }
 
   public Next(): void {
-    this.props.Data.ColumnSorts = this.state.ColumnSorts;
+    this.props.Data.ColumnSorts = ArrayExtensions.IsNotEmpty(this.state.ColumnSorts)
+      ? this.state.ColumnSorts
+      : [];
   }
   public Back(): void {
     // todo

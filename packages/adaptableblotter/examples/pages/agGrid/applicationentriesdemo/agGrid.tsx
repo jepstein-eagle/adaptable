@@ -25,7 +25,6 @@ No JSON or anything complicated
 Nor do we create the ag-Grid
 */
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {

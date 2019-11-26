@@ -17,8 +17,6 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
-
 var adaptableblotter: IAdaptableBlotter;
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();

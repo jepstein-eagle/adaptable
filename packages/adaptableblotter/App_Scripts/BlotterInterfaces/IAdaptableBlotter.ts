@@ -240,8 +240,6 @@ export interface IAdaptableBlotter {
   setVendorGridLayoutInfo(vendorGridInfo: VendorGridInfo): void;
   setGroupedColumns(groupedCols: string[]): void;
   setPivotingDetails(pivotDetails: PivotDetails): void;
-  turnOnPivoting(): void;
-  turnOffPivoting(): void;
   setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void;
   //setBlotterLayoutInfo(cols: string[]): any;
 

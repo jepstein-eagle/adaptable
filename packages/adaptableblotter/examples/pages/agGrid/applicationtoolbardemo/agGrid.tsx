@@ -19,7 +19,6 @@ import {
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {

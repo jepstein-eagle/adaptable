@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
@@ -117,13 +117,15 @@ class LayoutToolbarControlComponent extends React.Component<
           />
 
           <ButtonUndo
-            className="ab-DashboardToolbar__Layout__undo"        
+            className="ab-DashboardToolbar__Layout__undo"
             onClick={() =>
               isManualSaveLayout
                 ? this.onSelectedLayoutChanged(this.props.CurrentLayout)
                 : this.onRestoreLayout()
             }
-            disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
+            disabled={
+              this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT //|| !isModifiedLayout
+            }
             tooltip={isManualSaveLayout ? 'Undo Layout Changes' : 'Restore Layout'}
             AccessLevel={this.props.AccessLevel}
           />
@@ -156,10 +158,16 @@ class LayoutToolbarControlComponent extends React.Component<
 
   private isLayoutModified(layoutEntity: Layout): boolean {
     if (layoutEntity) {
+      if (!layoutEntity.VendorGridInfo) {
+        //  console.log('no grid info so return false');
+        return true;
+      }
+      //  console.log('is dirty: ' + layoutEntity.VendorGridInfo.IsDirty);
+
       if (
         !ArrayExtensions.areArraysEqualWithOrder(
           layoutEntity.Columns,
-          this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId)
+          layoutEntity.BlotterGridInfo.CurrentColumns
         )
       ) {
         return true;
@@ -167,13 +175,13 @@ class LayoutToolbarControlComponent extends React.Component<
       if (
         !ArrayExtensions.areArraysEqualWithOrderandProperties(
           layoutEntity.ColumnSorts,
-          this.props.ColumnSorts
+          layoutEntity.BlotterGridInfo.CurrentColumnSorts
         )
       ) {
         return true;
       }
     }
-    return false;
+    return true;
   }
 
   private onSelectedLayoutChanged(layoutName: string): any {
