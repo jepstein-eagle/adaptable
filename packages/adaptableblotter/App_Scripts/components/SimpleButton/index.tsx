@@ -22,6 +22,7 @@ export interface SimpleButtonProps extends ButtonProps {
   iconPosition?: 'start' | 'end';
   disabled?: boolean;
   AccessLevel?: AccessLevel;
+  children: ReactNode | ReactNode[];
 }
 
 const SimpleButton = (props: SimpleButtonProps) => {
