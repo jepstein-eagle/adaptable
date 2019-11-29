@@ -84,7 +84,8 @@ function InitAdaptableBlotter() {
 }
 
 function onNewTradeClicked() {
-  adaptableblotter.api.layoutApi.restorelayout(adaptableblotter.api.layoutApi.getCurrentLayout());
+  // adaptableblotter.api.layoutApi.restorelayout(adaptableblotter.api.layoutApi.getCurrentLayout());
+  adaptableblotter.api.systemStatusApi.setErrorSystemStatus('Hello Nat West');
 }
 
 let demoConfig: PredefinedConfig = {
