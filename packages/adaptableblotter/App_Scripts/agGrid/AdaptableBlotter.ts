@@ -618,7 +618,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (existingColumn) {
           existingColumn.Visible = vendorColumn.isVisible();
           if (existingColumn.DataType == DataType.Unknown) {
-            existingColumn.DataType = this.getColumnDataType(vendorColumn);
+            existingColumn.DataType = this.agGridHelper.getColumnDataType(vendorColumn);
           }
         } else {
           existingColumn = this.createColumn(vendorColumn);
@@ -638,7 +638,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       Uuid: createUuid(),
       ColumnId: colId,
       FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
-      DataType: this.getColumnDataType(vendorColumn),
+      DataType: this.agGridHelper.getColumnDataType(vendorColumn),
       Visible: vendorColumn.isVisible(),
       ReadOnly: this.agGridHelper.isColumnReadonly(colDef),
       Sortable: this.agGridHelper.isColumnSortable(colDef),
@@ -900,127 +900,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     this.emit(PRIVATE_ROWS_SELECTED_EVENT);
     this.agGridHelper.fireSelectionChangedEvent();
-  }
-
-  // We deduce the type here, as there is no way to get it through the definition
-  private getColumnDataType(column: Column): DataType {
-    // Some columns can have no ID or Title. we return string as a consequence but it needs testing
-    if (!column) {
-      LoggingHelper.LogAdaptableBlotterWarning('column is undefined returning String for Type');
-      return DataType.String;
-    }
-
-    // get the column type if already in store (and not unknown)
-    const existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
-      column.getId(),
-      this.api.gridApi.getColumns()
-    );
-    if (existingColumn && existingColumn.DataType != DataType.Unknown) {
-      return existingColumn.DataType;
-    }
-
-    // check for column type
-    const colType: any = column.getColDef().type;
-    if (colType) {
-      const isArray: boolean = Array.isArray(colType);
-      if (isArray) {
-        // do array check
-        let myDatatype: DataType = DataType.Unknown;
-        colType.forEach((c: string) => {
-          if (c == 'numericColumn') {
-            myDatatype = DataType.Number;
-          }
-          if (c.startsWith('abColDef')) {
-            myDatatype = this.getabColDefValue(c);
-          }
-        });
-        if (myDatatype != DataType.Unknown) {
-          return myDatatype;
-        }
-      } else {
-        // do string check
-        if (colType == 'numericColumn') {
-          return DataType.Number;
-        }
-        if (colType.startsWith('abColDef')) {
-          return this.getabColDefValue(colType);
-        }
-      }
-    }
-
-    const model = this.gridOptions.api!.getModel();
-    if (model == null) {
-      LoggingHelper.LogAdaptableBlotterWarning(
-        `No model so returning type "Unknown" for Column: "${column.getColId()}"`
-      );
-      return DataType.Unknown;
-    }
-
-    let row = model.getRow(0);
-
-    if (row == null) {
-      // possible that there will be no data.
-      LoggingHelper.LogAdaptableBlotterWarning(
-        `No data in grid so returning type "Unknown" for Column: "${column.getColId()}"`
-      );
-      return DataType.Unknown;
-    }
-    // if it's a group we need the content of the group
-    if (row.group) {
-      const childNodes: RowNode[] = row.childrenAfterGroup;
-      if (ArrayExtensions.IsNullOrEmpty(childNodes)) {
-        LoggingHelper.LogAdaptableBlotterWarning(
-          `No data in grid so returning type "Unknown" for Column: "${column.getColId()}"`
-        );
-        return DataType.Unknown;
-      }
-      row = childNodes[0];
-    }
-    const value = this.gridOptions.api!.getValue(column, row);
-    let dataType: DataType;
-    if (value instanceof Date) {
-      dataType = DataType.Date;
-    } else if (Array.isArray(value) && value.length && typeof value[0] === 'number') {
-      dataType = DataType.NumberArray;
-    } else {
-      switch (typeof value) {
-        case 'string':
-          dataType = DataType.String;
-          break;
-        case 'number':
-          dataType = DataType.Number;
-          break;
-        case 'boolean':
-          dataType = DataType.Boolean;
-          break;
-        case 'object':
-          dataType = DataType.Object;
-          break;
-        default:
-          break;
-      }
-    }
-    LoggingHelper.LogAdaptableBlotterWarning(
-      `No defined type for column '${column.getColId()}'. Defaulting to type of first value: ${dataType}`
-    );
-    return dataType;
-  }
-
-  private getabColDefValue(colType: string): DataType {
-    switch (colType) {
-      case 'abColDefNumber':
-        return DataType.Number;
-      case 'abColDefNumberArray':
-        return DataType.NumberArray;
-      case 'abColDefString':
-        return DataType.String;
-      case 'abColDefBoolean':
-        return DataType.Boolean;
-      case 'abColDefDate':
-        return DataType.Date;
-      case 'abColDefObject':
-        return DataType.Object;
-    }
   }
 
   public setValue(dataChangedInfo: DataChangedInfo): void {

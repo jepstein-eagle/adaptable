@@ -999,7 +999,7 @@ export class ExamplesHelper {
       headerName: 'Trade Id',
       field: 'tradeId',
       editable: true,
-      type: 'abColDefNumber',
+      type: ['hello', 'abColDefNumberx'],
       sortable: true,
       filter: true,
       resizable: true,

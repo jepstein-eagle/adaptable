@@ -11,6 +11,7 @@ import {
   GetContextMenuItemsParams,
   ColGroupDef,
   Column,
+  RowNode,
 } from 'ag-grid-community';
 import * as Redux from 'redux';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
@@ -76,6 +77,9 @@ import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import CellValidationHelper from '../Utilities/Helpers/CellValidationHelper';
+import { DataType } from '../PredefinedConfig/Common/Enums';
+import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
+import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -552,5 +556,120 @@ export class agGridHelper {
   public isColumnFilterable(colDef: ColDef): boolean {
     // follow agGrid logic which is that ONLY filterable if one explicitly set
     return colDef != null && colDef.filter != null && colDef.filter != false;
+  }
+
+  public getColumnDataType(column: Column): DataType {
+    // Some columns can have no ID or Title. we return string as a consequence but it needs testing
+    if (!column) {
+      LoggingHelper.LogAdaptableBlotterWarning('column is undefined returning String for Type');
+      return DataType.String;
+    }
+    let dataType: DataType = DataType.Unknown;
+    // get the column type if already in store (and not unknown)
+    const existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      column.getId(),
+      this.blotter.api.gridApi.getColumns()
+    );
+    if (existingColumn && existingColumn.DataType != DataType.Unknown) {
+      return existingColumn.DataType;
+    }
+
+    // check for column type
+    const colType: any = column.getColDef().type;
+    if (colType) {
+      if (Array.isArray(colType)) {
+        colType.forEach((c: string) => {
+          if (dataType == DataType.Unknown) {
+            dataType = this.getabColDefValue(c);
+          }
+        });
+      } else {
+        dataType = this.getabColDefValue(colType);
+      }
+      if (dataType != DataType.Unknown) {
+        return dataType;
+      }
+    }
+
+    const model = this.gridOptions.api!.getModel();
+    if (model == null) {
+      LoggingHelper.LogAdaptableBlotterWarning(
+        `No model so returning type "Unknown" for Column: "${column.getColId()}"`
+      );
+      return DataType.Unknown;
+    }
+
+    let row = model.getRow(0);
+
+    if (row == null) {
+      // possible that there will be no data.
+      LoggingHelper.LogAdaptableBlotterWarning(
+        `No data in grid so returning type "Unknown" for Column: "${column.getColId()}"`
+      );
+      return DataType.Unknown;
+    }
+    // if it's a group we need the content of the group
+    if (row.group) {
+      const childNodes: RowNode[] = row.childrenAfterGroup;
+      if (ArrayExtensions.IsNullOrEmpty(childNodes)) {
+        LoggingHelper.LogAdaptableBlotterWarning(
+          `No data in grid so returning type "Unknown" for Column: "${column.getColId()}"`
+        );
+        return DataType.Unknown;
+      }
+      row = childNodes[0];
+    }
+    const value = this.gridOptions.api!.getValue(column, row);
+    if (value instanceof Date) {
+      dataType = DataType.Date;
+    } else if (Array.isArray(value) && value.length && typeof value[0] === 'number') {
+      dataType = DataType.NumberArray;
+    } else {
+      switch (typeof value) {
+        case 'string':
+          dataType = DataType.String;
+          break;
+        case 'number':
+          dataType = DataType.Number;
+          break;
+        case 'boolean':
+          dataType = DataType.Boolean;
+          break;
+        case 'object':
+          dataType = DataType.Object;
+          break;
+        default:
+          break;
+      }
+    }
+    LoggingHelper.LogAdaptableBlotterWarning(
+      `No defined type for column '${column.getColId()}'. Defaulting to type of first value: ${dataType}`
+    );
+    return dataType;
+  }
+
+  private getabColDefValue(colType: string): DataType {
+    if (colType == 'numericColumn') {
+      return DataType.Number;
+    }
+    if (colType.startsWith('abColDef')) {
+      switch (colType) {
+        case 'abColDefNumber':
+          return DataType.Number;
+        case 'abColDefNumberArray':
+          return DataType.NumberArray;
+        case 'abColDefString':
+          return DataType.String;
+        case 'abColDefBoolean':
+          return DataType.Boolean;
+        case 'abColDefDate':
+          return DataType.Date;
+        case 'abColDefObject':
+          return DataType.Object;
+        default:
+          return DataType.Unknown;
+      }
+    }
+    return DataType.Unknown;
   }
 }
