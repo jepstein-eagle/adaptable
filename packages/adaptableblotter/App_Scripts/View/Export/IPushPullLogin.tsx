@@ -2,19 +2,22 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
-import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 
-import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import HelpBlock from '../../components/HelpBlock';
 
-interface IPushPullLoginProps extends StrategyViewPopupProps<IPushPullLoginComponent> {
+import FormLayout, { FormRow } from '../../components/FormLayout';
+import Input from '../../components/Input';
+import SimpleButton from '../../components/SimpleButton';
+import FlexWithFooter from '../../components/FlexWithFooter';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import { usePopupContext } from '../Components/Popups/PopupContext';
+
+interface IPushPullLoginProps {
   onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;
-  onCancel: () => PopupRedux.PopupHideScreenAction;
-  ErrorMsg: string;
+  onCancel: () => any;
 }
 
 interface IPushPullLoginInternalState {
@@ -22,76 +25,95 @@ interface IPushPullLoginInternalState {
   Password: string;
 }
 
-class IPushPullLoginComponent extends React.Component<
-  IPushPullLoginProps,
-  IPushPullLoginInternalState
-> {
-  constructor(props: IPushPullLoginProps) {
-    super(props);
-    this.state = { Login: null, Password: null };
-  }
-  render() {
-    return <div>TODO</div>;
-    // let cssClassName: string = StyleConstants.PUSHPULL_LOGIN;
-    // return (
-    //   <PanelWithButton
-    //
-    //     headerText="iPushPull Login"
-    //     bsStyle="primary"
-    //     glyphicon="export"
-    //   >
-    //     <FormGroup
-    //       controlId={'formEmail'}
-    //       validationState={StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? 'error' : null}
-    //     >
-    //       <ControlLabel>Email address</ControlLabel>
-    //       <Input onChange={e => this.onLoginChange(e)} type="email" placeholder="Enter email" />
-    //     </FormGroup>
-    //     <FormGroup
-    //       controlId={'formPassword'}
-    //       validationState={StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? 'error' : null}
-    //     >
-    //       <ControlLabel>Password</ControlLabel>
-    //       <FormControl type="password" onChange={e => this.onPasswordChange(e)} />
-    //       <HelpBlock>{this.props.ErrorMsg}</HelpBlock>
-    //     </FormGroup>
-    //     <Button
-    //       className="ab_right_modal_button"
-    //       onClick={() => {
-    //         this.props.onCancel();
-    //       }}
-    //     >
-    //       Cancel <Glyphicon glyph="remove" />
-    //     </Button>
-    //     <Button
-    //       disabled={StringExtensions.IsNullOrEmpty(this.state.Password)}
-    //       className="ab_right_modal_button"
-    //       bsStyle="primary"
-    //       onClick={() => {
-    //         this.props.onLogin(this.state.Login, this.state.Password);
-    //       }}
-    //     >
-    //       <Glyphicon glyph="user" /> Login
-    //     </Button>
-    //   </PanelWithButton>
-    // );
-  }
+const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
+  const [state, setState] = React.useState<IPushPullLoginInternalState>({
+    Login: '',
+    Password: '',
+  });
 
-  private onLoginChange(event: React.FormEvent<any>) {
-    const e = event.target as HTMLInputElement;
-    this.setState({ Login: e.value });
-  }
+  const { hidePopup } = usePopupContext();
 
-  private onPasswordChange(event: React.FormEvent<any>) {
-    const e = event.target as HTMLInputElement;
-    this.setState({ Password: e.value });
-  }
-}
-
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
-  return {
-    ErrorMsg: state.System.ReportErrorMessage,
+  const onSubmit = () => {
+    props.onLogin(state.Login, state.Password);
   };
+
+  const onLoginChange = (event: React.FormEvent<any>) => {
+    const e = event.target as HTMLInputElement;
+    setState({ ...state, Login: e.value });
+  };
+
+  const onPasswordChange = (event: React.FormEvent<any>) => {
+    const e = event.target as HTMLInputElement;
+    setState({ ...state, Password: e.value });
+  };
+  return (
+    <PanelWithImage
+      header="iPushPull Login"
+      glyphicon="export"
+      variant="primary"
+      style={{ height: '100%' }}
+    >
+      <FlexWithFooter
+        as="form"
+        onSubmit={(e: any) => {
+          e.preventDefault();
+          onSubmit();
+        }}
+        footerProps={{
+          fontSize: 'var(--ab-font-size-4)',
+        }}
+        footer={
+          <>
+            <SimpleButton
+              tone="neutral"
+              variant="text"
+              tooltip="Close"
+              onClick={e => {
+                e.stopPropagation();
+                hidePopup();
+              }}
+            >
+              CLOSE
+            </SimpleButton>
+            <div style={{ flex: 1 }} />
+
+            <SimpleButton
+              tone="accent"
+              variant="raised"
+              type="submit"
+              disabled={StringExtensions.IsNullOrEmpty(state.Password)}
+              icon={'check'}
+            >
+              Login
+            </SimpleButton>
+          </>
+        }
+      >
+        <FormLayout padding={2}>
+          <FormRow label={'IPushPull login'}>
+            <Input
+              type="email"
+              placeholder="Email address"
+              value={state.Login}
+              onChange={onLoginChange}
+            />
+          </FormRow>
+          <FormRow label={'Password'}>
+            <Input
+              type="password"
+              placeholder="Password"
+              value={state.Password}
+              onChange={onPasswordChange}
+            />
+          </FormRow>
+        </FormLayout>
+      </FlexWithFooter>
+    </PanelWithImage>
+  );
+};
+
+function mapStateToProps(state: AdaptableBlotterState) {
+  return {};
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
@@ -104,7 +126,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let IPushPullLogin = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IPushPullLoginComponent);
+export let IPushPullLogin = connect(mapStateToProps, mapDispatchToProps)(IPushPullLoginComponent);

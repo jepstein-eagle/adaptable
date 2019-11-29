@@ -22,6 +22,7 @@ import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Glue42Service';
+import { IPushPullService } from '../Utilities/Services/PushPullService';
 
 import {
   PRIVATE_CELLS_SELECTED_EVENT,
@@ -31,7 +32,6 @@ import {
   PRIVATE_GRID_RELOADED_EVENT,
   PRIVATE_KEY_DOWN_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
-import { EmitterCallback } from '../Utilities/Emitter';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { BlotterApi } from '../Api/BlotterApi';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
@@ -117,6 +117,7 @@ export interface IAdaptableBlotter {
   ScheduleService: IScheduleService;
   SearchService: ISearchService;
   Glue42Service: IGlue42Service;
+  PushPullService: IPushPullService;
   ReportService: IReportService;
 
   // These are private events only
