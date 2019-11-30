@@ -317,6 +317,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.GRID,
       ConfigConstants.POPUP,
       ConfigConstants.TEAM_SHARING,
+      ConfigConstants.PARTNER_CONFIG,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
@@ -1760,7 +1761,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 
           case DataSourceRedux.DATA_SOURCE_SELECT: {
             const actionTyped = action as DataSourceRedux.DataSourceSelectAction;
-            let dataSource = state.DataSource.DataSources.find(
+            let dataSource = state.DataSource.DataSources!.find(
               ds => ds.Name == actionTyped.SelectedDataSource
             );
             let functionAppliedDetails: FunctionAppliedDetails = {
@@ -2374,9 +2375,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -2528,13 +2527,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
 
           case ExportRedux.EXPORT_APPLY: {
+            const ppInstance = blotter.PushPullService.getPPInstance();
             let exportStrategy = <IExportStrategy>(
               blotter.strategies.get(StrategyConstants.ExportStrategyId)
             );
             const actionTyped = action as ExportRedux.ExportApplyAction;
             if (
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
-              iPushPullHelper.getIPPStatus() != iPushPullHelper.ServiceStatus.Connected
+              iPushPullHelper.getIPPStatus(ppInstance) != iPushPullHelper.ServiceStatus.Connected
             ) {
               let params: StrategyParams = {
                 value: actionTyped.Report.Name,
@@ -2545,16 +2545,18 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullLogin',
-                  params
+                  params,
+                  {footer: false}
                 )
               );
             } else if (
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
               !actionTyped.Folder
-            ) {
+            ) {              
               iPushPullHelper
                 .GetDomainPages(
-                  blotter.api.partnerConfigApi.getPartnerConfigState().pushPullConfig.api_key
+                  ppInstance,
+                  ppInstance.config.api_key
                 )
                 .then((domainpages: IPPDomain[]) => {
                   middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
@@ -2590,17 +2592,17 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
 
           case ExportRedux.IPP_LOGIN: {
+            const ppInstance = blotter.PushPullService.getPPInstance();
             const actionTyped = action as ExportRedux.IPPLoginAction;
             iPushPullHelper
-              .Login(actionTyped.Login, actionTyped.Password)
+              .Login(ppInstance, actionTyped.Login, actionTyped.Password)
               .then(() => {
                 let report = middlewareAPI.getState().Popup.ScreenPopup.Params;
                 middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
-                iPushPullHelper
-                  .GetDomainPages(
-                    blotter.api.partnerConfigApi.getPartnerConfigState().pushPullConfig.api_key
-                  )
+
+                const result = iPushPullHelper
+                  .GetDomainPages(ppInstance, ppInstance.config.api_key)
                   .then((domainpages: IPPDomain[]) => {
                     middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2608,20 +2610,21 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   .catch((error: any) => {
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
                   });
-                middlewareAPI.dispatch(
-                  PopupRedux.PopupShowScreen(
-                    StrategyConstants.ExportStrategyId,
-                    'IPushPullDomainPageSelector',
-                    report
-                  )
-                );
+                  middlewareAPI.dispatch(
+                    PopupRedux.PopupShowScreen(
+                      StrategyConstants.ExportStrategyId,
+                      'IPushPullDomainPageSelector',
+                      report
+                    )
+                  );
+                  return result
               })
               .catch((error: string) => {
                 LoggingHelper.LogAdaptableBlotterError('Login failed', error);
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
               });
             return next(action);
-          }
+          } 
           case SystemRedux.REPORT_STOP_LIVE: {
             const actionTyped = action as SystemRedux.ReportStopLiveAction;
             if (actionTyped.ExportDestination == ExportDestination.iPushPull) {

@@ -1,10 +1,9 @@
 import * as Redux from 'redux';
 import { PartnerConfigState } from '../../PredefinedConfig/PartnerConfigState';
-import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 const initialFilterState: PartnerConfigState = {
-  pushPullConfig: null,
-  glue42Config: null,
+  ipushpull: undefined,
+  glue42Config: undefined,
 };
 
 export const PartnerConfigReducer: Redux.Reducer<PartnerConfigState> = (
