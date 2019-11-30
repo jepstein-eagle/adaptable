@@ -38,6 +38,7 @@ export interface IScreenPopup {
   ComponentStrategy: string;
   ComponentName: string;
   Params: StrategyParams;
+  PopupProps?: { [key: string]: any };
 }
 
 export interface IChartPopup {

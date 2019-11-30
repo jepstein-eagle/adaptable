@@ -11,5 +11,3 @@ export interface PushPullConfig {
   storage_prefix?: string;
   hsts?: boolean;
 }
-
-

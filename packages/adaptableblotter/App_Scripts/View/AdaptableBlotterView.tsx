@@ -50,7 +50,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
       <div>
         <Dashboard Blotter={this.props.Blotter} />
 
-        {/* The chart widget - it will decide where it will display 
+        {/* The chart widget - it will decide where it will display
                 Either modally (if we set ShowModal in our Predefiend Config for Chart State)
                 Or in a div otherwise (if a div then the Chart screen will work out WHICH div...) */}
         {this.props.SystemState.ChartVisibility != ChartVisibility.Hidden && (
@@ -115,6 +115,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
           Blotter={this.props.Blotter}
           onClearPopupParams={() => this.props.onClearPopupParams()}
           PopupParams={this.props.PopupState.ScreenPopup.Params}
+          PopupProps={this.props.PopupState.ScreenPopup.PopupProps}
         />
       </div>
     );

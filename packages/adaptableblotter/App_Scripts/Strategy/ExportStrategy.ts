@@ -219,8 +219,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   public Export(
     report: Report,
     exportDestination: ExportDestination,
-    folder?: string,
-    page?: string
+    folder: string,
+    page: string
   ): void {
     switch (exportDestination) {
       case ExportDestination.Clipboard:
@@ -243,14 +243,17 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }, 500);
           });
         break;
-      case ExportDestination.iPushPull:
-        iPushPullHelper.LoadPage(folder, page).then(() => {
-          this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
-          setTimeout(() => {
-            this.throttledRecomputeAndSendLiveExcelEvent();
-          }, 500);
-        });
+      case ExportDestination.iPushPull: {
+        iPushPullHelper
+          .LoadPage(this.blotter.PushPullService.getPPInstance(), folder, page)
+          .then(() => {
+            this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
+            setTimeout(() => {
+              this.throttledRecomputeAndSendLiveExcelEvent();
+            }, 500);
+          });
         break;
+      }
       case ExportDestination.Glue42:
         let data: any[] = this.ConvertReportToArray(report);
 

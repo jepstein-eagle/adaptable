@@ -23,14 +23,15 @@ interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
   IPPDomainsPages: IPPDomain[];
   onApplyExport: (value: Report, folder: string, page: string) => ExportRedux.ExportApplyAction;
-  onCancel: () => PopupRedux.PopupHideScreenAction;
+  onCancel: () => void;
   ErrorMsg: string;
+  Report: Report;
   LiveReports: ILiveReport[];
 }
 
 interface IPushPullDomainPageSelectorInternalState {
-  SelectedFolder: string;
-  SelectedPage: string;
+  SelectedFolder: string | undefined;
+  SelectedPage: string | undefined;
 }
 
 class IPushPullDomainPageSelectorComponent extends React.Component<
@@ -39,14 +40,10 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
 > {
   constructor(props: IPushPullDomainPageSelectorProps) {
     super(props);
-    this.state = { SelectedFolder: null, SelectedPage: null };
+    this.state = { SelectedFolder: undefined, SelectedPage: undefined };
   }
   render() {
     let itemsElements: any[] = [];
-    // this line is total rubbish and just here to get the build to work!
-    let tempToFixBuild: Report = this.props.LiveReports.find(
-      lr => lr.Report.Name == this.props.PopupParams.value
-    ).Report;
 
     this.props.IPPDomainsPages.forEach(x => {
       // let itemsElements = this.props.IPPDomainsPages.map(x => {
@@ -112,15 +109,18 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
           disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
           className="ab_right_modal_button"
           onClick={() => {
+            // this line is total rubbish and just here to get the build to work!
+            // let tempToFixBuild: Report = this.props.LiveReports.find(
+            //   lr => lr.Report.Name == this.props.PopupParams.value
+            // ).Report;
             this.props.onApplyExport(
-              tempToFixBuild,
-              this.state.SelectedFolder,
-              this.state.SelectedPage
+              this.props.Report,
+              this.state.SelectedFolder || '',
+              this.state.SelectedPage || ''
             );
           }}
         >
-          {/* <Glyphicon glyph="user" />  */}
-          remove Select
+          Select
         </SimpleButton>
       </PanelWithButton>
     );
@@ -137,11 +137,12 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState, ownProps: IPushPullDomainPageSelectorProps) {
   return {
     IPPDomainsPages: state.System.IPPDomainsPages,
     ErrorMsg: state.System.ReportErrorMessage,
     LiveReports: state.System.CurrentLiveReports,
+    Report: ownProps.Blotter.api.exportApi.getCurrentReport(),
   };
 }
 

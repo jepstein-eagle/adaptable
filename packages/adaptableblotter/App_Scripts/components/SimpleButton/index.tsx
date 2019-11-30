@@ -22,9 +22,10 @@ export interface SimpleButtonProps extends ButtonProps {
   iconPosition?: 'start' | 'end';
   disabled?: boolean;
   AccessLevel?: AccessLevel;
+  children?: ReactNode | ReactNode[];
 }
 
-const SimpleButton = (props: SimpleButtonProps) => {
+const SimpleButton = (props: SimpleButtonProps & React.HTMLProps<HTMLButtonElement>) => {
   let {
     children,
     disabled,
@@ -36,6 +37,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
     icon,
     tooltip,
     AccessLevel: accessLevel,
+    type,
     ...buttonProps
   } = props;
 
@@ -83,6 +85,10 @@ const SimpleButton = (props: SimpleButtonProps) => {
         onKeyDown(e as any);
       }
     };
+  }
+
+  if (!buttonProps.as || buttonProps.as === 'button') {
+    (buttonProps as any).type = type ? type : 'button';
   }
 
   if (accessLevel === AccessLevel.Hidden) {
