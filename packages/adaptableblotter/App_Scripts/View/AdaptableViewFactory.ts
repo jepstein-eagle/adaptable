@@ -42,6 +42,7 @@ import { DataSourcePopup } from './DataSource/DataSourcePopup';
 import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
 import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
+import { SystemStatusToolbarControl } from './SystemStatus/SystemStatusToolbarControl';
 import { ChartPopup } from './Chart/ChartPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
@@ -53,6 +54,7 @@ import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
 import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ReminderPopup } from './Reminder/ReminderPopup';
+import { SystemStatusPopup } from './SystemStatus/SystemStatusPopup';
 import { ConnectedComponent } from 'react-redux';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -93,6 +95,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ShortcutPopup,
   ThemePopup,
   TeamSharingPopup,
+  SystemStatusPopup,
   UserFilterPopup,
   ChartDisplayPopup,
 };
@@ -112,6 +115,7 @@ export const AdaptableDashboardViewFactory = new Map<string, ConnectedComponent<
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
   [StrategyConstants.ChartStrategyId, ChartToolbarControl],
   [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
+  [StrategyConstants.SystemStatusStrategyId, SystemStatusToolbarControl],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<

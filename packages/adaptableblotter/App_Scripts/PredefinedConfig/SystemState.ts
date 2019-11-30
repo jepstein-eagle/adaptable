@@ -1,5 +1,3 @@
-import { SystemStatus } from '../Utilities/Interface/SystemStatus';
-
 import { IPPDomain } from '../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 import { IPreviewInfo } from '../Utilities/Interface/IPreview';
@@ -18,7 +16,6 @@ import { Report } from './ExportState';
  */
 
 export interface SystemState extends InternalState {
-  SystemStatus: SystemStatus;
   AdaptableAlerts: AdaptableAlert[];
   UpdatedRowInfos: UpdatedRowInfo[];
   AvailableCalendars: Calendar[];

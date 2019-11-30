@@ -1,10 +1,9 @@
 import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
-import { ExportDestination, MessageType } from '../../PredefinedConfig/Common/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
-import { SystemStatus } from '../../Utilities/Interface/SystemStatus';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -28,10 +27,6 @@ Bit of a mixed bag of actions but essentially its those that are related to Stra
 This allows us to keep the other reducers pure in terms of everything persists
 Not sure if its a good idea or not and perhaps we need 2 stores but I think its better than it was...
 */
-
-// Health Status
-export const SYSTEM_SET_HEALTH_STATUS = 'SYSTEM_SET_HEALTH_STATUS';
-export const SYSTEM_CLEAR_HEALTH_STATUS = 'SYSTEM_CLEAR_HEALTH_STATUS';
 
 // Alerts
 export const SYSTEM_ALERT_ADD = 'SYSTEM_ALERT_ADD';
@@ -78,12 +73,6 @@ export const QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS =
 
 // Columns
 export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';
-
-export interface SystemSetHealthStatusAction extends Redux.Action {
-  SystemStatus: SystemStatus;
-}
-
-export interface SystemClearHealthStatusAction extends Redux.Action {}
 
 export interface SystemAlertAddAction extends Redux.Action {
   Alert: AdaptableAlert;
@@ -178,15 +167,6 @@ export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Ac
 export interface SetNewColumnListOrderAction extends Redux.Action {
   VisibleColumnList: Array<AdaptableBlotterColumn>;
 }
-
-export const SystemSetHealthStatus = (SystemStatus: SystemStatus): SystemSetHealthStatusAction => ({
-  type: SYSTEM_SET_HEALTH_STATUS,
-  SystemStatus,
-});
-
-export const SystemClearHealthStatus = (): SystemClearHealthStatusAction => ({
-  type: SYSTEM_CLEAR_HEALTH_STATUS,
-});
 
 export const SystemAlertAdd = (Alert: AdaptableAlert, MaxAlerts: number): SystemAlertAddAction => ({
   type: SYSTEM_ALERT_ADD,
@@ -341,7 +321,6 @@ export const SetNewColumnListOrder = (
 });
 
 const initialSystemState: SystemState = {
-  SystemStatus: { StatusMessage: 'All good', StatusType: MessageType.Success }, // SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE
   AdaptableAlerts: EMPTY_ARRAY,
   UpdatedRowInfos: EMPTY_ARRAY,
   AvailableCalendars: CalendarHelper.getSystemCalendars(),
@@ -366,14 +345,6 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
 ): SystemState => {
   let alerts: AdaptableAlert[];
   switch (action.type) {
-    case SYSTEM_SET_HEALTH_STATUS:
-      return Object.assign({}, state, {
-        SystemStatus: (action as SystemSetHealthStatusAction).SystemStatus,
-      });
-    case SYSTEM_CLEAR_HEALTH_STATUS:
-      return Object.assign({}, state, {
-        SystemStatus: { StatusMessage: '', StatusType: 'Success' },
-      });
     case SYSTEM_ALERT_ADD: {
       const actionTypedAdd = action as SystemAlertAddAction;
       alerts = [].concat(state.AdaptableAlerts);

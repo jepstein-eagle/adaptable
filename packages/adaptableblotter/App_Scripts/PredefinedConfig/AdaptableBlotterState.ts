@@ -39,6 +39,7 @@ import { NamedFilterState } from './NamedFilterState';
 import { PartnerConfigState } from './PartnerConfigState';
 import { ApplicationState } from './ApplicationState';
 import { UpdatedRowState } from './UpdatedRowState';
+import { SystemStatusState } from './SystemStatusState';
 
 /**
  * The main state object that the Adaptable Blotter persists
@@ -58,6 +59,7 @@ export interface AdaptableBlotterState {
   NamedFilter: NamedFilterState;
   SparklineColumn: SparklineColumnState;
   SystemFilter: SystemFilterState;
+  SystemStatus: SystemStatusState;
   UserInterface: UserInterfaceState;
 
   // Set at design time and / or run time => only state is persisted

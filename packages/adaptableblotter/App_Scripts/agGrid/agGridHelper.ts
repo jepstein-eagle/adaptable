@@ -54,6 +54,7 @@ import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy';
 import { ThemeStrategy } from '../Strategy/ThemeStrategy';
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
+import { SystemStatusStrategy } from '../Strategy/SystemStatusStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
@@ -151,6 +152,7 @@ export class agGridHelper {
       new StateManagementStrategy(blotter)
     );
     strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(blotter));
+    strategies.set(StrategyConstants.SystemStatusStrategyId, new SystemStatusStrategy(blotter));
     strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(blotter));
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter));
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(blotter));

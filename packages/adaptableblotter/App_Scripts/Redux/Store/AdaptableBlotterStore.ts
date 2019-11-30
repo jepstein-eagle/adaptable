@@ -43,6 +43,7 @@ import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux';
 import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux';
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux';
 import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
+import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
 import * as PartnerConfigRedux from '../ActionsReducers/PartnerConfigRedux';
@@ -145,6 +146,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Grid: GridRedux.GridReducer,
   Popup: PopupRedux.PopupReducer,
   System: SystemRedux.SystemReducer,
+  SystemStatus: SystemStatusRedux.SystemStatusReducer,
   TeamSharing: TeamSharingRedux.TeamSharingReducer,
 
   ActionColumn: ActionColumnRedux.ActionColumnReducer,
@@ -3095,9 +3097,6 @@ export function getNonPersistedReduxActions(): string[] {
     RESET_STATE,
     INIT_STATE,
     LOAD_STATE,
-
-    SystemRedux.SYSTEM_SET_HEALTH_STATUS,
-    SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS,
 
     SystemRedux.SYSTEM_ALERT_ADD,
     SystemRedux.SYSTEM_ALERT_DELETE,

@@ -1,6 +1,6 @@
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 
-export interface SystemStatus {
+export interface SystemStatusUpdate {
   StatusMessage: string;
   StatusType: MessageType;
 }

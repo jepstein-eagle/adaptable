@@ -34,6 +34,7 @@ import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
 import { PartnerConfigState } from './PartnerConfigState';
+import { SystemStatusState } from './SystemStatusState';
 
 /**
  * This is the main Predefined Config interface which users will populate if they wish to ship their Adaptable Botter instance with initial state.
@@ -253,6 +254,8 @@ export interface PredefinedConfig {
    * (Note: Entitlement State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   Entitlements?: EntitlementsState;
+
+  SystemStatus?: SystemStatusState;
   /**
    *  Filters defined by Developers at design time which include a predicate function that is called by the Adaptable Blotter each time the filter is evaluated.
    *

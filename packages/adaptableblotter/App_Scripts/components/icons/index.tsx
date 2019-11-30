@@ -50,6 +50,7 @@ import ColumnCategory from './column-category';
 import ColumnFilter from './column-filter';
 import ColumnInformation from './column-info';
 import CustomSort from './custom-sort';
+import SystemStatus from './system-status';
 import DataSource from './data-source';
 import FlashingCell from './flashing-cell';
 import edit from './edit';
@@ -111,6 +112,7 @@ const allIcons = {
   reminder: Reminder, // alarm
   shortcut: Shortcut, // link
   'state-management': StateManagement, //   assignment,
+  'system-status': SystemStatus, // was traffic
   'team-share': TeamShare, // folder-shared
   'updated-row': UpdatedRow, //   system-update
   'user-filter': UserFilter, // person

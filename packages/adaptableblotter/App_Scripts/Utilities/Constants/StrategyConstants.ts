@@ -33,6 +33,7 @@ export const ReminderStrategyId: string = 'Reminder';
 export const ShortcutStrategyId: string = 'Shortcut';
 export const SmartEditStrategyId: string = 'SmartEdit';
 export const StateManagementStrategyId: string = 'StateManagement';
+export const SystemStatusStrategyId: string = 'SystemStatus';
 export const TeamSharingStrategyId: string = 'TeamSharing';
 export const ThemeStrategyId: string = 'Theme';
 export const UserFilterStrategyId: string = 'UserFilter';
@@ -71,6 +72,7 @@ export const ReminderStrategyName: string = 'Reminder';
 export const ShortcutStrategyName: string = 'Shortcut';
 export const SmartEditStrategyName: string = 'Smart Edit';
 export const StateManagementStrategyName: string = 'Manage State';
+export const SystemStatusStrategyName: string = 'System Status';
 export const TeamSharingStrategyName: string = 'Team Sharing';
 export const ThemeStrategyName: string = 'Theme';
 export const UserFilterStrategyName: string = 'User Filter';
@@ -109,6 +111,7 @@ export const ReminderGlyph: string = 'reminder';
 export const ShortcutGlyph: string = 'shortcut';
 export const SmartEditGlyph: string = 'smart-edit';
 export const StateManagementGlyph: string = 'state-management';
+export const SystemStatusGlyph: string = 'system-status';
 export const TeamSharingGlyph: string = 'team-share';
 export const ThemeGlyph: string = 'theme';
 export const UpdatedRowGlyph: string = 'updated-row';
@@ -180,6 +183,8 @@ export function getIdForStrategyName(strategyName: string) {
       return SmartEditStrategyId;
     case StateManagementStrategyName:
       return StateManagementStrategyId;
+    case SystemStatusStrategyName:
+      return SystemStatusStrategyId;
     case TeamSharingStrategyName:
       return TeamSharingStrategyId;
     case ThemeStrategyName:
@@ -257,6 +262,8 @@ export function getNameForStrategyId(strategyID: string) {
       return SmartEditStrategyName;
     case StateManagementStrategyId:
       return StateManagementStrategyName;
+    case SystemStatusStrategyId:
+      return SystemStatusStrategyName;
     case TeamSharingStrategyId:
       return TeamSharingStrategyName;
     case ThemeStrategyId:
@@ -328,6 +335,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
       return SmartEditGlyph;
     case StateManagementStrategyName:
       return StateManagementGlyph;
+    case SystemStatusStrategyName:
+      return SystemStatusGlyph;
     case TeamSharingStrategyId:
       return TeamSharingGlyph;
     case ThemeStrategyId:
