@@ -51,19 +51,19 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
         itemsElements.push(
           <ListGroupItem
             key={x.Name}
+            style={{ marginTop: '10px' }}
             onClick={() => {
               this.UnSelectFolder();
             }}
             value={x.Name}
           >
-            <Icon name="folder-open" /> {x.Name}
+            <Icon name="folder-open" style={{ marginRight: '10px' }} /> {x.Name}
           </ListGroupItem>
         );
         x.Pages.forEach((page: string) => {
           itemsElements.push(
             <ListGroupItem
               key={page}
-              style={{ paddingLeft: '30px' }}
               disabled={this.props.LiveReports.findIndex(x => x.WorkbookName == page) > -1}
               onClick={() => {
                 this.SelectPage(page);
@@ -71,7 +71,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
               active={this.state.SelectedPage == page}
               value={page}
             >
-              <Icon name="cloud-download" /> {page}
+              <Icon name="cloud-upload" style={{ marginRight: '10px' }} /> {page}
             </ListGroupItem>
           );
         });
@@ -79,12 +79,13 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
         itemsElements.push(
           <ListGroupItem
             key={x.Name}
+            style={{ marginTop: '10px' }}
             onClick={() => {
               this.SelectFolder(x.Name);
             }}
             value={x.Name}
           >
-            {/* <Glyphicon glyph="folder-close" />  */}
+            <Icon name="folder-shared" style={{ marginRight: '10px' }} />
             {x.Name}
           </ListGroupItem>
         );
@@ -97,17 +98,12 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
         ) : (
           <ListGroup>{itemsElements}</ListGroup>
         )}
-        <SimpleButton
-          onClick={() => {
-            this.props.onCancel();
-          }}
-        >
-          Cancel
-          {/* <Glyphicon glyph="remove" />  */}
-        </SimpleButton>
+
         <SimpleButton
           disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
-          className="ab_right_modal_button"
+          tone="accent"
+          variant="raised"
+          style={{ marginTop: '10px' }}
           onClick={() => {
             // this line is total rubbish and just here to get the build to work!
             // let tempToFixBuild: Report = this.props.LiveReports.find(
@@ -120,7 +116,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
             );
           }}
         >
-          Select
+          Start Export
         </SimpleButton>
       </PanelWithButton>
     );

@@ -74,6 +74,11 @@ import Theme from './theme';
 import checkBox from './check-box';
 import checkBoxOutline from './check-box-outline';
 import tabUnselected from './tab-unselected';
+import CloudUpload from './cloud-upload';
+import FolderOpen from './folder-open';
+import Folder from './folder';
+import FolderShared from './folder-shared';
+
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 const allIcons = {
@@ -163,6 +168,10 @@ const allIcons = {
   info: Info,
   'info-sign': Info,
   add: Plus,
+  'cloud-upload': CloudUpload,
+  'folder-open': FolderOpen,
+  'folder-shared': FolderShared,
+  folder: Folder,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {
