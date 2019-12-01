@@ -10,5 +10,5 @@ export const APPLICATION = 'Application';
 export const NAMED_FILTER = 'NamedFilter';
 export const ACTION_COLUMN = 'ActionColumn';
 export const SPARKLINE_COLUMN = 'SparklineColumn';
-export const PARTNER_CONFIG = 'PartnerConfig';
+export const PARTNER = 'Partner';
 export const SYSTEM_FILTER = 'SystemFilter';

@@ -87,7 +87,7 @@ export class ReportService implements IReportService {
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
       case ExportDestination.iPushPull:
-        return !!this.blotter.api.partnerConfigApi.getPushPullInstance();
+        return !!this.blotter.api.partnerApi.getPushPullInstance();
       case ExportDestination.Glue42:
         return this.blotter.api.gridApi.getGridState().IsGlue42Running;
     }

@@ -15,7 +15,7 @@ export interface IPushPullService {
   GetDomainPages(): Promise<IPPDomain[]>;
   LoadPage(folderIPP: string, pageIPP: string): Promise<any>;
   UnloadPage(page: string): void;
-  pushData(page: string, data: any[], style: IPPStyle): Promise<any>;
+  pushData(page: string, data: any[]): Promise<any>;
   getIPPStatus(): ServiceStatus;
   // ServiceStatus: ServiceStatus
 }
@@ -30,7 +30,7 @@ export class PushPullService implements IPushPullService {
 
     this.blotter.api.eventApi.on('BlotterReady', () => {
       if (!this.ppInstance) {
-        let instance = this.blotter.api.partnerConfigApi.getPushPullInstance();
+        let instance = this.blotter.api.partnerApi.getPushPullInstance();
         this.ppInstance = instance;
       }
     });
@@ -107,8 +107,9 @@ export class PushPullService implements IPushPullService {
     }
   }
 
-  public pushData(page: string, data: any[], style: IPPStyle): Promise<any> {
+  public pushData(page: string, data: any[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
+      const style: IPPStyle = this.blotter.getIPPStyle();
       var newData = data.map((row: any, i: number) =>
         row.map((cell: any, y: number) => {
           const col =

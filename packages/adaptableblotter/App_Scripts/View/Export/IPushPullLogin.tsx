@@ -125,12 +125,8 @@ const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
 
 function mapStateToProps(state: AdaptableBlotterState) {
   return {
-    pushpullLogin: state.PartnerConfig.ipushpull
-      ? state.PartnerConfig.ipushpull!.username
-      : undefined,
-    pushpullPassword: state.PartnerConfig.ipushpull
-      ? state.PartnerConfig.ipushpull!.password
-      : undefined,
+    pushpullLogin: state.Partner.ipushpull ? state.Partner.ipushpull!.username : undefined,
+    pushpullPassword: state.Partner.ipushpull ? state.Partner.ipushpull!.password : undefined,
   };
 }
 

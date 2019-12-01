@@ -104,7 +104,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
     if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
       this.isSendingData = true;
-      let ippStyle = this.blotter.getIPPStyle();
       let promises: Promise<any>[] = [];
       this.blotter.api.internalApi.getLiveReports().forEach(cle => {
         if (cle.ExportDestination == ExportDestination.OpenfinExcel) {
@@ -168,10 +167,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
               })
           );
         } else if (cle.ExportDestination == ExportDestination.iPushPull) {
-          //we there is no logic related to the Report so we want to get it only one time
-          if (!ippStyle) {
-            ippStyle = this.blotter.getIPPStyle();
-          }
           promises.push(
             Promise.resolve()
               .then(() => {
@@ -185,11 +180,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 });
               })
               .then(ReportAsArray => {
-                return this.blotter.PushPullService.pushData(
-                  cle.WorkbookName,
-                  ReportAsArray,
-                  ippStyle
-                );
+                return this.blotter.PushPullService.pushData(cle.WorkbookName, ReportAsArray);
               })
               .catch(reason => {
                 LoggingHelper.LogAdaptableBlotterWarning(

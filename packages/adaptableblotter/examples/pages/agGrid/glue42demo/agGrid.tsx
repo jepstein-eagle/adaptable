@@ -52,7 +52,7 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
-  PartnerConfig: {
+  Partner: {
     glue42Config: {
       initialization: {
         application: 'AdaptableBlotterDemo',

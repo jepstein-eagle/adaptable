@@ -71,7 +71,8 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
               active={this.state.SelectedPage == page}
               value={page}
             >
-              <Icon name="cloud-upload" style={{ marginRight: '10px' }} /> {page}
+              <Icon name="cloud-upload" style={{ marginRight: '10px', marginLeft: '10px' }} />{' '}
+              {page}
             </ListGroupItem>
           );
         });
@@ -105,10 +106,6 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
           variant="raised"
           style={{ marginTop: '10px' }}
           onClick={() => {
-            // this line is total rubbish and just here to get the build to work!
-            // let tempToFixBuild: Report = this.props.LiveReports.find(
-            //   lr => lr.Report.Name == this.props.PopupParams.value
-            // ).Report;
             this.props.onApplyExport(
               this.props.Report,
               this.state.SelectedFolder || '',

@@ -56,7 +56,7 @@ ipushpull.config.set({
 });
 
 let demoConfig: PredefinedConfig = {
-  PartnerConfig: {
+  Partner: {
     ipushpull: {
       ipushpullConfig: ipushpull,
       username: 'jonny.wolfson@adaptabletools.com',
@@ -64,11 +64,6 @@ let demoConfig: PredefinedConfig = {
     },
   },
 
-  //   PartnerConfig: {
-  // pushPullConfig: {
-
-  // }
-  //   },
   Dashboard: {
     VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
   },

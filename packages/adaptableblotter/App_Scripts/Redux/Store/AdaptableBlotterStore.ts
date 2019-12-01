@@ -46,7 +46,7 @@ import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
-import * as PartnerConfigRedux from '../ActionsReducers/PartnerConfigRedux';
+import * as PartnerRedux from '../ActionsReducers/PartnerRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -150,7 +150,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   ActionColumn: ActionColumnRedux.ActionColumnReducer,
   Entitlements: EntitlementsRedux.EntitlementsReducer,
   NamedFilter: NamedFilterRedux.NamedFilterReducer,
-  PartnerConfig: PartnerConfigRedux.PartnerConfigReducer,
+  Partner: PartnerRedux.PartnerReducer,
   SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
   UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
@@ -249,7 +249,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       state.SmartEdit = undefined;
       state.CellSummary = undefined;
       state.Theme = undefined;
-      state.PartnerConfig = undefined;
+      state.Partner = undefined;
       break;
     case LOAD_STATE:
       const { State } = action as LoadStateAction;
@@ -315,12 +315,11 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.GRID,
       ConfigConstants.POPUP,
       ConfigConstants.TEAM_SHARING,
-      ConfigConstants.PARTNER_CONFIG,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
       ConfigConstants.SYSTEM_FILTER,
-      ConfigConstants.PARTNER_CONFIG,
+      ConfigConstants.PARTNER,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.ACTION_COLUMN,
