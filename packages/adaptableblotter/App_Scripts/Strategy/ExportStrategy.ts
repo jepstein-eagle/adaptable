@@ -10,7 +10,6 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
 import { ExportState, Report } from '../PredefinedConfig/ExportState';
-import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
@@ -186,7 +185,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 });
               })
               .then(ReportAsArray => {
-                return iPushPullHelper.pushData(cle.WorkbookName, ReportAsArray, ippStyle);
+                return this.blotter.PushPullService.pushData(
+                  cle.WorkbookName,
+                  ReportAsArray,
+                  ippStyle
+                );
               })
               .catch(reason => {
                 LoggingHelper.LogAdaptableBlotterWarning(
@@ -244,14 +247,12 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
           });
         break;
       case ExportDestination.iPushPull: {
-        iPushPullHelper
-          .LoadPage(this.blotter.PushPullService.getPPInstance(), folder, page)
-          .then(() => {
-            this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
-            setTimeout(() => {
-              this.throttledRecomputeAndSendLiveExcelEvent();
-            }, 500);
-          });
+        this.blotter.PushPullService.LoadPage(folder, page).then(() => {
+          this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
+          setTimeout(() => {
+            this.throttledRecomputeAndSendLiveExcelEvent();
+          }, 500);
+        });
         break;
       }
       case ExportDestination.Glue42:

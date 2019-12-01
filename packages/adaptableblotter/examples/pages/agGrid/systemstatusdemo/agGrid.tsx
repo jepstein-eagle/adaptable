@@ -65,6 +65,7 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Application', 'SystemStatus'],
   },
+  /*
   SystemStatus: {
     ShowAlert: false,
     DefaultStatusMessage: 'This is default',
@@ -72,6 +73,7 @@ let demoConfig: PredefinedConfig = {
     StatusMessage: 'overriding with this',
     StatusType: 'Error',
   },
+  */
   Application: {
     ApplicationToolbarButtons: [
       {

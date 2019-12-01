@@ -96,7 +96,6 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
-import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
@@ -131,8 +130,7 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
-import layout from '../../components/icons/layout';
-import LayoutHelper from '../../Utilities/Helpers/LayoutHelper';
+import { ServiceStatus } from '../../Utilities/Services/PushPullService';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2375,7 +2373,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<
+              boolean
+            > = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -2527,14 +2527,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
 
           case ExportRedux.EXPORT_APPLY: {
-            const ppInstance = blotter.PushPullService.getPPInstance();
             let exportStrategy = <IExportStrategy>(
               blotter.strategies.get(StrategyConstants.ExportStrategyId)
             );
             const actionTyped = action as ExportRedux.ExportApplyAction;
             if (
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
-              iPushPullHelper.getIPPStatus(ppInstance) != iPushPullHelper.ServiceStatus.Connected
+              blotter.PushPullService.getIPPStatus() != ServiceStatus.Connected
             ) {
               let params: StrategyParams = {
                 value: actionTyped.Report.Name,
@@ -2546,18 +2545,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   StrategyConstants.ExportStrategyId,
                   'IPushPullLogin',
                   params,
-                  {footer: false}
+                  { footer: false }
                 )
               );
             } else if (
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
               !actionTyped.Folder
-            ) {              
-              iPushPullHelper
-                .GetDomainPages(
-                  ppInstance,
-                  ppInstance.config.api_key
-                )
+            ) {
+              blotter.PushPullService.GetDomainPages()
                 .then((domainpages: IPPDomain[]) => {
                   middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                   middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2592,17 +2587,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
 
           case ExportRedux.IPP_LOGIN: {
-            const ppInstance = blotter.PushPullService.getPPInstance();
             const actionTyped = action as ExportRedux.IPPLoginAction;
-            iPushPullHelper
-              .Login(ppInstance, actionTyped.Login, actionTyped.Password)
+            blotter.PushPullService.Login(actionTyped.Login, actionTyped.Password)
               .then(() => {
                 let report = middlewareAPI.getState().Popup.ScreenPopup.Params;
                 middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
 
-                const result = iPushPullHelper
-                  .GetDomainPages(ppInstance, ppInstance.config.api_key)
+                const result = blotter.PushPullService.GetDomainPages()
                   .then((domainpages: IPPDomain[]) => {
                     middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2610,21 +2602,21 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   .catch((error: any) => {
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
                   });
-                  middlewareAPI.dispatch(
-                    PopupRedux.PopupShowScreen(
-                      StrategyConstants.ExportStrategyId,
-                      'IPushPullDomainPageSelector',
-                      report
-                    )
-                  );
-                  return result
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowScreen(
+                    StrategyConstants.ExportStrategyId,
+                    'IPushPullDomainPageSelector',
+                    report
+                  )
+                );
+                return result;
               })
               .catch((error: string) => {
                 LoggingHelper.LogAdaptableBlotterError('Login failed', error);
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
               });
             return next(action);
-          } 
+          }
           case SystemRedux.REPORT_STOP_LIVE: {
             const actionTyped = action as SystemRedux.ReportStopLiveAction;
             if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
@@ -2634,7 +2626,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   x.Report == actionTyped.Report &&
                   x.ExportDestination == actionTyped.ExportDestination
               );
-              iPushPullHelper.UnloadPage(lre.WorkbookName);
+              blotter.PushPullService.UnloadPage(lre.WorkbookName);
             }
             return next(action);
           }

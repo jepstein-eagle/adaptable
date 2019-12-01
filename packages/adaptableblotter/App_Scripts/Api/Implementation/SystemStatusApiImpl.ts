@@ -29,32 +29,37 @@ export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
     };
     this.dispatchAction(SystemStatusRedux.SystemStatusSetUpdate(systemStatus));
     if (this.getSystemStatusState().ShowAlert) {
-      let messageType: MessageType = this.getSystemStatusState().StatusType as MessageType;
-      switch (messageType) {
-        case MessageType.Success:
-          this.blotter.api.alertApi.showAlertSuccess(
-            'System Status Success',
-            this.getSystemStatusState().StatusMessage
-          );
-          return;
-        case MessageType.Info:
-          this.blotter.api.alertApi.showAlertInfo(
-            'System Status Info',
-            this.getSystemStatusState().StatusMessage
-          );
-          return;
-        case MessageType.Warning:
-          this.blotter.api.alertApi.showAlertWarning(
-            'System Status Warning',
-            this.getSystemStatusState().StatusMessage
-          );
-          return;
-        case MessageType.Error:
-          this.blotter.api.alertApi.showAlertError(
-            'System Status Error',
-            this.getSystemStatusState().StatusMessage
-          );
-          return;
+      if (
+        systemStatus.StatusMessage !== this.getSystemStatusState().DefaultStatusMessage ||
+        systemStatus.StatusType !== this.getSystemStatusState().DefaultStatusType
+      ) {
+        let messageType: MessageType = this.getSystemStatusState().StatusType as MessageType;
+        switch (messageType) {
+          case MessageType.Success:
+            this.blotter.api.alertApi.showAlertSuccess(
+              'System Status Success',
+              this.getSystemStatusState().StatusMessage
+            );
+            return;
+          case MessageType.Info:
+            this.blotter.api.alertApi.showAlertInfo(
+              'System Status Info',
+              this.getSystemStatusState().StatusMessage
+            );
+            return;
+          case MessageType.Warning:
+            this.blotter.api.alertApi.showAlertWarning(
+              'System Status Warning',
+              this.getSystemStatusState().StatusMessage
+            );
+            return;
+          case MessageType.Error:
+            this.blotter.api.alertApi.showAlertError(
+              'System Status Error',
+              this.getSystemStatusState().StatusMessage
+            );
+            return;
+        }
       }
     }
   }

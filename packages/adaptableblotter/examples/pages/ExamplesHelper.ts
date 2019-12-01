@@ -1013,7 +1013,7 @@ export class ExamplesHelper {
       editable: true,
       //  enableRowGroup: true,
       enableValue: true,
-      rowGroup: true,
+      //  rowGroup: true,
       filter: true,
       sortable: true,
       type: 'abColDefString',

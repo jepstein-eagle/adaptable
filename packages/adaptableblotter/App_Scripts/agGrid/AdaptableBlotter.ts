@@ -84,7 +84,6 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
-import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { StyleHelper } from '../Utilities/Helpers/StyleHelper';
 import { LayoutHelper } from '../Utilities/Helpers/LayoutHelper';
@@ -1684,9 +1683,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const firstRow: HTMLElement = document.querySelector('.ag-row-even') as HTMLElement;
     const firstRowStyle = window.getComputedStyle(firstRow, null);
     const secondRow: HTMLElement = document.querySelector('.ag-row-odd') as HTMLElement;
-    const secondRowStyle = secondRow? window.getComputedStyle(secondRow, null): {
-      backgroundColor: '#fff'
-    };
+    const secondRowStyle = secondRow
+      ? window.getComputedStyle(secondRow, null)
+      : {
+          backgroundColor: '#fff',
+        };
     return {
       Header: {
         headerColor: new Color(headerColStyle.color).toHex(),

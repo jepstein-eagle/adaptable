@@ -7,28 +7,31 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-
 import FormLayout, { FormRow } from '../../components/FormLayout';
 import Input from '../../components/Input';
 import SimpleButton from '../../components/SimpleButton';
 import FlexWithFooter from '../../components/FlexWithFooter';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { usePopupContext } from '../Components/Popups/PopupContext';
+import { Flex, Text } from 'rebass';
 
 interface IPushPullLoginProps {
+  pushpullLogin: string | undefined;
+  pushpullPassword: string | undefined;
+
   onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;
   onCancel: () => any;
 }
 
 interface IPushPullLoginInternalState {
-  Login: string;
-  Password: string;
+  Login: string | undefined;
+  Password: string | undefined;
 }
 
 const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
   const [state, setState] = React.useState<IPushPullLoginInternalState>({
-    Login: '',
-    Password: '',
+    Login: props.pushpullLogin,
+    Password: props.pushpullPassword,
   });
 
   const { hidePopup } = usePopupContext();
@@ -48,7 +51,7 @@ const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
   };
   return (
     <PanelWithImage
-      header="iPushPull Login"
+      header="iPushPull Login Details"
       glyphicon="export"
       variant="primary"
       style={{ height: '100%' }}
@@ -89,31 +92,46 @@ const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
           </>
         }
       >
-        <FormLayout padding={2}>
-          <FormRow label={'IPushPull login'}>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            iPushPull login:
+          </Text>
+          <Flex flex={7} flexDirection="row" alignItems="center">
             <Input
               type="email"
               placeholder="Email address"
               value={state.Login}
               onChange={onLoginChange}
             />
-          </FormRow>
-          <FormRow label={'Password'}>
+          </Flex>
+        </Flex>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            iPushPull password:
+          </Text>
+          <Flex flex={7} flexDirection="row" alignItems="center">
             <Input
               type="password"
               placeholder="Password"
               value={state.Password}
               onChange={onPasswordChange}
             />
-          </FormRow>
-        </FormLayout>
+          </Flex>
+        </Flex>
       </FlexWithFooter>
     </PanelWithImage>
   );
 };
 
 function mapStateToProps(state: AdaptableBlotterState) {
-  return {};
+  return {
+    pushpullLogin: state.PartnerConfig.ipushpull
+      ? state.PartnerConfig.ipushpull!.username
+      : undefined,
+    pushpullPassword: state.PartnerConfig.ipushpull
+      ? state.PartnerConfig.ipushpull!.password
+      : undefined,
+  };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
@@ -126,4 +144,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let IPushPullLogin = connect(mapStateToProps, mapDispatchToProps)(IPushPullLoginComponent);
+export let IPushPullLogin = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IPushPullLoginComponent);

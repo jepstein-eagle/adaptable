@@ -23,7 +23,7 @@ function InitAdaptableBlotter() {
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Basic Demo',
+    blotterId: 'iPushPull Demo',
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
@@ -37,6 +37,9 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInLayout: true,
   };
 
+  console.log(process.env);
+  // alert(process.env.IPUSHPULL_API_KEY);
+  // alert(process.env.IPUSHPULL_API_KEY);
   new AdaptableBlotter(adaptableBlotterOptions);
 }
 
@@ -48,14 +51,17 @@ ipushpull.config.set({
   storage_prefix: 'ipp_local',
   api_key: process.env.IPUSHPULL_API_KEY as string,
   api_secret: process.env.IPUSHPULL_API_SECRET as string,
-
   transport: 'polling',
   hsts: false, // strict cors policy
 });
 
 let demoConfig: PredefinedConfig = {
   PartnerConfig: {
-    ipushpull,
+    ipushpull: {
+      ipushpullConfig: ipushpull,
+      username: 'jonny.wolfson@adaptabletools.com',
+      password: 'traders',
+    },
   },
 
   //   PartnerConfig: {
@@ -65,18 +71,6 @@ let demoConfig: PredefinedConfig = {
   //   },
   Dashboard: {
     VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
-  },
-  Layout: {
-    Layouts: [
-      {
-        ColumnSorts: [],
-        Columns: ['tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'Testing',
-        // GroupedColumns: ['currency'],
-        GroupedColumns: [],
-      },
-    ],
-    CurrentLayout: 'Testing',
   },
 };
 
