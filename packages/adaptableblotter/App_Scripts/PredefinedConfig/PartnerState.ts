@@ -7,7 +7,16 @@ import { DesignTimeState } from './DesignTimeState';
  *
  */
 export interface PartnerState extends DesignTimeState {
+  /**
+   * State required to run iPushPull from the Adaptable Blotter
+   *
+   * Primarily consists of an iPushPull object injected in to the Blotter
+   */
   ipushpull?: iPushPullState;
+
+  /**
+   * Config required allow the Adaptable Blotter to interract with Glue42.
+   */
   glue42Config?: Glue42Config;
 }
 
@@ -63,7 +72,7 @@ export interface PartnerState extends DesignTimeState {
  */
 export interface iPushPullState {
   /**
-   *  An iPushPull object - prepoulated with the user's iPushPull credentials
+   *  An iPushPull object - pre-populated with the user's iPushPull credentials
    */
   ipushpullConfig?: any;
 
