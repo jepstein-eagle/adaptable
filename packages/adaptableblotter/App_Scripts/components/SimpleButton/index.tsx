@@ -25,7 +25,7 @@ export interface SimpleButtonProps extends ButtonProps {
   children?: ReactNode | ReactNode[];
 }
 
-const SimpleButton = (props: SimpleButtonProps & React.HTMLProps<HTMLButtonElement>) => {
+const SimpleButton = (props: SimpleButtonProps) => {
   let {
     children,
     disabled,
