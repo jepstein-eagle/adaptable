@@ -33,7 +33,8 @@ import { ChartState } from './ChartState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
-import { PartnerConfigState } from './PartnerConfigState';
+import { PartnerState } from './PartnerState';
+import { SystemStatusState } from './SystemStatusState';
 
 /**
  * This is the main Predefined Config interface which users will populate if they wish to ship their Adaptable Botter instance with initial state.
@@ -253,6 +254,11 @@ export interface PredefinedConfig {
    * (Note: Entitlement State can be updated via the Blotter API but these updates **will not be persisted**).
    */
   Entitlements?: EntitlementsState;
+
+  /**
+   * Manges the System Status function which allows messages to be sent to the User detailing the health of the running application.
+   */
+  SystemStatus?: SystemStatusState;
   /**
    *  Filters defined by Developers at design time which include a predicate function that is called by the Adaptable Blotter each time the filter is evaluated.
    *
@@ -268,7 +274,7 @@ export interface PredefinedConfig {
    *
    * (Note: Partner Config State can be updated via the Blotter API but these updates **will not be persisted**).
    */
-  PartnerConfig?: PartnerConfigState;
+  Partner?: PartnerState;
   /**
    * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
    *

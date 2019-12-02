@@ -35,6 +35,7 @@ export interface PopupShowScreenAction extends Redux.Action {
   ComponentStrategy: string;
   ComponentName: string;
   Params?: StrategyParams;
+  PopupProps?: { [key: string]: any };
 }
 
 export interface PopupHideScreenAction extends Redux.Action {}
@@ -78,12 +79,14 @@ export interface PopupChartClearParamAction extends Redux.Action {}
 export const PopupShowScreen = (
   ComponentStrategy: string,
   ComponentName: string,
-  Params?: StrategyParams
+  Params?: StrategyParams,
+  PopupProps?: { [key: string]: any }
 ): PopupShowScreenAction => ({
   type: POPUP_SHOW_SCREEN,
   ComponentStrategy,
   ComponentName,
   Params,
+  PopupProps,
 });
 
 export const PopupHideScreen = (): PopupHideScreenAction => ({
@@ -203,6 +206,7 @@ export const PopupReducer: Redux.Reducer<PopupState> = (
         ComponentStrategy: actionTypedShowPopup.ComponentStrategy,
         ComponentName: actionTypedShowPopup.ComponentName,
         Params: actionTypedShowPopup.Params,
+        PopupProps: actionTypedShowPopup.PopupProps,
       };
       return Object.assign({}, state, { ScreenPopup: newScreenPopup });
     }

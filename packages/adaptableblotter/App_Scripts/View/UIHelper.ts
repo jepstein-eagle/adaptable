@@ -373,6 +373,21 @@ export function getGlyphForMessageType(messageType: MessageType): string {
   }
 }
 
+export function getButtonToneForMessageType(
+  messageType: MessageType
+): 'info' | 'warning' | 'error' | 'success' {
+  switch (messageType) {
+    case MessageType.Info:
+      return 'info';
+    case MessageType.Warning:
+      return 'warning';
+    case MessageType.Error:
+      return 'error';
+    case MessageType.Success:
+      return 'success';
+  }
+}
+
 export function getScheduleDescription(schedule: Schedule): string {
   if (schedule == null) {
     return '[No Schedule]';
@@ -429,6 +444,7 @@ export const UIHelper = {
   getGlyphByMessageType,
   getStyleForStatusColour,
   getGlyphForStatusColour,
+  getButtonToneForMessageType,
   getScheduleDescription,
   getColorByMessageType,
   getGlyphForMessageType,

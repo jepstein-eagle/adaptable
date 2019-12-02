@@ -1,4 +1,11 @@
+import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
+
 export interface SystemStatusApi {
+  /**
+   * Retrieves the System Status section from the Adaptable Blotter State
+   */
+  getSystemStatusState(): SystemStatusState;
+
   /**
    * Sets which coloured System Status button is displayed in the Home Toolbar
    * @param statusMessage The message to show when the button is clicked
@@ -36,4 +43,9 @@ export interface SystemStatusApi {
    * Clears any System Status messages (and sets the button to green)
    */
   clearSystemStatus(): void;
+
+  /**
+   * Opens the System Status popup
+   */
+  showSystemStatusPopup(): void;
 }

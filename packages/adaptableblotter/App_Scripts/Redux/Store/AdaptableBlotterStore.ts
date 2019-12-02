@@ -43,9 +43,10 @@ import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux';
 import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux';
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux';
 import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
+import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
-import * as PartnerConfigRedux from '../ActionsReducers/PartnerConfigRedux';
+import * as PartnerRedux from '../ActionsReducers/PartnerRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -95,7 +96,6 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
-import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
@@ -130,6 +130,7 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { ServiceStatus } from '../../Utilities/Services/PushPullService';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -143,12 +144,13 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Grid: GridRedux.GridReducer,
   Popup: PopupRedux.PopupReducer,
   System: SystemRedux.SystemReducer,
+  SystemStatus: SystemStatusRedux.SystemStatusReducer,
   TeamSharing: TeamSharingRedux.TeamSharingReducer,
 
   ActionColumn: ActionColumnRedux.ActionColumnReducer,
   Entitlements: EntitlementsRedux.EntitlementsReducer,
   NamedFilter: NamedFilterRedux.NamedFilterReducer,
-  PartnerConfig: PartnerConfigRedux.PartnerConfigReducer,
+  Partner: PartnerRedux.PartnerReducer,
   SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
   UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
@@ -247,7 +249,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       state.SmartEdit = undefined;
       state.CellSummary = undefined;
       state.Theme = undefined;
-      state.PartnerConfig = undefined;
+      state.Partner = undefined;
       break;
     case LOAD_STATE:
       const { State } = action as LoadStateAction;
@@ -317,7 +319,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
       ConfigConstants.SYSTEM_FILTER,
-      ConfigConstants.PARTNER_CONFIG,
+      ConfigConstants.PARTNER,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.ACTION_COLUMN,
@@ -1756,7 +1758,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 
           case DataSourceRedux.DATA_SOURCE_SELECT: {
             const actionTyped = action as DataSourceRedux.DataSourceSelectAction;
-            let dataSource = state.DataSource.DataSources.find(
+            let dataSource = state.DataSource.DataSources!.find(
               ds => ds.Name == actionTyped.SelectedDataSource
             );
             let functionAppliedDetails: FunctionAppliedDetails = {
@@ -2544,7 +2546,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             const actionTyped = action as ExportRedux.ExportApplyAction;
             if (
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
-              iPushPullHelper.getIPPStatus() != iPushPullHelper.ServiceStatus.Connected
+              blotter.PushPullService.getIPPStatus() != ServiceStatus.Connected
             ) {
               let params: StrategyParams = {
                 value: actionTyped.Report.Name,
@@ -2555,17 +2557,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullLogin',
-                  params
+                  params,
+                  { footer: false }
                 )
               );
             } else if (
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
               !actionTyped.Folder
             ) {
-              iPushPullHelper
-                .GetDomainPages(
-                  blotter.api.partnerConfigApi.getPartnerConfigState().pushPullConfig.api_key
-                )
+              blotter.PushPullService.GetDomainPages()
                 .then((domainpages: IPPDomain[]) => {
                   middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                   middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2601,16 +2601,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
           case ExportRedux.IPP_LOGIN: {
             const actionTyped = action as ExportRedux.IPPLoginAction;
-            iPushPullHelper
-              .Login(actionTyped.Login, actionTyped.Password)
+            blotter.PushPullService.Login(actionTyped.Login, actionTyped.Password)
               .then(() => {
                 let report = middlewareAPI.getState().Popup.ScreenPopup.Params;
                 middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
-                iPushPullHelper
-                  .GetDomainPages(
-                    blotter.api.partnerConfigApi.getPartnerConfigState().pushPullConfig.api_key
-                  )
+
+                const result = blotter.PushPullService.GetDomainPages()
                   .then((domainpages: IPPDomain[]) => {
                     middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2625,6 +2622,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                     report
                   )
                 );
+                return result;
               })
               .catch((error: string) => {
                 LoggingHelper.LogAdaptableBlotterError('Login failed', error);
@@ -2641,7 +2639,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   x.Report == actionTyped.Report &&
                   x.ExportDestination == actionTyped.ExportDestination
               );
-              iPushPullHelper.UnloadPage(lre.WorkbookName);
+              blotter.PushPullService.UnloadPage(lre.WorkbookName);
             }
             return next(action);
           }
@@ -3106,9 +3104,6 @@ export function getNonPersistedReduxActions(): string[] {
     RESET_STATE,
     INIT_STATE,
     LOAD_STATE,
-
-    SystemRedux.SYSTEM_SET_HEALTH_STATUS,
-    SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS,
 
     SystemRedux.SYSTEM_ALERT_ADD,
     SystemRedux.SYSTEM_ALERT_DELETE,

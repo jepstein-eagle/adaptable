@@ -43,7 +43,7 @@ import { UserInterfaceApiImpl } from './UserInterfaceApiImpl';
 import { UserFilterApiImpl } from './UserFilterApiImpl';
 import { NamedFilterApiImpl } from './NamedFilterApiImpl';
 import { InternalApiImpl } from './InternalApiImpl';
-import { PartnerConfigApiImpl } from './PartnerConfigApiImpl';
+import { PartnerApiImpl } from './PartnerApiImpl';
 import { ColumnChooserApiImpl } from './ColumnChooserApiImpl';
 import { BlotterApi } from '../../types';
 import { ActionColumnApi } from '../ActionColumnApi';
@@ -85,7 +85,7 @@ import { SystemStatusApi } from '../SystemStatusApi';
 import { UserInterfaceApi } from '../UserInterfaceApi';
 import { UserFilterApi } from '../UserFilterApi';
 import { NamedFilterApi } from '../NamedFilterApi';
-import { PartnerConfigAPI } from '../PartnerConfigAPI';
+import { PartnerAPI } from '../PartnerAPI';
 import { ThemeApi } from '../ThemeApi';
 import { GridApi } from '../GridApi';
 
@@ -132,7 +132,7 @@ export class BlotterApiImpl implements BlotterApi {
   public userInterfaceApi: UserInterfaceApi;
   public userFilterApi: UserFilterApi;
   public namedFilterApi: NamedFilterApi;
-  public partnerConfigApi: PartnerConfigAPI;
+  public partnerApi: PartnerAPI;
 
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
@@ -177,7 +177,7 @@ export class BlotterApiImpl implements BlotterApi {
     this.userInterfaceApi = new UserInterfaceApiImpl(blotter);
     this.userFilterApi = new UserFilterApiImpl(blotter);
     this.namedFilterApi = new NamedFilterApiImpl(blotter);
-    this.partnerConfigApi = new PartnerConfigApiImpl(blotter);
+    this.partnerApi = new PartnerApiImpl(blotter);
 
     this.internalApi = new InternalApiImpl(blotter);
   }

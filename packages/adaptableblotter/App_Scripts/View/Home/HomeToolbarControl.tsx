@@ -24,7 +24,6 @@ import {
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { SystemStatus } from '../../Utilities/Interface/SystemStatus';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
 import Checkbox from '../../components/CheckBox';
@@ -42,7 +41,8 @@ interface HomeToolbarComponentProps
   GridState: GridState;
   DashboardState: DashboardState;
   Columns: AdaptableBlotterColumn[];
-  SystemStatus: SystemStatus;
+  StatusMessage: string;
+  StatusType: string;
   HeaderText: string;
   DashboardSize: DashboardSize;
   onNewColumnListOrder: (
@@ -50,7 +50,6 @@ interface HomeToolbarComponentProps
   ) => SystemRedux.SetNewColumnListOrderAction;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
   onSetToolbarVisibility: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction;
-  onShowStatusMessage: (alert: AdaptableAlert) => PopupRedux.PopupShowAlertAction;
   onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
 
@@ -164,11 +163,11 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         variant="text"
         className="ab-DashboardToolbar__Home__status"
         key={'systemstatus'}
-        icon={UIHelper.getGlyphForMessageType(this.props.SystemStatus.StatusType as MessageType)}
-        style={UIHelper.getStyleForMessageType(this.props.SystemStatus.StatusType as MessageType)}
-        tooltip={'Status: ' + this.props.SystemStatus.StatusMessage}
+        icon={UIHelper.getGlyphForMessageType(this.props.StatusType as MessageType)}
+        style={UIHelper.getStyleForMessageType(this.props.StatusType as MessageType)}
+        tooltip={'Status: ' + this.props.StatusMessage}
         disabled={false}
-        onClick={() => this.onClickStatus()}
+        onClick={() => this.onShowSystemStatus()}
         AccessLevel={AccessLevel.Full}
       />
     );
@@ -296,51 +295,10 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     this.props.onClick(menuItem.Action);
   }
 
-  onClickStatus() {
-    let messageType: MessageType = this.props.SystemStatus.StatusType as MessageType;
-    switch (messageType) {
-      case MessageType.Success:
-        let success: AdaptableAlert = {
-          Header: 'System Status',
-          Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage)
-            ? this.props.SystemStatus.StatusMessage
-            : 'No issues',
-          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-            MessageType.Success
-          ),
-        };
-        this.props.onShowStatusMessage(success);
-        return;
-      case MessageType.Info:
-        let info: AdaptableAlert = {
-          Header: 'System Status',
-          Msg: this.props.SystemStatus.StatusMessage,
-          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(MessageType.Info),
-        };
-        this.props.onShowStatusMessage(info);
-        return;
-      case MessageType.Warning:
-        let warning: AdaptableAlert = {
-          Header: 'System Status',
-          Msg: this.props.SystemStatus.StatusMessage,
-          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-            MessageType.Warning
-          ),
-        };
-        this.props.onShowStatusMessage(warning);
-        return;
-      case MessageType.Error:
-        let error: AdaptableAlert = {
-          Header: 'System Status',
-          Msg: this.props.SystemStatus.StatusMessage,
-          AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-            MessageType.Error
-          ),
-        };
-        this.props.onShowStatusMessage(error);
-        return;
-    }
+  onShowSystemStatus() {
+    this.props.Blotter.api.systemStatusApi.showSystemStatusPopup();
   }
+
   onClickGridInfo() {
     this.props.onShowGridInfo();
   }
@@ -378,7 +336,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     GridState: state.Grid,
     DashboardState: state.Dashboard,
     Columns: state.Grid.Columns,
-    SystemStatus: state.System.SystemStatus,
+    StatusMessage: state.SystemStatus.StatusMessage,
+    StatusType: state.SystemStatus.StatusType,
   };
 }
 
@@ -397,7 +356,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
     onSetToolbarVisibility: (strategyIds: string[]) =>
       dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
-    onShowStatusMessage: (alert: AdaptableAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
     onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };
 }

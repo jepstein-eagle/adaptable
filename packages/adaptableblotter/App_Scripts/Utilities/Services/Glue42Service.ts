@@ -60,7 +60,7 @@ export class Glue42Service implements IGlue42Service {
     try {
       let glue42PartnerConfig:
         | Glue42Config
-        | undefined = this.blotter.api.partnerConfigApi.getPartnerConfigState().glue42Config;
+        | undefined = this.blotter.api.partnerApi.getPartnerState().glue42Config;
 
       if (!glue42PartnerConfig) {
         this.blotter.api.internalApi.setGlue42Off();

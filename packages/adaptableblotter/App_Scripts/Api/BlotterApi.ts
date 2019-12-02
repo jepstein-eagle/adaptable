@@ -1,7 +1,7 @@
 import { ApplicationApi } from './ApplicationAPI';
 import { ActionColumnApi } from './ActionColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
-import { PartnerConfigAPI } from './PartnerConfigAPI';
+import { PartnerAPI } from './PartnerAPI';
 import { AdvancedSearchApi } from './AdvancedSearchApi';
 import { AlertApi } from './AlertApi';
 import { AuditEventApi } from './AuditEventApi';
@@ -77,7 +77,7 @@ export interface BlotterApi {
   /**
    * Enables developers to set up configuration when using our Partner tools (like iPushPull and Glue42)
    */
-  partnerConfigApi: PartnerConfigAPI;
+  partnerApi: PartnerAPI;
 
   /**
    * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_predefinedconfig_runtimestate_advancedsearchstate_.advancedsearchstate.html).

@@ -197,6 +197,7 @@ const initialDashboardState: DashboardState = {
     StrategyConstants.SmartEditStrategyId,
     StrategyConstants.QuickSearchStrategyId,
     StrategyConstants.ThemeStrategyId,
+    StrategyConstants.SystemStatusStrategyId,
   ],
   VisibleToolbars: [
     StrategyConstants.QuickSearchStrategyId,
@@ -210,6 +211,7 @@ const initialDashboardState: DashboardState = {
     StrategyConstants.ColumnChooserStrategyId,
     StrategyConstants.ConditionalStyleStrategyId,
     StrategyConstants.TeamSharingStrategyId,
+    StrategyConstants.SystemStatusStrategyId,
   ],
   DashboardVisibility: Visibility.Visible,
   ShowSystemStatusButton: true,

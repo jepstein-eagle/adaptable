@@ -10,7 +10,6 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
 import { ExportState, Report } from '../PredefinedConfig/ExportState';
-import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
@@ -105,7 +104,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
     if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
       this.isSendingData = true;
-      let ippStyle = this.blotter.getIPPStyle();
       let promises: Promise<any>[] = [];
       this.blotter.api.internalApi.getLiveReports().forEach(cle => {
         if (cle.ExportDestination == ExportDestination.OpenfinExcel) {
@@ -169,10 +167,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
               })
           );
         } else if (cle.ExportDestination == ExportDestination.iPushPull) {
-          //we there is no logic related to the Report so we want to get it only one time
-          if (!ippStyle) {
-            ippStyle = this.blotter.getIPPStyle();
-          }
           promises.push(
             Promise.resolve()
               .then(() => {
@@ -186,7 +180,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 });
               })
               .then(ReportAsArray => {
-                return iPushPullHelper.pushData(cle.WorkbookName, ReportAsArray, ippStyle);
+                return this.blotter.PushPullService.pushData(cle.WorkbookName, ReportAsArray);
               })
               .catch(reason => {
                 LoggingHelper.LogAdaptableBlotterWarning(
@@ -219,8 +213,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   public Export(
     report: Report,
     exportDestination: ExportDestination,
-    folder?: string,
-    page?: string
+    folder: string,
+    page: string
   ): void {
     switch (exportDestination) {
       case ExportDestination.Clipboard:
@@ -243,14 +237,15 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }, 500);
           });
         break;
-      case ExportDestination.iPushPull:
-        iPushPullHelper.LoadPage(folder, page).then(() => {
+      case ExportDestination.iPushPull: {
+        this.blotter.PushPullService.LoadPage(folder, page).then(() => {
           this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
           setTimeout(() => {
             this.throttledRecomputeAndSendLiveExcelEvent();
           }, 500);
         });
         break;
+      }
       case ExportDestination.Glue42:
         let data: any[] = this.ConvertReportToArray(report);
 

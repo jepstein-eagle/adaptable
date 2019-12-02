@@ -1,50 +1,93 @@
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
+import * as SystemStatusRedux from '../../Redux/ActionsReducers/SystemStatusRedux';
 import { ApiBase } from './ApiBase';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { SystemStatusApi } from '../SystemStatusApi';
-import { SystemStatus } from '../../Utilities/Interface/SystemStatus';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
+import { SystemStatusUpdate } from '../../Utilities/Interface/SystemStatusUpdate';
+import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
+  public getSystemStatusState(): SystemStatusState {
+    return this.getBlotterState().SystemStatus;
+  }
+
   public setSystemStatus(
     statusMessage: string,
     messageType: 'Error' | 'Warning' | 'Success' | 'Info'
   ): void {
-    let systemStatus: SystemStatus = {
+    if (StringExtensions.IsNullOrEmpty(statusMessage)) {
+      LoggingHelper.LogAdaptableBlotterWarning('System Status Message cannot be empty.');
+      return;
+    }
+
+    let systemStatus: SystemStatusUpdate = {
       StatusMessage: statusMessage,
       StatusType: messageType as MessageType,
     };
-    this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
+    this.dispatchAction(SystemStatusRedux.SystemStatusSetUpdate(systemStatus));
+    if (this.getSystemStatusState().ShowAlert) {
+      if (
+        systemStatus.StatusMessage !== this.getSystemStatusState().DefaultStatusMessage ||
+        systemStatus.StatusType !== this.getSystemStatusState().DefaultStatusType
+      ) {
+        let messageType: MessageType = this.getSystemStatusState().StatusType as MessageType;
+        switch (messageType) {
+          case MessageType.Success:
+            this.blotter.api.alertApi.showAlertSuccess(
+              'System Status Success',
+              this.getSystemStatusState().StatusMessage
+            );
+            return;
+          case MessageType.Info:
+            this.blotter.api.alertApi.showAlertInfo(
+              'System Status Info',
+              this.getSystemStatusState().StatusMessage
+            );
+            return;
+          case MessageType.Warning:
+            this.blotter.api.alertApi.showAlertWarning(
+              'System Status Warning',
+              this.getSystemStatusState().StatusMessage
+            );
+            return;
+          case MessageType.Error:
+            this.blotter.api.alertApi.showAlertError(
+              'System Status Error',
+              this.getSystemStatusState().StatusMessage
+            );
+            return;
+        }
+      }
+    }
   }
+
   public setErrorSystemStatus(statusMessage: string): void {
-    let systemStatus: SystemStatus = {
-      StatusMessage: statusMessage,
-      StatusType: MessageType.Error,
-    };
-    this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
+    this.setSystemStatus(statusMessage, MessageType.Error);
   }
+
   public setWarningSystemStatus(statusMessage: string): void {
-    let systemStatus: SystemStatus = {
-      StatusMessage: statusMessage,
-      StatusType: MessageType.Warning,
-    };
-    this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
+    this.setSystemStatus(statusMessage, MessageType.Warning);
   }
+
   public setSuccessSystemStatus(statusMessage: string): void {
-    let systemStatus: SystemStatus = {
-      StatusMessage: statusMessage,
-      StatusType: MessageType.Success,
-    };
-    this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
+    this.setSystemStatus(statusMessage, MessageType.Success);
   }
+
   public setInfoSystemStatus(statusMessage: string): void {
-    let systemStatus: SystemStatus = {
-      StatusMessage: statusMessage,
-      StatusType: MessageType.Info,
-    };
-    this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
+    this.setSystemStatus(statusMessage, MessageType.Info);
   }
 
   public clearSystemStatus(): void {
-    this.dispatchAction(SystemRedux.SystemClearHealthStatus());
+    this.dispatchAction(SystemStatusRedux.SystemStatusClear());
+  }
+
+  public showSystemStatusPopup(): void {
+    this.blotter.api.internalApi.showPopupScreen(
+      StrategyConstants.SystemStatusStrategyId,
+      ScreenPopups.SystemStatusPopup
+    );
   }
 }

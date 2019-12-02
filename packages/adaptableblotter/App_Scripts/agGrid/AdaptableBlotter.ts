@@ -85,7 +85,6 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
-import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
@@ -158,10 +157,10 @@ import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { BlotterApi } from '../Api/BlotterApi';
 import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
+import { PushPullService, IPushPullService } from '../Utilities/Services/PushPullService';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
+import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
-import { StrategyService } from '../Utilities/Services/StrategyService';
-import { IStrategyService } from '../Utilities/Services/StrategyService';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -231,6 +230,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public SearchService: ISearchService;
 
   public Glue42Service: IGlue42Service;
+
+  public PushPullService: IPushPullService;
 
   public ReportService: IReportService;
 
@@ -312,6 +313,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.ScheduleService = new ScheduleService(this);
     this.SearchService = new SearchService(this);
     this.Glue42Service = new Glue42Service(this);
+    this.PushPullService = new PushPullService(this);
     this.ReportService = new ReportService(this);
     this.LayoutService = new LayoutService(this);
     this.StrategyService = new StrategyService(this);
@@ -338,9 +340,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (this.gridOptions.api) {
       (this.gridOptions.api as any).__blotter = this;
     }
-
-    // set up iPushPull
-    // iPushPullHelper.init(this.blotterOptions!.partnerOptions.iPushPullConfig);
 
     // Set up strategies - we set up all the strategies suitable for the vendor grid
     // But users can make some hidden or readonly in their entitlements
@@ -1692,7 +1691,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const firstRow: HTMLElement = document.querySelector('.ag-row-even') as HTMLElement;
     const firstRowStyle = window.getComputedStyle(firstRow, null);
     const secondRow: HTMLElement = document.querySelector('.ag-row-odd') as HTMLElement;
-    const secondRowStyle = window.getComputedStyle(secondRow, null);
+    const secondRowStyle = secondRow
+      ? window.getComputedStyle(secondRow, null)
+      : {
+          backgroundColor: '#fff',
+        };
     return {
       Header: {
         headerColor: new Color(headerColStyle.color).toHex(),

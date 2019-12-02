@@ -54,6 +54,7 @@ import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy';
 import { ThemeStrategy } from '../Strategy/ThemeStrategy';
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
+import { SystemStatusStrategy } from '../Strategy/SystemStatusStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
@@ -150,6 +151,7 @@ export class agGridHelper {
       new StateManagementStrategy(blotter)
     );
     strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(blotter));
+    strategies.set(StrategyConstants.SystemStatusStrategyId, new SystemStatusStrategy(blotter));
     strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(blotter));
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter));
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(blotter));
@@ -563,6 +565,7 @@ export class agGridHelper {
       LoggingHelper.LogAdaptableBlotterWarning('column is undefined returning String for Type');
       return DataType.String;
     }
+    let dataType: DataType = DataType.Unknown;
     // get the column type if already in store (and not unknown)
     const existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
       column.getId(),
@@ -572,27 +575,23 @@ export class agGridHelper {
       return existingColumn.DataType;
     }
 
-    // check for column type provided via Vendor Grid
+    // check for column type
     const colType: any = column.getColDef().type;
     if (colType) {
-      let datatype: DataType = DataType.Unknown;
       if (Array.isArray(colType)) {
-        // do array check
         colType.forEach((c: string) => {
-          if (datatype == DataType.Unknown) {
-            datatype = this.getabColDefValue(c);
+          if (dataType == DataType.Unknown) {
+            dataType = this.getabColDefValue(c);
           }
         });
       } else {
-        // do string check
-        datatype = this.getabColDefValue(colType);
+        dataType = this.getabColDefValue(colType);
       }
-      if (datatype != DataType.Unknown) {
-        return datatype;
+      if (dataType != DataType.Unknown) {
+        return dataType;
       }
     }
 
-    // we canot deduce the datatype so we have to get it from the grid's first row
     const model = this.gridOptions.api!.getModel();
     if (model == null) {
       LoggingHelper.LogAdaptableBlotterWarning(
@@ -622,7 +621,6 @@ export class agGridHelper {
       row = childNodes[0];
     }
     const value = this.gridOptions.api!.getValue(column, row);
-    let dataType: DataType;
     if (value instanceof Date) {
       dataType = DataType.Date;
     } else if (Array.isArray(value) && value.length && typeof value[0] === 'number') {
@@ -648,7 +646,6 @@ export class agGridHelper {
     LoggingHelper.LogAdaptableBlotterWarning(
       `No defined type for column '${column.getColId()}'. Defaulting to type of first value: ${dataType}`
     );
-    console.log('returning finally: ' + dataType);
     return dataType;
   }
 

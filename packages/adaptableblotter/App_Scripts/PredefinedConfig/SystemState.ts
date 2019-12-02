@@ -1,5 +1,3 @@
-import { SystemStatus } from '../Utilities/Interface/SystemStatus';
-
 import { IPPDomain } from '../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 import { IPreviewInfo } from '../Utilities/Interface/IPreview';
@@ -22,7 +20,6 @@ import { Report } from './ExportState';
  * None of this State is provided to the Adaptable Blotter by users (through Predefined Config) and none of it is persisted.
  */
 export interface SystemState extends InternalState {
-  SystemStatus: SystemStatus;
   AdaptableAlerts: AdaptableAlert[];
   UpdatedRowInfos: UpdatedRowInfo[];
   AvailableCalendars: Calendar[];

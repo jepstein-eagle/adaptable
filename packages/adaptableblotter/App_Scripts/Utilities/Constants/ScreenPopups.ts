@@ -35,4 +35,5 @@ export const ThemePopup: string = 'ThemePopup';
 export const QuickSearchPopup: string = 'QuickSearchPopup';
 export const ReminderPopup: string = 'ReminderPopup';
 export const StateManagementPopup: string = 'StateManagementPopup';
+export const SystemStatusPopup: string = 'SystemStatusPopup';
 export const UserFilterPopup: string = 'UserFilterPopup';

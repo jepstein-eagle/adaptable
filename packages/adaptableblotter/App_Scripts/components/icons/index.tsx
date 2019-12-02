@@ -50,6 +50,7 @@ import ColumnCategory from './column-category';
 import ColumnFilter from './column-filter';
 import ColumnInformation from './column-info';
 import CustomSort from './custom-sort';
+import SystemStatus from './system-status';
 import DataSource from './data-source';
 import FlashingCell from './flashing-cell';
 import edit from './edit';
@@ -73,6 +74,11 @@ import Theme from './theme';
 import checkBox from './check-box';
 import checkBoxOutline from './check-box-outline';
 import tabUnselected from './tab-unselected';
+import CloudUpload from './cloud-upload';
+import FolderOpen from './folder-open';
+import Folder from './folder';
+import FolderShared from './folder-shared';
+
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 const allIcons = {
@@ -111,6 +117,7 @@ const allIcons = {
   reminder: Reminder, // alarm
   shortcut: Shortcut, // link
   'state-management': StateManagement, //   assignment,
+  'system-status': SystemStatus, // was traffic
   'team-share': TeamShare, // folder-shared
   'updated-row': UpdatedRow, //   system-update
   'user-filter': UserFilter, // person
@@ -161,6 +168,10 @@ const allIcons = {
   info: Info,
   'info-sign': Info,
   add: Plus,
+  'cloud-upload': CloudUpload,
+  'folder-open': FolderOpen,
+  'folder-shared': FolderShared,
+  folder: Folder,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

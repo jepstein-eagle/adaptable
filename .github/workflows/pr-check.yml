@@ -1,0 +1,40 @@
+name: PR - Typescript checks
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  pr-build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Executing npm install in core
+      run: npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types
+      env:
+        CI: true
+    - name: tsc-core
+      run: npm run --prefix packages/adaptableblotter tsc
+
+    - name: Executing npm install in react
+      run: npm install --prefix packages/adaptableblotter-react-aggrid
+      env:
+        CI: true
+    - name: tsc-react
+      run: npm run --prefix packages/adaptableblotter-react-aggrid tsc
+    - name: Executing npm install in angular
+      run: npm install --prefix packages/adaptableblotter-ng-aggrid
+      env:
+        CI: true
+    - name: tsc-angular
+      run: npm run --prefix packages/adaptableblotter-ng-aggrid link-core && npm run --prefix packages/adaptableblotter-ng-aggrid tsc

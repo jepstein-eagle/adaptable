@@ -7,9 +7,12 @@ import { StrategyViewPopupProps, StrategyParams } from '../SharedProps/StrategyV
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
 import { UIHelper } from '../../UIHelper';
-import Dialog from '../../../components/Dialog';
+
 import SimpleButton from '../../../components/SimpleButton';
 import { Flex } from 'rebass';
+import { PopupWithFooter } from '../../../components/PopupWithFooter';
+
+import PopupContext from './PopupContext';
 
 /**
  * This is the main popup that we use - so all function popups will appear here.
@@ -22,6 +25,7 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
   onHide?: () => void;
   Blotter: IAdaptableBlotter;
   PopupParams: StrategyParams;
+  PopupProps?: { [key: string]: any };
   onClearPopupParams?: () => PopupRedux.PopupClearParamAction;
 }
 
@@ -44,7 +48,11 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () =>
           this.props.onClearPopupParams ? this.props.onClearPopupParams() : null,
-        onClosePopup: () => this.props.onHide(),
+        onClosePopup: () => {
+          if (this.props.onHide) {
+            this.props.onHide();
+          }
+        },
         TeamSharingActivated: BlotterHelper.isConfigServerEnabled(
           this.props.Blotter.blotterOptions
         ),
@@ -65,43 +73,45 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     }
 
     return (
-      <Dialog
-        isOpen={this.props.showModal}
-        onDismiss={this.props.onHide}
-        showCloseButton={false}
-        modal
-        padding={0}
+      <PopupContext.Provider
+        value={{
+          hidePopup: () => {
+            if (this.props.onHide) {
+              this.props.onHide();
+            }
+          },
+        }}
       >
-        <Flex
-          flexDirection="column"
-          style={{
-            height: '100%',
-            maxHeight: '90vh',
-
-            width: '70vw',
-            maxWidth: 800,
-          }}
-        >
-          <Flex flexDirection="column" padding={0} flex={1}>
-            <Flex flexDirection="column" flex={1}>
-              <Flex
-                flexDirection="column"
-                flex={1}
-                className={
-                  accessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-                }
+        <PopupWithFooter
+          showModal={this.props.showModal}
+          onHide={this.props.onHide}
+          modal
+          padding={0}
+          footer={
+            <>
+              <SimpleButton
+                onClick={() => {
+                  if (this.props.onHide) {
+                    this.props.onHide();
+                  }
+                }}
+                variant="text"
               >
-                {body}
-              </Flex>
-            </Flex>
+                CLOSE
+              </SimpleButton>
+            </>
+          }
+          {...this.props.PopupProps}
+        >
+          <Flex
+            flexDirection="column"
+            flex={1}
+            className={accessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''}
+          >
+            {body}
           </Flex>
-          <Flex padding={2} backgroundColor="primary" className="ab-Popup__footer">
-            <SimpleButton onClick={() => this.props.onHide()} variant="text">
-              CLOSE
-            </SimpleButton>
-          </Flex>
-        </Flex>
-      </Dialog>
+        </PopupWithFooter>
+      </PopupContext.Provider>
     );
   }
 }

@@ -19,7 +19,6 @@ import { IReportService } from './Interface/IReportService';
 import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
-import iPushPullHelper from '../Helpers/iPushPullHelper';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -88,7 +87,7 @@ export class ReportService implements IReportService {
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
       case ExportDestination.iPushPull:
-        return iPushPullHelper.isIPushPullLoaded();
+        return !!this.blotter.api.partnerApi.getPushPullInstance();
       case ExportDestination.Glue42:
         return this.blotter.api.gridApi.getGridState().IsGlue42Running;
     }
