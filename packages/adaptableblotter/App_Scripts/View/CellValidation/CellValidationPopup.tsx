@@ -23,7 +23,6 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
@@ -102,6 +101,7 @@ class CellValidationPopupComponent extends React.Component<
           onDeleteConfirm={CellValidationRedux.CellValidationDelete(cellValidationRule)}
           onChangeActionMode={(x, actionMode) => this.onActionModeChanged(x, actionMode)}
           AccessLevel={this.props.AccessLevel}
+          ValidationService={this.props.Blotter.ValidationService}
         />
       );
     });
@@ -219,7 +219,10 @@ class CellValidationPopupComponent extends React.Component<
       StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
       ExpressionHelper.IsNullOrEmptyOrValidExpression(cellValidationRule.Expression) &&
       StringExtensions.IsNotNullOrEmpty(
-        CellValidationHelper.createCellValidationDescription(cellValidationRule, this.props.Columns)
+        this.props.Blotter.ValidationService.createCellValidationDescription(
+          cellValidationRule,
+          this.props.Columns
+        )
       )
     );
   }

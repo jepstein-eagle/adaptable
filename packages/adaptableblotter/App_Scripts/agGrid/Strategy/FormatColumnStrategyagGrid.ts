@@ -2,7 +2,6 @@ import { IFormatColumnStrategy } from '../../Strategy/Interface/IFormatColumnStr
 import { FormatColumnStrategy } from '../../Strategy/FormatColumnStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
 export class FormatColumnStrategyagGrid extends FormatColumnStrategy
@@ -24,7 +23,7 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy
         formatColumns.forEach((fc, index) => {
           if (fc.ColumnId == column.ColumnId) {
             let styleName: string = StringExtensions.IsNullOrEmpty(fc.Style.ClassName)
-              ? StyleHelper.CreateUniqueStyleName(
+              ? theBlotter.StyleService.CreateUniqueStyleName(
                   StrategyConstants.FormatColumnStrategyId,
                   this.blotter,
                   fc

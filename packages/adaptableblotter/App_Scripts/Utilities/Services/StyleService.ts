@@ -2,7 +2,6 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -19,9 +18,10 @@ import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { IStyleService } from './Interface/IStyleService';
 
-// Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
-export class StyleService {
+export class StyleService implements IStyleService {
   private style: HTMLStyleElement;
 
   constructor(private blotter: IAdaptableBlotter) {
@@ -40,6 +40,36 @@ export class StyleService {
     this.blotter.api.eventApi.on('BlotterReady', () => {
       this.setUpFirstUsage();
     });
+  }
+
+  public CreateStyleName(strategyId: string, blotter: IAdaptableBlotter): string {
+    return (
+      StyleConstants.AB_HEADER +
+      strategyId +
+      '-' +
+      blotter.blotterOptions.blotterId
+        .trim()
+        .replace(/\s/g, '')
+        .replace('.', '')
+    );
+  }
+
+  public CreateUniqueStyleName(
+    strategyId: string,
+    blotter: IAdaptableBlotter,
+    adaqptableBlotterObject: AdaptableBlotterObject
+  ): string {
+    return (
+      StyleConstants.AB_HEADER +
+      strategyId +
+      '-' +
+      blotter.blotterOptions.blotterId
+        .trim()
+        .replace(/\s/g, '')
+        .replace('.', '') +
+      '-' +
+      adaqptableBlotterObject.Uuid
+    );
   }
 
   private setUpFirstUsage(): void {
@@ -97,7 +127,7 @@ export class StyleService {
 
     // Format Column
     this.blotter.api.formatColumnApi.getAllFormatColumn().forEach(formatColumn => {
-      const styleName = StyleHelper.CreateUniqueStyleName(
+      const styleName = this.CreateUniqueStyleName(
         StrategyConstants.FormatColumnStrategyId,
         this.blotter,
         formatColumn
@@ -123,7 +153,7 @@ export class StyleService {
     conditionalStyles
       .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
       .forEach(element => {
-        const styleName = StyleHelper.CreateUniqueStyleName(
+        const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
           this.blotter,
           element
@@ -146,7 +176,7 @@ export class StyleService {
     conditionalStyles
       .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory)
       .forEach(element => {
-        const styleName = StyleHelper.CreateUniqueStyleName(
+        const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
           this.blotter,
           element
@@ -169,7 +199,7 @@ export class StyleService {
     conditionalStyles
       .filter(cs => cs.ConditionalStyleScope == ConditionalStyleScope.Column)
       .forEach(element => {
-        const styleName = StyleHelper.CreateUniqueStyleName(
+        const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
           this.blotter,
           element
@@ -210,10 +240,7 @@ export class StyleService {
     // quick search
     const quickSearchStyle: IStyle = this.blotter.api.quickSearchApi.getQuickSearchStyle();
     if (StringExtensions.IsNullOrEmpty(quickSearchStyle.ClassName)) {
-      const styleName = StyleHelper.CreateStyleName(
-        StrategyConstants.QuickSearchStrategyId,
-        this.blotter
-      );
+      const styleName = this.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this.blotter);
 
       this.addCSSRule(
         `.${styleName}`,

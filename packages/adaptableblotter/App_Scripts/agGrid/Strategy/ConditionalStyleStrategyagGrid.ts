@@ -4,7 +4,6 @@ import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
@@ -87,7 +86,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
         let cellClassRules: any = {};
         conditionalStyles.forEach((cs, index) => {
           let styleName: string = StringExtensions.IsNullOrEmpty(cs.Style.ClassName)
-            ? StyleHelper.CreateUniqueStyleName(
+            ? theBlotter.StyleService.CreateUniqueStyleName(
                 StrategyConstants.ConditionalStyleStrategyId,
                 this.blotter,
                 cs

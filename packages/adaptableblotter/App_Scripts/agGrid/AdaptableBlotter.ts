@@ -50,6 +50,7 @@ import { ICalendarService } from '../Utilities/Services/Interface/ICalendarServi
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../Utilities/Services/AuditLogService';
 import { StyleService } from '../Utilities/Services/StyleService';
+import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
@@ -86,8 +87,6 @@ import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
-import { StyleHelper } from '../Utilities/Helpers/StyleHelper';
-import { LayoutHelper } from '../Utilities/Helpers/LayoutHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
@@ -159,6 +158,10 @@ import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { BlotterApi } from '../Api/BlotterApi';
 import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
+import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
+import { LayoutService } from '../Utilities/Services/LayoutService';
+import { StrategyService } from '../Utilities/Services/StrategyService';
+import { IStrategyService } from '../Utilities/Services/StrategyService';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -211,9 +214,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public AuditLogService: IAuditLogService;
 
-  public StyleService: StyleService;
-
   public ChartService: IChartService;
+
+  public StyleService: IStyleService;
+
+  public LayoutService: ILayoutService;
+
+  public StrategyService: IStrategyService;
 
   public CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
 
@@ -306,6 +313,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.SearchService = new SearchService(this);
     this.Glue42Service = new Glue42Service(this);
     this.ReportService = new ReportService(this);
+    this.LayoutService = new LayoutService(this);
+    this.StrategyService = new StrategyService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
       this,
       (columnId, rowNode) => this.gridOptions.api!.getValue(columnId, rowNode)
@@ -618,7 +627,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (existingColumn) {
           existingColumn.Visible = vendorColumn.isVisible();
           if (existingColumn.DataType == DataType.Unknown) {
-            existingColumn.DataType = this.getColumnDataType(vendorColumn);
+            existingColumn.DataType = this.agGridHelper.getColumnDataType(vendorColumn);
           }
         } else {
           existingColumn = this.createColumn(vendorColumn);
@@ -628,7 +637,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     });
     this.api.internalApi.setColumns(allColumns);
     // Save the layout if required
-    LayoutHelper.autoSaveLayout(this);
+    this.LayoutService.autoSaveLayout();
   }
 
   private createColumn(vendorColumn: Column): AdaptableBlotterColumn {
@@ -638,7 +647,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       Uuid: createUuid(),
       ColumnId: colId,
       FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
-      DataType: this.getColumnDataType(vendorColumn),
+      DataType: this.agGridHelper.getColumnDataType(vendorColumn),
       Visible: vendorColumn.isVisible(),
       ReadOnly: this.agGridHelper.isColumnReadonly(colDef),
       Sortable: this.agGridHelper.isColumnSortable(colDef),
@@ -699,7 +708,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.api.quickSearchApi.getQuickSearchStyle().ClassName
     )
       ? this.api.quickSearchApi.getQuickSearchStyle().ClassName
-      : StyleHelper.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this);
+      : this.StyleService.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this);
     return quickSearchClassName;
   }
 
@@ -807,7 +816,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.blotterOptions!.layoutOptions.includeVendorStateInLayouts != null &&
       this.blotterOptions!.layoutOptions.includeVendorStateInLayouts
     ) {
-      LayoutHelper.autoSaveLayout(this);
+      this.LayoutService.autoSaveLayout();
     }
   }
 
@@ -900,127 +909,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     this.emit(PRIVATE_ROWS_SELECTED_EVENT);
     this.agGridHelper.fireSelectionChangedEvent();
-  }
-
-  // We deduce the type here, as there is no way to get it through the definition
-  private getColumnDataType(column: Column): DataType {
-    // Some columns can have no ID or Title. we return string as a consequence but it needs testing
-    if (!column) {
-      LoggingHelper.LogAdaptableBlotterWarning('column is undefined returning String for Type');
-      return DataType.String;
-    }
-
-    // get the column type if already in store (and not unknown)
-    const existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
-      column.getId(),
-      this.api.gridApi.getColumns()
-    );
-    if (existingColumn && existingColumn.DataType != DataType.Unknown) {
-      return existingColumn.DataType;
-    }
-
-    // check for column type
-    const colType: any = column.getColDef().type;
-    if (colType) {
-      const isArray: boolean = Array.isArray(colType);
-      if (isArray) {
-        // do array check
-        let myDatatype: DataType = DataType.Unknown;
-        colType.forEach((c: string) => {
-          if (c == 'numericColumn') {
-            myDatatype = DataType.Number;
-          }
-          if (c.startsWith('abColDef')) {
-            myDatatype = this.getabColDefValue(c);
-          }
-        });
-        if (myDatatype != DataType.Unknown) {
-          return myDatatype;
-        }
-      } else {
-        // do string check
-        if (colType == 'numericColumn') {
-          return DataType.Number;
-        }
-        if (colType.startsWith('abColDef')) {
-          return this.getabColDefValue(colType);
-        }
-      }
-    }
-
-    const model = this.gridOptions.api!.getModel();
-    if (model == null) {
-      LoggingHelper.LogAdaptableBlotterWarning(
-        `No model so returning type "Unknown" for Column: "${column.getColId()}"`
-      );
-      return DataType.Unknown;
-    }
-
-    let row = model.getRow(0);
-
-    if (row == null) {
-      // possible that there will be no data.
-      LoggingHelper.LogAdaptableBlotterWarning(
-        `No data in grid so returning type "Unknown" for Column: "${column.getColId()}"`
-      );
-      return DataType.Unknown;
-    }
-    // if it's a group we need the content of the group
-    if (row.group) {
-      const childNodes: RowNode[] = row.childrenAfterGroup;
-      if (ArrayExtensions.IsNullOrEmpty(childNodes)) {
-        LoggingHelper.LogAdaptableBlotterWarning(
-          `No data in grid so returning type "Unknown" for Column: "${column.getColId()}"`
-        );
-        return DataType.Unknown;
-      }
-      row = childNodes[0];
-    }
-    const value = this.gridOptions.api!.getValue(column, row);
-    let dataType: DataType;
-    if (value instanceof Date) {
-      dataType = DataType.Date;
-    } else if (Array.isArray(value) && value.length && typeof value[0] === 'number') {
-      dataType = DataType.NumberArray;
-    } else {
-      switch (typeof value) {
-        case 'string':
-          dataType = DataType.String;
-          break;
-        case 'number':
-          dataType = DataType.Number;
-          break;
-        case 'boolean':
-          dataType = DataType.Boolean;
-          break;
-        case 'object':
-          dataType = DataType.Object;
-          break;
-        default:
-          break;
-      }
-    }
-    LoggingHelper.LogAdaptableBlotterWarning(
-      `No defined type for column '${column.getColId()}'. Defaulting to type of first value: ${dataType}`
-    );
-    return dataType;
-  }
-
-  private getabColDefValue(colType: string): DataType {
-    switch (colType) {
-      case 'abColDefNumber':
-        return DataType.Number;
-      case 'abColDefNumberArray':
-        return DataType.NumberArray;
-      case 'abColDefString':
-        return DataType.String;
-      case 'abColDefBoolean':
-        return DataType.Boolean;
-      case 'abColDefDate':
-        return DataType.Date;
-      case 'abColDefObject':
-        return DataType.Object;
-    }
   }
 
   public setValue(dataChangedInfo: DataChangedInfo): void {
@@ -2788,17 +2676,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public getVendorGridLayoutInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo {
-    // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
-    if (forceFetch) {
-      return {
-        GroupState: null, // is this right????  what if they want to group
-        ColumnState: JSON.stringify(this.gridOptions.columnApi!.getColumnState()),
-        ColumnGroupState: JSON.stringify(this.gridOptions.columnApi!.getColumnGroupState()),
-        InPivotMode: this.gridOptions.pivotMode,
-      };
-    }
+  public getVendorGridDefaultLayoutInfo(): VendorGridInfo {
+    return {
+      GroupState: null, // is this right????  what if they want to group
+      ColumnState: JSON.stringify(this.gridOptions.columnApi!.getColumnState()),
+      ColumnGroupState: JSON.stringify(this.gridOptions.columnApi!.getColumnGroupState()),
+      InPivotMode: this.gridOptions.pivotMode,
+    };
+  }
 
+  public getVendorGridLayoutInfo(visibleCols: string[]): VendorGridInfo {
     if (
       this.blotterOptions!.layoutOptions != null &&
       this.blotterOptions!.layoutOptions.includeVendorStateInLayouts != null &&
@@ -2887,7 +2774,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public setPivotingDetails(pivotDetails: PivotDetails): void {
-    let isPivotLayout = LayoutHelper.isPivotedLayout(pivotDetails);
+    let isPivotLayout = this.LayoutService.isPivotedLayout(pivotDetails);
 
     // if its not a pivot layout then turn off pivot mode and get out
     if (!isPivotLayout) {
@@ -2906,7 +2793,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void {
     if (vendorGridInfo == null) {
-      if (LayoutHelper.isPivotedLayout(pivotDetails)) {
+      if (this.LayoutService.isPivotedLayout(pivotDetails)) {
         this.turnOnPivoting();
       } else {
         this.turnOffPivoting();

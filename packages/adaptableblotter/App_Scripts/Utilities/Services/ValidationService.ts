@@ -14,6 +14,8 @@ import {
   RangeOperandType,
   ActionMode,
   DisplayAction,
+  DataType,
+  MessageType,
 } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import {
@@ -23,11 +25,11 @@ import {
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 import { IUIConfirmation, AdaptableAlert } from '../Interface/IMessage';
-import CellValidationHelper from '../Helpers/CellValidationHelper';
 import { ValidationResult } from '../../BlotterOptions/EditOptions';
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
 import StringExtensions from '../Extensions/StringExtensions';
+import { EMPTY_STRING } from '../Constants/GeneralConstants';
 
 export class ValidationService implements IValidationService {
   constructor(private blotter: IAdaptableBlotter) {
@@ -173,21 +175,17 @@ export class ValidationService implements IValidationService {
     if (failedRules.length > 0) {
       // first see if its an error = should only be one item in array if so
       if (failedRules[0].ActionMode == 'Stop Edit') {
-        const errorMessage: string = ObjectFactory.CreateCellValidationMessage(
-          failedRules[0],
-          this.blotter
-        );
+        const errorMessage: string = this.CreateCellValidationMessage(failedRules[0]);
         this.blotter.api.alertApi.showAlertError('Validation Error', errorMessage);
         return false;
       }
       let warningMessage: string = '';
       failedRules.forEach(f => {
-        warningMessage = `${warningMessage +
-          ObjectFactory.CreateCellValidationMessage(f, this.blotter)}\n`;
+        warningMessage = `${warningMessage + this.CreateCellValidationMessage(f)}\n`;
       });
       const confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(dataChangedInfo);
       const cancelAction: Redux.Action = null;
-      const confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
+      const confirmation: IUIConfirmation = this.createCellValidationUIConfirmation(
         confirmAction,
         cancelAction,
         warningMessage
@@ -281,5 +279,84 @@ export class ValidationService implements IValidationService {
 
       return false;
     };
+  }
+
+  public createCellValidationDescription(
+    cellValidationRule: CellValidationRule,
+    columns: AdaptableBlotterColumn[]
+  ): string {
+    if (cellValidationRule.Range.Operator == LeafExpressionOperator.PrimaryKeyDuplicate) {
+      return 'Primary Key column cannot contain duplicate values';
+    }
+
+    let operator: LeafExpressionOperator = cellValidationRule.Range
+      .Operator as LeafExpressionOperator;
+    let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
+      operator,
+      ColumnHelper.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId, columns)
+    );
+
+    if (!ExpressionHelper.OperatorRequiresValue(operator)) {
+      return valueDescription;
+    }
+    let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
+      cellValidationRule.ColumnId,
+      columns
+    );
+    let operand1Text: string =
+      dataType == DataType.Boolean || dataType == DataType.Number
+        ? cellValidationRule.Range.Operand1
+        : "'" + cellValidationRule.Range.Operand1 + "'";
+
+    valueDescription = valueDescription + operand1Text;
+
+    if (cellValidationRule.Range.Operator == LeafExpressionOperator.PercentChange) {
+      valueDescription = valueDescription + '%';
+    }
+
+    if (StringExtensions.IsNotNullOrEmpty(cellValidationRule.Range.Operand2)) {
+      let operand2Text: string =
+        dataType == DataType.Number
+          ? ' and ' + cellValidationRule.Range.Operand2
+          : " and '" + cellValidationRule.Range.Operand2 + "'";
+      valueDescription = valueDescription + operand2Text;
+    }
+    return valueDescription;
+  }
+
+  public createCellValidationUIConfirmation(
+    confirmAction: Redux.Action,
+    cancelAction: Redux.Action,
+    warningMessage: string = 'Do you want to continue?'
+  ): IUIConfirmation {
+    return {
+      CancelButtonText: 'Cancel Edit',
+      Header: 'Cell Validation Failed',
+      Msg: warningMessage,
+      ConfirmButtonText: 'Bypass Rule',
+      CancelAction: cancelAction,
+      ConfirmAction: confirmAction,
+      ShowInputBox: true,
+      MessageType: MessageType.Warning,
+    };
+  }
+
+  public CreateCellValidationMessage(CellValidation: CellValidationRule): string {
+    let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+    let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
+      CellValidation.ColumnId,
+      columns
+    );
+    let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
+      CellValidation.Expression
+    )
+      ? ' when ' + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns)
+      : EMPTY_STRING;
+    return (
+      columnFriendlyName +
+      ': ' +
+      this.createCellValidationDescription(CellValidation, columns) +
+      expressionDescription
+    );
   }
 }

@@ -10,7 +10,6 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
-import PercentBarHelper from '../../../Utilities/Helpers/PercentBarHelper';
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 export interface PercentBarSelectColumnWizardState {
@@ -46,8 +45,7 @@ export class PercentBarSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableBlotterColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = PercentBarHelper.getDistinctColumnValues(
-        this.props.Blotter,
+      let distinctColumnsValues: number[] = this.props.Blotter.StrategyService.getDistinctColumnValues(
         columns[0].ColumnId
       );
       let minValue = Math.min(...distinctColumnsValues);

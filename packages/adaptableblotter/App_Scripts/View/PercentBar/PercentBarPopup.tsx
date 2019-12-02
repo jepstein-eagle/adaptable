@@ -26,7 +26,6 @@ import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import PercentBarHelper from '../../Utilities/Helpers/PercentBarHelper';
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
   PercentBars: PercentBar[];
@@ -53,8 +52,7 @@ class PercentBarPopupComponent extends React.Component<
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
         let columnId: string = this.props.PopupParams.columnId;
         if (this.props.PopupParams.action == 'New') {
-          let distinctColumnsValues: number[] = PercentBarHelper.getDistinctColumnValues(
-            this.props.Blotter,
+          let distinctColumnsValues: number[] = this.props.Blotter.StrategyService.getDistinctColumnValues(
             columnId
           );
 

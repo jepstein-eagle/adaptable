@@ -9,7 +9,6 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { CellValidationHelper } from '../../../Utilities/Helpers/CellValidationHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
@@ -37,7 +36,7 @@ export class CellValidationSummaryWizard
       { Key: 'Mode', Value: this.props.Data.ActionMode },
       {
         Key: 'Rule',
-        Value: CellValidationHelper.createCellValidationDescription(
+        Value: this.props.Blotter.ValidationService.createCellValidationDescription(
           this.props.Data,
           this.props.Columns
         ),

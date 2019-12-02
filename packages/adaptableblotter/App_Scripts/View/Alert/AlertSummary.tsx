@@ -16,7 +16,6 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 
@@ -62,7 +61,10 @@ export class AlertSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CV' + index}
             Item1={'something here?'}
-            Item2={AlertHelper.createAlertDescription(item, this.props.Columns)}
+            Item2={this.props.Blotter.StrategyService.createAlertDescription(
+              item,
+              this.props.Columns
+            )}
             ConfigEnity={item}
             EntityType={StrategyConstants.AlertStrategyName}
             showShare={this.props.TeamSharingActivated}

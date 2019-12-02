@@ -103,7 +103,7 @@ import { RunTimeState } from './RunTimeState';
  *  });
  * ```
  *
- * ** The Application Data Entries**
+ * **The Application Data Entries**
  *
  * The Application State also provides an ApplicationDataEntries array.
  *

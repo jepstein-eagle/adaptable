@@ -130,8 +130,6 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
-import layout from '../../components/icons/layout';
-import LayoutHelper from '../../Utilities/Helpers/LayoutHelper';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2244,12 +2242,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
             if (currentLayout) {
               if (currentLayout.BlotterGridInfo == null) {
+                console.log('nothing for: ' + currentLayout.Name);
                 currentLayout.BlotterGridInfo = {
                   CurrentColumns: currentLayout.Columns,
                   CurrentColumnSorts: currentLayout.ColumnSorts,
                 };
               }
-              if (currentLayout.VendorGridInfo == null) {
+
+              let isNewLayout: boolean = currentLayout.VendorGridInfo == null;
+              if (isNewLayout) {
                 blotter.setGroupedColumns(currentLayout.GroupedColumns);
                 blotter.setPivotingDetails(currentLayout.PivotDetails);
               }
@@ -2279,6 +2280,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
               // set vendor specific info
               blotter.setVendorGridLayoutInfo(currentLayout.VendorGridInfo);
+              //  blotter.reloadGrid();
+              if (isNewLayout) {
+                let currentGridVendorInfo =
+                  currentLayout.Name == DEFAULT_LAYOUT
+                    ? blotter.getVendorGridDefaultLayoutInfo()
+                    : blotter.getVendorGridLayoutInfo(currentLayout.BlotterGridInfo.CurrentColumns);
+
+                currentLayout.VendorGridInfo = currentGridVendorInfo;
+
+                //   middlewareAPI.dispatch(LayoutRedux.LayoutSave(currentLayout));
+
+                middlewareAPI.dispatch(LayoutRedux.LayoutAdd(currentLayout));
+              }
             }
             return returnAction;
           }
@@ -2321,12 +2335,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               }
             }
             if (isExistingLayout) {
-              let forceFetch = layout.Name == DEFAULT_LAYOUT;
-
-              let currentGridVendorInfo = blotter.getVendorGridLayoutInfo(
-                layout.BlotterGridInfo.CurrentColumns,
-                forceFetch
-              );
+              let currentGridVendorInfo =
+                layout.Name == DEFAULT_LAYOUT
+                  ? blotter.getVendorGridDefaultLayoutInfo()
+                  : blotter.getVendorGridLayoutInfo(layout.BlotterGridInfo.CurrentColumns);
 
               layout.VendorGridInfo = currentGridVendorInfo;
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
@@ -3038,14 +3050,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
             let gridState: GridState = middlewareAPI.getState().Grid;
             let layoutState: LayoutState = middlewareAPI.getState().Layout;
-            let visibleColumnNames = gridState.Columns.filter(c => c.Visible).map(c => c.ColumnId);
 
             //create the default layout (if not there) so we can revert to it if needed
             let currentLayout = DEFAULT_LAYOUT;
             let defaultLayout: Layout = ObjectFactory.CreateLayout(
               gridState.Columns,
               [],
-              blotter.getVendorGridLayoutInfo(visibleColumnNames, true),
+              blotter.getVendorGridDefaultLayoutInfo(),
               DEFAULT_LAYOUT
             );
             middlewareAPI.dispatch(LayoutRedux.LayoutSave(defaultLayout));

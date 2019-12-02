@@ -13,10 +13,14 @@ import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
-/**
- * SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
- */
 
+//SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
+
+/**
+ * This is for internal use of the Adaptable Blotter only during a session.
+ *
+ * None of this State is provided to the Adaptable Blotter by users (through Predefined Config) and none of it is persisted.
+ */
 export interface SystemState extends InternalState {
   SystemStatus: SystemStatus;
   AdaptableAlerts: AdaptableAlert[];

@@ -9,7 +9,6 @@ import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/Adva
 import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
-import { LayoutHelper } from '../Helpers/LayoutHelper';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
@@ -124,12 +123,12 @@ export class SearchService implements ISearchService {
           if (this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearchandSort') {
             this.publishSearchChanged(SearchChangedTrigger.Sort);
           }
-          LayoutHelper.autoSaveLayout(this.blotter);
+          this.blotter.LayoutService.autoSaveLayout();
         }
 
         if (this.columns != this.getGridColumns()) {
           this.columns = this.getGridColumns();
-          LayoutHelper.autoSaveLayout(this.blotter);
+          this.blotter.LayoutService.autoSaveLayout();
         }
       }
     }

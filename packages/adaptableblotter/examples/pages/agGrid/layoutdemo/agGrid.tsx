@@ -42,7 +42,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   Layout: {
-    CurrentLayout: 'Pivoted Layout',
+    CurrentLayout: 'Simple Layout',
     Layouts: [
       {
         Name: 'Simple Layout',
@@ -75,7 +75,7 @@ let demoConfig: PredefinedConfig = {
         Name: 'Grouping Layout',
       },
       {
-        Columns: ['bid', 'ask', 'price', 'counterparty', 'status', 'stars'],
+        Columns: ['bid', 'ask'],
         Name: 'Pivoted Layout',
         GroupedColumns: ['currency'],
         PivotDetails: {

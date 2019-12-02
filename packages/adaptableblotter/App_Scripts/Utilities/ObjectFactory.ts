@@ -55,7 +55,6 @@ import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { IAdaptableBlotter } from '../types';
 import ColumnHelper from './Helpers/ColumnHelper';
-import CellValidationHelper from './Helpers/CellValidationHelper';
 import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
@@ -343,28 +342,6 @@ export function CreateEmptyShortcut(): Shortcut {
   };
 }
 
-export function CreateCellValidationMessage(
-  CellValidation: CellValidationRule,
-  blotter: IAdaptableBlotter
-): string {
-  let columns: AdaptableBlotterColumn[] = blotter.api.gridApi.getColumns();
-  let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
-    CellValidation.ColumnId,
-    columns
-  );
-  let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
-    CellValidation.Expression
-  )
-    ? ' when ' + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns)
-    : EMPTY_STRING;
-  return (
-    columnFriendlyName +
-    ': ' +
-    CellValidationHelper.createCellValidationDescription(CellValidation, columns) +
-    expressionDescription
-  );
-}
-
 export function CreateEmptyConditionalStyle(): ConditionalStyle {
   return {
     Uuid: createUuid(),
@@ -595,7 +572,6 @@ export const ObjectFactory = {
   CreateEmptyAutoExport,
   CreateEmptySchedule,
   CreateEmptyShortcut,
-  CreateCellValidationMessage,
   CreateEmptyConditionalStyle,
   CreateEmptyFormatColumn,
   CreateEmptyFreeTextColumn,

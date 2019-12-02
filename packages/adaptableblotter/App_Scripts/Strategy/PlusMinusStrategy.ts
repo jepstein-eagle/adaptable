@@ -15,7 +15,6 @@ import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
-import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
@@ -195,7 +194,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       let failedMessages: string[] = [];
       failedRules.forEach(fr => {
         let failedMessage: string =
-          ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + '\n';
+          this.blotter.ValidationService.CreateCellValidationMessage(fr) + '\n';
         let existingMessage = failedMessages.find(f => f == failedMessage);
         if (existingMessage == null) {
           failedMessages.push(failedMessage);
@@ -217,7 +216,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       let warningMessages: string[] = [];
       failedRules.forEach(fr => {
         let warningMessage: string =
-          ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + '\n';
+          this.blotter.ValidationService.CreateCellValidationMessage(fr) + '\n';
         let existingMessage = warningMessages.find(w => w == warningMessage);
         if (existingMessage == null) {
           warningMessages.push(warningMessage);
@@ -228,7 +227,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
       let confirmAction: Redux.Action = PlusMinusRedux.PlusMinusApply(allValues);
       let cancelAction: Redux.Action = PlusMinusRedux.PlusMinusApply(successfulValues);
-      let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
+      let confirmation: IUIConfirmation = this.blotter.ValidationService.createCellValidationUIConfirmation(
         confirmAction,
         cancelAction,
         warningMessage

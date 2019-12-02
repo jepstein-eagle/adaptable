@@ -778,6 +778,7 @@ export class ExamplesHelper {
         abColDefDate: {},
         abColDefNumberArray: {},
         abColDefObject: {},
+        abColDefCustom: {},
       },
     };
   }
@@ -999,7 +1000,7 @@ export class ExamplesHelper {
       headerName: 'Trade Id',
       field: 'tradeId',
       editable: true,
-      type: 'abColDefNumber',
+      type: ['abColDefCustom', 'abColDefNumber', 'helloworld'],
       sortable: true,
       filter: true,
       resizable: true,

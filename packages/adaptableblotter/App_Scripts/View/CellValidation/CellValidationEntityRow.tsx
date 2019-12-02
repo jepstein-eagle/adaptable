@@ -9,14 +9,15 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from '../UIInterfaces';
 import { ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import Dropdown from '../../components/Dropdown';
+import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
 
 export interface CellValidationEntityRowProps
   extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
   Column: AdaptableBlotterColumn;
+  ValidationService: IValidationService;
   onChangeActionMode: (cellValidationRule: CellValidationRule, ActionMode: ActionMode) => void;
 }
 
@@ -76,7 +77,10 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     );
     columnInfo +=
       ': ' +
-      CellValidationHelper.createCellValidationDescription(cellValidation, this.props.Columns);
+      this.props.ValidationService.createCellValidationDescription(
+        cellValidation,
+        this.props.Columns
+      );
     return columnInfo;
   }
 

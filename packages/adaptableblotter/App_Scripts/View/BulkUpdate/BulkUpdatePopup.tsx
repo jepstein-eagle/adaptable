@@ -20,7 +20,6 @@ import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import CheckBox from '../../components/CheckBox';
 import { Box, Flex } from 'rebass';
 import Input from '../../components/Input';
@@ -101,6 +100,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
         SelectedColumn={col}
         ShowPanel={showPanel}
         ShowHeader={true}
+        ValidationService={this.props.Blotter.ValidationService}
       />
     ) : null;
 
@@ -262,7 +262,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
+    let confirmation: IUIConfirmation = this.props.Blotter.ValidationService.createCellValidationUIConfirmation(
       confirmAction,
       cancelAction
     );

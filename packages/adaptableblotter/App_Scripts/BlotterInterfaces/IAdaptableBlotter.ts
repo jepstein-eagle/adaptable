@@ -1,6 +1,6 @@
 import { AdaptableBlotterOptions } from '../types';
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
-import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
+import { IStrategyCollection, IStrategy } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
@@ -35,6 +35,9 @@ import { EmitterCallback } from '../Utilities/Emitter';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { BlotterApi } from '../Api/BlotterApi';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
+import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
+import { IStrategyService } from '../Utilities/Services/StrategyService';
 
 /**
  *  The only interface for the AdaptableBlotter
@@ -118,6 +121,9 @@ export interface IAdaptableBlotter {
   SearchService: ISearchService;
   Glue42Service: IGlue42Service;
   ReportService: IReportService;
+  StyleService: IStyleService;
+  LayoutService: ILayoutService;
+  StrategyService: IStrategyService;
 
   // These are private events only
   _on(eventName: PRIVATE_CELLS_SELECTED_EVENT, callback: () => void): () => void;
@@ -236,7 +242,8 @@ export interface IAdaptableBlotter {
   getVisibleColumnCount(): number;
 
   // layout
-  getVendorGridLayoutInfo(visibleCols: string[], forceFetch: boolean): VendorGridInfo;
+  getVendorGridLayoutInfo(visibleCols: string[]): VendorGridInfo;
+  getVendorGridDefaultLayoutInfo(): VendorGridInfo;
   setVendorGridLayoutInfo(vendorGridInfo: VendorGridInfo): void;
   setGroupedColumns(groupedCols: string[]): void;
   setPivotingDetails(pivotDetails: PivotDetails): void;

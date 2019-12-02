@@ -8,7 +8,6 @@ import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/Express
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
-import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
@@ -74,7 +73,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
         // might be better to do a single alert with all the messages?
         this.blotter.api.alertApi.showAlert(
           ColumnHelper.getFriendlyNameFromColumnId(alertDefintion.ColumnId, columns),
-          AlertHelper.createAlertDescription(alertDefintion, columns),
+          this.blotter.StrategyService.createAlertDescription(alertDefintion, columns),
           alertDefintion,
           dataChangedInfo
         );

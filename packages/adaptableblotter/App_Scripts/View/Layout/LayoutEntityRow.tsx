@@ -7,15 +7,16 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColItem } from '../UIInterfaces';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
-import { LayoutHelper } from '../../Utilities/Helpers/LayoutHelper';
 import { Layout } from '../../PredefinedConfig/LayoutState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Radio from '../../components/Radio';
+import { ILayoutService } from '../../Utilities/Services/Interface/ILayoutService';
 
 export interface LayoutEntityRowProps<LayoutEntityRow>
   extends SharedEntityExpressionRowProps<LayoutEntityRow> {
   IsCurrentLayout: boolean;
   onSelect: (Layout: Layout) => void;
+  LayoutService: ILayoutService;
 }
 
 export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<LayoutEntityRow>, {}> {
@@ -37,7 +38,9 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
     );
     colItems[1].Content = <EntityRowItem Content={layout.Name} />;
     colItems[2].Content = (
-      <EntityRowItem Content={LayoutHelper.getLayoutDescription(layout, this.props.Columns)} />
+      <EntityRowItem
+        Content={this.props.LayoutService.getLayoutDescription(layout, this.props.Columns)}
+      />
     );
 
     let buttons: any = (

@@ -6,7 +6,6 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
-import { LayoutHelper } from '../../../Utilities/Helpers/LayoutHelper';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
@@ -25,12 +24,15 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
       { Key: 'Columns', Value: this.getColumnNames(this.props.Data.Columns) },
       {
         Key: 'Column Sorts',
-        Value: LayoutHelper.getColumnSort(this.props.Data.ColumnSorts, this.props.Columns),
+        Value: this.props.Blotter.LayoutService.getColumnSort(
+          this.props.Data.ColumnSorts,
+          this.props.Columns
+        ),
       },
       { Key: 'Grouped Columns', Value: this.getColumnNames(this.props.Data.GroupedColumns) },
     ];
     let pivotKeyValuePairs: KeyValuePair[] = [];
-    if (LayoutHelper.isPivotedLayout(this.props.Data.PivotDetails)) {
+    if (this.props.Blotter.LayoutService.isPivotedLayout(this.props.Data.PivotDetails)) {
       pivotKeyValuePairs = [
         {
           Key: 'Pivot Columns',

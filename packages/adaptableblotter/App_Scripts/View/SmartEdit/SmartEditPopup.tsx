@@ -18,7 +18,6 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import Input from '../../components/Input';
 import { Flex } from 'rebass';
 import DropdownButton from '../../components/DropdownButton';
@@ -89,6 +88,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         SelectedColumn={col}
         ShowPanel={showPanel}
         ShowHeader={true}
+        ValidationService={this.props.Blotter.ValidationService}
       />
     ) : null;
 
@@ -188,7 +188,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true);
     let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
-    let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
+    let confirmation: IUIConfirmation = this.props.Blotter.ValidationService.createCellValidationUIConfirmation(
       confirmAction,
       cancelAction
     );

@@ -6,7 +6,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import StyleHelper from '../../Utilities/Helpers/StyleHelper';
 
 export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy {
   constructor(blotter: AdaptableBlotter) {

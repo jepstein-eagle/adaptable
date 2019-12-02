@@ -4,7 +4,6 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 
@@ -12,6 +11,7 @@ import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';
 import UIHelper from '../UIHelper';
 import Panel from '../../components/Panel';
+import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   PreviewInfo: IPreviewInfo;
@@ -21,6 +21,7 @@ export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewR
   ShowPanel: boolean;
   style?: React.CSSProperties;
   ShowHeader: boolean;
+  ValidationService: IValidationService;
 }
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
@@ -117,7 +118,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
           ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns)
         : '';
       returnString.push(
-        CellValidationHelper.createCellValidationDescription(CellValidation, columns) +
+        this.props.ValidationService.createCellValidationDescription(CellValidation, columns) +
           expressionDescription
       );
     }

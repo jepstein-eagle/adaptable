@@ -21,7 +21,6 @@ import { UIHelper } from '../UIHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
@@ -73,6 +72,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
         SelectedColumn={selectedColumn}
         ShowPanel={true}
         ShowHeader={false}
+        ValidationService={this.props.Blotter.ValidationService}
       />
     );
 
@@ -185,7 +185,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
+    let confirmation: IUIConfirmation = this.props.Blotter.ValidationService.createCellValidationUIConfirmation(
       confirmAction,
       cancelAction
     );

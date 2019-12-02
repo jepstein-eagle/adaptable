@@ -19,7 +19,6 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 
 export interface CellValidationSummaryProps
@@ -71,7 +70,10 @@ export class CellValidationSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CV' + index}
             Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
-            Item2={CellValidationHelper.createCellValidationDescription(item, this.props.Columns)}
+            Item2={this.props.Blotter.ValidationService.createCellValidationDescription(
+              item,
+              this.props.Columns
+            )}
             ConfigEnity={item}
             EntityType={StrategyConstants.CellValidationStrategyName}
             showShare={this.props.TeamSharingActivated}

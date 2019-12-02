@@ -87,6 +87,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
             onSelect={() => this.props.onSelectLayout(x.Name)}
             AccessLevel={this.props.AccessLevel}
+            LayoutService={this.props.Blotter.LayoutService}
           />
         );
       }

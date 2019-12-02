@@ -8,7 +8,6 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { AlertHelper } from '../../../Utilities/Helpers/AlertHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
@@ -35,7 +34,10 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       },
       {
         Key: 'Rule',
-        Value: AlertHelper.createAlertDescription(alertDefinition, this.props.Columns),
+        Value: this.props.Blotter.StrategyService.createAlertDescription(
+          alertDefinition,
+          this.props.Columns
+        ),
       },
       { Key: 'Alert Type', Value: alertDefinition.MessageType },
       {

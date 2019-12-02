@@ -9,14 +9,15 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import Dropdown from '../../components/Dropdown';
+import { IStrategyService } from '../../Utilities/Services/StrategyService';
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
   Column: AdaptableBlotterColumn;
   onChangeMessageType: (alertDefinition: AlertDefinition, Type: MessageType) => void;
+  StrategyService: IStrategyService;
 }
 
 export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
@@ -72,7 +73,8 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
       Alert.ColumnId,
       this.props.Column
     );
-    columnInfo += ': ' + AlertHelper.createAlertDescription(Alert, this.props.Columns);
+    columnInfo +=
+      ': ' + this.props.StrategyService.createAlertDescription(Alert, this.props.Columns);
     return columnInfo;
   }
 

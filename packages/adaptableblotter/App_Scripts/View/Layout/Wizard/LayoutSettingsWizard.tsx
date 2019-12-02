@@ -12,7 +12,6 @@ import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
 
 import ErrorBox from '../../../components/ErrorBox';
-import LayoutHelper from '../../../Utilities/Helpers/LayoutHelper';
 import HelpBlock from '../../../components/HelpBlock';
 
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<Layout> {
@@ -95,6 +94,6 @@ export class LayoutSettingsWizard
   }
   public GetIndexStepDecrement() {
     // this is wrong as its only decrementing on pivot - but we need someway to know whether its ne or existing
-    return LayoutHelper.isPivotedLayout(this.props.Data.PivotDetails) ? 1 : 3;
+    return this.props.Blotter.LayoutService.isPivotedLayout(this.props.Data.PivotDetails) ? 1 : 3;
   }
 }

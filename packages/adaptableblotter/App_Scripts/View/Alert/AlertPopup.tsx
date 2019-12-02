@@ -89,6 +89,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             this.onMessageTypeChanged(alertDef, messageType)
           }
           AccessLevel={this.props.AccessLevel}
+          StrategyService={this.props.Blotter.StrategyService}
         />
       );
     });

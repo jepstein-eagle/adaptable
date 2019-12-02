@@ -9,7 +9,6 @@ import { Flex } from 'rebass';
 import HelpBlock from '../../../components/HelpBlock';
 import Checkbox from '../../../components/CheckBox';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
-import { LayoutHelper } from '../../../Utilities/Helpers/LayoutHelper';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 
 export interface LayoutSetPivotingWizardProps extends AdaptableWizardStepProps<Layout> {}
@@ -23,7 +22,7 @@ export class LayoutSetPivotingWizard
   constructor(props: LayoutSetPivotingWizardProps) {
     super(props);
     this.state = {
-      IsPivotLayout: LayoutHelper.isPivotedLayout(this.props.Data.PivotDetails),
+      IsPivotLayout: this.props.Blotter.LayoutService.isPivotedLayout(this.props.Data.PivotDetails),
     };
   }
 

@@ -13,7 +13,6 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { IColItem } from '../UIInterfaces';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
@@ -135,7 +134,10 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
               {ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
             </Flex>
             <Flex flex={4}>
-              {CellValidationHelper.createCellValidationDescription(cellVal, this.props.Columns)}
+              {this.props.Blotter.ValidationService.createCellValidationDescription(
+                cellVal,
+                this.props.Columns
+              )}
             </Flex>
             <Flex flex={4}>
               {ExpressionHelper.IsNotNullOrEmptyExpression(cellVal.Expression)

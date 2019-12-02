@@ -23,7 +23,6 @@ import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { UIHelper } from '../UIHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
@@ -83,6 +82,7 @@ class SmartEditToolbarControlComponent extends React.Component<
         SelectedColumn={selectedColumn}
         ShowPanel={true}
         ShowHeader={false}
+        ValidationService={this.props.Blotter.ValidationService}
       />
     );
 
@@ -220,7 +220,7 @@ class SmartEditToolbarControlComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true);
     let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
-    let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(
+    let confirmation: IUIConfirmation = this.props.Blotter.ValidationService.createCellValidationUIConfirmation(
       confirmAction,
       cancelAction
     );

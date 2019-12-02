@@ -23,7 +23,6 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
-import PercentBarHelper from '../../Utilities/Helpers/PercentBarHelper';
 
 export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarSummaryComponent> {
   PercentBars: PercentBar[];
@@ -112,8 +111,7 @@ export class PercentBarSummaryComponent extends React.Component<
     let configEntity: PercentBar = ObjectFactory.CreateEmptyPercentBar();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = PercentBarHelper.getDistinctColumnValues(
-      this.props.Blotter,
+    let distinctColumnsValues: number[] = this.props.Blotter.StrategyService.getDistinctColumnValues(
       this.props.SummarisedColumn.ColumnId
     );
 

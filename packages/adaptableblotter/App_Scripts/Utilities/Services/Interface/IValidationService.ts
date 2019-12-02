@@ -1,5 +1,8 @@
 import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
+import { AdaptableBlotterColumn } from '../../Interface/AdaptableBlotterColumn';
+import * as Redux from 'redux';
+import { IUIConfirmation } from '../../Interface/IMessage';
 
 export interface IValidationService {
   GetValidationRulesForDataChange(dataChangedInfo: DataChangedInfo): CellValidationRule[];
@@ -12,4 +15,17 @@ export interface IValidationService {
       onServerValidationCompleted: () => void;
     }
   ): () => boolean;
+
+  createCellValidationDescription(
+    cellValidationRule: CellValidationRule,
+    columns: AdaptableBlotterColumn[]
+  ): string;
+
+  CreateCellValidationMessage(CellValidation: CellValidationRule): string;
+
+  createCellValidationUIConfirmation(
+    confirmAction: Redux.Action,
+    cancelAction: Redux.Action,
+    warningMessage?: string
+  ): IUIConfirmation;
 }

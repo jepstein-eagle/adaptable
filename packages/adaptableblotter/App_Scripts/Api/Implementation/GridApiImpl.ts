@@ -13,7 +13,6 @@ import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedI
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import CellValidationHelper from '../../Utilities/Helpers/CellValidationHelper';
 
 export class GridApiImpl extends ApiBase implements GridApi {
   public getGridState(): GridState {
