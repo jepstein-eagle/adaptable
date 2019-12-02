@@ -17,7 +17,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Executing npm install in core
-      run: npm install --prefix packages/adaptableblotter
+      run: npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types
       env:
         CI: true
     - name: tsc-core
