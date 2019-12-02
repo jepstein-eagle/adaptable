@@ -1,0 +1,31 @@
+name: Node CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Executing npm install
+      run: npm install
+      env:
+        CI: true
+    - name: Executing npm install
+      run: npm install
+      env:
+        CI: true
+    - name: tsc-core
+      run: npm run tsc-core
+    - name: tsc-react
+      run: npm run tsc-react
+    - name: tsc-angular
+      run: npm run tsc-angular
