@@ -34,4 +34,4 @@ jobs:
       env:
         CI: true
     - name: tsc-angular
-      run: npm run --prefix packages/adaptableblotter-ng-aggrid tsc
+      run: npm run --prefix packages/adaptableblotter-ng-aggrid link-core && npm run --prefix packages/adaptableblotter-ng-aggrid tsc
