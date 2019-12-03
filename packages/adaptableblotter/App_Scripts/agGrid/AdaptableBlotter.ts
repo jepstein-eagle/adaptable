@@ -261,6 +261,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private emit = (eventName: string, data?: any): Promise<any> =>
     this.emitter.emit(eventName, data);
 
+  public static init(blotterOptions: AdaptableBlotterOptions): BlotterApi {
+    const ab = new AdaptableBlotter(blotterOptions);
+
+    return ab.api;
+  }
+
   constructor(
     blotterOptions: AdaptableBlotterOptions,
     renderGrid: boolean = true,
@@ -1117,7 +1123,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
+    return ArrayExtensions.ContainsItem(
+      percentBars.map(pb => pb.ColumnId),
+      columnId
+    );
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2962,7 +2971,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // every theme should define a custom css variable: --ab-theme-loaded: <themeName> defined on the document element.
     if (abThemeLoaded !== themeName) {
       LoggingHelper.LogWarning(`Theme "${themeName}" doesn't seem to be loaded! Make sure you import the css file for the "${themeName}" theme!
-        
+
 If it's a default theme, try
 
 import "adaptableblotter/themes/${themeName}.css"`);
@@ -3069,6 +3078,9 @@ interface AdaptableBlotterWizardOptions {
   };
 }
 
+export const init = (blotterOptions: AdaptableBlotterOptions): BlotterApi =>
+  AdaptableBlotter.init(blotterOptions);
+  
 export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
   private init: WizardInitFn;
 
