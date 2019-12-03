@@ -23,7 +23,6 @@
     "src/test.ts",
     "**/*.spec.ts",
     "src/adaptableblotter/examples",
-    "src/adaptableblotter/ExtLibs",
     "src/adaptableblotter/node_modules",
     "src/adaptableblotter/dist"
   ]
