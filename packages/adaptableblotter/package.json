@@ -99,7 +99,6 @@
     "webpack-fail-plugin": "^1.0.6"
   },
   "scripts": {
-
     "build-apidoc": "typedoc --options ./typedocconfig.ts",
     "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
     "registry-publish": "npm run build-package-json && npm run update-version-file && npm publish dist",

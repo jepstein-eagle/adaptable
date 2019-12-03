@@ -16,7 +16,7 @@ import ipushpull from 'ipushpull-js';
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 5000;
+  const tradeCount: number = 500;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
