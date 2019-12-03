@@ -10,7 +10,7 @@ import { RunTimeState } from './RunTimeState';
  *
  * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardapplicationtoolbardemo/) | [API](_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
  *
- * ** Application Toolbar **
+ * **Application Toolbar**
  *
  * The Application function provides an **deliberately empty toolbar** (called *Application*) which users can leverage and populate with their own content.
  *
@@ -87,10 +87,12 @@ import { RunTimeState } from './RunTimeState';
  *    {
  *      Name: 'btnNewTrade',
  *      Caption: 'New Trade',
+ *      Variant: 'text',
  *    },
  *    {
  *      Name: 'btnRefreshGrid',
  *      Caption: 'Refresh Grid',
+ *      Variant: 'raised',
  *    },
  *    ],
  *  }

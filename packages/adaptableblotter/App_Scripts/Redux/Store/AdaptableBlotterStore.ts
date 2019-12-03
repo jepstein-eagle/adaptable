@@ -39,6 +39,7 @@ import * as LayoutRedux from '../ActionsReducers/LayoutRedux';
 import * as NamedFilterRedux from '../ActionsReducers/NamedFilterRedux';
 import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux';
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux';
+import * as ToolPanelRedux from '../ActionsReducers/ToolPanelRedux';
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux';
 import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux';
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux';
@@ -183,6 +184,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Shortcut: ShortcutRedux.ShortcutReducer,
   SmartEdit: SmartEditRedux.SmartEditReducer,
   Theme: ThemeRedux.ThemeReducer,
+  ToolPanel: ToolPanelRedux.ToolPanelReducer,
   UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
   UserFilter: UserFilterRedux.UserFilterReducer,
 });
@@ -250,6 +252,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       state.CellSummary = undefined;
       state.Theme = undefined;
       state.Partner = undefined;
+      state.ToolPanel = undefined;
       break;
     case LOAD_STATE:
       const { State } = action as LoadStateAction;
@@ -2251,8 +2254,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 };
               }
 
-              let isNewLayout: boolean = currentLayout.VendorGridInfo == null;
-              if (isNewLayout) {
+              let hasNoVendorGridInfo: boolean = currentLayout.VendorGridInfo == null;
+              if (hasNoVendorGridInfo) {
                 blotter.setGroupedColumns(currentLayout.GroupedColumns);
                 blotter.setPivotingDetails(currentLayout.PivotDetails);
               }
@@ -2283,17 +2286,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               // set vendor specific info
               blotter.setVendorGridLayoutInfo(currentLayout.VendorGridInfo);
               //  blotter.reloadGrid();
-              if (isNewLayout) {
+              if (hasNoVendorGridInfo) {
+                console.log('in select: saving ' + currentLayout.Name);
                 let currentGridVendorInfo =
                   currentLayout.Name == DEFAULT_LAYOUT
                     ? blotter.getVendorGridDefaultLayoutInfo()
                     : blotter.getVendorGridLayoutInfo(currentLayout.BlotterGridInfo.CurrentColumns);
 
                 currentLayout.VendorGridInfo = currentGridVendorInfo;
-
-                //   middlewareAPI.dispatch(LayoutRedux.LayoutSave(currentLayout));
-
-                middlewareAPI.dispatch(LayoutRedux.LayoutAdd(currentLayout));
+                middlewareAPI.dispatch(LayoutRedux.LayoutSave(currentLayout));
               }
             }
             return returnAction;
@@ -2345,6 +2346,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               layout.VendorGridInfo = currentGridVendorInfo;
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             } else {
+              console.log('in save layout for ' + layout.Name);
               middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
             }
             return returnAction;
@@ -2386,9 +2388,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)

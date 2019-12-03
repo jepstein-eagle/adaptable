@@ -35,6 +35,7 @@ import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
 import { PartnerState } from './PartnerState';
 import { SystemStatusState } from './SystemStatusState';
+import { ToolPanelState } from './ToolPanelState';
 
 /**
  * This is the main Predefined Config interface which users will populate if they wish to ship their Adaptable Botter instance with initial state.
@@ -366,6 +367,8 @@ export interface PredefinedConfig {
    * Large series of properties to give users full control over the look and feel of the *Dashboard* - the section above the grid with toolbars and buttons.
    */
   Dashboard?: DashboardState;
+
+  ToolPanel?: ToolPanelState;
 
   /**
    * Supplies a collection of *DataSource* objects to facilitate replacing the DataSource in the Grid with an alternate set of data (e.g. a Book or Stored Proc name).

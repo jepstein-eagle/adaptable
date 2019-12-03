@@ -46,19 +46,19 @@ function InitAdaptableBlotter() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
+    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'AdvancedSearch'],
   },
   Layout: {
     Layouts: [
       {
         ColumnSorts: [],
         Columns: ['tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'Testing',
+        Name: 'fuckingbug',
         // GroupedColumns: ['currency'],
         GroupedColumns: [],
       },
     ],
-    CurrentLayout: 'Testing',
+    CurrentLayout: 'fuckingbug',
   },
 };
 

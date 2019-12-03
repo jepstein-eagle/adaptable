@@ -13,6 +13,8 @@ import Dropdown from '../../../components/Dropdown';
 import EnumExtensions from '../../../Utilities/Extensions/EnumExtensions';
 import { Text, Flex } from 'rebass';
 import { IAdaptableBlotter } from '../../../types';
+import { QuickSearchToolPanel } from '../../QuickSearch/QuickSearchToolPanel';
+import { AdvancedSearchToolPanel } from '../../AdvancedSearch/AdvancedSearchToolPanel';
 
 interface AdaptableBlotterToolPanelProps {
   QuickSearchText: string | undefined;
@@ -65,6 +67,7 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
           Dashboard{' '}
         </Text>
         <Dropdown
+          key={'dashboardvisibility'}
           placeholder="select"
           showEmptyItem={false}
           showClearButton={false}
@@ -72,6 +75,10 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
           onChange={(value: any) => this.onDashboardVisibilityChanged(value)}
           options={visibilityOptions}
         ></Dropdown>
+
+        <QuickSearchToolPanel key={'quicksearch'} />
+
+        <AdvancedSearchToolPanel key={'advancedsearch'} />
       </Flex>
     );
   }

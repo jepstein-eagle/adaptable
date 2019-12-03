@@ -27,6 +27,7 @@ import { ApplicationState } from '../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
+import { PartnerState } from '../PredefinedConfig/PartnerState';
 
 export interface ConfigApi {
   configInit(): void;
@@ -80,6 +81,7 @@ export interface ConfigApi {
       | 'FlashingCell'
       | 'FormatColumn'
       | 'Layout'
+      | 'Partner'
       | 'PlusMinus'
       | 'QuickSearch'
       | 'Shortcut'
@@ -125,4 +127,5 @@ However if you pass in true for the returnJson parameter, then the method will r
   configGetThemeState(returnJson: boolean): ThemeState;
   configGetUpdatedRowState(returnJson: boolean): UpdatedRowState;
   configGetUserFilterState(returnJson: boolean): UserFilterState;
+  configGetPartnerState(returnJson: boolean): PartnerState;
 }

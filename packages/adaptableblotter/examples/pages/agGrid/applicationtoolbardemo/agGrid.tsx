@@ -97,10 +97,12 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'btnNewTrade',
         Caption: 'New Trade',
+        Variant: 'text',
       },
       {
         Name: 'btnRefreshGrid',
         Caption: 'Refresh Grid',
+        Variant: 'raised',
       },
     ],
   },

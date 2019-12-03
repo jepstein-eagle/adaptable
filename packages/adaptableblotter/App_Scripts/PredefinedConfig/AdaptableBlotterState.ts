@@ -40,6 +40,7 @@ import { PartnerState } from './PartnerState';
 import { ApplicationState } from './ApplicationState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { SystemStatusState } from './SystemStatusState';
+import { ToolPanelState } from './ToolPanelState';
 
 /**
  * The main state object that the Adaptable Blotter persists
@@ -91,6 +92,7 @@ export interface AdaptableBlotterState {
   SmartEdit: SmartEditState;
   TeamSharing: TeamSharingState;
   Theme: ThemeState;
+  ToolPanel: ToolPanelState;
   UpdatedRow: UpdatedRowState;
   UserFilter: UserFilterState;
 }

@@ -32,6 +32,7 @@ import { ActionColumnState } from '../../PredefinedConfig/ActionColumnState';
 import { ApplicationState } from '../../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../../PredefinedConfig/SparklineColumnState';
+import { PartnerState } from '../../PredefinedConfig/PartnerState';
 
 export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configInit(): void {
@@ -86,6 +87,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'FormatColumn',
       'Layout',
       'PlusMinus',
+      'Partner',
       'QuickSearch',
       'SelectedCells',
       'Shortcut',
@@ -133,6 +135,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       | 'FormatColumn'
       | 'Layout'
       | 'PlusMinus'
+      | 'Partner'
       | 'QuickSearch'
       | 'Shortcut'
       | 'SmartEdit'
@@ -215,6 +218,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getBlotterState().Layout)
           : this.getBlotterState().Layout;
+      case StateChangedTrigger.Partner:
+        return returnJson
+          ? JSON.stringify(this.getBlotterState().Partner)
+          : this.getBlotterState().Partner;
       case StateChangedTrigger.PlusMinus:
         return returnJson
           ? JSON.stringify(this.getBlotterState().PlusMinus)
@@ -350,6 +357,12 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   }
   public configGetLayoutState(returnJson: boolean = false): LayoutState {
     return this.configGetUserStateByFunction(StateChangedTrigger.Layout, returnJson) as LayoutState;
+  }
+  public configGetPartnerState(returnJson: boolean = false): PartnerState {
+    return this.configGetUserStateByFunction(
+      StateChangedTrigger.Partner,
+      returnJson
+    ) as PartnerState;
   }
   public configGetPlusMinusState(returnJson: boolean = false): PlusMinusState {
     return this.configGetUserStateByFunction(

@@ -198,6 +198,7 @@ export enum StateChangedTrigger {
   FreeTextColumn = 'FreeTextColumn',
   Layout = 'Layout',
   PercentBar = 'PercentBar',
+  Partner = 'Partner',
   PlusMinus = 'PlusMinus',
   QuickSearch = 'QuickSearch',
   Reminder = 'Reminder',
