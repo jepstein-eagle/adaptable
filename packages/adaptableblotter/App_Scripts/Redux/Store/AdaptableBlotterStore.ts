@@ -2247,7 +2247,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
             if (currentLayout) {
               if (currentLayout.BlotterGridInfo == null) {
-                console.log('nothing for: ' + currentLayout.Name);
                 currentLayout.BlotterGridInfo = {
                   CurrentColumns: currentLayout.Columns,
                   CurrentColumnSorts: currentLayout.ColumnSorts,
@@ -2287,7 +2286,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               blotter.setVendorGridLayoutInfo(currentLayout.VendorGridInfo);
               //  blotter.reloadGrid();
               if (hasNoVendorGridInfo) {
-                console.log('in select: saving ' + currentLayout.Name);
                 let currentGridVendorInfo =
                   currentLayout.Name == DEFAULT_LAYOUT
                     ? blotter.getVendorGridDefaultLayoutInfo()
@@ -2346,7 +2344,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               layout.VendorGridInfo = currentGridVendorInfo;
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             } else {
-              console.log('in save layout for ' + layout.Name);
               middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
             }
             return returnAction;
@@ -2388,7 +2385,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<
+              boolean
+            > = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)

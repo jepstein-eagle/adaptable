@@ -5,7 +5,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { DashboardState } from '../../PredefinedConfig/DashboardState';
 
 import {
-  AdaptableDashboardViewFactory,
+  AdaptableDashboardFactory,
   AdaptableDashboardPermanentToolbarFactory,
 } from '../AdaptableViewFactory';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
@@ -46,15 +46,14 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     );
     let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt =>
       ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
-    ); //.filter(dc => dc.IsVisible);
-
+    );
     let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
       let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
         this.props.EntitlementsState.FunctionEntitlements,
         control
       );
       if (accessLevel != AccessLevel.Hidden) {
-        let dashboardControl = AdaptableDashboardViewFactory.get(control);
+        let dashboardControl = AdaptableDashboardFactory.get(control);
         if (dashboardControl) {
           let dashboardElememt = React.createElement(dashboardControl, {
             Blotter: this.props.Blotter,
@@ -104,7 +103,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
           <div className="ab_no_margin">
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
               <SimpleButton
-                variant="outlined"
+                variant={this.props.DashboardState.MinimisedHomeToolbarButtonVariant}
                 m={1}
                 px={1}
                 py={1}
@@ -150,4 +149,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardComponent);
+export let Dashboard = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DashboardComponent);

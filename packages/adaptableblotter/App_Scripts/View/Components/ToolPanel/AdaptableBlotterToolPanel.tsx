@@ -1,36 +1,46 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
-import * as QuickSearchRedux from '../../../Redux/ActionsReducers/QuickSearchRedux';
+import * as ToolPanelRedux from '../../../Redux/ActionsReducers/ToolPanelRedux';
 import * as DashboardRedux from '../../../Redux/ActionsReducers/DashboardRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../PredefinedConfig/AdaptableBlotterState';
 import { IAdaptableBlotterToolPanelContext } from '../../../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
 import { render } from 'react-dom';
-import { Visibility } from '../../../PredefinedConfig/Common/Enums';
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
+import { Visibility, AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import Dropdown from '../../../components/Dropdown';
 import EnumExtensions from '../../../Utilities/Extensions/EnumExtensions';
-import { Text, Flex } from 'rebass';
+import { Text, Flex, Box } from 'rebass';
 import { IAdaptableBlotter } from '../../../types';
 import { QuickSearchToolPanel } from '../../QuickSearch/QuickSearchToolPanel';
 import { AdvancedSearchToolPanel } from '../../AdvancedSearch/AdvancedSearchToolPanel';
+import { Entitlement } from '../../../PredefinedConfig/EntitlementsState';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
+import BlotterHelper from '../../../Utilities/Helpers/BlotterHelper';
+import { AdaptableToolPanelFactory } from '../../AdaptableViewFactory';
+import LoggingHelper from '../../../Utilities/Helpers/LoggingHelper';
+import DropdownButton from '../../../components/DropdownButton';
+import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
+import { Icon } from '../../../components/icons';
+import Checkbox from '../../../components/CheckBox';
+
+const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface AdaptableBlotterToolPanelProps {
-  QuickSearchText: string | undefined;
-  DashboardVisibility: Visibility;
   Blotter: IAdaptableBlotter;
   TeamSharingActivated?: boolean;
-
-  onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
-  onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
+  VisibleToolsPanels: string[];
+  AvailableToolPanels: string[];
+  FunctionEntitlements: Entitlement[];
+  MainMenuItems: AdaptableBlotterMenuItem[];
+  // wondering if this shoudl take some base props like others?  though i know we dont like that...
+  onClick: (action: Redux.Action) => Redux.Action;
+  onSetToolPanelVisibility: (strategyIds: string[]) => ToolPanelRedux.ToolPanelSetToolPanelsAction;
 }
 
-export interface AdaptableBlotterToolPanelState {
-  EditedQuickSearchText: string;
-  QuickSearchShowPanel: boolean;
-  QuickSearchShowSettings: boolean;
-}
+export interface AdaptableBlotterToolPanelState {}
 
 class AdaptableBlotterToolPanelComponent extends React.Component<
   AdaptableBlotterToolPanelProps,
@@ -38,90 +48,168 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
 > {
   constructor(props: AdaptableBlotterToolPanelProps) {
     super(props);
-    this.state = {
-      EditedQuickSearchText: this.props.QuickSearchText,
-      QuickSearchShowPanel: false,
-      QuickSearchShowSettings: false,
-    };
-    // we got agGrid api from props
-    // console.log(this.props.api);
-    // console.log(this.props);
+    this.state = {};
   }
 
-  debouncedRunQuickSearch = _.debounce(
-    () => this.props.onRunQuickSearch(this.state.EditedQuickSearchText),
-    0
-  );
-
   render(): any {
-    let visibilityOptions = EnumExtensions.getNames(Visibility).map(type => {
+    const functionsGlyph: any = <Icon name={'home'} />;
+    const toolPanelsGlyph: any = <Icon name={'align-justify'} />;
+
+    let hiddenEntitlements: Entitlement[] = this.props.FunctionEntitlements.filter(
+      e => e.AccessLevel == 'Hidden'
+    );
+    let visibleDashboardControls = this.props.VisibleToolsPanels.filter(vt =>
+      ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
+    );
+    let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
+      let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
+        this.props.FunctionEntitlements,
+        control
+      );
+      if (accessLevel != AccessLevel.Hidden) {
+        let toolPanel = AdaptableToolPanelFactory.get(control);
+        if (toolPanel) {
+          let dashboardElememt = React.createElement(toolPanel, {
+            AccessLevel: accessLevel,
+          });
+          return (
+            <Box
+              key={control}
+              marginTop={1}
+              marginRight={1}
+              className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
+            >
+              {dashboardElememt}
+            </Box>
+          );
+        } else {
+          LoggingHelper.LogAdaptableBlotterError('Cannot find ToolPanel Control for ' + control);
+        }
+      }
+    });
+
+    let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
+    let allowedMenuItems = this.props.MainMenuItems.filter(
+      x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
+    );
+
+    // function menu items
+    let menuItems = allowedMenuItems.map(menuItem => {
       return {
-        value: type,
-        label: type,
+        //  disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+        onClick: () => this.props.onClick(menuItem.Action),
+        icon: <Icon name={menuItem.Icon} />,
+        label: menuItem.Label,
       };
     });
+    let functionsDropdown = (
+      <DropdownButton
+        variant="text"
+        items={menuItems}
+        tooltip="Grid Functions"
+        className="ab-DashboardToolbar__Home__functions"
+        key={'dropdown-functions'}
+        id={'dropdown-functions'}
+      >
+        {functionsGlyph}
+      </DropdownButton>
+    );
+
+    // toolpanel items
+    let toolpanelItems: any = [];
+    let allowedMenuNames: string[] = allowedMenuItems.map(vm => {
+      return vm.StrategyId;
+    });
+    toolpanelItems.push({
+      clickable: false,
+      label: (
+        <div key="toolPanelTitle">
+          {' '}
+          &nbsp;&nbsp;<b>{'Tool Panels'}</b>
+        </div>
+      ),
+    });
+    this.props.AvailableToolPanels.forEach((toolPanel: string, index) => {
+      if (ArrayExtensions.ContainsItem(allowedMenuNames, toolPanel)) {
+        let isVisible: boolean = ArrayExtensions.ContainsItem(
+          this.props.VisibleToolsPanels,
+          toolPanel
+        );
+        let functionName = StrategyConstants.getNameForStrategyId(toolPanel);
+        toolpanelItems.push({
+          id: toolPanel,
+          onClick: (e: React.SyntheticEvent) => {
+            this.onSetToolPanelVisibility(toolPanel, !isVisible);
+          },
+          label: (
+            <Checkbox
+              className="ab-dd-checkbox"
+              my={0}
+              as="div"
+              value={toolPanel}
+              key={toolPanel}
+              checked={isVisible}
+              onMouseDown={preventDefault}
+            >
+              {functionName}
+            </Checkbox>
+          ),
+        });
+      }
+    });
+    let toolPanelsDropDown = (
+      <DropdownButton
+        variant="text"
+        collapseOnItemClick={false}
+        key={'dropdown-toolpanels'}
+        id={'dropdown-toolpanels'}
+        className="ab-DashboardToolbar__Home__toolbars"
+        columns={['label']}
+        items={toolpanelItems}
+        tooltip="Manage Tool Panels"
+      >
+        {toolPanelsGlyph}
+      </DropdownButton>
+    );
 
     return (
       <Flex flexDirection="column" justifyContent="center" padding={2} style={{ width: '100%' }}>
-        <Text marginTop={3} marginBottom={2}>
-          Dashboard{' '}
-        </Text>
-        <Dropdown
-          key={'dashboardvisibility'}
-          placeholder="select"
-          showEmptyItem={false}
-          showClearButton={false}
-          value={this.props.DashboardVisibility}
-          onChange={(value: any) => this.onDashboardVisibilityChanged(value)}
-          options={visibilityOptions}
-        ></Dropdown>
-
-        <QuickSearchToolPanel key={'quicksearch'} />
-
-        <AdvancedSearchToolPanel key={'advancedsearch'} />
+        <Flex flexDirection="row" justifyContent="left" padding={2} style={{ width: '100%' }}>
+          {functionsDropdown}
+          {toolPanelsDropDown}
+        </Flex>
+        {visibleDashboardElements}
       </Flex>
     );
   }
 
-  onDashboardVisibilityChanged(visibility: any) {
-    this.props.onSetDashboardVisibility(visibility);
-  }
-
-  onUpdateQuickSearchText(searchText: string) {
-    this.setState({ EditedQuickSearchText: searchText });
-    this.debouncedRunQuickSearch();
-  }
-
-  onMinimiseQuickSearch() {
-    this.setState({ QuickSearchShowPanel: false });
-  }
-
-  onMaximiseQuickSearch() {
-    this.setState({ QuickSearchShowPanel: true });
-  }
-
-  onShowQuickSearchSettings() {
-    this.setState({ QuickSearchShowSettings: true });
-  }
-
-  onHideQuickSearchSettings() {
-    this.setState({ QuickSearchShowSettings: false });
+  onSetToolPanelVisibility(name: string, checked: boolean) {
+    const strategy: string = this.props.AvailableToolPanels.find(at => at == name);
+    const visibleToolPanels: string[] = [].concat(this.props.VisibleToolsPanels);
+    if (checked) {
+      visibleToolPanels.push(strategy);
+    } else {
+      let index: number = visibleToolPanels.findIndex(vt => vt == strategy);
+      visibleToolPanels.splice(index, 1);
+    }
+    this.props.onSetToolPanelVisibility(visibleToolPanels);
   }
 }
 
 function mapStateToProps(state: AdaptableBlotterState) {
   return {
-    QuickSearchText: state.QuickSearch.QuickSearchText,
-    DashboardVisibility: state.Dashboard.DashboardVisibility as Visibility,
+    VisibleToolsPanels: state.ToolPanel.VisibleToolPanels,
+    AvailableToolPanels: state.ToolPanel.AvailableToolPanels,
+    FunctionEntitlements: state.Entitlements.FunctionEntitlements,
+    MainMenuItems: state.Grid.MainMenuItems,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onRunQuickSearch: (newQuickSearchText: string) =>
-      dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
-    onSetDashboardVisibility: (visibility: Visibility) =>
-      dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
+    onClick: (action: Redux.Action) => dispatch(action),
+    onSetToolPanelVisibility: (strategyIds: string[]) =>
+      dispatch(ToolPanelRedux.ToolPanelSetToolPanels(strategyIds)),
   };
 }
 

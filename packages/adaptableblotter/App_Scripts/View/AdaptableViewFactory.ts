@@ -56,6 +56,9 @@ import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ReminderPopup } from './Reminder/ReminderPopup';
 import { SystemStatusPopup } from './SystemStatus/SystemStatusPopup';
 import { ConnectedComponent } from 'react-redux';
+import { AdvancedSearchToolPanel } from './AdvancedSearch/AdvancedSearchToolPanel';
+import { QuickSearchToolPanel } from './QuickSearch/QuickSearchToolPanel';
+import { DashboardToolPanel } from './Dashboard/DashboardToolPanel';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -101,7 +104,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 };
 
 // here we put the dashboard control for each strategy
-export const AdaptableDashboardViewFactory = new Map<string, ConnectedComponent<any, any>>([
+export const AdaptableDashboardFactory = new Map<string, ConnectedComponent<any, any>>([
   [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],
   [StrategyConstants.QuickSearchStrategyId, QuickSearchToolbarControl],
@@ -116,6 +119,12 @@ export const AdaptableDashboardViewFactory = new Map<string, ConnectedComponent<
   [StrategyConstants.ChartStrategyId, ChartToolbarControl],
   [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolbarControl],
+]);
+
+export const AdaptableToolPanelFactory = new Map<string, ConnectedComponent<any, any>>([
+  [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolPanel],
+  [StrategyConstants.QuickSearchStrategyId, QuickSearchToolPanel],
+  [StrategyConstants.DashboardStrategyId, DashboardToolPanel],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<

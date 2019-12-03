@@ -3,8 +3,8 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
+import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 
@@ -15,7 +15,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 
 interface QuickSearchToolPanelComponentProps
-  extends ToolbarStrategyViewPopupProps<QuickSearchToolPanelComponentProps> {
+  extends ToolPanelStrategyViewPopupProps<QuickSearchToolPanelComponentProps> {
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
   QuickSearchText: string;
 }
@@ -31,7 +31,7 @@ class QuickSearchToolPanelComponent extends React.Component<
 > {
   constructor(props: QuickSearchToolPanelComponentProps) {
     super(props);
-    this.state = { EditedQuickSearchText: this.props.QuickSearchText, IsMinimised: false };
+    this.state = { EditedQuickSearchText: this.props.QuickSearchText, IsMinimised: true };
   }
 
   UNSAFE_componentWillReceiveProps(
@@ -45,7 +45,7 @@ class QuickSearchToolPanelComponent extends React.Component<
 
   debouncedRunQuickSearch = _.debounce(
     () => this.props.onRunQuickSearch(this.state.EditedQuickSearchText),
-    250
+    350
   );
 
   render() {
@@ -53,10 +53,10 @@ class QuickSearchToolPanelComponent extends React.Component<
       <PanelToolPanel
         className="ab-DashboardToolbar__QuickSearch"
         headerText={StrategyConstants.QuickSearchStrategyName}
-        glyphicon={StrategyConstants.QuickSearchGlyph}
         onConfigure={() => this.props.onConfigure()}
-        onMinimiseChanged={() => this.onMinimiseChanged()}
+        onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
+        onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
       >
         {!this.state.IsMinimised && (
           <AdaptableBlotterFormControlTextClear
@@ -73,9 +73,6 @@ class QuickSearchToolPanelComponent extends React.Component<
     );
   }
 
-  onMinimiseChanged() {
-    this.setState({ IsMinimised: !this.state.IsMinimised });
-  }
   onUpdateQuickSearchText(searchText: string) {
     this.setState({ EditedQuickSearchText: searchText });
     this.debouncedRunQuickSearch();
@@ -99,6 +96,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           ScreenPopups.QuickSearchPopup
         )
       ),
+    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
   };
 }
 

@@ -311,7 +311,6 @@ export function IsSatisfied(
     // Check for ranges if column and user filter expressions have failed
     if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.RangeExpressions)) {
       let columnRanges = Expression.RangeExpressions.find(x => x.ColumnId == columnId);
-      // console.log(columnRanges);
       if (columnRanges) {
         let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnId);
         let colValue = getColumnValue(columnRanges.ColumnId);

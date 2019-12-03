@@ -273,6 +273,13 @@ export enum DashboardSize {
   XSmall = 'xsmall',
 }
 
+export enum ButtonVariant {
+  Text = 'text',
+  Outlined = 'outlined',
+  Raised = 'raised',
+  Unelevated = 'unelevated',
+}
+
 export enum DayOfWeek {
   Sunday = 0,
   Monday = 1,

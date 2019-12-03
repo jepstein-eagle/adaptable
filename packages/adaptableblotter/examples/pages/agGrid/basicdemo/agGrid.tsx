@@ -47,6 +47,7 @@ function InitAdaptableBlotter() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'AdvancedSearch'],
+    MinimisedHomeToolbarButtonVariant: 'raised',
   },
   Layout: {
     Layouts: [

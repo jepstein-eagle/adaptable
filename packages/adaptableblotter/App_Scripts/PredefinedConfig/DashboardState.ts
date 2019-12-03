@@ -11,6 +11,7 @@ export interface DashboardState extends RunTimeState {
   ShowToolbarsDropdown?: boolean;
   HomeToolbarTitle?: string;
   ApplicationToolbarTitle?: string;
+  MinimisedHomeToolbarButtonVariant?: 'text' | 'outlined' | 'raised' | 'unelevated';
 }
 
 /*
@@ -89,4 +90,19 @@ Sets the title of the Application Toolbar.
 Note
 The Application Toolbar is an empty toolbar designed for letting you host your own elements, buttons and controls.
 
-*/
+
+
+   * How the button will appear.
+   *
+   * Options are:
+   *
+   * -'text' (just the caption)
+   *
+   * -'outlined' (with a border)
+   *
+   * -'raised' (the button will be raised)
+   *
+   * -'unelevated'(the button will appear in the primary colour of the theme - primarily used for non light themes)
+   *
+   * **Default Value: 'outlined'**
+   */

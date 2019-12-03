@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
+import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
@@ -21,9 +21,10 @@ import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
+import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 
 interface AdvancedSearchToolPanelComponentProps
-  extends ToolbarStrategyViewPopupProps<AdvancedSearchToolPanelComponent> {
+  extends ToolPanelStrategyViewPopupProps<AdvancedSearchToolPanelComponent> {
   CurrentAdvancedSearchName: string;
   AdvancedSearches: AdvancedSearch[];
   onSelectAdvancedSearch: (
@@ -33,10 +34,19 @@ interface AdvancedSearchToolPanelComponentProps
   onEditAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
 }
 
+interface AdvancedSearchToolPanelComponentState {
+  IsMinimised: boolean;
+}
+
 class AdvancedSearchToolPanelComponent extends React.Component<
   AdvancedSearchToolPanelComponentProps,
-  {}
+  AdvancedSearchToolPanelComponentState
 > {
+  constructor(props: AdvancedSearchToolPanelComponentProps) {
+    super(props);
+    this.state = { IsMinimised: true };
+  }
+
   render() {
     let savedSearch: AdvancedSearch = this.props.AdvancedSearches.find(
       s => s.Name == this.props.CurrentAdvancedSearchName
@@ -68,12 +78,11 @@ class AdvancedSearchToolPanelComponent extends React.Component<
           <Dropdown
             className="ab-DashboardToolbar__AdvancedSearch__select"
             disabled={availableSearches.length == 0}
-            style={{ minWidth: 160 }}
+            style={{ minWidth: 170 }}
             options={availableSearches}
             value={this.props.CurrentAdvancedSearchName}
             placeholder="Select Search"
             onChange={searchName => this.onSelectedSearchChanged(searchName)}
-            marginRight={2}
           ></Dropdown>
         </Flex>
         <Flex
@@ -113,15 +122,18 @@ class AdvancedSearchToolPanelComponent extends React.Component<
     );
 
     return (
-      <PanelDashboard
+      <PanelToolPanel
         className="ab-DashboardToolbar__AdvancedSearch"
         headerText={StrategyConstants.AdvancedSearchStrategyName}
-        glyphicon={StrategyConstants.AdvancedSearchGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}
+        // glyphicon={StrategyConstants.AdvancedSearchGlyph}
+        //  onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}
+        onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
+        isMinimised={this.state.IsMinimised}
       >
-        {content}
-      </PanelDashboard>
+        {this.state.IsMinimised ? null : content}
+      </PanelToolPanel>
     );
   }
 
@@ -163,8 +175,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           }
         )
       ),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

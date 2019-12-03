@@ -13,32 +13,28 @@ import { ButtonMaximise } from '../../Buttons/ButtonMaximise';
 
 export interface PanelToolPanelProps extends PanelProps {
   headerText: string;
-  glyphicon: string;
   onConfigure: () => void;
+  onClose: () => void;
   onMinimiseChanged?: () => void;
-  isMinimised: boolean; // this you have to give I think
-  showGlyphIcon?: boolean;
-
+  isMinimised: boolean;
   useDefaultPanelStyle?: boolean;
 }
 
 export class PanelToolPanel extends React.Component<PanelToolPanelProps, {}> {
   public static defaultProps: PanelToolPanelProps = {
-    headerText: 'Function',
-    glyphicon: 'home',
+    headerText: '',
+    onClose: null,
     onConfigure: null,
     onMinimiseChanged: null,
-    showGlyphIcon: true,
-    isMinimised: false,
+    isMinimised: true,
   };
   render() {
     const {
       useDefaultPanelStyle,
       isMinimised,
-      glyphicon,
-      showGlyphIcon,
       onMinimiseChanged,
       headerText,
+      onClose,
       onConfigure,
       ...props
     } = this.props;
@@ -58,32 +54,27 @@ export class PanelToolPanel extends React.Component<PanelToolPanelProps, {}> {
             marginRight={1}
           />
         )}
-        {showGlyphIcon ? (
-          <Icon
-            style={{
-              alignSelf: 'center',
-              marginLeft: 'var(--ab-space-2)',
-              color: 'var(--ab-cmp-dashboardpanel_header__fill)',
-            }}
-            className="ab-DashboardPanel__header-icon"
-            name={glyphicon}
-          />
-        ) : null}
 
         <Flex
           className="ab-DashboardPanel__header-text"
           flex={1}
           alignItems="center"
-          marginLeft={showGlyphIcon ? 2 : 0}
+          marginLeft={0}
         >
           {headerText}
         </Flex>
         <ButtonConfigure
           iconSize={16}
-          marginLeft={2}
+          marginLeft={1}
           className="ab-DashboardPanel__header-configure-button"
           tooltip={'Configure ' + headerText}
           onClick={() => onConfigure()}
+        />
+        <ButtonClose
+          marginLeft={0}
+          className="ab-DashboardPanel__header-close-button"
+          tooltip={'Close ' + headerText}
+          onClick={() => onClose()}
         />
       </>
     );

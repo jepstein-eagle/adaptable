@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { PartnerState } from '../../PredefinedConfig/PartnerState';
 
 const initialFilterState: PartnerState = {
-  ipushpull: undefined,
+  iPushPull: undefined,
   glue42Config: undefined,
 };
 
