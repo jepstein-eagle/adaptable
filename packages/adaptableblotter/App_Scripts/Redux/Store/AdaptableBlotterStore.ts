@@ -2581,7 +2581,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullDomainPageSelector',
-                  params
+                  params,
+                  { footer: false }
                 )
               );
             } else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
@@ -2615,11 +2616,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   .catch((error: any) => {
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
                   });
+                let params: StrategyParams = {
+                  value: report,
+                  source: 'Other',
+                };
                 middlewareAPI.dispatch(
                   PopupRedux.PopupShowScreen(
                     StrategyConstants.ExportStrategyId,
                     'IPushPullDomainPageSelector',
-                    report
+                    params,
+                    { footer: false }
                   )
                 );
                 return result;

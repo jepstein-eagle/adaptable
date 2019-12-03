@@ -18,6 +18,8 @@ import ListGroup from '../../components/List/ListGroup';
 import ErrorBox from '../../components/ErrorBox';
 import SimpleButton from '../../components/SimpleButton';
 import { Icon } from '../../components/icons';
+import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import FlexWithFooter from '../../components/FlexWithFooter';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
@@ -93,40 +95,92 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
       }
     });
     return (
-      <PanelWithButton headerText="iPushPull Folder and Page Selector" glyphicon="export">
-        {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? (
-          <ErrorBox>Error getting iPushPull Pages : {this.props.ErrorMsg}</ErrorBox>
-        ) : (
-          <ListGroup>{itemsElements}</ListGroup>
-        )}
-
-        <SimpleButton
-          disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
-          tone="accent"
-          variant="raised"
-          style={{ marginTop: '10px' }}
-          onClick={() => {
-            this.props.onApplyExport(
-              this.props.Report,
-              this.state.SelectedFolder || '',
-              this.state.SelectedPage || ''
-            );
+      <PanelWithImage
+        header="iPushPull Folder and Page Selector"
+        glyphicon="export"
+        variant="primary"
+        style={{ height: '100%' }}
+      >
+        <FlexWithFooter
+          as="form"
+          onSubmit={(e: any) => {
+            e.preventDefault();
+            // this.onSubmit();
           }}
+          footerProps={{
+            fontSize: 'var(--ab-font-size-4)',
+          }}
+          footer={
+            <>
+              <SimpleButton
+                tone="neutral"
+                variant="text"
+                tooltip="Close"
+                onClick={e => {
+                  e.stopPropagation();
+                  this.hidePopup();
+                }}
+              >
+                CLOSE
+              </SimpleButton>
+              <div style={{ flex: 1 }} />
+
+              <SimpleButton
+                disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
+                tone="accent"
+                variant="raised"
+                type="submit"
+                style={{ marginTop: '10px' }}
+                onClick={() => {
+                  this.props.onApplyExport(
+                    this.props.Report,
+                    this.state.SelectedFolder || '',
+                    this.state.SelectedPage || ''
+                  );
+                }}
+              >
+                Export to iPushPull
+              </SimpleButton>
+            </>
+          }
         >
-          Start Export
-        </SimpleButton>
-      </PanelWithButton>
+          {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? (
+            <ErrorBox>Error getting iPushPull Pages : {this.props.ErrorMsg}</ErrorBox>
+          ) : (
+            <ListGroup>{itemsElements}</ListGroup>
+          )}
+        </FlexWithFooter>
+      </PanelWithImage>
     );
   }
 
+  //const { hidePopup } = usePopupContext();
+
+  hidePopup() {
+    this.props.onClosePopup();
+  }
+
   SelectFolder(folder: string) {
-    this.setState({ SelectedFolder: folder });
+    this.setState({ SelectedFolder: folder, SelectedPage: '' });
   }
   SelectPage(page: string) {
     this.setState({ SelectedPage: page });
   }
   UnSelectFolder() {
     this.setState({ SelectedFolder: '', SelectedPage: '' });
+  }
+  onSubmit() {
+    // not being called
+    if (
+      StringExtensions.IsNotNullOrEmpty(this.state.SelectedFolder) &&
+      StringExtensions.IsNotNullOrEmpty(this.state.SelectedPage)
+    ) {
+      this.props.onApplyExport(
+        this.props.Report,
+        this.state.SelectedFolder,
+        this.state.SelectedPage
+      );
+    }
   }
 }
 
