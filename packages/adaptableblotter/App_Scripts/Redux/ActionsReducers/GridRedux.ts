@@ -29,6 +29,8 @@ export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
 export const SET_GLUE42_ON = 'SET_GLUE42_ON';
 export const SET_GLUE42_OFF = 'SET_GLUE42_OFF';
+export const SET_IPUSHPULL_ON = 'SET_IPUSHPULL_ON';
+export const SET_IPUSHPULL_OFF = 'SET_IPUSHPULL_OFF';
 export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
 export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
 
@@ -97,6 +99,10 @@ export interface SetMainMenuItemsAction extends Redux.Action {
 export interface SetGlue42OnAction extends Redux.Action {}
 
 export interface SetGlue42OffAction extends Redux.Action {}
+
+export interface SetIPushPullOnAction extends Redux.Action {}
+
+export interface SetIPushPullOffAction extends Redux.Action {}
 
 export interface SetPivotModeOnAction extends Redux.Action {}
 
@@ -195,6 +201,14 @@ export const SetGlue42Off = (): SetGlue42OffAction => ({
   type: SET_GLUE42_OFF,
 });
 
+export const SetIPushPullOn = (): SetIPushPullOnAction => ({
+  type: SET_IPUSHPULL_ON,
+});
+
+export const SetIPushPullOff = (): SetIPushPullOffAction => ({
+  type: SET_IPUSHPULL_OFF,
+});
+
 export const SetPivotModeOn = (): SetPivotModeOnAction => ({
   type: SET_PIVOT_MODE_ON,
 });
@@ -276,6 +290,10 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { IsGlue42Running: true });
     case SET_GLUE42_OFF:
       return Object.assign({}, state, { IsGlue42Running: false });
+    case SET_IPUSHPULL_ON:
+      return Object.assign({}, state, { IsIPushPullRunning: true });
+    case SET_IPUSHPULL_OFF:
+      return Object.assign({}, state, { IsIPushPullRunning: false });
     case SET_PIVOT_MODE_ON:
       return Object.assign({}, state, { IsGridInPivotMode: true });
     case SET_PIVOT_MODE_OFF:

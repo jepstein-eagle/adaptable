@@ -1,9 +1,20 @@
 ﻿import { GridOptions, RowNode } from 'ag-grid-community';
 import { ITrade, ExamplesHelper } from './ExamplesHelper';
 import ArrayExtensions from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
-import { IAdaptableBlotter } from '../../App_Scripts/types';
+import { IAdaptableBlotter, BlotterApi } from '../../App_Scripts/types';
 
 export class TickingDataHelper {
+  startTickingDatSystemStatus(api: BlotterApi) {
+    setInterval(() => {
+      let systemStatusTyps: any = api.systemStatusApi.getSystemStatusState().StatusType;
+      if (systemStatusTyps == 'Info') {
+        api.systemStatusApi.setWarningSystemStatus('end is nigh');
+      } else {
+        api.systemStatusApi.setInfoSystemStatus('nah its ok');
+      }
+    }, 2000);
+  }
+
   startTickingDataagGridSetData(gridOptions: GridOptions) {
     setInterval(() => {
       const tradeId = this.generateRandomInt(0, 20);

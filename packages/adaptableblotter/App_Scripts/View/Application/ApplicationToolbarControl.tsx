@@ -65,7 +65,7 @@ class ApplicationToolbarControlComponent extends React.Component<
                   <SimpleButton
                     style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
                     key={button.Name}
-                    variant="text"
+                    variant={button.Variant ? button.Variant : 'outlined'}
                     onClick={() => {
                       this.props.Blotter.api.eventApi.emit(
                         'ApplicationToolbarButtonClicked',

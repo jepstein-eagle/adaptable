@@ -176,6 +176,25 @@ export interface ApplicationToolbarButton extends AdaptableBlotterObject {
    * *Currently you cannot provide an image for this button but that will be made available in a forthcoming release*
    */
   Caption: string;
+
+  // Tooltip?: string;
+
+  /**
+   * How the button will appear.
+   *
+   * Options are:
+   *
+   * -'text' (just the caption)
+   *
+   * -'outlined' (with a border)
+   *
+   * -'raised' (the button will be raised)
+   *
+   * -'unelevated'(the button will appear in the primary colour of the theme - primarily used for non light themes)
+   *
+   * **Default Value: 'outlined'**
+   */
+  Variant?: 'text' | 'outlined' | 'raised' | 'unelevated';
 }
 
 /**

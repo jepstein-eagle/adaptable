@@ -32,6 +32,11 @@ export class PushPullService implements IPushPullService {
       if (!this.ppInstance) {
         let instance = this.blotter.api.partnerApi.getPushPullInstance();
         this.ppInstance = instance;
+        if (instance) {
+          this.blotter.api.internalApi.setIPushPullOn();
+        } else {
+          this.blotter.api.internalApi.setIPushPullOff();
+        }
       }
     });
   }

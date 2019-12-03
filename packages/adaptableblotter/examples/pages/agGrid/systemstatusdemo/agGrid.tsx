@@ -18,6 +18,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
+import { TickingDataHelper } from '../../TickingDataHelper';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -25,6 +26,7 @@ function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  const tickingDataHelper = new TickingDataHelper();
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
@@ -36,6 +38,10 @@ function InitAdaptableBlotter() {
   };
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+
+  adaptableblotter.api.eventApi.on('BlotterReady', () => {
+    tickingDataHelper.startTickingDatSystemStatus(adaptableblotter.api);
+  });
 
   adaptableblotter.api.eventApi.on(
     'ApplicationToolbarButtonClicked',
@@ -65,15 +71,15 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Application', 'SystemStatus'],
   },
-  /*
+
   SystemStatus: {
-    ShowAlert: false,
+    //  ShowAlert: false,
     DefaultStatusMessage: 'This is default',
     DefaultStatusType: 'Info',
     StatusMessage: 'overriding with this',
     StatusType: 'Error',
   },
-  */
+
   Application: {
     ApplicationToolbarButtons: [
       {
