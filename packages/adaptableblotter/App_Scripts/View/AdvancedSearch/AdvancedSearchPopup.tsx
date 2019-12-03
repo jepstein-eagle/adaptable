@@ -67,9 +67,9 @@ class AdvancedSearchPopupComponent extends React.Component<
           }
         }
       }
+      this.shouldClosePopupOnFinishWizard =
+        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
     }
-    this.shouldClosePopupOnFinishWizard =
-      this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
   }
 
   render() {
