@@ -4,9 +4,8 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { DataType } from '../PredefinedConfig/Common/Enums';
+import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 
 /**
  * Provides access to important elements of the Adaptable Blotter like columns, sorting, selected cells etc.
@@ -132,4 +131,18 @@ export interface GridApi {
    * Returns all the current Selected Rows in the Adaptable Blotter
    */
   getSelectedRowInfo(): SelectedRowInfo;
+
+  /**
+   * Returns the underlying Vendor Grid
+   *
+   * This will be the object passed into the Adaptable Blotter Options when you created the Adaptable Blotter
+   *
+   * For ag-Grid this is the GridOptions object.
+   */
+  getVendorGrid(): any;
+
+  /**
+   * Returns the Blotter Options object passed into the Adaptable Blotter at the start
+   */
+  getBlotterOptions(): AdaptableBlotterOptions;
 }

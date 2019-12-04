@@ -13,6 +13,7 @@ import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedI
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
+import { AdaptableBlotterOptions } from '../../types';
 
 export class GridApiImpl extends ApiBase implements GridApi {
   public getGridState(): GridState {
@@ -147,5 +148,13 @@ export class GridApiImpl extends ApiBase implements GridApi {
 
   public getColumnSorts(): ColumnSort[] {
     return this.getGridState().ColumnSorts;
+  }
+
+  public getVendorGrid(): any {
+    return this.blotter.blotterOptions.vendorGrid;
+  }
+
+  public getBlotterOptions(): AdaptableBlotterOptions {
+    return this.blotter.blotterOptions;
   }
 }
