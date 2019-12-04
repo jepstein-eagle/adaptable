@@ -66,6 +66,9 @@ function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedE
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Theme', 'Layout'],
+  },
   ActionColumn: {
     ActionColumns: [
       {
@@ -76,7 +79,7 @@ let demoConfig: PredefinedConfig = {
         },
         RenderFunction: params => {
           let data: number = params.rowData.notional;
-          return data > 100
+          return data > 50
             ? '<button class="doublebutton">Double</button>'
             : '<button class="treblebutton">Treble</button>';
         },
@@ -90,6 +93,18 @@ let demoConfig: PredefinedConfig = {
         ColumnId: 'Minus',
         ButtonText: '-',
       },
+      {
+        ColumnId: 'Test1',
+        ButtonText: 'Test 1',
+      },
+      {
+        ColumnId: 'Test2',
+        ButtonText: 'Test 2',
+      },
+      {
+        ColumnId: 'Test3',
+        ButtonText: 'Test 3',
+      },
     ],
   },
   Layout: {
@@ -100,7 +115,9 @@ let demoConfig: PredefinedConfig = {
           'tradeId',
           'Triple Notional',
           'notional',
-          'counterparty',
+          'Test1',
+          'Test2',
+          'Test3',
           'Action',
           'Plus',
           'Minus',

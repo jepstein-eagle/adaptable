@@ -9,13 +9,8 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  IAdaptableBlotter,
-} from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 
@@ -88,11 +83,13 @@ let demoConfig: PredefinedConfig = {
         Name: 'btnNewTrade',
         Caption: 'New Trade',
         Variant: 'text',
+        Tone: 'success',
       },
       {
         Name: 'btnRefreshGrid',
         Caption: 'Refresh Grid',
         Variant: 'raised',
+        Tone: 'accent',
       },
     ],
   },
