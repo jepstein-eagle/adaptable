@@ -11,7 +11,6 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
@@ -68,15 +67,15 @@ class AdvancedSearchToolPanelComponent extends React.Component<
       <Flex
         flexDirection="column"
         alignItems="stretch"
-        className="ab-DashboardToolbar__AdvancedSearch__wrap"
+        className="ab-ToolPanel__AdvancedSearch__wrap"
       >
         <Flex
           flexDirection="row"
           alignItems="stretch"
-          className="ab-DashboardToolbar__AdvancedSearch__wrap"
+          className="ab-ToolPanel__AdvancedSearch__wrap"
         >
           <Dropdown
-            className="ab-DashboardToolbar__AdvancedSearch__select"
+            className="ab-ToolPanel__AdvancedSearch__select"
             disabled={availableSearches.length == 0}
             style={{ minWidth: 170 }}
             options={availableSearches}
@@ -88,11 +87,11 @@ class AdvancedSearchToolPanelComponent extends React.Component<
         <Flex
           flexDirection="row"
           alignItems="stretch"
-          className="ab-DashboardToolbar__AdvancedSearch__wrap"
+          className="ab-ToolPanel__AdvancedSearch__wrap"
         >
           <ButtonEdit
             onClick={() => this.props.onEditAdvancedSearch()}
-            className="ab-DashboardToolbar__AdvancedSearch__edit"
+            className="ab-ToolPanel__AdvancedSearch__edit"
             tooltip="Edit Current Advanced Search"
             disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
             AccessLevel={this.props.AccessLevel}
@@ -100,7 +99,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
           <ButtonNew
             variant="text"
             tone="neutral"
-            className="ab-DashboardToolbar__AdvancedSearch__new"
+            className="ab-ToolPanel__AdvancedSearch__new"
             onClick={() => this.props.onNewAdvancedSearch()}
             tooltip="Create New Advanced Search"
             AccessLevel={this.props.AccessLevel}
@@ -109,7 +108,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
 
           <ButtonDelete
             tooltip="Delete Advanced Search"
-            className="ab-DashboardToolbar__AdvancedSearch__delete"
+            className="ab-ToolPanel__AdvancedSearch__delete"
             disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
             ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
             ConfirmationMsg={
@@ -124,7 +123,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
 
     return (
       <PanelToolPanel
-        className="ab-DashboardToolbar__AdvancedSearch"
+        className="ab-ToolPanel__AdvancedSearch"
         headerText={StrategyConstants.AdvancedSearchStrategyName}
         // glyphicon={StrategyConstants.AdvancedSearchGlyph}
         //  onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}

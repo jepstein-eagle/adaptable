@@ -7,9 +7,6 @@ import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { Text, Flex, Box } from 'rebass';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
@@ -46,7 +43,7 @@ class DashboardToolPanelComponent extends React.Component<
 
     return (
       <PanelToolPanel
-        className="ab-DashboardToolbar__Dashboard"
+        className="ab-ToolPanel__Dashboard"
         headerText={StrategyConstants.DashboardStrategyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}

@@ -5,12 +5,11 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
+import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonUndo } from '../Components/Buttons/ButtonUndo';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
@@ -19,22 +18,34 @@ import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
 import join from '../../components/utils/join';
+import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { BlotterApi } from '../../Api/BlotterApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
-interface LayoutToolbarControlComponentProps
-  extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
+interface LayoutToolPanelComponentProps
+  extends ToolbarStrategyViewPopupProps<LayoutToolPanelComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
   onRestoreLayout: (layout: Layout) => LayoutRedux.LayoutRestoreAction;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
   CurrentLayout: string;
+  BlotterApi: BlotterApi;
 }
 
-class LayoutToolbarControlComponent extends React.Component<
-  LayoutToolbarControlComponentProps,
-  {}
+interface LayoutToolPanelComponentState {
+  IsMinimised: boolean;
+}
+
+class LayoutToolPanelComponent extends React.Component<
+  LayoutToolPanelComponentProps,
+  LayoutToolPanelComponentState
 > {
+  constructor(props: LayoutToolPanelComponentProps) {
+    super(props);
+    this.state = { IsMinimised: true };
+  }
+
   render(): any {
     let nonDefaultLayouts = this.props.Layouts.filter(
       l => l.Name != GeneralConstants.DEFAULT_LAYOUT
@@ -42,13 +53,16 @@ class LayoutToolbarControlComponent extends React.Component<
     let layoutEntity = nonDefaultLayouts.find(
       x => x.Name == this.props.CurrentLayout || x.Uuid == this.props.CurrentLayout
     );
+
+    // let availableLayouts: any = nonDefaultLayouts.filter(l => l.Name != currentLayoutTitle);
+
     // this is wrong at the moment an always returning true
     // but not going to worry until we test with non autosavelayouts (that dont think anyone uses)
     // but worth fixing and then making that save button enabled depending on whether this is true
     let isModifiedLayout: boolean = this.props.Blotter.LayoutService.isLayoutModified(layoutEntity);
 
     let isManualSaveLayout: boolean =
-      this.props.Blotter.blotterOptions.layoutOptions!.autoSaveLayouts == false;
+      this.props.BlotterApi.gridApi.getBlotterOptions().layoutOptions!.autoSaveLayouts == false;
 
     let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
       return {
@@ -59,36 +73,36 @@ class LayoutToolbarControlComponent extends React.Component<
     });
 
     let content = (
-      <Flex flexDirection="row">
-        <Dropdown
-          disabled={availableLayoutOptions.length == 0}
-          style={{ minWidth: 160 }}
-          marginRight={2}
-          className="ab-DashboardToolbar__Layout__select"
-          placeholder="Select Layout"
-          value={layoutEntity ? layoutEntity.Name : null}
-          options={availableLayoutOptions}
-          onChange={(layoutName: any) => {
-            this.onSelectedLayoutChanged(layoutName);
-          }}
-          clearButtonProps={{
-            tooltip: 'Clear layout',
-            disabled: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT,
-            AccessLevel: this.props.AccessLevel,
-          }}
-          showClearButton={this.props.CurrentLayout !== GeneralConstants.DEFAULT_LAYOUT}
-        />
-
+      <Flex flexDirection="column">
+        <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Layout__wrap">
+          <Dropdown
+            disabled={availableLayoutOptions.length == 0}
+            style={{ minWidth: 170 }}
+            className="ab-ToolPanel__Layout__select"
+            placeholder="Select Layout"
+            value={layoutEntity ? layoutEntity.Name : null}
+            options={availableLayoutOptions}
+            onChange={(layoutName: any) => {
+              this.onSelectedLayoutChanged(layoutName);
+            }}
+            clearButtonProps={{
+              tooltip: 'Clear layout',
+              disabled: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT,
+              AccessLevel: this.props.AccessLevel,
+            }}
+            showClearButton={this.props.CurrentLayout !== GeneralConstants.DEFAULT_LAYOUT}
+          />
+        </Flex>
         <Flex
           flexDirection="row"
           className={join(
             this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : '',
-            'ab-DashboardToolbar__Layout__wrap'
+            'ab-ToolPanel__Layout__wrap'
           )}
         >
           {isManualSaveLayout && (
             <ButtonSave
-              className="ab-DashboardToolbar__Layout__save"
+              className="ab-ToolPanel__Layout__save"
               onClick={() => this.onSaveLayout()}
               tooltip="Save Changes to Current Layout"
               disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
@@ -100,14 +114,14 @@ class LayoutToolbarControlComponent extends React.Component<
             children={null}
             tone="neutral"
             variant="text"
-            className="ab-DashboardToolbar__Layout__new"
+            className="ab-ToolPanel__Layout__new"
             onClick={() => this.props.onNewLayout()}
             tooltip="Create a new Layout"
             AccessLevel={this.props.AccessLevel}
           />
 
           <ButtonUndo
-            className="ab-DashboardToolbar__Layout__undo"
+            className="ab-ToolPanel__Layout__undo"
             onClick={() =>
               isManualSaveLayout
                 ? this.onSelectedLayoutChanged(this.props.CurrentLayout)
@@ -122,7 +136,7 @@ class LayoutToolbarControlComponent extends React.Component<
 
           <ButtonDelete
             tooltip="Delete Layout"
-            className="ab-DashboardToolbar__Layout__delete"
+            className="ab-ToolPanel__Layout__delete"
             disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
             ConfirmAction={LayoutRedux.LayoutDelete(layoutEntity)}
             ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
@@ -134,15 +148,16 @@ class LayoutToolbarControlComponent extends React.Component<
     );
 
     return (
-      <PanelDashboard
-        className="ab-DashboardToolbar__Layout"
+      <PanelToolPanel
+        className="ab-ToolPanel__Layout"
         headerText={StrategyConstants.LayoutStrategyName}
-        glyphicon={StrategyConstants.LayoutGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)}
         onConfigure={() => this.props.onConfigure()}
+        onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
+        isMinimised={this.state.IsMinimised}
+        onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)}
       >
-        {content}
-      </PanelDashboard>
+        {this.state.IsMinimised ? null : content}
+      </PanelToolPanel>
     );
   }
 
@@ -206,8 +221,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           source: 'Toolbar',
         })
       ),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup)
@@ -215,7 +229,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let LayoutToolbarControl = connect(
+export let LayoutToolPanel = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LayoutToolbarControlComponent);
+)(LayoutToolPanelComponent);

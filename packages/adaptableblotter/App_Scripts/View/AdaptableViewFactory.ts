@@ -59,6 +59,7 @@ import { ConnectedComponent } from 'react-redux';
 import { AdvancedSearchToolPanel } from './AdvancedSearch/AdvancedSearchToolPanel';
 import { QuickSearchToolPanel } from './QuickSearch/QuickSearchToolPanel';
 import { DashboardToolPanel } from './Dashboard/DashboardToolPanel';
+import { LayoutToolPanel } from './Layout/LayoutToolPanel';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -125,6 +126,7 @@ export const AdaptableToolPanelFactory = new Map<string, ConnectedComponent<any,
   [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolPanel],
   [StrategyConstants.QuickSearchStrategyId, QuickSearchToolPanel],
   [StrategyConstants.DashboardStrategyId, DashboardToolPanel],
+  [StrategyConstants.LayoutStrategyId, LayoutToolPanel],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<

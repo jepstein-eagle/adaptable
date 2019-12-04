@@ -113,4 +113,32 @@ export class LayoutService implements ILayoutService {
         ArrayExtensions.IsNotNullOrEmpty(pivotDetails.AggregationColumns))
     );
   }
+
+  public isLayoutModified(layoutEntity: Layout): boolean {
+    if (layoutEntity) {
+      if (!layoutEntity.VendorGridInfo) {
+        //  console.log('no grid info so return false');
+        return true;
+      }
+      //  console.log('is dirty: ' + layoutEntity.VendorGridInfo.IsDirty);
+
+      if (
+        !ArrayExtensions.areArraysEqualWithOrder(
+          layoutEntity.Columns,
+          layoutEntity.BlotterGridInfo.CurrentColumns
+        )
+      ) {
+        return true;
+      }
+      if (
+        !ArrayExtensions.areArraysEqualWithOrderandProperties(
+          layoutEntity.ColumnSorts,
+          layoutEntity.BlotterGridInfo.CurrentColumnSorts
+        )
+      ) {
+        return true;
+      }
+    }
+    return true;
+  }
 }
