@@ -73,7 +73,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   SystemStatus: {
-    //  ShowAlert: false,
+    ShowAlert: false,
     DefaultStatusMessage: 'This is default',
     DefaultStatusType: 'Info',
     StatusMessage: 'overriding with this',
