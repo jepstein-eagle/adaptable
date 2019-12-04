@@ -8,15 +8,16 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import AdaptableBlotter, { init } from '../../../../App_Scripts/agGrid';
 import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-var adaptableblotter: IAdaptableBlotter;
+var api: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -41,7 +42,7 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInLayout: true,
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  api = init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {
