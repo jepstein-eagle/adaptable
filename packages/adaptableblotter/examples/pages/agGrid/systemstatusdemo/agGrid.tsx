@@ -48,10 +48,16 @@ function InitAdaptableBlotter() {
           blotterApi.systemStatusApi.setSuccessSystemStatus('All working fine');
           break;
         case 'warning':
-          blotterApi.systemStatusApi.setWarningSystemStatus('Problems with server');
+          blotterApi.systemStatusApi.setWarningSystemStatus(
+            'Problems with server',
+            'It should be back up again in 1 hour'
+          );
           break;
         case 'error':
-          blotterApi.systemStatusApi.setErrorSystemStatus('The server is down!');
+          blotterApi.systemStatusApi.setErrorSystemStatus(
+            'The server is down.  Yikes!',
+            'Please make sure you dont make any changes.'
+          );
           break;
         case 'clear':
           blotterApi.systemStatusApi.clearSystemStatus();
@@ -67,7 +73,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   SystemStatus: {
-    ShowAlert: false,
+    // ShowAlert: false,
     DefaultStatusMessage: 'This is default',
     DefaultStatusType: 'Info',
     StatusMessage: 'overriding with this',
@@ -102,7 +108,7 @@ let demoConfig: PredefinedConfig = {
       },
       {
         Name: 'clear',
-        Caption: 'Set Clear',
+        Caption: 'Clear',
         Variant: 'raised',
         Tone: 'accent',
       },

@@ -6,4 +6,5 @@ export interface SystemStatusState extends DesignTimeState {
   StatusMessage?: string;
   StatusType?: 'Info' | 'Success' | 'Warning' | 'Error';
   ShowAlert?: boolean;
+  StatusFurtherInformation?: string;
 }

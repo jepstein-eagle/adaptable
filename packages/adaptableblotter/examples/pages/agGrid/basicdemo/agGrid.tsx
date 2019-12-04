@@ -54,12 +54,12 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnSorts: [],
         Columns: ['tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'fuckingbug',
+        Name: 'fixing a bug',
         // GroupedColumns: ['currency'],
         GroupedColumns: [],
       },
     ],
-    CurrentLayout: 'fuckingbug',
+    CurrentLayout: 'fixing a bug',
   },
 };
 

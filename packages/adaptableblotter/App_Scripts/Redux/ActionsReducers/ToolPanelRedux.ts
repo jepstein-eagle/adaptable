@@ -62,8 +62,7 @@ const initialToolPanelState: ToolPanelState = {
     ///   StrategyConstants.ExportStrategyId,
     StrategyConstants.LayoutStrategyId, //
     StrategyConstants.QuickSearchStrategyId,
-
-    //    StrategyConstants.ThemeStrategyId,
+    StrategyConstants.ThemeStrategyId,
     //    StrategyConstants.SystemStatusStrategyId,
   ],
   VisibleToolPanels: [
@@ -71,6 +70,7 @@ const initialToolPanelState: ToolPanelState = {
     StrategyConstants.QuickSearchStrategyId,
     StrategyConstants.AdvancedSearchStrategyId,
     StrategyConstants.LayoutStrategyId,
+    StrategyConstants.ThemeStrategyId,
     // StrategyConstants.ExportStrategyId,
     //   StrategyConstants.ColumnFilterStrategyId,
   ],

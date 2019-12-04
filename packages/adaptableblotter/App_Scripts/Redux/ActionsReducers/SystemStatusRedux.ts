@@ -4,8 +4,6 @@ import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import { SystemStatusUpdate } from '../../Utilities/Interface/SystemStatusUpdate';
 
 export const SYSTEM_SYSTEM_SET_UPDATE = 'SYSTEM_SYSTEM_SET_UPDATE';
-export const SYSTEM_SYSTEM_SET_MESSAGE = 'SYSTEM_SYSTEM_SET_MESSAGE';
-export const SYSTEM_SYSTEM_SET_STATUS_TYPE = 'SYSTEM_SYSTEM_SET_STATUS_TYPE';
 export const SYSTEM_SYSTEM_SET_SHOW_ALERT = 'SYSTEM_SYSTEM_SET_SHOW_ALERT';
 export const SYSTEM_STATUS_CLEAR = 'SYSTEM_STATUS_CLEAR';
 
@@ -30,18 +28,6 @@ export const SystemStatusSetUpdate = (
   type: SYSTEM_SYSTEM_SET_UPDATE,
   systemStatusUpdate,
 });
-export const SystemStatusSetMessage = (
-  systemStatusMessage: string
-): SystemStatusSetMessageAction => ({
-  type: SYSTEM_SYSTEM_SET_MESSAGE,
-  systemStatusMessage,
-});
-export const SystemStatusSetStatusType = (
-  systemStatusType: string
-): SystemStatusSetStatusTypeAction => ({
-  type: SYSTEM_SYSTEM_SET_STATUS_TYPE,
-  systemStatusType,
-});
 
 export const SystemStatusSetShowAlert = (showAlert: boolean): SystemStatusSetShowAlertAction => ({
   type: SYSTEM_SYSTEM_SET_SHOW_ALERT,
@@ -56,6 +42,7 @@ const initialSystemStatusState: SystemStatusState = {
   DefaultStatusMessage: 'All fine',
   DefaultStatusType: MessageType.Success,
   StatusMessage: '',
+  StatusFurtherInformation: '',
   StatusType: undefined,
   ShowAlert: true,
 };
@@ -71,16 +58,7 @@ export const SystemStatusReducer: Redux.Reducer<SystemStatusState> = (
       return Object.assign({}, state, {
         StatusMessage: systemStatusUpdate.StatusMessage,
         StatusType: systemStatusUpdate.StatusType,
-      });
-    case SYSTEM_SYSTEM_SET_MESSAGE:
-      let statusMessage: string = (action as SystemStatusSetMessageAction).systemStatusMessage;
-      return Object.assign({}, state, {
-        StatusMessage: statusMessage,
-      });
-    case SYSTEM_SYSTEM_SET_STATUS_TYPE:
-      let statusType: string = (action as SystemStatusSetStatusTypeAction).systemStatusType;
-      return Object.assign({}, state, {
-        StatusType: statusType,
+        StatusFurtherInformation: systemStatusUpdate.StatusFurtherInformation,
       });
     case SYSTEM_SYSTEM_SET_SHOW_ALERT:
       let showAlert: boolean = (action as SystemStatusSetShowAlertAction).showAlert;
@@ -91,6 +69,7 @@ export const SystemStatusReducer: Redux.Reducer<SystemStatusState> = (
       return Object.assign({}, state, {
         StatusMessage: state.DefaultStatusMessage,
         StatusType: state.DefaultStatusType,
+        StatusFurtherInformation: '',
       });
 
     default:

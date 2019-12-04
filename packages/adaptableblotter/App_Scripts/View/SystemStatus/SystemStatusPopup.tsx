@@ -2,53 +2,21 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as SystemStatusRedux from '../../Redux/ActionsReducers/SystemStatusRedux';
-import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { ColorPicker } from '../ColorPicker';
-
-import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-
-import {
-  QUICK_SEARCH_DEFAULT_BACK_COLOR,
-  QUICK_SEARCH_DEFAULT_FORE_COLOR,
-} from '../../Utilities/Constants/GeneralConstants';
-import {
-  DisplayAction,
-  LeafExpressionOperator,
-  MessageType,
-  AccessLevel,
-} from '../../PredefinedConfig/Common/Enums';
-import { IStyle } from '../../PredefinedConfig/Common/IStyle';
-import { AdaptablePopover } from '../AdaptablePopover';
-
-import WizardPanel from '../../components/WizardPanel';
-import Dropdown from '../../components/Dropdown';
-import Checkbox from '../../components/CheckBox';
-import { Text, Flex, Box } from 'rebass';
-import Panel from '../../components/Panel';
-import FormLayout, { FormRow } from '../../components/FormLayout';
-import HelpBlock from '../../components/HelpBlock';
-import Radio from '../../components/Radio';
+import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { Text, Flex } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
 import UIHelper from '../UIHelper';
-import { fontWeight } from 'styled-system';
 
 interface SystemStatusPopupProps extends StrategyViewPopupProps<SystemStatusPopupComponent> {
   StatusMessage: string;
+  StatusFurtherInformation: string;
   StatusType: MessageType;
   ShowAlert: boolean;
-  onSetSystemStatusMessage: (
-    systemStatusMessage: string
-  ) => SystemStatusRedux.SystemStatusSetMessageAction;
-  onSetSystemStatusType: (
-    systemStatusType: string
-  ) => SystemStatusRedux.SystemStatusSetStatusTypeAction;
   onSetSystemStatusShowAlert: (
     showAlert: boolean
   ) => SystemStatusRedux.SystemStatusSetShowAlertAction;
@@ -66,12 +34,6 @@ class SystemStatusPopupComponent extends React.Component<
     // this.state = { EditedSystemStatusText: '', EditedStyle: null };
   }
 
-  onSystemStatusMessageChanged(systemStatusMessage: string) {
-    this.props.onSetSystemStatusMessage(systemStatusMessage);
-  }
-  onSystemStatusTypeChanged(systemStatusType: string) {
-    this.props.onSetSystemStatusType(systemStatusType);
-  }
   onSystemStatusShowAlertChanged(showAlert: boolean) {
     this.props.onSetSystemStatusShowAlert(showAlert);
   }
@@ -129,6 +91,11 @@ class SystemStatusPopupComponent extends React.Component<
             {this.props.StatusMessage}
           </Text>
         </Flex>
+        <Flex flexDirection="row" alignItems="center">
+          <Text style={{ flex: 2 }} marginRight={2} marginTop={2}>
+            {this.props.StatusFurtherInformation}
+          </Text>
+        </Flex>
         {clearButton}
       </PanelWithImage>
     );
@@ -139,16 +106,13 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
     StatusMessage: state.SystemStatus.StatusMessage,
     StatusType: state.SystemStatus.StatusType,
+    StatusFurtherInformation: state.SystemStatus.StatusFurtherInformation,
     ShowAlert: state.SystemStatus.ShowAlert,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onSetSystemStatusMessage: (systemStatusMessage: string) =>
-      dispatch(SystemStatusRedux.SystemStatusSetMessage(systemStatusMessage)),
-    onSetSystemStatusType: (systemStatusType: string) =>
-      dispatch(SystemStatusRedux.SystemStatusSetStatusType(systemStatusType)),
     onSetSystemStatusShowAlert: (showAlert: boolean) =>
       dispatch(SystemStatusRedux.SystemStatusSetShowAlert(showAlert)),
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
