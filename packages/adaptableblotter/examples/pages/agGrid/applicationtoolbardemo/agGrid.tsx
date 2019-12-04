@@ -19,8 +19,6 @@ import {
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 
-var adaptableblotter: IAdaptableBlotter;
-
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(250);
@@ -35,57 +33,49 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const api = AdaptableBlotter.init(adaptableBlotterOptions);
 
   // global.adaptableblotter = adaptableblotter;
 
-  adaptableblotter.api.eventApi.on(
-    'ToolbarVisibilityChanged',
-    toolbarVisibilityChangedEventArgs => {
-      if (toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Application') {
-        let toolbarContents: any = (
-          <div style={{ display: 'flex' }}>
-            <button
-              className="ab-SimpleButton ab-SimpleButton--variant-outlined"
-              onClick={onNewTradeClicked}
-              style={{ marginRight: '3px' }}
-            >
-              Create New Trade
-            </button>
-            <select className="ab-Dropdown" style={{ marginRight: '3px' }}>
-              <option>Book 1</option>
-              <option>Book 2</option>
-              <option>Book 3</option>
-            </select>
-          </div>
-        );
+  api.eventApi.on('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs => {
+    if (toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Application') {
+      let toolbarContents: any = (
+        <div style={{ display: 'flex' }}>
+          <button
+            className="ab-SimpleButton ab-SimpleButton--variant-outlined"
+            onClick={onNewTradeClicked}
+            style={{ marginRight: '3px' }}
+          >
+            Create New Trade
+          </button>
+          <select className="ab-Dropdown" style={{ marginRight: '3px' }}>
+            <option>Book 1</option>
+            <option>Book 2</option>
+            <option>Book 3</option>
+          </select>
+        </div>
+      );
 
-        ReactDOM.render(
-          toolbarContents,
-          adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
-        );
-      }
+      ReactDOM.render(toolbarContents, api.applicationApi.getApplicationToolbarContentsDiv());
     }
-  );
+  });
+
+  function onNewTradeClicked() {
+    // adaptableblotter.api.layoutApi.restorelayout(adaptableblotter.api.layoutApi.getCurrentLayout());
+    api.systemStatusApi.setErrorSystemStatus('Hello Nat West');
+  }
+
   //adaptableblotter._on()
 
-  adaptableblotter.api.eventApi.on(
-    'ApplicationToolbarButtonClicked',
-    applicationToolbarButtonClickedEventArgs => {
-      alert(
-        'name: ' + applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Name
-      );
-      alert(
-        'caption: ' +
-          applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Caption
-      );
-    }
-  );
-}
-
-function onNewTradeClicked() {
-  // adaptableblotter.api.layoutApi.restorelayout(adaptableblotter.api.layoutApi.getCurrentLayout());
-  adaptableblotter.api.systemStatusApi.setErrorSystemStatus('Hello Nat West');
+  api.eventApi.on('ApplicationToolbarButtonClicked', applicationToolbarButtonClickedEventArgs => {
+    alert(
+      'name: ' + applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Name
+    );
+    alert(
+      'caption: ' +
+        applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Caption
+    );
+  });
 }
 
 let demoConfig: PredefinedConfig = {

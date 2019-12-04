@@ -1,10 +1,10 @@
 import {
   AdaptableBlotter,
-  init as initFn,
+  //init as initFn,
   AdaptableBlotterWizard as ABWizard,
 } from './AdaptableBlotter';
 
 export default AdaptableBlotter;
 
 export const AdaptableBlotterWizard = ABWizard;
-export const init = initFn;
+//export const init = initFn;

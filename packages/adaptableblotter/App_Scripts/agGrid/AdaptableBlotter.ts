@@ -1131,10 +1131,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -3085,9 +3082,9 @@ interface AdaptableBlotterWizardOptions {
   };
 }
 
-export const init = (blotterOptions: AdaptableBlotterOptions): BlotterApi =>
-  AdaptableBlotter.init(blotterOptions);
-  
+//export const init = (blotterOptions: AdaptableBlotterOptions): BlotterApi =>
+//  AdaptableBlotter.init(blotterOptions);
+
 export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
   private init: WizardInitFn;
 
