@@ -1,0 +1,4 @@
+{
+    "editor.formatOnSave": true,
+    "typescript.tsdk": "./packages/adaptableblotter/node_modules/typescript/lib"
+}
