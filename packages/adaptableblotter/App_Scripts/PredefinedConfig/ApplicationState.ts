@@ -32,7 +32,7 @@ import { RunTimeState } from './RunTimeState';
  * **Application Rendering Example** (Using React)
  *
  *  ```ts
- * adaptableblotter.api.eventApi.on('ToolbarVisibilityChanged',
+ * blotterApi.eventApi.on('ToolbarVisibilityChanged',
  *  (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
  * if (
  *   toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Application' &&
@@ -58,7 +58,7 @@ import { RunTimeState } from './RunTimeState';
  *
  *  ReactDOM.render(
  *    toolbarContents,
- *    adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
+ *    blotterApi.applicationApi.getApplicationToolbarContentsDiv()
  *    );
  *  }
  * });
@@ -100,7 +100,7 @@ import { RunTimeState } from './RunTimeState';
  *
  *  ......
  *
- *  adaptableblotter.api.eventApi.on('ApplicationToolbarButtonClicked', applicationToolbarButtonClickedEventArgs)  => {
+ *  blotterApi.eventApi.on('ApplicationToolbarButtonClicked', applicationToolbarButtonClickedEventArgs)  => {
  *      // respond as appropriate - the button argument is the ApplicationToolbarButton we provided in the state
  *  });
  * ```

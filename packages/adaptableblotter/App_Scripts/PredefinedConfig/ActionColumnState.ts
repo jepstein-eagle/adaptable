@@ -41,8 +41,8 @@ import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
  *
  * // we listen to the ActionColumnClicked event (via the eventAPI in Blotter API) and
  * // delete the row using *deleteGridData* method in gridAPI (also in Blotter API)
- *  adaptableblotter.api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
- *    adaptableblotter.api.gridApi.deleteGridData([args.data[0].id.rowData]);
+ *  blotterApi.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
+ *    blotterApi.gridApi.deleteGridData([args.data[0].id.rowData]);
  * });
  *
  *  --------------
