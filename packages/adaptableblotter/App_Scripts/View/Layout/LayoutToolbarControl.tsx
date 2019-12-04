@@ -108,7 +108,7 @@ class LayoutToolbarControlComponent extends React.Component<
 
           <ButtonNew
             children={null}
-            tone="none"
+            tone="neutral"
             variant="text"
             className="ab-DashboardToolbar__Layout__new"
             onClick={() => this.props.onNewLayout()}

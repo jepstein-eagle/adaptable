@@ -99,6 +99,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
           />
           <ButtonNew
             variant="text"
+            tone="neutral"
             className="ab-DashboardToolbar__AdvancedSearch__new"
             onClick={() => this.props.onNewAdvancedSearch()}
             tooltip="Create New Advanced Search"

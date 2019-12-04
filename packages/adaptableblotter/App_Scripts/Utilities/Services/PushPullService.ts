@@ -61,7 +61,8 @@ export class PushPullService implements IPushPullService {
       })
       .catch((err: any) => {
         this.ppInstance.__status = ServiceStatus.Error;
-        throw err.message;
+        // prefer a more descriptive error, which IPP generally provides
+        throw err.data ? err.data.error_description || err.message : err.message;
       });
   }
 

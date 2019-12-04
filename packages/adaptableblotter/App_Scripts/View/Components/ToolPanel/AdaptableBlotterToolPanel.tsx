@@ -173,7 +173,15 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
     );
 
     return (
-      <Flex flexDirection="column" justifyContent="center" padding={2} style={{ width: '100%' }}>
+      <Flex
+        flexDirection="column"
+        justifyContent="center"
+        padding={2}
+        style={{
+          width: '100%',
+          ['--ab-cmp-dashboardpanel_body__background' as any]: 'var(--ab-color-primary)',
+        }}
+      >
         <Flex flexDirection="row" justifyContent="left" padding={2} style={{ width: '100%' }}>
           {functionsDropdown}
           {toolPanelsDropDown}
