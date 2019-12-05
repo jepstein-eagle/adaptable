@@ -197,6 +197,13 @@ export interface ApplicationToolbarButton extends AdaptableBlotterObject {
    * **Default Value: 'outlined'**
    */
   Variant?: 'text' | 'outlined' | 'raised' | 'unelevated';
+
+  /**
+   * The tone of the button
+   *
+   * **Default Value: 'neutral'**
+   */
+  Tone?: 'success' | 'error' | 'neutral' | 'none' | 'warning' | 'info' | 'accent';
 }
 
 /**

@@ -60,16 +60,17 @@ const initialToolPanelState: ToolPanelState = {
     //   StrategyConstants.ColumnFilterStrategyId,/
     //   StrategyConstants.DataSourceStrategyId,
     ///   StrategyConstants.ExportStrategyId,
-    //    StrategyConstants.LayoutStrategyId,//
+    StrategyConstants.LayoutStrategyId, //
     StrategyConstants.QuickSearchStrategyId,
-
-    //    StrategyConstants.ThemeStrategyId,
+    StrategyConstants.ThemeStrategyId,
     //    StrategyConstants.SystemStatusStrategyId,
   ],
   VisibleToolPanels: [
     StrategyConstants.DashboardStrategyId,
     StrategyConstants.QuickSearchStrategyId,
     StrategyConstants.AdvancedSearchStrategyId,
+    StrategyConstants.LayoutStrategyId,
+    StrategyConstants.ThemeStrategyId,
     // StrategyConstants.ExportStrategyId,
     //   StrategyConstants.ColumnFilterStrategyId,
   ],
@@ -100,7 +101,6 @@ export const ToolPanelReducer: Redux.Reducer<ToolPanelState> = (
       return setToolPanels(state, toolPanels);
     }
     case TOOLPANEL_HIDE_TOOLBAR: {
-      alert('hello im here');
       const actionTyped = action as ToolPanelHideToolPanelAction;
       const toolPanels = (state.VisibleToolPanels || []).filter(a => a !== actionTyped.StrategyId);
       return setToolPanels(state, toolPanels);

@@ -2630,6 +2630,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 return result;
               })
               .catch((error: string) => {
+                middlewareAPI.dispatch(ExportRedux.IPPLoginFailed(error))
                 LoggingHelper.LogAdaptableBlotterError('Login failed', error);
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
               });
@@ -3122,6 +3123,9 @@ export function getNonPersistedReduxActions(): string[] {
     SystemRedux.REPORT_STOP_LIVE,
     SystemRedux.SET_IPP_DOMAIN_PAGES,
     SystemRedux.REPORT_SET_ERROR_MESSAGE,
+
+    ExportRedux.IPP_LOGIN,
+    ExportRedux.IPP_LOGIN_FAILED,
 
     SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION,
     SystemRedux.SMARTEDIT_FETCH_PREVIEW,

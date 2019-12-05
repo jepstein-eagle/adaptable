@@ -7,8 +7,6 @@ import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
-
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -51,7 +49,7 @@ class QuickSearchToolPanelComponent extends React.Component<
   render() {
     return (
       <PanelToolPanel
-        className="ab-DashboardToolbar__QuickSearch"
+        className="ab-ToolPanel__QuickSearch"
         headerText={StrategyConstants.QuickSearchStrategyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
@@ -62,7 +60,7 @@ class QuickSearchToolPanelComponent extends React.Component<
           <AdaptableBlotterFormControlTextClear
             type="text"
             placeholder="Search Text"
-            className="ab-DashboardToolbar__QuickSearch__text"
+            className="ab-ToolPanel__QuickSearch__text"
             value={this.state.EditedQuickSearchText}
             OnTextChange={x => this.onUpdateQuickSearchText(x)}
             style={{ height: '100%' }}

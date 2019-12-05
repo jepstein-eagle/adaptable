@@ -32,6 +32,7 @@ export interface SystemState extends InternalState {
   ChartVisibility: ChartVisibility;
   CalculatedColumnErrorMessage: string;
   IPPDomainsPages: IPPDomain[];
+  IPPLoginMessage?: string;
   SystemReports: Report[];
   ReportErrorMessage: string;
   QuickSearchRange: QueryRange;

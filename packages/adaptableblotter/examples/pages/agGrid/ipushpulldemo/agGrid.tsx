@@ -59,7 +59,8 @@ let demoConfig: PredefinedConfig = {
   Partner: {
     iPushPull: {
       iPushPullConfig: ipushpull,
-      // Username: process.env.IPUSHPULL_USERNAME as string,
+      Username: 'dadas@dsadas.com',
+      Password: '12312',
       // Password: process.env.IPUSHPULL_PASSWORD as string,
     },
   },

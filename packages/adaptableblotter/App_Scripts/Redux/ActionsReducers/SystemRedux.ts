@@ -21,6 +21,7 @@ import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange'
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './ExportRedux';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -345,6 +346,12 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
 ): SystemState => {
   let alerts: AdaptableAlert[];
   switch (action.type) {
+    case IPP_LOGIN: {
+      return { ...state, IPPLoginMessage: undefined };
+    }
+    case IPP_LOGIN_FAILED: {
+      return { ...state, IPPLoginMessage: (action as IPPLoginFailedAction).Message };
+    }
     case SYSTEM_ALERT_ADD: {
       const actionTypedAdd = action as SystemAlertAddAction;
       alerts = [].concat(state.AdaptableAlerts);

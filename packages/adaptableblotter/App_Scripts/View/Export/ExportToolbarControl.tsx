@@ -188,6 +188,7 @@ class ExportToolbarControlComponent extends React.Component<
           <ButtonNew
             variant="text"
             className="ab-DashboardToolbar__Export__new"
+            tone="neutral"
             children={null}
             onClick={() => this.props.onNewReport()}
             tooltip="Create New Report"

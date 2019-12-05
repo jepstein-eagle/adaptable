@@ -13,11 +13,12 @@ import SimpleButton from '../../components/SimpleButton';
 import FlexWithFooter from '../../components/FlexWithFooter';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { usePopupContext } from '../Components/Popups/PopupContext';
-import { Flex, Text } from 'rebass';
+import ErrorBox from '../../components/ErrorBox';
 
 interface IPushPullLoginProps {
   pushpullLogin: string | undefined;
   pushpullPassword: string | undefined;
+  pushpullLoginErrorMessage: string | undefined;
 
   onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;
   onCancel: () => any;
@@ -30,14 +31,14 @@ interface IPushPullLoginInternalState {
 
 const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
   const [state, setState] = React.useState<IPushPullLoginInternalState>({
-    Login: props.pushpullLogin,
-    Password: props.pushpullPassword,
+    Login: props.pushpullLogin || '',
+    Password: props.pushpullPassword || '',
   });
 
   const { hidePopup } = usePopupContext();
 
   const onSubmit = () => {
-    props.onLogin(state.Login, state.Password);
+    props.onLogin(state.Login || '', state.Password || '');
   };
 
   const onLoginChange = (event: React.FormEvent<any>) => {
@@ -92,32 +93,32 @@ const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
           </>
         }
       >
-        <Flex flexDirection="row" alignItems="center" marginTop={3}>
-          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
-            iPushPull login:
-          </Text>
-          <Flex flex={7} flexDirection="row" alignItems="center">
+        <FormLayout margin={3}>
+          <FormRow label="iPushPull login:">
             <Input
+              width="100%"
               type="email"
               placeholder="Email address"
               value={state.Login}
               onChange={onLoginChange}
             />
-          </Flex>
-        </Flex>
-        <Flex flexDirection="row" alignItems="center" marginTop={3}>
-          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
-            iPushPull password:
-          </Text>
-          <Flex flex={7} flexDirection="row" alignItems="center">
+          </FormRow>
+          <FormRow label="iPushPull password:">
             <Input
+              width="100%"
               type="password"
               placeholder="Password"
               value={state.Password}
               onChange={onPasswordChange}
             />
-          </Flex>
-        </Flex>
+          </FormRow>
+
+          {props.pushpullLoginErrorMessage ? (
+            <FormRow label="">
+              <ErrorBox>{props.pushpullLoginErrorMessage}</ErrorBox>
+            </FormRow>
+          ) : null}
+        </FormLayout>
       </FlexWithFooter>
     </PanelWithImage>
   );
@@ -127,6 +128,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   return {
     pushpullLogin: state.Partner.iPushPull ? state.Partner.iPushPull!.Username : undefined,
     pushpullPassword: state.Partner.iPushPull ? state.Partner.iPushPull!.Password : undefined,
+    pushpullLoginErrorMessage: state.System.IPPLoginMessage,
   };
 }
 
@@ -140,7 +142,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let IPushPullLogin = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IPushPullLoginComponent);
+export let IPushPullLogin = connect(mapStateToProps, mapDispatchToProps)(IPushPullLoginComponent);

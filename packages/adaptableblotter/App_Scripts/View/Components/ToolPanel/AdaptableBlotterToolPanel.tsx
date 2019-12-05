@@ -55,13 +55,14 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
     const functionsGlyph: any = <Icon name={'home'} />;
     const toolPanelsGlyph: any = <Icon name={'align-justify'} />;
 
+    // Build the Tool Panels
     let hiddenEntitlements: Entitlement[] = this.props.FunctionEntitlements.filter(
       e => e.AccessLevel == 'Hidden'
     );
-    let visibleDashboardControls = this.props.VisibleToolsPanels.filter(vt =>
+    let visibleToolPanels = this.props.VisibleToolsPanels.filter(vt =>
       ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
     );
-    let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
+    let visibleToolPanelControls = visibleToolPanels.map((control, idx) => {
       let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
         this.props.FunctionEntitlements,
         control
@@ -71,6 +72,8 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
         if (toolPanel) {
           let dashboardElememt = React.createElement(toolPanel, {
             AccessLevel: accessLevel,
+            BlotterApi: this.props.Blotter.api,
+            Blotter: this.props.Blotter,
           });
           return (
             <Box
@@ -173,12 +176,20 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
     );
 
     return (
-      <Flex flexDirection="column" justifyContent="center" padding={2} style={{ width: '100%' }}>
+      <Flex
+        flexDirection="column"
+        justifyContent="center"
+        padding={2}
+        style={{
+          width: '100%',
+          ['--ab-cmp-dashboardpanel_body__background' as any]: 'var(--ab-color-primary)',
+        }}
+      >
         <Flex flexDirection="row" justifyContent="left" padding={2} style={{ width: '100%' }}>
           {functionsDropdown}
           {toolPanelsDropDown}
         </Flex>
-        {visibleDashboardElements}
+        {visibleToolPanelControls}
       </Flex>
     );
   }

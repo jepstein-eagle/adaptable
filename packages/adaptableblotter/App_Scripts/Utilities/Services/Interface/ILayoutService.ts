@@ -6,4 +6,5 @@ export interface ILayoutService {
   getSortOrder(sortOrder: 'Ascending' | 'Descending'): string;
   autoSaveLayout(): void;
   isPivotedLayout(pivotDetails: PivotDetails): boolean;
+  isLayoutModified(layoutEntity: Layout): boolean;
 }

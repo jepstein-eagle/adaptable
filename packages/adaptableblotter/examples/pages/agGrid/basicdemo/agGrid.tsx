@@ -8,14 +8,13 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter, { init } from '../../../../App_Scripts/agGrid';
 import {
   AdaptableBlotterOptions,
   PredefinedConfig,
-  IAdaptableBlotter,
   BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import AdaptableBlotter from '../../../../agGrid';
 
 var api: BlotterApi;
 
@@ -42,7 +41,7 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInLayout: true,
   };
 
-  api = init(adaptableBlotterOptions);
+  api = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {
@@ -55,12 +54,12 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnSorts: [],
         Columns: ['tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'fuckingbug',
+        Name: 'fixing a bug',
         // GroupedColumns: ['currency'],
         GroupedColumns: [],
       },
     ],
-    CurrentLayout: 'fuckingbug',
+    CurrentLayout: 'fixing a bug',
   },
 };
 

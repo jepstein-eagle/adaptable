@@ -1,5 +1,4 @@
 node_modules/
-.vscode/
 .next
 .awcache
 /packages/adaptableblotter/dist
@@ -10,7 +9,7 @@ node_modules/
 
 # ignore symlink in angular project
 
-/packages/adaptableblotter-ng-aggrid/projects/adaptableblotter-angular-aggrid/src/adaptableblotter 
+/packages/adaptableblotter-ng-aggrid/projects/adaptableblotter-angular-aggrid/src/adaptableblotter
 /packages/adaptableblotter-ng-aggrid/dist
 **/package-lock.json
 package-lock.json

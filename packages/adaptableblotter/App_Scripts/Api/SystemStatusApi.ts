@@ -7,38 +7,47 @@ export interface SystemStatusApi {
   getSystemStatusState(): SystemStatusState;
 
   /**
-   * Sets which coloured System Status button is displayed in the Home Toolbar
-   * @param statusMessage The message to show when the button is clicked
-   * @param messageType the type of message - which will also influence the colour of the button shown (i.e. red: error, amber: warning, green: info)
+   * Sets s System Status messages.
+   *
+   * This will appear in the System Status toolbar (and popup).
+   *
+   * Additionally it will colour, as appropriate, the 'SystemStatus' button which coloured System Status button in the Home Toolbar
+   *
+   * The (optional) statusFurtherInformation allows further details to be provided if required.
    */
   setSystemStatus(
     statusMessage: string,
-    messageType: 'Error' | 'Warning' | 'Success' | 'Info'
+    messageType: 'Error' | 'Warning' | 'Success' | 'Info',
+    statusFurtherInformation?: string
   ): void;
 
   /**
    * Sets System Status to ERROR with an accompany message to display when the button is clicked.
-   * @param statusMessage The message to show when the button is clicked
+   *
+   * The (optional) statusFurtherInformation allows further details to be provided if required.
    */
-  setErrorSystemStatus(statusMessage: string): void;
+  setErrorSystemStatus(statusMessage: string, statusFurtherInformation?: string): void;
 
   /**
    * Sets System Status to WARNING with an accompany message to display when the button is clicked.
-   * @param statusMessage The message to show when the button is clicked
+   *
+   * The (optional) statusFurtherInformation allows further details to be provided if required.
    */
-  setWarningSystemStatus(statusMessage: string): void;
+  setWarningSystemStatus(statusMessage: string, statusFurtherInformation?: string): void;
 
   /**
-   * Sets System Status to SUCCESS with an accompany message to display when the button is clicked.
-   * @param statusMessage The message to show when the button is clicked
+   * Sets System Status to SUCCESS with an accompanying message to display when the button is clicked.
+   *
+   * The (optional) statusFurtherInformation allows further details to be provided if required.
    */
-  setSuccessSystemStatus(statusMessage: string): void;
+  setSuccessSystemStatus(statusMessage: string, statusFurtherInformation?: string): void;
 
   /**
    * Sets System Status to INFO with an accompany message to display when the button is clicked.
-   * @param statusMessage The message to show when the button is clicked
+   *
+   * The (optional) statusFurtherInformation allows further details to be provided if required.
    */
-  setInfoSystemStatus(statusMessage: string): void;
+  setInfoSystemStatus(statusMessage: string, statusFurtherInformation?: string): void;
   /**
    * Clears any System Status messages (and sets the button to green)
    */

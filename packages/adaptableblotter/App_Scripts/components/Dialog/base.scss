@@ -1,6 +1,7 @@
 .ab-Dialog {
   position: relative;
   background: var(--ab-cmp-dialog__background);
+  fill: var(--ab-color-text-on-primary);
   color: var(--ab-cmp-dialog__color);
   border-radius: var(--ab-cmp-dialog__border-radius);
   min-height: var(--ab-cmp-dialog__min-height);
@@ -10,7 +11,7 @@
   & > * {
     flex: 1; // needed for Safari
   }
-  
+
   &__close-button {
     position: absolute;
     right: 0.7rem;
@@ -39,6 +40,6 @@
   }
 
   &--not-modal {
-    
+
   }
 }

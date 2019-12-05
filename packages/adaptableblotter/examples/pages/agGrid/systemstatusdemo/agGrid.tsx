@@ -9,24 +9,18 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import {
   AdaptableBlotterOptions,
   PredefinedConfig,
-  IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import ReactDOM from 'react-dom';
-import { TickingDataHelper } from '../../TickingDataHelper';
-
-var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  const tickingDataHelper = new TickingDataHelper();
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
@@ -37,30 +31,36 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  adaptableblotter.api.eventApi.on('BlotterReady', () => {
-    tickingDataHelper.startTickingDatSystemStatus(adaptableblotter.api);
+  blotterApi.eventApi.on('BlotterReady', () => {
+    // tickingDataHelper.startTickingDatSystemStatus(blotterApi);
   });
 
-  adaptableblotter.api.eventApi.on(
+  blotterApi.eventApi.on(
     'ApplicationToolbarButtonClicked',
     applicationToolbarButtonClickedEventArgs => {
       switch (applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Name) {
         case 'info':
-          adaptableblotter.api.systemStatusApi.setInfoSystemStatus('No issues');
+          blotterApi.systemStatusApi.setInfoSystemStatus('No issues');
           break;
         case 'success':
-          adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('All working fine');
+          blotterApi.systemStatusApi.setSuccessSystemStatus('All working fine');
           break;
         case 'warning':
-          adaptableblotter.api.systemStatusApi.setWarningSystemStatus('Problems with server');
+          blotterApi.systemStatusApi.setWarningSystemStatus(
+            'Problems with server',
+            'It should be back up again in 1 hour'
+          );
           break;
         case 'error':
-          adaptableblotter.api.systemStatusApi.setErrorSystemStatus('The server is down!');
+          blotterApi.systemStatusApi.setErrorSystemStatus(
+            'The server is down.  Yikes!',
+            'Please make sure you dont make any changes.'
+          );
           break;
         case 'clear':
-          adaptableblotter.api.systemStatusApi.clearSystemStatus();
+          blotterApi.systemStatusApi.clearSystemStatus();
           break;
       }
     }
@@ -73,7 +73,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   SystemStatus: {
-    ShowAlert: false,
+    // ShowAlert: false,
     DefaultStatusMessage: 'This is default',
     DefaultStatusType: 'Info',
     StatusMessage: 'overriding with this',
@@ -84,23 +84,33 @@ let demoConfig: PredefinedConfig = {
     ApplicationToolbarButtons: [
       {
         Name: 'info',
-        Caption: 'Info',
+        Caption: 'Set Info',
+        Variant: 'raised',
+        Tone: 'info',
       },
       {
         Name: 'success',
-        Caption: 'Success',
+        Caption: 'Set Success',
+        Variant: 'raised',
+        Tone: 'success',
       },
       {
         Name: 'warning',
-        Caption: 'Warning',
+        Caption: 'Set Warning',
+        Variant: 'raised',
+        Tone: 'warning',
       },
       {
         Name: 'error',
-        Caption: 'Error',
+        Caption: 'Set Error',
+        Variant: 'raised',
+        Tone: 'error',
       },
       {
         Name: 'clear',
         Caption: 'Clear',
+        Variant: 'raised',
+        Tone: 'accent',
       },
     ],
   },
