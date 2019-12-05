@@ -59,11 +59,11 @@ const initialToolPanelState: ToolPanelState = {
     //    StrategyConstants.ChartStrategyId,//
     //   StrategyConstants.ColumnFilterStrategyId,/
     //   StrategyConstants.DataSourceStrategyId,
-    ///   StrategyConstants.ExportStrategyId,
+    StrategyConstants.ExportStrategyId,
     StrategyConstants.LayoutStrategyId, //
     StrategyConstants.QuickSearchStrategyId,
     StrategyConstants.ThemeStrategyId,
-    //    StrategyConstants.SystemStatusStrategyId,
+    StrategyConstants.SystemStatusStrategyId,
   ],
   VisibleToolPanels: [
     StrategyConstants.DashboardStrategyId,
@@ -71,7 +71,8 @@ const initialToolPanelState: ToolPanelState = {
     StrategyConstants.AdvancedSearchStrategyId,
     StrategyConstants.LayoutStrategyId,
     StrategyConstants.ThemeStrategyId,
-    // StrategyConstants.ExportStrategyId,
+    StrategyConstants.ExportStrategyId,
+    StrategyConstants.SystemStatusStrategyId,
     //   StrategyConstants.ColumnFilterStrategyId,
   ],
 };

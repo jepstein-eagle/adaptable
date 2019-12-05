@@ -61,6 +61,8 @@ import { QuickSearchToolPanel } from './QuickSearch/QuickSearchToolPanel';
 import { DashboardToolPanel } from './Dashboard/DashboardToolPanel';
 import { LayoutToolPanel } from './Layout/LayoutToolPanel';
 import { ThemeToolPanel } from './Theme/ThemeToolPanel';
+import { ExportToolPanel } from './Export/ExportToolPanel';
+import { SystemStatusToolPanel } from './SystemStatus/SystemStatusToolPanel';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -129,6 +131,8 @@ export const AdaptableToolPanelFactory = new Map<string, ConnectedComponent<any,
   [StrategyConstants.DashboardStrategyId, DashboardToolPanel],
   [StrategyConstants.LayoutStrategyId, LayoutToolPanel],
   [StrategyConstants.ThemeStrategyId, ThemeToolPanel],
+  [StrategyConstants.ExportStrategyId, ExportToolPanel],
+  [StrategyConstants.SystemStatusStrategyId, SystemStatusToolPanel],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<
