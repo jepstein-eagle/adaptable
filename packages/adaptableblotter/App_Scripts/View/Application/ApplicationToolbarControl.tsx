@@ -60,13 +60,20 @@ class ApplicationToolbarControlComponent extends React.Component<
                   'Application Toolbar Button Clicked Args',
                   applicationToolbarButtonClickedInfo
                 );
-
+                let buttonVariant =
+                  button.ButtonStyle && button.ButtonStyle.Variant
+                    ? button.ButtonStyle.Variant
+                    : 'outlined';
+                let buttonTone =
+                  button.ButtonStyle && button.ButtonStyle.Tone
+                    ? button.ButtonStyle.Tone
+                    : 'neutral';
                 return (
                   <SimpleButton
                     style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
                     key={button.Name}
-                    variant={button.Variant ? button.Variant : 'outlined'}
-                    tone={button.Tone ? button.Tone : 'neutral'}
+                    variant={buttonVariant}
+                    tone={buttonTone}
                     onClick={() => {
                       this.props.Blotter.api.eventApi.emit(
                         'ApplicationToolbarButtonClicked',

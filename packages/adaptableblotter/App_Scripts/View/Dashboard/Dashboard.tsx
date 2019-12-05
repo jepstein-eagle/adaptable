@@ -103,7 +103,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
           <div className="ab_no_margin">
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
               <SimpleButton
-                variant={this.props.DashboardState.MinimisedHomeToolbarButtonVariant}
+                variant={this.props.DashboardState.MinimisedHomeToolbarButtonStyle!.Variant}
+                tone={this.props.DashboardState.MinimisedHomeToolbarButtonStyle!.Tone}
                 m={1}
                 px={1}
                 py={1}

@@ -76,20 +76,28 @@ function InitAdaptableBlotter() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Theme', 'Export', 'Layout', 'Application'],
+    MinimisedHomeToolbarButtonStyle: {
+      Variant: 'raised',
+      Tone: 'accent',
+    },
   },
   Application: {
     ApplicationToolbarButtons: [
       {
         Name: 'btnNewTrade',
         Caption: 'New Trade',
-        Variant: 'text',
-        Tone: 'success',
+        ButtonStyle: {
+          Variant: 'text',
+          Tone: 'success',
+        },
       },
       {
         Name: 'btnRefreshGrid',
         Caption: 'Refresh Grid',
-        Variant: 'raised',
-        Tone: 'accent',
+        ButtonStyle: {
+          Variant: 'raised',
+          Tone: 'accent',
+        },
       },
     ],
   },
