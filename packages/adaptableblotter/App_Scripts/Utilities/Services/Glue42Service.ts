@@ -29,7 +29,7 @@ export interface IExcelStatus {
   isResolved: boolean;
 }
 export interface IGlue42Service {
-  init(): void;
+  init(glue42State: Glue42State): void;
   exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys: any[]): void;
 }
 
@@ -51,18 +51,23 @@ export class Glue42Service implements IGlue42Service {
 
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
+
+    this.blotter.api.eventApi.on('BlotterReady', () => {
+      if (!this.glue4ExcelInstance) {
+        let glue42State: Glue42State | undefined = this.blotter.api.partnerApi.getGlue42State();
+
+        if (glue42State) {
+          this.init(glue42State);
+        } else {
+          this.blotter.api.internalApi.setGlue42Off();
+          return;
+        }
+      }
+    });
   }
 
-  async init(): Promise<void> {
+  async init(glue42State: Glue42State): Promise<void> {
     try {
-      let glue42State: Glue42State | undefined = this.blotter.api.partnerApi.getGlue42State();
-
-      if (!glue42State) {
-        this.blotter.api.internalApi.setGlue42Off();
-        LogAdaptableBlotterWarning('No Glue42 config was provided');
-        return;
-      }
-
       const glue42Config = glue42State.Glue42Config;
       const glue = glue42State.Glue;
       const glue4Office = glue42State.Glue4Office;

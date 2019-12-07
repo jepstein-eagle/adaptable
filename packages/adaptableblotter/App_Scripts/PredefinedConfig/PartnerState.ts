@@ -102,7 +102,7 @@ export interface Glue42State {
    */
   Glue42Config?: any;
 
-  Glue: any; // this is the glue object
+  Glue?: any; // this is the glue object
 
-  Glue4Office: any; // this is the Glue4Office object
+  Glue4Office?: any; // this is the Glue4Office object
 }

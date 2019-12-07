@@ -374,7 +374,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.applyFinalRendering();
         this.isInitialised = true;
         this.api.internalApi.hideLoadingScreen();
-        //  await this.Glue42Service.init();
       });
 
     if (renderGrid) {
@@ -1131,7 +1130,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
+    return ArrayExtensions.ContainsItem(
+      percentBars.map(pb => pb.ColumnId),
+      columnId
+    );
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2046,7 +2048,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
 
     // this handles ticking data
-    // except it doesnt handle when data has been added to ag-Grid using updateRowData  ouch !!!
+    // except it doesnt handle when data has been added to ag-Grid using updateRowData
     this.gridOptions.api!.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {

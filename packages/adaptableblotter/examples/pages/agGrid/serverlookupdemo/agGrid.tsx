@@ -50,10 +50,6 @@ function InitAdaptableBlotter() {
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  //gridOptions.api!.ensureIndexVisible(200);
-  // adaptableblotter.api.userFilterApi.showUserFilterPopup();
-
-  //  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
   global.adaptableblotter = adaptableblotter;
 }
 

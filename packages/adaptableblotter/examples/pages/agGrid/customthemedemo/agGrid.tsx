@@ -42,8 +42,6 @@ function InitAdaptableBlotter() {
       listenToThemeChanged(themeChangedEventArgs);
     }
   );
-
-  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
 }
 
 function listenToThemeChanged(args: ThemeChangedEventArgs) {
