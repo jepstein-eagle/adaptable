@@ -17,7 +17,7 @@ export interface PartnerState extends DesignTimeState {
   /**
    * Config required allow the Adaptable Blotter to interract with Glue42.
    */
-  glue42Config?: Glue42Config;
+  Glue42?: Glue42State;
 }
 
 /**
@@ -96,22 +96,13 @@ export interface iPushPullState {
   Password?: string;
 }
 
-/**
- * Confiuration required to run Glue42
- */
-export interface Glue42Config {
-  initialization: {
-    application: string;
-    gateway: {
-      protocolVersion: number;
-      ws: string;
-    };
-    auth: {
-      username: string;
-      password: string;
-    };
-  };
-  excelExport?: {
-    timeoutMs?: number;
-  };
+export interface Glue42State {
+  /**
+   *  A Glue42 object - pre-populated with the user's Glue42 credentials
+   */
+  Glue42Config?: any;
+
+  Glue: any; // this is the glue object
+
+  Glue4Office: any; // this is the Glue4Office object
 }

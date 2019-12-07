@@ -1,4 +1,4 @@
-import { PartnerState, iPushPullState } from '../PredefinedConfig/PartnerState';
+import { PartnerState, iPushPullState, Glue42State } from '../PredefinedConfig/PartnerState';
 
 /**
  * Provides full and comprehensive run-time access to the Partner Config state.
@@ -23,4 +23,9 @@ export interface PartnerAPI {
    * Retrieves an iPushPull instance (if one has been provided by the User at design time)
    */
   getPushPullInstance(): any;
+
+  /**
+   * Retrieves the iPushPUll section from the  Partner Config section of the Adaptable Blotter State
+   */
+  getGlue42State(): Glue42State | undefined;
 }

@@ -3,7 +3,7 @@ import { PartnerState } from '../../PredefinedConfig/PartnerState';
 
 const initialFilterState: PartnerState = {
   iPushPull: undefined,
-  glue42Config: undefined,
+  Glue42: undefined,
 };
 
 export const PartnerReducer: Redux.Reducer<PartnerState> = (

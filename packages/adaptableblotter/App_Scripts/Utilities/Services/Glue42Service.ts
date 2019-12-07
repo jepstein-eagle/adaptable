@@ -1,18 +1,15 @@
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
-import { Glue42Config } from '../../PredefinedConfig/Glue42Config';
 import { LogAdaptableBlotterWarning, LogAdaptableBlotterError } from '../Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
 import Helper from '../Helpers/Helper';
 import ColumnHelper from '../Helpers/ColumnHelper';
-import { GridCell } from '../Interface/Selection/GridCell';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
-import Glue4Office, { Glue42Office } from '@glue42/office';
-import Glue, { Glue42 } from '@glue42/desktop';
+import { Glue42State } from '../../PredefinedConfig/PartnerState';
 
 export interface IGlue42ExportError {
   row: number;
@@ -38,14 +35,14 @@ export interface IGlue42Service {
 
 type SheetChangeCallback = (
   data: object[],
-  errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
+  errorCallback: (errors: any) => void, // was (errors: Glue42Office.Excel.ValidationError[]) => void,
   doneCallback: () => void,
-  delta: Glue42Office.Excel.DeltaItem[]
+  delta: any // Glue42Office.Excel.DeltaItem[]
 ) => void;
 
 export class Glue42Service implements IGlue42Service {
-  private glue4ExcelInstance!: Glue42Office.Excel.API;
-  private glueInstance!: Glue42.Glue;
+  private glue4ExcelInstance!: any;
+  private glueInstance!: any;
   private excelSyncTimeout?: number;
   private isExcelStatus: IExcelStatus = {
     msg: '[Excel] Not checked, changed the addin status 0 times!',
@@ -58,27 +55,27 @@ export class Glue42Service implements IGlue42Service {
 
   async init(): Promise<void> {
     try {
-      let glue42PartnerConfig:
-        | Glue42Config
-        | undefined = this.blotter.api.partnerApi.getPartnerState().glue42Config;
+      let glue42State: Glue42State | undefined = this.blotter.api.partnerApi.getGlue42State();
 
-      if (!glue42PartnerConfig) {
+      if (!glue42State) {
         this.blotter.api.internalApi.setGlue42Off();
         LogAdaptableBlotterWarning('No Glue42 config was provided');
         return;
       }
 
-      const glue42Config = glue42PartnerConfig as Glue42Config;
+      const glue42Config = glue42State.Glue42Config;
+      const glue = glue42State.Glue;
+      const glue4Office = glue42State.Glue4Office;
       if (glue42Config.excelExport && glue42Config.excelExport.timeoutMs) {
         this.excelSyncTimeout = glue42Config.excelExport.timeoutMs;
       }
 
-      this.glueInstance = await Glue(glue42Config.initialization);
+      this.glueInstance = await glue(glue42Config.initialization);
       // Avoid a circular assignment:
       const glue4OfficeConfig: any = cloneDeep(glue42Config.initialization);
       glue4OfficeConfig.glue = this.glueInstance;
-      const glue4OfficeInstance = await Glue4Office(glue4OfficeConfig);
-      this.glue4ExcelInstance = glue4OfficeInstance.excel as Glue42Office.Excel.API;
+      const glue4OfficeInstance = await glue4Office(glue4OfficeConfig);
+      this.glue4ExcelInstance = glue4OfficeInstance.excel; // as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
       this.blotter.api.internalApi.setGlue42On();
     } catch (error) {
@@ -106,9 +103,9 @@ export class Glue42Service implements IGlue42Service {
       let sentRows: any[] = Helper.cloneObject(exportData);
 
       //Work around a mistaken definition
-      const rowTrigger: Glue42Office.Excel.TriggerType = 'row' as any;
+      const rowTrigger = 'row' as any;
       const updateTrigger = [rowTrigger];
-      const syncOptions: Glue42Office.Excel.OpenSheetOptions = {
+      const syncOptions: any = {
         workbook: 'Glue42 Excel Integration Demo',
         worksheet: 'Data Sheet',
         updateTrigger,
@@ -117,7 +114,7 @@ export class Glue42Service implements IGlue42Service {
         syncOptions.timeoutMs = this.excelSyncTimeout;
       }
 
-      const sheetData: Glue42Office.Excel.OpenSheetConfig = {
+      const sheetData: any = {
         columnConfig: this.createColumns(data),
         data: exportData,
         options: syncOptions,
@@ -145,9 +142,9 @@ export class Glue42Service implements IGlue42Service {
   ): SheetChangeCallback {
     return (
       allData: any[],
-      errorCallback: (errors: Glue42Office.Excel.ValidationError[]) => void,
+      errorCallback: (errors: any[]) => void,
       doneCallback: () => void,
-      delta: Glue42Office.Excel.DeltaItem[]
+      delta: any[]
     ) => {
       let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(
         this.blotter.blotterOptions.primaryKey,
@@ -159,7 +156,7 @@ export class Glue42Service implements IGlue42Service {
 
       delta.forEach(deltaItem => {
         if (deltaItem.action === 'modified') {
-          deltaItem.row.forEach((change, changeIndex) => {
+          deltaItem.row.forEach((change: any, changeIndex: number) => {
             if (change !== null) {
               const column = ColumnHelper.getColumnFromFriendlyName(
                 exportColumns[changeIndex],
