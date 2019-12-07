@@ -53,14 +53,12 @@ export class Glue42Service implements IGlue42Service {
     this.blotter = blotter;
 
     this.blotter.api.eventApi.on('BlotterReady', () => {
-      if (!this.glue4ExcelInstance) {
+      if (!this.glueInstance) {
         let glue42State: Glue42State | undefined = this.blotter.api.partnerApi.getGlue42State();
-
         if (glue42State) {
           this.init(glue42State);
         } else {
           this.blotter.api.internalApi.setGlue42Off();
-          return;
         }
       }
     });
