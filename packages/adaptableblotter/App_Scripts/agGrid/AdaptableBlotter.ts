@@ -1130,10 +1130,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2054,8 +2051,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       (params: NewValueParams) => {
         // this gets called as soon as opening editor so make sure the values are different before starting any work...
         if (params.newValue != params.oldValue) {
-          const identifierValue = this.getPrimaryKeyValueFromRowNode(params.node);
-          const colId: string = params.colDef.field;
+          // not sure I need this now as we ALWAYS do this in performPostEditChecks();
+          /*
           const dataChangedInfo: DataChangedInfo = {
             OldValue: params.oldValue,
             NewValue: params.newValue,
@@ -2063,50 +2060,51 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             PrimaryKeyValue: identifierValue,
             RowNode: params.node,
           };
+           this.DataService.CreateDataChangedEvent(dataChangedInfo);
+       */
+          const colId: string | undefined = params.colDef.field;
+          if (colId) {
+            // 24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
+            // so we manually raise.
+            // https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
+            const refreshColumnList: string[] = [colId];
+            const columnList = this.calculatedColumnPathMap.get(colId);
+            if (columnList) {
+              const identifierValue = this.getPrimaryKeyValueFromRowNode(params.node);
+              columnList.forEach(columnId => {
+                const dataChangedInfo: DataChangedInfo = {
+                  OldValue: params.oldValue,
+                  NewValue: this.gridOptions.api!.getValue(columnId, params.node),
+                  ColumnId: columnId,
+                  PrimaryKeyValue: identifierValue,
+                  RowNode: params.node,
+                };
+                this.DataService.CreateDataChangedEvent(dataChangedInfo);
+                ArrayExtensions.AddItem(refreshColumnList, columnId);
+              });
+            }
 
-          this.DataService.CreateDataChangedEvent(dataChangedInfo);
-          // 24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
-          // so we manually raise.
-          // https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
-          const refreshColumnList: string[] = [colId];
-          const columnList = this.calculatedColumnPathMap.get(colId);
-          if (columnList) {
-            columnList.forEach(columnId => {
-              const dataChangedInfo: DataChangedInfo = {
-                OldValue: params.oldValue,
-                NewValue: this.gridOptions.api!.getValue(columnId, params.node),
-                ColumnId: columnId,
-                PrimaryKeyValue: identifierValue,
-                RowNode: params.node,
-              };
-              this.DataService.CreateDataChangedEvent(dataChangedInfo);
-              ArrayExtensions.AddItem(refreshColumnList, columnId);
+            // see if we need to refresh any percent bars
+            this.api.percentBarApi.getAllPercentBar().forEach(pb => {
+              refreshColumnList.forEach(changedColId => {
+                if (
+                  StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) &&
+                  pb.MaxValueColumnId == changedColId
+                ) {
+                  ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                }
+                if (
+                  StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) &&
+                  pb.MinValueColumnId == changedColId
+                ) {
+                  ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                }
+              });
             });
           }
 
-          // see if we need to refresh any percent bars
-          this.api.percentBarApi.getAllPercentBar().forEach(pb => {
-            refreshColumnList.forEach(changedColId => {
-              if (
-                StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) &&
-                pb.MaxValueColumnId == changedColId
-              ) {
-                ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-              }
-              if (
-                StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) &&
-                pb.MinValueColumnId == changedColId
-              ) {
-                ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-              }
-            });
-          });
-
           // this is new  - giving users ability to filter on external data changes
           this.filterOnExternalDataChange([params.node]);
-
-          // only if visible...
-          //     this.refreshCells([params.node], refreshColumnList);
         }
       }
     );
@@ -2473,7 +2471,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
 
         // we cannot check here for cell validation as it will be too late
-        // so we have to hope that its been done already
+        // so we have to hope that its been done already - though currently we ONLY do it for direct edits and setCellValue() but not other api updates
         // if we have gone through the Blotter API we will be fine but not if they update ag-Grid directly
         // but we can perform the POST EDIT checks
         this.performPostEditChecks(dataChangedInfo);

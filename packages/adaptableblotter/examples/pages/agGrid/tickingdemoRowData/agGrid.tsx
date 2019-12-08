@@ -23,11 +23,11 @@ function InitAdaptableBlotter() {
   const tickingDataHelper = new TickingDataHelper();
   const tradeCount: number = 30;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
-  console.log(tradeData);
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(null);
+
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'ticking demo row demo '
+    'ticking data row demo '
   );
   adaptableBlotterOptions.predefinedConfig = flashingJson;
   const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
@@ -36,13 +36,9 @@ function InitAdaptableBlotter() {
   tickingDataHelper.startTickingDataagGridThroughRowData(
     adaptableblotter,
     tradeData,
-    1000,
+    5000,
     tradeCount
   );
-
-  setTimeout(() => {
-    gridOptions.api!.setRowData(tradeData);
-  }, 5000);
 }
 
 let flashingJson: PredefinedConfig = {

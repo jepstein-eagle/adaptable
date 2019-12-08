@@ -6,17 +6,16 @@ import * as SystemStatusRedux from '../../Redux/ActionsReducers/SystemStatusRedu
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 
 interface SystemStatusToolPanelProps
-  extends ToolbarStrategyViewPopupProps<SystemStatusToolPanelComponent> {
+  extends ToolPanelStrategyViewPopupProps<SystemStatusToolPanelComponent> {
   StatusMessage: string;
   StatusType: string;
   DefaultStatusMessage: string;

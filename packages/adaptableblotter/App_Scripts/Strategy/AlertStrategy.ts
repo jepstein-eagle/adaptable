@@ -17,7 +17,6 @@ import {
   MenuItemShowPopup,
 } from '../Utilities/MenuItem';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
-import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {

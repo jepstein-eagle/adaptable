@@ -67,7 +67,7 @@ export class TickingDataHelper {
           trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - directionToAdd));
         });
       }
-    }, 400);
+    }, 3000);
   }
 
   startTickingDataagGridRowNodeSetData(gridOptions: GridOptions, rowData: any) {
@@ -130,7 +130,7 @@ export class TickingDataHelper {
       setInterval(() => {
         const tradeId = this.generateRandomInt(0, tradeCount);
         // NOTE:  You need to make a COPY of the data that you are changing...
-        const trade: ITrade = { ...gridOptions.rowData[tradeId] };
+        const trade: ITrade = { ...rowData[tradeId] };
         if (trade) {
           const randomInt = this.generateRandomInt(1, 2);
           const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
@@ -140,7 +140,6 @@ export class TickingDataHelper {
           const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
           const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
 
-          console.log(trade.notional);
           trade.price = newPrice;
           trade.bid = bid;
           trade.ask = ask;
@@ -150,7 +149,9 @@ export class TickingDataHelper {
           trade.changeOnYear =
             trade.changeOnYear > 0 ? trade.changeOnYear + 50 : trade.changeOnYear - 50;
 
-          blotter.api.gridApi.updateGridData([trade]);
+          //  blotter.api.gridApi.updateGridData([trade]);
+          blotter.api.gridApi.setCellValue('notional', trade.notional, tradeId);
+
           //   gridOptions.api!.updateRowData({ update: [trade] });
         }
       }, tickingFrequency);

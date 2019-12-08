@@ -52,7 +52,7 @@ const initialToolPanelState: ToolPanelState = {
   AvailableToolPanels: [
     StrategyConstants.DashboardStrategyId,
     StrategyConstants.AdvancedSearchStrategyId,
-    //  StrategyConstants.AlertStrategyId,
+    StrategyConstants.AlertStrategyId,
     //   StrategyConstants.ApplicationStrategyId,
     //    StrategyConstants.BulkUpdateStrategyId,
     //   StrategyConstants.CellSummaryStrategyId,
@@ -73,6 +73,7 @@ const initialToolPanelState: ToolPanelState = {
     StrategyConstants.ThemeStrategyId,
     StrategyConstants.ExportStrategyId,
     StrategyConstants.SystemStatusStrategyId,
+    StrategyConstants.AlertStrategyId,
     //   StrategyConstants.ColumnFilterStrategyId,
   ],
 };

@@ -43,7 +43,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
       const icon = IconCmp ? <IconCmp /> : null;
 
       let alertText = (
-        <div style={{ maxWidth: '600px', width: '100%' }}>
+        <div key={alert.Uuid} style={{ maxWidth: '600px', width: '100%' }}>
           <Flex alignItems="center" width="100%">
             <Text style={textStyle}>{icon}</Text>
 
