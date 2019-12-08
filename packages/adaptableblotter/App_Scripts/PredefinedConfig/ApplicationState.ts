@@ -166,7 +166,9 @@ export interface ApplicationState extends RunTimeState {
   /**
    * Sets the title of the Application Toolbar
    *
-   * Use this property instead of the deprecrated `ApplicationToolbarTitle` property in Dashboard State.
+   * Note:  Use this property instead of the deprecrated `ApplicationToolbarTitle` property in Dashboard State.
+   *
+   * **Default Value: 'Application**
    */
   ApplicationToolbarTitle?: string;
 }

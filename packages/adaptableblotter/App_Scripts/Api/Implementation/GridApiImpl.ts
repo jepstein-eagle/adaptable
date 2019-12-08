@@ -146,8 +146,20 @@ export class GridApiImpl extends ApiBase implements GridApi {
     }
   }
 
-  public getCellDisplayValue(id: any, columnId: string): string {
-    return this.blotter.getDisplayValue(id, columnId);
+  public getCellDisplayValue(primaryKeyValue: any, columnId: string): string {
+    return this.blotter.getDisplayValue(primaryKeyValue, columnId);
+  }
+
+  public hideFilterForm(): void {
+    this.blotter.hideFilterForm();
+  }
+
+  public applyGridFiltering(): void {
+    this.blotter.applyGridFiltering();
+  }
+
+  public clearGridFiltering(): void {
+    this.blotter.clearGridFiltering();
   }
 
   public getColumnSorts(): ColumnSort[] {

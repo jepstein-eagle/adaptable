@@ -55,7 +55,7 @@ export const ApplicationSetApplicationToolbarTitle = (
 const initialFilterState: ApplicationState = {
   ApplicationToolbarButtons: EMPTY_ARRAY,
   ApplicationDataEntries: EMPTY_ARRAY,
-  ApplicationToolbarTitle: EMPTY_STRING,
+  ApplicationToolbarTitle: 'Application',
 };
 
 export const ApplicationReducer: Redux.Reducer<ApplicationState> = (

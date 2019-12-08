@@ -17,11 +17,6 @@ export class ApplicationApiImpl extends ApiBase implements ApplicationApi {
     return this.getApplicationState().ApplicationToolbarButtons;
   }
 
-  /**
-   * Renders the Application Toolbar with the element it is given.
-   *
-   * @param element the element to be rendered - presumably a <div> but can be anything which is easily renderable.
-   */
   public getApplicationToolbarContentsDivId(): string {
     return 'ab-ApplicationToolbar__contents';
   }
