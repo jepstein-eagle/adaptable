@@ -23,7 +23,6 @@ const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
 const DASHBOARD_SHOW_TOOLBARS_DROPDOWN = 'DASHBOARD_SHOW_TOOLBARS_DROPDOWN';
 const DASHBOARD_HIDE_TOOLBARS_DROPDOWN = 'DASHBOARD_HIDE_TOOLBARS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
-const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE';
 const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE =
   'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE';
 
@@ -81,10 +80,6 @@ export interface DashboardShowToolbarsDropdownAction extends Redux.Action {}
 export interface DashboardHideToolbarsDropdownAction extends Redux.Action {}
 
 export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
-  Title: string;
-}
-
-export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action {
   Title: string;
 }
 
@@ -182,13 +177,6 @@ export const DashboardSetHomeToolbarTitle = (
   Title,
 });
 
-export const DashboardSetApplicationToolbarTitle = (
-  Title: string
-): DashboardSetHomeToolbarTitleAction => ({
-  type: DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE,
-  Title,
-});
-
 export const DashboardSetMinimisedHomeToolbarButtonStyle = (
   ButtonStyle: ButtonStyle
 ): DashboardSetMinimisedHomeToolbarButtonStyleAction => ({
@@ -224,8 +212,8 @@ const initialDashboardState: DashboardState = {
     StrategyConstants.SmartEditStrategyId,
     StrategyConstants.ColumnChooserStrategyId,
     StrategyConstants.ConditionalStyleStrategyId,
-    StrategyConstants.TeamSharingStrategyId,
-    StrategyConstants.SystemStatusStrategyId,
+    // StrategyConstants.TeamSharingStrategyId,
+    // StrategyConstants.SystemStatusStrategyId,
   ],
   DashboardVisibility: Visibility.Visible,
   ShowSystemStatusButton: true,
@@ -333,11 +321,6 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_SET_HOME_TOOLBAR_TITLE: {
       const actionTyped = action as DashboardSetHomeToolbarTitleAction;
       return Object.assign({}, state, { HomeToolbarTitle: actionTyped.Title });
-    }
-
-    case DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE: {
-      const actionTyped = action as DashboardSetApplicationToolbarTitleAction;
-      return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
     }
 
     case DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE: {

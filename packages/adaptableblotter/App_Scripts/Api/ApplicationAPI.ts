@@ -43,4 +43,6 @@ export interface ApplicationApi {
   deleteApplicationDataEntry(applicationDataEntry: ApplicationDataEntry): void;
   getApplicationDataEntryByKey(key: string): ApplicationDataEntry | undefined;
   getApplicationDataEntriesByValue(value: any): ApplicationDataEntry[];
+
+  SetApplicationToolbarTitle(title: string): void;
 }

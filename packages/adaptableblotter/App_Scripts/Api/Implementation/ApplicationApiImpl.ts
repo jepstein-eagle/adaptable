@@ -63,4 +63,8 @@ export class ApplicationApiImpl extends ApiBase implements ApplicationApi {
     let entries = this.getApplicationState().ApplicationDataEntries;
     return entries.filter(e => e.Value === value);
   }
+
+  public SetApplicationToolbarTitle(title: string): void {
+    this.dispatchAction(ApplicationRedux.ApplicationSetApplicationToolbarTitle(title));
+  }
 }

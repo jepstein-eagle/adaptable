@@ -162,6 +162,13 @@ export interface ApplicationState extends RunTimeState {
    * That data will then be persisted by Adaptable Blotter in its own State.
    */
   ApplicationDataEntries?: ApplicationDataEntry[];
+
+  /**
+   * Sets the title of the Application Toolbar
+   *
+   * Use this property instead of the deprecrated `ApplicationToolbarTitle` property in Dashboard State.
+   */
+  ApplicationToolbarTitle?: string;
 }
 
 /**

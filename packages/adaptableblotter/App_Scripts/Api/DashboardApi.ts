@@ -24,6 +24,9 @@ export interface DashboardApi {
   HideColumnsDropdown(): void;
   // If no value is set, the title of the Home Toolbar will be the ​​blotterId​​ property in AdaptableBlotterOptions
   SetHomeToolbarTitle(title: string): void;
+  /**
+   * This is deprecated
+   */
   SetApplicationToolbarTitle(title: string): void;
   Minimise(): void;
 

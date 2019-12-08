@@ -21,6 +21,7 @@ import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
 interface ApplicationToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
   ApplicationToolbarTitle: string | undefined;
+  ApplicationToolbarTitleDashboard: string | undefined;
   ApplicationToolbarButtons: ApplicationToolbarButton[] | undefined;
 }
 class ApplicationToolbarControlComponent extends React.Component<
@@ -30,6 +31,8 @@ class ApplicationToolbarControlComponent extends React.Component<
   render(): any {
     const headerText = StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitle)
       ? this.props.ApplicationToolbarTitle
+      : StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitleDashboard)
+      ? this.props.ApplicationToolbarTitleDashboard
       : StrategyConstants.ApplicationStrategyName;
 
     return (
@@ -94,7 +97,8 @@ class ApplicationToolbarControlComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableBlotterState) {
   return {
-    ApplicationToolbarTitle: state.Dashboard.ApplicationToolbarTitle,
+    ApplicationToolbarTitleDashboard: state.Dashboard.ApplicationToolbarTitle, // deprecated but not used any more
+    ApplicationToolbarTitle: state.Application.ApplicationToolbarTitle,
     ApplicationToolbarButtons: state.Application.ApplicationToolbarButtons,
   };
 }
