@@ -31,7 +31,7 @@ function InitAdaptableBlotter() {
     'ticking demo node help'
   );
   adaptableBlotterOptions.predefinedConfig = json;
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   // turn on mimicing ticking data
   tickingDataHelper.startTickingDataagGridRowNodeSetData(gridOptions, tradeData);

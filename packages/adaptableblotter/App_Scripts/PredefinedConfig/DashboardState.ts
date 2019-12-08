@@ -30,7 +30,7 @@ import { ButtonStyle } from './Common/ButtonStyle';
  *
  * - set 5 Toolbars to be visible
  *
- * - set 4 Function Quick-Link buttons to be visible
+ * - set 4 Function Buttons to be visible
  *
  * - hidden the GridInfo button
  *
@@ -62,7 +62,7 @@ export interface DashboardState extends RunTimeState {
   VisibleToolbars?: string[];
 
   /**
-   * Which strategy quick-link buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
+   * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
    *
    * Each button is connected to a Function in the Adaptable Blotter and opens the main popup screen for that Strategy.
    *

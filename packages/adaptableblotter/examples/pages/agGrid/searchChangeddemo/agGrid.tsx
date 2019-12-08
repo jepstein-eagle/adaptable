@@ -10,11 +10,12 @@ import {
   IAdaptableBlotter,
   AdaptableBlotterOptions,
   SearchChangedEventArgs,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -29,9 +30,9 @@ function InitAdaptableBlotter() {
     blotterId: 'audit demo',
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  adaptableblotter.api.eventApi
+  blotterApi.eventApi
     .onSearchChanged()
     .Subscribe((sender, searchChangedArgs) => listenToSearchChangedEvent(searchChangedArgs));
 }

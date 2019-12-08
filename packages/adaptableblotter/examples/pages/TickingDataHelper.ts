@@ -159,7 +159,7 @@ export class TickingDataHelper {
 
   public startTickingDataagGridTradesUpdateData(
     gridOptions: any,
-    blotter: IAdaptableBlotter,
+    blotterApi: BlotterApi,
     tickingFrequency: number,
     tradeCount: number
   ) {
@@ -179,7 +179,7 @@ export class TickingDataHelper {
           trade.price = trade.price - 1;
         } else if (numberToAdd == 3) {
           // if 3 then update a currency
-          let curentValue = blotter.getDisplayValue(trade.tradeId, 'currency');
+          let curentValue = blotterApi.gridApi.getCellDisplayValue(trade.tradeId, 'currency');
           let isCurrency: boolean = curentValue == 'JPY';
           if (isCurrency) {
             trade.currency = 'ABC';
@@ -188,13 +188,13 @@ export class TickingDataHelper {
           }
         }
 
-        blotter.api.gridApi.updateGridData([trade]);
+        blotterApi.gridApi.updateGridData([trade]);
       }, tickingFrequency);
     }
   }
 
-  startTickingDataagGridAddRow(blotter: IAdaptableBlotter, rowData: any, rowCount: number) {
-    let gridOptions: GridOptions = blotter.blotterOptions.vendorGrid as GridOptions;
+  startTickingDataagGridAddRow(blotterApi: BlotterApi, rowData: any, rowCount: number) {
+    let gridOptions: GridOptions = blotterApi.gridApi.getVendorGrid() as GridOptions;
     if (
       gridOptions != null &&
       gridOptions.api != null &&
@@ -209,15 +209,15 @@ export class TickingDataHelper {
         const trade: ITrade = examplesHelper.createTrade(newRowCount);
         if (trade) {
           console.log('adding row with tradeid: ' + newRowCount);
-          blotter.api.gridApi.addGridData([trade]);
+          blotterApi.gridApi.addGridData([trade]);
           //  gridOptions.api!.updateRowData({ add: [trade] });
         }
       }, 2000);
     }
   }
 
-  startTickingDataagGridDeleteRow(blotter: IAdaptableBlotter, rowData: any, rowCount: number) {
-    let gridOptions: GridOptions = blotter.blotterOptions.vendorGrid as GridOptions;
+  startTickingDataagGridDeleteRow(blotterApi: BlotterApi, rowData: any, rowCount: number) {
+    let gridOptions: GridOptions = blotterApi.gridApi.getVendorGrid() as GridOptions;
     if (
       gridOptions != null &&
       gridOptions.api != null &&
@@ -230,7 +230,7 @@ export class TickingDataHelper {
         if (ArrayExtensions.NotContainsItem(deletedTradeIds, tradeId)) {
           deletedTradeIds.push(tradeId);
           console.log('deleting row with tradeid: ' + (tradeId + 1));
-          blotter.api.gridApi.deleteGridData([rowData[tradeId]]);
+          blotterApi.gridApi.deleteGridData([rowData[tradeId]]);
           //   gridOptions.api!.updateRowData({ remove: [rowData[tradeId]] });
         }
       }, 5000);

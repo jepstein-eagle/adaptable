@@ -6,15 +6,15 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
 import {
-  IAdaptableBlotter,
   AdaptableBlotterOptions,
   PredefinedConfig,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -36,18 +36,18 @@ function InitAdaptableBlotter() {
 
   // userFunctions
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
   let runNewEvents: boolean = true;
 
   if (runNewEvents) {
-    adaptableblotter.api.eventApi.on(
+    blotterApi.eventApi.on(
       'ActionColumnClicked',
       (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
         listenToActionColumnClicked(actionColumnEventArgs);
       }
     );
   } else {
-    adaptableblotter.api.eventApi
+    blotterApi.eventApi
       .onActionColumnClicked()
       .Subscribe((sender, actionColumnEventArgs) =>
         listenToActionColumnClicked(actionColumnEventArgs)
@@ -62,7 +62,7 @@ function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedE
   let rowData = actionColumnEventArgs.data[0].id.rowData;
   let multiplier: number = rowData.notional > 100 ? 2 : 3;
   let newNotional = rowData.notional * multiplier;
-  adaptableblotter.api.gridApi.setCellValue(rowData.tradeId, 'notional', newNotional);
+  blotterApi.gridApi.setCellValue(rowData.tradeId, 'notional', newNotional);
 }
 
 let demoConfig: PredefinedConfig = {

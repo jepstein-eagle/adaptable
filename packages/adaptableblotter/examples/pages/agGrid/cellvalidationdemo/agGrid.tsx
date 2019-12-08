@@ -7,14 +7,14 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
 import {
-  IAdaptableBlotter,
   AdaptableBlotterOptions,
   PredefinedConfig,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -30,7 +30,7 @@ function InitAdaptableBlotter() {
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {
@@ -39,7 +39,7 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'price',
         Expression: undefined,
-        QueryRange: {
+        Range: {
           Operand1: '100',
           Operand1Type: 'Value',
           Operand2: '',

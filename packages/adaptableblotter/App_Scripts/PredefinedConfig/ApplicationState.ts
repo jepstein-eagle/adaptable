@@ -198,7 +198,7 @@ export interface ApplicationToolbarButton extends AdaptableBlotterObject {
    *
    * Includes 'Variant' and 'Tone'
    */
-  ButtonStyle: ButtonStyle;
+  ButtonStyle?: ButtonStyle;
 }
 
 /**

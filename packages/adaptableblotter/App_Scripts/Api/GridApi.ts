@@ -145,4 +145,6 @@ export interface GridApi {
    * Returns the Blotter Options object passed into the Adaptable Blotter at the start
    */
   getBlotterOptions(): AdaptableBlotterOptions;
+
+  getCellDisplayValue(id: any, columnId: string): string;
 }

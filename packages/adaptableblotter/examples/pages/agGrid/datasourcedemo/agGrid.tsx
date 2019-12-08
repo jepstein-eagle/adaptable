@@ -15,6 +15,7 @@ import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   SearchChangedEventArgs,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { BlotterSearchState } from '../../../../App_Scripts/Api/Events/SearchChanged/BlotterSearchState';
@@ -47,17 +48,17 @@ function InitAdaptableBlotter() {
     },
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  adaptableblotter.api.eventApi
+  blotterApi.eventApi
     .onSearchChanged()
     .Subscribe((sender, searchChangedArgs) =>
-      listenToSearchChange(adaptableblotter, examplesHelper, searchChangedArgs)
+      listenToSearchChange(blotterApi, examplesHelper, searchChangedArgs)
     );
 }
 
 function listenToSearchChange(
-  blotter: AdaptableBlotter,
+  blotterApi: BlotterApi,
   examplesHelper: ExamplesHelper,
   searchChangedArgs: SearchChangedEventArgs
 ) {
@@ -69,17 +70,17 @@ function listenToSearchChange(
       switch (searchState.dataSource.Name) {
         case 'Euro':
           let euroTrades = examplesHelper.getEuroTrades(500);
-          blotter.api.gridApi.setGridData(euroTrades);
+          blotterApi.gridApi.setGridData(euroTrades);
           break;
 
         case 'Dollar':
           let dollarTrades = examplesHelper.getDollarTrades(500);
-          blotter.api.gridApi.setGridData(dollarTrades);
+          blotterApi.gridApi.setGridData(dollarTrades);
           break;
 
         case 'GBP':
           let sterlingTrades = examplesHelper.getGBPTrades(500);
-          blotter.api.gridApi.setGridData(sterlingTrades);
+          blotterApi.gridApi.setGridData(sterlingTrades);
           break;
       }
     }

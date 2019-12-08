@@ -30,7 +30,7 @@ function InitAdaptableBlotter() {
     // useAdaptableBlotterFilterForm: false,
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {

@@ -83,6 +83,14 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdown());
   }
 
+  public ShowToolbarsDropdown(): void {
+    this.dispatchAction(DashboardRedux.DashboardShowToolbarsDropdown());
+  }
+
+  public HideToolbarsDropdown(): void {
+    this.dispatchAction(DashboardRedux.DashboardHideToolbarsDropdown());
+  }
+
   public SetHomeToolbarTitle(title: string): void {
     this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title));
   }

@@ -15,17 +15,12 @@ import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ApplicationDataEntry } from '../../../../App_Scripts/PredefinedConfig/ApplicationState';
 
-/*
-Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
-No JSON or anything complicated
-Nor do we create the ag-Grid
-*/
-
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -47,42 +42,42 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInLayout: true,
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  adaptableblotter.api.eventApi.on(
+  blotterApi.eventApi.on(
     'ApplicationToolbarButtonClicked',
     applicationToolbarButtonClickedEventArgs => {
       console.log('fetching');
-      console.log(adaptableblotter.api.applicationApi.getApplicationDataEntries());
+      console.log(blotterApi.applicationApi.getApplicationDataEntries());
       console.log('adding');
       let kvp: ApplicationDataEntry = {
         Key: 'team',
         Value: 'liverpool',
       };
-      adaptableblotter.api.applicationApi.addApplicationDataEntry(kvp);
-      console.log(adaptableblotter.api.applicationApi.getApplicationDataEntries());
+      blotterApi.applicationApi.addApplicationDataEntry(kvp);
+      console.log(blotterApi.applicationApi.getApplicationDataEntries());
 
       console.log('editing');
-      let kvpToEdit = adaptableblotter.api.applicationApi.getApplicationDataEntryByKey('Name');
+      let kvpToEdit = blotterApi.applicationApi.getApplicationDataEntryByKey('Name');
       if (kvpToEdit) {
         let newKVP: ApplicationDataEntry = {
           Key: kvpToEdit.Key,
           Value: 'Danielle',
         };
-        adaptableblotter.api.applicationApi.editApplicationDataEntry(newKVP);
-        console.log(adaptableblotter.api.applicationApi.getApplicationDataEntries());
+        blotterApi.applicationApi.editApplicationDataEntry(newKVP);
+        console.log(blotterApi.applicationApi.getApplicationDataEntries());
       }
 
       console.log('deleting');
-      let newkvps = adaptableblotter.api.applicationApi.getApplicationDataEntries();
+      let newkvps = blotterApi.applicationApi.getApplicationDataEntries();
       let kvpToDelete = newkvps[1];
       if (kvpToDelete) {
-        adaptableblotter.api.applicationApi.deleteApplicationDataEntry(kvpToDelete);
-        console.log(adaptableblotter.api.applicationApi.getApplicationDataEntries());
+        blotterApi.applicationApi.deleteApplicationDataEntry(kvpToDelete);
+        console.log(blotterApi.applicationApi.getApplicationDataEntries());
       }
 
       console.log('getting');
-      let newkvpsget = adaptableblotter.api.applicationApi.getApplicationDataEntriesByValue(33);
+      let newkvpsget = blotterApi.applicationApi.getApplicationDataEntriesByValue(33);
       console.log(newkvpsget);
     }
   );

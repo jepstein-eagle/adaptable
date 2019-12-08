@@ -8,16 +8,15 @@ import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import {
   AdaptableBlotterOptions,
   PredefinedConfig,
-  IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
@@ -31,7 +30,7 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {
@@ -76,7 +75,7 @@ let demoConfig: PredefinedConfig = {
           {
             Label: 'Open Column Chooser',
             UserMenuItemClickedFunction: () => {
-              adaptableblotter.api.columnChooserApi.showColumnChooserPopup();
+              blotterApi.columnChooserApi.showColumnChooserPopup();
             },
             Icon: '<img src="./test.png"/>',
           },

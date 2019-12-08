@@ -56,7 +56,7 @@ function InitAdaptableBlotter() {
     alertShowAsPopup: true,
   };
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let flashingJson: PredefinedConfig = {

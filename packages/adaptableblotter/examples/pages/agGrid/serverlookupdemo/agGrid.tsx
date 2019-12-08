@@ -15,11 +15,12 @@ import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { IServerColumnValues } from '../../../../App_Scripts/BlotterOptions/QueryOptions';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -48,9 +49,9 @@ function InitAdaptableBlotter() {
     },
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  global.adaptableblotter = adaptableblotter;
+  // global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {

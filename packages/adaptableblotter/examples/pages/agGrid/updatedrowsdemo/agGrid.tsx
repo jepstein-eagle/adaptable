@@ -15,11 +15,12 @@ import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -43,7 +44,7 @@ function InitAdaptableBlotter() {
     autoApplyFilter: false,
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   tickingDataHelper.startTickingDataagGridTradesUpdateData(
     gridOptions,

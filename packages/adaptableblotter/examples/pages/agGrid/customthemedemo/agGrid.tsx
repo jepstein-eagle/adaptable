@@ -18,10 +18,11 @@ import {
   PredefinedConfig,
   ThemeChangedEventArgs,
   IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { RowStyle } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -34,18 +35,15 @@ function InitAdaptableBlotter() {
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  adaptableblotter.api.eventApi.on(
-    'ThemeChanged',
-    (themeChangedEventArgs: ThemeChangedEventArgs) => {
-      listenToThemeChanged(themeChangedEventArgs);
-    }
-  );
+  blotterApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
+    listenToThemeChanged(themeChangedEventArgs);
+  });
 }
 
 function listenToThemeChanged(args: ThemeChangedEventArgs) {
-  if (args.themeName === 'wimbledon-theme') {
+  if (args.data[0].id.themeName === 'wimbledon-theme') {
     let rowStyles: RowStyle[] = [];
     let evenStyle: RowStyle = {
       Style: {
@@ -65,9 +63,9 @@ function listenToThemeChanged(args: ThemeChangedEventArgs) {
     };
     rowStyles.push(evenStyle);
     rowStyles.push(oddStyle);
-    adaptableblotter.api.userInterfaceApi.setRowStyles(rowStyles);
+    blotterApi.userInterfaceApi.setRowStyles(rowStyles);
   } else {
-    adaptableblotter.api.userInterfaceApi.clearRowStyles();
+    blotterApi.userInterfaceApi.clearRowStyles();
   }
 }
 
