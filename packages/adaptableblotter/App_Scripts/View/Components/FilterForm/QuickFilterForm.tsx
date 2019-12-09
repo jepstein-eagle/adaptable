@@ -23,6 +23,8 @@ import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRan
 import Input from '../../../components/Input';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
+import { ThemeProvider } from 'styled-components';
+import theme from '../../../theme';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: AdaptableBlotterColumn;
@@ -343,6 +345,7 @@ export let QuickFilterForm = connect(
 
 export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
+  <ThemeProvider theme={theme}>
     <QuickFilterForm
       Blotter={FilterContext.Blotter}
       CurrentColumn={FilterContext.Column}
@@ -350,5 +353,6 @@ export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
       ColumnWidth={FilterContext.ColumnWidth}
       EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
     />
+    </ThemeProvider>
   </Provider>
 );

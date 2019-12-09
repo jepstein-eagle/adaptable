@@ -59,7 +59,7 @@ export class AdaptableBlotterPopupAlert extends React.Component<
               <Flex flexDirection="row" alignItems="center">
                 {this.props.Msg.split('\n').map(function(item, index) {
                   return (
-                    <Flex flexDirection="row">
+                    <Flex flexDirection="row" key={index}>
                       <Text key={index} margin={2}>
                         {item}
                         <br />

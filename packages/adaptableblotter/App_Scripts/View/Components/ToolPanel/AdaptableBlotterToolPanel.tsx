@@ -25,6 +25,8 @@ import DropdownButton from '../../../components/DropdownButton';
 import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
 import { Icon } from '../../../components/icons';
 import Checkbox from '../../../components/CheckBox';
+import { ThemeProvider } from 'styled-components';
+import theme from '../../../theme';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -243,10 +245,12 @@ export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableBlotterToolPanel
       this.gui.id = 'adaptable-blotter-tool-panel_' + this.ctx.Blotter.blotterOptions.blotterId;
       render(
         <Provider store={this.ctx.Blotter.adaptableBlotterStore.TheStore}>
-          <ConnectedAdaptableBlotterToolPanel
-            Blotter={this.ctx.Blotter}
-            TeamSharingActivated={false}
-          />
+          <ThemeProvider theme={theme}>
+            <ConnectedAdaptableBlotterToolPanel
+              Blotter={this.ctx.Blotter}
+              TeamSharingActivated={false}
+            />
+          </ThemeProvider>
         </Provider>,
         this.gui
       );
