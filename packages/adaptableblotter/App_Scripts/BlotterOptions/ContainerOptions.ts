@@ -15,7 +15,7 @@ export interface ContainerOptions {
    *
    * Only set if you are not using a div with the default value.
    *
-   * This is **onll required if using the vanilla JavaScript version** (and not the Angular or React wrappers).
+   * This is **only required if using the vanilla JavaScript version** (and not the Angular or React wrappers).
    *
    * **Default Value: adaptableBlotter**
    */
