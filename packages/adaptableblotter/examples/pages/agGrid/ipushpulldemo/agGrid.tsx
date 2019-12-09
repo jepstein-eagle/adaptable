@@ -9,7 +9,11 @@ import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import {
+  AdaptableBlotterOptions,
+  PredefinedConfig,
+  BlotterApi,
+} from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 import ipushpull from 'ipushpull-js';
@@ -37,28 +41,13 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInLayout: true,
   };
 
-  console.log(process.env);
-  // alert(process.env.IPUSHPULL_API_KEY);
-  // alert(process.env.IPUSHPULL_API_KEY);
-  new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterAPI: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
-
-ipushpull.config.set({
-  api_url: 'https://www.ipushpull.com/api/1.0',
-  ws_url: 'https://www.ipushpull.com',
-  web_url: 'https://www.ipushpull.com',
-  docs_url: 'https://docs.ipushpull.com',
-  storage_prefix: 'ipp_local',
-  api_key: '', //process.env.IPUSHPULL_API_KEY as string,
-  api_secret: '', // process.env.IPUSHPULL_API_SECRET as string,
-  transport: 'polling',
-  hsts: false, // strict cors policy
-});
 
 let demoConfig: PredefinedConfig = {
   Partner: {
     iPushPull: {
-      iPushPullConfig: ipushpull,
+      iPushPull: ipushpull,
     },
   },
 

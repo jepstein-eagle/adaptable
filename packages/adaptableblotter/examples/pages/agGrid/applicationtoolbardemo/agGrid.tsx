@@ -56,11 +56,8 @@ function InitAdaptableBlotter() {
   });
 
   function onNewTradeClicked() {
-    // adaptableblotter.api.layoutApi.restorelayout(adaptableblotter.api.layoutApi.getCurrentLayout());
     api.systemStatusApi.setErrorSystemStatus('Hello Nat West');
   }
-
-  //adaptableblotter._on()
 
   api.eventApi.on('ApplicationToolbarButtonClicked', applicationToolbarButtonClickedEventArgs => {
     alert(

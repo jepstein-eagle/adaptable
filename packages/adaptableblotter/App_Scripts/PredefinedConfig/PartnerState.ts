@@ -77,9 +77,9 @@ export interface PartnerState extends DesignTimeState {
  */
 export interface iPushPullState {
   /**
-   *  An iPushPull object - pre-populated with the user's iPushPull credentials
+   *  The iPushPull object
    */
-  iPushPullConfig?: any;
+  iPushPull: any;
 
   /**
    * The user's iPushPull user name (usually an email address)
