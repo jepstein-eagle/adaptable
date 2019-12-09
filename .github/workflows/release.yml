@@ -77,8 +77,16 @@ jobs:
     - name: Building angular
       run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
+    - name: Set git config
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
     - name: Actually publish to private registry
       run: npm run canaryrelease
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
 
     #node scripts/registry-publish.js
 
