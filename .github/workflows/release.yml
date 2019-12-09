@@ -18,6 +18,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Executing npm install in root
+      run: npm i
+
     - name: Executing npm install in core
       run: npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types
       # env:
