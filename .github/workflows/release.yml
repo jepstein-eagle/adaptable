@@ -54,7 +54,7 @@ jobs:
       run: echo "$MATRIX_CONTEXT"
 
     - name: Executing npm install in core
-      run: npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types
+      run: npm run install-core
       env:
         CI: true
 
@@ -62,7 +62,7 @@ jobs:
       run: cd packages/adaptableblotter && npm run build-prod-no-cleanup
 
     - name: Executing npm install in react
-      run: npm install --prefix packages/adaptableblotter-react-aggrid
+      run: npm run install-react
       env:
         CI: true
 
@@ -70,7 +70,7 @@ jobs:
       run: cd packages/adaptableblotter-react-aggrid && npm run build-prod-no-cleanup
 
     - name: Executing npm install in angular
-      run: npm install --prefix packages/adaptableblotter-ng-aggrid
+      run: npm run install-angular
       env:
         CI: true
 
@@ -78,7 +78,9 @@ jobs:
       run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
     - name: Actually publish to private registry
-      run: node scripts/registry-publish.js
+      run: npm run canaryrelease
+
+    #node scripts/registry-publish.js
 
 #     - name: Executing npm install in react
 #       run: npm install --prefix packages/adaptableblotter-react-aggrid
