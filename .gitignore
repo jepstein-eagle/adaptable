@@ -18,3 +18,4 @@ package-lock.json
 /apidoc
 yarn.lock
 dist
+.npmrc
