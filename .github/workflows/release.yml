@@ -23,7 +23,7 @@ jobs:
       env:
         CI: true
     - name: Building core
-      run: npm run --prefix packages/adaptableblotter build-prod-no-cleanup
+      run: cd packages/adaptableblotter && npm run build-prod-no-cleanup
 
 #     - name: Executing npm install in react
 #       run: npm install --prefix packages/adaptableblotter-react-aggrid
