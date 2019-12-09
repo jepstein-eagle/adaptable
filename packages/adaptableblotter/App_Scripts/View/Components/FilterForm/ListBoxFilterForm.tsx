@@ -85,7 +85,7 @@ export class ListBoxFilterForm extends React.Component<
       let display: string = x.DisplayValue;
       let value = x.RawValue;
       if (
-        StringExtensions.IsNotEmpty(this.state.FilterValue) &&
+        StringExtensions.IsNotNullOrEmpty(this.state.FilterValue) &&
         display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0
       ) {
         return null;
@@ -125,7 +125,7 @@ export class ListBoxFilterForm extends React.Component<
         columnValue = x.RawValue;
       }
       if (
-        StringExtensions.IsNotEmpty(this.state.FilterValue) &&
+        StringExtensions.IsNotNullOrEmpty(this.state.FilterValue) &&
         columnValue.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0
       ) {
         return null;
