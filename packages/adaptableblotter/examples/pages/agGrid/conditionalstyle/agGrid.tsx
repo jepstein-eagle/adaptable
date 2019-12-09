@@ -232,14 +232,12 @@ function InitAdaptableBlotter() {
     predefinedConfig: config as PredefinedConfig,
   };
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
   setTimeout(() => {
-    if (adaptableblotter.api.layoutApi.getCurrentLayoutName() === 'Ab_Default_Layout') {
+    if (blotterApi.layoutApi.getCurrentLayoutName() === 'Ab_Default_Layout') {
       gridOptions.columnApi!.autoSizeAllColumns();
     }
   });
-
-  global.adaptableblotter = adaptableblotter;
 }
 
 export default () => {

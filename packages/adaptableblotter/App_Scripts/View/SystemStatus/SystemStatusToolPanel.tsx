@@ -4,18 +4,18 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as SystemStatusRedux from '../../Redux/ActionsReducers/SystemStatusRedux';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
+import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
+import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 
-interface SystemStatusToolbarControlProps
-  extends ToolbarStrategyViewPopupProps<SystemStatusToolbarControlComponent> {
+interface SystemStatusToolPanelProps
+  extends ToolPanelStrategyViewPopupProps<SystemStatusToolPanelComponent> {
   StatusMessage: string;
   StatusType: string;
   DefaultStatusMessage: string;
@@ -23,14 +23,17 @@ interface SystemStatusToolbarControlProps
   onClearSystemStatus: () => SystemStatusRedux.SystemStatusClearAction;
 }
 
-interface SystemStatusToolbarState {}
+interface SystemStatusToolbarState {
+  IsMinimised: boolean;
+}
 
-class SystemStatusToolbarControlComponent extends React.Component<
-  SystemStatusToolbarControlProps,
+class SystemStatusToolPanelComponent extends React.Component<
+  SystemStatusToolPanelProps,
   SystemStatusToolbarState
 > {
-  constructor(props: SystemStatusToolbarControlProps) {
+  constructor(props: SystemStatusToolPanelProps) {
     super(props);
+    this.state = { IsMinimised: true };
   }
 
   render() {
@@ -55,33 +58,45 @@ class SystemStatusToolbarControlComponent extends React.Component<
     );
 
     let content = (
-      <Flex alignItems="stretch" className="ab-DashboardToolbar__SystemStatus__wrap">
+      <Flex
+        flexDirection="column"
+        alignItems="stretch"
+        className="ab-ToolPanel__SystemStatus__wrap"
+      >
         <Flex
+          flexDirection="row"
+          alignItems="stretch"
+          className="ab-ToolPanel__SystemStatus__text"
           style={{ borderRadius: 'var(--ab__border-radius)' }}
-          className="ab-DashboardToolbar__SystemStatus__text"
           marginRight={2}
           padding={2}
           color={'text-on-secondary'}
           backgroundColor={messageTypeColor}
           fontSize={'var( --ab-font-size-2)'}
-          alignItems="center"
         >
           {this.props.StatusMessage}
         </Flex>
-        <Flex alignItems="center">{clearButton}</Flex>
+        <Flex
+          flexDirection="column"
+          alignItems="stretch"
+          className="ab-ToolPanel__SystemStatus__wrap"
+        >
+          {clearButton}
+        </Flex>
       </Flex>
     );
 
     return (
-      <PanelDashboard
-        className="ab-DashboardToolbar__SystemStatus"
+      <PanelToolPanel
+        className="ab-ToolPanel_SystemStatus"
         headerText={StrategyConstants.SystemStatusStrategyName}
-        glyphicon={StrategyConstants.SystemStatusGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.SystemStatusStrategyId)}
         onConfigure={() => this.props.onConfigure()}
+        onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
+        isMinimised={this.state.IsMinimised}
+        onClose={() => this.props.onClose(StrategyConstants.SystemStatusStrategyId)}
       >
-        {content}
-      </PanelDashboard>
+        {this.state.IsMinimised ? null : content}
+      </PanelToolPanel>
     );
   }
 }
@@ -98,8 +113,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(
@@ -110,7 +124,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let SystemStatusToolbarControl = connect(
+export let SystemStatusToolPanel = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SystemStatusToolbarControlComponent);
+)(SystemStatusToolPanelComponent);

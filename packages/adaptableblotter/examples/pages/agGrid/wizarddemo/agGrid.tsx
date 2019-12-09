@@ -42,8 +42,6 @@ function InitAdaptableBlotter() {
         };
       });
       // const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-      //   //
-      //   // adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
       //   // global.adaptableblotter = adaptableblotter;
       // return adaptableblotter;
     },

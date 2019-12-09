@@ -28,7 +28,7 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInLayout: true,
   };
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {

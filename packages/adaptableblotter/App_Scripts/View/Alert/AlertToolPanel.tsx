@@ -2,25 +2,22 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
-
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
+import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { MessageType, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AlertsPanel } from './AlertsPanel';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { Flex } from 'rebass';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import UIHelper from '../UIHelper';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
+import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 
-interface AlertToolbarControlProps
-  extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
+interface AlertToolPanelProps extends ToolPanelStrategyViewPopupProps<AlertToolPanelComponent> {
   AlertDefinitions: AlertDefinition[];
   AdaptableAlerts: AdaptableAlert[];
 
@@ -31,17 +28,16 @@ interface AlertToolbarControlProps
 interface AlertToolbarState {
   ShowMessage: boolean;
   Alerts: AdaptableAlert[];
+  IsMinimised: boolean;
 }
 
-class AlertToolbarControlComponent extends React.Component<
-  AlertToolbarControlProps,
-  AlertToolbarState
-> {
-  constructor(props: AlertToolbarControlProps) {
+class AlertToolPanelComponent extends React.Component<AlertToolPanelProps, AlertToolbarState> {
+  constructor(props: AlertToolPanelProps) {
     super(props);
     this.state = {
       ShowMessage: false,
       Alerts: this.props.AdaptableAlerts,
+      IsMinimised: true,
     };
   }
 
@@ -86,10 +82,10 @@ class AlertToolbarControlComponent extends React.Component<
     );
 
     let content = (
-      <Flex alignItems="stretch" className="ab-DashboardToolbar__Alert__wrap">
+      <Flex alignItems="stretch" className="ab-ToolPanel__Alert__wrap">
         <Flex
           style={{ borderRadius: 'var(--ab__border-radius)' }}
-          className="ab-DashboardToolbar__Alert__text"
+          className="ab-ToolPanel__Alert__text"
           marginRight={2}
           padding={2}
           color={buttonTextColor}
@@ -103,9 +99,8 @@ class AlertToolbarControlComponent extends React.Component<
         {this.props.AdaptableAlerts.length > 0 && (
           <Flex alignItems="center">
             <AdaptablePopover
-              className="ab-DashboardToolbar__Alert__info"
+              className="ab-ToolPanel__Alert__info"
               headerText=""
-              // tooltipText="Alerts"
               bodyText={[alertsPanel]}
               MessageType={messageType}
               useButton={true}
@@ -118,15 +113,16 @@ class AlertToolbarControlComponent extends React.Component<
     );
 
     return (
-      <PanelDashboard
-        className="ab-DashboardToolbar__Alert"
+      <PanelToolPanel
+        className="ab-ToolPanel__Alert"
         headerText={StrategyConstants.AlertStrategyName}
-        glyphicon={StrategyConstants.AlertGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)}
         onConfigure={() => this.props.onConfigure()}
+        onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
+        isMinimised={this.state.IsMinimised}
+        onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)}
       >
-        {content}
-      </PanelDashboard>
+        {this.state.IsMinimised ? null : content}
+      </PanelToolPanel>
     );
   }
 }
@@ -143,8 +139,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
     onDeleteAllAlert: (alerts: AdaptableAlert[]) =>
       dispatch(SystemRedux.SystemAlertDeleteAll(alerts)),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.AlertStrategyId, ScreenPopups.AlertPopup)
@@ -152,7 +147,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let AlertToolbarControl = connect(
+export let AlertToolPanel = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AlertToolbarControlComponent);
+)(AlertToolPanelComponent);

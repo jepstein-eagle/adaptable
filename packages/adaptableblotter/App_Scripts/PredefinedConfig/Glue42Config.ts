@@ -1,3 +1,4 @@
+/*
 export interface Glue42Config {
   initialization: {
     application: string;
@@ -14,3 +15,4 @@ export interface Glue42Config {
     timeoutMs?: number;
   };
 }
+*/

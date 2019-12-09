@@ -104,7 +104,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
             tooltip="Create New Advanced Search"
             AccessLevel={this.props.AccessLevel}
             children={null}
-          />
+          ></ButtonNew>
 
           <ButtonDelete
             tooltip="Delete Advanced Search"

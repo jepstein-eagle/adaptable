@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@babel/runtime-corejs2": "^7.4.4",
+    "@glue42/desktop": "^4.6.3",
+    "@glue42/office": "^1.5.1",
     "@types/next": "8.0.4",
     "ag-grid-community": "^21.0.0",
     "ag-grid-enterprise": "^21.0.0",

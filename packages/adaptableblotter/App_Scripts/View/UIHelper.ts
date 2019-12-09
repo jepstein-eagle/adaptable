@@ -21,6 +21,7 @@ import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
+import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export const BLACK: string = 'Black';
 export const WHITE: string = 'White';
@@ -428,6 +429,32 @@ function addLeadingZero(item: number): string {
   return item.toString();
 }
 
+export function getMessageTypeFromAdaptableAlerts(adaptableAlerts: AdaptableAlert[]): MessageType {
+  if (adaptableAlerts.find(a => a.AlertDefinition.MessageType == MessageType.Error) != null) {
+    return MessageType.Error;
+  }
+  if (adaptableAlerts.find(a => a.AlertDefinition.MessageType == MessageType.Warning) != null) {
+    return MessageType.Warning;
+  }
+  if (adaptableAlerts.find(a => a.AlertDefinition.MessageType == MessageType.Success) != null) {
+    return MessageType.Success;
+  }
+  return MessageType.Info;
+}
+
+export function getButtonColourForAdaptableAlerts(
+  adaptableAlerts: AdaptableAlert[],
+  messageTypeColor: string
+): string {
+  return ArrayExtensions.IsNotNullOrEmpty(adaptableAlerts) ? messageTypeColor : 'primary';
+}
+
+export function getButtonTextColourForAdaptableAlerts(adaptableAlerts: AdaptableAlert[]): string {
+  return ArrayExtensions.IsNotNullOrEmpty(adaptableAlerts)
+    ? 'text-on-secondary'
+    : 'text-on-primary';
+}
+
 export const UIHelper = {
   getHexForName,
   getDefaultColors,
@@ -449,5 +476,8 @@ export const UIHelper = {
   getColorByMessageType,
   getGlyphForMessageType,
   getStyleForMessageType,
+  getMessageTypeFromAdaptableAlerts,
+  getButtonColourForAdaptableAlerts,
+  getButtonTextColourForAdaptableAlerts,
 };
 export default UIHelper;

@@ -9,12 +9,12 @@ import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
 import {
-  IAdaptableBlotter,
   AdaptableBlotterOptions,
   AlertFiredEventArgs,
   ColumnStateChangedEventArgs,
   SearchChangedEventArgs,
   PredefinedConfig,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -27,7 +27,7 @@ import {
 } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 import ReactDOM from 'react-dom';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 /*
 This example runs all the events we fire.
@@ -48,71 +48,65 @@ function InitAdaptableBlotter() {
     serverSearchOption: 'AllSearchandSort',
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   let runNewEvents: boolean = true;
 
   if (!runNewEvents) {
     // old way
-    adaptableblotter.api.eventApi
+    blotterApi.eventApi
       .onThemeChanged()
       .Subscribe((sender, themeChangedEventArgs) => listenToThemeChanged(themeChangedEventArgs));
-    adaptableblotter.api.eventApi
+    blotterApi.eventApi
       .onColumnStateChanged()
       .Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs));
-    adaptableblotter.api.eventApi
+    blotterApi.eventApi
       .onAlertFired()
       .Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
-    adaptableblotter.api.eventApi
+    blotterApi.eventApi
       .onSearchChanged()
       .Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
-    adaptableblotter.api.eventApi
+    blotterApi.eventApi
       .onActionColumnClicked()
       .Subscribe((sender, actionColumnEventArgs) =>
         listenToActionColumnClicked(actionColumnEventArgs)
       );
-    adaptableblotter.api.eventApi
+    blotterApi.eventApi
       .onSelectionChanged()
       .Subscribe((sender, selectionChangedEventArgs) =>
         listenToSelectionChanged(selectionChangedEventArgs)
       );
   } else {
     // new way
-    adaptableblotter.api.eventApi.on(
-      'ThemeChanged',
-      (themeChangedEventArgs: ThemeChangedEventArgs) => {
-        listenToThemeChanged(themeChangedEventArgs);
-      }
-    );
-    adaptableblotter.api.eventApi.on(
+    blotterApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
+      listenToThemeChanged(themeChangedEventArgs);
+    });
+    blotterApi.eventApi.on(
       'ColumnStateChanged',
       (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => {
         listenToColumnStateChange(columnStateChangedEventArgs);
       }
     );
-    adaptableblotter.api.eventApi.on('AlertFired', (alertFiredArgs: AlertFiredEventArgs) => {
+    blotterApi.eventApi.on('AlertFired', (alertFiredArgs: AlertFiredEventArgs) => {
       listenToAlertFired(alertFiredArgs);
     });
-    adaptableblotter.api.eventApi.on(
-      'SearchChanged',
-      (searchChangedArgs: SearchChangedEventArgs) => {
-        listenToSearchChange(searchChangedArgs);
-      }
-    );
-    adaptableblotter.api.eventApi.on(
+    blotterApi.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
+      listenToSearchChange(searchChangedArgs);
+    });
+    blotterApi.eventApi.on(
       'ActionColumnClicked',
       (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
         listenToActionColumnClicked(actionColumnEventArgs);
       }
     );
-    adaptableblotter.api.eventApi.on(
+    blotterApi.eventApi.on(
       'SelectionChanged',
       (selectionChangedEventArgs: SelectionChangedEventArgs) => {
         listenToSelectionChanged(selectionChangedEventArgs);
       }
     );
 
-    adaptableblotter.api.eventApi.on(
+    blotterApi.eventApi.on(
       'ApplicationToolbarButtonClicked',
       (applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs) => {
         console.log('Application Toolbar Button Clicked');
@@ -127,7 +121,7 @@ function InitAdaptableBlotter() {
       }
     );
 
-    adaptableblotter.api.eventApi.on(
+    blotterApi.eventApi.on(
       'ToolbarVisibilityChanged',
       (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
         if (
@@ -144,7 +138,7 @@ function InitAdaptableBlotter() {
 
           ReactDOM.render(
             toolbarContents,
-            adaptableblotter.api.applicationApi.getApplicationToolbarContentsDiv()
+            blotterApi.applicationApi.getApplicationToolbarContentsDiv()
           );
         }
       }

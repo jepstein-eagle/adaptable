@@ -17,7 +17,7 @@ This uses the agGrid setDataValue method which DOES call cell value changed
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeData: any = examplesHelper.getTrades(20);
+  const tradeData: any = examplesHelper.getTrades(30);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // turn on mimicing ticking data
@@ -56,7 +56,7 @@ function InitAdaptableBlotter() {
     alertShowAsPopup: true,
   };
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let flashingJson: PredefinedConfig = {

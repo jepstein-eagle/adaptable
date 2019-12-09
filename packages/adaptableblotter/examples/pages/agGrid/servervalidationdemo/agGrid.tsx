@@ -12,14 +12,14 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import {
   AdaptableBlotterOptions,
   PredefinedConfig,
-  IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 import { DataChangedInfo } from '../../../../App_Scripts/BlotterOptions/CommonObjects/DataChangedInfo';
 import { ValidationResult } from '../../../../App_Scripts/BlotterOptions/EditOptions';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -47,10 +47,10 @@ function InitAdaptableBlotter() {
     };
   }
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  adaptableblotter.api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
-    adaptableblotter.api.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue);
+  blotterApi.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
+    blotterApi.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue);
   });
 }
 

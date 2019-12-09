@@ -115,6 +115,11 @@ export interface GridApi {
    */
   getNumericArrayColumns(): AdaptableBlotterColumn[];
 
+  /**
+   * Returns all Columns in the State that have a given DataType
+   *
+   * @param dataType the DataType of the Columns to retrieve
+   */
   getColumnsOfType(dataType: DataType): AdaptableBlotterColumn[];
 
   /**
@@ -145,4 +150,17 @@ export interface GridApi {
    * Returns the Blotter Options object passed into the Adaptable Blotter at the start
    */
   getBlotterOptions(): AdaptableBlotterOptions;
+
+  /**
+   * Retrieves the value in the cell which is in the given Column and in the Row that contains that given Primary Key Value
+   *
+   * @param id the primaryKeyValue of the row (ie. the value in the Column defined as the Primary Key Column)
+   *
+   * @param columnId the name of the Column which contains the cell
+   */
+  getCellDisplayValue(primaryKeyValue: any, columnId: string): string;
+
+  hideFilterForm(): void;
+  applyGridFiltering(): void;
+  clearGridFiltering(): void;
 }

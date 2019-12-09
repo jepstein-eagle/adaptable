@@ -2,7 +2,8 @@ import * as Redux from 'redux';
 import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { Visibility, ButtonVariant } from '../../PredefinedConfig/Common/Enums';
+import { Visibility } from '../../PredefinedConfig/Common/Enums';
+import { ButtonStyle } from '../../PredefinedConfig/Common/ButtonStyle';
 
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
 export const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';
@@ -22,9 +23,8 @@ const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
 const DASHBOARD_SHOW_TOOLBARS_DROPDOWN = 'DASHBOARD_SHOW_TOOLBARS_DROPDOWN';
 const DASHBOARD_HIDE_TOOLBARS_DROPDOWN = 'DASHBOARD_HIDE_TOOLBARS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
-const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE';
-const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_VARIANT =
-  'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_VARIANT';
+const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE =
+  'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
   StrategyIds: string[];
@@ -83,12 +83,8 @@ export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
   Title: string;
 }
 
-export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action {
-  Title: string;
-}
-
-export interface DashboardSetMinimisedHomeToolbarButtonVariantAction extends Redux.Action {
-  ButtonVariant: ButtonVariant;
+export interface DashboardSetMinimisedHomeToolbarButtonStyleAction extends Redux.Action {
+  ButtonStyle: ButtonStyle;
 }
 
 export const DashboardSetAvailableToolbars = (
@@ -181,18 +177,11 @@ export const DashboardSetHomeToolbarTitle = (
   Title,
 });
 
-export const DashboardSetApplicationToolbarTitle = (
-  Title: string
-): DashboardSetHomeToolbarTitleAction => ({
-  type: DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE,
-  Title,
-});
-
-export const DashboardSetMinimisedHomeToolbarButtonVariant = (
-  ButtonVariant: ButtonVariant
-): DashboardSetMinimisedHomeToolbarButtonVariantAction => ({
-  type: DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_VARIANT,
-  ButtonVariant,
+export const DashboardSetMinimisedHomeToolbarButtonStyle = (
+  ButtonStyle: ButtonStyle
+): DashboardSetMinimisedHomeToolbarButtonStyleAction => ({
+  type: DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE,
+  ButtonStyle,
 });
 
 const initialDashboardState: DashboardState = {
@@ -223,8 +212,8 @@ const initialDashboardState: DashboardState = {
     StrategyConstants.SmartEditStrategyId,
     StrategyConstants.ColumnChooserStrategyId,
     StrategyConstants.ConditionalStyleStrategyId,
-    StrategyConstants.TeamSharingStrategyId,
-    StrategyConstants.SystemStatusStrategyId,
+    // StrategyConstants.TeamSharingStrategyId,
+    // StrategyConstants.SystemStatusStrategyId,
   ],
   DashboardVisibility: Visibility.Visible,
   ShowSystemStatusButton: true,
@@ -234,7 +223,10 @@ const initialDashboardState: DashboardState = {
   ShowToolbarsDropdown: true,
   HomeToolbarTitle: '',
   ApplicationToolbarTitle: '',
-  MinimisedHomeToolbarButtonVariant: 'outlined',
+  MinimisedHomeToolbarButtonStyle: {
+    Variant: 'outlined',
+    Tone: 'neutral',
+  },
 };
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (
@@ -331,15 +323,10 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
       return Object.assign({}, state, { HomeToolbarTitle: actionTyped.Title });
     }
 
-    case DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE: {
-      const actionTyped = action as DashboardSetApplicationToolbarTitleAction;
-      return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
-    }
-
-    case DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_VARIANT: {
-      const actionTyped = action as DashboardSetMinimisedHomeToolbarButtonVariantAction;
+    case DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE: {
+      const actionTyped = action as DashboardSetMinimisedHomeToolbarButtonStyleAction;
       return Object.assign({}, state, {
-        MinimisedHomeToolbarButtonVariant: actionTyped.ButtonVariant,
+        MinimisedHomeToolbarButtonStyle: actionTyped.ButtonStyle,
       });
     }
 

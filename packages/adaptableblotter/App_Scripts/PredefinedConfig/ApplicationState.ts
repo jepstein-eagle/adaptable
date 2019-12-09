@@ -1,5 +1,6 @@
 import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 import { RunTimeState } from './RunTimeState';
+import { ButtonStyle } from './Common/ButtonStyle';
 
 /**
  * The Predefined Configuration for the Application function
@@ -87,12 +88,18 @@ import { RunTimeState } from './RunTimeState';
  *    {
  *      Name: 'btnNewTrade',
  *      Caption: 'New Trade',
- *      Variant: 'text',
+ *      ButtonStyle: {
+          Variant: 'text',
+          Tone: 'success',
+        },
  *    },
  *    {
  *      Name: 'btnRefreshGrid',
  *      Caption: 'Refresh Grid',
- *      Variant: 'raised',
+ *       ButtonStyle: {
+          Variant: 'raised',
+          Tone: 'accent',
+        },
  *    },
  *    ],
  *  }
@@ -155,6 +162,15 @@ export interface ApplicationState extends RunTimeState {
    * That data will then be persisted by Adaptable Blotter in its own State.
    */
   ApplicationDataEntries?: ApplicationDataEntry[];
+
+  /**
+   * Sets the title of the Application Toolbar
+   *
+   * Note:  Use this property instead of the deprecrated `ApplicationToolbarTitle` property in Dashboard State.
+   *
+   * **Default Value: 'Application**
+   */
+  ApplicationToolbarTitle?: string;
 }
 
 /**
@@ -179,31 +195,12 @@ export interface ApplicationToolbarButton extends AdaptableBlotterObject {
    */
   Caption: string;
 
-  // Tooltip?: string;
-
   /**
-   * How the button will appear.
+   * The style to use for the Application Button.
    *
-   * Options are:
-   *
-   * -'text' (just the caption)
-   *
-   * -'outlined' (with a border)
-   *
-   * -'raised' (the button will be raised)
-   *
-   * -'unelevated'(the button will appear in the primary colour of the theme - primarily used for non light themes)
-   *
-   * **Default Value: 'outlined'**
+   * Includes 'Variant' and 'Tone'
    */
-  Variant?: 'text' | 'outlined' | 'raised' | 'unelevated';
-
-  /**
-   * The tone of the button
-   *
-   * **Default Value: 'neutral'**
-   */
-  Tone?: 'success' | 'error' | 'neutral' | 'none' | 'warning' | 'info' | 'accent';
+  ButtonStyle?: ButtonStyle;
 }
 
 /**

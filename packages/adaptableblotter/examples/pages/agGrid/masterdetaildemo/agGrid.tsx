@@ -27,7 +27,7 @@ function InitAdaptableBlotter() {
     'master detail demo'
   );
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 export default () => {

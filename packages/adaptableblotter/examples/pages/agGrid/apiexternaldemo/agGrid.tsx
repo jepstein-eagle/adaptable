@@ -10,6 +10,7 @@ import {
   IAdaptableBlotter,
   AdaptableBlotterOptions,
   PredefinedConfig,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -17,28 +18,28 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 Demo that shows how we can use the api 'externally' via textboxes and buttons
 */
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 //  NOTE:  this is not currently being able to be called by index.tsx
 export function runQuickSearchViaAPI() {
   const element: any = document.getElementById('txtQuickSearchText');
-  adaptableblotter.api.quickSearchApi.applyQuickSearch(element.value);
+  blotterApi.quickSearchApi.applyQuickSearch(element.value);
 }
 
 export function clearQuickSearchViaAPI() {
   const element: any = document.getElementById('txtQuickSearchText');
   element.value = '';
-  adaptableblotter.api.quickSearchApi.clearQuickSearch();
+  blotterApi.quickSearchApi.clearQuickSearch();
 }
 
 export function setDarkTheme() {
-  adaptableblotter.api.themeApi.loadDarkTheme();
+  blotterApi.themeApi.loadDarkTheme();
 }
 export function setLightTheme() {
-  adaptableblotter.api.themeApi.loadLightTheme();
+  blotterApi.themeApi.loadLightTheme();
 }
 export function setCustomTheme() {
-  adaptableblotter.api.themeApi.loadTheme('custom-theme');
+  blotterApi.themeApi.loadTheme('custom-theme');
 }
 
 function InitAdaptableBlotter() {
@@ -50,7 +51,7 @@ function InitAdaptableBlotter() {
     'api external demo'
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {
