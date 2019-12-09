@@ -61,6 +61,11 @@ class ChartToolPanelComponent extends React.Component<
         ? selectChartString
         : this.props.CurrentChartDefinition.Name;
 
+    let currentChartDefinitionType =
+      this.props.CurrentChartDefinition == null
+        ? ChartType.CategoryChart
+        : this.props.CurrentChartDefinition.ChartType;
+
     let sortedChartDefinitions: ChartDefinition[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
       this.props.ChartDefinitions,
@@ -156,8 +161,8 @@ class ChartToolPanelComponent extends React.Component<
             className="ab-ToolPanel__Chart__edit"
             onClick={() =>
               this.props.onNewChartDefinition({
-                value: 'CategoryChart',
-                action: 'New',
+                value: currentChartDefinitionType,
+                action: 'Edit',
                 source: 'Toolbar',
               })
             }

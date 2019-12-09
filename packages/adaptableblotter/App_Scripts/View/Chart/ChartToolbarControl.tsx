@@ -48,6 +48,11 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         ? selectChartString
         : this.props.CurrentChartDefinition.Name;
 
+    let currentChartDefinitionType =
+      this.props.CurrentChartDefinition == null
+        ? ChartType.CategoryChart
+        : this.props.CurrentChartDefinition.ChartType;
+
     let sortedChartDefinitions: ChartDefinition[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
       this.props.ChartDefinitions,
@@ -136,9 +141,9 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
           <ButtonEdit
             className="ab-DashboardToolbar__Chart__edit"
             onClick={() =>
-              this.props.onNewChartDefinition({
-                value: 'CategoryChart',
-                action: 'New',
+              this.props.onEditChartDefinition({
+                value: currentChartDefinitionType,
+                action: 'Edit',
                 source: 'Toolbar',
               })
             }
