@@ -36,22 +36,6 @@ export interface PartnerState extends DesignTimeState {
  *  // 1. import ipushpull into your harness / application
  *  import ipushpull from 'ipushpull-js';
  *
- * -------------
- *
- * //  2. fill in the ipushpull config
- * // use the values below substituting your own `api_key` and `api_secret` values as provided by iPushPull
- * ipushpull.config.set({
- *  api_url: 'https://www.ipushpull.com/api/1.0',
- *  ws_url: 'https://www.ipushpull.com',
- *  web_url: 'https://www.ipushpull.com',
- *  docs_url: 'https://docs.ipushpull.com',
- *  storage_prefix: 'ipp_local',
- *  api_key: [PUT YOUR IPUSHPULL API KEY HERE],
- *  api_secret: [PUT YOUR IPUSHPULL API SECRET HERE],
- *  transport: 'polling',
- *  hsts: false, // strict cors policy so needs to be false
- * });
- *
  *  ------
  *
  * // 3. pass in this config as the `iPushPullConfig` property in iPushPull section of PartnerState
@@ -63,7 +47,7 @@ export interface PartnerState extends DesignTimeState {
  *    predefinedConfig: {
  *       Partner: {
  *         iPushPull: {
- *           iPushPullConfig: ipushpull,  // object created above
+ *           iPushPullInstance: ipushpull,  // object created above
  *           Username: [YOUR IPUSHPULL USERNAME (EMAIL)],  // this is optional
  *           Password: [YOUR IPUSHPULL PASSWORD],  // this is optional
  *         },
@@ -77,9 +61,9 @@ export interface PartnerState extends DesignTimeState {
  */
 export interface iPushPullState {
   /**
-   *  The iPushPull object
+   *  The iPushPull object - this is injected by the user from 'ipushpull-js'
    */
-  iPushPull: any;
+  iPushPullInstance: any;
 
   /**
    * The user's iPushPull user name (usually an email address)

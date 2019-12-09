@@ -47,7 +47,7 @@ function InitAdaptableBlotter() {
 let demoConfig: PredefinedConfig = {
   Partner: {
     iPushPull: {
-      iPushPull: ipushpull,
+      iPushPullInstance: ipushpull,
     },
   },
 

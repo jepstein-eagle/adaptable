@@ -18,7 +18,7 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   public getPushPullInstance(): any {
     let pushpullState = this.getPushPullState();
     if (pushpullState != undefined) {
-      return pushpullState.iPushPull;
+      return pushpullState.iPushPullInstance;
     } else {
       return pushpullState;
     }
