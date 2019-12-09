@@ -19,11 +19,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - uses: adaptabletools/release-action@v1.14
-      env:
+      with:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
     - name: Echo publish cmd
-      run: echo "$PUBLISH_PACKAGE_CMD"
+      run: echo $PUBLISH_PACKAGE_CMD
 
     - name: Executing npm install in root
       run: npm i
