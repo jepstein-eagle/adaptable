@@ -42,6 +42,8 @@ import HelpBlock from '../../../components/HelpBlock';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
+import { ThemeProvider } from 'styled-components';
+import theme from '../../../theme';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: AdaptableBlotterColumn;
@@ -546,6 +548,7 @@ export let FilterForm = connect(
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
+  <ThemeProvider theme={theme}>
     <FilterForm
       Blotter={FilterContext.Blotter}
       CurrentColumn={FilterContext.Column}
@@ -553,5 +556,6 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
       EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
       ShowCloseButton={FilterContext.ShowCloseButton}
     />
+    </ThemeProvider>
   </Provider>
 );
