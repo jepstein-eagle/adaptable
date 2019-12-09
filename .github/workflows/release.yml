@@ -22,6 +22,9 @@ jobs:
       env:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
+    - name: Echo publish cmd
+      run: echo "$PUBLISH_PACKAGE_CMD"
+
     - name: Executing npm install in root
       run: npm i
 
@@ -74,7 +77,7 @@ jobs:
     - name: Building angular
       run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
-    - name:
+    - name: Actually publish to private registry
       run: node scripts/registry-publish.js
 
 #     - name: Executing npm install in react
