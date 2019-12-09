@@ -18,7 +18,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: adaptabletools/release-action@v1.16
+    - uses: adaptabletools/release-action@v1.17
       with:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
