@@ -18,7 +18,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: adaptabletools/release-action@v1.7
+    - uses: adaptabletools/release-action@v1.9
+      env:
+        PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
     - name: Executing npm install in root
       run: npm i
@@ -71,6 +73,9 @@ jobs:
 
     - name: Building angular
       run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
+
+    - name:
+      run: node scripts/registry-publish.js
 
 #     - name: Executing npm install in react
 #       run: npm install --prefix packages/adaptableblotter-react-aggrid
