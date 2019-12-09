@@ -1,108 +1,165 @@
 import { RunTimeState } from './RunTimeState';
+import { ButtonStyle } from './Common/ButtonStyle';
+/**
+ * The Predefined Configuration for the Dashboard function
+ *
+ * The Dashboard is the area above the grid which contains buttons, toolbars and dropdowns.
+ *
+ *  **Further Resources**
+ *
+ * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardtoolbarsdemo/) | [API](_api_dashboardapi_.dashboardapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030944511-Dashboard-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
+ *
+ * **Dashboard Predefined Config Example**
+ *
+ * ```ts
+ * export default {
+ * Dashboard: {
+ *   VisibleToolbars: ['Theme', 'Export', 'Layout', 'Chart', 'Application'],
+ *   VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
+ *   ShowGridInfoButton: false,
+ *   ShowToolbarsDropdown: false,
+ *   DashboardVisibility: 'Minimised',
+ *   MinimisedHomeToolbarButtonStyle: {
+ *     Variant: 'raised',
+ *     Tone: 'accent',
+ *   },
+ *  }
+ * } as PredefinedConfig;
+ * ```
+ * In this example we have:
+ *
+ * - set 5 Toolbars to be visible
+ *
+ * - set 4 Function Buttons to be visible
+ *
+ * - hidden the GridInfo button
+ *
+ * - hidden the Toolbars dropdown
+ *
+ * - set the Dashboard to be minimised at start-up
+ *
+ * - set how the Home Toolbar minimised button will render
+ */
 export interface DashboardState extends RunTimeState {
-  AvailableToolbars?: string[];
-  VisibleToolbars?: string[];
-  VisibleButtons?: string[];
-  DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
-  ShowSystemStatusButton?: boolean;
-  ShowGridInfoButton?: boolean;
-  ShowFunctionsDropdown?: boolean;
-  ShowColumnsDropdown?: boolean;
-  ShowToolbarsDropdown?: boolean;
-  HomeToolbarTitle?: string;
-  ApplicationToolbarTitle?: string;
-  MinimisedHomeToolbarButtonVariant?: 'text' | 'outlined' | 'raised' | 'unelevated';
-}
-
-/*
-AvailableToolbars
-
-string array
-
-Which function toolbars are available to users. This includes both those which are visible at startup (see VisibleToolbars property below) and those which are hidden but available in the Dashboard Popup to be made visible).
-
-If this property is set, then any function toolbar not listed cannot be seen or used.
-
-If this property is not set, then all function toolbars are available.
-
-See table below for a list of valid values.
-
-VisibleToolbars
-
-string array
-
-Which function toolbars are visible at startup. The order of this collection is the order in which they will appear from left to right. 
-
-See table below for a list of valid values.
-
-VisibleButtons
-
-string array
-
-Which function buttons are visible in the Home Toolbar at startup. Choose the function buttons that make most sense to your users.
-
-Must be a valid value (the list is in the Appendix).
-
-DashboardVisibility
-
-string
-
-Sets the visibility of the Dashboard
-
-Valid values are Visible (default) Hidden or Minimised.
-
-ShowSystemStatusButton
-
-boolean
-
-Whether the coloured System Status button is included in the Home Toolbar (its used for showing system health messages sent from a server).
-
-ShowFunctionsDropdown
-
-boolean
-
-Whether to show the Functions dropdown (true by default).
-
-The Functions dropdown is situated on the left hand side of the Home Toolbar and lists all the functions available to the user.
-
-ShowColumnsDropdown
-
-boolean
-
-Whether to show the Columns dropdown (true by default).
-
-The Columns dropdown is situated on the right hand side of the Home Toolbar and lists all the columns in the grid.
-
-HomeToolbarTitle
-
-string
-
-Sets the title of the Home Toolbar.  
-
-If nothing is set (default is blank), the value of the blotterId property in IAdaptableBlotterOptions will be used instead.
-
-ApplicationToolbarTitle
-
-string
-
-Sets the title of the Application Toolbar.
-
-Note
-The Application Toolbar is an empty toolbar designed for letting you host your own elements, buttons and controls.
-
-
-
-   * How the button will appear.
+  /**
+   * Which toolbars should be available for the user to select to see.
    *
-   * Options are:
+   * Only those toolbars listed here will be selectable
    *
-   * -'text' (just the caption)
+   * If you don't provide any value for this property, then ALL toolbars will be available.
    *
-   * -'outlined' (with a border)
-   *
-   * -'raised' (the button will be raised)
-   *
-   * -'unelevated'(the button will appear in the primary colour of the theme - primarily used for non light themes)
-   *
-   * **Default Value: 'outlined'**
+   * **Default Value**:  Empty array
    */
+  AvailableToolbars?: string[];
+
+  /**
+   * Which toolbars should be visible in the Dasbhoard when the application loads.
+   *
+   * Note: If the `AvailableToolbars` property has been set then the visible toolbars listed here must also be included there.
+   *
+   * **Default Value**:  'QuickSearch', 'Layout', 'Export', 'ColumnFilter'
+   */
+  VisibleToolbars?: string[];
+
+  /**
+   * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
+   *
+   * Each button is connected to a Function in the Adaptable Blotter and opens the main popup screen for that Strategy.
+   *
+   * **Default Value**:  'Dashboard', 'SmartEdit', 'ColumnChooser', 'ConditionalStyle', ''
+   */
+  VisibleButtons?: string[];
+
+  /**
+   * How the Dashboard will appear.
+   *
+   * You can Show / Minimise the Dashboard through the carat button in the top corner of the Home Dashboard.
+   *
+   * If you want to hide the Dashboard altogether then select 'Hide Dashboard' from the Column Header menu (or 'Show Dashboard' to put it back).
+   *
+   * **Default Value**:  'Visible'
+   */
+  DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
+
+  /**
+   * Whether to show the System Status button in the Home Toolbar.
+   *
+   * If 'true' then the button will be visible; clicking the button will open the System Status popup showing any System Status messages.
+   *
+   * The colour of the button will reflect the `StatusType` of the last System Status message received.
+   *
+   * **Default Value**:  true
+   */
+  ShowSystemStatusButton?: boolean;
+
+  /**
+   * Whether to show the Grid Info button in the Home Toolbar.
+   *
+   * If 'true' then the button will be visible; clicking the button will open a Dialog giving details of the Current Grid, version, row count etc.
+   *
+   * It will also include an Options tab allowing you to see what your Blotter Options are.
+   *
+   * **Default Value**:  true
+   */
+  ShowGridInfoButton?: boolean;
+
+  /**
+   * Whether to show the Functions dropdown in the Home Toolbar.
+   *
+   * If 'true' then the dropdown will be visible as the first item (with a 'house' icon).
+   *
+   * Clicking the button will open a Dropdown listing all the Functions in your `Entitlements`.  Clicking a menu item will open the popup for that Function.
+   *
+   * **Default Value**:  true
+   */
+  ShowFunctionsDropdown?: boolean;
+
+  /**
+   * Whether to show the Columns dropdown in the Home Toolbar.
+   *
+   * If 'true' then the dropdown will be visible as the penultimate item in the Home Toolbar.
+   *
+   * Clicking the button will open a Dropdown listing all the Columns in your grid.  You can click the checkbox to show / hide the column.
+   *
+   * Note: if you want to move Columns in your Grid then you need to use the `Column Chooser` Function.
+   *
+   * **Default Value**:  true
+   */
+  ShowColumnsDropdown?: boolean;
+
+  /**
+   * Whether to show the Toolbars dropdown in the Home Toolbar.
+   *
+   * If 'true' then the dropdown will be visible as the last item in the Home Toolbar.
+   *
+   * Clicking the button will open a Dropdown listing all the Toolbars available (see the `AvailableToolbars` property).  You can click the checkbox to show / hide the toolbar.
+   *
+   * Note: if you want to move / reposition the Toolbars in the Dashboard then you need to open the Dashboard Configuration popup.
+   *
+   * **Default Value**:  true
+   */
+  ShowToolbarsDropdown?: boolean;
+
+  /**
+   * The title of the Home Toolbar - the first toolbar visible.
+   *
+   * If no value is provided then the Home Toolbar will show the 'blotterId' property in Blotter Options
+   *
+   * **Default Value**:  'blotterId' property in Blotter Options
+   */
+  HomeToolbarTitle?: string;
+
+  /**
+   * How the Home Toolbar will appear (as a button) when Miminised
+   *
+   * **Default Value**:   `Variant`: 'outlined', `Tone`: 'neutral',
+   */
+  MinimisedHomeToolbarButtonStyle?: ButtonStyle;
+
+  /**
+   * Sets the title of the Application Toolbar
+   *
+   * **note: this property is deprecated**  Please use the `ApplicationToolbarTitle` property of Application State instead.
+   */
+  ApplicationToolbarTitle?: string;
+}

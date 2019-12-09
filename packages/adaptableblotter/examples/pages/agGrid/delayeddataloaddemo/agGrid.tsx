@@ -13,10 +13,11 @@ import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   IAdaptableBlotter,
+  BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -41,7 +42,7 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInLayout: true,
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   setTimeout(() => {
     gridOptions.api!.setRowData(tradeData);

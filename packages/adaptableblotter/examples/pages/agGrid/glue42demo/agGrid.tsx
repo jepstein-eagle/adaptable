@@ -9,10 +9,12 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+
+import glue42Desktop from '@glue42/desktop';
+import glue42office from '@glue42/office';
 
 /*
 Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
@@ -35,38 +37,44 @@ function InitAdaptableBlotter() {
     showModal: false,
     displayOnStartUp: true,
   };
-  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event) {
+  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event: {
+    colDef: { field: any };
+    newValue: any;
+  }) {
     console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
   };
-  adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
+  adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event: { data: any }) {
     var data = event.data;
     console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
   };
   adaptableBlotterOptions.filterOptions = {
     autoApplyFilter: false,
   };
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-
-  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-  // global.adaptableblotter = adaptableblotter;
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {
   Partner: {
-    glue42Config: {
-      initialization: {
-        application: 'AdaptableBlotterDemo',
-        gateway: {
-          protocolVersion: 3,
-          ws: 'ws://localhost:8385',
+    Glue42: {
+      Glue: glue42Desktop, // this is the glue object
+
+      Glue4Office: glue42office, // this is the Glue4Office object
+
+      Glue42Config: {
+        initialization: {
+          application: 'AdaptableBlotterDemo',
+          gateway: {
+            protocolVersion: 3,
+            ws: 'ws://localhost:8385',
+          },
+          auth: {
+            username: 'demouser',
+            password: 'demopassword',
+          },
         },
-        auth: {
-          username: 'demouser',
-          password: 'demopassword',
+        excelExport: {
+          timeoutMs: 3000,
         },
-      },
-      excelExport: {
-        timeoutMs: 3000,
       },
     },
   },

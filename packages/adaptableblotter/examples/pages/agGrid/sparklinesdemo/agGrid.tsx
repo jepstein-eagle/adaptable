@@ -32,10 +32,9 @@ function InitAdaptableBlotter() {
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  //  adaptableblotter.api.systemStatusApi.setSuccessSystemStatus('ouch');
-  global.adaptableblotter = adaptableblotter;
+  // global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {

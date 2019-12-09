@@ -6,13 +6,17 @@ import 'ag-grid-community/dist/styles/ag-theme-blue.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
-import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import {
+  IAdaptableBlotter,
+  AdaptableBlotterOptions,
+  BlotterApi,
+} from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
 import { AuditLogEntry } from '../../../../App_Scripts/Utilities/Interface/AuditLogEntry';
 
-var adaptableblotter: IAdaptableBlotter;
+var blotterApi: BlotterApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -39,24 +43,24 @@ function InitAdaptableBlotter() {
     },
   };
 
-  adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   let runNewEvents: boolean = true;
 
   if (!runNewEvents) {
-    adaptableblotter.api.auditEventApi
+    blotterApi.auditEventApi
       .onAuditStateChanged()
       .Subscribe((sender, auditLogEventArgs) =>
         listenToAuditLogEvent('audit state', auditLogEventArgs)
       );
   } else {
-    adaptableblotter.api.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
+    blotterApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
       listenToAuditLogEvent('cell edit', auditLogEventArgs);
     });
-    adaptableblotter.api.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
+    blotterApi.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
       listenToAuditLogEvent('function applied', auditLogEventArgs);
     });
-    adaptableblotter.api.auditEventApi.on('AuditStateChanged', auditLogEventArgs => {
+    blotterApi.auditEventApi.on('AuditStateChanged', auditLogEventArgs => {
       listenToAuditLogEvent('state changed', auditLogEventArgs);
     });
   }

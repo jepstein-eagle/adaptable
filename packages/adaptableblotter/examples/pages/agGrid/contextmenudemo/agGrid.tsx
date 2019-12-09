@@ -26,7 +26,7 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {};

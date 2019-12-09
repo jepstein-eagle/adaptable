@@ -47,8 +47,6 @@ class ThemeToolPanelComponent extends React.Component<
       };
     });
 
-    console.log(themes);
-
     let currentTheme = allThemes.find(theme => theme.Name === this.props.CurrentTheme);
 
     return (

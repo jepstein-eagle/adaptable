@@ -32,12 +32,12 @@ function InitAdaptableBlotter() {
     'ticking data add delete row'
   );
   adaptableBlotterOptions.predefinedConfig = json;
-  const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   // turn on mimicing adding rows
-  tickingDataHelper.startTickingDataagGridAddRow(adaptableblotter, tradeData, rowCount);
+  tickingDataHelper.startTickingDataagGridAddRow(blotterApi, tradeData, rowCount);
   // turn on mimicing removing rows
-  tickingDataHelper.startTickingDataagGridDeleteRow(adaptableblotter, tradeData, rowCount);
+  tickingDataHelper.startTickingDataagGridDeleteRow(blotterApi, tradeData, rowCount);
 }
 
 let json: PredefinedConfig = {};

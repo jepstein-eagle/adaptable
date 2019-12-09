@@ -49,8 +49,8 @@ ipushpull.config.set({
   web_url: 'https://www.ipushpull.com',
   docs_url: 'https://docs.ipushpull.com',
   storage_prefix: 'ipp_local',
-  api_key: process.env.IPUSHPULL_API_KEY as string,
-  api_secret: process.env.IPUSHPULL_API_SECRET as string,
+  api_key: '', //process.env.IPUSHPULL_API_KEY as string,
+  api_secret: '', // process.env.IPUSHPULL_API_SECRET as string,
   transport: 'polling',
   hsts: false, // strict cors policy
 });
@@ -59,9 +59,6 @@ let demoConfig: PredefinedConfig = {
   Partner: {
     iPushPull: {
       iPushPullConfig: ipushpull,
-      Username: 'dadas@dsadas.com',
-      Password: '12312',
-      // Password: process.env.IPUSHPULL_PASSWORD as string,
     },
   },
 

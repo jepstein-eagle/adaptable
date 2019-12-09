@@ -1015,7 +1015,7 @@ export class ExamplesHelper {
       //  enableRowGroup: true,
       enableValue: true,
       //  rowGroup: true,
-      filter: true,
+      filter: 'agSetColumnFilter',
       sortable: true,
       type: 'abColDefString',
       //   cellRenderer: 'agAnimateShowChangeCellRenderer',

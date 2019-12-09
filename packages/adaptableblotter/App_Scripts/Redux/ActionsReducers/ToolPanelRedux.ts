@@ -52,18 +52,18 @@ const initialToolPanelState: ToolPanelState = {
   AvailableToolPanels: [
     StrategyConstants.DashboardStrategyId,
     StrategyConstants.AdvancedSearchStrategyId,
-    //  StrategyConstants.AlertStrategyId,
+    StrategyConstants.AlertStrategyId,
     //   StrategyConstants.ApplicationStrategyId,
     //    StrategyConstants.BulkUpdateStrategyId,
     //   StrategyConstants.CellSummaryStrategyId,
-    //    StrategyConstants.ChartStrategyId,//
+    StrategyConstants.ChartStrategyId,
     //   StrategyConstants.ColumnFilterStrategyId,/
     //   StrategyConstants.DataSourceStrategyId,
-    ///   StrategyConstants.ExportStrategyId,
+    StrategyConstants.ExportStrategyId,
     StrategyConstants.LayoutStrategyId, //
     StrategyConstants.QuickSearchStrategyId,
     StrategyConstants.ThemeStrategyId,
-    //    StrategyConstants.SystemStatusStrategyId,
+    StrategyConstants.SystemStatusStrategyId,
   ],
   VisibleToolPanels: [
     StrategyConstants.DashboardStrategyId,
@@ -71,7 +71,10 @@ const initialToolPanelState: ToolPanelState = {
     StrategyConstants.AdvancedSearchStrategyId,
     StrategyConstants.LayoutStrategyId,
     StrategyConstants.ThemeStrategyId,
-    // StrategyConstants.ExportStrategyId,
+    StrategyConstants.ExportStrategyId,
+    StrategyConstants.SystemStatusStrategyId,
+    StrategyConstants.AlertStrategyId,
+    StrategyConstants.ChartStrategyId,
     //   StrategyConstants.ColumnFilterStrategyId,
   ],
 };

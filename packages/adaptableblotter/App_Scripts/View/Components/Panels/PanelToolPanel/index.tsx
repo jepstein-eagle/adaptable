@@ -85,6 +85,7 @@ export class PanelToolPanel extends React.Component<PanelToolPanelProps, {}> {
         className={join('ab-DashboardPanel', props.className)}
         header={header}
         style={{
+          minWidth: 180,
           color: 'var(--ab-cmp-dashboardpanel__color)',
           fill: 'var(--ab-cmp-dashboardpanel__fill)',
 
