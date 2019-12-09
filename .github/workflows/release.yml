@@ -19,8 +19,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: adaptabletools/release-action@v1.20
-      with:
+    - uses: adaptabletools/release-action@v1.21
+      env:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
     - name: Echo whoami
