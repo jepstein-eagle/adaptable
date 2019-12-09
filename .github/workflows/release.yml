@@ -18,7 +18,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: adaptabletools/release-action@v1.2
+    - uses: adaptabletools/release-action@v1.3
 
     - name: Executing npm install in root
       run: npm i
