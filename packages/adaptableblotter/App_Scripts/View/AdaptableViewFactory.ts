@@ -64,6 +64,7 @@ import { ThemeToolPanel } from './Theme/ThemeToolPanel';
 import { ExportToolPanel } from './Export/ExportToolPanel';
 import { SystemStatusToolPanel } from './SystemStatus/SystemStatusToolPanel';
 import { AlertToolPanel } from './Alert/AlertToolPanel';
+import { ChartToolPanel } from './Chart/ChartToolPanel';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -135,6 +136,7 @@ export const AdaptableToolPanelFactory = new Map<string, ConnectedComponent<any,
   [StrategyConstants.ExportStrategyId, ExportToolPanel],
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolPanel],
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
+  [StrategyConstants.ChartStrategyId, ChartToolPanel],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<

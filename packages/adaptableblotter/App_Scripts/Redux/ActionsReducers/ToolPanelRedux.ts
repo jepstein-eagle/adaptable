@@ -56,7 +56,7 @@ const initialToolPanelState: ToolPanelState = {
     //   StrategyConstants.ApplicationStrategyId,
     //    StrategyConstants.BulkUpdateStrategyId,
     //   StrategyConstants.CellSummaryStrategyId,
-    //    StrategyConstants.ChartStrategyId,//
+    StrategyConstants.ChartStrategyId,
     //   StrategyConstants.ColumnFilterStrategyId,/
     //   StrategyConstants.DataSourceStrategyId,
     StrategyConstants.ExportStrategyId,
@@ -74,6 +74,7 @@ const initialToolPanelState: ToolPanelState = {
     StrategyConstants.ExportStrategyId,
     StrategyConstants.SystemStatusStrategyId,
     StrategyConstants.AlertStrategyId,
+    StrategyConstants.ChartStrategyId,
     //   StrategyConstants.ColumnFilterStrategyId,
   ],
 };
