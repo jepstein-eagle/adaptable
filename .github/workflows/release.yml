@@ -18,12 +18,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    # - name: Executing npm install in core
-    #   run: npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types
-    #   env:
-    #     CI: true
+    - name: Executing npm install in core
+      run: npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types
+      # env:
+      #   CI: true
     - name: Building core
-      run: cd packages/adaptableblotter && echo `pwd`
+      run: cd packages/adaptableblotter && npm run build-prod-no-cleanup
 
 #     - name: Executing npm install in react
 #       run: npm install --prefix packages/adaptableblotter-react-aggrid
