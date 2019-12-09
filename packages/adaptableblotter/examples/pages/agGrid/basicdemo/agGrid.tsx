@@ -42,6 +42,11 @@ function InitAdaptableBlotter() {
   };
 
   api = AdaptableBlotter.init(adaptableBlotterOptions);
+
+  api.eventApi.on('BlotterReady', () => {
+    let test = api.columnFilterApi.getAllColumnFilterForColumn('notional');
+    console.log(test);
+  });
 }
 
 let demoConfig: PredefinedConfig = {

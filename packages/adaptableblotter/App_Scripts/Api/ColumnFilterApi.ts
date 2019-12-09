@@ -43,4 +43,11 @@ export interface ColumnFilterApi {
    * Retrieves all the Column Filters in the Column Filter State (of Predefined Config)
    */
   getAllColumnFilter(): ColumnFilter[];
+
+  /**
+   * Retrieves all the Column Filters in the Column Filter State (of Predefined Config) for a given Column
+   *
+   * @param column the column to retrieve the Column Filters for
+   */
+  getAllColumnFilterForColumn(column: string): ColumnFilter[];
 }

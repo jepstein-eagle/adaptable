@@ -1,6 +1,5 @@
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
 import { ApiBase } from './ApiBase';
-import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ColumnFilterApi } from '../ColumnFilterApi';
 import { ColumnFilterState, ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 
@@ -30,12 +29,14 @@ export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
   }
 
   public clearColumnFilterByColumn(column: string): void {
-    let columnFiltersForColumn: ColumnFilter[] = this.getAllColumnFilter().filter(
-      cf => cf.ColumnId == column
+    let columnFiltersForColumn: ColumnFilter[] | undefined = this.getAllColumnFilterForColumn(
+      column
     );
-    columnFiltersForColumn.forEach(cf => {
-      this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(cf));
-    });
+    if (columnFiltersForColumn) {
+      columnFiltersForColumn.forEach(cf => {
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(cf));
+      });
+    }
   }
 
   public clearAllColumnFilter(): void {
@@ -44,5 +45,15 @@ export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
 
   public getAllColumnFilter(): ColumnFilter[] {
     return this.getBlotterState().ColumnFilter.ColumnFilters;
+  }
+
+  public getAllColumnFilterForColumn(column: string): ColumnFilter[] {
+    let columnFilters: ColumnFilter[] | undefined = this.getBlotterState().ColumnFilter
+      .ColumnFilters;
+    if (columnFilters) {
+      return columnFilters.filter(cf => cf.ColumnId == column);
+    } else {
+      return [];
+    }
   }
 }

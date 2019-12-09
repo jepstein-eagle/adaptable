@@ -124,6 +124,9 @@ export class ListBoxFilterForm extends React.Component<
         isActive = this.state.UiSelectedColumnValues.indexOf(x.RawValue) >= 0;
         columnValue = x.RawValue;
       }
+      if (StringExtensions.IsNullOrEmpty(columnValue)) {
+        return null;
+      }
       if (
         StringExtensions.IsNotNullOrEmpty(this.state.FilterValue) &&
         columnValue.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0
