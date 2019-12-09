@@ -23,6 +23,8 @@ jobs:
       with:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
+    - name: Echo whoami
+      run: npm whoami --registry=https://registry.adaptabletools.com
     - name: Echo publish cmd
       run: echo $PUBLISH_PACKAGE_CMD
 
