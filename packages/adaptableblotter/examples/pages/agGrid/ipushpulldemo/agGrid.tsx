@@ -18,6 +18,12 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 import ipushpull from 'ipushpull-js';
 
+ipushpull.config.set({
+  hsts: false,
+  api_secret: '',
+  api_key: '',
+});
+
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 500;
