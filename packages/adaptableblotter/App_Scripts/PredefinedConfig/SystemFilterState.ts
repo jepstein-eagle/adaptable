@@ -9,7 +9,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * **If this section is not set then all System Filters will be used**
  *
- * If you want **no System Filters** to be used then provide an empty array.
+ * If you want **no System Filters** to be used then provide an empty array:
  *
  * ```ts
  * export default {
@@ -19,7 +19,7 @@ import { DesignTimeState } from './DesignTimeState';
  * } as PredefinedConfig;
  * ```
  *
- *  If you want to set which System Filters should be used then provide an array with those values.
+ *  If you want to set which System Filters should be used then provide an array with those values:
  *
  * ```ts
  * export default {
@@ -29,7 +29,7 @@ import { DesignTimeState } from './DesignTimeState';
  * } as PredefinedConfig;
  * ```
  *
- * Set the System Filters you want.  The full available list of System Filters is:
+ * The full list of available System Filters is:
  *
  *  | Filter                  | Columns
  *  | -----------             | -----------
@@ -47,6 +47,7 @@ import { DesignTimeState } from './DesignTimeState';
  *  | Tomorrow                | Date
  *  | Next Working Day        | Date
  *  | Previous Working Day    | Date
+ *  | This Year               | Date
  *
  */
 
