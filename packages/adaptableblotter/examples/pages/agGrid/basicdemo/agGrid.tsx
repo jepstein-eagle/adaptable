@@ -59,7 +59,7 @@ let demoConfig: PredefinedConfig = {
     },
   },
   SystemFilter: {
-    SystemFilters: [],
+    SystemFilters: ['Positive', 'Today', 'Blanks'],
   },
   SystemStatus: {
     // ShowAlert: false,
