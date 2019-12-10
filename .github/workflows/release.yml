@@ -66,14 +66,15 @@ jobs:
     # - name: Building angular
     #   run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
-
     - name: Set git config
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "SHIP IT"
 
     - name: Bump version
-      run: node ./scripts/registry-publish.js
+      run: "./.github/actions/execute_cmd"
+      with:
+        cmd_to_execute: $PUBLISH_PACKAGE_CMD
 
     - name: Registry publish core
       run: cd packages/adaptableblotter && npm run registry-publish-canary
