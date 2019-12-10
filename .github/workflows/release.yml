@@ -37,6 +37,7 @@ jobs:
       env:
         CI: true
 
+
     - name: Building core
       run: cd packages/adaptableblotter && npm run build-prod-no-cleanup
 
