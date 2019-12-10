@@ -72,7 +72,7 @@ jobs:
         git config --local user.name "SHIP IT"
 
     - name: Bump version
-      run: "./.github/actions/execute_cmd"
+      run: "./.github/actions/execute-cmd"
       with:
         cmd_to_execute: $PUBLISH_PACKAGE_CMD
 
