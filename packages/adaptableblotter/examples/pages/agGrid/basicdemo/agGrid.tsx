@@ -44,8 +44,9 @@ function InitAdaptableBlotter() {
   api = AdaptableBlotter.init(adaptableBlotterOptions);
 
   api.eventApi.on('BlotterReady', () => {
-    let test = api.columnFilterApi.getAllColumnFilterForColumn('notional');
-    console.log(test);
+    // let test = api.columnFilterApi.getAllColumnFilterForColumn('notional');
+    /// console.log(test);
+    api.internalApi.setMainMenuItems([]);
   });
 }
 
@@ -56,6 +57,9 @@ let demoConfig: PredefinedConfig = {
       Variant: 'text',
       Tone: 'success',
     },
+  },
+  SystemFilter: {
+    SystemFilters: [],
   },
   SystemStatus: {
     // ShowAlert: false,
