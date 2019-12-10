@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+echo "resetting now"
+git reset --hard
+
 INPUT_BRANCH=${INPUT_BRANCH:-master}
 INPUT_FORCE=${INPUT_FORCE:-false}
 INPUT_DIRECTORY=${INPUT_DIRECTORY:-'.'}
@@ -21,5 +24,4 @@ cd ${INPUT_DIRECTORY}
 
 remote_repo="https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/${REPOSITORY}.git"
 
-git reset --hard
 git push "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags $_FORCE_OPTION;
