@@ -62,7 +62,7 @@ jobs:
         git config --local user.name "SHIP IT"
 
     - name: Actually publish to private registry
-      run: node ./registry-publish.js
+      run: node ./scripts/registry-publish.js
 
     - name: Push changes
       uses: ad-m/github-push-action@02b0b75d447f0098d40d0d65a3e6cdf2119e6f60
