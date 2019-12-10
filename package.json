@@ -28,7 +28,7 @@
   "scripts": {
     "release": "npm run release:patch",
     "canaryversion": "npm version prerelease --preid=precanary && cp .npmrc ./packages/adaptableblotter && cp .npmrc ./packages/adaptableblotter-react-aggrid && cp .npmrc ./packages/adaptableblotter-ng-aggrid",
-    "canaryrelease": "npm version prerelease --preid=precanary && cp .npmrc ./packages/adaptableblotter && cp .npmrc ./packages/adaptableblotter-react-aggrid && cp .npmrc ./packages/adaptableblotter-ng-aggrid && npm run registry-publish-canary",
+    "canaryrelease": "npm run canaryversion",
     "release:patch": "cd packages/adaptableblotter && npm version patch && cd ../../packages/adaptableblotter-react-aggrid && npm version patch && cd ../../packages/adaptableblotter-ng-aggrid && npm version patch && cd ../../ && npm run registry-publish",
     "release:minor": "cd packages/adaptableblotter && npm version minor && cd ../../packages/adaptableblotter-react-aggrid && npm version minor && cd ../../packages/adaptableblotter-ng-aggrid && npm version minor && cd ../../ && npm run registry-publish",
     "release:major": "cd packages/adaptableblotter && npm version major && cd ../../packages/adaptableblotter-react-aggrid && npm version major && cd ../../packages/adaptableblotter-ng-aggrid && npm version major && cd ../../ && npm run registry-publish",
