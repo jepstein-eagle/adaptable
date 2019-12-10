@@ -76,11 +76,11 @@ jobs:
     - name: Registry publish core
       run: cd packages/adaptableblotter && npm run registry-publish-canary
 
-    - name: Registry publish react
-      run: cd packages/adaptableblotter-react-aggrid && npm run registry-publish-canary
+    # - name: Registry publish react
+    #   run: cd packages/adaptableblotter-react-aggrid && npm run registry-publish-canary
 
-    - name: Registry publish angular
-      run: cd packages/adaptableblotter-ng-aggrid && npm run registry-publish-canary
+    # - name: Registry publish angular
+    #   run: cd packages/adaptableblotter-ng-aggrid && npm run registry-publish-canary
 
     - run: git diff
     - run: cat package.json
