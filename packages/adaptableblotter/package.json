@@ -102,6 +102,7 @@
     "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
     "registry-publish": "npm run build-package-json && npm run update-version-file && npm publish dist",
     "registry-publish-canary": "npm run build-package-json && npm run update-version-file && npm publish --tag canary dist",
+    "canaryrelease": "npm version prerelease --preid=canary && npm run registry-publish-canary",
     "rmdist": "rimraf ./dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i && npm run rm-native-types",
