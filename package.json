@@ -1,6 +1,6 @@
 {
   "name": "@adaptabletools/adaptableblotter-monorepo",
-  "version": "5.2.2-canary.5",
+  "version": "5.2.2-canary.6",
   "private": true,
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
@@ -25,7 +25,6 @@
     "release": "^6.0.1",
     "rimraf": "^2.6.3"
   },
-
   "scripts": {
     "release": "npm run release:patch",
     "canaryrelease": "npm version prerelease --preid=canary && npm run registry-publish-canary",
