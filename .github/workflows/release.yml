@@ -19,47 +19,18 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: adaptabletools/release-action@v1.21
+    - uses: adaptabletools/release-library@v1.1
       env:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
     - name: Echo whoami
       run: npm whoami --registry=https://registry.adaptabletools.com
+
     - name: Echo publish cmd
       run: echo $PUBLISH_PACKAGE_CMD
 
     - name: Executing npm install in root
       run: npm i
-
-
-
-    - name: git status
-      run: git status
-
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
-    - name: Dump job context
-      env:
-        JOB_CONTEXT: ${{ toJson(job) }}
-      run: echo "$JOB_CONTEXT"
-    - name: Dump steps context
-      env:
-        STEPS_CONTEXT: ${{ toJson(steps) }}
-      run: echo "$STEPS_CONTEXT"
-    - name: Dump runner context
-      env:
-        RUNNER_CONTEXT: ${{ toJson(runner) }}
-      run: echo "$RUNNER_CONTEXT"
-    - name: Dump strategy context
-      env:
-        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-      run: echo "$STRATEGY_CONTEXT"
-    - name: Dump matrix context
-      env:
-        MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      run: echo "$MATRIX_CONTEXT"
 
     - name: Executing npm install in core
       run: npm run install-core
@@ -88,13 +59,16 @@ jobs:
     - name: Set git config
       run: |
         git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --local user.name "SHIP IT"
 
     - name: Actually publish to private registry
       run: npm run canaryrelease
 
     - name: Push changes
       uses: ad-m/github-push-action@master
+      with:
+          github_token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
+
 
     #node scripts/registry-publish.js
 
