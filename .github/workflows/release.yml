@@ -89,7 +89,9 @@ jobs:
     - name: Push changes
       uses: "./.github/actions/git-push-action"
       with:
+          branch: try-deploy
           github_token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
+
 
 
     #node scripts/registry-publish.js

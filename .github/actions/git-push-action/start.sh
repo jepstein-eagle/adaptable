@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 
-echo "resetting now"
-git reset --hard
+# echo "resetting now"
+# git reset --hard
 
 INPUT_BRANCH=${INPUT_BRANCH:-master}
 INPUT_FORCE=${INPUT_FORCE:-false}
