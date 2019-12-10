@@ -66,6 +66,7 @@ jobs:
     # - name: Building angular
     #   run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
+
     - name: Set git config
       run: |
         git config --local user.email "action@github.com"
