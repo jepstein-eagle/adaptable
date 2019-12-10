@@ -33,7 +33,7 @@
   },
   "scripts": {
     "release": "npm run release:patch",
-    "canaryrelease": "cd packages/adaptableblotter && npm version prerelease --preid=canary && cd ../../packages/adaptableblotter-react-aggrid && npm version prerelease --preid=canary && cd ../../packages/adaptableblotter-ng-aggrid && npm version prerelease --preid=canary && cd ../../ && npm run registry-publish-canary",
+    "canaryrelease": "cd packages/adaptableblotter && npm run canaryrelease",
     "release:patch": "cd packages/adaptableblotter && npm version patch && cd ../../packages/adaptableblotter-react-aggrid && npm version patch && cd ../../packages/adaptableblotter-ng-aggrid && npm version patch && cd ../../ && npm run registry-publish",
     "release:minor": "cd packages/adaptableblotter && npm version minor && cd ../../packages/adaptableblotter-react-aggrid && npm version minor && cd ../../packages/adaptableblotter-ng-aggrid && npm version minor && cd ../../ && npm run registry-publish",
     "release:major": "cd packages/adaptableblotter && npm version major && cd ../../packages/adaptableblotter-react-aggrid && npm version major && cd ../../packages/adaptableblotter-ng-aggrid && npm version major && cd ../../ && npm run registry-publish",
