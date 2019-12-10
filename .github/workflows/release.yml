@@ -71,13 +71,13 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "SHIP IT"
 
-    - name: Bump version
+    - name: Bump version and release
       uses: "./.github/actions/execute-cmd"
       with:
         cmd_to_execute: $PUBLISH_PACKAGE_CMD
 
-    - name: Registry publish core
-      run: cd packages/adaptableblotter && npm run registry-publish-canary
+    # - name: Registry publish core
+    #   run: cd packages/adaptableblotter && npm run registry-publish-canary
 
     # - name: Registry publish react
     #   run: cd packages/adaptableblotter-react-aggrid && npm run registry-publish-canary
