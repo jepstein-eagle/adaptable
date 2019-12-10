@@ -28,17 +28,13 @@
   "scripts": {
     "release": "npm run release:patch",
     "canaryrelease": "npm version prerelease --preid=precanary && npm run copy-npmrc && npm run registry-publish-canary",
-
     "release:patch": "npm version patch && npm run copy-npmrc && npm run registry-publish",
     "release:minor": "npm version minor && npm run copy-npmrc && npm run registry-publish",
     "release:major": "npm version major && npm run copy-npmrc && npm run registry-publish",
-
     "copy-npmrc": "cp .npmrc ./packages/adaptableblotter && cp .npmrc ./packages/adaptableblotter-react-aggrid && cp .npmrc ./packages/adaptableblotter-ng-aggrid",
-
     "xregistry-publish": "npm run --prefix packages/adaptableblotter registry-publish && npm run --prefix packages/adaptableblotter-react-aggrid registry-publish && npm run --prefix packages/adaptableblotter-ng-aggrid registry-publish",
     "registry-publish-canary": "cd packages/adaptableblotter && npm run registry-publish-canary",
     "registry-publish": "cd packages/adaptableblotter && npm run registry-publish",
-
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "install-core": "npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types",
     "install-react": "npm install --prefix packages/adaptableblotter-react-aggrid",
