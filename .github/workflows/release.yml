@@ -73,6 +73,8 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "SHIP IT"
 
+    - run: git diff
+
     - name: Bump version and release
       uses: "./.github/actions/execute-cmd"
       with:
