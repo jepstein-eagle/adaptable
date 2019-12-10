@@ -32,9 +32,9 @@ export interface ExcelStatus {
 
 type SheetChangeCallback = (
   data: object[],
-  errorCallback: (errors: any) => void, // was (errors: Glue42Office.Excel.ValidationError[]) => void,
+  errorCallback: (errors: any) => void,
   doneCallback: () => void,
-  delta: any // Glue42Office.Excel.DeltaItem[]
+  delta: any
 ) => void;
 
 export class Glue42Service implements IGlue42Service {
