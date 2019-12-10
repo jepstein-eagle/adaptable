@@ -18,6 +18,18 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 import ipushpull from 'ipushpull-js';
 
+ipushpull.config.set({
+  api_secret: '',
+  api_key: '',
+  api_url: 'https://www.ipushpull.com/api/1.0',
+  ws_url: 'https://www.ipushpull.com',
+  web_url: 'https://www.ipushpull.com',
+  docs_url: 'https://docs.ipushpull.com',
+  storage_prefix: 'ipp_local',
+  transport: 'polling',
+  hsts: false, // strict cors policy
+});
+
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 500;
