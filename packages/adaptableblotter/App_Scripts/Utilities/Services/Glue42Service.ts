@@ -1,6 +1,6 @@
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
-import { LogAdaptableBlotterWarning, LogAdaptableBlotterError } from '../Helpers/LoggingHelper';
+import { LogAdaptableBlotterError } from '../Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
 import Helper from '../Helpers/Helper';
 import ColumnHelper from '../Helpers/ColumnHelper';
@@ -10,8 +10,9 @@ import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedI
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { Glue42State } from '../../PredefinedConfig/PartnerState';
+import { IGlue42Service } from './Interface/IGlue42Service';
 
-export interface IGlue42ExportError {
+export interface Glue42ExportError {
   row: number;
   column: number;
   description: string;
@@ -19,18 +20,14 @@ export interface IGlue42ExportError {
   backgroundColor: string;
 }
 
-export interface IGlue42ColumnInfo {
+export interface Glue42ColumnInfo {
   header: string;
   fieldName: string;
 }
 
-export interface IExcelStatus {
+export interface ExcelStatus {
   msg: string;
   isResolved: boolean;
-}
-export interface IGlue42Service {
-  init(glue42State: Glue42State): void;
-  exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys: any[]): void;
 }
 
 type SheetChangeCallback = (
@@ -44,7 +41,7 @@ export class Glue42Service implements IGlue42Service {
   private glue4ExcelInstance!: any;
   private glueInstance!: any;
   private excelSyncTimeout?: number;
-  private isExcelStatus: IExcelStatus = {
+  private isExcelStatus: ExcelStatus = {
     msg: '[Excel] Not checked, changed the addin status 0 times!',
     isResolved: false,
   };
@@ -155,7 +152,7 @@ export class Glue42Service implements IGlue42Service {
       );
 
       let dataChangedInfos: DataChangedInfo[] = [];
-      const errors: IGlue42ExportError[] = [];
+      const errors: Glue42ExportError[] = [];
 
       delta.forEach(deltaItem => {
         if (deltaItem.action === 'modified') {
@@ -211,7 +208,7 @@ export class Glue42Service implements IGlue42Service {
             description: msg,
             foregroundColor: 'white',
             backgroundColor: 'red',
-          } as IGlue42ExportError);
+          } as Glue42ExportError);
         }
       });
       dataChangedInfos.forEach(dc => {
@@ -264,7 +261,7 @@ export class Glue42Service implements IGlue42Service {
     primaryKeyValue: any,
     rowIndex: number,
     columnIndex: number,
-    errors: IGlue42ExportError[],
+    errors: Glue42ExportError[],
     columns: AdaptableBlotterColumn[]
   ): boolean {
     if (column.ReadOnly) {
@@ -329,7 +326,7 @@ export class Glue42Service implements IGlue42Service {
     rowIndex: number,
     columnIndex: number,
     errorDescription: string
-  ): IGlue42ExportError {
+  ): Glue42ExportError {
     return {
       row: rowIndex,
       column: columnIndex,
@@ -343,7 +340,7 @@ export class Glue42Service implements IGlue42Service {
     rowIndex: number,
     columnIndex: number,
     errorDescription: string
-  ): IGlue42ExportError {
+  ): Glue42ExportError {
     return {
       row: rowIndex,
       column: columnIndex,
@@ -353,9 +350,9 @@ export class Glue42Service implements IGlue42Service {
     };
   }
 
-  createColumns(data: any[]): IGlue42ColumnInfo[] {
+  createColumns(data: any[]): Glue42ColumnInfo[] {
     let firstRow: string[] = data[0];
-    let headers: IGlue42ColumnInfo[] = [];
+    let headers: Glue42ColumnInfo[] = [];
     firstRow.forEach((element: any) => {
       headers.push({
         header: element.replace(' ', ''),
