@@ -62,8 +62,14 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "SHIP IT"
 
-    - name: Actually publish to private registry
-      run: npm run canaryrelease
+    - name: Bump version
+      run: npm run canaryversion
+
+    - name: Registry publish core
+      run: cd packages/adaptableblotter && npm run registry-publish-canary
+
+    - name: Registry publish react
+      run: cd packages/adaptableblotter-react-aggrid && npm run registry-publish-canary
 
     - name: Push changes
       uses: ad-m/github-push-action@02b0b75d447f0098d40d0d65a3e6cdf2119e6f60
