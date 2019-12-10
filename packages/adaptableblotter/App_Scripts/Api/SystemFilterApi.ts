@@ -14,9 +14,28 @@ export interface SystemFilterApi {
    * Retrieves the System Filter section from the Adaptable Blotter State
    */
   getSystemFilterState(): SystemFilterState;
-  setSystemFilterByUserFilters(userFilters: UserFilter[]): void;
-  setSystemFilter(systemFilters: string[]): void;
-  clearSystemFilter(): void;
-  getCurrentSystemFilter(): string[];
+
+  /**
+   * Sets the given SystemFilters to be used
+   *
+   * @param systemFilters SystemFilters to set
+   */
+  setSystemFilters(systemFilters: string[]): void;
+
+  /**
+   * Clears all System Filters - essentially removes them all
+   */
+  clearSystemFilters(): void;
+
+  /**
+   * Gets all the System Filters currently in the System Filter State
+   */
   getAllSystemFilter(): string[];
+
+  /**
+   * Gets all the System Filters which could be created by the Adaptable Blotter
+   *
+   * If no System Filters have been set by the users then these will be all in the state
+   */
+  getAllPotentialSystemFilters(): string[];
 }
