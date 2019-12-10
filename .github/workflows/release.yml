@@ -48,13 +48,13 @@ jobs:
     - name: Building react
       run: cd packages/adaptableblotter-react-aggrid && npm run build-prod-no-cleanup
 
-    - name: Executing npm install in angular
-      run: npm run install-angular
-      env:
-        CI: true
+    # - name: Executing npm install in angular
+    #   run: npm run install-angular
+    #   env:
+    #     CI: true
 
-    - name: Building angular
-      run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
+    # - name: Building angular
+    #   run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
     - name: Set git config
       run: |
