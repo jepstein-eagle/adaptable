@@ -101,7 +101,7 @@
     "build-apidoc": "typedoc --options ./typedocconfig.ts",
     "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
     "registry-publish": "npm run build-package-json && npm run update-version-file && npm publish dist",
-    "registry-publish-canary": "cat package.json && echo works && npm run build-package-json && npm run update-version-file && npm publish --tag precanary dist",
+    "registry-publish-canary": "npm run build-package-json && npm run update-version-file && npm publish --tag precanary dist",
     "correct-registry-publish-canary": "npm run build-package-json && npm run update-version-file && npm publish --tag canary dist",
     "rmdist": "rimraf ./dist",
     "test": "echo \"Error: no test specified\" && exit 1",
