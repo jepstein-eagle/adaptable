@@ -1,6 +1,6 @@
 {
   "name": "@adaptabletools/adaptableblotter-monorepo",
-  "version": "5.2.2-precanary.2",
+  "version": "5.2.2-precanary.3",
   "private": true,
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
