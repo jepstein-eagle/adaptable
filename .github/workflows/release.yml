@@ -83,7 +83,7 @@ jobs:
       run: cd packages/adaptableblotter-ng-aggrid && npm run registry-publish-canary
 
     - name: Push changes
-      uses: ad-m/github-push-action@02b0b75d447f0098d40d0d65a3e6cdf2119e6f60
+      uses: "./.github/actions/git-push-action"
       with:
           github_token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
 
