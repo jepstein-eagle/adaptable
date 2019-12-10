@@ -3,7 +3,7 @@ name: RELEASE
 on:
   push:
     branches:
-      - try-deploy
+      - master
 
 jobs:
   release:
@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: adaptabletools/release-library@v1.1
+    - uses: adaptabletools/release-library@v1.2
       env:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
@@ -32,6 +32,7 @@ jobs:
     - name: Executing npm install in root
       run: npm i
 
+
     - name: Executing npm install in core
       run: npm run install-core
       env:
@@ -40,34 +41,45 @@ jobs:
     - name: Building core
       run: cd packages/adaptableblotter && npm run build-prod-no-cleanup
 
-    # - name: Executing npm install in react
-    #   run: npm run install-react
-    #   env:
-    #     CI: true
 
-    # - name: Building react
-    #   run: cd packages/adaptableblotter-react-aggrid && npm run build-prod-no-cleanup
+    - name: Executing npm install in react
+      run: npm run install-react
+      env:
+        CI: true
 
-    # - name: Executing npm install in angular
-    #   run: npm run install-angular
-    #   env:
-    #     CI: true
+    - name: Building react
+      run: cd packages/adaptableblotter-react-aggrid && npm run build-prod-no-cleanup
 
-    # - name: Building angular
-    #   run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
+
+    - name: Executing npm install in angular
+      run: npm run install-angular
+      env:
+        CI: true
+
+    - name: Building angular
+      run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
     - name: Set git config
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "SHIP IT"
 
-    - name: Actually publish to private registry
-      run: npm run canaryrelease
+    - run: git diff
+
+    - name: Bump version and release
+      uses: "./.github/actions/execute-cmd"
+      with:
+        cmd_to_execute: $PUBLISH_PACKAGE_CMD
+
+    - run: git diff
+    - run: cat package.json
 
     - name: Push changes
-      uses: ad-m/github-push-action@02b0b75d447f0098d40d0d65a3e6cdf2119e6f60
+      uses: "./.github/actions/git-push-action"
       with:
+          branch: master
           github_token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
+
 
 
     #node scripts/registry-publish.js

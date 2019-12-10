@@ -1,6 +1,6 @@
 {
   "name": "@adaptabletools/adaptableblotter-monorepo",
-  "version": "5.2.2-precanary.0",
+  "version": "5.2.2-precanary.11",
   "private": true,
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
@@ -27,12 +27,14 @@
   },
   "scripts": {
     "release": "npm run release:patch",
-    "canaryrelease": "npm version prerelease --preid=precanary && cp .npmrc ./packages/adaptableblotter && npm run registry-publish-canary",
-    "release:patch": "cd packages/adaptableblotter && npm version patch && cd ../../packages/adaptableblotter-react-aggrid && npm version patch && cd ../../packages/adaptableblotter-ng-aggrid && npm version patch && cd ../../ && npm run registry-publish",
-    "release:minor": "cd packages/adaptableblotter && npm version minor && cd ../../packages/adaptableblotter-react-aggrid && npm version minor && cd ../../packages/adaptableblotter-ng-aggrid && npm version minor && cd ../../ && npm run registry-publish",
-    "release:major": "cd packages/adaptableblotter && npm version major && cd ../../packages/adaptableblotter-react-aggrid && npm version major && cd ../../packages/adaptableblotter-ng-aggrid && npm version major && cd ../../ && npm run registry-publish",
-    "registry-publish": "npm run --prefix packages/adaptableblotter registry-publish && npm run --prefix packages/adaptableblotter-react-aggrid registry-publish && npm run --prefix packages/adaptableblotter-ng-aggrid registry-publish",
-    "registry-publish-canary": "cd packages/adaptableblotter && npm run registry-publish-canary",
+    "canaryrelease": "npm version prerelease --preid=precanary && npm run copy-npmrc && npm run registry-publish-canary",
+    "release:patch": "npm version patch && npm run copy-npmrc && npm run registry-publish",
+    "release:minor": "npm version minor && npm run copy-npmrc && npm run registry-publish",
+    "release:major": "npm version major && npm run copy-npmrc && npm run registry-publish",
+    "copy-npmrc": "cp .npmrc ./packages/adaptableblotter && cp .npmrc ./packages/adaptableblotter-react-aggrid && cp .npmrc ./packages/adaptableblotter-ng-aggrid",
+    "xregistry-publish": "npm run --prefix packages/adaptableblotter registry-publish && npm run --prefix packages/adaptableblotter-react-aggrid registry-publish && npm run --prefix packages/adaptableblotter-ng-aggrid registry-publish",
+    "registry-publish-canary": "cd packages/adaptableblotter && npm run registry-publish-canary && cd ../../packages/adaptableblotter-react-aggrid && npm run registry-publish-canary && cd ../../packages/adaptableblotter-ng-aggrid && npm run registry-publish-canary",
+    "registry-publish": "cd packages/adaptableblotter && npm run registry-publish && cd ../../packages/adaptableblotter-react-aggrid && npm run registry-publish && cd ../../packages/adaptableblotter-ng-aggrid && npm run registry-publish",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "install-core": "npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types",
     "install-react": "npm install --prefix packages/adaptableblotter-react-aggrid",
@@ -47,7 +49,8 @@
     "tsc": "npm run tsc-core && npm run tsc-react && npm run tsc-angular",
     "tsc-core": "npm run --prefix packages/adaptableblotter tsc",
     "tsc-react": "npm run --prefix packages/adaptableblotter-react-aggrid tsc",
-    "tsc-angular": "npm run --prefix packages/adaptableblotter-ng-aggrid tsc"
+    "tsc-angular": "npm run --prefix packages/adaptableblotter-ng-aggrid tsc",
+    "echo": "echo xxx"
   },
   "husky": {
     "hooks": {
