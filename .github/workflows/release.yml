@@ -74,7 +74,7 @@ jobs:
     - name: Bump version
       run: "./.github/actions/execute-cmd"
       with:
-        cmd_to_execute: $PUBLISH_PACKAGE_CMD
+          cmd_to_execute: ${{ $PUBLISH_PACKAGE_CMD }}
 
     - name: Registry publish core
       run: cd packages/adaptableblotter && npm run registry-publish-canary
