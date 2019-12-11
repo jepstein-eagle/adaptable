@@ -47,64 +47,12 @@ export interface DashboardHideToolbarAction extends Redux.Action {
 }
 
 export interface DashboardMoveItemAction extends Redux.Action {
-  toolbar:
-    | 'AdvancedSearch'
-    | 'Alert'
-    | 'Application'
-    | 'Bulk Update'
-    | 'CellSummary'
-    | 'Chart'
-    | 'ColumnFilter'
-    | 'Alert'
-    | 'Export'
-    | 'Layout'
-    | 'SmartEdit'
-    | 'QuickSearch'
-    | 'Theme'
-    | 'SystemStatus';
+  toolbar: AdaptableBlotterDashboardToolbar;
   NewIndex: number;
 }
 
 export interface DashboardSetFunctionButtonsAction extends Redux.Action {
-  functionButtons: (
-    | 'AdvancedSearch'
-    | 'Alert'
-    | 'Application'
-    | 'BulkUpdate'
-    | 'CalculatedColumn'
-    | 'Calendar'
-    | 'CellSummary'
-    | 'CellValidation'
-    | 'Chart'
-    | 'ColumnCategory'
-    | 'ColumnChooser'
-    | 'ColumnFilter'
-    | 'ColumnInfo'
-    | 'ConditionalStyle'
-    | 'CustomSort'
-    | 'Dashboard'
-    | 'DataSource'
-    | 'Export'
-    | 'FlashingCells'
-    | 'FormatColumn'
-    | 'FreeTextColumn'
-    | 'Home'
-    | 'Layout'
-    | 'PercentBar'
-    | 'PieChart'
-    | 'PlusMinus'
-    | 'QuickSearch'
-    | 'Reminder'
-    | 'Shortcut'
-    | 'SmartEdit'
-    | 'SparklineColumn'
-    | 'Sparkline'
-    | 'StateManagement'
-    | 'SystemStatus'
-    | 'TeamSharing'
-    | 'Theme'
-    | 'Updated Row'
-    | 'UserFilter')[];
+  functionButtons: AdaptableBlotterFunctionButtons;
 }
 
 export interface DashboardSetVisibilityAction extends Redux.Action {
