@@ -2,9 +2,9 @@
 
 const { spawnSync } = require('child_process');
 
-if (process.env.PUBLISH_PACKAGE_CMD) {
-  console.log('starting publishing with ' + process.env.PUBLISH_PACKAGE_CMD);
-  const { stdout } = spawnSync(process.env.PUBLISH_PACKAGE_CMD, {
+if (process.env.WILL_RELEASE_CMD) {
+  console.log('starting publishing with ' + process.env.WILL_RELEASE_CMD);
+  const { stdout } = spawnSync(process.env.WILL_RELEASE_CMD, {
     stdio: 'inherit',
     env: { ...process.env },
   });
