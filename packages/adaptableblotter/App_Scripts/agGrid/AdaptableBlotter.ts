@@ -462,7 +462,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     }
     // now create the grid itself - we have to do it this way as previously when we instantiated the Grid 'properly' it got created as J.Grid
-    // console.log('creating the grid as not created by user')
 
     let grid: any;
     if (this.runtimeConfig && this.runtimeConfig.instantiateGrid) {
@@ -888,7 +887,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const selectedRows: GridRow[] = [];
 
     if (this.gridOptions.columnApi.isPivotMode()) {
-      //  console.log('cannot currently perform row selection in pivot mode');
+      //  dont perform row selection in pivot mode
       return;
     }
 
@@ -2005,15 +2004,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.debouncedSetSelectedCells();
     });
 
-    // this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
-    //  console.log('in row data updated');
-    //  console.log(params);
-    //});
-    // this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
-    //  console.log('in row data changed');
-    //   console.log(params);
-    // });
-
     this.gridOptions.api!.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
       // not sure about this - doing it to make sure that we set the columns properly at least once!
 
@@ -2429,7 +2419,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
         colDef.tooltipField = colDef.field;
         // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
-        //   console.log('getting tooltip');
         //  coldDef.tooltipComponent = PercentBarTooltip;
         // coldDef.tooltipValueGetter = (params: ITooltipParams) => {
         //   return { value: params.value * 10 };

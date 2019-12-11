@@ -18,7 +18,6 @@ export class DataService implements IDataService {
   }
 
   public CreateDataChangedEvent(dataChangedInfo: DataChangedInfo): void {
-    //console.log(dataChangedInfo.ColumnId);
     if (dataChangedInfo.NewValue != dataChangedInfo.OldValue) {
       this._onDataSourceChanged.Dispatch(this, dataChangedInfo);
     }
