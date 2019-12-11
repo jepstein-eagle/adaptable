@@ -117,10 +117,8 @@ export class LayoutService implements ILayoutService {
   public isLayoutModified(layoutEntity: Layout): boolean {
     if (layoutEntity) {
       if (!layoutEntity.VendorGridInfo) {
-        //  console.log('no grid info so return false');
         return true;
       }
-      //  console.log('is dirty: ' + layoutEntity.VendorGridInfo.IsDirty);
 
       if (
         !ArrayExtensions.areArraysEqualWithOrder(

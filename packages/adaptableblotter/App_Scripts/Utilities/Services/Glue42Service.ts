@@ -1,6 +1,6 @@
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
-import { LogAdaptableBlotterError } from '../Helpers/LoggingHelper';
+import LoggingHelper, { LogAdaptableBlotterError } from '../Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
 import Helper from '../Helpers/Helper';
 import ColumnHelper from '../Helpers/ColumnHelper';
@@ -246,7 +246,7 @@ export class Glue42Service implements IGlue42Service {
           isResolved: false,
         };
 
-        console.log("[Excel] Application isn't running!");
+        LoggingHelper.LogAdaptableBlotterWarning("[Excel] Application isn't running!");
       });
     } catch (error) {
       this.isExcelStatus = {

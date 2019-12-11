@@ -46,7 +46,7 @@ import Panel from '../../../components/Panel';
 import Checkbox from '../../../components/CheckBox';
 
 import SizedContainer from '../../../components/SizedContainer';
-import {ChartContainer} from '../../../components/ChartContainer';
+import { ChartContainer } from '../../../components/ChartContainer';
 
 interface PieChartComponentProps {
   CurrentChartDefinition: PieChartDefinition;
@@ -432,7 +432,6 @@ export class PieChartComponent extends React.Component<
   }
 
   onSliceClick(e: SliceClickEventArgs): void {
-    //    console.log("onSliceClick " + e);
     e.isExploded = !e.isExploded;
     e.isSelected = !e.isSelected;
     if (e.isExploded) {

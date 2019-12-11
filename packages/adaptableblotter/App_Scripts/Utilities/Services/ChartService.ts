@@ -370,7 +370,7 @@ export class ChartService implements IChartService {
           dataRanges.set(rangeKey, range);
         }
       });
-      //   console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions)
+
       // finally we can generate slice items based on data ranges
       dataRanges.forEach((range, key) => {
         let sliceItem: PieChartDataItem = {
