@@ -20,7 +20,7 @@ async function run() {
                 type: 'section',
                 text: {
                   type: 'mrkdwn',
-                  text: `Version release *${version || 512}*`,
+                  text: `Version *${version || 512}* is out 🎉🎉🎉`,
                 },
               },
             ],
