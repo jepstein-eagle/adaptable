@@ -56,6 +56,13 @@ class ExportToolbarControlComponent extends React.Component<
   ExportToolbarControlComponentProps,
   {}
 > {
+  public componentDidMount() {
+    if (this.props.Blotter) {
+      this.props.Blotter._on('Glue42Loaded', () => {
+        this.forceUpdate();
+      });
+    }
+  }
   render(): any {
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
