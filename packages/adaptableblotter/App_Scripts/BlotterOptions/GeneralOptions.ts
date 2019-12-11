@@ -57,7 +57,6 @@ export interface GeneralOptions {
   /**
    * Whether or not to show a Blotter Tool Panel on the right hand side (ag-Grid only).
    *
-   *
    * Note - the toolpanel is not yet operational and will be released in the Summer of 2019.
    *
    * **Default Value: false**
