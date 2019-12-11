@@ -114,7 +114,7 @@
     "registry-publish-canary": "npm run build-package-json && npm publish --tag canary dist",
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i",
     "build": "npm run clean-deps && rimraf dist && npm run build-prod-no-cleanup",
-    "build-prod-no-cleanup": "npm run before-build && npm run update-version-file && npm run update-env-file && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
+    "build-prod-no-cleanup": "npm run before-build && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
     "build-package-json": "node ./scripts/buildPackageJson",
     "before-build": "npm run ensure-clean-on-local",
     "after-build": "",

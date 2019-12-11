@@ -65,7 +65,7 @@
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i && npm run clean-deps-projects",
     "clean-deps-projects": "rimraf projects/adaptableblotter-angular-aggrid/yarn.lock && rimraf projects/adaptableblotter-angular-aggrid/package-lock.json && rimraf projects/adaptableblotter-angular-aggrid/node_modules && npm --prefix projects/adaptableblotter-angular-aggrid/ i",
     "build": "npm run clean-deps && rimraf dist && npm run build-prod-no-cleanup",
-    "build-prod-no-cleanup": "npm run before-build && npm run update-env-file && npm run update-version-file && npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng build adaptableblotter-angular-aggrid && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
+    "build-prod-no-cleanup": "npm run before-build && npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng build adaptableblotter-angular-aggrid && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
     "before-build": "npm run ensure-clean-on-local",
     "after-build": "",
     "ensure-clean-on-local": "node ../../scripts/ensure-clean-on-local",
