@@ -195,9 +195,11 @@ export class PushPullService implements IPushPullService {
   }
 
   private getApiKey(): string {
-    return 'CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP'; // process.env.IPUSHPULL_API_KEY as string, // need to make sure that is always there
+    let key = process.env.IPUSHPULL_API_KEY; // need to make sure that is always there
+    return key;
   }
   private getApiSecret(): string {
-    return 'xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj'; //  process.env.IPUSHPULL_API_KEY as string, // need to make sure that is always there
+    let secret: string = process.env.IPUSHPULL_API_SECRET as string; // need to make sure that is always there
+    return secret;
   }
 }
