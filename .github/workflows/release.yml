@@ -74,9 +74,6 @@ jobs:
     - name: Building angular
       run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
-
-    - run: git diff
-
     - name: Ship it
       uses: "./.github/actions/execute-cmd"
       with:
