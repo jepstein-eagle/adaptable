@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IStateManagementStrategy } from './Interface/IStateManagementStrategy';
 
 export class StateManagementStrategy extends AdaptableStrategyBase

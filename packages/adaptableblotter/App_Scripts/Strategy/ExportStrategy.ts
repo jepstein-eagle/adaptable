@@ -13,8 +13,8 @@ import { ExportState, Report } from '../PredefinedConfig/ExportState';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
 import { SELECTED_CELLS_REPORT } from '../Utilities/Constants/GeneralConstants';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private isSendingData = false;

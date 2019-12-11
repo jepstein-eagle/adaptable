@@ -61,9 +61,7 @@ export interface PartnerState extends DesignTimeState {
  * // 3. pass in this config as the `iPushPullInstance` property in iPushPull section of PartnerState
  * // Additionally you can add your iPushPull username and password to help to pre-fill the login page
  * const adaptableBlotterOptions: AdaptableBlotterOptions = {
- *   primaryKey: 'tradeId',
- *   blotterId: 'iPushPull Demo',
- *    vendorGrid: gridOptions,
+ *   .........
  *    predefinedConfig: {
  *       Partner: {
  *         iPushPull: {

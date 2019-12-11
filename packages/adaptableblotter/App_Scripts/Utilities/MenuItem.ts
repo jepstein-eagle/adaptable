@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 
 // A menu item which performs a Redux Action when it is clicke
 export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {

@@ -10,7 +10,7 @@ import { Action } from 'redux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../PredefinedConfig/LayoutState';

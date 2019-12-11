@@ -20,7 +20,7 @@ import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnum
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
   private ChartState: ChartState;
