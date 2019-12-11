@@ -26,7 +26,7 @@ jobs:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
     - name: check if release needed
-      if: $WILL_RELEASE == false
+      if: $WILL_RELEASE == 'false'
       run: |
         echo "proceeding with release"
         exit 0
