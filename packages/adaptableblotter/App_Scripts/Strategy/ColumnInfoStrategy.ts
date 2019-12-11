@@ -5,8 +5,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 

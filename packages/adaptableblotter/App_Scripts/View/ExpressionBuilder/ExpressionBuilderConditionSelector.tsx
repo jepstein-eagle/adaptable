@@ -22,16 +22,18 @@ import {
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
-import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import {
+  Expression,
+  QueryRange,
+  FilterExpression,
+  RangeExpression,
+} from '../../PredefinedConfig/Common/Expression';
 
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
-import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
-import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';

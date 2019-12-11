@@ -6,8 +6,12 @@ import {
   RangeOperandType,
 } from '../../PredefinedConfig/Common/Enums';
 
-import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
-import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import {
+  Expression,
+  QueryRange,
+  ColumnValueExpression,
+  RangeExpression,
+} from '../../PredefinedConfig/Common/Expression';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -17,8 +21,6 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
-import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { NamedFilterFunction } from '../../BlotterOptions/AdvancedOptions';
 import Helper from './Helper';

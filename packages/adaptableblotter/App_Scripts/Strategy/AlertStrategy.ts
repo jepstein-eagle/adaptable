@@ -12,8 +12,7 @@ import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {

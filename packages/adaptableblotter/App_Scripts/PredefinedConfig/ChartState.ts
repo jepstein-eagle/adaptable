@@ -14,7 +14,7 @@ import {
   AxisAngle,
   HorizontalAlignment,
 } from './Common/ChartEnums';
-import { Expression } from './Common/Expression/Expression';
+import { Expression } from './Common/Expression';
 
 export interface ChartState extends RunTimeState {
   ChartDefinitions?: ChartDefinition[];

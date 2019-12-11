@@ -1,13 +1,11 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-
-import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import { Expression, ColumnValueExpression } from '../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';

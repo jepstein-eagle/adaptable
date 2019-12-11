@@ -12,8 +12,6 @@ import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterF
 
 import { UIHelper } from '../../UIHelper';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
-import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
-
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
 import { Box, Flex } from 'rebass';
@@ -23,6 +21,7 @@ import Input from '../../../components/Input';
 import { SyntheticEvent } from 'react';
 import CheckBox, { CheckBoxProps } from '../../../components/CheckBox';
 import join from '../../../components/utils/join';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
   CurrentColumn: AdaptableBlotterColumn;

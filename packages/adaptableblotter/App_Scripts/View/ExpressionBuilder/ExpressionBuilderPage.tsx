@@ -14,7 +14,7 @@ import {
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import { Expression } from '../../PredefinedConfig/Common/Expression';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import SimpleButton from '../../components/SimpleButton';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';

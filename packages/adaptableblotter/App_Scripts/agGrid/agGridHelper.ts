@@ -65,8 +65,6 @@ import { iconToString } from '../components/icons';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import Helper from '../Utilities/Helpers/Helper';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
@@ -81,6 +79,7 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
+import { ContextMenuInfo, AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy

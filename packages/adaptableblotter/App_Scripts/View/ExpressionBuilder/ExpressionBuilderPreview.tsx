@@ -7,7 +7,13 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import {
+  Expression,
+  ColumnValueExpression,
+  FilterExpression,
+  RangeExpression,
+  QueryRange,
+} from '../../PredefinedConfig/Common/Expression';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import {
   QueryTab,
@@ -18,15 +24,11 @@ import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
 
 import ButtonPreviewDelete from '../Components/Buttons/ButtonPreviewDelete';
 import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
-import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
-import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
-import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 
 import ListGroupItem from '../../components/List/ListGroupItem';
 import ListGroup from '../../components/List/ListGroup';
 import SimpleButton from '../../components/SimpleButton';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export interface ExpressionBuilderPreviewProps
   extends React.ClassAttributes<ExpressionBuilderPreview> {

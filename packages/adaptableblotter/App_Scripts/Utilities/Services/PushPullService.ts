@@ -2,21 +2,15 @@ import { IAdaptableBlotter } from '../../types';
 import { IPPDomain } from '../Interface/Reports/IPPDomain';
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { IPPStyle } from '../Interface/Reports/IPPStyle';
+import { IPushPullService } from './Interface/IPushPullService';
+
+const env = require('../../env');
 
 export enum ServiceStatus {
   Unknown = 'Unknown',
   Disconnected = 'Disconnected',
   Connected = 'Connected',
   Error = 'Error',
-}
-
-export interface IPushPullService {
-  Login(login: string, password: string): Promise<any>;
-  GetDomainPages(): Promise<IPPDomain[]>;
-  LoadPage(folderIPP: string, pageIPP: string): Promise<any>;
-  UnloadPage(page: string): void;
-  pushData(page: string, data: any[]): Promise<any>;
-  getIPPStatus(): ServiceStatus;
 }
 
 export class PushPullService implements IPushPullService {
@@ -39,8 +33,8 @@ export class PushPullService implements IPushPullService {
             web_url: 'https://www.ipushpull.com',
             docs_url: 'https://docs.ipushpull.com',
             storage_prefix: 'ipp_local',
-            api_key: process.env.IPUSHPULL_API_KEY as string, // need to make sure that is always there
-            api_secret: process.env.IPUSHPULL_API_SECRET as string, // need to make sure this is always here
+            api_key: this.getApiKey(),
+            api_secret: this.getApiSecret(),
             transport: 'polling',
             hsts: false, // strict cors policy
           });
@@ -200,5 +194,14 @@ export class PushPullService implements IPushPullService {
         }
       );
     });
+  }
+
+  private getApiKey(): string {
+    let key = env.IPUSHPULL_API_KEY as string; // need to make sure that is always there
+    return key;
+  }
+  private getApiSecret(): string {
+    let secret: string = env.IPUSHPULL_API_SECRET as string; // need to make sure that is always there
+    return secret;
   }
 }

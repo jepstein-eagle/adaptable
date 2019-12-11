@@ -7,8 +7,7 @@ import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterC
 import { Entitlement } from '../PredefinedConfig/EntitlementsState';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
-import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
 /**

@@ -127,6 +127,8 @@ export type PRIVATE_GRID_RELOADED_EVENT = 'GridReloaded';
 export const PRIVATE_GRID_RELOADED_EVENT: string = 'GridReloaded';
 export type PRIVATE_KEY_DOWN_EVENT = 'KeyDown';
 export const PRIVATE_KEY_DOWN_EVENT: string = 'KeyDown';
+export type PRIVATE_GLUE42_LOADED_EVENT = 'Glue42Loaded';
+export const PRIVATE_GLUE42_LOADED_EVENT: string = 'Glue42Loaded';
 
 // these are now external events that will replace the current event model
 export type BLOTTER_READY_EVENT = 'BlotterReady';

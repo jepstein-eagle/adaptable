@@ -1,7 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
-import { Expression } from './Common/Expression/Expression';
-import { QueryRange } from './Common/Expression/QueryRange';
+import { Expression, QueryRange } from './Common/Expression';
 export interface CellValidationState extends RunTimeState {
   CellValidations?: CellValidationRule[];
 }

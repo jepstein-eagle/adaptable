@@ -33,6 +33,10 @@ function InitAdaptableBlotter() {
     },
   };
 
+  adaptableBlotterOptions.generalOptions = {
+    showAdaptableBlotterToolPanel: true,
+  };
+
   const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
