@@ -27,7 +27,7 @@
   },
   "scripts": {
     "release": "npm run release:patch",
-    "canaryrelease": "npm version prerelease --preid=precanary && npm run copy-npmrc && npm run registry-publish-canary",
+    "canaryrelease": "npm version prerelease --preid=canary && npm run copy-npmrc && npm run registry-publish-canary",
     "release:patch": "npm version patch && npm run copy-npmrc && npm run registry-publish",
     "release:minor": "npm version minor && npm run copy-npmrc && npm run registry-publish",
     "release:major": "npm version major && npm run copy-npmrc && npm run registry-publish",
