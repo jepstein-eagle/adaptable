@@ -20,10 +20,9 @@ function simpleFileReplace(filePath) {
   let matchAll = fileContents.matchAll(regexp);
 
   const variables = [...matchAll].map(match => match[1]);
-  const THE_ENV = {};
+  const THE_ENV = process.env;
 
   variables.forEach(name => {
-    THE_ENV[name] = 'a';
     if (!THE_ENV[name]) {
       throw `Cannot find env variable ${name}`;
     }
