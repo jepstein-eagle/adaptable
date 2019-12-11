@@ -14,11 +14,9 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import {
-  MenuItemShowPopup,
-  AdaptableBlotterMenuItem,
-  ContextMenuInfo,
-} from '../Utilities/MenuItem';
+import { MenuItemShowPopup } from '../Utilities/MenuItem';
+import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';

@@ -5,7 +5,7 @@ import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 // This is a special strategy that the user can never remove but which is useful to us
 // We use it to manage internal state changes and menu items that are not directly strategy related

@@ -3,11 +3,9 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IPieChartStrategy } from './Interface/IPieChartStrategy';
-import {
-  MenuItemShowPopup,
-  AdaptableBlotterMenuItem,
-  ContextMenuInfo,
-} from '../Utilities/MenuItem';
+import { MenuItemShowPopup } from '../Utilities/MenuItem';
+import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';

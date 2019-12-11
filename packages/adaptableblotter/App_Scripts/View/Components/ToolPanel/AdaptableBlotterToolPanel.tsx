@@ -22,7 +22,7 @@ import BlotterHelper from '../../../Utilities/Helpers/BlotterHelper';
 import { AdaptableToolPanelFactory } from '../../AdaptableViewFactory';
 import LoggingHelper from '../../../Utilities/Helpers/LoggingHelper';
 import DropdownButton from '../../../components/DropdownButton';
-import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../../../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { Icon } from '../../../components/icons';
 import Checkbox from '../../../components/CheckBox';
 import { ThemeProvider } from 'styled-components';

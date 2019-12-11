@@ -12,7 +12,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {

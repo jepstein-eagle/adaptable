@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IReminderStrategy } from './Interface/IReminderStrategy';
 import { ReminderState } from '../PredefinedConfig/ReminderState';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 export class ReminderStrategy extends AdaptableStrategyBase implements IReminderStrategy {
   protected ReminderState: ReminderState;

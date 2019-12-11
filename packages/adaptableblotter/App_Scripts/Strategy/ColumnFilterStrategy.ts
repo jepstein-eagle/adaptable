@@ -5,7 +5,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
   constructor(blotter: IAdaptableBlotter) {

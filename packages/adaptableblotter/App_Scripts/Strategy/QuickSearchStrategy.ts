@@ -10,7 +10,7 @@ import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { DisplayAction, LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
   constructor(blotter: IAdaptableBlotter) {

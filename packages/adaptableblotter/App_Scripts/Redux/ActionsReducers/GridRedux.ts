@@ -7,7 +7,7 @@ import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
-import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';

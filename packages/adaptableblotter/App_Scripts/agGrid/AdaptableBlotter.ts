@@ -144,7 +144,8 @@ import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../Utilities/MenuItem';
+import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
@@ -1131,10 +1132,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2286,10 +2284,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // Build the CONTEXT MENU.  Again we do this each time a cell is right clicked as its context-sensitive
     const originalgetContextMenuItems = this.gridOptions.getContextMenuItems;
+
     this.gridOptions.getContextMenuItems = (params: GetContextMenuItemsParams) => {
       let contextMenuItems: (string | MenuItemDef)[] = [];
-            
-      let contextMenuInfo : ContextMenuInfo
+
+      // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
+      // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
+      if (originalgetContextMenuItems) {
+        const originalContexttems = originalgetContextMenuItems(params);
+        contextMenuItems = originalContexttems.slice(0);
+      } else {
+        contextMenuItems = params.defaultItems.slice(0);
+      }
+      let contextMenuInfo: ContextMenuInfo;
 
       // keep it simple for now - if its a grouped cell then do nothing
       if (!params.node.group) {
@@ -2302,12 +2309,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           );
 
           if (adaptableColumn != null) {
-            contextMenuInfo = this.agGridHelper.getContextMenuInfo(
-              params,
-              adaptableColumn
-            );
+            contextMenuInfo = this.agGridHelper.getContextMenuInfo(params, adaptableColumn);
             this.strategies.forEach(s => {
-              let menuItem: AdaptableBlotterMenuItem = s.addContextMenuItem(contextMenuInfo);
+              let menuItem: AdaptableBlotterMenuItem | undefined = s.addContextMenuItem(
+                contextMenuInfo
+              );
               if (menuItem) {
                 adaptableBlotterMenuItems.push(menuItem);
               }
@@ -2315,22 +2321,41 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           }
 
           if (ArrayExtensions.IsNotNullOrEmpty(adaptableBlotterMenuItems)) {
-            contextMenuItems.push('separator');
-            adaptableBlotterMenuItems.forEach(
-              (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-                  adaptableBlotterMenuItem
-                );
-                contextMenuItems.push(menuItem);
-              }
-            );
+            let showAdaptableBlotterContextMenu = this.blotterOptions.generalOptions!
+              .showAdaptableBlotterContextMenu;
+            if (
+              showAdaptableBlotterContextMenu == null ||
+              showAdaptableBlotterContextMenu !== false
+            ) {
+              contextMenuItems.push('separator');
+              adaptableBlotterMenuItems.forEach(
+                (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+                  let addContextMenuItem: boolean = true;
+                  if (
+                    showAdaptableBlotterContextMenu != null &&
+                    typeof showAdaptableBlotterContextMenu === 'function'
+                  ) {
+                    addContextMenuItem = showAdaptableBlotterContextMenu(
+                      adaptableBlotterMenuItem,
+                      contextMenuInfo
+                    );
+                  }
+                  if (addContextMenuItem) {
+                    let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+                      adaptableBlotterMenuItem
+                    );
+                    contextMenuItems.push(menuItem);
+                  }
+                }
+              );
+            }
           }
 
           let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
             .ContextMenuItems;
           if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
             contextMenuItems.push('separator');
-            userContextMenuItems.forEach((userMenuItem: UserMenuItem) => {
+            userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
               let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
                 userMenuItem
               );
@@ -2340,22 +2365,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       }
 
-      const { showAdaptableBlotterContextMenu } = this.blotterOptions.generalOptions
-
-      if (typeof showAdaptableBlotterContextMenu === 'function') {
-        contextMenuItems = contextMenuItems.filter(item => showAdaptableBlotterContextMenu(item, contextMenuInfo))
-      } else if (showAdaptableBlotterContextMenu === false) {
-        contextMenuItems = []
-      }
-
-      // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
-      // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
-      if (originalgetContextMenuItems) {
-        const originalContexttems = originalgetContextMenuItems(params);
-        contextMenuItems = originalContexttems.slice(0);
-      } else {
-        contextMenuItems = params.defaultItems.slice(0);
-      }
       return contextMenuItems;
     };
   }

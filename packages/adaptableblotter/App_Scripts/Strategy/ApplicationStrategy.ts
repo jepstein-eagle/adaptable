@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 export class ApplicationStrategy extends AdaptableStrategyBase implements IApplicationStrategy {
   constructor(blotter: IAdaptableBlotter) {

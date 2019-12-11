@@ -41,7 +41,7 @@ import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import HelpBlock from '../../../components/HelpBlock';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
-import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../../../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 
@@ -548,14 +548,14 @@ export let FilterForm = connect(
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
-  <ThemeProvider theme={theme}>
-    <FilterForm
-      Blotter={FilterContext.Blotter}
-      CurrentColumn={FilterContext.Column}
-      TeamSharingActivated={false}
-      EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
-      ShowCloseButton={FilterContext.ShowCloseButton}
-    />
+    <ThemeProvider theme={theme}>
+      <FilterForm
+        Blotter={FilterContext.Blotter}
+        CurrentColumn={FilterContext.Column}
+        TeamSharingActivated={false}
+        EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
+        ShowCloseButton={FilterContext.ShowCloseButton}
+      />
     </ThemeProvider>
   </Provider>
 );

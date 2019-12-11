@@ -5,11 +5,9 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISparklineStrategy } from './Interface/ISparklineStrategy';
 
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import {
-  AdaptableBlotterMenuItem,
-  ContextMenuInfo,
-  MenuItemShowPopup,
-} from '../Utilities/MenuItem';
+import { MenuItemShowPopup } from '../Utilities/MenuItem';
+import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 

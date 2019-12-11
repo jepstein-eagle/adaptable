@@ -18,7 +18,7 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AlertProperties } from '../PredefinedConfig/AlertState';
 
