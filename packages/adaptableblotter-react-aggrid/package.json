@@ -117,7 +117,7 @@
     "build-prod-no-cleanup": "npm run before-build && npm run update-version-file && npm run update-env-file && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
     "build-package-json": "node ./scripts/buildPackageJson",
     "before-build": "npm run ensure-clean-on-local",
-    "after-build": "git reset --hard",
+    "after-build": "",
     "ensure-clean-on-local": "node ../../scripts/ensure-clean-on-local",
     "update-version-file": "node ../../scripts/updateVersionFile",
     "update-env-file": "node ../../scripts/updateEnvFile",

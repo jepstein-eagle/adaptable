@@ -506,22 +506,22 @@ async function run() {
       commit.message.toLowerCase().includes('release version')
     )[0];
 
-    let commandToExecute;
+    let type;
 
     if (commit && commit.message) {
       const message = commit.message.toLowerCase();
 
       if (message.includes('canary')) {
-        commandToExecute = 'npm run canaryrelease';
+        type = 'canary';
       } else if (message.includes('patch')) {
-        commandToExecute = 'npm run release:patch';
+        type = 'patch';
       } else if (message.includes('minor')) {
-        commandToExecute = 'npm run release:minor';
+        type = 'minor';
       } else if (message.includes('major')) {
-        commandToExecute = 'npm run release:major';
+        type = 'major';
       }
 
-      if (commandToExecute) {
+      if (type) {
         const PRIVATE_REGISTRY_TOKEN = process.env.PRIVATE_REGISTRY_TOKEN;
 
         const contents = `@adaptabletools:registry=https://registry.adaptabletools.com
@@ -536,10 +536,11 @@ package-lock=false`;
             if (error) {
               core.setFailed(error.message);
             } else {
-              core.exportVariable('WILL_RELEASE_CMD', commandToExecute);
+              core.exportVariable('WILL_RELEASE_CMD', `npm run release:${type}-nobump`);
+              core.exportVariable('WILL_RELEASE_TYPE', type);
               core.exportVariable('WILL_RELEASE', 'true');
 
-              core.info('set env var WILL_RELEASE_CMD = ' + commandToExecute);
+              core.info('set env var WILL_RELEASE_CMD = ' + `npm run release:${type}-nobump`);
               core.info('DONE writing .npmrc');
             }
           }
@@ -548,7 +549,7 @@ package-lock=false`;
       }
     }
 
-    feedback = !commandToExecute
+    feedback = !type
       ? `ambigous release commit message: should have the format "release version <canary|patch|minor|major>"`
       : 'no release will happen';
 

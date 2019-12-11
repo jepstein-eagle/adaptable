@@ -41,6 +41,9 @@ jobs:
     - name: Executing npm install in root
       run: npm i
 
+    - name: Bump version
+      run: npm run bump:${WILL_RELEASE_TYPE}
+
 
     - name: Executing npm install in core
       run: npm run install-core
@@ -75,7 +78,7 @@ jobs:
 
     - run: git diff
 
-    - name: Bump version and release
+    - name: Ship it
       uses: "./.github/actions/execute-cmd"
       with:
         cmd_to_execute: $WILL_RELEASE_CMD
