@@ -21,15 +21,15 @@ export interface PartnerState extends DesignTimeState {
 }
 
 /**
- * The information required to run iPushPull from within the Adaptable Blotter.
+ * The objects required to run the [iPushPull](https://ipushpull.com) integration from within the Adaptable Blotter.
  *
- * This information is created by the user / developer at design time and injected into the Adaptable Blotter as Predefined Config
+ * This state is created by the user / developer at design time and injected into the Adaptable Blotter as Predefined Config
  *
- * If the information is provided then the Adaptable Blotter will include an iPushPull option to the Export Toolbar.
+ * If iPushPull state is provided, then the Adaptable Blotter will include an 'Export to iPushPull' option in the Export Toolbar.
  *
- * It will also show associated iPushPull login and domain-page retrieval screens.
+ * If this option is selected, the Adaptable Blotter will show iPushPull login and domain-page retrieval screens.
  *
- * To use iPushPull you will need to have your own iPushPull username and login
+ * To use iPushPull you will need to have your own iPushPull username and login credentials.
  *
  * However you will automatically use the Adaptable Blotter credentials (i.e. the `api_secret` and `api_key` properties), so please **always use the config as set in the example below**.
  *
@@ -37,12 +37,12 @@ export interface PartnerState extends DesignTimeState {
  *
  *  ```ts
  *
- *  // 1. import ipushpull into your harness / application
+ *  // 1. import ipushpull into your harness / application using the iPushPull dependency (which you will need to add your package.json)
  *  import ipushpull from 'ipushpull-js';
  *
  *  ------
  *
- *  // 2. immediately thereafter please set the config for the ipushpull object as follows
+ *  // 2. immediately thereafter please set the config for the ipushpull object as follows:
  * // (note: we will later late add the real values for the `api_secret` and `api_key` properties)
  *  ipushpull.config.set({
  *    api_secret: '',   // this will be added by the Adaptable Blotter
@@ -58,7 +58,7 @@ export interface PartnerState extends DesignTimeState {
  *
  *  ------
  *
- * // 3. pass in this config as the `iPushPullInstance` property in iPushPull section of PartnerState
+ * // 3. pass in this config as the 'iPushPullInstance' property in iPushPull section of PartnerState
  * // Additionally you can add your iPushPull username and password to help to pre-fill the login page
  * const adaptableBlotterOptions: AdaptableBlotterOptions = {
  *   .........
@@ -66,8 +66,8 @@ export interface PartnerState extends DesignTimeState {
  *       Partner: {
  *         iPushPull: {
  *           iPushPullInstance: ipushpull,  // object created above
- *           Username: [YOUR IPUSHPULL USERNAME (EMAIL)],  // this is optional but will save you adding it each time
- *           Password: [YOUR IPUSHPULL PASSWORD],  // this is optional but will save you adding it each time
+ *           Username: [YOUR IPUSHPULL USERNAME],  // optional but will save being added each time
+ *           Password: [YOUR IPUSHPULL PASSWORD],  // optional but will save being added each time
  *         },
  *       },
  *     }
