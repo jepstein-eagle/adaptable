@@ -4,7 +4,7 @@ import LoggingHelper from '../Helpers/LoggingHelper';
 import { IPPStyle } from '../Interface/Reports/IPPStyle';
 import { IPushPullService } from './Interface/IPushPullService';
 
-const env = require('../../env');
+import env from '../../env';
 
 export enum ServiceStatus {
   Unknown = 'Unknown',
@@ -197,11 +197,11 @@ export class PushPullService implements IPushPullService {
   }
 
   private getApiKey(): string {
-    let key = env.IPUSHPULL_API_KEY as string; // need to make sure that is always there
+    let key = env.IPUSHPULL_API_KEY; // need to make sure that is always there
     return key;
   }
   private getApiSecret(): string {
-    let secret: string = env.IPUSHPULL_API_SECRET as string; // need to make sure that is always there
+    let secret: string = env.IPUSHPULL_API_SECRET; // need to make sure that is always there
     return secret;
   }
 }
