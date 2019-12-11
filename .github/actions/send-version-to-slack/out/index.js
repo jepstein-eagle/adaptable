@@ -7060,7 +7060,8 @@ async function run() {
   try {
     const version =
       core.getInput('version') ||
-      JSON.parse(fs.readFileSync(__webpack_require__.ab + "package.json", 'utf-8')).version;
+      JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../../../package.json'), 'utf-8'))
+        .version;
 
     const request = __webpack_require__(830);
 
