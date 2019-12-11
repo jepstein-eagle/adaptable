@@ -21,13 +21,13 @@ import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import BlotterHelper from '../../../Utilities/Helpers/BlotterHelper';
 import { AdaptableToolPanelFactory } from '../../AdaptableViewFactory';
 import LoggingHelper from '../../../Utilities/Helpers/LoggingHelper';
-import DropdownButton from '../../../components/DropdownButton';
-import { AdaptableBlotterMenuItem } from '../../../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { Icon } from '../../../components/icons';
 import Checkbox from '../../../components/CheckBox';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import { AdaptableBlotterToolPanels } from '../../../PredefinedConfig/ToolPanelState';
+import { AdaptableBlotterMenuItem } from '../../../PredefinedConfig/Common/Menu';
+import DropdownButton from '../../../components/DropdownButton';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 

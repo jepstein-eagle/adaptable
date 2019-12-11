@@ -20,13 +20,11 @@ import {
 } from '../../../PredefinedConfig/Common/Enums';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
-import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
-import { Helper } from '../../../Utilities/Helpers/Helper';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { ButtonClose } from '../Buttons/ButtonClose';
-import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
+import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ButtonClear } from '../Buttons/ButtonClear';
 import { Waiting } from './Waiting';
@@ -41,9 +39,9 @@ import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import HelpBlock from '../../../components/HelpBlock';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
-import { AdaptableBlotterMenuItem } from '../../../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
+import { AdaptableBlotterMenuItem } from '../../../PredefinedConfig/Common/Menu';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: AdaptableBlotterColumn;

@@ -13,11 +13,10 @@ import {
 } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import { Expression, QueryRange } from '../../PredefinedConfig/Common/Expression';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
-import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';

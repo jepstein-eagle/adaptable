@@ -94,7 +94,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 // if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
+import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
@@ -129,7 +129,6 @@ import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { ColumnSort, VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
-import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import {
   PermittedColumnValues,
   EditLookUpColumn,
@@ -144,8 +143,6 @@ import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
-import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
@@ -159,10 +156,12 @@ import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { BlotterApi } from '../Api/BlotterApi';
 import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
-import { PushPullService, IPushPullService } from '../Utilities/Services/PushPullService';
+import { PushPullService } from '../Utilities/Services/PushPullService';
+import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
 
 // do I need this in both places??
 type RuntimeConfig = {

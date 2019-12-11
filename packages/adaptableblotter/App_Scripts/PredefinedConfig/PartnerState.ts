@@ -29,6 +29,10 @@ export interface PartnerState extends DesignTimeState {
  *
  * It will also show associated iPushPull login and domain-page retrieval screens.
  *
+ * To use iPushPull you will need to have your own iPushPull username and login
+ *
+ * However you will automatically use the Adaptable Blotter credentials (i.e. the `api_secret` and `api_key` properties), so please **always use the config as set in the example below**.
+ *
  * **iPushPull Predefined Config Example**
  *
  *  ```ts
@@ -38,7 +42,23 @@ export interface PartnerState extends DesignTimeState {
  *
  *  ------
  *
- * // 2. pass in this config as the `iPushPullInstance` property in iPushPull section of PartnerState
+ *  // 2. immediately thereafter please set the config for the ipushpull object as follows
+ * // (note: we will later late add the real values for the `api_secret` and `api_key` properties)
+ *  ipushpull.config.set({
+ *    api_secret: '',   // this will be added by the Adaptable Blotter
+ *    api_key: '',      // this will be added by the Adaptable Blotter
+ *    api_url: 'https://www.ipushpull.com/api/1.0',
+ *    ws_url: 'https://www.ipushpull.com',
+ *    web_url: 'https://www.ipushpull.com',
+ *    docs_url: 'https://docs.ipushpull.com',
+ *    storage_prefix: 'ipp_local',
+ *    transport: 'polling',
+ *    hsts: false, // strict cors policy
+ * });
+ *
+ *  ------
+ *
+ * // 3. pass in this config as the `iPushPullInstance` property in iPushPull section of PartnerState
  * // Additionally you can add your iPushPull username and password to help to pre-fill the login page
  * const adaptableBlotterOptions: AdaptableBlotterOptions = {
  *   primaryKey: 'tradeId',
@@ -48,8 +68,8 @@ export interface PartnerState extends DesignTimeState {
  *       Partner: {
  *         iPushPull: {
  *           iPushPullInstance: ipushpull,  // object created above
- *           Username: [YOUR IPUSHPULL USERNAME (EMAIL)],  // this is optional
- *           Password: [YOUR IPUSHPULL PASSWORD],  // this is optional
+ *           Username: [YOUR IPUSHPULL USERNAME (EMAIL)],  // this is optional but will save you adding it each time
+ *           Password: [YOUR IPUSHPULL PASSWORD],  // this is optional but will save you adding it each time
  *         },
  *       },
  *     }
@@ -61,7 +81,7 @@ export interface PartnerState extends DesignTimeState {
  */
 export interface iPushPullState {
   /**
-   *  The iPushPull object - this is injected by the user from 'ipushpull-js'
+   *  The iPushPull object - this is injected by the user from 'ipushpull-js' and set with standard configuration.
    */
   iPushPullInstance: any;
 

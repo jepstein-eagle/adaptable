@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class FreeTextColumnStrategy extends AdaptableStrategyBase

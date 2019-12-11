@@ -15,7 +15,7 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
-import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
+import { Expression } from '../PredefinedConfig/Common/Expression';
 
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';

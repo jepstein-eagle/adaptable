@@ -1,5 +1,4 @@
-import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
 
 /**
  * General options section of Adaptable Blotter Options.

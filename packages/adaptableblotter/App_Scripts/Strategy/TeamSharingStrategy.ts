@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ITeamSharingStrategy } from './Interface/ITeamSharingStrategy';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
 
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
   constructor(blotter: IAdaptableBlotter) {

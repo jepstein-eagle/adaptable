@@ -9,7 +9,7 @@ import { SparklinesChartDefinition } from '../../../../PredefinedConfig/ChartSta
 import ColumnHelper from '../../../../Utilities/Helpers/ColumnHelper';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';
 import { KeyValuePair } from '../../../../Utilities/Interface/KeyValuePair';
-import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
+import { Expression } from '../../../../PredefinedConfig/Common/Expression';
 import ExpressionHelper from '../../../../Utilities/Helpers/ExpressionHelper';
 
 export interface SparklinesChartSummaryWizardProps

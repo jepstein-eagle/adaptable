@@ -13,7 +13,6 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
 
@@ -21,6 +20,7 @@ import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import Radio from '../../../components/Radio';
 import Input from '../../../components/Input';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression';
 
 export interface CellValidationRulesWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}

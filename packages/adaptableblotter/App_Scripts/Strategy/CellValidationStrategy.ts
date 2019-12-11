@@ -4,7 +4,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CellValidationStrategy extends AdaptableStrategyBase

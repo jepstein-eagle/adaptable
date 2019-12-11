@@ -1,5 +1,5 @@
 import { RunTimeState } from './/RunTimeState';
-import { Expression } from './Common/Expression/Expression';
+import { Expression } from './Common/Expression';
 import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
 
 /**

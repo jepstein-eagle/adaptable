@@ -10,8 +10,7 @@ import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Comm
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {

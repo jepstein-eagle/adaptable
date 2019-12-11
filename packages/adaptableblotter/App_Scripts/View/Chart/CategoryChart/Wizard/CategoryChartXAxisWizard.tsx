@@ -4,7 +4,7 @@ import {
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
 import { CategoryChartDefinition } from '../../../../PredefinedConfig/ChartState';
-import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
+import { Expression } from '../../../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';

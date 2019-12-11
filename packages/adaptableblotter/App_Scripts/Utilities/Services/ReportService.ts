@@ -1,5 +1,5 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import { Expression } from '../../PredefinedConfig/Common/Expression';
 import { SelectedCellInfo } from '../Interface/Selection/SelectedCellInfo';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import {

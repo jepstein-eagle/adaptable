@@ -15,7 +15,7 @@ import WizardPanel from '../../../../components/WizardPanel';
 import FormLayout, { FormRow } from '../../../../components/FormLayout';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import Radio from '../../../../components/Radio';
-import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
+import { Expression } from '../../../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 
 export interface SparklinesChartColumnWizardProps

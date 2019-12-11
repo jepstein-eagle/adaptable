@@ -4,13 +4,12 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import RangeHelper from '../Utilities/Helpers/RangeHelper';
-import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
+import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { DisplayAction, LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/menu';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
   constructor(blotter: IAdaptableBlotter) {

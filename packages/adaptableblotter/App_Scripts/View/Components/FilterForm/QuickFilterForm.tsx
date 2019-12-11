@@ -11,7 +11,7 @@ import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
-import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
+import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
@@ -19,7 +19,6 @@ import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Comm
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
-import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import Input from '../../../components/Input';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
@@ -345,14 +344,14 @@ export let QuickFilterForm = connect(
 
 export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
-  <ThemeProvider theme={theme}>
-    <QuickFilterForm
-      Blotter={FilterContext.Blotter}
-      CurrentColumn={FilterContext.Column}
-      TeamSharingActivated={false}
-      ColumnWidth={FilterContext.ColumnWidth}
-      EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
-    />
+    <ThemeProvider theme={theme}>
+      <QuickFilterForm
+        Blotter={FilterContext.Blotter}
+        CurrentColumn={FilterContext.Column}
+        TeamSharingActivated={false}
+        ColumnWidth={FilterContext.ColumnWidth}
+        EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
+      />
     </ThemeProvider>
   </Provider>
 );

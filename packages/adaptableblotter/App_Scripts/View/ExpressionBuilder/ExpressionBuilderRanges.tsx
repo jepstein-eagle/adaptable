@@ -11,7 +11,6 @@ import EnumExtensions from '../../Utilities/Extensions/EnumExtensions';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import UIHelper from '../UIHelper';
 import ObjectFactory from '../../Utilities/ObjectFactory';
-import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import SimpleButton from '../../components/SimpleButton';
 import DropdownButton from '../../components/DropdownButton';
 import Dropdown from '../../components/Dropdown';
@@ -20,6 +19,7 @@ import FieldWrap from '../../components/FieldWrap';
 import Input from '../../components/Input';
 import Panel from '../../components/Panel';
 import DropdownButtonItem from '../../components/DropdownButton/DropdownButtonItem';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression';
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges
   extends React.ClassAttributes<ExpressionBuilderRanges> {

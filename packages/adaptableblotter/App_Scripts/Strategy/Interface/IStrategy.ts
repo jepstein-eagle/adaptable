@@ -1,6 +1,5 @@
-import { ContextMenuInfo } from '../../PredefinedConfig/Common/ContextMenuInfo';
-import { AdaptableBlotterMenuItem } from '../../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../../PredefinedConfig/Common/Menu';
 
 /**
  * This is the interface that all Strategies implement (as well as all deriving from AdaptableStrategyBase).

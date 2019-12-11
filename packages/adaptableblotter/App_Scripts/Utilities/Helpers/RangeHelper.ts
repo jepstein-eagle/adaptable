@@ -3,7 +3,7 @@ import { LeafExpressionOperator, DataType } from '../../PredefinedConfig/Common/
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression';
 
 export function CreateValueRange(
   operator: LeafExpressionOperator,
