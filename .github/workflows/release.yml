@@ -14,6 +14,9 @@ jobs:
       matrix:
         node-version: [12.x]
 
+    env:
+      IPUSHPULL_API_SECRET: ${{ secrets.IPUSHPULL_API_SECRET }}
+      IPUSHPULL_API_KEY: ${{ secrets.IPUSHPULL_API_KEY }}
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
@@ -25,9 +28,9 @@ jobs:
       env:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
-    - name: check if release needed
-      run: |
-        [ -z "${WILL_RELEASE_CMD}" ] && { echo 'Not proceeding, since no release commit message found'; exit 78; };
+    # - name: check if release needed
+    #   run: |
+    #     [ -z "${WILL_RELEASE_CMD}" ] && { echo 'Not proceeding, since no release commit message found'; exit 78; };
 
     - name: Echo whoami
       run: npm whoami --registry=https://registry.adaptabletools.com
