@@ -15,7 +15,7 @@ Grid components supported include:
 - ag-Grid by ag-Grid
 - Hypergrid by OpenFin
 - Kendo Grid by Telerik
-- Adaptable Grid by Adaptable Tools.
+- Adaptable Grid by Adaptable Tools
 
 More grid components are being added all the time so contact us if you would like us to implement your favourite HTML5 grid control.
 
