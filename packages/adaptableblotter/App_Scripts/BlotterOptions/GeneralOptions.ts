@@ -1,3 +1,5 @@
+import { ContextMenuInfo } from '../Utilities/MenuItem';
+
 /**
  * General options section of Adaptable Blotter Options.
  *
@@ -55,13 +57,23 @@ export interface GeneralOptions {
   /**
    * Whether or not to show a Blotter Tool Panel on the right hand side (ag-Grid only).
    *
-   * Recommended to set to true (default) to give users access.
    *
    * Note - the toolpanel is not yet operational and will be released in the Summer of 2019.
    *
    * **Default Value: false**
    */
   showAdaptableBlotterToolPanel?: boolean;
+
+  /**
+   * Whether or not to show the Blotter specific context menu items.
+   *
+   * Can either be a boolean value or a function that will be called for every context menu item the Blotter provides. The second param to the function is the context menu info (row, column, etc)
+   *
+   * **Default Value: true**
+   */
+  showAdaptableBlotterContextMenu?:
+    | boolean
+    | ((menuItem: string | { name: string }, contextMenuInfo: ContextMenuInfo) => boolean);
 
   /**
    * Runs a check to see if the current version of the Adaptable Blotter is the latest version.

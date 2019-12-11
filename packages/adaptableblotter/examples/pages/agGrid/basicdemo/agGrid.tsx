@@ -35,6 +35,12 @@ function InitAdaptableBlotter() {
 
   adaptableBlotterOptions.generalOptions = {
     showAdaptableBlotterToolPanel: true,
+    showAdaptableBlotterContextMenu: item => {
+      if (typeof item != 'string' && item.name === 'Show Column Chooser') {
+        return false;
+      }
+      return true;
+    },
   };
 
   adaptableBlotterOptions.layoutOptions = {

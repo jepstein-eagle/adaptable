@@ -2287,15 +2287,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // Build the CONTEXT MENU.  Again we do this each time a cell is right clicked as its context-sensitive
     const originalgetContextMenuItems = this.gridOptions.getContextMenuItems;
     this.gridOptions.getContextMenuItems = (params: GetContextMenuItemsParams) => {
-      let contextMenuItems: (string | MenuItemDef)[];
-      // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
-      // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
-      if (originalgetContextMenuItems) {
-        const originalContexttems = originalgetContextMenuItems(params);
-        contextMenuItems = originalContexttems.slice(0);
-      } else {
-        contextMenuItems = params.defaultItems.slice(0);
-      }
+      let contextMenuItems: (string | MenuItemDef)[] = [];
+            
+      let contextMenuInfo : ContextMenuInfo
 
       // keep it simple for now - if its a grouped cell then do nothing
       if (!params.node.group) {
@@ -2308,7 +2302,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           );
 
           if (adaptableColumn != null) {
-            let contextMenuInfo: ContextMenuInfo = this.agGridHelper.getContextMenuInfo(
+            contextMenuInfo = this.agGridHelper.getContextMenuInfo(
               params,
               adaptableColumn
             );
@@ -2344,6 +2338,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
           }
         }
+      }
+
+      const { showAdaptableBlotterContextMenu } = this.blotterOptions.generalOptions
+
+      if (typeof showAdaptableBlotterContextMenu === 'function') {
+        contextMenuItems = contextMenuItems.filter(item => showAdaptableBlotterContextMenu(item, contextMenuInfo))
+      } else if (showAdaptableBlotterContextMenu === false) {
+        contextMenuItems = []
+      }
+
+      // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
+      // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
+      if (originalgetContextMenuItems) {
+        const originalContexttems = originalgetContextMenuItems(params);
+        contextMenuItems = originalContexttems.slice(0);
+      } else {
+        contextMenuItems = params.defaultItems.slice(0);
       }
       return contextMenuItems;
     };

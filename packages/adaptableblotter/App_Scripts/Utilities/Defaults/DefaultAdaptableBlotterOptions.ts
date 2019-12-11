@@ -96,6 +96,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     preventDuplicatePrimaryKeyValues: true,
     serverSearchOption: 'None',
     showAdaptableBlotterToolPanel: false,
+    showAdaptableBlotterContextMenu: true,
     // checkIfLatestVersionOnStartup: true,
   },
   advancedOptions: {
