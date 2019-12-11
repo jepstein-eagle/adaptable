@@ -11,25 +11,19 @@ export class SystemFilterApiImpl extends ApiBase implements SystemFilterApi {
     return this.getBlotterState().SystemFilter;
   }
 
-  public setSystemFilterByUserFilters(userFilters: UserFilter[]): void {
-    userFilters.forEach(uf => {
-      this.dispatchAction(UserFilterRedux.UserFilterAdd(uf));
-    });
-  }
-
-  public setSystemFilter(systemFilters: string[]): void {
+  public setSystemFilters(systemFilters: string[]): void {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet(systemFilters));
   }
 
-  public clearSystemFilter(): void {
+  public clearSystemFilters(): void {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet([]));
   }
 
-  public getCurrentSystemFilter(): string[] {
+  public getAllSystemFilter(): string[] {
     return this.getBlotterState().SystemFilter.SystemFilters;
   }
 
-  public getAllSystemFilter(): string[] {
+  public getAllPotentialSystemFilters(): string[] {
     return FilterHelper.GetAllSystemFilters();
   }
 }

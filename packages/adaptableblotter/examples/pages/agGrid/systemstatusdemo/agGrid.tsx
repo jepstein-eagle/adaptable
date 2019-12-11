@@ -85,32 +85,41 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'info',
         Caption: 'Set Info',
-        Variant: 'raised',
-        Tone: 'info',
+        ButtonStyle: {
+          Variant: 'text',
+          Tone: 'info',
+        },
       },
       {
         Name: 'success',
         Caption: 'Set Success',
-        Variant: 'raised',
-        Tone: 'success',
+        ButtonStyle: {
+          Variant: 'text',
+          Tone: 'success',
+        },
       },
       {
         Name: 'warning',
         Caption: 'Set Warning',
-        Variant: 'raised',
-        Tone: 'warning',
+        ButtonStyle: {
+          Variant: 'text',
+          Tone: 'warning',
+        },
       },
       {
         Name: 'error',
         Caption: 'Set Error',
-        Variant: 'raised',
-        Tone: 'error',
+        ButtonStyle: {
+          Variant: 'text',
+          Tone: 'error',
+        },
       },
       {
         Name: 'clear',
         Caption: 'Clear',
-        Variant: 'raised',
-        Tone: 'accent',
+        ButtonStyle: {
+          Variant: 'raised',
+        },
       },
     ],
   },

@@ -25,6 +25,7 @@ import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import DropdownButton from '../../components/DropdownButton';
 import { StrategyParams } from '../Components/SharedProps/StrategyViewPopupProps';
+import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
 const AddIcon = icons.add as ReactComponentLike;
 
@@ -47,6 +48,11 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       this.props.CurrentChartDefinition == null
         ? selectChartString
         : this.props.CurrentChartDefinition.Name;
+
+    let currentChartDefinitionType =
+      this.props.CurrentChartDefinition == null
+        ? ChartType.CategoryChart
+        : this.props.CurrentChartDefinition.ChartType;
 
     let sortedChartDefinitions: ChartDefinition[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
@@ -136,9 +142,9 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
           <ButtonEdit
             className="ab-DashboardToolbar__Chart__edit"
             onClick={() =>
-              this.props.onNewChartDefinition({
-                value: 'CategoryChart',
-                action: 'New',
+              this.props.onEditChartDefinition({
+                value: currentChartDefinitionType,
+                action: 'Edit',
                 source: 'Toolbar',
               })
             }
@@ -214,8 +220,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
         )
       ),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup)

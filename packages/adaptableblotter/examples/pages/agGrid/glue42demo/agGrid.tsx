@@ -16,40 +16,23 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import glue42Desktop from '@glue42/desktop';
 import glue42office from '@glue42/office';
 
-/*
-Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
-No JSON or anything complicated
-Nor do we create the ag-Grid
-*/
-
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(300);
+  const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    `glue42-demo` // ${Date.now()}`
+    'glue42-demo'
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.chartOptions = {
-    showModal: false,
-    displayOnStartUp: true,
+  adaptableBlotterOptions.auditOptions = {
+    auditTickingDataChanges: {
+      auditToConsole: true,
+    },
   };
-  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function(event: {
-    colDef: { field: any };
-    newValue: any;
-  }) {
-    console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
-  };
-  adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event: { data: any }) {
-    var data = event.data;
-    console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
-  };
-  adaptableBlotterOptions.filterOptions = {
-    autoApplyFilter: false,
-  };
+
   const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
@@ -57,9 +40,7 @@ let demoConfig: PredefinedConfig = {
   Partner: {
     Glue42: {
       Glue: glue42Desktop, // this is the glue object
-
       Glue4Office: glue42office, // this is the Glue4Office object
-
       Glue42Config: {
         initialization: {
           application: 'AdaptableBlotterDemo',
@@ -68,12 +49,12 @@ let demoConfig: PredefinedConfig = {
             ws: 'ws://localhost:8385',
           },
           auth: {
-            username: 'demouser',
-            password: 'demopassword',
+            username: 'jonny', // should get from .env file
+            password: 'demopassword', // put in .env file
           },
         },
         excelExport: {
-          timeoutMs: 3000,
+          timeoutMs: 10000,
         },
       },
     },

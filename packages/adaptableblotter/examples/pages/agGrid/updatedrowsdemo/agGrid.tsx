@@ -9,12 +9,10 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import {
   AdaptableBlotterOptions,
   PredefinedConfig,
-  IAdaptableBlotter,
   BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -48,13 +46,13 @@ function InitAdaptableBlotter() {
 
   tickingDataHelper.startTickingDataagGridTradesUpdateData(
     gridOptions,
-    adaptableblotter,
+    blotterApi,
     3000,
     tradeCount
   );
 
-  adaptableblotter.api.eventApi.on('ApplicationToolbarButtonClicked', () => {
-    adaptableblotter.api.updatedRowApi.deleteAllUpdatedRowInfo();
+  blotterApi.eventApi.on('ApplicationToolbarButtonClicked', () => {
+    blotterApi.updatedRowApi.deleteAllUpdatedRowInfo();
   });
 }
 

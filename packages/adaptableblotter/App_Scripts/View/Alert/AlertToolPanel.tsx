@@ -16,6 +16,7 @@ import { Flex } from 'rebass';
 import UIHelper from '../UIHelper';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface AlertToolPanelProps extends ToolPanelStrategyViewPopupProps<AlertToolPanelComponent> {
   AlertDefinitions: AlertDefinition[];
@@ -77,8 +78,9 @@ class AlertToolPanelComponent extends React.Component<AlertToolPanelProps, Alert
       messageTypeColor
     );
 
-    let buttonTextColor: string = UIHelper.getButtonTextColourForAdaptableAlerts(
-      this.props.AdaptableAlerts
+    let buttonTextColor: string = UIHelper.getButtonTextColourForArrayandMessageType(
+      this.props.AdaptableAlerts,
+      messageType
     );
 
     let content = (
@@ -119,7 +121,7 @@ class AlertToolPanelComponent extends React.Component<AlertToolPanelProps, Alert
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)}
+        onClose={() => this.props.onClose('Alert')}
       >
         {this.state.IsMinimised ? null : content}
       </PanelToolPanel>
@@ -139,7 +141,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
     onDeleteAllAlert: (alerts: AdaptableAlert[]) =>
       dispatch(SystemRedux.SystemAlertDeleteAll(alerts)),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.AlertStrategyId, ScreenPopups.AlertPopup)

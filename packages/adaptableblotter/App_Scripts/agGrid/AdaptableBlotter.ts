@@ -151,7 +151,8 @@ import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAda
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { IGlue42Service, Glue42Service } from '../Utilities/Services/Glue42Service';
+import { Glue42Service } from '../Utilities/Services/Glue42Service';
+import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
@@ -1130,7 +1131,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
+    return ArrayExtensions.ContainsItem(
+      percentBars.map(pb => pb.ColumnId),
+      columnId
+    );
   }
 
   public getDisplayValue(id: any, columnId: string): string {

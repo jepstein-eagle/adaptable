@@ -18,6 +18,7 @@ import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { Flex } from 'rebass';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import UIHelper from '../UIHelper';
+import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
@@ -81,8 +82,9 @@ class AlertToolbarControlComponent extends React.Component<
       messageTypeColor
     );
 
-    let buttonTextColor: string = UIHelper.getButtonTextColourForAdaptableAlerts(
-      this.props.AdaptableAlerts
+    let buttonTextColor: string = UIHelper.getButtonTextColourForArrayandMessageType(
+      this.props.AdaptableAlerts,
+      messageType
     );
 
     let content = (
@@ -143,8 +145,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
     onDeleteAllAlert: (alerts: AdaptableAlert[]) =>
       dispatch(SystemRedux.SystemAlertDeleteAll(alerts)),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.AlertStrategyId, ScreenPopups.AlertPopup)

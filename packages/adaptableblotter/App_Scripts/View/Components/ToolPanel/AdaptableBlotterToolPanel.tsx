@@ -27,6 +27,7 @@ import { Icon } from '../../../components/icons';
 import Checkbox from '../../../components/CheckBox';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
+import { AdaptableBlotterToolPanels } from '../../../PredefinedConfig/ToolPanelState';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -39,7 +40,9 @@ interface AdaptableBlotterToolPanelProps {
   MainMenuItems: AdaptableBlotterMenuItem[];
   // wondering if this shoudl take some base props like others?  though i know we dont like that...
   onClick: (action: Redux.Action) => Redux.Action;
-  onSetToolPanelVisibility: (strategyIds: string[]) => ToolPanelRedux.ToolPanelSetToolPanelsAction;
+  onSetToolPanelVisibility: (
+    toolPanels: AdaptableBlotterToolPanels
+  ) => ToolPanelRedux.ToolPanelSetToolPanelsAction;
 }
 
 export interface AdaptableBlotterToolPanelState {}
@@ -76,6 +79,7 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
             AccessLevel: accessLevel,
             BlotterApi: this.props.Blotter.api,
             Blotter: this.props.Blotter,
+            Columns: this.props.Blotter.api.gridApi.getColumns(),
           });
           return (
             <Box
@@ -197,8 +201,8 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
   }
 
   onSetToolPanelVisibility(name: string, checked: boolean) {
-    const strategy: string = this.props.AvailableToolPanels.find(at => at == name);
-    const visibleToolPanels: string[] = [].concat(this.props.VisibleToolsPanels);
+    const strategy = this.props.AvailableToolPanels.find(at => at == name);
+    const visibleToolPanels = [].concat(this.props.VisibleToolsPanels);
     if (checked) {
       visibleToolPanels.push(strategy);
     } else {
@@ -221,8 +225,8 @@ function mapStateToProps(state: AdaptableBlotterState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
-    onSetToolPanelVisibility: (strategyIds: string[]) =>
-      dispatch(ToolPanelRedux.ToolPanelSetToolPanels(strategyIds)),
+    onSetToolPanelVisibility: (toolPanels: AdaptableBlotterToolPanels) =>
+      dispatch(ToolPanelRedux.ToolPanelSetToolPanels(toolPanels)),
   };
 }
 

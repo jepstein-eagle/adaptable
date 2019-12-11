@@ -35,7 +35,6 @@ function InitAdaptableBlotter() {
 
   adaptableBlotterOptions.vendorGrid.onCellValueChanged = function() {
     //   console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
-    // adaptableblotter.api.columnChooserApi.showColumnChooserPopup();
   };
   adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
     //  console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
@@ -44,10 +43,7 @@ function InitAdaptableBlotter() {
     autoApplyFilter: false,
   };
 
-  const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
-
-  //gridOptions.api!.ensureIndexVisible(200);
-  //adaptableblotter.api.userFilterApi.showUserFilterPopup();
+  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {

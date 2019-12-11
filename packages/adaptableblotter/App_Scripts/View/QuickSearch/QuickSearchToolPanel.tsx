@@ -11,6 +11,7 @@ import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/Adapta
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface QuickSearchToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<QuickSearchToolPanelComponentProps> {
@@ -54,7 +55,7 @@ class QuickSearchToolPanelComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
+        onClose={() => this.props.onClose('QuickSearch')}
       >
         {!this.state.IsMinimised && (
           <AdaptableBlotterFormControlTextClear
@@ -94,7 +95,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           ScreenPopups.QuickSearchPopup
         )
       ),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
   };
 }
 

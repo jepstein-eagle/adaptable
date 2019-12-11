@@ -17,7 +17,6 @@ export interface IPushPullService {
   UnloadPage(page: string): void;
   pushData(page: string, data: any[]): Promise<any>;
   getIPPStatus(): ServiceStatus;
-  // ServiceStatus: ServiceStatus
 }
 
 export class PushPullService implements IPushPullService {
@@ -31,8 +30,21 @@ export class PushPullService implements IPushPullService {
     this.blotter.api.eventApi.on('BlotterReady', () => {
       if (!this.ppInstance) {
         let instance = this.blotter.api.partnerApi.getPushPullInstance();
-        this.ppInstance = instance;
+
         if (instance) {
+          // we now set this ourselves and attach it to the instance provided by the user
+          instance.config.set({
+            api_url: 'https://www.ipushpull.com/api/1.0',
+            ws_url: 'https://www.ipushpull.com',
+            web_url: 'https://www.ipushpull.com',
+            docs_url: 'https://docs.ipushpull.com',
+            storage_prefix: 'ipp_local',
+            api_key: process.env.IPUSHPULL_API_KEY as string, // need to make sure that is always there
+            api_secret: process.env.IPUSHPULL_API_SECRET as string, // need to make sure this is always here
+            transport: 'polling',
+            hsts: false, // strict cors policy
+          });
+          this.ppInstance = instance;
           this.blotter.api.internalApi.setIPushPullOn();
         } else {
           this.blotter.api.internalApi.setIPushPullOff();

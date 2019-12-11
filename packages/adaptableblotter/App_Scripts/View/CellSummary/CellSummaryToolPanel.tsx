@@ -3,6 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
+import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as SelectedCellsRedux from '../../Redux/ActionsReducers/CellSummaryRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -26,9 +27,15 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import Dropdown from '../../components/Dropdown';
+import Helper from '../../Utilities/Helpers/Helper';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
-interface CellSummaryToolbarControlComponentProps
-  extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {
+interface CellSummaryToolPanelComponentProps
+  extends ToolPanelStrategyViewPopupProps<CellSummaryToolPanelComponent> {
   SelectedCellInfo: SelectedCellInfo;
   CellSummaryOperation: CellSummaryOperation | CellSummaryOptionalOperation;
   OptionalSummaryOperations: string[];
@@ -39,12 +46,17 @@ interface CellSummaryToolbarControlComponentProps
   CellSummary: ICellSummmary;
 }
 
-class CellSummaryToolbarControlComponent extends React.Component<
-  CellSummaryToolbarControlComponentProps,
-  {}
+interface CellSummaryToolPanelComponentState {
+  IsMinimised: boolean;
+}
+
+class CellSummaryToolPanelComponent extends React.Component<
+  CellSummaryToolPanelComponentProps,
+  CellSummaryToolPanelComponentState
 > {
-  constructor(props: CellSummaryToolbarControlComponentProps) {
+  constructor(props: CellSummaryToolPanelComponentProps) {
     super(props);
+    this.state = { IsMinimised: true };
   }
   public componentDidMount() {
     if (this.props.Blotter) {
@@ -53,13 +65,6 @@ class CellSummaryToolbarControlComponent extends React.Component<
       });
     }
   }
-
-  // needed?
-  // public componentWillUnmount() {
-  //   if (this.props.Blotter) {
-  //     this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
-  //   }
-  // }
 
   render() {
     let operationMenuItems = EnumExtensions.getNames(CellSummaryOperation).map(
@@ -81,6 +86,16 @@ class CellSummaryToolbarControlComponent extends React.Component<
         }
       })
       .filter(x => !!x);
+
+    let options = [...operationMenuItems, ...operationOptionalMenuItems];
+
+    let availableOptions: any[] = options.map((option, index) => {
+      return {
+        label: option.label,
+        value: option.label,
+      };
+    });
+
     let cellSummaryPopover = <CellSummaryPopover CellSummary={this.props.CellSummary} />;
 
     let shouldDisable: boolean =
@@ -88,58 +103,77 @@ class CellSummaryToolbarControlComponent extends React.Component<
       this.props.Blotter.api.internalApi.isGridInPivotMode() ||
       this.props.CellSummary == null;
 
+    let operationValue = shouldDisable ? null : this.getOperationValue();
+
     let content = (
       <Flex
-        flexDirection="row"
-        alignItems="center"
-        width="100%"
-        className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}
+        flexDirection="column"
+        alignItems="stretch"
+        className={
+          shouldDisable ? GeneralConstants.READ_ONLY_STYLE : 'ab-ToolPanel__CellSummary__wrap'
+        }
       >
-        <DropdownButton
-          marginRight={2}
-          columns={['label']}
-          className="ab-DashboardToolbar__CellSummary__select"
-          items={[...operationMenuItems, ...operationOptionalMenuItems]}
-          disabled={shouldDisable}
-        >
-          {this.props.CellSummaryOperation}
-        </DropdownButton>
-        {!shouldDisable && (
-          <>
-            <Flex
-              flex={1}
-              marginRight={2}
-              justifyContent="center"
-              className="ab-DashboardToolbar__CellSummary__value"
-              color={'var(--ab-color-text-on-primary)'}
-            >
-              {this.getOperationValue()}
-            </Flex>
-            {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (
-              <AdaptablePopover
-                className="ab-DashboardToolbar__CellSummary__info"
-                bodyText={[cellSummaryPopover]}
-                // tooltipText={'Show Cell Summary'}
-                useButton={true}
-                showEvent={'focus'}
-                hideEvent="blur"
-              />
-            )}
-          </>
-        )}
+        <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__CellSummary__wrap">
+          <Dropdown
+            style={{ minWidth: 170 }}
+            className="ab-ToolPanel__CellSummary__select"
+            placeholder="Select Summary Operation"
+            value={this.props.CellSummaryOperation}
+            options={availableOptions}
+            showClearButton={false}
+            //  onChange={() => this.onSelectionChanged()}
+            onChange={(summaryOperation: any) =>
+              this.props.onCellSummaryOperationChange(summaryOperation)
+            }
+          />
+        </Flex>
+        <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__CellSummary__wrap">
+          {!shouldDisable && (
+            <>
+              {JSON.stringify(operationValue) != '""' && (
+                <Flex
+                  flexDirection="row"
+                  alignItems="stretch"
+                  className="ab-ToolPanel__SystemStatus__text"
+                  style={{ borderRadius: 'var(--ab__border-radius)' }}
+                  marginRight={2}
+                  marginLeft={1}
+                  marginTop={1}
+                  padding={2}
+                  color={'var( --ab-color-text-on-info)'}
+                  backgroundColor={'var(--ab-color-info)'}
+                  fontSize={'var( --ab-font-size-2)'}
+                >
+                  {this.getOperationValue()}
+                </Flex>
+              )}
+
+              {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (
+                <AdaptablePopover
+                  className="ab-ToolPanel__CellSummary__info"
+                  bodyText={[cellSummaryPopover]}
+                  useButton={true}
+                  showEvent={'focus'}
+                  hideEvent="blur"
+                />
+              )}
+            </>
+          )}
+        </Flex>
       </Flex>
     );
 
     return (
-      <PanelDashboard
-        className="ab-DashboardToolbar__CellSummary"
+      <PanelToolPanel
+        className="ab-ToolPanel__ColumnFilter"
         headerText={StrategyConstants.CellSummaryStrategyName}
-        glyphicon={StrategyConstants.CellSummaryGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.CellSummaryStrategyId)}
         onConfigure={() => this.props.onConfigure()}
+        onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
+        isMinimised={this.state.IsMinimised}
+        onClose={() => this.props.onClose('CellSummary')}
       >
-        {content}
-      </PanelDashboard>
+        {this.state.IsMinimised ? null : content}
+      </PanelToolPanel>
     );
   }
 
@@ -188,8 +222,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       summaryOperation: CellSummaryOperation | CellSummaryOptionalOperation
     ) => dispatch(SelectedCellsRedux.CellSummaryChangeOperation(summaryOperation)),
     onCreateCellSummary: () => dispatch(GridRedux.GridCreateCellSummary()),
-    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(
@@ -200,7 +234,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let CellSummaryToolbarControl = connect(
+export let CellSummaryToolPanel = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CellSummaryToolbarControlComponent);
+)(CellSummaryToolPanelComponent);

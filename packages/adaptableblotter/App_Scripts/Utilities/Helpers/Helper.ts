@@ -62,12 +62,14 @@ export function convertArrayToCsv(array: any[], separator: string = " ' "): stri
       item = infoArray[i];
       if (separator == ',') {
         if (item != null && item != undefined) {
-          if (item.indexOf(',') !== -1 || item.indexOf('"') !== -1) {
-            item = `"${item.replace(/"/g, '""')}"`;
-          }
-          // bit of a hack but we have a user where they have "+2502+S" as a value which Excel then thinks is a formula
-          if (item.indexOf('+') == 0) {
-            item = `'${item}'`;
+          if (typeof item === 'string' || item instanceof String) {
+            if (item.indexOf(',') !== -1 || item.indexOf('"') !== -1) {
+              item = `"${item.replace(/"/g, '""')}"`;
+            }
+            // bit of a hack but we have a user where they have "+2502+S" as a value which Excel then thinks is a formula
+            if (item.indexOf('+') == 0) {
+              item = `'${item}'`;
+            }
           }
         }
       }

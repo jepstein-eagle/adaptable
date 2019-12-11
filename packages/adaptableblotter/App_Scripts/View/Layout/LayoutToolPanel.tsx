@@ -21,9 +21,11 @@ import join from '../../components/utils/join';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { BlotterApi } from '../../Api/BlotterApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface LayoutToolPanelComponentProps
-  extends ToolbarStrategyViewPopupProps<LayoutToolPanelComponent> {
+  extends ToolPanelStrategyViewPopupProps<LayoutToolPanelComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
   onRestoreLayout: (layout: Layout) => LayoutRedux.LayoutRestoreAction;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
@@ -154,7 +156,7 @@ class LayoutToolPanelComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)}
+        onClose={() => this.props.onClose('Layout')}
       >
         {this.state.IsMinimised ? null : content}
       </PanelToolPanel>
@@ -221,7 +223,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           source: 'Toolbar',
         })
       ),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup)

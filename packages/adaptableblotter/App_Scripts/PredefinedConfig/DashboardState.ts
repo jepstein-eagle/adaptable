@@ -1,9 +1,91 @@
 import { RunTimeState } from './RunTimeState';
 import { ButtonStyle } from './Common/ButtonStyle';
+
+/**
+ * The Adaptable Blotter Toolbar collection
+ *
+ * When setting the `AvailableToolbars` or `VisibleToolbars` properties in Dashboard state, only the Toolbars listed here can be included.
+ */
+export type AdaptableBlotterDashboardToolbars = AdaptableBlotterDashboardToolbar[];
+
+/**
+ * List of all the Toolbars that the Adaptable Blotter provides
+ */
+export type AdaptableBlotterDashboardToolbar =
+  | 'AdvancedSearch'
+  | 'Alert'
+  | 'Application'
+  | 'Bulk Update'
+  | 'CellSummary'
+  | 'Chart'
+  | 'ColumnFilter'
+  | 'Export'
+  | 'Layout'
+  | 'SmartEdit'
+  | 'QuickSearch'
+  | 'SystemStatus'
+  | 'Theme';
+
+/**
+ * The Adaptable Blotter Function Button collection
+ *
+ * When setting the VisibleButtons` properties in Dashboard state, only the Function Buttons listed here can be included.
+ */
+export type AdaptableBlotterFunctionButtons = AdaptableBlotterFunctionButton[];
+
+/**
+ * List of all the Function button that the Adaptable Blotter provides.
+ *
+ * Essentially it is a list of all the Functions in the Adaptable Blotter as each Function has a popup for which this is a shortcut button.
+ */
+export type AdaptableBlotterFunctionButton =
+  | 'AdvancedSearch'
+  | 'Alert'
+  | 'Application'
+  | 'BulkUpdate'
+  | 'CalculatedColumn'
+  | 'Calendar'
+  | 'CellSummary'
+  | 'CellValidation'
+  | 'Chart'
+  | 'ColumnCategory'
+  | 'ColumnChooser'
+  | 'ColumnFilter'
+  | 'ColumnInfo'
+  | 'ConditionalStyle'
+  | 'CustomSort'
+  | 'Dashboard'
+  | 'DataSource'
+  | 'Export'
+  | 'FlashingCells'
+  | 'FormatColumn'
+  | 'FreeTextColumn'
+  | 'Home'
+  | 'Layout'
+  | 'PercentBar'
+  | 'PieChart'
+  | 'PlusMinus'
+  | 'QuickSearch'
+  | 'Reminder'
+  | 'Shortcut'
+  | 'SmartEdit'
+  | 'SparklineColumn'
+  | 'Sparkline'
+  | 'StateManagement'
+  | 'SystemStatus'
+  | 'TeamSharing'
+  | 'Theme'
+  | 'UpdatedRow'
+  | 'UserFilter';
+
 /**
  * The Predefined Configuration for the Dashboard function
  *
  * The Dashboard is the area above the grid which contains buttons, toolbars and dropdowns.
+ *
+ * It comprises the 'Home Toolbar' (which hosts Function buttons and various dropdowns) and a range of Function Toolbars.
+ *
+ * You use the Dashboard State to set which elements are availalbe (and visible) in the Home Toolbar and to select which Function Toolbars are available (and visible).
  *
  *  **Further Resources**
  *
@@ -46,20 +128,20 @@ export interface DashboardState extends RunTimeState {
    *
    * Only those toolbars listed here will be selectable
    *
-   * If you don't provide any value for this property, then ALL toolbars will be available.
+   * If you don't provide any value for this property, then ALL Adaptable Blotter toolbars will be available.
    *
    * **Default Value**:  Empty array
    */
-  AvailableToolbars?: string[];
+  AvailableToolbars?: AdaptableBlotterDashboardToolbars;
 
   /**
-   * Which toolbars should be visible in the Dasbhoard when the application loads.
+   * Which toolbars should be visible in the Dasbhoard when the application first loads.
    *
-   * Note: If the `AvailableToolbars` property has been set then the visible toolbars listed here must also be included there.
+   * Note: If the `AvailableToolbars` property has been set, then the visible toolbars listed here must also be included there.
    *
    * **Default Value**:  'QuickSearch', 'Layout', 'Export', 'ColumnFilter'
    */
-  VisibleToolbars?: string[];
+  VisibleToolbars?: AdaptableBlotterDashboardToolbars;
 
   /**
    * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
@@ -68,7 +150,7 @@ export interface DashboardState extends RunTimeState {
    *
    * **Default Value**:  'Dashboard', 'SmartEdit', 'ColumnChooser', 'ConditionalStyle', ''
    */
-  VisibleButtons?: string[];
+  VisibleButtons?: AdaptableBlotterFunctionButtons;
 
   /**
    * How the Dashboard will appear.

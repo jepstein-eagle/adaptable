@@ -18,7 +18,6 @@ export const DashboardStrategyId: string = 'Dashboard';
 export const DataSourceStrategyId: string = 'DataSource';
 export const ExportStrategyId: string = 'Export';
 export const FlashingCellsStrategyId: string = 'FlashingCells';
-export const UpdatedRowStrategyId: string = 'Updated Row';
 export const FormatColumnStrategyId: string = 'FormatColumn';
 export const FreeTextColumnStrategyId: string = 'FreeTextColumn';
 export const HomeStrategyId: string = 'Home';
@@ -36,6 +35,7 @@ export const StateManagementStrategyId: string = 'StateManagement';
 export const SystemStatusStrategyId: string = 'SystemStatus';
 export const TeamSharingStrategyId: string = 'TeamSharing';
 export const ThemeStrategyId: string = 'Theme';
+export const UpdatedRowStrategyId: string = 'UpdatedRow';
 export const UserFilterStrategyId: string = 'UserFilter';
 
 // Strategy Names

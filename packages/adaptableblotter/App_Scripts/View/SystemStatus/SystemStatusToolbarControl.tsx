@@ -13,6 +13,7 @@ import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
+import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
 interface SystemStatusToolbarControlProps
   extends ToolbarStrategyViewPopupProps<SystemStatusToolbarControlComponent> {
@@ -35,6 +36,9 @@ class SystemStatusToolbarControlComponent extends React.Component<
 
   render() {
     let messageTypeColor: string = UIHelper.getColorByMessageType(this.props
+      .StatusType as MessageType);
+
+    let buttonTextColor: string = UIHelper.getButtonTextColourForMessageType(this.props
       .StatusType as MessageType);
 
     let isDefaultMessage: boolean =
@@ -61,7 +65,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
           className="ab-DashboardToolbar__SystemStatus__text"
           marginRight={2}
           padding={2}
-          color={'text-on-secondary'}
+          color={buttonTextColor}
           backgroundColor={messageTypeColor}
           fontSize={'var( --ab-font-size-2)'}
           alignItems="center"
@@ -98,8 +102,8 @@ function mapStateToProps(state: AdaptableBlotterState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

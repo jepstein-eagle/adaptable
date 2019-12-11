@@ -1,11 +1,41 @@
 import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
 import { UserFilter } from '../PredefinedConfig/UserFilterState';
 
+/**
+ * Provides run-time access to the System Filter section of Adaptable Blotter State.
+ *
+ *  **Further Resources**
+ *
+ * [Demo Site](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/) | [State](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
+ *
+ */
 export interface SystemFilterApi {
+  /**
+   * Retrieves the System Filter section from the Adaptable Blotter State
+   */
   getSystemFilterState(): SystemFilterState;
-  setSystemFilterByUserFilters(userFilters: UserFilter[]): void;
-  setSystemFilter(systemFilters: string[]): void;
-  clearSystemFilter(): void;
-  getCurrentSystemFilter(): string[];
+
+  /**
+   * Sets the given SystemFilters to be used
+   *
+   * @param systemFilters SystemFilters to set
+   */
+  setSystemFilters(systemFilters: string[]): void;
+
+  /**
+   * Clears all System Filters - essentially removes them all
+   */
+  clearSystemFilters(): void;
+
+  /**
+   * Gets all the System Filters currently in the System Filter State
+   */
   getAllSystemFilter(): string[];
+
+  /**
+   * Gets all the System Filters which could be created by the Adaptable Blotter
+   *
+   * If no System Filters have been set by the users then these will be all in the state
+   */
+  getAllPotentialSystemFilters(): string[];
 }

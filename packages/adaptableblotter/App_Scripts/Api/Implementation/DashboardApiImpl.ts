@@ -3,7 +3,12 @@ import * as ApplicationRedux from '../../Redux/ActionsReducers/ApplicationRedux'
 import { ApiBase } from './ApiBase';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import { DashboardApi } from '../DashboardApi';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import {
+  DashboardState,
+  AdaptableBlotterDashboardToolbars,
+  AdaptableBlotterDashboardToolbar,
+  AdaptableBlotterFunctionButtons,
+} from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
@@ -13,25 +18,25 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     return this.getBlotterState().Dashboard;
   }
 
-  public SetAvailableToolbars(availableToolbars: string[]): void {
+  public SetAvailableToolbars(availableToolbars: AdaptableBlotterDashboardToolbars): void {
     this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars));
   }
 
-  public SetVisibleToolbars(visibleToolbars: string[]): void {
-    visibleToolbars.forEach(vt => {
+  public SetVisibleToolbars(visibleToolbars: AdaptableBlotterDashboardToolbars): void {
+    visibleToolbars.forEach((vt: AdaptableBlotterDashboardToolbar) => {
       this.ShowToolbar(vt);
     });
   }
 
-  public ShowToolbar(visibleToolbar: string): void {
+  public ShowToolbar(visibleToolbar: AdaptableBlotterDashboardToolbar): void {
     this.dispatchAction(DashboardRedux.DashboardShowToolbar(visibleToolbar));
   }
 
-  public HideToolbar(visibleToolbar: string): void {
+  public HideToolbar(visibleToolbar: AdaptableBlotterDashboardToolbar): void {
     this.dispatchAction(DashboardRedux.DashboardHideToolbar(visibleToolbar));
   }
 
-  public SetVisibleButtons(functionButtons: string[]): void {
+  public SetVisibleButtons(functionButtons: AdaptableBlotterFunctionButtons): void {
     this.dispatchAction(DashboardRedux.DashboardSetFunctionButtons(functionButtons));
   }
 

@@ -1,4 +1,9 @@
-import { DashboardState } from '../PredefinedConfig/DashboardState';
+import {
+  DashboardState,
+  AdaptableBlotterDashboardToolbars,
+  AdaptableBlotterDashboardToolbar,
+  AdaptableBlotterFunctionButtons,
+} from '../PredefinedConfig/DashboardState';
 
 /**
  * Provides access to the Dashboard state
@@ -19,34 +24,34 @@ export interface DashboardApi {
    *
    * @param availableToolbars toolbars to make available
    */
-  SetAvailableToolbars(availableToolbars: string[]): void;
+  SetAvailableToolbars(availableToolbars: AdaptableBlotterDashboardToolbars): void;
   /**
    * Sets which toolbars should be visibile in the Adaptable Blotter
    *
    * @param visibleToolbars toolbars to show
    */
-  SetVisibleToolbars(visibleToolbars: string[]): void;
+  SetVisibleToolbars(visibleToolbars: AdaptableBlotterDashboardToolbars): void;
 
   /**
    * Makes the given toolbar visible
    *
    * @param visibleToolbar toolbar to show
    */
-  ShowToolbar(visibleToolbar: string): void;
+  ShowToolbar(visibleToolbar: AdaptableBlotterDashboardToolbar): void;
 
   /**
    * Hides the given toolbar
    *
    * @param visibleToolbar toolbar to hide
    */
-  HideToolbar(visibleToolbar: string): void;
+  HideToolbar(visibleToolbar: AdaptableBlotterDashboardToolbar): void;
 
   /**
    * Sets which Function Buttons are visible
    *
    * @param functionButtons buttons to show
    */
-  SetVisibleButtons(functionButtons: string[]): void;
+  SetVisibleButtons(functionButtons: AdaptableBlotterFunctionButtons): void;
 
   /**
    * Sets whether the Dashboard is Visible, Hiden or Minimised

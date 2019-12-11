@@ -21,7 +21,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
-import { IGlue42Service } from '../Utilities/Services/Glue42Service';
+import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IPushPullService } from '../Utilities/Services/PushPullService';
 
 import {
