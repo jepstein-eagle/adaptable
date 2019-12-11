@@ -333,7 +333,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     let rootReducer = mergeReducer(rootReducerWithResetManagement, LOAD_STATE);
 
     let composeEnhancers;
-    if ('production' != p.e.NODE_ENV) {
+    if ('production' != process.env.NODE_ENV) {
       composeEnhancers = composeWithDevTools({
         // Specify here name, actionsBlacklist, actionsCreators and other options if needed
       });
