@@ -4,7 +4,7 @@ import * as Redux from 'redux';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
 import { Icon } from '../../../components/icons';
-import { AdaptableBlotterMenuItem } from '../../../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../../../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 export interface ListBoxMenuProps extends ListGroupProps {
   MenuItems: AdaptableBlotterMenuItem[];

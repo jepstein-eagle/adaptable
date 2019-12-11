@@ -7,11 +7,9 @@ import { ISparklineColumnStrategy } from './Interface/ISparklineColumnStrategy';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import {
-  AdaptableBlotterMenuItem,
-  ContextMenuInfo,
-  MenuItemShowPopup,
-} from '../Utilities/MenuItem';
+import { MenuItemShowPopup } from '../Utilities/MenuItem';
+import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class SparklineColumnStrategy extends AdaptableStrategyBase

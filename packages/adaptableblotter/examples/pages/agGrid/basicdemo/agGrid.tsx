@@ -15,6 +15,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import AdaptableBlotter from '../../../../agGrid';
+import { AdaptableBlotterMenuItem } from '../../../../App_Scripts/PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 var api: BlotterApi;
 
@@ -35,8 +36,12 @@ function InitAdaptableBlotter() {
 
   adaptableBlotterOptions.generalOptions = {
     showAdaptableBlotterToolPanel: true,
-    showAdaptableBlotterContextMenu: item => {
-      if (typeof item != 'string' && item.name === 'Show Column Chooser') {
+    //showAdaptableBlotterContextMenu: true,
+    //showAdaptableBlotterContextMenu: false,
+
+    showAdaptableBlotterContextMenu: (menuItem: AdaptableBlotterMenuItem) => {
+      console.log(menuItem);
+      if (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'SmartEdit') {
         return false;
       }
       return true;

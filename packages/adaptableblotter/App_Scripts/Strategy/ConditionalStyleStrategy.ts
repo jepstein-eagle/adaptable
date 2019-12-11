@@ -7,7 +7,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase

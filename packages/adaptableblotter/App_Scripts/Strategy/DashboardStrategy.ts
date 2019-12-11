@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
 import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
 import {
   ToolbarVisibilityChangedEventArgs,

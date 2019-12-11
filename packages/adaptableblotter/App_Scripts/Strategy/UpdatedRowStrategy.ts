@@ -4,11 +4,9 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IUpdatedRowStrategy } from './Interface/IUpdatedRowStrategy';
-import {
-  AdaptableBlotterMenuItem,
-  ContextMenuInfo,
-  MenuItemShowPopup,
-} from '../Utilities/MenuItem';
+import { MenuItemShowPopup } from '../Utilities/MenuItem';
+import { ContextMenuInfo } from '../PredefinedConfig/Common/ContextMenuInfo';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';

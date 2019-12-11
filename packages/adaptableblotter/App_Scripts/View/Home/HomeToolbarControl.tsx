@@ -35,7 +35,7 @@ import SimpleButton from '../../components/SimpleButton';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { Icon } from '../../components/icons';
-import { AdaptableBlotterMenuItem } from '../../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();

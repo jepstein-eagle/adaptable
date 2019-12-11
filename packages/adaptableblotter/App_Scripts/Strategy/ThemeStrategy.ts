@@ -5,7 +5,7 @@ import { IThemeStrategy } from './Interface/IThemeStrategy';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/BlotterEvents';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 import { THEME_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 

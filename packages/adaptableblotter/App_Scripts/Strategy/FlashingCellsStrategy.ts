@@ -9,7 +9,7 @@ import { FlashingCellState, FlashingCell } from '../PredefinedConfig/FlashingCel
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {

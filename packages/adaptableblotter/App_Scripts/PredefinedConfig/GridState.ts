@@ -3,7 +3,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { ICellSummmary } from '../Utilities/Interface/Selection/ICellSummmary';
 import { InternalState } from './InternalState';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
-import { AdaptableBlotterMenuItem } from '../Utilities/MenuItem';
+import { AdaptableBlotterMenuItem } from './Common/AdaptableBlotterMenuItem';
 import { ColumnSort } from './LayoutState';
 
 export interface GridState extends InternalState {
