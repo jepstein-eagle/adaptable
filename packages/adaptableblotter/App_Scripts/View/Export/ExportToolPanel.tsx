@@ -65,6 +65,14 @@ class ExportToolPanelComponent extends React.Component<
     this.state = { IsMinimised: true };
   }
 
+  public componentDidMount() {
+    if (this.props.Blotter) {
+      this.props.Blotter._on('Glue42Loaded', () => {
+        this.forceUpdate();
+      });
+    }
+  }
+
   render(): any {
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
@@ -285,7 +293,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let ExportToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExportToolPanelComponent);
+export let ExportToolPanel = connect(mapStateToProps, mapDispatchToProps)(ExportToolPanelComponent);
