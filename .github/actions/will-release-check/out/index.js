@@ -502,7 +502,9 @@ const { context } = __webpack_require__(469);
 async function run() {
   try {
     const { sha, payload } = context;
-    const commit = payload.commits.filter(commit => commit.id === sha)[0];
+    const commit = payload.commits.filter(commit =>
+      commit.message.toLowerCase().includes('release version')
+    )[0];
 
     let commandToExecute;
 
@@ -519,32 +521,30 @@ async function run() {
         commandToExecute = 'npm run release:major';
       }
 
-      if (message.includes('release version')) {
-        if (commandToExecute) {
-          const PRIVATE_REGISTRY_TOKEN = process.env.PRIVATE_REGISTRY_TOKEN;
+      if (commandToExecute) {
+        const PRIVATE_REGISTRY_TOKEN = process.env.PRIVATE_REGISTRY_TOKEN;
 
-          const contents = `@adaptabletools:registry=https://registry.adaptabletools.com
+        const contents = `@adaptabletools:registry=https://registry.adaptabletools.com
 //registry.adaptabletools.com/:_authToken=${PRIVATE_REGISTRY_TOKEN}
 package-lock=false`;
 
-          fs.writeFile(
-            '.npmrc',
+        fs.writeFile(
+          '.npmrc',
 
-            contents,
-            error => {
-              if (error) {
-                core.setFailed(error.message);
-              } else {
-                core.exportVariable('WILL_RELEASE_CMD', commandToExecute);
-                core.exportVariable('WILL_RELEASE', 'true');
+          contents,
+          error => {
+            if (error) {
+              core.setFailed(error.message);
+            } else {
+              core.exportVariable('WILL_RELEASE_CMD', commandToExecute);
+              core.exportVariable('WILL_RELEASE', 'true');
 
-                core.info('set env var WILL_RELEASE_CMD = ' + commandToExecute);
-                core.info('DONE writing .npmrc');
-              }
+              core.info('set env var WILL_RELEASE_CMD = ' + commandToExecute);
+              core.info('DONE writing .npmrc');
             }
-          );
-          return;
-        }
+          }
+        );
+        return;
       }
     }
 
