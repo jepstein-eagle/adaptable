@@ -19,7 +19,6 @@ function simpleFileReplace(variables, filePath) {
   const THE_ENV = variables;
 
   Object.keys(variables).forEach(name => {
-    THE_ENV[name] = 'a';
     if (!THE_ENV[name]) {
       throw `Cannot find env variable ${name}`;
     }
