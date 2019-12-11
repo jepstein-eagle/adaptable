@@ -26,9 +26,8 @@ jobs:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
 
     - name: check if release needed
-
       run: |
-        [ -z "${WILL_RELEASE_CMD}" ] && { echo 'Not proceeding, since no release commit message found'; exit 1; };
+        [ -z "${WILL_RELEASE_CMD}" ] && { echo 'Not proceeding, since no release commit message found'; exit 78; };
 
     - name: Echo whoami
       run: npm whoami --registry=https://registry.adaptabletools.com
