@@ -83,6 +83,10 @@ export type AdaptableBlotterFunctionButton =
  *
  * The Dashboard is the area above the grid which contains buttons, toolbars and dropdowns.
  *
+ * It comprises the 'Home Toolbar' (which hosts Function buttons and various dropdowns) and a range of Function Toolbars.
+ *
+ * You use the Dashboard State to set which elements are availalbe (and visible) in the Home Toolbar and to select which Function Toolbars are available (and visible).
+ *
  *  **Further Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardtoolbarsdemo/) | [API](_api_dashboardapi_.dashboardapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030944511-Dashboard-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
@@ -241,24 +245,3 @@ export interface DashboardState extends RunTimeState {
    */
   ApplicationToolbarTitle?: string;
 }
-
-export type test = {
-  Tool: string;
-  value: string;
-};
-
-export type Toolbars = 'AdvancedSearch' | 'Alert' | 'QuickSearch' | 'Export' | 'Layout';
-/*
-  StrategyConstants.ApplicationStrategyId|
-  StrategyConstants.BulkUpdateStrategyId|
-  StrategyConstants.CellSummaryStrategyId|
-  StrategyConstants.ChartStrategyId|
-  StrategyConstants.ColumnFilterStrategyId|
-  StrategyConstants.DataSourceStrategyId|
-  StrategyConstants.ExportStrategyId|
-  StrategyConstants.LayoutStrategyId|
-  StrategyConstants.SmartEditStrategyId|
-  StrategyConstants.QuickSearchStrategyId|
-  StrategyConstants.ThemeStrategyId|
-  StrategyConstants.SystemStatusStrategyId
-*/
