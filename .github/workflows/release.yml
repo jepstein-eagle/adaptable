@@ -38,12 +38,16 @@ jobs:
     - name: Echo publish cmd
       run: echo $WILL_RELEASE_CMD
 
-    - name: Executing npm install in root
-      run: npm i
+    - name: Set git config
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "SHIP IT"
 
     - name: Bump version
       run: npm run bump:${WILL_RELEASE_TYPE}
 
+    - name: Executing npm install in root
+      run: npm i
 
     - name: Executing npm install in core
       run: npm run install-core
@@ -71,10 +75,6 @@ jobs:
     - name: Building angular
       run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
-    - name: Set git config
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "SHIP IT"
 
     - run: git diff
 
