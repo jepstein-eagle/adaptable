@@ -12,6 +12,7 @@ import {
   ToolbarVisibilityChangedInfo,
 } from '../Api/Events/BlotterEvents';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import { AdaptableBlotterDashboardToolbar } from '../PredefinedConfig/DashboardState';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   private visibleToolbars: string[];
@@ -40,7 +41,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         }
       );
 
-      [...(this.visibleToolbars || [])].forEach((toolbar: string) => {
+      [...(this.visibleToolbars || [])].forEach((toolbar: AdaptableBlotterDashboardToolbar) => {
         if (!newVisibleToolbars[toolbar]) {
           this.fireToolbarVisibilityChangedEvent(toolbar);
         }

@@ -1,6 +1,10 @@
 import * as Redux from 'redux';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
+import {
+  DashboardState,
+  AdaptableBlotterDashboardToolbar,
+  AdaptableBlotterDashboardToolbars,
+  AdaptableBlotterFunctionButtons,
+} from '../../PredefinedConfig/DashboardState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import { ButtonStyle } from '../../PredefinedConfig/Common/ButtonStyle';
@@ -27,32 +31,80 @@ const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE =
   'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
-  StrategyIds: string[];
+  toolbars: AdaptableBlotterDashboardToolbars;
 }
 
 export interface DashboardSetToolbarsAction extends Redux.Action {
-  StrategyIds: string[];
+  toolbars: AdaptableBlotterDashboardToolbars;
 }
 
 export interface DashboardShowToolbarAction extends Redux.Action {
-  StrategyId: string;
+  toolbar: AdaptableBlotterDashboardToolbar;
 }
 
 export interface DashboardHideToolbarAction extends Redux.Action {
-  StrategyId: string;
+  toolbar: AdaptableBlotterDashboardToolbar;
 }
 
 export interface DashboardMoveItemAction extends Redux.Action {
-  StrategyId: string;
+  toolbar:
+    | 'AdvancedSearch'
+    | 'Alert'
+    | 'Application'
+    | 'Bulk Update'
+    | 'CellSummary'
+    | 'Chart'
+    | 'ColumnFilter'
+    | 'Alert'
+    | 'Export'
+    | 'Layout'
+    | 'SmartEdit'
+    | 'QuickSearch'
+    | 'Theme'
+    | 'SystemStatus';
   NewIndex: number;
 }
 
-export interface DashboardCreateDefaultConfigurationItemAction extends Redux.Action {
-  StrategyId: string;
-}
-
 export interface DashboardSetFunctionButtonsAction extends Redux.Action {
-  StrategyIds: string[];
+  functionButtons: (
+    | 'AdvancedSearch'
+    | 'Alert'
+    | 'Application'
+    | 'BulkUpdate'
+    | 'CalculatedColumn'
+    | 'Calendar'
+    | 'CellSummary'
+    | 'CellValidation'
+    | 'Chart'
+    | 'ColumnCategory'
+    | 'ColumnChooser'
+    | 'ColumnFilter'
+    | 'ColumnInfo'
+    | 'ConditionalStyle'
+    | 'CustomSort'
+    | 'Dashboard'
+    | 'DataSource'
+    | 'Export'
+    | 'FlashingCells'
+    | 'FormatColumn'
+    | 'FreeTextColumn'
+    | 'Home'
+    | 'Layout'
+    | 'PercentBar'
+    | 'PieChart'
+    | 'PlusMinus'
+    | 'QuickSearch'
+    | 'Reminder'
+    | 'Shortcut'
+    | 'SmartEdit'
+    | 'SparklineColumn'
+    | 'Sparkline'
+    | 'StateManagement'
+    | 'SystemStatus'
+    | 'TeamSharing'
+    | 'Theme'
+    | 'Updated Row'
+    | 'UserFilter')[];
 }
 
 export interface DashboardSetVisibilityAction extends Redux.Action {
@@ -88,41 +140,48 @@ export interface DashboardSetMinimisedHomeToolbarButtonStyleAction extends Redux
 }
 
 export const DashboardSetAvailableToolbars = (
-  StrategyIds: string[]
+  toolbars: AdaptableBlotterDashboardToolbars
 ): DashboardSetAvailableToolbarsAction => ({
   type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
-  StrategyIds,
+  toolbars,
 });
 
-export const DashboardSetToolbars = (StrategyIds: string[]): DashboardSetToolbarsAction => ({
+export const DashboardSetToolbars = (
+  toolbars: AdaptableBlotterDashboardToolbar[]
+): DashboardSetToolbarsAction => ({
   type: DASHBOARD_SET_TOOLBARS,
-  StrategyIds,
+  toolbars,
 });
 
-export const DashboardShowToolbar = (StrategyId: string): DashboardShowToolbarAction => ({
+export const DashboardShowToolbar = (
+  toolbar: AdaptableBlotterDashboardToolbar
+): DashboardShowToolbarAction => ({
   type: DASHBOARD_SHOW_TOOLBAR,
-  StrategyId,
+  toolbar,
 });
 
-export const DashboardHideToolbar = (StrategyId: string): DashboardHideToolbarAction => ({
+export const DashboardHideToolbar = (
+  toolbar: AdaptableBlotterDashboardToolbar
+): DashboardHideToolbarAction => ({
   type: DASHBOARD_HIDE_TOOLBAR,
-  StrategyId,
+  toolbar,
 });
 
 export const DashboardMoveItem = (
-  StrategyId: string,
+  toolbar: AdaptableBlotterDashboardToolbar,
+
   NewIndex: number
 ): DashboardMoveItemAction => ({
   type: DASHBOARD_MOVE_ITEM,
-  StrategyId,
+  toolbar,
   NewIndex,
 });
 
 export const DashboardSetFunctionButtons = (
-  StrategyIds: string[]
+  functionButtons: AdaptableBlotterFunctionButtons
 ): DashboardSetFunctionButtonsAction => ({
   type: DASHBOARD_SET_FUNCTION_BUTTONS,
-  StrategyIds,
+  functionButtons,
 });
 
 export const DashboardSetVisibility = (Visibility: Visibility): DashboardSetVisibilityAction => ({
@@ -186,35 +245,22 @@ export const DashboardSetMinimisedHomeToolbarButtonStyle = (
 
 const initialDashboardState: DashboardState = {
   AvailableToolbars: [
-    StrategyConstants.AdvancedSearchStrategyId,
-    StrategyConstants.AlertStrategyId,
-    StrategyConstants.ApplicationStrategyId,
-    StrategyConstants.BulkUpdateStrategyId,
-    StrategyConstants.CellSummaryStrategyId,
-    StrategyConstants.ChartStrategyId,
-    StrategyConstants.ColumnFilterStrategyId,
-    StrategyConstants.DataSourceStrategyId,
-    StrategyConstants.ExportStrategyId,
-    StrategyConstants.LayoutStrategyId,
-    StrategyConstants.SmartEditStrategyId,
-    StrategyConstants.QuickSearchStrategyId,
-    StrategyConstants.ThemeStrategyId,
-    StrategyConstants.SystemStatusStrategyId,
+    'AdvancedSearch',
+    'Alert',
+    'Application',
+    'Bulk Update',
+    'CellSummary',
+    'Chart',
+    'ColumnFilter',
+    'Export',
+    'Layout',
+    'SmartEdit',
+    'QuickSearch',
+    'SystemStatus',
+    'Theme',
   ],
-  VisibleToolbars: [
-    StrategyConstants.QuickSearchStrategyId,
-    StrategyConstants.LayoutStrategyId,
-    StrategyConstants.ExportStrategyId,
-    StrategyConstants.ColumnFilterStrategyId,
-  ],
-  VisibleButtons: [
-    StrategyConstants.DashboardStrategyId,
-    StrategyConstants.SmartEditStrategyId,
-    StrategyConstants.ColumnChooserStrategyId,
-    StrategyConstants.ConditionalStyleStrategyId,
-    // StrategyConstants.TeamSharingStrategyId,
-    // StrategyConstants.SystemStatusStrategyId,
-  ],
+  VisibleToolbars: ['QuickSearch', 'Layout', 'Export', 'ColumnFilter'],
+  VisibleButtons: ['Dashboard', 'SmartEdit', 'ColumnChooser', 'ConditionalStyle'],
   DashboardVisibility: Visibility.Visible,
   ShowSystemStatusButton: true,
   ShowGridInfoButton: true,
@@ -234,47 +280,50 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
   action: Redux.Action
 ): DashboardState => {
   let index: number;
-  let dashboardControls: string[];
+  let dashboardControls: AdaptableBlotterDashboardToolbars;
 
-  const setToolbars = (state: DashboardState, toolbars: string[]): DashboardState => {
+  const setToolbars = (
+    state: DashboardState,
+    toolbars: AdaptableBlotterDashboardToolbars
+  ): DashboardState => {
     return { ...state, VisibleToolbars: toolbars };
   };
 
   switch (action.type) {
     case DASHBOARD_SET_AVAILABLE_TOOLBARS:
       return Object.assign({}, state, {
-        AvailableToolbars: (action as DashboardSetAvailableToolbarsAction).StrategyIds,
+        AvailableToolbars: (action as DashboardSetAvailableToolbarsAction).toolbars,
       });
     case DASHBOARD_SET_TOOLBARS: {
       const actionTyped = action as DashboardSetToolbarsAction;
-      const dashboardToolbars = actionTyped.StrategyIds;
+      const dashboardToolbars = actionTyped.toolbars;
 
       return setToolbars(state, dashboardToolbars);
     }
     case DASHBOARD_MOVE_ITEM: {
       const actionTyped = action as DashboardMoveItemAction;
       dashboardControls = [...state.VisibleToolbars!];
-      index = dashboardControls.findIndex(a => a == actionTyped.StrategyId);
+      index = dashboardControls.findIndex(a => a == actionTyped.toolbar);
       ArrayExtensions.moveArray(dashboardControls, index, actionTyped.NewIndex);
       return setToolbars(state, dashboardControls);
     }
     case DASHBOARD_SHOW_TOOLBAR: {
       const actionTyped = action as DashboardShowToolbarAction;
       const dashboardToolbars = [...state.VisibleToolbars!];
-      dashboardToolbars.push(actionTyped.StrategyId);
+      dashboardToolbars.push(actionTyped.toolbar);
       return setToolbars(state, dashboardToolbars);
     }
     case DASHBOARD_HIDE_TOOLBAR: {
       const actionTyped = action as DashboardHideToolbarAction;
       const dashboardToolbars = (state.VisibleToolbars || []).filter(
-        a => a !== actionTyped.StrategyId
+        a => a !== actionTyped.toolbar
       );
       return setToolbars(state, dashboardToolbars);
     }
 
     case DASHBOARD_SET_FUNCTION_BUTTONS: {
       const actionTyped = action as DashboardSetFunctionButtonsAction;
-      const dashboardFunctionButtons = actionTyped.StrategyIds;
+      const dashboardFunctionButtons = actionTyped.functionButtons;
       return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
     }
     case DASHBOARD_SET_VISIBILITY: {

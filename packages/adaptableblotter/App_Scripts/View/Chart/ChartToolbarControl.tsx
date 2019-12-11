@@ -25,6 +25,7 @@ import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import DropdownButton from '../../components/DropdownButton';
 import { StrategyParams } from '../Components/SharedProps/StrategyViewPopupProps';
+import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
 const AddIcon = icons.add as ReactComponentLike;
 
@@ -219,8 +220,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
         )
       ),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup)

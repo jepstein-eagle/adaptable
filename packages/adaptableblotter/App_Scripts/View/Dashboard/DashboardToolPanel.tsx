@@ -13,6 +13,7 @@ import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import EnumExtensions from '../../Utilities/Extensions/EnumExtensions';
 import Dropdown from '../../components/Dropdown';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface DashboardToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<DashboardToolPanelComponentProps> {
@@ -48,7 +49,7 @@ class DashboardToolPanelComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose(StrategyConstants.DashboardStrategyId)}
+        onClose={() => this.props.onClose('Dashboard')}
       >
         {!this.state.IsMinimised && (
           <Dropdown
@@ -84,7 +85,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           ScreenPopups.DashboardPopup
         )
       ),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
   };
 }
 

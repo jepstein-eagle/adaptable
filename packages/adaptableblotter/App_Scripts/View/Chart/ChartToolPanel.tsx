@@ -8,8 +8,6 @@ import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -27,6 +25,7 @@ import DropdownButton from '../../components/DropdownButton';
 import { StrategyParams } from '../Components/SharedProps/StrategyViewPopupProps';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 const AddIcon = icons.add as ReactComponentLike;
 
@@ -193,7 +192,7 @@ class ChartToolPanelComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose(StrategyConstants.ChartStrategyId)}
+        onClose={() => this.props.onClose('Chart')}
       >
         {this.state.IsMinimised ? null : content}
       </PanelToolPanel>
@@ -239,7 +238,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
         )
       ),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup)

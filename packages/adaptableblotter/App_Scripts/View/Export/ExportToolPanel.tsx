@@ -28,6 +28,7 @@ import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -231,7 +232,7 @@ class ExportToolPanelComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose(StrategyConstants.ExportStrategyId)}
+        onClose={() => this.props.onClose('Export')}
       >
         {this.state.IsMinimised ? null : content}
       </PanelToolPanel>
@@ -275,7 +276,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           source: 'Toolbar',
         })
       ),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup)

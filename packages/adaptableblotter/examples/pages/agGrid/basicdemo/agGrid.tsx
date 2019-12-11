@@ -42,25 +42,22 @@ function InitAdaptableBlotter() {
   };
 
   api = AdaptableBlotter.init(adaptableBlotterOptions);
-
-  api.eventApi.on('BlotterReady', () => {
-    // let test = api.columnFilterApi.getAllColumnFilterForColumn('notional');
-    /// console.log(test);
-    api.internalApi.setMainMenuItems([]);
-  });
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'AdvancedSearch'],
+    VisibleToolbars: ['Layout', 'AdvancedSearch'],
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
-    },
+    }, //
   },
-  SystemFilter: {
-    SystemFilters: ['Positive', 'Today', 'Blanks'],
+  ToolPanel: {
+    VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
   },
+  // SystemFilter: {
+  //   SystemFilters: ['Positive', 'Today', 'Blanks'],
+  // },
   SystemStatus: {
     // ShowAlert: false,
     DefaultStatusMessage: 'This is default message and its quite long',

@@ -21,6 +21,10 @@ import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
+import {
+  AdaptableBlotterDashboardToolbars,
+  AdaptableBlotterDashboardToolbar,
+} from '../../PredefinedConfig/DashboardState';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
@@ -153,8 +157,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           }
         )
       ),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

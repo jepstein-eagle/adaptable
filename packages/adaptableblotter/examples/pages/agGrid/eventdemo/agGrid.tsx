@@ -181,6 +181,7 @@ function listenToThemeChanged(themeChangedEventArgs: ThemeChangedEventArgs) {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Theme', 'Export', 'Layout', 'Application'],
+    AvailableToolbars: ['Theme', 'Export', 'Layout', 'Application', 'AdvancedSearch', 'SmartEdit'],
   },
   Application: {
     ApplicationToolbarButtons: [

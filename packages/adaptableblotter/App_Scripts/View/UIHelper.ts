@@ -449,10 +449,27 @@ export function getButtonColourForAdaptableAlerts(
   return ArrayExtensions.IsNotNullOrEmpty(adaptableAlerts) ? messageTypeColor : 'primary';
 }
 
-export function getButtonTextColourForAdaptableAlerts(adaptableAlerts: AdaptableAlert[]): string {
-  return ArrayExtensions.IsNotNullOrEmpty(adaptableAlerts)
-    ? 'text-on-secondary'
-    : 'text-on-primary';
+export function getButtonTextColourForArrayandMessageType(
+  adaptableAlerts: AdaptableAlert[],
+  messageType: MessageType
+): string {
+  if (ArrayExtensions.IsNullOrEmpty(adaptableAlerts)) {
+    return 'text-on-primary';
+  }
+  return this.getButtonTextColourForMessageType(messageType);
+}
+
+export function getButtonTextColourForMessageType(messageType: MessageType): string {
+  switch (messageType) {
+    case MessageType.Info:
+      return 'var( --ab-color-text-on-info)';
+    case MessageType.Success:
+      return 'var( --ab-color-text-on-success)';
+    case MessageType.Warning:
+      return 'var( --ab-color-text-on-warn)';
+    case MessageType.Error:
+      return 'var( --ab-color-text-on-error)';
+  }
 }
 
 export const UIHelper = {
@@ -478,6 +495,7 @@ export const UIHelper = {
   getStyleForMessageType,
   getMessageTypeFromAdaptableAlerts,
   getButtonColourForAdaptableAlerts,
-  getButtonTextColourForAdaptableAlerts,
+  getButtonTextColourForArrayandMessageType,
+  getButtonTextColourForMessageType,
 };
 export default UIHelper;

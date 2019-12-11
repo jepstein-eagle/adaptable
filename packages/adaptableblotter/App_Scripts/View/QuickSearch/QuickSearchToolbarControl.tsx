@@ -12,6 +12,7 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
+import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
 interface QuickSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
@@ -91,8 +92,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           ScreenPopups.QuickSearchPopup
         )
       ),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

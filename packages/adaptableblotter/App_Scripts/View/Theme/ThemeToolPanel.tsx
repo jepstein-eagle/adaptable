@@ -15,9 +15,11 @@ import DropdownButton from '../../components/DropdownButton';
 import join from '../../components/utils/join';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import Dropdown from '../../components/Dropdown';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface ThemeToolPanelComponentProps
-  extends ToolbarStrategyViewPopupProps<ThemeToolPanelComponent> {
+  extends ToolPanelStrategyViewPopupProps<ThemeToolPanelComponent> {
   onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction;
   SystemThemes: AdaptableBlotterTheme[];
   UserThemes: AdaptableBlotterTheme[];
@@ -56,7 +58,7 @@ class ThemeToolPanelComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)}
+        onClose={() => this.props.onClose('Theme')}
       >
         {!this.state.IsMinimised && (
           <div
@@ -103,7 +105,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onSelectTheme: (theme: string) => dispatch(ThemeRedux.ThemeSelect(theme)),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ThemeStrategyId, ScreenPopups.ThemePopup)

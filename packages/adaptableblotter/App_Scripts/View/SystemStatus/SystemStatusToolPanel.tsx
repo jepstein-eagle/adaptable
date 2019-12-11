@@ -13,6 +13,7 @@ import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface SystemStatusToolPanelProps
   extends ToolPanelStrategyViewPopupProps<SystemStatusToolPanelComponent> {
@@ -38,6 +39,9 @@ class SystemStatusToolPanelComponent extends React.Component<
 
   render() {
     let messageTypeColor: string = UIHelper.getColorByMessageType(this.props
+      .StatusType as MessageType);
+
+    let buttonTextColor: string = UIHelper.getButtonTextColourForMessageType(this.props
       .StatusType as MessageType);
 
     let isDefaultMessage: boolean =
@@ -70,7 +74,7 @@ class SystemStatusToolPanelComponent extends React.Component<
           style={{ borderRadius: 'var(--ab__border-radius)' }}
           marginRight={2}
           padding={2}
-          color={'text-on-secondary'}
+          color={buttonTextColor}
           backgroundColor={messageTypeColor}
           fontSize={'var( --ab-font-size-2)'}
         >
@@ -93,7 +97,7 @@ class SystemStatusToolPanelComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose(StrategyConstants.SystemStatusStrategyId)}
+        onClose={() => this.props.onClose('SystemStatus')}
       >
         {this.state.IsMinimised ? null : content}
       </PanelToolPanel>
@@ -113,7 +117,8 @@ function mapStateToProps(state: AdaptableBlotterState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

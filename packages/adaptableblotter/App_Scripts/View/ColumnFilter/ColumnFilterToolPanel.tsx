@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
+import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
@@ -17,19 +17,20 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
-
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
-
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 
-interface ColumnFilterToolbarControlComponentProps
-  extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
+interface ColumnFilterToolPanelComponentProps
+  extends ToolPanelStrategyViewPopupProps<ColumnFilterToolPanelComponent> {
   onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction;
   onClearColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
@@ -42,10 +43,19 @@ interface ColumnFilterToolbarControlComponentProps
   IsQuickFilterActive: boolean;
 }
 
-class ColumnFilterToolbarControlComponent extends React.Component<
-  ColumnFilterToolbarControlComponentProps,
-  {}
+interface ColumnFilterTToolPanelComponentState {
+  IsMinimised: boolean;
+}
+
+class ColumnFilterToolPanelComponent extends React.Component<
+  ColumnFilterToolPanelComponentProps,
+  ColumnFilterTToolPanelComponentState
 > {
+  constructor(props: ColumnFilterToolPanelComponentProps) {
+    super(props);
+    this.state = { IsMinimised: true };
+  }
+
   render(): any {
     let activeFiltersPanel = (
       <ActiveFiltersPanel
@@ -60,12 +70,12 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     );
 
     let content = (
-      <Flex alignItems="stretch" className="ab-DashboardToolbar__ColumnFilter__wrap">
+      <Flex alignItems="stretch" className="ab-ToolPanel__ColumnFilter__wrap">
         {/*<Text mx={1}>{collapsedText}</Text>*/}
         {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
           <>
             <AdaptablePopover
-              className="ab-DashboardToolbar__ColumnFilter__info"
+              className="ab-ToolPanel__ColumnFilter__info"
               headerText=""
               bodyText={[activeFiltersPanel]}
               //  tooltipText={'Show Filter Details'}
@@ -76,7 +86,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<
             />
             <ButtonClear
               marginLeft={1}
-              className="ab-DashboardToolbar__ColumnFilter__clear"
+              marginBottom={0}
+              className="ab-ToolPanel__ColumnFilter__clear"
               onClick={() => this.onClearFilters()}
               tooltip="Clear Column Filters"
               disabled={this.props.ColumnFilters.length == 0}
@@ -85,9 +96,11 @@ class ColumnFilterToolbarControlComponent extends React.Component<
           </>
         )}
         <CheckBox
-          className="ab-DashboardToolbar__ColumnFilter__active-check"
+          className="ab-ToolPanel__ColumnFilter__active-check"
           disabled={this.props.Blotter.api.internalApi.isGridInPivotMode()}
-          marginLeft={3}
+          marginLeft={1}
+          marginTop={0}
+          padding={1}
           checked={this.props.IsQuickFilterActive}
           onChange={(checked: boolean) => {
             checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
@@ -99,15 +112,16 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     );
 
     return (
-      <PanelDashboard
-        className="ab-DashboardToolbar__ColumnFilter"
+      <PanelToolPanel
+        className="ab-ToolPanel__ColumnFilter"
         headerText={StrategyConstants.ColumnFilterStrategyName}
-        glyphicon={StrategyConstants.ColumnFilterGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)}
         onConfigure={() => this.props.onConfigure()}
+        onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
+        isMinimised={this.state.IsMinimised}
+        onClose={() => this.props.onClose('ColumnFilter')}
       >
-        {content}
-      </PanelDashboard>
+        {this.state.IsMinimised ? null : content}
+      </PanelToolPanel>
     );
   }
 
@@ -148,8 +162,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
     onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),
     onShowQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarShow()),
-    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(
@@ -160,7 +174,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let ColumnFilterToolbarControl = connect(
+export let ColumnFilterToolPanel = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ColumnFilterToolbarControlComponent);
+)(ColumnFilterToolPanelComponent);

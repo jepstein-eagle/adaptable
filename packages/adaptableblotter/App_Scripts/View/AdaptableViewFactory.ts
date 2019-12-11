@@ -65,6 +65,8 @@ import { ExportToolPanel } from './Export/ExportToolPanel';
 import { SystemStatusToolPanel } from './SystemStatus/SystemStatusToolPanel';
 import { AlertToolPanel } from './Alert/AlertToolPanel';
 import { ChartToolPanel } from './Chart/ChartToolPanel';
+import { ColumnFilterToolPanel } from './ColumnFilter/ColumnFilterToolPanel';
+import { CellSummaryToolPanel } from './CellSummary/CellSummaryToolPanel';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -137,6 +139,8 @@ export const AdaptableToolPanelFactory = new Map<string, ConnectedComponent<any,
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolPanel],
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
   [StrategyConstants.ChartStrategyId, ChartToolPanel],
+  [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolPanel],
+  [StrategyConstants.CellSummaryStrategyId, CellSummaryToolPanel],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<

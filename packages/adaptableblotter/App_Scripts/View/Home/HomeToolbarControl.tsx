@@ -7,7 +7,11 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import {
+  DashboardState,
+  AdaptableBlotterDashboardToolbar,
+  AdaptableBlotterDashboardToolbars,
+} from '../../PredefinedConfig/DashboardState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -49,7 +53,9 @@ interface HomeToolbarComponentProps
     VisibleColumnList: AdaptableBlotterColumn[]
   ) => SystemRedux.SetNewColumnListOrderAction;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
-  onSetToolbarVisibility: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction;
+  onSetToolbarVisibility: (
+    toolbars: AdaptableBlotterDashboardToolbars
+  ) => DashboardRedux.DashboardSetToolbarsAction;
   onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
 
@@ -66,7 +72,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
     let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
-    let allowedMenuItems = this.props.GridState.MainMenuItems.filter(
+    let allowedMenuItems: AdaptableBlotterMenuItem[] = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
 
@@ -92,6 +98,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         ),
       },
     ];
+
     this.props.Columns.forEach((col: AdaptableBlotterColumn, index) => {
       colItems.push({
         id: col.ColumnId,
@@ -128,34 +135,38 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         </div>
       ),
     });
-    this.props.DashboardState.AvailableToolbars.forEach((toolbar: string, index) => {
-      if (ArrayExtensions.ContainsItem(allowedMenuNames, toolbar)) {
-        let isVisible: boolean = ArrayExtensions.ContainsItem(
-          this.props.DashboardState.VisibleToolbars,
-          toolbar
-        );
-        let functionName = StrategyConstants.getNameForStrategyId(toolbar);
-        toolbarItems.push({
-          id: toolbar,
-          onClick: (e: React.SyntheticEvent) => {
-            this.onSetToolbarVisibility(toolbar, !isVisible);
-          },
-          label: (
-            <Checkbox
-              className="ab-dd-checkbox"
-              my={0}
-              as="div"
-              value={toolbar}
-              key={toolbar}
-              checked={isVisible}
-              onMouseDown={preventDefault}
-            >
-              {functionName}
-            </Checkbox>
-          ),
-        });
+
+    this.props.DashboardState.AvailableToolbars.forEach(
+      (toolbar: AdaptableBlotterDashboardToolbar, index) => {
+        let myToolbar: string = toolbar as string;
+        if (ArrayExtensions.ContainsItem(allowedMenuNames, myToolbar)) {
+          let isVisible: boolean = ArrayExtensions.ContainsItem(
+            this.props.DashboardState.VisibleToolbars,
+            toolbar
+          );
+          let functionName = StrategyConstants.getNameForStrategyId(myToolbar);
+          toolbarItems.push({
+            id: myToolbar,
+            onClick: (e: React.SyntheticEvent) => {
+              this.onSetToolbarVisibility(myToolbar, !isVisible);
+            },
+            label: (
+              <Checkbox
+                className="ab-dd-checkbox"
+                my={0}
+                as="div"
+                value={myToolbar}
+                key={myToolbar}
+                checked={isVisible}
+                onMouseDown={preventDefault}
+              >
+                {functionName}
+              </Checkbox>
+            ),
+          });
+        }
       }
-    });
+    );
 
     // status button
     let statusButton = (
@@ -320,7 +331,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
   onSetToolbarVisibility(name: string, checked: boolean) {
     const strategy: string = this.props.DashboardState.AvailableToolbars.find(at => at == name);
-    const visibleToolbars: string[] = [].concat(this.props.DashboardState.VisibleToolbars);
+    const visibleToolbars = [].concat(this.props.DashboardState.VisibleToolbars);
     if (checked) {
       visibleToolbars.push(strategy);
     } else {
@@ -344,8 +355,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
-    onClose: (dashboardControl: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
+    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.DashboardPopup)
@@ -354,8 +365,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetDashboardVisibility: (visibility: Visibility) =>
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
-    onSetToolbarVisibility: (strategyIds: string[]) =>
-      dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
+    onSetToolbarVisibility: (toolbars: AdaptableBlotterDashboardToolbars) =>
+      dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
     onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };
 }

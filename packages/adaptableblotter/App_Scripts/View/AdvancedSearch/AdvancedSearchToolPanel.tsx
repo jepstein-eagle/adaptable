@@ -21,6 +21,7 @@ import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface AdvancedSearchToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<AdvancedSearchToolPanelComponent> {
@@ -128,7 +129,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
         // glyphicon={StrategyConstants.AdvancedSearchGlyph}
         //  onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}
         onConfigure={() => this.props.onConfigure()}
-        onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}
+        onClose={() => this.props.onClose('AdvancedSearch')}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
       >
@@ -175,7 +176,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
           }
         )
       ),
-    onClose: (toolPanel: string) => dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

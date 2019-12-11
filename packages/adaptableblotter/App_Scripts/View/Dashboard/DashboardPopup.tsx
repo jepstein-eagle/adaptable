@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import {
+  DashboardState,
+  AdaptableBlotterFunctionButtons,
+  AdaptableBlotterDashboardToolbars,
+} from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { DualListBoxEditor, DisplaySize } from '../Components/ListBox/DualListBoxEditor';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -267,8 +271,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onDashboardSetFunctionButtons: (StrategyConstants: string[]) =>
-      dispatch(DashboardRedux.DashboardSetFunctionButtons(StrategyConstants)),
+    onDashboardSetFunctionButtons: (functionButtons: AdaptableBlotterFunctionButtons) =>
+      dispatch(DashboardRedux.DashboardSetFunctionButtons(functionButtons)),
     onDashboardShowFunctionsDropdown: () =>
       dispatch(DashboardRedux.DashboardShowFunctionsDropdown()),
     onDashboardHideFunctionsDropdown: () =>
@@ -283,8 +287,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(DashboardRedux.DashboardHideSystemStatusButton()),
     onDashboardShowGridInfoButton: () => dispatch(DashboardRedux.DashboardShowGridInfoButton()),
     onDashboardHideGridInfoButton: () => dispatch(DashboardRedux.DashboardHideGridInfoButton()),
-    onDashboardSetToolbars: (StrategyConstants: string[]) =>
-      dispatch(DashboardRedux.DashboardSetToolbars(StrategyConstants)),
+    onDashboardSetToolbars: (toolbars: AdaptableBlotterDashboardToolbars) =>
+      dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
   };
 }
 
