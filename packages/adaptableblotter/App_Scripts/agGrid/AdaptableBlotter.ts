@@ -1130,10 +1130,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -1487,10 +1484,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       (colDef: ColDef) => {
         if (colDef.headerName === calculatedColumnID) {
           foundColDef = true;
-
           return null;
         }
-
         return colDef;
       },
       { removeEmpty: true }
@@ -1505,7 +1500,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         columnList.splice(index, 1);
       }
     }
-    this.setColumnIntoStore();
+
+    if (this.isInitialised) {
+      //  reload the existing layout if its not default
+      let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
+      if (currentlayout != DEFAULT_LAYOUT) {
+        this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
+        setTimeout(() => {
+          this.api.layoutApi.setLayout(currentlayout);
+          this.setColumnIntoStore();
+        }, 300);
+      }
+    }
+    // if grid is initialised then emit the Blotter Ready event so we can reapply any styles
+    // and reapply any specially rendered columns
+    if (this.isInitialised) {
+      this.api.eventApi.emit('BlotterReady');
+      this.addSpecialRendereredColumns();
+    }
   }
 
   public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
@@ -1642,12 +1654,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.applyStylingToColumn(vendorColumn, specialColumn);
 
       if (this.isInitialised) {
-        // if blotter initialised then init any conditional styles
-        const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
-          StrategyConstants.ConditionalStyleStrategyId
-        ) as IConditionalStyleStrategy;
-        conditionalStyleagGridStrategy.initStyles();
-
         // and reload the existing layout if its not default
         let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
         if (currentlayout != DEFAULT_LAYOUT) {

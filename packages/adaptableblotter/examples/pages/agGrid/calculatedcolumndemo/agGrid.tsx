@@ -22,6 +22,9 @@ function InitAdaptableBlotter() {
     `calculated column demo`
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
+  adaptableBlotterOptions.layoutOptions = {
+    autoSizeColumnsInLayout: true,
+  };
 
   const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
@@ -31,7 +34,7 @@ let demoConfig: PredefinedConfig = {
     CalculatedColumns: [
       {
         ColumnExpression: 'Col("notional") * 2',
-        ColumnId: 'Double Notional',
+        ColumnId: 'Dob Notional',
       },
     ],
   },
@@ -39,9 +42,34 @@ let demoConfig: PredefinedConfig = {
     CurrentLayout: 'with calc cols',
     Layouts: [
       {
-        Columns: ['tradeId', 'country', 'notional', 'Double Notional', 'stars', 'counterparty'],
+        Columns: ['tradeId', 'country', 'notional', 'Dob Notional'],
+        GroupedColumns: ['currency'],
         ColumnSorts: [],
         Name: 'with calc cols',
+      },
+    ],
+  },
+  ConditionalStyle: {
+    ConditionalStyles: [
+      {
+        Style: {
+          BackColor: '#0000ff',
+          ForeColor: undefined,
+          FontWeight: 'Normal',
+          FontStyle: 'Normal',
+          FontSize: undefined,
+          ClassName: '',
+        },
+        ConditionalStyleScope: 'Row',
+        Expression: {
+          ColumnValueExpressions: [
+            {
+              ColumnId: 'country',
+              ColumnDisplayValues: ['France', 'China'],
+              ColumnRawValues: ['France', 'China'],
+            },
+          ],
+        },
       },
     ],
   },

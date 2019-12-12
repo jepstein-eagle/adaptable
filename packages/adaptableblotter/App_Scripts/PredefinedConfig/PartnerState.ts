@@ -42,8 +42,8 @@ export interface PartnerState extends DesignTimeState {
  *
  *  ------
  *
- *  // 2. immediately thereafter please set the config for the ipushpull object as follows:
- * // (note: we will later late add the real values for the `api_secret` and `api_key` properties)
+ *  // 2. immediately thereafter set the config for the ipushpull object as follows:
+ * // (note: we will later add the real values for the `api_secret` & `api_key` properties)
  *  ipushpull.config.set({
  *    api_secret: '',   // this will be added by the Adaptable Blotter
  *    api_key: '',      // this will be added by the Adaptable Blotter
@@ -58,19 +58,19 @@ export interface PartnerState extends DesignTimeState {
  *
  *  ------
  *
- * // 3. pass in this config as the 'iPushPullInstance' property in iPushPull section of PartnerState
- * // Additionally you can add your iPushPull username and password to help to pre-fill the login page
+ * // 3. pass in this config as 'iPushPullInstance' property in iPushPull / Partner state
+ * // You can add your iPushPull username & password to help pre-fill the login page
  * const adaptableBlotterOptions: AdaptableBlotterOptions = {
  *   .........
- *    predefinedConfig: {
- *       Partner: {
- *         iPushPull: {
- *           iPushPullInstance: ipushpull,  // object created above
- *           Username: [YOUR IPUSHPULL USERNAME],  // optional but will save being added each time
- *           Password: [YOUR IPUSHPULL PASSWORD],  // optional but will save being added each time
- *         },
- *       },
- *     }
+ *   predefinedConfig: {
+ *      Partner: {
+ *        iPushPull: {
+ *          iPushPullInstance: ipushpull,  // object created above
+ *          Username: [YOUR IPUSHPULL USERNAME], // optional, saves being added each time
+ *          Password: [YOUR IPUSHPULL PASSWORD], // optional, save sbeing added each time
+ *        },
+ *      },
+ *    }
  *  };
  * }
  *
