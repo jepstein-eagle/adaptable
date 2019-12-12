@@ -1009,6 +1009,17 @@ export class ExamplesHelper {
       cellRenderer: 'agAnimateShowChangeCellRenderer',
     });
     schema.push({
+      headerName: 'Bid',
+      field: 'bid',
+      columnGroupShow: 'closed',
+      editable: true,
+      filter: true,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+      valueFormatter: this.twoDecimalPlaceFormatter,
+      enableValue: true,
+    });
+    schema.push({
       headerName: 'Counterparty',
       field: 'counterparty',
       editable: true,
@@ -1088,16 +1099,6 @@ export class ExamplesHelper {
       valueFormatter: this.shortDateFormatteragGrid,
       filter: 'agDateColumnFilter',
       type: 'abColDefDate',
-    });
-    schema.push({
-      headerName: 'Bid',
-      field: 'bid',
-      columnGroupShow: 'closed',
-      filter: true,
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-      valueFormatter: this.fourDecimalPlaceFormatter,
-      enableValue: true,
     });
 
     schema.push({

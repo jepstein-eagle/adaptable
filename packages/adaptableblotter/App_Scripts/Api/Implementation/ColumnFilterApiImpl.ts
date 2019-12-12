@@ -2,6 +2,7 @@ import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedu
 import { ApiBase } from './ApiBase';
 import { ColumnFilterApi } from '../ColumnFilterApi';
 import { ColumnFilterState, ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
+import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
 
 export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
   public getColumnFilterState(): ColumnFilterState {
@@ -55,5 +56,24 @@ export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
     } else {
       return [];
     }
+  }
+
+  public createColumnFilterForCell(column: string, primarykeyValue: any): void {
+    let rowNode = this.blotter.getRowNodeForPrimaryKey(primarykeyValue);
+    let displayValue = this.blotter.getDisplayValueFromRowNode(rowNode, column);
+    let rawValue = this.blotter.getRawValueFromRowNode(rowNode, column);
+
+    let filter: ColumnFilter = {
+      ColumnId: column,
+      Filter: ExpressionHelper.CreateSingleColumnExpression(
+        column,
+        [displayValue],
+        [rawValue],
+        [],
+        []
+      ),
+    };
+    console.log(filter);
+    this.setColumnFilter([filter]);
   }
 }

@@ -9,7 +9,7 @@ export interface GridCell {
    */
   columnId: string;
   /**
-   * The **new value** which the cell should contain
+   * The value which the cell contains
    */
   value: any;
 

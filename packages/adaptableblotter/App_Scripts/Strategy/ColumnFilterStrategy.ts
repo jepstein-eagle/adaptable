@@ -5,7 +5,14 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import {
+  MenuItemShowPopup,
+  MenuItemDoReduxAction,
+  MenuItemDoClickFunction,
+} from '../Utilities/MenuItem';
+import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { Action } from 'redux';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -18,6 +25,27 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
       ComponentName: ScreenPopups.ColumnFilterPopup,
       Icon: StrategyConstants.ColumnFilterGlyph,
     });
+  }
+
+  public addContextMenuItem(
+    contextMenuInfo: ContextMenuInfo
+  ): AdaptableBlotterMenuItem | undefined {
+    let menuItemClickFunction: MenuItemDoClickFunction = undefined;
+
+    if (contextMenuInfo.column && contextMenuInfo.gridCell != null) {
+      let clickFunction = () => {
+        this.blotter.api.columnFilterApi.createColumnFilterForCell(
+          contextMenuInfo.column.ColumnId,
+          contextMenuInfo.gridCell.primaryKeyValue
+        );
+      };
+      menuItemClickFunction = this.createColumnMenuItemClickFunction(
+        'Filter on cell value',
+        StrategyConstants.ColumnFilterGlyph,
+        clickFunction
+      );
+    }
+    return menuItemClickFunction;
   }
 
   public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {

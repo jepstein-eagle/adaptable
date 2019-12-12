@@ -303,7 +303,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   onClick(menuItem: AdaptableBlotterMenuItem) {
-    this.props.onClick(menuItem.Action);
+    this.props.onClick(menuItem.ReduxAction);
   }
 
   onShowSystemStatus() {

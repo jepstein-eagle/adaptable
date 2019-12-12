@@ -37,7 +37,7 @@ export class ListBoxMenu extends React.Component<ListBoxMenuProps, ListBoxMenuSt
   }
 
   onClick(menuItem: AdaptableBlotterMenuItem) {
-    this.props.onMenuItemClick(menuItem.Action);
+    this.props.onMenuItemClick(menuItem.ReduxAction);
   }
 }
 

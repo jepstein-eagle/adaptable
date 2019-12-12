@@ -2269,9 +2269,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
+        // create a Context Menu Info - all we have is the Column
+        let contextMenuInfo: ContextMenuInfo = {
+          gridCell: undefined,
+          column: column,
+          isSelectedCell: false,
+          isSingleSelectedColumn: false,
+          rowNode: undefined,
+          primaryKeyValue: undefined,
+        };
         userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
           let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-            userMenuItem
+            userMenuItem,
+            contextMenuInfo
           );
           colMenuItems.push(menuItem);
         });
@@ -2318,6 +2328,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
           }
 
+          // here we create Adaptable Blotter Menu items from OUR internal collection
+          // user has ability to decide whether to show or not
           if (ArrayExtensions.IsNotNullOrEmpty(adaptableBlotterMenuItems)) {
             let showAdaptableBlotterContextMenu = this.blotterOptions.generalOptions!
               .showAdaptableBlotterContextMenu;
@@ -2349,13 +2361,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
           }
 
+          // here we add any User defined Context Menu Items
           let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
             .ContextMenuItems;
+
+          if (typeof userContextMenuItems === 'function') {
+            userContextMenuItems = userContextMenuItems(contextMenuInfo);
+          }
+
           if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
             contextMenuItems.push('separator');
             userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
               let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-                userMenuItem
+                userMenuItem,
+                contextMenuInfo
               );
               contextMenuItems.push(menuItem);
             });

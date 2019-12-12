@@ -15,7 +15,6 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import AdaptableBlotter from '../../../../agGrid';
-import { AdaptableBlotterMenuItem } from '../../../../App_Scripts/PredefinedConfig/Common/AdaptableBlotterMenuItem';
 
 var api: BlotterApi;
 
@@ -32,20 +31,6 @@ function InitAdaptableBlotter() {
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
-  };
-
-  adaptableBlotterOptions.generalOptions = {
-    showAdaptableBlotterToolPanel: true,
-    //showAdaptableBlotterContextMenu: true,
-    //showAdaptableBlotterContextMenu: false,
-
-    showAdaptableBlotterContextMenu: (menuItem: AdaptableBlotterMenuItem) => {
-      console.log(menuItem);
-      if (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'SmartEdit') {
-        return false;
-      }
-      return true;
-    },
   };
 
   adaptableBlotterOptions.layoutOptions = {
@@ -68,9 +53,6 @@ let demoConfig: PredefinedConfig = {
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
   },
-  // SystemFilter: {
-  //   SystemFilters: ['Positive', 'Today', 'Blanks'],
-  // },
   SystemStatus: {
     // ShowAlert: false,
     DefaultStatusMessage: 'This is default message and its quite long',

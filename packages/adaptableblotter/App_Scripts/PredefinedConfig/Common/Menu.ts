@@ -28,7 +28,8 @@ Like with the Column Menu,the Context menu is created EACH TIME that it is opene
 export interface AdaptableBlotterMenuItem {
   Label: string;
   StrategyId: string;
-  Action: Redux.Action;
+  ReduxAction?: Redux.Action;
+  ClickFunction?: () => void;
   IsVisible: boolean;
   Icon: string;
 }

@@ -8,7 +8,7 @@ export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {
   constructor(
     label: string,
     strategyId: string,
-    action: Redux.Action,
+    reduxAaction: Redux.Action,
     icon: string,
     isVisible: boolean
   ) {
@@ -16,10 +16,32 @@ export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {
     this.StrategyId = strategyId;
     this.IsVisible = isVisible;
     this.Icon = icon;
-    this.Action = action;
+    this.ReduxAction = reduxAaction;
   }
 
-  public Action: Redux.Action;
+  public ReduxAction: Redux.Action;
+  public Label: string;
+  public StrategyId: string;
+  public IsVisible: boolean;
+  public Icon: string;
+}
+
+export class MenuItemDoClickFunction implements AdaptableBlotterMenuItem {
+  constructor(
+    label: string,
+    strategyId: string,
+    clickFunction: () => void,
+    icon: string,
+    isVisible: boolean
+  ) {
+    this.Label = label;
+    this.StrategyId = strategyId;
+    this.IsVisible = isVisible;
+    this.Icon = icon;
+    this.ClickFunction = clickFunction;
+  }
+
+  public ClickFunction: () => void;
   public Label: string;
   public StrategyId: string;
   public IsVisible: boolean;
@@ -40,9 +62,9 @@ export class MenuItemShowPopup implements AdaptableBlotterMenuItem {
     this.StrategyId = strategyId;
     this.IsVisible = isVisible;
     this.Icon = icon;
-    this.Action = PopupRedux.PopupShowScreen(strategyId, componentName, popupParams);
+    this.ReduxAction = PopupRedux.PopupShowScreen(strategyId, componentName, popupParams);
   }
-  public Action: Redux.Action;
+  public ReduxAction: Redux.Action;
   public Label: string;
   public StrategyId: string;
   public IsVisible: boolean;

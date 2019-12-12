@@ -464,21 +464,25 @@ export class agGridHelper {
     const colId = params.column.getColId();
     const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRowNode(params.node);
     let isSingleSelectedColumn: boolean = false;
+    let isSelectedCell: boolean = false;
     let clickedCell: GridCell = {
       columnId: colId,
       value: params.value,
       primaryKeyValue: primaryKeyValue,
     };
     let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
-    let matchedCell: GridCell = selectedCellInfo.GridCells.find(
-      gc =>
-        gc != null &&
-        gc.columnId == clickedCell.columnId &&
-        gc.primaryKeyValue == clickedCell.primaryKeyValue
-    );
-    let isSelectedCell: boolean = matchedCell != null;
-    if (isSelectedCell) {
-      isSingleSelectedColumn = ArrayExtensions.CorrectLength(selectedCellInfo.Columns, 1);
+    if (selectedCellInfo) {
+      let matchedCell: GridCell = selectedCellInfo.GridCells.find(
+        gc =>
+          gc != null &&
+          gc.columnId == clickedCell.columnId &&
+          gc.primaryKeyValue == clickedCell.primaryKeyValue
+      );
+
+      isSelectedCell = matchedCell != null;
+      if (isSelectedCell) {
+        isSingleSelectedColumn = ArrayExtensions.CorrectLength(selectedCellInfo.Columns, 1);
+      }
     }
 
     return {
@@ -494,7 +498,9 @@ export class agGridHelper {
   public createAgGridMenuDefFromAdaptableMenu(x: AdaptableBlotterMenuItem): MenuItemDef {
     return {
       name: x.Label,
-      action: () => this.blotter.api.internalApi.dispatchReduxAction(x.Action),
+      action: x.ClickFunction
+        ? x.ClickFunction
+        : () => this.blotter.api.internalApi.dispatchReduxAction(x.ReduxAction),
       icon: iconToString(x.Icon, {
         style: {
           fill: 'var(--ab-color-text-on-primary)',
@@ -503,15 +509,18 @@ export class agGridHelper {
     };
   }
 
-  public createAgGridMenuDefFromUsereMenu(x: UserMenuItem): MenuItemDef {
+  public createAgGridMenuDefFromUsereMenu(
+    x: UserMenuItem,
+    contextMenuInfo: ContextMenuInfo
+  ): MenuItemDef {
     return {
       name: x.Label,
-      action: x.UserMenuItemClickedFunction,
+      action: () => x.UserMenuItemClickedFunction(contextMenuInfo),
       icon: x.Icon,
       subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
         ? undefined
         : x.SubMenuItems!.map(s => {
-            return this.createAgGridMenuDefFromUsereMenu(s);
+            return this.createAgGridMenuDefFromUsereMenu(s, contextMenuInfo);
           }),
     };
   }

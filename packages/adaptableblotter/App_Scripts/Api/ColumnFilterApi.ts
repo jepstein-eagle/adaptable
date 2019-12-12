@@ -50,4 +50,6 @@ export interface ColumnFilterApi {
    * @param column the column to retrieve the Column Filters for
    */
   getAllColumnFilterForColumn(column: string): ColumnFilter[];
+
+  createColumnFilterForCell(column: string, primarykeyValue: any): void;
 }

@@ -106,7 +106,7 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
     let menuItems = allowedMenuItems.map(menuItem => {
       return {
         //  disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
-        onClick: () => this.props.onClick(menuItem.Action),
+        onClick: () => this.props.onClick(menuItem.ReduxAction),
         icon: <Icon name={menuItem.Icon} />,
         label: menuItem.Label,
       };

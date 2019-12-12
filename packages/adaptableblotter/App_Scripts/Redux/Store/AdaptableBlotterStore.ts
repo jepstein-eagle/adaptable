@@ -128,7 +128,6 @@ import { ChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { ServiceStatus } from '../../Utilities/Services/PushPullService';
@@ -2630,7 +2629,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 return result;
               })
               .catch((error: string) => {
-                middlewareAPI.dispatch(ExportRedux.IPPLoginFailed(error))
+                middlewareAPI.dispatch(ExportRedux.IPPLoginFailed(error));
                 LoggingHelper.LogAdaptableBlotterError('Login failed', error);
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
               });

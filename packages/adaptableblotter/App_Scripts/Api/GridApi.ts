@@ -67,13 +67,6 @@ export interface GridApi {
   ): void;
 
   /**
-   * Replaces an existing cell value in the Adaptable Blotter with that contained in this inputted Grid Cell
-   * @param gridCell the new cell
-   */
-
-  setGridCell(gridCell: GridCell, validateChange: boolean): void;
-
-  /**
    * Replaces a batch of existing cell values in the Adaptable Blotter with those contained in the inputted Grid Cells
    * @param gridCells the new cells
    */

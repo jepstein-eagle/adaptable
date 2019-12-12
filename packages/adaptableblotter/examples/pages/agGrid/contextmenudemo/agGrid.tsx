@@ -8,16 +8,27 @@ import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import {
+  AdaptableBlotterOptions,
+  PredefinedConfig,
+  BlotterApi,
+} from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AdaptableBlotterMenuItem } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
+import { ColumnFilter } from '../../../../App_Scripts/PredefinedConfig/ColumnFilterState';
+import { UserMenuItem } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
+import FilterHelper from '../../../../App_Scripts/Utilities/Helpers/FilterHelper';
+import ExpressionHelper from '../../../../App_Scripts/Utilities/Helpers/ExpressionHelper';
+import { DataType } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
+import { GridCell } from '../../../../App_Scripts/Utilities/Interface/Selection/GridCell';
 
+var blotterApi: BlotterApi;
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  gridOptions.getContextMenuItems = getContextMenuItems;
+  //gridOptions.getContextMenuItems = getContextMenuItems;
 
   //gridOptions.singleClickEdit = true;
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
@@ -25,158 +36,94 @@ function InitAdaptableBlotter() {
     'context menu demo'
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
+  adaptableBlotterOptions.generalOptions = {
+    showAdaptableBlotterToolPanel: true,
+    //showAdaptableBlotterContextMenu: true,
+    //showAdaptableBlotterContextMenu: false,
 
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+    showAdaptableBlotterContextMenu: (menuItem: AdaptableBlotterMenuItem) => {
+      if (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'SmartEdit') {
+        return false;
+      }
+      return true;
+    },
+  };
+
+  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Layout', 'SystemStatus'],
+  },
+  SystemStatus: {
+    ShowAlert: false,
+  },
+  UserInterface: {
+    /*
+    ContextMenuItems: [
+      {
+        Label: 'Set System Status',
+        SubMenuItems: [
+          {
+            Label: 'Set Error',
+            UserMenuItemClickedFunction: () => {
+              blotterApi.systemStatusApi.setErrorSystemStatus('System Down');
+            },
+          },
+          {
+            Label: 'Set Warning',
+            UserMenuItemClickedFunction: () => {
+              blotterApi.systemStatusApi.setWarningSystemStatus('System Slow');
+            },
+          },
+          {
+            Label: 'Set Success',
+            UserMenuItemClickedFunction: () => {
+              blotterApi.systemStatusApi.setSuccessSystemStatus('System Fine');
+            },
+          },
+          {
+            Label: 'Set Info',
+            UserMenuItemClickedFunction: () => {
+              blotterApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
+            },
+          },
+        ],
+      },
+    ],
+    */
 
-function getContextMenuItems(params: any) {
-  var result = [
-    {
-      // custom item
-      name: 'Alert ' + params.value,
-      action: function() {
-        window.alert('Alerting about ' + params.value);
-      },
-      cssClasses: ['redFont', 'bold'],
+    ContextMenuItems: contextMenuInfo => {
+      console.warn(contextMenuInfo);
+      return [
+        {
+          Label: 'Set as Filter',
+          UserMenuItemClickedFunction: contextMenuInfo => {
+            blotterApi.columnFilterApi.createColumnFilterForValues(
+              contextMenuInfo.column.ColumnId,
+              [contextMenuInfo.gridCell.value]
+            );
+          },
+        },
+        {
+          Label: 'Double Value',
+          UserMenuItemClickedFunction: contextMenuInfo => {
+            if (contextMenuInfo.column && contextMenuInfo.column.DataType == DataType.Number) {
+              blotterApi.gridApi.setCellValue(
+                contextMenuInfo.gridCell.columnId,
+                contextMenuInfo.gridCell.value * 2,
+                contextMenuInfo.gridCell.primaryKeyValue
+              );
+            } else {
+              return null;
+            }
+          },
+        },
+      ];
     },
-    {
-      // custom item
-      name: 'Always Disabled',
-      disabled: true,
-      tooltip: 'Very long tooltip, did I mention that I am very long, well I am! Long!  Very Long!',
-    },
-    {
-      name: 'Country',
-      subMenu: [
-        {
-          name: 'Ireland',
-          action: function() {
-            console.log('Ireland was pressed');
-          },
-          icon: createFlagImg('ie'),
-        },
-        {
-          name: 'UK',
-          action: function() {
-            console.log('UK was pressed');
-          },
-          icon: createFlagImg('gb'),
-        },
-        {
-          name: 'France',
-          action: function() {
-            console.log('France was pressed');
-          },
-          icon: createFlagImg('fr'),
-        },
-      ],
-    },
-    {
-      name: 'Person',
-      subMenu: [
-        {
-          name: 'Niall',
-          action: function() {
-            console.log('Niall was pressed');
-          },
-          icon: createFlagImg('fr'),
-        },
-        {
-          name: 'Sean',
-          action: function() {
-            console.log('Sean was pressed');
-          },
-        },
-        {
-          name: 'John',
-          action: function() {
-            console.log('John was pressed');
-          },
-        },
-        {
-          name: 'Alberto',
-          action: function() {
-            console.log('Alberto was pressed');
-          },
-        },
-        {
-          name: 'Tony',
-          action: function() {
-            console.log('Tony was pressed');
-          },
-        },
-        {
-          name: 'Andrew',
-          action: function() {
-            console.log('Andrew was pressed');
-          },
-        },
-        {
-          name: 'Kev',
-          action: function() {
-            console.log('Kev was pressed');
-          },
-        },
-        {
-          name: 'Will',
-          action: function() {
-            console.log('Will was pressed');
-          },
-        },
-        {
-          name: 'Armaan',
-          action: function() {
-            console.log('Armaan was pressed');
-          },
-        },
-      ],
-    }, // built in separator
-    'separator',
-    {
-      // custom item
-      name: 'Windows',
-      shortcut: 'Alt + W',
-      action: function() {
-        console.log('Windows Item Selected');
-      },
-      icon: '<img src="../images/skills/windows.png"/>',
-    },
-    {
-      // custom item
-      name: 'Mac',
-      shortcut: 'Alt + M',
-      action: function() {
-        console.log('Mac Item Selected');
-      },
-      icon: '<img src="../images/skills/mac.png"/>',
-    }, // built in separator
-    'separator',
-    {
-      // custom item
-      name: 'Checked',
-      checked: true,
-      action: function() {
-        console.log('Checked Selected');
-      },
-      icon: '<img src="../images/skills/mac.png"/>',
-    }, // built in copy item
-    'copy',
-    'separator',
-    'chartRange',
-  ];
-
-  return result;
-}
-
-function createFlagImg(flag: any) {
-  return (
-    '<img border="0" width="15" height="10" src="https://flags.fmcdn.net/data/flags/mini/' +
-    flag +
-    '.png"/>'
-  );
-}
+  },
+};
 
 export default () => {
   useEffect(() => {

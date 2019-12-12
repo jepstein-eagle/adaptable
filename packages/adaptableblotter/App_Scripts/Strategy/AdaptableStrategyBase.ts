@@ -6,7 +6,11 @@ import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterC
 
 import { Entitlement } from '../PredefinedConfig/EntitlementsState';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
+import {
+  MenuItemShowPopup,
+  MenuItemDoReduxAction,
+  MenuItemDoClickFunction,
+} from '../Utilities/MenuItem';
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
@@ -105,6 +109,16 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   // direct actions called by the column menu - invisible if strategy is hidden or readonly
+  createColumnMenuItemClickFunction(
+    Label: string,
+    Icon: string,
+    ClickFunction: () => void
+  ): MenuItemDoClickFunction {
+    if (this.isVisible && !this.isReadOnly) {
+      return new MenuItemDoClickFunction(Label, this.Id, ClickFunction, Icon, true);
+    }
+  }
+
   createColumnMenuItemReduxAction(
     Label: string,
     Icon: string,
@@ -130,7 +144,14 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   canCreateColumnMenuItem(
     column: AdaptableBlotterColumn,
     blotter: IAdaptableBlotter,
-    functionType: string = ''
+    functionType?:
+      | 'sort'
+      | 'editable'
+      | 'style'
+      | 'sparkline'
+      | 'columnfilter'
+      | 'quickfilter'
+      | 'numeric'
   ): boolean {
     if (this.isReadOnly) {
       return false;
