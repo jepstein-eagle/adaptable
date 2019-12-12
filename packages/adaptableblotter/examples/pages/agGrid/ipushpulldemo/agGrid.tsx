@@ -17,6 +17,10 @@ import {
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 import ipushpull from 'ipushpull-js';
+import {
+  PartnerConnectivityChangedEventArgs,
+  PartnerConnectivityChangedInfo,
+} from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
 ipushpull.config.set({
   api_secret: '',
@@ -54,14 +58,25 @@ function InitAdaptableBlotter() {
   };
 
   const blotterAPI: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+
+  blotterAPI.eventApi.on(
+    'PartnerConnectivityChanged',
+    (partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs) => {
+      let eventData: PartnerConnectivityChangedInfo =
+        partnerConnectivityChangedEventArgs.data[0].id;
+      if (eventData.partner === 'iPushPull') {
+        alert('connected: ' + eventData.isConnected);
+      }
+    }
+  );
 }
 
 let demoConfig: PredefinedConfig = {
   Partner: {
     iPushPull: {
       iPushPullInstance: ipushpull,
-      Username: 'jonny.wolfson@adaptabletools.com',
-      Password: 'traders',
+      Username: process.env.IPUSHPULL_USERNAME,
+      Password: process.env.IPUSHPULL_PASSWORD,
     },
   },
 

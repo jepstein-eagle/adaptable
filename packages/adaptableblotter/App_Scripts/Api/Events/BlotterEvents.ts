@@ -126,6 +126,20 @@ export interface ToolbarVisibilityChangedInfo {
   visibility: 'Visible' | 'Hidden';
 }
 
+export interface PartnerConnectivityChangedEventArgs extends BlotterEventArgs {
+  data: PartnerConnectivityChangedEventData[];
+}
+
+export interface PartnerConnectivityChangedEventData extends AdaptableBlotterEventData {
+  id: PartnerConnectivityChangedInfo;
+}
+
+export interface PartnerConnectivityChangedInfo {
+  isConnected: boolean;
+  partner: 'iPushPull' | 'Glue42';
+  params: any;
+}
+
 export interface ApplicationToolbarButtonClickedEventArgs extends BlotterEventArgs {
   data: ApplicationToolbarButtonClickedEventData[];
 }

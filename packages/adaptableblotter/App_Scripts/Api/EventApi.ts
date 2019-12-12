@@ -9,6 +9,7 @@ import {
   SelectionChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,
   ApplicationToolbarButtonClickedEventArgs,
+  PartnerConnectivityChangedEventArgs,
 } from './Events/BlotterEvents';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import {
@@ -21,6 +22,7 @@ import {
   COLUMN_STATE_CHANGED_EVENT,
   ALERT_FIRED_EVENT,
   ACTION_COLUMN_CLICKED_EVENT,
+  PARTNER_CONNECTIVITY_CHANGED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 
 /**
@@ -183,6 +185,11 @@ export interface EventApi {
     callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
   ): () => void;
 
+  on(
+    eventName: 'PartnerConnectivityChanged',
+    callback: (partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs) => void
+  ): () => void;
+
   /**
    * Fired when the Blotter is up and running - has no arguments.
    *
@@ -240,6 +247,7 @@ export interface EventApi {
       | COLUMN_STATE_CHANGED_EVENT
       | APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT
       | TOOLBAR_VISIBILITY_CHANGED_EVENT
+      | PARTNER_CONNECTIVITY_CHANGED_EVENT
       | BLOTTER_READY_EVENT,
     data?: any
   ): Promise<any>;

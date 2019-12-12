@@ -127,8 +127,6 @@ export type PRIVATE_GRID_RELOADED_EVENT = 'GridReloaded';
 export const PRIVATE_GRID_RELOADED_EVENT: string = 'GridReloaded';
 export type PRIVATE_KEY_DOWN_EVENT = 'KeyDown';
 export const PRIVATE_KEY_DOWN_EVENT: string = 'KeyDown';
-export type PRIVATE_GLUE42_LOADED_EVENT = 'Glue42Loaded';
-export const PRIVATE_GLUE42_LOADED_EVENT: string = 'Glue42Loaded';
 
 // these are now external events that will replace the current event model
 export type BLOTTER_READY_EVENT = 'BlotterReady';
@@ -140,6 +138,7 @@ export type COLUMN_STATE_CHANGED_EVENT = 'ColumnStateChanged';
 export type ALERT_FIRED_EVENT = 'AlertFired';
 export type ACTION_COLUMN_CLICKED_EVENT = 'ActionColumnClicked';
 export type SELECTION_CHANGED_EVENT = 'SelectionChanged';
+export type PARTNER_CONNECTIVITY_CHANGED_EVENT = 'PartnerConnectivityChanged';
 
 // Audit Events
 export type AUDIT_STATE_CHANGED_EVENT = 'AuditStateChanged';

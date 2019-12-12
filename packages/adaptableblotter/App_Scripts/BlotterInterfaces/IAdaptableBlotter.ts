@@ -31,7 +31,6 @@ import {
   PRIVATE_GRID_REFRESHED_EVENT,
   PRIVATE_GRID_RELOADED_EVENT,
   PRIVATE_KEY_DOWN_EVENT,
-  PRIVATE_GLUE42_LOADED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { BlotterApi } from '../Api/BlotterApi';
@@ -134,11 +133,10 @@ export interface IAdaptableBlotter {
   _on(eventName: PRIVATE_GRID_REFRESHED_EVENT, callback: () => void): () => void;
   _on(eventName: PRIVATE_GRID_RELOADED_EVENT, callback: () => void): () => void;
   _on(eventName: PRIVATE_GRID_RELOADED_EVENT, callback: () => void): () => void;
-  _on(eventName: PRIVATE_GLUE42_LOADED_EVENT, callback: () => void): () => void;
   _on(eventName: PRIVATE_KEY_DOWN_EVENT, callback: (keyDownEvent: any) => void): () => void;
 
   // onAny(callback: EmitterCallback): () => void;
-  _emit(eventName: string, data?: any): Promise<any>;
+  //emit(eventName: string, data?: any): Promise<any>;
 
   // General
   createMainMenu(): void;

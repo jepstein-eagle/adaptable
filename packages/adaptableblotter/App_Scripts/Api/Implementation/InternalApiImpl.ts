@@ -13,17 +13,18 @@ import { ChartData } from '../../PredefinedConfig/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { AdaptableBlotterMenuItem } from '../../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
-import { grid } from 'styled-system';
+import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
+import {
+  PartnerConnectivityChangedInfo,
+  PartnerConnectivityChangedEventArgs,
+} from '../Events/BlotterEvents';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions
@@ -105,18 +106,80 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   public setGlue42On(): void {
+    // fire partner connectivity changed event...
+    let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
+      isConnected: true,
+      partner: 'Glue42',
+      params: null,
+    };
+    const partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs = BlotterHelper.createFDC3Message(
+      'Partner Created Args',
+      partnerConnectivityChangedInfo
+    );
+
+    this.blotter.api.eventApi.emit(
+      'PartnerConnectivityChanged',
+      partnerConnectivityChangedEventArgs
+    );
     this.dispatchAction(GridRedux.SetGlue42On());
   }
 
   public setGlue42Off(): void {
+    // fire partner connectivity changed event...
+    let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
+      isConnected: false,
+      partner: 'Glue42',
+      params: null,
+    };
+    const partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs = BlotterHelper.createFDC3Message(
+      'Partner Created Args',
+      partnerConnectivityChangedInfo
+    );
+    this.blotter.api.eventApi.emit(
+      'PartnerConnectivityChanged',
+      partnerConnectivityChangedEventArgs
+    );
+
     this.dispatchAction(GridRedux.SetGlue42Off());
   }
 
   public setIPushPullOn(): void {
+    // fire partner connectivity changed event...
+    let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
+      isConnected: true,
+      partner: 'iPushPull',
+      params: {
+        CurrentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports,
+        DomainsPages: this.blotter.api.partnerApi.getIPushPullDomainsPages,
+      },
+    };
+    const partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs = BlotterHelper.createFDC3Message(
+      'Partner Created Args',
+      partnerConnectivityChangedInfo
+    );
+
+    this.blotter.api.eventApi.emit(
+      'PartnerConnectivityChanged',
+      partnerConnectivityChangedEventArgs
+    );
     this.dispatchAction(GridRedux.SetIPushPullOn());
   }
 
   public setIPushPullOff(): void {
+    // fire partner connectivity changed event...
+    let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
+      isConnected: false,
+      partner: 'iPushPull',
+      params: null,
+    };
+    const partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs = BlotterHelper.createFDC3Message(
+      'Partner Created Args',
+      partnerConnectivityChangedInfo
+    );
+    this.blotter.api.eventApi.emit(
+      'PartnerConnectivityChanged',
+      partnerConnectivityChangedEventArgs
+    );
     this.dispatchAction(GridRedux.SetIPushPullOff());
   }
 

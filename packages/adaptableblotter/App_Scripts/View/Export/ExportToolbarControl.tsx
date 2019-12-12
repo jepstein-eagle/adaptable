@@ -29,6 +29,7 @@ import icons from '../../components/icons';
 import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { PartnerConnectivityChangedEventArgs } from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -58,9 +59,14 @@ class ExportToolbarControlComponent extends React.Component<
 > {
   public componentDidMount() {
     if (this.props.Blotter) {
-      this.props.Blotter._on('Glue42Loaded', () => {
-        this.forceUpdate();
-      });
+      this.props.Blotter.api.eventApi.on(
+        'PartnerConnectivityChanged',
+        (partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs) => {
+          if (partnerConnectivityChangedEventArgs.data[0].id.partner == 'Glue42') {
+            this.forceUpdate();
+          }
+        }
+      );
     }
   }
   render(): any {

@@ -11,7 +11,6 @@ import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { Glue42State } from '../../PredefinedConfig/PartnerState';
 import { IGlue42Service } from './Interface/IGlue42Service';
-import { PRIVATE_GLUE42_LOADED_EVENT } from '../Constants/GeneralConstants';
 
 export interface Glue42ExportError {
   row: number;
@@ -79,7 +78,7 @@ export class Glue42Service implements IGlue42Service {
       this.glue4ExcelInstance = glue4OfficeInstance.excel; // as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
       this.blotter.api.internalApi.setGlue42On();
-      this.blotter._emit(PRIVATE_GLUE42_LOADED_EVENT);
+      //  this.blotter._emit(PRIVATE_GLUE42_LOADED_EVENT);
     } catch (error) {
       LogAdaptableBlotterError(error);
       this.blotter.api.internalApi.setGlue42Off();

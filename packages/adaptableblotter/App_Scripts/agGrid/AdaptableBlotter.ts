@@ -265,7 +265,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   // only for our private / internal events as public events are emitted through the EventApi
   _on = (eventName: string, callback: EmitterCallback): (() => void) =>
     this.emitter.on(eventName, callback);
-  public _emit = (eventName: string, data?: any): Promise<any> =>
+  private _emit = (eventName: string, data?: any): Promise<any> =>
     this.emitter.emit(eventName, data);
 
   public static init(blotterOptions: AdaptableBlotterOptions): BlotterApi {
