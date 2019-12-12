@@ -3,7 +3,6 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
@@ -13,7 +12,6 @@ import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
@@ -29,6 +27,7 @@ import { ReactComponentLike } from 'prop-types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { PartnerConnectivityChangedEventArgs } from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -67,9 +66,14 @@ class ExportToolPanelComponent extends React.Component<
 
   public componentDidMount() {
     if (this.props.Blotter) {
-      this.props.Blotter._on('Glue42Loaded', () => {
-        this.forceUpdate();
-      });
+      this.props.Blotter.api.eventApi.on(
+        'PartnerConnectivityChanged',
+        (partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs) => {
+          if (partnerConnectivityChangedEventArgs.data[0].id.partner == 'Glue42') {
+            this.forceUpdate();
+          }
+        }
+      );
     }
   }
 
