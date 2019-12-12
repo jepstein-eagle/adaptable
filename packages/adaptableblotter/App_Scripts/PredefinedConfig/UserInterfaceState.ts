@@ -67,7 +67,7 @@ export interface UserInterfaceState extends DesignTimeState {
    */
   RowStyles?: RowStyle[];
 
-  ColumnMenuItems?: UserMenuItem[];
+  ColumnMenuItems?: UserMenuItem[] | ((contextMenuInfo: ContextMenuInfo) => UserMenuItem[]);
 
   ContextMenuItems?: UserMenuItem[] | ((contextMenuInfo: ContextMenuInfo) => UserMenuItem[]);
 }
@@ -199,8 +199,6 @@ export interface RowStyle {
 
 export interface UserMenuItem {
   Label: string;
-  // UserMenuItemClickedFunction?: () => void;
-  // is this possible?
   UserMenuItemClickedFunction?: (contextMenuInfo: ContextMenuInfo) => void;
   Icon?: string;
   SubMenuItems?: UserMenuItem[];

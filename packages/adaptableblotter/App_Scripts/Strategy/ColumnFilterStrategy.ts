@@ -6,13 +6,7 @@ import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
-import {
-  MenuItemShowPopup,
-  MenuItemDoReduxAction,
-  MenuItemDoClickFunction,
-} from '../Utilities/MenuItem';
-import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { Action } from 'redux';
+import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
   constructor(blotter: IAdaptableBlotter) {

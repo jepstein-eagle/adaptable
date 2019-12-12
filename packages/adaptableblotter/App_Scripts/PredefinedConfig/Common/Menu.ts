@@ -24,7 +24,18 @@ It also stipulates whethere the cell clicked is one which is part of the current
 Like with the Column Menu,the Context menu is created EACH TIME that it is opened and nothing is persisted in State.
 
 */
-// A menu item - used in all 3 menus
+
+/**
+ * The main menu item used by the Adaptable Blotter.
+ *
+ * It is used in 3 places:
+ *
+ * -Function Menu: the menu at the left of the Home Toolbar (with a home icon) that shows all the available functions.  Clicking an item will open the popup for that Function.
+ *
+ * -Column Header Menu: the menu that appears in the Column Header.  We add our menu items after those provided by the vendor grid.
+ *
+ * -Context Menu: when you right-click in the grid.
+ */
 export interface AdaptableBlotterMenuItem {
   Label: string;
   StrategyId: string;
