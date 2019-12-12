@@ -1,4 +1,10 @@
-import { PartnerState, iPushPullState, Glue42State } from '../PredefinedConfig/PartnerState';
+import {
+  PartnerState,
+  iPushPullState,
+  Glue42State,
+  iPushPullDomain,
+} from '../PredefinedConfig/PartnerState';
+import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 
 /**
  * Provides full and comprehensive run-time access to the Partner Config state.
@@ -28,4 +34,12 @@ export interface PartnerAPI {
    * Retrieves the iPushPUll section from the  Partner Config section of the Adaptable Blotter State
    */
   getGlue42State(): Glue42State | undefined;
+
+  isGlue42Runing(): boolean;
+
+  isIPushPullRunning(): boolean;
+
+  getCurrentLiveReports(): ILiveReport[];
+
+  getIPushPullDomainsPages(): iPushPullDomain[];
 }

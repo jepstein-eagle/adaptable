@@ -846,11 +846,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         for (const column of rangeSelection.columns) {
           if (column != null) {
             const colId: string = column.getColId();
-            if (index == 0) {
-              const selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
-                colId,
-                this.api.gridApi.getColumns()
-              );
+            const selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+              colId,
+              this.api.gridApi.getColumns()
+            );
+            if (columns.find(c => c.ColumnId == selectedColumn.ColumnId) == null) {
               columns.push(selectedColumn);
             }
 

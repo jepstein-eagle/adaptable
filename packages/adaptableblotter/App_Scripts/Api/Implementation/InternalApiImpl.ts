@@ -112,20 +112,12 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(GridRedux.SetGlue42Off());
   }
 
-  public isGlue42Runing(): boolean {
-    return this.getBlotterState().Grid.IsGlue42Running;
-  }
-
   public setIPushPullOn(): void {
     this.dispatchAction(GridRedux.SetIPushPullOn());
   }
 
   public setIPushPullOff(): void {
     this.dispatchAction(GridRedux.SetIPushPullOff());
-  }
-
-  public isIPushPullRunning(): boolean {
-    return this.getBlotterState().Grid.IsIPushPullRunning;
   }
 
   public setPivotModeOn(): void {

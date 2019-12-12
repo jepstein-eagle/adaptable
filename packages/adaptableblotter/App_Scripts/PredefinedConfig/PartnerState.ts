@@ -108,3 +108,8 @@ export interface Glue42State {
 
   Glue4Office?: any; // this is the Glue4Office object
 }
+
+export interface iPushPullDomain {
+  Name: string;
+  Pages: string[];
+}

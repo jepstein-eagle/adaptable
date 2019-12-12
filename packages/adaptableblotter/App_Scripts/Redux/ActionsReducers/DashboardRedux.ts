@@ -196,7 +196,7 @@ const initialDashboardState: DashboardState = {
     'AdvancedSearch',
     'Alert',
     'Application',
-    'Bulk Update',
+    'BulkUpdate',
     'CellSummary',
     'Chart',
     'ColumnFilter',

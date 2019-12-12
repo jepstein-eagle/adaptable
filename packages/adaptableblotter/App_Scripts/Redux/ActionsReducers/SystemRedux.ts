@@ -2,7 +2,6 @@ import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
@@ -21,6 +20,7 @@ import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyAc
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './ExportRedux';
+import { iPushPullDomain } from '../../PredefinedConfig/PartnerState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -148,8 +148,8 @@ export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
   expression: string;
 }
 
-export interface SetIPPDomainPagesAction extends Redux.Action {
-  IPPDomainsPages: IPPDomain[];
+export interface SetIPushPullDomainsPagesAction extends Redux.Action {
+  IPushPullDomainsPages: iPushPullDomain[];
 }
 
 export interface ReportSetErrorMessageAction extends Redux.Action {
@@ -285,10 +285,14 @@ export const CalculatedColumnIsExpressionValid = (
   expression,
 });
 
-export const SetIPPDomainPages = (IPPDomainsPages: IPPDomain[]): SetIPPDomainPagesAction => ({
-  type: SET_IPP_DOMAIN_PAGES,
-  IPPDomainsPages,
-});
+export const SetIPushPullDomainsPages = (
+  IPushPullDomainsPages: iPushPullDomain[]
+): SetIPushPullDomainsPagesAction => {
+  return {
+    type: SET_IPP_DOMAIN_PAGES,
+    IPushPullDomainsPages,
+  };
+};
 
 export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessageAction => ({
   type: REPORT_SET_ERROR_MESSAGE,
@@ -332,7 +336,7 @@ const initialSystemState: SystemState = {
   ChartData: null,
   ChartVisibility: SYSTEM_DEFAULT_CHART_VISIBILITY,
   CalculatedColumnErrorMessage: EMPTY_STRING,
-  IPPDomainsPages: EMPTY_ARRAY,
+  IPushPullDomainsPages: EMPTY_ARRAY,
   SystemReports: ObjectFactory.CreateSystemReports(),
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
@@ -457,7 +461,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     }
     case SET_IPP_DOMAIN_PAGES: {
       return Object.assign({}, state, {
-        IPPDomainsPages: (action as SetIPPDomainPagesAction).IPPDomainsPages,
+        IPushPullDomainsPages: (action as SetIPushPullDomainsPagesAction).IPushPullDomainsPages,
       });
     }
     case REPORT_SET_ERROR_MESSAGE: {

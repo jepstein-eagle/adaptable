@@ -54,8 +54,6 @@ import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
-import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
-import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { IAdaptableBlotterStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -131,6 +129,7 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { ServiceStatus } from '../../Utilities/Services/PushPullService';
+import { iPushPullDomain } from '../../PredefinedConfig/PartnerState';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2564,8 +2563,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               !actionTyped.Folder
             ) {
               blotter.PushPullService.GetDomainPages()
-                .then((domainpages: IPPDomain[]) => {
-                  middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
+                .then((domainpages: iPushPullDomain[]) => {
+                  middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
                   middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
                 })
                 .catch((err: any) => {
@@ -2607,8 +2606,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
 
                 const result = blotter.PushPullService.GetDomainPages()
-                  .then((domainpages: IPPDomain[]) => {
-                    middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
+                  .then((domainpages: iPushPullDomain[]) => {
+                    middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
                   })
                   .catch((error: any) => {

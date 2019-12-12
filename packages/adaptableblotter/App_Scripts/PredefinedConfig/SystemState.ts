@@ -1,4 +1,3 @@
-import { IPPDomain } from '../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 import { IPreviewInfo } from '../Utilities/Interface/IPreview';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
@@ -10,6 +9,7 @@ import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
+import { iPushPullDomain } from './PartnerState';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 
@@ -22,7 +22,6 @@ export interface SystemState extends InternalState {
   AdaptableAlerts: AdaptableAlert[];
   UpdatedRowInfos: UpdatedRowInfo[];
   AvailableCalendars: Calendar[];
-  CurrentLiveReports: ILiveReport[];
   IsValidSmartEditSelection: boolean;
   SmartEditPreviewInfo: IPreviewInfo;
   BulkUpdateValidationResult: BulkUpdateValidationResult;
@@ -30,7 +29,8 @@ export interface SystemState extends InternalState {
   ChartData: ChartData;
   ChartVisibility: ChartVisibility;
   CalculatedColumnErrorMessage: string;
-  IPPDomainsPages: IPPDomain[];
+  CurrentLiveReports: ILiveReport[];
+  IPushPullDomainsPages: iPushPullDomain[];
   IPPLoginMessage?: string;
   SystemReports: Report[];
   ReportErrorMessage: string;

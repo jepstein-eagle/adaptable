@@ -197,7 +197,7 @@ export class ExamplesHelper {
     const coupon = this.roundTo4Dp(
       this.getMeaningfulDouble() * this.getRandomItem(this.getBidOfferSpreads())
     );
-    const tradeDate = this.generateRandomDateAndTime(-1000, 1000);
+    const tradeDate = this.generateRandomDate(-3, 3);
     const bond = {
       tradeId: i,
       notional: this.getRandomItem(this.getNotionals()),
@@ -247,7 +247,7 @@ export class ExamplesHelper {
     const bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
     const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
     const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
-    const tradeDate = this.generateRandomDate(-1000, 1000);
+    const tradeDate = this.generateRandomDate(-4, 5);
     const moodyRating = this.getRandomItem(this.getMoodysRatings());
     const tradeCurrency = currency || this.getRandomItem(this.getCurrencies());
     const trade = {
@@ -1092,6 +1092,8 @@ export class ExamplesHelper {
       headerName: 'Trade Date',
       field: 'tradeDate',
       editable: true,
+      enableRowGroup: true,
+      //rowGroup: true,
       cellEditorParams: {
         useFormatter: true,
       },

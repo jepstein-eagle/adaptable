@@ -15,7 +15,7 @@ export type AdaptableBlotterDashboardToolbar =
   | 'AdvancedSearch'
   | 'Alert'
   | 'Application'
-  | 'Bulk Update'
+  | 'BulkUpdate'
   | 'CellSummary'
   | 'Chart'
   | 'ColumnFilter'

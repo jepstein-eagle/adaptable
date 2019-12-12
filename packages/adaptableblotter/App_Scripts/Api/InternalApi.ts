@@ -56,13 +56,9 @@ export interface InternalApi {
 
   setGlue42Off(): void;
 
-  isGlue42Runing(): boolean;
-
   setIPushPullOn(): void;
 
   setIPushPullOff(): void;
-
-  isIPushPullRunning(): boolean;
 
   setPivotModeOn(): void;
 

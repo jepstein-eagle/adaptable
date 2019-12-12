@@ -1,8 +1,8 @@
 import { IAdaptableBlotter } from '../../types';
-import { IPPDomain } from '../Interface/Reports/IPPDomain';
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { IPPStyle } from '../Interface/Reports/IPPStyle';
 import { IPushPullService } from './Interface/IPushPullService';
+import { iPushPullDomain } from '../../PredefinedConfig/PartnerState';
 
 const env = require('../../env');
 
@@ -74,7 +74,7 @@ export class PushPullService implements IPushPullService {
   }
 
   // Retrieves domain pages from iPushPull
-  public GetDomainPages(): Promise<IPPDomain[]> {
+  public GetDomainPages(): Promise<iPushPullDomain[]> {
     if (!this.ppInstance) {
       return Promise.reject('No iPushPull instance found!');
     }
@@ -86,7 +86,7 @@ export class PushPullService implements IPushPullService {
           Pages: domain.current_user_domain_page_access.pages
             .filter((page: any) => page.special_page_type == 0 && page.write_access)
             .map((page: any) => page.name),
-        })) as IPPDomain[];
+        })) as iPushPullDomain[];
       })
       .catch((error: any) => {
         LoggingHelper.LogAdaptableBlotterError("couldn't get Domain/Pages from IPP : ", error);

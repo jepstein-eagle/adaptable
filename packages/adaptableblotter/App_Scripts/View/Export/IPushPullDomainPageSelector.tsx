@@ -8,7 +8,6 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
@@ -20,10 +19,11 @@ import SimpleButton from '../../components/SimpleButton';
 import { Icon } from '../../components/icons';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import FlexWithFooter from '../../components/FlexWithFooter';
+import { iPushPullDomain } from '../../PredefinedConfig/PartnerState';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
-  IPPDomainsPages: IPPDomain[];
+  IPushPullDomainsPages: iPushPullDomain[];
   onApplyExport: (value: Report, folder: string, page: string) => ExportRedux.ExportApplyAction;
   onCancel: () => void;
   ErrorMsg: string;
@@ -47,8 +47,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
   render() {
     let itemsElements: any[] = [];
 
-    this.props.IPPDomainsPages.forEach(x => {
-      // let itemsElements = this.props.IPPDomainsPages.map(x => {
+    this.props.IPushPullDomainsPages.forEach(x => {
       if (x.Name == this.state.SelectedFolder) {
         itemsElements.push(
           <ListGroupItem
@@ -186,7 +185,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: IPushPullDomainPageSelectorProps) {
   return {
-    IPPDomainsPages: state.System.IPPDomainsPages,
+    IPushPullDomainsPages: state.System.IPushPullDomainsPages,
     ErrorMsg: state.System.ReportErrorMessage,
     LiveReports: state.System.CurrentLiveReports,
     Report: ownProps.Blotter.api.exportApi.getCurrentReport(),

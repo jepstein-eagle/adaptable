@@ -60,6 +60,8 @@ let demoConfig: PredefinedConfig = {
   Partner: {
     iPushPull: {
       iPushPullInstance: ipushpull,
+      Username: 'jonny.wolfson@adaptabletools.com',
+      Password: 'traders',
     },
   },
 

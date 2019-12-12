@@ -1,6 +1,12 @@
 import { ApiBase } from './ApiBase';
 import { PartnerAPI } from '../PartnerAPI';
-import { PartnerState, iPushPullState, Glue42State } from '../../PredefinedConfig/PartnerState';
+import {
+  PartnerState,
+  iPushPullState,
+  Glue42State,
+  iPushPullDomain,
+} from '../../PredefinedConfig/PartnerState';
+import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 
 export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   public getPartnerState(): PartnerState {
@@ -22,5 +28,21 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
     } else {
       return pushpullState;
     }
+  }
+
+  public isGlue42Runing(): boolean {
+    return this.getBlotterState().Grid.IsGlue42Running;
+  }
+
+  public isIPushPullRunning(): boolean {
+    return this.getBlotterState().Grid.IsIPushPullRunning;
+  }
+
+  public getCurrentLiveReports(): ILiveReport[] {
+    return this.getBlotterState().System.CurrentLiveReports;
+  }
+
+  public getIPushPullDomainsPages(): iPushPullDomain[] {
+    return this.getBlotterState().System.IPushPullDomainsPages;
   }
 }

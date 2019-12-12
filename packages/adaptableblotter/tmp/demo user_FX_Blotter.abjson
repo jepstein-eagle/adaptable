@@ -13,7 +13,7 @@
 		"PlusMinusRules": []
 	},
 	"Export": {
-		"IPPDomainsPages": [],
+		"IPushPullDomainsPages": [],
 		"Reports": [],
 		"CurrentReport": "",
 		"ErrorMsg": ""

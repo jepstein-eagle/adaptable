@@ -19,6 +19,8 @@ import { IReportService } from './Interface/IReportService';
 import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
+import { GridCell } from '../Interface/Selection/GridCell';
+import { Grid } from 'ag-grid-community';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -87,9 +89,9 @@ export class ReportService implements IReportService {
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
       case ExportDestination.iPushPull:
-        return this.blotter.api.internalApi.isIPushPullRunning();
+        return this.blotter.api.partnerApi.isIPushPullRunning();
       case ExportDestination.Glue42:
-        return this.blotter.api.internalApi.isGlue42Runing();
+        return this.blotter.api.partnerApi.isGlue42Runing();
     }
 
     return false;
@@ -121,9 +123,6 @@ export class ReportService implements IReportService {
   }
 
   public ConvertReportToArray(report: Report): IStrategyActionReturn<any[]> {
-    //let ReportColumns: AdaptableBlotterColumn[] = [];
-    //  let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
-
     let reportColumns: AdaptableBlotterColumn[] = this.getReportColumnsForReport(report);
     if (ArrayExtensions.IsNullOrEmpty(reportColumns)) {
       // some way of saying we cannot export anything
@@ -161,7 +160,6 @@ export class ReportService implements IReportService {
 
       case ReportRowScope.ExpressionRows:
         let expressionToCheck: Expression = report.Expression;
-
         this.blotter.forAllRowNodesDo(row => {
           if (
             ExpressionHelper.checkForExpressionFromRowNode(
@@ -180,20 +178,39 @@ export class ReportService implements IReportService {
       case ReportRowScope.SelectedCells:
         const selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-        const { Columns, GridCells } = selectedCellInfo;
-        const colCount = Columns.length;
-        const rowCount = GridCells.length / colCount;
+        const { GridCells } = selectedCellInfo;
 
-        for (let i = 0; i < rowCount; i++) {
+        // Im sure this can be done better... but this is how I do it
+
+        // 1.  Get - and sort - all the distinct primary key values
+        let distinctPKValues = [
+          ...new Set(
+            GridCells.map(gc => gc.primaryKeyValue).sort(function(a, b) {
+              return a < b ? -1 : 1;
+            })
+          ),
+        ];
+
+        // 2.  Loop through eaach of the primary key values to get all the Grid Cells that contain that pk value
+        distinctPKValues.forEach((pkValue: any) => {
           const newRow: any[] = [];
-          for (let j = 0; j < colCount; j++) {
-            const index = i + j * rowCount;
-            newRow.push(String(GridCells[index].value));
-          }
-          dataToExport.push(newRow);
-        }
+          let matchingGridCells: GridCell[] = GridCells.filter(
+            gc => gc.primaryKeyValue === pkValue
+          );
 
+          // 3.  Loop through each column to see if we have a GridCell in our group for the current PK
+          // If we do then we add the value; otherwise we add null
+          reportColumns.forEach(rc => {
+            let matchingGridCell: GridCell = matchingGridCells.find(
+              gc => gc.columnId === rc.ColumnId
+            );
+            let cellValue: any = matchingGridCell ? matchingGridCell.value : null;
+            newRow.push(cellValue);
+          });
+          dataToExport.push(newRow);
+        });
         break;
+
       case ReportRowScope.SelectedRows:
         const selectedRowInfo: SelectedRowInfo = this.blotter.api.gridApi.getSelectedRowInfo();
         if (selectedRowInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedRowInfo.GridRows)) {
@@ -212,7 +229,6 @@ export class ReportService implements IReportService {
         }
         break;
     }
-
     return { ActionReturn: dataToExport };
   }
 

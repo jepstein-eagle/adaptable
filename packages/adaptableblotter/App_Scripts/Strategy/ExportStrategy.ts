@@ -175,7 +175,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                   if (ReportAsArray) {
                     resolve(ReportAsArray);
                   } else {
-                    reject();
+                    reject('no data in the report');
                   }
                 });
               })
@@ -190,10 +190,12 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 this.blotter.adaptableBlotterStore.TheStore.dispatch(
                   SystemRedux.ReportStopLive(cle.Report, ExportDestination.iPushPull)
                 );
-                this.blotter.api.alertApi.showAlertError(
-                  'Live Excel Error',
-                  'Failed to send data for [' + cle.Report + ']. This live export has been stopped'
-                );
+                let errorMessage: string = 'Export Failed';
+                if (reason) {
+                  errorMessage += ': ' + reason;
+                }
+                errorMessage += '.  This live export has been cancelled.';
+                this.blotter.api.alertApi.showAlertError('iPushPull Export Error', errorMessage);
               })
           );
         }
