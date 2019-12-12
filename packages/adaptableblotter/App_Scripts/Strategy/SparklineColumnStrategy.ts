@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISparklineColumnStrategy } from './Interface/ISparklineColumnStrategy';
 
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';

@@ -14,7 +14,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
 import { QuickFilterFormReact } from '../View/Components/FilterForm/QuickFilterForm';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export const FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) =>

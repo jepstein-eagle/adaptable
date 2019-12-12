@@ -9,7 +9,7 @@ import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/Adva
 import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { SearchChangedEventArgs } from '../../Api/Events/SearchChanged/SearchChangedEventArgs';

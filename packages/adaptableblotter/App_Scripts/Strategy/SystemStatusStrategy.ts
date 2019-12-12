@@ -6,7 +6,7 @@ import { ISystemStatusStrategy } from './Interface/ISystemStatusStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { MessageType } from '../PredefinedConfig/Common/Enums';

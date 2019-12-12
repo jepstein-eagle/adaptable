@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { GridState } from '../../PredefinedConfig/GridState';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';

@@ -1,4 +1,4 @@
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { GridState } from '../PredefinedConfig/GridState';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ColumnSort } from '../PredefinedConfig/LayoutState';

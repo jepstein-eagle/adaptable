@@ -13,7 +13,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';

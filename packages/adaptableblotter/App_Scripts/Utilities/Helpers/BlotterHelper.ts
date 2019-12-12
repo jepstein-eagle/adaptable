@@ -1,7 +1,7 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
 import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';

@@ -6,7 +6,7 @@ import {
 import { SparklinesChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterColumn } from '../../../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 

@@ -1,6 +1,6 @@
 import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
-import { AdaptableBlotterColumn } from '../../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import * as Redux from 'redux';
 import { IUIConfirmation } from '../../Interface/IMessage';
 

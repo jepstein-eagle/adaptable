@@ -6,7 +6,7 @@ import theme from '../theme';
 import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContext';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {

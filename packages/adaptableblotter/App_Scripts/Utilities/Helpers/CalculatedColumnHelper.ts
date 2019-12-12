@@ -1,5 +1,5 @@
 import { ColumnHelper } from './ColumnHelper';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 
 export function getColumnListFromExpression(expression: string): string[] {
   let columnList: string[] = [];

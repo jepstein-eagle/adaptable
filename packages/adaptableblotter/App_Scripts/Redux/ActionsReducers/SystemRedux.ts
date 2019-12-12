@@ -14,7 +14,7 @@ import {
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Expression, QueryRange } from '../../PredefinedConfig/Common/Expression';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';

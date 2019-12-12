@@ -1,7 +1,7 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { Expression } from '../../PredefinedConfig/Common/Expression';
 import { SelectedCellInfo } from '../Interface/Selection/SelectedCellInfo';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import {
   ReportColumnScope,
   MessageType,

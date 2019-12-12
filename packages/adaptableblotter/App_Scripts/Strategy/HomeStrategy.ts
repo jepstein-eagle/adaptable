@@ -4,7 +4,7 @@ import * as GlyphConstants from '../Utilities/Constants/GlyphConstants';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 
 // This is a special strategy that the user can never remove but which is useful to us

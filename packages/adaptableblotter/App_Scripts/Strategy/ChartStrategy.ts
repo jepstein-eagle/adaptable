@@ -18,7 +18,7 @@ import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo
 
 import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 

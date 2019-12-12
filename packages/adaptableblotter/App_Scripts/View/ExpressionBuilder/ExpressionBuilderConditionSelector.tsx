@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import {
   ExpressionBuilderColumnValues,
   ExpressionBuilderColumnValuesProps,

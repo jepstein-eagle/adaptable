@@ -18,7 +18,7 @@ import {
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import * as React from 'react';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
 import { DefaultCategoryChartProperties } from '../../../Utilities/Defaults/DefaultCategoryChartProperties';
 

@@ -11,7 +11,7 @@ import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterFormControlTextClear';
 
 import { UIHelper } from '../../UIHelper';
-import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
 import { Box, Flex } from 'rebass';

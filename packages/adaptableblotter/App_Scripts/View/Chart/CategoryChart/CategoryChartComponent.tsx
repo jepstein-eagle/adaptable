@@ -33,14 +33,14 @@ import {
 } from '../../../PredefinedConfig/ChartState';
 import { CategoryChartUIHelper } from './CategoryChartUIHelper';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
-import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 
 import Dropdown from '../../../components/Dropdown';
 import Input from '../../../components/Input';
 
 import Checkbox from '../../../components/CheckBox';
 import FormLayout, { FormRow, FormLayoutColumn } from '../../../components/FormLayout';
-import {ChartContainer} from '../../../components/ChartContainer';
+import { ChartContainer } from '../../../components/ChartContainer';
 
 /*
 This is really only going to be for Category Charts.

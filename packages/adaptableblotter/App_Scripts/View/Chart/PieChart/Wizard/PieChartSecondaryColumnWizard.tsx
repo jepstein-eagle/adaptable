@@ -7,7 +7,7 @@ import { PieChartDefinition } from '../../../../PredefinedConfig/ChartState';
 
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode, DataType } from '../../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterColumn } from '../../../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';

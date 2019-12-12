@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from './AdaptableBlotterColumn';
 
 /*
 The Adaptable Blotter provides 3 menus:

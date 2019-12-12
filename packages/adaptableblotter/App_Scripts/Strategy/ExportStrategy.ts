@@ -12,7 +12,7 @@ import * as _ from 'lodash';
 import { ExportState, Report } from '../PredefinedConfig/ExportState';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { SELECTED_CELLS_REPORT } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 

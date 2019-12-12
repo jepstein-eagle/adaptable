@@ -4,7 +4,7 @@ import {
   PieChartDefinition,
   SparklinesChartDefinition,
 } from '../../../PredefinedConfig/ChartState';
-import { AdaptableBlotterColumn } from '../../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 
 export interface IChartService {
   BuildCategoryChartData(

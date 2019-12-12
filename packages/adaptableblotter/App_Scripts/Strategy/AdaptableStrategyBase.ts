@@ -2,7 +2,7 @@ import { IStrategy } from './Interface/IStrategy';
 import { Action } from 'redux';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 
 import { Entitlement } from '../PredefinedConfig/EntitlementsState';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';

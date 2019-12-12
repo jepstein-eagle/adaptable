@@ -11,7 +11,7 @@ import { IColItem } from '../UIInterfaces';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 
 export class ConditionalStyleEntityRow extends React.Component<
   SharedEntityExpressionRowProps<ConditionalStyleEntityRow>,

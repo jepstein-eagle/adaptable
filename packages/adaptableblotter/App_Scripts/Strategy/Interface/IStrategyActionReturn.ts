@@ -1,5 +1,5 @@
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 
 export interface IStrategyActionReturn<T> {
   ActionReturn?: T;

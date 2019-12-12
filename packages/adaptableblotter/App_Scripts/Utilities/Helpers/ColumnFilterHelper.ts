@@ -1,5 +1,5 @@
 import { ExpressionHelper } from './ExpressionHelper';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import { ColumnHelper } from './ColumnHelper';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';

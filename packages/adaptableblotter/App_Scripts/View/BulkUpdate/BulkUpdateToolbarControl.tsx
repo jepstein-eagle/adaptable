@@ -24,7 +24,7 @@ import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import join from '../../components/utils/join';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 

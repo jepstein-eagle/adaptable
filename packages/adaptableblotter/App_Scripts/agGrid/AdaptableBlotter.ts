@@ -79,7 +79,7 @@ import {
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
@@ -2268,16 +2268,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       });
 
       let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
+      // create a Context Menu Info - all we have is the Column
+      let contextMenuInfo: ContextMenuInfo = {
+        gridCell: undefined,
+        column: column,
+        isSelectedCell: false,
+        isSingleSelectedColumn: false,
+        rowNode: undefined,
+        primaryKeyValue: undefined,
+      };
+      if (typeof userColumnMenuItems === 'function') {
+        userColumnMenuItems = userColumnMenuItems(contextMenuInfo);
+      }
+
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
-        // create a Context Menu Info - all we have is the Column
-        let contextMenuInfo: ContextMenuInfo = {
-          gridCell: undefined,
-          column: column,
-          isSelectedCell: false,
-          isSingleSelectedColumn: false,
-          rowNode: undefined,
-          primaryKeyValue: undefined,
-        };
         userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
           let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
             userMenuItem,
@@ -2302,7 +2306,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const originalContexttems = originalgetContextMenuItems(params);
         contextMenuItems = originalContexttems.slice(0);
       } else {
-        contextMenuItems = params.defaultItems.slice(0);
+        contextMenuItems = params.defaultItems ? params.defaultItems.slice(0) : [];
       }
       let contextMenuInfo: ContextMenuInfo;
 
@@ -2326,58 +2330,58 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 adaptableBlotterMenuItems.push(menuItem);
               }
             });
-          }
 
-          // here we create Adaptable Blotter Menu items from OUR internal collection
-          // user has ability to decide whether to show or not
-          if (ArrayExtensions.IsNotNullOrEmpty(adaptableBlotterMenuItems)) {
-            let showAdaptableBlotterContextMenu = this.blotterOptions.generalOptions!
-              .showAdaptableBlotterContextMenu;
-            if (
-              showAdaptableBlotterContextMenu == null ||
-              showAdaptableBlotterContextMenu !== false
-            ) {
-              contextMenuItems.push('separator');
-              adaptableBlotterMenuItems.forEach(
-                (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-                  let addContextMenuItem: boolean = true;
-                  if (
-                    showAdaptableBlotterContextMenu != null &&
-                    typeof showAdaptableBlotterContextMenu === 'function'
-                  ) {
-                    addContextMenuItem = showAdaptableBlotterContextMenu(
-                      adaptableBlotterMenuItem,
-                      contextMenuInfo
-                    );
+            // here we create Adaptable Blotter Menu items from OUR internal collection
+            // user has ability to decide whether to show or not
+            if (ArrayExtensions.IsNotNullOrEmpty(adaptableBlotterMenuItems)) {
+              let showAdaptableBlotterContextMenu = this.blotterOptions.generalOptions!
+                .showAdaptableBlotterContextMenu;
+              if (
+                showAdaptableBlotterContextMenu == null ||
+                showAdaptableBlotterContextMenu !== false
+              ) {
+                contextMenuItems.push('separator');
+                adaptableBlotterMenuItems.forEach(
+                  (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+                    let addContextMenuItem: boolean = true;
+                    if (
+                      showAdaptableBlotterContextMenu != null &&
+                      typeof showAdaptableBlotterContextMenu === 'function'
+                    ) {
+                      addContextMenuItem = showAdaptableBlotterContextMenu(
+                        adaptableBlotterMenuItem,
+                        contextMenuInfo
+                      );
+                    }
+                    if (addContextMenuItem) {
+                      let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+                        adaptableBlotterMenuItem
+                      );
+                      contextMenuItems.push(menuItem);
+                    }
                   }
-                  if (addContextMenuItem) {
-                    let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-                      adaptableBlotterMenuItem
-                    );
-                    contextMenuItems.push(menuItem);
-                  }
-                }
-              );
+                );
+              }
             }
-          }
 
-          // here we add any User defined Context Menu Items
-          let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
-            .ContextMenuItems;
+            // here we add any User defined Context Menu Items
+            let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
+              .ContextMenuItems;
 
-          if (typeof userContextMenuItems === 'function') {
-            userContextMenuItems = userContextMenuItems(contextMenuInfo);
-          }
+            if (typeof userContextMenuItems === 'function') {
+              userContextMenuItems = userContextMenuItems(contextMenuInfo);
+            }
 
-          if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
-            contextMenuItems.push('separator');
-            userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
-              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-                userMenuItem,
-                contextMenuInfo
-              );
-              contextMenuItems.push(menuItem);
-            });
+            if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
+              contextMenuItems.push('separator');
+              userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
+                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                  userMenuItem,
+                  contextMenuInfo
+                );
+                contextMenuItems.push(menuItem);
+              });
+            }
           }
         }
       }

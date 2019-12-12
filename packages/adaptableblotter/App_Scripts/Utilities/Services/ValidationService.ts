@@ -17,7 +17,7 @@ import {
   DataType,
   MessageType,
 } from '../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import {
   CellValidationState,
   CellValidationRule,

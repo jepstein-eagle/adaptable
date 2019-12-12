@@ -12,7 +12,7 @@ import {
   ColumnValueExpression,
   RangeExpression,
 } from '../../PredefinedConfig/Common/Expression';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';

@@ -71,7 +71,7 @@ import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import {
   DEFAULT_LAYOUT,

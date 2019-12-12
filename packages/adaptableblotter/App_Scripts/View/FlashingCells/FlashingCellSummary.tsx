@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { IColItem } from '../UIInterfaces';
 import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';

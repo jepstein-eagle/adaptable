@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode, SortOrder } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
 

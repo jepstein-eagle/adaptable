@@ -63,7 +63,7 @@ import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { SelectionChangedEventArgs, SelectionChangedInfo } from '../Api/Events/BlotterEvents';
 import { iconToString } from '../components/icons';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import Helper from '../Utilities/Helpers/Helper';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';

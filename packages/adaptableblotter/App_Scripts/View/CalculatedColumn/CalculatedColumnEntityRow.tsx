@@ -5,7 +5,7 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from '../UIInterfaces';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { CalculatedColumnHelper } from '../../Utilities/Helpers/CalculatedColumnHelper';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 

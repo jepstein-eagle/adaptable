@@ -48,7 +48,7 @@ import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { UserFilter } from '../PredefinedConfig/UserFilterState';
 import { Report, AutoExport } from '../PredefinedConfig/ExportState';
-import { AdaptableBlotterColumn } from './Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { FlashingCell } from '../PredefinedConfig/FlashingCellState';
 import { Reminder } from '../PredefinedConfig/ReminderState';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';

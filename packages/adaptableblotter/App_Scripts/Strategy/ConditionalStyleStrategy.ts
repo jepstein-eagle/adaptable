@@ -4,7 +4,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';

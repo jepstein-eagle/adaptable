@@ -3,7 +3,7 @@ import * as math from 'mathjs';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { CalculatedColumnHelper } from '../Helpers/CalculatedColumnHelper';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {

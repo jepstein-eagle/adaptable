@@ -1,7 +1,7 @@
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import { LeafExpressionOperator, DataType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { AdaptableBlotterColumn } from '../Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression';
 

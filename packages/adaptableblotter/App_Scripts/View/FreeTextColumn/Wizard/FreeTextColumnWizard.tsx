@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AdaptableBlotterColumn } from '../../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { FreeTextColumnSettingsWizard } from './FreeTextColumnSettingsWizard';
 import { FreeTextColumnSummaryWizard } from './FreeTextColumnSummaryWizard';

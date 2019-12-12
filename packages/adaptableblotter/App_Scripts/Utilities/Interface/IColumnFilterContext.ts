@@ -1,4 +1,4 @@
-import { AdaptableBlotterColumn } from './AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 
 export interface IColumnFilterContext {

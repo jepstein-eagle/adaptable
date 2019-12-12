@@ -1,4 +1,4 @@
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../../PredefinedConfig/Common/Menu';
 
 /**

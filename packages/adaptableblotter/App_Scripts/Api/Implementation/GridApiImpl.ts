@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ApiBase } from './ApiBase';
 import { GridApi } from '../GridApi';
-import { AdaptableBlotterColumn } from '../../Utilities/Interface/AdaptableBlotterColumn';
+import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
