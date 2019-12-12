@@ -60,8 +60,13 @@ let demoConfig: PredefinedConfig = {
     ShowAlert: false,
   },
   UserInterface: {
-    /*
     ContextMenuItems: [
+      {
+        Label: 'Mimise Dashboard',
+        UserMenuItemClickedFunction: () => {
+          blotterApi.dashboardApi.Minimise();
+        },
+      },
       {
         Label: 'Set System Status',
         SubMenuItems: [
@@ -92,36 +97,6 @@ let demoConfig: PredefinedConfig = {
         ],
       },
     ],
-    */
-
-    ContextMenuItems: contextMenuInfo => {
-      console.warn(contextMenuInfo);
-      return [
-        {
-          Label: 'Set as Filter',
-          UserMenuItemClickedFunction: contextMenuInfo => {
-            blotterApi.columnFilterApi.createColumnFilterForValues(
-              contextMenuInfo.column.ColumnId,
-              [contextMenuInfo.gridCell.value]
-            );
-          },
-        },
-        {
-          Label: 'Double Value',
-          UserMenuItemClickedFunction: contextMenuInfo => {
-            if (contextMenuInfo.column && contextMenuInfo.column.DataType == DataType.Number) {
-              blotterApi.gridApi.setCellValue(
-                contextMenuInfo.gridCell.columnId,
-                contextMenuInfo.gridCell.value * 2,
-                contextMenuInfo.gridCell.primaryKeyValue
-              );
-            } else {
-              return null;
-            }
-          },
-        },
-      ];
-    },
   },
 };
 

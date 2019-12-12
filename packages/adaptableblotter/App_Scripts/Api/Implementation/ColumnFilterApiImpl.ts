@@ -58,22 +58,26 @@ export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
     }
   }
 
-  public createColumnFilterForCell(column: string, primarykeyValue: any): void {
-    let rowNode = this.blotter.getRowNodeForPrimaryKey(primarykeyValue);
-    let displayValue = this.blotter.getDisplayValueFromRowNode(rowNode, column);
-    let rawValue = this.blotter.getRawValueFromRowNode(rowNode, column);
+  public createColumnFilterForCell(column: string, primarykeyValues: any[]): void {
+    let displayValues: any[] = [];
+    let rawValues: any[] = [];
+
+    primarykeyValues.forEach(pk => {
+      let rowNode = this.blotter.getRowNodeForPrimaryKey(pk);
+      displayValues.push(this.blotter.getDisplayValueFromRowNode(rowNode, column));
+      rawValues.push(this.blotter.getRawValueFromRowNode(rowNode, column));
+    });
 
     let filter: ColumnFilter = {
       ColumnId: column,
       Filter: ExpressionHelper.CreateSingleColumnExpression(
         column,
-        [displayValue],
-        [rawValue],
+        [...new Set(displayValues)],
+        [...new Set(rawValues)],
         [],
         []
       ),
     };
-    console.log(filter);
     this.setColumnFilter([filter]);
   }
 }

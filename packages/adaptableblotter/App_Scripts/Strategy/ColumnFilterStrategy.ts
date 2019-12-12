@@ -30,17 +30,25 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
   public addContextMenuItem(
     contextMenuInfo: ContextMenuInfo
   ): AdaptableBlotterMenuItem | undefined {
-    let menuItemClickFunction: MenuItemDoClickFunction = undefined;
+    let menuItemClickFunction: MenuItemDoClickFunction | undefined = undefined;
 
     if (contextMenuInfo.column && contextMenuInfo.gridCell != null) {
+      let isMultiple: boolean =
+        contextMenuInfo.isSelectedCell && contextMenuInfo.isSingleSelectedColumn;
+
+      let pkValues: any[] = isMultiple
+        ? this.blotter.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
+            return gc.primaryKeyValue;
+          })
+        : [contextMenuInfo.gridCell.primaryKeyValue];
       let clickFunction = () => {
         this.blotter.api.columnFilterApi.createColumnFilterForCell(
           contextMenuInfo.column.ColumnId,
-          contextMenuInfo.gridCell.primaryKeyValue
+          pkValues
         );
       };
       menuItemClickFunction = this.createColumnMenuItemClickFunction(
-        'Filter on cell value',
+        isMultiple ? 'Filter on Cell Values' : 'Filter on Cell Value',
         StrategyConstants.ColumnFilterGlyph,
         clickFunction
       );

@@ -51,5 +51,5 @@ export interface ColumnFilterApi {
    */
   getAllColumnFilterForColumn(column: string): ColumnFilter[];
 
-  createColumnFilterForCell(column: string, primarykeyValue: any): void;
+  createColumnFilterForCell(column: string, primarykeyValues: any[]): void;
 }

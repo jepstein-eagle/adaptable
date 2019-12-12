@@ -26,16 +26,17 @@ export class PushPullService implements IPushPullService {
         let instance = this.blotter.api.partnerApi.getPushPullInstance();
 
         if (instance) {
-          // we now set this ourselves and attach it to the instance provided by the user
+          let userPushPullConfig = instance.config;
+
           instance.config.set({
-            api_url: 'https://www.ipushpull.com/api/1.0',
-            ws_url: 'https://www.ipushpull.com',
-            web_url: 'https://www.ipushpull.com',
-            docs_url: 'https://docs.ipushpull.com',
-            storage_prefix: 'ipp_local',
-            api_key: this.getApiKey(),
-            api_secret: this.getApiSecret(),
-            transport: 'polling',
+            api_url: userPushPullConfig.api_url || 'https://www.ipushpull.com/api/1.0',
+            ws_url: userPushPullConfig.ws_url || 'https://www.ipushpull.com',
+            web_url: userPushPullConfig.web_url || 'https://www.ipushpull.com',
+            docs_url: userPushPullConfig.docs_url || 'https://docs.ipushpull.com',
+            storage_prefix: userPushPullConfig.storage_prefix || 'ipp_local',
+            api_key: userPushPullConfig.api_key || this.getApiKey(),
+            api_secret: userPushPullConfig.api_secret || this.getApiSecret(),
+            transport: userPushPullConfig.transport || 'polling',
             hsts: false, // strict cors policy
           });
           this.ppInstance = instance;
@@ -200,6 +201,7 @@ export class PushPullService implements IPushPullService {
     let key = env.IPUSHPULL_API_KEY as string; // need to make sure that is always there
     return key;
   }
+
   private getApiSecret(): string {
     let secret: string = env.IPUSHPULL_API_SECRET as string; // need to make sure that is always there
     return secret;
