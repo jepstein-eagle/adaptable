@@ -22,6 +22,8 @@ import {
   PartnerConnectivityChangedInfo,
 } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
+import { TickingDataHelper } from '../../TickingDataHelper';
+
 ipushpull.config.set({
   api_secret: '',
   api_key: '',
@@ -36,9 +38,12 @@ ipushpull.config.set({
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 500;
+  const tradeCount: number = 21;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  const tickingDataHelper = new TickingDataHelper();
+
+  tickingDataHelper.startTickingDataagGridRowNodeSetData(gridOptions, tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
@@ -65,7 +70,7 @@ function InitAdaptableBlotter() {
       let eventData: PartnerConnectivityChangedInfo =
         partnerConnectivityChangedEventArgs.data[0].id;
       if (eventData.partner === 'iPushPull') {
-        alert('connected: ' + eventData.isConnected);
+        // alert('connected: ' + eventData.isConnected);
       }
     }
   );
