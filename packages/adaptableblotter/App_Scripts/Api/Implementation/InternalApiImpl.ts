@@ -5,7 +5,6 @@ import { ApiBase } from './ApiBase';
 import { InternalApi } from '../InternalApi';
 import { IUIConfirmation, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { Calendar } from '../../PredefinedConfig/CalendarState';
@@ -21,19 +20,17 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
 import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
-import {
-  PartnerConnectivityChangedInfo,
-  PartnerConnectivityChangedEventArgs,
-} from '../Events/BlotterEvents';
+import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
+import { IPushPullUpdatedInfo, IPushPullUpdatedEventArgs } from '../Events/BlotterEvents';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions
   public startLiveReport(
     report: Report,
-    workbookName: string,
+    pageName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void {
-    this.dispatchAction(SystemRedux.ReportStartLive(report, workbookName, exportDestination));
+    this.dispatchAction(SystemRedux.ReportStartLive(report, pageName, exportDestination));
   }
 
   public getSystemState(): SystemState {
@@ -56,7 +53,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     return this.getSystemState().SystemReports;
   }
 
-  public getLiveReports(): ILiveReport[] {
+  public getLiveReports(): LiveReport[] {
     return this.getSystemState().CurrentLiveReports;
   }
 
@@ -106,6 +103,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   public setGlue42On(): void {
+    /*
     // fire partner connectivity changed event...
     let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
       isConnected: true,
@@ -121,10 +119,12 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       'PartnerConnectivityChanged',
       partnerConnectivityChangedEventArgs
     );
+    */
     this.dispatchAction(GridRedux.SetGlue42On());
   }
 
   public setGlue42Off(): void {
+    /*
     // fire partner connectivity changed event...
     let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
       isConnected: false,
@@ -139,48 +139,19 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       'PartnerConnectivityChanged',
       partnerConnectivityChangedEventArgs
     );
-
+*/
     this.dispatchAction(GridRedux.SetGlue42Off());
   }
 
   public setIPushPullOn(): void {
     // fire partner connectivity changed event...
-    let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
-      isConnected: true,
-      partner: 'iPushPull',
-      params: {
-        CurrentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports,
-        DomainsPages: this.blotter.api.partnerApi.getIPushPullDomainsPages,
-      },
-    };
-    const partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs = BlotterHelper.createFDC3Message(
-      'Partner Created Args',
-      partnerConnectivityChangedInfo
-    );
-
-    this.blotter.api.eventApi.emit(
-      'PartnerConnectivityChanged',
-      partnerConnectivityChangedEventArgs
-    );
     this.dispatchAction(GridRedux.SetIPushPullOn());
+    this.blotter.ReportService.PublishIPushPullEvent('Connected');
   }
 
   public setIPushPullOff(): void {
-    // fire partner connectivity changed event...
-    let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
-      isConnected: false,
-      partner: 'iPushPull',
-      params: null,
-    };
-    const partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs = BlotterHelper.createFDC3Message(
-      'Partner Created Args',
-      partnerConnectivityChangedInfo
-    );
-    this.blotter.api.eventApi.emit(
-      'PartnerConnectivityChanged',
-      partnerConnectivityChangedEventArgs
-    );
     this.dispatchAction(GridRedux.SetIPushPullOff());
+    this.blotter.ReportService.PublishIPushPullEvent('Disconnected');
   }
 
   public setPivotModeOn(): void {

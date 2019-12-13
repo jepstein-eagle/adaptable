@@ -9,7 +9,7 @@ import {
   SelectionChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,
   ApplicationToolbarButtonClickedEventArgs,
-  PartnerConnectivityChangedEventArgs,
+  IPushPullUpdatedEventArgs,
 } from './Events/BlotterEvents';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import {
@@ -22,7 +22,8 @@ import {
   COLUMN_STATE_CHANGED_EVENT,
   ALERT_FIRED_EVENT,
   ACTION_COLUMN_CLICKED_EVENT,
-  PARTNER_CONNECTIVITY_CHANGED_EVENT,
+  IPUSHPULL_UPDATED_EVENT,
+  GLUE42_UPDATED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 
 /**
@@ -186,8 +187,8 @@ export interface EventApi {
   ): () => void;
 
   on(
-    eventName: 'PartnerConnectivityChanged',
-    callback: (partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs) => void
+    eventName: 'IPushPullUpdatedEvent',
+    callback: (iPushPullUpdatedEventArgs: IPushPullUpdatedEventArgs) => void
   ): () => void;
 
   /**
@@ -247,7 +248,8 @@ export interface EventApi {
       | COLUMN_STATE_CHANGED_EVENT
       | APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT
       | TOOLBAR_VISIBILITY_CHANGED_EVENT
-      | PARTNER_CONNECTIVITY_CHANGED_EVENT
+      | IPUSHPULL_UPDATED_EVENT
+      | GLUE42_UPDATED_EVENT
       | BLOTTER_READY_EVENT,
     data?: any
   ): Promise<any>;

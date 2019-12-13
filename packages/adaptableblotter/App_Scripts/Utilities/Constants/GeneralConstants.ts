@@ -138,7 +138,8 @@ export type COLUMN_STATE_CHANGED_EVENT = 'ColumnStateChanged';
 export type ALERT_FIRED_EVENT = 'AlertFired';
 export type ACTION_COLUMN_CLICKED_EVENT = 'ActionColumnClicked';
 export type SELECTION_CHANGED_EVENT = 'SelectionChanged';
-export type PARTNER_CONNECTIVITY_CHANGED_EVENT = 'PartnerConnectivityChanged';
+export type IPUSHPULL_UPDATED_EVENT = 'IPushPullUpdated';
+export type GLUE42_UPDATED_EVENT = 'Glue42Updated';
 
 // Audit Events
 export type AUDIT_STATE_CHANGED_EVENT = 'AuditStateChanged';

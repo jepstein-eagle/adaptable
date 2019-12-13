@@ -2,6 +2,7 @@
 import { ITrade, ExamplesHelper } from './ExamplesHelper';
 import ArrayExtensions from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
 import { IAdaptableBlotter, BlotterApi } from '../../App_Scripts/types';
+import { grid } from 'styled-system';
 
 export class TickingDataHelper {
   startTickingDatSystemStatus(api: BlotterApi) {
@@ -37,9 +38,13 @@ export class TickingDataHelper {
   }
 
   // This DOES update the AB as agGrid fires an event
-  startTickingDataagGridSetDataValue(gridOptions: GridOptions) {
+  startTickingDataagGridSetDataValue(
+    gridOptions: GridOptions,
+    tickingFrequency: number,
+    tradeCount: number
+  ) {
     setInterval(() => {
-      const tradeId = this.generateRandomInt(0, 29);
+      const tradeId = this.generateRandomInt(0, tradeCount);
       if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
         gridOptions.api.forEachNode((rowNode: RowNode) => {
           if (rowNode.group) {
@@ -67,17 +72,22 @@ export class TickingDataHelper {
           trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - directionToAdd));
         });
       }
-    }, 3000);
+    }, tickingFrequency);
   }
 
-  startTickingDataagGridRowNodeSetData(gridOptions: GridOptions, rowData: any) {
+  startTickingDataagGridRowNodeSetData(
+    gridOptions: GridOptions,
+    rowData: any,
+    tickingFrequency: number,
+    tradeCount: number
+  ) {
     setInterval(() => {
       if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
         gridOptions.api.forEachNode((rowNode: RowNode) => {
           if (rowNode.group) {
             return;
           }
-          const tradeId = this.generateRandomInt(0, 4);
+          const tradeId = this.generateRandomInt(0, tradeCount);
 
           const rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
           if (rowTradeId != tradeId) {
@@ -100,7 +110,6 @@ export class TickingDataHelper {
             trade.ask = ask;
             trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
             trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
-
             trade.notional = this.generateRandomInt(1, 50);
             trade.changeOnYear = trade.changeOnYear > 0 ? -100 : 100;
 
@@ -108,7 +117,7 @@ export class TickingDataHelper {
           }
         });
       }
-    }, 3000);
+    }, tickingFrequency);
   }
 
   // This DOES NOT update the AB as agGrid fires an event
@@ -164,31 +173,31 @@ export class TickingDataHelper {
     tickingFrequency: number,
     tradeCount: number
   ) {
+    console.log('hfdsfdffdsfdseresss');
+    console.log(gridOptions);
     if (gridOptions != null && gridOptions.api != null) {
+      console.log('heresss');
       setInterval(() => {
         let tradeId = this.generateRandomInt(1, tradeCount);
 
         const trade: ITrade = { ...gridOptions.rowData[tradeId] };
 
-        let numberToAdd: number = this.generateRandomInt(1, 3);
+        const randomInt = this.generateRandomInt(1, 2);
+        const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
+        const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
+        const newPrice = this.roundTo4Dp(trade.price + numberToAdd);
+        const bidOfferSpread = trade.bidOfferSpread;
+        const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
+        const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
 
-        if (numberToAdd == 1) {
-          // if 1 then update a number up
-          trade.price = trade.price + 1;
-        } else if (numberToAdd == 2) {
-          // if 2 then update a number down
-          trade.price = trade.price - 1;
-        } else if (numberToAdd == 3) {
-          // if 3 then update a currency
-          let curentValue = blotterApi.gridApi.getCellDisplayValue(trade.tradeId, 'currency');
-          let isCurrency: boolean = curentValue == 'JPY';
-          if (isCurrency) {
-            trade.currency = 'ABC';
-          } else {
-            trade.currency = 'JPY';
-          }
-        }
-
+        trade.price = newPrice;
+        trade.bid = bid;
+        trade.ask = ask;
+        trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
+        trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
+        trade.notional = this.generateRandomInt(1, 200); //trade.notional === undefined ? 34 : 4;
+        trade.changeOnYear =
+          trade.changeOnYear > 0 ? trade.changeOnYear + 50 : trade.changeOnYear - 50;
         blotterApi.gridApi.updateGridData([trade]);
       }, tickingFrequency);
     }

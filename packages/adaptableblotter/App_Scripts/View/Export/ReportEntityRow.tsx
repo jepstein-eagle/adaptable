@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
+import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
@@ -16,7 +16,7 @@ import { IReportService } from '../../Utilities/Services/Interface/IReportServic
 
 const ExportIcon = icons.export as ReactComponentLike;
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
-  LiveReports: ILiveReport[];
+  LiveReports: LiveReport[];
   ReportService: IReportService;
   onExport: (exportDestination: ExportDestination) => void;
   onReportStopLive: (

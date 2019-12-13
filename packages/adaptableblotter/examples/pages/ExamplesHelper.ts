@@ -1023,7 +1023,7 @@ export class ExamplesHelper {
       headerName: 'Counterparty',
       field: 'counterparty',
       editable: true,
-      //  enableRowGroup: true,
+      enableRowGroup: true,
       enableValue: true,
       //  rowGroup: true,
       filter: 'agSetColumnFilter',

@@ -10,15 +10,13 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-//import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
+import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -29,7 +27,7 @@ import icons from '../../components/icons';
 import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
-import { PartnerConnectivityChangedEventArgs } from '../../Api/Events/BlotterEvents';
+import { IPushPullUpdatedEventArgs, IPushPullUpdatedInfo } from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -50,7 +48,7 @@ interface ExportToolbarControlComponentProps
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
   CurrentReport: string | undefined;
-  LiveReports: ILiveReport[];
+  LiveReports: LiveReport[];
 }
 
 class ExportToolbarControlComponent extends React.Component<
@@ -60,15 +58,21 @@ class ExportToolbarControlComponent extends React.Component<
   public componentDidMount() {
     if (this.props.Blotter) {
       this.props.Blotter.api.eventApi.on(
-        'PartnerConnectivityChanged',
-        (partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs) => {
-          if (partnerConnectivityChangedEventArgs.data[0].id.partner == 'Glue42') {
+        'IPushPullUpdatedEvent',
+        (partnerConnectivityChangedEventArgs: IPushPullUpdatedEventArgs) => {
+          let pushPullUpdatedInfo: IPushPullUpdatedInfo =
+            partnerConnectivityChangedEventArgs.data[0].id;
+          if (
+            pushPullUpdatedInfo.trigger == 'Connected' ||
+            pushPullUpdatedInfo.trigger == 'Disconnected'
+          ) {
             this.forceUpdate();
           }
         }
       );
     }
   }
+
   render(): any {
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);

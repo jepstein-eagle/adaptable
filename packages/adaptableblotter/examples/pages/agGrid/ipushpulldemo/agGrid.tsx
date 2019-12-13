@@ -18,8 +18,8 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 import ipushpull from 'ipushpull-js';
 import {
-  PartnerConnectivityChangedEventArgs,
-  PartnerConnectivityChangedInfo,
+  IPushPullUpdatedEventArgs,
+  IPushPullUpdatedInfo,
 } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
@@ -38,12 +38,10 @@ ipushpull.config.set({
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 21;
+  const tradeCount: number = 25;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
-
-  tickingDataHelper.startTickingDataagGridRowNodeSetData(gridOptions, tradeData);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
@@ -64,13 +62,19 @@ function InitAdaptableBlotter() {
 
   const blotterAPI: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
+  tickingDataHelper.startTickingDataagGridTradesUpdateData(
+    gridOptions,
+    blotterAPI,
+    500,
+    tradeCount
+  );
+
   blotterAPI.eventApi.on(
-    'PartnerConnectivityChanged',
-    (partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs) => {
-      let eventData: PartnerConnectivityChangedInfo =
-        partnerConnectivityChangedEventArgs.data[0].id;
-      if (eventData.partner === 'iPushPull') {
-        // alert('connected: ' + eventData.isConnected);
+    'IPushPullUpdatedEvent',
+    (pushPullUpdatedEventArgs: IPushPullUpdatedEventArgs) => {
+      let eventData: IPushPullUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
+      if (eventData.isConnected) {
+        console.log('ipushpull connected');
       }
     }
   );
@@ -83,6 +87,38 @@ let demoConfig: PredefinedConfig = {
       Username: process.env.IPUSHPULL_USERNAME,
       Password: process.env.IPUSHPULL_PASSWORD,
     },
+  },
+  FlashingCell: {
+    FlashingCells: [
+      {
+        IsLive: true,
+        ColumnId: 'notional',
+        FlashingCellDuration: 500,
+        UpColor: '#008000',
+        DownColor: '#FF0000',
+      },
+      {
+        IsLive: true,
+        ColumnId: 'ask',
+        FlashingCellDuration: 500,
+        UpColor: '#008000',
+        DownColor: '#FF0000',
+      },
+      {
+        IsLive: true,
+        ColumnId: 'bid',
+        FlashingCellDuration: 500,
+        UpColor: '#008000',
+        DownColor: '#FF0000',
+      },
+      {
+        IsLive: true,
+        ColumnId: 'price',
+        FlashingCellDuration: 500,
+        UpColor: 'Blue',
+        DownColor: 'Yellow',
+      },
+    ],
   },
 
   Dashboard: {

@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
+import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -20,7 +20,7 @@ import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyAc
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './ExportRedux';
-import { iPushPullDomain } from '../../PredefinedConfig/PartnerState';
+import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -102,7 +102,7 @@ export interface SystemUpdatedRowDeleteAllAction extends Redux.Action {
 export interface ReportStartLiveAction extends Redux.Action {
   Report: Report;
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
-  WorkbookName: string;
+  PageName: string;
 }
 
 export interface ReportStopLiveAction extends Redux.Action {
@@ -149,7 +149,7 @@ export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
 }
 
 export interface SetIPushPullDomainsPagesAction extends Redux.Action {
-  IPushPullDomainsPages: iPushPullDomain[];
+  IPushPullDomainsPages: IPushPullDomain[];
 }
 
 export interface ReportSetErrorMessageAction extends Redux.Action {
@@ -205,13 +205,13 @@ export const SystemUpdatedRowDeleteAll = (
 
 export const ReportStartLive = (
   Report: Report,
-  WorkbookName: string,
+  PageName: string,
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
 ): ReportStartLiveAction => ({
   type: REPORT_START_LIVE,
   Report,
   ExportDestination,
-  WorkbookName,
+  PageName,
 });
 
 export const ReportStopLive = (
@@ -286,7 +286,7 @@ export const CalculatedColumnIsExpressionValid = (
 });
 
 export const SetIPushPullDomainsPages = (
-  IPushPullDomainsPages: iPushPullDomain[]
+  IPushPullDomainsPages: IPushPullDomain[]
 ): SetIPushPullDomainsPagesAction => {
   return {
     type: SET_IPP_DOMAIN_PAGES,
@@ -409,17 +409,17 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
 
     case REPORT_START_LIVE: {
       const actionTyped = action as ReportStartLiveAction;
-      const currentLiveReports: ILiveReport[] = [].concat(state.CurrentLiveReports);
+      const currentLiveReports: LiveReport[] = [].concat(state.CurrentLiveReports);
       currentLiveReports.push({
         ExportDestination: actionTyped.ExportDestination,
         Report: actionTyped.Report,
-        WorkbookName: actionTyped.WorkbookName,
+        PageName: actionTyped.PageName,
       });
       return Object.assign({}, state, { CurrentLiveReports: currentLiveReports });
     }
     case REPORT_STOP_LIVE: {
       const actionTyped = action as ReportStopLiveAction;
-      const currentLiveReports: ILiveReport[] = [].concat(state.CurrentLiveReports);
+      const currentLiveReports: LiveReport[] = [].concat(state.CurrentLiveReports);
       const index = currentLiveReports.findIndex(
         x => x.Report == actionTyped.Report && x.ExportDestination == actionTyped.ExportDestination
       );

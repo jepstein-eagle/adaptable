@@ -9,7 +9,6 @@ import {
   ExportDestination,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { createUuid } from '../../PredefinedConfig/Uuid';
 import { Report } from '../../PredefinedConfig/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { SelectedRowInfo } from '../Interface/Selection/SelectedRowInfo';
@@ -20,7 +19,8 @@ import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
-import { Grid } from 'ag-grid-community';
+import { IPushPullUpdatedInfo, IPushPullUpdatedEventArgs } from '../../Api/Events/BlotterEvents';
+import BlotterHelper from '../Helpers/BlotterHelper';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -308,5 +308,21 @@ export class ReportService implements IReportService {
       newRow.push(columnValue);
     });
     return newRow;
+  }
+
+  public PublishIPushPullEvent(
+    trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated'
+  ): void {
+    let partnerConnectivityChangedInfo: IPushPullUpdatedInfo = {
+      isPushPullRunning: this.blotter.api.partnerApi.isIPushPullRunning(),
+      trigger: trigger,
+      currentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
+      domainPages: this.blotter.api.partnerApi.getIPushPullDomainsPages(),
+    };
+    const partnerConnectivityChangedEventArgs: IPushPullUpdatedEventArgs = BlotterHelper.createFDC3Message(
+      'IPushPull Updated Args',
+      partnerConnectivityChangedInfo
+    );
+    this.blotter.api.eventApi.emit('IPushPullUpdated', partnerConnectivityChangedEventArgs);
   }
 }

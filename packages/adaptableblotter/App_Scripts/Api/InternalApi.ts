@@ -1,6 +1,5 @@
 import { IUIConfirmation, AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
-import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 import { SystemState } from '../PredefinedConfig/SystemState';
 import { Report } from '../PredefinedConfig/ExportState';
 import { Calendar } from '../PredefinedConfig/CalendarState';
@@ -15,6 +14,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
+import { LiveReport } from '../Utilities/Interface/Reports/LiveReport';
 
 /**
  * This set of api methods is designed for **internal use of the Adaptable Blotter** only.
@@ -26,14 +26,14 @@ export interface InternalApi {
   getSystemState(): SystemState;
   startLiveReport(
     report: Report,
-    workbookName: string,
+    pageName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void;
   getAvailableCalendars(): Calendar[];
   setChartData(chartData: ChartData): void;
   setChartVisibility(chartVisbility: ChartVisibility): void;
   getSystemReports(): Report[];
-  getLiveReports(): ILiveReport[];
+  getLiveReports(): LiveReport[];
   getAdaptableAlerts(): AdaptableAlert[];
   showPopupConfirmation(confirmation: IUIConfirmation): void;
 

@@ -2,18 +2,18 @@ import { ApiBase } from './ApiBase';
 import { PartnerAPI } from '../PartnerAPI';
 import {
   PartnerState,
-  iPushPullState,
+  IPushPullState,
   Glue42State,
-  iPushPullDomain,
+  IPushPullDomain,
 } from '../../PredefinedConfig/PartnerState';
-import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
+import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 
 export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   public getPartnerState(): PartnerState {
     return this.getBlotterState().Partner || {};
   }
 
-  public getPushPullState(): iPushPullState | undefined {
+  public getPushPullState(): IPushPullState | undefined {
     return this.getPartnerState().iPushPull;
   }
 
@@ -38,11 +38,11 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
     return this.getBlotterState().Grid.IsIPushPullRunning;
   }
 
-  public getCurrentLiveReports(): ILiveReport[] {
+  public getCurrentLiveReports(): LiveReport[] {
     return this.getBlotterState().System.CurrentLiveReports;
   }
 
-  public getIPushPullDomainsPages(): iPushPullDomain[] {
+  public getIPushPullDomainsPages(): IPushPullDomain[] {
     return this.getBlotterState().System.IPushPullDomainsPages;
   }
 }

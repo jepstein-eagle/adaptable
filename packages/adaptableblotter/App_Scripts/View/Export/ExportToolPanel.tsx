@@ -14,7 +14,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
+import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -27,7 +27,7 @@ import { ReactComponentLike } from 'prop-types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
-import { PartnerConnectivityChangedEventArgs } from '../../Api/Events/BlotterEvents';
+import { IPushPullUpdatedEventArgs, IPushPullUpdatedInfo } from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -48,7 +48,7 @@ interface ExportToolPanelComponentProps
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
   CurrentReport: string | undefined;
-  LiveReports: ILiveReport[];
+  LiveReports: LiveReport[];
 }
 
 interface ExportToolPanelComponentState {
@@ -67,9 +67,14 @@ class ExportToolPanelComponent extends React.Component<
   public componentDidMount() {
     if (this.props.Blotter) {
       this.props.Blotter.api.eventApi.on(
-        'PartnerConnectivityChanged',
-        (partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs) => {
-          if (partnerConnectivityChangedEventArgs.data[0].id.partner == 'Glue42') {
+        'IPushPullUpdatedEvent',
+        (partnerConnectivityChangedEventArgs: IPushPullUpdatedEventArgs) => {
+          let pushPullUpdatedInfo: IPushPullUpdatedInfo =
+            partnerConnectivityChangedEventArgs.data[0].id;
+          if (
+            pushPullUpdatedInfo.trigger == 'Connected' ||
+            pushPullUpdatedInfo.trigger == 'Disconnected'
+          ) {
             this.forceUpdate();
           }
         }

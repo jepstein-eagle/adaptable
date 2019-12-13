@@ -129,7 +129,7 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { ServiceStatus } from '../../Utilities/Services/PushPullService';
-import { iPushPullDomain } from '../../PredefinedConfig/PartnerState';
+import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 
 type EmitterCallback = (data?: any) => any;
 /*
@@ -2563,7 +2563,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               !actionTyped.Folder
             ) {
               blotter.PushPullService.GetDomainPages()
-                .then((domainpages: iPushPullDomain[]) => {
+                .then((domainpages: IPushPullDomain[]) => {
                   middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
                   middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
                 })
@@ -2606,7 +2606,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
 
                 const result = blotter.PushPullService.GetDomainPages()
-                  .then((domainpages: iPushPullDomain[]) => {
+                  .then((domainpages: IPushPullDomain[]) => {
                     middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
                   })
@@ -2643,7 +2643,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   x.Report == actionTyped.Report &&
                   x.ExportDestination == actionTyped.ExportDestination
               );
-              blotter.PushPullService.UnloadPage(lre.WorkbookName);
+              blotter.PushPullService.UnloadPage(lre.PageName);
             }
             return next(action);
           }

@@ -3,6 +3,9 @@ import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
+import { LoadingOverlayComponent } from 'ag-grid-community/dist/lib/rendering/overlays/loadingOverlayComponent';
+import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
+import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 
 /**
  * The main object used when publishing events.
@@ -126,18 +129,31 @@ export interface ToolbarVisibilityChangedInfo {
   visibility: 'Visible' | 'Hidden';
 }
 
-export interface PartnerConnectivityChangedEventArgs extends BlotterEventArgs {
-  data: PartnerConnectivityChangedEventData[];
+export interface IPushPullUpdatedEventArgs extends BlotterEventArgs {
+  data: IPushPullUpdatedEventData[];
 }
 
-export interface PartnerConnectivityChangedEventData extends AdaptableBlotterEventData {
-  id: PartnerConnectivityChangedInfo;
+export interface IPushPullUpdatedEventData extends AdaptableBlotterEventData {
+  id: IPushPullUpdatedInfo;
 }
 
-export interface PartnerConnectivityChangedInfo {
+export interface IPushPullUpdatedInfo {
+  isPushPullRunning: boolean;
+  trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated';
+  currentLiveReports?: LiveReport[];
+  domainPages?: IPushPullDomain[];
+}
+
+export interface Glue42UpdatedEventArgs extends BlotterEventArgs {
+  data: IPushPullUpdatedEventData[];
+}
+
+export interface Glue42UpdatedhangedEventData extends AdaptableBlotterEventData {
+  id: Glue42UpdatedInfo;
+}
+
+export interface Glue42UpdatedInfo {
   isConnected: boolean;
-  partner: 'iPushPull' | 'Glue42';
-  params: any;
 }
 
 export interface ApplicationToolbarButtonClickedEventArgs extends BlotterEventArgs {

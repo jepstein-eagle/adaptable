@@ -23,7 +23,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
+import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -39,7 +39,7 @@ import EmptyContent from '../../components/EmptyContent';
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
   Reports: Report[];
   SystemReports: Report[];
-  LiveReports: ILiveReport[];
+  LiveReports: LiveReport[];
   CurrentReport: string;
   onApplyExport: (
     report: Report,

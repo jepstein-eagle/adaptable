@@ -12,7 +12,7 @@ export interface PartnerState extends DesignTimeState {
    *
    * Primarily consists of an iPushPull object injected in to the Blotter
    */
-  iPushPull?: iPushPullState;
+  iPushPull?: IPushPullState;
 
   /**
    * Config required allow the Adaptable Blotter to interract with Glue42.
@@ -77,7 +77,7 @@ export interface PartnerState extends DesignTimeState {
  *  ```
  *
  */
-export interface iPushPullState {
+export interface IPushPullState {
   /**
    *  The iPushPull object - this is injected by the user from 'ipushpull-js' and set with standard configuration.
    */
@@ -96,6 +96,11 @@ export interface iPushPullState {
    * If supplied then the iPushPull login screen's password textbox will be pre-populated
    */
   Password?: string;
+
+  /**
+   * How long the Adaptable Blotter should wait (in miliseconds) before sending an update.
+   */
+  ThrottleTime?: number;
 }
 
 export interface Glue42State {
@@ -109,7 +114,7 @@ export interface Glue42State {
   Glue4Office?: any; // this is the Glue4Office object
 }
 
-export interface iPushPullDomain {
+export interface IPushPullDomain {
   Name: string;
   Pages: string[];
 }

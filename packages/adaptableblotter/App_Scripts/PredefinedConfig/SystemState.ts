@@ -1,4 +1,3 @@
-import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 import { IPreviewInfo } from '../Utilities/Interface/IPreview';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { ChartVisibility } from './Common/ChartEnums';
@@ -9,7 +8,8 @@ import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
-import { iPushPullDomain } from './PartnerState';
+import { LiveReport } from '../Utilities/Interface/Reports/LiveReport';
+import { IPushPullDomain } from './PartnerState';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 
@@ -29,8 +29,8 @@ export interface SystemState extends InternalState {
   ChartData: ChartData;
   ChartVisibility: ChartVisibility;
   CalculatedColumnErrorMessage: string;
-  CurrentLiveReports: ILiveReport[];
-  IPushPullDomainsPages: iPushPullDomain[];
+  CurrentLiveReports: LiveReport[];
+  IPushPullDomainsPages: IPushPullDomain[];
   IPPLoginMessage?: string;
   SystemReports: Report[];
   ReportErrorMessage: string;

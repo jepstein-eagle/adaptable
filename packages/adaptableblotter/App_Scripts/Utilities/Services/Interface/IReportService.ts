@@ -1,7 +1,6 @@
 import { Report } from '../../../PredefinedConfig/ExportState';
 import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ExportDestination } from '../../../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../../../types';
 import { IStrategyActionReturn } from '../../../Strategy/Interface/IStrategyActionReturn';
 
 export interface IReportService {
@@ -16,4 +15,8 @@ export interface IReportService {
   ConvertReportToArray(report: Report): IStrategyActionReturn<any[]>;
 
   GetPrimaryKeysForReport(report: Report): any[];
+
+  PublishIPushPullEvent(
+    trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated'
+  ): void;
 }
