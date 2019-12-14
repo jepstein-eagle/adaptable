@@ -25,11 +25,17 @@ export interface InternalApi {
   startLiveReport(
     report: Report,
     pageName: string,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42
   ): void;
   stopLiveReport(
     report: Report,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42
   ): void;
   getAvailableCalendars(): Calendar[];
   setChartData(chartData: ChartData): void;

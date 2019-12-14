@@ -48,7 +48,10 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
   onReportStopLive: (
     Report: Report,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
   onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
@@ -266,7 +269,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
     onReportStopLive: (
       Report: Report,
-      exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+      exportDestination:
+        | ExportDestination.OpenfinExcel
+        | ExportDestination.iPushPull
+        | ExportDestination.Glue42
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId)),

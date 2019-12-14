@@ -26,7 +26,10 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(
     report: Report,
     pageName: string,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42
   ): void {
     this.dispatchAction(SystemRedux.ReportStartLive(report, pageName, exportDestination));
     // now raise the event
@@ -37,7 +40,10 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
   public stopLiveReport(
     report: Report,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42
   ): void {
     this.dispatchAction(SystemRedux.ReportStopLive(report, exportDestination));
     // now raise the event

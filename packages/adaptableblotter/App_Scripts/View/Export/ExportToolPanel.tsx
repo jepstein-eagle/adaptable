@@ -45,7 +45,10 @@ interface ExportToolPanelComponentProps
   onEditReport: () => PopupRedux.PopupShowScreenAction;
   onReportStopLive: (
     Report: Report,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
   Columns: AdaptableBlotterColumn[];
   Reports: Report[] | undefined;
@@ -74,8 +77,8 @@ class ExportToolPanelComponent extends React.Component<
         (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
           let liveReportUpdatedInfo: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
           if (
-            liveReportUpdatedInfo.liveReportTrigger == 'Connected' ||
-            liveReportUpdatedInfo.liveReportTrigger == 'Disconnected'
+            liveReportUpdatedInfo.LiveReportTrigger == 'Connected' ||
+            liveReportUpdatedInfo.LiveReportTrigger == 'Disconnected'
           ) {
             this.forceUpdate();
           }
@@ -279,7 +282,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
     onReportStopLive: (
       Report: Report,
-      exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+      exportDestination:
+        | ExportDestination.OpenfinExcel
+        | ExportDestination.iPushPull
+        | ExportDestination.Glue42
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onNewReport: () =>
       dispatch(

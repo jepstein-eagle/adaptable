@@ -292,7 +292,6 @@ export class ReportService implements IReportService {
       case ReportRowScope.SelectedRows:
         const selectedRowInfo: SelectedRowInfo = this.blotter.api.gridApi.getSelectedRowInfo();
         if (selectedRowInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedRowInfo.GridRows)) {
-          let columnIds: string[] = reportColumns.map(rc => rc.ColumnId);
           selectedRowInfo.GridRows.filter(gr => gr.rowInfo.isGroup == false).forEach(
             (gridRow: GridRow) => {
               pkValues.push(gridRow.primaryKeyValue);
@@ -322,9 +321,9 @@ export class ReportService implements IReportService {
     liveReportTrigger: LiveReportTrigger
   ): void {
     let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
-      exportDestination: exportDestination,
-      liveReportTrigger: liveReportTrigger,
-      currentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
+      ExportDestination: exportDestination,
+      LiveReportTrigger: liveReportTrigger,
+      CurrentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
     };
     const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = BlotterHelper.createFDC3Message(
       'IPushPull Updated Args',

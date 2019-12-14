@@ -101,13 +101,19 @@ export interface SystemUpdatedRowDeleteAllAction extends Redux.Action {
 
 export interface ReportStartLiveAction extends Redux.Action {
   Report: Report;
-  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
+  ExportDestination:
+    | ExportDestination.OpenfinExcel
+    | ExportDestination.iPushPull
+    | ExportDestination.Glue42;
   PageName: string;
 }
 
 export interface ReportStopLiveAction extends Redux.Action {
   Report: Report;
-  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
+  ExportDestination:
+    | ExportDestination.OpenfinExcel
+    | ExportDestination.iPushPull
+    | ExportDestination.Glue42;
 }
 
 export interface SmartEditCheckCellSelectionAction extends Redux.Action {}
@@ -206,7 +212,10 @@ export const SystemUpdatedRowDeleteAll = (
 export const ReportStartLive = (
   Report: Report,
   PageName: string,
-  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+  ExportDestination:
+    | ExportDestination.OpenfinExcel
+    | ExportDestination.iPushPull
+    | ExportDestination.Glue42
 ): ReportStartLiveAction => ({
   type: REPORT_START_LIVE,
   Report,
@@ -216,7 +225,10 @@ export const ReportStartLive = (
 
 export const ReportStopLive = (
   Report: Report,
-  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+  ExportDestination:
+    | ExportDestination.OpenfinExcel
+    | ExportDestination.iPushPull
+    | ExportDestination.Glue42
 ): ReportStopLiveAction => ({
   type: REPORT_STOP_LIVE,
   Report,

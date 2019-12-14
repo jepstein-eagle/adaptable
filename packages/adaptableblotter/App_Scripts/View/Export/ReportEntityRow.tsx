@@ -19,7 +19,10 @@ export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<Rep
   ReportService: IReportService;
   onExport: (exportDestination: ExportDestination) => void;
   onReportStopLive: (
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42
   ) => void;
 }
 
