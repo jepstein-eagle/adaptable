@@ -4,7 +4,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ApiBase } from './ApiBase';
 import { InternalApi } from '../InternalApi';
 import { IUIConfirmation, AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
+import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { Calendar } from '../../PredefinedConfig/CalendarState';
@@ -29,6 +29,22 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void {
     this.dispatchAction(SystemRedux.ReportStartLive(report, pageName, exportDestination));
+    // now raise the event
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+      exportDestination,
+      LiveReportTrigger.ExportStarted
+    );
+  }
+  public stopLiveReport(
+    report: Report,
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+  ): void {
+    this.dispatchAction(SystemRedux.ReportStopLive(report, exportDestination));
+    // now raise the event
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+      exportDestination,
+      LiveReportTrigger.ExportStopped
+    );
   }
 
   public getSystemState(): SystemState {
@@ -102,22 +118,34 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public setGlue42On(): void {
     this.dispatchAction(GridRedux.SetGlue42On());
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent('Glue42', 'Connected');
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+      ExportDestination.Glue42,
+      LiveReportTrigger.Connected
+    );
   }
 
   public setGlue42Off(): void {
     this.dispatchAction(GridRedux.SetGlue42Off());
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent('Glue42', 'Disconnected');
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+      ExportDestination.Glue42,
+      LiveReportTrigger.Disconnected
+    );
   }
 
   public setIPushPullOn(): void {
     this.dispatchAction(GridRedux.SetIPushPullOn());
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent('iPushPull', 'Connected');
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+      ExportDestination.iPushPull,
+      LiveReportTrigger.Connected
+    );
   }
 
   public setIPushPullOff(): void {
     this.dispatchAction(GridRedux.SetIPushPullOff());
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent('iPushPull', 'Disconnected');
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+      ExportDestination.iPushPull,
+      LiveReportTrigger.Disconnected
+    );
   }
 
   public setPivotModeOn(): void {

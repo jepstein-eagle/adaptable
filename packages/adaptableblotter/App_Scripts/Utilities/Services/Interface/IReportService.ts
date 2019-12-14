@@ -1,7 +1,8 @@
 import { Report } from '../../../PredefinedConfig/ExportState';
 import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { ExportDestination } from '../../../PredefinedConfig/Common/Enums';
+import { ExportDestination, LiveReportTrigger } from '../../../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from '../../../Strategy/Interface/IStrategyActionReturn';
+import { LiveReportUpdatedEventArgs } from '../../../Api/Events/BlotterEvents';
 
 export interface IReportService {
   IsSystemReport(Report: Report): boolean;
@@ -17,7 +18,10 @@ export interface IReportService {
   GetPrimaryKeysForReport(report: Report): any[];
 
   PublishLiveReportUpdatedEvent(
-    partner: 'iPushPull' | 'Glue42' | 'OpenFin',
-    trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated'
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42,
+    liveReportTrigger: LiveReportTrigger
   ): void;
 }

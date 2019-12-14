@@ -28,6 +28,10 @@ export interface InternalApi {
     pageName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void;
+  stopLiveReport(
+    report: Report,
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
+  ): void;
   getAvailableCalendars(): Calendar[];
   setChartData(chartData: ChartData): void;
   setChartVisibility(chartVisbility: ChartVisibility): void;

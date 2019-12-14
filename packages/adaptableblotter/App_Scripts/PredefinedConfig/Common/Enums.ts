@@ -106,6 +106,14 @@ export enum ExportDestination {
   Glue42 = 'Glue42',
 }
 
+export enum LiveReportTrigger {
+  Connected = 'Connected',
+  Disconnected = 'Disconnected',
+  ExportStarted = 'ExportStarted',
+  ExportStopped = 'ExportStopped',
+  LiveDataUpdated = 'LiveDataUpdated',
+}
+
 export enum SortOrder {
   Ascending = 'Ascending',
   Descending = 'Descending',

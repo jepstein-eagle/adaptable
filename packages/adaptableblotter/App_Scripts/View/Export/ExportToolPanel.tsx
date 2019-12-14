@@ -74,8 +74,8 @@ class ExportToolPanelComponent extends React.Component<
         (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
           let liveReportUpdatedInfo: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
           if (
-            liveReportUpdatedInfo.trigger == 'Connected' ||
-            liveReportUpdatedInfo.trigger == 'Disconnected'
+            liveReportUpdatedInfo.liveReportTrigger == 'Connected' ||
+            liveReportUpdatedInfo.liveReportTrigger == 'Disconnected'
           ) {
             this.forceUpdate();
           }

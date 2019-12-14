@@ -7,6 +7,7 @@ import {
   MessageType,
   ReportRowScope,
   ExportDestination,
+  LiveReportTrigger,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { Report } from '../../PredefinedConfig/ExportState';
@@ -311,12 +312,15 @@ export class ReportService implements IReportService {
   }
 
   public PublishLiveReportUpdatedEvent(
-    partner: 'iPushPull' | 'Glue42' | 'OpenFin',
-    trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated'
+    exportDestination:
+      | ExportDestination.OpenfinExcel
+      | ExportDestination.iPushPull
+      | ExportDestination.Glue42,
+    liveReportTrigger: LiveReportTrigger
   ): void {
     let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
-      partner: partner,
-      trigger: trigger,
+      exportDestination: exportDestination,
+      liveReportTrigger: liveReportTrigger,
       currentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
     };
     const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = BlotterHelper.createFDC3Message(

@@ -40,9 +40,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
       LoggingHelper.LogAdaptableBlotterInfo('Excel closed stopping all Live Excel');
       this.blotter.api.internalApi.getLiveReports().forEach(cle => {
-        this.blotter.adaptableBlotterStore.TheStore.dispatch(
-          SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel)
-        );
+        this.blotter.api.internalApi.stopLiveReport(cle.Report, ExportDestination.OpenfinExcel);
       });
     });
     OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
@@ -53,8 +51,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         .getLiveReports()
         .find(x => x.PageName == workbook.name);
       if (liveReport) {
-        this.blotter.adaptableBlotterStore.TheStore.dispatch(
-          SystemRedux.ReportStopLive(liveReport.Report, ExportDestination.OpenfinExcel)
+        this.blotter.api.internalApi.stopLiveReport(
+          liveReport.Report,
+          ExportDestination.OpenfinExcel
         );
       }
     });
@@ -63,15 +62,16 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       let liveReport = this.blotter.api.internalApi
         .getLiveReports()
         .find(x => x.PageName == workbookSavedEvent.OldName);
-      this.blotter.adaptableBlotterStore.TheStore.dispatch(
-        SystemRedux.ReportStopLive(liveReport.Report, ExportDestination.OpenfinExcel)
+
+      this.blotter.api.internalApi.stopLiveReport(
+        liveReport.Report,
+        ExportDestination.OpenfinExcel
       );
-      this.blotter.adaptableBlotterStore.TheStore.dispatch(
-        SystemRedux.ReportStartLive(
-          liveReport.Report,
-          workbookSavedEvent.NewName,
-          ExportDestination.OpenfinExcel
-        )
+
+      this.blotter.api.internalApi.startLiveReport(
+        liveReport.Report,
+        workbookSavedEvent.NewName,
+        ExportDestination.OpenfinExcel
       );
     });
     // if a piece of data has updated then update any live reports
@@ -164,9 +164,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                   'Live Excel failed to send data for [' + cle.Report + ']',
                   reason
                 );
-                this.blotter.adaptableBlotterStore.TheStore.dispatch(
-                  SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel)
+                this.blotter.api.internalApi.stopLiveReport(
+                  cle.Report,
+                  ExportDestination.OpenfinExcel
                 );
+
                 this.blotter.api.alertApi.showAlertError(
                   'Live Excel Error',
                   'Failed to send data for [' + cle.Report + ']. This live export has been stopped'
@@ -194,9 +196,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                   'Live Excel failed to send data for [' + cle.Report + ']',
                   reason
                 );
-                this.blotter.adaptableBlotterStore.TheStore.dispatch(
-                  SystemRedux.ReportStopLive(cle.Report, ExportDestination.iPushPull)
+                this.blotter.api.internalApi.stopLiveReport(
+                  cle.Report,
+                  ExportDestination.iPushPull
                 );
+
                 let errorMessage: string = 'Export Failed';
                 if (reason) {
                   errorMessage += ': ' + reason;
@@ -238,8 +242,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       case ExportDestination.OpenfinExcel:
         OpenfinHelper.initOpenFinExcel() //.then((workbook) => OpenfinHelper.addReportWorkSheet(workbook, ReportName))
           .then(pageName => {
-            this.blotter.adaptableBlotterStore.TheStore.dispatch(
-              SystemRedux.ReportStartLive(report, pageName, ExportDestination.OpenfinExcel)
+            this.blotter.api.internalApi.startLiveReport(
+              report,
+              pageName,
+              ExportDestination.OpenfinExcel
             );
             setTimeout(() => {
               this.throttledRecomputeAndSendLiveExcelEvent();
@@ -257,12 +263,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       }
       case ExportDestination.Glue42:
         let data: any[] = this.ConvertReportToArray(report);
-
         let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
-
         // for glue42 we need to pass in the pk values of the data also
         let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(report);
-
         try {
           if (data) {
             this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
@@ -274,7 +277,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         } catch (error) {
           LoggingHelper.LogAdaptableBlotterError(error);
         }
-
         break;
     }
   }

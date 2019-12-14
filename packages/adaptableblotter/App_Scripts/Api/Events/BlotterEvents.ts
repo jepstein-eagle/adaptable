@@ -4,7 +4,7 @@ import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCe
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
 import { Report } from '../../PredefinedConfig/ExportState';
-import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
+import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
 
 /**
  * The main object used when publishing events.
@@ -157,14 +157,17 @@ export interface LiveReportUpdatedEventData extends AdaptableBlotterEventData {
  */
 export interface LiveReportUpdatedInfo {
   /**
-   * Which of the Adaptable Blotter partners is being used to send live data.
+   * Which of the Adaptable Blotter partners is being used as the export destination to which to send live data.
    */
-  partner: 'iPushPull' | 'Glue42' | 'OpenFin';
+  exportDestination:
+    | ExportDestination.OpenfinExcel
+    | ExportDestination.iPushPull
+    | ExportDestination.Glue42;
 
   /**
    * What triggered the event being fired.
    */
-  trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated';
+  liveReportTrigger: LiveReportTrigger;
 
   /**
    * What are the current 'Live Reports' in the State.
