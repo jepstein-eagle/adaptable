@@ -166,13 +166,27 @@ export interface LiveReportUpdatedInfo {
 
   /**
    * What triggered the event being fired.
+   *
+   * The available trigger values are:
+   *
+   * - 'Connected'
+   *
+   * - 'Disconnected'
+   *
+   * - 'ExportStarted'
+   *
+   * - 'ExportStopped'
+   *
+   * - 'LiveDataUpdated'
+   *
    */
   liveReportTrigger: LiveReportTrigger;
 
   /**
    * What are the current 'Live Reports' in the State.
+   *
    */
-  currentLiveReports?: LiveReport[];
+  currentLiveReports: LiveReport[];
 }
 
 export interface ApplicationToolbarButtonClickedEventArgs extends BlotterEventArgs {
