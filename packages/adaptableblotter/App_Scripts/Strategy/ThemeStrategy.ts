@@ -4,10 +4,10 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IThemeStrategy } from './Interface/IThemeStrategy';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
-import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/BlotterEvents';
 import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 import { THEME_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/ThemeChanged';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
   private ThemeState: ThemeState;

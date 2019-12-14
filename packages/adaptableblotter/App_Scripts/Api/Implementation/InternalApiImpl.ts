@@ -19,7 +19,7 @@ import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRow
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import { LiveReport } from '../Events/BlotterEvents';
+import { LiveReport } from '../Events/LiveReportUpdated';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions

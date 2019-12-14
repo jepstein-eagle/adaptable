@@ -4,11 +4,13 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { ActionColumn, ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
-import { ActionColumnClickedEventArgs, ActionColumnClickedInfo } from '../Api/Events/BlotterEvents';
 import AdaptableBlotter from '../../agGrid';
-import { ACTION_COLUMN_CLICKED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 import Helper from '../Utilities/Helpers/Helper';
+import {
+  ActionColumnClickedEventArgs,
+  ActionColumnClickedInfo,
+} from '../Api/Events/ActionColumnClicked';
 export class ActionColumnRenderer implements ICellRendererComp {
   private eGui: any;
   private eventListener: any;

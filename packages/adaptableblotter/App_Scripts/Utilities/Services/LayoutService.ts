@@ -11,14 +11,14 @@ import {
   VendorGridInfo,
 } from '../../PredefinedConfig/LayoutState';
 import { GridState } from '../../PredefinedConfig/GridState';
-import {
-  ColumnStateChangedEventArgs,
-  ColumnStateChangedInfo,
-} from '../../Api/Events/BlotterEvents';
 import BlotterHelper from '../Helpers/BlotterHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 import { ILayoutService } from './Interface/ILayoutService';
+import {
+  ColumnStateChangedEventArgs,
+  ColumnStateChangedInfo,
+} from '../../Api/Events/ColumnStateChanged';
 
 export class LayoutService implements ILayoutService {
   constructor(private blotter: IAdaptableBlotter) {

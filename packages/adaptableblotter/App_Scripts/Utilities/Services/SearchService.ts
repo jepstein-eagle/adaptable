@@ -12,12 +12,13 @@ import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrat
 import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { SearchChangedEventArgs } from '../../Api/Events/SearchChanged/SearchChangedEventArgs';
-import { BlotterSearchState } from '../../Api/Events/SearchChanged/BlotterSearchState';
-import { BlotterSortState } from '../../Api/Events/SearchChanged/BlotterSortState';
-import { SearchChangedInfo } from '../../Api/Events/SearchChanged/SearchChangedInfo';
-import { SearchEventData } from '../../Api/Events/SearchChanged/SearchEventData';
 import BlotterHelper from '../Helpers/BlotterHelper';
+import {
+  BlotterSearchState,
+  BlotterSortState,
+  SearchChangedInfo,
+} from '../../Api/Events/SearchChanged';
+import { SearchChangedEventArgs } from '../../types';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;

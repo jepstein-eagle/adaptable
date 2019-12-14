@@ -60,26 +60,21 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
-import { SelectionChangedEventArgs, SelectionChangedInfo } from '../Api/Events/BlotterEvents';
-import { iconToString } from '../components/icons';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import Helper from '../Utilities/Helpers/Helper';
-import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
-import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
-import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
-import { UpdatedRowStrategy } from '../Strategy/UpdatedRowStrategy';
-import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
-import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
-import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
-import ObjectFactory from '../Utilities/ObjectFactory';
-import { IUIConfirmation } from '../Utilities/Interface/IMessage';
-import { DataType } from '../PredefinedConfig/Common/Enums';
 import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 import { ContextMenuInfo, AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
+import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
+import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
+import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
+import Helper from '../Utilities/Helpers/Helper';
+import { SelectionChangedInfo, SelectionChangedEventArgs } from '../Api/Events/SelectionChanged';
+import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { iconToString } from '../components/icons';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy

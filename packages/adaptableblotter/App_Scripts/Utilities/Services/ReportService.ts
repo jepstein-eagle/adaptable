@@ -21,7 +21,10 @@ import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
 import BlotterHelper from '../Helpers/BlotterHelper';
-import { LiveReportUpdatedInfo, LiveReportUpdatedEventArgs } from '../../Api/Events/BlotterEvents';
+import {
+  LiveReportUpdatedEventArgs,
+  LiveReportUpdatedInfo,
+} from '../../Api/Events/LiveReportUpdated';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';

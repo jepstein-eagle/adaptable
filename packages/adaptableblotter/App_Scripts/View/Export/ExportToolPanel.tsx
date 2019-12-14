@@ -27,10 +27,10 @@ import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
 import {
-  LiveReportUpdatedEventArgs,
-  LiveReportUpdatedInfo,
   LiveReport,
-} from '../../Api/Events/BlotterEvents';
+  LiveReportUpdatedInfo,
+  LiveReportUpdatedEventArgs,
+} from '../../Api/Events/LiveReportUpdated';
 
 const ExportIcon = icons.export as ReactComponentLike;
 

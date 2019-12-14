@@ -9,10 +9,10 @@ import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   BlotterApi,
+  ActionColumnClickedEventArgs,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
 var blotterApi: BlotterApi;
 

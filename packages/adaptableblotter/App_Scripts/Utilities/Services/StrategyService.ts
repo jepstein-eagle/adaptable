@@ -2,34 +2,14 @@ import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import {
-  SortOrder,
   DataType,
   LeafExpressionOperator,
-  MessageType,
   DistinctCriteriaPairValue,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import {
-  LayoutState,
-  Layout,
-  ColumnSort,
-  PivotDetails,
-  VendorGridInfo,
-} from '../../PredefinedConfig/LayoutState';
-import { GridState } from '../../PredefinedConfig/GridState';
-import {
-  ColumnStateChangedEventArgs,
-  ColumnStateChangedInfo,
-} from '../../Api/Events/BlotterEvents';
-import BlotterHelper from '../Helpers/BlotterHelper';
-import ArrayExtensions from '../Extensions/ArrayExtensions';
-
-import { ILayoutService } from './Interface/ILayoutService';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import StringExtensions from '../Extensions/StringExtensions';
-import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-import { IUIConfirmation } from '../Interface/IMessage';
 
 export interface IStrategyService {
   createAlertDescription(

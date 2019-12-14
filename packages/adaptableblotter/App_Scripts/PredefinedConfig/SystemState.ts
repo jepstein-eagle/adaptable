@@ -9,7 +9,7 @@ import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
 import { IPushPullDomain } from './PartnerState';
-import { LiveReport } from '../Api/Events/BlotterEvents';
+import { LiveReport } from '../Api/Events/LiveReportUpdated';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 

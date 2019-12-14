@@ -28,9 +28,9 @@ import { ReactComponentLike } from 'prop-types';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 import {
   LiveReportUpdatedEventArgs,
-  LiveReportUpdatedInfo,
   LiveReport,
-} from '../../Api/Events/BlotterEvents';
+  LiveReportUpdatedInfo,
+} from '../../Api/Events/LiveReportUpdated';
 
 const ExportIcon = icons.export as ReactComponentLike;
 

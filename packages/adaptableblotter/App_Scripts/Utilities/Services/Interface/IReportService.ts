@@ -2,7 +2,6 @@ import { Report } from '../../../PredefinedConfig/ExportState';
 import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { ExportDestination, LiveReportTrigger } from '../../../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from '../../../Strategy/Interface/IStrategyActionReturn';
-import { LiveReportUpdatedEventArgs } from '../../../Api/Events/BlotterEvents';
 
 export interface IReportService {
   IsSystemReport(Report: Report): boolean;

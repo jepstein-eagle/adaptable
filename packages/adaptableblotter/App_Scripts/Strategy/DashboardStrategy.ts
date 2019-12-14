@@ -7,12 +7,12 @@ import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
+import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import { AdaptableBlotterDashboardToolbar } from '../PredefinedConfig/DashboardState';
 import {
   ToolbarVisibilityChangedEventArgs,
   ToolbarVisibilityChangedInfo,
-} from '../Api/Events/BlotterEvents';
-import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
-import { AdaptableBlotterDashboardToolbar } from '../PredefinedConfig/DashboardState';
+} from '../Api/Events/ToolbarVisibilityChanged';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   private visibleToolbars: string[];

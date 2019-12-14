@@ -2,17 +2,17 @@ import { ApiBase } from './ApiBase';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
-import { SearchChangedEventArgs } from '../Events/SearchChanged/SearchChangedEventArgs';
-import {
-  ThemeChangedEventArgs,
-  AlertFiredEventArgs,
-  ColumnStateChangedEventArgs,
-  ActionColumnClickedEventArgs,
-  SelectionChangedEventArgs,
-} from '../Events/BlotterEvents';
 import { EventApi } from '../EventApi';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 import Emitter, { EmitterCallback } from '../../Utilities/Emitter';
+import {
+  SearchChangedEventArgs,
+  ThemeChangedEventArgs,
+  ColumnStateChangedEventArgs,
+  AlertFiredEventArgs,
+} from '../../types';
+import { ActionColumnClickedEventArgs } from '../Events/ActionColumnClicked';
+import { SelectionChangedEventArgs } from '../Events/SelectionChanged';
 
 export class EventApiImpl extends ApiBase implements EventApi {
   public _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;

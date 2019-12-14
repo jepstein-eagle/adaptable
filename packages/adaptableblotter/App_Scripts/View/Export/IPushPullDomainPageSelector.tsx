@@ -17,7 +17,7 @@ import { Icon } from '../../components/icons';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import FlexWithFooter from '../../components/FlexWithFooter';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
-import { LiveReport } from '../../Api/Events/BlotterEvents';
+import { LiveReport } from '../../Api/Events/LiveReportUpdated';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {

@@ -13,8 +13,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import { LiveReport } from './Events/BlotterEvents';
-
+import { LiveReport } from './Events/LiveReportUpdated';
 /**
  * This set of api methods is designed for **internal use of the Adaptable Blotter** only.
  *

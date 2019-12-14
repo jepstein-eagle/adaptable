@@ -1,16 +1,6 @@
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { EventDispatcher } from '../Utilities/EventDispatcher';
-import { SearchChangedEventArgs } from './Events/SearchChanged/SearchChangedEventArgs';
-import {
-  ThemeChangedEventArgs,
-  ColumnStateChangedEventArgs,
-  AlertFiredEventArgs,
-  ActionColumnClickedEventArgs,
-  SelectionChangedEventArgs,
-  ToolbarVisibilityChangedEventArgs,
-  ApplicationToolbarButtonClickedEventArgs,
-  LiveReportUpdatedEventArgs,
-} from './Events/BlotterEvents';
+
 import { IEvent } from '../Utilities/Interface/IEvent';
 import {
   SELECTION_CHANGED_EVENT,
@@ -24,6 +14,17 @@ import {
   ACTION_COLUMN_CLICKED_EVENT,
   LIVE_REPORT_UPDATED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
+import {
+  SearchChangedEventArgs,
+  ThemeChangedEventArgs,
+  AlertFiredEventArgs,
+  ColumnStateChangedEventArgs,
+} from '../types';
+import { SelectionChangedEventArgs } from './Events/SelectionChanged';
+import { ActionColumnClickedEventArgs } from './Events/ActionColumnClicked';
+import { ApplicationToolbarButtonClickedEventArgs } from './Events/ApplicationToolbarButtonClicked';
+import { LiveReportUpdatedEventArgs } from './Events/LiveReportUpdated';
+import { ToolbarVisibilityChangedEventArgs } from './Events/ToolbarVisibilityChanged';
 
 /**
  * The Adaptable Blotter publishes a large number of events to which users can subscribe as required.

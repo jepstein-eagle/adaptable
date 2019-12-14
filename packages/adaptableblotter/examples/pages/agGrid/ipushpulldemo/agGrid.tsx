@@ -15,14 +15,13 @@ import {
   BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-
 import ipushpull from 'ipushpull-js';
+
+import { TickingDataHelper } from '../../TickingDataHelper';
 import {
   LiveReportUpdatedEventArgs,
   LiveReportUpdatedInfo,
-} from '../../../../App_Scripts/Api/Events/BlotterEvents';
-
-import { TickingDataHelper } from '../../TickingDataHelper';
+} from '../../../../App_Scripts/Api/Events/LiveReportUpdated';
 
 ipushpull.config.set({
   api_secret: '',

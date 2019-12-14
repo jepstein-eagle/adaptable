@@ -12,9 +12,8 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import OpenfinHelper from '../../Utilities/Helpers/OpenfinHelper';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import ObjectFactory from '../../Utilities/ObjectFactory';
-import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/BlotterEvents';
-import { ALERT_FIRED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
+import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/AlertFired';
 
 export class AlertApiImpl extends ApiBase implements AlertApi {
   public getAlertState(): AlertState {

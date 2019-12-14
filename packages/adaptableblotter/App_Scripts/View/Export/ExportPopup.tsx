@@ -33,7 +33,7 @@ import {
   ReportColumnScope,
 } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
-import { LiveReport } from '../../Api/Events/BlotterEvents';
+import { LiveReport } from '../../Api/Events/LiveReportUpdated';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
   Reports: Report[];

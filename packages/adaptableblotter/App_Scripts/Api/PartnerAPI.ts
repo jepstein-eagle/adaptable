@@ -4,7 +4,7 @@ import {
   IPushPullDomain,
   IPushPullState,
 } from '../PredefinedConfig/PartnerState';
-import { LiveReport } from './Events/BlotterEvents';
+import { LiveReport } from './Events/LiveReportUpdated';
 
 /**
  * Provides full and comprehensive run-time access to the Partner Config state.
