@@ -13,9 +13,9 @@ import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   BlotterApi,
+  ActionColumnClickedEventArgs,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { ActionColumnClickedEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 import { DataChangedInfo } from '../../../../App_Scripts/BlotterOptions/CommonObjects/DataChangedInfo';
 import { ValidationResult } from '../../../../App_Scripts/BlotterOptions/EditOptions';
 

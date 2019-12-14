@@ -1,31 +1,24 @@
 import * as React from 'react';
 import { useState, useEffect, ReactNode, useMemo } from 'react';
-
 import * as AgGrid from 'ag-grid-community';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-
 import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
 import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
 import { BlotterApi } from '../../adaptableblotter/types';
-
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
-
 import {
   AdaptableBlotterOptions,
   SearchChangedEventArgs,
   ThemeChangedEventArgs,
   ColumnStateChangedEventArgs,
   AlertFiredEventArgs,
-} from '../../adaptableblotter/types';
-
-import {
   ActionColumnClickedEventArgs,
   SelectionChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,
   ApplicationToolbarButtonClickedEventArgs,
-} from '../../adaptableblotter/App_Scripts/Api/Events/BlotterEvents';
+  LiveReportUpdatedEventArgs,
+} from '../../adaptableblotter/types';
 import { AuditLogEventArgs } from '../../adaptableblotter/App_Scripts/Api/Events/AuditEvents';
-
 export * from '../../adaptableblotter/types';
 
 type TypeFactory =
@@ -124,17 +117,19 @@ const AdaptableBlotterReact = ({
   tagName,
   agGridTheme,
   render,
-  onSearchChanged,
-  onThemeChanged,
+  onActionColumnClicked,
+  onAlertFired,
   onApplicationToolbarButtonClicked,
   onColumnStateChanged,
-  onAlertFired,
-  onActionColumnClicked,
+  onLiveReportUpdated,
+  onSearchChanged,
   onSelectionChanged,
+  onThemeChanged,
   onToolbarVisibilityChanged,
   onAuditStateChanged,
   onAuditCellEdited,
   onAuditFunctionApplied,
+
   onBlotterReady,
   ...props
 }: {
@@ -155,6 +150,7 @@ const AdaptableBlotterReact = ({
   onAlertFired?: (alertFiredEventArgs: AlertFiredEventArgs) => void;
   onActionColumnClicked?: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void;
   onSelectionChanged?: (selectionChangedEventArgs: SelectionChangedEventArgs) => void;
+  onLiveReportUpdated?: (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => void;
 
   onAuditStateChanged?: (auditStateChangedArgs: AuditLogEventArgs) => void;
   onAuditCellEdited?: (auditCellEditedArgs: AuditLogEventArgs) => void;
