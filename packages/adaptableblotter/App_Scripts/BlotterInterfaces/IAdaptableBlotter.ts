@@ -19,7 +19,7 @@ import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
-import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
+import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';

@@ -318,7 +318,6 @@ export class ReportService implements IReportService {
       partner: partner,
       trigger: trigger,
       currentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
-      domainPages: this.blotter.api.partnerApi.getIPushPullDomainsPages(),
     };
     const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = BlotterHelper.createFDC3Message(
       'IPushPull Updated Args',

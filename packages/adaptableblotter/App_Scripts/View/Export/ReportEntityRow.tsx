@@ -2,17 +2,16 @@ import * as React from 'react';
 
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { EntityRowItem } from '../Components/EntityRowItem';
-
 import icons from '../../components/icons';
 import { ReactComponentLike } from 'prop-types';
 import DropdownButton from '../../components/DropdownButton';
 import { IReportService } from '../../Utilities/Services/Interface/IReportService';
+import { LiveReport } from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {

@@ -8,8 +8,8 @@ import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
-import { LiveReport } from '../Utilities/Interface/Reports/LiveReport';
 import { IPushPullDomain } from './PartnerState';
+import { LiveReport } from '../Api/Events/BlotterEvents';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 

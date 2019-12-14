@@ -1,6 +1,6 @@
 import { IAdaptableBlotter } from '../../types';
 import LoggingHelper from '../Helpers/LoggingHelper';
-import { IPPStyle } from '../Interface/Reports/IPPStyle';
+import { IPPStyle } from '../Interface/IPPStyle';
 import { IPushPullService } from './Interface/IPushPullService';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 

@@ -16,7 +16,6 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -27,7 +26,11 @@ import icons from '../../components/icons';
 import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
-import { LiveReportUpdatedEventArgs, LiveReportUpdatedInfo } from '../../Api/Events/BlotterEvents';
+import {
+  LiveReportUpdatedEventArgs,
+  LiveReportUpdatedInfo,
+  LiveReport,
+} from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 

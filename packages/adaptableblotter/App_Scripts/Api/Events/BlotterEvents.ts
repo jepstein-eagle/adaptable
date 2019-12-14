@@ -3,9 +3,8 @@ import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
-import { LoadingOverlayComponent } from 'ag-grid-community/dist/lib/rendering/overlays/loadingOverlayComponent';
-import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
-import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
+import { Report } from '../../PredefinedConfig/ExportState';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 
 /**
  * The main object used when publishing events.
@@ -29,7 +28,7 @@ export interface AdaptableBlotterEventData {
 }
 
 /**
- * Event Args used as part of the **onColumnStateChanged** event.
+ * Event Args used as part of the **on('ColumnStateChanged')** event.
  *
  * Includes just the name of the new selected Layout.
  */
@@ -46,7 +45,7 @@ export interface ColumnStateChangedInfo {
 }
 
 /**
- * Event Args used as part of the **onAlertFired** event.
+ * Event Args used as part of the **on('AlertFired')** event.
  *
  * Includes the Alert has been fired - this will contain details of the Alert Definition that triggered the Alert, and (optionally) what Data Change was responsible.
  */
@@ -63,7 +62,7 @@ export interface AlertFiredInfo {
 }
 
 /**
- * Event Args used as part of the **onActionColumnClicked** event.
+ * Event Args used as part of the **on('ActionColumnClicked')** event.
  *
  * Includes the Action Column that was clicked, the row that contained the cell that was clicked (and its Primary Key value).
  */
@@ -82,7 +81,7 @@ export interface ActionColumnClickedInfo {
 }
 
 /**
- * Event Args used as part of the **onSelectionChanged** event.
+ * Event Args used as part of the **on('SelectionChanged')** event.
  *
  * Includes full details of all Selected Cells and Rows (if the latter has been activated).
  */
@@ -100,7 +99,7 @@ export interface SelectionChangedInfo {
 }
 
 /**
- * Event Args used as part of the **onThemeChanged** event.
+ * Event Args used as part of the **on('ThemeChanged')** event.
  *
  * Includes just the name of the new selected theme.
  */
@@ -116,6 +115,11 @@ export interface ThemeChangedInfo {
   themeName: string;
 }
 
+/**
+ * Event Args used as part of the **on('ToolbarVisibilityChanged)** event.
+ *
+ * Includes the Action Column that was clicked, the row that contained the cell that was clicked (and its Primary Key value).
+ */
 export interface ToolbarVisibilityChangedEventArgs extends BlotterEventArgs {
   data: ToolbarVisibilityChangedEventData[];
 }
@@ -129,6 +133,11 @@ export interface ToolbarVisibilityChangedInfo {
   visibility: 'Visible' | 'Hidden';
 }
 
+/**
+ * Event Args used as part of the **on('LiveReportUpdated)** event.
+ *
+ * Includes the Action Column that was clicked, the row that contained the cell that was clicked (and its Primary Key value).
+ */
 export interface LiveReportUpdatedEventArgs extends BlotterEventArgs {
   data: LiveReportUpdatedEventData[];
 }
@@ -137,11 +146,30 @@ export interface LiveReportUpdatedEventData extends AdaptableBlotterEventData {
   id: LiveReportUpdatedInfo;
 }
 
+/**
+ * The main args used in the **on('LiveReportUpdated)** event.
+ *
+ * This event fires when any LiveData is being used (i.e. being sent to Excel via Glue42 or OpenFin or to iPushPull)
+ *
+ * It is fired whenever anything changes regarding this.
+ *
+ * The `trigger` property defines **why** the event fired.
+ */
 export interface LiveReportUpdatedInfo {
+  /**
+   * Which of the Adaptable Blotter partners is being used to send live data.
+   */
   partner: 'iPushPull' | 'Glue42' | 'OpenFin';
+
+  /**
+   * What triggered the event being fired.
+   */
   trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated';
+
+  /**
+   * What are the current 'Live Reports' in the State.
+   */
   currentLiveReports?: LiveReport[];
-  domainPages?: IPushPullDomain[];
 }
 
 export interface ApplicationToolbarButtonClickedEventArgs extends BlotterEventArgs {
@@ -154,4 +182,10 @@ export interface ApplicationToolbarButtonClickedEventData extends AdaptableBlott
 
 export interface ApplicationToolbarButtonClickedInfo {
   applicationToolbarButton: ApplicationToolbarButton;
+}
+
+export interface LiveReport {
+  PageName: string; // for Excel this will be the workbook name, for iPushpull the page name.  for Glue42?
+  Report: Report;
+  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
 }

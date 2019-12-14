@@ -6,7 +6,7 @@ import {
   Glue42State,
   IPushPullDomain,
 } from '../../PredefinedConfig/PartnerState';
-import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
+import { LiveReport } from '../Events/BlotterEvents';
 
 export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   public getPartnerState(): PartnerState {

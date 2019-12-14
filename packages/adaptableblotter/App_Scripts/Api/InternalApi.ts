@@ -7,14 +7,13 @@ import { ChartData } from '../PredefinedConfig/ChartState';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import { LiveReport } from '../Utilities/Interface/Reports/LiveReport';
+import { LiveReport } from './Events/BlotterEvents';
 
 /**
  * This set of api methods is designed for **internal use of the Adaptable Blotter** only.

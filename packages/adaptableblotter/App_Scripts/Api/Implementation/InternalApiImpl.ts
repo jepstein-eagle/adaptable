@@ -19,7 +19,7 @@ import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRow
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
+import { LiveReport } from '../Events/BlotterEvents';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions
@@ -101,48 +101,16 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   public setGlue42On(): void {
-    /*
-    // fire partner connectivity changed event...
-    let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
-      isConnected: true,
-      partner: 'Glue42',
-      params: null,
-    };
-    const partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs = BlotterHelper.createFDC3Message(
-      'Partner Created Args',
-      partnerConnectivityChangedInfo
-    );
-
-    this.blotter.api.eventApi.emit(
-      'PartnerConnectivityChanged',
-      partnerConnectivityChangedEventArgs
-    );
-    */
     this.dispatchAction(GridRedux.SetGlue42On());
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent('Glue42', 'Connected');
   }
 
   public setGlue42Off(): void {
-    /*
-    // fire partner connectivity changed event...
-    let partnerConnectivityChangedInfo: PartnerConnectivityChangedInfo = {
-      isConnected: false,
-      partner: 'Glue42',
-      params: null,
-    };
-    const partnerConnectivityChangedEventArgs: PartnerConnectivityChangedEventArgs = BlotterHelper.createFDC3Message(
-      'Partner Created Args',
-      partnerConnectivityChangedInfo
-    );
-    this.blotter.api.eventApi.emit(
-      'PartnerConnectivityChanged',
-      partnerConnectivityChangedEventArgs
-    );
-*/
     this.dispatchAction(GridRedux.SetGlue42Off());
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent('Glue42', 'Disconnected');
   }
 
   public setIPushPullOn(): void {
-    // fire partner connectivity changed event...
     this.dispatchAction(GridRedux.SetIPushPullOn());
     this.blotter.ReportService.PublishLiveReportUpdatedEvent('iPushPull', 'Connected');
   }

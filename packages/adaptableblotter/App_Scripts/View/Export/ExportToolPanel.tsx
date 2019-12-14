@@ -14,7 +14,6 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -27,7 +26,11 @@ import { ReactComponentLike } from 'prop-types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
-import { LiveReportUpdatedEventArgs, LiveReportUpdatedInfo } from '../../Api/Events/BlotterEvents';
+import {
+  LiveReportUpdatedEventArgs,
+  LiveReportUpdatedInfo,
+  LiveReport,
+} from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 

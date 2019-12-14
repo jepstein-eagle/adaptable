@@ -78,7 +78,7 @@ import {
 } from '../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
-import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
+import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';

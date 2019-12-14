@@ -78,7 +78,6 @@ export class Glue42Service implements IGlue42Service {
       this.glue4ExcelInstance = glue4OfficeInstance.excel; // as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
       this.blotter.api.internalApi.setGlue42On();
-      //  this.blotter._emit(PRIVATE_GLUE42_LOADED_EVENT);
     } catch (error) {
       LogAdaptableBlotterError(error);
       this.blotter.api.internalApi.setGlue42Off();

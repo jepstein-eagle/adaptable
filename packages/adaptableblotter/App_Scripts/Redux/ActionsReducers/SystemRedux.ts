@@ -2,7 +2,6 @@ import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -21,6 +20,7 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './ExportRedux';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
+import { LiveReport } from '../../Api/Events/BlotterEvents';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state

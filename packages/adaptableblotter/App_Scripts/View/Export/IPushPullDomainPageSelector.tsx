@@ -3,12 +3,9 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-
-import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { Report } from '../../PredefinedConfig/ExportState';
@@ -20,6 +17,7 @@ import { Icon } from '../../components/icons';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import FlexWithFooter from '../../components/FlexWithFooter';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
+import { LiveReport } from '../../Api/Events/BlotterEvents';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {

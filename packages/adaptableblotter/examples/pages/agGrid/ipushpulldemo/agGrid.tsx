@@ -73,9 +73,8 @@ function InitAdaptableBlotter() {
     'LiveReportUpdated',
     (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
       let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
-      if (eventData.trigger == 'Connected') {
-        console.log('ipushpull connected');
-      }
+      console.log('live report event');
+      console.log(eventData);
     }
   );
 }
