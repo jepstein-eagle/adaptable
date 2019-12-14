@@ -27,7 +27,7 @@ import { ReactComponentLike } from 'prop-types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
-import { IPushPullUpdatedEventArgs, IPushPullUpdatedInfo } from '../../Api/Events/BlotterEvents';
+import { LiveReportUpdatedEventArgs, LiveReportUpdatedInfo } from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -67,13 +67,12 @@ class ExportToolPanelComponent extends React.Component<
   public componentDidMount() {
     if (this.props.Blotter) {
       this.props.Blotter.api.eventApi.on(
-        'IPushPullUpdatedEvent',
-        (partnerConnectivityChangedEventArgs: IPushPullUpdatedEventArgs) => {
-          let pushPullUpdatedInfo: IPushPullUpdatedInfo =
-            partnerConnectivityChangedEventArgs.data[0].id;
+        'LiveReportUpdated',
+        (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
+          let liveReportUpdatedInfo: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
           if (
-            pushPullUpdatedInfo.trigger == 'Connected' ||
-            pushPullUpdatedInfo.trigger == 'Disconnected'
+            liveReportUpdatedInfo.trigger == 'Connected' ||
+            liveReportUpdatedInfo.trigger == 'Disconnected'
           ) {
             this.forceUpdate();
           }

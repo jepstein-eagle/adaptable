@@ -19,8 +19,8 @@ import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
-import { IPushPullUpdatedInfo, IPushPullUpdatedEventArgs } from '../../Api/Events/BlotterEvents';
 import BlotterHelper from '../Helpers/BlotterHelper';
+import { LiveReportUpdatedInfo, LiveReportUpdatedEventArgs } from '../../Api/Events/BlotterEvents';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -310,19 +310,20 @@ export class ReportService implements IReportService {
     return newRow;
   }
 
-  public PublishIPushPullEvent(
+  public PublishLiveReportUpdatedEvent(
+    partner: 'iPushPull' | 'Glue42' | 'OpenFin',
     trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated'
   ): void {
-    let partnerConnectivityChangedInfo: IPushPullUpdatedInfo = {
-      isPushPullRunning: this.blotter.api.partnerApi.isIPushPullRunning(),
+    let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
+      partner: partner,
       trigger: trigger,
       currentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
       domainPages: this.blotter.api.partnerApi.getIPushPullDomainsPages(),
     };
-    const partnerConnectivityChangedEventArgs: IPushPullUpdatedEventArgs = BlotterHelper.createFDC3Message(
+    const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = BlotterHelper.createFDC3Message(
       'IPushPull Updated Args',
-      partnerConnectivityChangedInfo
+      liveReportUpdatedInfo
     );
-    this.blotter.api.eventApi.emit('IPushPullUpdated', partnerConnectivityChangedEventArgs);
+    this.blotter.api.eventApi.emit('LiveReportUpdated', liveReportUpdatedEventArgs);
   }
 }

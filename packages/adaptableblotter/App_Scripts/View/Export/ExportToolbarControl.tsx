@@ -27,7 +27,7 @@ import icons from '../../components/icons';
 import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
-import { IPushPullUpdatedEventArgs, IPushPullUpdatedInfo } from '../../Api/Events/BlotterEvents';
+import { LiveReportUpdatedEventArgs, LiveReportUpdatedInfo } from '../../Api/Events/BlotterEvents';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -58,13 +58,12 @@ class ExportToolbarControlComponent extends React.Component<
   public componentDidMount() {
     if (this.props.Blotter) {
       this.props.Blotter.api.eventApi.on(
-        'IPushPullUpdatedEvent',
-        (partnerConnectivityChangedEventArgs: IPushPullUpdatedEventArgs) => {
-          let pushPullUpdatedInfo: IPushPullUpdatedInfo =
-            partnerConnectivityChangedEventArgs.data[0].id;
+        'LiveReportUpdated',
+        (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
+          let liveReportUpdatedInfo: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
           if (
-            pushPullUpdatedInfo.trigger == 'Connected' ||
-            pushPullUpdatedInfo.trigger == 'Disconnected'
+            liveReportUpdatedInfo.trigger == 'Connected' ||
+            liveReportUpdatedInfo.trigger == 'Disconnected'
           ) {
             this.forceUpdate();
           }

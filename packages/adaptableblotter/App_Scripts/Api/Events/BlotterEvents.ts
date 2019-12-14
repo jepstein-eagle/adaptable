@@ -129,31 +129,19 @@ export interface ToolbarVisibilityChangedInfo {
   visibility: 'Visible' | 'Hidden';
 }
 
-export interface IPushPullUpdatedEventArgs extends BlotterEventArgs {
-  data: IPushPullUpdatedEventData[];
+export interface LiveReportUpdatedEventArgs extends BlotterEventArgs {
+  data: LiveReportUpdatedEventData[];
 }
 
-export interface IPushPullUpdatedEventData extends AdaptableBlotterEventData {
-  id: IPushPullUpdatedInfo;
+export interface LiveReportUpdatedEventData extends AdaptableBlotterEventData {
+  id: LiveReportUpdatedInfo;
 }
 
-export interface IPushPullUpdatedInfo {
-  isPushPullRunning: boolean;
+export interface LiveReportUpdatedInfo {
+  partner: 'iPushPull' | 'Glue42' | 'OpenFin';
   trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated';
   currentLiveReports?: LiveReport[];
   domainPages?: IPushPullDomain[];
-}
-
-export interface Glue42UpdatedEventArgs extends BlotterEventArgs {
-  data: IPushPullUpdatedEventData[];
-}
-
-export interface Glue42UpdatedhangedEventData extends AdaptableBlotterEventData {
-  id: Glue42UpdatedInfo;
-}
-
-export interface Glue42UpdatedInfo {
-  isConnected: boolean;
 }
 
 export interface ApplicationToolbarButtonClickedEventArgs extends BlotterEventArgs {

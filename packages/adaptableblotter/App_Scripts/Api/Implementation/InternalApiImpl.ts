@@ -19,9 +19,7 @@ import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRow
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
 import { LiveReport } from '../../Utilities/Interface/Reports/LiveReport';
-import { IPushPullUpdatedInfo, IPushPullUpdatedEventArgs } from '../Events/BlotterEvents';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions
@@ -146,12 +144,12 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public setIPushPullOn(): void {
     // fire partner connectivity changed event...
     this.dispatchAction(GridRedux.SetIPushPullOn());
-    this.blotter.ReportService.PublishIPushPullEvent('Connected');
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent('iPushPull', 'Connected');
   }
 
   public setIPushPullOff(): void {
     this.dispatchAction(GridRedux.SetIPushPullOff());
-    this.blotter.ReportService.PublishIPushPullEvent('Disconnected');
+    this.blotter.ReportService.PublishLiveReportUpdatedEvent('iPushPull', 'Disconnected');
   }
 
   public setPivotModeOn(): void {
@@ -179,7 +177,9 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   public isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean {
-    let foundUpdatedRowInfo: UpdatedRowInfo = this.getSystemState().UpdatedRowInfos.find(
+    let foundUpdatedRowInfo:
+      | UpdatedRowInfo
+      | undefined = this.getSystemState().UpdatedRowInfos.find(
       uri => uri.primaryKeyValue == primaryKeyValue && uri.changeDirection == changeDirection
     );
     return Helper.objectExists(foundUpdatedRowInfo);

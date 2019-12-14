@@ -18,8 +18,8 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 import ipushpull from 'ipushpull-js';
 import {
-  IPushPullUpdatedEventArgs,
-  IPushPullUpdatedInfo,
+  LiveReportUpdatedEventArgs,
+  LiveReportUpdatedInfo,
 } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
@@ -70,10 +70,10 @@ function InitAdaptableBlotter() {
   );
 
   blotterAPI.eventApi.on(
-    'IPushPullUpdatedEvent',
-    (pushPullUpdatedEventArgs: IPushPullUpdatedEventArgs) => {
-      let eventData: IPushPullUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
-      if (eventData.isConnected) {
+    'LiveReportUpdated',
+    (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
+      let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
+      if (eventData.trigger == 'Connected') {
         console.log('ipushpull connected');
       }
     }

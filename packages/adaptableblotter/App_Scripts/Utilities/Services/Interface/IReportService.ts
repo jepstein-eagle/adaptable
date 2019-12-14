@@ -16,7 +16,8 @@ export interface IReportService {
 
   GetPrimaryKeysForReport(report: Report): any[];
 
-  PublishIPushPullEvent(
+  PublishLiveReportUpdatedEvent(
+    partner: 'iPushPull' | 'Glue42' | 'OpenFin',
     trigger: 'Connected' | 'Disconnected' | 'ExportStarted' | 'ExportStopped' | 'LiveDataUpdated'
   ): void;
 }
