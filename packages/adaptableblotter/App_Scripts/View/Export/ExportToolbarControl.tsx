@@ -1,7 +1,6 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';

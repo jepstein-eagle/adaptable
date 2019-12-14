@@ -1,4 +1,9 @@
-import { ExportDestination, MathOperation, MessageType } from '../../PredefinedConfig/Common/Enums';
+import {
+  ExportDestination,
+  MathOperation,
+  MessageType,
+  LiveReportTrigger,
+} from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -2634,6 +2639,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               });
             return next(action);
           }
+          case SystemRedux.REPORT_START_LIVE: {
+            let ret = next(action);
+            const actionTyped = action as SystemRedux.ReportStopLiveAction;
+            // fire the Live Report event for Export Started
+            blotter.ReportService.PublishLiveReportUpdatedEvent(
+              actionTyped.ExportDestination,
+              LiveReportTrigger.ExportStarted
+            );
+            return ret;
+          }
           case SystemRedux.REPORT_STOP_LIVE: {
             const actionTyped = action as SystemRedux.ReportStopLiveAction;
             if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
@@ -2645,7 +2660,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               );
               blotter.PushPullService.UnloadPage(lre.PageName);
             }
-            return next(action);
+            let ret = next(action);
+            // fire the Live Report event for Export Stopped
+            blotter.ReportService.PublishLiveReportUpdatedEvent(
+              actionTyped.ExportDestination,
+              LiveReportTrigger.ExportStopped
+            );
+            return ret;
           }
 
           /*******************

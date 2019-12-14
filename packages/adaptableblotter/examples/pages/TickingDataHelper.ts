@@ -173,10 +173,7 @@ export class TickingDataHelper {
     tickingFrequency: number,
     tradeCount: number
   ) {
-    console.log('hfdsfdffdsfdseresss');
-    console.log(gridOptions);
     if (gridOptions != null && gridOptions.api != null) {
-      console.log('heresss');
       setInterval(() => {
         let tradeId = this.generateRandomInt(1, tradeCount);
 

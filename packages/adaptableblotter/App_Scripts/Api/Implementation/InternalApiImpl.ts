@@ -23,6 +23,7 @@ import { LiveReport } from '../Events/LiveReportUpdated';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions
+
   public startLiveReport(
     report: Report,
     pageName: string,
@@ -32,12 +33,8 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       | ExportDestination.Glue42
   ): void {
     this.dispatchAction(SystemRedux.ReportStartLive(report, pageName, exportDestination));
-    // now raise the event
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
-      exportDestination,
-      LiveReportTrigger.ExportStarted
-    );
   }
+
   public stopLiveReport(
     report: Report,
     exportDestination:
@@ -46,11 +43,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       | ExportDestination.Glue42
   ): void {
     this.dispatchAction(SystemRedux.ReportStopLive(report, exportDestination));
-    // now raise the event
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
-      exportDestination,
-      LiveReportTrigger.ExportStopped
-    );
   }
 
   public getSystemState(): SystemState {

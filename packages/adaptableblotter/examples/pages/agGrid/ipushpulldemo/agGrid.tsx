@@ -41,6 +41,7 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
+  const useTickingData: boolean = false;
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
@@ -61,12 +62,14 @@ function InitAdaptableBlotter() {
 
   const blotterAPI: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  tickingDataHelper.startTickingDataagGridTradesUpdateData(
-    gridOptions,
-    blotterAPI,
-    500,
-    tradeCount
-  );
+  if (useTickingData) {
+    tickingDataHelper.startTickingDataagGridTradesUpdateData(
+      gridOptions,
+      blotterAPI,
+      500,
+      tradeCount
+    );
+  }
 
   blotterAPI.eventApi.on(
     'LiveReportUpdated',
