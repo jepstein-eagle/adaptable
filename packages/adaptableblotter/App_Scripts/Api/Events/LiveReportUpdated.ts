@@ -13,13 +13,13 @@ import { Report } from '../../PredefinedConfig/ExportState';
  *
  * The Adaptable Blotter uses [FDC3](https://fdc3.finos.org/) so you access the object using [FDC3 Context Data Specification](https://fdc3.finos.org/docs/1.0/context-spec) (e.g xxx.data[0].id;)
  *
- *  **Subscribing to the 'LiveReportUpdated' Example**
+ *  **Example: Subscribing to the 'LiveReportUpdated' event**
  *
  * ```ts
  * blotterAPI.eventApi.on(
  *    'LiveReportUpdated',
- *      (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
- *        let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
+ *      (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
+ *        let eventData: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
  *        // do something...
  *   }
  *  );
@@ -45,9 +45,9 @@ export interface LiveReportUpdatedEventData extends AdaptableBlotterEventData {
  *
  * -The `LiveReportTrigger` property defines **why** the event fired.
  *
- * -The `ExportDestination` property reflects which of the Adaptable Blotter Partners is being used (OpenFin, iPushPull or Glue42).
+ * -The `ExportDestination` property reflects which of the Adaptable Blotter Partners is being used (i.e. OpenFin, iPushPull or Glue42).
  *
- * -The `CurrentLiveReports` property lists which are the 'LiveReports' (ie. reports which will update the destination as the data ticks.)
+ * -The `CurrentLiveReports` property lists the 'Live Reports' in the State (ie. reports which will update the destination as the data ticks.)
  *
  */
 export interface LiveReportUpdatedInfo {
