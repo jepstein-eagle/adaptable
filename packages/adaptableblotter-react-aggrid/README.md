@@ -267,7 +267,7 @@ To see AdaptableBlotter.JS in action visit https://demo.adaptableblotter.com whe
 
 ## Help
 
-Further information about AdaptableBlotter.JS is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+Further information about the Adaptable Blotter is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
 Developers can see how to access the Adaptable Blotter programmatically at https://api.adaptableblotter.com
 

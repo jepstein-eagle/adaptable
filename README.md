@@ -10,13 +10,6 @@ The Adaptable Blotter is a powerful HTML5 DataGrid add-on that integrates with t
 
 It offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment. Try it out for yourself at https://demo.adaptableblotter.com.
 
-Grid components supported include:
-
-- ag-Grid by ag-Grid
-- Hypergrid by OpenFin
-- Kendo Grid by Telerik
-- Adaptable Grid by Adaptable Tools
-
 The Adaptable Blotter supports a number of underlying vendor grid components, and new vendor grids are being added all the time.  Please contact us if you would like us to implement your favourite HTML5 grid control.
 
 The Adaptable Blotter is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
@@ -37,7 +30,7 @@ Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for mo
 
 ## Help
 
-Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.
+Further information about the Adaptable Blotter is available at www.adaptabletools.com.
 
 Additionally, there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
