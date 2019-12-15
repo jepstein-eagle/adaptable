@@ -3,11 +3,27 @@ import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Com
 import { Report } from '../../PredefinedConfig/ExportState';
 
 /**
- * Event Args used as part of the **on('LiveReportUpdated)** event.
+ * The Event Args used as part of the **on('LiveReportUpdated')** event.
  *
  * This event is fired whenever OpenFin, Glue42 or iPushPull is connected or disconnected.
  *
  * It is also fired whenever a `Live Report` is started, stopped or updated.
+ *
+ * The main property is the [`LiveReportUpdatedInfo`](_api_events_livereportupdated_.livereportupdatedinfo.html)
+ *
+ * The Adaptable Blotter uses [FDC3](https://fdc3.finos.org/) so you access the object using [FDC3 Context Data Specification](https://fdc3.finos.org/docs/1.0/context-spec) (e.g xxx.data[0].id;)
+ *
+ *  **Subscribing to the 'LiveReportUpdated' Example**
+ *
+ * ```ts
+ * blotterAPI.eventApi.on(
+ *    'LiveReportUpdated',
+ *      (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
+ *        let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
+ *        // do something...
+ *   }
+ *  );
+ * ```
  *
  */
 export interface LiveReportUpdatedEventArgs extends BlotterEventArgs {
