@@ -95,7 +95,7 @@ export class ReportService implements IReportService {
       case ExportDestination.iPushPull:
         return this.blotter.api.partnerApi.isIPushPullRunning();
       case ExportDestination.Glue42:
-        return this.blotter.api.partnerApi.isGlue42Runing();
+        return this.blotter.api.partnerApi.isGlue42Running();
     }
 
     return false;

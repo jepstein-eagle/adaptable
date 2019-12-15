@@ -75,6 +75,23 @@ export interface PartnerState extends DesignTimeState {
  * }
  *
  *  ```
+ * You are also able to listen to iPushPull-related changes by subscribing to the `LiveReportUpdated` event (learn more [here](_api_events_livereportupdated_.livereportupdatedeventargs.html)  )
+ *
+ * This event contains a `ExportDestination` property which you can check to be 'iPushPull'
+ *
+ *  **Example: Subscribing to the 'LiveReportUpdated' event**
+ *
+ * ```ts
+ * blotterAPI.eventApi.on(
+ *    'LiveReportUpdated',
+ *      (eventArgs: LiveReportUpdatedEventArgs) => {
+ *        let reportUpdatedInfo: LiveReportUpdatedInfo = eventArgs.data[0].id;
+ *        if (eventData.ExportDestination === 'iPushPull') {
+ *            // do something...
+ *        }
+ *    }
+ *  );
+ * ```
  *
  */
 export interface IPushPullState {

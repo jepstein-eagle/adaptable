@@ -359,10 +359,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     if (this.blotter.api.partnerApi.isIPushPullRunning()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.iPushPull);
     }
-    if (this.blotter.api.partnerApi.isGlue42Runing()) {
+    if (this.blotter.api.partnerApi.isGlue42Running()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.Glue42);
     }
-    if (this.blotter.api.partnerApi.isOpenFinRuning()) {
+    if (this.blotter.api.partnerApi.isOpenFinRunning()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.OpenfinExcel);
     }
     return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
