@@ -18,8 +18,8 @@ import { Report } from '../../PredefinedConfig/ExportState';
  * ```ts
  * blotterAPI.eventApi.on(
  *    'LiveReportUpdated',
- *      (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
- *        let eventData: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
+ *      (eventArgs: LiveReportUpdatedEventArgs) => {
+ *        let reportUpdatedInfo: LiveReportUpdatedInfo = eventArgs.data[0].id;
  *        // do something...
  *   }
  *  );
