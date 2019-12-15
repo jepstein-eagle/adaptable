@@ -15,7 +15,7 @@ import {
   BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import ipushpull from 'ipushpull-js';
+import ipushpull, { ICreate } from 'ipushpull-js';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
 import {
