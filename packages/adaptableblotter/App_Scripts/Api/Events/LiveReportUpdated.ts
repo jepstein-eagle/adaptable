@@ -19,15 +19,19 @@ export interface LiveReportUpdatedEventData extends AdaptableBlotterEventData {
 }
 
 /**
- * The main args used in the **on('LiveReportUpdated)** event.
+ * The main args object used in the **on('LiveReportUpdated)** event.
  *
- * This event fires when any LiveData is being used (i.e. being sent to Excel via Glue42 or OpenFin or to iPushPull)
+ * This event fires when any LiveData is being used (i.e. a report is being sent to Excel via Glue42 or OpenFin, or it is being sent to iPushPull)
  *
- * It is fired whenever anything changes regarding this.
+ * The event fires when a partner is connected or disconnected, or a LiveReport is started, stopped or updated.
  *
- * The `trigger` property defines **why** the event fired.
+ * The object contains 3 properties:
  *
- * The `exportDestination` property reflects which of the Adaptable Partners is being used (OpenFin, iPushPull or Glue42).
+ * -The `LiveReportTrigger` property defines **why** the event fired.
+ *
+ * -The `ExportDestination` property reflects which of the Adaptable Blotter Partners is being used (OpenFin, iPushPull or Glue42).
+ *
+ * -The `CurrentLiveReports` property lists which are the 'LiveReports' (ie. reports which will update the destination as the data ticks.)
  *
  */
 export interface LiveReportUpdatedInfo {
@@ -40,7 +44,7 @@ export interface LiveReportUpdatedInfo {
     | ExportDestination.Glue42;
 
   /**
-   * What triggered the event being fired.
+   * What triggered the event to be fired.
    *
    * The available trigger values are:
    *
@@ -58,7 +62,7 @@ export interface LiveReportUpdatedInfo {
   LiveReportTrigger: LiveReportTrigger;
 
   /**
-   * What are the current 'Live Reports' in the State.
+   * Which are the current 'Live Reports' in the State.
    *
    */
   CurrentLiveReports: LiveReport[];

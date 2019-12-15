@@ -75,7 +75,7 @@ function InitAdaptableBlotter() {
     'LiveReportUpdated',
     (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
       let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
-      console.log('live report event');
+      console.log('live report event published:');
       console.log(eventData);
     }
   );
