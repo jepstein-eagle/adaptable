@@ -4,7 +4,7 @@ Repository for the multiple AdaptableBlotter.JS packages developed by Adaptable 
 
 - 'Core' HTML5 version (adaptableblotter)
 - React wrapper (adaptableblotter-react)
-- Angular wrapper (adaptableblotter-angular-aggrid).
+- Angular wrapper (adaptableblotter-angular-aggrid)
 
 AdaptableBlotter.JS is a powerful HTML5 DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their grids and blotters.
 
@@ -15,7 +15,7 @@ Grid components supported include:
 - ag-Grid by ag-Grid
 - Hypergrid by OpenFin
 - Kendo Grid by Telerik
-- Adaptable Grid by Adaptable Tools.
+- Adaptable Grid by Adaptable Tools
 
 More grid components are being added all the time so contact us if you would like us to implement your favourite HTML5 grid control.
 

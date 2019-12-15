@@ -4,22 +4,25 @@ const resolve = require('path').resolve;
 
 const envFilePath = resolve(__dirname, '../packages/adaptableblotter/App_Scripts/env.ts'); //'packages', 'adaptableblotter', 'dist', 'env.js');
 
-var ENVS;
-
 try {
-  ENVS = require(envFilePath);
+  if (!fs.existsSync(envFilePath)) {
+    throw `env file not found at ${envFilePath}`;
+  }
 } catch (err) {
   throw err;
 }
 
-function simpleFileReplace(variables, filePath) {
+let regexp = /process\.env\.(\w*)/g;
+
+function simpleFileReplace(filePath) {
   let fileContents = fs.readFileSync(filePath, { encoding: 'utf8' });
 
-  // const THE_ENV = process.env
-  const THE_ENV = variables;
+  let matchAll = fileContents.matchAll(regexp);
 
-  Object.keys(variables).forEach(name => {
-    THE_ENV[name] = 'a';
+  const variables = [...matchAll].map(match => match[1]);
+  const THE_ENV = process.env;
+
+  variables.forEach(name => {
     if (!THE_ENV[name]) {
       throw `Cannot find env variable ${name}`;
     }
@@ -31,4 +34,4 @@ function simpleFileReplace(variables, filePath) {
   fs.writeFileSync(filePath, fileContents, 'utf8');
 }
 
-simpleFileReplace(ENVS, envFilePath);
+simpleFileReplace(envFilePath);
