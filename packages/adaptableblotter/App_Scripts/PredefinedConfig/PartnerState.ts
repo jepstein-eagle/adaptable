@@ -42,8 +42,8 @@ export interface PartnerState extends DesignTimeState {
  *
  *  ------
  *
- *  // 2. immediately thereafter set the config for the ipushpull object as follows:
- * // (note: we will later add the real values for the `api_secret` & `api_key` properties)
+ * // 2. immediately thereafter set the config for the ipushpull object as follows:
+ * // (note: we will  add the real values for the `api_secret` & `api_key` properties)
  *  ipushpull.config.set({
  *    api_secret: '',   // this will be added by the Adaptable Blotter
  *    api_key: '',      // this will be added by the Adaptable Blotter
