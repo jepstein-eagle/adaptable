@@ -175,7 +175,7 @@ export class TickingDataHelper {
   ) {
     if (gridOptions != null && gridOptions.api != null) {
       setInterval(() => {
-        let tradeId = this.generateRandomInt(1, tradeCount);
+        let tradeId = 5; //this.generateRandomInt(1, tradeCount);
 
         const trade: ITrade = { ...gridOptions.rowData[tradeId] };
 
@@ -187,14 +187,14 @@ export class TickingDataHelper {
         const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
         const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
 
-        trade.price = newPrice;
-        trade.bid = bid;
-        trade.ask = ask;
-        trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
-        trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
+        //   trade.price = newPrice;
+        //    trade.bid = bid;
+        //    trade.ask = ask;
+        //    trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
+        //    trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
         trade.notional = this.generateRandomInt(1, 200); //trade.notional === undefined ? 34 : 4;
-        trade.changeOnYear =
-          trade.changeOnYear > 0 ? trade.changeOnYear + 50 : trade.changeOnYear - 50;
+        //    trade.changeOnYear =
+        //      trade.changeOnYear > 0 ? trade.changeOnYear + 50 : trade.changeOnYear - 50;
         blotterApi.gridApi.updateGridData([trade]);
       }, tickingFrequency);
     }

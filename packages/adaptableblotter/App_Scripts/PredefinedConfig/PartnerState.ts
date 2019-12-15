@@ -98,7 +98,9 @@ export interface IPushPullState {
   Password?: string;
 
   /**
-   * How long the Adaptable Blotter should wait (in miliseconds) before sending an update.
+   * How long (in miliseconds) the Adaptable Blotter should throttle when sending an update to iPushPull.
+   *
+   * **Default Value: 2000**
    */
   ThrottleTime?: number;
 }
@@ -112,9 +114,28 @@ export interface Glue42State {
   Glue?: any; // this is the glue object
 
   Glue4Office?: any; // this is the Glue4Office object
+
+  RunLiveReports?: boolean;
+
+  /**
+   * How long (in miliseconds) the Adaptable Blotter should throttle when sending an update to iPushPull.
+   *
+   * **Default Value: 2000**
+   */
+  ThrottleTime?: number;
 }
 
+/**
+ * Describes an IPushPull folder / page
+ */
 export interface IPushPullDomain {
+  /**
+   * the Name of the Domain (or Folder)
+   */
   Name: string;
+
+  /**
+   * The names of the pages within the Domain (Folder)
+   */
   Pages: string[];
 }

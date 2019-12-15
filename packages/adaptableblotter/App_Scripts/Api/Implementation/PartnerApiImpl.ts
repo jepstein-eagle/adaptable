@@ -1,5 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { PartnerAPI } from '../PartnerAPI';
+import * as PartnerRedux from '../../Redux/ActionsReducers/PartnerRedux';
 import {
   PartnerState,
   IPushPullState,
@@ -13,7 +14,7 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
     return this.getBlotterState().Partner || {};
   }
 
-  public getPushPullState(): IPushPullState | undefined {
+  public getIPushPullState(): IPushPullState | undefined {
     return this.getPartnerState().iPushPull;
   }
 
@@ -21,8 +22,8 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
     return this.getPartnerState().Glue42;
   }
 
-  public getPushPullInstance(): any {
-    let pushpullState = this.getPushPullState();
+  public getIPushPullInstance(): any {
+    let pushpullState = this.getIPushPullState();
     if (pushpullState != undefined) {
       return pushpullState.iPushPullInstance;
     } else {
@@ -37,6 +38,9 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   public isIPushPullRunning(): boolean {
     return this.getBlotterState().Grid.IsIPushPullRunning;
   }
+  public isOpenFinRuning(): boolean {
+    return false; // TODO
+  }
 
   public getCurrentLiveReports(): LiveReport[] {
     return this.getBlotterState().System.CurrentLiveReports;
@@ -44,5 +48,21 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
 
   public getIPushPullDomainsPages(): IPushPullDomain[] {
     return this.getBlotterState().System.IPushPullDomainsPages;
+  }
+
+  public getIPushPullThrottleTime(): number | undefined {
+    return this.getIPushPullState().ThrottleTime;
+  }
+
+  public setIPushPullThrottleTime(throttleTime: number): void {
+    this.dispatchAction(PartnerRedux.IPushPullSetThrottleTime(throttleTime));
+  }
+
+  public getGlue42ThrottleTime(): number | undefined {
+    return this.getGlue42State().ThrottleTime;
+  }
+
+  public setGlue42ThrottleTime(throttleTime: number): void {
+    this.dispatchAction(PartnerRedux.Glue42SetThrottleTime(throttleTime));
   }
 }

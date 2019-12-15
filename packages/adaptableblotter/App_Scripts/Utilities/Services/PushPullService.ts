@@ -3,6 +3,7 @@ import LoggingHelper from '../Helpers/LoggingHelper';
 import { IPPStyle } from '../Interface/IPPStyle';
 import { IPushPullService } from './Interface/IPushPullService';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
+import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
 
 const env = require('../../env');
 
@@ -23,7 +24,7 @@ export class PushPullService implements IPushPullService {
 
     this.blotter.api.eventApi.on('BlotterReady', () => {
       if (!this.ppInstance) {
-        let instance = this.blotter.api.partnerApi.getPushPullInstance();
+        let instance = this.blotter.api.partnerApi.getIPushPullInstance();
 
         if (instance) {
           let userPushPullConfig = instance.config;
@@ -184,6 +185,10 @@ export class PushPullService implements IPushPullService {
       const pageIPP = this.pages.get(page);
       pageIPP.Content.canDoDelta = false;
       pageIPP.Content.update(newData, true);
+      this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+        ExportDestination.iPushPull,
+        LiveReportTrigger.LiveDataUpdated
+      );
       pageIPP.push().then(
         () => {
           LoggingHelper.LogAdaptableBlotterSuccess(`Data pushed for iPushPull page : ${page}`);

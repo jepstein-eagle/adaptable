@@ -67,6 +67,8 @@ export const SYSTEM_DEFAULT_SYSTEM_STATUS_TYPE: 'Error' | 'Warning' | 'Success' 
 export const THEME_DEFAULT_CURRENT_THEME: string = LIGHT_THEME;
 // Updated Row
 export const UPDATED_ROW_DEFAULT_MAX_ALERTS_IN_STORE: number = Infinity;
+// Live Report Throttle Time (used in OpenFin, IPushPull, Glue42 etc.)
+export const DEFAULT_LIVE_REPORT_THROTTLE_TIME: number = 2000;
 /**
  * Object Factory
  */

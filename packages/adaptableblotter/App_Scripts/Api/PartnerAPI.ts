@@ -23,12 +23,12 @@ export interface PartnerAPI {
   /**
    * Retrieves the iPushPUll section from the  Partner Config section of the Adaptable Blotter State
    */
-  getPushPullState(): IPushPullState | undefined;
+  getIPushPullState(): IPushPullState | undefined;
 
   /**
    * Retrieves an iPushPull instance (if one has been provided by the User at design time)
    */
-  getPushPullInstance(): any;
+  getIPushPullInstance(): any;
 
   /**
    * Retrieves the iPushPUll section from the  Partner Config section of the Adaptable Blotter State
@@ -39,7 +39,17 @@ export interface PartnerAPI {
 
   isIPushPullRunning(): boolean;
 
+  isOpenFinRuning(): boolean;
+
   getCurrentLiveReports(): LiveReport[];
 
   getIPushPullDomainsPages(): IPushPullDomain[];
+
+  getIPushPullThrottleTime(): number | undefined;
+
+  setIPushPullThrottleTime(throttleTime: number): void;
+
+  getGlue42ThrottleTime(): number | undefined;
+
+  setGlue42ThrottleTime(throttleTime: number): void;
 }

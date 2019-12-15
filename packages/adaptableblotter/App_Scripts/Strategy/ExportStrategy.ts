@@ -1,35 +1,43 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
-import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IExportStrategy } from './Interface/IExportStrategy';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
-import { ExportState, Report } from '../PredefinedConfig/ExportState';
+import { Report } from '../PredefinedConfig/ExportState';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { SELECTED_CELLS_REPORT } from '../Utilities/Constants/GeneralConstants';
+import {
+  SELECTED_CELLS_REPORT,
+  DEFAULT_LIVE_REPORT_THROTTLE_TIME,
+} from '../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { LiveReport } from '../Api/Events/LiveReportUpdated';
 
 // this page needs some thought as currently we only send live data to iPushpull and Excel but soon we will send it to Glue42
 // we need something that will work for all 3 (e.g. all 3 will want to listen to Selected Cells) but allows you to manage throttling time differently for each
 // its very unlikley that the same user will be using iPushPull and Glue42 at the same time but its theoretically possible so we need to handle that.
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
-  private isSendingData = false;
+  private isSendingData: boolean = false;
   private workAroundOpenfinExcelDataDimension: Map<string, { x: number; y: number }> = new Map();
 
-  private throttledRecomputeAndSendLiveExcelEvent = _.throttle(
-    () => this.sendNewDataToLiveExcel(),
-    2000
-  );
+  private throttledRecomputeAndSendLiveExcelEvent: (() => void) & _.Cancelable;
 
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ExportStrategyId, blotter);
+
+    this.blotter.api.eventApi.on('BlotterReady', () => {
+      setTimeout(() => {
+        this.throttledRecomputeAndSendLiveExcelEvent = _.throttle(
+          () => this.sendNewDataToLiveExcel(),
+          this.getThrottleTimeFromState()
+        );
+      }, 1000);
+    });
 
     this.blotter._on('GridReloaded', () => {
       this.scheduleReports();
@@ -76,13 +84,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     });
     // if a piece of data has updated then update any live reports
     this.blotter.DataService.OnDataSourceChanged().Subscribe(() => {
-      this.throttledRecomputeAndSendLiveExcelEvent();
+      this.refreshLiveReports();
     });
     // if the grid has refreshed then update any live reports
     this.blotter._on('GridRefreshed', () => {
-      this.throttledRecomputeAndSendLiveExcelEvent();
+      this.refreshLiveReports();
     });
-    // if cell selection has changed and we have selected cells as one of the reports then update any live reports
+    // if cell selection has changed and we have selected cells as one of the live reports then send updated data
     this.blotter._on('CellsSelected', () => {
       if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
         let liveReport = this.blotter.api.internalApi
@@ -112,8 +120,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
       this.isSendingData = true;
       let promises: Promise<any>[] = [];
-      this.blotter.api.internalApi.getLiveReports().forEach(cle => {
-        if (cle.ExportDestination == ExportDestination.OpenfinExcel) {
+      this.blotter.api.internalApi.getLiveReports().forEach((liveReport: LiveReport) => {
+        if (liveReport.ExportDestination == ExportDestination.OpenfinExcel) {
           promises.push(
             Promise.resolve()
               .then(() => {
@@ -123,9 +131,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                   //and also is incorrrect as until we call setcells again we've lost all values in excel which might upset
                   //some macros
                   let previousDimension = this.workAroundOpenfinExcelDataDimension.get(
-                    cle.Report.Uuid
+                    liveReport.Report.Uuid
                   );
-                  let ReportAsArray: any[] = this.ConvertReportToArray(cle.Report);
+                  let ReportAsArray: any[] = this.ConvertReportToArray(liveReport.Report);
                   let newDimension = { x: ReportAsArray[0].length, y: ReportAsArray.length };
                   if (previousDimension) {
                     let missingNumberOfRows = previousDimension.y - newDimension.y;
@@ -149,7 +157,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                     }
                   }
                   if (ReportAsArray) {
-                    this.workAroundOpenfinExcelDataDimension.set(cle.Report.Uuid, newDimension);
+                    this.workAroundOpenfinExcelDataDimension.set(
+                      liveReport.Report.Uuid,
+                      newDimension
+                    );
                     resolve(ReportAsArray);
                   } else {
                     reject();
@@ -157,30 +168,32 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 });
               })
               .then(ReportAsArray => {
-                return OpenfinHelper.pushData(cle.PageName, ReportAsArray);
+                return OpenfinHelper.pushData(liveReport.PageName, ReportAsArray);
               })
               .catch(reason => {
                 LoggingHelper.LogAdaptableBlotterWarning(
-                  'Live Excel failed to send data for [' + cle.Report + ']',
+                  'Live Excel failed to send data for [' + liveReport.Report + ']',
                   reason
                 );
                 this.blotter.api.internalApi.stopLiveReport(
-                  cle.Report,
+                  liveReport.Report,
                   ExportDestination.OpenfinExcel
                 );
 
                 this.blotter.api.alertApi.showAlertError(
                   'Live Excel Error',
-                  'Failed to send data for [' + cle.Report + ']. This live export has been stopped'
+                  'Failed to send data for [' +
+                    liveReport.Report +
+                    ']. This live export has been stopped'
                 );
               })
           );
-        } else if (cle.ExportDestination == ExportDestination.iPushPull) {
+        } else if (liveReport.ExportDestination == ExportDestination.iPushPull) {
           promises.push(
             Promise.resolve()
               .then(() => {
                 return new Promise<any>((resolve, reject) => {
-                  let ReportAsArray: any[] = this.ConvertReportToArray(cle.Report);
+                  let ReportAsArray: any[] = this.ConvertReportToArray(liveReport.Report);
                   if (ReportAsArray) {
                     resolve(ReportAsArray);
                   } else {
@@ -189,15 +202,15 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 });
               })
               .then(ReportAsArray => {
-                return this.blotter.PushPullService.pushData(cle.PageName, ReportAsArray);
+                return this.blotter.PushPullService.pushData(liveReport.PageName, ReportAsArray);
               })
               .catch(reason => {
                 LoggingHelper.LogAdaptableBlotterWarning(
-                  'Live Excel failed to send data for [' + cle.Report + ']',
+                  'Live Excel failed to send data for [' + liveReport.Report + ']',
                   reason
                 );
                 this.blotter.api.internalApi.stopLiveReport(
-                  cle.Report,
+                  liveReport.Report,
                   ExportDestination.iPushPull
                 );
 
@@ -340,5 +353,53 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     this.blotter.api.exportApi.getScheduledReports().forEach((report: Report) => {
       this.blotter.ScheduleService.AddReportSchedule(report);
     });
+  }
+
+  private getThrottleTimeFromState(): number {
+    if (this.blotter.api.partnerApi.isIPushPullRunning()) {
+      return this.getThrottleDurationForExportDestination(ExportDestination.iPushPull);
+    }
+    if (this.blotter.api.partnerApi.isGlue42Runing()) {
+      return this.getThrottleDurationForExportDestination(ExportDestination.Glue42);
+    }
+    if (this.blotter.api.partnerApi.isOpenFinRuning()) {
+      return this.getThrottleDurationForExportDestination(ExportDestination.OpenfinExcel);
+    }
+    return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+  }
+
+  private getThrottleDurationForExportDestination(exportDestination: ExportDestination): number {
+    switch (exportDestination) {
+      case ExportDestination.OpenfinExcel:
+        return DEFAULT_LIVE_REPORT_THROTTLE_TIME; // hardcoding this for now until we do properly
+      case ExportDestination.Glue42:
+        let glue42ThrottleTime:
+          | number
+          | undefined = this.blotter.api.partnerApi.getGlue42ThrottleTime();
+        return glue42ThrottleTime ? glue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+      case ExportDestination.iPushPull:
+        let iPushPullThrottleTime:
+          | number
+          | undefined = this.blotter.api.partnerApi.getIPushPullThrottleTime();
+        return iPushPullThrottleTime ? iPushPullThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+      default:
+        return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+    }
+  }
+
+  // we assume that we are only ever sending to one destination so we just get the throttle time of the first live report
+  // if thats wrong then its not the end of the world tbh
+  private refreshLiveReports(): void {
+    let firstLiveReport = this.getFirstLiveReport();
+    if (firstLiveReport) {
+      this.throttledRecomputeAndSendLiveExcelEvent();
+    }
+  }
+
+  private getFirstLiveReport(): LiveReport | undefined {
+    if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
+      return this.blotter.api.internalApi.getLiveReports()[0];
+    }
+    return undefined;
   }
 }

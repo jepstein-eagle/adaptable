@@ -41,7 +41,7 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
-  const useTickingData: boolean = false;
+  const useTickingData: boolean = true;
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
@@ -87,6 +87,7 @@ let demoConfig: PredefinedConfig = {
       iPushPullInstance: ipushpull,
       Username: process.env.IPUSHPULL_USERNAME,
       Password: process.env.IPUSHPULL_PASSWORD,
+      ThrottleTime: 200,
     },
   },
   FlashingCell: {

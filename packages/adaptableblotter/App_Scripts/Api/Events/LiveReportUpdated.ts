@@ -3,12 +3,6 @@ import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Com
 import { Report } from '../../PredefinedConfig/ExportState';
 
 /**
- * General comments on LiveReport Updated event here.
- *
- * Do I see them anywhere?
- */
-
-/**
  * Event Args used as part of the **on('LiveReportUpdated)** event.
  *
  * This event is fired whenever OpenFin, Glue42 or iPushPull is connected or disconnected.
