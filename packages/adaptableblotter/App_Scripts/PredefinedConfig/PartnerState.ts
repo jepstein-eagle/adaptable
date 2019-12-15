@@ -77,7 +77,9 @@ export interface PartnerState extends DesignTimeState {
  *  ```
  * You are also able to listen to iPushPull-related changes by subscribing to the `LiveReportUpdated` event (learn more [here](_api_events_livereportupdated_.livereportupdatedeventargs.html)  )
  *
- * This event contains a `ExportDestination` property which you can check to be 'iPushPull'
+ * This event contains a `ExportDestination` property which you can check whether it equals 'iPushPull'.
+ *
+ * The event will tell you the trigger for the event (e.g. connected, dataupdated etc.) as well as provide details of the current live reports.
  *
  *  **Example: Subscribing to the 'LiveReportUpdated' event**
  *

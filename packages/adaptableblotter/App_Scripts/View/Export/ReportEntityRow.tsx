@@ -56,11 +56,11 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     )
       ? {
           onClick: () => this.props.onReportStopLive(ExportDestination.iPushPull),
-          label: 'Stop Sync with iPushPull',
+          label: 'iPushPull (Stop Sync)',
         }
       : {
           onClick: () => this.props.onExport(ExportDestination.iPushPull),
-          label: 'Start Sync with iPushPull',
+          label: 'iPushPull (Start Sync)',
         };
 
     let glue42MenuItem = {
