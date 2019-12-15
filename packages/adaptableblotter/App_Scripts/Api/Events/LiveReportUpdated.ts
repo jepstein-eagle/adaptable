@@ -100,7 +100,7 @@ export interface LiveReportUpdatedInfo {
  * The Adaptable Blotter will fire the `LiveReportUpdated` event each time a Live Report is stopped, started or updated.
  */
 export interface LiveReport {
-  PageName: string; // for Excel this will be the workbook name, for iPushpull the page name.  for Glue42?
+  PageName: string; // for Excel this will be the workbook name, for iPushpull the page name.  for Glue42 the Spreadsheet name.
   Report: Report;
   ExportDestination:
     | ExportDestination.OpenfinExcel
