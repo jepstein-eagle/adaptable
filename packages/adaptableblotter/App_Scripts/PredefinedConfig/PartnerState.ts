@@ -45,8 +45,8 @@ export interface PartnerState extends DesignTimeState {
  * // 2. immediately thereafter set the config for the ipushpull object as follows:
  * // (note: we will  add the real values for the `api_secret` & `api_key` properties)
  *  ipushpull.config.set({
- *    api_secret: '',   // this will be added by the Adaptable Blotter
- *    api_key: '',      // this will be added by the Adaptable Blotter
+ *    api_secret: '',  // will be added by the Adaptable Blotter
+ *    api_key: '',     // will be added by the Adaptable Blotter
  *    api_url: 'https://www.ipushpull.com/api/1.0',
  *    ws_url: 'https://www.ipushpull.com',
  *    web_url: 'https://www.ipushpull.com',
@@ -66,8 +66,8 @@ export interface PartnerState extends DesignTimeState {
  *      Partner: {
  *        iPushPull: {
  *          iPushPullInstance: ipushpull,  // object created above
- *          Username: [YOUR IPUSHPULL USERNAME], // optional, saves being added each time
- *          Password: [YOUR IPUSHPULL PASSWORD], // optional, save sbeing added each time
+ *          Username: [YOUR IPUSHPULL USERNAME], // optional, saves being keyed each time
+ *          Password: [YOUR IPUSHPULL PASSWORD], // optional, save sbeing keyed each time
  *        },
  *      },
  *    }
@@ -79,7 +79,7 @@ export interface PartnerState extends DesignTimeState {
  *
  * This event contains a `ExportDestination` property which you can check whether it equals 'iPushPull'.
  *
- * The event will tell you the trigger for the event (e.g. connected, dataupdated etc.) as well as provide details of the current live reports.
+ * The event also includes a `trigger` property which will tell you what caused the event to fire (e.g. connected, dataupdated etc.) as well as providing details of the current live reports.
  *
  *  **Example: Subscribing to the 'LiveReportUpdated' event**
  *
@@ -117,7 +117,7 @@ export interface IPushPullState {
   Password?: string;
 
   /**
-   * How long (in miliseconds) the Adaptable Blotter should throttle when sending an update to iPushPull.
+   * How long (in miliseconds) the Adaptable Blotter should throttle when sending a data update to iPushPull.
    *
    * **Default Value: 2000**
    */

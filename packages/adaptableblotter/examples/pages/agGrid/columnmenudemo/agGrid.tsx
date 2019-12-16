@@ -19,12 +19,6 @@ import {
   AdaptableBlotterMenuItem,
   ContextMenuInfo,
 } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
-import { ColumnFilter } from '../../../../App_Scripts/PredefinedConfig/ColumnFilterState';
-import { UserMenuItem } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
-import FilterHelper from '../../../../App_Scripts/Utilities/Helpers/FilterHelper';
-import ExpressionHelper from '../../../../App_Scripts/Utilities/Helpers/ExpressionHelper';
-import { DataType } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
-import { GridCell } from '../../../../App_Scripts/Utilities/Interface/Selection/GridCell';
 
 var blotterApi: BlotterApi;
 function InitAdaptableBlotter() {
