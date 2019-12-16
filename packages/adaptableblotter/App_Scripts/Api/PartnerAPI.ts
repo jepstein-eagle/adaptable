@@ -37,6 +37,8 @@ export interface PartnerAPI {
 
   isGlue42Runing(): boolean;
 
+  isGlue42RunLiveData(): boolean;
+
   isIPushPullRunning(): boolean;
 
   isOpenFinRuning(): boolean;
