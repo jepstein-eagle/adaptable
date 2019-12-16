@@ -31,7 +31,7 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
     }
   }
 
-  public isGlue42Runing(): boolean {
+  public isGlue42Running(): boolean {
     return this.getBlotterState().Grid.IsGlue42Running;
   }
 
@@ -42,7 +42,7 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   public isIPushPullRunning(): boolean {
     return this.getBlotterState().Grid.IsIPushPullRunning;
   }
-  public isOpenFinRuning(): boolean {
+  public isOpenFinRunning(): boolean {
     return false; // TODO
   }
 

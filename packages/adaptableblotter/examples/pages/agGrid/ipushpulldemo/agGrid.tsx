@@ -22,6 +22,7 @@ import {
   LiveReportUpdatedEventArgs,
   LiveReportUpdatedInfo,
 } from '../../../../App_Scripts/Api/Events/LiveReportUpdated';
+import eventdemo from '../eventdemo';
 
 ipushpull.config.set({
   api_secret: '',
@@ -75,7 +76,9 @@ function InitAdaptableBlotter() {
     'LiveReportUpdated',
     (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
       let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
-      // do something...
+      if (eventData.ExportDestination == 'iPushPull') {
+        // do something...
+      }
     }
   );
 }

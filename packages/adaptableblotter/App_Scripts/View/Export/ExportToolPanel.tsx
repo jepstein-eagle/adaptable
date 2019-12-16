@@ -146,12 +146,12 @@ class ExportToolPanelComponent extends React.Component<
     ) {
       iPushPullExcelMenuItem = {
         onClick: () => this.props.onReportStopLive(currentReport, ExportDestination.iPushPull),
-        label: 'Stop Sync with iPushPull',
+        label: 'iPushPull (Stop Sync)',
       };
     } else {
       iPushPullExcelMenuItem = {
         onClick: () => this.props.onApplyExport(currentReport, ExportDestination.iPushPull),
-        label: 'Start Sync with iPushPull',
+        label: 'iPushPull (Start Sync)',
       };
     }
 

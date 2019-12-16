@@ -42,8 +42,8 @@ export interface PartnerState extends DesignTimeState {
  *
  *  ------
  *
- *  // 2. immediately thereafter set the config for the ipushpull object as follows:
- * // (note: we will later add the real values for the `api_secret` & `api_key` properties)
+ * // 2. immediately thereafter set the config for the ipushpull object as follows:
+ * // (note: we will  add the real values for the `api_secret` & `api_key` properties)
  *  ipushpull.config.set({
  *    api_secret: '',   // this will be added by the Adaptable Blotter
  *    api_key: '',      // this will be added by the Adaptable Blotter
@@ -75,6 +75,25 @@ export interface PartnerState extends DesignTimeState {
  * }
  *
  *  ```
+ * You are also able to listen to iPushPull-related changes by subscribing to the `LiveReportUpdated` event (learn more [here](_api_events_livereportupdated_.livereportupdatedeventargs.html)  )
+ *
+ * This event contains a `ExportDestination` property which you can check whether it equals 'iPushPull'.
+ *
+ * The event will tell you the trigger for the event (e.g. connected, dataupdated etc.) as well as provide details of the current live reports.
+ *
+ *  **Example: Subscribing to the 'LiveReportUpdated' event**
+ *
+ * ```ts
+ * blotterAPI.eventApi.on(
+ *    'LiveReportUpdated',
+ *      (eventArgs: LiveReportUpdatedEventArgs) => {
+ *        let reportUpdatedInfo: LiveReportUpdatedInfo = eventArgs.data[0].id;
+ *        if (eventData.ExportDestination === 'iPushPull') {
+ *            // do something...
+ *        }
+ *    }
+ *  );
+ * ```
  *
  */
 export interface IPushPullState {

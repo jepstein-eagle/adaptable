@@ -35,13 +35,13 @@ export interface PartnerAPI {
    */
   getGlue42State(): Glue42State | undefined;
 
-  isGlue42Runing(): boolean;
+  isGlue42Running(): boolean;
 
   isGlue42RunLiveData(): boolean;
 
   isIPushPullRunning(): boolean;
 
-  isOpenFinRuning(): boolean;
+  isOpenFinRunning(): boolean;
 
   getCurrentLiveReports(): LiveReport[];
 

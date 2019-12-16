@@ -54,10 +54,7 @@ export interface LiveReportUpdatedInfo {
   /**
    * Which of the Adaptable Blotter partners is being used as the export destination to which to send live data.
    */
-  ExportDestination:
-    | ExportDestination.OpenfinExcel
-    | ExportDestination.iPushPull
-    | ExportDestination.Glue42;
+  ExportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42';
 
   /**
    * What triggered the event to be fired.
