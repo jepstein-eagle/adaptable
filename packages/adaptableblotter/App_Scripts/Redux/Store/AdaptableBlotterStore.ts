@@ -2388,9 +2388,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -2546,56 +2544,57 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               blotter.strategies.get(StrategyConstants.ExportStrategyId)
             );
             const actionTyped = action as ExportRedux.ExportApplyAction;
-            if (
-              actionTyped.ExportDestination == ExportDestination.iPushPull &&
-              blotter.PushPullService.getIPPStatus() != ServiceStatus.Connected
-            ) {
-              let params: StrategyParams = {
-                value: actionTyped.Report.Name,
-                source: 'Other',
-              };
+            if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
+              // for ipushpull we neeed to show a series of pages (login, domain pages etc.) before we actually get to export
+              // so we have a series of actions depending on where we are in the process
+              if (blotter.PushPullService.getIPPStatus() != ServiceStatus.Connected) {
+                let params: StrategyParams = {
+                  value: actionTyped.Report.Name,
+                  source: 'Other',
+                };
 
-              middlewareAPI.dispatch(
-                PopupRedux.PopupShowScreen(
-                  StrategyConstants.ExportStrategyId,
-                  'IPushPullLogin',
-                  params,
-                  { footer: false }
-                )
-              );
-            } else if (
-              actionTyped.ExportDestination == ExportDestination.iPushPull &&
-              !actionTyped.Folder
-            ) {
-              blotter.PushPullService.GetDomainPages()
-                .then((domainpages: IPushPullDomain[]) => {
-                  middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
-                  middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
-                })
-                .catch((err: any) => {
-                  middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(err));
-                });
-              let params: StrategyParams = {
-                value: actionTyped.Report.Name,
-                source: 'Other',
-              };
-              middlewareAPI.dispatch(
-                PopupRedux.PopupShowScreen(
-                  StrategyConstants.ExportStrategyId,
-                  'IPushPullDomainPageSelector',
-                  params,
-                  { footer: false }
-                )
-              );
-            } else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
-              exportStrategy.Export(
-                actionTyped.Report,
-                actionTyped.ExportDestination,
-                actionTyped.Folder,
-                actionTyped.Page
-              );
-              middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowScreen(
+                    StrategyConstants.ExportStrategyId,
+                    'IPushPullLogin',
+                    params,
+                    { footer: false }
+                  )
+                );
+              } else if (!actionTyped.Folder) {
+                blotter.PushPullService.GetDomainPages()
+                  .then((domainpages: IPushPullDomain[]) => {
+                    middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
+                    middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
+                  })
+                  .catch((err: any) => {
+                    middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(err));
+                  });
+                let params: StrategyParams = {
+                  value: actionTyped.Report.Name,
+                  source: 'Other',
+                };
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowScreen(
+                    StrategyConstants.ExportStrategyId,
+                    'IPushPullDomainPageSelector',
+                    params,
+                    { footer: false }
+                  )
+                );
+              } else {
+                exportStrategy.Export(
+                  actionTyped.Report,
+                  actionTyped.ExportDestination,
+                  actionTyped.Folder,
+                  actionTyped.Page
+                );
+                middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+              }
             } else {
+              // for all other destinations we can go straight to export
+              // if its Openfin then we will get the page from the OpenFin Helper
+              // if its Glue then we dont currently get a page but we probably should
               exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination);
               middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             }
@@ -2641,7 +2640,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
           case SystemRedux.REPORT_START_LIVE: {
             let ret = next(action);
-            const actionTyped = action as SystemRedux.ReportStopLiveAction;
+            const actionTyped = action as SystemRedux.ReportStartLiveAction;
             // fire the Live Report event for Export Started
             blotter.ReportService.PublishLiveReportUpdatedEvent(
               actionTyped.ExportDestination,

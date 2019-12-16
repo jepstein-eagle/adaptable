@@ -35,6 +35,10 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
     return this.getBlotterState().Grid.IsGlue42Running;
   }
 
+  public isGlue42RunLiveData(): boolean {
+    return this.getGlue42State().RunLiveData;
+  }
+
   public isIPushPullRunning(): boolean {
     return this.getBlotterState().Grid.IsIPushPullRunning;
   }

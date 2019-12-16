@@ -25,15 +25,15 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   private isSendingData: boolean = false;
   private workAroundOpenfinExcelDataDimension: Map<string, { x: number; y: number }> = new Map();
 
-  private throttledRecomputeAndSendLiveExcelEvent: (() => void) & _.Cancelable;
+  private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
 
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ExportStrategyId, blotter);
 
     this.blotter.api.eventApi.on('BlotterReady', () => {
       setTimeout(() => {
-        this.throttledRecomputeAndSendLiveExcelEvent = _.throttle(
-          () => this.sendNewDataToLiveExcel(),
+        this.throttledRecomputeAndSendLiveDataEvent = _.throttle(
+          () => this.sendNewLiveData(),
           this.getThrottleTimeFromState()
         );
       }, 1000);
@@ -97,7 +97,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
           .getLiveReports()
           .find(x => x.Report.Name == SELECTED_CELLS_REPORT);
         if (liveReport) {
-          this.throttledRecomputeAndSendLiveExcelEvent();
+          this.throttledRecomputeAndSendLiveDataEvent();
         }
       }
     });
@@ -111,10 +111,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     });
   }
 
-  private sendNewDataToLiveExcel() {
-    //we wait for the last sendNewDataToLiveExcel to finish
+  private sendNewLiveData() {
+    //we wait for the last sendNewLiveData to finish
     if (this.isSendingData == true) {
-      this.throttledRecomputeAndSendLiveExcelEvent();
+      this.throttledRecomputeAndSendLiveDataEvent();
       return;
     }
     if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
@@ -193,16 +193,59 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             Promise.resolve()
               .then(() => {
                 return new Promise<any>((resolve, reject) => {
-                  let ReportAsArray: any[] = this.ConvertReportToArray(liveReport.Report);
-                  if (ReportAsArray) {
-                    resolve(ReportAsArray);
+                  let reportAsArray: any[] = this.ConvertReportToArray(liveReport.Report);
+                  if (reportAsArray) {
+                    resolve(reportAsArray);
                   } else {
                     reject('no data in the report');
                   }
                 });
               })
-              .then(ReportAsArray => {
-                return this.blotter.PushPullService.pushData(liveReport.PageName, ReportAsArray);
+              .then(reportAsArray => {
+                return this.blotter.PushPullService.pushData(liveReport.PageName, reportAsArray);
+              })
+              .catch(reason => {
+                LoggingHelper.LogAdaptableBlotterWarning(
+                  'Live Excel failed to send data for [' + liveReport.Report + ']',
+                  reason
+                );
+                this.blotter.api.internalApi.stopLiveReport(
+                  liveReport.Report,
+                  ExportDestination.iPushPull
+                );
+
+                let errorMessage: string = 'Export Failed';
+                if (reason) {
+                  errorMessage += ': ' + reason;
+                }
+                errorMessage += '.  This live export has been cancelled.';
+                this.blotter.api.alertApi.showAlertError('iPushPull Export Error', errorMessage);
+              })
+          );
+        } else if (liveReport.ExportDestination == ExportDestination.Glue42) {
+          promises.push(
+            Promise.resolve()
+              .then(() => {
+                return new Promise<any>((resolve, reject) => {
+                  let reportAsArray: any[] = this.ConvertReportToArray(liveReport.Report);
+
+                  if (reportAsArray) {
+                    resolve(reportAsArray);
+                  } else {
+                    reject('no data in the report');
+                  }
+                });
+              })
+              .then(reportAsArray => {
+                let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+                let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(
+                  liveReport.Report
+                );
+                return this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
+                  reportAsArray,
+                  gridColumns,
+                  primaryKeyValues,
+                ]);
               })
               .catch(reason => {
                 LoggingHelper.LogAdaptableBlotterWarning(
@@ -261,7 +304,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
               ExportDestination.OpenfinExcel
             );
             setTimeout(() => {
-              this.throttledRecomputeAndSendLiveExcelEvent();
+              this.throttledRecomputeAndSendLiveDataEvent();
             }, 500);
           });
         break;
@@ -269,28 +312,36 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         this.blotter.PushPullService.LoadPage(folder, page).then(() => {
           this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
           setTimeout(() => {
-            this.throttledRecomputeAndSendLiveExcelEvent();
+            this.throttledRecomputeAndSendLiveDataEvent();
           }, 500);
         });
         break;
       }
       case ExportDestination.Glue42:
-        let data: any[] = this.ConvertReportToArray(report);
-        let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
-        // for glue42 we need to pass in the pk values of the data also
-        let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(report);
-        try {
-          if (data) {
-            this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
-              data,
-              gridColumns,
-              primaryKeyValues,
-            ]);
+        if (this.blotter.api.partnerApi.isGlue42RunLiveData()) {
+          let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
+          this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.Glue42);
+          setTimeout(() => {
+            this.throttledRecomputeAndSendLiveDataEvent();
+          }, 500);
+        } else {
+          let data: any[] = this.ConvertReportToArray(report);
+          let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+          // for glue42 we need to pass in the pk values of the data also
+          let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(report);
+          try {
+            if (data) {
+              this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
+                data,
+                gridColumns,
+                primaryKeyValues,
+              ]);
+            }
+          } catch (error) {
+            LoggingHelper.LogAdaptableBlotterError(error);
           }
-        } catch (error) {
-          LoggingHelper.LogAdaptableBlotterError(error);
+          break;
         }
-        break;
     }
   }
 
@@ -392,7 +443,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   private refreshLiveReports(): void {
     let firstLiveReport = this.getFirstLiveReport();
     if (firstLiveReport) {
-      this.throttledRecomputeAndSendLiveExcelEvent();
+      this.throttledRecomputeAndSendLiveDataEvent();
     }
   }
 
