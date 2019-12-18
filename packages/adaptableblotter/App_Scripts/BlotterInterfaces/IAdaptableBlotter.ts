@@ -139,7 +139,7 @@ export interface IAdaptableBlotter {
   //emit(eventName: string, data?: any): Promise<any>;
 
   // General
-  createMainMenu(): void;
+  createFunctionMenu(): void;
   reloadGrid(): void;
   redraw(): void;
   redrawRow(rowNode: any): void;

@@ -16,7 +16,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
     super(StrategyConstants.QuickSearchStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.QuickSearchStrategyName,
       ComponentName: ScreenPopups.QuickSearchPopup,

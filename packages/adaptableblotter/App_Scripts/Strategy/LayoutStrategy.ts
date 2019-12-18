@@ -15,7 +15,7 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
     super(StrategyConstants.LayoutStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.LayoutStrategyName,
       ComponentName: ScreenPopups.LayoutPopup,

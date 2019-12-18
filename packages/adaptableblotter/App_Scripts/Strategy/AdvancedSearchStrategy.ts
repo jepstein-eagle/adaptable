@@ -11,7 +11,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase
     super(StrategyConstants.AdvancedSearchStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.AdvancedSearchStrategyName,
       ComponentName: ScreenPopups.AdvancedSearchPopup,

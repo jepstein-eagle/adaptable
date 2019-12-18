@@ -19,7 +19,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ConditionalStyleStrategyName,
       ComponentName: ScreenPopups.ConditionalStylePopup,

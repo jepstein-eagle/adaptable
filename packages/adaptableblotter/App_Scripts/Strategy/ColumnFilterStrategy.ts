@@ -13,7 +13,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     super(StrategyConstants.ColumnFilterStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnFilterStrategyName,
       ComponentName: ScreenPopups.ColumnFilterPopup,

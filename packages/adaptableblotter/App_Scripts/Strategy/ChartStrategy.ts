@@ -44,7 +44,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ChartStrategyName,
       ComponentName: ScreenPopups.ChartPopup,

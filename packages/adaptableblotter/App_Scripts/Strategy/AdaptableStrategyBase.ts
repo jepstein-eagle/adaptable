@@ -49,7 +49,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      */
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     // base class implementation which is empty
     return undefined;
   }

@@ -103,7 +103,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     });
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ExportStrategyName,
       ComponentName: ScreenPopups.ExportPopup,
@@ -283,7 +283,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     report: Report,
     exportDestination: ExportDestination,
     folder: string,
-    page: string
+    page: string,
+    isLiveReport?: boolean
   ): void {
     switch (exportDestination) {
       case ExportDestination.Clipboard:
@@ -309,12 +310,19 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
           });
         break;
       case ExportDestination.iPushPull: {
-        this.blotter.PushPullService.LoadPage(folder, page).then(() => {
-          this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
-          setTimeout(() => {
-            this.throttledRecomputeAndSendLiveDataEvent();
-          }, 500);
-        });
+        if (isLiveReport) {
+          this.blotter.PushPullService.LoadPage(folder, page).then(() => {
+            this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
+            setTimeout(() => {
+              this.throttledRecomputeAndSendLiveDataEvent();
+            }, 500);
+          });
+        } else {
+          let reportAsArray: any[] = this.ConvertReportToArray(report);
+          if (reportAsArray) {
+            this.blotter.PushPullService.pushData(page, reportAsArray);
+          }
+        }
         break;
       }
       case ExportDestination.Glue42:
@@ -322,7 +330,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
           let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
           let reportData: any[] = this.ConvertReportToArray(report);
           this.blotter.Glue42Service.openSheet(reportData).then(() => {
-            alert('we get here');
             this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.Glue42);
             setTimeout(() => {
               this.throttledRecomputeAndSendLiveDataEvent();

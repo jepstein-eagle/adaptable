@@ -12,7 +12,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     super(StrategyConstants.UserFilterStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.UserFilterStrategyName,
       ComponentName: ScreenPopups.UserFilterPopup,

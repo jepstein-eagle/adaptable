@@ -25,7 +25,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
 
   public abstract initStyles(): void;
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.AlertStrategyName,
       ComponentName: ScreenPopups.AlertPopup,

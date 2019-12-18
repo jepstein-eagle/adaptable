@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISystemStatusStrategy } from './Interface/ISystemStatusStrategy';
-import { MenuItemShowPopup } from '../Utilities/MenuItem';
+import * as SystemStatusRedux from '../Redux/ActionsReducers/SystemStatusRedux';
 import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
@@ -16,6 +16,32 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
   private systemStatusState: SystemStatusState;
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.SystemStatusStrategyId, blotter);
+
+    blotter.adaptableBlotterStore.onAny((eventName: string) => {
+      if (
+        eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_UPDATE ||
+        eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_SHOW_ALERT ||
+        eventName == SystemStatusRedux.SYSTEM_STATUS_CLEAR
+      ) {
+        this.doStuff();
+      }
+    });
+  }
+
+  protected doStuff(): void {
+    let systemStatusState = this.blotter.api.systemStatusApi.getSystemStatusState();
+    if (StringExtensions.IsNullOrEmpty(this.systemStatusState.StatusMessage)) {
+      this.blotter.api.systemStatusApi.setSystemStatus(
+        this.systemStatusState.DefaultStatusMessage,
+        this.systemStatusState.StatusType
+      );
+    }
+    if (Helper.objectNotExists(this.systemStatusState.StatusType)) {
+      this.blotter.api.systemStatusApi.setSystemStatus(
+        this.systemStatusState.StatusMessage,
+        this.systemStatusState.DefaultStatusType
+      );
+    }
   }
 
   protected InitState() {
@@ -36,7 +62,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
     }
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SystemStatusStrategyName,
       ComponentName: ScreenPopups.SystemStatusPopup,

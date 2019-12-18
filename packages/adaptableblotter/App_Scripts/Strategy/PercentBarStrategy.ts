@@ -16,7 +16,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     super(StrategyConstants.PercentBarStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PercentBarStrategyName,
       ComponentName: ScreenPopups.PercentBarPopup,

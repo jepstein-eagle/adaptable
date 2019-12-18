@@ -17,7 +17,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     super(StrategyConstants.FlashingCellsStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.FlashingCellsStrategyName,
       ComponentName: ScreenPopups.FlashingCellsPopup,

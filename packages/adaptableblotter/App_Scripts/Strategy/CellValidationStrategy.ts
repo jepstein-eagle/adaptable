@@ -13,7 +13,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase
     super(StrategyConstants.CellValidationStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CellValidationStrategyName,
       ComponentName: ScreenPopups.CellValidationPopup,

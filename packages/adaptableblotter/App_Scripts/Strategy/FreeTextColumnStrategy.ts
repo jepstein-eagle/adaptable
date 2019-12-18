@@ -13,7 +13,7 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.FreeTextColumnStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.FreeTextColumnStrategyName,
       ComponentName: ScreenPopups.FreeTextColumnPopup,

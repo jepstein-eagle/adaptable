@@ -20,7 +20,9 @@ export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
     statusFurtherInformation?: string
   ): void {
     if (StringExtensions.IsNullOrEmpty(statusMessage)) {
-      LoggingHelper.LogAdaptableBlotterWarning('System Status Message cannot be empty.');
+      if (this.blotter.isInitialised) {
+        LoggingHelper.LogAdaptableBlotterWarning('System Status Message cannot be empty.');
+      }
       return;
     }
 

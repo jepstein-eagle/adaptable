@@ -12,7 +12,7 @@ export class StateManagementStrategy extends AdaptableStrategyBase
     super(StrategyConstants.StateManagementStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.StateManagementStrategyName,
       ComponentName: ScreenPopups.StateManagementPopup,

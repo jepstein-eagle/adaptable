@@ -18,7 +18,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     super(StrategyConstants.CellSummaryStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CellSummaryStrategyName,
       ComponentName: ScreenPopups.CellSummaryPopup,

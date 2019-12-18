@@ -26,7 +26,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     super(StrategyConstants.BulkUpdateStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.BulkUpdateStrategyName,
       ComponentName: ScreenPopups.BulkUpdatePopup,

@@ -7,7 +7,8 @@ export interface IExportStrategy extends IStrategy {
     report: Report,
     exportDestination: ExportDestination,
     folder?: string,
-    page?: string
+    page?: string,
+    isLiveReport?: boolean
   ): void;
 
   scheduleReports(): void;

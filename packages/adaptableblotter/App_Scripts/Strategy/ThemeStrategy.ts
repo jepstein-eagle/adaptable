@@ -16,7 +16,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     super(StrategyConstants.ThemeStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ThemeStrategyName,
       ComponentName: ScreenPopups.ThemePopup,

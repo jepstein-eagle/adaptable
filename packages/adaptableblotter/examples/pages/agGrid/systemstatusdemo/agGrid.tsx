@@ -73,11 +73,11 @@ let demoConfig: PredefinedConfig = {
   },
 
   SystemStatus: {
-    // ShowAlert: false,
-    DefaultStatusMessage: 'This is default',
+    ShowAlert: false,
+    DefaultStatusMessage: 'Server is running fine.',
     DefaultStatusType: 'Info',
-    StatusMessage: 'overriding with this',
-    StatusType: 'Error',
+    StatusMessage: 'Please check you have sent End of Day report.',
+    StatusType: 'Warning',
   },
 
   Application: {
