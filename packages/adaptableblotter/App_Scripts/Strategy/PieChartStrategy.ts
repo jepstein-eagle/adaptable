@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IPieChartStrategy } from './Interface/IPieChartStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
@@ -44,20 +44,14 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   // Add a context menu item - ONLY if the cell clicked one which is part of the current cell selection
   // and if the cell selection is a single column
   // not that we pass the primary kev values in the Strategy params
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
-    if (
-      contextMenuInfo.column &&
-      contextMenuInfo.isSelectedCell &&
-      contextMenuInfo.isSingleSelectedColumn
-    ) {
+    if (menuInfo.column && menuInfo.isSelectedCell && menuInfo.isSingleSelectedColumn) {
       let pkValues: any[] = this.blotter.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
         return gc.primaryKeyValue;
       });
       let popUpParams: StrategyParams = {
-        columnId: contextMenuInfo.column.ColumnId,
+        columnId: menuInfo.column.ColumnId,
         primaryKeyValues: pkValues,
         source: 'ContextMenu',
       };

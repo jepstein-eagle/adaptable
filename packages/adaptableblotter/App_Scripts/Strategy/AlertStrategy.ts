@@ -12,7 +12,7 @@ import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
@@ -33,19 +33,17 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     });
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (contextMenuInfo.column && contextMenuInfo.rowNode) {
+    if (menuInfo.column && menuInfo.rowNode) {
       let currentAlerts: AdaptableAlert[] = this.blotter.api.internalApi
         .getAdaptableAlerts()
         .filter(a => a.DataChangedInfo && a.AlertDefinition.AlertProperties.HighlightCell);
       if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
         let relevantAlert: AdaptableAlert = currentAlerts.find(
           a =>
-            a.AlertDefinition.ColumnId == contextMenuInfo.column.ColumnId &&
-            a.DataChangedInfo.RowNode == contextMenuInfo.rowNode
+            a.AlertDefinition.ColumnId == menuInfo.column.ColumnId &&
+            a.DataChangedInfo.RowNode == menuInfo.rowNode
         );
         if (relevantAlert) {
           menuItemShowPopup = this.createColumnMenuItemReduxAction(

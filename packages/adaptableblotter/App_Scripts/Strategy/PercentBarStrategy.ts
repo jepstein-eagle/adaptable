@@ -7,7 +7,7 @@ import { PercentBarState } from '../PredefinedConfig/PercentBarState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
@@ -47,15 +47,13 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     }
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     let percentBarExists: boolean = ArrayExtensions.ContainsItem(
       this.PercentBarState.PercentBars.map(f => f.ColumnId),
-      contextMenuInfo.column.ColumnId
+      menuInfo.column.ColumnId
     );
-    if (contextMenuInfo.column && percentBarExists) {
+    if (menuInfo.column && percentBarExists) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',
       };

@@ -241,11 +241,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(
                   liveReport.Report
                 );
-                return this.blotter.Glue42Service.exportData.apply(this.blotter.Glue42Service, [
+                return this.blotter.Glue42Service.updateData(
                   reportAsArray,
                   gridColumns,
-                  primaryKeyValues,
-                ]);
+                  primaryKeyValues
+                );
               })
               .catch(reason => {
                 LoggingHelper.LogAdaptableBlotterWarning(
@@ -320,10 +320,15 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       case ExportDestination.Glue42:
         if (this.blotter.api.partnerApi.isGlue42RunLiveData()) {
           let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
-          this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.Glue42);
-          setTimeout(() => {
-            this.throttledRecomputeAndSendLiveDataEvent();
-          }, 500);
+          let reportData: any[] = this.ConvertReportToArray(report);
+          this.blotter.Glue42Service.openSheet(reportData).then(() => {
+            alert('we get here');
+            this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.Glue42);
+            setTimeout(() => {
+              this.throttledRecomputeAndSendLiveDataEvent();
+            }, 500);
+          });
+          break;
         } else {
           let data: any[] = this.ConvertReportToArray(report);
           let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();

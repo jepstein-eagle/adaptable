@@ -15,7 +15,7 @@ import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -33,20 +33,18 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     });
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     // not sure if this is right but logic is that
     // if the context cell is one of a selection taht can have smart edit applied
     // then open the smart edit screen
     // perhaps this is faulty logic though?
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (
-      contextMenuInfo.column &&
-      contextMenuInfo.column.DataType == DataType.Number &&
-      !contextMenuInfo.column.ReadOnly &&
-      contextMenuInfo.isSelectedCell &&
-      contextMenuInfo.isSingleSelectedColumn
+      menuInfo.column &&
+      menuInfo.column.DataType == DataType.Number &&
+      !menuInfo.column.ReadOnly &&
+      menuInfo.isSelectedCell &&
+      menuInfo.isSingleSelectedColumn
     ) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',

@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISystemStatusStrategy } from './Interface/ISystemStatusStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
@@ -52,9 +52,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
     );
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let popUpParams: StrategyParams = {
       source: 'ContextMenu',
     };

@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
-
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
-
 import { GridOptions } from 'ag-grid-community';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import {
@@ -17,14 +14,8 @@ import {
 import { ExamplesHelper } from '../../ExamplesHelper';
 import {
   AdaptableBlotterMenuItem,
-  ContextMenuInfo,
+  MenuInfo,
 } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
-import { ColumnFilter } from '../../../../App_Scripts/PredefinedConfig/ColumnFilterState';
-import { UserMenuItem } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
-import FilterHelper from '../../../../App_Scripts/Utilities/Helpers/FilterHelper';
-import ExpressionHelper from '../../../../App_Scripts/Utilities/Helpers/ExpressionHelper';
-import { DataType } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
-import { GridCell } from '../../../../App_Scripts/Utilities/Interface/Selection/GridCell';
 
 var blotterApi: BlotterApi;
 function InitAdaptableBlotter() {
@@ -40,7 +31,18 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   adaptableBlotterOptions.generalOptions = {
-    showAdaptableBlotterToolPanel: true,
+    // showAdaptableBlotterColumnMenu: true,
+    // showAdaptableBlotterColumnMenu: false,
+
+    showAdaptableBlotterColumnMenu: (menuItem: AdaptableBlotterMenuItem, menuInfo: MenuInfo) => {
+      if (
+        menuInfo.column.ColumnId === 'counterparty' &&
+        (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'PieChart')
+      ) {
+        return false;
+      }
+      return true;
+    },
   };
 
   blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
@@ -58,8 +60,8 @@ let demoConfig: PredefinedConfig = {
     ColumnMenuItems: [
       {
         Label: 'Column Menu 1',
-        UserMenuItemClickedFunction: (contextMenuInfo: ContextMenuInfo) => {
-          console.log(contextMenuInfo.column.FriendlyName);
+        UserMenuItemClickedFunction: (menuInfo: MenuInfo) => {
+          console.log(menuInfo.column.FriendlyName);
         },
         Icon:
           '<img border="0" width="15" height="10" src="https://flags.fmcdn.net/data/flags/mini/gb.png"/>',

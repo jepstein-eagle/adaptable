@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 
@@ -37,16 +37,14 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     }
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (this.canCreateColumnMenuItem(contextMenuInfo.column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(menuInfo.column, this.blotter)) {
       let popupParam: StrategyParams = {
-        columnId: contextMenuInfo.column.ColumnId,
+        columnId: menuInfo.column.ColumnId,
         source: 'ContextMenu',
       };
-      if (contextMenuInfo.column) {
+      if (menuInfo.column) {
         menuItemShowPopup = this.createMainMenuItemShowPopup({
           Label: StrategyConstants.ColumnInfoStrategyName,
           ComponentName: ScreenPopups.ColumnInfoPopup,

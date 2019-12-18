@@ -161,7 +161,7 @@ import { IPushPullService } from '../Utilities/Services/Interface/IPushPullServi
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -1130,7 +1130,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
+    return ArrayExtensions.ContainsItem(
+      percentBars.map(pb => pb.ColumnId),
+      columnId
+    );
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2232,13 +2235,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
 
-      const column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      const adaptableColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
         colId,
         this.api.gridApi.getColumns()
       );
-      if (column != null) {
+      if (adaptableColumn != null) {
         this.strategies.forEach(s => {
-          let menuItem: AdaptableBlotterMenuItem = s.addColumnMenuItem(column);
+          let menuItem: AdaptableBlotterMenuItem = s.addColumnMenuItem(adaptableColumn);
           if (menuItem) {
             adaptableBlotterMenuItems.push(menuItem);
           }
@@ -2247,7 +2250,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const homeStrategy: IHomeStrategy = this.strategies.get(
           StrategyConstants.HomeStrategyId
         ) as IHomeStrategy;
-        adaptableBlotterMenuItems.push(...homeStrategy.addBaseColumnMenuItems(column));
+        adaptableBlotterMenuItems.push(...homeStrategy.addBaseColumnMenuItems(adaptableColumn));
       }
 
       let colMenuItems: (string | MenuItemDef)[];
@@ -2260,32 +2263,46 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       colMenuItems.push('separator');
 
-      adaptableBlotterMenuItems.forEach((adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-        let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-          adaptableBlotterMenuItem
-        );
-        colMenuItems.push(menuItem);
-      });
-
-      let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
-      // create a Context Menu Info - all we have is the Column
-      let contextMenuInfo: ContextMenuInfo = {
+      let menuInfo: MenuInfo = {
         gridCell: undefined,
-        column: column,
+        column: adaptableColumn,
         isSelectedCell: false,
         isSingleSelectedColumn: false,
         rowNode: undefined,
         primaryKeyValue: undefined,
       };
+
+      let showAdaptableBlotterColumnMenu = this.blotterOptions.generalOptions!
+        .showAdaptableBlotterColumnMenu;
+
+      if (showAdaptableBlotterColumnMenu == null || showAdaptableBlotterColumnMenu !== false) {
+        adaptableBlotterMenuItems.forEach((adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+          let addContextMenuItem: boolean = true;
+          if (
+            showAdaptableBlotterColumnMenu != null &&
+            typeof showAdaptableBlotterColumnMenu === 'function'
+          ) {
+            addContextMenuItem = showAdaptableBlotterColumnMenu(adaptableBlotterMenuItem, menuInfo);
+          }
+          if (addContextMenuItem) {
+            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+              adaptableBlotterMenuItem
+            );
+            colMenuItems.push(menuItem);
+          }
+        });
+      }
+      let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
+
       if (typeof userColumnMenuItems === 'function') {
-        userColumnMenuItems = userColumnMenuItems(contextMenuInfo);
+        userColumnMenuItems = userColumnMenuItems(menuInfo);
       }
 
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
         userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
           let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
             userMenuItem,
-            contextMenuInfo
+            menuInfo
           );
           colMenuItems.push(menuItem);
         });
@@ -2308,7 +2325,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       } else {
         contextMenuItems = params.defaultItems ? params.defaultItems.slice(0) : [];
       }
-      let contextMenuInfo: ContextMenuInfo;
+      let menuInfo: MenuInfo;
 
       // keep it simple for now - if its a grouped cell then do nothing
       if (!params.node.group) {
@@ -2321,11 +2338,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           );
 
           if (adaptableColumn != null) {
-            contextMenuInfo = this.agGridHelper.getContextMenuInfo(params, adaptableColumn);
+            menuInfo = this.agGridHelper.getMenuInfo(params, adaptableColumn);
             this.strategies.forEach(s => {
-              let menuItem: AdaptableBlotterMenuItem | undefined = s.addContextMenuItem(
-                contextMenuInfo
-              );
+              let menuItem: AdaptableBlotterMenuItem | undefined = s.addContextMenuItem(menuInfo);
               if (menuItem) {
                 adaptableBlotterMenuItems.push(menuItem);
               }
@@ -2350,7 +2365,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     ) {
                       addContextMenuItem = showAdaptableBlotterContextMenu(
                         adaptableBlotterMenuItem,
-                        contextMenuInfo
+                        menuInfo
                       );
                     }
                     if (addContextMenuItem) {
@@ -2369,7 +2384,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               .ContextMenuItems;
 
             if (typeof userContextMenuItems === 'function') {
-              userContextMenuItems = userContextMenuItems(contextMenuInfo);
+              userContextMenuItems = userContextMenuItems(menuInfo);
             }
 
             if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
@@ -2377,7 +2392,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
                 let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
                   userMenuItem,
-                  contextMenuInfo
+                  menuInfo
                 );
                 contextMenuItems.push(menuItem);
               });

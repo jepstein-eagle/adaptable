@@ -45,7 +45,7 @@ export interface AdaptableBlotterMenuItem {
   Icon: string;
 }
 
-export interface ContextMenuInfo {
+export interface MenuInfo {
   // the cell that has been clicked
   gridCell: GridCell;
   // the column in which the cell was clicked
@@ -59,5 +59,6 @@ export interface ContextMenuInfo {
   isSingleSelectedColumn: boolean;
   // this will be the node
   rowNode: any;
+
   primaryKeyValue: any;
 }

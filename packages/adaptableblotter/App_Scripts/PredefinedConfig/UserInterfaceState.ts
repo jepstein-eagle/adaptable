@@ -1,6 +1,6 @@
 import { DesignTimeState } from './DesignTimeState';
 import { IStyle } from './Common/IStyle';
-import { ContextMenuInfo } from './Common/Menu';
+import { MenuInfo } from './Common/Menu';
 
 /**
  * The Predefined Configuration for managing the User Interface
@@ -67,9 +67,9 @@ export interface UserInterfaceState extends DesignTimeState {
    */
   RowStyles?: RowStyle[];
 
-  ColumnMenuItems?: UserMenuItem[] | ((contextMenuInfo: ContextMenuInfo) => UserMenuItem[]);
+  ColumnMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
 
-  ContextMenuItems?: UserMenuItem[] | ((contextMenuInfo: ContextMenuInfo) => UserMenuItem[]);
+  ContextMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
 }
 
 /**
@@ -199,7 +199,7 @@ export interface RowStyle {
 
 export interface UserMenuItem {
   Label: string;
-  UserMenuItemClickedFunction?: (contextMenuInfo: ContextMenuInfo) => void;
+  UserMenuItemClickedFunction?: (menuInfo: MenuInfo) => void;
   Icon?: string;
   SubMenuItems?: UserMenuItem[];
 }

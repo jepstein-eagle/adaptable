@@ -12,6 +12,7 @@ import {
   ColGroupDef,
   Column,
   RowNode,
+  GetMainMenuItemsParams,
 } from 'ag-grid-community';
 import * as Redux from 'redux';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
@@ -62,7 +63,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
-import { ContextMenuInfo, AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
@@ -450,10 +451,7 @@ export class agGridHelper {
     this.blotter.api.eventApi.emit('SelectionChanged', selectionChangedArgs);
   }
 
-  public getContextMenuInfo(
-    params: GetContextMenuItemsParams,
-    column: AdaptableBlotterColumn
-  ): ContextMenuInfo {
+  public getMenuInfo(params: GetContextMenuItemsParams, column: AdaptableBlotterColumn): MenuInfo {
     // lets build a picture of what has been right clicked.  Will take time to get right but lets start
 
     const colId = params.column.getColId();
@@ -504,18 +502,15 @@ export class agGridHelper {
     };
   }
 
-  public createAgGridMenuDefFromUsereMenu(
-    x: UserMenuItem,
-    contextMenuInfo: ContextMenuInfo
-  ): MenuItemDef {
+  public createAgGridMenuDefFromUsereMenu(x: UserMenuItem, menuInfo: MenuInfo): MenuItemDef {
     return {
       name: x.Label,
-      action: () => x.UserMenuItemClickedFunction(contextMenuInfo),
+      action: () => x.UserMenuItemClickedFunction(menuInfo),
       icon: x.Icon,
       subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
         ? undefined
         : x.SubMenuItems!.map(s => {
-            return this.createAgGridMenuDefFromUsereMenu(s, contextMenuInfo);
+            return this.createAgGridMenuDefFromUsereMenu(s, menuInfo);
           }),
     };
   }

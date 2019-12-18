@@ -44,7 +44,7 @@ const initialSystemStatusState: SystemStatusState = {
   StatusMessage: '',
   StatusFurtherInformation: '',
   StatusType: undefined,
-  ShowAlert: true,
+  ShowAlert: false,
 };
 
 export const SystemStatusReducer: Redux.Reducer<SystemStatusState> = (

@@ -6,7 +6,7 @@ import { ISparklineStrategy } from './Interface/ISparklineStrategy';
 
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 
@@ -30,21 +30,19 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
     }
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
     if (
-      contextMenuInfo.column &&
-      contextMenuInfo.isSelectedCell &&
-      contextMenuInfo.column.DataType == DataType.Number &&
-      contextMenuInfo.isSingleSelectedColumn
+      menuInfo.column &&
+      menuInfo.isSelectedCell &&
+      menuInfo.column.DataType == DataType.Number &&
+      menuInfo.isSingleSelectedColumn
     ) {
       let pkValues: any[] = this.blotter.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
         return gc.primaryKeyValue;
       });
       let popUpParams: StrategyParams = {
-        columnId: contextMenuInfo.column.ColumnId,
+        columnId: menuInfo.column.ColumnId,
         primaryKeyValues: pkValues,
         source: 'ContextMenu',
       };

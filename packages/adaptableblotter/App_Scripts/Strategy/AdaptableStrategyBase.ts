@@ -11,7 +11,7 @@ import {
   MenuItemDoReduxAction,
   MenuItemDoClickFunction,
 } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
 /**
@@ -59,9 +59,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     return undefined;
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     // base class implementation which is empty
     return undefined;
   }

@@ -5,7 +5,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
@@ -21,23 +21,20 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     });
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemClickFunction: MenuItemDoClickFunction | undefined = undefined;
 
-    if (contextMenuInfo.column && contextMenuInfo.gridCell != null) {
-      let isMultiple: boolean =
-        contextMenuInfo.isSelectedCell && contextMenuInfo.isSingleSelectedColumn;
+    if (menuInfo.column && menuInfo.gridCell != null) {
+      let isMultiple: boolean = menuInfo.isSelectedCell && menuInfo.isSingleSelectedColumn;
 
       let pkValues: any[] = isMultiple
         ? this.blotter.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
             return gc.primaryKeyValue;
           })
-        : [contextMenuInfo.gridCell.primaryKeyValue];
+        : [menuInfo.gridCell.primaryKeyValue];
       let clickFunction = () => {
         this.blotter.api.columnFilterApi.createColumnFilterForCell(
-          contextMenuInfo.column.ColumnId,
+          menuInfo.column.ColumnId,
           pkValues
         );
       };

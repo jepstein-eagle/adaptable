@@ -10,7 +10,7 @@ import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Comm
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
@@ -26,14 +26,12 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     });
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     let popUpParams: StrategyParams = {
       source: 'ContextMenu',
     };
-    if (contextMenuInfo.column && contextMenuInfo.isSelectedCell) {
+    if (menuInfo.column && menuInfo.isSelectedCell) {
       menuItemShowPopup = this.createMainMenuItemShowPopup({
         Label: 'See Cell Summary',
         ComponentName: ScreenPopups.CellSummaryPopup,

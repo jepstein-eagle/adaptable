@@ -41,6 +41,7 @@ export class Glue42Service implements IGlue42Service {
   private glue4ExcelInstance!: any;
   private glueInstance!: any;
   private excelSyncTimeout?: number;
+  private sheet?: any; // think this is wrong but lets give it a go
   private isExcelStatus: ExcelStatus = {
     msg: '[Excel] Not checked, changed the addin status 0 times!',
     isResolved: false,
@@ -122,6 +123,67 @@ export class Glue42Service implements IGlue42Service {
 
       const sheet = await this.glue4ExcelInstance.openSheet(sheetData);
       sheet.onChanged(
+        this.getSheetChangeHandler(gridColumns, sentRows, exportColumns, primaryKeys)
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async openSheet(data: any[]): Promise<any> {
+    if (!this.glueInstance) {
+      return;
+    }
+
+    try {
+      if (!this.isExcelStatus.isResolved) {
+        try {
+          if (this.glueInstance.appManager) {
+            await this.glueInstance.appManager.application('excel').start();
+          }
+        } catch (error) {}
+      }
+
+      //Work around a mistaken definition
+      const rowTrigger = 'row' as any;
+      const updateTrigger = [rowTrigger];
+      const syncOptions: any = {
+        workbook: 'Glue42 Excel Integration Demo',
+        worksheet: 'Data Sheet',
+        updateTrigger,
+      };
+      if (this.excelSyncTimeout) {
+        syncOptions.timeoutMs = this.excelSyncTimeout;
+      }
+
+      const openSheetConfig: any = {
+        columnConfig: this.createColumns(data),
+        data: [],
+        options: syncOptions,
+      };
+
+      return new Promise<any>((resolve: any, reject: any) => {
+        const page: any = this.glue4ExcelInstance.openSheet(openSheetConfig);
+        this.sheet = page;
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async updateData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys: any[]) {
+    alert('updating data');
+    if (!this.glueInstance) {
+      return;
+    }
+
+    try {
+      let exportColumns: any[] = data[0];
+      let exportData: any[] = this.createData(data, exportColumns);
+      let sentRows: any[] = Helper.cloneObject(exportData);
+      this.sheet.update(exportData);
+
+      this.sheet.onChanged(
         this.getSheetChangeHandler(gridColumns, sentRows, exportColumns, primaryKeys)
       );
     } catch (error) {

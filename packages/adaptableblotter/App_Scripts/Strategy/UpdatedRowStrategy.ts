@@ -5,7 +5,7 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IUpdatedRowStrategy } from './Interface/IUpdatedRowStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
@@ -45,15 +45,13 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
     }
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (contextMenuInfo.column && contextMenuInfo.rowNode) {
+    if (menuInfo.column && menuInfo.rowNode) {
       let updatedRowInfos: UpdatedRowInfo[] = this.blotter.api.internalApi.getUpdatedRowInfos();
       if (ArrayExtensions.IsNotNullOrEmpty(updatedRowInfos)) {
         let updatedRowInfo: UpdatedRowInfo = updatedRowInfos.find(
-          a => a.primaryKeyValue == contextMenuInfo.primaryKeyValue
+          a => a.primaryKeyValue == menuInfo.primaryKeyValue
         );
         if (updatedRowInfo) {
           menuItemShowPopup = this.createColumnMenuItemReduxAction(

@@ -8,7 +8,7 @@ import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlot
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, ContextMenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class SparklineColumnStrategy extends AdaptableStrategyBase
@@ -42,13 +42,11 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     }
   }
 
-  public addContextMenuItem(
-    contextMenuInfo: ContextMenuInfo
-  ): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (
-      contextMenuInfo.column &&
-      this.canCreateColumnMenuItem(contextMenuInfo.column, this.blotter, 'sparkline')
+      menuInfo.column &&
+      this.canCreateColumnMenuItem(menuInfo.column, this.blotter, 'sparkline')
     ) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',
