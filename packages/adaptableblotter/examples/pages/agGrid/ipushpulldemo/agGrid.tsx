@@ -89,7 +89,7 @@ let demoConfig: PredefinedConfig = {
       iPushPullInstance: ipushpull,
       Username: process.env.IPUSHPULL_USERNAME,
       Password: process.env.IPUSHPULL_PASSWORD,
-      ThrottleTime: 200,
+      ThrottleTime: 5000,
     },
   },
   FlashingCell: {
