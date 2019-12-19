@@ -6,7 +6,6 @@ import { QuickSearchState } from '../../PredefinedConfig/QuickSearchState';
 import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceState';
 import { ColumnFilterState } from '../../PredefinedConfig/ColumnFilterState';
 import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
-import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
@@ -44,34 +43,22 @@ export class SearchService implements ISearchService {
 
   protected listenToSearchStoreChanges(): void {
     if (this.blotter.isInitialised) {
-      // Fire Search Changed for Advanced Search (if ServerSearchOption is not 'None')
       if (this.advancedSearchState != this.getAdvancedSearchState()) {
         this.advancedSearchState = this.getAdvancedSearchState();
-        if (this.blotter.blotterOptions.generalOptions!.serverSearchOption != 'None') {
-          this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
-        }
+        this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
       }
 
-      // Fire Search Changed for ColumnFilter (if ServerSearchOption is set too All Search)
       if (this.columnFilterState != this.getColumnFilterState()) {
         this.columnFilterState = this.getColumnFilterState();
-
         setTimeout(() => this.blotter.applyGridFiltering(), 5);
-        if (
-          this.blotter.blotterOptions.generalOptions!.serverSearchOption == 'AllSearch' ||
-          this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearchandSort'
-        ) {
-          this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
-        }
+        this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
       }
 
-      // Fire Search Changed for Data Source in all circumstances (as only makes sense on the server)
       if (this.dataSourceState != this.getDataSourceState()) {
         this.dataSourceState = this.getDataSourceState();
         this.publishSearchChanged(SearchChangedTrigger.DataSource);
       }
 
-      // Fire Search Changed for Quick Search (if ServerSearchOption is set too All Search)
       if (this.quickSearchState != this.getQuickSearchState()) {
         this.quickSearchState = this.getQuickSearchState();
 
@@ -85,13 +72,7 @@ export class SearchService implements ISearchService {
 
         this.blotter.applyGridFiltering();
         this.blotter.redraw();
-
-        if (
-          this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearch' ||
-          this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearchandSort'
-        ) {
-          this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
-        }
+        this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
       }
 
       // Fire Search Changed for User Filter (if ServerSearchOption is not 'None')
@@ -99,18 +80,7 @@ export class SearchService implements ISearchService {
         this.userFilterState = this.getUserFilterState();
 
         setTimeout(() => this.blotter.applyGridFiltering(), 5);
-        if (this.blotter.blotterOptions.generalOptions.serverSearchOption != 'None') {
-          // we cannot stop all extraneous publishing (e.g. we publish if the changed user filter is NOT being used)
-          // but we can at least ensure that we only publish IF there are live searches or column filters
-          if (
-            StringExtensions.IsNotNullOrEmpty(
-              this.blotter.api.advancedSearchApi.getCurrentAdvancedSearchName()
-            ) ||
-            ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.columnFilterApi.getAllColumnFilter())
-          ) {
-            this.publishSearchChanged(SearchChangedTrigger.UserFilter);
-          }
-        }
+        this.publishSearchChanged(SearchChangedTrigger.UserFilter);
 
         // Do Column Sorts and Columns Separately
         if (
@@ -120,10 +90,8 @@ export class SearchService implements ISearchService {
           )
         ) {
           this.columnSorts = this.getGridColumnSorts();
+          this.publishSearchChanged(SearchChangedTrigger.Sort);
 
-          if (this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearchandSort') {
-            this.publishSearchChanged(SearchChangedTrigger.Sort);
-          }
           this.blotter.LayoutService.autoSaveLayout();
         }
 
@@ -171,12 +139,14 @@ export class SearchService implements ISearchService {
   publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
     if (this.blotter.isInitialised) {
       const currentDataSource: DataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
-      const currentAdvancedSearch: AdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
+      const currentAdvancedSearch:
+        | AdvancedSearch
+        | undefined = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
 
       // lets get the searchstate
       const blotterSearchState: BlotterSearchState = {
-        dataSource: currentDataSource == null ? null : currentDataSource,
-        advancedSearch: currentAdvancedSearch == null ? null : currentAdvancedSearch,
+        dataSource: currentDataSource == null ? undefined : currentDataSource,
+        advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
         quickSearch: this.blotter.api.quickSearchApi.getQuickSearchValue(),
         columnFilters: this.blotter.api.columnFilterApi.getAllColumnFilter(),
       };

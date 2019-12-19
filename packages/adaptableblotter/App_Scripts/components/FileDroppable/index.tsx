@@ -9,16 +9,23 @@ import SimpleButton from '../SimpleButton';
 import { Icon } from '../icons';
 import HelpBlock from '../HelpBlock';
 
+import { FileDroppableState } from './FileDroppableState';
+
+import reducer, { ActionTypes, Action } from './reducer';
+
 interface FileDroppableProps extends FlexProps {
   buttonText?: React.ReactNode;
+  fileAccept?: string;
+  icon?: React.ReactNode;
+  helpText?: React.ReactNode;
+  defaultText?: React.ReactNode;
+  dragOverText?: React.ReactNode;
   message?: React.ReactNode;
+  toJSON?: (str: string) => Promise<any> | any;
+  readFile?: (file: File, toJSON?: (str: string) => Promise<any> | any) => Promise<any>;
   onDropSuccess?: (json: any, file: File) => void;
 }
 
-interface FileDroppableState {
-  dragOver: boolean;
-  message?: React.ReactNode;
-}
 const initialState: FileDroppableState = {
   dragOver: false,
   message: null,
@@ -29,13 +36,16 @@ const stop = (e: React.SyntheticEvent) => {
   e.stopPropagation();
 };
 
-const readJSONFile = async (file: File) => {
+const readJSONFile = async (file: File, toJSON?: (str: string) => Promise<any> | any) => {
   const reader = new FileReader();
 
   return new Promise((resolve, reject) => {
     reader.onload = function(e) {
       try {
-        resolve(JSON.parse((e as any).target.result));
+        const fn = toJSON || JSON.parse;
+        const json = fn((e as any).target.result);
+
+        Promise.resolve(json).then(resolve);
       } catch (ex) {
         reject('Invalid JSON');
       }
@@ -47,52 +57,18 @@ const readJSONFile = async (file: File) => {
   });
 };
 
-enum ActionTypes {
-  DRAG_OVER = 'DRAG_OVER',
-  DRAG_OUT = 'DRAG_OUT',
-  SET_INVALID_FILE = 'SET_INVALID_FILE',
-  DROP_SUCCES = 'DROP_SUCCES',
-}
-
-interface Action {
-  type: ActionTypes;
-  payload?: any;
-}
-const reducer: Reducer<FileDroppableState, any> = (state: FileDroppableState, action: Action) => {
-  if (action.type === ActionTypes.DRAG_OVER) {
-    return {
-      ...state,
-      dragOver: true,
-    };
-  }
-
-  if (action.type === ActionTypes.DRAG_OUT) {
-    return {
-      ...state,
-      dragOver: false,
-    };
-  }
-
-  if (action.type === ActionTypes.SET_INVALID_FILE) {
-    return {
-      ...state,
-      message: action.payload.message,
-    };
-  }
-
-  if (action.type === ActionTypes.DROP_SUCCES) {
-    return {
-      ...state,
-      dragOver: false,
-      message: action.payload.message,
-    };
-  }
-
-  return state;
-};
-
 const FileDroppable = (props: FileDroppableProps) => {
-  const { onDropSuccess, message, ...domProps } = props;
+  const {
+    onDropSuccess,
+    message,
+    fileAccept = '.json',
+    helpText = 'The Adaptable Blotter No Code Version',
+    defaultText = 'Click here to select a JSON file to load or drag it here',
+    dragOverText = 'Drop file here to start Adaptable Blotter Wizard',
+    icon = <Icon name="attach-file" size={48} />,
+    ...domProps
+  } = props;
+
   const [state, dispatch] = useReducer<Reducer<FileDroppableState, Action>>(reducer, initialState);
 
   const onDragEnter = (e: React.SyntheticEvent) => {
@@ -134,7 +110,7 @@ const FileDroppable = (props: FileDroppableProps) => {
     if (file) {
       let json: any;
       try {
-        json = await readJSONFile(file);
+        json = await (props.readFile || readJSONFile)(file, props.toJSON);
 
         dispatch({
           type: ActionTypes.DROP_SUCCES,
@@ -165,19 +141,11 @@ const FileDroppable = (props: FileDroppableProps) => {
   let form = (
     <form onSubmit={stop}>
       <SimpleButton style={{ cursor: 'pointer' }} variant="text">
-        <div>
-          {state.dragOver ? (
-            <b>Drop file here to start Adaptable Blotter Wizard</b>
-          ) : (
-            <div>
-              <b>Click here to select a JSON file to load </b> or drag it here
-            </div>
-          )}
-        </div>
+        <div>{state.dragOver ? dragOverText : defaultText}</div>
         <input
           type="file"
           onChange={onDrop}
-          accept=".json"
+          accept={fileAccept}
           style={{
             opacity: 0,
             position: 'absolute',
@@ -214,14 +182,21 @@ const FileDroppable = (props: FileDroppableProps) => {
       ref={domRef}
     >
       {props.children}
-      <Flex flexDirection="column">
-        <Flex flexDirection="column" alignItems="center" margin={2}>
-          <HelpBlock>The Adaptable Blotter No Code Version</HelpBlock>
+
+      {helpText || icon ? (
+        <Flex flexDirection="column">
+          {helpText ? (
+            <Flex flexDirection="column" alignItems="center" margin={2}>
+              <HelpBlock>{helpText}</HelpBlock>
+            </Flex>
+          ) : null}
+          {icon ? (
+            <Flex flexDirection="column" alignItems="center" margin={2}>
+              {icon}
+            </Flex>
+          ) : null}
         </Flex>
-        <Flex flexDirection="column" alignItems="center" margin={2}>
-          <Icon name="attach-file" size={48} />
-        </Flex>
-      </Flex>
+      ) : null}
 
       {msg}
 

@@ -2,7 +2,6 @@
 import { ITrade, ExamplesHelper } from './ExamplesHelper';
 import ArrayExtensions from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
 import { IAdaptableBlotter, BlotterApi } from '../../App_Scripts/types';
-import { grid } from 'styled-system';
 
 export class TickingDataHelper {
   startTickingDatSystemStatus(api: BlotterApi) {
@@ -14,6 +13,94 @@ export class TickingDataHelper {
         api.systemStatusApi.setInfoSystemStatus('nah its ok');
       }
     }, 2000);
+  }
+
+  public testTickingDataagGrid(
+    gridOptions: any,
+    blotterApi: BlotterApi,
+    tickingFrequency: number,
+    tradeCount: number
+  ) {
+    if (gridOptions != null && gridOptions.api != null) {
+      const examplesHelper = new ExamplesHelper();
+      let useBlotterAPIUpdateGridData: boolean = false;
+      let useBlotterAPISetCellValue: boolean = true;
+      let useRowNodeSetDataValue: boolean = false;
+      let useRowNodeSetData: boolean = false;
+      let gridOptionsUpdateRowData: boolean = false;
+
+      setInterval(() => {
+        let tradeId = this.generateRandomInt(1, tradeCount);
+        let rowNode: RowNode = gridOptions.api!.getRowNode(tradeId);
+
+        const trade: ITrade = { ...gridOptions.rowData[tradeId] };
+        const randomInt = this.generateRandomInt(1, 2);
+        const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
+        const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
+        const price = this.roundTo4Dp(trade.price + numberToAdd);
+        const bidOfferSpread = trade.bidOfferSpread;
+        const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
+        const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
+        const bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
+        const bloombergBid = this.roundTo4Dp(bid - directionToAdd);
+        const notional = this.getRandomItem(examplesHelper.getNotionals());
+        const changeOnYear = examplesHelper.getMeaningfulDouble();
+
+        if (useBlotterAPIUpdateGridData) {
+          trade.price = price;
+          trade.bid = bid;
+          trade.ask = ask;
+          trade.bloombergAsk = bloombergAsk;
+          trade.bloombergBid = bloombergBid;
+          trade.notional = notional;
+          trade.changeOnYear = changeOnYear;
+          blotterApi.gridApi.updateGridData([trade]);
+        }
+
+        if (gridOptionsUpdateRowData) {
+          trade.price = price;
+          trade.bid = bid;
+          trade.ask = ask;
+          trade.bloombergAsk = bloombergAsk;
+          trade.bloombergBid = bloombergBid;
+          trade.notional = notional;
+          trade.changeOnYear = changeOnYear;
+          gridOptions.api!.updateRowData({ update: [trade] });
+        }
+
+        if (useBlotterAPISetCellValue) {
+          blotterApi.gridApi.setCellValue('price', price, tradeId);
+          blotterApi.gridApi.setCellValue('bid', bid, tradeId);
+          blotterApi.gridApi.setCellValue('ask', ask, tradeId);
+          blotterApi.gridApi.setCellValue('bloombergAsk', bloombergAsk, tradeId);
+          blotterApi.gridApi.setCellValue('bloombergBid', bloombergBid, tradeId);
+          blotterApi.gridApi.setCellValue('notional', notional, tradeId);
+          blotterApi.gridApi.setCellValue('changeOnYear', changeOnYear, tradeId);
+        }
+
+        if (useRowNodeSetDataValue) {
+          rowNode.setDataValue('price', price);
+          rowNode.setDataValue('bid', bid);
+          rowNode.setDataValue('ask', ask);
+          rowNode.setDataValue('bloombergAsk', bloombergAsk);
+          rowNode.setDataValue('bloombergBid', bloombergBid);
+          rowNode.setDataValue('notional', notional);
+          rowNode.setDataValue('changeOnYear', changeOnYear);
+        }
+
+        if (useRowNodeSetData) {
+          const data = rowNode.data;
+          data.price = price;
+          data.bid = bid;
+          data.ask = ask;
+          data.bloombergAsk = bloombergAsk;
+          data.bloombergBid = bloombergBid;
+          data.notional = notional;
+          data.changeOnYear = changeOnYear;
+          rowNode.setData(data);
+        }
+      }, tickingFrequency);
+    }
   }
 
   startTickingDataagGridSetData(gridOptions: GridOptions) {
@@ -58,7 +145,7 @@ export class TickingDataHelper {
           const randomInt = this.generateRandomInt(1, 2);
           const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
           const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-          const trade = rowNode;
+          const trade: RowNode = rowNode;
           const columnName = 'price';
           const initialPrice = gridOptions.api!.getValue(columnName, trade);
           const newPrice = this.roundTo4Dp(initialPrice + numberToAdd);

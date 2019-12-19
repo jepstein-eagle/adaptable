@@ -1,3 +1,34 @@
+import { GridOptions } from 'ag-grid-community';
+
+import { AdaptableBlotterOptions, IAdaptableBlotter } from '../types';
+
+export type IAdaptableBlotterWizardInitFn = ({
+  gridOptions,
+  adaptableBlotterOptions,
+}: {
+  gridOptions: GridOptions;
+  adaptableBlotterOptions: AdaptableBlotterOptions;
+}) => IAdaptableBlotter | void;
+
+export interface IAdaptableBlotterWizardOptions {
+  onInit?: IAdaptableBlotterWizardInitFn;
+  fileAccept?: string;
+  defaultActionMessage?: React.ReactNode;
+  dragOverActionMessage?: React.ReactNode;
+  fetchData?: () => Promise<any>;
+  fileContentsToJSON?: (str: string) => Promise<any> | any;
+  readFile?: (file: File) => Promise<any>;
+  loadingMessage?: string | null;
+  prepareData?: (
+    data: any,
+    file?: File
+  ) => {
+    columns: string[];
+    data: any[];
+    primaryKey?: string;
+  };
+}
+
 /**
  * When you want to configure an Adaptable Blotter via json file D&D, use this instead of the AdaptableBlotter constructor
  *
@@ -32,7 +63,7 @@
  *
  *      // OR instantiate the AdaptableBlotter yourself with
  *
- *      const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+ *      const adaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
  *      // in case you need a reference to it for later use (api stuff...)
  *      // and return the blotter instance
  *

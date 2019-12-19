@@ -62,7 +62,7 @@ let demoConfig: PredefinedConfig = {
           AlertDefinition: {
             ColumnId: '',
             Range: {
-              
+
             }
             MessageType: 'Info',
             AlertProperties: {

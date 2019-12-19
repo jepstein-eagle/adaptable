@@ -1,5 +1,3 @@
-import * as Redux from 'redux';
-import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ApiBase } from './ApiBase';
 import { GridApi } from '../GridApi';
 import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
@@ -10,9 +8,6 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
-import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-import ObjectFactory from '../../Utilities/ObjectFactory';
-import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { AdaptableBlotterOptions } from '../../types';
 
 export class GridApiImpl extends ApiBase implements GridApi {

@@ -2,17 +2,20 @@
 .ab-FileDroppable {
   $transition: fill .15s ease-in-out, color .15s ease-in-out, outline-offset .15s ease-in-out, background-color .15s linear;
 
+  align-items: center;
+  justify-content: center;
+
   position: relative;
   padding: var(--ab-cmp-file-droppable__padding);
   margin: var(--ab-cmp-file-droppable__margin);
-  
+
   transition: $transition;
 
   outline: var(--ab-cmp-file-droppable__outline);
   outline-offset: var(--ab-cmp-file-droppable__outline-offset);
 
   background: var(--ab-cmp-file-droppable__background);
-  
+
 
   &, input, button, .ab-SimpleButton {
     transition: $transition;
@@ -23,7 +26,7 @@
   &.ab-FileDroppable--drag-over {
     outline-offset: var(--ab-cmp-file-droppable--drag-over__outline-offset);
     outline: var(--ab-cmp-file-droppable--drag-over__outline);
-    
+
     background: var(--ab-cmp-file-droppable--drag-over__background);
     color: var(--ab-cmp-file-droppable--drag-over__color);
 
