@@ -1130,10 +1130,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2681,7 +2678,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public updateRows(dataRows: any[]): void {
-    //  fdasfdafdsfdsafdsafsdafafsd
     this.gridOptions.api!.updateRowData({ update: dataRows });
   }
 

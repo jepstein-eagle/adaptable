@@ -12,6 +12,7 @@ import {
   AdaptableBlotterOptions,
   PredefinedConfig,
   BlotterApi,
+  SearchChangedEventArgs,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import AdaptableBlotter from '../../../../agGrid';
@@ -38,6 +39,11 @@ function InitAdaptableBlotter() {
   };
 
   api = AdaptableBlotter.init(adaptableBlotterOptions);
+
+  api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
+    console.log('search changed');
+    console.log(searchChangedArgs.data[0].id);
+  });
 }
 
 console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');

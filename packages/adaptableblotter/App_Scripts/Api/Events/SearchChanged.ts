@@ -73,19 +73,19 @@ export interface BlotterSearchState {
   /**
    * Current Data Source (if any selected)
    */
-  dataSource: DataSource;
+  dataSource: DataSource | undefined;
   /**
    * Current Advanced Search (if any selected)
    */
-  advancedSearch: AdvancedSearch;
+  advancedSearch: AdvancedSearch | undefined;
   /**
    * Current live Quick Search text. (Value can be null / empty)
    */
-  quickSearch: string;
+  quickSearch: string | undefined;
   /**
    * Details of any column filters currently applied
    */
-  columnFilters: ColumnFilter[];
+  columnFilters: ColumnFilter[] | undefined;
 }
 
 /**

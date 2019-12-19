@@ -378,7 +378,7 @@ export class ExamplesHelper {
     return myString;
   }
 
-  protected getMeaningfulDouble(): number {
+  public getMeaningfulDouble(): number {
     return this.roundTo4Dp(this.generateRandomInt(10, 150) + this.generateRandomDouble());
   }
 
@@ -542,7 +542,7 @@ export class ExamplesHelper {
     return ary[this.generateRandomInt(0, ary.length - 1)];
   }
 
-  protected getNotionals(): number[] {
+  public getNotionals(): number[] {
     let notionals = [1000000, 2000000, 5000000, 7500000, 10000000, undefined];
     return notionals;
   }
