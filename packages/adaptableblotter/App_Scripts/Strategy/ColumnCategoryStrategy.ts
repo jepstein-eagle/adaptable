@@ -11,7 +11,7 @@ export class ColumnCategoryStrategy extends AdaptableStrategyBase
     super(StrategyConstants.ColumnCategoryStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnCategoryStrategyName,
       ComponentName: ScreenPopups.ColumnCategoryPopup,

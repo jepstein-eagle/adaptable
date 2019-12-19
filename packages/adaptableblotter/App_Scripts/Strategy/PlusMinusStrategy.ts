@@ -31,7 +31,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     });
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PlusMinusStrategyName,
       ComponentName: ScreenPopups.PlusMinusPopup,

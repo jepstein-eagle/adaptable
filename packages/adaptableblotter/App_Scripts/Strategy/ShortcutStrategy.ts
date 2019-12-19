@@ -23,7 +23,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     });
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ShortcutStrategyName,
       ComponentName: ScreenPopups.ShortcutPopup,

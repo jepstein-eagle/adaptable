@@ -10,7 +10,7 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
     super(StrategyConstants.CalendarStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CalendarStrategyName,
       ComponentName: ScreenPopups.CalendarsPopup,

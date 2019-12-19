@@ -12,7 +12,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     super(StrategyConstants.ColumnChooserStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnChooserStrategyName,
       ComponentName: ScreenPopups.ColumnChooserPopup,

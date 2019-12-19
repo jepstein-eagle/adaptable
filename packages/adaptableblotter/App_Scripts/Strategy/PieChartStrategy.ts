@@ -14,7 +14,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
     super(StrategyConstants.PieChartStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PieChartStrategyName,
       ComponentName: ScreenPopups.PieChartPopup,

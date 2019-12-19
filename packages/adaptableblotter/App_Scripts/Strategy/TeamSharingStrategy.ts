@@ -11,7 +11,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
     super(StrategyConstants.TeamSharingStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     if (BlotterHelper.isConfigServerEnabled(this.blotter.blotterOptions)) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.TeamSharingStrategyName,

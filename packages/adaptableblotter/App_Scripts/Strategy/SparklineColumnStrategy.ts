@@ -19,7 +19,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.SparklineColumnStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SparklineColumnStrategyName,
       ComponentName: ScreenPopups.SparklineColumnPopup,

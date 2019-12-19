@@ -10,7 +10,7 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
     super(StrategyConstants.DataSourceStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.DataSourceStrategyName,
       ComponentName: ScreenPopups.DataSourcePopup,

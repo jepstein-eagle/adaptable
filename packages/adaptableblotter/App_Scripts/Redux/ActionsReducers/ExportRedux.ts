@@ -17,6 +17,7 @@ export interface ExportApplyAction extends Redux.Action {
   ExportDestination: ExportDestination;
   Folder?: string;
   Page?: string;
+  IsLiveReport?: boolean;
 }
 
 export interface ReportAction extends Redux.Action {
@@ -75,13 +76,15 @@ export const ExportApply = (
   Report: Report,
   ExportDestination: ExportDestination,
   Folder?: string,
-  Page?: string
+  Page?: string,
+  IsLiveReport?: boolean
 ): ExportApplyAction => ({
   type: EXPORT_APPLY,
   Report,
   ExportDestination,
   Folder,
   Page,
+  IsLiveReport,
 });
 
 export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({

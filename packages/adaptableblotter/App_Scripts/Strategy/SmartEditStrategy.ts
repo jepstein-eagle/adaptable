@@ -25,7 +25,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     super(StrategyConstants.SmartEditStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SmartEditStrategyName,
       ComponentName: ScreenPopups.SmartEditPopup,

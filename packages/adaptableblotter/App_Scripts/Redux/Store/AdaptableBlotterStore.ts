@@ -3110,8 +3110,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
             }
 
-            // create the main menu (in the home toolbar)
-            blotter.createMainMenu();
+            // create the functions menu (for use in the home toolbar and the toolpanel)
+            blotter.createFunctionMenu();
 
             return returnAction;
           }

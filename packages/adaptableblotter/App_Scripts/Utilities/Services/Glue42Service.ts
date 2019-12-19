@@ -172,7 +172,6 @@ export class Glue42Service implements IGlue42Service {
   }
 
   async updateData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys: any[]) {
-    alert('updating data');
     if (!this.glueInstance) {
       return;
     }
@@ -183,6 +182,7 @@ export class Glue42Service implements IGlue42Service {
       let sentRows: any[] = Helper.cloneObject(exportData);
       this.sheet.update(exportData);
 
+      // should this be here? or in the openSheet function?
       this.sheet.onChanged(
         this.getSheetChangeHandler(gridColumns, sentRows, exportColumns, primaryKeys)
       );
@@ -195,7 +195,6 @@ export class Glue42Service implements IGlue42Service {
    * Returns a callback, handling the Sheet Changed event.
    * Walks through the delta.
    */
-
   private getSheetChangeHandler(
     gridColumns: AdaptableBlotterColumn[],
     sentRows: any[],

@@ -10,7 +10,7 @@ export class ApplicationStrategy extends AdaptableStrategyBase implements IAppli
     super(StrategyConstants.ApplicationStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ApplicationStrategyName,
       ComponentName: ScreenPopups.ApplicationPopup,

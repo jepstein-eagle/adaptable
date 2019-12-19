@@ -262,18 +262,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private emitter: Emitter;
 
-  // only for our private / internal events as public events are emitted through the EventApi
+  private _currentEditor: ICellEditor;
+
+  // only for our private / internal events used within the Adaptable Blotter
+  // public events are emitted through the EventApi
   _on = (eventName: string, callback: EmitterCallback): (() => void) =>
     this.emitter.on(eventName, callback);
   private _emit = (eventName: string, data?: any): Promise<any> =>
     this.emitter.emit(eventName, data);
 
+  // new static constructor which takes an Adaptable Blotter object and returns the api object
+  // going forward this should be the only way that we instantiate and use the Adaptable Blotter and everything should be accessible via the API
   public static init(blotterOptions: AdaptableBlotterOptions): BlotterApi {
     const ab = new AdaptableBlotter(blotterOptions);
-
     return ab.api;
   }
 
+  // the 'old' constructor which takes an Adaptable Blotter object
+  // this is still used internally but should not be used externally as a preference
   constructor(
     blotterOptions: AdaptableBlotterOptions,
     renderGrid: boolean = true,
@@ -312,7 +318,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // create the services
     this.CalendarService = new CalendarService(this);
-
     this.ValidationService = new ValidationService(this);
     this.StyleService = new StyleService(this);
     this.ChartService = new ChartService(this);
@@ -377,6 +382,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api.internalApi.hideLoadingScreen();
       });
 
+    // render the Blotter (not sure why this would ever be false?)
     if (renderGrid) {
       if (this.abContainerElement == null) {
         this.abContainerElement = this.getBlotterContainerElement();
@@ -386,6 +392,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
       }
     }
+
     // create debounce methods that take a time based on user settings
     this.throttleOnDataChangedUser = _.throttle(
       this.applyDataChange,
@@ -399,9 +406,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private initStore() {
     this.adaptableBlotterStore = new AdaptableBlotterStore(this);
-
     this.adaptableBlotterStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
+        // and reset state also?
         this.api.eventApi.emit('BlotterReady', this.blotterOptions.blotterId);
       }
     });
@@ -462,16 +469,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     }
     // now create the grid itself - we have to do it this way as previously when we instantiated the Grid 'properly' it got created as J.Grid
-
     let grid: any;
     if (this.runtimeConfig && this.runtimeConfig.instantiateGrid) {
       grid = this.runtimeConfig.instantiateGrid(vendorContainer, this.gridOptions);
     } else {
       grid = new Grid(vendorContainer, this.gridOptions);
     }
-
-    // global.grid = grid;
-
     return grid != null;
   }
 
@@ -529,8 +532,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       vendorColDef.floatingFilterComponent = FloatingFilterWrapperFactory(this);
     }
   }
-
-  private _currentEditor: ICellEditor;
 
   public reloadGrid(): void {
     this._emit(PRIVATE_GRID_RELOADED_EVENT);
@@ -611,7 +612,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public setColumnIntoStore() {
-    // if pivotig and we have 'special' columns as a result then do nothing ...
+    // if pivotnig and we have 'special' columns as a result then do nothing ...
     if (this.gridOptions.columnApi.isPivotMode()) {
       if (ArrayExtensions.IsNotNullOrEmpty(this.gridOptions.columnApi.getPivotColumns())) {
         return;
@@ -763,11 +764,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.setCellClassRules(cellClassRules, col.ColumnId, 'QuickSearch');
   }
 
-  public createMainMenu() {
+  public createFunctionMenu() {
     const menuItems: AdaptableBlotterMenuItem[] = [];
     this.strategies.forEach((strat: IStrategy) => {
       strat.setStrategyEntitlement();
-      const menuItem: AdaptableBlotterMenuItem | undefined = strat.addMainMenuItem();
+      const menuItem: AdaptableBlotterMenuItem | undefined = strat.addFunctionMenuItem();
       if (Helper.objectExists(menuItem)) {
         if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
           menuItems.push(menuItem);

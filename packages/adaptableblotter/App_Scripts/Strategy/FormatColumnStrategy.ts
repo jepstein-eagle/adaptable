@@ -14,7 +14,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.FormatColumnStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.FormatColumnStrategyName,
       ComponentName: ScreenPopups.FormatColumnPopup,

@@ -17,7 +17,7 @@ import { AdaptableBlotterMenuItem, MenuInfo } from '../../PredefinedConfig/Commo
 
 export interface IStrategy {
   Id: string;
-  addMainMenuItem(): AdaptableBlotterMenuItem | undefined;
+  addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined;
   initializeWithRedux(): void;
   addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined;
   addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined;

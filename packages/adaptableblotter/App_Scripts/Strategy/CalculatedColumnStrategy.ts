@@ -13,7 +13,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.CalculatedColumnStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CalculatedColumnStrategyName,
       ComponentName: ScreenPopups.CalculatedColumnPopup,

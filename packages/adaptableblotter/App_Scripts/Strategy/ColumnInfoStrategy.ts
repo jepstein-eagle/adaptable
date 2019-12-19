@@ -14,7 +14,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     super(StrategyConstants.ColumnInfoStrategyId, blotter);
   }
 
-  public addMainMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnInfoStrategyName,
       ComponentName: ScreenPopups.ColumnInfoPopup,

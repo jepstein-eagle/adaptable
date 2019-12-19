@@ -22,7 +22,12 @@ import { LiveReport } from '../../Api/Events/LiveReportUpdated';
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
   IPushPullDomainsPages: IPushPullDomain[];
-  onApplyExport: (value: Report, folder: string, page: string) => ExportRedux.ExportApplyAction;
+  onApplyExport: (
+    value: Report,
+    folder: string,
+    page: string,
+    isLiveReport: boolean
+  ) => ExportRedux.ExportApplyAction;
   onCancel: () => void;
   ErrorMsg: string;
   Report: Report;
@@ -132,7 +137,8 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
                   this.props.onApplyExport(
                     this.props.Report,
                     this.state.SelectedFolder || '',
-                    this.state.SelectedPage || ''
+                    this.state.SelectedPage || '',
+                    true // will get later from state or somewhere
                   );
                 }}
               >
@@ -175,7 +181,8 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
       this.props.onApplyExport(
         this.props.Report,
         this.state.SelectedFolder,
-        this.state.SelectedPage
+        this.state.SelectedPage,
+        true // hard coding for now but will get from page later...
       );
     }
   }
