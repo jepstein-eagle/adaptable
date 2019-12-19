@@ -22,7 +22,8 @@
     "ipushpull-js": "^2.18.8",
     "next": "8.0.4",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "xlsx": "^0.15.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.4",

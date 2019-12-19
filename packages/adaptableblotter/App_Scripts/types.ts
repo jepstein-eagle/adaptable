@@ -8,6 +8,10 @@ import { ApplicationToolbarButtonClickedEventArgs } from './Api/Events/Applicati
 import { ToolbarVisibilityChangedEventArgs } from './Api/Events/ToolbarVisibilityChanged';
 import { LiveReportUpdatedEventArgs } from './Api/Events/LiveReportUpdated';
 import { SelectionChangedEventArgs } from './Api/Events/SelectionChanged';
+export {
+  IAdaptableBlotterWizard,
+  IAdaptableBlotterWizardOptions,
+} from './BlotterInterfaces/IAdaptableBlotterWizard';
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { IAdaptableBlotter } from './BlotterInterfaces/IAdaptableBlotter';
 export { BlotterApi } from './Api/BlotterApi';

@@ -1,5 +1,5 @@
-.ab-Wizard {
-  
+.ab-nocode-wizard {
+
   & , *, *:before, *:after {
     box-sizing: border-box;
   }
@@ -9,5 +9,7 @@
 
   background: var(--ab-cmp-wizard__background);
   color: var(--ab-cmp-wizard__color);
-  
+
+  height: 100%;
+
 }

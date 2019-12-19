@@ -17,7 +17,12 @@ import { Flex } from 'rebass';
 interface AdaptableBlotterWizardViewProps {
   adaptableBlotterOptions: AdaptableBlotterOptions;
   onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => any;
+  fileContentsToJSON?: (str: string) => Promise<any> | any;
+  readFile?: (file: File) => Promise<any>;
+  fileAccept?: string;
   loadingMessage?: ReactNode;
+  defaultActionMessage?: ReactNode;
+  dragOverActionMessage?: ReactNode;
   fetchData?: () => Promise<any>;
   prepareData?: (
     data: any,
@@ -180,15 +185,18 @@ const Wizard = (props: AdaptableBlotterWizardViewProps) => {
       {ddEnabled ? (
         <FileDroppable
           key={droppableKey}
-          className={join('ab-Wizard')}
-          alignItems="center"
-          justifyContent="center"
+          className={'ab-nocode-wizard'}
+          toJSON={props.fileContentsToJSON}
+          readFile={props.readFile}
+          fileAccept={props.fileAccept}
           message={state.error}
+          defaultText={props.defaultActionMessage}
+          dragOverText={props.dragOverActionMessage}
           onDropSuccess={onDropSuccess}
         ></FileDroppable>
       ) : (
         <Flex
-          className={join('ab-Wizard')}
+          className={'ab-nocode-wizard'}
           alignItems="center"
           justifyContent="center"
           flexDirection="column"

@@ -100,7 +100,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
           <Panel
             header={this.props.FriendlyName}
             border="none"
-            className="ab-Wizard__steps"
+            className="ab-WizardDialog__steps"
             borderRadius="none"
             variant="primary"
             style={{ flex: 'none' }}
@@ -121,7 +121,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             padding={2}
             backgroundColor="primary"
             alignItems="center"
-            className="ab-Wizard__footer"
+            className="ab-WizardDialog__footer"
           >
             <SimpleButton
               tone="neutral"

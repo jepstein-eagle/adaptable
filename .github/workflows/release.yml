@@ -74,6 +74,14 @@ jobs:
     - name: Building angular
       run: cd packages/adaptableblotter-ng-aggrid && npm run build-prod-no-cleanup
 
+    - name: Executing npm install in nocode
+      run: npm run install-nocode
+      env:
+        CI: true
+
+    - name: Building nocode
+      run: cd packages/adaptableblotter-nocode && npm run build-prod-no-cleanup
+
     - name: Ship it
       uses: "./.github/actions/execute-cmd"
       with:

@@ -147,7 +147,7 @@ import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
-import { IAdaptableBlotterWizard } from '../BlotterInterfaces/IAdaptableBlotterWizard';
+
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { Glue42Service } from '../Utilities/Services/Glue42Service';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
@@ -161,7 +161,9 @@ import { IPushPullService } from '../Utilities/Services/Interface/IPushPullServi
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
+import { IAdaptableBlotterWizard, IAdaptableBlotterWizardOptions,  IAdaptableBlotterWizardInitFn } from '../BlotterInterfaces/IAdaptableBlotterWizard';
 import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -3116,45 +3118,23 @@ import "adaptableblotter/themes/${themeName}.css"`);
   }
 }
 
-type WizardInitFn = ({
-  gridOptions,
-  adaptableBlotterOptions,
-}: {
-  gridOptions: GridOptions;
-  adaptableBlotterOptions: AdaptableBlotterOptions;
-}) => AdaptableBlotter | void;
-
-interface AdaptableBlotterWizardOptions {
-  onInit?: WizardInitFn;
-  fetchData?: () => Promise<any>;
-  loadingMessage?: string | null;
-  prepareData?: (
-    data: any,
-    file?: File
-  ) => {
-    columns: string[];
-    data: any[];
-    primaryKey?: string;
-  };
-}
-
 //export const init = (blotterOptions: AdaptableBlotterOptions): BlotterApi =>
 //  AdaptableBlotter.init(blotterOptions);
 
 export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
-  private init: WizardInitFn;
+  private init: IAdaptableBlotterWizardInitFn;
 
   private adaptableBlotterOptions: AdaptableBlotterOptions;
-  private extraOptions: AdaptableBlotterWizardOptions;
+  private extraOptions: IAdaptableBlotterWizardOptions;
 
   /**
    * @param adaptableBlotterOptions
    */
   constructor(
     adaptableBlotterOptions: AdaptableBlotterOptions,
-    extraOptions: AdaptableBlotterWizardOptions = {}
+    extraOptions: IAdaptableBlotterWizardOptions = {}
   ) {
-    const defaultInit: WizardInitFn = ({ gridOptions, adaptableBlotterOptions }) => {
+    const defaultInit: IAdaptableBlotterWizardInitFn = ({ gridOptions, adaptableBlotterOptions }) => {
       adaptableBlotterOptions.vendorGrid = gridOptions;
 
       return new AdaptableBlotter(adaptableBlotterOptions);
@@ -3189,11 +3169,9 @@ export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
     ReactDOM.render(
       React.createElement(AdaptableBlotterWizardView, {
         adaptableBlotterOptions: this.adaptableBlotterOptions,
-        prepareData: this.extraOptions.prepareData,
-        loadingMessage: this.extraOptions.loadingMessage,
-        fetchData: this.extraOptions.fetchData,
+        ...this.extraOptions,
         onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => {
-          let adaptableBlotter: AdaptableBlotter | void;
+          let adaptableBlotter: IAdaptableBlotter | void;
 
           ReactDOM.unmountComponentAtNode(container!);
 
