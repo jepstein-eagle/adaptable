@@ -10,7 +10,6 @@ import { Visibility } from '../../PredefinedConfig/Common/Enums';
 
 const TOOLPANEL_SET_AVAILABLE_TOOLPANELS = 'TOOLPANEL_SET_AVAILABLE_TOOLPANELS';
 export const TOOLPANEL_SET_TOOLPANELS = 'TOOLPANEL_SET_TOOLPANELS';
-
 const TOOLPANEL_SHOW_TOOLBAR = 'TOOLPANEL_SHOW_TOOLBAR';
 const TOOLPANEL_HIDE_TOOLBAR = 'TOOLPANEL_HIDE_TOOLBAR';
 
@@ -62,29 +61,29 @@ const initialToolPanelState: ToolPanelState = {
   AvailableToolPanels: [
     'AdvancedSearch',
     'Alert',
-    // | 'Bulk Update'
+    'BulkUpdate',
     'CellSummary',
     'Chart',
     'ColumnFilter',
     'Dashboard',
     'Export',
     'Layout',
-    // | 'SmartEdit'
     'QuickSearch',
+    'SmartEdit',
     'SystemStatus',
     'Theme',
   ],
   VisibleToolPanels: [
     'AdvancedSearch',
     'Alert',
-    // | 'Bulk Update'
+    'BulkUpdate',
     'CellSummary',
     'Chart',
     'ColumnFilter',
     'Dashboard',
     'Export',
     'Layout',
-    // | 'SmartEdit'
+    'SmartEdit',
     'QuickSearch',
     'SystemStatus',
     'Theme',

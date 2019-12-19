@@ -114,36 +114,44 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(GridRedux.QuickFilterBarShow());
   }
 
-  public setGlue42On(): void {
-    this.dispatchAction(GridRedux.SetGlue42On());
+  public setGlue42AvailableOn(): void {
+    this.dispatchAction(GridRedux.SetGlue42AvailableOn());
     this.blotter.ReportService.PublishLiveReportUpdatedEvent(
       ExportDestination.Glue42,
       LiveReportTrigger.Connected
     );
   }
 
-  public setGlue42Off(): void {
-    this.dispatchAction(GridRedux.SetGlue42Off());
+  public setGlue42AvailableOff(): void {
+    this.dispatchAction(GridRedux.SetGlue42AvailableOff());
     this.blotter.ReportService.PublishLiveReportUpdatedEvent(
       ExportDestination.Glue42,
       LiveReportTrigger.Disconnected
     );
   }
 
-  public setIPushPullOn(): void {
-    this.dispatchAction(GridRedux.SetIPushPullOn());
+  public setIPushPullAvailableOn(): void {
+    this.dispatchAction(GridRedux.SetIPushPullAvailableOn());
     this.blotter.ReportService.PublishLiveReportUpdatedEvent(
       ExportDestination.iPushPull,
       LiveReportTrigger.Connected
     );
   }
 
-  public setIPushPullOff(): void {
-    this.dispatchAction(GridRedux.SetIPushPullOff());
+  public setIPushPullAvailableOff(): void {
+    this.dispatchAction(GridRedux.SetIPushPullAvailableOff());
     this.blotter.ReportService.PublishLiveReportUpdatedEvent(
       ExportDestination.iPushPull,
       LiveReportTrigger.Disconnected
     );
+  }
+
+  public setLiveReportRunningOn(): void {
+    this.dispatchAction(GridRedux.SetLiveReportRunningOn());
+  }
+
+  public setLiveReportRunningOff(): void {
+    this.dispatchAction(GridRedux.SetLiveReportRunningOff());
   }
 
   public setPivotModeOn(): void {

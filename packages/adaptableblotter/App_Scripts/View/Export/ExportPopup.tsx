@@ -1,12 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -42,12 +40,13 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   CurrentReport: string;
   onApplyExport: (
     report: Report,
-    exportDestination: ExportDestination
+    exportDestination: ExportDestination,
+    isLiveReport: boolean
   ) => ExportRedux.ExportApplyAction;
   onAddReport: (report: Report) => ExportRedux.ReportAddAction;
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
   onReportStopLive: (
-    Report: Report,
+    report: Report,
     exportDestination:
       | ExportDestination.OpenfinExcel
       | ExportDestination.iPushPull
@@ -247,8 +246,12 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     });
   }
 
-  onApplyExport(Report: Report, exportDestination: ExportDestination) {
-    this.props.onApplyExport(Report, exportDestination);
+  onApplyExport(report: Report, exportDestination: ExportDestination) {
+    let isLiveReport: boolean = this.props.Blotter.ReportService.IsReportLiveReport(
+      report,
+      exportDestination
+    );
+    this.props.onApplyExport(report, exportDestination, isLiveReport);
   }
 }
 
@@ -263,23 +266,20 @@ function mapStateToProps(state: AdaptableBlotterState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onApplyExport: (report: Report, exportDestination: ExportDestination) =>
-      dispatch(ExportRedux.ExportApply(report, exportDestination)),
+    onApplyExport: (report: Report, exportDestination: ExportDestination, isLiveReport: boolean) =>
+      dispatch(ExportRedux.ExportApply(report, exportDestination, isLiveReport)),
     onAddReport: (report: Report) => dispatch(ExportRedux.ReportAdd(report)),
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
     onReportStopLive: (
-      Report: Report,
+      report: Report,
       exportDestination:
         | ExportDestination.OpenfinExcel
         | ExportDestination.iPushPull
         | ExportDestination.Glue42
-    ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
+    ) => dispatch(SystemRedux.ReportStopLive(report, exportDestination)),
     onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId)),
   };
 }
 
-export let ExportPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExportPopupComponent);
+export let ExportPopup = connect(mapStateToProps, mapDispatchToProps)(ExportPopupComponent);

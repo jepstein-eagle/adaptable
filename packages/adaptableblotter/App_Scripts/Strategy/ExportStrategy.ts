@@ -282,9 +282,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   public Export(
     report: Report,
     exportDestination: ExportDestination,
+    isLiveReport: boolean,
     folder: string,
-    page: string,
-    isLiveReport?: boolean
+    page: string
   ): void {
     switch (exportDestination) {
       case ExportDestination.Clipboard:
@@ -326,7 +326,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         break;
       }
       case ExportDestination.Glue42:
-        if (this.blotter.api.partnerApi.isGlue42RunLiveData()) {
+        if (isLiveReport) {
           let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
           let reportData: any[] = this.ConvertReportToArray(report);
           this.blotter.Glue42Service.openSheet(reportData).then(() => {
@@ -419,13 +419,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   private getThrottleTimeFromState(): number {
-    if (this.blotter.api.partnerApi.isIPushPullRunning()) {
+    if (this.blotter.api.partnerApi.isIPushPullAvailable()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.iPushPull);
     }
-    if (this.blotter.api.partnerApi.isGlue42Running()) {
+    if (this.blotter.api.partnerApi.isGlue42Available()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.Glue42);
     }
-    if (this.blotter.api.partnerApi.isOpenFinRunning()) {
+    if (this.blotter.api.partnerApi.isOpenFinAvailable()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.OpenfinExcel);
     }
     return DEFAULT_LIVE_REPORT_THROTTLE_TIME;

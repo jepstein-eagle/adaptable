@@ -7,8 +7,6 @@ import {
 } from './ExpressionBuilderColumnValues';
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter';
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges';
-import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
-
 import SimpleButton from '../../components/SimpleButton';
 import {
   DataType,
@@ -326,7 +324,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
     // get filter names
     // first system filters
-    let availableSystemFilterNames: string[] = FilterHelper.GetSystemFiltersForColumn(
+    let availableSystemFilterNames: string[] = this.props.Blotter.FilterService.GetSystemFiltersForColumn(
       selectedColumn,
       this.props.SystemFilters
     ).map(sf => {
@@ -334,7 +332,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     });
 
     // then user filters
-    let availableUserFilterNames: string[] = FilterHelper.GetUserFiltersForColumn(
+    let availableUserFilterNames: string[] = this.props.Blotter.FilterService.GetUserFiltersForColumn(
       selectedColumn,
       this.props.UserFilters
     ).map(uf => {
@@ -342,7 +340,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     });
 
     // then named filters
-    let availableNamedFilterNames: string[] = FilterHelper.GetNamedFiltersForColumn(
+    let availableNamedFilterNames: string[] = this.props.Blotter.FilterService.GetNamedFiltersForColumn(
       selectedColumn,
       this.props.NamedFilters,
       this.props.ColumnCategories
@@ -445,7 +443,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                       <SimpleButton
                         onClick={() => this.onTabChanged(QueryTab.ColumnValue)}
                         marginRight={2}
-                        tone={(firstSelected ? 'accent' : 'neutral') as ('accent' | 'neutral')}
+                        tone={(firstSelected ? 'accent' : 'neutral') as 'accent' | 'neutral'}
                         variant={firstSelected ? 'raised' : 'outlined'}
                       >
                         Column Values
@@ -453,13 +451,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                       <SimpleButton
                         onClick={() => this.onTabChanged(QueryTab.Filter)}
                         marginRight={2}
-                        tone={(secondSelected ? 'accent' : 'neutral') as ('accent' | 'neutral')}
+                        tone={(secondSelected ? 'accent' : 'neutral') as 'accent' | 'neutral'}
                         variant={secondSelected ? 'raised' : 'outlined'}
                       >
                         Filters
                       </SimpleButton>
                       <SimpleButton
-                        tone={thirdSelected ? 'accent' : ('neutral' as ('accent' | 'neutral'))}
+                        tone={thirdSelected ? 'accent' : ('neutral' as 'accent' | 'neutral')}
                         onClick={() => this.onTabChanged(QueryTab.QueryRange)}
                         variant={thirdSelected ? 'raised' : 'outlined'}
                       >

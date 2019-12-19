@@ -6,9 +6,9 @@ export interface IExportStrategy extends IStrategy {
   Export(
     report: Report,
     exportDestination: ExportDestination,
+    isLiveReport: boolean,
     folder?: string,
-    page?: string,
-    isLiveReport?: boolean
+    page?: string
   ): void;
 
   scheduleReports(): void;

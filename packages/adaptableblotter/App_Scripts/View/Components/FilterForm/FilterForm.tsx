@@ -9,7 +9,6 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { FilterHelper } from '../../../Utilities/Helpers/FilterHelper';
 import {
   DataType,
   SortOrder,
@@ -193,24 +192,24 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     let isFilterable: string = this.isFilterable();
 
     // get user filter expressions appropriate for this column
-    let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(
+    let appropriateFilters: string[] = this.props.Blotter.FilterService.GetUserFiltersForColumn(
       this.props.CurrentColumn,
       this.props.UserFilters
     )
       .map(uf => uf.Name)
       .concat(
-        FilterHelper.GetNamedFiltersForColumn(
+        this.props.Blotter.FilterService.GetNamedFiltersForColumn(
           this.props.CurrentColumn,
           this.props.NamedFilters,
           this.props.ColumnCategories
         ).map(nf => nf.Name)
       )
       .concat(
-        FilterHelper.GetSystemFiltersForColumn(
+        this.props.Blotter.FilterService.GetSystemFiltersForColumn(
           this.props.CurrentColumn,
           this.props.SystemFilters
         ).map(sf => sf)
-      ); //.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
+      ); //.filter(u => this.props.Blotter.FilterService.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
 
     let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map(uf => {
       return { RawValue: uf, DisplayValue: uf };
@@ -539,10 +538,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let FilterForm = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FilterFormComponent);
+export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>

@@ -174,7 +174,9 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 break;
             }
             //avoid the 0.0000000000x
-            newValue = parseFloat(newValue.toFixed(12));
+            if (newValue) {
+              newValue = parseFloat(newValue.toFixed(12));
+            }
 
             let dataChangedEvent: DataChangedInfo = {
               OldValue: Number(selectedCell.value),

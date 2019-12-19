@@ -38,6 +38,7 @@ import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';
+import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 
 /**
  *  The only interface for the AdaptableBlotter
@@ -125,6 +126,7 @@ export interface IAdaptableBlotter {
   StyleService: IStyleService;
   LayoutService: ILayoutService;
   StrategyService: IStrategyService;
+  FilterService: IFilterService;
 
   // These are private events only
   _on(eventName: PRIVATE_CELLS_SELECTED_EVENT, callback: () => void): () => void;

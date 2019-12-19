@@ -23,10 +23,10 @@ interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
   IPushPullDomainsPages: IPushPullDomain[];
   onApplyExport: (
-    value: Report,
+    report: Report,
+    isLiveReport: boolean,
     folder: string,
-    page: string,
-    isLiveReport: boolean
+    page: string
   ) => ExportRedux.ExportApplyAction;
   onCancel: () => void;
   ErrorMsg: string;
@@ -37,6 +37,7 @@ interface IPushPullDomainPageSelectorProps
 interface IPushPullDomainPageSelectorInternalState {
   SelectedFolder: string | undefined;
   SelectedPage: string | undefined;
+  IsLiveReport: boolean; // later we should get this from the page...
 }
 
 class IPushPullDomainPageSelectorComponent extends React.Component<
@@ -45,7 +46,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
 > {
   constructor(props: IPushPullDomainPageSelectorProps) {
     super(props);
-    this.state = { SelectedFolder: undefined, SelectedPage: undefined };
+    this.state = { SelectedFolder: undefined, SelectedPage: undefined, IsLiveReport: true };
   }
   render() {
     let itemsElements: any[] = [];
@@ -136,9 +137,9 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
                 onClick={() => {
                   this.props.onApplyExport(
                     this.props.Report,
+                    this.state.IsLiveReport,
                     this.state.SelectedFolder || '',
-                    this.state.SelectedPage || '',
-                    true // will get later from state or somewhere
+                    this.state.SelectedPage || ''
                   );
                 }}
               >
@@ -180,9 +181,9 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
     ) {
       this.props.onApplyExport(
         this.props.Report,
+        this.state.IsLiveReport,
         this.state.SelectedFolder,
-        this.state.SelectedPage,
-        true // hard coding for now but will get from page later...
+        this.state.SelectedPage
       );
     }
   }
@@ -199,8 +200,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: IPushPullDomain
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onApplyExport: (value: Report, folder: string, page: string) =>
-      dispatch(ExportRedux.ExportApply(value, ExportDestination.iPushPull, folder, page)),
+    onApplyExport: (value: Report, isLiveReport: boolean, folder: string, page: string) =>
+      dispatch(
+        ExportRedux.ExportApply(value, ExportDestination.iPushPull, isLiveReport, folder, page)
+      ),
     onCancel: () => {
       dispatch(PopupRedux.PopupHideScreen());
       dispatch(SystemRedux.ReportSetErrorMessage(''));

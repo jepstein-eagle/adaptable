@@ -41,9 +41,9 @@ export class PushPullService implements IPushPullService {
             hsts: false, // strict cors policy
           });
           this.ppInstance = instance;
-          this.blotter.api.internalApi.setIPushPullOn();
+          this.blotter.api.internalApi.setIPushPullAvailableOn();
         } else {
-          this.blotter.api.internalApi.setIPushPullOff();
+          this.blotter.api.internalApi.setIPushPullAvailableOff();
         }
       }
     });

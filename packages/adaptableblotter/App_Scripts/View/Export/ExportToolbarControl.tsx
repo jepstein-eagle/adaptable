@@ -30,6 +30,7 @@ import {
   LiveReport,
   LiveReportUpdatedInfo,
 } from '../../Api/Events/LiveReportUpdated';
+import { isIP } from 'net';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -37,7 +38,8 @@ interface ExportToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
   onApplyExport: (
     Report: Report,
-    exportDestination: ExportDestination
+    exportDestination: ExportDestination,
+    isLiveReport: boolean
   ) => ExportRedux.ExportApplyAction;
   onSelectReport: (Report: string) => ExportRedux.ReportSelectAction;
   onNewReport: () => PopupRedux.PopupShowScreenAction;
@@ -80,15 +82,11 @@ class ExportToolbarControlComponent extends React.Component<
   render(): any {
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
-
     let currentReport: Report = this.props.Blotter.api.exportApi.getCurrentReport();
-
     let savedReport: Report | undefined = allReports.find(s => s.Name == this.props.CurrentReport);
-
     let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport)
       ? selectReportString
       : this.props.CurrentReport;
-
     let availableReports: any[] = allReports.map(report => {
       return {
         label: report.Name,
@@ -97,17 +95,17 @@ class ExportToolbarControlComponent extends React.Component<
     });
 
     let csvMenuItem = {
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV, false),
       label: 'CSV',
     };
 
     let jsonMenuItem = {
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.JSON),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.JSON, false),
       label: 'JSON',
     };
     let clipboardMenuItem = {
       label: 'Clipboard',
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Clipboard),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Clipboard, false),
     };
 
     let openfinExcelMenuItem;
@@ -122,8 +120,8 @@ class ExportToolbarControlComponent extends React.Component<
       };
     } else {
       openfinExcelMenuItem = {
-        onClick: () => this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel),
-
+        onClick: () =>
+          this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel, true),
         label: 'Start Live Openfin Excel',
       };
     }
@@ -139,14 +137,28 @@ class ExportToolbarControlComponent extends React.Component<
         label: 'iPushPull (Stop Sync)',
       };
     } else {
+      let isIPushPullLiveReport = this.props.Blotter.ReportService.IsReportLiveReport(
+        currentReport,
+        ExportDestination.iPushPull
+      );
       iPushPullExcelMenuItem = {
-        onClick: () => this.props.onApplyExport(currentReport, ExportDestination.iPushPull),
+        onClick: () =>
+          this.props.onApplyExport(
+            currentReport,
+            ExportDestination.iPushPull,
+            isIPushPullLiveReport
+          ),
         label: 'iPushPull (Start Sync)',
       };
     }
 
+    let isGlueLiveReport: boolean = this.props.Blotter.ReportService.IsReportLiveReport(
+      currentReport,
+      ExportDestination.Glue42
+    );
     let glue42MenuItem = {
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Glue42),
+      onClick: () =>
+        this.props.onApplyExport(currentReport, ExportDestination.Glue42, isGlueLiveReport),
       label: 'Export to Excel (via Glue42)',
     };
 
@@ -261,8 +273,8 @@ function mapStateToProps(state: AdaptableBlotterState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onApplyExport: (Report: Report, exportDestination: ExportDestination) =>
-      dispatch(ExportRedux.ExportApply(Report, exportDestination)),
+    onApplyExport: (report: Report, exportDestination: ExportDestination, isLiveReport: boolean) =>
+      dispatch(ExportRedux.ExportApply(report, exportDestination, isLiveReport)),
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
     onReportStopLive: (
       Report: Report,

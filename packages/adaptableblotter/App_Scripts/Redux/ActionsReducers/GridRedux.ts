@@ -27,10 +27,12 @@ export const GRID_QUICK_FILTER_BAR_HIDE = 'GRID_QUICK_FILTER_BAR_HIDE';
 export const GRID_REFRESH_CELLS = 'GRID_REFRESH_CELLS';
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
-export const SET_GLUE42_ON = 'SET_GLUE42_ON';
-export const SET_GLUE42_OFF = 'SET_GLUE42_OFF';
-export const SET_IPUSHPULL_ON = 'SET_IPUSHPULL_ON';
-export const SET_IPUSHPULL_OFF = 'SET_IPUSHPULL_OFF';
+export const SET_GLUE42_AVAILABLE_ON = 'SET_GLUE42_AVAILABLE_ON';
+export const SET_GLUE42_AVAILABLE_OFF = 'SET_GLUE42_AVAILABLE_OFF';
+export const SET_IPUSHPULL_AVAILABLE_ON = 'SET_IPUSHPULL_AVAILABLE_ON';
+export const SET_IPUSHPULL_AVAILABLE_OFF = 'SET_IPUSHPULL_AVAILABLE_OFF';
+export const SET_LIVE_REPORT_RUNNING_ON = 'SET_LIVE_REPORT_RUNNING_ON';
+export const SET_LIVE_REPORT_RUNNING_OFF = 'SET_LIVE_REPORT_RUNNING_OFF';
 export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
 export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
 
@@ -96,13 +98,17 @@ export interface SetMainMenuItemsAction extends Redux.Action {
   MenuItems: AdaptableBlotterMenuItem[];
 }
 
-export interface SetGlue42OnAction extends Redux.Action {}
+export interface SetGlue42AvailableOnAction extends Redux.Action {}
 
-export interface SetGlue42OffAction extends Redux.Action {}
+export interface SetGlue42AvailableOffAction extends Redux.Action {}
 
-export interface SetIPushPullOnAction extends Redux.Action {}
+export interface SetIPushPullAvailableOnAction extends Redux.Action {}
 
-export interface SetIPushPullOffAction extends Redux.Action {}
+export interface SetIPushPullAvailableOffAction extends Redux.Action {}
+
+export interface SetLiveReportRunningOnAction extends Redux.Action {}
+
+export interface SetLiveReportRunningOffAction extends Redux.Action {}
 
 export interface SetPivotModeOnAction extends Redux.Action {}
 
@@ -193,20 +199,27 @@ export const FilterFormHide = (): FilterFormHideAction => ({
   type: FILTER_FORM_HIDE,
 });
 
-export const SetGlue42On = (): SetGlue42OnAction => ({
-  type: SET_GLUE42_ON,
+export const SetGlue42AvailableOn = (): SetGlue42AvailableOnAction => ({
+  type: SET_GLUE42_AVAILABLE_ON,
 });
 
-export const SetGlue42Off = (): SetGlue42OffAction => ({
-  type: SET_GLUE42_OFF,
+export const SetGlue42AvailableOff = (): SetGlue42AvailableOffAction => ({
+  type: SET_GLUE42_AVAILABLE_OFF,
 });
 
-export const SetIPushPullOn = (): SetIPushPullOnAction => ({
-  type: SET_IPUSHPULL_ON,
+export const SetIPushPullAvailableOn = (): SetIPushPullAvailableOnAction => ({
+  type: SET_IPUSHPULL_AVAILABLE_ON,
 });
 
-export const SetIPushPullOff = (): SetIPushPullOffAction => ({
-  type: SET_IPUSHPULL_OFF,
+export const SetIPushPullAvailableOff = (): SetIPushPullAvailableOffAction => ({
+  type: SET_IPUSHPULL_AVAILABLE_OFF,
+});
+export const SetLiveReportRunningOn = (): SetLiveReportRunningOnAction => ({
+  type: SET_LIVE_REPORT_RUNNING_ON,
+});
+
+export const SetLiveReportRunningOff = (): SetLiveReportRunningOffAction => ({
+  type: SET_LIVE_REPORT_RUNNING_OFF,
 });
 
 export const SetPivotModeOn = (): SetPivotModeOnAction => ({
@@ -232,8 +245,9 @@ const initialGridState: GridState = {
   CellSummary: null,
   IsQuickFilterActive: false,
   MainMenuItems: EMPTY_ARRAY,
-  IsGlue42Running: false,
-  IsIPushPullRunning: false,
+  IsGlue42Available: false,
+  isIPushPullAvailable: false,
+  IsLiveReportRunning: false,
   IsGridInPivotMode: false,
 };
 
@@ -286,14 +300,18 @@ export const GridReducer: Redux.Reducer<GridState> = (
       );
       return Object.assign({}, state, { MainMenuItems: menuItems });
     }
-    case SET_GLUE42_ON:
-      return Object.assign({}, state, { IsGlue42Running: true });
-    case SET_GLUE42_OFF:
-      return Object.assign({}, state, { IsGlue42Running: false });
-    case SET_IPUSHPULL_ON:
-      return Object.assign({}, state, { IsIPushPullRunning: true });
-    case SET_IPUSHPULL_OFF:
-      return Object.assign({}, state, { IsIPushPullRunning: false });
+    case SET_GLUE42_AVAILABLE_ON:
+      return Object.assign({}, state, { IsGlue42Available: true });
+    case SET_GLUE42_AVAILABLE_OFF:
+      return Object.assign({}, state, { IsGlue42Available: false });
+    case SET_IPUSHPULL_AVAILABLE_ON:
+      return Object.assign({}, state, { isIPushPullAvailable: true });
+    case SET_IPUSHPULL_AVAILABLE_OFF:
+      return Object.assign({}, state, { isIPushPullAvailable: false });
+    case SET_LIVE_REPORT_RUNNING_ON:
+      return Object.assign({}, state, { IsLiveReportRunning: true });
+    case SET_LIVE_REPORT_RUNNING_OFF:
+      return Object.assign({}, state, { IsLiveReportRunning: false });
     case SET_PIVOT_MODE_ON:
       return Object.assign({}, state, { IsGridInPivotMode: true });
     case SET_PIVOT_MODE_OFF:

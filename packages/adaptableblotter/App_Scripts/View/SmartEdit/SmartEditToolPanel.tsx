@@ -1,19 +1,16 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
+import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { StatusColour, MathOperation, AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -26,10 +23,13 @@ import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
-import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
+import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import Dropdown from '../../components/Dropdown';
 
-interface SmartEditToolbarControlComponentProps
-  extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
+interface SmartEditToolPanelComponentProps
+  extends ToolPanelStrategyViewPopupProps<SmartEditToolPanelComponent> {
   SmartEditValue: number | string;
   MathOperation: MathOperation;
   IsValidSelection: boolean;
@@ -46,18 +46,20 @@ interface SmartEditToolbarControlComponentProps
   ) => PopupRedux.PopupShowConfirmationAction;
 }
 
-interface SmartEditToolbarControlComponentState {
+interface SmartEditToolPanelComponentState {
   SelectedColumnId: string;
+  IsMinimised: boolean;
 }
 
-class SmartEditToolbarControlComponent extends React.Component<
-  SmartEditToolbarControlComponentProps,
-  SmartEditToolbarControlComponentState
+class SmartEditToolPanelComponent extends React.Component<
+  SmartEditToolPanelComponentProps,
+  SmartEditToolPanelComponentState
 > {
-  constructor(props: SmartEditToolbarControlComponentProps) {
+  constructor(props: SmartEditToolPanelComponentProps) {
     super(props);
     this.state = {
       SelectedColumnId: '',
+      IsMinimised: true,
     };
   }
   public componentDidMount() {
@@ -87,12 +89,12 @@ class SmartEditToolbarControlComponent extends React.Component<
       />
     );
 
-    let operationMenuItems = EnumExtensions.getNames(MathOperation)
+    let operations: any[] = EnumExtensions.getNames(MathOperation)
       .filter(e => e != MathOperation.Replace)
-      .map((mathOperation: MathOperation, index) => {
+      .map((operation: MathOperation, index) => {
         return {
-          onClick: () => this.props.onSmartEditOperationChange(mathOperation),
-          label: mathOperation as MathOperation,
+          label: operation,
+          value: operation,
         };
       });
 
@@ -107,71 +109,74 @@ class SmartEditToolbarControlComponent extends React.Component<
       this.props.Blotter.api.internalApi.isGridInPivotMode();
 
     let content = (
-      <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>
-        <DropdownButton
-          className="ab-DashboardToolbar__SmartEdit__select"
-          marginRight={2}
-          items={operationMenuItems}
-          columns={['label']}
-          disabled={shouldDisable}
-        >
-          {this.props.MathOperation}
-        </DropdownButton>
-
-        <Input
-          style={{
-            width: '5rem',
-          }}
-          className="ab-DashboardToolbar__SmartEdit__select-value"
-          value={this.props.SmartEditValue.toString()}
-          type="number"
-          placeholder="Enter a Number"
-          step="any"
-          onChange={(e: React.SyntheticEvent) => this.onSmartEditValueChange(e)}
-          disabled={shouldDisable}
-        />
-
-        {!shouldDisable && (
-          <ButtonApply
-            marginLeft={2}
-            onClick={() => this.onApplyClick()}
-            style={applyButtonStyle}
-            className="ab-DashboardToolbar__SmartEdit__apply"
-            tooltip="Apply Smart Edit"
-            disabled={
-              StringExtensions.IsNullOrEmpty(`${this.props.SmartEditValue}`) ||
-              (this.props.PreviewInfo != null &&
-                this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
-            }
-            AccessLevel={this.props.AccessLevel}
+      <Flex flexDirection="column" alignItems="stretch" className="ab-ToolPanel__SmartEdit__wrap">
+        <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__SmartEdit__wrap">
+          <Dropdown
+            style={{ minWidth: 90 }}
+            showEmptyItem={false}
+            className="ab-ToolPanel__SmartEdit__select"
+            value={this.props.MathOperation}
+            options={operations}
+            showClearButton={false}
+            onChange={(mathOperation: string) => this.onchangeMathOperation(mathOperation)}
           />
-        )}
-
-        {!shouldDisable && (
-          <AdaptablePopover
-            headerText="Preview Results"
-            className="ab-DashboardToolbar__SmartEdit__info"
-            //  tooltipText="Preview Results"
-            bodyText={[previewPanel]}
-            MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
-            useButton={true}
-            showEvent={'focus'}
-            hideEvent="blur"
+          <Input
+            style={{
+              width: '5rem',
+            }}
+            className="ab-DashboardToolPanel__SmartEdit__select-value"
+            value={this.props.SmartEditValue.toString()}
+            type="number"
+            placeholder="Enter a Number"
+            step="any"
+            onChange={(e: React.SyntheticEvent) => this.onSmartEditValueChange(e)}
+            disabled={shouldDisable}
           />
-        )}
+        </Flex>
+        <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__SmartEdit_wrap">
+          {!shouldDisable && (
+            <ButtonApply
+              marginLeft={2}
+              onClick={() => this.onApplyClick()}
+              style={applyButtonStyle}
+              className="ab-DashboardPanel__SmartEdit__apply"
+              tooltip="Apply Smart Edit"
+              disabled={
+                StringExtensions.IsNullOrEmpty(`${this.props.SmartEditValue}`) ||
+                (this.props.PreviewInfo != null &&
+                  this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
+              }
+              AccessLevel={this.props.AccessLevel}
+            />
+          )}
+
+          {!shouldDisable && (
+            <AdaptablePopover
+              headerText="Preview Results"
+              className="ab-DashboardPanel__SmartEdit__info"
+              //  tooltipText="Preview Results"
+              bodyText={[previewPanel]}
+              MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
+              useButton={true}
+              showEvent={'focus'}
+              hideEvent="blur"
+            />
+          )}
+        </Flex>
       </Flex>
     );
 
     return (
-      <PanelDashboard
-        className="ab-DashboardToolbar__SmartEdit"
+      <PanelToolPanel
+        className="ab-ToolPanel__SmartEdit"
         headerText={StrategyConstants.SmartEditStrategyName}
-        glyphicon={StrategyConstants.SmartEditGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.SmartEditStrategyId)}
         onConfigure={() => this.props.onConfigure()}
+        onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
+        isMinimised={this.state.IsMinimised}
+        onClose={() => this.props.onClose('SmartEdit')}
       >
-        {content}
-      </PanelDashboard>
+        {this.state.IsMinimised ? null : content}
+      </PanelToolPanel>
     );
   }
 
@@ -214,6 +219,10 @@ class SmartEditToolbarControlComponent extends React.Component<
     this.props.onConfirmWarningCellValidation(confirmation);
   }
 
+  private onchangeMathOperation(mathOperation: string) {
+    this.props.onSmartEditOperationChange(mathOperation as MathOperation);
+  }
+
   onApplySmartEdit(): any {
     this.props.onApplySmartEdit();
   }
@@ -237,8 +246,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
+    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+      dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(
@@ -249,7 +258,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let SmartEditToolbarControl = connect(
+export let SmartEditToolPanel = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SmartEditToolbarControlComponent);
+)(SmartEditToolPanelComponent);

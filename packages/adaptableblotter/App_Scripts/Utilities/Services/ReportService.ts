@@ -24,6 +24,7 @@ import BlotterHelper from '../Helpers/BlotterHelper';
 import {
   LiveReportUpdatedEventArgs,
   LiveReportUpdatedInfo,
+  LiveReport,
 } from '../../Api/Events/LiveReportUpdated';
 
 export const ALL_DATA_REPORT = 'All Data';
@@ -93,9 +94,9 @@ export class ReportService implements IReportService {
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
       case ExportDestination.iPushPull:
-        return this.blotter.api.partnerApi.isIPushPullRunning();
+        return this.blotter.api.partnerApi.isIPushPullAvailable();
       case ExportDestination.Glue42:
-        return this.blotter.api.partnerApi.isGlue42Running();
+        return this.blotter.api.partnerApi.isGlue42Available();
     }
 
     return false;
@@ -326,9 +327,27 @@ export class ReportService implements IReportService {
       CurrentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
     };
     const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = BlotterHelper.createFDC3Message(
-      'IPushPull Updated Args',
+      'Live Report Updated Args',
       liveReportUpdatedInfo
     );
     this.blotter.api.eventApi.emit('LiveReportUpdated', liveReportUpdatedEventArgs);
+  }
+
+  public IsReportLiveReport(report: Report, exportDestination: ExportDestination): boolean {
+    if (!report) {
+      return false;
+    }
+    switch (exportDestination) {
+      case (ExportDestination.CSV, ExportDestination.Clipboard, ExportDestination.JSON):
+        return false;
+      case ExportDestination.OpenfinExcel:
+        return true;
+      case ExportDestination.iPushPull:
+        let liveReports: LiveReport[] = this.blotter.api.internalApi.getLiveReports();
+        let currentLiveReport = liveReports.find(lr => lr.Report.Name == report.Name);
+        return currentLiveReport != null;
+      case ExportDestination.Glue42:
+        return this.blotter.api.partnerApi.isGlue42RunLiveData();
+    }
   }
 }

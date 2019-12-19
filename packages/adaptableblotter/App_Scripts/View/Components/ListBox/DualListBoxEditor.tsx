@@ -270,9 +270,6 @@ export class DualListBoxEditor extends React.Component<
       />
     );
 
-    let listGroupAvailableStyle: any = this.getListGroupAvailableStyle(displaySize);
-    let listGroupSelectedStyle: any = this.getListGroupSelectedStyle(displaySize);
-
     return (
       <Flex
         alignItems="stretch"
@@ -293,7 +290,7 @@ export class DualListBoxEditor extends React.Component<
           >
             <ListGroup
               className="ab-AvailableDropZone"
-              style={listGroupAvailableStyle}
+              style={listGroupStyle}
               onDragEnter={(event: any) => this.DragEnterAvailable(event)}
               onDragOver={(event: any) => this.DragOverAvailable(event)}
               onDragLeave={(event: any) => this.DragLeaveAvailable(event)}
@@ -358,7 +355,7 @@ export class DualListBoxEditor extends React.Component<
             onSelectedChange={this.onSelectedListSelectionChange}
           >
             <ListGroup
-              style={listGroupSelectedStyle}
+              style={listGroupStyle}
               className="ab-SelectedDropZone"
               onDragEnter={(event: any) => this.DragEnterSelected(event)}
               onDragOver={(event: any) => this.DragOverSelected(event)}
@@ -411,34 +408,10 @@ export class DualListBoxEditor extends React.Component<
     );
   }
 
-  // let listGroupAvailableStyle: any = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge
-  private getListGroupAvailableStyle(displaySize: DisplaySize): any {
-    switch (displaySize) {
-      case DisplaySize.Large:
-        return listGroupStyleAvailableLarge;
-      case DisplaySize.Small:
-        return listGroupStyleAvailableSmall;
-      case DisplaySize.XSmall:
-        return listGroupStyleAvailableExtraSmall;
-    }
-  }
-
-  private getListGroupSelectedStyle(displaySize: DisplaySize): any {
-    switch (displaySize) {
-      case DisplaySize.Large:
-        return listGroupStyleSelectedLarge;
-      case DisplaySize.Small:
-        return listGroupStyleSelectedSmall;
-      case DisplaySize.XSmall:
-        return listGroupStyleSelectedExraSmall;
-    }
-  }
-
   buildMasterValues(masterChildren: IMasterChildren[]): IMasterValue[] {
     if (ArrayExtensions.IsNullOrEmpty(masterChildren)) {
       return [];
     }
-
     return this.props.MasterChildren.map(mc => {
       return { value: mc.Master, isAvailable: false, isOpen: true };
     });
@@ -1185,37 +1158,8 @@ export class DualListBoxEditor extends React.Component<
   };
 }
 
-var listGroupStyleAvailableLarge: React.CSSProperties = {
+var listGroupStyle: React.CSSProperties = {
   overflowY: 'auto',
-
-  marginBottom: '0px',
-};
-
-var listGroupStyleSelectedLarge: React.CSSProperties = {
-  overflowY: 'auto',
-
-  marginBottom: '0px',
-};
-var listGroupStyleAvailableSmall: React.CSSProperties = {
-  overflowY: 'auto',
-
-  marginBottom: '0px',
-};
-
-var listGroupStyleSelectedSmall: React.CSSProperties = {
-  overflowY: 'auto',
-
-  marginBottom: '0px',
-};
-var listGroupStyleAvailableExtraSmall: React.CSSProperties = {
-  overflowY: 'auto',
-
-  marginBottom: '0px',
-};
-
-var listGroupStyleSelectedExraSmall: React.CSSProperties = {
-  overflowY: 'auto',
-
   marginBottom: '0px',
 };
 

@@ -56,7 +56,7 @@ export class Glue42Service implements IGlue42Service {
         if (glue42State) {
           this.init(glue42State);
         } else {
-          this.blotter.api.internalApi.setGlue42Off();
+          this.blotter.api.internalApi.setGlue42AvailableOff();
         }
       }
     });
@@ -78,10 +78,10 @@ export class Glue42Service implements IGlue42Service {
       const glue4OfficeInstance = await glue4Office(glue4OfficeConfig);
       this.glue4ExcelInstance = glue4OfficeInstance.excel; // as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
-      this.blotter.api.internalApi.setGlue42On();
+      this.blotter.api.internalApi.setGlue42AvailableOn();
     } catch (error) {
       LogAdaptableBlotterError(error);
-      this.blotter.api.internalApi.setGlue42Off();
+      this.blotter.api.internalApi.setGlue42AvailableOff();
     }
   }
 

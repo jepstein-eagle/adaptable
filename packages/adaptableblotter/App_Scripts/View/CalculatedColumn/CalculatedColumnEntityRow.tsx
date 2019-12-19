@@ -4,14 +4,15 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { CalculatedColumnHelper } from '../../Utilities/Helpers/CalculatedColumnHelper';
 import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
+import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 
 interface CalculatedColumnEntityRowProps<CalculatedColumnEntityRow>
   extends SharedEntityRowProps<CalculatedColumnEntityRow> {
   Columns: AdaptableBlotterColumn[];
+  CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
 }
 
 export class CalculatedColumnEntityRow extends React.Component<
@@ -26,7 +27,7 @@ export class CalculatedColumnEntityRow extends React.Component<
     colItems[0].Content = <EntityRowItem Content={calculatedColumn.ColumnId} />;
     colItems[1].Content = (
       <EntityRowItem
-        Content={CalculatedColumnHelper.getExpressionString(
+        Content={this.props.CalculatedColumnExpressionService.GetExpressionString(
           calculatedColumn.ColumnExpression,
           this.props.Columns
         )}

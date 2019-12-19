@@ -1,4 +1,3 @@
-import { FilterHelper } from './FilterHelper';
 import {
   LeafExpressionOperator,
   DataType,
@@ -234,7 +233,7 @@ export function IsSatisfied(
       let filtersForColumn = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
       if (filtersForColumn) {
         // first evaluate any user filters
-        let filteredUserFilters: UserFilter[] = FilterHelper.GetUserFilters(
+        let filteredUserFilters: UserFilter[] = blotter.FilterService.GetUserFilters(
           userFilters,
           filtersForColumn.Filters
         );
@@ -261,7 +260,9 @@ export function IsSatisfied(
             f => filtersForColumn.Filters.find(u => u == f) != null
           );
           for (let systemFilter of filteredSystemFilters) {
-            let satisfyFunction: any = FilterHelper.GetFunctionForSystemFilter(systemFilter);
+            let satisfyFunction: any = blotter.FilterService.GetFunctionForSystemFilter(
+              systemFilter
+            );
             isColumnSatisfied = satisfyFunction.IsExpressionSatisfied(columnValue, blotter);
             if (isColumnSatisfied) {
               break;

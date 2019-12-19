@@ -6,7 +6,6 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { CalculatedColumnHelper } from '../../../Utilities/Helpers/CalculatedColumnHelper';
 import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
 
 export interface CalculatedColumnSummaryWizardProps
@@ -24,7 +23,7 @@ export class CalculatedColumnSummaryWizard
       { Key: 'Name', Value: this.props.Data.ColumnId },
       {
         Key: 'Expression',
-        Value: CalculatedColumnHelper.getExpressionString(
+        Value: this.props.Blotter.CalculatedColumnExpressionService.GetExpressionString(
           this.props.Data.ColumnExpression,
           this.props.Columns
         ),

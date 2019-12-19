@@ -134,7 +134,7 @@ export interface Glue42State {
 
   Glue4Office?: any; // this is the Glue4Office object
 
-  RunLiveData?: boolean;
+  RunLiveData?: boolean; // keep this?????
 
   /**
    * How long (in miliseconds) the Adaptable Blotter should throttle when sending an update to iPushPull.

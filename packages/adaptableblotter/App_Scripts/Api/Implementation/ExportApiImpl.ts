@@ -5,6 +5,8 @@ import { ExportState, Report } from '../../PredefinedConfig/ExportState';
 import { ApiBase } from './ApiBase';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
+import { LiveReport } from '../Events/LiveReportUpdated';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export class ExportApiImpl extends ApiBase implements ExportApi {
   public getExportState(): ExportState {
@@ -36,8 +38,9 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
 
   public sendReport(reportName: string, destination: ExportDestination): void {
     let report: Report = this.getReportByName(reportName);
+    let isLiveReport = this.blotter.ReportService.IsReportLiveReport(report, destination);
     if (this.checkItemExists(report, reportName, 'Report')) {
-      this.dispatchAction(ExportRedux.ExportApply(report, destination));
+      this.dispatchAction(ExportRedux.ExportApply(report, destination, isLiveReport));
     }
   }
 

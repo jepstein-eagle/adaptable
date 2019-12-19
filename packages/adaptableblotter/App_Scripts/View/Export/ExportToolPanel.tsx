@@ -1,7 +1,6 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
@@ -37,8 +36,9 @@ const ExportIcon = icons.export as ReactComponentLike;
 interface ExportToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<ExportToolPanelComponent> {
   onApplyExport: (
-    Report: Report,
-    exportDestination: ExportDestination
+    report: Report,
+    exportDestination: ExportDestination,
+    isLiveReport: boolean
   ) => ExportRedux.ExportApplyAction;
   onSelectReport: (Report: string) => ExportRedux.ReportSelectAction;
   onNewReport: () => PopupRedux.PopupShowScreenAction;
@@ -107,17 +107,17 @@ class ExportToolPanelComponent extends React.Component<
     });
 
     let csvMenuItem = {
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV, false),
       label: 'CSV',
     };
 
     let jsonMenuItem = {
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.JSON),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.JSON, false),
       label: 'JSON',
     };
     let clipboardMenuItem = {
       label: 'Clipboard',
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Clipboard),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Clipboard, false),
     };
 
     let openfinExcelMenuItem;
@@ -132,8 +132,8 @@ class ExportToolPanelComponent extends React.Component<
       };
     } else {
       openfinExcelMenuItem = {
-        onClick: () => this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel),
-
+        onClick: () =>
+          this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel, true),
         label: 'Start Live Openfin Excel',
       };
     }
@@ -149,14 +149,28 @@ class ExportToolPanelComponent extends React.Component<
         label: 'iPushPull (Stop Sync)',
       };
     } else {
+      let isIPushPullLiveReport = this.props.Blotter.ReportService.IsReportLiveReport(
+        currentReport,
+        ExportDestination.iPushPull
+      );
       iPushPullExcelMenuItem = {
-        onClick: () => this.props.onApplyExport(currentReport, ExportDestination.iPushPull),
+        onClick: () =>
+          this.props.onApplyExport(
+            currentReport,
+            ExportDestination.iPushPull,
+            isIPushPullLiveReport
+          ),
         label: 'iPushPull (Start Sync)',
       };
     }
 
+    let isGlueLiveReport: boolean = this.props.Blotter.ReportService.IsReportLiveReport(
+      currentReport,
+      ExportDestination.Glue42
+    );
     let glue42MenuItem = {
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Glue42),
+      onClick: () =>
+        this.props.onApplyExport(currentReport, ExportDestination.Glue42, isGlueLiveReport),
       label: 'Export to Excel (via Glue42)',
     };
 
@@ -277,8 +291,8 @@ function mapStateToProps(state: AdaptableBlotterState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
-    onApplyExport: (Report: Report, exportDestination: ExportDestination) =>
-      dispatch(ExportRedux.ExportApply(Report, exportDestination)),
+    onApplyExport: (report: Report, exportDestination: ExportDestination, isLiveReport: boolean) =>
+      dispatch(ExportRedux.ExportApply(report, exportDestination, isLiveReport)),
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
     onReportStopLive: (
       Report: Report,
@@ -310,7 +324,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let ExportToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExportToolPanelComponent);
+export let ExportToolPanel = connect(mapStateToProps, mapDispatchToProps)(ExportToolPanelComponent);

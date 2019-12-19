@@ -15,9 +15,9 @@ export const IPP_LOGIN_FAILED = 'IPP_LOGIN_FAILED';
 export interface ExportApplyAction extends Redux.Action {
   Report: Report;
   ExportDestination: ExportDestination;
+  IsLiveReport: boolean;
   Folder?: string;
   Page?: string;
-  IsLiveReport?: boolean;
 }
 
 export interface ReportAction extends Redux.Action {
@@ -75,16 +75,16 @@ export const ReportDelete = (report: Report): ReportDeleteAction => ({
 export const ExportApply = (
   Report: Report,
   ExportDestination: ExportDestination,
+  IsLiveReport: boolean,
   Folder?: string,
-  Page?: string,
-  IsLiveReport?: boolean
+  Page?: string
 ): ExportApplyAction => ({
   type: EXPORT_APPLY,
   Report,
   ExportDestination,
+  IsLiveReport,
   Folder,
   Page,
-  IsLiveReport,
 });
 
 export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({

@@ -114,7 +114,6 @@ import {
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { agGridHelper } from './agGridHelper';
-import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
@@ -123,6 +122,7 @@ import { QuickSearchState } from '../PredefinedConfig/QuickSearchState';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
+import { FilterService } from '../Utilities/Services/FilterService';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
@@ -162,6 +162,7 @@ import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
 import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -229,6 +230,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public ScheduleService: IScheduleService;
 
   public SearchService: ISearchService;
+
+  public FilterService: IFilterService;
 
   public Glue42Service: IGlue42Service;
 
@@ -324,6 +327,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.FreeTextColumnService = new FreeTextColumnService(this);
     this.ScheduleService = new ScheduleService(this);
     this.SearchService = new SearchService(this);
+    this.FilterService = new FilterService(this);
     this.Glue42Service = new Glue42Service(this);
     this.PushPullService = new PushPullService(this);
     this.ReportService = new ReportService(this);
@@ -1415,7 +1419,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       c => c.Uuid == calculatedColumn.Uuid
     );
 
-    let cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
+    let cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
       calculatedColumn.ColumnExpression,
       cols
     );
@@ -1464,7 +1468,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       }
       // and then add
-      const columnList = CalculatedColumnHelper.getColumnListFromExpression(cleanedExpression);
+      const columnList = this.CalculatedColumnExpressionService.GetColumnListFromExpression(
+        cleanedExpression
+      );
       for (const column of columnList) {
         let childrenColumnList = this.calculatedColumnPathMap.get(column);
         if (!childrenColumnList) {
@@ -1528,7 +1534,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const colDefs: (ColDef | ColGroupDef)[] = [...(this.getColumnDefs() || [])];
 
     const cols: AdaptableBlotterColumn[] = this.api.gridApi.getColumns();
-    const cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
+    const cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
       calculatedColumn.ColumnExpression,
       cols
     );
@@ -1571,7 +1577,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     colDefs.push(newColDef);
     this.safeSetColDefs(colDefs);
 
-    const columnList = CalculatedColumnHelper.getColumnListFromExpression(cleanedExpression);
+    const columnList = this.CalculatedColumnExpressionService.GetColumnListFromExpression(
+      cleanedExpression
+    );
     for (const column of columnList) {
       let childrenColumnList = this.calculatedColumnPathMap.get(column);
       if (!childrenColumnList) {

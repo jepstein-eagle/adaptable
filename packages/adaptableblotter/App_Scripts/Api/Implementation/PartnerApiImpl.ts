@@ -31,18 +31,26 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
     }
   }
 
-  public isGlue42Running(): boolean {
-    return this.getBlotterState().Grid.IsGlue42Running;
-  }
-
   public isGlue42RunLiveData(): boolean {
-    return this.getGlue42State().RunLiveData;
+    let glue42State: Glue42State = this.getGlue42State();
+    if (glue42State) {
+      return glue42State.RunLiveData;
+    }
+    return false;
   }
 
-  public isIPushPullRunning(): boolean {
-    return this.getBlotterState().Grid.IsIPushPullRunning;
+  public isGlue42Available(): boolean {
+    return this.getBlotterState().Grid.IsGlue42Available;
   }
-  public isOpenFinRunning(): boolean {
+
+  public isLiveReportRunning(): boolean {
+    return this.getBlotterState().Grid.IsLiveReportRunning;
+  }
+
+  public isIPushPullAvailable(): boolean {
+    return this.getBlotterState().Grid.isIPushPullAvailable;
+  }
+  public isOpenFinAvailable(): boolean {
     return false; // TODO
   }
 

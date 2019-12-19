@@ -5,15 +5,15 @@ export type AdaptableBlotterToolPanels = AdaptableBlotterToolPanel[];
 export type AdaptableBlotterToolPanel =
   | 'AdvancedSearch'
   | 'Alert'
-  // | 'Bulk Update'
+  | 'BulkUpdate'
   | 'CellSummary'
   | 'Chart'
   | 'ColumnFilter'
   | 'Dashboard'
   | 'Export'
   | 'Layout'
-  // | 'SmartEdit'
   | 'QuickSearch'
+  | 'SmartEdit'
   | 'SystemStatus'
   | 'Theme';
 

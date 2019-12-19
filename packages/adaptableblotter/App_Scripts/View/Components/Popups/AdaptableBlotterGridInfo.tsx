@@ -7,7 +7,6 @@ import { AdaptableObjectCollection } from '../AdaptableObjectCollection';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AdaptableBlotterOptions } from '../../../BlotterOptions/AdaptableBlotterOptions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ColumnFilterHelper } from '../../../Utilities/Helpers/ColumnFilterHelper';
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { UIHelper } from '../../UIHelper';
 import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
@@ -426,10 +425,9 @@ export class AdaptableBlotterGridInfo extends React.Component<
         .getAllCalculatedColumn()
         .map(c => c.ColumnId);
       let columns: AdaptableBlotterColumn[] = this.props.AdaptableBlotter.api.gridApi.getColumns();
-      let columnFilterDescription: string = ColumnFilterHelper.getColumnFiltersDescription(
+      let columnFilterDescription: string = this.props.AdaptableBlotter.FilterService.GetColumnFiltersDescription(
         this.props.AdaptableBlotter.api.columnFilterApi.getAllColumnFilter(),
-        columns,
-        this.props.AdaptableBlotter
+        columns
       );
       let sorts: any = this.props.AdaptableBlotter.api.gridApi.getColumnSorts().map(gs => {
         return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ': ' + gs.SortOrder;

@@ -67,6 +67,8 @@ import { AlertToolPanel } from './Alert/AlertToolPanel';
 import { ChartToolPanel } from './Chart/ChartToolPanel';
 import { ColumnFilterToolPanel } from './ColumnFilter/ColumnFilterToolPanel';
 import { CellSummaryToolPanel } from './CellSummary/CellSummaryToolPanel';
+import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
+import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -131,16 +133,18 @@ export const AdaptableDashboardFactory = new Map<string, ConnectedComponent<any,
 
 export const AdaptableToolPanelFactory = new Map<string, ConnectedComponent<any, any>>([
   [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolPanel],
-  [StrategyConstants.QuickSearchStrategyId, QuickSearchToolPanel],
-  [StrategyConstants.DashboardStrategyId, DashboardToolPanel],
-  [StrategyConstants.LayoutStrategyId, LayoutToolPanel],
-  [StrategyConstants.ThemeStrategyId, ThemeToolPanel],
-  [StrategyConstants.ExportStrategyId, ExportToolPanel],
-  [StrategyConstants.SystemStatusStrategyId, SystemStatusToolPanel],
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
+  [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolPanel],
+  [StrategyConstants.CellSummaryStrategyId, CellSummaryToolPanel],
   [StrategyConstants.ChartStrategyId, ChartToolPanel],
   [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolPanel],
-  [StrategyConstants.CellSummaryStrategyId, CellSummaryToolPanel],
+  [StrategyConstants.DashboardStrategyId, DashboardToolPanel],
+  [StrategyConstants.ExportStrategyId, ExportToolPanel],
+  [StrategyConstants.LayoutStrategyId, LayoutToolPanel],
+  [StrategyConstants.QuickSearchStrategyId, QuickSearchToolPanel],
+  [StrategyConstants.SmartEditStrategyId, SmartEditToolPanel],
+  [StrategyConstants.SystemStatusStrategyId, SystemStatusToolPanel],
+  [StrategyConstants.ThemeStrategyId, ThemeToolPanel],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<

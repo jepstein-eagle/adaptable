@@ -4,13 +4,10 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
-
 import {
   CellSummaryOperation,
   CellSummaryOptionalOperation,
 } from '../../PredefinedConfig/Common/Enums';
-
-import HelpBlock from '../../components/HelpBlock';
 import EmptyContent from '../../components/EmptyContent';
 
 interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetails> {
@@ -19,7 +16,10 @@ interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetai
 
 export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps, {}> {
   render() {
-    let colItems: IColItem[] = [{ Content: 'Operation', Size: 4 }, { Content: 'Value', Size: 8 }];
+    let colItems: IColItem[] = [
+      { Content: 'Operation', Size: 5 },
+      { Content: 'Value', Size: 7 },
+    ];
 
     let rowElements: any[] = [];
     if (this.props.CellSummary != null) {
@@ -77,7 +77,9 @@ export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps,
     let rowColItems: IColItem[] = Helper.cloneObject(colItems);
     rowColItems[0].Content = key;
     rowColItems[1].Content = value;
-    let rowElement = <AdaptableObjectRow key={key} colItems={rowColItems} />;
+    let rowElement = (
+      <AdaptableObjectRow style={{ minWidth: 185 }} key={key} colItems={rowColItems} />
+    );
     return rowElement;
   }
 }

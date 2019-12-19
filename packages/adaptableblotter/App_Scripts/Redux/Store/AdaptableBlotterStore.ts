@@ -2586,6 +2586,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 exportStrategy.Export(
                   actionTyped.Report,
                   actionTyped.ExportDestination,
+                  actionTyped.IsLiveReport,
                   actionTyped.Folder,
                   actionTyped.Page
                 );
@@ -2595,7 +2596,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               // for all other destinations we can go straight to export
               // if its Openfin then we will get the page from the OpenFin Helper
               // if its Glue then we dont currently get a page but we probably should
-              exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination);
+              exportStrategy.Export(
+                actionTyped.Report,
+                actionTyped.ExportDestination,
+                actionTyped.IsLiveReport
+              );
               middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             }
             return next(action);
@@ -2646,6 +2651,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               actionTyped.ExportDestination,
               LiveReportTrigger.ExportStarted
             );
+            // set livereport on
+            blotter.api.internalApi.setLiveReportRunningOn();
             return ret;
           }
           case SystemRedux.REPORT_STOP_LIVE: {
@@ -2665,6 +2672,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               actionTyped.ExportDestination,
               LiveReportTrigger.ExportStopped
             );
+            // set livereport off
+            blotter.api.internalApi.setLiveReportRunningOff();
             return ret;
           }
 
@@ -3183,8 +3192,12 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
     GridRedux.SET_MAIN_MENUITEMS,
-    GridRedux.SET_GLUE42_ON,
-    GridRedux.SET_GLUE42_OFF,
+    GridRedux.SET_GLUE42_AVAILABLE_ON,
+    GridRedux.SET_GLUE42_AVAILABLE_OFF,
+    GridRedux.SET_IPUSHPULL_AVAILABLE_ON,
+    GridRedux.SET_IPUSHPULL_AVAILABLE_OFF,
+    GridRedux.SET_LIVE_REPORT_RUNNING_ON,
+    GridRedux.SET_LIVE_REPORT_RUNNING_OFF,
     GridRedux.SET_PIVOT_MODE_ON,
     GridRedux.SET_PIVOT_MODE_OFF,
 

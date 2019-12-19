@@ -23,4 +23,6 @@ export interface IReportService {
       | ExportDestination.Glue42,
     liveReportTrigger: LiveReportTrigger
   ): void;
+
+  IsReportLiveReport(report: Report, exportDestination: ExportDestination): boolean;
 }
