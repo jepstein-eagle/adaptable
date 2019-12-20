@@ -63,6 +63,7 @@ export interface GridApi {
     columnId: string,
     newValue: any,
     primaryKeyValue: any,
+    reselectSelectedCells: boolean,
     validateChange?: boolean
   ): void;
 
@@ -70,7 +71,11 @@ export interface GridApi {
    * Replaces a batch of existing cell values in the Adaptable Blotter with those contained in the inputted Grid Cells
    * @param gridCells the new cells
    */
-  setGridCells(gridCells: GridCell[], validateChange: boolean): void;
+  setGridCells(
+    gridCells: GridCell[],
+    reselectSelectedCells: boolean,
+    validateChange: boolean
+  ): void;
 
   /** Returns all the columns in the Adaptable Blotter
    *

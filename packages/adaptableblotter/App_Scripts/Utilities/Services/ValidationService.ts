@@ -254,7 +254,7 @@ export class ValidationService implements IValidationService {
           // otherwise the value will persist
           if (validationResult.NewValue !== dataChangedInfo.NewValue) {
             dataChangedInfo.NewValue = validationResult.NewValue;
-            this.blotter.setValue(dataChangedInfo);
+            this.blotter.setValue(dataChangedInfo, false);
 
             this.logAuditValidationEvent(
               'Server Validation',

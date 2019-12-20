@@ -48,7 +48,7 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   }
 
   public isIPushPullAvailable(): boolean {
-    return this.getBlotterState().Grid.isIPushPullAvailable;
+    return this.getBlotterState().Grid.IsIPushPullAvailable;
   }
   public isOpenFinAvailable(): boolean {
     return false; // TODO

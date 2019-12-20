@@ -318,10 +318,12 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }, 500);
           });
         } else {
-          let reportAsArray: any[] = this.ConvertReportToArray(report);
-          if (reportAsArray) {
-            this.blotter.PushPullService.pushData(page, reportAsArray);
-          }
+          this.blotter.PushPullService.LoadPage(folder, page).then(() => {
+            let reportAsArray: any[] = this.ConvertReportToArray(report);
+            if (reportAsArray) {
+              this.blotter.PushPullService.pushData(page, reportAsArray);
+            }
+          });
         }
         break;
       }

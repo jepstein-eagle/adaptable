@@ -2388,7 +2388,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<
+              boolean
+            > = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -2528,7 +2530,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 };
               });
               dataChangedInfos.forEach(dc => {
-                blotter.setValue(dc);
+                blotter.setValue(dc, true);
               });
             }
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
@@ -2972,14 +2974,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
           case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
             const actionTyped = action as GridRedux.GridSetValueLikeEditAction;
-            blotter.setValue(actionTyped.DataChangedInfo);
+            blotter.setValue(actionTyped.DataChangedInfo, true);
             return next(action);
           }
 
           case GridRedux.GRID_SET_VALUE_LIKE_EDIT_BATCH: {
             const actionTyped = action as GridRedux.GridSetValueLikeEditBatchAction;
             actionTyped.DataChangedInfoBatch.forEach(dc => {
-              blotter.setValue(dc);
+              blotter.setValue(dc, true);
             });
 
             return next(action);

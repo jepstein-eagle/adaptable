@@ -246,7 +246,7 @@ const initialGridState: GridState = {
   IsQuickFilterActive: false,
   MainMenuItems: EMPTY_ARRAY,
   IsGlue42Available: false,
-  isIPushPullAvailable: false,
+  IsIPushPullAvailable: false,
   IsLiveReportRunning: false,
   IsGridInPivotMode: false,
 };
@@ -305,9 +305,9 @@ export const GridReducer: Redux.Reducer<GridState> = (
     case SET_GLUE42_AVAILABLE_OFF:
       return Object.assign({}, state, { IsGlue42Available: false });
     case SET_IPUSHPULL_AVAILABLE_ON:
-      return Object.assign({}, state, { isIPushPullAvailable: true });
+      return Object.assign({}, state, { IsIPushPullAvailable: true });
     case SET_IPUSHPULL_AVAILABLE_OFF:
-      return Object.assign({}, state, { isIPushPullAvailable: false });
+      return Object.assign({}, state, { IsIPushPullAvailable: false });
     case SET_LIVE_REPORT_RUNNING_ON:
       return Object.assign({}, state, { IsLiveReportRunning: true });
     case SET_LIVE_REPORT_RUNNING_OFF:

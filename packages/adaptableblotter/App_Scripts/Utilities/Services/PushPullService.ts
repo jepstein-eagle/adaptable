@@ -121,6 +121,21 @@ export class PushPullService implements IPushPullService {
     }
   }
 
+  public AddNewPage(): Promise<any> {
+    alert('adding new page');
+    if (!this.ppInstance) {
+      return Promise.reject('No iPushPull instance found!');
+    }
+    // ipushpull.Page.create([domainId],ipushpull.helpers.createSlug('[Page Name]'))
+    this.ppInstance.Page.create('Jonny_', this.ppInstance.helpers.createSlug('PageFromBlotter'))
+      .then((page: any) => {
+        console.log(page);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  }
+
   public pushData(page: string, data: any[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       const style: IPPStyle = this.blotter.getIPPStyle();

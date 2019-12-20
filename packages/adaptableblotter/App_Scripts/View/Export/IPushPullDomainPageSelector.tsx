@@ -18,6 +18,9 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import FlexWithFooter from '../../components/FlexWithFooter';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 import { LiveReport } from '../../Api/Events/LiveReportUpdated';
+import { Flex } from 'rebass';
+import Radio from '../../components/Radio';
+import HelpBlock from '../../components/HelpBlock';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
@@ -151,7 +154,43 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
           {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? (
             <ErrorBox>Error getting iPushPull Pages : {this.props.ErrorMsg}</ErrorBox>
           ) : (
-            <ListGroup>{itemsElements}</ListGroup>
+            <Flex flexDirection="column" padding={2} margin={2}>
+              <HelpBlock marginBottom={1}>
+                Choose whether to send a 'Live Report' (which updates as the Grid data changes) or a
+                one-off 'Snapshot Report'.
+              </HelpBlock>{' '}
+              <Flex>
+                <Radio
+                  marginRight={3}
+                  value="livereport"
+                  checked={this.state.IsLiveReport == true}
+                  onChange={(x: any, e: React.SyntheticEvent) => this.SelectLiveReport(e)}
+                >
+                  Live Report
+                </Radio>
+                <Radio
+                  value="snapshot"
+                  checked={this.state.IsLiveReport == false}
+                  onChange={(x: any, e: React.SyntheticEvent) => this.SelectLiveReport(e)}
+                >
+                  Snapshot
+                </Radio>
+              </Flex>
+              <HelpBlock marginBottom={1} marginTop={2}>
+                Select the iPushPull Folder and Page where the data will be exported.
+              </HelpBlock>
+              <SimpleButton
+                tone="neutral"
+                variant="text"
+                tooltip="Close"
+                onClick={() => {
+                  this.createNewIPushPullPage();
+                }}
+              >
+                New
+              </SimpleButton>
+              <ListGroup>{itemsElements}</ListGroup>
+            </Flex>
           )}
         </FlexWithFooter>
       </PanelWithImage>
@@ -159,9 +198,21 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
   }
 
   //const { hidePopup } = usePopupContext();
+  createNewIPushPullPage(): void {
+    this.props.Blotter.PushPullService.AddNewPage();
+  }
 
   hidePopup() {
     this.props.onClosePopup();
+  }
+
+  SelectLiveReport(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    if (e.value == 'livereport') {
+      this.setState({ IsLiveReport: true });
+    } else if (e.value == 'snapshot') {
+      this.setState({ IsLiveReport: false });
+    }
   }
 
   SelectFolder(folder: string) {

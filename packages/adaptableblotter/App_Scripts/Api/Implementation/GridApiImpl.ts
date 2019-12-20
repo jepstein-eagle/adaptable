@@ -37,6 +37,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
     columnId: string,
     newValue: any,
     primaryKeyValue: any,
+    reselectSelectedCells: boolean,
     validateChange: boolean = true
   ): void {
     let gridCell: GridCell = {
@@ -44,10 +45,14 @@ export class GridApiImpl extends ApiBase implements GridApi {
       columnId: columnId,
       value: newValue,
     };
-    this.setGridCell(gridCell, validateChange);
+    this.setGridCell(gridCell, reselectSelectedCells, validateChange);
   }
 
-  public setGridCell(gridCell: GridCell, validateChange: boolean = true): void {
+  public setGridCell(
+    gridCell: GridCell,
+    reselectSelectedCells: boolean,
+    validateChange: boolean = true
+  ): void {
     let dataChangedInfo: DataChangedInfo = this.createDataChangedInfoFromGridCell(gridCell);
     if (validateChange) {
       if (!this.blotter.ValidationService.PerformCellValidation(dataChangedInfo)) {
@@ -56,7 +61,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
     }
 
     const onServerValidationCompleted = () => {
-      this.blotter.setValue(dataChangedInfo);
+      this.blotter.setValue(dataChangedInfo, reselectSelectedCells);
     };
 
     const mimicPromise = this.blotter.blotterOptions.editOptions!.validateOnServer

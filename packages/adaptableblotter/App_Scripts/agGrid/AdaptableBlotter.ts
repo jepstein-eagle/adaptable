@@ -925,7 +925,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.agGridHelper.fireSelectionChangedEvent();
   }
 
-  public setValue(dataChangedInfo: DataChangedInfo): void {
+  public setValue(dataChangedInfo: DataChangedInfo, reselectSelectedCells: boolean): void {
     // if we have the row node then just update it
     if (dataChangedInfo.RowNode) {
       dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
@@ -952,6 +952,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     }
     this.performPostEditChecks(dataChangedInfo);
+    if (reselectSelectedCells) {
+      this.agGridHelper.reselectSelectedCells();
+    }
   }
 
   public cancelEdit() {
@@ -1140,10 +1143,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2564,7 +2564,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
     this.DataService.CreateDataChangedEvent(dataChangedInfo);
-    this.agGridHelper.reselectSelectedCells();
+
     if (applyFilter) {
       this.filterOnUserDataChange([dataChangedInfo.RowNode]);
     }

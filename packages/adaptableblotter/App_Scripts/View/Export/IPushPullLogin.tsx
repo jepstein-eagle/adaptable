@@ -14,6 +14,8 @@ import FlexWithFooter from '../../components/FlexWithFooter';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { usePopupContext } from '../Components/Popups/PopupContext';
 import ErrorBox from '../../components/ErrorBox';
+import HelpBlock from '../../components/HelpBlock';
+import { Flex } from 'rebass';
 
 interface IPushPullLoginProps {
   pushpullLogin: string | undefined;
@@ -93,32 +95,37 @@ const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
           </>
         }
       >
-        <FormLayout margin={3}>
-          <FormRow label="iPushPull login:">
-            <Input
-              width="100%"
-              type="email"
-              placeholder="Email address"
-              value={state.Login}
-              onChange={onLoginChange}
-            />
-          </FormRow>
-          <FormRow label="iPushPull password:">
-            <Input
-              width="100%"
-              type="password"
-              placeholder="Password"
-              value={state.Password}
-              onChange={onPasswordChange}
-            />
-          </FormRow>
+        <Flex flexDirection="column" padding={2} margin={2}>
+          <HelpBlock marginBottom={1}>
+            Login to iPushPull using your login (email address) and password.
+          </HelpBlock>
 
-          {props.pushpullLoginErrorMessage ? (
-            <FormRow label="">
-              <ErrorBox>{props.pushpullLoginErrorMessage}</ErrorBox>
+          <FormLayout margin={3}>
+            <FormRow label="iPushPull login:">
+              <Input
+                width="100%"
+                type="email"
+                placeholder="Email address"
+                value={state.Login}
+                onChange={onLoginChange}
+              />
             </FormRow>
-          ) : null}
-        </FormLayout>
+            <FormRow label="iPushPull password:">
+              <Input
+                width="100%"
+                type="password"
+                placeholder="Password"
+                value={state.Password}
+                onChange={onPasswordChange}
+              />
+            </FormRow>
+            {props.pushpullLoginErrorMessage ? (
+              <FormRow label="">
+                <ErrorBox>{props.pushpullLoginErrorMessage}</ErrorBox>
+              </FormRow>
+            ) : null}
+          </FormLayout>
+        </Flex>
       </FlexWithFooter>
     </PanelWithImage>
   );
@@ -142,4 +149,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let IPushPullLogin = connect(mapStateToProps, mapDispatchToProps)(IPushPullLoginComponent);
+export let IPushPullLogin = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IPushPullLoginComponent);

@@ -193,7 +193,7 @@ export interface IAdaptableBlotter {
   getRowNodeForPrimaryKey(primaryKeyValue: any): any;
 
   // editing related
-  setValue(dataChangedInfo: DataChangedInfo): void;
+  setValue(dataChangedInfo: DataChangedInfo, reselectSelectedCells: boolean): void;
   cancelEdit(): any;
   gridHasCurrentEditValue(): boolean;
   getCurrentCellEditValue(): any;

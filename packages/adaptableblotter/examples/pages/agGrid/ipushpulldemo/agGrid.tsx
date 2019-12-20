@@ -15,14 +15,14 @@ import {
   BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import ipushpull, { ICreate } from 'ipushpull-js';
+import ipushpull from 'ipushpull-js';
+import { IPageService } from 'ipushpull-js/dist/Page/Page';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
 import {
   LiveReportUpdatedEventArgs,
   LiveReportUpdatedInfo,
 } from '../../../../App_Scripts/Api/Events/LiveReportUpdated';
-import eventdemo from '../eventdemo';
 
 ipushpull.config.set({
   api_secret: '',
@@ -63,9 +63,16 @@ function InitAdaptableBlotter() {
 
   const blotterAPI: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
+  //ipushpull.Page.creat
+
   if (useTickingData) {
-    tickingDataHelper.testTickingDataagGrid(gridOptions, blotterAPI, 500, tradeCount);
+    tickingDataHelper.testTickingDataagGrid(gridOptions, blotterAPI, 1000, tradeCount);
   }
+
+  blotterAPI.eventApi.on('BlotterReady', () => {
+    let page: IPageService = new ipushpull.Page('TomTest', 'Jonny_');
+    //ipushpull.Page.create('Jonny_', ipushpull.helpers.createSlug('PageFromBlotter'));
+  });
 
   blotterAPI.eventApi.on(
     'LiveReportUpdated',

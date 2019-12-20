@@ -50,7 +50,7 @@ function InitAdaptableBlotter() {
   blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   blotterApi.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
-    blotterApi.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue);
+    blotterApi.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue, false);
   });
 }
 
