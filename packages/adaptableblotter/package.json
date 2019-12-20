@@ -11,12 +11,9 @@
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "deep-diff": "^1.0.2",
-    "es6-promise": "^4.2.4",
-    "es6-promise-promise": "^1.0.0",
     "igniteui-react-charts": "16.6.10",
     "igniteui-react-core": "16.6.10",
     "isomorphic-fetch": "^2.2.1",
-    "json-loader": "^0.5.7",
     "lodash": "^4.17.10",
     "mathjs": "^5.1.1",
     "normalize.css": "^8.0.1",
@@ -26,8 +23,8 @@
     "react-dom": "^16.9.0",
     "react-redux": "^7.1.0",
     "react-remove-scroll": "^1.0.8",
-    "react-select": "^3.0.3",
-    "react-spring": "^8.0.20",
+
+
     "rebass": "^3.1.0",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.5",
@@ -41,6 +38,7 @@
     "ag-grid-enterprise": "^21.0.0"
   },
   "devDependencies": {
+    "json-loader": "^0.5.7",
     "@types/body-parser": "^1.17.0",
     "@types/bunyan": "^1.8.4",
     "@types/deep-diff": "0.0.31",
