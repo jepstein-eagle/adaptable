@@ -4,13 +4,11 @@ import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import {
-  LayoutState,
   Layout,
   ColumnSort,
   PivotDetails,
   VendorGridInfo,
 } from '../../PredefinedConfig/LayoutState';
-import { GridState } from '../../PredefinedConfig/GridState';
 import BlotterHelper from '../Helpers/BlotterHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
@@ -52,11 +50,8 @@ export class LayoutService implements ILayoutService {
   }
 
   public autoSaveLayout(): void {
-    let layoutState: LayoutState = this.blotter.api.layoutApi.getLayoutState();
-    if (
-      this.blotter.isInitialised &&
-      layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT
-    ) {
+    let currentLayoutName: string = this.blotter.api.layoutApi.getCurrentLayoutName();
+    if (this.blotter.isInitialised && currentLayoutName != GeneralConstants.DEFAULT_LAYOUT) {
       if (
         this.blotter.blotterOptions.layoutOptions != null &&
         this.blotter.blotterOptions.layoutOptions.autoSaveLayouts != null &&
@@ -64,8 +59,7 @@ export class LayoutService implements ILayoutService {
       ) {
         let layout = this.blotter.api.layoutApi.getCurrentLayout();
         if (layout != null) {
-          let gridState: GridState = this.blotter.api.gridApi.getGridState();
-          let visibleColumns: AdaptableBlotterColumn[] = gridState.Columns.filter(c => c.Visible);
+          let visibleColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getVisibleColumns();
 
           let currentGridVendorInfo: VendorGridInfo = this.blotter.getVendorGridLayoutInfo(
             visibleColumns.map(vc => vc.ColumnId)
@@ -73,7 +67,7 @@ export class LayoutService implements ILayoutService {
 
           let layoutToSave: Layout = {
             Uuid: layout.Uuid,
-            Name: layoutState.CurrentLayout,
+            Name: currentLayoutName,
             Columns: layout.Columns,
             ColumnSorts: layout.ColumnSorts,
             GroupedColumns: layout.GroupedColumns,
@@ -81,7 +75,7 @@ export class LayoutService implements ILayoutService {
             VendorGridInfo: currentGridVendorInfo,
             BlotterGridInfo: {
               CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-              CurrentColumnSorts: gridState.ColumnSorts,
+              CurrentColumnSorts: this.blotter.api.gridApi.getColumnSorts(),
             },
           };
           this.blotter.api.layoutApi.saveLayout(layoutToSave);
@@ -89,7 +83,7 @@ export class LayoutService implements ILayoutService {
       }
 
       let columnStateChangedInfo: ColumnStateChangedInfo = {
-        currentLayout: layoutState.CurrentLayout,
+        currentLayout: currentLayoutName,
       };
       const columnStateChangedEventArgs: ColumnStateChangedEventArgs = BlotterHelper.createFDC3Message(
         'Column State Changed Args',

@@ -30,21 +30,21 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
 
   protected doStuff(): void {
     let systemStatusState = this.blotter.api.systemStatusApi.getSystemStatusState();
-    if (StringExtensions.IsNullOrEmpty(this.systemStatusState.StatusMessage)) {
+    if (StringExtensions.IsNullOrEmpty(systemStatusState.StatusMessage)) {
       this.blotter.api.systemStatusApi.setSystemStatus(
-        this.systemStatusState.DefaultStatusMessage,
-        this.systemStatusState.StatusType
+        systemStatusState.DefaultStatusMessage,
+        systemStatusState.StatusType
       );
     }
-    if (Helper.objectNotExists(this.systemStatusState.StatusType)) {
+    if (Helper.objectNotExists(systemStatusState.StatusType)) {
       this.blotter.api.systemStatusApi.setSystemStatus(
-        this.systemStatusState.StatusMessage,
-        this.systemStatusState.DefaultStatusType
+        systemStatusState.StatusMessage,
+        systemStatusState.DefaultStatusType
       );
     }
   }
 
-  protected InitState() {
+  protected InitStateOld() {
     if (this.systemStatusState != this.blotter.api.systemStatusApi.getSystemStatusState()) {
       this.systemStatusState = this.blotter.api.systemStatusApi.getSystemStatusState();
       if (StringExtensions.IsNullOrEmpty(this.systemStatusState.StatusMessage)) {

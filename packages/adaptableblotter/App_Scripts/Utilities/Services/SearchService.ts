@@ -1,3 +1,9 @@
+import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
+import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
+import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
+import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
+import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ISearchService } from './Interface/ISearchService';
 import * as StrategyConstants from '../Constants/StrategyConstants';
 import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Common/Enums';
@@ -22,113 +28,65 @@ import { SearchChangedEventArgs } from '../../types';
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;
 
-  private advancedSearchState: AdvancedSearchState;
-
-  private columnFilterState: ColumnFilterState;
-
-  private dataSourceState: DataSourceState;
-
-  private quickSearchState: QuickSearchState;
-
-  private userFilterState: UserFilterState;
-
-  private columnSorts: ColumnSort[];
-
-  private columns: AdaptableBlotterColumn[];
-
   constructor(blotter: IAdaptableBlotter) {
     this.blotter = blotter;
-    this.blotter.adaptableBlotterStore.TheStore.subscribe(() => this.listenToSearchStoreChanges());
-  }
 
-  protected listenToSearchStoreChanges(): void {
-    if (this.blotter.isInitialised) {
-      if (this.advancedSearchState != this.getAdvancedSearchState()) {
-        this.advancedSearchState = this.getAdvancedSearchState();
-        this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
-      }
-
-      if (this.columnFilterState != this.getColumnFilterState()) {
-        this.columnFilterState = this.getColumnFilterState();
-        setTimeout(() => this.blotter.applyGridFiltering(), 5);
-        this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
-      }
-
-      if (this.dataSourceState != this.getDataSourceState()) {
-        this.dataSourceState = this.getDataSourceState();
-        this.publishSearchChanged(SearchChangedTrigger.DataSource);
-      }
-
-      if (this.quickSearchState != this.getQuickSearchState()) {
-        this.quickSearchState = this.getQuickSearchState();
-
-        // if not highlighting cell then lets tell quick search strategy to create a range
-        if (this.quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
-          const quickSearchStrategy = this.blotter.strategies.get(
-            StrategyConstants.QuickSearchStrategyId
-          ) as IQuickSearchStrategy;
-          quickSearchStrategy.createQuickSearchRange();
-        }
-
-        this.blotter.applyGridFiltering();
-        this.blotter.redraw();
-        this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
-      }
-
-      // Fire Search Changed for User Filter (if ServerSearchOption is not 'None')
-      if (this.userFilterState != this.getUserFilterState()) {
-        this.userFilterState = this.getUserFilterState();
-
-        setTimeout(() => this.blotter.applyGridFiltering(), 5);
-        this.publishSearchChanged(SearchChangedTrigger.UserFilter);
-
-        // Do Column Sorts and Columns Separately
+    this.blotter.adaptableBlotterStore.onAny((eventName: string) => {
+      if (this.blotter.isInitialised) {
         if (
-          !ArrayExtensions.areArraysEqualWithOrderandProperties(
-            this.columnSorts,
-            this.getGridColumnSorts()
-          )
+          eventName == AdvancedSearchRedux.ADVANCED_SEARCH_ADD ||
+          eventName == AdvancedSearchRedux.ADVANCED_SEARCH_EDIT ||
+          eventName == AdvancedSearchRedux.ADVANCED_SEARCH_DELETE ||
+          eventName == AdvancedSearchRedux.ADVANCED_SEARCH_SELECT
         ) {
-          this.columnSorts = this.getGridColumnSorts();
+          this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
+        } else if (
+          eventName == ColumnFilterRedux.COLUMN_FILTER_ADD ||
+          eventName == ColumnFilterRedux.COLUMN_FILTER_EDIT ||
+          eventName == ColumnFilterRedux.COLUMN_FILTER_SET ||
+          eventName == ColumnFilterRedux.COLUMN_FILTER_CLEAR_ALL ||
+          eventName == ColumnFilterRedux.COLUMN_FILTER_CLEAR
+        ) {
+          setTimeout(() => this.blotter.applyGridFiltering(), 5);
+          this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
+        } else if (
+          eventName == DataSourceRedux.DATA_SOURCE_SELECT ||
+          eventName == DataSourceRedux.DATA_SOURCE_ADD ||
+          eventName == DataSourceRedux.DATA_SOURCE_EDIT ||
+          eventName == DataSourceRedux.DATA_SOURCE_DELETE
+        ) {
+          this.publishSearchChanged(SearchChangedTrigger.DataSource);
+        } else if (
+          eventName == QuickSearchRedux.QUICK_SEARCH_APPLY ||
+          eventName == QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY ||
+          eventName == QuickSearchRedux.QUICK_SEARCH_SET_STYLE
+        ) {
+          // if not highlighting cell then lets tell quick search strategy to create a range
+          if (
+            this.blotter.api.quickSearchApi.getQuickSearchDisplayAction() !=
+            DisplayAction.HighlightCell
+          ) {
+            const quickSearchStrategy = this.blotter.strategies.get(
+              StrategyConstants.QuickSearchStrategyId
+            ) as IQuickSearchStrategy;
+            quickSearchStrategy.createQuickSearchRange();
+          }
+          this.blotter.applyGridFiltering();
+          this.blotter.redraw();
+          this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
+        } else if (
+          eventName == UserFilterRedux.USER_FILTER_ADD ||
+          eventName == UserFilterRedux.USER_FILTER_EDIT ||
+          eventName == UserFilterRedux.USER_FILTER_DELETE ||
+          eventName == UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER
+        ) {
+          setTimeout(() => this.blotter.applyGridFiltering(), 5);
+          this.publishSearchChanged(SearchChangedTrigger.UserFilter);
+        } else if (eventName == GridRedux.GRID_SET_SORT) {
           this.publishSearchChanged(SearchChangedTrigger.Sort);
-
-          this.blotter.LayoutService.autoSaveLayout();
-        }
-
-        if (this.columns != this.getGridColumns()) {
-          this.columns = this.getGridColumns();
-          this.blotter.LayoutService.autoSaveLayout();
         }
       }
-    }
-  }
-
-  private getAdvancedSearchState(): AdvancedSearchState {
-    return this.blotter.api.advancedSearchApi.getAdvancedSearchState();
-  }
-
-  private getColumnFilterState(): ColumnFilterState {
-    return this.blotter.api.columnFilterApi.getColumnFilterState();
-  }
-
-  private getDataSourceState(): DataSourceState {
-    return this.blotter.api.dataSourceApi.getDataSourceState();
-  }
-
-  private getQuickSearchState(): QuickSearchState {
-    return this.blotter.api.quickSearchApi.getQuickSearchState();
-  }
-
-  private getUserFilterState(): UserFilterState {
-    return this.blotter.api.userFilterApi.getUserFilterState();
-  }
-
-  private getGridColumns(): AdaptableBlotterColumn[] {
-    return this.blotter.api.gridApi.getColumns();
-  }
-
-  private getGridColumnSorts(): ColumnSort[] {
-    return this.blotter.api.gridApi.getColumnSorts();
+    });
   }
 
   /**
