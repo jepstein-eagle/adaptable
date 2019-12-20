@@ -7,5 +7,5 @@ export interface IPushPullService {
   UnloadPage(page: string): void;
   pushData(page: string, data: any[]): Promise<any>;
   getIPPStatus(): ServiceStatus;
-  AddNewPage(): Promise<any>;
+  AddNewPage(folderId: number, page: string): Promise<any>;
 }

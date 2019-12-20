@@ -21,6 +21,9 @@ import { LiveReport } from '../../Api/Events/LiveReportUpdated';
 import { Flex } from 'rebass';
 import Radio from '../../components/Radio';
 import HelpBlock from '../../components/HelpBlock';
+import { minWidth } from 'styled-system';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
@@ -57,16 +60,29 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
     this.props.IPushPullDomainsPages.forEach(x => {
       if (x.Name == this.state.SelectedFolder) {
         itemsElements.push(
-          <ListGroupItem
-            key={x.Name}
-            style={{ marginTop: '10px' }}
-            onClick={() => {
-              this.UnSelectFolder();
-            }}
-            value={x.Name}
-          >
-            <Icon name="folder-open" style={{ marginRight: '10px' }} /> {x.Name}
-          </ListGroupItem>
+          <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Export__wrap">
+            <ListGroupItem
+              key={x.Name}
+              style={{ marginTop: '10px', width: '40rem' }}
+              onClick={() => {
+                this.UnSelectFolder();
+              }}
+              value={x.Name}
+            >
+              <Icon name="folder-open" style={{ marginRight: '10px' }} /> {x.Name}
+            </ListGroupItem>
+            <SimpleButton
+              tone="none"
+              key={'closedbutton_' + x.Name}
+              variant="text"
+              style={{ marginLeft: '10px', padding: '1px', alignItems: 'bottom' }}
+              onClick={() => {
+                this.createNewIPushPullPage(x);
+              }}
+            >
+              New Page
+            </SimpleButton>
+          </Flex>
         );
         x.Pages.forEach((page: string) => {
           itemsElements.push(
@@ -86,17 +102,30 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
         });
       } else {
         itemsElements.push(
-          <ListGroupItem
-            key={x.Name}
-            style={{ marginTop: '10px' }}
-            onClick={() => {
-              this.SelectFolder(x.Name);
-            }}
-            value={x.Name}
-          >
-            <Icon name="folder-shared" style={{ marginRight: '10px' }} />
-            {x.Name}
-          </ListGroupItem>
+          <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Export__wrap">
+            <ListGroupItem
+              key={x.Name}
+              style={{ marginTop: '10px', width: '40rem' }}
+              onClick={() => {
+                this.SelectFolder(x.Name);
+              }}
+              value={x.Name}
+            >
+              <Icon name="folder-shared" style={{ marginRight: '10px' }} />
+              {x.Name}
+            </ListGroupItem>
+            <SimpleButton
+              tone="neutral"
+              key={'openbutton_' + x.Name}
+              variant="text"
+              style={{ marginLeft: '10px', padding: '1px', alignItems: 'bottom' }}
+              onClick={() => {
+                this.createNewIPushPullPage(x);
+              }}
+            >
+              New Page
+            </SimpleButton>
+          </Flex>
         );
       }
     });
@@ -179,16 +208,6 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
               <HelpBlock marginBottom={1} marginTop={2}>
                 Select the iPushPull Folder and Page where the data will be exported.
               </HelpBlock>
-              <SimpleButton
-                tone="neutral"
-                variant="text"
-                tooltip="Close"
-                onClick={() => {
-                  this.createNewIPushPullPage();
-                }}
-              >
-                New
-              </SimpleButton>
               <ListGroup>{itemsElements}</ListGroup>
             </Flex>
           )}
@@ -197,9 +216,18 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
     );
   }
 
-  //const { hidePopup } = usePopupContext();
-  createNewIPushPullPage(): void {
-    this.props.Blotter.PushPullService.AddNewPage();
+  createNewIPushPullPage(x: IPushPullDomain): void {
+    // this should be an AdaptablePrompt...
+    let page = prompt('Choose a Page Name');
+    if (page) {
+      // check if exists
+      if (ArrayExtensions.ContainsItem(x.Pages, page)) {
+        // this should be a proper Alert - need to do properly
+        alert('A page with that name already exists in the folder');
+      } else {
+        this.props.Blotter.PushPullService.AddNewPage(x.FolderId, page);
+      }
+    }
   }
 
   hidePopup() {

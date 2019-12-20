@@ -153,6 +153,8 @@ export interface IPushPullDomain {
    */
   Name: string;
 
+  FolderId: number;
+
   /**
    * The names of the pages within the Domain (Folder)
    */

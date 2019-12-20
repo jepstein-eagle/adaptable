@@ -33,12 +33,7 @@ function InitAdaptableBlotter() {
   const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   // turn on mimicing ticking data
-  tickingDataHelper.startTickingDataagGridThroughRowData(
-    adaptableblotter,
-    tradeData,
-    5000,
-    tradeCount
-  );
+  tickingDataHelper.testTickingDataagGrid(adaptableblotter, tradeData, 5000, tradeCount);
 }
 
 let flashingJson: PredefinedConfig = {

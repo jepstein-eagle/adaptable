@@ -6,6 +6,7 @@ import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
 
 import env from '../../env';
+import folder from '../../components/icons/folder';
 
 export enum ServiceStatus {
   Unknown = 'Unknown',
@@ -82,8 +83,10 @@ export class PushPullService implements IPushPullService {
     return this.ppInstance.api
       .getDomainsAndPages(this.ppInstance.config.api_key)
       .then((response: any) => {
+        console.log(response);
         return response.data.domains.map((domain: any) => ({
           Name: domain.name,
+          FolderId: domain.id,
           Pages: domain.current_user_domain_page_access.pages
             .filter((page: any) => page.special_page_type == 0 && page.write_access)
             .map((page: any) => page.name),
@@ -121,18 +124,18 @@ export class PushPullService implements IPushPullService {
     }
   }
 
-  public AddNewPage(): Promise<any> {
-    alert('adding new page');
+  public AddNewPage(folderId: number, page: string): Promise<any> {
     if (!this.ppInstance) {
       return Promise.reject('No iPushPull instance found!');
     }
-    // ipushpull.Page.create([domainId],ipushpull.helpers.createSlug('[Page Name]'))
-    this.ppInstance.Page.create('Jonny_', this.ppInstance.helpers.createSlug('PageFromBlotter'))
+    this.ppInstance.Page.create(folderId, page)
       .then((page: any) => {
-        console.log(page);
+        LoggingHelper.LogAdaptableBlotterSuccess("Page: '" + page + "' successfully created.");
       })
       .catch((err: any) => {
-        console.log(err);
+        LoggingHelper.LogAdaptableBlotterError(
+          "Couldn't create Page: '" + page + "'. Reason: " + err
+        );
       });
   }
 

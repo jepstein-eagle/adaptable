@@ -42,7 +42,7 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
-  const useTickingData: boolean = true;
+  const useTickingData: boolean = false;
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
@@ -63,16 +63,9 @@ function InitAdaptableBlotter() {
 
   const blotterAPI: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  //ipushpull.Page.creat
-
   if (useTickingData) {
     tickingDataHelper.testTickingDataagGrid(gridOptions, blotterAPI, 1000, tradeCount);
   }
-
-  blotterAPI.eventApi.on('BlotterReady', () => {
-    let page: IPageService = new ipushpull.Page('TomTest', 'Jonny_');
-    //ipushpull.Page.create('Jonny_', ipushpull.helpers.createSlug('PageFromBlotter'));
-  });
 
   blotterAPI.eventApi.on(
     'LiveReportUpdated',

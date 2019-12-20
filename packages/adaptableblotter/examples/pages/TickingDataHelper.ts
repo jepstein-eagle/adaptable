@@ -1,7 +1,7 @@
 ﻿import { GridOptions, RowNode } from 'ag-grid-community';
 import { ITrade, ExamplesHelper } from './ExamplesHelper';
 import ArrayExtensions from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
-import { IAdaptableBlotter, BlotterApi } from '../../App_Scripts/types';
+import { BlotterApi } from '../../App_Scripts/types';
 
 export class TickingDataHelper {
   startTickingDatSystemStatus(api: BlotterApi) {
@@ -15,7 +15,7 @@ export class TickingDataHelper {
     }, 2000);
   }
 
-  public testTickingDataagGrid(
+  testTickingDataagGrid(
     gridOptions: any,
     blotterApi: BlotterApi,
     tickingFrequency: number,
@@ -23,11 +23,11 @@ export class TickingDataHelper {
   ) {
     if (gridOptions != null && gridOptions.api != null) {
       const examplesHelper = new ExamplesHelper();
-      let useBlotterAPIUpdateGridData: boolean = false; // this fails
-      let useBlotterAPISetCellValue: boolean = false; // this now works
-      let useRowNodeSetDataValue: boolean = false; // this works
-      let useRowNodeSetData: boolean = false; // this works
-      let gridOptionsUpdateRowData: boolean = true; // this fails
+      let useBlotterAPIUpdateGridData: boolean = false;
+      let useBlotterAPISetCellValue: boolean = false;
+      let useRowNodeSetDataValue: boolean = false;
+      let useRowNodeSetData: boolean = false;
+      let gridOptionsUpdateRowData: boolean = true;
 
       setInterval(() => {
         let tradeId = this.generateRandomInt(1, tradeCount);
@@ -47,7 +47,6 @@ export class TickingDataHelper {
         const changeOnYear = examplesHelper.getMeaningfulDouble();
 
         if (useBlotterAPIUpdateGridData) {
-          console.log('using blotter update grid data');
           trade.price = price;
           trade.bid = bid;
           trade.ask = ask;
@@ -59,7 +58,6 @@ export class TickingDataHelper {
         }
 
         if (gridOptionsUpdateRowData) {
-          console.log('using gridoptions update row data');
           trade.price = price;
           trade.bid = bid;
           trade.ask = ask;
@@ -71,7 +69,6 @@ export class TickingDataHelper {
         }
 
         if (useBlotterAPISetCellValue) {
-          console.log('using blotter set cell value');
           blotterApi.gridApi.setCellValue('price', price, tradeId, false);
           blotterApi.gridApi.setCellValue('bid', bid, tradeId, false);
           blotterApi.gridApi.setCellValue('ask', ask, tradeId, false);
@@ -82,7 +79,6 @@ export class TickingDataHelper {
         }
 
         if (useRowNodeSetDataValue) {
-          console.log('using rownode set data value');
           rowNode.setDataValue('price', price);
           rowNode.setDataValue('bid', bid);
           rowNode.setDataValue('ask', ask);
@@ -93,7 +89,6 @@ export class TickingDataHelper {
         }
 
         if (useRowNodeSetData) {
-          console.log('using row node set data');
           const data = rowNode.data;
           data.price = price;
           data.bid = bid;
@@ -104,190 +99,6 @@ export class TickingDataHelper {
           data.changeOnYear = changeOnYear;
           rowNode.setData(data);
         }
-      }, tickingFrequency);
-    }
-  }
-
-  startTickingDataagGridSetData(gridOptions: GridOptions) {
-    setInterval(() => {
-      const tradeId = this.generateRandomInt(0, 20);
-      if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
-        gridOptions.api.forEachNode((rowNode: RowNode) => {
-          if (rowNode.group) {
-            return;
-          }
-          const rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
-          if (rowTradeId != tradeId) {
-            return;
-          }
-
-          const test = rowNode.data;
-          test.notional = this.generateRandomInt(1, 200000);
-          rowNode.setData(test);
-        });
-      }
-    }, 5000);
-  }
-
-  // This DOES update the AB as agGrid fires an event
-  startTickingDataagGridSetDataValue(
-    gridOptions: GridOptions,
-    tickingFrequency: number,
-    tradeCount: number
-  ) {
-    setInterval(() => {
-      const tradeId = this.generateRandomInt(0, tradeCount);
-      if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
-        gridOptions.api.forEachNode((rowNode: RowNode) => {
-          if (rowNode.group) {
-            return;
-          }
-          const rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
-          if (rowTradeId != tradeId) {
-            return;
-          }
-
-          const randomInt = this.generateRandomInt(1, 2);
-          const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
-          const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-          const trade: RowNode = rowNode;
-          const columnName = 'price';
-          const initialPrice = gridOptions.api!.getValue(columnName, trade);
-          const newPrice = this.roundTo4Dp(initialPrice + numberToAdd);
-          trade.setDataValue(columnName, newPrice);
-          const bidOfferSpread = gridOptions.api!.getValue('bidOfferSpread', trade);
-          const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
-          trade.setDataValue('ask', ask);
-          const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
-          trade.setDataValue('bid', bid);
-          trade.setDataValue('bloombergAsk', this.roundTo4Dp(ask + directionToAdd));
-          trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - directionToAdd));
-        });
-      }
-    }, tickingFrequency);
-  }
-
-  startTickingDataagGridRowNodeSetData(
-    gridOptions: GridOptions,
-    rowData: any,
-    tickingFrequency: number,
-    tradeCount: number
-  ) {
-    setInterval(() => {
-      if (gridOptions != null && gridOptions.api != null && gridOptions.api != undefined) {
-        gridOptions.api.forEachNode((rowNode: RowNode) => {
-          if (rowNode.group) {
-            return;
-          }
-          const tradeId = this.generateRandomInt(0, tradeCount);
-
-          const rowTradeId = gridOptions.api!.getValue('tradeId', rowNode);
-          if (rowTradeId != tradeId) {
-            return;
-          }
-
-          // NOTE:  You need to make a COPY of the data that you are changing...
-          const trade: ITrade = { ...rowData[tradeId - 1] };
-          if (trade) {
-            const randomInt = this.generateRandomInt(1, 2);
-            const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
-            const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-            const newPrice = this.roundTo4Dp(trade.price + numberToAdd);
-            const bidOfferSpread = trade.bidOfferSpread;
-            const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
-            const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
-
-            trade.price = newPrice;
-            trade.bid = bid;
-            trade.ask = ask;
-            trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
-            trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
-            trade.notional = this.generateRandomInt(1, 50);
-            trade.changeOnYear = trade.changeOnYear > 0 ? -100 : 100;
-
-            rowNode.setData(trade);
-          }
-        });
-      }
-    }, tickingFrequency);
-  }
-
-  // This DOES NOT update the AB as agGrid fires an event
-  startTickingDataagGridThroughRowData(
-    blotter: IAdaptableBlotter,
-    rowData: any,
-    tickingFrequency: number,
-    tradeCount: number
-  ) {
-    let gridOptions: GridOptions = blotter.blotterOptions.vendorGrid as GridOptions;
-    let myRowData = gridOptions.rowData;
-    if (
-      gridOptions != null &&
-      gridOptions.api != null &&
-      gridOptions.api != undefined &&
-      myRowData != null &&
-      myRowData != undefined
-    ) {
-      setInterval(() => {
-        const tradeId = this.generateRandomInt(0, tradeCount);
-        // NOTE:  You need to make a COPY of the data that you are changing...
-        const trade: ITrade = { ...rowData[tradeId] };
-        if (trade) {
-          const randomInt = this.generateRandomInt(1, 2);
-          const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
-          const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-          const newPrice = this.roundTo4Dp(trade.price + numberToAdd);
-          const bidOfferSpread = trade.bidOfferSpread;
-          const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
-          const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
-
-          trade.price = newPrice;
-          trade.bid = bid;
-          trade.ask = ask;
-          trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
-          trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
-          trade.notional = this.generateRandomInt(1, 200); //trade.notional === undefined ? 34 : 4;
-          trade.changeOnYear =
-            trade.changeOnYear > 0 ? trade.changeOnYear + 50 : trade.changeOnYear - 50;
-
-          //  blotter.api.gridApi.updateGridData([trade]);
-          blotter.api.gridApi.setCellValue('notional', trade.notional, tradeId);
-
-          //   gridOptions.api!.updateRowData({ update: [trade] });
-        }
-      }, tickingFrequency);
-    }
-  }
-
-  public startTickingDataagGridTradesUpdateData(
-    gridOptions: any,
-    blotterApi: BlotterApi,
-    tickingFrequency: number,
-    tradeCount: number
-  ) {
-    if (gridOptions != null && gridOptions.api != null) {
-      setInterval(() => {
-        let tradeId = this.generateRandomInt(1, tradeCount);
-
-        const trade: ITrade = { ...gridOptions.rowData[tradeId] };
-
-        const randomInt = this.generateRandomInt(1, 2);
-        const numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
-        const directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-        const newPrice = this.roundTo4Dp(trade.price + numberToAdd);
-        const bidOfferSpread = trade.bidOfferSpread;
-        const ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
-        const bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
-
-        //   trade.price = newPrice;
-        //   trade.bid = bid;
-        //    trade.ask = ask;
-        //    trade.bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
-        ///    trade.bloombergBid = this.roundTo4Dp(bid - directionToAdd);
-        trade.notional = this.generateRandomInt(10000, 200000); //trade.notional === undefined ? 34 : 4;
-        //    trade.changeOnYear =
-        //      trade.changeOnYear > 0 ? trade.changeOnYear + 50 : trade.changeOnYear - 50;
-        blotterApi.gridApi.updateGridData([trade]);
       }, tickingFrequency);
     }
   }

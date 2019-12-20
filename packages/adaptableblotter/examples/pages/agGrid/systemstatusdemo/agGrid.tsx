@@ -33,10 +33,6 @@ function InitAdaptableBlotter() {
 
   const blotterApi: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  blotterApi.eventApi.on('BlotterReady', () => {
-    // tickingDataHelper.startTickingDatSystemStatus(blotterApi);
-  });
-
   blotterApi.eventApi.on(
     'ApplicationToolbarButtonClicked',
     applicationToolbarButtonClickedEventArgs => {
