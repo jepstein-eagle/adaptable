@@ -9,6 +9,7 @@ module.exports = {
     './App_Scripts/Redux/**/*',
     './App_Scripts/Strategy/**/*',
     './App_Scripts/Utilities/**/*',
+    './App_Scripts/BlotterInterfaces/**/*',
     './App_Scripts/fonts/**/*',
     './App_Scripts/Temp/**/*',
     './App_Scripts/themes/**/*',
