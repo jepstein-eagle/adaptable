@@ -47,7 +47,7 @@ export interface IAdaptableNoCodeWizardOptions {
  *  // the user configured the columns
  * };
  *
- * const AdaptableWizard = new AdaptableWizard(adaptableBlotterOptions);
+ * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableBlotterOptions);
  *
  * // in the most simple case.
  *
@@ -56,7 +56,7 @@ export interface IAdaptableNoCodeWizardOptions {
  * the developer to override some configuration in case this is needed. This is how it looks like:
  *
  *
- * const AdaptableWizard = new AdaptableWizard(adaptableBlotterOptions, {
+ * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableBlotterOptions, {
  *    onInit: ({ adaptableBlotterOptions, gridOptions }) => {
  *      // here you can either change some of the ab options or the gridOptions
  *      // and don't return anything
@@ -73,7 +73,7 @@ export interface IAdaptableNoCodeWizardOptions {
  *
  * you can also have a `prepareData` config
  *
- * const AdaptableWizard = new AdaptableWizard(adaptableBlotterOptions, {
+ * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableBlotterOptions, {
  *   prepareData: (dataFromFile) => {
  *     return {
  *       columns: ['name','value']

@@ -9,7 +9,7 @@ import '../../../src/themes/dark.scss'; // from '@adaptabletools/adaptableblotte
 
 import './index.css';
 
-import AdaptableWizard, { AdaptableBlotterOptions, PredefinedConfig } from '../../../src'; // from '@adaptabletools/adaptableblotter-nocode'
+import AdaptableNoCodeWizard, { AdaptableBlotterOptions, PredefinedConfig } from '../../../src'; // from '@adaptabletools/adaptableblotter-nocode'
 
 /*
 Basic demo of wizard that allow d&d of a json with an array contents
@@ -21,7 +21,7 @@ function InitAdaptableBlotter() {
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
-  AdaptableWizard.init(adaptableBlotterOptions).then(api => {
+  AdaptableNoCodeWizard.init(adaptableBlotterOptions).then(api => {
     console.log(api);
   });
 }

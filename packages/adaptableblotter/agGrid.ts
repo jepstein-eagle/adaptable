@@ -1,4 +1,4 @@
-import AdaptableBlotter, { AdaptableWizard as ABWizard } from './App_Scripts/agGrid';
+import AdaptableBlotter, { AdaptableNoCodeWizard as ABWizard } from './App_Scripts/agGrid';
 
 export default AdaptableBlotter;
-export const AdaptableWizard = ABWizard;
+export const AdaptableNoCodeWizard = ABWizard;

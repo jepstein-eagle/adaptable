@@ -8,7 +8,7 @@ import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
-import { AdaptableWizard } from '../../../../App_Scripts/agGrid';
+import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 
 /*
@@ -37,7 +37,7 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  new AdaptableWizard(adaptableBlotterOptions, {
+  new AdaptableNoCodeWizard(adaptableBlotterOptions, {
     prepareData: data => {
       const result = {
         columns: ['name', 'value'],

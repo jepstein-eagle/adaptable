@@ -10,8 +10,8 @@ import './index.css';
 
 import XLSX from 'xlsx';
 
-import { AdaptableWizard } from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid/AdaptableBlotter';
 
 /*
 Basic demo of wizard that allow d&d of a json with an array contents
@@ -24,7 +24,7 @@ function InitAdaptableBlotter() {
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
-  new AdaptableWizard(adaptableBlotterOptions, {
+  new AdaptableNoCodeWizard(adaptableBlotterOptions, {
     readFile: (file: File): Promise<any> => {
       /* Boilerplate to set up FileReader */
       const reader = new FileReader();
