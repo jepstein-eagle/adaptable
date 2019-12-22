@@ -30,7 +30,7 @@ import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
-import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;
@@ -415,7 +415,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   private getAccessLevel(strategyId: string): AccessLevel {
-    return BlotterHelper.getEntitlementAccessLevelForStrategy(
+    return AdaptableHelper.getEntitlementAccessLevelForStrategy(
       this.props.FunctionEntitlements,
       strategyId
     );

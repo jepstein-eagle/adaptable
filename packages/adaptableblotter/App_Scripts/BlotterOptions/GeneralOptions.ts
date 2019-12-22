@@ -61,7 +61,7 @@ export interface GeneralOptions {
    *
    * **Default Value: false**
    */
-  showAdaptableBlotterToolPanel?: boolean;
+  showAdaptableToolPanel?: boolean;
 
   /**
    * Whether or not to show the Adaptable Blotter specific Context Menu items.
@@ -76,7 +76,7 @@ export interface GeneralOptions {
    *
    * **Default Value: true**
    */
-  showAdaptableBlotterContextMenu?:
+  showAdaptableContextMenu?:
     | boolean
     | ((menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => boolean);
 

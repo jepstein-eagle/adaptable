@@ -17,7 +17,7 @@ import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrat
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import BlotterHelper from '../Helpers/BlotterHelper';
+import AdaptableHelper from '../Helpers/AdaptableHelper';
 import {
   BlotterSearchState,
   BlotterSortState,
@@ -121,7 +121,7 @@ export class SearchService implements ISearchService {
         searchAsAtDate: new Date(),
       };
 
-      const searchChangedArgs: SearchChangedEventArgs = BlotterHelper.createFDC3Message(
+      const searchChangedArgs: SearchChangedEventArgs = AdaptableHelper.createFDC3Message(
         'Search Changed Args',
         searchChangedInfo
       );

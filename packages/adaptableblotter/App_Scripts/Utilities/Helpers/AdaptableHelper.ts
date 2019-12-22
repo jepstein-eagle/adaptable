@@ -1,7 +1,5 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
 import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
-import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -12,59 +10,61 @@ import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { AdaptableBlotterEventData, BlotterEventArgs } from '../../Api/Events/BlotterEvents';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
 
 export function assignBlotterOptions(
   blotterOptions: AdaptableBlotterOptions
 ): AdaptableBlotterOptions {
-  const returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions);
+  const returnBlotterOptions = Object.assign({}, DefaultAdaptableOptions, blotterOptions);
   returnBlotterOptions.auditOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.auditOptions,
+    DefaultAdaptableOptions.auditOptions,
     blotterOptions.auditOptions
   );
   returnBlotterOptions.configServerOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.configServerOptions,
+    DefaultAdaptableOptions.configServerOptions,
     blotterOptions.configServerOptions
   );
   returnBlotterOptions.layoutOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.layoutOptions,
+    DefaultAdaptableOptions.layoutOptions,
     blotterOptions.layoutOptions
   );
   returnBlotterOptions.filterOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.filterOptions,
+    DefaultAdaptableOptions.filterOptions,
     blotterOptions.filterOptions
   );
   returnBlotterOptions.queryOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.queryOptions,
+    DefaultAdaptableOptions.queryOptions,
     blotterOptions.queryOptions
   );
   returnBlotterOptions.editOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.editOptions,
+    DefaultAdaptableOptions.editOptions,
     blotterOptions.editOptions
   );
   returnBlotterOptions.containerOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.containerOptions,
+    DefaultAdaptableOptions.containerOptions,
     blotterOptions.containerOptions
   );
   returnBlotterOptions.generalOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.generalOptions,
+    DefaultAdaptableOptions.generalOptions,
     blotterOptions.generalOptions
   );
   returnBlotterOptions.chartOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.chartOptions,
+    DefaultAdaptableOptions.chartOptions,
     blotterOptions.chartOptions
   );
   returnBlotterOptions.stateOptions = Object.assign(
     {},
-    DefaultAdaptableBlotterOptions.stateOptions,
+    DefaultAdaptableOptions.stateOptions,
     blotterOptions.stateOptions
   );
 
@@ -164,7 +164,7 @@ export function createFDC3Message(type: string, id: any): BlotterEventArgs {
   };
 }
 
-export const BlotterHelper = {
+export const AdaptableHelper = {
   assignBlotterOptions,
   isValidPrimaryKey,
   isConfigServerEnabled,
@@ -173,4 +173,4 @@ export const BlotterHelper = {
   getEntitlementAccessLevelForStrategy,
   createFDC3Message,
 };
-export default BlotterHelper;
+export default AdaptableHelper;

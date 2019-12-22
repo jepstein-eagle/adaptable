@@ -2,7 +2,6 @@ import * as React from 'react';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import { AdaptableBlotterOptions } from '../../../types';
 import CheckBox from '../../../components/CheckBox';
-import { DefaultAdaptableBlotterOptions } from '../../../Utilities/Defaults/DefaultAdaptableBlotterOptions';
 import { FilterOptions } from '../../../BlotterOptions/FilterOptions';
 import { LayoutOptions } from '../../../BlotterOptions/LayoutOptions';
 import { GridOptions } from 'ag-grid-community';
@@ -13,6 +12,7 @@ import { GeneralOptions } from '../../../BlotterOptions/GeneralOptions';
 import { QueryOptions } from '../../../BlotterOptions/QueryOptions';
 import { ChartOptions } from '../../../BlotterOptions/ChartOptions';
 import { Flex, Text } from 'rebass';
+import { DefaultAdaptableOptions } from '../../../Utilities/Defaults/DefaultAdaptableOptions';
 
 interface ConfigurationFormOptions {
   adaptableBlotterOptions: AdaptableBlotterOptions;
@@ -23,38 +23,38 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
   let abOptions = props.adaptableBlotterOptions;
 
   const filterOptions: FilterOptions = {
-    ...DefaultAdaptableBlotterOptions.filterOptions,
+    ...DefaultAdaptableOptions.filterOptions,
     ...abOptions.filterOptions,
   };
 
   const layoutOptions: LayoutOptions = {
-    ...DefaultAdaptableBlotterOptions.layoutOptions,
+    ...DefaultAdaptableOptions.layoutOptions,
     ...abOptions.layoutOptions,
   };
 
   const generalOptions: GeneralOptions = {
-    ...DefaultAdaptableBlotterOptions.generalOptions,
+    ...DefaultAdaptableOptions.generalOptions,
     ...abOptions.generalOptions,
   };
 
   const queryOptions: QueryOptions = {
-    ...DefaultAdaptableBlotterOptions.queryOptions,
+    ...DefaultAdaptableOptions.queryOptions,
     ...abOptions.queryOptions,
   };
 
   const configServerOptions: ConfigServerOptions = {
-    ...DefaultAdaptableBlotterOptions.configServerOptions,
+    ...DefaultAdaptableOptions.configServerOptions,
     ...abOptions.configServerOptions,
   };
 
   const chartOptions: ChartOptions = {
-    ...DefaultAdaptableBlotterOptions.chartOptions,
+    ...DefaultAdaptableOptions.chartOptions,
     ...abOptions.chartOptions,
   };
 
   // we are 'hard-coding' this to use ag-Grid but so does helper so ok for now and we can refactor when Adaptable Grid is ready
   const vendorGrid: GridOptions = {
-    ...DefaultAdaptableBlotterOptions.vendorGrid,
+    ...DefaultAdaptableOptions.vendorGrid,
     ...abOptions.vendorGrid,
   };
 
@@ -104,11 +104,11 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         {/* 
         <FormRow label="Show Adaptable Blotter Tool Panel">
           <CheckBox
-            checked={generalOptions.showAdaptableBlotterToolPanel}
-            onChange={(showAdaptableBlotterToolPanel: boolean) => {
+            checked={generalOptions.showAdaptableToolPanel}
+            onChange={(showAdaptableToolPanel: boolean) => {
               abOptions = { ...abOptions };
               abOptions.generalOptions = { ...abOptions.generalOptions };
-              abOptions.generalOptions.showAdaptableBlotterToolPanel = showAdaptableBlotterToolPanel;
+              abOptions.generalOptions.showAdaptableToolPanel = showAdaptableToolPanel;
 
               props.onChangeBlotterOptions(abOptions);
             }}

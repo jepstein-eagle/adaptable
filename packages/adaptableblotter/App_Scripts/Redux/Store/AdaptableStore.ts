@@ -102,7 +102,7 @@ import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
+import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
 import { IUIConfirmation, InputAction, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -295,7 +295,7 @@ export class AdaptableStore implements IAdaptableStore {
     // not sure we can do this as we need to be backwardly compatible with existing users so need to stick with blotter id (which should be unique)
     // const localStorageKey =  'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey;
 
-    if (BlotterHelper.isConfigServerEnabled(blotter.blotterOptions)) {
+    if (AdaptableHelper.isConfigServerEnabled(blotter.blotterOptions)) {
       storageEngine = createEngineRemote({
         url: blotter.blotterOptions.configServerOptions.configServerUrl,
         userName: blotter.blotterOptions.userName,
@@ -2377,7 +2377,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<
+              boolean
+            > = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)

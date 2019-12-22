@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
 import { AdaptablePopup } from './AdaptablePopup';
-import BlotterHelper from '../../../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
 
 /*
 The Chart popup or Div.
@@ -45,7 +45,7 @@ export class AdaptableChart extends React.Component<
         document,
         this.props.showModal
       ),
-      accessLevel: BlotterHelper.getEntitlementAccessLevelForStrategy(
+      accessLevel: AdaptableHelper.getEntitlementAccessLevelForStrategy(
         this.props.AdaptableBlotter.api.entitlementApi.getAllEntitlement(),
         StrategyConstants.ChartStrategyId
       ),

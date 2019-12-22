@@ -7,7 +7,7 @@ import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
-import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableBlotterDashboardToolbar } from '../PredefinedConfig/DashboardState';
 import {
   ToolbarVisibilityChangedEventArgs,
@@ -98,7 +98,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
       toolbar: toolbar,
       visibility: Visibility.Visible,
     };
-    const toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = BlotterHelper.createFDC3Message(
+    const toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Toolbar Visibility Changed Args',
       toolbarVisibilityChangedInfo
     );

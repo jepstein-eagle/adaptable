@@ -35,7 +35,7 @@ function InitAdaptableBlotter() {
   };
 
   adaptableBlotterOptions.generalOptions = {
-    showAdaptableBlotterToolPanel: true,
+    showAdaptableToolPanel: true,
   };
 
   adaptableBlotterOptions.layoutOptions = {

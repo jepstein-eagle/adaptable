@@ -11,7 +11,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
 import SimpleButton from '../../components/SimpleButton';
-import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 import {
   ApplicationToolbarButtonClickedEventArgs,
@@ -59,7 +59,7 @@ class ApplicationToolbarControlComponent extends React.Component<
                 let applicationToolbarButtonClickedInfo: ApplicationToolbarButtonClickedInfo = {
                   applicationToolbarButton: button,
                 };
-                const applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs = BlotterHelper.createFDC3Message(
+                const applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
                   'Application Toolbar Button Clicked Args',
                   applicationToolbarButtonClickedInfo
                 );

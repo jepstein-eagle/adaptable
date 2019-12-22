@@ -9,7 +9,7 @@ import {
   PivotDetails,
   VendorGridInfo,
 } from '../../PredefinedConfig/LayoutState';
-import BlotterHelper from '../Helpers/BlotterHelper';
+import AdaptableHelper from '../Helpers/AdaptableHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 import { ILayoutService } from './Interface/ILayoutService';
@@ -85,7 +85,7 @@ export class LayoutService implements ILayoutService {
       let columnStateChangedInfo: ColumnStateChangedInfo = {
         currentLayout: currentLayoutName,
       };
-      const columnStateChangedEventArgs: ColumnStateChangedEventArgs = BlotterHelper.createFDC3Message(
+      const columnStateChangedEventArgs: ColumnStateChangedEventArgs = AdaptableHelper.createFDC3Message(
         'Column State Changed Args',
         columnStateChangedInfo
       );

@@ -96,7 +96,6 @@ import { Helper } from '../Utilities/Helpers/Helper';
 // if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
-import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { BlotterApiImpl } from '../Api/Implementation/BlotterApiImpl';
@@ -143,7 +142,6 @@ import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInf
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
-import { DefaultAdaptableBlotterOptions } from '../Utilities/Defaults/DefaultAdaptableBlotterOptions';
 import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
 
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
@@ -168,6 +166,8 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { FilterService } from '../Utilities/Services/FilterService';
 import { IAdaptableToolPanelContext } from '../Utilities/Interface/IAdaptableToolPanelContext';
+import { DefaultAdaptableOptions } from '../Utilities/Defaults/DefaultAdaptableOptions';
+import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -297,8 +297,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     this.renderGrid = renderGrid;
     // we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
-    this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
-    BlotterHelper.CheckBlotterOptions(this.blotterOptions);
+    this.blotterOptions = AdaptableHelper.assignBlotterOptions(blotterOptions);
+    AdaptableHelper.CheckBlotterOptions(this.blotterOptions);
     this.runtimeConfig = runtimeConfig;
 
     this.gridOptions = this.blotterOptions!.vendorGrid;
@@ -437,7 +437,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
 
     // Create Adaptable Blotter Tool Panel
-    if (this.blotterOptions!!.generalOptions!.showAdaptableBlotterToolPanel) {
+    if (this.blotterOptions!!.generalOptions!.showAdaptableToolPanel) {
       LoggingHelper.LogAdaptableBlotterInfo('Adding Adaptable Blotter Tool Panel');
       this.gridOptions.sideBar = this.gridOptions.sideBar || {};
       this.gridOptions.components = this.gridOptions.components || {};
@@ -2351,23 +2351,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             // here we create Adaptable Blotter Menu items from OUR internal collection
             // user has ability to decide whether to show or not
             if (ArrayExtensions.IsNotNullOrEmpty(AdaptableMenuItems)) {
-              let showAdaptableBlotterContextMenu = this.blotterOptions.generalOptions!
-                .showAdaptableBlotterContextMenu;
-              if (
-                showAdaptableBlotterContextMenu == null ||
-                showAdaptableBlotterContextMenu !== false
-              ) {
+              let showAdaptableContextMenu = this.blotterOptions.generalOptions!
+                .showAdaptableContextMenu;
+              if (showAdaptableContextMenu == null || showAdaptableContextMenu !== false) {
                 contextMenuItems.push('separator');
                 AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
                   let addContextMenuItem: boolean = true;
                   if (
-                    showAdaptableBlotterContextMenu != null &&
-                    typeof showAdaptableBlotterContextMenu === 'function'
+                    showAdaptableContextMenu != null &&
+                    typeof showAdaptableContextMenu === 'function'
                   ) {
-                    addContextMenuItem = showAdaptableBlotterContextMenu(
-                      AdaptableMenuItem,
-                      menuInfo
-                    );
+                    addContextMenuItem = showAdaptableContextMenu(AdaptableMenuItem, menuInfo);
                   }
                   if (addContextMenuItem) {
                     let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
@@ -3152,8 +3146,7 @@ export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
 
   render(container?: HTMLElement | null) {
     let id: string =
-      DefaultAdaptableBlotterOptions.containerOptions!.adaptableBlotterContainer ||
-      'adaptableBlotter';
+      DefaultAdaptableOptions.containerOptions!.adaptableBlotterContainer || 'adaptableBlotter';
 
     if (!container) {
       if (this.adaptableBlotterOptions.containerOptions) {

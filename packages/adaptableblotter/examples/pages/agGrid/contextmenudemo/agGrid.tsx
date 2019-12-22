@@ -31,11 +31,11 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   adaptableBlotterOptions.generalOptions = {
-    showAdaptableBlotterToolPanel: true,
-    //showAdaptableBlotterContextMenu: true,
-    //showAdaptableBlotterContextMenu: false,
+    showAdaptableToolPanel: true,
+    //showAdaptableContextMenu: true,
+    //showAdaptableContextMenu: false,
 
-    showAdaptableBlotterContextMenu: (menuItem: AdaptableMenuItem) => {
+    showAdaptableContextMenu: (menuItem: AdaptableMenuItem) => {
       if (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'SmartEdit') {
         return false;
       }

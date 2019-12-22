@@ -12,7 +12,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import OpenfinHelper from '../../Utilities/Helpers/OpenfinHelper';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import ObjectFactory from '../../Utilities/ObjectFactory';
-import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/AlertFired';
 
 export class AlertApiImpl extends ApiBase implements AlertApi {
@@ -36,7 +36,7 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     let alertFiredInfo: AlertFiredInfo = {
       alert: alertToShow,
     };
-    const alertFiredArgs: AlertFiredEventArgs = BlotterHelper.createFDC3Message(
+    const alertFiredArgs: AlertFiredEventArgs = AdaptableHelper.createFDC3Message(
       'Alert Fired Args',
       alertFiredInfo
     );

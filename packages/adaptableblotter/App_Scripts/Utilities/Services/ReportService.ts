@@ -20,7 +20,7 @@ import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
-import BlotterHelper from '../Helpers/BlotterHelper';
+import AdaptableHelper from '../Helpers/AdaptableHelper';
 import {
   LiveReportUpdatedEventArgs,
   LiveReportUpdatedInfo,
@@ -326,7 +326,7 @@ export class ReportService implements IReportService {
       LiveReportTrigger: liveReportTrigger,
       CurrentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
     };
-    const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = BlotterHelper.createFDC3Message(
+    const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = AdaptableHelper.createFDC3Message(
       'Live Report Updated Args',
       liveReportUpdatedInfo
     );

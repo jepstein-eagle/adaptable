@@ -6,7 +6,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { THEME_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
-import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/ThemeChanged';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
@@ -30,7 +30,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     let themeChangedInfo: ThemeChangedInfo = {
       themeName: themeState.CurrentTheme,
     };
-    const themeChangedEventArgs: ThemeChangedEventArgs = BlotterHelper.createFDC3Message(
+    const themeChangedEventArgs: ThemeChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Theme Changed Args',
       themeChangedInfo
     );

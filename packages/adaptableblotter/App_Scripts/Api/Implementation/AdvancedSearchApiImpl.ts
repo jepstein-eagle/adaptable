@@ -5,7 +5,7 @@ import { ApiBase } from './ApiBase';
 import { AdvancedSearchApi } from '../AdvancedSearchApi';
 import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
-import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
 export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi {
@@ -19,7 +19,7 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
 
     if (advancedSearches != advancedSearchState.AdvancedSearches) {
       advancedSearchState.AdvancedSearches.forEach((advancedSearch: AdvancedSearch) => {
-        if (BlotterHelper.BlotterObjectExistsInState(advancedSearches, advancedSearch)) {
+        if (AdaptableHelper.BlotterObjectExistsInState(advancedSearches, advancedSearch)) {
           this.editAdvancedSearch(advancedSearch);
         } else {
           this.addAdvancedSearch(advancedSearch);

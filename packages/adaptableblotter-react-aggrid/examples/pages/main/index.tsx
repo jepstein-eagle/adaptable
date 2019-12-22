@@ -336,7 +336,7 @@ const App = () => {
       // pieChartMaxItems: 100
     },
     generalOptions: {
-      showAdaptableBlotterToolPanel: true,
+      showAdaptableToolPanel: true,
       // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
     },
   };

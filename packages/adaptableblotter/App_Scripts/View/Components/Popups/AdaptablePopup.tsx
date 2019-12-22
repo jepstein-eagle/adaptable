@@ -5,7 +5,7 @@ import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { StrategyViewPopupProps, StrategyParams } from '../SharedProps/StrategyViewPopupProps';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
-import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
+import { AdaptableHelper } from '../../../Utilities/Helpers/AdaptableHelper';
 import { UIHelper } from '../../UIHelper';
 
 import SimpleButton from '../../../components/SimpleButton';
@@ -35,7 +35,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
       this.props.Blotter.blotterOptions,
       document
     );
-    let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
+    let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
       this.props.Blotter.api.entitlementApi.getAllEntitlement(),
       this.props.ComponentStrategy
     );
@@ -53,7 +53,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
             this.props.onHide();
           }
         },
-        TeamSharingActivated: BlotterHelper.isConfigServerEnabled(
+        TeamSharingActivated: AdaptableHelper.isConfigServerEnabled(
           this.props.Blotter.blotterOptions
         ),
         Columns: this.props.Blotter.api.gridApi.getColumns(),

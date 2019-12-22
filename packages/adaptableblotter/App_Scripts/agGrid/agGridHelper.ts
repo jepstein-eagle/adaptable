@@ -70,7 +70,7 @@ import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
 import Helper from '../Utilities/Helpers/Helper';
 import { SelectionChangedInfo, SelectionChangedEventArgs } from '../Api/Events/SelectionChanged';
-import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
@@ -440,7 +440,7 @@ export class agGridHelper {
       selectedCellInfo: this.blotter.api.gridApi.getGridState().SelectedCellInfo,
       selectedRowInfo: this.blotter.api.gridApi.getGridState().SelectedRowInfo,
     };
-    const selectionChangedArgs: SelectionChangedEventArgs = BlotterHelper.createFDC3Message(
+    const selectionChangedArgs: SelectionChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Selection Changed Args',
       selectionChangedInfo
     );

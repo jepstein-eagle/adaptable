@@ -64,7 +64,7 @@ export interface IAdaptableBlotter {
   /**
    * The main configuration object which contains all the options that users needs to set up the Blotter.
    *
-   * Most properties are nullable with sensible defaults provided in DefaultBlotterOptions that is merged at initialisation.
+   * Most properties are nullable with sensible defaults provided in DefaultAdaptableOptions that is merged at initialisation.
    *
    * Each implementation of the Adaptable Blotter has a constructor that contains an AdaptableBlotterOptions object.
    *

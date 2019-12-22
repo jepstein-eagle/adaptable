@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
 import { SelectionMode } from '../../PredefinedConfig/Common/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -9,7 +8,6 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-
 import { ChartData, SparklinesChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { Flex, Text } from 'rebass';
@@ -17,7 +15,6 @@ import ErrorBox from '../../components/ErrorBox';
 import Panel from '../../components/Panel';
 import { ChartContainer } from '../../components/ChartContainer';
 import SparklineChart from '../../components/SparklineChart';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import FormLayout, { FormRow } from '../../components/FormLayout';
 import CheckBox from '../../components/CheckBox';
 import Input from '../../components/Input';
@@ -25,7 +22,6 @@ import { SparklineTypeDropdown } from './Wizard/SparklineColumnSettingsWizard';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { DefaultSparklinesChartProperties } from '../../Utilities/Defaults/DefaultSparklinesChartProperties';
 import { ColorPicker } from '../ColorPicker';
-import { DefaultAdaptableBlotterOptions } from '../../Utilities/Defaults/DefaultAdaptableBlotterOptions';
 import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 
 interface ViewAsSparklinesPopupProps

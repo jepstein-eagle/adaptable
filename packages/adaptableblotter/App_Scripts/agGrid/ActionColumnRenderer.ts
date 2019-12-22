@@ -5,7 +5,7 @@ import { ActionColumn, ActionColumnRenderParams } from '../PredefinedConfig/Acti
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
 import AdaptableBlotter from '../../agGrid';
-import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import Helper from '../Utilities/Helpers/Helper';
 import {
   ActionColumnClickedEventArgs,
@@ -79,7 +79,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
           primaryKeyValue: blotter.getPrimaryKeyValueFromRowNode(params.node),
           rowData: params.data,
         };
-        const actionColumnClickedEventArgs: ActionColumnClickedEventArgs = BlotterHelper.createFDC3Message(
+        const actionColumnClickedEventArgs: ActionColumnClickedEventArgs = AdaptableHelper.createFDC3Message(
           'Action Column Clicked Args',
           actionColumnClickedInfo
         );

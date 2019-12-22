@@ -20,7 +20,7 @@ import { EntitlementsState, Entitlement } from '../../PredefinedConfig/Entitleme
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';
-import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
+import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -48,7 +48,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
     );
     let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
-      let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
+      let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
         this.props.EntitlementsState.FunctionEntitlements,
         control
       );

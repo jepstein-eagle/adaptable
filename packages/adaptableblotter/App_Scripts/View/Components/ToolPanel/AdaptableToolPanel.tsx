@@ -17,7 +17,7 @@ import { QuickSearchToolPanel } from '../../QuickSearch/QuickSearchToolPanel';
 import { AdvancedSearchToolPanel } from '../../AdvancedSearch/AdvancedSearchToolPanel';
 import { Entitlement } from '../../../PredefinedConfig/EntitlementsState';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
-import BlotterHelper from '../../../Utilities/Helpers/BlotterHelper';
+import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
 import { AdaptableToolPanelFactory } from '../../AdaptableViewFactory';
 import LoggingHelper from '../../../Utilities/Helpers/LoggingHelper';
 import { Icon } from '../../../components/icons';
@@ -68,7 +68,7 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
       ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
     );
     let visibleToolPanelControls = visibleToolPanels.map((control, idx) => {
-      let accessLevel: AccessLevel = BlotterHelper.getEntitlementAccessLevelForStrategy(
+      let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
         this.props.FunctionEntitlements,
         control
       );

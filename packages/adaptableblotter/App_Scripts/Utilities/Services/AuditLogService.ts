@@ -14,7 +14,7 @@ import { AdaptableAlert } from '../Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import ColumnHelper from '../Helpers/ColumnHelper';
 import ObjectFactory from '../ObjectFactory';
-import BlotterHelper from '../Helpers/BlotterHelper';
+import AdaptableHelper from '../Helpers/AdaptableHelper';
 
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<AuditLogEntry>;
@@ -455,7 +455,7 @@ export class AuditLogService implements IAuditLogService {
   }
 
   publishStateChanged(auditLogEntry: AuditLogEntry, auditLogType: AuditLogType): void {
-    const stateChangedArgs: AuditLogEventArgs = BlotterHelper.createFDC3Message(
+    const stateChangedArgs: AuditLogEventArgs = AdaptableHelper.createFDC3Message(
       'Audit Log Event',
       auditLogEntry
     );

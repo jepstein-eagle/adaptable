@@ -1,7 +1,7 @@
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 
-export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
+export const DefaultAdaptableOptions: AdaptableBlotterOptions = {
   vendorGrid: null,
   primaryKey: '',
   userName: GeneralConstants.USER_NAME,
@@ -95,8 +95,8 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     showMissingPrimaryKeyWarning: true,
     preventDuplicatePrimaryKeyValues: true,
     serverSearchOption: 'None',
-    showAdaptableBlotterToolPanel: false,
-    showAdaptableBlotterContextMenu: true,
+    showAdaptableToolPanel: false,
+    showAdaptableContextMenu: true,
     // checkIfLatestVersionOnStartup: true,
   },
   advancedOptions: {
