@@ -22,7 +22,7 @@ import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../../PredefinedConfig/AlertState';
 import { AdvancedSearchState } from '../../PredefinedConfig/AdvancedSearchState';
 import { RunTimeState } from '../../PredefinedConfig/RunTimeState';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ResetUserData, LoadState, InitState } from '../../Redux/Store/AdaptableBlotterStore';
 import { StateChangedTrigger } from '../../PredefinedConfig/Common/Enums';
 import { ApiBase } from './ApiBase';
@@ -45,14 +45,14 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   }
 
   public configCopyAllStateToClipboard(): void {
-    let state: AdaptableBlotterState = this.getBlotterState();
+    let state: AdaptableState = this.getBlotterState();
     let stringifiedState = JSON.stringify(state);
     Helper.copyToClipboard(stringifiedState);
   }
 
   public configCopyUserStateToClipboard(): void {
     // This doesnt currently work...
-    let state: AdaptableBlotterState = this.getBlotterState();
+    let state: AdaptableState = this.getBlotterState();
     //  let userState = state
     let stringifiedState = JSON.stringify(state);
     Helper.copyToClipboard(stringifiedState);
@@ -64,7 +64,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     window.location.reload();
   }
 
-  public configGetAllState(): AdaptableBlotterState {
+  public configGetAllState(): AdaptableState {
     return this.getBlotterState();
   }
 

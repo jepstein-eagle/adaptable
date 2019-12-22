@@ -1,9 +1,9 @@
-import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 
 /**
  * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading with custom functionality.
  *
- * By default, AdaptableBlotterState is persisted in the local storage of the user browser, under the `blotterId` key.
+ * By default, AdaptableState is persisted in the local storage of the user browser, under the `blotterId` key.
  *
  * (Or if you are using [Config Server](_blotteroptions_configserveroptions_.configserveroptions.html) in the location specified by the [configServerUrl Server](_blotteroptions_configserveroptions_.configserveroptions.html#configserverurl) property).
  *
@@ -13,13 +13,13 @@ import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState
  *
  * - `loadState`: Allows the customization of state loading.
  *
- * - `applyState`: Allows hooking into the AdaptableBlotterState hydration
+ * - `applyState`: Allows hooking into the AdaptableState hydration
  *
  * - `saveState`: Allows the customization of the state that is going to be persisted
  *
  * - `persistState`: Allows the customization of state persistence
  *
- * The AdaptableBlotterState flow is the following:
+ * The AdaptableState flow is the following:
  *
  * **User Loads Page** --> `loadState()`: state1 -> `applyState(state1)`: state2 ---- BLOTTER NOW READY WITH STATE (state2) ---- **User Updates State** ------ `saveState(state3)`: state4  -> `persistState(state4)`
  *
@@ -95,10 +95,10 @@ export interface StateOptions {
    *
    * **Default implementation: (state) => state**
    */
-  saveState?: (state: AdaptableBlotterState) => Partial<AdaptableBlotterState>;
+  saveState?: (state: AdaptableState) => Partial<AdaptableState>;
 
   /**
-   * Allows hooking into the AdaptableBlotterState hydration - useful when `saveState` was specified and added new custom properties, which will again be accessible into the `applyState` function.
+   * Allows hooking into the AdaptableState hydration - useful when `saveState` was specified and added new custom properties, which will again be accessible into the `applyState` function.
    *
    * This function determines what state is (re)applied on the blotter when the blotter is initialized.
    *
@@ -143,7 +143,7 @@ export interface StateOptions {
  */
 export interface AdaptableBlotterPersistStateFunction {
   (
-    state: Partial<AdaptableBlotterState>,
+    state: Partial<AdaptableState>,
     { blotterId, userName, url }: { blotterId: string; userName: string; url?: string }
   ): Promise<any>;
 }

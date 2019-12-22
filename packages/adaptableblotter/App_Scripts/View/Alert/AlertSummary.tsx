@@ -11,7 +11,7 @@ import { AlertWizard } from './Wizard/AlertWizard';
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -148,7 +148,7 @@ export class AlertSummaryComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Columns: state.Grid.Columns,
     Alerts: state.Alert.AlertDefinitions,
@@ -159,7 +159,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(Alert)),
     onEditAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(Alert)),

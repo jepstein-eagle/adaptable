@@ -4,7 +4,7 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
@@ -121,14 +121,14 @@ export class CalculatedColumnSummaryComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
     CalculatedColumnErrorMessage: state.System.CalculatedColumnErrorMessage,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onEdit: (calculatedColumn: CalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),

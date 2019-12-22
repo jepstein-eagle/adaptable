@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 import { ChartData, SparklinesChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
@@ -268,7 +268,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {};
 }
 

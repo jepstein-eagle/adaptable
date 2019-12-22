@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 
 import Helper from '../../Utilities/Helpers/Helper';
@@ -52,7 +52,7 @@ export abstract class ApiBase {
    *
    * This is a simple *getState()* call
    */
-  public getBlotterState(): AdaptableBlotterState {
+  public getBlotterState(): AdaptableState {
     return this.blotter.adaptableBlotterStore.TheStore.getState();
   }
 }

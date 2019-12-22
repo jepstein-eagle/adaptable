@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -259,13 +259,13 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Entities: state.TeamSharing.SharedEntities,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onGetSharedItems: () => dispatch(TeamSharingRedux.TeamSharingGet()),
     onImportItem: (entity: AdaptableObject, strategy: string) =>

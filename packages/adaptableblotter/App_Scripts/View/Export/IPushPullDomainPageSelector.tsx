@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
@@ -268,7 +268,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: IPushPullDomainPageSelectorProps) {
+function mapStateToProps(state: AdaptableState, ownProps: IPushPullDomainPageSelectorProps) {
   return {
     IPushPullDomainsPages: state.System.IPushPullDomainsPages,
     ErrorMsg: state.System.ReportErrorMessage,
@@ -277,7 +277,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: IPushPullDomain
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onApplyExport: (value: Report, isLiveReport: boolean, folder: string, page: string) =>
       dispatch(

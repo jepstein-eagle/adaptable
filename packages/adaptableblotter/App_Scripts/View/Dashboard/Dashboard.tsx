@@ -8,7 +8,7 @@ import {
   AdaptableDashboardFactory,
   AdaptableDashboardPermanentToolbarFactory,
 } from '../AdaptableViewFactory';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
@@ -128,7 +128,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     DashboardState: state.Dashboard,
     EntitlementsState: state.Entitlements,
@@ -142,7 +142,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
     onSetDashboardVisibility: (visibility: Visibility) =>

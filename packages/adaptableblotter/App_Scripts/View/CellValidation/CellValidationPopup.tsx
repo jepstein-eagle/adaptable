@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -226,13 +226,13 @@ class CellValidationPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CellValidations: state.CellValidation.CellValidations,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddCellValidation: (cellValidationRule: CellValidationRule) =>
       dispatch(CellValidationRedux.CellValidationAdd(cellValidationRule)),

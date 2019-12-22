@@ -19,7 +19,7 @@ import { AdaptableBlotterChart } from './Components/Popups/AdaptableBlotterChart
 import { AdaptableBlotterLoadingScreen } from './Components/Popups/AdaptableBlotterLoadingScreen';
 import { AdaptableBlotterGridInfo } from './Components/Popups/AdaptableBlotterGridInfo';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
-import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
   PopupState: PopupState;
@@ -122,7 +122,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     PopupState: state.Popup,
     SystemState: state.System,
@@ -131,7 +131,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
     onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),

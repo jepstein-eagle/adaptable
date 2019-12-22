@@ -6,7 +6,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import {
   DashboardState,
   AdaptableBlotterDashboardToolbar,
@@ -339,7 +339,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     GridState: state.Grid,
     DashboardState: state.Dashboard,
@@ -349,7 +349,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
     onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>

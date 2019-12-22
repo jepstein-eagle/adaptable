@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as SparklineColumnRedux from '../../Redux/ActionsReducers/SparklineColumnRedux';
@@ -233,13 +233,13 @@ class SparklineColumnPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     SparklineColumns: state.SparklineColumn.SparklineColumns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddSparklineColumn: (sparklineColumn: SparklineColumn) =>
       dispatch(SparklineColumnRedux.SparklineColumnsAdd(sparklineColumn)),

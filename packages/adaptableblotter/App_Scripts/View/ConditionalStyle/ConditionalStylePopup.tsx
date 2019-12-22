@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -222,7 +222,7 @@ class ConditionalStylePopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
@@ -230,7 +230,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),

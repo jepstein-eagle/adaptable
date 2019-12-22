@@ -2,7 +2,7 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
@@ -188,14 +188,14 @@ class LayoutToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CurrentLayout: state.Layout.CurrentLayout,
     Layouts: state.Layout.Layouts,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),

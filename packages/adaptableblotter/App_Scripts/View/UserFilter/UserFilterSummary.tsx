@@ -11,7 +11,7 @@ import { UserFilterWizard } from './Wizard/UserFilterWizard';
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
@@ -183,7 +183,7 @@ export class UserFilterSummaryComponent extends React.Component<
     );
   }
 }
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,
@@ -193,7 +193,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddUserFilter: (UserFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterAdd(UserFilter)),

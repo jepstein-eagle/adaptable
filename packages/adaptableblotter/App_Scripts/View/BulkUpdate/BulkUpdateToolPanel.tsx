@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -222,7 +222,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
     BulkUpdateValidationResult: state.System.BulkUpdateValidationResult,
@@ -230,7 +230,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onBulkUpdateValueChange: (value: string) =>
       dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),

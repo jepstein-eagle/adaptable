@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
@@ -262,7 +262,7 @@ class ExportToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     CurrentReport: state.Export.CurrentReport,
     Reports: state.Export.Reports,
@@ -271,7 +271,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onApplyExport: (report: Report, exportDestination: ExportDestination, isLiveReport: boolean) =>
       dispatch(ExportRedux.ExportApply(report, exportDestination, isLiveReport)),

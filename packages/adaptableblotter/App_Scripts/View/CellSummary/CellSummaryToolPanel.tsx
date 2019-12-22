@@ -10,7 +10,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import {
   AccessLevel,
@@ -207,7 +207,7 @@ class CellSummaryToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SelectedCellInfo: state.Grid.SelectedCellInfo,
     CellSummaryOperation: state.CellSummary.SummaryOperation,
@@ -216,7 +216,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onCellSummaryOperationChange: (
       summaryOperation: CellSummaryOperation | CellSummaryOptionalOperation

@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import {
   DashboardState,
   AdaptableBlotterFunctionButtons,
@@ -261,7 +261,7 @@ class DashboardPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     DashboardState: state.Dashboard,
     GridState: state.Grid,
@@ -269,7 +269,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onDashboardSetFunctionButtons: (functionButtons: AdaptableBlotterFunctionButtons) =>
       dispatch(DashboardRedux.DashboardSetFunctionButtons(functionButtons)),

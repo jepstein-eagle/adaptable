@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
@@ -124,14 +124,14 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
     AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSelectAdvancedSearch: (advancedSearchName: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),

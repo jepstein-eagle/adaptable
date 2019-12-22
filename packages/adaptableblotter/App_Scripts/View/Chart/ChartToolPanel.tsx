@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux';
@@ -208,7 +208,7 @@ class ChartToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     CurrentChartDefinition: state.Chart.ChartDefinitions.find(
       c => c.Name == state.Chart.CurrentChartName
@@ -217,7 +217,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),

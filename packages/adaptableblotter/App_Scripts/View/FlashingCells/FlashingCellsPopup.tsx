@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 
@@ -162,14 +162,14 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     FlashingCells: state.FlashingCell.FlashingCells,
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSelectColumn: (flashingCell: FlashingCell) =>
       dispatch(FlashingCellsRedux.FlashingCellSelect(flashingCell)),

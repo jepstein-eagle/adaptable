@@ -12,7 +12,7 @@ import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
@@ -163,7 +163,7 @@ export class PlusMinusSummaryComponent extends React.Component<
     return expressionDescription == 'Any' ? '[Default Column Nudge Value]' : expressionDescription;
   }
 }
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Columns: state.Grid.Columns,
     PlusMinusRules: state.PlusMinus.PlusMinusRules,
@@ -174,7 +174,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddPlusMinusRule: (PlusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleAdd(PlusMinusRule)),

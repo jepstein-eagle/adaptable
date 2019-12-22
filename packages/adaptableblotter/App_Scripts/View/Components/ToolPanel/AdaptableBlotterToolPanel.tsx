@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import * as ToolPanelRedux from '../../../Redux/ActionsReducers/ToolPanelRedux';
 import * as DashboardRedux from '../../../Redux/ActionsReducers/DashboardRedux';
 import { Provider, connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IAdaptableBlotterToolPanelContext } from '../../../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
 import { render } from 'react-dom';
@@ -213,7 +213,7 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     VisibleToolsPanels: state.ToolPanel.VisibleToolPanels,
     AvailableToolPanels: state.ToolPanel.AvailableToolPanels,
@@ -222,7 +222,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
     onSetToolPanelVisibility: (toolPanels: AdaptableBlotterToolPanels) =>

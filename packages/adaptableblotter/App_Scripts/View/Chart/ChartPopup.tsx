@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
@@ -296,7 +296,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ChartDefinitions: state.Chart.ChartDefinitions,
     CurrentChartDefinition: state.Chart.ChartDefinitions.find(
@@ -305,7 +305,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddChartDefinition: (chartDefinition: ChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),

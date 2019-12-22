@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -95,7 +95,7 @@ class ApplicationToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     ApplicationToolbarTitleDashboard: state.Dashboard.ApplicationToolbarTitle, // deprecated but not used any more
     ApplicationToolbarTitle: state.Application.ApplicationToolbarTitle,
@@ -103,7 +103,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
       dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),

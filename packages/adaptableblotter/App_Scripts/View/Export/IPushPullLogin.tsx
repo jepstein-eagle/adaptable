@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
@@ -131,7 +131,7 @@ const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
   );
 };
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     pushpullLogin: state.Partner.iPushPull ? state.Partner.iPushPull!.Username : undefined,
     pushpullPassword: state.Partner.iPushPull ? state.Partner.iPushPull!.Password : undefined,
@@ -139,7 +139,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onLogin: (login: string, password: string) => dispatch(ExportRedux.IPPLogin(login, password)),
     onCancel: () => {

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 function customizer(objValue: any, srcValue: any) {
   if (_.isArray(objValue)) {
@@ -42,15 +42,15 @@ export function MergeState(oldState: any, newState: any) {
 }
 
 type TypeReducer = (
-  state: AdaptableBlotterState,
+  state: AdaptableState,
   action: { type: string; State?: { [s: string]: ConfigState } }
-) => AdaptableBlotterState;
+) => AdaptableState;
 
 export const mergeReducer = (rootReducer: TypeReducer, LOAD_STATE_TYPE: string): TypeReducer => {
   let finalReducer = rootReducer;
 
   finalReducer = (
-    state: AdaptableBlotterState,
+    state: AdaptableState,
     action: { type: string; State: { [s: string]: ConfigState } }
   ) => {
     if (action.type === LOAD_STATE_TYPE) {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -263,13 +263,13 @@ class PlusMinusPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     PlusMinusRules: state.PlusMinus.PlusMinusRules,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddPlusMinusRule: (plusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleAdd(plusMinusRule)),

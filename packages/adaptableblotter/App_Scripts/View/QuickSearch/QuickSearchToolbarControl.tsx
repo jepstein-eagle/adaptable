@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
@@ -75,13 +75,13 @@ class QuickSearchToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     QuickSearchText: state.QuickSearch.QuickSearchText,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onRunQuickSearch: (newQuickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),

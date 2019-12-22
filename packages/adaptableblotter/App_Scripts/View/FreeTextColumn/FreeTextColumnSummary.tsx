@@ -11,7 +11,7 @@ import { FreeTextColumnWizard } from './Wizard/FreeTextColumnWizard';
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import { StrategyProfile } from '../Components/StrategyProfile';
@@ -145,7 +145,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
     return StringExtensions.IsNotNullOrEmpty(FreeTextColumn.ColumnId);
   }
 }
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Columns: state.Grid.Columns,
     FreeTextColumns: state.FreeTextColumn.FreeTextColumns,
@@ -153,7 +153,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddFreeTextColumn: (FreeTextColumn: FreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),

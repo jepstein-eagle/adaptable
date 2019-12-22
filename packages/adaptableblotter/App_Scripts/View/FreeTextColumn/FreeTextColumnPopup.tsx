@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { FreeTextColumnEntityRow } from './FreeTextColumnEntityRow';
@@ -186,13 +186,13 @@ class FreeTextColumnPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     FreeTextColumns: state.FreeTextColumn.FreeTextColumns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddFreeTextColumn: (FreeTextColumn: FreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),

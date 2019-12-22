@@ -4,7 +4,7 @@ import * as Redux from 'redux';
 import * as _ from 'lodash';
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux';
 import { Provider, connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 
@@ -314,7 +314,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CurrentColumn: ownProps.CurrentColumn,
     Blotter: ownProps.Blotter,
@@ -326,7 +326,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),

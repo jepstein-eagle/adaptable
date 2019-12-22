@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
@@ -255,7 +255,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
@@ -264,7 +264,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onApplyExport: (report: Report, exportDestination: ExportDestination, isLiveReport: boolean) =>
       dispatch(ExportRedux.ExportApply(report, exportDestination, isLiveReport)),

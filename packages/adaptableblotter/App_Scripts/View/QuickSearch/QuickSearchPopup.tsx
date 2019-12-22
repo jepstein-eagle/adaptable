@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -255,7 +255,7 @@ class QuickSearchPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     QuickSearchText: state.QuickSearch.QuickSearchText,
     DisplayAction: state.QuickSearch.DisplayAction,
@@ -263,7 +263,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onRunQuickSearch: (quickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText)),

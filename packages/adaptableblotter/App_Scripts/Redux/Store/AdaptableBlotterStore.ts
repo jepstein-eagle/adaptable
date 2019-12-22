@@ -132,7 +132,7 @@ import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ServiceStatus } from '../../Utilities/Services/PushPullService';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 
@@ -141,9 +141,7 @@ type EmitterCallback = (data?: any) => any;
 This is the main store for the Adaptable Blotter
 */
 
-const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
-  AdaptableBlotterState
->({
+const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<AdaptableState>({
   //  Reducers for Non-Persisted State
   Grid: GridRedux.GridReducer,
   Popup: PopupRedux.PopupReducer,
@@ -221,7 +219,7 @@ export const LoadState = (State: { [s: string]: ConfigState }): LoadStateAction 
   State,
 });
 
-const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
+const rootReducerWithResetManagement = (state: AdaptableState, action: Redux.Action) => {
   switch (action.type) {
     case RESET_STATE:
       //This trigger the persist of the state with nothing
@@ -271,7 +269,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
 const configServerTeamSharingUrl = '/adaptableblotter-teamsharing';
 
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
-  public TheStore: Redux.Store<AdaptableBlotterState>;
+  public TheStore: Redux.Store<AdaptableState>;
   public Load: PromiseLike<any>;
   private emitter: Emitter;
 
@@ -344,7 +342,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       composeEnhancers = (x: any) => x;
     }
 
-    const persistedReducer = (state: AdaptableBlotterState, action: Redux.Action) => {
+    const persistedReducer = (state: AdaptableState, action: Redux.Action) => {
       const init = state === undefined;
       const newState = rootReducer(state, action);
 
@@ -369,7 +367,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
     //TODO: need to check if we want the storage to be done before or after
     //we enrich the state with the AB middleware
-    this.TheStore = Redux.createStore<AdaptableBlotterState, Redux.Action<any>, any, any>(
+    this.TheStore = Redux.createStore<AdaptableState, Redux.Action<any>, any, any>(
       persistedReducer,
       composeEnhancers(
         Redux.applyMiddleware(
@@ -418,12 +416,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 // NOTE: the Audit Logger is also responsible for firing AuditEventApi changes if that has been set
 var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
   function(
-    middlewareAPI: Redux.MiddlewareAPI<
-      Redux.Dispatch<Redux.Action<AdaptableBlotterState>>,
-      AdaptableBlotterState
-    >
+    middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
-    return function(next: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+    return function(next: Redux.Dispatch<Redux.Action<AdaptableState>>) {
       return function(action: Redux.Action) {
         if (
           // if audit state is turned off, then get out
@@ -1699,12 +1694,9 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
 // e.g. this should say when the current Advanced search has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
 var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
   function(
-    middlewareAPI: Redux.MiddlewareAPI<
-      Redux.Dispatch<Redux.Action<AdaptableBlotterState>>,
-      AdaptableBlotterState
-    >
+    middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
-    return function(next: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+    return function(next: Redux.Dispatch<Redux.Action<AdaptableState>>) {
       return function(action: Redux.Action) {
         if (!adaptableBlotter.AuditLogService.isAuditFunctionEventsEnabled) {
           // not logging functions so leave...
@@ -1959,12 +1951,9 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 // Please document each use case where we have to use the Store rather than a strategy or a popup screen
 var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
   function(
-    middlewareAPI: Redux.MiddlewareAPI<
-      Redux.Dispatch<Redux.Action<AdaptableBlotterState>>,
-      AdaptableBlotterState
-    >
+    middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
-    return function(next: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+    return function(next: Redux.Dispatch<Redux.Action<AdaptableState>>) {
       return function(action: Redux.Action) {
         switch (action.type) {
           /*******************

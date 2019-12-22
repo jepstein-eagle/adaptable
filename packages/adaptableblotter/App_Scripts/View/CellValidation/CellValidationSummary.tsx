@@ -13,7 +13,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -159,7 +159,7 @@ export class CellValidationSummaryComponent extends React.Component<
     return true;
   }
 }
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Columns: state.Grid.Columns,
     CellValidations: state.CellValidation.CellValidations,
@@ -170,7 +170,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddCellValidation: (cellValidationRule: CellValidationRule) =>
       dispatch(CellValidationRedux.CellValidationAdd(cellValidationRule)),

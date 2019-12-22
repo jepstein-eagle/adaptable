@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -68,13 +68,13 @@ class DashboardToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     DashboardVisibility: state.Dashboard.DashboardVisibility,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSetDashboardVisibility: (visibility: Visibility) =>
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),

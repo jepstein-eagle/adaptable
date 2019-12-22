@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -228,7 +228,7 @@ class SmartEditToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SmartEditValue: state.SmartEdit.SmartEditValue,
     MathOperation: state.SmartEdit.MathOperation,
@@ -237,7 +237,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
     onSmartEditOperationChange: (SmartEditOperation: MathOperation) =>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
 import Checkbox from '../../components/CheckBox';
@@ -176,13 +176,13 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     UpdatedRowState: state.UpdatedRow,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onEnableDisableUpdatedRow: (shouldEnable: boolean) =>
       dispatch(UpdatedRowRedux.UpdatedRowEnableDisable(shouldEnable)),

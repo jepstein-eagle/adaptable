@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as SystemStatusRedux from '../../Redux/ActionsReducers/SystemStatusRedux';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
@@ -90,7 +90,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     StatusMessage: state.SystemStatus.StatusMessage,
     StatusType: state.SystemStatus.StatusType,
@@ -99,7 +99,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
     onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>

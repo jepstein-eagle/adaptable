@@ -43,9 +43,9 @@ import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 
 /**
- * The main state object that the Adaptable Blotter persists
+ * The main state object that the Adaptable persists
  */
-export interface AdaptableBlotterState {
+export interface AdaptableState {
   [s: string]: ConfigState;
 
   // internal state

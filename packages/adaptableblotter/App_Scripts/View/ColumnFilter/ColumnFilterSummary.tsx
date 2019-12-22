@@ -4,7 +4,7 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -69,7 +69,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
     return ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns);
   }
 }
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     Columns: state.Grid.Columns,
@@ -79,7 +79,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClearFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),

@@ -18,7 +18,7 @@ import { IgrRingSeries } from 'igniteui-react-charts/ES2015/igr-ring-series';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { PieChartDefinition, PieChartDataItem, ChartData } from '../../PredefinedConfig/ChartState';
@@ -493,7 +493,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {};
 }
 

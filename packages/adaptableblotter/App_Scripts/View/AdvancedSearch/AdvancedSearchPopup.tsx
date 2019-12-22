@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { Flex } from 'rebass';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { AdvancedSearchWizard } from './Wizard/AdvancedSearchWizard';
@@ -241,14 +241,14 @@ class AdvancedSearchPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
     CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddAdvancedSearch: (advancedSearch: AdvancedSearch) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch)),

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { Provider, connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux';
 import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux';
 import * as GridRedux from '../../../Redux/ActionsReducers/GridRedux';
@@ -508,7 +508,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CurrentColumn: ownProps.CurrentColumn,
     Blotter: ownProps.Blotter,
@@ -522,7 +522,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onMenuItemClick: (action: Redux.Action) => dispatch(action),
     onClearColumnFilter: (columnFilter: ColumnFilter) =>

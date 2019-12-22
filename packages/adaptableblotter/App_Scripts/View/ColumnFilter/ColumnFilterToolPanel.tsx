@@ -6,7 +6,7 @@ import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -146,7 +146,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     Entitlements: state.Entitlements.FunctionEntitlements,
@@ -154,7 +154,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),

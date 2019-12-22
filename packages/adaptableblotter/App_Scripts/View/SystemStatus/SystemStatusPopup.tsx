@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as SystemStatusRedux from '../../Redux/ActionsReducers/SystemStatusRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -102,7 +102,7 @@ class SystemStatusPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     StatusMessage: state.SystemStatus.StatusMessage,
     StatusType: state.SystemStatus.StatusType,
@@ -111,7 +111,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSetSystemStatusShowAlert: (showAlert: boolean) =>
       dispatch(SystemStatusRedux.SystemStatusSetShowAlert(showAlert)),

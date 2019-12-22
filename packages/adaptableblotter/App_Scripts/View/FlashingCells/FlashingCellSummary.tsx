@@ -5,7 +5,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
@@ -81,14 +81,14 @@ export class FlashingCellSummaryComponent extends React.Component<
     this.props.onSelectFlashingCell(existingfc);
   }
 }
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     FlashingCells: state.FlashingCell.FlashingCells,
     Columns: state.Grid.Columns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSelectFlashingCell: (flashingCell: FlashingCell) =>
       dispatch(FlashingCellRedux.FlashingCellSelect(flashingCell)),

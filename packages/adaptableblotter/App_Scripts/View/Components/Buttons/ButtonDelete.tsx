@@ -7,7 +7,7 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { IUIConfirmation } from '../../../Utilities/Interface/IMessage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
-import { AdaptableBlotterState } from '../../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 
 export interface DeleteButtonProps extends SimpleButtonProps {
   onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
@@ -58,7 +58,7 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ConfirmAction: ownProps.ConfirmAction,
     ConfirmationMsg: ownProps.ConfirmationMsg,
@@ -66,7 +66,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onConfirmWarning: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),

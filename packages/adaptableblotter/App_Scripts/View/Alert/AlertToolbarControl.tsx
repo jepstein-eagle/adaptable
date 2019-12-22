@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
@@ -133,14 +133,14 @@ class AlertToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     AlertDefinitions: state.Alert.AlertDefinitions,
     AdaptableAlerts: state.System.AdaptableAlerts,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
     onDeleteAllAlert: (alerts: AdaptableAlert[]) =>

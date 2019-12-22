@@ -26,7 +26,7 @@ import { ActionColumnState } from '../PredefinedConfig/ActionColumnState';
 import { ApplicationState } from '../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
-import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { PartnerState } from '../PredefinedConfig/PartnerState';
 
 export interface ConfigApi {
@@ -56,7 +56,7 @@ export interface ConfigApi {
   /**
    * Some of the state retrieved by this function will be internal state that is required by the System but not relevant to users so be careful - it is preferable to use the configGetAllUserState method which will only retrieve run-time state that can be amended by users (and is persisted into local storage or remote config).
    */
-  configGetAllState(): AdaptableBlotterState;
+  configGetAllState(): AdaptableState;
 
   configGetAllUserState(): RunTimeState[];
 

@@ -5,7 +5,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { CellSummaryDetails } from './CellSummaryDetails';
@@ -42,13 +42,13 @@ class CellSummaryPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CellSummary: state.Grid.CellSummary,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSetSelectedCellSummary: () => dispatch(GridRedux.GridCreateCellSummary()),
   };

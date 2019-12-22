@@ -19,7 +19,7 @@ import { PanelWithImageThreeButtons } from '../Components/Panels/PanelWithIImage
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -256,7 +256,7 @@ class ChartDisplayPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState) {
+function mapStateToProps(state: AdaptableState) {
   return {
     ChartDefinitions: state.Chart.ChartDefinitions,
     CurrentChartDefinition: state.Chart.ChartDefinitions.find(
@@ -267,7 +267,7 @@ function mapStateToProps(state: AdaptableBlotterState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddChartDefinition: (chartDefinition: ChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),

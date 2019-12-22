@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux';
@@ -260,13 +260,13 @@ class PercentBarPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     PercentBars: state.PercentBar.PercentBars,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarAdd(percentBar)),

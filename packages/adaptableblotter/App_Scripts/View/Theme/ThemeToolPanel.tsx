@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -93,7 +93,7 @@ class ThemeToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SystemThemes: state.Theme.SystemThemes,
     CurrentTheme: state.Theme.CurrentTheme,
@@ -102,7 +102,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSelectTheme: (theme: string) => dispatch(ThemeRedux.ThemeSelect(theme)),
     onClose: (toolPanel: AdaptableBlotterToolPanel) =>

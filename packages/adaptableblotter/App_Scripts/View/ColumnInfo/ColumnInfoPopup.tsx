@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { Flex, Box } from 'rebass';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -422,7 +422,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
     ColumnCategory: state.ColumnCategory.ColumnCategories,
@@ -430,7 +430,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {};
 }
 

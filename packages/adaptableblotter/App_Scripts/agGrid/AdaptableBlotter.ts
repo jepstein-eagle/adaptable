@@ -154,7 +154,7 @@ import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { BlotterApi } from '../Api/BlotterApi';
-import { AdaptableBlotterState } from '../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { PushPullService } from '../Utilities/Services/PushPullService';
 import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
@@ -3113,7 +3113,7 @@ import "adaptableblotter/themes/${themeName}.css"`);
   }
 
   // A couple of state management functions
-  private getState(): AdaptableBlotterState {
+  private getState(): AdaptableState {
     return this.adaptableBlotterStore.TheStore.getState();
   }
 }

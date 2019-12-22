@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategoryRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -187,13 +187,13 @@ class ColumnCategoryPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ColumnCategorys: state.ColumnCategory.ColumnCategories,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddColumnCategory: (ColumnCategory: ColumnCategory) =>
       dispatch(ColumnCategoryRedux.ColumnCategoryAdd(ColumnCategory)),

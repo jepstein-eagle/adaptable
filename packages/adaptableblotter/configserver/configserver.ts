@@ -1,4 +1,4 @@
-import { AdaptableBlotterState } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore';
+import { AdaptableState } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore';
 import * as express from 'express';
 import * as BodyParser from 'body-parser';
 import * as fs from 'fs';
@@ -70,8 +70,8 @@ app.get('/adaptableblotter-config', function(req, res) {
   try {
     if (username) {
       let filename = ABConfigFolder + username + '_' + adaptableblotter_id + '.abjson';
-      let ApplicationConfig: AdaptableBlotterState;
-      let UserConfig: AdaptableBlotterState;
+      let ApplicationConfig: AdaptableState;
+      let UserConfig: AdaptableState;
       if (fs.existsSync(ApplicationConfigFileName)) {
         ApplicationConfig = JSON.parse(
           fs.readFileSync(ApplicationConfigFileName, { encoding: 'utf8' })

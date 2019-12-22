@@ -13,7 +13,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ConditionalStyleScope, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
@@ -172,7 +172,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Columns: state.Grid.Columns,
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
@@ -186,7 +186,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),

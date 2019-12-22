@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow';
@@ -201,14 +201,14 @@ class FormatColumnPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     FormatColumns: state.FormatColumn.FormatColumns,
     StyleClassNames: state.UserInterface.StyleClassNames,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddFormatColumn: (formatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),

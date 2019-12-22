@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { LayoutWizard } from './Wizard/LayoutWizard';
@@ -215,14 +215,14 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Layouts: state.Layout.Layouts,
     CurrentLayoutName: state.Layout.CurrentLayout,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onSelectLayout: (selectedSearchName: string) =>

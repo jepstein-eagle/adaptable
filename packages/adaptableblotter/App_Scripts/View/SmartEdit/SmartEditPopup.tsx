@@ -23,7 +23,7 @@ import { Flex } from 'rebass';
 import DropdownButton from '../../components/DropdownButton';
 import SimpleButton from '../../components/SimpleButton';
 import { SyntheticEvent } from 'react';
-import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
+import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
@@ -211,7 +211,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SmartEditValue: state.SmartEdit.SmartEditValue,
     MathOperation: state.SmartEdit.MathOperation,
@@ -219,7 +219,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
     onSmartEditOperationChange: (SmartEditOperation: MathOperation) =>
