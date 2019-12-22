@@ -13,7 +13,7 @@ import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import EnumExtensions from '../../Utilities/Extensions/EnumExtensions';
 import Dropdown from '../../components/Dropdown';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface DashboardToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<DashboardToolPanelComponentProps> {
@@ -85,7 +85,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           ScreenPopups.DashboardPopup
         )
       ),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
   };
 }

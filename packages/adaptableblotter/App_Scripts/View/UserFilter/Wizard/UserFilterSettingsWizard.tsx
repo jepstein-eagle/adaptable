@@ -5,7 +5,6 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import ErrorBox from '../../../components/ErrorBox';

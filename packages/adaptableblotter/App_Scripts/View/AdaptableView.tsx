@@ -6,22 +6,22 @@ import theme from '../theme';
 
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
-import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
+import { AdaptablePopup } from './Components/Popups/AdaptablePopup';
 import { ChartState } from '../PredefinedConfig/ChartState';
 import { PopupState } from '../PredefinedConfig/PopupState';
 import { SystemState } from '../PredefinedConfig/SystemState';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt';
+import { AdaptablePopupPrompt } from './Components/Popups/AdaptablePopupPrompt';
 import { Dashboard } from './Dashboard/Dashboard';
-import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation';
-import { AdaptableBlotterPopupAlert } from './Components/Popups/AdaptableBlotterPopupAlert';
-import { AdaptableBlotterChart } from './Components/Popups/AdaptableBlotterChart';
-import { AdaptableBlotterLoadingScreen } from './Components/Popups/AdaptableBlotterLoadingScreen';
-import { AdaptableBlotterGridInfo } from './Components/Popups/AdaptableBlotterGridInfo';
+import { AdaptablePopupConfirmation } from './Components/Popups/AdaptablePopupConfirmation';
+import { AdaptablePopupAlert } from './Components/Popups/AdaptablePopupAlert';
+import { AdaptableChart } from './Components/Popups/AdaptableChart';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
+import { AdaptableGridInfo } from './Components/Popups/AdaptableGridInfo';
+import { AdaptableLoadingScreen } from './Components/Popups/AdaptableLoadingScreen';
 
-interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
+interface AdaptableViewProps extends React.ClassAttributes<AdaptableView> {
   PopupState: PopupState;
   SystemState: SystemState;
   ChartState: ChartState;
@@ -44,7 +44,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 }
 
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
-class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
+class AdaptableView extends React.Component<AdaptableViewProps, {}> {
   render() {
     return (
       <div>
@@ -54,7 +54,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 Either modally (if we set ShowModal in our Predefiend Config for Chart State)
                 Or in a div otherwise (if a div then the Chart screen will work out WHICH div...) */}
         {this.props.SystemState.ChartVisibility != ChartVisibility.Hidden && (
-          <AdaptableBlotterChart
+          <AdaptableChart
             AdaptableBlotter={this.props.Blotter}
             onClose={this.props.onCloseChartPopup}
             showChart={this.props.SystemState.ChartVisibility == ChartVisibility.Maximised}
@@ -63,19 +63,19 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         )}
 
         {/*  These are all popups that we show at different times */}
-        <AdaptableBlotterGridInfo
+        <AdaptableGridInfo
           AdaptableBlotter={this.props.Blotter}
           onClose={this.props.onCloseGridInfoPopup}
           showAbout={this.props.PopupState.GridInfoPopup.ShowGridInfoPopup}
         />
 
-        <AdaptableBlotterLoadingScreen
+        <AdaptableLoadingScreen
           AdaptableBlotter={this.props.Blotter}
           onClose={this.props.onCloseLoadingPopup}
           showLoadingScreen={this.props.PopupState.LoadingPopup.ShowLoadingPopup}
         />
 
-        <AdaptableBlotterPopupAlert
+        <AdaptablePopupAlert
           Header={this.props.PopupState.AlertPopup.Header}
           Msg={this.props.PopupState.AlertPopup.Msg}
           onClose={this.props.onCloseAlertPopup}
@@ -84,7 +84,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
           AdaptableBlotter={this.props.Blotter}
         />
 
-        <AdaptableBlotterPopupPrompt
+        <AdaptablePopupPrompt
           Msg={this.props.PopupState.PromptPopup.Msg}
           Header={this.props.PopupState.PromptPopup.Header}
           onClose={this.props.onClosePromptPopup}
@@ -93,7 +93,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
           AdaptableBlotter={this.props.Blotter}
         />
 
-        <AdaptableBlotterPopupConfirmation
+        <AdaptablePopupConfirmation
           Header={this.props.PopupState.ConfirmationPopup.Header}
           Msg={this.props.PopupState.ConfirmationPopup.Msg}
           ShowPopup={this.props.PopupState.ConfirmationPopup.ShowConfirmationPopup}
@@ -107,7 +107,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
         />
 
         {/*  The main model window where function screens are 'hosted' */}
-        <AdaptableBlotterPopup
+        <AdaptablePopup
           showModal={this.props.PopupState.ScreenPopup.ShowScreenPopup}
           ComponentName={this.props.PopupState.ScreenPopup.ComponentName}
           ComponentStrategy={this.props.PopupState.ScreenPopup.ComponentStrategy}
@@ -148,10 +148,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-let AdaptableBlotterWrapper: ConnectedComponent<typeof AdaptableBlotterView, any> = connect(
+let AdaptableBlotterWrapper: ConnectedComponent<typeof AdaptableView, any> = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdaptableBlotterView);
+)(AdaptableView);
 
 export const AdaptableBlotterApp = ({
   AdaptableBlotter,

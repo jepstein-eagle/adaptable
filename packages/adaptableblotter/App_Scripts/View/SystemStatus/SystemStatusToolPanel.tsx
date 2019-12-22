@@ -13,7 +13,7 @@ import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface SystemStatusToolPanelProps
   extends ToolPanelStrategyViewPopupProps<SystemStatusToolPanelComponent> {
@@ -117,7 +117,7 @@ function mapStateToProps(state: AdaptableState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

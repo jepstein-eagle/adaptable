@@ -324,11 +324,11 @@ export class agGridHelper {
 
   public createAdaptableBlotterToolPanel(): ToolPanelDef {
     return {
-      id: 'adaptableBlotterToolPanel',
+      id: 'AdaptableToolPanel',
       labelDefault: 'Adaptable Blotter',
-      labelKey: 'adaptableBlotterToolPanel',
+      labelKey: 'AdaptableToolPanel',
       iconKey: 'menu',
-      toolPanel: 'adaptableBlotterToolPanel',
+      toolPanel: 'AdaptableToolPanel',
     };
   }
 

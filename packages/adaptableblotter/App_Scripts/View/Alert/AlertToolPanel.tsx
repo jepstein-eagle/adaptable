@@ -16,7 +16,7 @@ import { Flex } from 'rebass';
 import UIHelper from '../UIHelper';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface AlertToolPanelProps extends ToolPanelStrategyViewPopupProps<AlertToolPanelComponent> {
   AlertDefinitions: AlertDefinition[];
@@ -141,7 +141,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
     onDeleteAllAlert: (alerts: AdaptableAlert[]) =>
       dispatch(SystemRedux.SystemAlertDeleteAll(alerts)),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

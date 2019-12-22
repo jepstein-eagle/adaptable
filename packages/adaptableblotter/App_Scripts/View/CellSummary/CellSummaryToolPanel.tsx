@@ -28,7 +28,7 @@ import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import Dropdown from '../../components/Dropdown';
 import Helper from '../../Utilities/Helpers/Helper';
@@ -222,7 +222,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       summaryOperation: CellSummaryOperation | CellSummaryOptionalOperation
     ) => dispatch(SelectedCellsRedux.CellSummaryChangeOperation(summaryOperation)),
     onCreateCellSummary: () => dispatch(GridRedux.GridCreateCellSummary()),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

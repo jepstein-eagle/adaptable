@@ -7,7 +7,7 @@ import { UIHelper } from '../../UIHelper';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
-import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
+import { AdaptablePopup } from './AdaptablePopup';
 import BlotterHelper from '../../../Utilities/Helpers/BlotterHelper';
 
 /*
@@ -20,7 +20,7 @@ Otherwise we use the default.
 TODO:  put the stuff n state if we redraw every time?
 */
 
-export interface IAdaptableBlotterChartProps extends React.ClassAttributes<AdaptableBlotterChart> {
+export interface IAdaptableBlotterChartProps extends React.ClassAttributes<AdaptableChart> {
   showChart: boolean;
   onClose?: () => void;
   AdaptableBlotter: IAdaptableBlotter;
@@ -33,7 +33,7 @@ export interface AdaptableBlotterChartState {
   isValidUserChartContainer: boolean;
 }
 
-export class AdaptableBlotterChart extends React.Component<
+export class AdaptableChart extends React.Component<
   IAdaptableBlotterChartProps,
   AdaptableBlotterChartState
 > {
@@ -78,7 +78,7 @@ export class AdaptableBlotterChart extends React.Component<
     // var body: any = React.createElement(bodyElement, commonProps);
 
     return this.props.showModal ? (
-      <AdaptableBlotterPopup
+      <AdaptablePopup
         Blotter={this.props.AdaptableBlotter}
         onHide={this.props.onClose}
         showModal
@@ -87,7 +87,7 @@ export class AdaptableBlotterChart extends React.Component<
         ComponentStrategy={StrategyConstants.ChartStrategyId}
       >
         {body}
-      </AdaptableBlotterPopup>
+      </AdaptablePopup>
     ) : this.state.isValidUserChartContainer ? (
       ReactDOM.createPortal(body, this.state.chartContainer)
     ) : (

@@ -24,7 +24,7 @@ import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 import {
   LiveReport,
   LiveReportUpdatedInfo,
@@ -315,7 +315,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           source: 'Toolbar',
         })
       ),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

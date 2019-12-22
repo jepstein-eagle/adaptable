@@ -8,7 +8,6 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterFormControlTextClear';
 
 import { UIHelper } from '../../UIHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
@@ -22,6 +21,7 @@ import { SyntheticEvent } from 'react';
 import CheckBox, { CheckBoxProps } from '../../../components/CheckBox';
 import join from '../../../components/utils/join';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression';
+import { AdaptableFormControlTextClear } from '../Forms/AdaptableFormControlTextClear';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
   CurrentColumn: AdaptableColumn;
@@ -155,7 +155,7 @@ export class ListBoxFilterForm extends React.Component<
     });
 
     let textClear = (
-      <AdaptableBlotterFormControlTextClear
+      <AdaptableFormControlTextClear
         autoFocus={true}
         type="text"
         placeholder="Search Filters"

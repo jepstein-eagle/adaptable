@@ -18,7 +18,7 @@ import PopupContext from './PopupContext';
  * This is the main popup that we use - so all function popups will appear here.
  */
 
-export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
+export interface AdaptablePopupProps extends React.ClassAttributes<AdaptablePopup> {
   showModal: boolean;
   ComponentName?: string;
   ComponentStrategy: string;
@@ -29,7 +29,7 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
   onClearPopupParams?: () => PopupRedux.PopupClearParamAction;
 }
 
-export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopupProps, {}> {
+export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
   render() {
     let modalContainer: HTMLElement = UIHelper.getModalContainer(
       this.props.Blotter.blotterOptions,

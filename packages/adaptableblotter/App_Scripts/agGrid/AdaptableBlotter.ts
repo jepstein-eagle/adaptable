@@ -35,7 +35,7 @@ import {
 } from 'ag-grid-community/dist/lib/entities/gridOptions';
 import { Action } from 'redux';
 import Emitter, { EmitterCallback } from '../Utilities/Emitter';
-import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
+import { AdaptableBlotterApp } from '../View/AdaptableView';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
@@ -114,8 +114,7 @@ import {
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { agGridHelper } from './agGridHelper';
-import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
-import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
+import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { QuickSearchState } from '../PredefinedConfig/QuickSearchState';
@@ -168,6 +167,7 @@ import {
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { FilterService } from '../Utilities/Services/FilterService';
+import { IAdaptableToolPanelContext } from '../Utilities/Interface/IAdaptableToolPanelContext';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -471,8 +471,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             sidebarDef.toolPanels.push(this.agGridHelper.createAdaptableBlotterToolPanel());
           }
         }
-        const toolpanelContext: IAdaptableBlotterToolPanelContext = { Blotter: this };
-        this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanelBuilder(
+        const toolpanelContext: IAdaptableToolPanelContext = { Blotter: this };
+        this.gridOptions.components.AdaptableToolPanel = AdaptableBlotterToolPanelBuilder(
           toolpanelContext
         );
       }

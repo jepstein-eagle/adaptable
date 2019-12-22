@@ -1,8 +1,8 @@
 import { RunTimeState } from './RunTimeState';
 
-export type AdaptableBlotterToolPanels = AdaptableBlotterToolPanel[];
+export type AdaptableBlotterToolPanels = AdaptableToolPanel[];
 
-export type AdaptableBlotterToolPanel =
+export type AdaptableToolPanel =
   | 'AdvancedSearch'
   | 'Alert'
   | 'BulkUpdate'

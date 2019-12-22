@@ -583,7 +583,7 @@ export class CategoryChartComponent extends React.Component<
                     }
                   ></FormRow>
                   {/* TODO uncomment when ChategoryChart has 'xAxisLabelLocation' property */}
-                  {/* <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
+                  {/* <AdaptableForm horizontal style={{ marginTop: '0px' }}>
                                                                         <Row>
                                                                             <Col xs={6}><ControlLabel>Axis Location</ControlLabel></Col>
                                                                             <Col xs={5}>
@@ -594,7 +594,7 @@ export class CategoryChartComponent extends React.Component<
                                                                               </FormControl>
                                                                             </Col>
                                                                         </Row>
-                                                                    </AdaptableBlotterForm> */}
+                                                                    </AdaptableForm> */}
                   <FormRow label="Labels Angle">
                     <Dropdown
                       placeholder="select"

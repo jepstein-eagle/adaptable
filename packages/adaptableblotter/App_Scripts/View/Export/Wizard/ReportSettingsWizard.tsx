@@ -6,7 +6,6 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ReportRowScope } from '../../../PredefinedConfig/Common/Enums';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';

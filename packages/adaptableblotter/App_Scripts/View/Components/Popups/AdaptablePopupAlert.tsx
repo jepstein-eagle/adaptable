@@ -12,7 +12,7 @@ import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter'
  * The most simple of the alert type popups - just shows a message with a close button.  No user action required.
  */
 export interface AdaptableBlotterPopupAlertProps
-  extends React.ClassAttributes<AdaptableBlotterPopupAlert> {
+  extends React.ClassAttributes<AdaptablePopupAlert> {
   ShowPopup: boolean;
   onClose: () => void;
   Msg: string;
@@ -21,10 +21,7 @@ export interface AdaptableBlotterPopupAlertProps
   AdaptableBlotter: IAdaptableBlotter;
 }
 
-export class AdaptableBlotterPopupAlert extends React.Component<
-  AdaptableBlotterPopupAlertProps,
-  {}
-> {
+export class AdaptablePopupAlert extends React.Component<AdaptableBlotterPopupAlertProps, {}> {
   render() {
     const messageType = this.props.MessageType || MessageType.Error;
     let headerContainsMessage: boolean = this.props.Header.indexOf(messageType) != -1;

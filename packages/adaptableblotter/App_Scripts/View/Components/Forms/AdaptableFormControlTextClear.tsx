@@ -6,14 +6,14 @@ import SimpleButton from '../../../components/SimpleButton';
 import Input, { InputProps } from '../../../components/Input';
 import { CSSProperties } from 'react';
 
-export type AdaptableBlotterFormControlTextClearProps = {
+export type AdaptableFormControlTextClearProps = {
   OnTextChange: (textValue: string) => void;
   autoFocus?: boolean;
   inputStyle?: CSSProperties;
 } & InputProps;
 
-export class AdaptableBlotterFormControlTextClear extends React.Component<
-  AdaptableBlotterFormControlTextClearProps,
+export class AdaptableFormControlTextClear extends React.Component<
+  AdaptableFormControlTextClearProps,
   {}
 > {
   render() {

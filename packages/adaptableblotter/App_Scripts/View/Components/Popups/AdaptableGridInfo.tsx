@@ -22,7 +22,7 @@ import { Flex } from 'rebass';
 import SimpleButton from '../../../components/SimpleButton';
 import Radio from '../../../components/Radio';
 
-interface AdaptableBlotterGridInfoProps extends React.ClassAttributes<AdaptableBlotterGridInfo> {
+interface AdaptableBlotterGridInfoProps extends React.ClassAttributes<AdaptableGridInfo> {
   AdaptableBlotter: IAdaptableBlotter;
   onClose?: () => void;
   showAbout: boolean;
@@ -42,7 +42,7 @@ export interface GridInfoBlotterState {
   IsGeneralOptionsMinimised: boolean;
 }
 
-export class AdaptableBlotterGridInfo extends React.Component<
+export class AdaptableGridInfo extends React.Component<
   AdaptableBlotterGridInfoProps,
   GridInfoBlotterState
 > {

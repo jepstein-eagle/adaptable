@@ -22,7 +22,7 @@ import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { BlotterApi } from '../../Api/BlotterApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface LayoutToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<LayoutToolPanelComponent> {
@@ -223,7 +223,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           source: 'Toolbar',
         })
       ),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

@@ -14,7 +14,7 @@ import Dialog from '../../../components/Dialog';
  */
 
 export interface AdaptableBlotterPopupConfirmationProps
-  extends React.ClassAttributes<AdaptableBlotterPopupConfirmation> {
+  extends React.ClassAttributes<AdaptablePopupConfirmation> {
   ShowPopup: boolean;
   onConfirm: (comment: string) => void;
   onCancel: () => void;
@@ -31,7 +31,7 @@ export interface AdaptableBlotterPopupConfirmationState {
   PromptText: string;
 }
 
-export class AdaptableBlotterPopupConfirmation extends React.Component<
+export class AdaptablePopupConfirmation extends React.Component<
   AdaptableBlotterPopupConfirmationProps,
   AdaptableBlotterPopupConfirmationState
 > {

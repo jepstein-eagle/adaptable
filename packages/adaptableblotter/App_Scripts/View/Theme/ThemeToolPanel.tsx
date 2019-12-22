@@ -16,7 +16,7 @@ import join from '../../components/utils/join';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import Dropdown from '../../components/Dropdown';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface ThemeToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<ThemeToolPanelComponent> {
@@ -105,7 +105,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSelectTheme: (theme: string) => dispatch(ThemeRedux.ThemeSelect(theme)),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

@@ -10,8 +10,6 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
-
-import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
 import {
@@ -30,6 +28,7 @@ import Panel from '../../components/Panel';
 import FormLayout, { FormRow } from '../../components/FormLayout';
 import HelpBlock from '../../components/HelpBlock';
 import Radio from '../../components/Radio';
+import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
@@ -146,7 +145,7 @@ class QuickSearchPopupComponent extends React.Component<
       >
         <FormLayout>
           <FormRow label={'Search For:'}>
-            <AdaptableBlotterFormControlTextClear
+            <AdaptableFormControlTextClear
               type="text"
               placeholder="Quick Search Text"
               value={this.state.EditedQuickSearchText}

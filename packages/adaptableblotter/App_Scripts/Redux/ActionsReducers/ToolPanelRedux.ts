@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import {
   ToolPanelState,
   AdaptableBlotterToolPanels,
-  AdaptableBlotterToolPanel,
+  AdaptableToolPanel,
 } from '../../PredefinedConfig/ToolPanelState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -22,11 +22,11 @@ export interface ToolPanelSetToolPanelsAction extends Redux.Action {
 }
 
 export interface ToolPanelShowToolPanelAction extends Redux.Action {
-  toolPanel: AdaptableBlotterToolPanel;
+  toolPanel: AdaptableToolPanel;
 }
 
 export interface ToolPanelHideToolPanelAction extends Redux.Action {
-  toolPanel: AdaptableBlotterToolPanel;
+  toolPanel: AdaptableToolPanel;
 }
 
 export const ToolPanelSetAvailableToolPanels = (
@@ -44,14 +44,14 @@ export const ToolPanelSetToolPanels = (
 });
 
 export const ToolPanelShowToolPanel = (
-  toolPanel: AdaptableBlotterToolPanel
+  toolPanel: AdaptableToolPanel
 ): ToolPanelShowToolPanelAction => ({
   type: TOOLPANEL_SHOW_TOOLBAR,
   toolPanel,
 });
 
 export const ToolPanelHideToolPanel = (
-  toolPanel: AdaptableBlotterToolPanel
+  toolPanel: AdaptableToolPanel
 ): ToolPanelHideToolPanelAction => ({
   type: TOOLPANEL_HIDE_TOOLBAR,
   toolPanel,

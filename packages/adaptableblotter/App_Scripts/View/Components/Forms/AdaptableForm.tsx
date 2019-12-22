@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-export type AdaptableBlotterFormProps = any;
+export type AdaptableFormProps = any;
 
-export class AdaptableBlotterForm extends React.Component<AdaptableBlotterFormProps, {}> {
+export class AdaptableForm extends React.Component<AdaptableFormProps, {}> {
   render() {
     const { children, ...attrs } = this.props;
     return (

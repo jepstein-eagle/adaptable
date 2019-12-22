@@ -25,7 +25,7 @@ import { Flex } from 'rebass';
 import Input from '../../components/Input';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 import Dropdown from '../../components/Dropdown';
 
 interface SmartEditToolPanelComponentProps
@@ -246,7 +246,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

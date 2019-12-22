@@ -9,10 +9,10 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
 
 interface QuickSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
@@ -56,7 +56,7 @@ class QuickSearchToolbarControlComponent extends React.Component<
         onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
-        <AdaptableBlotterFormControlTextClear
+        <AdaptableFormControlTextClear
           type="text"
           placeholder="Search Text"
           className="ab-DashboardToolbar__QuickSearch__text"

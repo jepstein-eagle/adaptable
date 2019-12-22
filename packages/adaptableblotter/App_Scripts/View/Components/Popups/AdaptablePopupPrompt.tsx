@@ -8,8 +8,7 @@ import SimpleButton from '../../../components/SimpleButton';
 import Input from '../../../components/Input';
 import { SyntheticEvent } from 'react';
 
-export interface AdaptableBlotterPopupPromptProps
-  extends React.ClassAttributes<AdaptableBlotterPopupPrompt> {
+export interface AdaptablePopupPromptProps extends React.ClassAttributes<AdaptablePopupPrompt> {
   ShowPopup: boolean;
   Header: string;
   Msg: string;
@@ -18,15 +17,15 @@ export interface AdaptableBlotterPopupPromptProps
   AdaptableBlotter: IAdaptableBlotter;
 }
 
-export interface AdaptableBlotterPopupPromptState {
+export interface AdaptablePopupPromptState {
   PromptText: string;
 }
 
-export class AdaptableBlotterPopupPrompt extends React.Component<
-  AdaptableBlotterPopupPromptProps,
-  AdaptableBlotterPopupPromptState
+export class AdaptablePopupPrompt extends React.Component<
+  AdaptablePopupPromptProps,
+  AdaptablePopupPromptState
 > {
-  constructor(props: AdaptableBlotterPopupPromptProps) {
+  constructor(props: AdaptablePopupPromptProps) {
     super(props);
     this.state = { PromptText: '' };
   }
@@ -96,17 +95,17 @@ export class AdaptableBlotterPopupPrompt extends React.Component<
   }
 
   onCloseForm(): void {
-    this.setState({ PromptText: '' } as AdaptableBlotterPopupPromptState);
+    this.setState({ PromptText: '' } as AdaptablePopupPromptState);
     this.props.onClose();
   }
 
   onConfirmmForm(): void {
     let promptText = this.state.PromptText;
-    this.setState({ PromptText: '' } as AdaptableBlotterPopupPromptState);
+    this.setState({ PromptText: '' } as AdaptablePopupPromptState);
     this.props.onConfirm(promptText);
   }
 
   changeContent = (e: any) => {
-    this.setState({ PromptText: e.target.value } as AdaptableBlotterPopupPromptState);
+    this.setState({ PromptText: e.target.value } as AdaptablePopupPromptState);
   };
 }

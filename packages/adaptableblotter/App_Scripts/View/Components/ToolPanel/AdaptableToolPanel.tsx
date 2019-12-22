@@ -5,7 +5,6 @@ import * as ToolPanelRedux from '../../../Redux/ActionsReducers/ToolPanelRedux';
 import * as DashboardRedux from '../../../Redux/ActionsReducers/DashboardRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
-import { IAdaptableBlotterToolPanelContext } from '../../../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
 import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
@@ -28,6 +27,7 @@ import theme from '../../../theme';
 import { AdaptableBlotterToolPanels } from '../../../PredefinedConfig/ToolPanelState';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import DropdownButton from '../../../components/DropdownButton';
+import { IAdaptableToolPanelContext } from '../../../Utilities/Interface/IAdaptableToolPanelContext';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -235,10 +235,10 @@ export const ConnectedAdaptableBlotterToolPanel = connect(
   mapDispatchToProps
 )(AdaptableBlotterToolPanelComponent);
 
-export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableBlotterToolPanelContext) =>
-  class AdaptableBlotterToolPanel implements IToolPanelComp {
+export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableToolPanelContext) =>
+  class AdaptableToolPanel implements IToolPanelComp {
     public gui: HTMLElement;
-    public ctx: IAdaptableBlotterToolPanelContext;
+    public ctx: IAdaptableToolPanelContext;
 
     public constructor() {
       this.ctx = ctx;

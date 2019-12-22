@@ -9,7 +9,6 @@ import {
 } from '../../../../PredefinedConfig/ChartState';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
 import { AdaptableColumn } from '../../../../PredefinedConfig/Common/AdaptableColumn';

@@ -21,7 +21,7 @@ import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 
 interface AdvancedSearchToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<AdvancedSearchToolPanelComponent> {
@@ -176,7 +176,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           }
         )
       ),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

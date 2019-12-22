@@ -5,7 +5,6 @@ import { SelectionMode } from '../../PredefinedConfig/Common/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';

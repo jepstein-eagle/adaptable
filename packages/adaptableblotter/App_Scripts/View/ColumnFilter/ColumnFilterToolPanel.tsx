@@ -26,7 +26,7 @@ import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 
 interface ColumnFilterToolPanelComponentProps
@@ -162,7 +162,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
     onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),
     onShowQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarShow()),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

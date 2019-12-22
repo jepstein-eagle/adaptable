@@ -23,7 +23,7 @@ import { Flex } from 'rebass';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import join from '../../components/utils/join';
-import { AdaptableBlotterToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 
 interface BulkUpdateToolPanelControlComponentProps
@@ -238,7 +238,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-    onClose: (toolPanel: AdaptableBlotterToolPanel) =>
+    onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(

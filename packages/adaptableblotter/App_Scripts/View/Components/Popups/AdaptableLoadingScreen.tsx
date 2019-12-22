@@ -6,13 +6,13 @@ import Dialog from '../../../components/Dialog';
 import { Box } from 'rebass';
 
 export interface IAdaptableBlotterLoadingScreenProps
-  extends React.ClassAttributes<AdaptableBlotterLoadingScreen> {
+  extends React.ClassAttributes<AdaptableLoadingScreen> {
   showLoadingScreen: boolean;
   onClose?: () => {};
   AdaptableBlotter: IAdaptableBlotter;
 }
 
-export class AdaptableBlotterLoadingScreen extends React.Component<
+export class AdaptableLoadingScreen extends React.Component<
   IAdaptableBlotterLoadingScreenProps,
   {}
 > {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect, ReactNode, useMemo } from 'react';
 import * as AgGrid from 'ag-grid-community';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
+import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableView';
 import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
 import { BlotterApi } from '../../adaptableblotter/types';
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
