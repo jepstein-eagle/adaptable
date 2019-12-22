@@ -25,7 +25,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 
@@ -40,7 +40,7 @@ interface CalculatedColumnPopupProps
   CalculatedColumns: Array<CalculatedColumn>;
   CalculatedColumnErrorMessage: string;
   IsExpressionValid: (expression: string) => SystemRedux.CalculatedColumnIsExpressionValidAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class CalculatedColumnPopupComponent extends React.Component<
@@ -95,7 +95,7 @@ class CalculatedColumnPopupComponent extends React.Component<
             Columns={this.props.Columns}
             onShare={() => this.props.onShare(calculatedColumn)}
             TeamSharingActivated={this.props.TeamSharingActivated}
-            AdaptableBlotterObject={calculatedColumn}
+            AdaptableObject={calculatedColumn}
             key={calculatedColumn.ColumnId}
             onEdit={calculatedColumn => this.onEdit(calculatedColumn as CalculatedColumn)}
             onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
@@ -133,11 +133,9 @@ class CalculatedColumnPopupComponent extends React.Component<
         )}
 
         {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <CalculatedColumnWizard
-            EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as CalculatedColumn
-            }
+            EditedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
             ConfigEntities={this.props.CalculatedColumns}
             Columns={this.props.Columns}
             ModalContainer={this.props.ModalContainer}
@@ -160,7 +158,7 @@ class CalculatedColumnPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCalculatedColumn(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyCalculatedColumn(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -169,7 +167,7 @@ class CalculatedColumnPopupComponent extends React.Component<
   onEdit(calculatedColumn: CalculatedColumn) {
     let clonedObject = Helper.cloneObject(calculatedColumn);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -178,7 +176,7 @@ class CalculatedColumnPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -186,23 +184,21 @@ class CalculatedColumnPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let calculatedColumn: CalculatedColumn = Helper.cloneObject(
-      this.state.EditedAdaptableBlotterObject
-    );
+    let calculatedColumn: CalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditCalculatedColumn(calculatedColumn);
     } else {
       this.props.onAddCalculatedColumn(calculatedColumn);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let calculatedColumn = this.state.EditedAdaptableBlotterObject as CalculatedColumn;
+    let calculatedColumn = this.state.EditedAdaptableObject as CalculatedColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)
@@ -225,7 +221,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),
     IsExpressionValid: (expression: string) =>
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId)
       ),

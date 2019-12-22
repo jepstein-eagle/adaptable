@@ -1,5 +1,5 @@
 import { DesignTimeState } from './DesignTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for Action Columns
@@ -58,7 +58,7 @@ export interface ActionColumnState extends DesignTimeState {
 /**
  * The ActionColumn object used in the Advanced Search function.
  */
-export interface ActionColumn extends AdaptableBlotterObject {
+export interface ActionColumn extends AdaptableObject {
   /**
    * The id of the Action Column
    *

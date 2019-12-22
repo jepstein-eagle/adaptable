@@ -1,7 +1,7 @@
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import { LeafExpressionOperator, DataType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression';
 
@@ -103,7 +103,7 @@ function getSingleOperatorFromOperandText(operandText: string): string {
 
 export function IsColumnAppropriateForRange(
   operator: LeafExpressionOperator,
-  column: AdaptableBlotterColumn
+  column: AdaptableColumn
 ): boolean {
   if (operator == LeafExpressionOperator.Contains) {
     return true;

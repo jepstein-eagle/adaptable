@@ -20,7 +20,7 @@ import {
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
@@ -30,7 +30,7 @@ interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopu
   StyleClassNames: string[];
   onAddFormatColumn: (formatColumn: FormatColumn) => FormatColumnRedux.FormatColumnAddAction;
   onEditFormatColumn: (formatColumn: FormatColumn) => FormatColumnRedux.FormatColumnEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class FormatColumnPopupComponent extends React.Component<
@@ -40,7 +40,7 @@ class FormatColumnPopupComponent extends React.Component<
   constructor(props: FormatColumnPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     };
@@ -85,7 +85,7 @@ class FormatColumnPopupComponent extends React.Component<
         <FormatColumnEntityRow
           key={formatColumn.Uuid}
           colItems={colItems}
-          AdaptableBlotterObject={formatColumn}
+          AdaptableObject={formatColumn}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(formatColumn)}
@@ -120,9 +120,9 @@ class FormatColumnPopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={FormatColumns} />
           )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
+          {this.state.EditedAdaptableObject != null && (
             <FormatColumnWizard
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as FormatColumn}
+              EditedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
               ModalContainer={this.props.ModalContainer}
               ColorPalette={this.props.ColorPalette}
               StyleClassNames={this.props.StyleClassNames}
@@ -146,7 +146,7 @@ class FormatColumnPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyFormatColumn(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyFormatColumn(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -155,7 +155,7 @@ class FormatColumnPopupComponent extends React.Component<
   onNewFromColumn(formatColumn: FormatColumn) {
     let clonedObject: FormatColumn = Helper.cloneObject(formatColumn);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStatus: WizardStatus.New,
       WizardStartIndex: 1,
     });
@@ -164,7 +164,7 @@ class FormatColumnPopupComponent extends React.Component<
   onEdit(formatColumn: FormatColumn) {
     let clonedObject: FormatColumn = Helper.cloneObject(formatColumn);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -173,7 +173,7 @@ class FormatColumnPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -183,17 +183,17 @@ class FormatColumnPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let formatColumn = this.state.EditedAdaptableBlotterObject as FormatColumn;
+    let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditFormatColumn(formatColumn);
     } else {
       this.props.onAddFormatColumn(formatColumn);
     }
-    this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
+    this.setState({ EditedAdaptableObject: null, WizardStartIndex: 0 });
     this.shouldClosePopupOnFinishWizard = false;
   }
   canFinishWizard() {
-    let formatColumn = this.state.EditedAdaptableBlotterObject as FormatColumn;
+    let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
       UIHelper.IsNotEmptyStyle(formatColumn.Style)
@@ -214,7 +214,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),
     onEditFormatColumn: (formatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId)),
   };
 }

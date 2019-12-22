@@ -1,5 +1,5 @@
 import * as GeneralConstants from '../Constants/GeneralConstants';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import {
   DataType,
@@ -12,10 +12,7 @@ import ExpressionHelper from '../Helpers/ExpressionHelper';
 import StringExtensions from '../Extensions/StringExtensions';
 
 export interface IStrategyService {
-  createAlertDescription(
-    alertDefinition: AlertDefinition,
-    columns: AdaptableBlotterColumn[]
-  ): string;
+  createAlertDescription(alertDefinition: AlertDefinition, columns: AdaptableColumn[]): string;
 
   getDistinctColumnValues(columnId: string): number[];
 }
@@ -42,7 +39,7 @@ export class StrategyService implements IStrategyService {
 
   public createAlertDescription(
     alertDefinition: AlertDefinition,
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): string {
     let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
       alertDefinition.ColumnId,

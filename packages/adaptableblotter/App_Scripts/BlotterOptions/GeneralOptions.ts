@@ -1,4 +1,4 @@
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 
 /**
  * General options section of Adaptable Blotter Options.
@@ -70,7 +70,7 @@ export interface GeneralOptions {
    *
    * The two params to the function are:
    *
-   * -  an `AdaptableBlotterMenuItem`
+   * -  an `AdaptableMenuItem`
    *
    * -  the `MenuInfo` (row, column etc.)
    *
@@ -78,7 +78,7 @@ export interface GeneralOptions {
    */
   showAdaptableBlotterContextMenu?:
     | boolean
-    | ((menuItem: AdaptableBlotterMenuItem, menuInfo: MenuInfo) => boolean);
+    | ((menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => boolean);
 
   /**
    * Whether or not to show the Adaptable Blotter specific Column Menu items.
@@ -87,15 +87,15 @@ export interface GeneralOptions {
    *
    * The two params to the function are:
    *
-   * -  an `AdaptableBlotterMenuItem`
+   * -  an `AdaptableMenuItem`
    *
    * -  the `MenuInfo` (row, column etc.)
    *
    * **Default Value: true**
    */
-  showAdaptableBlotterColumnMenu?:
+  showAdaptableColumnMenu?:
     | boolean
-    | ((menuItem: AdaptableBlotterMenuItem, menuInfo: MenuInfo) => boolean);
+    | ((menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => boolean);
 
   /**
    * Runs a check to see if the current version of the Adaptable Blotter is the latest version.

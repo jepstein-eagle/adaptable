@@ -13,7 +13,7 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IColItem } from '../UIInterfaces';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
@@ -38,7 +38,7 @@ interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupC
   Entities: Array<ISharedEntity>;
   onGetSharedItems: () => TeamSharingRedux.TeamSharingShareAction;
   onImportItem: (
-    entity: AdaptableBlotterObject,
+    entity: AdaptableObject,
     strategy: string
   ) => TeamSharingRedux.TeamSharingImportItemAction;
 }
@@ -268,7 +268,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlotterState>>) {
   return {
     onGetSharedItems: () => dispatch(TeamSharingRedux.TeamSharingGet()),
-    onImportItem: (entity: AdaptableBlotterObject, strategy: string) =>
+    onImportItem: (entity: AdaptableObject, strategy: string) =>
       dispatch(TeamSharingRedux.TeamSharingImportItem(entity, strategy)),
   };
 }

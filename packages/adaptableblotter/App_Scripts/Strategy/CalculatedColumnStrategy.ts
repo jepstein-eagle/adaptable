@@ -3,8 +3,8 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ICalculatedColumnStrategy } from './Interface/ICalculatedColumnStrategy';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CalculatedColumnStrategy extends AdaptableStrategyBase
@@ -13,7 +13,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.CalculatedColumnStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CalculatedColumnStrategyName,
       ComponentName: ScreenPopups.CalculatedColumnPopup,
@@ -21,7 +21,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (
         this.blotter.api.calculatedColumnApi

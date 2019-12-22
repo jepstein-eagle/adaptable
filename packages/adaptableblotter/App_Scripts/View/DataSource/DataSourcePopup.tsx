@@ -19,7 +19,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Flex } from 'rebass';
@@ -32,7 +32,7 @@ interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupCom
   onSelectDataSource: (SelectedDataSource: string) => DataSourceRedux.DataSourceSelectAction;
   DataSources: Array<DataSource>;
   CurrentDataSource: string;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class DataSourcePopupComponent extends React.Component<
@@ -58,7 +58,7 @@ class DataSourcePopupComponent extends React.Component<
     let dataSources = this.props.DataSources.map((dataSource: DataSource, index: number) => {
       return (
         <DataSourceEntityRow
-          AdaptableBlotterObject={dataSource}
+          AdaptableObject={dataSource}
           key={'ns' + index}
           onEdit={() => this.onEdit(dataSource)}
           colItems={colItems}
@@ -82,7 +82,7 @@ class DataSourcePopupComponent extends React.Component<
       />
     );
 
-    let DataSource: DataSource = this.state.EditedAdaptableBlotterObject as DataSource;
+    let DataSource: DataSource = this.state.EditedAdaptableObject as DataSource;
 
     return (
       <PanelWithButton
@@ -98,9 +98,9 @@ class DataSourcePopupComponent extends React.Component<
           <EmptyContent>Click 'New' to add a new DataSource.</EmptyContent>
         )}
 
-        {this.state.EditedAdaptableBlotterObject != null && (
+        {this.state.EditedAdaptableObject != null && (
           <DataSourceWizard
-            EditedAdaptableBlotterObject={DataSource}
+            EditedAdaptableObject={DataSource}
             ConfigEntities={this.props.DataSources}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -134,7 +134,7 @@ class DataSourcePopupComponent extends React.Component<
   onEdit(dataSource: DataSource) {
     let clonedObject: DataSource = Helper.cloneObject(dataSource);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
@@ -143,18 +143,18 @@ class DataSourcePopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    //  let searchIndex: number = this.state.EditedAdaptableBlotterObjectIndex;
+    //  let searchIndex: number = this.state.EditedAdaptableObjectIndex;
     //  let currentSearchIndex: number = this.props.DataSources.findIndex(
     //    as => as.Name == this.props.CurrentDataSource
     //  );
-    let clonedObject: DataSource = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+    let clonedObject: DataSource = Helper.cloneObject(this.state.EditedAdaptableObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditDataSource(clonedObject);
     } else {
@@ -162,7 +162,7 @@ class DataSourcePopupComponent extends React.Component<
     }
 
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -173,7 +173,7 @@ class DataSourcePopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let DataSource = this.state.EditedAdaptableBlotterObject as DataSource;
+    let DataSource = this.state.EditedAdaptableObject as DataSource;
 
     return (
       StringExtensions.IsNotNullOrEmpty(DataSource.Name) &&
@@ -183,7 +183,7 @@ class DataSourcePopupComponent extends React.Component<
 
   CreateDataSource() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyDataSource(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyDataSource(),
       WizardStartIndex: 0,
     });
   }
@@ -204,7 +204,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(DataSourceRedux.DataSourceEdit(DataSource)),
     onSelectDataSource: (SelectedDataSource: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(SelectedDataSource)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.DataSourceStrategyId)),
   };
 }

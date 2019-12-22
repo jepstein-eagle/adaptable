@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -16,7 +16,7 @@ import Input from '../../components/Input';
 
 export interface PlusMinusEntityRowProps
   extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
-  Column: AdaptableBlotterColumn;
+  Column: AdaptableColumn;
   onColumnDefaultNudgeValueChange: (
     plusMinusRule: PlusMinusRule,
     event: React.FormEvent<any>
@@ -25,7 +25,7 @@ export interface PlusMinusEntityRowProps
 
 export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps, {}> {
   render(): any {
-    let plusMinusRule: PlusMinusRule = this.props.AdaptableBlotterObject as PlusMinusRule;
+    let plusMinusRule: PlusMinusRule = this.props.AdaptableObject as PlusMinusRule;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = (

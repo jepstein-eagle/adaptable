@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IThemeStrategy } from './Interface/IThemeStrategy';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { THEME_CHANGED_EVENT } from '../Utilities/Constants/GeneralConstants';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/ThemeChanged';
@@ -16,7 +16,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     super(StrategyConstants.ThemeStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ThemeStrategyName,
       ComponentName: ScreenPopups.ThemePopup,

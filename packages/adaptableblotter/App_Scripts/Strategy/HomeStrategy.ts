@@ -4,8 +4,8 @@ import * as GlyphConstants from '../Utilities/Constants/GlyphConstants';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 // This is a special strategy that the user can never remove but which is useful to us
 // We use it to manage internal state changes and menu items that are not directly strategy related
@@ -18,8 +18,8 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     });
   }
 
-  public addBaseColumnMenuItems(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem[] {
-    let baseMenuItems: AdaptableBlotterMenuItem[] = [];
+  public addBaseColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] {
+    let baseMenuItems: AdaptableMenuItem[] = [];
 
     if (this.canCreateColumnMenuItem(column, this.blotter, 'quickfilter')) {
       const isFilterActive: boolean = this.blotter.api.gridApi.getGridState().IsQuickFilterActive;

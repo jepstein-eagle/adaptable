@@ -16,7 +16,7 @@ import { GridState } from '../../PredefinedConfig/GridState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 
 import {
@@ -35,7 +35,7 @@ import SimpleButton from '../../components/SimpleButton';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { Icon } from '../../components/icons';
-import { AdaptableBlotterMenuItem } from '../../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
@@ -44,13 +44,13 @@ interface HomeToolbarComponentProps
   extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
   GridState: GridState;
   DashboardState: DashboardState;
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
   StatusMessage: string;
   StatusType: string;
   HeaderText: string;
   DashboardSize: DashboardSize;
   onNewColumnListOrder: (
-    VisibleColumnList: AdaptableBlotterColumn[]
+    VisibleColumnList: AdaptableColumn[]
   ) => SystemRedux.SetNewColumnListOrderAction;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
   onSetToolbarVisibility: (
@@ -72,7 +72,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
     let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
-    let allowedMenuItems: AdaptableBlotterMenuItem[] = this.props.GridState.MainMenuItems.filter(
+    let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
 
@@ -99,7 +99,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       },
     ];
 
-    this.props.Columns.forEach((col: AdaptableBlotterColumn, index) => {
+    this.props.Columns.forEach((col: AdaptableColumn, index) => {
       colItems.push({
         id: col.ColumnId,
         onClick: (e: React.SyntheticEvent) => {
@@ -302,7 +302,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     );
   }
 
-  onClick(menuItem: AdaptableBlotterMenuItem) {
+  onClick(menuItem: AdaptableMenuItem) {
     this.props.onClick(menuItem.ReduxAction);
   }
 
@@ -315,12 +315,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   onSetColumnVisibility(name: string) {
-    let changedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
-      name,
-      this.props.Columns
-    );
+    let changedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(name, this.props.Columns);
 
-    let columns: AdaptableBlotterColumn[] = [].concat(this.props.Columns);
+    let columns: AdaptableColumn[] = [].concat(this.props.Columns);
     changedColumn = Object.assign({}, changedColumn, {
       Visible: !changedColumn.Visible,
     });
@@ -361,7 +358,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.DashboardPopup)
       ),
-    onNewColumnListOrder: (VisibleColumnList: AdaptableBlotterColumn[]) =>
+    onNewColumnListOrder: (VisibleColumnList: AdaptableColumn[]) =>
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetDashboardVisibility: (visibility: Visibility) =>
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),

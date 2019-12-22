@@ -4,10 +4,10 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
@@ -19,7 +19,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ConditionalStyleStrategyName,
       ComponentName: ScreenPopups.ConditionalStylePopup,
@@ -27,7 +27,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'style')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,

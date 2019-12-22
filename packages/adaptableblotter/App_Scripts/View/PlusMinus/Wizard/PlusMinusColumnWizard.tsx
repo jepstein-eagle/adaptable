@@ -3,7 +3,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
@@ -11,7 +11,7 @@ import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
 import WizardPanel from '../../../components/WizardPanel';
 
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {
-  NumericColumns: Array<AdaptableBlotterColumn>;
+  NumericColumns: Array<AdaptableColumn>;
 }
 
 export interface PlusMinusColumnWizardState {
@@ -38,7 +38,7 @@ export class PlusMinusColumnWizard
     );
   }
 
-  private onColumnSelectedChanged(columns: AdaptableBlotterColumn[]) {
+  private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     this.setState({ SelectedColumnId: columns.length > 0 ? columns[0].ColumnId : '' }, () =>
       this.props.UpdateGoBackState()
     );

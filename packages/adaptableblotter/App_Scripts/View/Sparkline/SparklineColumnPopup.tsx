@@ -13,7 +13,7 @@ import {
   WizardStatus,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 
@@ -36,7 +36,7 @@ interface SparklineColumnPopupProps extends StrategyViewPopupProps<SparklineColu
   onEditSparklineColumn: (
     sparklineColumn: SparklineColumn
   ) => SparklineColumnRedux.SparklineColumnEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class SparklineColumnPopupComponent extends React.Component<
@@ -46,7 +46,7 @@ class SparklineColumnPopupComponent extends React.Component<
   constructor(props: SparklineColumnPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     };
@@ -85,7 +85,7 @@ class SparklineColumnPopupComponent extends React.Component<
         <SparklineColumnEntityRow
           key={sparklineColumn.Uuid}
           colItems={colItems}
-          AdaptableBlotterObject={sparklineColumn}
+          AdaptableObject={sparklineColumn}
           Column={column}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
@@ -126,11 +126,9 @@ class SparklineColumnPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
+          {this.state.EditedAdaptableObject != null && (
             <SparklineColumnWizard
-              EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as SparklineColumn
-              }
+              EditedAdaptableObject={this.state.EditedAdaptableObject as SparklineColumn}
               ConfigEntities={null}
               ColorPalette={this.props.ColorPalette}
               Blotter={this.props.Blotter}
@@ -179,7 +177,7 @@ class SparklineColumnPopupComponent extends React.Component<
 
   onNewFromColumn(sparklineColumn: SparklineColumn) {
     this.setState({
-      EditedAdaptableBlotterObject: sparklineColumn,
+      EditedAdaptableObject: sparklineColumn,
       WizardStatus: WizardStatus.New,
       WizardStartIndex: 1,
     });
@@ -187,7 +185,7 @@ class SparklineColumnPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptySparklineColumn(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptySparklineColumn(),
       WizardStatus: WizardStatus.New,
       WizardStartIndex: 0,
     });
@@ -196,7 +194,7 @@ class SparklineColumnPopupComponent extends React.Component<
   onEdit(sparklineColumn: SparklineColumn) {
     let clonedObject: SparklineColumn = Helper.cloneObject(sparklineColumn);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -205,30 +203,28 @@ class SparklineColumnPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let sparklineColumn: SparklineColumn = Helper.cloneObject(
-      this.state.EditedAdaptableBlotterObject
-    );
+    let sparklineColumn: SparklineColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditSparklineColumn(sparklineColumn);
     } else {
       this.props.onAddSparklineColumn(sparklineColumn);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard(): boolean {
-    let sparklineColumn = this.state.EditedAdaptableBlotterObject as SparklineColumn;
+    let sparklineColumn = this.state.EditedAdaptableObject as SparklineColumn;
     if (StringExtensions.IsNullOrEmpty(sparklineColumn.ColumnId)) {
       return false;
     }
@@ -249,7 +245,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(SparklineColumnRedux.SparklineColumnsAdd(sparklineColumn)),
     onEditSparklineColumn: (sparklineColumn: SparklineColumn) =>
       dispatch(SparklineColumnRedux.SparklineColumnsEdit(sparklineColumn)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.SparklineStrategyId)),
   };
 }

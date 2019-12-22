@@ -4,9 +4,9 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISystemStatusStrategy } from './Interface/ISystemStatusStrategy';
 import * as SystemStatusRedux from '../Redux/ActionsReducers/SystemStatusRedux';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { MessageType } from '../PredefinedConfig/Common/Enums';
@@ -62,7 +62,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
     }
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SystemStatusStrategyName,
       ComponentName: ScreenPopups.SystemStatusPopup,
@@ -70,7 +70,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     return this.createColumnMenuItemShowPopup(
       'Show ' + StrategyConstants.SystemStatusStrategyName,
       ScreenPopups.SystemStatusPopup,
@@ -78,7 +78,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
     );
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let popUpParams: StrategyParams = {
       source: 'ContextMenu',
     };

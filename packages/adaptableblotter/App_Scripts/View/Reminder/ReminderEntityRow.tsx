@@ -13,7 +13,7 @@ export class ReminderEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let reminder: Reminder = this.props.AdaptableBlotterObject as Reminder;
+    let reminder: Reminder = this.props.AdaptableObject as Reminder;
 
     //   let column = ColumnHelper.getColumnFromId(Reminder.ColumnId, this.props.Columns);
 

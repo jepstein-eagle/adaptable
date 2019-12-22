@@ -4,11 +4,11 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISparklineColumnStrategy } from './Interface/ISparklineColumnStrategy';
 
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class SparklineColumnStrategy extends AdaptableStrategyBase
@@ -19,7 +19,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.SparklineColumnStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SparklineColumnStrategyName,
       ComponentName: ScreenPopups.SparklineColumnPopup,
@@ -27,7 +27,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'sparkline')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
@@ -42,7 +42,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     }
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (
       menuInfo.column &&

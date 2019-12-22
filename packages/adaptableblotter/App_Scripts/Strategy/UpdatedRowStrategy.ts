@@ -5,13 +5,13 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IUpdatedRowStrategy } from './Interface/IUpdatedRowStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { UpdatedRowInfo, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -26,7 +26,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.UpdatedRowStrategyName,
       ComponentName: ScreenPopups.UpdatedRowPopup,
@@ -34,7 +34,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(): AdaptableMenuItem | undefined {
     let currentRowInfos: UpdatedRowInfo[] = this.blotter.api.internalApi.getUpdatedRowInfos();
     if (ArrayExtensions.IsNotNullOrEmpty(currentRowInfos)) {
       return this.createColumnMenuItemReduxAction(
@@ -45,7 +45,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
     }
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (menuInfo.column && menuInfo.rowNode) {
       let updatedRowInfos: UpdatedRowInfo[] = this.blotter.api.internalApi.getUpdatedRowInfos();

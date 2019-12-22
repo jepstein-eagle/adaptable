@@ -9,7 +9,7 @@ import { TypeUuid } from '../Uuid';
  *
  * If the user has provided Predefined Config, the Uuid is assigned BEFORE the Config is read.
  */
-export interface AdaptableBlotterObject {
+export interface AdaptableObject {
   /**
    * A unique identifier for the object
    *

@@ -1,6 +1,6 @@
 import { IAdaptableBlotter } from '../../types';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
@@ -63,10 +63,7 @@ export class FilterService implements IFilterService {
     return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null);
   }
 
-  public GetSystemFiltersForColumn(
-    column: AdaptableBlotterColumn,
-    systemFilters: string[]
-  ): string[] {
+  public GetSystemFiltersForColumn(column: AdaptableColumn, systemFilters: string[]): string[] {
     let appropriateSystemFilters: string[] = [];
     if (column != null) {
       systemFilters.forEach((systemFilter: string) => {
@@ -82,10 +79,7 @@ export class FilterService implements IFilterService {
     return appropriateSystemFilters;
   }
 
-  public GetUserFiltersForColumn(
-    column: AdaptableBlotterColumn,
-    userFilters: UserFilter[]
-  ): UserFilter[] {
+  public GetUserFiltersForColumn(column: AdaptableColumn, userFilters: UserFilter[]): UserFilter[] {
     let appropriateUserFilters: UserFilter[] = [];
     if (column != null) {
       userFilters.forEach((userFilter: UserFilter) => {
@@ -98,7 +92,7 @@ export class FilterService implements IFilterService {
   }
 
   public GetNamedFiltersForColumn(
-    column: AdaptableBlotterColumn,
+    column: AdaptableColumn,
     namedFilters: NamedFilter[],
     columnCategories: ColumnCategory[]
   ): NamedFilter[] {
@@ -131,7 +125,7 @@ export class FilterService implements IFilterService {
   public ShowUserFilterForColumn(
     UserFilters: UserFilter[],
     name: string,
-    column: AdaptableBlotterColumn
+    column: AdaptableColumn
   ): boolean {
     let userFilter: UserFilter = UserFilters.find(f => f.Name == name);
     return userFilter.ColumnId == column.ColumnId;
@@ -321,11 +315,11 @@ export class FilterService implements IFilterService {
 
   public ConvertColumnFiltersToKVPArray(
     columnFilters: ColumnFilter[],
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): KeyValuePair[] {
     let infoBody: KeyValuePair[] = [];
     columnFilters.forEach(x => {
-      let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
+      let column: AdaptableColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
       if (column) {
         let expression: string = ExpressionHelper.ConvertExpressionToString(
           x.Filter,
@@ -343,7 +337,7 @@ export class FilterService implements IFilterService {
 
   public GetColumnFiltersDescription(
     columnFilters: ColumnFilter[],
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): string {
     if (ArrayExtensions.IsNullOrEmpty(columnFilters)) {
       return 'No Column Filter Active';

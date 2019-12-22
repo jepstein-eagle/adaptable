@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder, AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 import { GridSortRow } from '../GridSortRow';
@@ -22,7 +22,7 @@ import EmptyContent from '../../../components/EmptyContent';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<Layout> {
-  SortableColumns: AdaptableBlotterColumn[];
+  SortableColumns: AdaptableColumn[];
 }
 
 export interface LayoutGridSortWizardState {
@@ -62,7 +62,7 @@ export class LayoutGridSortWizard
       return (
         <GridSortRow
           key={index}
-          AdaptableBlotterObject={null}
+          AdaptableObject={null}
           colItems={colItems}
           Columns={this.props.SortableColumns}
           UserFilters={null}
@@ -111,7 +111,7 @@ export class LayoutGridSortWizard
     );
   }
 
-  private onColumnSelectedChanged(index: number, column: AdaptableBlotterColumn) {
+  private onColumnSelectedChanged(index: number, column: AdaptableColumn) {
     let sorts: ColumnSort[] = [].concat(this.state.ColumnSorts);
     let sort: ColumnSort = sorts[index];
     sort.Column = column ? column.ColumnId : '';

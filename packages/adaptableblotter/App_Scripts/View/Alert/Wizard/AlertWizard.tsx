@@ -6,12 +6,12 @@ import { AlertRulesWizard } from './AlertRulesWizard';
 import { AlertSummaryWizard } from './AlertSummaryWizard';
 import { AlertSelectQueryWizard } from './AlertSelectQueryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { AlertTypeWizard } from './AlertTypeWizard';
 import { AlertScopeWizard } from './AlertScopeWizard';
 
 export interface AlertWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<AlertWizard> {}
+  extends AdaptableObjectExpressionAdaptableWizardProps<AlertWizard> {}
 
 export class AlertWizard extends React.Component<AlertWizardProps, {}> {
   render() {
@@ -68,7 +68,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
               Element: <AlertSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

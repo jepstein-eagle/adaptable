@@ -14,7 +14,7 @@ export interface DataSourceEntityRowProps extends SharedEntityRowProps<DataSourc
 
 export class DataSourceEntityRow extends React.Component<DataSourceEntityRowProps, {}> {
   render(): any {
-    let dataSource: DataSource = this.props.AdaptableBlotterObject as DataSource;
+    let dataSource: DataSource = this.props.AdaptableObject as DataSource;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     // put in the ability to change name / description later...
@@ -37,11 +37,11 @@ export class DataSourceEntityRow extends React.Component<DataSourceEntityRowProp
 
   onDescriptionChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onChangeDescription(this.props.AdaptableBlotterObject as DataSource, e.value);
+    this.props.onChangeDescription(this.props.AdaptableObject as DataSource, e.value);
   }
 
   onNameChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onChangeName(this.props.AdaptableBlotterObject as DataSource, e.value);
+    this.props.onChangeName(this.props.AdaptableObject as DataSource, e.value);
   }
 }

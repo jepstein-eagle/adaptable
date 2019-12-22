@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Flex } from 'rebass';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -29,7 +29,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   // these all need to be ptional because of wizard compatibility - todo: fix...
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
-  Columns?: Array<AdaptableBlotterColumn>;
+  Columns?: Array<AdaptableColumn>;
   Blotter?: IAdaptableBlotter;
 }
 

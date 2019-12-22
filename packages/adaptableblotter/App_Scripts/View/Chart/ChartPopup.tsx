@@ -21,7 +21,7 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
@@ -40,7 +40,7 @@ interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
   ChartDefinitions: Array<ChartDefinition>;
   CurrentChartDefinition: ChartDefinition;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfigEntityState> {
@@ -82,7 +82,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       return (
         <ChartEntityRow
           colItems={colItems}
-          AdaptableBlotterObject={Chart}
+          AdaptableObject={Chart}
           key={Chart.Name}
           onEdit={() => this.onEdit(Chart as ChartDefinition)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -126,7 +126,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       </DropdownButton>
     );
 
-    let editedChartDefinition = this.state.EditedAdaptableBlotterObject as ChartDefinition;
+    let editedChartDefinition = this.state.EditedAdaptableObject as ChartDefinition;
 
     return (
       <PanelWithButton
@@ -147,11 +147,11 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           </EmptyContent>
         )}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <div>
             {editedChartDefinition.ChartType == ChartType.CategoryChart ? (
               <CategoryChartWizard
-                EditedAdaptableBlotterObject={editedChartDefinition}
+                EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
                 Columns={this.props.Columns}
@@ -168,7 +168,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
             ) : null}
             {editedChartDefinition.ChartType === ChartType.PieChart ? (
               <PieChartWizard
-                EditedAdaptableBlotterObject={editedChartDefinition}
+                EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
                 Columns={this.props.Columns}
@@ -186,7 +186,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
             {editedChartDefinition.ChartType === ChartType.SparklinesChart ? (
               <SparklinesChartWizard
-                EditedAdaptableBlotterObject={editedChartDefinition}
+                EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
                 Columns={this.props.Columns}
@@ -215,7 +215,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   onEdit(Chart: ChartDefinition) {
     //so we dont mutate original object
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(Chart),
+      EditedAdaptableObject: Helper.cloneObject(Chart),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
@@ -239,7 +239,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       }
     }
     this.setState({
-      EditedAdaptableBlotterObject: emptyChartDefinition,
+      EditedAdaptableObject: emptyChartDefinition,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -248,7 +248,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -267,7 +267,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   onFinishWizard() {
-    let clonedObject: ChartDefinition = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+    let clonedObject: ChartDefinition = Helper.cloneObject(this.state.EditedAdaptableObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditChartDefinition(clonedObject);
     } else {
@@ -279,7 +279,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       this.props.CurrentChartDefinition.Uuid == clonedObject.Uuid;
 
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -291,7 +291,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   canFinishWizard() {
-    let Chart = this.state.EditedAdaptableBlotterObject as ChartDefinition;
+    let Chart = this.state.EditedAdaptableObject as ChartDefinition;
     return StringExtensions.IsNotNullOrEmpty(Chart.Name);
   }
 }
@@ -315,7 +315,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId)),
   };
 }

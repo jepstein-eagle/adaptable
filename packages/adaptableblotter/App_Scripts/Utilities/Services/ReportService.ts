@@ -1,7 +1,7 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { Expression } from '../../PredefinedConfig/Common/Expression';
 import { SelectedCellInfo } from '../Interface/Selection/SelectedCellInfo';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
   ReportColumnScope,
   MessageType,
@@ -47,7 +47,7 @@ export class ReportService implements IReportService {
     );
   }
 
-  public GetReportColumnsDescription(report: Report, cols: AdaptableBlotterColumn[]): string {
+  public GetReportColumnsDescription(report: Report, cols: AdaptableColumn[]): string {
     switch (report.ReportColumnScope) {
       case ReportColumnScope.AllColumns:
         return '[All Columns]';
@@ -60,7 +60,7 @@ export class ReportService implements IReportService {
     }
   }
 
-  public GetReportExpressionDescription(Report: Report, cols: AdaptableBlotterColumn[]): string {
+  public GetReportExpressionDescription(Report: Report, cols: AdaptableColumn[]): string {
     if (this.IsSystemReport(Report)) {
       if (Report.Name == ALL_DATA_REPORT) {
         return '[All Blotter Data]';
@@ -103,8 +103,8 @@ export class ReportService implements IReportService {
   }
 
   private getReportColumnsForReport(report: Report): any {
-    let reportColumns: AdaptableBlotterColumn[] = [];
-    let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+    let reportColumns: AdaptableColumn[] = [];
+    let gridColumns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
 
     // first get the cols depending on the Column Scope
     switch (report.ReportColumnScope) {
@@ -128,7 +128,7 @@ export class ReportService implements IReportService {
   }
 
   public ConvertReportToArray(report: Report): IStrategyActionReturn<any[]> {
-    let reportColumns: AdaptableBlotterColumn[] = this.getReportColumnsForReport(report);
+    let reportColumns: AdaptableColumn[] = this.getReportColumnsForReport(report);
     if (ArrayExtensions.IsNullOrEmpty(reportColumns)) {
       // some way of saying we cannot export anything
       return {
@@ -239,7 +239,7 @@ export class ReportService implements IReportService {
 
   public GetPrimaryKeysForReport(report: Report): any[] {
     let pkValues: any[] = [];
-    let reportColumns: AdaptableBlotterColumn[] = this.getReportColumnsForReport(report);
+    let reportColumns: AdaptableColumn[] = this.getReportColumnsForReport(report);
 
     switch (report.ReportRowScope) {
       case ReportRowScope.AllRows:
@@ -305,7 +305,7 @@ export class ReportService implements IReportService {
     return pkValues;
   }
 
-  private getRowValues(rowNode: any, reportColumns: AdaptableBlotterColumn[]): any[] {
+  private getRowValues(rowNode: any, reportColumns: AdaptableColumn[]): any[] {
     let newRow: any[] = [];
     reportColumns.forEach(col => {
       let columnValue: any = this.blotter.getDisplayValueFromRowNode(rowNode, col.ColumnId);

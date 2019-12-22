@@ -7,8 +7,8 @@ import { ChartData } from '../PredefinedConfig/ChartState';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../PredefinedConfig/LayoutState';
@@ -50,9 +50,9 @@ export interface InternalApi {
 
   showPopupScreen(strategyId: string, componentName: string, popupParams?: StrategyParams): void;
 
-  setColumns(columns: AdaptableBlotterColumn[]): void;
+  setColumns(columns: AdaptableColumn[]): void;
 
-  setMainMenuItems(menuItems: AdaptableBlotterMenuItem[]): void;
+  setMainMenuItems(menuItems: AdaptableMenuItem[]): void;
 
   setSelectedCells(selectedCellInfo: SelectedCellInfo): void;
 
@@ -78,7 +78,7 @@ export interface InternalApi {
 
   isGridInPivotMode(): boolean;
 
-  addAdaptableBlotterColumn(adaptableBlotterColumn: AdaptableBlotterColumn): void;
+  addAdaptableColumn(AdaptableColumn: AdaptableColumn): void;
 
   setColumnSorts(columnSorts: ColumnSort[]): void;
 

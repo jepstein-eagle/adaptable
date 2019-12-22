@@ -4,9 +4,9 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ISparklineStrategy } from './Interface/ISparklineStrategy';
 
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 
@@ -15,7 +15,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
     super(StrategyConstants.SparklineStrategyId, blotter);
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'numeric')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
@@ -30,7 +30,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
     }
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
     if (
       menuInfo.column &&

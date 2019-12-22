@@ -6,13 +6,13 @@ import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { DataType, MathOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -23,7 +23,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     });
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ShortcutStrategyName,
       ComponentName: ScreenPopups.ShortcutPopup,
@@ -40,7 +40,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     if (!activeCell) {
       return;
     }
-    let selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+    let selectedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
       activeCell.columnId,
       this.blotter.api.gridApi.getColumns()
     );

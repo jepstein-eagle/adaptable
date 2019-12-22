@@ -4,14 +4,14 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { ITeamSharingStrategy } from './Interface/ITeamSharingStrategy';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.TeamSharingStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     if (BlotterHelper.isConfigServerEnabled(this.blotter.blotterOptions)) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.TeamSharingStrategyName,

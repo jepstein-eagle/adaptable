@@ -4,17 +4,17 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IPieChartStrategy } from './Interface/IPieChartStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.PieChartStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PieChartStrategyName,
       ComponentName: ScreenPopups.PieChartPopup,
@@ -22,7 +22,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (
       this.canCreateColumnMenuItem(column, this.blotter) &&
       column.DataType !== DataType.NumberArray
@@ -44,7 +44,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   // Add a context menu item - ONLY if the cell clicked one which is part of the current cell selection
   // and if the cell selection is a single column
   // not that we pass the primary kev values in the Strategy params
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
     if (menuInfo.column && menuInfo.isSelectedCell && menuInfo.isSingleSelectedColumn) {
       let pkValues: any[] = this.blotter.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {

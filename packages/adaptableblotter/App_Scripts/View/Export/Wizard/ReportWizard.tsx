@@ -5,14 +5,14 @@ import { ReportColumnTypeWizard } from './ReportColumnTypeWizard';
 import { ReportExpressionWizard } from './ReportExpressionWizard';
 import { ReportSettingsWizard } from './ReportSettingsWizard';
 import { ReportSummaryWizard } from './ReportSummaryWizard';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { Report } from '../../../PredefinedConfig/ExportState';
 import { ReportRowTypeWizard } from './ReportRowTypeWizard';
 import { ReportScheduleWizard } from './ReportScheduleWizard';
 
 export class ReportWizard extends React.Component<
-  AdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>,
+  AdaptableObjectExpressionAdaptableWizardProps<ReportWizard>,
   {}
 > {
   render() {
@@ -67,7 +67,7 @@ export class ReportWizard extends React.Component<
               Element: <ReportSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject as Report}
+          Data={this.props.EditedAdaptableObject as Report}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

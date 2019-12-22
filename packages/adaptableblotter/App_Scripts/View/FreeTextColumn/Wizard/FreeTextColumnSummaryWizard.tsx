@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { FreeTextColumn } from '../../../PredefinedConfig/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';

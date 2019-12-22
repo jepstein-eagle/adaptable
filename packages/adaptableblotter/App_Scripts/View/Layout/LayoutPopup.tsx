@@ -22,7 +22,7 @@ import { UIHelper } from '../UIHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { Layout } from '../../PredefinedConfig/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
@@ -34,7 +34,7 @@ interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> 
   CurrentLayoutName: string;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableConfigEntityState> {
@@ -78,7 +78,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             key={x.Uuid}
             colItems={colItems}
             IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
-            AdaptableBlotterObject={x}
+            AdaptableObject={x}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             onEdit={() => this.onEdit(x)}
@@ -121,9 +121,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             <EmptyContent>Click 'New' to start creating layouts.</EmptyContent>
           )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
+          {this.state.EditedAdaptableObject != null && (
             <LayoutWizard
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
+              EditedAdaptableObject={this.state.EditedAdaptableObject}
               ConfigEntities={this.props.Layouts}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
@@ -146,7 +146,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyLayout(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyLayout(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -155,7 +155,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   onEdit(layout: Layout) {
     let clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -164,7 +164,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -175,7 +175,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+    let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableObject);
     this.props.onSaveLayout(clonedObject);
 
     let currentLayout = this.props.Layouts.find(l => l.Name == this.props.CurrentLayoutName);
@@ -183,7 +183,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       this.state.WizardStatus == WizardStatus.New || currentLayout.Uuid == clonedObject.Uuid;
 
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -196,7 +196,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   canFinishWizard() {
-    let layout = this.state.EditedAdaptableBlotterObject as Layout;
+    let layout = this.state.EditedAdaptableObject as Layout;
     if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
       let canFinish: boolean = true;
       layout.ColumnSorts.forEach(gs => {
@@ -227,7 +227,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId)),
   };
 }

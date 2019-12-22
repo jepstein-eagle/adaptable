@@ -18,9 +18,9 @@ import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo
 
 import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
   private ChartState: ChartState;
@@ -44,7 +44,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ChartStrategyName,
       ComponentName: ScreenPopups.ChartPopup,
@@ -301,7 +301,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     return this.blotter.api.chartApi.getChartState();
   }
 
-  private GetColumnState(): AdaptableBlotterColumn[] {
+  private GetColumnState(): AdaptableColumn[] {
     return this.blotter.api.gridApi.getColumns();
   }
 

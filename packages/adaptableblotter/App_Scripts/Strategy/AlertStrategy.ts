@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -12,7 +12,7 @@ import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
@@ -25,7 +25,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
 
   public abstract initStyles(): void;
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.AlertStrategyName,
       ComponentName: ScreenPopups.AlertPopup,
@@ -33,7 +33,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     });
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (menuInfo.column && menuInfo.rowNode) {
       let currentAlerts: AdaptableAlert[] = this.blotter.api.internalApi
@@ -62,7 +62,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       dataChangedInfo
     );
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
-      let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
       alertDefinitions.forEach((alertDefintion: AlertDefinition) => {
         // might be better to do a single alert with all the messages?
         this.blotter.api.alertApi.showAlert(
@@ -81,7 +81,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       .filter(v => v.ColumnId == dataChangedEvent.ColumnId);
     let triggeredAlerts: AlertDefinition[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
-      let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
       let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
@@ -121,17 +121,14 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   private isAlertTriggered(
     alert: AlertDefinition,
     dataChangedEvent: DataChangedInfo,
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): boolean {
     // if its any change then alert triggers immediately
     if (alert.Range.Operator == LeafExpressionOperator.AnyChange) {
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
-      dataChangedEvent.ColumnId,
-      columns
-    );
+    let column: AdaptableColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
     let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
       alert.Range,
       dataChangedEvent.NewValue,

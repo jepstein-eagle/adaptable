@@ -63,7 +63,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
@@ -71,7 +71,7 @@ import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
 import Helper from '../Utilities/Helpers/Helper';
 import { SelectionChangedInfo, SelectionChangedEventArgs } from '../Api/Events/SelectionChanged';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { iconToString } from '../components/icons';
@@ -451,7 +451,7 @@ export class agGridHelper {
     this.blotter.api.eventApi.emit('SelectionChanged', selectionChangedArgs);
   }
 
-  public getMenuInfo(params: GetContextMenuItemsParams, column: AdaptableBlotterColumn): MenuInfo {
+  public getMenuInfo(params: GetContextMenuItemsParams, column: AdaptableColumn): MenuInfo {
     // lets build a picture of what has been right clicked.  Will take time to get right but lets start
 
     const colId = params.column.getColId();
@@ -488,7 +488,7 @@ export class agGridHelper {
     };
   }
 
-  public createAgGridMenuDefFromAdaptableMenu(x: AdaptableBlotterMenuItem): MenuItemDef {
+  public createAgGridMenuDefFromAdaptableMenu(x: AdaptableMenuItem): MenuItemDef {
     return {
       name: x.Label,
       action: x.ClickFunction
@@ -566,7 +566,7 @@ export class agGridHelper {
     }
     let dataType: DataType = DataType.Unknown;
     // get the column type if already in store (and not unknown)
-    const existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+    const existingColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
       column.getId(),
       this.blotter.api.gridApi.getColumns()
     );

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -16,15 +16,14 @@ import { IValidationService } from '../../Utilities/Services/Interface/IValidati
 
 export interface CellValidationEntityRowProps
   extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
-  Column: AdaptableBlotterColumn;
+  Column: AdaptableColumn;
   ValidationService: IValidationService;
   onChangeActionMode: (cellValidationRule: CellValidationRule, ActionMode: ActionMode) => void;
 }
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {
   render(): any {
-    let cellValidationRule: CellValidationRule = this.props
-      .AdaptableBlotterObject as CellValidationRule;
+    let cellValidationRule: CellValidationRule = this.props.AdaptableObject as CellValidationRule;
 
     let ActionModeTypes = EnumExtensions.getNames(ActionMode).map(type => {
       return {

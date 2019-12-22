@@ -14,7 +14,7 @@ export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSor
 
 export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProps, {}> {
   render(): any {
-    let customSort: CustomSort = this.props.AdaptableBlotterObject as CustomSort;
+    let customSort: CustomSort = this.props.AdaptableObject as CustomSort;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={this.props.ColumnLabel} />;

@@ -14,7 +14,7 @@ import { ColumnFilterState } from '../../PredefinedConfig/ColumnFilterState';
 import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import BlotterHelper from '../Helpers/BlotterHelper';

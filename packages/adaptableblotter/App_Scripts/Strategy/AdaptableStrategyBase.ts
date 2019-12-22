@@ -2,7 +2,7 @@ import { IStrategy } from './Interface/IStrategy';
 import { Action } from 'redux';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 import { Entitlement } from '../PredefinedConfig/EntitlementsState';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -11,7 +11,7 @@ import {
   MenuItemDoReduxAction,
   MenuItemDoClickFunction,
 } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 
 /**
@@ -49,17 +49,17 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      */
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     // base class implementation which is empty
     return undefined;
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     // base class implementation which is empty
     return undefined;
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     // base class implementation which is empty
     return undefined;
   }
@@ -140,7 +140,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   canCreateColumnMenuItem(
-    column: AdaptableBlotterColumn,
+    column: AdaptableColumn,
     blotter: IAdaptableBlotter,
     functionType?:
       | 'sort'

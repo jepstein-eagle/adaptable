@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for the Calculated Column function
@@ -34,7 +34,7 @@ export interface CalculatedColumnState extends RunTimeState {
   CalculatedColumns?: CalculatedColumn[];
 }
 
-export interface CalculatedColumn extends AdaptableBlotterObject {
+export interface CalculatedColumn extends AdaptableObject {
   /**
    * The name of the Calculated Column.
    *

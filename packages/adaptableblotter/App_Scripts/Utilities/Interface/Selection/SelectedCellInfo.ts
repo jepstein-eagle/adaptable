@@ -1,6 +1,6 @@
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { GridCell } from './GridCell';
 export interface SelectedCellInfo {
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
   GridCells: GridCell[];
 }

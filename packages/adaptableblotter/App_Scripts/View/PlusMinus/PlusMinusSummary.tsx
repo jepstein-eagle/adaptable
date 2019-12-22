@@ -19,14 +19,14 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
   PlusMinusRules: PlusMinusRule[];
   onAddPlusMinusRule: (PlusMinus: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
   onEditPlusMinusRule: (PlusMinus: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PlusMinusSummaryComponent extends React.Component<
@@ -85,9 +85,9 @@ export class PlusMinusSummaryComponent extends React.Component<
       <div>
         {strategySummaries}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <PlusMinusWizard
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as PlusMinusRule}
+            EditedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -111,7 +111,7 @@ export class PlusMinusSummaryComponent extends React.Component<
     let configEntity: PlusMinusRule = ObjectFactory.CreateEmptyPlusMinusRule();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableBlotterObject: configEntity,
+      EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.New,
     });
@@ -119,7 +119,7 @@ export class PlusMinusSummaryComponent extends React.Component<
 
   onEdit(PlusMinus: PlusMinusRule) {
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(PlusMinus),
+      EditedAdaptableObject: Helper.cloneObject(PlusMinus),
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -127,14 +127,14 @@ export class PlusMinusSummaryComponent extends React.Component<
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableBlotterObject as PlusMinusRule;
+    let plusMinus = this.state.EditedAdaptableObject as PlusMinusRule;
 
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditPlusMinusRule(plusMinus);
@@ -143,14 +143,14 @@ export class PlusMinusSummaryComponent extends React.Component<
     }
 
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableBlotterObject as PlusMinusRule;
+    let plusMinus = this.state.EditedAdaptableObject as PlusMinusRule;
     return (
       StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
@@ -181,7 +181,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onEditPlusMinusRule: (PlusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(PlusMinusRule)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
   };
 }

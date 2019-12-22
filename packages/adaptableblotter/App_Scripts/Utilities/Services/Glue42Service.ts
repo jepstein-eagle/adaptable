@@ -1,5 +1,5 @@
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import LoggingHelper, { LogAdaptableBlotterError } from '../Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
 import Helper from '../Helpers/Helper';
@@ -85,7 +85,7 @@ export class Glue42Service implements IGlue42Service {
     }
   }
 
-  async exportData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys: any[]) {
+  async exportData(data: any[], gridColumns: AdaptableColumn[], primaryKeys: any[]) {
     if (!this.glueInstance) {
       return;
     }
@@ -171,7 +171,7 @@ export class Glue42Service implements IGlue42Service {
     }
   }
 
-  async updateData(data: any[], gridColumns: AdaptableBlotterColumn[], primaryKeys: any[]) {
+  async updateData(data: any[], gridColumns: AdaptableColumn[], primaryKeys: any[]) {
     if (!this.glueInstance) {
       return;
     }
@@ -196,7 +196,7 @@ export class Glue42Service implements IGlue42Service {
    * Walks through the delta.
    */
   private getSheetChangeHandler(
-    gridColumns: AdaptableBlotterColumn[],
+    gridColumns: AdaptableColumn[],
     sentRows: any[],
     exportColumns: any[],
     primaryKeys?: any[]
@@ -317,14 +317,14 @@ export class Glue42Service implements IGlue42Service {
   }
 
   private isValidEdit(
-    column: AdaptableBlotterColumn,
+    column: AdaptableColumn,
     originalValue: any,
     returnedValue: any,
     primaryKeyValue: any,
     rowIndex: number,
     columnIndex: number,
     errors: Glue42ExportError[],
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): boolean {
     if (column.ReadOnly) {
       errors.push(

@@ -12,7 +12,7 @@ import {
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Expression, QueryRange } from '../../PredefinedConfig/Common/Expression';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
@@ -171,7 +171,7 @@ export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Acti
 export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Action {}
 
 export interface SetNewColumnListOrderAction extends Redux.Action {
-  VisibleColumnList: Array<AdaptableBlotterColumn>;
+  VisibleColumnList: Array<AdaptableColumn>;
 }
 
 export const SystemAlertAdd = (Alert: AdaptableAlert, MaxAlerts: number): SystemAlertAddAction => ({
@@ -330,7 +330,7 @@ export const QuickSearchClearVisibleColumnExpressions = (): QuickSearchClearVisi
 });
 
 export const SetNewColumnListOrder = (
-  VisibleColumnList: Array<AdaptableBlotterColumn>
+  VisibleColumnList: Array<AdaptableColumn>
 ): SetNewColumnListOrderAction => ({
   type: SET_NEW_COLUMN_LIST_ORDER,
   VisibleColumnList,

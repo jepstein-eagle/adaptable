@@ -13,7 +13,7 @@ import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
@@ -26,10 +26,10 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
-  CurrentColumn: AdaptableBlotterColumn;
+  CurrentColumn: AdaptableColumn;
   ColumnWidth: number;
   Blotter: IAdaptableBlotter;
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];

@@ -3,7 +3,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { LayoutApi } from '../LayoutApi';
 import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/LayoutState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
@@ -60,7 +60,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
       );
       if (currentLayoutObject) {
         let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
-        let visibleColumns: AdaptableBlotterColumn[] = this.getBlotterState().Grid.Columns.filter(
+        let visibleColumns: AdaptableColumn[] = this.getBlotterState().Grid.Columns.filter(
           c => c.Visible
         );
         let columnSorts: ColumnSort[] = this.getBlotterState().Grid.ColumnSorts;

@@ -6,7 +6,7 @@ import {
 import { SparklinesChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterColumn } from '../../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 
@@ -95,7 +95,7 @@ export class SparklinesChartColumnWizard
     this.setState(state);
   };
 
-  private onColumnChanged(columns: AdaptableBlotterColumn[]) {
+  private onColumnChanged(columns: AdaptableColumn[]) {
     let isColumn: boolean = ArrayExtensions.IsNotNullOrEmpty(columns);
     this.setState(
       {

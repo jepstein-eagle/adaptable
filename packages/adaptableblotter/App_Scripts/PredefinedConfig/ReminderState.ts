@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { Schedule } from './Common/Schedule';
 
@@ -7,7 +7,7 @@ export interface ReminderState extends RunTimeState {
   Reminders?: Reminder[];
 }
 
-export interface Reminder extends AdaptableBlotterObject {
+export interface Reminder extends AdaptableObject {
   Alert: AdaptableAlert;
   Schedule: Schedule;
 }

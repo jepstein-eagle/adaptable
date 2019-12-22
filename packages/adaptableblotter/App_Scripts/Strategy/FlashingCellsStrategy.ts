@@ -6,10 +6,10 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux';
 import { FlashingCellState, FlashingCell } from '../PredefinedConfig/FlashingCellState';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
@@ -17,7 +17,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     super(StrategyConstants.FlashingCellsStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.FlashingCellsStrategyName,
       ComponentName: ScreenPopups.FlashingCellsPopup,
@@ -25,7 +25,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (column.DataType == DataType.Number) {
         if (

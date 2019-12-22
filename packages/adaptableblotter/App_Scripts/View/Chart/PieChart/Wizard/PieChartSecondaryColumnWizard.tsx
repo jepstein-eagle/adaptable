@@ -7,7 +7,7 @@ import { PieChartDefinition } from '../../../../PredefinedConfig/ChartState';
 
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
 import { SelectionMode, DataType } from '../../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterColumn } from '../../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
@@ -98,7 +98,7 @@ export class PieChartSecondaryColumnWizard
     );
   }
 
-  private onSecondaryColumnChanged(columns: AdaptableBlotterColumn[]) {
+  private onSecondaryColumnChanged(columns: AdaptableColumn[]) {
     let isColumn: boolean = ArrayExtensions.IsNotNullOrEmpty(columns);
     let secondaryColumnOperation: SecondaryColumnOperation = SecondaryColumnOperation.Count;
     if (isColumn) {

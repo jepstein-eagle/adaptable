@@ -2,14 +2,14 @@ import * as React from 'react';
 
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode, SortOrder } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
-  ColumnList: AdaptableBlotterColumn[];
+  ColumnList: AdaptableColumn[];
   SelectedColumnIds: string[];
-  onColumnChange: (SelectedColumns: AdaptableBlotterColumn[]) => void;
+  onColumnChange: (SelectedColumns: AdaptableColumn[]) => void;
   SelectionMode: SelectionMode;
   className?: string;
   placeHolder?: string;
@@ -66,7 +66,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
     this.props.onColumnChange([]);
   }
 
-  onColumnChange(selected: AdaptableBlotterColumn[], isEmptySelection: boolean) {
+  onColumnChange(selected: AdaptableColumn[], isEmptySelection: boolean) {
     if (selected.length == 0 && isEmptySelection) {
       return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
     }

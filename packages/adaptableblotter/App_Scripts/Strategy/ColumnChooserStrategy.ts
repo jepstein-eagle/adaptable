@@ -3,16 +3,16 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ColumnChooserStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnChooserStrategyName,
       ComponentName: ScreenPopups.ColumnChooserPopup,
@@ -20,7 +20,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     return this.createColumnMenuItemShowPopup(
       'Show ' + StrategyConstants.ColumnChooserStrategyName,
       ScreenPopups.ColumnChooserPopup,
@@ -28,7 +28,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     );
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let popUpParams: StrategyParams = {
       source: 'ContextMenu',
     };

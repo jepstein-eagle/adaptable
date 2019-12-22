@@ -1,4 +1,4 @@
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 import { Scope } from './Common/Scope';
 import { DesignTimeState } from './DesignTimeState';
 
@@ -60,7 +60,7 @@ export interface NamedFilterState extends DesignTimeState {
 /**
  * A Named Filter is a filter provided at design-time together with a Predicate Function that is evaluated each time the filter is run.
  */
-export interface NamedFilter extends AdaptableBlotterObject {
+export interface NamedFilter extends AdaptableObject {
   /**
    * The name of the Named Filter that will be applied.
    *

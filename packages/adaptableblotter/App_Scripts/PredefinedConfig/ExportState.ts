@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 import { ExportDestination } from './Common/Enums';
 import { Schedule } from './Common/Schedule';
@@ -12,7 +12,7 @@ export interface ExportState extends RunTimeState {
   Reports?: Report[];
 }
 
-export interface Report extends AdaptableBlotterObject {
+export interface Report extends AdaptableObject {
   Name: string;
   ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedColumns' | 'BespokeColumns';
   ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedCells' | 'SelectedRows' | 'ExpressionRows';
@@ -21,7 +21,7 @@ export interface Report extends AdaptableBlotterObject {
   AutoExport?: AutoExport;
 }
 
-export interface AutoExport extends AdaptableBlotterObject {
+export interface AutoExport extends AdaptableObject {
   Schedule: Schedule;
   ExportDestination: ExportDestination;
 }

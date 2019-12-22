@@ -5,9 +5,9 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
 import { PercentBarState } from '../PredefinedConfig/PercentBarState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
@@ -16,7 +16,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     super(StrategyConstants.PercentBarStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PercentBarStrategyName,
       ComponentName: ScreenPopups.PercentBarPopup,
@@ -24,7 +24,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'numeric')) {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
         this.PercentBarState.PercentBars.map(f => f.ColumnId),
@@ -47,7 +47,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     }
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     let percentBarExists: boolean = ArrayExtensions.ContainsItem(
       this.PercentBarState.PercentBars.map(f => f.ColumnId),

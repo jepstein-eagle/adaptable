@@ -15,7 +15,7 @@ export class FormatColumnEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let formatColumn = this.props.AdaptableBlotterObject as FormatColumn;
+    let formatColumn = this.props.AdaptableObject as FormatColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

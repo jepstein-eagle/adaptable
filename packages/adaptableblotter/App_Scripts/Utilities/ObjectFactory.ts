@@ -48,7 +48,7 @@ import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { UserFilter } from '../PredefinedConfig/UserFilterState';
 import { Report, AutoExport } from '../PredefinedConfig/ExportState';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { FlashingCell } from '../PredefinedConfig/FlashingCellState';
 import { Reminder } from '../PredefinedConfig/ReminderState';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
@@ -288,7 +288,7 @@ export function CreateEmptyReport(): Report {
 }
 
 export function CreateDefaultFlashingCell(
-  column: AdaptableBlotterColumn,
+  column: AdaptableColumn,
   upColor: string,
   downColor: string,
   duration: 250 | 500 | 750 | 1000
@@ -383,7 +383,7 @@ export function CreateEmptyLayout(): Layout {
 }
 
 export function CreateLayout(
-  columns: AdaptableBlotterColumn[],
+  columns: AdaptableColumn[],
   columnSorts: ColumnSort[],
   vendorGridInfo: VendorGridInfo,
   name: string

@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression, QueryRange } from './Common/Expression';
 
 /**
@@ -91,7 +91,7 @@ export interface AlertState extends RunTimeState {
 /**
  * The Alert Definition object used in the Alert function.
  */
-export interface AlertDefinition extends AdaptableBlotterObject {
+export interface AlertDefinition extends AdaptableObject {
   /**
    * The Id (fieldname) of the column whose change will trigger the alert
    */

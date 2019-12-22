@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
 import { CategoryChartDefinition, ChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { CategoryChartYAxisWizard } from './CategoryChartYAxisWizard';
@@ -11,7 +11,7 @@ import { CategoryChartSummaryWizard } from './CategoryChartSummaryWizard';
 import { CategoryChartSettingsWizard } from './CategoryChartSettingsWizard';
 
 export interface CategoryChartWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<CategoryChartWizard> {}
+  extends AdaptableObjectExpressionAdaptableWizardProps<CategoryChartWizard> {}
 
 export class CategoryChartWizard extends React.Component<CategoryChartWizardProps, {}> {
   render() {
@@ -60,7 +60,7 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
               Element: <CategoryChartSummaryWizard />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

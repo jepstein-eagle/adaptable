@@ -24,7 +24,7 @@ import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import join from '../../components/utils/join';
 import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
@@ -63,7 +63,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   render() {
     let statusColour: StatusColour = this.getStatusColour();
 
-    let selectedColumn: AdaptableBlotterColumn = this.props.BulkUpdateValidationResult.Column;
+    let selectedColumn: AdaptableColumn = this.props.BulkUpdateValidationResult.Column;
 
     let previewPanel = (
       <PreviewResultsPanel

@@ -1,9 +1,9 @@
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { StrategyViewPopupProps } from './StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../../Redux/ActionsReducers/TeamSharingRedux';
-import { AdaptableBlotterObject } from '../../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
 
 export interface StrategySummaryProps<View> extends StrategyViewPopupProps<View> {
-  SummarisedColumn: AdaptableBlotterColumn;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  SummarisedColumn: AdaptableColumn;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }

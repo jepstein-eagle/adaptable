@@ -1,5 +1,5 @@
 import { DesignTimeState } from './DesignTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for Sparkline Columns
@@ -35,7 +35,7 @@ export interface SparklineColumnState extends DesignTimeState {
 /**
  * The SparklineColumn object used in the Advanced Search function.
  */
-export interface SparklineColumn extends AdaptableBlotterObject {
+export interface SparklineColumn extends AdaptableObject {
   /**
    * The id of the Column
    *

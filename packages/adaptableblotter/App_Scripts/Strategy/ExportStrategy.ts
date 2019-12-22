@@ -10,12 +10,12 @@ import * as _ from 'lodash';
 import { Report } from '../PredefinedConfig/ExportState';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import {
   SELECTED_CELLS_REPORT,
   DEFAULT_LIVE_REPORT_THROTTLE_TIME,
 } from '../Utilities/Constants/GeneralConstants';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { LiveReport } from '../Api/Events/LiveReportUpdated';
 
 // this page needs some thought as currently we only send live data to iPushpull and Excel but soon we will send it to Glue42
@@ -103,7 +103,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     });
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ExportStrategyName,
       ComponentName: ScreenPopups.ExportPopup,
@@ -237,7 +237,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 });
               })
               .then(reportAsArray => {
-                let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+                let gridColumns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
                 let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(
                   liveReport.Report
                 );
@@ -340,7 +340,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
           break;
         } else {
           let data: any[] = this.ConvertReportToArray(report);
-          let gridColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+          let gridColumns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
           // for glue42 we need to pass in the pk values of the data also
           let primaryKeyValues: any[] = this.blotter.ReportService.GetPrimaryKeysForReport(report);
           try {

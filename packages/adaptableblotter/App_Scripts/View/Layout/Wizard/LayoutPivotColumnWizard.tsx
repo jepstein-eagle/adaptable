@@ -8,11 +8,11 @@ import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
 
 export interface LayoutPivotColumnWizardProps extends AdaptableWizardStepProps<Layout> {
-  PivotableColumns: AdaptableBlotterColumn[];
+  PivotableColumns: AdaptableColumn[];
 }
 
 export interface LayoutPivotColumnWizardState {

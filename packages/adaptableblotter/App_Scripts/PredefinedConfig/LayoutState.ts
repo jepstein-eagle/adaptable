@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for the Layout function
@@ -90,7 +90,7 @@ export interface LayoutState extends RunTimeState {
  *
  * Contains all that is required to create a Layout - including Columns, Sorts, Grouping and Pivoting details.
  */
-export interface Layout extends AdaptableBlotterObject {
+export interface Layout extends AdaptableObject {
   /**
    * The Name of the Layout - this is what will appear in the Layout toolbar.
    */

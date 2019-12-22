@@ -15,7 +15,7 @@ export class FreeTextColumnEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let FreeTextColumn = this.props.AdaptableBlotterObject as FreeTextColumn;
+    let FreeTextColumn = this.props.AdaptableObject as FreeTextColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

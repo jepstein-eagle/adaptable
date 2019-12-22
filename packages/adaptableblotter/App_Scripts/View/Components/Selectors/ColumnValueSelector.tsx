@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
@@ -12,7 +12,7 @@ import Input from '../../../components/Input';
 import LoggingHelper from '../../../Utilities/Helpers/LoggingHelper';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
-  SelectedColumn: AdaptableBlotterColumn;
+  SelectedColumn: AdaptableColumn;
   SelectedColumnValue: string;
   onColumnValueChange: (columnvalue: any) => void;
   Blotter: IAdaptableBlotter;

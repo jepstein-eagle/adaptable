@@ -28,7 +28,7 @@ export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<Rep
 
 export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
   render(): any {
-    let report: Report = this.props.AdaptableBlotterObject as Report;
+    let report: Report = this.props.AdaptableObject as Report;
     let csvMenuItem: any = {
       onClick: () => this.props.onExport(ExportDestination.CSV),
       label: 'Export to CSV',

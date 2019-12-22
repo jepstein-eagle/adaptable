@@ -165,7 +165,7 @@ class ChartDisplayPopupComponent extends React.Component<
           <div>
             {this.state.EditedChartDefinition.ChartType == ChartType.CategoryChart ? (
               <CategoryChartWizard
-                EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
+                EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
                 Columns={this.props.Columns}
@@ -182,7 +182,7 @@ class ChartDisplayPopupComponent extends React.Component<
             ) : null}
             {this.state.EditedChartDefinition.ChartType == ChartType.PieChart ? (
               <PieChartWizard
-                EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
+                EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
                 Columns={this.props.Columns}
@@ -200,7 +200,7 @@ class ChartDisplayPopupComponent extends React.Component<
 
             {this.state.EditedChartDefinition.ChartType == ChartType.SparklinesChart ? (
               <SparklinesChartWizard
-                EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
+                EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
                 Columns={this.props.Columns}

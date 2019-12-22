@@ -3,9 +3,9 @@ import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
-export interface AdaptableAlert extends AdaptableBlotterObject {
+export interface AdaptableAlert extends AdaptableObject {
   Header: string;
   Msg: string;
   AlertDefinition: AlertDefinition;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
@@ -15,7 +15,7 @@ import Input from '../../components/Input';
 
 export interface PercentBarEntityRowProps
   extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
-  Column: AdaptableBlotterColumn;
+  Column: AdaptableColumn;
   ColorPalette: string[];
   onMinimumValueChanged: (PercentBar: PercentBar, minimumValue: number) => void;
   onMaximumValueChanged: (PercentBar: PercentBar, maximumValue: number) => void;
@@ -25,7 +25,7 @@ export interface PercentBarEntityRowProps
 
 export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProps, {}> {
   render(): any {
-    let PercentBar: PercentBar = this.props.AdaptableBlotterObject as PercentBar;
+    let PercentBar: PercentBar = this.props.AdaptableObject as PercentBar;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -122,7 +122,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let minValue: number = Number(e.value);
-      this.props.onMinimumValueChanged(this.props.AdaptableBlotterObject as PercentBar, minValue);
+      this.props.onMinimumValueChanged(this.props.AdaptableObject as PercentBar, minValue);
     }
   }
 
@@ -130,17 +130,17 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let maxValue: number = Number(e.value);
-      this.props.onMaximumValueChanged(this.props.AdaptableBlotterObject as PercentBar, maxValue);
+      this.props.onMaximumValueChanged(this.props.AdaptableObject as PercentBar, maxValue);
     }
   }
 
   onPositiveColorChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onPositiveColorChanged(this.props.AdaptableBlotterObject as PercentBar, e.value);
+    this.props.onPositiveColorChanged(this.props.AdaptableObject as PercentBar, e.value);
   }
 
   onNegativeColorChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onNegativeColorChanged(this.props.AdaptableBlotterObject as PercentBar, e.value);
+    this.props.onNegativeColorChanged(this.props.AdaptableObject as PercentBar, e.value);
   }
 }

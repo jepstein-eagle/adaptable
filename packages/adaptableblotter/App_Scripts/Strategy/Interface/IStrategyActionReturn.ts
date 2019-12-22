@@ -1,5 +1,5 @@
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 export interface IStrategyActionReturn<T> {
   ActionReturn?: T;
@@ -8,6 +8,6 @@ export interface IStrategyActionReturn<T> {
 
 export interface BulkUpdateValidationResult {
   IsValid: boolean;
-  Column?: AdaptableBlotterColumn;
+  Column?: AdaptableColumn;
   Alert?: AdaptableAlert;
 }

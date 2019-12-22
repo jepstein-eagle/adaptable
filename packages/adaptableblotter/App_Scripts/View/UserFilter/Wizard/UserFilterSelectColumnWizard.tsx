@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -44,7 +44,7 @@ export class UserFilterSelectColumnWizard
     );
   }
 
-  private onColumnSelectedChanged(columns: AdaptableBlotterColumn[]) {
+  private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     this.setState(
       {
         ColumnId: columns.length > 0 ? columns[0].ColumnId : '',

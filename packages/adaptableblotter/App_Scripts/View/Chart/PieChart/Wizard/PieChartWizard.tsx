@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
 import { ChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { PieChartSettingsWizard } from './PieChartSettingsWizard';
@@ -9,7 +9,7 @@ import { PieChartPrimaryColumnWizard } from './PieChartPrimaryColumnWizard';
 import { PieChartSecondaryColumnWizard } from './PieChartSecondaryColumnWizard';
 
 export interface PieChartWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<PieChartWizard> {}
+  extends AdaptableObjectExpressionAdaptableWizardProps<PieChartWizard> {}
 
 export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
   render() {
@@ -44,7 +44,7 @@ export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
               Element: <PieChartSummaryWizard />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

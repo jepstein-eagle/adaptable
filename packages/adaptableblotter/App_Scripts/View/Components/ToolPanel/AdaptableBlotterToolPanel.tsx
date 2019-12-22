@@ -26,7 +26,7 @@ import Checkbox from '../../../components/CheckBox';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import { AdaptableBlotterToolPanels } from '../../../PredefinedConfig/ToolPanelState';
-import { AdaptableBlotterMenuItem } from '../../../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import DropdownButton from '../../../components/DropdownButton';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
@@ -37,7 +37,7 @@ interface AdaptableBlotterToolPanelProps {
   VisibleToolsPanels: string[];
   AvailableToolPanels: string[];
   FunctionEntitlements: Entitlement[];
-  MainMenuItems: AdaptableBlotterMenuItem[];
+  MainMenuItems: AdaptableMenuItem[];
   // wondering if this shoudl take some base props like others?  though i know we dont like that...
   onClick: (action: Redux.Action) => Redux.Action;
   onSetToolPanelVisibility: (

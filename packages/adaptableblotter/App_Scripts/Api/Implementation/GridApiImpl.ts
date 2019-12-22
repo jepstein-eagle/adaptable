@@ -1,6 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { GridApi } from '../GridApi';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
@@ -92,7 +92,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
     });
   }
 
-  public getColumns(): AdaptableBlotterColumn[] {
+  public getColumns(): AdaptableColumn[] {
     return this.getGridState().Columns;
   }
 
@@ -104,31 +104,31 @@ export class GridApiImpl extends ApiBase implements GridApi {
     return this.getGridState().SelectedRowInfo;
   }
 
-  public getVisibleColumns(): AdaptableBlotterColumn[] {
+  public getVisibleColumns(): AdaptableColumn[] {
     return this.getColumns().filter(c => c.Visible);
   }
 
-  public getNumericColumns(): AdaptableBlotterColumn[] {
+  public getNumericColumns(): AdaptableColumn[] {
     return this.getColumns().filter(c => c.DataType == DataType.Number);
   }
 
-  public getNumericArrayColumns(): AdaptableBlotterColumn[] {
+  public getNumericArrayColumns(): AdaptableColumn[] {
     return this.getColumns().filter(c => c.DataType == DataType.NumberArray);
   }
 
-  public getDateColumns(): AdaptableBlotterColumn[] {
+  public getDateColumns(): AdaptableColumn[] {
     return this.getColumns().filter(c => c.DataType == DataType.Date);
   }
 
-  public getStringColumns(): AdaptableBlotterColumn[] {
+  public getStringColumns(): AdaptableColumn[] {
     return this.getColumns().filter(c => c.DataType == DataType.String);
   }
 
-  public getBooleanColumns(): AdaptableBlotterColumn[] {
+  public getBooleanColumns(): AdaptableColumn[] {
     return this.getColumns().filter(c => c.DataType == DataType.Boolean);
   }
 
-  public getColumnsOfType(dataType: DataType): AdaptableBlotterColumn[] {
+  public getColumnsOfType(dataType: DataType): AdaptableColumn[] {
     switch (dataType) {
       case DataType.Boolean:
         return this.getBooleanColumns();

@@ -10,7 +10,7 @@ import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
 import { ColumnSort, VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
@@ -162,7 +162,7 @@ export interface IAdaptableBlotter {
 
   // column related
   setColumnIntoStore(): void;
-  setNewColumnListOrder(visibleColumnList: Array<AdaptableBlotterColumn>): void;
+  setNewColumnListOrder(visibleColumnList: Array<AdaptableColumn>): void;
 
   // getting rowNode and keys
   getPrimaryKeyValueFromRowNode(rowNode: any): any;

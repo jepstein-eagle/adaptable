@@ -15,9 +15,9 @@ import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
@@ -26,7 +26,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     super(StrategyConstants.BulkUpdateStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.BulkUpdateStrategyName,
       ComponentName: ScreenPopups.BulkUpdatePopup,
@@ -34,7 +34,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     });
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     // not sure if this is right but logic is that
     // if the context cell is one of a selection taht can have smart edit applied
     // then open the smart edit screen
@@ -115,7 +115,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       };
     }
 
-    let selectedColumn: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
+    let selectedColumn: AdaptableColumn = selectedCellInfo.Columns[0];
     if (selectedColumn && selectedColumn.ReadOnly) {
       return {
         IsValid: false,

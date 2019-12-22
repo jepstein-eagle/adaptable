@@ -22,7 +22,7 @@ export class AdvancedSearchEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let advancedSearch: AdvancedSearch = this.props.AdaptableBlotterObject as AdvancedSearch;
+    let advancedSearch: AdvancedSearch = this.props.AdaptableObject as AdvancedSearch;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

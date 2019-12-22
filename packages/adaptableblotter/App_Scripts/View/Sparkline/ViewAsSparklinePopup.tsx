@@ -7,7 +7,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 
 import { ChartData, SparklinesChartDefinition } from '../../PredefinedConfig/ChartState';
@@ -228,7 +228,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
     }
   }
 
-  private onDataColumnChanged(columns: AdaptableBlotterColumn[]) {
+  private onDataColumnChanged(columns: AdaptableColumn[]) {
     let columnId = this.state.SparklinesChartDefinition.ColumnId;
     if (columns.length > 0) {
       columnId = columns[0].ColumnId;

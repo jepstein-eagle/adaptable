@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { PlusMinusColumnWizard } from './PlusMinusColumnWizard';
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard';
@@ -7,11 +7,11 @@ import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard';
 import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 
 export interface PlusMinusWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<PlusMinusWizard> {
+  extends AdaptableObjectExpressionAdaptableWizardProps<PlusMinusWizard> {
   SelectedColumnId: string;
 }
 
@@ -57,7 +57,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
               Element: <PlusMinusSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

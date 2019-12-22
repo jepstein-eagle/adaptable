@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -172,7 +172,7 @@ export class PercentBarValuesWizard
     );
   };
 
-  private onColumnMinValueSelectedChanged(columns: AdaptableBlotterColumn[]) {
+  private onColumnMinValueSelectedChanged(columns: AdaptableColumn[]) {
     this.setState(
       {
         MinValueColumnId: columns.length > 0 ? columns[0].ColumnId : '',
@@ -194,7 +194,7 @@ export class PercentBarValuesWizard
     );
   };
 
-  private onColumnMaxValueSelectedChanged(columns: AdaptableBlotterColumn[]) {
+  private onColumnMaxValueSelectedChanged(columns: AdaptableColumn[]) {
     this.setState(
       {
         MaxValueColumnId: columns.length > 0 ? columns[0].ColumnId : '',

@@ -6,10 +6,10 @@ import { UserFilterExpressionWizard } from './UserFilterExpressionWizard';
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard';
 import { UserFilterSummaryWizard } from './UserFilterSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface UserFilterWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<UserFilterWizard> {
+  extends AdaptableObjectExpressionAdaptableWizardProps<UserFilterWizard> {
   SelectedColumnId: string;
 }
 
@@ -52,7 +52,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
               Element: <UserFilterSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

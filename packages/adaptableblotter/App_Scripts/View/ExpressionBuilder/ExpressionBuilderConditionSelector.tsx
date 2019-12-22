@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
   ExpressionBuilderColumnValues,
   ExpressionBuilderColumnValuesProps,
@@ -39,7 +39,7 @@ import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
-  ColumnsList: Array<AdaptableBlotterColumn>;
+  ColumnsList: Array<AdaptableColumn>;
   Expression: Expression;
   ExpressionMode: ExpressionMode;
   onExpressionChange: (Expression: Expression) => void;
@@ -319,7 +319,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     let column = StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)
       ? null
       : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId);
-    let selectedColumn: AdaptableBlotterColumn = column;
+    let selectedColumn: AdaptableColumn = column;
     let selectedColumnFriendlyName: string = selectedColumn ? selectedColumn.FriendlyName : '';
 
     // get filter names
@@ -613,7 +613,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     } as ExpressionBuilderConditionSelectorState);
   }
 
-  private onColumnSelectChange(columns: AdaptableBlotterColumn[]) {
+  private onColumnSelectChange(columns: AdaptableColumn[]) {
     this.props.onSelectedColumnChange(
       columns.length > 0 ? columns[0].ColumnId : '',
       QueryTab.ColumnValue

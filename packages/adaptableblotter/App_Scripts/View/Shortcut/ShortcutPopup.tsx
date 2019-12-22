@@ -26,13 +26,13 @@ import Helper from '../../Utilities/Helpers/Helper';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { Shortcut } from '../../PredefinedConfig/ShortcutState';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
   onAddShortcut: (shortcut: Shortcut) => ShortcutRedux.ShortcutAddAction;
   onEditShortcut: (shortcut: Shortcut) => ShortcutRedux.ShortcutEditAction;
   Shortcuts: Array<Shortcut>;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ShortcutPopupComponent extends React.Component<
@@ -73,7 +73,7 @@ class ShortcutPopupComponent extends React.Component<
     let shortcuts = this.props.Shortcuts.map((shortcut: Shortcut, index: number) => {
       return (
         <ShortcutEntityRow
-          AdaptableBlotterObject={shortcut}
+          AdaptableObject={shortcut}
           key={'ns' + index}
           onEdit={null}
           colItems={colItems}
@@ -100,7 +100,7 @@ class ShortcutPopupComponent extends React.Component<
       />
     );
 
-    let shortcut: Shortcut = this.state.EditedAdaptableBlotterObject as Shortcut;
+    let shortcut: Shortcut = this.state.EditedAdaptableObject as Shortcut;
 
     return (
       <Flex flex={1} flexDirection="column">
@@ -118,9 +118,9 @@ class ShortcutPopupComponent extends React.Component<
             <EmptyContent>Click 'New' to add a new Shortcut.</EmptyContent>
           )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
+          {this.state.EditedAdaptableObject != null && (
             <ShortcutWizard
-              EditedAdaptableBlotterObject={shortcut}
+              EditedAdaptableObject={shortcut}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
@@ -195,24 +195,24 @@ class ShortcutPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let shortcut = this.state.EditedAdaptableBlotterObject as Shortcut;
+    let shortcut = this.state.EditedAdaptableObject as Shortcut;
     this.props.onAddShortcut(shortcut);
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let shortcut = this.state.EditedAdaptableBlotterObject as Shortcut;
+    let shortcut = this.state.EditedAdaptableObject as Shortcut;
 
     return (
       StringExtensions.IsNotNullOrEmpty(shortcut.ShortcutResult) &&
@@ -222,7 +222,7 @@ class ShortcutPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyShortcut(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyShortcut(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -261,7 +261,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   return {
     onAddShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
     onEditShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutEdit(shortcut)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId)),
   };
 }

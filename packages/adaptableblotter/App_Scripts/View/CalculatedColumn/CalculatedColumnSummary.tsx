@@ -63,11 +63,9 @@ export class CalculatedColumnSummaryComponent extends React.Component<
       <div>
         {detailRow}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <CalculatedColumnWizard
-            EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as CalculatedColumn
-            }
+            EditedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
             ConfigEntities={this.props.CalculatedColumns}
             Columns={this.props.Columns}
             ModalContainer={this.props.ModalContainer}
@@ -90,7 +88,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
 
   onEdit(calculatedColumn: CalculatedColumn) {
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(calculatedColumn),
+      EditedAdaptableObject: Helper.cloneObject(calculatedColumn),
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -98,26 +96,24 @@ export class CalculatedColumnSummaryComponent extends React.Component<
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let calculatedColumn: CalculatedColumn = Helper.cloneObject(
-      this.state.EditedAdaptableBlotterObject
-    );
+    let calculatedColumn: CalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
     this.props.onEdit(calculatedColumn);
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let calculatedColumn = this.state.EditedAdaptableBlotterObject as CalculatedColumn;
+    let calculatedColumn = this.state.EditedAdaptableObject as CalculatedColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)

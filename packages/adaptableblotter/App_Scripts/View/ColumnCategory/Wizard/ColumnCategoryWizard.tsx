@@ -4,11 +4,11 @@ import { ColumnCategorySettingsWizard } from './ColumnCategorySettingsWizard';
 import { ColumnCategoryColumnsWizard } from './ColumnCategoryColumnsWizard';
 import { ColumnCategorySummaryWizard } from './ColumnCategorySummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 
 export interface ColumnCategoryWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<ColumnCategoryWizard> {
+  extends AdaptableObjectExpressionAdaptableWizardProps<ColumnCategoryWizard> {
   ColumnCategorys: ColumnCategory[];
 }
 
@@ -40,7 +40,7 @@ export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardPr
               Element: <ColumnCategorySummaryWizard />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

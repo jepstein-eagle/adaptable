@@ -1,5 +1,5 @@
 import * as GeneralConstants from '../Constants/GeneralConstants';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
@@ -23,7 +23,7 @@ export class LayoutService implements ILayoutService {
     this.blotter = blotter;
   }
 
-  public getLayoutDescription(layout: Layout, columns: AdaptableBlotterColumn[]): string {
+  public getLayoutDescription(layout: Layout, columns: AdaptableColumn[]): string {
     let returnString: string = '';
     returnString += layout.Columns.length + ' Columns; ';
     returnString += '\n';
@@ -31,7 +31,7 @@ export class LayoutService implements ILayoutService {
     return returnString;
   }
 
-  public getColumnSort(columnSorts: ColumnSort[], columns: AdaptableBlotterColumn[]): string {
+  public getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string {
     if (ArrayExtensions.IsNullOrEmpty(columnSorts)) {
       return 'None';
     }
@@ -59,7 +59,7 @@ export class LayoutService implements ILayoutService {
       ) {
         let layout = this.blotter.api.layoutApi.getCurrentLayout();
         if (layout != null) {
-          let visibleColumns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getVisibleColumns();
+          let visibleColumns: AdaptableColumn[] = this.blotter.api.gridApi.getVisibleColumns();
 
           let currentGridVendorInfo: VendorGridInfo = this.blotter.getVendorGridLayoutInfo(
             visibleColumns.map(vc => vc.ColumnId)

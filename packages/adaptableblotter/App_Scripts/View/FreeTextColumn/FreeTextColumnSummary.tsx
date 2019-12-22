@@ -18,7 +18,7 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
@@ -31,7 +31,7 @@ export interface FreeTextColumnSummaryProps
   onEditFreeTextColumn: (
     FreeTextColumn: FreeTextColumn
   ) => FreeTextColumnRedux.FreeTextColumnEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class FreeTextColumnSummaryComponent extends React.Component<
@@ -78,9 +78,9 @@ export class FreeTextColumnSummaryComponent extends React.Component<
       <div>
         {FreeTextColumnRow}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <FreeTextColumnWizard
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as FreeTextColumn}
+            EditedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
             ConfigEntities={this.props.FreeTextColumns}
@@ -103,7 +103,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
     let configEntity: FreeTextColumn = ObjectFactory.CreateEmptyFreeTextColumn();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableBlotterObject: configEntity,
+      EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.New,
     });
@@ -112,7 +112,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
   onEdit(FreeTextColumn: FreeTextColumn) {
     let clonedObject: FreeTextColumn = Helper.cloneObject(FreeTextColumn);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
@@ -120,28 +120,28 @@ export class FreeTextColumnSummaryComponent extends React.Component<
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let FreeTextColumn: FreeTextColumn = this.state.EditedAdaptableBlotterObject as FreeTextColumn;
+    let FreeTextColumn: FreeTextColumn = this.state.EditedAdaptableObject as FreeTextColumn;
     if (this.props.FreeTextColumns.find(x => x.ColumnId == FreeTextColumn.ColumnId)) {
       this.props.onEditFreeTextColumn(FreeTextColumn);
     } else {
       this.props.onAddFreeTextColumn(FreeTextColumn);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let FreeTextColumn = this.state.EditedAdaptableBlotterObject as FreeTextColumn;
+    let FreeTextColumn = this.state.EditedAdaptableObject as FreeTextColumn;
     return StringExtensions.IsNotNullOrEmpty(FreeTextColumn.ColumnId);
   }
 }
@@ -159,7 +159,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),
     onEditFreeTextColumn: (FreeTextColumn: FreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)
       ),

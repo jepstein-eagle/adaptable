@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { LayoutSelectionWizard } from './LayoutSelectionWizard';
 import { LayoutColumnWizard } from './LayoutColumnWizard';
@@ -7,7 +7,7 @@ import { LayoutSettingsWizard } from './LayoutSettingsWizard';
 import { LayoutGridSortWizard } from './LayoutGridSortWizard';
 import { LayoutSummaryWizard } from './LayoutSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { Layout, ColumnSort } from '../../../PredefinedConfig/LayoutState';
 import { LayoutGroupedColumnWizard } from './LayoutGroupedColumnWizard';
 import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
@@ -16,7 +16,7 @@ import { LayoutPivotColumnWizard } from './LayoutPivotColumnWizard';
 import { LayoutAggregationColumnWizard } from './LayoutPivotAggregationColumnWizard';
 
 export interface LayoutWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
+  extends AdaptableObjectExpressionAdaptableWizardProps<LayoutWizard> {
   ColumnSorts: ColumnSort[];
 }
 
@@ -95,7 +95,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               Element: <LayoutSummaryWizard />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

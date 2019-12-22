@@ -3,11 +3,11 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { DataSourceSettingsWizard } from './DataSourceSettingsWizard';
 import { DataSourceSummaryWizard } from './DataSourceSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataSource } from '../../../PredefinedConfig/DataSourceState';
 
 export interface DataSourceWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<DataSourceWizard> {}
+  extends AdaptableObjectExpressionAdaptableWizardProps<DataSourceWizard> {}
 
 export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}> {
   render() {
@@ -32,7 +32,7 @@ export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}>
               Element: <DataSourceSummaryWizard />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

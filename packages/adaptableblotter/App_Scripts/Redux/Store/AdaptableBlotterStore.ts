@@ -74,7 +74,7 @@ import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import {
   DEFAULT_LAYOUT,
@@ -2264,7 +2264,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
               let gridState: GridState = middlewareAPI.getState().Grid;
               // set columns
-              let blotterColumns: AdaptableBlotterColumn[] = [];
+              let blotterColumns: AdaptableColumn[] = [];
               currentLayout.BlotterGridInfo.CurrentColumns.forEach(c => {
                 let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
                 if (column) {

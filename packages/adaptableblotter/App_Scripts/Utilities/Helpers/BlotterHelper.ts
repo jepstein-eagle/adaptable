@@ -1,12 +1,12 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
 import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -85,11 +85,8 @@ export function assignBlotterOptions(
   return returnBlotterOptions;
 }
 
-export function isValidPrimaryKey(
-  blotter: IAdaptableBlotter,
-  columns: AdaptableBlotterColumn[]
-): boolean {
-  const pkColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: AdaptableColumn[]): boolean {
+  const pkColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
     blotter.blotterOptions.primaryKey,
     columns
   );
@@ -118,8 +115,8 @@ export function isConfigServerEnabled(blotterOptions: AdaptableBlotterOptions): 
 }
 
 export function BlotterObjectExistsInState(
-  array: AdaptableBlotterObject[],
-  itemToCheck: AdaptableBlotterObject
+  array: AdaptableObject[],
+  itemToCheck: AdaptableObject
 ): boolean {
   if (array == null) {
     return false;

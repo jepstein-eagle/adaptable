@@ -13,7 +13,7 @@ import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import EmptyContent from '../../components/EmptyContent';
@@ -23,7 +23,7 @@ interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopu
   ColumnFilters: ColumnFilter[];
   onClearColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps, {}> {
@@ -50,7 +50,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         <ColumnFilterEntityRow
           key={index}
           colItems={colItems}
-          AdaptableBlotterObject={null}
+          AdaptableObject={null}
           ColumnFilter={columnFilter}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
@@ -116,7 +116,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
   };
 }

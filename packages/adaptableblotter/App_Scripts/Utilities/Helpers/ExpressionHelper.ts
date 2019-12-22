@@ -11,7 +11,7 @@ import {
   ColumnValueExpression,
   RangeExpression,
 } from '../../PredefinedConfig/Common/Expression';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
@@ -65,7 +65,7 @@ export function CreateSingleColumnExpression(
 // Converts an Expression to a readable string - used in display boxes
 export function ConvertExpressionToString(
   Expression: Expression,
-  columns: Array<AdaptableBlotterColumn>,
+  columns: Array<AdaptableColumn>,
   includeColumnName: boolean = true
 ): string {
   let returnValue = '';
@@ -140,7 +140,7 @@ export function ConvertExpressionToString(
 }
 
 // Converts a QueryRange to a readable string
-export function ConvertRangeToString(range: QueryRange, columns: AdaptableBlotterColumn[]): string {
+export function ConvertRangeToString(range: QueryRange, columns: AdaptableColumn[]): string {
   let returnValue: string = range.Operator + ' ' + range.Operand1;
   if (StringExtensions.IsNotNullOrEmpty(range.Operand2)) {
     returnValue += range.Operand2;
@@ -151,7 +151,7 @@ export function ConvertRangeToString(range: QueryRange, columns: AdaptableBlotte
 export function checkForExpression(
   Expression: Expression,
   identifierValue: any,
-  columns: AdaptableBlotterColumn[],
+  columns: AdaptableColumn[],
   blotter: IAdaptableBlotter
 ): boolean {
   return IsSatisfied(
@@ -170,7 +170,7 @@ export function checkForExpression(
 export function checkForExpressionFromRowNode(
   Expression: Expression,
   rowNode: any,
-  columns: AdaptableBlotterColumn[],
+  columns: AdaptableColumn[],
   blotter: IAdaptableBlotter
 ): boolean {
   return IsSatisfied(
@@ -196,7 +196,7 @@ export function IsSatisfied(
   getColumnValue: (columnId: string) => any,
   getDisplayColumnValue: (columnId: string) => string,
   getOtherColumnValue: (columnId: string) => any,
-  columnBlotterList: AdaptableBlotterColumn[],
+  columnBlotterList: AdaptableColumn[],
   userFilters: UserFilter[],
   systemFilters: string[],
   namedFilters: NamedFilter[],
@@ -380,7 +380,7 @@ function UserFiltersToString(
 function RangesToString(
   rangeExpression: RangeExpression,
   columnFriendlyName: string,
-  columns: AdaptableBlotterColumn[],
+  columns: AdaptableColumn[],
   includeColumnName: boolean
 ): string {
   let returnValue = '';
@@ -575,7 +575,7 @@ export function GetOperatorsForDataType(dataType: DataType): LeafExpressionOpera
 function getOperandValue(
   rangeOperandType: string,
   operand: string,
-  columns: AdaptableBlotterColumn[]
+  columns: AdaptableColumn[]
 ): string {
   if (rangeOperandType == 'Value') {
     return operand;
@@ -683,7 +683,7 @@ export function GetRangeEvaluation(
   rangeExpression: QueryRange,
   newValue: any,
   initialValue: any,
-  column: AdaptableBlotterColumn,
+  column: AdaptableColumn,
   blotter: IAdaptableBlotter,
   getOtherColumnValue: (columnId: string) => any
 ): IRangeEvaluation {

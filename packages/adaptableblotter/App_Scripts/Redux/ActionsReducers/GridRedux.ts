@@ -1,13 +1,13 @@
 import * as Redux from 'redux';
 import { GridState } from '../../PredefinedConfig/GridState';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
-import { AdaptableBlotterMenuItem } from '../../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
@@ -37,13 +37,13 @@ export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
 export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
 
 export interface GridSetColumnsAction extends Redux.Action {
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
 }
 export interface GridAddColumnAction extends Redux.Action {
-  Column: AdaptableBlotterColumn;
+  Column: AdaptableColumn;
 }
 export interface GridEditColumnAction extends Redux.Action {
-  Column: AdaptableBlotterColumn;
+  Column: AdaptableColumn;
 }
 export interface GridHideColumnAction extends Redux.Action {
   ColumnId: string;
@@ -95,7 +95,7 @@ export interface QuickFilterBarHideAction extends Redux.Action {}
 export interface FilterFormHideAction extends Redux.Action {}
 
 export interface SetMainMenuItemsAction extends Redux.Action {
-  MenuItems: AdaptableBlotterMenuItem[];
+  MenuItems: AdaptableMenuItem[];
 }
 
 export interface SetGlue42AvailableOnAction extends Redux.Action {}
@@ -114,17 +114,17 @@ export interface SetPivotModeOnAction extends Redux.Action {}
 
 export interface SetPivotModeOffAction extends Redux.Action {}
 
-export const GridSetColumns = (Columns: AdaptableBlotterColumn[]): GridSetColumnsAction => ({
+export const GridSetColumns = (Columns: AdaptableColumn[]): GridSetColumnsAction => ({
   type: GRID_SET_COLUMNS,
   Columns,
 });
 
-export const GridAddColumn = (Column: AdaptableBlotterColumn): GridAddColumnAction => ({
+export const GridAddColumn = (Column: AdaptableColumn): GridAddColumnAction => ({
   type: GRID_ADD_COLUMN,
   Column,
 });
 
-export const GridEditColumn = (Column: AdaptableBlotterColumn): GridEditColumnAction => ({
+export const GridEditColumn = (Column: AdaptableColumn): GridEditColumnAction => ({
   type: GRID_EDIT_COLUMN,
   Column,
 });
@@ -230,9 +230,7 @@ export const SetPivotModeOff = (): SetPivotModeOffAction => ({
   type: SET_PIVOT_MODE_OFF,
 });
 
-export const SetMainMenuItems = (
-  MenuItems: AdaptableBlotterMenuItem[]
-): SetMainMenuItemsAction => ({
+export const SetMainMenuItems = (MenuItems: AdaptableMenuItem[]): SetMainMenuItemsAction => ({
   type: SET_MAIN_MENUITEMS,
   MenuItems,
 });
@@ -266,7 +264,7 @@ export const GridReducer: Redux.Reducer<GridState> = (
       columns.push(actionTypedAdd.Column);
       return Object.assign({}, state, { Columns: columns });
     case GRID_EDIT_COLUMN:
-      const actioncolumn: AdaptableBlotterColumn = (action as GridEditColumnAction).Column;
+      const actioncolumn: AdaptableColumn = (action as GridEditColumnAction).Column;
       return {
         ...state,
         Columns: state.Columns.map(abObject =>
@@ -294,9 +292,8 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { IsQuickFilterActive: false });
     case SET_MAIN_MENUITEMS: {
       const actionTyped = action as SetMainMenuItemsAction;
-      const menuItems = actionTyped.MenuItems.sort(
-        (a: AdaptableBlotterMenuItem, b: AdaptableBlotterMenuItem) =>
-          a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
+      const menuItems = actionTyped.MenuItems.sort((a: AdaptableMenuItem, b: AdaptableMenuItem) =>
+        a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
       );
       return Object.assign({}, state, { MainMenuItems: menuItems });
     }

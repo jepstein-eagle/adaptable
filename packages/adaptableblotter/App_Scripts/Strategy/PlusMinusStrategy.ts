@@ -7,7 +7,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
@@ -20,7 +20,7 @@ import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AlertProperties } from '../PredefinedConfig/AlertState';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -31,7 +31,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     });
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.PlusMinusStrategyName,
       ComponentName: ScreenPopups.PlusMinusPopup,
@@ -39,7 +39,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (column && column.DataType == DataType.Number) {
         let popupParam: StrategyParams = {
@@ -89,7 +89,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     side: number
   ): boolean {
     let shouldApplyPlusMinus = false;
-    let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
     let successfulValues: GridCell[] = [];
     let failedPreventEdits: CellValidationRule[] = [];
     let failedWarningEdits: CellValidationRule[] = [];
@@ -101,7 +101,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(rulesForColumn)) {
-        let selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+        let selectedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
           selectedCell.columnId,
           columns
         );

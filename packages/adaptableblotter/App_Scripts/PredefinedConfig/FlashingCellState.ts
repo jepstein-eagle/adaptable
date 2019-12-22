@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for the Flashing Cell function
@@ -35,7 +35,7 @@ export interface FlashingCellState extends RunTimeState {
   DefaultDuration?: 250 | 500 | 750 | 1000;
 }
 
-export interface FlashingCell extends AdaptableBlotterObject {
+export interface FlashingCell extends AdaptableObject {
   IsLive: boolean;
   ColumnId: string;
   FlashingCellDuration: 250 | 500 | 750 | 1000;

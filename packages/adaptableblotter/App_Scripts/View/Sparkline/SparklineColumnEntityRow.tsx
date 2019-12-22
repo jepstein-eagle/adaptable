@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
@@ -17,7 +17,7 @@ import { SparklineTypeEnum } from '../../PredefinedConfig/Common/ChartEnums';
 
 export interface SparklineColumnEntityRowProps
   extends SharedEntityExpressionRowProps<SparklineColumnEntityRow> {
-  Column: AdaptableBlotterColumn;
+  Column: AdaptableColumn;
   ColorPalette: string[];
 
   onSparklineTypeChange: (
@@ -31,7 +31,7 @@ export interface SparklineColumnEntityRowProps
 
 export class SparklineColumnEntityRow extends React.Component<SparklineColumnEntityRowProps, {}> {
   render(): any {
-    let sparklineColumn: SparklineColumn = this.props.AdaptableBlotterObject as SparklineColumn;
+    let sparklineColumn: SparklineColumn = this.props.AdaptableObject as SparklineColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -51,7 +51,7 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
             value={sparklineColumn.SparklineType as SparklineTypeEnum}
             onChange={(sparklineType: SparklineTypeEnum) => {
               this.props.onSparklineTypeChange(
-                this.props.AdaptableBlotterObject as SparklineColumn,
+                this.props.AdaptableObject as SparklineColumn,
                 sparklineType
               );
             }}
@@ -125,10 +125,7 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let minValue: number = Number(e.value);
-      this.props.onMinimumValueChanged(
-        this.props.AdaptableBlotterObject as SparklineColumn,
-        minValue
-      );
+      this.props.onMinimumValueChanged(this.props.AdaptableObject as SparklineColumn, minValue);
     }
   }
 
@@ -136,15 +133,12 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let maxValue: number = Number(e.value);
-      this.props.onMaximumValueChanged(
-        this.props.AdaptableBlotterObject as SparklineColumn,
-        maxValue
-      );
+      this.props.onMaximumValueChanged(this.props.AdaptableObject as SparklineColumn, maxValue);
     }
   }
 
   onLineColorChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onLineColorChanged(this.props.AdaptableBlotterObject as SparklineColumn, e.value);
+    this.props.onLineColorChanged(this.props.AdaptableObject as SparklineColumn, e.value);
   }
 }

@@ -20,7 +20,7 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { Reminder } from '../../PredefinedConfig/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
@@ -30,7 +30,7 @@ interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupCompone
   Reminders: Reminder[];
   onAddReminder: (reminder: Reminder) => ReminderRedux.ReminderAddAction;
   onEditReminder: (reminder: Reminder) => ReminderRedux.ReminderEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ReminderPopupComponent extends React.Component<
@@ -58,7 +58,7 @@ class ReminderPopupComponent extends React.Component<
     let Reminders = this.props.Reminders.map((reminder: Reminder, index) => {
       return (
         <ReminderEntityRow
-          AdaptableBlotterObject={reminder}
+          AdaptableObject={reminder}
           colItems={colItems}
           key={'CS' + index}
           onShare={() => this.props.onShare(reminder)}
@@ -97,9 +97,9 @@ class ReminderPopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={Reminders} />
           )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
+          {this.state.EditedAdaptableObject != null && (
             <ReminderWizard
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as Reminder}
+              EditedAdaptableObject={this.state.EditedAdaptableObject as Reminder}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
@@ -121,7 +121,7 @@ class ReminderPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyReminder(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyReminder(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -130,7 +130,7 @@ class ReminderPopupComponent extends React.Component<
   onEdit(reminder: Reminder) {
     let clonedObject: Reminder = Helper.cloneObject(reminder);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
@@ -139,28 +139,28 @@ class ReminderPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let reminder: Reminder = this.state.EditedAdaptableBlotterObject as Reminder;
+    let reminder: Reminder = this.state.EditedAdaptableObject as Reminder;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditReminder(reminder);
     } else {
       this.props.onAddReminder(reminder);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let reminder = this.state.EditedAdaptableBlotterObject as Reminder;
+    let reminder = this.state.EditedAdaptableObject as Reminder;
     if (reminder.Alert == null && reminder.Schedule == null) {
       return false;
     }
@@ -188,7 +188,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   return {
     onAddReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderAdd(reminder)),
     onEditReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderEdit(reminder)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ReminderStrategyId)),
   };
 }

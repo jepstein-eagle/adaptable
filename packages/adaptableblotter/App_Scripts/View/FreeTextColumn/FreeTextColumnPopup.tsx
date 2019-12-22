@@ -19,7 +19,7 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
@@ -32,7 +32,7 @@ interface FreeTextColumnPopupProps extends StrategyViewPopupProps<FreeTextColumn
   onEditFreeTextColumn: (
     FreeTextColumn: FreeTextColumn
   ) => FreeTextColumnRedux.FreeTextColumnEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class FreeTextColumnPopupComponent extends React.Component<
@@ -42,7 +42,7 @@ class FreeTextColumnPopupComponent extends React.Component<
   constructor(props: FreeTextColumnPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     };
@@ -82,7 +82,7 @@ class FreeTextColumnPopupComponent extends React.Component<
           <FreeTextColumnEntityRow
             key={FreeTextColumn.Uuid}
             colItems={colItems}
-            AdaptableBlotterObject={FreeTextColumn}
+            AdaptableObject={FreeTextColumn}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             onEdit={() => this.onEdit(FreeTextColumn)}
@@ -118,11 +118,9 @@ class FreeTextColumnPopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={freeTextColumns} />
           )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
+          {this.state.EditedAdaptableObject != null && (
             <FreeTextColumnWizard
-              EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as FreeTextColumn
-              }
+              EditedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
               ModalContainer={this.props.ModalContainer}
               UserFilters={this.props.UserFilters}
               SystemFilters={this.props.SystemFilters}
@@ -144,7 +142,7 @@ class FreeTextColumnPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyFreeTextColumn(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyFreeTextColumn(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -153,7 +151,7 @@ class FreeTextColumnPopupComponent extends React.Component<
   onEdit(FreeTextColumn: FreeTextColumn) {
     let clonedObject: FreeTextColumn = Helper.cloneObject(FreeTextColumn);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
@@ -162,28 +160,28 @@ class FreeTextColumnPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let freeTextColumn = this.state.EditedAdaptableBlotterObject as FreeTextColumn;
+    let freeTextColumn = this.state.EditedAdaptableObject as FreeTextColumn;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditFreeTextColumn(freeTextColumn);
     } else {
       this.props.onAddFreeTextColumn(freeTextColumn);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let freeTextColumn = this.state.EditedAdaptableBlotterObject as FreeTextColumn;
+    let freeTextColumn = this.state.EditedAdaptableObject as FreeTextColumn;
     return StringExtensions.IsNotNullOrEmpty(freeTextColumn.ColumnId);
   }
 }
@@ -200,7 +198,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),
     onEditFreeTextColumn: (FreeTextColumn: FreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)
       ),

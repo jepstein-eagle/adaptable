@@ -79,7 +79,7 @@ import {
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
@@ -165,7 +165,7 @@ import {
   IAdaptableBlotterWizardOptions,
   IAdaptableBlotterWizardInitFn,
 } from '../BlotterInterfaces/IAdaptableBlotterWizard';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { FilterService } from '../Utilities/Services/FilterService';
 
@@ -587,7 +587,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableBlotterColumn>): void {
+  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
     let startIndex: number = 0;
 
@@ -627,17 +627,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return;
       }
     }
-    const allColumns: AdaptableBlotterColumn[] = [];
-    const existingColumns: AdaptableBlotterColumn[] = this.api.gridApi.getColumns();
+    const allColumns: AdaptableColumn[] = [];
+    const existingColumns: AdaptableColumn[] = this.api.gridApi.getColumns();
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
 
     vendorCols.forEach(vendorColumn => {
       const colId: string = vendorColumn.getColId();
       if (!ColumnHelper.isSpecialColumn(colId)) {
-        let existingColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
-          colId,
-          existingColumns
-        );
+        let existingColumn: AdaptableColumn = ColumnHelper.getColumnFromId(colId, existingColumns);
         if (existingColumn) {
           existingColumn.Visible = vendorColumn.isVisible();
           if (existingColumn.DataType == DataType.Unknown) {
@@ -654,10 +651,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.LayoutService.autoSaveLayout();
   }
 
-  private createColumn(vendorColumn: Column): AdaptableBlotterColumn {
+  private createColumn(vendorColumn: Column): AdaptableColumn {
     const colId: string = vendorColumn.getColId();
     const colDef: ColDef = vendorColumn.getColDef();
-    const abColumn: AdaptableBlotterColumn = {
+    const abColumn: AdaptableColumn = {
       Uuid: createUuid(),
       ColumnId: colId,
       FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
@@ -676,7 +673,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return abColumn;
   }
 
-  private applyStylingToColumn(vendorColumn: Column, abColumn: AdaptableBlotterColumn): void {
+  private applyStylingToColumn(vendorColumn: Column, abColumn: AdaptableColumn): void {
     if (
       vendorColumn.getColDef().filter &&
       this.blotterOptions!.filterOptions.useAdaptableBlotterFilterForm
@@ -707,7 +704,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
     vendorCols.forEach((vendorColumn: Column) => {
-      let abColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      let abColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
         vendorColumn.getColId(),
         this.api.gridApi.getColumns()
       );
@@ -726,10 +723,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return quickSearchClassName;
   }
 
-  private addQuickSearchStyleToColumn(
-    col: AdaptableBlotterColumn,
-    quickSearchClassName: string
-  ): void {
+  private addQuickSearchStyleToColumn(col: AdaptableColumn, quickSearchClassName: string): void {
     const blotter = this;
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
@@ -774,10 +768,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public createFunctionMenu() {
-    const menuItems: AdaptableBlotterMenuItem[] = [];
+    const menuItems: AdaptableMenuItem[] = [];
     this.strategies.forEach((strat: IStrategy) => {
       strat.setStrategyEntitlement();
-      const menuItem: AdaptableBlotterMenuItem | undefined = strat.addFunctionMenuItem();
+      const menuItem: AdaptableMenuItem | undefined = strat.addFunctionMenuItem();
       if (Helper.objectExists(menuItem)) {
         if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
           menuItems.push(menuItem);
@@ -838,7 +832,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   // If the selection mode is row it will returns nothing - use the setSelectedRows() method
   public setSelectedCells(): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
-    const columns: AdaptableBlotterColumn[] = [];
+    const columns: AdaptableColumn[] = [];
     const selectedCells: GridCell[] = [];
 
     if (this.api.internalApi.isGridInPivotMode()) {
@@ -856,7 +850,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         for (const column of rangeSelection.columns) {
           if (column != null) {
             const colId: string = column.getColId();
-            const selectedColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+            const selectedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
               colId,
               this.api.gridApi.getColumns()
             );
@@ -1419,10 +1413,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
     // the name of the column might have changed so lets get the column from store as that will be the 'old' one
-    const cols: AdaptableBlotterColumn[] = this.api.gridApi.getColumns();
-    const existingABColumn: AdaptableBlotterColumn = cols.find(
-      c => c.Uuid == calculatedColumn.Uuid
-    );
+    const cols: AdaptableColumn[] = this.api.gridApi.getColumns();
+    const existingABColumn: AdaptableColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
 
     let cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
       calculatedColumn.ColumnExpression,
@@ -1489,7 +1481,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // re-apply the datatype in case it has been changed as a result of the expression changing
       existingABColumn.ColumnId = calculatedColumn.ColumnId;
       existingABColumn.DataType = dataType;
-      this.api.internalApi.addAdaptableBlotterColumn(existingABColumn);
+      this.api.internalApi.addAdaptableColumn(existingABColumn);
     }
   }
 
@@ -1538,7 +1530,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
     const colDefs: (ColDef | ColGroupDef)[] = [...(this.getColumnDefs() || [])];
 
-    const cols: AdaptableBlotterColumn[] = this.api.gridApi.getColumns();
+    const cols: AdaptableColumn[] = this.api.gridApi.getColumns();
     const cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
       calculatedColumn.ColumnExpression,
       cols
@@ -1651,7 +1643,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     if (vendorColumn) {
       const vendorColDef: ColDef = vendorColumn.getColDef();
-      const specialColumn: AdaptableBlotterColumn = {
+      const specialColumn: AdaptableColumn = {
         Uuid: uuid,
         ColumnId: columnId,
         FriendlyName: columnId,
@@ -1666,7 +1658,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         IsSparkline: dataType == DataType.NumberArray,
       };
 
-      this.api.internalApi.addAdaptableBlotterColumn(specialColumn);
+      this.api.internalApi.addAdaptableColumn(specialColumn);
 
       this.applyStylingToColumn(vendorColumn, specialColumn);
 
@@ -2247,24 +2239,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // couldnt find a way to listen for menu close. There is a Menu Item Select, but you can also close menu from filter and clicking outside menu....
       const colId: string = params.column.getColId();
 
-      const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
+      const AdaptableMenuItems: AdaptableMenuItem[] = [];
 
-      const adaptableColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
         colId,
         this.api.gridApi.getColumns()
       );
       if (adaptableColumn != null) {
         this.strategies.forEach(s => {
-          let menuItem: AdaptableBlotterMenuItem = s.addColumnMenuItem(adaptableColumn);
+          let menuItem: AdaptableMenuItem = s.addColumnMenuItem(adaptableColumn);
           if (menuItem) {
-            adaptableBlotterMenuItems.push(menuItem);
+            AdaptableMenuItems.push(menuItem);
           }
         });
         // add the column menu items from Home Strategy
         const homeStrategy: IHomeStrategy = this.strategies.get(
           StrategyConstants.HomeStrategyId
         ) as IHomeStrategy;
-        adaptableBlotterMenuItems.push(...homeStrategy.addBaseColumnMenuItems(adaptableColumn));
+        AdaptableMenuItems.push(...homeStrategy.addBaseColumnMenuItems(adaptableColumn));
       }
 
       let colMenuItems: (string | MenuItemDef)[];
@@ -2286,21 +2278,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         primaryKeyValue: undefined,
       };
 
-      let showAdaptableBlotterColumnMenu = this.blotterOptions.generalOptions!
-        .showAdaptableBlotterColumnMenu;
+      let showAdaptableColumnMenu = this.blotterOptions.generalOptions!.showAdaptableColumnMenu;
 
-      if (showAdaptableBlotterColumnMenu == null || showAdaptableBlotterColumnMenu !== false) {
-        adaptableBlotterMenuItems.forEach((adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
+      if (showAdaptableColumnMenu == null || showAdaptableColumnMenu !== false) {
+        AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
           let addContextMenuItem: boolean = true;
-          if (
-            showAdaptableBlotterColumnMenu != null &&
-            typeof showAdaptableBlotterColumnMenu === 'function'
-          ) {
-            addContextMenuItem = showAdaptableBlotterColumnMenu(adaptableBlotterMenuItem, menuInfo);
+          if (showAdaptableColumnMenu != null && typeof showAdaptableColumnMenu === 'function') {
+            addContextMenuItem = showAdaptableColumnMenu(AdaptableMenuItem, menuInfo);
           }
           if (addContextMenuItem) {
             let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-              adaptableBlotterMenuItem
+              AdaptableMenuItem
             );
             colMenuItems.push(menuItem);
           }
@@ -2343,10 +2331,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       // keep it simple for now - if its a grouped cell then do nothing
       if (!params.node.group) {
-        const adaptableBlotterMenuItems: AdaptableBlotterMenuItem[] = [];
+        const AdaptableMenuItems: AdaptableMenuItem[] = [];
         const agGridColumn: Column = params.column;
         if (agGridColumn) {
-          const adaptableColumn: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+          const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
             agGridColumn.getColId(),
             this.api.gridApi.getColumns()
           );
@@ -2354,15 +2342,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           if (adaptableColumn != null) {
             menuInfo = this.agGridHelper.getMenuInfo(params, adaptableColumn);
             this.strategies.forEach(s => {
-              let menuItem: AdaptableBlotterMenuItem | undefined = s.addContextMenuItem(menuInfo);
+              let menuItem: AdaptableMenuItem | undefined = s.addContextMenuItem(menuInfo);
               if (menuItem) {
-                adaptableBlotterMenuItems.push(menuItem);
+                AdaptableMenuItems.push(menuItem);
               }
             });
 
             // here we create Adaptable Blotter Menu items from OUR internal collection
             // user has ability to decide whether to show or not
-            if (ArrayExtensions.IsNotNullOrEmpty(adaptableBlotterMenuItems)) {
+            if (ArrayExtensions.IsNotNullOrEmpty(AdaptableMenuItems)) {
               let showAdaptableBlotterContextMenu = this.blotterOptions.generalOptions!
                 .showAdaptableBlotterContextMenu;
               if (
@@ -2370,26 +2358,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 showAdaptableBlotterContextMenu !== false
               ) {
                 contextMenuItems.push('separator');
-                adaptableBlotterMenuItems.forEach(
-                  (adaptableBlotterMenuItem: AdaptableBlotterMenuItem) => {
-                    let addContextMenuItem: boolean = true;
-                    if (
-                      showAdaptableBlotterContextMenu != null &&
-                      typeof showAdaptableBlotterContextMenu === 'function'
-                    ) {
-                      addContextMenuItem = showAdaptableBlotterContextMenu(
-                        adaptableBlotterMenuItem,
-                        menuInfo
-                      );
-                    }
-                    if (addContextMenuItem) {
-                      let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-                        adaptableBlotterMenuItem
-                      );
-                      contextMenuItems.push(menuItem);
-                    }
+                AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
+                  let addContextMenuItem: boolean = true;
+                  if (
+                    showAdaptableBlotterContextMenu != null &&
+                    typeof showAdaptableBlotterContextMenu === 'function'
+                  ) {
+                    addContextMenuItem = showAdaptableBlotterContextMenu(
+                      AdaptableMenuItem,
+                      menuInfo
+                    );
                   }
-                );
+                  if (addContextMenuItem) {
+                    let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+                      AdaptableMenuItem
+                    );
+                    contextMenuItems.push(menuItem);
+                  }
+                });
               }
             }
 
@@ -2715,7 +2701,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
       ) {
         const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
-        const column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+        const column: AdaptableColumn = ColumnHelper.getColumnFromId(
           columnId,
           this.api.gridApi.getColumns()
         );

@@ -3,8 +3,8 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
@@ -12,7 +12,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     super(StrategyConstants.UserFilterStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.UserFilterStrategyName,
       ComponentName: ScreenPopups.UserFilterPopup,
@@ -20,7 +20,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'columnfilter')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,

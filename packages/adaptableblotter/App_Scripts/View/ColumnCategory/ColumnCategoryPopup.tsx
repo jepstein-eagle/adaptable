@@ -19,7 +19,7 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow';
@@ -34,7 +34,7 @@ interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategory
   onEditColumnCategory: (
     columnCategory: ColumnCategory
   ) => ColumnCategoryRedux.ColumnCategoryEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ColumnCategoryPopupComponent extends React.Component<
@@ -75,7 +75,7 @@ class ColumnCategoryPopupComponent extends React.Component<
         <ColumnCategoryEntityRow
           key={index}
           colItems={colItems}
-          AdaptableBlotterObject={item}
+          AdaptableObject={item}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(item)}
@@ -112,9 +112,9 @@ class ColumnCategoryPopupComponent extends React.Component<
           </EmptyContent>
         )}
 
-        {this.state.EditedAdaptableBlotterObject != null && (
+        {this.state.EditedAdaptableObject != null && (
           <ColumnCategoryWizard
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
+            EditedAdaptableObject={this.state.EditedAdaptableObject}
             ConfigEntities={this.props.ColumnCategorys}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -136,7 +136,7 @@ class ColumnCategoryPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyColumnCategory(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyColumnCategory(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -145,7 +145,7 @@ class ColumnCategoryPopupComponent extends React.Component<
   onEdit(columnCategory: ColumnCategory) {
     let clonedObject: ColumnCategory = Helper.cloneObject(columnCategory);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -154,7 +154,7 @@ class ColumnCategoryPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -164,14 +164,14 @@ class ColumnCategoryPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let columnCategory = this.state.EditedAdaptableBlotterObject as ColumnCategory;
+    let columnCategory = this.state.EditedAdaptableObject as ColumnCategory;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditColumnCategory(columnCategory);
     } else {
       this.props.onAddColumnCategory(columnCategory);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -179,7 +179,7 @@ class ColumnCategoryPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let ColumnCategory = this.state.EditedAdaptableBlotterObject as ColumnCategory;
+    let ColumnCategory = this.state.EditedAdaptableObject as ColumnCategory;
     return (
       StringExtensions.IsNotEmpty(ColumnCategory.ColumnCategoryId) &&
       ArrayExtensions.IsNotEmpty(ColumnCategory.ColumnIds)
@@ -199,7 +199,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(ColumnCategoryRedux.ColumnCategoryAdd(ColumnCategory)),
     onEditColumnCategory: (columnCategory: ColumnCategory) =>
       dispatch(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
       ),

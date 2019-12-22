@@ -3,12 +3,12 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { PercentBarSelectColumnWizard } from '././PercentBarSelectColumnWizard';
 import { PercentBarSummaryWizard } from '././PercentBarSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { PercentBarSettingsWizard } from './PercentBarSettingsWizard';
 import { PercentBarValuesWizard } from './PercentBarValuesWizard';
 
 export interface PercentBarWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<PercentBarWizard> {
+  extends AdaptableObjectExpressionAdaptableWizardProps<PercentBarWizard> {
   ColorPalette: Array<string>;
 }
 
@@ -43,7 +43,7 @@ export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}>
               Element: <PercentBarSummaryWizard />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

@@ -2,7 +2,7 @@ import { ICalculatedColumnExpressionService } from './Interface/ICalculatedColum
 import * as math from 'mathjs';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import ColumnHelper from '../Helpers/ColumnHelper';
 
@@ -36,7 +36,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
   public IsExpressionValid(expression: string): { IsValid: Boolean; ErrorMsg?: string } {
     try {
-      let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
       let cleanedExpression: string = this.CleanExpressionColumnNames(expression, columns);
       let firstRecord = this.blotter.getFirstRowNode();
       math.eval(cleanedExpression, {
@@ -87,7 +87,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
     return columnList;
   }
 
-  public CleanExpressionColumnNames(expression: string, columns: AdaptableBlotterColumn[]): string {
+  public CleanExpressionColumnNames(expression: string, columns: AdaptableColumn[]): string {
     let newExpression: string = expression;
     let columnNameList: string[] = [];
     let regEx: RegExp = /\b(?:Col\(")([a-zA-Z0-9 ]+)(?:"\))/g;
@@ -96,7 +96,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       let columnId: any = match[1];
 
       // check if its a column name
-      let col: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(columnId, columns, false);
+      let col: AdaptableColumn = ColumnHelper.getColumnFromId(columnId, columns, false);
       if (!col) {
         // no column so lets see if they are using FriendlyName
         col = ColumnHelper.getColumnFromFriendlyName(columnId, columns, false);
@@ -116,7 +116,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
     return newExpression;
   }
 
-  public GetExpressionString(expression: string, columns: AdaptableBlotterColumn[]): string {
+  public GetExpressionString(expression: string, columns: AdaptableColumn[]): string {
     let cleanExpression: string = this.CleanExpressionColumnNames(expression, columns);
     let columnIds: string[] = this.GetColumnListFromExpression(cleanExpression);
     columnIds.forEach(c => {

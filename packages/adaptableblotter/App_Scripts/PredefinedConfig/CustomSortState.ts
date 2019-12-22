@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for the Custom Sort function
@@ -47,7 +47,7 @@ export interface CustomSortState extends RunTimeState {
 /**
  * The CustomSort object used in the Custom Sort function.
  */
-export interface CustomSort extends AdaptableBlotterObject {
+export interface CustomSort extends AdaptableObject {
   /**
    * The Id of the Column on which the Custom Sort will be applied (e.g. when the column header is clicked in order to sort the Column values)
    */

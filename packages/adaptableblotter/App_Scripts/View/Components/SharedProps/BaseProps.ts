@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
@@ -10,7 +10,7 @@ import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 export interface BaseProps<View> extends React.ClassAttributes<View> {
   AccessLevel: AccessLevel;
 
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];

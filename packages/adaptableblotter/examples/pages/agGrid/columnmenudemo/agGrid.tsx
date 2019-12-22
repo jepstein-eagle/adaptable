@@ -12,10 +12,7 @@ import {
   BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import {
-  AdaptableBlotterMenuItem,
-  MenuInfo,
-} from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
 
 var blotterApi: BlotterApi;
 function InitAdaptableBlotter() {
@@ -31,10 +28,10 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   adaptableBlotterOptions.generalOptions = {
-    // showAdaptableBlotterColumnMenu: true,
-    // showAdaptableBlotterColumnMenu: false,
+    // showAdaptableColumnMenu: true,
+    // showAdaptableColumnMenu: false,
 
-    showAdaptableBlotterColumnMenu: (menuItem: AdaptableBlotterMenuItem, menuInfo: MenuInfo) => {
+    showAdaptableColumnMenu: (menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => {
       if (
         menuInfo.column.ColumnId === 'counterparty' &&
         (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'PieChart')

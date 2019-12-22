@@ -1,6 +1,6 @@
 import { RunTimeState } from './/RunTimeState';
 import { Expression } from './Common/Expression';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for the Advanced Search function
@@ -97,7 +97,7 @@ export interface AdvancedSearchState extends RunTimeState {
 /**
  * The AdvancedSearch object used in the Advanced Search function.
  */
-export interface AdvancedSearch extends AdaptableBlotterObject {
+export interface AdvancedSearch extends AdaptableObject {
   /**
    * The name of the Advanced Search - used for *external* identification purposes
    */

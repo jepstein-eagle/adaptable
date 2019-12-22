@@ -15,7 +15,7 @@ export class UserFilterEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let userFilter: UserFilter = this.props.AdaptableBlotterObject as UserFilter;
+    let userFilter: UserFilter = this.props.AdaptableObject as UserFilter;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

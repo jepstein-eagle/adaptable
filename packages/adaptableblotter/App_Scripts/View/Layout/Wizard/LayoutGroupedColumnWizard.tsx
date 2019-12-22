@@ -8,10 +8,10 @@ import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 
 export interface LayoutGroupedColumnWizardProps extends AdaptableWizardStepProps<Layout> {
-  GroupableColumns: AdaptableBlotterColumn[];
+  GroupableColumns: AdaptableColumn[];
 }
 
 export interface LayoutGroupedColumnWizardState {

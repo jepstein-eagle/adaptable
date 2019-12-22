@@ -7,10 +7,10 @@ import { CellValidationRulesWizard } from './CellValidationRulesWizard';
 import { CellValidationSummaryWizard } from './CellValidationSummaryWizard';
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface CellValidationWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<CellValidationWizard> {}
+  extends AdaptableObjectExpressionAdaptableWizardProps<CellValidationWizard> {}
 
 export class CellValidationWizard extends React.Component<CellValidationWizardProps, {}> {
   render() {
@@ -60,7 +60,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
               Element: <CellValidationSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

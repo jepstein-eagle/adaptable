@@ -14,7 +14,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
 import { QuickFilterFormReact } from '../View/Components/FilterForm/QuickFilterForm';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export const FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) =>
@@ -34,7 +34,7 @@ export const FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) =>
       this.filterContainer = document.createElement('div');
       this.filterContainer.id = `floatingFilter_${colId}_${blotter.blotterOptions.blotterId}`;
       this.filterContainer.style.display = 'flex';
-      const column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      const column: AdaptableColumn = ColumnHelper.getColumnFromId(
         colId,
         blotter.api.gridApi.getColumns()
       );

@@ -3,12 +3,12 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard';
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard';
 import { AdvancedSearchSummaryWizard } from './AdvancedSearchSummaryWizard';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdvancedSearch } from '../../../PredefinedConfig/AdvancedSearchState';
 
 export class AdvancedSearchWizard extends React.Component<
-  AdaptableBlotterObjectExpressionAdaptableWizardProps<AdvancedSearchWizard>,
+  AdaptableObjectExpressionAdaptableWizardProps<AdvancedSearchWizard>,
   {}
 > {
   render() {
@@ -47,7 +47,7 @@ export class AdvancedSearchWizard extends React.Component<
               Element: <AdvancedSearchSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject as AdvancedSearch}
+          Data={this.props.EditedAdaptableObject as AdvancedSearch}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

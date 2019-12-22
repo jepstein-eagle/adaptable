@@ -1,4 +1,4 @@
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../PredefinedConfig/GridState';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ColumnSort } from '../PredefinedConfig/LayoutState';
@@ -81,44 +81,44 @@ export interface GridApi {
    *
    * Each column has a number of properties such as Visiblity and Data Type
    */
-  getColumns(): AdaptableBlotterColumn[];
+  getColumns(): AdaptableColumn[];
 
   /**
    * Returns all the visible columns in the Adaptable Blotter
    */
-  getVisibleColumns(): AdaptableBlotterColumn[];
+  getVisibleColumns(): AdaptableColumn[];
 
   /**
    * Returns all the numeric columns in the Adaptable Blotter
    */
-  getNumericColumns(): AdaptableBlotterColumn[];
+  getNumericColumns(): AdaptableColumn[];
 
   /**
    * Returns all the Date columns in the Adaptable Blotter
    */
-  getDateColumns(): AdaptableBlotterColumn[];
+  getDateColumns(): AdaptableColumn[];
 
   /**
    * Returns all the string columns in the Adaptable Blotter
    */
-  getStringColumns(): AdaptableBlotterColumn[];
+  getStringColumns(): AdaptableColumn[];
 
   /**
    * Returns all the boolean columns in the Adaptable Blotter
    */
-  getBooleanColumns(): AdaptableBlotterColumn[];
+  getBooleanColumns(): AdaptableColumn[];
 
   /**
    * Returns all the numeric array columns in the Adaptable Blotter
    */
-  getNumericArrayColumns(): AdaptableBlotterColumn[];
+  getNumericArrayColumns(): AdaptableColumn[];
 
   /**
    * Returns all Columns in the State that have a given DataType
    *
    * @param dataType the DataType of the Columns to retrieve
    */
-  getColumnsOfType(dataType: DataType): AdaptableBlotterColumn[];
+  getColumnsOfType(dataType: DataType): AdaptableColumn[];
 
   /**
    * Returns all the current Column Sort information in the Adaptable Blotter

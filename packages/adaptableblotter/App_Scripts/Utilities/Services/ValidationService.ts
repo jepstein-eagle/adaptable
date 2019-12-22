@@ -17,7 +17,7 @@ import {
   DataType,
   MessageType,
 } from '../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
   CellValidationState,
   CellValidationRule,
@@ -81,7 +81,7 @@ export class ValidationService implements IValidationService {
     );
 
     if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
-      let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
       let expressionRules: CellValidationRule[] = editingRules.filter(r =>
@@ -201,17 +201,14 @@ export class ValidationService implements IValidationService {
   private IsCellValidationRuleBroken(
     cellValidationRule: CellValidationRule,
     dataChangedEvent: DataChangedInfo,
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): boolean {
     // if its any change then validation fails immediately
     if (cellValidationRule.Range.Operator == LeafExpressionOperator.AnyChange) {
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
-      dataChangedEvent.ColumnId,
-      columns
-    );
+    let column: AdaptableColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
     let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
       cellValidationRule.Range,
       dataChangedEvent.NewValue,
@@ -283,7 +280,7 @@ export class ValidationService implements IValidationService {
 
   public createCellValidationDescription(
     cellValidationRule: CellValidationRule,
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): string {
     if (cellValidationRule.Range.Operator == LeafExpressionOperator.PrimaryKeyDuplicate) {
       return 'Primary Key column cannot contain duplicate values';
@@ -342,7 +339,7 @@ export class ValidationService implements IValidationService {
   }
 
   public CreateCellValidationMessage(CellValidation: CellValidationRule): string {
-    let columns: AdaptableBlotterColumn[] = this.blotter.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
     let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
       CellValidation.ColumnId,
       columns

@@ -3,9 +3,9 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 
@@ -14,7 +14,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     super(StrategyConstants.ColumnInfoStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnInfoStrategyName,
       ComponentName: ScreenPopups.ColumnInfoPopup,
@@ -22,7 +22,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     });
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter)) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
@@ -37,7 +37,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     }
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (this.canCreateColumnMenuItem(menuInfo.column, this.blotter)) {
       let popupParam: StrategyParams = {

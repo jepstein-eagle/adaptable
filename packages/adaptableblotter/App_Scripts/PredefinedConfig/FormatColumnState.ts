@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 import { IStyle } from './Common/IStyle';
 
 export interface FormatColumnState extends RunTimeState {
@@ -9,7 +9,7 @@ export interface FormatColumnState extends RunTimeState {
 /**
  * The FormatColumn object used in the Format Column function.
  */
-export interface FormatColumn extends AdaptableBlotterObject {
+export interface FormatColumn extends AdaptableObject {
   /**
    * The column which has the style applied to it.
    */

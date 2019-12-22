@@ -4,8 +4,8 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
@@ -13,7 +13,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     super(StrategyConstants.ColumnFilterStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.ColumnFilterStrategyName,
       ComponentName: ScreenPopups.ColumnFilterPopup,
@@ -21,7 +21,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     });
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemClickFunction: MenuItemDoClickFunction | undefined = undefined;
 
     if (menuInfo.column && menuInfo.gridCell != null) {
@@ -47,7 +47,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     return menuItemClickFunction;
   }
 
-  public addColumnMenuItem(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (this.canCreateColumnMenuItem(column, this.blotter, 'columnfilter')) {
       let existingColumnFilter = this.blotter.api.columnFilterApi
         .getAllColumnFilter()

@@ -17,7 +17,7 @@ const baseClassName = 'ab-Button';
 //   //Override normal tooltip i.e. Edit
 //   overrideTooltip?: string;
 //   //The entity we pass in to check normal disabled status
-//   //  ConfigEntity?: IAdaptableBlotterObject
+//   //  ConfigEntity?: IAdaptableObject
 //   style?: React.CSSProperties;
 
 //   //Override normal Text i.e. Edit

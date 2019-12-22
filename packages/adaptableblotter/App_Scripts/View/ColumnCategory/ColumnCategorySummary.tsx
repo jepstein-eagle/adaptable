@@ -17,7 +17,7 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyProfile } from '../Components/StrategyProfile';
@@ -26,7 +26,7 @@ export interface ColumnCategorySummaryProps
   extends StrategySummaryProps<ColumnCategorySummaryComponent> {
   ColumnCategorys: ColumnCategory[];
   // onAddUpdateColumnCategory: (index: number, ColumnCategory: ColumnCategory) => ColumnCategoryRedux.ColumnCategoryAddUpdateConditionAction
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class ColumnCategorySummaryComponent extends React.Component<
@@ -76,9 +76,9 @@ export class ColumnCategorySummaryComponent extends React.Component<
       <div>
         {ColumnCategoryRow}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <ColumnCategoryWizard
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ColumnCategory}
+            EditedAdaptableObject={this.state.EditedAdaptableObject as ColumnCategory}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -101,7 +101,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
   onNew() {
     let configEntity: ColumnCategory = ObjectFactory.CreateEmptyColumnCategory();
     this.setState({
-      EditedAdaptableBlotterObject: configEntity,
+      EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.New,
     });
@@ -109,7 +109,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
 
   onEdit(ColumnCategory: ColumnCategory) {
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(ColumnCategory),
+      EditedAdaptableObject: Helper.cloneObject(ColumnCategory),
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -117,19 +117,19 @@ export class ColumnCategorySummaryComponent extends React.Component<
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    //  this.props.onAddUpdateColumnCategory(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as ColumnCategory);
-    //  this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    //  this.props.onAddUpdateColumnCategory(this.state.EditedAdaptableObjectIndex, this.state.EditedAdaptableObject as ColumnCategory);
+    //  this.setState({ EditedAdaptableObject: null, WizardStartIndex: 0, EditedAdaptableObjectIndex: -1, });
   }
 
   canFinishWizard() {
-    //   let ColumnCategory = this.state.EditedAdaptableBlotterObject as ColumnCategory
+    //   let ColumnCategory = this.state.EditedAdaptableObject as ColumnCategory
     //   return StringExtensions.IsNotNullOrEmpty(ColumnCategory.ColumnId) &&
     //       StringExtensions.IsNotNullOrEmpty(ColumnCategory.NudgeValue.toString()) && // check its a number??
     //       (ColumnCategory.IsDefaultNudge || ExpressionHelper.IsNotEmptyOrInvalidExpression(ColumnCategory.Expression))
@@ -151,7 +151,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   return {
     //   onAddUpdateColumnCategory: (index: number, ColumnCategory: ColumnCategory) => dispatch(ColumnCategoryRedux.ColumnCategoryAddUpdateCondition(index, ColumnCategory)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
       ),

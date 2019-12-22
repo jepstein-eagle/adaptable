@@ -1,5 +1,5 @@
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
@@ -12,12 +12,12 @@ export interface IFilterService {
 
   GetUserFilters(userFilters: UserFilter[], userFilterNames: string[]): UserFilter[];
 
-  GetSystemFiltersForColumn(column: AdaptableBlotterColumn, systemFilters: string[]): string[];
+  GetSystemFiltersForColumn(column: AdaptableColumn, systemFilters: string[]): string[];
 
-  GetUserFiltersForColumn(column: AdaptableBlotterColumn, userFilters: UserFilter[]): UserFilter[];
+  GetUserFiltersForColumn(column: AdaptableColumn, userFilters: UserFilter[]): UserFilter[];
 
   GetNamedFiltersForColumn(
-    column: AdaptableBlotterColumn,
+    column: AdaptableColumn,
     namedFilters: NamedFilter[],
     columnCategories: ColumnCategory[]
   ): NamedFilter[];
@@ -25,7 +25,7 @@ export interface IFilterService {
   ShowUserFilterForColumn(
     UserFilters: UserFilter[],
     name: string,
-    column: AdaptableBlotterColumn
+    column: AdaptableColumn
   ): boolean;
 
   GetColumnIdForUserFilter(userFilter: UserFilter): string;
@@ -36,11 +36,8 @@ export interface IFilterService {
 
   ConvertColumnFiltersToKVPArray(
     columnFilters: ColumnFilter[],
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): KeyValuePair[];
 
-  GetColumnFiltersDescription(
-    columnFilters: ColumnFilter[],
-    columns: AdaptableBlotterColumn[]
-  ): string;
+  GetColumnFiltersDescription(columnFilters: ColumnFilter[], columns: AdaptableColumn[]): string;
 }

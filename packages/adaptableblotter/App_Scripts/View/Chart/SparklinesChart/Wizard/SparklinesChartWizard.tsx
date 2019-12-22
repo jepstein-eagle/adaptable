@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
 import { ChartDefinition } from '../../../../PredefinedConfig/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { SparklinesChartColumnWizard } from './SparklinesChartColumnWizard';
@@ -14,7 +14,7 @@ import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 // import { PieChartSecondaryColumnWizard } from './PieChartSecondaryColumnWizard';
 
 export interface SparklinesChartWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<SparklinesChartWizard> {}
+  extends AdaptableObjectExpressionAdaptableWizardProps<SparklinesChartWizard> {}
 
 export class SparklinesChartWizard extends React.Component<SparklinesChartWizardProps, {}> {
   render() {
@@ -58,7 +58,7 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
               Element: <SparklinesChartSummaryWizard />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

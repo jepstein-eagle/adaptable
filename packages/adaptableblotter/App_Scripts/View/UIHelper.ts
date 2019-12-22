@@ -128,7 +128,7 @@ export function getDefaultColors(): string[] {
 
 export function getEmptyConfigState(): EditableConfigEntityState {
   return {
-    EditedAdaptableBlotterObject: null,
+    EditedAdaptableObject: null,
     WizardStartIndex: 0,
     WizardStatus: WizardStatus.None,
   };

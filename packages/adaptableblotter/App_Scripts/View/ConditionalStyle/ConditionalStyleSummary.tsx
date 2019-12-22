@@ -21,7 +21,7 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 
@@ -97,11 +97,9 @@ export class ConditionalStyleSummaryComponent extends React.Component<
       <div>
         {strategySummaries}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <ConditionalStyleWizard
-            EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as ConditionalStyle
-            }
+            EditedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -127,7 +125,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     configEntity.ConditionalStyleScope = ConditionalStyleScope.Column;
     this.setState({
-      EditedAdaptableBlotterObject: configEntity,
+      EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.New,
     });
@@ -135,7 +133,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
 
   onEdit(ConditionalStyle: ConditionalStyle) {
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(ConditionalStyle),
+      EditedAdaptableObject: Helper.cloneObject(ConditionalStyle),
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -143,7 +141,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -151,21 +149,20 @@ export class ConditionalStyleSummaryComponent extends React.Component<
 
   onFinishWizard() {
     if (this.state.WizardStatus == WizardStatus.Edit) {
-      this.props.onEditConditionalStyle(this.state
-        .EditedAdaptableBlotterObject as ConditionalStyle);
+      this.props.onEditConditionalStyle(this.state.EditedAdaptableObject as ConditionalStyle);
     } else {
-      this.props.onAddConditionalStyle(this.state.EditedAdaptableBlotterObject as ConditionalStyle);
+      this.props.onAddConditionalStyle(this.state.EditedAdaptableObject as ConditionalStyle);
     }
 
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let conditionalStyle = this.state.EditedAdaptableBlotterObject as ConditionalStyle;
+    let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
     return (
       (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Row ||
         StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
@@ -195,7 +192,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
       ),

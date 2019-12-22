@@ -1,10 +1,10 @@
 import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 // A menu item which performs a Redux Action when it is clicke
-export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {
+export class MenuItemDoReduxAction implements AdaptableMenuItem {
   constructor(
     label: string,
     strategyId: string,
@@ -26,7 +26,7 @@ export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {
   public Icon: string;
 }
 
-export class MenuItemDoClickFunction implements AdaptableBlotterMenuItem {
+export class MenuItemDoClickFunction implements AdaptableMenuItem {
   constructor(
     label: string,
     strategyId: string,
@@ -49,7 +49,7 @@ export class MenuItemDoClickFunction implements AdaptableBlotterMenuItem {
 }
 
 // A menu item which shows a popup screen when it is clieked
-export class MenuItemShowPopup implements AdaptableBlotterMenuItem {
+export class MenuItemShowPopup implements AdaptableMenuItem {
   constructor(
     label: string,
     strategyId: string,

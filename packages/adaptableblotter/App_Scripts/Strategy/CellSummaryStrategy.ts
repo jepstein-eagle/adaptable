@@ -10,7 +10,7 @@ import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Comm
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
@@ -18,7 +18,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     super(StrategyConstants.CellSummaryStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.CellSummaryStrategyName,
       ComponentName: ScreenPopups.CellSummaryPopup,
@@ -26,7 +26,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     });
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     let popUpParams: StrategyParams = {
       source: 'ContextMenu',

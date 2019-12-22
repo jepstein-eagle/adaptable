@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Theme State section of the Adaptable Blotter Predefined Config.
@@ -65,7 +65,7 @@ export interface ThemeState extends RunTimeState {
 /**
  * The AdaptableBlotterTheme object used in the Theme function - required for when creating User (Custom) Themes.
  */
-export interface AdaptableBlotterTheme extends AdaptableBlotterObject {
+export interface AdaptableBlotterTheme extends AdaptableObject {
   /**
    * The name of the css file which will be applied
    */

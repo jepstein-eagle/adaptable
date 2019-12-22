@@ -18,7 +18,7 @@ import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IStyleService } from './Interface/IStyleService';
 
 export class StyleService implements IStyleService {
@@ -57,7 +57,7 @@ export class StyleService implements IStyleService {
   public CreateUniqueStyleName(
     strategyId: string,
     blotter: IAdaptableBlotter,
-    adaqptableBlotterObject: AdaptableBlotterObject
+    adaqptableBlotterObject: AdaptableObject
   ): string {
     return (
       StyleConstants.AB_HEADER +

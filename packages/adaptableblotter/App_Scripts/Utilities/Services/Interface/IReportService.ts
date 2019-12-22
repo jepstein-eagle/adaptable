@@ -1,14 +1,14 @@
 import { Report } from '../../../PredefinedConfig/ExportState';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { ExportDestination, LiveReportTrigger } from '../../../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from '../../../Strategy/Interface/IStrategyActionReturn';
 
 export interface IReportService {
   IsSystemReport(Report: Report): boolean;
 
-  GetReportColumnsDescription(report: Report, cols: AdaptableBlotterColumn[]): string;
+  GetReportColumnsDescription(report: Report, cols: AdaptableColumn[]): string;
 
-  GetReportExpressionDescription(Report: Report, cols: AdaptableBlotterColumn[]): string;
+  GetReportExpressionDescription(Report: Report, cols: AdaptableColumn[]): string;
 
   IsReportDestinationActive(exportDestination: ExportDestination): boolean;
 

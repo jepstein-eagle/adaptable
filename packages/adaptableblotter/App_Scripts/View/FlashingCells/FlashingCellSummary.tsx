@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { IColItem } from '../UIInterfaces';
 import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -66,7 +66,7 @@ export class FlashingCellSummaryComponent extends React.Component<
       let flashingCellState: FlashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(
         false
       );
-      let col: AdaptableBlotterColumn = ColumnHelper.getColumnFromId(
+      let col: AdaptableColumn = ColumnHelper.getColumnFromId(
         this.props.SummarisedColumn.ColumnId,
         this.props.Columns
       );

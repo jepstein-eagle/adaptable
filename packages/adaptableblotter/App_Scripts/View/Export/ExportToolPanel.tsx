@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -50,7 +50,7 @@ interface ExportToolPanelComponentProps
       | ExportDestination.iPushPull
       | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
   CurrentReport: string | undefined;
@@ -324,4 +324,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   };
 }
 
-export let ExportToolPanel = connect(mapStateToProps, mapDispatchToProps)(ExportToolPanelComponent);
+export let ExportToolPanel = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ExportToolPanelComponent);

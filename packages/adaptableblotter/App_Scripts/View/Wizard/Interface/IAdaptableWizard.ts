@@ -1,7 +1,7 @@
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
-import { AdaptableBlotterObject } from '../../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 
@@ -18,7 +18,7 @@ export interface AdaptableWizardStepProps<T> {
   Data?: T;
   UpdateGoBackState?(): void;
   Blotter?: IAdaptableBlotter;
-  Columns?: AdaptableBlotterColumn[];
+  Columns?: AdaptableColumn[];
 }
 
 // props for an Expression Wizard Page
@@ -30,9 +30,9 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
-export interface AdaptableBlotterObjectExpressionAdaptableWizardProps<View>
-  extends AdaptableBlotterObjectAdaptableWizardProps<View> {
-  Columns: Array<AdaptableBlotterColumn>;
+export interface AdaptableObjectExpressionAdaptableWizardProps<View>
+  extends AdaptableObjectAdaptableWizardProps<View> {
+  Columns: Array<AdaptableColumn>;
   UserFilters: UserFilter[];
   SystemFilters: string[];
   NamedFilters: NamedFilter[];
@@ -50,8 +50,7 @@ export interface AdaptableWizardProps<View> extends React.ClassAttributes<View> 
 }
 
 // props for a wizard that wraps a config entity (without an expression)
-export interface AdaptableBlotterObjectAdaptableWizardProps<View>
-  extends AdaptableWizardProps<View> {
-  ConfigEntities: AdaptableBlotterObject[];
-  EditedAdaptableBlotterObject: AdaptableBlotterObject;
+export interface AdaptableObjectAdaptableWizardProps<View> extends AdaptableWizardProps<View> {
+  ConfigEntities: AdaptableObject[];
+  EditedAdaptableObject: AdaptableObject;
 }

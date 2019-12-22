@@ -1,6 +1,6 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { LoggingHelper } from './LoggingHelper';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -12,21 +12,18 @@ export function isSpecialColumn(columnId: string): boolean {
   return columnId == 'ag-Grid-AutoColumn';
 }
 
-export function isNumericColumn(column: AdaptableBlotterColumn): boolean {
+export function isNumericColumn(column: AdaptableColumn): boolean {
   return column.DataType == DataType.Number;
 }
 
 export function getColumnDataTypeFromColumnId(
   columnId: string,
-  columns: AdaptableBlotterColumn[]
+  columns: AdaptableColumn[]
 ): DataType {
   return columns.find(c => c.ColumnId == columnId).DataType;
 }
 
-export function getFriendlyNameFromColumn(
-  columnId: string,
-  column: AdaptableBlotterColumn
-): string {
+export function getFriendlyNameFromColumn(columnId: string, column: AdaptableColumn): string {
   if (columnId.includes(GeneralConstants.MISSING_COLUMN)) {
     return columnId;
   }
@@ -37,11 +34,8 @@ export function getFriendlyNameFromColumn(
   return columnId + GeneralConstants.MISSING_COLUMN;
 }
 
-export function getFriendlyNameFromColumnId(
-  columnId: string,
-  columns: AdaptableBlotterColumn[]
-): string {
-  const foundColumn: AdaptableBlotterColumn | undefined = columns.find(c => c.ColumnId == columnId);
+export function getFriendlyNameFromColumnId(columnId: string, columns: AdaptableColumn[]): string {
+  const foundColumn: AdaptableColumn | undefined = columns.find(c => c.ColumnId == columnId);
   if (foundColumn) {
     return getFriendlyNameFromColumn(columnId, foundColumn);
   }
@@ -51,7 +45,7 @@ export function getFriendlyNameFromColumnId(
 
 export function getFriendlyNamesFromColumnIds(
   columnIds: string[],
-  columns: AdaptableBlotterColumn[]
+  columns: AdaptableColumn[]
 ): string[] {
   const friendlyNames: string[] = [];
   if (ArrayExtensions.IsNullOrEmpty(columnIds)) {
@@ -65,12 +59,12 @@ export function getFriendlyNamesFromColumnIds(
 
 export function getColumnIdFromFriendlyName(
   friendlyName: string,
-  columns: AdaptableBlotterColumn[]
+  columns: AdaptableColumn[]
 ): string {
   if (friendlyName.includes(GeneralConstants.MISSING_COLUMN)) {
     return friendlyName.replace(GeneralConstants.MISSING_COLUMN, ''); // Ids should stay "pure"
   }
-  const foundColumn: AdaptableBlotterColumn | undefined = columns.find(
+  const foundColumn: AdaptableColumn | undefined = columns.find(
     c => c.FriendlyName == friendlyName
   );
   if (foundColumn) {
@@ -82,7 +76,7 @@ export function getColumnIdFromFriendlyName(
 
 export function getColumnIdsFromFriendlyNames(
   friendlyNames: string[],
-  columns: AdaptableBlotterColumn[]
+  columns: AdaptableColumn[]
 ): string[] {
   const columnIds: string[] = [];
   if (ArrayExtensions.IsNullOrEmpty(friendlyNames)) {
@@ -96,22 +90,22 @@ export function getColumnIdsFromFriendlyNames(
 
 export function getColumnsFromFriendlyNames(
   friendlyNames: string[],
-  columns: AdaptableBlotterColumn[]
-): AdaptableBlotterColumn[] {
+  columns: AdaptableColumn[]
+): AdaptableColumn[] {
   // not sure if this is right as might ignore bad cols
   return friendlyNames.map(friendlyName => columns.find(x => x.FriendlyName == friendlyName));
 }
 
 export function getColumnFromId(
   columnId: string,
-  columns: AdaptableBlotterColumn[],
+  columns: AdaptableColumn[],
   logWarning = true
-): AdaptableBlotterColumn {
+): AdaptableColumn {
   // just return null if no columns rather than logging a warning - otherwise get lots at startup
   if (ArrayExtensions.IsNullOrEmpty(columns)) {
     return null;
   }
-  const foundColumn: AdaptableBlotterColumn = columns.find(c => c.ColumnId == columnId);
+  const foundColumn: AdaptableColumn = columns.find(c => c.ColumnId == columnId);
   if (foundColumn) {
     return foundColumn;
   }
@@ -123,14 +117,14 @@ export function getColumnFromId(
 
 export function getColumnFromFriendlyName(
   columnName: string,
-  columns: AdaptableBlotterColumn[],
+  columns: AdaptableColumn[],
   logWarning = true
-): AdaptableBlotterColumn {
+): AdaptableColumn {
   // just return null if no columns rather than logging a warning - otherwise get lots at startup
   if (ArrayExtensions.IsNullOrEmpty(columns)) {
     return null;
   }
-  const foundColumn: AdaptableBlotterColumn = columns.find(c => c.FriendlyName == columnName);
+  const foundColumn: AdaptableColumn = columns.find(c => c.FriendlyName == columnName);
   if (foundColumn) {
     return foundColumn;
   }
@@ -141,9 +135,9 @@ export function getColumnFromFriendlyName(
 }
 
 export function getColumnsOfType(
-  columns: AdaptableBlotterColumn[],
+  columns: AdaptableColumn[],
   dataType: DataType
-): AdaptableBlotterColumn[] {
+): AdaptableColumn[] {
   switch (dataType) {
     case DataType.All:
       return columns;
@@ -162,25 +156,23 @@ export function getColumnsOfType(
   }
 }
 
-export function getNumericColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+export function getNumericColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.DataType == DataType.Number);
 }
 
-export function getNumericArrayColumns(
-  columns: AdaptableBlotterColumn[]
-): AdaptableBlotterColumn[] {
+export function getNumericArrayColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.DataType == DataType.NumberArray);
 }
 
-export function getStringColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+export function getStringColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.DataType == DataType.String);
 }
 
-export function getDateColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+export function getDateColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.DataType == DataType.Date);
 }
 
-export function getBooleanColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+export function getBooleanColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.DataType == DataType.Boolean);
 }
 
@@ -200,21 +192,19 @@ export function getColumnCategoryFromColumnCategories(
   return returnValue;
 }
 
-export function getSortableColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+export function getSortableColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.Sortable);
 }
 
-export function getGroupableColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+export function getGroupableColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.Groupable);
 }
 
-export function getPivotableColumns(columns: AdaptableBlotterColumn[]): AdaptableBlotterColumn[] {
+export function getPivotableColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.Pivotable);
 }
 
-export function getAggregetableColumns(
-  columns: AdaptableBlotterColumn[]
-): AdaptableBlotterColumn[] {
+export function getAggregetableColumns(columns: AdaptableColumn[]): AdaptableColumn[] {
   return columns.filter(c => c.Aggregatable).filter(c => c.DataType == DataType.Number);
 }
 

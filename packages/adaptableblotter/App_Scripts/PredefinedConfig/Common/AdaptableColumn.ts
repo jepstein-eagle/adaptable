@@ -12,7 +12,7 @@ import { TypeUuid } from '../Uuid';
  *
  * -FriendlyName: this is the how the Column is referred to in screens and dialog and is the 'Caption' or 'Header' of the column in the underlying grid.
  */
-export interface AdaptableBlotterColumn {
+export interface AdaptableColumn {
   Uuid?: TypeUuid; // not sure about this but could be a winner...
   ColumnId: string;
   FriendlyName: string;

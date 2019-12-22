@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard';
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard';
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard';
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 
 export interface ConditionalStyleWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
+  extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   ColorPalette: string[];
   StyleClassNames: string[];
   ColumnCategories: ColumnCategory[];
@@ -61,7 +61,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               Element: <ConditionalStyleSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

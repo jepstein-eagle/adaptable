@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { MathOperation, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
@@ -66,7 +66,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
       'Smart Edits that break Cell Validation Rules will be flagged and prevented.',
     ];
 
-    let col: AdaptableBlotterColumn;
+    let col: AdaptableColumn;
     if (this.props.PreviewInfo) {
       col = ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
     }

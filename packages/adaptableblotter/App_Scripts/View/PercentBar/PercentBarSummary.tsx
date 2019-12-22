@@ -12,7 +12,7 @@ import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
@@ -20,7 +20,7 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
@@ -30,7 +30,7 @@ export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarS
   StyleClassNames: string[];
   onAddPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarAddAction;
   onEditPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PercentBarSummaryComponent extends React.Component<
@@ -85,9 +85,9 @@ export class PercentBarSummaryComponent extends React.Component<
       <div>
         {percentBarRow}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <PercentBarWizard
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as PercentBar}
+            EditedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
             ConfigEntities={this.props.PercentBars}
@@ -119,7 +119,7 @@ export class PercentBarSummaryComponent extends React.Component<
     configEntity.MaxValue = Math.max(...distinctColumnsValues);
 
     this.setState({
-      EditedAdaptableBlotterObject: configEntity,
+      EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.New,
     });
@@ -128,7 +128,7 @@ export class PercentBarSummaryComponent extends React.Component<
   onEdit(renderedColumn: PercentBar) {
     let clonedObject: PercentBar = Helper.cloneObject(renderedColumn);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -136,28 +136,28 @@ export class PercentBarSummaryComponent extends React.Component<
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let percentBar: PercentBar = this.state.EditedAdaptableBlotterObject as PercentBar;
+    let percentBar: PercentBar = this.state.EditedAdaptableObject as PercentBar;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditPercentBar(percentBar);
     } else {
       this.props.onAddPercentBar(percentBar);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let percentBar = this.state.EditedAdaptableBlotterObject as PercentBar;
+    let percentBar = this.state.EditedAdaptableObject as PercentBar;
     return StringExtensions.IsNotNullOrEmpty(percentBar.ColumnId);
   }
 }
@@ -177,7 +177,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(PercentBarRedux.PercentBarAdd(percentBar)),
     onEditPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
   };
 }

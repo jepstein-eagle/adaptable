@@ -15,7 +15,7 @@ import {
   BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AdaptableBlotterMenuItem } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
 
 var blotterApi: BlotterApi;
 function InitAdaptableBlotter() {
@@ -35,7 +35,7 @@ function InitAdaptableBlotter() {
     //showAdaptableBlotterContextMenu: true,
     //showAdaptableBlotterContextMenu: false,
 
-    showAdaptableBlotterContextMenu: (menuItem: AdaptableBlotterMenuItem) => {
+    showAdaptableBlotterContextMenu: (menuItem: AdaptableMenuItem) => {
       if (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'SmartEdit') {
         return false;
       }

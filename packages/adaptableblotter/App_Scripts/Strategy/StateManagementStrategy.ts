@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IStateManagementStrategy } from './Interface/IStateManagementStrategy';
 
 export class StateManagementStrategy extends AdaptableStrategyBase
@@ -12,7 +12,7 @@ export class StateManagementStrategy extends AdaptableStrategyBase
     super(StrategyConstants.StateManagementStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.StateManagementStrategyName,
       ComponentName: ScreenPopups.StateManagementPopup,

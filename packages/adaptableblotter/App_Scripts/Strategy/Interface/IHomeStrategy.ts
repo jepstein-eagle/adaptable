@@ -1,7 +1,7 @@
 import { IStrategy } from './IStrategy';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../../PredefinedConfig/Common/Menu';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 
 export interface IHomeStrategy extends IStrategy {
-  addBaseColumnMenuItems(column: AdaptableBlotterColumn): AdaptableBlotterMenuItem[];
+  addBaseColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[];
 }

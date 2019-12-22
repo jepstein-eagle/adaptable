@@ -7,7 +7,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -23,7 +23,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
@@ -39,7 +39,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
   onConfirmWarningCellValidation: (
     confirmation: IUIConfirmation
   ) => PopupRedux.PopupShowConfirmationAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class PlusMinusPopupComponent extends React.Component<
@@ -58,7 +58,7 @@ class PlusMinusPopupComponent extends React.Component<
           let plusMinus = ObjectFactory.CreateEmptyPlusMinusRule();
           plusMinus.ColumnId = this.props.PopupParams.columnId;
           this.setState({
-            EditedAdaptableBlotterObject: plusMinus,
+            EditedAdaptableObject: plusMinus,
             WizardStatus: WizardStatus.New,
             WizardStartIndex: 1,
           });
@@ -93,7 +93,7 @@ class PlusMinusPopupComponent extends React.Component<
       return (
         <PlusMinusEntityRow
           colItems={colItems}
-          AdaptableBlotterObject={x}
+          AdaptableObject={x}
           key={index}
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
@@ -136,11 +136,9 @@ class PlusMinusPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
+          {this.state.EditedAdaptableObject != null && (
             <PlusMinusWizard
-              EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as PlusMinusRule
-              }
+              EditedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
@@ -163,7 +161,7 @@ class PlusMinusPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPlusMinusRule(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyPlusMinusRule(),
       WizardStatus: WizardStatus.New,
       WizardStartIndex: 0,
     });
@@ -171,7 +169,7 @@ class PlusMinusPopupComponent extends React.Component<
   onEdit(plusMinusRule: PlusMinusRule) {
     let clonedObject: PlusMinusRule = Helper.cloneObject(plusMinusRule);
     this.setState({
-      EditedAdaptableBlotterObject: clonedObject,
+      EditedAdaptableObject: clonedObject,
       WizardStatus: WizardStatus.Edit,
       WizardStartIndex: 1,
     });
@@ -180,7 +178,7 @@ class PlusMinusPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -190,14 +188,14 @@ class PlusMinusPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableBlotterObject as PlusMinusRule;
+    let plusMinus = this.state.EditedAdaptableObject as PlusMinusRule;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditPlusMinusRule(plusMinus);
     } else {
       this.props.onAddPlusMinusRule(plusMinus);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -205,7 +203,7 @@ class PlusMinusPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableBlotterObject as PlusMinusRule;
+    let plusMinus = this.state.EditedAdaptableObject as PlusMinusRule;
     return (
       StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
@@ -279,7 +277,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(plusMinusRule)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
   };
 }

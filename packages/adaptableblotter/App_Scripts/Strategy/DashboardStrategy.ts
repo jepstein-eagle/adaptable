@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
 import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
-import { AdaptableBlotterMenuItem } from '../PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 import { AdaptableBlotterDashboardToolbar } from '../PredefinedConfig/DashboardState';
@@ -68,7 +68,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     }
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.DashboardStrategyName,
       ComponentName: ScreenPopups.DashboardPopup,
@@ -76,7 +76,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     });
   }
 
-  public addColumnMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addColumnMenuItem(): AdaptableMenuItem | undefined {
     // for now just show / hide = lets worry about minimise later..
     if (this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Hidden) {
       return this.createColumnMenuItemReduxAction(

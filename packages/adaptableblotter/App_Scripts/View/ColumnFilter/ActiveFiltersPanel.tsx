@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
@@ -15,7 +15,7 @@ import { Flex } from 'rebass';
 
 export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFiltersPanel> {
   ColumnFilters: ColumnFilter[];
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
 
   AccessLevel: AccessLevel;
   onClear: (columnFilter: ColumnFilter) => void;

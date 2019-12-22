@@ -1,6 +1,6 @@
 import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import * as Redux from 'redux';
 import { IUIConfirmation } from '../../Interface/IMessage';
 
@@ -18,7 +18,7 @@ export interface IValidationService {
 
   createCellValidationDescription(
     cellValidationRule: CellValidationRule,
-    columns: AdaptableBlotterColumn[]
+    columns: AdaptableColumn[]
   ): string;
 
   CreateCellValidationMessage(CellValidation: CellValidationRule): string;

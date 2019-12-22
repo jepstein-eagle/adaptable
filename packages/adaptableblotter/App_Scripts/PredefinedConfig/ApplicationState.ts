@@ -1,4 +1,4 @@
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 import { RunTimeState } from './RunTimeState';
 import { ButtonStyle } from './Common/ButtonStyle';
 
@@ -180,7 +180,7 @@ export interface ApplicationState extends RunTimeState {
  *
  * When an Application Toolbar Button is clicked, the Adaptable Blotter will fire an *ApplicationToolbarButtonClicked* event to which you can subscribe via the Event API.
  */
-export interface ApplicationToolbarButton extends AdaptableBlotterObject {
+export interface ApplicationToolbarButton extends AdaptableObject {
   /**
    * The name of the button
    *

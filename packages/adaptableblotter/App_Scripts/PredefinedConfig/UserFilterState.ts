@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 
 /**
@@ -21,7 +21,7 @@ export interface UserFilterState extends RunTimeState {
  *
  * **note; this will shortly be updated to take a Scope object so that it can work across mutliple columns or a single DataType**
  */
-export interface UserFilter extends AdaptableBlotterObject {
+export interface UserFilter extends AdaptableObject {
   /**
    * The name of the User Filter - how it will appear in Column Filters and the Query Builder screen
    */

@@ -16,7 +16,7 @@ export class ColumnCategoryEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let ColumnCategory: ColumnCategory = this.props.AdaptableBlotterObject as ColumnCategory;
+    let ColumnCategory: ColumnCategory = this.props.AdaptableObject as ColumnCategory;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
     let columnNames: string[] = ColumnCategory.ColumnIds.map(ci => {

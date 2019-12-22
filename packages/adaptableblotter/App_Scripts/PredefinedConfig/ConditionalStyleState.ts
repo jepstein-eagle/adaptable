@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 import { IStyle } from './Common/IStyle';
 
@@ -94,7 +94,7 @@ export interface ConditionalStyleState extends RunTimeState {
 /**
  * The ConditionalStyle object used in the Conditional Style function.
  */
-export interface ConditionalStyle extends AdaptableBlotterObject {
+export interface ConditionalStyle extends AdaptableObject {
   /**
    * The column which will be styled (if the scope is Column)
    */

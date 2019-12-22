@@ -12,8 +12,8 @@ import { ChartData } from '../../PredefinedConfig/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterMenuItem } from '../../PredefinedConfig/Common/Menu';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
@@ -94,11 +94,11 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(PopupRedux.PopupShowScreen(strategyId, componentName, popupParams));
   }
 
-  public setColumns(columns: AdaptableBlotterColumn[]): void {
+  public setColumns(columns: AdaptableColumn[]): void {
     this.dispatchAction(GridRedux.GridSetColumns(columns));
   }
 
-  public setMainMenuItems(menuItems: AdaptableBlotterMenuItem[]): void {
+  public setMainMenuItems(menuItems: AdaptableMenuItem[]): void {
     this.dispatchAction(GridRedux.SetMainMenuItems(menuItems));
   }
 
@@ -166,8 +166,8 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     return this.getBlotterState().Grid.IsGridInPivotMode;
   }
 
-  public addAdaptableBlotterColumn(adaptableBlotterColumn: AdaptableBlotterColumn): void {
-    this.dispatchAction(GridRedux.GridAddColumn(adaptableBlotterColumn));
+  public addAdaptableColumn(AdaptableColumn: AdaptableColumn): void {
+    this.dispatchAction(GridRedux.GridAddColumn(AdaptableColumn));
   }
 
   public setColumnSorts(columnSorts: ColumnSort[]): void {

@@ -18,7 +18,7 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
@@ -89,9 +89,9 @@ export class CustomSortSummaryComponent extends React.Component<
       <div>
         {customSortRow}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <CustomSortWizard
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as CustomSort}
+            EditedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
             ConfigEntities={this.props.CustomSorts}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -114,7 +114,7 @@ export class CustomSortSummaryComponent extends React.Component<
     let configEntity: CustomSort = ObjectFactory.CreateEmptyCustomSort();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableBlotterObject: configEntity,
+      EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.New,
     });
@@ -122,7 +122,7 @@ export class CustomSortSummaryComponent extends React.Component<
 
   onEdit(customSort: CustomSort) {
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(customSort),
+      EditedAdaptableObject: Helper.cloneObject(customSort),
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -130,28 +130,28 @@ export class CustomSortSummaryComponent extends React.Component<
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let customSort: CustomSort = this.state.EditedAdaptableBlotterObject as CustomSort;
+    let customSort: CustomSort = this.state.EditedAdaptableObject as CustomSort;
     if (this.props.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
       this.props.onEditCustomSort(customSort);
     } else {
       this.props.onAddCustomSort(customSort);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let customSort = this.state.EditedAdaptableBlotterObject as CustomSort;
+    let customSort = this.state.EditedAdaptableObject as CustomSort;
     return (
       StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&
       ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)
@@ -173,7 +173,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(CustomSortRedux.CustomSortAdd(customSort)),
     onEditCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortEdit(customSort)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId)),
   };
 }

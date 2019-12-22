@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { FreeTextColumnSettingsWizard } from './FreeTextColumnSettingsWizard';
 import { FreeTextColumnSummaryWizard } from './FreeTextColumnSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface FreeTextColumnWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<FreeTextColumnWizard> {}
+  extends AdaptableObjectExpressionAdaptableWizardProps<FreeTextColumnWizard> {}
 
 export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardProps, {}> {
   render() {
@@ -30,7 +30,7 @@ export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardPr
               Element: <FreeTextColumnSummaryWizard />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject}
+          Data={this.props.EditedAdaptableObject}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

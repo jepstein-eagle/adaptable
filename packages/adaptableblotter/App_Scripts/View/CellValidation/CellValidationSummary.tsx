@@ -18,7 +18,7 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 
 export interface CellValidationSummaryProps
@@ -30,7 +30,7 @@ export interface CellValidationSummaryProps
   onEditCellValidation: (
     cellValidationRule: CellValidationRule
   ) => CellValidationRedux.CellValidationEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class CellValidationSummaryComponent extends React.Component<
@@ -90,11 +90,9 @@ export class CellValidationSummaryComponent extends React.Component<
       <div>
         {strategySummaries}
 
-        {this.state.EditedAdaptableBlotterObject && (
+        {this.state.EditedAdaptableObject && (
           <CellValidationWizard
-            EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as CellValidationRule
-            }
+            EditedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -117,7 +115,7 @@ export class CellValidationSummaryComponent extends React.Component<
     let configEntity: CellValidationRule = ObjectFactory.CreateEmptyCellValidation();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableBlotterObject: configEntity,
+      EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.New,
     });
@@ -125,7 +123,7 @@ export class CellValidationSummaryComponent extends React.Component<
 
   onEdit(CellValidation: CellValidationRule) {
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(CellValidation),
+      EditedAdaptableObject: Helper.cloneObject(CellValidation),
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -133,7 +131,7 @@ export class CellValidationSummaryComponent extends React.Component<
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -141,7 +139,7 @@ export class CellValidationSummaryComponent extends React.Component<
 
   onFinishWizard() {
     let cellValidationRule: CellValidationRule = Helper.cloneObject(
-      this.state.EditedAdaptableBlotterObject
+      this.state.EditedAdaptableObject
     );
     if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddCellValidation(cellValidationRule);
@@ -150,14 +148,14 @@ export class CellValidationSummaryComponent extends React.Component<
     }
 
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let cellValidatinRule = this.state.EditedAdaptableBlotterObject as CellValidationRule;
+    let cellValidatinRule = this.state.EditedAdaptableObject as CellValidationRule;
     return true;
   }
 }
@@ -178,7 +176,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(CellValidationRedux.CellValidationAdd(cellValidationRule)),
     onEditCellValidation: (cellValidationRule: CellValidationRule) =>
       dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId)
       ),

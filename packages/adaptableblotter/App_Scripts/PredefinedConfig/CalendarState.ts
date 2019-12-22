@@ -1,10 +1,10 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableBlotterObject } from './Common/AdaptableBlotterObject';
+import { AdaptableObject } from './Common/AdaptableObject';
 export interface CalendarState extends RunTimeState {
   CurrentCalendar?: string;
 }
 
-export interface Calendar extends AdaptableBlotterObject {
+export interface Calendar extends AdaptableObject {
   Name: string;
   YearName: Number;
   CalendarEntries: CalendarEntry[];

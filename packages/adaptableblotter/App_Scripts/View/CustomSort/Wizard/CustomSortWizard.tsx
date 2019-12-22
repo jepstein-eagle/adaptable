@@ -4,11 +4,11 @@ import { CustomSortColumnWizard } from './CustomSortColumnWizard';
 import { CustomSortValuesWizard } from './CustomSortValuesWizard';
 import { CustomSortSummaryWizard } from './CustomSortSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
 
 export interface CustomSortWizardProps
-  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<CustomSortWizard> {}
+  extends AdaptableObjectExpressionAdaptableWizardProps<CustomSortWizard> {}
 
 export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}> {
   render() {
@@ -42,7 +42,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
             Element: <CustomSortSummaryWizard />,
           },
         ]}
-        Data={this.props.EditedAdaptableBlotterObject}
+        Data={this.props.EditedAdaptableObject}
         StepStartIndex={this.props.WizardStartIndex}
         onHide={() => this.props.onCloseWizard()}
         onFinish={() => this.props.onFinishWizard()}

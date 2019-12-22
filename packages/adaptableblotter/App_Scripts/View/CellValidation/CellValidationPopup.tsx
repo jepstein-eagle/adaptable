@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { AdaptableBlotterState } from '../../PredefinedConfig/AdaptableBlotterState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableBlotterColumn } from '../../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -24,7 +24,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';
@@ -38,7 +38,7 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
   onEditCellValidation: (
     cellValidationRule: CellValidationRule
   ) => CellValidationRedux.CellValidationEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class CellValidationPopupComponent extends React.Component<
@@ -57,7 +57,7 @@ class CellValidationPopupComponent extends React.Component<
           let cellValitdation = ObjectFactory.CreateEmptyCellValidation();
           cellValitdation.ColumnId = this.props.PopupParams.columnId;
           this.setState({
-            EditedAdaptableBlotterObject: cellValitdation,
+            EditedAdaptableObject: cellValitdation,
             WizardStartIndex: 1,
             WizardStatus: WizardStatus.New,
           });
@@ -91,7 +91,7 @@ class CellValidationPopupComponent extends React.Component<
         <CellValidationEntityRow
           key={index}
           colItems={colItems}
-          AdaptableBlotterObject={cellValidationRule}
+          AdaptableObject={cellValidationRule}
           Column={column}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
@@ -138,11 +138,9 @@ class CellValidationPopupComponent extends React.Component<
           </EmptyContent>
         )}
 
-        {this.state.EditedAdaptableBlotterObject != null && (
+        {this.state.EditedAdaptableObject != null && (
           <CellValidationWizard
-            EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as CellValidationRule
-            }
+            EditedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
             ConfigEntities={null}
             Blotter={this.props.Blotter}
             ModalContainer={this.props.ModalContainer}
@@ -163,7 +161,7 @@ class CellValidationPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCellValidation(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyCellValidation(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -171,7 +169,7 @@ class CellValidationPopupComponent extends React.Component<
 
   onEdit(CellValidation: CellValidationRule) {
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(CellValidation),
+      EditedAdaptableObject: Helper.cloneObject(CellValidation),
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -185,7 +183,7 @@ class CellValidationPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -197,7 +195,7 @@ class CellValidationPopupComponent extends React.Component<
 
   onFinishWizard() {
     let cellValidationRule: CellValidationRule = Helper.cloneObject(
-      this.state.EditedAdaptableBlotterObject
+      this.state.EditedAdaptableObject
     );
 
     if (this.state.WizardStatus == WizardStatus.New) {
@@ -206,7 +204,7 @@ class CellValidationPopupComponent extends React.Component<
       this.props.onEditCellValidation(cellValidationRule);
     }
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 5,
       WizardStatus: WizardStatus.None,
     });
@@ -214,7 +212,7 @@ class CellValidationPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let cellValidationRule = this.state.EditedAdaptableBlotterObject as CellValidationRule;
+    let cellValidationRule = this.state.EditedAdaptableObject as CellValidationRule;
     return (
       StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
       ExpressionHelper.IsNullOrEmptyOrValidExpression(cellValidationRule.Expression) &&
@@ -240,7 +238,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
       dispatch(CellValidationRedux.CellValidationAdd(cellValidationRule)),
     onEditCellValidation: (cellValidationRule: CellValidationRule) =>
       dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId)
       ),

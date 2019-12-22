@@ -21,7 +21,7 @@ export interface LayoutEntityRowProps<LayoutEntityRow>
 
 export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<LayoutEntityRow>, {}> {
   render(): any {
-    let layout: Layout = this.props.AdaptableBlotterObject as Layout;
+    let layout: Layout = this.props.AdaptableObject as Layout;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

@@ -15,8 +15,8 @@ import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
-import { AdaptableBlotterMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
-import { AdaptableBlotterColumn } from '../PredefinedConfig/Common/AdaptableBlotterColumn';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
@@ -25,7 +25,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     super(StrategyConstants.SmartEditStrategyId, blotter);
   }
 
-  public addFunctionMenuItem(): AdaptableBlotterMenuItem | undefined {
+  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
       Label: StrategyConstants.SmartEditStrategyName,
       ComponentName: ScreenPopups.SmartEditPopup,
@@ -33,7 +33,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     });
   }
 
-  public addContextMenuItem(menuInfo: MenuInfo): AdaptableBlotterMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     // not sure if this is right but logic is that
     // if the context cell is one of a selection taht can have smart edit applied
     // then open the smart edit screen
@@ -110,7 +110,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       };
     }
 
-    let column: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
+    let column: AdaptableColumn = selectedCellInfo.Columns[0];
     if (column) {
       if (column.DataType != DataType.Number) {
         return {
@@ -150,7 +150,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
     if (!this.blotter.api.internalApi.isGridInPivotMode()) {
       if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
-        let column: AdaptableBlotterColumn = selectedCellInfo.Columns[0];
+        let column: AdaptableColumn = selectedCellInfo.Columns[0];
         if (column) {
           columnId = column.ColumnId;
 

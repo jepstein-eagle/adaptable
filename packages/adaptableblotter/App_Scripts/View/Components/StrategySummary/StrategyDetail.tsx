@@ -3,13 +3,13 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { EntityListActionButtons } from '../Buttons/EntityListActionButtons';
 import { SummaryRowItem } from './SummaryRowItem';
-import { AdaptableBlotterObject } from '../../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
 
 export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetail> {
   key: string;
   Item1: any;
   Item2: any;
-  ConfigEnity: AdaptableBlotterObject;
+  ConfigEnity: AdaptableObject;
   EntityType: string;
   onEdit: () => void;
   onShare: () => void;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from 'redux';
-import { AdaptableBlotterColumn } from '../../../PredefinedConfig/Common/AdaptableBlotterColumn';
-import { AdaptableBlotterObject } from '../../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
@@ -13,9 +13,9 @@ export interface BaseRowProps<View> extends React.ClassAttributes<View> {
 }
 
 export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
-  AdaptableBlotterObject: AdaptableBlotterObject;
+  AdaptableObject: AdaptableObject;
   onDeleteConfirm: Redux.Action;
-  onEdit: (adaptableBlotterObject: AdaptableBlotterObject) => void;
+  onEdit: (AdaptableObject: AdaptableObject) => void;
 }
 
 // shared props
@@ -27,12 +27,12 @@ export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
 
 // Expression props
 export interface ExpressionEntityRowProps<View> extends BaseEntityRowProps<View> {
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
 }
 
 // Shared and Expression Props
 export interface SharedEntityExpressionRowProps<View> extends SharedEntityRowProps<View> {
-  Columns: AdaptableBlotterColumn[];
+  Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
 }

@@ -25,7 +25,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
-import { AdaptableBlotterObject } from '../../PredefinedConfig/Common/AdaptableBlotterObject';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import SimpleButton from '../../components/SimpleButton';
 
@@ -33,7 +33,7 @@ interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
   onAddAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionAddAction;
   onEditAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionEditAction;
-  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfigEntityState> {
@@ -48,7 +48,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
           let alertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
           alertDefinition.ColumnId = this.props.PopupParams.columnId;
           this.setState({
-            EditedAdaptableBlotterObject: alertDefinition,
+            EditedAdaptableObject: alertDefinition,
             WizardStartIndex: 1,
             WizardStatus: WizardStatus.New,
           });
@@ -77,7 +77,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         <AlertEntityRow
           key={index}
           colItems={colItems}
-          AdaptableBlotterObject={alertDefinition}
+          AdaptableObject={alertDefinition}
           Column={column}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
@@ -123,9 +123,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
         {this.state.WizardStatus != WizardStatus.None && (
           <AlertWizard
-            EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as AlertDefinition
-            }
+            EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -146,7 +144,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
   createAlertDefinition() {
     this.setState({
-      EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyAlertDefinition(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyAlertDefinition(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -159,7 +157,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
   onEdit(alert: AlertDefinition) {
     this.setState({
-      EditedAdaptableBlotterObject: Helper.cloneObject(alert),
+      EditedAdaptableObject: Helper.cloneObject(alert),
       WizardStartIndex: 1,
       WizardStatus: WizardStatus.Edit,
     });
@@ -168,7 +166,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
@@ -176,20 +174,20 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
   onFinishWizard() {
     if (this.state.WizardStatus == WizardStatus.New) {
-      this.props.onAddAlert(this.state.EditedAdaptableBlotterObject as AlertDefinition);
+      this.props.onAddAlert(this.state.EditedAdaptableObject as AlertDefinition);
     } else if (this.state.WizardStatus == WizardStatus.Edit) {
-      this.props.onEditAlert(this.state.EditedAdaptableBlotterObject as AlertDefinition);
+      this.props.onEditAlert(this.state.EditedAdaptableObject as AlertDefinition);
     }
 
     this.setState({
-      EditedAdaptableBlotterObject: null,
+      EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let AlertRule = this.state.EditedAdaptableBlotterObject as AlertDefinition;
+    let AlertRule = this.state.EditedAdaptableObject as AlertDefinition;
     return (
       StringExtensions.IsNotNullOrEmpty(AlertRule.ColumnId) &&
       ExpressionHelper.IsNullOrEmptyOrValidExpression(AlertRule.Expression)
@@ -207,7 +205,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableBlott
   return {
     onAddAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(alert)),
     onEditAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(alert)),
-    onShare: (entity: AdaptableBlotterObject) =>
+    onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
   };
 }

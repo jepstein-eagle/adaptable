@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
-import { AdaptableBlotterColumn } from './AdaptableBlotterColumn';
+import { AdaptableColumn } from './AdaptableColumn';
 
 /*
 The Adaptable Blotter provides 3 menus:
@@ -36,7 +36,7 @@ Like with the Column Menu,the Context menu is created EACH TIME that it is opene
  *
  * -Context Menu: when you right-click in the grid.
  */
-export interface AdaptableBlotterMenuItem {
+export interface AdaptableMenuItem {
   Label: string;
   StrategyId: string;
   ReduxAction?: Redux.Action;
@@ -49,7 +49,7 @@ export interface MenuInfo {
   // the cell that has been clicked
   gridCell: GridCell;
   // the column in which the cell was clicked
-  column: AdaptableBlotterColumn;
+  column: AdaptableColumn;
   // whether or not the cell clicked is one that is currently selected.
   // important for strategies like Smart Edit where we act on more than one cell
   // our assumption is that we will only do things if the cell clicked is also selected
