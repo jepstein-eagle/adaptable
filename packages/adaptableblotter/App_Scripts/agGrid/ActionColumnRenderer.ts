@@ -1,5 +1,4 @@
 import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
-
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { ActionColumn, ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';

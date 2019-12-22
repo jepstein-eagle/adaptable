@@ -11,7 +11,6 @@ module.exports = {
     './App_Scripts/Utilities/**/*',
     './App_Scripts/BlotterInterfaces/**/*',
     './App_Scripts/fonts/**/*',
-    './App_Scripts/Temp/**/*',
     './App_Scripts/themes/**/*',
     './App_Scripts/Api/Implementation/**/*',
   ],

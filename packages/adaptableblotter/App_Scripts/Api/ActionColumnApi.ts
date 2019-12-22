@@ -5,7 +5,15 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  *  **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/column/aggridactioncolumnsdemo/) | [State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
+ * -[Demo Site](https://demo.adaptableblotter.com/column/aggridactioncolumnsdemo/)
+ *
+ * -[State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
+ *
+ * -[FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ)
+ *
+ * -[Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos)
+ *
+ * -[User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *
  */
 export interface ActionColumnApi {

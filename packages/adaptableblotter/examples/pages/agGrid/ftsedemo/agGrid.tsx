@@ -9,7 +9,7 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
-import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
@@ -20,7 +20,7 @@ function InitAdaptableBlotter() {
     gridOptions,
     'ftse demo'
   );
-  const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
+  const api = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 export default () => {

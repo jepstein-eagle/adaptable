@@ -13,6 +13,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AdaptableMenuItem, MenuInfo } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
+import { ALL_DATA_REPORT } from '../../../../App_Scripts/Utilities/Constants/GeneralConstants';
 
 var blotterApi: BlotterApi;
 function InitAdaptableBlotter() {
@@ -54,7 +55,16 @@ let demoConfig: PredefinedConfig = {
   },
 
   UserInterface: {
-    ColumnMenuItems: [
+    ColumnMenuItems: (menuinfo: MenuInfo) => {
+      return [
+        {
+          Label: 'hello',
+          UserMenuItemClickedFunction: (menuInfo: MenuInfo) => null,
+        },
+      ];
+    },
+
+    /*
       {
         Label: 'Column Menu 1',
         UserMenuItemClickedFunction: (menuInfo: MenuInfo) => {
@@ -77,7 +87,7 @@ let demoConfig: PredefinedConfig = {
           },
         ],
       },
-    ],
+      */
 
     ContextMenuItems: [
       {

@@ -4,19 +4,8 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 import { GridOptions } from 'ag-grid-community';
-import {
-  AdaptableBlotterOptions,
-  IAdaptableBlotter,
-  ColumnStateChangedEventArgs,
-} from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { StateChangedTrigger } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
-import { QuickSearchState } from '../../../../App_Scripts/PredefinedConfig/QuickSearchState';
-import { AdvancedSearchState } from '../../../../App_Scripts/PredefinedConfig/AdvancedSearchState';
-import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
-
-var adaptableblotter1: IAdaptableBlotter;
-var adaptableblotter2: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -32,7 +21,7 @@ function InitAdaptableBlotter() {
     adaptableBlotterContainer: 'adaptableBlotter1',
     vendorContainer: 'grid1',
   };
-  adaptableblotter1 = new AdaptableBlotter(adaptableBlotterOptions1);
+  const api1 = AdaptableBlotter.init(adaptableBlotterOptions1);
 
   // second blotter
   const tradeData2: any = examplesHelper.getTrades(500);
@@ -45,46 +34,8 @@ function InitAdaptableBlotter() {
     adaptableBlotterContainer: 'adaptableBlotter2',
     vendorContainer: 'grid2',
   };
-  adaptableblotter2 = new AdaptableBlotter(adaptableBlotterOptions2);
-
-  // adaptableblotter2.syncWithBlotter(adaptableblotter1);
-
-  //  adaptableblotter1.api.eventApi
-  //    .onStateChanged()
-  //    .Subscribe((sender, stateChangedArgs) => listenToStateChangeBlotter1(stateChangedArgs));
-
-  //   adaptableblotter2.api.eventApi
-  //   .onStateChanged()
-  //    .Subscribe((sender, stateChangedArgs) => listenToStateChangeBlotter2(stateChangedArgs));
+  const api2 = AdaptableBlotter.init(adaptableBlotterOptions2);
 }
-
-function listenToStateChangeBlotter1(stateChangedArgs: AuditLogEventArgs) {
-  let stateChangedInfo = stateChangedArgs.data[0].id;
-
-  if (stateChangedInfo.stateChangedTrigger == StateChangedTrigger.QuickSearch) {
-    let quickSearchState: QuickSearchState = stateChangedInfo.userState as QuickSearchState;
-    adaptableblotter2.api.quickSearchApi.setQuickSearchState(quickSearchState);
-  }
-  if (stateChangedInfo.stateChangedTrigger == StateChangedTrigger.AdvancedSearch) {
-    let advancedSearhState: AdvancedSearchState = stateChangedInfo.userState as AdvancedSearchState;
-    adaptableblotter2.api.advancedSearchApi.setAdvancedSearchState(advancedSearhState);
-  }
-}
-function listenToStateChangeBlotter2(stateChangedArgs: StateChangedEventArgs) {
-  let stateChangedInfo = stateChangedArgs.data[0].id;
-
-  if (stateChangedInfo.stateChangedTrigger == StateChangedTrigger.QuickSearch) {
-    let quickSearchState: QuickSearchState = stateChangedInfo.userState as QuickSearchState;
-    adaptableblotter1.api.quickSearchApi.setQuickSearchState(quickSearchState);
-  }
-  if (stateChangedInfo.stateChangedTrigger == StateChangedTrigger.AdvancedSearch) {
-    let advancedSearhState: AdvancedSearchState = stateChangedInfo.userState as AdvancedSearchState;
-    adaptableblotter1.api.advancedSearchApi.setAdvancedSearchState(advancedSearhState);
-  }
-}
-
-let blotter1Json = {};
-let blotter2Json = {};
 
 export default () => {
   useEffect(() => {

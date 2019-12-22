@@ -9,11 +9,13 @@ import { MenuInfo } from './Common/Menu';
  *
  * **Further Resources**
  *
- * [User Interface Demo](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/)
+ * -[Column Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcolumnmenudemo/)
  *
- * [User Interface API](_api_userinterfaceapi_.userinterfaceapi.html)
+ * -[Context Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcontextmenudemo/)
  *
- * [Advanced Search FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004951-Advanced-Search-FAQ)
+ * -[User Interface API](_api_userinterfaceapi_.userinterfaceapi.html)
+ *
+ * -[User Interface FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004751-Look-and-Feel-FAQ)
  **/
 export interface UserInterfaceState extends DesignTimeState {
   /**
@@ -22,6 +24,8 @@ export interface UserInterfaceState extends DesignTimeState {
    * This is used for those Functions that create a Style (e.g. Conditional Style, Format Column)
    *
    * **Please provide a list of hex values**
+   *
+   *  **Default Value**:  Empty array
    * */
 
   ColorPalette?: string[];
@@ -35,6 +39,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * **You must ensure that any style name you list here is available to the Adaptable Blotter in a stylesheet that you provide**
    *
+   *  **Default Value**:  Empty array
    */
   StyleClassNames?: string[];
 
@@ -55,6 +60,8 @@ export interface UserInterfaceState extends DesignTimeState {
    * If there are no Permitted Values for the Column then the Adaptable Blotter will fetch all the distinct values in the Column and populate the Dropdown with them.
    *
    * **The column must also be marked as editable in the column schema for the Dropdown to appear.**
+   *
+   *  **Default Value**:  Empty array
    */
   EditLookUpColumns?: EditLookUpColumn[];
 
@@ -64,11 +71,35 @@ export interface UserInterfaceState extends DesignTimeState {
    * You can choose to style All, Odd or Even rows (the last 2 are used for when wanting to have alternating row styles).
    *
    * **note if this is left empty (the default) then the row style in the Grid theme will be used**
+   *
+   *  **Default Value**:  Empty array
    */
   RowStyles?: RowStyle[];
 
+  /**
+   * Additional items to add to the Column Menu (the one that appears as a dropdown in each Column Header).
+   *
+   * You can add as many `UserMenuItem`s as you wish.  And each Menu Item can take an array of sub items.
+   *
+   * You can provide either a standard arry of Menu Items or a function which will return an array of MenuItems depending on the `MenuInfo`.
+   *
+   * If you want to control which of the shipped Adaptable Blotter Column Menu items are showns use the `showAdaptableColumnMenu` property in [General Options](_blotteroptions_generaloptions_.generaloptions.html)
+   *
+   * **Default Value**:  Empty array
+   */
   ColumnMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
 
+  /**
+   * Additional items to add to the Context Menu (the one that appears when you right-click a cell in the Grid).
+   *
+   * You can add as many `UserMenuItem`s as you wish.  And each Menu Item can take an array of sub items.
+   *
+   * You can provide either a standard arry of Menu Items or a function which will return an array of MenuItems depending on the `MenuInfo`.
+   *
+   * If you want to control which of the shipped Adaptable Blotter Context Menu items are showns use the `showAdaptableContextMenu` property in [General Options](_blotteroptions_generaloptions_.generaloptions.html)
+   *
+   * **Default Value**:  Empty array
+   */
   ContextMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
 }
 
