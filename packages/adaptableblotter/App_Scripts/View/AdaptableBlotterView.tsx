@@ -158,7 +158,7 @@ export const AdaptableBlotterApp = ({
 }: {
   AdaptableBlotter: IAdaptableBlotter;
 }) => (
-  <Provider store={AdaptableBlotter.adaptableBlotterStore.TheStore}>
+  <Provider store={AdaptableBlotter.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <AdaptableBlotterWrapper Blotter={AdaptableBlotter} />
     </ThemeProvider>

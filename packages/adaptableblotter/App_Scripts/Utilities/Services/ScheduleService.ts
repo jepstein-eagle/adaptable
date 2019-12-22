@@ -63,9 +63,7 @@ export class ScheduleService implements IScheduleService {
 
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
-    this.blotter.adaptableBlotterStore.TheStore.subscribe(() =>
-      this.listenToScheduleStoreChanges()
-    );
+    this.blotter.AdaptableStore.TheStore.subscribe(() => this.listenToScheduleStoreChanges());
     this.reminderJobs = [];
     this.exportJobs = [];
 

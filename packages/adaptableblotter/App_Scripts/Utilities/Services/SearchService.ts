@@ -31,7 +31,7 @@ export class SearchService implements ISearchService {
   constructor(blotter: IAdaptableBlotter) {
     this.blotter = blotter;
 
-    this.blotter.adaptableBlotterStore.onAny((eventName: string) => {
+    this.blotter.AdaptableStore.onAny((eventName: string) => {
       if (this.blotter.isInitialised) {
         if (
           eventName == AdvancedSearchRedux.ADVANCED_SEARCH_ADD ||

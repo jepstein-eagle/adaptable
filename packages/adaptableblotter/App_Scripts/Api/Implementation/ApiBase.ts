@@ -44,7 +44,7 @@ export abstract class ApiBase {
    * @param action the Redux Action to be dispatched
    */
   protected dispatchAction(action: Action): void {
-    this.blotter.adaptableBlotterStore.TheStore.dispatch(action);
+    this.blotter.AdaptableStore.TheStore.dispatch(action);
   }
 
   /**
@@ -53,6 +53,6 @@ export abstract class ApiBase {
    * This is a simple *getState()* call
    */
   public getBlotterState(): AdaptableState {
-    return this.blotter.adaptableBlotterStore.TheStore.getState();
+    return this.blotter.AdaptableStore.TheStore.getState();
   }
 }

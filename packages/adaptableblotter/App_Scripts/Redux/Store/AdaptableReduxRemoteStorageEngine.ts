@@ -49,7 +49,7 @@ const loadState: AdaptableBlotterLoadStateFunction = ({ userName, blotterId, url
     .then(response => response.json());
 };
 
-class AdaptableBlotterRemoteStorageEngine implements IStorageEngine {
+class AdaptableRemoteStorageEngine implements IStorageEngine {
   private url: string;
   private userName: string;
   private blotterId: string;
@@ -105,7 +105,7 @@ export function createEngine({
   persistState?: AdaptableBlotterPersistStateFunction;
   loadState?: AdaptableBlotterLoadStateFunction;
 }): IStorageEngine {
-  return new AdaptableBlotterRemoteStorageEngine({
+  return new AdaptableRemoteStorageEngine({
     url,
     userName,
     blotterId,

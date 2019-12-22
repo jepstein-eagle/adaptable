@@ -40,8 +40,8 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 // redux / store
-import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
-import { AdaptableBlotterStore, INIT_STATE } from '../Redux/Store/AdaptableBlotterStore';
+import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
+import { AdaptableStore, INIT_STATE } from '../Redux/Store/AdaptableStore';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
@@ -206,7 +206,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public strategies: IStrategyCollection;
 
-  public adaptableBlotterStore: IAdaptableBlotterStore;
+  public AdaptableStore: IAdaptableStore;
 
   public blotterOptions: AdaptableBlotterOptions;
 
@@ -367,10 +367,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.strategies = this.agGridHelper.setUpStrategies();
 
     // Load the store
-    this.adaptableBlotterStore.Load.then(
+    this.AdaptableStore.Load.then(
       () => this.strategies.forEach(strat => strat.initializeWithRedux()),
       e => {
-        LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
+        LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableStore : ', e);
         // for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
         this.strategies.forEach(strat => strat.initializeWithRedux());
         this.api.internalApi.hideLoadingScreen(); // doesnt really help but at least clears the screen
@@ -414,8 +414,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   private initStore() {
-    this.adaptableBlotterStore = new AdaptableBlotterStore(this);
-    this.adaptableBlotterStore.onAny((eventName: string) => {
+    this.AdaptableStore = new AdaptableStore(this);
+    this.AdaptableStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
         // and reset state also?
         this.api.eventApi.emit('BlotterReady', this.blotterOptions.blotterId);
@@ -2724,7 +2724,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               this.getState().System.QuickSearchVisibleColumnExpressions
             );
             quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
-            this.adaptableBlotterStore.TheStore.dispatch(
+            this.AdaptableStore.TheStore.dispatch(
               SystemRedux.QuickSearchSetVisibleColumnExpressions(
                 quickSearchVisibleColumnExpressions
               )
@@ -3114,7 +3114,7 @@ import "adaptableblotter/themes/${themeName}.css"`);
 
   // A couple of state management functions
   private getState(): AdaptableState {
-    return this.adaptableBlotterStore.TheStore.getState();
+    return this.AdaptableStore.TheStore.getState();
   }
 }
 

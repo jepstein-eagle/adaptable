@@ -27,15 +27,15 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
   public createQuickSearchRange() {
     // if searchText is empty then set clear both types, otherwise set them
     if (StringExtensions.IsNullOrEmpty(this.blotter.api.quickSearchApi.getQuickSearchValue())) {
-      this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
-      this.blotter.adaptableBlotterStore.TheStore.dispatch(
+      this.blotter.AdaptableStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
+      this.blotter.AdaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchClearVisibleColumnExpressions()
       );
     } else {
       let quickSearchRange: QueryRange = RangeHelper.CreateValueRangeFromOperand(
         this.blotter.api.quickSearchApi.getQuickSearchValue()
       );
-      this.blotter.adaptableBlotterStore.TheStore.dispatch(
+      this.blotter.AdaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchSetRange(quickSearchRange)
       );
 
@@ -59,7 +59,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
           quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
         }
       }
-      this.blotter.adaptableBlotterStore.TheStore.dispatch(
+      this.blotter.AdaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions)
       );
     }

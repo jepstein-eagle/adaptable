@@ -29,7 +29,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
   public initializeWithRedux() {
     this.InitState();
-    this.blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState());
+    this.blotter.AdaptableStore.TheStore.subscribe(() => this.InitState());
   }
 
   public setStrategyEntitlement(): void {

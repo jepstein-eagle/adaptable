@@ -343,7 +343,7 @@ export let QuickFilterForm = connect(
 )(QuickFilterFormComponent);
 
 export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
+  <Provider store={FilterContext.Blotter.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <QuickFilterForm
         Blotter={FilterContext.Blotter}

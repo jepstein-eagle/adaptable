@@ -288,94 +288,91 @@ export class StyleService implements IStyleService {
   // I suspsect it is so we dont have lots of bits of state being stored and compared
   private setUpStoreListeners() {
     //  Quick Search - no need to set up styles for Quick Search as done in AB not the Strategy = need to test!!!
-    this.blotter.adaptableBlotterStore.on(QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY, () => {
+    this.blotter.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY, () => {
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(QuickSearchRedux.QUICK_SEARCH_SET_STYLE, () => {
+    this.blotter.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_STYLE, () => {
       this.createAdaptableBlotterFunctionStyles();
     });
 
     // Format Column
-    this.blotter.adaptableBlotterStore.on(FormatColumnRedux.FORMAT_COLUMN_ADD, () => {
+    this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_ADD, () => {
       this.setUpFormatColumn();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(FormatColumnRedux.FORMAT_COLUMN_EDIT, () => {
+    this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_EDIT, () => {
       this.setUpFormatColumn();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(FormatColumnRedux.FORMAT_COLUMN_DELETE, () => {
+    this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_DELETE, () => {
       this.setUpFormatColumn();
       this.createAdaptableBlotterFunctionStyles();
     });
 
     // Conditional Style
-    this.blotter.adaptableBlotterStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_ADD, () => {
+    this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_ADD, () => {
       this.setUpConditionalStyle();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT, () => {
+    this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT, () => {
       this.setUpConditionalStyle();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE, () => {
+    this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE, () => {
       this.setUpConditionalStyle();
       this.createAdaptableBlotterFunctionStyles();
     });
 
     // Alert Definition (note we dont need to create styles)
-    this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
+    this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
       this.setUpAlerts();
       // this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
+    this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
       this.setUpAlerts();
       // this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
+    this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
       this.setUpAlerts();
       //  this.createAdaptableBlotterFunctionStyles();
     });
 
     // Updated Row
-    this.blotter.adaptableBlotterStore.on(UpdatedRowRedux.UPDATED_ROW_ENABLE_DISABLE, () => {
+    this.blotter.AdaptableStore.on(UpdatedRowRedux.UPDATED_ROW_ENABLE_DISABLE, () => {
       this.setUpUpdatedRow();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(UpdatedRowRedux.UP_COLOR_SET, () => {
+    this.blotter.AdaptableStore.on(UpdatedRowRedux.UP_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(UpdatedRowRedux.DOWN_COLOR_SET, () => {
+    this.blotter.AdaptableStore.on(UpdatedRowRedux.DOWN_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(UpdatedRowRedux.NEUTRAL_COLOR_SET, () => {
+    this.blotter.AdaptableStore.on(UpdatedRowRedux.NEUTRAL_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableBlotterFunctionStyles();
     });
 
     // Flashing Cell
-    this.blotter.adaptableBlotterStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT, () => {
+    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT, () => {
       this.setUpFlashingCells();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT_ALL, () => {
+    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT_ALL, () => {
       this.setUpFlashingCells();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_UP_COLOR, () => {
+    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_UP_COLOR, () => {
       this.setUpFlashingCells();
       this.createAdaptableBlotterFunctionStyles();
     });
-    this.blotter.adaptableBlotterStore.on(
-      FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR,
-      () => {
-        this.setUpFlashingCells();
-        this.createAdaptableBlotterFunctionStyles();
-      }
-    );
-    this.blotter.adaptableBlotterStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION, () => {
+    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR, () => {
+      this.setUpFlashingCells();
+      this.createAdaptableBlotterFunctionStyles();
+    });
+    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION, () => {
       this.setUpFlashingCells();
       this.createAdaptableBlotterFunctionStyles();
     });

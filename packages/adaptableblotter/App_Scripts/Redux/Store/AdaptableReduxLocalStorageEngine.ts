@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { MergeStateFunction } from './AdaptableBlotterReduxMerger';
+import { MergeStateFunction } from './AdaptableReduxMerger';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 
@@ -40,7 +40,7 @@ const loadState: AdaptableBlotterLoadStateFunction = ({ blotterId }) => {
   return Promise.resolve(parsedJsonState);
 };
 
-class AdaptableBlotterReduxLocalStorageEngine implements IStorageEngine {
+class AdaptableReduxLocalStorageEngine implements IStorageEngine {
   private blotterId: string;
   private userName: string;
   private predefinedConfig: PredefinedConfig | string;
@@ -109,5 +109,5 @@ export function createEngine(config: {
   loadState?: AdaptableBlotterLoadStateFunction;
   persistState?: AdaptableBlotterPersistStateFunction;
 }): IStorageEngine {
-  return new AdaptableBlotterReduxLocalStorageEngine(config);
+  return new AdaptableReduxLocalStorageEngine(config);
 }

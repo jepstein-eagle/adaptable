@@ -7,9 +7,9 @@ import {
 import * as Redux from 'redux';
 import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createEngine as createEngineRemote } from './AdaptableBlotterReduxRemoteStorageEngine';
-import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
-import { mergeReducer } from './AdaptableBlotterReduxMerger';
+import { createEngine as createEngineRemote } from './AdaptableReduxRemoteStorageEngine';
+import { createEngine as createEngineLocal } from './AdaptableReduxLocalStorageEngine';
+import { mergeReducer } from './AdaptableReduxMerger';
 
 import * as PopupRedux from '../ActionsReducers/PopupRedux';
 import * as ChartRedux from '../ActionsReducers/ChartRedux';
@@ -60,7 +60,7 @@ import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrateg
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
-import { IAdaptableBlotterStore } from './Interface/IAdaptableStore';
+import { IAdaptableStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
 import { LayoutState, VendorGridInfo } from '../../PredefinedConfig/LayoutState';
@@ -268,7 +268,7 @@ const rootReducerWithResetManagement = (state: AdaptableState, action: Redux.Act
 // const configServerUrl = "/adaptableblotter-config"
 const configServerTeamSharingUrl = '/adaptableblotter-teamsharing';
 
-export class AdaptableBlotterStore implements IAdaptableBlotterStore {
+export class AdaptableStore implements IAdaptableStore {
   public TheStore: Redux.Store<AdaptableState>;
   public Load: PromiseLike<any>;
   private emitter: Emitter;
@@ -2377,9 +2377,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)

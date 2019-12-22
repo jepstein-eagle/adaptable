@@ -1,5 +1,5 @@
 import { AdaptableBlotterOptions } from '../types';
-import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
+import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection, IStrategy } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
@@ -77,7 +77,7 @@ export interface IAdaptableBlotter {
    *
    * Ideally all access to and from the store should be via the Blotter API and this store should NOT be accessed directly.
    */
-  adaptableBlotterStore: IAdaptableBlotterStore;
+  AdaptableStore: IAdaptableStore;
 
   /**
    * Each set of functionality in the Adaptable Blotter is called a strategy (e.g. Quick Search, Export)

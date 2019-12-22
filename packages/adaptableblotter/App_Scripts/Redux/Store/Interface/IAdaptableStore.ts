@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 
-export interface IAdaptableBlotterStore {
+export interface IAdaptableStore {
   TheStore: Redux.Store<AdaptableState>;
   Load: PromiseLike<any>;
 

@@ -544,7 +544,7 @@ export let FilterForm = connect(
 )(FilterFormComponent);
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
+  <Provider store={FilterContext.Blotter.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <FilterForm
         Blotter={FilterContext.Blotter}

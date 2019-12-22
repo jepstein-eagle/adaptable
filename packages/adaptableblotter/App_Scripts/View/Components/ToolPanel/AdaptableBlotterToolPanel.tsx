@@ -248,7 +248,7 @@ export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableBlotterToolPanel
       this.gui = document.createElement('div');
       this.gui.id = 'adaptable-blotter-tool-panel_' + this.ctx.Blotter.blotterOptions.blotterId;
       render(
-        <Provider store={this.ctx.Blotter.adaptableBlotterStore.TheStore}>
+        <Provider store={this.ctx.Blotter.AdaptableStore.TheStore}>
           <ThemeProvider theme={theme}>
             <ConnectedAdaptableBlotterToolPanel
               Blotter={this.ctx.Blotter}

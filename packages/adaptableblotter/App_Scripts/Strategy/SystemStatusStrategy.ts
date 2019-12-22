@@ -17,7 +17,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.SystemStatusStrategyId, blotter);
 
-    blotter.adaptableBlotterStore.onAny((eventName: string) => {
+    blotter.AdaptableStore.onAny((eventName: string) => {
       if (
         eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_UPDATE ||
         eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_SHOW_ALERT ||
