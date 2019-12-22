@@ -93,7 +93,7 @@ export class PushPullService implements IPushPullService {
         })) as IPushPullDomain[];
       })
       .catch((error: any) => {
-        LoggingHelper.LogAdaptableBlotterError("couldn't get Domain/Pages from IPP : ", error);
+        LoggingHelper.LogAdaptableError("couldn't get Domain/Pages from IPP : ", error);
         throw error.message;
       });
   }
@@ -105,7 +105,7 @@ export class PushPullService implements IPushPullService {
     return new Promise<any>((resolve: any, reject: any) => {
       const page: any = new this.ppInstance.Page(pageIPP, folderIPP);
       page.on(page.EVENT_NEW_CONTENT, () => {
-        LoggingHelper.LogAdaptableBlotterInfo(`Page Ready : ${pageIPP}`);
+        LoggingHelper.LogAdaptableInfo(`Page Ready : ${pageIPP}`);
         this.pages.set(pageIPP, page);
         resolve(page);
         // we return true so it removes the listener for new content.
@@ -120,7 +120,7 @@ export class PushPullService implements IPushPullService {
     if (pageIPP) {
       pageIPP.destroy();
       this.pages.delete(page);
-      LoggingHelper.LogAdaptableBlotterInfo(`Page Unloaded : ${page}`);
+      LoggingHelper.LogAdaptableInfo(`Page Unloaded : ${page}`);
     }
   }
 
@@ -130,12 +130,10 @@ export class PushPullService implements IPushPullService {
     }
     this.ppInstance.Page.create(folderId, page)
       .then((page: any) => {
-        LoggingHelper.LogAdaptableBlotterSuccess("Page: '" + page + "' successfully created.");
+        LoggingHelper.LogAdaptableSuccess("Page: '" + page + "' successfully created.");
       })
       .catch((err: any) => {
-        LoggingHelper.LogAdaptableBlotterError(
-          "Couldn't create Page: '" + page + "'. Reason: " + err
-        );
+        LoggingHelper.LogAdaptableError("Couldn't create Page: '" + page + "'. Reason: " + err);
       });
   }
 
@@ -209,11 +207,11 @@ export class PushPullService implements IPushPullService {
       );
       pageIPP.push().then(
         () => {
-          LoggingHelper.LogAdaptableBlotterSuccess(`Data pushed for iPushPull page : ${page}`);
+          LoggingHelper.LogAdaptableSuccess(`Data pushed for iPushPull page : ${page}`);
           resolve();
         },
         (err: any) => {
-          LoggingHelper.LogAdaptableBlotterInfo(`Error pushing data for iPushPull page : ${page}`);
+          LoggingHelper.LogAdaptableInfo(`Error pushing data for iPushPull page : ${page}`);
           reject();
         }
       );

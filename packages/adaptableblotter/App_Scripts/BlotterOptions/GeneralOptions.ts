@@ -55,9 +55,9 @@ export interface GeneralOptions {
   preventDuplicatePrimaryKeyValues?: boolean;
 
   /**
-   * Whether or not to show a Blotter Tool Panel on the right hand side (ag-Grid only).
+   * Whether or not to show an Adaptable Tool Panel on the right hand side (ag-Grid only).
    *
-   * Note - the toolpanel is not yet operational and will be released in the Summer of 2019.
+   * Note - the toolpanel is not yet operational and will be released in v.6 (January 2020).
    *
    * **Default Value: false**
    */

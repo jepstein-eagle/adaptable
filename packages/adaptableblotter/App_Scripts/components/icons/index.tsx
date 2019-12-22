@@ -194,7 +194,7 @@ export const Icon = ({
   const IconCmp = (allIcons[name] || null) as ReactComponentLike;
 
   if (!IconCmp) {
-    LoggingHelper.LogAdaptableBlotterWarning('NO icon found for ' + name);
+    LoggingHelper.LogAdaptableWarning('NO icon found for ' + name);
     return <svg />;
   }
 

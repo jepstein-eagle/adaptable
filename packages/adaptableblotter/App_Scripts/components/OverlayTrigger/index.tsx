@@ -93,7 +93,7 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
   useEffect(() => {
     const target = (domRef as any).current.previousSibling;
     if (!target) {
-      LoggingHelper.LogAdaptableBlotterWarning(
+      LoggingHelper.LogAdaptableWarning(
         'No OverlayTrigger target - make sure you render a child inside the OverlayTrigger, which will be the overlay target'
       );
       return;

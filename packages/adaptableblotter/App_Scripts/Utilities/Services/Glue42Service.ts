@@ -1,6 +1,6 @@
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import LoggingHelper, { LogAdaptableBlotterError } from '../Helpers/LoggingHelper';
+import LoggingHelper, { LogAdaptableError } from '../Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
 import Helper from '../Helpers/Helper';
 import ColumnHelper from '../Helpers/ColumnHelper';
@@ -80,7 +80,7 @@ export class Glue42Service implements IGlue42Service {
       this.subscribeToAddinStatusChanges();
       this.blotter.api.internalApi.setGlue42AvailableOn();
     } catch (error) {
-      LogAdaptableBlotterError(error);
+      LogAdaptableError(error);
       this.blotter.api.internalApi.setGlue42AvailableOff();
     }
   }
@@ -306,7 +306,7 @@ export class Glue42Service implements IGlue42Service {
           isResolved: false,
         };
 
-        LoggingHelper.LogAdaptableBlotterWarning("[Excel] Application isn't running!");
+        LoggingHelper.LogAdaptableWarning("[Excel] Application isn't running!");
       });
     } catch (error) {
       this.isExcelStatus = {

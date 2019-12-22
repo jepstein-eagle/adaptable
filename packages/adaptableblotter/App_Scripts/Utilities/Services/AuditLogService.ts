@@ -315,11 +315,11 @@ export class AuditLogService implements IAuditLogService {
     };
     let xhr = new XMLHttpRequest();
     xhr.onerror = (ev: any) => {
-      LoggingHelper.LogAdaptableBlotterError('error sending ping: ' + ev.message);
+      LoggingHelper.LogAdaptableError('error sending ping: ' + ev.message);
       this.SetCanSendLog(false);
     };
     xhr.ontimeout = (ev: ProgressEvent) => {
-      LoggingHelper.LogAdaptableBlotterError('timeout sending ping');
+      LoggingHelper.LogAdaptableError('timeout sending ping');
       this.SetCanSendLog(false);
     };
     xhr.onload = (ev: ProgressEvent) => {
@@ -327,7 +327,7 @@ export class AuditLogService implements IAuditLogService {
         if (xhr.status == 200) {
           this.SetCanSendLog(true);
         } else {
-          LoggingHelper.LogAdaptableBlotterError('error sending ping: ' + xhr.statusText);
+          LoggingHelper.LogAdaptableError('error sending ping: ' + xhr.statusText);
           this.SetCanSendLog(false);
         }
       }
@@ -359,13 +359,13 @@ export class AuditLogService implements IAuditLogService {
     while (obj) {
       let xhr = new XMLHttpRequest();
       xhr.onerror = (ev: any) =>
-        LoggingHelper.LogAdaptableBlotterError('error sending AuditLog: ' + ev.message);
+        LoggingHelper.LogAdaptableError('error sending AuditLog: ' + ev.message);
       xhr.ontimeout = (pe: ProgressEvent) =>
-        LoggingHelper.LogAdaptableBlotterError('timeout sending AuditLog');
+        LoggingHelper.LogAdaptableError('timeout sending AuditLog');
       xhr.onload = (pe: ProgressEvent) => {
         if (xhr.readyState == 4) {
           if (xhr.status != 200) {
-            LoggingHelper.LogAdaptableBlotterError('error sending AuditLog: ' + xhr.statusText);
+            LoggingHelper.LogAdaptableError('error sending AuditLog: ' + xhr.statusText);
           }
         }
       };

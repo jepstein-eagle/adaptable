@@ -75,13 +75,13 @@ class AdaptableReduxLocalStorageEngine implements IStorageEngine {
           .then(checkStatus)
           .then(response => response.json())
           .then(parsedPredefinedState => MergeStateFunction(parsedPredefinedState, parsedJsonState))
-          .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
+          .catch(err => LoggingHelper.LogAdaptableError(err));
       }
       if (this.predefinedConfig != null) {
         // we have config as an object so need to merge that
         return Promise.resolve(this.predefinedConfig)
           .then(parsedPredefinedState => MergeStateFunction(parsedPredefinedState, parsedJsonState))
-          .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
+          .catch(err => LoggingHelper.LogAdaptableError(err));
       }
       // no predefined config so nothing to merge
       return new Promise(resolve => {

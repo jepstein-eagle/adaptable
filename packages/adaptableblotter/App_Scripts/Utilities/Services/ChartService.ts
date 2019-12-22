@@ -305,7 +305,7 @@ export class ChartService implements IChartService {
       dataCounter.size > this.blotter.blotterOptions.chartOptions.pieChartMaxItems
     ) {
       let message: string = 'Cannot create pie chart as it contains too many items.';
-      LoggingHelper.LogAdaptableBlotterWarning(message);
+      LoggingHelper.LogAdaptableWarning(message);
       return {
         Data: [],
         ErrorMessage: message,
@@ -315,7 +315,7 @@ export class ChartService implements IChartService {
     // if nothing passes (possible if you have visible rows only)
     if (dataCounter.size == 0) {
       let message: string = 'No data returned for Pie Chart.';
-      LoggingHelper.LogAdaptableBlotterWarning(message);
+      LoggingHelper.LogAdaptableWarning(message);
       return {
         Data: [],
         ErrorMessage: message,

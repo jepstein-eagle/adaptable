@@ -212,7 +212,7 @@ export function IsSatisfied(
 
     let column = columnBlotterList.find(x => x.ColumnId == columnId);
     if (!column) {
-      LoggingHelper.LogAdaptableBlotterWarning('Could not find column id:' + columnId);
+      LoggingHelper.LogAdaptableWarning('Could not find column id:' + columnId);
       isColumnSatisfied = true;
     }
 

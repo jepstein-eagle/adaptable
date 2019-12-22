@@ -8,45 +8,45 @@ export function LogAlert(
 ): void {
   switch (messageType) {
     case MessageType.Info:
-      LogAdaptableBlotterInfo(message, optionalParams);
+      LogAdaptableInfo(message, optionalParams);
       break;
     case MessageType.Success:
-      LogAdaptableBlotterSuccess(message, optionalParams);
+      LogAdaptableSuccess(message, optionalParams);
       break;
     case MessageType.Warning:
-      LogAdaptableBlotterWarning(message, optionalParams);
+      LogAdaptableWarning(message, optionalParams);
       break;
     case MessageType.Error:
-      LogAdaptableBlotterError(message, optionalParams);
+      LogAdaptableError(message, optionalParams);
       break;
   }
 }
-export function LogAdaptableBlotterInfo(message: string, ...optionalParams: any[]): void {
+export function LogAdaptableInfo(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.info('Adaptable Blotter Info: ' + message, optionalParams);
+    console.info('Adaptable Info: ' + message, optionalParams);
   } else {
-    console.info('Adaptable Blotter Info: ' + message);
+    console.info('Adaptable Info: ' + message);
   }
 }
-export function LogAdaptableBlotterSuccess(message: string, ...optionalParams: any[]): void {
+export function LogAdaptableSuccess(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.log('Adaptable Blotter Success: ' + message, optionalParams);
+    console.log('Adaptable Success: ' + message, optionalParams);
   } else {
-    console.log('Adaptable Blotter Success: ' + message);
+    console.log('Adaptable Success: ' + message);
   }
 }
-export function LogAdaptableBlotterWarning(message: string, ...optionalParams: any[]): void {
+export function LogAdaptableWarning(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.warn('Adaptable Blotter Warning: ' + message, optionalParams);
+    console.warn('Adaptable Warning: ' + message, optionalParams);
   } else {
-    console.warn('Adaptable Blotter Warning: ' + message);
+    console.warn('Adaptable Warning: ' + message);
   }
 }
-export function LogAdaptableBlotterError(message: string, ...optionalParams: any[]): void {
+export function LogAdaptableError(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.error('Adaptable Blotter Error: ' + message, optionalParams);
+    console.error('Adaptable Error: ' + message, optionalParams);
   } else {
-    console.error('Adaptable Blotter Error: ' + message);
+    console.error('Adaptable Error: ' + message);
   }
 }
 
@@ -84,10 +84,10 @@ export function LogObject(objectToLog: any, ...optionalParams: any[]): void {
 
 export const LoggingHelper = {
   LogAlert,
-  LogAdaptableBlotterInfo,
-  LogAdaptableBlotterSuccess,
-  LogAdaptableBlotterWarning,
-  LogAdaptableBlotterError,
+  LogAdaptableInfo,
+  LogAdaptableSuccess,
+  LogAdaptableWarning,
+  LogAdaptableError,
   LogWarning,
   LogError,
   LogInfo,

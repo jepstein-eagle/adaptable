@@ -113,7 +113,7 @@ import {
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { agGridHelper } from './agGridHelper';
-import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
+import { AdaptableToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { QuickSearchState } from '../PredefinedConfig/QuickSearchState';
@@ -165,9 +165,9 @@ import {
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { FilterService } from '../Utilities/Services/FilterService';
-import { IAdaptableToolPanelContext } from '../Utilities/Interface/IAdaptableToolPanelContext';
 import { DefaultAdaptableOptions } from '../Utilities/Defaults/DefaultAdaptableOptions';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
+import { AdaptableToolPanelContext } from '../Utilities/Interface/AdaptableToolPanelContext';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -351,7 +351,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const canInstantiateGrid = this.tryInstantiateAgGrid();
       if (!canInstantiateGrid) {
         // we have no grid, we can't do anything
-        LoggingHelper.LogAdaptableBlotterError('Unable to set up ag-Grid');
+        LoggingHelper.LogAdaptableError('Unable to set up ag-Grid');
         return;
       }
     }
@@ -370,7 +370,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.AdaptableStore.Load.then(
       () => this.strategies.forEach(strat => strat.initializeWithRedux()),
       e => {
-        LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableStore : ', e);
+        LoggingHelper.LogAdaptableError('Failed to Init AdaptableStore : ', e);
         // for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
         this.strategies.forEach(strat => strat.initializeWithRedux());
         this.api.internalApi.hideLoadingScreen(); // doesnt really help but at least clears the screen
@@ -379,7 +379,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       .then(
         () => this.initInternalGridLogic(),
         e => {
-          LoggingHelper.LogAdaptableBlotterError('Failed to Init Strategies : ', e);
+          LoggingHelper.LogAdaptableError('Failed to Init Strategies : ', e);
           // for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
           this.initInternalGridLogic();
           this.api.internalApi.hideLoadingScreen(); // doesnt really help but at least clears the screen
@@ -426,7 +426,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private tryInstantiateAgGrid(): boolean {
     const vendorContainer = this.getGridContainerElement();
     if (!vendorContainer) {
-      LoggingHelper.LogAdaptableBlotterError(
+      LoggingHelper.LogAdaptableError(
         'You must provide an element id in `containerOptions.vendorContainer`'
       );
       return false;
@@ -438,7 +438,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // Create Adaptable Blotter Tool Panel
     if (this.blotterOptions!!.generalOptions!.showAdaptableToolPanel) {
-      LoggingHelper.LogAdaptableBlotterInfo('Adding Adaptable Blotter Tool Panel');
+      LoggingHelper.LogAdaptableInfo('Adding Adaptable Tool Panel');
       this.gridOptions.sideBar = this.gridOptions.sideBar || {};
       this.gridOptions.components = this.gridOptions.components || {};
       // https://www.ag-grid.com/javascript-grid-side-bar/
@@ -447,32 +447,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const sidebar = this.gridOptions.sideBar;
         if (sidebar === true) {
           // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:
-          this.gridOptions.sideBar = this.agGridHelper.createAdaptableBlotterSideBarDefs(
-            true,
-            true
-          );
+          this.gridOptions.sideBar = this.agGridHelper.createAdaptableSideBarDefs(true, true);
         } else if (sidebar === 'columns') {
           // Possibility 2: Sidebar is 'columns' (string) - meaning column only so create just that
-          this.gridOptions.sideBar = this.agGridHelper.createAdaptableBlotterSideBarDefs(
-            false,
-            true
-          );
+          this.gridOptions.sideBar = this.agGridHelper.createAdaptableSideBarDefs(false, true);
         } else if (sidebar === 'filters') {
           // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that
-          this.gridOptions.sideBar = this.agGridHelper.createAdaptableBlotterSideBarDefs(
-            true,
-            false
-          );
+          this.gridOptions.sideBar = this.agGridHelper.createAdaptableSideBarDefs(true, false);
         } else {
           // Possibilty 4: either no sidebar or they created their own; in either case, should add Blotter Tool panel
           const sidebarDef = this.gridOptions.sideBar as SideBarDef;
           if (sidebarDef) {
             sidebarDef.toolPanels = sidebarDef.toolPanels || [];
-            sidebarDef.toolPanels.push(this.agGridHelper.createAdaptableBlotterToolPanel());
+            sidebarDef.toolPanels.push(this.agGridHelper.createAdaptableToolPanel());
           }
         }
-        const toolpanelContext: IAdaptableToolPanelContext = { Blotter: this };
-        this.gridOptions.components.AdaptableToolPanel = AdaptableBlotterToolPanelBuilder(
+        const toolpanelContext: AdaptableToolPanelContext = { Blotter: this };
+        this.gridOptions.components.AdaptableToolPanel = AdaptableToolPanelBuilder(
           toolpanelContext
         );
       }
@@ -603,7 +594,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     VisibleColumnList.forEach((column, index) => {
       const col = this.gridOptions.columnApi!.getColumn(column.ColumnId);
       if (!col) {
-        LoggingHelper.LogAdaptableBlotterError(`Cannot find vendor column:${column.ColumnId}`);
+        LoggingHelper.LogAdaptableError(`Cannot find vendor column:${column.ColumnId}`);
       } else {
         if (!col.isVisible()) {
           this.setColumnVisible(this.gridOptions.columnApi, col, true, 'api');
@@ -836,7 +827,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const selectedCells: GridCell[] = [];
 
     if (this.api.internalApi.isGridInPivotMode()) {
-      //  LoggingHelper.LogAdaptableBlotterWarning(
+      //  LoggingHelper.LogAdaptableWarning(
       //    'cannot currently perform cell selection in pivot mode'
       //  );
       return;
@@ -1788,7 +1779,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.abContainerElement = this.getBlotterContainerElement();
       }
       if (this.abContainerElement == null) {
-        LoggingHelper.LogAdaptableBlotterError(
+        LoggingHelper.LogAdaptableError(
           `There is no DIV with id="${
             this.blotterOptions!.containerOptions.adaptableBlotterContainer
           }" so cannot render the Adaptable Blotter`

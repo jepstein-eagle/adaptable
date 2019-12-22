@@ -210,7 +210,7 @@ export function getAggregetableColumns(columns: AdaptableColumn[]): AdaptableCol
 
 function LogMissingColumnWarning(columnId: string): void {
   if (!isSpecialColumn(columnId)) {
-    LoggingHelper.LogAdaptableBlotterWarning(`No column found named '${columnId}'`);
+    LoggingHelper.LogAdaptableWarning(`No column found named '${columnId}'`);
   }
 }
 

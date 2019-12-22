@@ -1789,7 +1789,7 @@ export class ExamplesHelper {
     try {
       return this.stringToDate(params.newValue, 'dd/mm/yyyy', '/');
     } catch (ex) {
-      LoggingHelper.LogAdaptableBlotterError(
+      LoggingHelper.LogAdaptableError(
         `Error parsing the date value: ${params.newValue} and node : `,
         params.node
       );
@@ -1822,7 +1822,7 @@ export class ExamplesHelper {
         return this.shortDateFormatter.format(params.value);
       }
     } catch (ex) {
-      LoggingHelper.LogAdaptableBlotterError(
+      LoggingHelper.LogAdaptableError(
         `Error formatting the date for value: ${params.value} and node : `,
         params.node
       );

@@ -25,7 +25,7 @@ export abstract class ApiBase {
    */
   protected checkItemExists(item: any, name: string, type: string): boolean {
     if (Helper.objectNotExists(item)) {
-      LoggingHelper.LogAdaptableBlotterError(`No ${type} found with the name: ${name}`);
+      LoggingHelper.LogAdaptableError(`No ${type} found with the name: ${name}`);
       return false;
     }
     return true;
@@ -33,7 +33,7 @@ export abstract class ApiBase {
 
   protected checkArrayExists(array: any): boolean {
     if (!Array.isArray(array)) {
-      LoggingHelper.LogAdaptableBlotterError(`Item passed to API function was not an array`);
+      LoggingHelper.LogAdaptableError(`Item passed to API function was not an array`);
       return false;
     }
     return true;

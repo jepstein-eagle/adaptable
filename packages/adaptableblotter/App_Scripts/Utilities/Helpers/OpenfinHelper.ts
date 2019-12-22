@@ -43,9 +43,9 @@ export function isExcelOpenfinLoaded() {
 }
 function addWorkbook(): Promise<string> {
   return new Promise<string>((resolve: any, reject: any) => {
-    LoggingHelper.LogAdaptableBlotterInfo('Creating new workbook');
+    LoggingHelper.LogAdaptableInfo('Creating new workbook');
     fin.desktop.Excel.addWorkbook(function(workbook: ExcelWorkbook) {
-      LoggingHelper.LogAdaptableBlotterSuccess('workbook created:' + workbook.name);
+      LoggingHelper.LogAdaptableSuccess('workbook created:' + workbook.name);
       resolve(workbook.name);
       // workbook.addEventListener("workbookActivated", (event) => onWorkbookActivated(event, resolve));
       // workbook.activate();
@@ -79,7 +79,7 @@ export function pushData(workBookName: string, data: any[]): Promise<any> {
   return new Promise<any>((resolve, reject) => {
     let workBook = fin.desktop.Excel.getWorkbookByName(workBookName);
     if (!workBook) {
-      LoggingHelper.LogAdaptableBlotterError('Cannot find workbook:' + workBookName);
+      LoggingHelper.LogAdaptableError('Cannot find workbook:' + workBookName);
       reject('Cannot find workbook:' + workBookName);
     }
     let worksheet = workBook.getWorksheetByName('Sheet1');
@@ -97,7 +97,7 @@ export function initOpenFinExcel(): Promise<string> {
       .then(onExcelConnected)
       .then(addWorkbook)
       .catch(err => {
-        LoggingHelper.LogAdaptableBlotterError(err);
+        LoggingHelper.LogAdaptableError(err);
         return '';
       });
   } else {
@@ -106,7 +106,7 @@ export function initOpenFinExcel(): Promise<string> {
       .then(onExcelConnected)
       .then(addWorkbook)
       .catch(err => {
-        LoggingHelper.LogAdaptableBlotterError(err);
+        LoggingHelper.LogAdaptableError(err);
         return '';
       });
   }
@@ -119,7 +119,7 @@ function initExcelPluginService(): Promise<any> {
   var addInPath = 'OpenFin.ExcelApi-AddIn.xll';
 
   if (excelStatus != ExcelServiceStatus.Unknown) {
-    LoggingHelper.LogAdaptableBlotterInfo('Skipping Add-in deployment as already deployed');
+    LoggingHelper.LogAdaptableInfo('Skipping Add-in deployment as already deployed');
     return Promise.resolve();
   }
 
@@ -133,13 +133,13 @@ function initExcelPluginService(): Promise<any> {
 
 function deployAddIn(servicePath: string, installFolder: string): Promise<any> {
   return new Promise((resolve: any, reject: any) => {
-    LoggingHelper.LogAdaptableBlotterInfo('Deploying Add-In');
+    LoggingHelper.LogAdaptableInfo('Deploying Add-In');
     fin.desktop.System.launchExternalProcess({
       alias: 'excel-api-addin',
       target: servicePath,
       arguments: '-d "' + installFolder + '"',
       listener: function(args: any) {
-        LoggingHelper.LogAdaptableBlotterSuccess('Installer script completed! ' + args.exitCode);
+        LoggingHelper.LogAdaptableSuccess('Installer script completed! ' + args.exitCode);
         resolve();
       },
     });
@@ -154,13 +154,13 @@ function startExcelService(servicePath: string, installFolder: string) {
       var excelServiceIndex = extApps.findIndex(extApp => extApp.uuid === serviceUuid);
 
       if (excelServiceIndex >= 0) {
-        LoggingHelper.LogAdaptableBlotterInfo('Service Already Running');
+        LoggingHelper.LogAdaptableInfo('Service Already Running');
         resolve();
         return;
       }
 
       var onServiceStarted = () => {
-        LoggingHelper.LogAdaptableBlotterSuccess('Service Started');
+        LoggingHelper.LogAdaptableSuccess('Service Started');
         fin.desktop.Excel.instance.removeEventListener('started', onServiceStarted);
         resolve();
       };
@@ -175,7 +175,7 @@ function startExcelService(servicePath: string, installFolder: string) {
             uuid: serviceUuid,
           },
           (process: any) => {
-            LoggingHelper.LogAdaptableBlotterSuccess('Service Launched: ' + process.uuid);
+            LoggingHelper.LogAdaptableSuccess('Service Launched: ' + process.uuid);
           },
           (error: any) => {
             reject('Error starting Excel service');
@@ -188,9 +188,9 @@ function startExcelService(servicePath: string, installFolder: string) {
 
 function registerAddIn(servicePath: string, installFolder: string) {
   return new Promise((resolve, reject) => {
-    LoggingHelper.LogAdaptableBlotterInfo('Registering Add-In');
+    LoggingHelper.LogAdaptableInfo('Registering Add-In');
     fin.desktop.Excel.install((ack: any) => {
-      LoggingHelper.LogAdaptableBlotterInfo('Add-In Registration callback', ack);
+      LoggingHelper.LogAdaptableInfo('Add-In Registration callback', ack);
       //if (ack.success) {
       resolve();
       //}
@@ -202,10 +202,10 @@ function connectToExcel() {
   return new Promise((resolve, reject) => {
     fin.desktop.Excel.instance.getExcelInstances((instances: any) => {
       if (instances.length > 0) {
-        LoggingHelper.LogAdaptableBlotterInfo('Excel Already Running');
+        LoggingHelper.LogAdaptableInfo('Excel Already Running');
         resolve();
       } else {
-        LoggingHelper.LogAdaptableBlotterInfo('Launching Excel');
+        LoggingHelper.LogAdaptableInfo('Launching Excel');
         fin.desktop.Excel.run(resolve);
       }
     });
@@ -219,19 +219,19 @@ function onWorkbookSaved(event: any) {
   _onWorkbookSaved.Dispatch(this, { OldName: event.oldWorkbookName, NewName: event.workbook.name });
 }
 function onWorkbookActivated(event: any) {
-  LoggingHelper.LogAdaptableBlotterInfo('Workbook Activated: ' + event.target.name);
+  LoggingHelper.LogAdaptableInfo('Workbook Activated: ' + event.target.name);
   event.target.getWorksheets((ack: any) => {
-    LoggingHelper.LogAdaptableBlotterInfo('getWorksheets:', ack);
+    LoggingHelper.LogAdaptableInfo('getWorksheets:', ack);
   });
 }
 function onWorkbookAdded(event: any) {
-  LoggingHelper.LogAdaptableBlotterSuccess('Workbook Added: ' + event.workbook.name);
+  LoggingHelper.LogAdaptableSuccess('Workbook Added: ' + event.workbook.name);
   let workbook = event.workbook;
   workbook.addEventListener('workbookActivated', onWorkbookActivated);
 }
 function onExcelConnected() {
   if (excelStatus != ExcelServiceStatus.Connected) {
-    LoggingHelper.LogAdaptableBlotterSuccess(
+    LoggingHelper.LogAdaptableSuccess(
       'Excel Connected: ' + fin.desktop.Excel.legacyApi.connectionUuid
     );
 
@@ -246,7 +246,7 @@ function onExcelConnected() {
     var legacyApi = fin.desktop.Excel.legacyApi;
 
     var onExcelDisconnected = function() {
-      LoggingHelper.LogAdaptableBlotterInfo('Excel Disconnected: ' + legacyApi.connectionUuid);
+      LoggingHelper.LogAdaptableInfo('Excel Disconnected: ' + legacyApi.connectionUuid);
 
       fin.desktop.Excel.instance.removeEventListener('excelDisconnected', onExcelDisconnected);
       legacyApi.removeEventListener('workbookClosed', onWorkbookRemoved);

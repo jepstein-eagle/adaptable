@@ -34,7 +34,7 @@ export const useSelectionEvent = () => {
 
   return (event: SyntheticEvent, { index }: { index: number }) => {
     if (index === undefined) {
-      LoggingHelper.LogAdaptableBlotterWarning('No "index" was passed to the list item');
+      LoggingHelper.LogAdaptableWarning('No "index" was passed to the list item');
       return;
     }
 

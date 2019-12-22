@@ -131,13 +131,13 @@ export function copyToClipboard(text: string) {
     try {
       return document.execCommand('copy'); // Security exception may be thrown by some browsers.
     } catch (ex) {
-      LoggingHelper.LogAdaptableBlotterWarning('Copy to clipboard failed.', ex);
+      LoggingHelper.LogAdaptableWarning('Copy to clipboard failed.', ex);
       return false;
     } finally {
       document.body.removeChild(textarea);
     }
   }
-  LoggingHelper.LogAdaptableBlotterWarning('Copy not available on this computer.');
+  LoggingHelper.LogAdaptableWarning('Copy not available on this computer.');
 }
 
 export function ReturnItemCount(items: any[], itemName: string): string {

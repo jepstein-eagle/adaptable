@@ -390,10 +390,7 @@ export class AdaptableStore implements IAdaptableStore {
       .then(
         () => this.TheStore.dispatch(InitState()),
         e => {
-          LoggingHelper.LogAdaptableBlotterError(
-            'Failed to load previous adaptable blotter state : ',
-            e
-          );
+          LoggingHelper.LogAdaptableError('Failed to load previous adaptable blotter state : ', e);
           //for now i'm still initializing the AB even if loading state has failed....
           //we may revisit that later
           this.TheStore.dispatch(InitState());
@@ -2259,7 +2256,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 if (column) {
                   blotterColumns.push(column);
                 } else {
-                  LoggingHelper.LogAdaptableBlotterWarning(
+                  LoggingHelper.LogAdaptableWarning(
                     "Column '" + c + "' not found while selecting layout: " + currentLayout
                   );
                 }
@@ -2629,7 +2626,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               })
               .catch((error: string) => {
                 middlewareAPI.dispatch(ExportRedux.IPPLoginFailed(error));
-                LoggingHelper.LogAdaptableBlotterError('Login failed', error);
+                LoggingHelper.LogAdaptableError('Login failed', error);
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
               });
             return next(action);
@@ -2704,19 +2701,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let returnAction = next(action);
             let xhr = new XMLHttpRequest();
             xhr.onerror = (ev: any) =>
-              LoggingHelper.LogAdaptableBlotterError(
+              LoggingHelper.LogAdaptableError(
                 'TeamSharing share error :' + ev.message,
                 actionTyped.Entity
               );
             xhr.ontimeout = () =>
-              LoggingHelper.LogAdaptableBlotterWarning(
-                'TeamSharing share timeout',
-                actionTyped.Entity
-              );
+              LoggingHelper.LogAdaptableWarning('TeamSharing share timeout', actionTyped.Entity);
             xhr.onload = () => {
               if (xhr.readyState == 4) {
                 if (xhr.status != 200) {
-                  LoggingHelper.LogAdaptableBlotterError(
+                  LoggingHelper.LogAdaptableError(
                     'TeamSharing share error : ' + xhr.statusText,
                     actionTyped.Entity
                   );
@@ -2759,15 +2753,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let returnAction = next(action);
             let xhr = new XMLHttpRequest();
             xhr.onerror = (ev: any) =>
-              LoggingHelper.LogAdaptableBlotterError('TeamSharing get error :' + ev.message);
-            xhr.ontimeout = () =>
-              LoggingHelper.LogAdaptableBlotterWarning('TeamSharing get timeout');
+              LoggingHelper.LogAdaptableError('TeamSharing get error :' + ev.message);
+            xhr.ontimeout = () => LoggingHelper.LogAdaptableWarning('TeamSharing get timeout');
             xhr.onload = () => {
               if (xhr.readyState == 4) {
                 if (xhr.status != 200) {
-                  LoggingHelper.LogAdaptableBlotterError(
-                    'TeamSharing get error : ' + xhr.statusText
-                  );
+                  LoggingHelper.LogAdaptableError('TeamSharing get error : ' + xhr.statusText);
                 } else {
                   middlewareAPI.dispatch(
                     TeamSharingRedux.TeamSharingSet(
@@ -2939,7 +2930,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 })
               );
             } else {
-              LoggingHelper.LogAdaptableBlotterError('Unknown item type', actionTyped.Entity);
+              LoggingHelper.LogAdaptableError('Unknown item type', actionTyped.Entity);
               middlewareAPI.dispatch(
                 PopupRedux.PopupShowAlert({
                   Header: 'Team Sharing Error:',

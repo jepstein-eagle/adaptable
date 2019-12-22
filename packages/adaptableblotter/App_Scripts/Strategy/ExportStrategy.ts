@@ -46,13 +46,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     // ideally this OpenFin stuff should come out and be put in an OpenFin Service (like with glue and ipushpull)
     // and that will manage this and only call the strategy as required
     OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
-      LoggingHelper.LogAdaptableBlotterInfo('Excel closed stopping all Live Excel');
+      LoggingHelper.LogAdaptableInfo('Excel closed stopping all Live Excel');
       this.blotter.api.internalApi.getLiveReports().forEach(cle => {
         this.blotter.api.internalApi.stopLiveReport(cle.Report, ExportDestination.OpenfinExcel);
       });
     });
     OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
-      LoggingHelper.LogAdaptableBlotterInfo(
+      LoggingHelper.LogAdaptableInfo(
         'Workbook closed:' + workbook.name + ', Stopping Openfin Live Excel'
       );
       let liveReport = this.blotter.api.internalApi
@@ -66,7 +66,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       }
     });
     OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
-      LoggingHelper.LogAdaptableBlotterInfo('Workbook Saved', workbookSavedEvent);
+      LoggingHelper.LogAdaptableInfo('Workbook Saved', workbookSavedEvent);
       let liveReport = this.blotter.api.internalApi
         .getLiveReports()
         .find(x => x.PageName == workbookSavedEvent.OldName);
@@ -171,7 +171,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 return OpenfinHelper.pushData(liveReport.PageName, ReportAsArray);
               })
               .catch(reason => {
-                LoggingHelper.LogAdaptableBlotterWarning(
+                LoggingHelper.LogAdaptableWarning(
                   'Live Excel failed to send data for [' + liveReport.Report + ']',
                   reason
                 );
@@ -205,7 +205,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 return this.blotter.PushPullService.pushData(liveReport.PageName, reportAsArray);
               })
               .catch(reason => {
-                LoggingHelper.LogAdaptableBlotterWarning(
+                LoggingHelper.LogAdaptableWarning(
                   'Live Excel failed to send data for [' + liveReport.Report + ']',
                   reason
                 );
@@ -248,7 +248,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 );
               })
               .catch(reason => {
-                LoggingHelper.LogAdaptableBlotterWarning(
+                LoggingHelper.LogAdaptableWarning(
                   'Live Excel failed to send data for [' + liveReport.Report + ']',
                   reason
                 );
@@ -269,11 +269,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       });
       Promise.all(promises)
         .then(() => {
-          LoggingHelper.LogAdaptableBlotterSuccess('All live report data sent');
+          LoggingHelper.LogAdaptableSuccess('All live report data sent');
           this.isSendingData = false;
         })
         .catch(() => {
-          LoggingHelper.LogAdaptableBlotterWarning('One live Excel failed to send data');
+          LoggingHelper.LogAdaptableWarning('One live Excel failed to send data');
           this.isSendingData = false;
         });
     }
@@ -352,7 +352,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
               ]);
             }
           } catch (error) {
-            LoggingHelper.LogAdaptableBlotterError(error);
+            LoggingHelper.LogAdaptableError(error);
           }
           break;
         }

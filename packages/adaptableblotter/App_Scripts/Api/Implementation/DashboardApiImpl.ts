@@ -101,7 +101,7 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
   }
 
   public SetApplicationToolbarTitle(title: string): void {
-    LoggingHelper.LogAdaptableBlotterWarning(
+    LoggingHelper.LogAdaptableWarning(
       'This method is deprecated.  Use ApplicationApi.SetApplicationToolbarTitle instead.'
     );
     this.dispatchAction(ApplicationRedux.ApplicationSetApplicationToolbarTitle(title));

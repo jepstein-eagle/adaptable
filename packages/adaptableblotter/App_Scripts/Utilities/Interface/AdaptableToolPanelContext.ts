@@ -1,5 +1,5 @@
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 
-export interface IAdaptableToolPanelContext {
+export interface AdaptableToolPanelContext {
   Blotter: IAdaptableBlotter;
 }

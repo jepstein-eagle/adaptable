@@ -286,7 +286,7 @@ export class agGridHelper {
     return render({ value: valueToRender }) || '';
   }
 
-  public createAdaptableBlotterSideBarDefs(
+  public createAdaptableSideBarDefs(
     showFilterPanel: boolean,
     showColumnsPanel: boolean
   ): SideBarDef {
@@ -313,7 +313,7 @@ export class agGridHelper {
       };
       toolPanelDef.push(columnsToolPanel);
     }
-    toolPanelDef.push(this.createAdaptableBlotterToolPanel());
+    toolPanelDef.push(this.createAdaptableToolPanel());
 
     const abSideBarDef: SideBarDef = {
       toolPanels: toolPanelDef,
@@ -322,10 +322,10 @@ export class agGridHelper {
     return abSideBarDef;
   }
 
-  public createAdaptableBlotterToolPanel(): ToolPanelDef {
+  public createAdaptableToolPanel(): ToolPanelDef {
     return {
       id: 'AdaptableToolPanel',
-      labelDefault: 'Adaptable Blotter',
+      labelDefault: 'Adaptable',
       labelKey: 'AdaptableToolPanel',
       iconKey: 'menu',
       toolPanel: 'AdaptableToolPanel',
@@ -561,7 +561,7 @@ export class agGridHelper {
   public getColumnDataType(column: Column): DataType {
     // Some columns can have no ID or Title. we return string as a consequence but it needs testing
     if (!column) {
-      LoggingHelper.LogAdaptableBlotterWarning('column is undefined returning String for Type');
+      LoggingHelper.LogAdaptableWarning('column is undefined returning String for Type');
       return DataType.String;
     }
     let dataType: DataType = DataType.Unknown;
@@ -593,7 +593,7 @@ export class agGridHelper {
 
     const model = this.gridOptions.api!.getModel();
     if (model == null) {
-      LoggingHelper.LogAdaptableBlotterWarning(
+      LoggingHelper.LogAdaptableWarning(
         `No model so returning type "Unknown" for Column: "${column.getColId()}"`
       );
       return DataType.Unknown;
@@ -603,7 +603,7 @@ export class agGridHelper {
 
     if (row == null) {
       // possible that there will be no data.
-      LoggingHelper.LogAdaptableBlotterWarning(
+      LoggingHelper.LogAdaptableWarning(
         `No data in grid so returning type "Unknown" for Column: "${column.getColId()}"`
       );
       return DataType.Unknown;
@@ -612,7 +612,7 @@ export class agGridHelper {
     if (row.group) {
       const childNodes: RowNode[] = row.childrenAfterGroup;
       if (ArrayExtensions.IsNullOrEmpty(childNodes)) {
-        LoggingHelper.LogAdaptableBlotterWarning(
+        LoggingHelper.LogAdaptableWarning(
           `No data in grid so returning type "Unknown" for Column: "${column.getColId()}"`
         );
         return DataType.Unknown;
@@ -642,7 +642,7 @@ export class agGridHelper {
           break;
       }
     }
-    LoggingHelper.LogAdaptableBlotterWarning(
+    LoggingHelper.LogAdaptableWarning(
       `No defined type for column '${column.getColId()}'. Defaulting to type of first value: ${dataType}`
     );
     return dataType;

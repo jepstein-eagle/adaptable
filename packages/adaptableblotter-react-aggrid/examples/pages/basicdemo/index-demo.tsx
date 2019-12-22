@@ -25,7 +25,7 @@ export default () => (
   <AdaptableBlotterReact
     style={{ height: '100vh' }}
     onSearchChanged={(...args: any[]) => {
-      LoggingHelper.LogAdaptableBlotterWarning('search changed', args);
+      LoggingHelper.LogAdaptableWarning('search changed', args);
     }}
     onBlotterReady={api => {
       console.log('blotter ready!!!', api);

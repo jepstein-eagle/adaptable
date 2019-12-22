@@ -42,41 +42,41 @@ export class EventApiImpl extends ApiBase implements EventApi {
   }
 
   public onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs> {
-    LoggingHelper.LogAdaptableBlotterWarning(
+    LoggingHelper.LogAdaptableWarning(
       'The onSearchChanged event in the Event API is deprecated - please use the on("SearchChanged") event instead.'
     );
     return this._onSearchChanged;
   }
 
   public onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs> {
-    LoggingHelper.LogAdaptableBlotterWarning(
+    LoggingHelper.LogAdaptableWarning(
       'The onThemeChanged event in the Event API is deprecated - please use the on("ThemeChanged") event instead.'
     );
     return this._onThemeChanged;
   }
 
   public onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs> {
-    LoggingHelper.LogAdaptableBlotterWarning(
+    LoggingHelper.LogAdaptableWarning(
       'The onColumnStateChanged event in the Event API is deprecated - please use the on("ColumnStateChanged") event instead.'
     );
     return this._onColumnStateChanged;
   }
 
   public onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs> {
-    LoggingHelper.LogAdaptableBlotterWarning(
+    LoggingHelper.LogAdaptableWarning(
       'The onAlertFired event in the Event API is deprecated - please use the on("AlertFired") event instead.'
     );
     return this._onAlertFired;
   }
 
   public onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs> {
-    LoggingHelper.LogAdaptableBlotterWarning(
+    LoggingHelper.LogAdaptableWarning(
       'The onActionColumnClicked event in the Event API is deprecated - please use the on("ActionColumnClicked") event instead.'
     );
     return this._onActionColumnClicked;
   }
   public onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs> {
-    LoggingHelper.LogAdaptableBlotterWarning(
+    LoggingHelper.LogAdaptableWarning(
       'The onSelectionChanged event in the Event API is deprecated - please use the on("SelectionChanged") event instead.'
     );
     return this._onSelectionChanged;

@@ -85,7 +85,7 @@ class AdaptableRemoteStorageEngine implements IStorageEngine {
       blotterId: this.blotterId,
       url: this.url,
     }).catch(error => {
-      LoggingHelper.LogAdaptableBlotterError(`Cannot Save Config: ${error.message}`);
+      LoggingHelper.LogAdaptableError(`Cannot Save Config: ${error.message}`);
       return Promise.reject(`Cannot save config:${error.message}`);
     });
   }

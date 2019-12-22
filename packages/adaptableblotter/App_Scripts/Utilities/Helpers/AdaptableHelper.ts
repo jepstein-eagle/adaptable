@@ -98,7 +98,7 @@ export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: Adaptable
       blotter.api.alertApi.showAlertError('No Primary Key', errorMessage);
     } else {
       // otherwise just log it
-      LoggingHelper.LogAdaptableBlotterError(errorMessage);
+      LoggingHelper.LogAdaptableError(errorMessage);
     }
     return false;
   }

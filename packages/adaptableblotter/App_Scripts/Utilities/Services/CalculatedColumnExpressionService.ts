@@ -29,7 +29,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       });
       return !isNaN(Number(firstRowValue)) ? DataType.Number : DataType.String;
     } catch (e) {
-      LoggingHelper.LogAdaptableBlotterWarning(e);
+      LoggingHelper.LogAdaptableWarning(e);
       return DataType.Number;
     }
   }
@@ -50,7 +50,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       });
       return { IsValid: true };
     } catch (e) {
-      LoggingHelper.LogAdaptableBlotterWarning(e);
+      LoggingHelper.LogAdaptableWarning(e);
       return { IsValid: false, ErrorMsg: e.message };
     }
   }
@@ -71,7 +71,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
         },
       });
     } catch (e) {
-      LoggingHelper.LogAdaptableBlotterError(e);
+      LoggingHelper.LogAdaptableError(e);
       return null;
     }
   }

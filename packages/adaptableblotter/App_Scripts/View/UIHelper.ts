@@ -214,7 +214,7 @@ export function getChartContainer(
         chartContainer.className += chartContainerClassName;
       }
     } else {
-      LoggingHelper.LogAdaptableBlotterError(
+      LoggingHelper.LogAdaptableError(
         `Chart div called '${blotterOptions.containerOptions.chartContainer}' not found: so creating standard div`
       );
       chartContainer = document.getElementById('ad');

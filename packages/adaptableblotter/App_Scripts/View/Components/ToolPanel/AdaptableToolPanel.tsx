@@ -27,7 +27,7 @@ import theme from '../../../theme';
 import { AdaptableBlotterToolPanels } from '../../../PredefinedConfig/ToolPanelState';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import DropdownButton from '../../../components/DropdownButton';
-import { IAdaptableToolPanelContext } from '../../../Utilities/Interface/IAdaptableToolPanelContext';
+import { AdaptableToolPanelContext } from '../../../Utilities/Interface/AdaptableToolPanelContext';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -92,7 +92,7 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
             </Box>
           );
         } else {
-          LoggingHelper.LogAdaptableBlotterError('Cannot find ToolPanel Control for ' + control);
+          LoggingHelper.LogAdaptableError('Cannot find ToolPanel Control for ' + control);
         }
       }
     });
@@ -235,10 +235,10 @@ export const ConnectedAdaptableBlotterToolPanel = connect(
   mapDispatchToProps
 )(AdaptableBlotterToolPanelComponent);
 
-export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableToolPanelContext) =>
+export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
   class AdaptableToolPanel implements IToolPanelComp {
     public gui: HTMLElement;
-    public ctx: IAdaptableToolPanelContext;
+    public ctx: AdaptableToolPanelContext;
 
     public constructor() {
       this.ctx = ctx;

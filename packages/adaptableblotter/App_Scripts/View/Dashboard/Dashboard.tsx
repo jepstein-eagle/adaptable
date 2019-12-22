@@ -76,7 +76,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             </Box>
           );
         } else {
-          LoggingHelper.LogAdaptableBlotterError('Cannot find Dashboard Control for ' + control);
+          LoggingHelper.LogAdaptableError('Cannot find Dashboard Control for ' + control);
         }
       }
     });
