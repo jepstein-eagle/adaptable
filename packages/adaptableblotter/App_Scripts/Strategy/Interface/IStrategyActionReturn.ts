@@ -5,9 +5,3 @@ export interface IStrategyActionReturn<T> {
   ActionReturn?: T;
   Alert?: AdaptableAlert;
 }
-
-export interface BulkUpdateValidationResult {
-  IsValid: boolean;
-  Column?: AdaptableColumn;
-  Alert?: AdaptableAlert;
-}

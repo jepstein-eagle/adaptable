@@ -56,7 +56,10 @@ import * as PartnerRedux from '../ActionsReducers/PartnerRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
-import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrategy';
+import {
+  IBulkUpdateStrategy,
+  BulkUpdateValidationResult,
+} from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
@@ -105,10 +108,6 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
 import { IUIConfirmation, InputAction, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
-import {
-  IStrategyActionReturn,
-  BulkUpdateValidationResult,
-} from '../../Strategy/Interface/IStrategyActionReturn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
@@ -135,6 +134,7 @@ import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedI
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ServiceStatus } from '../../Utilities/Services/PushPullService';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
+import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 
 type EmitterCallback = (data?: any) => any;
 /*

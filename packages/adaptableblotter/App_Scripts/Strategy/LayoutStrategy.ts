@@ -4,7 +4,6 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { LayoutState } from '../PredefinedConfig/LayoutState';
-import { StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStrategy {

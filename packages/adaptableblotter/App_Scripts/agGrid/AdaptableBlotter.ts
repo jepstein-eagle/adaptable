@@ -35,7 +35,7 @@ import {
 } from 'ag-grid-community/dist/lib/entities/gridOptions';
 import { Action } from 'redux';
 import Emitter, { EmitterCallback } from '../Utilities/Emitter';
-import { AdaptableBlotterApp } from '../View/AdaptableView';
+import { AdaptableApp } from '../View/AdaptableView';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
@@ -398,7 +398,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement != null) {
         this.abContainerElement.innerHTML = '';
-        ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
+        ReactDOM.render(AdaptableApp({ AdaptableBlotter: this }), this.abContainerElement);
       }
     }
 
@@ -2597,10 +2597,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                   const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
                   groupCustomSort.ColumnId = sm.colId;
                   groupCustomSort.SortedValues = customSort.SortedValues;
-                  const comparator: any = customSortStrategy.getComparerFunction(
-                    groupCustomSort,
-                    this
-                  );
+                  const comparator: any = customSortStrategy.getComparerFunction(groupCustomSort);
                   this.setCustomSort(sm.colId, comparator);
                 }
               }

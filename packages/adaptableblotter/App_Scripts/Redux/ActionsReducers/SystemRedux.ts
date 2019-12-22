@@ -15,12 +15,12 @@ import { Expression, QueryRange } from '../../PredefinedConfig/Common/Expression
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
-import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './ExportRedux';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 import { LiveReport } from '../../Api/Events/LiveReportUpdated';
+import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state

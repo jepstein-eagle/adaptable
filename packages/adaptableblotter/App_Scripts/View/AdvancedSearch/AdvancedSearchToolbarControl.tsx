@@ -21,10 +21,7 @@ import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
-import {
-  AdaptableDashboardToolbars,
-  AdaptableDashboardToolbar,
-} from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {

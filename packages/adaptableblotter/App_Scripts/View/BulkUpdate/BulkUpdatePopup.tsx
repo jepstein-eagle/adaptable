@@ -25,7 +25,7 @@ import { Box, Flex } from 'rebass';
 import Input from '../../components/Input';
 import SimpleButton from '../../components/SimpleButton';
 import HelpBlock from '../../components/HelpBlock';
-import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
+import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
   BulkUpdateValue: string;

@@ -153,11 +153,7 @@ let AdaptableBlotterWrapper: ConnectedComponent<typeof AdaptableView, any> = con
   mapDispatchToProps
 )(AdaptableView);
 
-export const AdaptableBlotterApp = ({
-  AdaptableBlotter,
-}: {
-  AdaptableBlotter: IAdaptableBlotter;
-}) => (
+export const AdaptableApp = ({ AdaptableBlotter }: { AdaptableBlotter: IAdaptableBlotter }) => (
   <Provider store={AdaptableBlotter.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <AdaptableBlotterWrapper Blotter={AdaptableBlotter} />

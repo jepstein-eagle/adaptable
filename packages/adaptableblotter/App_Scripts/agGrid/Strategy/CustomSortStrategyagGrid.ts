@@ -7,16 +7,23 @@ export class CustomSortStrategyagGrid extends CustomSortStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(blotter);
   }
-  public getComparerFunction(customSort: CustomSort, blotter: IAdaptableBlotter): Function {
+
+  public getComparerFunction(customSort: CustomSort): Function {
+    let theBlotter = this.blotter as IAdaptableBlotter;
     return function compareItemsOfCustomSort(
       valueA: any,
       valueB: any,
       nodeA?: RowNode,
-      nodeB?: RowNode,
-      isInverted?: boolean
+      nodeB?: RowNode
     ): number {
-      let firstElementValueString = blotter.getDisplayValueFromRowNode(nodeA, customSort.ColumnId);
-      let secondElementValueString = blotter.getDisplayValueFromRowNode(nodeB, customSort.ColumnId);
+      let firstElementValueString = theBlotter.getDisplayValueFromRowNode(
+        nodeA,
+        customSort.ColumnId
+      );
+      let secondElementValueString = theBlotter.getDisplayValueFromRowNode(
+        nodeB,
+        customSort.ColumnId
+      );
       let firstElementValue = valueA;
       let secondElementValue = valueB;
       let indexFirstElement = customSort.SortedValues.indexOf(firstElementValueString);

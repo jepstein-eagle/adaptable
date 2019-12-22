@@ -29,6 +29,90 @@ import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { PartnerState } from '../PredefinedConfig/PartnerState';
 
+export type AdaptableStateKeys = AdaptableStateKey[];
+
+export type AdaptableStateKey =
+  | 'ActionColumn'
+  | 'AdvancedSearch'
+  | 'Alert'
+  | 'Application'
+  | 'BulkUpdate'
+  | 'CalculatedColumn'
+  | 'Calendar'
+  | 'CellSummary'
+  | 'CellValidation'
+  | 'Chart'
+  | 'ColumnCategory'
+  | 'ColumnFilter'
+  | 'ConditionalStyle'
+  | 'CustomSort'
+  | 'Dashboard'
+  | 'DataSource'
+  | 'Entitlement'
+  | 'Export'
+  | 'FlashingCell'
+  | 'FormatColumn'
+  | 'FreeTextColumn'
+  | 'Layout'
+  | 'NamedFilter'
+  | 'Partner'
+  | 'PercentBar'
+  | 'PlusMinus'
+  | 'QuickSearch'
+  | 'Reminder'
+  | 'Shortcut'
+  | 'SmartEdit'
+  | 'SparklineColumn'
+  | 'SystemFilter'
+  | 'SystemStatus'
+  | 'TeamSharing'
+  | 'Theme'
+  | 'ToolPanel'
+  | 'UpdatedRow'
+  | 'UserFilter'
+  | 'UserInterface';
+
+export type AdaptableFunctionName =
+  | 'ActionColumn'
+  | 'AdvancedSearch'
+  | 'Alert'
+  | 'Application'
+  | 'BulkUpdate'
+  | 'CalculatedColumn'
+  | 'Calendar'
+  | 'CellSummary'
+  | 'CellValidation'
+  | 'Chart'
+  | 'ColumnCategory'
+  | 'ColumnChooser'
+  | 'ColumnFilter'
+  | 'ColumnInfo'
+  | 'ConditionalStyle'
+  | 'CustomSort'
+  | 'Dashboard'
+  | 'DataSource'
+  | 'Export'
+  | 'FlashingCells'
+  | 'FormatColumn'
+  | 'FreeTextColumn'
+  | 'Home'
+  | 'Layout'
+  | 'PercentBar'
+  | 'PieChart'
+  | 'PlusMinus'
+  | 'QuickSearch'
+  | 'Reminder'
+  | 'Shortcut'
+  | 'SmartEdit'
+  | 'SparklineColumn'
+  | 'Sparkline'
+  | 'StateManagement'
+  | 'SystemStatus'
+  | 'TeamSharing'
+  | 'Theme'
+  | 'UpdatedRow'
+  | 'UserFilter';
+
 export interface ConfigApi {
   configInit(): void;
 
@@ -60,37 +144,7 @@ export interface ConfigApi {
 
   configGetAllUserState(): RunTimeState[];
 
-  configGetUserStateByFunction(
-    functionName:
-      | 'ActionColumn'
-      | 'AdvancedSearch'
-      | 'Alert'
-      | 'Application'
-      | 'BulkUpdate'
-      | 'CalculatedColumn'
-      | 'Calendar'
-      | 'CellSummary'
-      | 'CellValidation'
-      | 'Chart'
-      | 'ColumnFilter'
-      | 'ConditionalStyle'
-      | 'CustomSort'
-      | 'Dashboard'
-      | 'DataSource'
-      | 'Export'
-      | 'FlashingCell'
-      | 'FormatColumn'
-      | 'Layout'
-      | 'Partner'
-      | 'PlusMinus'
-      | 'QuickSearch'
-      | 'Shortcut'
-      | 'SmartEdit'
-      | 'Theme'
-      | 'UpdatedRow'
-      | 'UserFilter',
-    returnJson: boolean
-  ): RunTimeState;
+  configGetUserStateByStateKey(stateKey: AdaptableStateKey, returnJson: boolean): RunTimeState;
 
   /*
 

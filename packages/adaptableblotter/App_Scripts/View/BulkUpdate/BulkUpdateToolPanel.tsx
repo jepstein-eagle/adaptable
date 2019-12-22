@@ -20,11 +20,11 @@ import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
-import { BulkUpdateValidationResult } from '../../Strategy/Interface/IStrategyActionReturn';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import join from '../../components/utils/join';
 import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 
 interface BulkUpdateToolPanelControlComponentProps
   extends ToolPanelStrategyViewPopupProps<BulkUpdateToolPanelControlComponent> {

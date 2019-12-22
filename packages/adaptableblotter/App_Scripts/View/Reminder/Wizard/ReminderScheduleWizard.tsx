@@ -5,7 +5,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DayOfWeek, StateChangedTrigger } from '../../../PredefinedConfig/Common/Enums';
+import { DayOfWeek } from '../../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
 import WizardPanel from '../../../components/WizardPanel';

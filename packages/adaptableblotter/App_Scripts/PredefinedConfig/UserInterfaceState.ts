@@ -96,12 +96,10 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * You can provide either a standard arry of Menu Items or a function which will return an array of MenuItems depending on the `MenuInfo`.
    *
-   * The function signature is:
+   * The function takes a [General Options](_blotteroptions_generaloptions_.generaloptions.html) object and returns an array of UserMenuItem. signature is:
    *
    *  ```ts
-   *
    * ((menuInfo: MenuInfo) => UserMenuItem[])
-   *
    *  ```
    *
    * If you want to control which of the shipped Adaptable Blotter Context Menu items are showns use the `showAdaptableContextMenu` property in [General Options](_blotteroptions_generaloptions_.generaloptions.html)

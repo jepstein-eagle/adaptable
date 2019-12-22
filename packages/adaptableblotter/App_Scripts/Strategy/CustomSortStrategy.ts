@@ -6,8 +6,9 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { ICustomSortStrategy } from './Interface/ICustomSortStrategy';
 
-export class CustomSortStrategy extends AdaptableStrategyBase {
+export class CustomSortStrategy extends AdaptableStrategyBase implements ICustomSortStrategy {
   private CustomSorts: CustomSort[];
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.CustomSortStrategyId, blotter);
@@ -59,21 +60,20 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
 
   applyCustomSorts() {
     this.CustomSorts.forEach(customSort => {
-      this.blotter.setCustomSort(
-        customSort.ColumnId,
-        this.getComparerFunction(customSort, this.blotter)
-      );
+      this.blotter.setCustomSort(customSort.ColumnId, this.getComparerFunction(customSort));
     });
   }
 
-  public getComparerFunction(customSort: CustomSort, blotter: IAdaptableBlotter): Function {
+  // make this an abstract function?
+  public getComparerFunction(customSort: CustomSort): Function {
+    let theBlotter = this.blotter as IAdaptableBlotter;
     return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
-      let firstElementValueString = blotter.getDisplayValue(
-        blotter.getPrimaryKeyValueFromRowNode(firstElement),
+      let firstElementValueString = theBlotter.getDisplayValue(
+        theBlotter.getPrimaryKeyValueFromRowNode(firstElement),
         customSort.ColumnId
       ); //firstElement[customSort.ColumnId];
-      let secondElementValueString = blotter.getDisplayValue(
-        blotter.getPrimaryKeyValueFromRowNode(secondElement),
+      let secondElementValueString = theBlotter.getDisplayValue(
+        theBlotter.getPrimaryKeyValueFromRowNode(secondElement),
         customSort.ColumnId
       ); //secondElement[customSort.ColumnId];
       let firstElementValue = firstElement[customSort.ColumnId];

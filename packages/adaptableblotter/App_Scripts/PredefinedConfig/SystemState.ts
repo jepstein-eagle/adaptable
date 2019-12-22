@@ -3,13 +3,13 @@ import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { ChartVisibility } from './Common/ChartEnums';
 import { Expression, QueryRange } from './Common/Expression';
 import { InternalState } from './InternalState';
-import { BulkUpdateValidationResult } from '../Strategy/Interface/IStrategyActionReturn';
 import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
 import { IPushPullDomain } from './PartnerState';
 import { LiveReport } from '../Api/Events/LiveReportUpdated';
+import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 

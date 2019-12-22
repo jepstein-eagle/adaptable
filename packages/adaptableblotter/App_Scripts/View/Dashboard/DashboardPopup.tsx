@@ -18,7 +18,6 @@ import Input from '../../components/Input';
 
 import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { Box, Flex, Text } from 'rebass';
-import { StateChangedTrigger } from '../../PredefinedConfig/Common/Enums';
 import { GridState } from '../../PredefinedConfig/GridState';
 import HelpBlock from '../../components/HelpBlock';
 
