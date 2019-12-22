@@ -69,7 +69,7 @@ class DashboardPopupComponent extends React.Component<
   render() {
     let selectedValues: string[] = [];
     this.props.DashboardState.VisibleButtons.forEach(x => {
-      let menuItem = this.props.GridState.MainMenuItems.find(m => m.StrategyId == x);
+      let menuItem = this.props.GridState.MainMenuItems.find(m => m.FunctionName == x);
       if (menuItem != null && menuItem.IsVisible) {
         selectedValues.push(StrategyConstants.getNameForStrategyId(x));
       }

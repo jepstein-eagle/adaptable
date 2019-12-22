@@ -122,7 +122,7 @@ class AdaptableToolPanelComponent extends React.Component<
     // toolpanel items
     let toolpanelItems: any = [];
     let allowedMenuNames: string[] = allowedMenuItems.map(vm => {
-      return vm.StrategyId;
+      return vm.FunctionName;
     });
     toolpanelItems.push({
       clickable: false,

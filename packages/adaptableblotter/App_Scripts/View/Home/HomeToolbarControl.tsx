@@ -124,7 +124,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     // toolbar items
     let toolbarItems: any = [];
     let allowedMenuNames: string[] = allowedMenuItems.map(vm => {
-      return vm.StrategyId;
+      return vm.FunctionName;
     });
     toolbarItems.push({
       clickable: false,
@@ -248,7 +248,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     if (shortcutsArray) {
       shortcuts = shortcutsArray.map(x => {
         let menuItem = this.props.GridState.MainMenuItems.find(
-          y => y.IsVisible && y.StrategyId == x
+          y => y.IsVisible && y.FunctionName == x
         );
         if (menuItem) {
           return (

@@ -13,6 +13,7 @@ import {
 } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { AdaptableFunctionName } from '../Api/ConfigApi';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
@@ -103,7 +104,14 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         source: 'FunctionMenu',
       };
     }
-    return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, this.isVisible, PopupParams);
+    return new MenuItemShowPopup(
+      Label,
+      this.Id as AdaptableFunctionName,
+      ComponentName,
+      Icon,
+      this.isVisible,
+      PopupParams
+    );
   }
 
   // direct actions called by the column menu - invisible if strategy is hidden or readonly
@@ -113,7 +121,13 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     ClickFunction: () => void
   ): MenuItemDoClickFunction {
     if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemDoClickFunction(Label, this.Id, ClickFunction, Icon, true);
+      return new MenuItemDoClickFunction(
+        Label,
+        this.Id as AdaptableFunctionName,
+        ClickFunction,
+        Icon,
+        true
+      );
     }
   }
 
@@ -123,7 +137,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Action: Action
   ): MenuItemDoReduxAction {
     if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemDoReduxAction(Label, this.Id, Action, Icon, true);
+      return new MenuItemDoReduxAction(Label, this.Id as AdaptableFunctionName, Action, Icon, true);
     }
   }
 
@@ -135,7 +149,14 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     PopupParams?: StrategyParams
   ): MenuItemShowPopup {
     if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
+      return new MenuItemShowPopup(
+        Label,
+        this.Id as AdaptableFunctionName,
+        ComponentName,
+        Icon,
+        true,
+        PopupParams
+      );
     }
   }
 

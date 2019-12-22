@@ -764,7 +764,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       strat.setStrategyEntitlement();
       const menuItem: AdaptableMenuItem | undefined = strat.addFunctionMenuItem();
       if (Helper.objectExists(menuItem)) {
-        if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
+        if (menuItems.findIndex(m => m.FunctionName == menuItem.FunctionName) == -1) {
           menuItems.push(menuItem);
         }
       }

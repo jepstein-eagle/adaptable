@@ -1,6 +1,7 @@
 import * as Redux from 'redux';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { AdaptableColumn } from './AdaptableColumn';
+import { AdaptableFunctionName } from '../../Api/ConfigApi';
 
 /*
 The Adaptable Blotter provides 3 menus:
@@ -45,7 +46,7 @@ export interface AdaptableMenuItem {
   /**
    * The name of the function
    */
-  StrategyId: string;
+  FunctionName: AdaptableFunctionName;
   ReduxAction?: Redux.Action;
   ClickFunction?: () => void;
   IsVisible: boolean;
