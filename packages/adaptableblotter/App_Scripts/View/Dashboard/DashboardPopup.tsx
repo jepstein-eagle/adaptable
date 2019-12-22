@@ -6,8 +6,8 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import {
   DashboardState,
-  AdaptableBlotterFunctionButtons,
-  AdaptableBlotterDashboardToolbars,
+  AdaptableFunctionButtons,
+  AdaptableDashboardToolbars,
 } from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { DualListBoxEditor, DisplaySize } from '../Components/ListBox/DualListBoxEditor';
@@ -271,7 +271,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onDashboardSetFunctionButtons: (functionButtons: AdaptableBlotterFunctionButtons) =>
+    onDashboardSetFunctionButtons: (functionButtons: AdaptableFunctionButtons) =>
       dispatch(DashboardRedux.DashboardSetFunctionButtons(functionButtons)),
     onDashboardShowFunctionsDropdown: () =>
       dispatch(DashboardRedux.DashboardShowFunctionsDropdown()),
@@ -287,7 +287,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DashboardRedux.DashboardHideSystemStatusButton()),
     onDashboardShowGridInfoButton: () => dispatch(DashboardRedux.DashboardShowGridInfoButton()),
     onDashboardHideGridInfoButton: () => dispatch(DashboardRedux.DashboardHideGridInfoButton()),
-    onDashboardSetToolbars: (toolbars: AdaptableBlotterDashboardToolbars) =>
+    onDashboardSetToolbars: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
   };
 }

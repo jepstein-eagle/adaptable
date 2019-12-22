@@ -9,8 +9,8 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import {
   DashboardState,
-  AdaptableBlotterDashboardToolbar,
-  AdaptableBlotterDashboardToolbars,
+  AdaptableDashboardToolbar,
+  AdaptableDashboardToolbars,
 } from '../../PredefinedConfig/DashboardState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
@@ -54,7 +54,7 @@ interface HomeToolbarComponentProps
   ) => SystemRedux.SetNewColumnListOrderAction;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
   onSetToolbarVisibility: (
-    toolbars: AdaptableBlotterDashboardToolbars
+    toolbars: AdaptableDashboardToolbars
   ) => DashboardRedux.DashboardSetToolbarsAction;
   onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
@@ -137,7 +137,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     });
 
     this.props.DashboardState.AvailableToolbars.forEach(
-      (toolbar: AdaptableBlotterDashboardToolbar, index) => {
+      (toolbar: AdaptableDashboardToolbar, index) => {
         let myToolbar: string = toolbar as string;
         if (ArrayExtensions.ContainsItem(allowedMenuNames, myToolbar)) {
           let isVisible: boolean = ArrayExtensions.ContainsItem(
@@ -352,7 +352,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
-    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
       dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
@@ -362,7 +362,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetDashboardVisibility: (visibility: Visibility) =>
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
-    onSetToolbarVisibility: (toolbars: AdaptableBlotterDashboardToolbars) =>
+    onSetToolbarVisibility: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
     onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };

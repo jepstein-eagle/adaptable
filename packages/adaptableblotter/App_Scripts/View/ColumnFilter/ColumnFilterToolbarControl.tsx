@@ -26,7 +26,7 @@ import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
-import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
 interface ColumnFilterToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
@@ -148,7 +148,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
     onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),
     onShowQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarShow()),
-    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
       dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(

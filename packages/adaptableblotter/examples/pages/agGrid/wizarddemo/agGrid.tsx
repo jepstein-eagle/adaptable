@@ -11,9 +11,9 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter, { AdaptableBlotterWizard } from '../../../../App_Scripts/agGrid';
+import AdaptableBlotter, { AdaptableWizard } from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
-import { IAdaptableBlotterWizard } from '../../../../App_Scripts/BlotterInterfaces/IAdaptableBlotterWizard';
+import { IAdaptableWizard } from '../../../../App_Scripts/BlotterInterfaces/IAdaptableNoCodeWizard';
 import { ColDef } from 'ag-grid-community';
 
 /*
@@ -27,7 +27,7 @@ function InitAdaptableBlotter() {
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
-  let abWizard: IAdaptableBlotterWizard = new AdaptableBlotterWizard(adaptableBlotterOptions, {
+  let abWizard: IAdaptableWizard = new AdaptableWizard(adaptableBlotterOptions, {
     //  fetchData: () => {
     //    return fetch(
     //      'https://dl.dropboxusercontent.com/s/effei2a3g7bc4dt/positionMonitor_ARBITRAGE-ALPHA-STRAT.json?dl=0'

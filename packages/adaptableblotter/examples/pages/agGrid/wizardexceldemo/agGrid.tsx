@@ -10,7 +10,7 @@ import './index.css';
 
 import XLSX from 'xlsx';
 
-import { AdaptableBlotterWizard } from '../../../../App_Scripts/agGrid';
+import { AdaptableWizard } from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 
 /*
@@ -24,7 +24,7 @@ function InitAdaptableBlotter() {
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
-  new AdaptableBlotterWizard(adaptableBlotterOptions, {
+  new AdaptableWizard(adaptableBlotterOptions, {
     readFile: (file: File): Promise<any> => {
       /* Boilerplate to set up FileReader */
       const reader = new FileReader();

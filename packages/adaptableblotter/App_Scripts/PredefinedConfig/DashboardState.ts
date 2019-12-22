@@ -6,12 +6,12 @@ import { ButtonStyle } from './Common/ButtonStyle';
  *
  * When setting the `AvailableToolbars` or `VisibleToolbars` properties in Dashboard state, only the Toolbars listed here can be included.
  */
-export type AdaptableBlotterDashboardToolbars = AdaptableBlotterDashboardToolbar[];
+export type AdaptableDashboardToolbars = AdaptableDashboardToolbar[];
 
 /**
  * List of all the Toolbars that the Adaptable Blotter provides
  */
-export type AdaptableBlotterDashboardToolbar =
+export type AdaptableDashboardToolbar =
   | 'AdvancedSearch'
   | 'Alert'
   | 'Application'
@@ -27,18 +27,18 @@ export type AdaptableBlotterDashboardToolbar =
   | 'Theme';
 
 /**
- * The Adaptable Blotter Function Button collection
+ * The Adaptable Function Button collection
  *
  * When setting the VisibleButtons` properties in Dashboard state, only the Function Buttons listed here can be included.
  */
-export type AdaptableBlotterFunctionButtons = AdaptableBlotterFunctionButton[];
+export type AdaptableFunctionButtons = AdaptableFunctionButton[];
 
 /**
  * List of all the Function button that the Adaptable Blotter provides.
  *
  * Essentially it is a list of all the Functions in the Adaptable Blotter as each Function has a popup for which this is a shortcut button.
  */
-export type AdaptableBlotterFunctionButton =
+export type AdaptableFunctionButton =
   | 'AdvancedSearch'
   | 'Alert'
   | 'Application'
@@ -132,7 +132,7 @@ export interface DashboardState extends RunTimeState {
    *
    * **Default Value**:  Empty array
    */
-  AvailableToolbars?: AdaptableBlotterDashboardToolbars;
+  AvailableToolbars?: AdaptableDashboardToolbars;
 
   /**
    * Which toolbars should be visible in the Dasbhoard when the application first loads.
@@ -141,7 +141,7 @@ export interface DashboardState extends RunTimeState {
    *
    * **Default Value**:  'QuickSearch', 'Layout', 'Export', 'ColumnFilter'
    */
-  VisibleToolbars?: AdaptableBlotterDashboardToolbars;
+  VisibleToolbars?: AdaptableDashboardToolbars;
 
   /**
    * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
@@ -150,7 +150,7 @@ export interface DashboardState extends RunTimeState {
    *
    * **Default Value**:  'Dashboard', 'SmartEdit', 'ColumnChooser', 'ConditionalStyle', ''
    */
-  VisibleButtons?: AdaptableBlotterFunctionButtons;
+  VisibleButtons?: AdaptableFunctionButtons;
 
   /**
    * How the Dashboard will appear.

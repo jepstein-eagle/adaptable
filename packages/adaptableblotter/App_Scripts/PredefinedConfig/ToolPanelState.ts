@@ -1,6 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 
-export type AdaptableBlotterToolPanels = AdaptableToolPanel[];
+export type AdaptableToolPanels = AdaptableToolPanel[];
 
 export type AdaptableToolPanel =
   | 'AdvancedSearch'
@@ -18,6 +18,6 @@ export type AdaptableToolPanel =
   | 'Theme';
 
 export interface ToolPanelState extends RunTimeState {
-  AvailableToolPanels?: AdaptableBlotterToolPanels;
-  VisibleToolPanels?: AdaptableBlotterToolPanels;
+  AvailableToolPanels?: AdaptableToolPanels;
+  VisibleToolPanels?: AdaptableToolPanels;
 }

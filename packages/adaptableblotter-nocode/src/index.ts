@@ -1,10 +1,10 @@
 import XLSX from 'xlsx';
 import AdaptableBlotter, {
-  AdaptableBlotterWizard as ABWizard,
+  AdaptableWizard as ABWizard,
 } from '../../adaptableblotter/App_Scripts/agGrid';
 
 import { AdaptableBlotterOptions, BlotterApi } from '../../adaptableblotter/types';
-import { IAdaptableBlotterWizardOptions } from '../../adaptableblotter/types';
+import { IAdaptableWizardOptions } from '../../adaptableblotter/types';
 
 export * from '../../adaptableblotter/types';
 
@@ -54,10 +54,10 @@ export const readExcelFile = (file: File): Promise<any> => {
   });
 };
 
-export default class AdaptableBlotterWizard {
+export default class AdaptableWizard {
   public static init(
     adaptableBlotterOptions: AdaptableBlotterOptions,
-    extraOptions?: IAdaptableBlotterWizardOptions
+    extraOptions?: IAdaptableWizardOptions
   ): Promise<BlotterApi> {
     let adaptableBlotter;
 

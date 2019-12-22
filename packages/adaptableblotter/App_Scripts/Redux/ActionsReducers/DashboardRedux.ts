@@ -1,9 +1,9 @@
 import * as Redux from 'redux';
 import {
   DashboardState,
-  AdaptableBlotterDashboardToolbar,
-  AdaptableBlotterDashboardToolbars,
-  AdaptableBlotterFunctionButtons,
+  AdaptableDashboardToolbar,
+  AdaptableDashboardToolbars,
+  AdaptableFunctionButtons,
 } from '../../PredefinedConfig/DashboardState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
@@ -31,28 +31,28 @@ const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE =
   'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
-  toolbars: AdaptableBlotterDashboardToolbars;
+  toolbars: AdaptableDashboardToolbars;
 }
 
 export interface DashboardSetToolbarsAction extends Redux.Action {
-  toolbars: AdaptableBlotterDashboardToolbars;
+  toolbars: AdaptableDashboardToolbars;
 }
 
 export interface DashboardShowToolbarAction extends Redux.Action {
-  toolbar: AdaptableBlotterDashboardToolbar;
+  toolbar: AdaptableDashboardToolbar;
 }
 
 export interface DashboardHideToolbarAction extends Redux.Action {
-  toolbar: AdaptableBlotterDashboardToolbar;
+  toolbar: AdaptableDashboardToolbar;
 }
 
 export interface DashboardMoveItemAction extends Redux.Action {
-  toolbar: AdaptableBlotterDashboardToolbar;
+  toolbar: AdaptableDashboardToolbar;
   NewIndex: number;
 }
 
 export interface DashboardSetFunctionButtonsAction extends Redux.Action {
-  functionButtons: AdaptableBlotterFunctionButtons;
+  functionButtons: AdaptableFunctionButtons;
 }
 
 export interface DashboardSetVisibilityAction extends Redux.Action {
@@ -88,35 +88,35 @@ export interface DashboardSetMinimisedHomeToolbarButtonStyleAction extends Redux
 }
 
 export const DashboardSetAvailableToolbars = (
-  toolbars: AdaptableBlotterDashboardToolbars
+  toolbars: AdaptableDashboardToolbars
 ): DashboardSetAvailableToolbarsAction => ({
   type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
   toolbars,
 });
 
 export const DashboardSetToolbars = (
-  toolbars: AdaptableBlotterDashboardToolbar[]
+  toolbars: AdaptableDashboardToolbar[]
 ): DashboardSetToolbarsAction => ({
   type: DASHBOARD_SET_TOOLBARS,
   toolbars,
 });
 
 export const DashboardShowToolbar = (
-  toolbar: AdaptableBlotterDashboardToolbar
+  toolbar: AdaptableDashboardToolbar
 ): DashboardShowToolbarAction => ({
   type: DASHBOARD_SHOW_TOOLBAR,
   toolbar,
 });
 
 export const DashboardHideToolbar = (
-  toolbar: AdaptableBlotterDashboardToolbar
+  toolbar: AdaptableDashboardToolbar
 ): DashboardHideToolbarAction => ({
   type: DASHBOARD_HIDE_TOOLBAR,
   toolbar,
 });
 
 export const DashboardMoveItem = (
-  toolbar: AdaptableBlotterDashboardToolbar,
+  toolbar: AdaptableDashboardToolbar,
 
   NewIndex: number
 ): DashboardMoveItemAction => ({
@@ -126,7 +126,7 @@ export const DashboardMoveItem = (
 });
 
 export const DashboardSetFunctionButtons = (
-  functionButtons: AdaptableBlotterFunctionButtons
+  functionButtons: AdaptableFunctionButtons
 ): DashboardSetFunctionButtonsAction => ({
   type: DASHBOARD_SET_FUNCTION_BUTTONS,
   functionButtons,
@@ -228,11 +228,11 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
   action: Redux.Action
 ): DashboardState => {
   let index: number;
-  let dashboardControls: AdaptableBlotterDashboardToolbars;
+  let dashboardControls: AdaptableDashboardToolbars;
 
   const setToolbars = (
     state: DashboardState,
-    toolbars: AdaptableBlotterDashboardToolbars
+    toolbars: AdaptableDashboardToolbars
   ): DashboardState => {
     return { ...state, VisibleToolbars: toolbars };
   };

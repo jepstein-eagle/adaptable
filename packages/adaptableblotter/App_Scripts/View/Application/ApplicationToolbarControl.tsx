@@ -12,7 +12,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
 import SimpleButton from '../../components/SimpleButton';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
-import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 import {
   ApplicationToolbarButtonClickedEventArgs,
   ApplicationToolbarButtonClickedInfo,
@@ -105,7 +105,7 @@ function mapStateToProps(state: AdaptableState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
       dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(

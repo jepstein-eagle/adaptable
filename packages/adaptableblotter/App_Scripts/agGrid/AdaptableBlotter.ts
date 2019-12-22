@@ -142,7 +142,7 @@ import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInf
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
-import AdaptableBlotterWizardView from '../View/AdaptableBlotterWizardView';
+import AdaptableWizardView from '../View/AdaptableWizardView';
 
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { Glue42Service } from '../Utilities/Services/Glue42Service';
@@ -157,17 +157,17 @@ import { IPushPullService } from '../Utilities/Services/Interface/IPushPullServi
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
-import {
-  IAdaptableBlotterWizard,
-  IAdaptableBlotterWizardOptions,
-  IAdaptableBlotterWizardInitFn,
-} from '../BlotterInterfaces/IAdaptableBlotterWizard';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { FilterService } from '../Utilities/Services/FilterService';
 import { DefaultAdaptableOptions } from '../Utilities/Defaults/DefaultAdaptableOptions';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableToolPanelContext } from '../Utilities/Interface/AdaptableToolPanelContext';
+import {
+  IAdaptableNoCodeWizard,
+  IAdaptableNoCodeWizardOptions,
+  IAdaptableNoCodeWizardInitFn,
+} from '../BlotterInterfaces/IAdaptableNoCodeWizard';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -3106,20 +3106,20 @@ import "adaptableblotter/themes/${themeName}.css"`);
 //export const init = (blotterOptions: AdaptableBlotterOptions): BlotterApi =>
 //  AdaptableBlotter.init(blotterOptions);
 
-export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
-  private init: IAdaptableBlotterWizardInitFn;
+export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
+  private init: IAdaptableNoCodeWizardInitFn;
 
   private adaptableBlotterOptions: AdaptableBlotterOptions;
-  private extraOptions: IAdaptableBlotterWizardOptions;
+  private extraOptions: IAdaptableNoCodeWizardOptions;
 
   /**
    * @param adaptableBlotterOptions
    */
   constructor(
     adaptableBlotterOptions: AdaptableBlotterOptions,
-    extraOptions: IAdaptableBlotterWizardOptions = {}
+    extraOptions: IAdaptableNoCodeWizardOptions = {}
   ) {
-    const defaultInit: IAdaptableBlotterWizardInitFn = ({
+    const defaultInit: IAdaptableNoCodeWizardInitFn = ({
       gridOptions,
       adaptableBlotterOptions,
     }) => {
@@ -3150,11 +3150,11 @@ export class AdaptableBlotterWizard implements IAdaptableBlotterWizard {
     container = container || document.getElementById(id);
 
     if (!container) {
-      throw new Error('Cannot find container in which to render the AdaptableBlotterWizard');
+      throw new Error('Cannot find container in which to render the Adaptable No Code Wizard');
     }
 
     ReactDOM.render(
-      React.createElement(AdaptableBlotterWizardView, {
+      React.createElement(AdaptableWizardView, {
         adaptableBlotterOptions: this.adaptableBlotterOptions,
         ...this.extraOptions,
         onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => {

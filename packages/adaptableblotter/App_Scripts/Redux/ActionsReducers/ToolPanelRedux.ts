@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import {
   ToolPanelState,
-  AdaptableBlotterToolPanels,
+  AdaptableToolPanels,
   AdaptableToolPanel,
 } from '../../PredefinedConfig/ToolPanelState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -14,11 +14,11 @@ const TOOLPANEL_SHOW_TOOLBAR = 'TOOLPANEL_SHOW_TOOLBAR';
 const TOOLPANEL_HIDE_TOOLBAR = 'TOOLPANEL_HIDE_TOOLBAR';
 
 export interface ToolPanelSetAvailableToolPanelsAction extends Redux.Action {
-  toolPanels: AdaptableBlotterToolPanels;
+  toolPanels: AdaptableToolPanels;
 }
 
 export interface ToolPanelSetToolPanelsAction extends Redux.Action {
-  toolPanels: AdaptableBlotterToolPanels;
+  toolPanels: AdaptableToolPanels;
 }
 
 export interface ToolPanelShowToolPanelAction extends Redux.Action {
@@ -30,14 +30,14 @@ export interface ToolPanelHideToolPanelAction extends Redux.Action {
 }
 
 export const ToolPanelSetAvailableToolPanels = (
-  toolPanels: AdaptableBlotterToolPanels
+  toolPanels: AdaptableToolPanels
 ): ToolPanelSetAvailableToolPanelsAction => ({
   type: TOOLPANEL_SET_AVAILABLE_TOOLPANELS,
   toolPanels,
 });
 
 export const ToolPanelSetToolPanels = (
-  toolPanels: AdaptableBlotterToolPanels
+  toolPanels: AdaptableToolPanels
 ): ToolPanelSetToolPanelsAction => ({
   type: TOOLPANEL_SET_TOOLPANELS,
   toolPanels,
@@ -96,7 +96,7 @@ export const ToolPanelReducer: Redux.Reducer<ToolPanelState> = (
 ): ToolPanelState => {
   const setToolPanels = (
     state: ToolPanelState,
-    toolPanels: AdaptableBlotterToolPanels
+    toolPanels: AdaptableToolPanels
   ): ToolPanelState => {
     return { ...state, VisibleToolPanels: toolPanels };
   };

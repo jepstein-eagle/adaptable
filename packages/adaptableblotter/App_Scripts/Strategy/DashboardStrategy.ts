@@ -8,7 +8,7 @@ import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
-import { AdaptableBlotterDashboardToolbar } from '../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../PredefinedConfig/DashboardState';
 import {
   ToolbarVisibilityChangedEventArgs,
   ToolbarVisibilityChangedInfo,
@@ -41,7 +41,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         }
       );
 
-      [...(this.visibleToolbars || [])].forEach((toolbar: AdaptableBlotterDashboardToolbar) => {
+      [...(this.visibleToolbars || [])].forEach((toolbar: AdaptableDashboardToolbar) => {
         if (!newVisibleToolbars[toolbar]) {
           this.fireToolbarVisibilityChangedEvent(toolbar);
         }

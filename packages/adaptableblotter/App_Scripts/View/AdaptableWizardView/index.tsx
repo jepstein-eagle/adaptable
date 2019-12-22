@@ -14,7 +14,7 @@ import { prepareDataSource, WizardDataSourceInfo, prepareGridOptions } from './h
 import ConfigurationDialog from './AdaptableBlotterConfigurationDialog';
 import { Flex } from 'rebass';
 
-interface AdaptableBlotterWizardViewProps {
+interface AdaptableWizardViewProps {
   adaptableBlotterOptions: AdaptableBlotterOptions;
   onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => any;
   fileContentsToJSON?: (str: string) => Promise<any> | any;
@@ -34,7 +34,7 @@ interface AdaptableBlotterWizardViewProps {
   };
 }
 
-const AdaptableBlotterWizardView = (props: AdaptableBlotterWizardViewProps) => (
+const AdaptableWizardView = (props: AdaptableWizardViewProps) => (
   <ThemeProvider theme={theme}>
     <Wizard {...props} />
   </ThemeProvider>
@@ -105,7 +105,7 @@ const validDataSource = (dataSourceInfo: any) => {
   return true;
 };
 
-const Wizard = (props: AdaptableBlotterWizardViewProps) => {
+const Wizard = (props: AdaptableWizardViewProps) => {
   const [state, dispatch] = useReducer<Reducer<WizardState, any>>(reducer, {
     ...initialState,
     adaptableBlotterOptions: props.adaptableBlotterOptions,
@@ -209,4 +209,4 @@ const Wizard = (props: AdaptableBlotterWizardViewProps) => {
   );
 };
 
-export default AdaptableBlotterWizardView;
+export default AdaptableWizardView;

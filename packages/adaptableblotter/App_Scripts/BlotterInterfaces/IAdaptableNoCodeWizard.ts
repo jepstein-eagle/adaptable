@@ -2,7 +2,7 @@ import { GridOptions } from 'ag-grid-community';
 
 import { AdaptableBlotterOptions, IAdaptableBlotter } from '../types';
 
-export type IAdaptableBlotterWizardInitFn = ({
+export type IAdaptableNoCodeWizardInitFn = ({
   gridOptions,
   adaptableBlotterOptions,
 }: {
@@ -10,8 +10,8 @@ export type IAdaptableBlotterWizardInitFn = ({
   adaptableBlotterOptions: AdaptableBlotterOptions;
 }) => IAdaptableBlotter | void;
 
-export interface IAdaptableBlotterWizardOptions {
-  onInit?: IAdaptableBlotterWizardInitFn;
+export interface IAdaptableNoCodeWizardOptions {
+  onInit?: IAdaptableNoCodeWizardInitFn;
   fileAccept?: string;
   defaultActionMessage?: React.ReactNode;
   dragOverActionMessage?: React.ReactNode;
@@ -47,7 +47,7 @@ export interface IAdaptableBlotterWizardOptions {
  *  // the user configured the columns
  * };
  *
- * const adaptableblotterWizard = new AdaptableBlotterWizard(adaptableBlotterOptions);
+ * const AdaptableWizard = new AdaptableWizard(adaptableBlotterOptions);
  *
  * // in the most simple case.
  *
@@ -56,7 +56,7 @@ export interface IAdaptableBlotterWizardOptions {
  * the developer to override some configuration in case this is needed. This is how it looks like:
  *
  *
- * const adaptableblotterWizard = new AdaptableBlotterWizard(adaptableBlotterOptions, {
+ * const AdaptableWizard = new AdaptableWizard(adaptableBlotterOptions, {
  *    onInit: ({ adaptableBlotterOptions, gridOptions }) => {
  *      // here you can either change some of the ab options or the gridOptions
  *      // and don't return anything
@@ -73,7 +73,7 @@ export interface IAdaptableBlotterWizardOptions {
  *
  * you can also have a `prepareData` config
  *
- * const adaptableblotterWizard = new AdaptableBlotterWizard(adaptableBlotterOptions, {
+ * const AdaptableWizard = new AdaptableWizard(adaptableBlotterOptions, {
  *   prepareData: (dataFromFile) => {
  *     return {
  *       columns: ['name','value']
@@ -94,4 +94,4 @@ export interface IAdaptableBlotterWizardOptions {
  *
  *
  */
-export interface IAdaptableBlotterWizard {}
+export interface IAdaptableNoCodeWizard {}

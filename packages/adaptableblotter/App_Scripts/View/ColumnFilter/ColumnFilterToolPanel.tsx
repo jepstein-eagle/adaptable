@@ -24,7 +24,7 @@ import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
-import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';

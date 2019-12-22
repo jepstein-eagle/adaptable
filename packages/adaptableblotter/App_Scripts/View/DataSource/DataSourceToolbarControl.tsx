@@ -18,7 +18,7 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
-import { AdaptableBlotterDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
 
 interface DataSourceToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {
@@ -163,7 +163,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onSelectDataSource: (DataSourceName: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(DataSourceName)),
-    onClose: (toolbar: AdaptableBlotterDashboardToolbar) =>
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
       dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(

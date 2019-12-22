@@ -5,9 +5,9 @@ import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import { DashboardApi } from '../DashboardApi';
 import {
   DashboardState,
-  AdaptableBlotterDashboardToolbars,
-  AdaptableBlotterDashboardToolbar,
-  AdaptableBlotterFunctionButtons,
+  AdaptableDashboardToolbars,
+  AdaptableDashboardToolbar,
+  AdaptableFunctionButtons,
 } from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -18,25 +18,25 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     return this.getBlotterState().Dashboard;
   }
 
-  public SetAvailableToolbars(availableToolbars: AdaptableBlotterDashboardToolbars): void {
+  public SetAvailableToolbars(availableToolbars: AdaptableDashboardToolbars): void {
     this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars));
   }
 
-  public SetVisibleToolbars(visibleToolbars: AdaptableBlotterDashboardToolbars): void {
-    visibleToolbars.forEach((vt: AdaptableBlotterDashboardToolbar) => {
+  public SetVisibleToolbars(visibleToolbars: AdaptableDashboardToolbars): void {
+    visibleToolbars.forEach((vt: AdaptableDashboardToolbar) => {
       this.ShowToolbar(vt);
     });
   }
 
-  public ShowToolbar(visibleToolbar: AdaptableBlotterDashboardToolbar): void {
+  public ShowToolbar(visibleToolbar: AdaptableDashboardToolbar): void {
     this.dispatchAction(DashboardRedux.DashboardShowToolbar(visibleToolbar));
   }
 
-  public HideToolbar(visibleToolbar: AdaptableBlotterDashboardToolbar): void {
+  public HideToolbar(visibleToolbar: AdaptableDashboardToolbar): void {
     this.dispatchAction(DashboardRedux.DashboardHideToolbar(visibleToolbar));
   }
 
-  public SetVisibleButtons(functionButtons: AdaptableBlotterFunctionButtons): void {
+  public SetVisibleButtons(functionButtons: AdaptableFunctionButtons): void {
     this.dispatchAction(DashboardRedux.DashboardSetFunctionButtons(functionButtons));
   }
 

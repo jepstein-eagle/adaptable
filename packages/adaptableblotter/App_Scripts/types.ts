@@ -9,9 +9,9 @@ import { ToolbarVisibilityChangedEventArgs } from './Api/Events/ToolbarVisibilit
 import { LiveReportUpdatedEventArgs } from './Api/Events/LiveReportUpdated';
 import { SelectionChangedEventArgs } from './Api/Events/SelectionChanged';
 export {
-  IAdaptableBlotterWizard,
-  IAdaptableBlotterWizardOptions,
-} from './BlotterInterfaces/IAdaptableBlotterWizard';
+  IAdaptableNoCodeWizard,
+  IAdaptableNoCodeWizardOptions,
+} from './BlotterInterfaces/IAdaptableNoCodeWizard';
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { IAdaptableBlotter } from './BlotterInterfaces/IAdaptableBlotter';
 export { BlotterApi } from './Api/BlotterApi';

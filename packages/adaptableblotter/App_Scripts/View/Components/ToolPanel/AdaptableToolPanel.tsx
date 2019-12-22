@@ -2,19 +2,14 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
 import * as ToolPanelRedux from '../../../Redux/ActionsReducers/ToolPanelRedux';
-import * as DashboardRedux from '../../../Redux/ActionsReducers/DashboardRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
 import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { Visibility, AccessLevel } from '../../../PredefinedConfig/Common/Enums';
-import Dropdown from '../../../components/Dropdown';
-import EnumExtensions from '../../../Utilities/Extensions/EnumExtensions';
+import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Text, Flex, Box } from 'rebass';
 import { IAdaptableBlotter } from '../../../types';
-import { QuickSearchToolPanel } from '../../QuickSearch/QuickSearchToolPanel';
-import { AdvancedSearchToolPanel } from '../../AdvancedSearch/AdvancedSearchToolPanel';
 import { Entitlement } from '../../../PredefinedConfig/EntitlementsState';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
@@ -24,14 +19,14 @@ import { Icon } from '../../../components/icons';
 import Checkbox from '../../../components/CheckBox';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
-import { AdaptableBlotterToolPanels } from '../../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanels } from '../../../PredefinedConfig/ToolPanelState';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import DropdownButton from '../../../components/DropdownButton';
 import { AdaptableToolPanelContext } from '../../../Utilities/Interface/AdaptableToolPanelContext';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
-interface AdaptableBlotterToolPanelProps {
+interface AdaptableToolPanelProps {
   Blotter: IAdaptableBlotter;
   TeamSharingActivated?: boolean;
   VisibleToolsPanels: string[];
@@ -41,17 +36,17 @@ interface AdaptableBlotterToolPanelProps {
   // wondering if this shoudl take some base props like others?  though i know we dont like that...
   onClick: (action: Redux.Action) => Redux.Action;
   onSetToolPanelVisibility: (
-    toolPanels: AdaptableBlotterToolPanels
+    toolPanels: AdaptableToolPanels
   ) => ToolPanelRedux.ToolPanelSetToolPanelsAction;
 }
 
-export interface AdaptableBlotterToolPanelState {}
+export interface AdaptableToolPanelState {}
 
-class AdaptableBlotterToolPanelComponent extends React.Component<
-  AdaptableBlotterToolPanelProps,
-  AdaptableBlotterToolPanelState
+class AdaptableToolPanelComponent extends React.Component<
+  AdaptableToolPanelProps,
+  AdaptableToolPanelState
 > {
-  constructor(props: AdaptableBlotterToolPanelProps) {
+  constructor(props: AdaptableToolPanelProps) {
     super(props);
     this.state = {};
   }
@@ -172,7 +167,7 @@ class AdaptableBlotterToolPanelComponent extends React.Component<
         collapseOnItemClick={false}
         key={'dropdown-toolpanels'}
         id={'dropdown-toolpanels'}
-        className="ab-DashboardToolbar__Home__toolbars"
+        className="ab-ToolPanel__toolbars"
         columns={['label']}
         items={toolpanelItems}
         tooltip="Manage Tool Panels"
@@ -225,15 +220,15 @@ function mapStateToProps(state: AdaptableState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
-    onSetToolPanelVisibility: (toolPanels: AdaptableBlotterToolPanels) =>
+    onSetToolPanelVisibility: (toolPanels: AdaptableToolPanels) =>
       dispatch(ToolPanelRedux.ToolPanelSetToolPanels(toolPanels)),
   };
 }
 
-export const ConnectedAdaptableBlotterToolPanel = connect(
+export const ConnectedAdaptableToolPanel = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdaptableBlotterToolPanelComponent);
+)(AdaptableToolPanelComponent);
 
 export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
   class AdaptableToolPanel implements IToolPanelComp {
@@ -250,10 +245,7 @@ export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
       render(
         <Provider store={this.ctx.Blotter.AdaptableStore.TheStore}>
           <ThemeProvider theme={theme}>
-            <ConnectedAdaptableBlotterToolPanel
-              Blotter={this.ctx.Blotter}
-              TeamSharingActivated={false}
-            />
+            <ConnectedAdaptableToolPanel Blotter={this.ctx.Blotter} TeamSharingActivated={false} />
           </ThemeProvider>
         </Provider>,
         this.gui
