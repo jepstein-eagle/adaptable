@@ -9,13 +9,13 @@ import { MenuInfo } from './Common/Menu';
  *
  * **Further Resources**
  *
- * -[Column Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcolumnmenudemo/)
+ * - [Column Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcolumnmenudemo/)
  *
- * -[Context Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcontextmenudemo/)
+ * - [Context Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcontextmenudemo/)
  *
- * -[User Interface API](_api_userinterfaceapi_.userinterfaceapi.html)
+ * - [User Interface API](_api_userinterfaceapi_.userinterfaceapi.html)
  *
- * -[User Interface FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004751-Look-and-Feel-FAQ)
+ * - [User Interface FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004751-Look-and-Feel-FAQ)
  **/
 export interface UserInterfaceState extends DesignTimeState {
   /**
@@ -95,6 +95,14 @@ export interface UserInterfaceState extends DesignTimeState {
    * You can add as many `UserMenuItem`s as you wish.  And each Menu Item can take an array of sub items.
    *
    * You can provide either a standard arry of Menu Items or a function which will return an array of MenuItems depending on the `MenuInfo`.
+   *
+   * The function signature is:
+   *
+   *  ```ts
+   *
+   * ((menuInfo: MenuInfo) => UserMenuItem[])
+   *
+   *  ```
    *
    * If you want to control which of the shipped Adaptable Blotter Context Menu items are showns use the `showAdaptableContextMenu` property in [General Options](_blotteroptions_generaloptions_.generaloptions.html)
    *
