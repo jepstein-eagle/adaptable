@@ -6,5 +6,5 @@ import {
 
 export default AdaptableBlotter;
 
-export const AdaptableWizard = ABWizard;
+export const AdaptableNoCodeWizard = ABWizard;
 //export const init = initFn;

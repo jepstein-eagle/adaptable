@@ -42,7 +42,7 @@ function InitAdaptableBlotter() {
 
   api = AdaptableBlotter.init(adaptableBlotterOptions);
   if (useTickingData) {
-    tickingDataHelper.testTickingDataagGrid(gridOptions, api, 200, tradeCount);
+    tickingDataHelper.useTickingDataagGrid(gridOptions, api, 200, tradeCount);
   }
 }
 

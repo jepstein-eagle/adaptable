@@ -15,7 +15,7 @@ export class TickingDataHelper {
     }, 2000);
   }
 
-  testTickingDataagGrid(
+  useTickingDataagGrid(
     gridOptions: any,
     blotterApi: BlotterApi,
     tickingFrequency: number,

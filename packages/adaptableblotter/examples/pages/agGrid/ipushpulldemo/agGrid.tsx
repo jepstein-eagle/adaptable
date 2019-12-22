@@ -64,7 +64,7 @@ function InitAdaptableBlotter() {
   const blotterAPI: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   if (useTickingData) {
-    tickingDataHelper.testTickingDataagGrid(gridOptions, blotterAPI, 1000, tradeCount);
+    tickingDataHelper.useTickingDataagGrid(gridOptions, blotterAPI, 1000, tradeCount);
   }
 
   blotterAPI.eventApi.on(

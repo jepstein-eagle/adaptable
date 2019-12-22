@@ -58,7 +58,7 @@ function InitAdaptableBlotter() {
   const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
   // turn on mimicing ticking data
-  tickingDataHelper.testTickingDataagGrid(gridOptions, blotterApi, 500, tradeCount);
+  tickingDataHelper.useTickingDataagGrid(gridOptions, blotterApi, 500, tradeCount);
 }
 
 let flashingJson: PredefinedConfig = {
