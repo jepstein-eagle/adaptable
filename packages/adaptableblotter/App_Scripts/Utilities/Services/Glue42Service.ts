@@ -130,6 +130,7 @@ export class Glue42Service implements IGlue42Service {
     }
   }
 
+  // this method ideally will create a connection to Excel and return an ID? somethign?
   async openSheet(data: any[]): Promise<any> {
     if (!this.glueInstance) {
       return;
@@ -171,6 +172,9 @@ export class Glue42Service implements IGlue42Service {
     }
   }
 
+  // this will sned the data itself to update.
+  // it could be that the columns never send
+  // currently we resend everything but we can change that internally just to send deltas.
   async updateData(data: any[], gridColumns: AdaptableColumn[], primaryKeys: any[]) {
     if (!this.glueInstance) {
       return;

@@ -15,11 +15,15 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 import glue42Desktop from '@glue42/desktop';
 import glue42office from '@glue42/office';
+import { TickingDataHelper } from '../../TickingDataHelper';
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(100);
+  const tradeCount: number = 30;
+  const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  const tickingDataHelper = new TickingDataHelper();
+  const useTickingData: boolean = true;
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
@@ -38,12 +42,16 @@ function InitAdaptableBlotter() {
   };
 
   const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+
+  if (useTickingData) {
+    tickingDataHelper.useTickingDataagGrid(gridOptions, blotterApi, 1000, tradeCount);
+  }
 }
 
 let demoConfig: PredefinedConfig = {
   Partner: {
     Glue42: {
-      RunLiveData: false,
+      RunLiveData: true,
       Glue: glue42Desktop, // this is the glue object
       Glue4Office: glue42office, // this is the Glue4Office object
       Glue42Config: {
@@ -59,10 +67,42 @@ let demoConfig: PredefinedConfig = {
           },
         },
         excelExport: {
-          timeoutMs: 10000,
+          timeoutMs: 30000,
         },
       },
     },
+  },
+  FlashingCell: {
+    FlashingCells: [
+      {
+        IsLive: true,
+        ColumnId: 'notional',
+        FlashingCellDuration: 500,
+        UpColor: '#008000',
+        DownColor: '#FF0000',
+      },
+      {
+        IsLive: true,
+        ColumnId: 'ask',
+        FlashingCellDuration: 500,
+        UpColor: '#008000',
+        DownColor: '#FF0000',
+      },
+      {
+        IsLive: true,
+        ColumnId: 'bid',
+        FlashingCellDuration: 500,
+        UpColor: '#008000',
+        DownColor: '#FF0000',
+      },
+      {
+        IsLive: true,
+        ColumnId: 'price',
+        FlashingCellDuration: 500,
+        UpColor: 'Blue',
+        DownColor: 'Yellow',
+      },
+    ],
   },
 };
 

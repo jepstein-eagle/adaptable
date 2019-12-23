@@ -137,7 +137,7 @@ export interface Glue42State {
   RunLiveData?: boolean; // keep this?????
 
   /**
-   * How long (in miliseconds) the Adaptable Blotter should throttle when sending an update to iPushPull.
+   * How long (in miliseconds) the Adaptable Blotter should throttle when sending an update to Glue42.
    *
    * **Default Value: 2000**
    */
