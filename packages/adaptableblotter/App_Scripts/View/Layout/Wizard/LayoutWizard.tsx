@@ -26,7 +26,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.LayoutStrategyName}
+          FriendlyName={StrategyConstants.LayoutStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

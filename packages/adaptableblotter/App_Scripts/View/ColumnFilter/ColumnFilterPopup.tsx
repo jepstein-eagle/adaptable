@@ -66,7 +66,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
     return (
       <PanelWithImage
-        header={StrategyConstants.ColumnFilterStrategyName}
+        header={StrategyConstants.ColumnFilterStrategyFriendlyName}
         variant="primary"
         infoBody={infoBody}
         glyphicon={StrategyConstants.ColumnFilterGlyph}

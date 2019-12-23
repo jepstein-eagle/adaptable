@@ -165,7 +165,7 @@ class SmartEditToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         className="ab-DashboardToolbar__SmartEdit"
-        headerText={StrategyConstants.SmartEditStrategyName}
+        headerText={StrategyConstants.SmartEditStrategyFriendlyName}
         glyphicon={StrategyConstants.SmartEditGlyph}
         onClose={() => this.props.onClose(StrategyConstants.SmartEditStrategyId)}
         onConfigure={() => this.props.onConfigure()}

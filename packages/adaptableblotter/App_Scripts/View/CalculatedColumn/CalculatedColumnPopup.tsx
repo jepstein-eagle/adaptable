@@ -119,7 +119,7 @@ class CalculatedColumnPopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.CalculatedColumnStrategyName}
+        headerText={StrategyConstants.CalculatedColumnStrategyFriendlyName}
         className="ab_main_popup"
         infoBody={infoBody}
         button={newButton}

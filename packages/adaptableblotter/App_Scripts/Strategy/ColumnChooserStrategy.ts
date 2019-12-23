@@ -14,7 +14,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ColumnChooserStrategyName,
+      Label: StrategyConstants.ColumnChooserStrategyFriendlyName,
       ComponentName: ScreenPopups.ColumnChooserPopup,
       Icon: StrategyConstants.ColumnChooserGlyph,
     });
@@ -22,7 +22,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     return this.createColumnMenuItemShowPopup(
-      'Show ' + StrategyConstants.ColumnChooserStrategyName,
+      'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
       ScreenPopups.ColumnChooserPopup,
       StrategyConstants.ColumnChooserGlyph
     );
@@ -33,7 +33,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
       source: 'ContextMenu',
     };
     return this.createMainMenuItemShowPopup({
-      Label: 'Show ' + StrategyConstants.ColumnChooserStrategyName,
+      Label: 'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
       ComponentName: ScreenPopups.ColumnChooserPopup,
       Icon: StrategyConstants.ColumnChooserGlyph,
       PopupParams: popUpParams,

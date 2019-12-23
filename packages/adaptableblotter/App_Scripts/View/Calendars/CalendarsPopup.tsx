@@ -83,7 +83,7 @@ class CalendarsPopupComponent extends React.Component<
 
     return (
       <PanelWithImage
-        header={StrategyConstants.CalendarStrategyName}
+        header={StrategyConstants.CalendarStrategyFriendlyName}
         variant="primary"
         glyphicon={StrategyConstants.CalendarGlyph}
         infoBody={infoBody}

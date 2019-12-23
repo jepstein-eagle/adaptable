@@ -171,7 +171,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     return (
       <PanelDashboard
         className="ab-DashboardToolbar__Chart"
-        headerText={StrategyConstants.ChartStrategyName}
+        headerText={StrategyConstants.ChartStrategyFriendlyName}
         glyphicon={StrategyConstants.ChartGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ChartStrategyId)}
         onConfigure={() => this.props.onConfigure()}

@@ -16,7 +16,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ColumnInfoStrategyName,
+      Label: StrategyConstants.ColumnInfoStrategyFriendlyName,
       ComponentName: ScreenPopups.ColumnInfoPopup,
       Icon: StrategyConstants.ColumnInfoGlyph,
     });
@@ -29,7 +29,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
         source: 'ColumnMenu',
       };
       return this.createColumnMenuItemShowPopup(
-        StrategyConstants.ColumnInfoStrategyName,
+        StrategyConstants.ColumnInfoStrategyFriendlyName,
         ScreenPopups.ColumnInfoPopup,
         StrategyConstants.ColumnInfoGlyph,
         popupParam
@@ -46,7 +46,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
       };
       if (menuInfo.column) {
         menuItemShowPopup = this.createMainMenuItemShowPopup({
-          Label: StrategyConstants.ColumnInfoStrategyName,
+          Label: StrategyConstants.ColumnInfoStrategyFriendlyName,
           ComponentName: ScreenPopups.ColumnInfoPopup,
           Icon: StrategyConstants.ColumnInfoGlyph,
           PopupParams: popupParam,

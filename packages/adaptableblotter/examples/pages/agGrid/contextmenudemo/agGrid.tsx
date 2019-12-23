@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
-
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
@@ -36,7 +34,7 @@ function InitAdaptableBlotter() {
     //showAdaptableContextMenu: false,
 
     showAdaptableContextMenu: (menuItem: AdaptableMenuItem) => {
-      if (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'SmartEdit') {
+      if (menuItem.FunctionName === 'ColumnChooser' || menuItem.FunctionName === 'SmartEdit') {
         return false;
       }
       return true;

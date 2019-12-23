@@ -21,7 +21,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.SparklineColumnStrategyName,
+      Label: StrategyConstants.SparklineColumnStrategyFriendlyName,
       ComponentName: ScreenPopups.SparklineColumnPopup,
       Icon: StrategyConstants.SparklineColumnGlyph,
     });

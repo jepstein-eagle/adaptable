@@ -20,7 +20,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.PlusMinusStrategyName}
+          FriendlyName={StrategyConstants.PlusMinusStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

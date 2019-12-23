@@ -183,7 +183,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithImage
-          header={StrategyConstants.SparklineStrategyName}
+          header={StrategyConstants.SparklineStrategyFriendlyName}
           glyphicon={StrategyConstants.SparklinesGlyph}
           infoBody={infoBody}
           variant="primary"

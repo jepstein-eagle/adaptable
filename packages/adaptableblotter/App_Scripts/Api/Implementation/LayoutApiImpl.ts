@@ -16,7 +16,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
   public setLayout(layoutName: string): void {
     if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
       let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
-      if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
+      if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyFriendlyName)) {
         this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
       }
     }
@@ -42,7 +42,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
   public getLayoutByName(layoutName: string): Layout {
     if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
       let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
-      if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
+      if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyFriendlyName)) {
         return layout;
       }
     }

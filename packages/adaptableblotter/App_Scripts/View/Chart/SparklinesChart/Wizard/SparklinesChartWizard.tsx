@@ -23,7 +23,7 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ChartStrategyName}
+          FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

@@ -87,7 +87,7 @@ class DataSourcePopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.DataSourceStrategyName}
+        headerText={StrategyConstants.DataSourceStrategyFriendlyName}
         button={newButton}
         bodyProps={{ padding: 0 }}
         glyphicon={StrategyConstants.DataSourceGlyph}

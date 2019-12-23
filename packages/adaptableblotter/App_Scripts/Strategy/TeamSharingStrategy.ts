@@ -14,7 +14,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     if (AdaptableHelper.isConfigServerEnabled(this.blotter.blotterOptions)) {
       return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.TeamSharingStrategyName,
+        Label: StrategyConstants.TeamSharingStrategyFriendlyName,
         ComponentName: ScreenPopups.TeamSharingPopup,
         Icon: StrategyConstants.TeamSharingGlyph,
       });

@@ -35,7 +35,7 @@ function InitAdaptableBlotter() {
     showAdaptableColumnMenu: (menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => {
       if (
         menuInfo.column.ColumnId === 'counterparty' &&
-        (menuItem.StrategyId === 'ColumnChooser' || menuItem.StrategyId === 'PieChart')
+        (menuItem.FunctionName === 'ColumnChooser' || menuItem.FunctionName === 'PieChart')
       ) {
         return false;
       }

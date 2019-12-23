@@ -54,18 +54,18 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     // title row
     let titleRow = (
       <StrategyHeader
-        key={StrategyConstants.ConditionalStyleStrategyName}
-        StrategyId={StrategyConstants.ConditionalStyleStrategyId}
+        key={StrategyConstants.ConditionalStyleStrategyFriendlyName}
+        FunctionName={StrategyConstants.ConditionalStyleStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.ConditionalStyles.filter(
             item =>
               item.ColumnId == this.props.SummarisedColumn.ColumnId &&
               item.ConditionalStyleScope == ConditionalStyleScope.Column
           ),
-          StrategyConstants.ConditionalStyleStrategyName
+          StrategyConstants.ConditionalStyleStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
-        NewButtonTooltip={StrategyConstants.ConditionalStyleStrategyName}
+        NewButtonTooltip={StrategyConstants.ConditionalStyleStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -83,7 +83,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             Item1={<StyleVisualItem Style={item.Style} />}
             Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)}
             ConfigEnity={item}
-            EntityType={StrategyConstants.ConditionalStyleStrategyName}
+            EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}

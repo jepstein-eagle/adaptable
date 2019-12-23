@@ -42,7 +42,7 @@ export class ConditionalStyleSummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.ConditionalStyleStrategyName}
+        header={StrategyConstants.ConditionalStyleStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

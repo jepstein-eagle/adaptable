@@ -27,7 +27,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.AlertStrategyName,
+      Label: StrategyConstants.AlertStrategyFriendlyName,
       ComponentName: ScreenPopups.AlertPopup,
       Icon: StrategyConstants.AlertGlyph,
     });

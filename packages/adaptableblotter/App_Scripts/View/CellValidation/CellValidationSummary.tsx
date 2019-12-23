@@ -49,16 +49,16 @@ export class CellValidationSummaryComponent extends React.Component<
     // title row
     let titleRow = (
       <StrategyHeader
-        key={StrategyConstants.CellValidationStrategyName}
-        StrategyId={StrategyConstants.CellValidationStrategyId}
+        key={StrategyConstants.CellValidationStrategyFriendlyName}
+        FunctionName={StrategyConstants.CellValidationStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.CellValidations.filter(
             item => item.ColumnId == this.props.SummarisedColumn.ColumnId
           ),
-          StrategyConstants.CellValidationStrategyName
+          StrategyConstants.CellValidationStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
-        NewButtonTooltip={StrategyConstants.CellValidationStrategyName}
+        NewButtonTooltip={StrategyConstants.CellValidationStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -76,7 +76,7 @@ export class CellValidationSummaryComponent extends React.Component<
               this.props.Columns
             )}
             ConfigEnity={item}
-            EntityType={StrategyConstants.CellValidationStrategyName}
+            EntityType={StrategyConstants.CellValidationStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}

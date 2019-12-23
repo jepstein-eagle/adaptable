@@ -15,7 +15,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ColumnFilterStrategyName,
+      Label: StrategyConstants.ColumnFilterStrategyFriendlyName,
       ComponentName: ScreenPopups.ColumnFilterPopup,
       Icon: StrategyConstants.ColumnFilterGlyph,
     });

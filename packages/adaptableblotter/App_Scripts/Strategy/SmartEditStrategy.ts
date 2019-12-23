@@ -27,7 +27,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.SmartEditStrategyName,
+      Label: StrategyConstants.SmartEditStrategyFriendlyName,
       ComponentName: ScreenPopups.SmartEditPopup,
       Icon: StrategyConstants.SmartEditGlyph,
     });
@@ -50,7 +50,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         source: 'ContextMenu',
       };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'Apply ' + StrategyConstants.SmartEditStrategyName,
+        Label: 'Apply ' + StrategyConstants.SmartEditStrategyFriendlyName,
         ComponentName: ScreenPopups.SmartEditPopup,
         Icon: StrategyConstants.SmartEditGlyph,
         PopupParams: popUpParams,

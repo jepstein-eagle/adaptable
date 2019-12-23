@@ -68,7 +68,7 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.PercentBarStrategyName}
+        header={StrategyConstants.PercentBarStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

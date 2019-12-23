@@ -25,7 +25,7 @@ export class DataSourceSummaryWizard extends React.Component<DataSourceSummaryWi
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.DataSourceStrategyName}
+        header={StrategyConstants.DataSourceStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

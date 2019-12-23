@@ -131,7 +131,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.ChartStrategyName}
+        headerText={StrategyConstants.ChartStrategyFriendlyName}
         infoBody={infoBody}
         button={dropdownButton}
         bodyProps={{ padding: 0 }}

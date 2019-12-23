@@ -42,14 +42,14 @@ export class AlertSummaryComponent extends React.Component<
     // title row
     let titleRow = (
       <StrategyHeader
-        key={StrategyConstants.AlertStrategyName}
-        StrategyId={StrategyConstants.AlertStrategyId}
+        key={StrategyConstants.AlertStrategyFriendlyName}
+        FunctionName={StrategyConstants.AlertStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId),
-          StrategyConstants.AlertStrategyName
+          StrategyConstants.AlertStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
-        NewButtonTooltip={StrategyConstants.AlertStrategyName}
+        NewButtonTooltip={StrategyConstants.AlertStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -67,7 +67,7 @@ export class AlertSummaryComponent extends React.Component<
               this.props.Columns
             )}
             ConfigEnity={item}
-            EntityType={StrategyConstants.AlertStrategyName}
+            EntityType={StrategyConstants.AlertStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}

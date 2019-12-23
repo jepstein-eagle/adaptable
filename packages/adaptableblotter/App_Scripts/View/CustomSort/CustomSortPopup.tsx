@@ -115,7 +115,7 @@ class CustomSortPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.CustomSortStrategyName}
+          headerText={StrategyConstants.CustomSortStrategyFriendlyName}
           infoBody={infoBody}
           button={newButton}
           bodyProps={{ padding: 0 }}

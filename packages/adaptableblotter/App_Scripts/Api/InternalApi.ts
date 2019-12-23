@@ -50,7 +50,7 @@ export interface InternalApi {
   hideLoadingScreen(): void;
 
   showPopupScreen(
-    strategyId: AdaptableFunctionName,
+    functionName: AdaptableFunctionName,
     componentName: string,
     popupParams?: StrategyParams
   ): void;

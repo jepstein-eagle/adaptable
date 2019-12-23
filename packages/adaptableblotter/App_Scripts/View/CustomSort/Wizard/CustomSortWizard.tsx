@@ -15,7 +15,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
     let customSorts: CustomSort[] = this.props.ConfigEntities as CustomSort[];
     return (
       <AdaptableWizard
-        FriendlyName={StrategyConstants.CustomSortStrategyName}
+        FriendlyName={StrategyConstants.CustomSortStrategyFriendlyName}
         ModalContainer={this.props.ModalContainer}
         Blotter={this.props.Blotter}
         Columns={this.props.Columns}

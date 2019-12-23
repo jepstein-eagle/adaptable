@@ -163,7 +163,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__BulkUpdate"
-        headerText={StrategyConstants.BulkUpdateStrategyName}
+        headerText={StrategyConstants.BulkUpdateStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}

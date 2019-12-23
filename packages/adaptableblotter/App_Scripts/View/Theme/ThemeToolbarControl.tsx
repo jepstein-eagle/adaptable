@@ -72,7 +72,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
     return (
       <PanelDashboard
         className="ab-DashboardToolbar__Theme"
-        headerText={StrategyConstants.ThemeStrategyName}
+        headerText={StrategyConstants.ThemeStrategyFriendlyName}
         glyphicon={StrategyConstants.ThemeGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)}
         onConfigure={() => this.props.onConfigure()}

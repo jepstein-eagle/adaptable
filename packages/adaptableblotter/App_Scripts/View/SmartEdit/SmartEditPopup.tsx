@@ -106,7 +106,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     return (
       <PanelWithImage
         variant="primary"
-        header={StrategyConstants.SmartEditStrategyName}
+        header={StrategyConstants.SmartEditStrategyFriendlyName}
         glyphicon={StrategyConstants.SmartEditGlyph}
         infoBody={infoBody}
         bodyScroll={true}

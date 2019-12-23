@@ -70,7 +70,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.DashboardStrategyName,
+      Label: StrategyConstants.DashboardStrategyFriendlyName,
       ComponentName: ScreenPopups.DashboardPopup,
       Icon: StrategyConstants.DashboardGlyph,
     });

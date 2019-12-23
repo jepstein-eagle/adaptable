@@ -44,8 +44,8 @@ export class PlusMinusSummaryComponent extends React.Component<
     // title row
     let titleRow = (
       <StrategyHeader
-        key={StrategyConstants.PlusMinusStrategyName}
-        StrategyId={StrategyConstants.PlusMinusStrategyId}
+        key={StrategyConstants.PlusMinusStrategyFriendlyName}
+        FunctionName={StrategyConstants.PlusMinusStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.PlusMinusRules.filter(
             item => item.ColumnId == this.props.SummarisedColumn.ColumnId
@@ -72,7 +72,7 @@ export class PlusMinusSummaryComponent extends React.Component<
             )}
             ConfigEnity={item}
             showShare={this.props.TeamSharingActivated}
-            EntityType={StrategyConstants.PlusMinusStrategyName}
+            EntityType={StrategyConstants.PlusMinusStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}
             onDelete={PlusMinusRedux.PlusMinusRuleDelete(item)}

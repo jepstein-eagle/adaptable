@@ -65,7 +65,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         <li className="list-group-item" key={index}>
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={2}>
-              <StrategyProfile StrategyId={x.functionName} />
+              <StrategyProfile FunctionName={x.functionName} />
             </Flex>
             <Flex flex={3}>
               {x.user}
@@ -91,7 +91,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 
     return (
       <PanelWithImage
-        header={StrategyConstants.TeamSharingStrategyName}
+        header={StrategyConstants.TeamSharingStrategyFriendlyName}
         infoBody={infoBody}
         glyphicon={StrategyConstants.TeamSharingGlyph}
       >

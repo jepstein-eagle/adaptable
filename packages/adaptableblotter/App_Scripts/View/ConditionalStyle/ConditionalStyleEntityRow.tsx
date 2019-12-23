@@ -48,7 +48,7 @@ export class ConditionalStyleEntityRow extends React.Component<
           !column && conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column
         }
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.ConditionalStyleStrategyName}
+        EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

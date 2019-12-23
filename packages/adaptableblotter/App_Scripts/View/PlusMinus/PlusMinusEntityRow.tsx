@@ -55,7 +55,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={false}
-        EntityType={StrategyConstants.PlusMinusStrategyName + ' Rule '}
+        EntityType={StrategyConstants.PlusMinusStrategyFriendlyName + ' Rule '}
         AccessLevel={this.props.AccessLevel}
       />
     );

@@ -28,7 +28,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.UpdatedRowStrategyName,
+      Label: StrategyConstants.UpdatedRowStrategyFriendlyName,
       ComponentName: ScreenPopups.UpdatedRowPopup,
       Icon: StrategyConstants.UpdatedRowGlyph,
     });

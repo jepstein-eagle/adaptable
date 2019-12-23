@@ -72,20 +72,20 @@ class DashboardPopupComponent extends React.Component<
     this.props.DashboardState.VisibleButtons.forEach(x => {
       let menuItem = this.props.GridState.MainMenuItems.find(m => m.FunctionName == x);
       if (menuItem != null && menuItem.IsVisible) {
-        selectedValues.push(StrategyConstants.getNameForStrategyId(x));
+        selectedValues.push(StrategyConstants.getFriendlyNameForStrategyId(x));
       }
     });
 
     let availableToolbarNames: string[] = this.props.DashboardState.AvailableToolbars.filter(at =>
       this.isVisibleStrategy(at)
     ).map(at => {
-      return StrategyConstants.getNameForStrategyId(at);
+      return StrategyConstants.getFriendlyNameForStrategyId(at);
     });
 
     let visibleToolbarNames: string[] = this.props.DashboardState.VisibleToolbars.filter(at =>
       this.isVisibleStrategy(at)
     ).map(vt => {
-      return StrategyConstants.getNameForStrategyId(vt);
+      return StrategyConstants.getFriendlyNameForStrategyId(vt);
     });
 
     let availableValues = this.props.GridState.MainMenuItems.filter(
@@ -241,19 +241,23 @@ class DashboardPopupComponent extends React.Component<
   }
 
   onDashboardButtonsChanged(selectedValues: string[]) {
-    let selectedFunctions = selectedValues.map(sv => StrategyConstants.getIdForStrategyName(sv));
+    let selectedFunctions = selectedValues.map(sv =>
+      StrategyConstants.getIdForStrategyFriendlyName(sv)
+    );
     this.props.onDashboardSetFunctionButtons(selectedFunctions);
   }
 
   onDashboardToolbarsChanged(selectedValues: string[]) {
     let selectedToolbars: string[] = selectedValues.map(sv => {
-      return StrategyConstants.getIdForStrategyName(sv);
+      return StrategyConstants.getIdForStrategyFriendlyName(sv);
     });
     this.props.onDashboardSetToolbars(selectedToolbars);
   }
 
-  isVisibleStrategy(strategyId: AdaptableFunctionName): boolean {
-    let entitlement: Entitlement = this.props.Entitlements.find(x => x.FunctionName == strategyId);
+  isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
+    let entitlement: Entitlement = this.props.Entitlements.find(
+      x => x.FunctionName == functionName
+    );
     if (entitlement) {
       return entitlement.AccessLevel != 'Hidden';
     }

@@ -13,7 +13,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.AdvancedSearchStrategyName,
+      Label: StrategyConstants.AdvancedSearchStrategyFriendlyName,
       ComponentName: ScreenPopups.AdvancedSearchPopup,
       Icon: StrategyConstants.AdvancedSearchGlyph,
     });

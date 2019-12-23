@@ -122,7 +122,7 @@ class PlusMinusPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.PlusMinusStrategyName}
+          headerText={StrategyConstants.PlusMinusStrategyFriendlyName}
           bodyProps={{ padding: 0 }}
           button={newButton}
           glyphicon={StrategyConstants.PlusMinusGlyph}

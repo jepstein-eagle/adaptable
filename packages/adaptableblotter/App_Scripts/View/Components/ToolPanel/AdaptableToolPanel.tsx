@@ -139,7 +139,7 @@ class AdaptableToolPanelComponent extends React.Component<
           this.props.VisibleToolsPanels,
           toolPanel
         );
-        let functionName = StrategyConstants.getNameForStrategyId(toolPanel);
+        let functionName = StrategyConstants.getFriendlyNameForStrategyId(toolPanel);
         toolpanelItems.push({
           id: toolPanel,
           onClick: (e: React.SyntheticEvent) => {

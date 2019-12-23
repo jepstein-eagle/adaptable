@@ -68,7 +68,7 @@ class SystemStatusPopupComponent extends React.Component<
     return (
       <PanelWithImage
         variant="primary"
-        header={StrategyConstants.SystemStatusStrategyName}
+        header={StrategyConstants.SystemStatusStrategyFriendlyName}
         glyphicon={StrategyConstants.SystemStatusGlyph}
         infoBody={infoBody}
         bodyProps={{ padding: 2 }}

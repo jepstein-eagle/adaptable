@@ -113,7 +113,7 @@ class SparklineColumnPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.SparklineColumnStrategyName}
+          headerText={StrategyConstants.SparklineColumnStrategyFriendlyName}
           style={{ height: '100%' }}
           glyphicon={StrategyConstants.SparklinesGlyph}
           infoBody={infoBody}

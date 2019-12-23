@@ -9,10 +9,8 @@ import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PercentBarWizard } from './Wizard/PercentBarWizard';
 import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
@@ -47,9 +45,6 @@ export class PercentBarSummaryComponent extends React.Component<
     let percentBar: PercentBar = this.props.PercentBars.find(
       c => c.ColumnId == this.props.SummarisedColumn.ColumnId
     );
-    let percentBarIndex: number = this.props.PercentBars.findIndex(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
-    );
     let noPercentBar: boolean = percentBar == null;
 
     let percentBarRow: any;
@@ -57,23 +52,23 @@ export class PercentBarSummaryComponent extends React.Component<
     if (noPercentBar) {
       percentBarRow = (
         <StrategyHeader
-          key={StrategyConstants.PercentBarStrategyName}
-          StrategyId={StrategyConstants.PercentBarStrategyId}
+          key={StrategyConstants.PercentBarStrategyFriendlyName}
+          FunctionName={StrategyConstants.PercentBarStrategyId}
           StrategySummary={'No Percent Bar'}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.PercentBarStrategyName}
+          NewButtonTooltip={StrategyConstants.PercentBarStrategyFriendlyName}
           AccessLevel={this.props.AccessLevel}
         />
       );
     } else {
       percentBarRow = (
         <StrategyDetail
-          key={StrategyConstants.PercentBarStrategyName}
-          Item1={<StrategyProfile StrategyId={StrategyConstants.PercentBarStrategyId} />}
+          key={StrategyConstants.PercentBarStrategyFriendlyName}
+          Item1={<StrategyProfile FunctionName={StrategyConstants.PercentBarStrategyId} />}
           Item2={'Percent Bar set'}
           ConfigEnity={percentBar}
           showShare={this.props.TeamSharingActivated}
-          EntityType={StrategyConstants.PercentBarStrategyName}
+          EntityType={StrategyConstants.PercentBarStrategyFriendlyName}
           onEdit={() => this.onEdit(percentBar)}
           onShare={() => this.props.onShare(percentBar)}
           onDelete={PercentBarRedux.PercentBarDelete(percentBar)}

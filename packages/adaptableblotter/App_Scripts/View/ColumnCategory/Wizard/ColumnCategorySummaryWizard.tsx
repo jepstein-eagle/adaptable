@@ -28,7 +28,7 @@ export class ColumnCategorySummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.ColumnCategoryStrategyName}
+        header={StrategyConstants.ColumnCategoryStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

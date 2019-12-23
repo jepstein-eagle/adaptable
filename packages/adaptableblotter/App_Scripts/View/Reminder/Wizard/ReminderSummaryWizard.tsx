@@ -33,7 +33,7 @@ export class ReminderSummaryWizard extends React.Component<ReminderSummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.ReminderStrategyName}
+        header={StrategyConstants.ReminderStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

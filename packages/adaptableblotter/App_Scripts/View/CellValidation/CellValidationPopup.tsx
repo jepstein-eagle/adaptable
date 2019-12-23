@@ -121,7 +121,7 @@ class CellValidationPopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.CellValidationStrategyName}
+        headerText={StrategyConstants.CellValidationStrategyFriendlyName}
         button={newButton}
         glyphicon={StrategyConstants.CellValidationGlyph}
         infoBody={infoBody}

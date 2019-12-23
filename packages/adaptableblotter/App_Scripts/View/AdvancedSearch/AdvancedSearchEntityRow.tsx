@@ -49,7 +49,7 @@ export class AdvancedSearchEntityRow extends React.Component<
         editClick={() => this.props.onEdit(advancedSearch)}
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={undefined}
-        EntityType={StrategyConstants.AdvancedSearchStrategyName}
+        EntityType={StrategyConstants.AdvancedSearchStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

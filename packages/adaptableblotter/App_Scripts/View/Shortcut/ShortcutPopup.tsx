@@ -106,7 +106,7 @@ class ShortcutPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.ShortcutStrategyName}
+          headerText={StrategyConstants.ShortcutStrategyFriendlyName}
           className="ab_main_popup"
           button={newButton}
           glyphicon={StrategyConstants.ShortcutGlyph}

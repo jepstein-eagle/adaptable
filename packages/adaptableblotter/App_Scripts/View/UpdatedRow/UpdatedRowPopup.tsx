@@ -87,7 +87,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
       <Flex flex={1} flexDirection="column">
         <PanelWithImage
           variant="primary"
-          header={StrategyConstants.UpdatedRowStrategyName}
+          header={StrategyConstants.UpdatedRowStrategyFriendlyName}
           glyphicon={StrategyConstants.UpdatedRowGlyph}
           infoBody={infoBody}
           bodyProps={{ padding: 0 }}

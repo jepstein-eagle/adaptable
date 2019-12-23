@@ -17,7 +17,7 @@ export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardPr
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ColumnCategoryStrategyName}
+          FriendlyName={StrategyConstants.ColumnCategoryStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

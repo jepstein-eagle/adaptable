@@ -45,7 +45,7 @@ class DashboardToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__Dashboard"
-        headerText={StrategyConstants.DashboardStrategyName}
+        headerText={StrategyConstants.DashboardStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}

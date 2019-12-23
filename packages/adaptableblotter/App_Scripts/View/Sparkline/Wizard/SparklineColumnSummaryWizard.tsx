@@ -56,7 +56,7 @@ export class SparklineColumnSummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.SparklineColumnStrategyName}
+        header={StrategyConstants.SparklineColumnStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

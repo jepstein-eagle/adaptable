@@ -51,7 +51,7 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.ChartStrategyName}
+        header={StrategyConstants.ChartStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

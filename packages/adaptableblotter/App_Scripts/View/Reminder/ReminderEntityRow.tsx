@@ -30,7 +30,7 @@ export class ReminderEntityRow extends React.Component<
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.ReminderStrategyName}
+        EntityType={StrategyConstants.ReminderStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

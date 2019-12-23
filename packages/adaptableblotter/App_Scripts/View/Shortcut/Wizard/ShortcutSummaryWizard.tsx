@@ -27,7 +27,7 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.ShortcutStrategyName}
+        header={StrategyConstants.ShortcutStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

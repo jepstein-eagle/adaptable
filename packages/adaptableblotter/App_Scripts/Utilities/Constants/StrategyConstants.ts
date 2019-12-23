@@ -1,6 +1,6 @@
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
-// Strategy Ids
+// Strategy Ids used in Config so have made it a type of AdaptableFunctionName
 export const AdvancedSearchStrategyId: AdaptableFunctionName = 'AdvancedSearch';
 export const AlertStrategyId: AdaptableFunctionName = 'Alert';
 export const ApplicationStrategyId: AdaptableFunctionName = 'Application';
@@ -40,44 +40,44 @@ export const ThemeStrategyId: AdaptableFunctionName = 'Theme';
 export const UpdatedRowStrategyId: AdaptableFunctionName = 'UpdatedRow';
 export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
 
-// Strategy Names
-export const AdvancedSearchStrategyName: string = 'Advanced Search';
-export const AlertStrategyName: string = 'Alert';
-export const ApplicationStrategyName: string = 'Application';
-export const BulkUpdateStrategyName: string = 'Bulk Update';
-export const CalculatedColumnStrategyName: string = 'Calculated Column';
-export const CalendarStrategyName: string = 'Calendar';
-export const CellSummaryStrategyName: string = 'Cell Summary';
-export const CellValidationStrategyName: string = 'Cell Validation';
-export const ChartStrategyName: string = 'Chart';
-export const ColumnCategoryStrategyName: string = 'Column Category';
-export const ColumnChooserStrategyName: string = 'Column Chooser';
-export const ColumnFilterStrategyName: string = 'Column Filter';
-export const ColumnInfoStrategyName: string = 'Column Information';
-export const ConditionalStyleStrategyName: string = 'Conditional Style';
-export const CustomSortStrategyName: string = 'Custom Sort';
-export const DashboardStrategyName: string = 'Dashboard';
-export const DataSourceStrategyName: string = 'Data Source';
-export const ExportStrategyName: string = 'Export';
-export const FlashingCellsStrategyName: string = 'Flashing Cells';
-export const UpdatedRowStrategyName: string = 'Updated Row';
-export const FormatColumnStrategyName: string = 'Format Column';
-export const FreeTextColumnStrategyName: string = 'Free Text Column';
-export const LayoutStrategyName: string = 'Layout';
-export const PercentBarStrategyName: string = 'Percent Bar';
-export const SparklineColumnStrategyName: string = 'Sparkline Column';
-export const SparklineStrategyName: string = 'Sparkline';
-export const PieChartStrategyName: string = 'Pie Chart';
-export const PlusMinusStrategyName: string = 'Plus Minus';
-export const QuickSearchStrategyName: string = 'Quick Search';
-export const ReminderStrategyName: string = 'Reminder';
-export const ShortcutStrategyName: string = 'Shortcut';
-export const SmartEditStrategyName: string = 'Smart Edit';
-export const StateManagementStrategyName: string = 'Manage State';
-export const SystemStatusStrategyName: string = 'System Status';
-export const TeamSharingStrategyName: string = 'Team Sharing';
-export const ThemeStrategyName: string = 'Theme';
-export const UserFilterStrategyName: string = 'User Filter';
+// Strategy Names - only used internally
+export const AdvancedSearchStrategyFriendlyName: string = 'Advanced Search';
+export const AlertStrategyFriendlyName: string = 'Alert';
+export const ApplicationStrategyFriendlyName: string = 'Application';
+export const BulkUpdateStrategyFriendlyName: string = 'Bulk Update';
+export const CalculatedColumnStrategyFriendlyName: string = 'Calculated Column';
+export const CalendarStrategyFriendlyName: string = 'Calendar';
+export const CellSummaryStrategyFriendlyName: string = 'Cell Summary';
+export const CellValidationStrategyFriendlyName: string = 'Cell Validation';
+export const ChartStrategyFriendlyName: string = 'Chart';
+export const ColumnCategoryStrategyFriendlyName: string = 'Column Category';
+export const ColumnChooserStrategyFriendlyName: string = 'Column Chooser';
+export const ColumnFilterStrategyFriendlyName: string = 'Column Filter';
+export const ColumnInfoStrategyFriendlyName: string = 'Column Information';
+export const ConditionalStyleStrategyFriendlyName: string = 'Conditional Style';
+export const CustomSortStrategyFriendlyName: string = 'Custom Sort';
+export const DashboardStrategyFriendlyName: string = 'Dashboard';
+export const DataSourceStrategyFriendlyName: string = 'Data Source';
+export const ExportStrategyFriendlyName: string = 'Export';
+export const FlashingCellsStrategyFriendlyName: string = 'Flashing Cells';
+export const UpdatedRowStrategyFriendlyName: string = 'Updated Row';
+export const FormatColumnStrategyFriendlyName: string = 'Format Column';
+export const FreeTextColumnStrategyFriendlyName: string = 'Free Text Column';
+export const LayoutStrategyFriendlyName: string = 'Layout';
+export const PercentBarStrategyFriendlyName: string = 'Percent Bar';
+export const SparklineColumnStrategyFriendlyName: string = 'Sparkline Column';
+export const SparklineStrategyFriendlyName: string = 'Sparkline';
+export const PieChartStrategyFriendlyName: string = 'Pie Chart';
+export const PlusMinusStrategyFriendlyName: string = 'Plus Minus';
+export const QuickSearchStrategyFriendlyName: string = 'Quick Search';
+export const ReminderStrategyFriendlyName: string = 'Reminder';
+export const ShortcutStrategyFriendlyName: string = 'Shortcut';
+export const SmartEditStrategyFriendlyName: string = 'Smart Edit';
+export const StateManagementStrategyFriendlyName: string = 'Manage State';
+export const SystemStatusStrategyFriendlyName: string = 'System Status';
+export const TeamSharingStrategyFriendlyName: string = 'Team Sharing';
+export const ThemeStrategyFriendlyName: string = 'Theme';
+export const UserFilterStrategyFriendlyName: string = 'User Filter';
 
 // Strategy Glyphs
 export const AdvancedSearchGlyph: string = 'advanced-search';
@@ -119,164 +119,164 @@ export const ThemeGlyph: string = 'theme';
 export const UpdatedRowGlyph: string = 'updated-row';
 export const UserFilterGlyph: string = 'user-filter';
 
-export function getIdForStrategyName(strategyName: string) {
-  switch (strategyName) {
-    case AdvancedSearchStrategyName:
+export function getIdForStrategyFriendlyName(functionName: string): AdaptableFunctionName {
+  switch (functionName) {
+    case AdvancedSearchStrategyFriendlyName:
       return AdvancedSearchStrategyId;
-    case AlertStrategyName:
+    case AlertStrategyFriendlyName:
       return AlertStrategyId;
-    case ApplicationStrategyName:
+    case ApplicationStrategyFriendlyName:
       return ApplicationStrategyId;
-    case BulkUpdateStrategyName:
+    case BulkUpdateStrategyFriendlyName:
       return BulkUpdateStrategyId;
-    case CalculatedColumnStrategyName:
+    case CalculatedColumnStrategyFriendlyName:
       return CalculatedColumnStrategyId;
-    case CalendarStrategyName:
+    case CalendarStrategyFriendlyName:
       return CalendarStrategyId;
-    case CellValidationStrategyName:
+    case CellValidationStrategyFriendlyName:
       return CellValidationStrategyId;
-    case ChartStrategyName:
+    case ChartStrategyFriendlyName:
       return ChartStrategyId;
-    case ColumnCategoryStrategyName:
+    case ColumnCategoryStrategyFriendlyName:
       return ColumnCategoryStrategyId;
-    case ColumnChooserStrategyName:
+    case ColumnChooserStrategyFriendlyName:
       return ColumnChooserStrategyId;
-    case ColumnFilterStrategyName:
+    case ColumnFilterStrategyFriendlyName:
       return ColumnFilterStrategyId;
-    case ColumnInfoStrategyName:
+    case ColumnInfoStrategyFriendlyName:
       return ColumnInfoStrategyId;
-    case ConditionalStyleStrategyName:
+    case ConditionalStyleStrategyFriendlyName:
       return ConditionalStyleStrategyId;
-    case CustomSortStrategyName:
+    case CustomSortStrategyFriendlyName:
       return CustomSortStrategyId;
-    case DashboardStrategyName:
+    case DashboardStrategyFriendlyName:
       return DashboardStrategyId;
-    case DataSourceStrategyName:
+    case DataSourceStrategyFriendlyName:
       return DataSourceStrategyId;
-    case ExportStrategyName:
+    case ExportStrategyFriendlyName:
       return ExportStrategyId;
-    case FlashingCellsStrategyName:
+    case FlashingCellsStrategyFriendlyName:
       return FlashingCellsStrategyId;
-    case FormatColumnStrategyName:
+    case FormatColumnStrategyFriendlyName:
       return FormatColumnStrategyId;
-    case FreeTextColumnStrategyName:
+    case FreeTextColumnStrategyFriendlyName:
       return FreeTextColumnStrategyId;
-    case LayoutStrategyName:
+    case LayoutStrategyFriendlyName:
       return LayoutStrategyId;
-    case PercentBarStrategyName:
+    case PercentBarStrategyFriendlyName:
       return PercentBarStrategyId;
-    case SparklineColumnStrategyName:
+    case SparklineColumnStrategyFriendlyName:
       return SparklineColumnStrategyId;
-    case SparklineStrategyName:
+    case SparklineStrategyFriendlyName:
       return SparklineStrategyId;
-    case PieChartStrategyName:
+    case PieChartStrategyFriendlyName:
       return PieChartStrategyId;
-    case PlusMinusStrategyName:
+    case PlusMinusStrategyFriendlyName:
       return PlusMinusStrategyId;
-    case QuickSearchStrategyName:
+    case QuickSearchStrategyFriendlyName:
       return QuickSearchStrategyId;
-    case ReminderStrategyName:
+    case ReminderStrategyFriendlyName:
       return ReminderStrategyId;
-    case CellSummaryStrategyName:
+    case CellSummaryStrategyFriendlyName:
       return CellSummaryStrategyId;
-    case ShortcutStrategyName:
+    case ShortcutStrategyFriendlyName:
       return ShortcutStrategyId;
-    case SmartEditStrategyName:
+    case SmartEditStrategyFriendlyName:
       return SmartEditStrategyId;
-    case StateManagementStrategyName:
+    case StateManagementStrategyFriendlyName:
       return StateManagementStrategyId;
-    case SystemStatusStrategyName:
+    case SystemStatusStrategyFriendlyName:
       return SystemStatusStrategyId;
-    case TeamSharingStrategyName:
+    case TeamSharingStrategyFriendlyName:
       return TeamSharingStrategyId;
-    case ThemeStrategyName:
+    case ThemeStrategyFriendlyName:
       return ThemeStrategyId;
-    case UserFilterStrategyName:
+    case UserFilterStrategyFriendlyName:
       return UserFilterStrategyId;
   }
 }
 
-export function getNameForStrategyId(strategyID: AdaptableFunctionName) {
-  switch (strategyID) {
+export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName): string {
+  switch (functionName) {
     case AdvancedSearchStrategyId:
-      return AdvancedSearchStrategyName;
+      return AdvancedSearchStrategyFriendlyName;
     case AlertStrategyId:
-      return AlertStrategyName;
+      return AlertStrategyFriendlyName;
     case ApplicationStrategyId:
-      return ApplicationStrategyName;
+      return ApplicationStrategyFriendlyName;
     case BulkUpdateStrategyId:
-      return BulkUpdateStrategyName;
+      return BulkUpdateStrategyFriendlyName;
     case CalculatedColumnStrategyId:
-      return CalculatedColumnStrategyName;
+      return CalculatedColumnStrategyFriendlyName;
     case CalendarStrategyId:
-      return CalendarStrategyName;
+      return CalendarStrategyFriendlyName;
     case CellValidationStrategyId:
-      return CellValidationStrategyName;
+      return CellValidationStrategyFriendlyName;
     case ChartStrategyId:
-      return ChartStrategyName;
+      return ChartStrategyFriendlyName;
     case ColumnCategoryStrategyId:
-      return ColumnCategoryStrategyName;
+      return ColumnCategoryStrategyFriendlyName;
     case ColumnChooserStrategyId:
-      return ColumnChooserStrategyName;
+      return ColumnChooserStrategyFriendlyName;
     case ColumnFilterStrategyId:
-      return ColumnFilterStrategyName;
+      return ColumnFilterStrategyFriendlyName;
     case ColumnInfoStrategyId:
-      return ColumnInfoStrategyName;
+      return ColumnInfoStrategyFriendlyName;
     case ConditionalStyleStrategyId:
-      return ConditionalStyleStrategyName;
+      return ConditionalStyleStrategyFriendlyName;
     case CustomSortStrategyId:
-      return CustomSortStrategyName;
+      return CustomSortStrategyFriendlyName;
     case DashboardStrategyId:
-      return DashboardStrategyName;
+      return DashboardStrategyFriendlyName;
     case DataSourceStrategyId:
-      return DataSourceStrategyName;
+      return DataSourceStrategyFriendlyName;
     case ExportStrategyId:
-      return ExportStrategyName;
+      return ExportStrategyFriendlyName;
     case FlashingCellsStrategyId:
-      return FlashingCellsStrategyName;
+      return FlashingCellsStrategyFriendlyName;
     case FormatColumnStrategyId:
-      return FormatColumnStrategyName;
+      return FormatColumnStrategyFriendlyName;
     case FreeTextColumnStrategyId:
-      return FreeTextColumnStrategyName;
+      return FreeTextColumnStrategyFriendlyName;
     case LayoutStrategyId:
-      return LayoutStrategyName;
+      return LayoutStrategyFriendlyName;
     case PercentBarStrategyId:
-      return PercentBarStrategyName;
+      return PercentBarStrategyFriendlyName;
     case SparklineStrategyId:
-      return SparklineStrategyName;
+      return SparklineStrategyFriendlyName;
     case SparklineColumnStrategyId:
-      return SparklineColumnStrategyName;
+      return SparklineColumnStrategyFriendlyName;
     case PieChartStrategyId:
-      return PieChartStrategyName;
+      return PieChartStrategyFriendlyName;
     case PlusMinusStrategyId:
-      return PlusMinusStrategyName;
+      return PlusMinusStrategyFriendlyName;
     case QuickSearchStrategyId:
-      return QuickSearchStrategyName;
+      return QuickSearchStrategyFriendlyName;
     case QuickSearchStrategyId:
-      return ReminderStrategyName;
+      return ReminderStrategyFriendlyName;
     case ReminderStrategyId:
-      return ReminderStrategyName;
+      return ReminderStrategyFriendlyName;
     case CellSummaryStrategyId:
-      return CellSummaryStrategyName;
+      return CellSummaryStrategyFriendlyName;
     case ShortcutStrategyId:
-      return ShortcutStrategyName;
+      return ShortcutStrategyFriendlyName;
     case SmartEditStrategyId:
-      return SmartEditStrategyName;
+      return SmartEditStrategyFriendlyName;
     case StateManagementStrategyId:
-      return StateManagementStrategyName;
+      return StateManagementStrategyFriendlyName;
     case SystemStatusStrategyId:
-      return SystemStatusStrategyName;
+      return SystemStatusStrategyFriendlyName;
     case TeamSharingStrategyId:
-      return TeamSharingStrategyName;
+      return TeamSharingStrategyFriendlyName;
     case ThemeStrategyId:
-      return ThemeStrategyName;
+      return ThemeStrategyFriendlyName;
     case UserFilterStrategyId:
-      return UserFilterStrategyName;
+      return UserFilterStrategyFriendlyName;
   }
 }
 
-export function getGhyphiconForStrategyId(strategyID: string) {
-  switch (strategyID) {
+export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): string {
+  switch (functionName) {
     case AdvancedSearchStrategyId:
       return AdvancedSearchGlyph;
     case AlertStrategyId:
@@ -335,9 +335,9 @@ export function getGhyphiconForStrategyId(strategyID: string) {
       return CellSummaryGlyph;
     case SmartEditStrategyId:
       return SmartEditGlyph;
-    case StateManagementStrategyName:
+    case StateManagementStrategyFriendlyName:
       return StateManagementGlyph;
-    case SystemStatusStrategyName:
+    case SystemStatusStrategyFriendlyName:
       return SystemStatusGlyph;
     case TeamSharingStrategyId:
       return TeamSharingGlyph;

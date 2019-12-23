@@ -33,7 +33,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.PlusMinusStrategyName,
+      Label: StrategyConstants.PlusMinusStrategyFriendlyName,
       ComponentName: ScreenPopups.PlusMinusPopup,
       Icon: StrategyConstants.PlusMinusGlyph,
     });

@@ -18,7 +18,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.PercentBarStrategyName,
+      Label: StrategyConstants.PercentBarStrategyFriendlyName,
       ComponentName: ScreenPopups.PercentBarPopup,
       Icon: StrategyConstants.PercentBarGlyph,
     });
@@ -39,7 +39,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       };
 
       return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.PercentBarStrategyName,
+        label + StrategyConstants.PercentBarStrategyFriendlyName,
         ScreenPopups.PercentBarPopup,
         StrategyConstants.PercentBarGlyph,
         popupParam

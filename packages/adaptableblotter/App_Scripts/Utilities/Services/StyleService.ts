@@ -43,10 +43,10 @@ export class StyleService implements IStyleService {
     });
   }
 
-  public CreateStyleName(strategyId: AdaptableFunctionName): string {
+  public CreateStyleName(functionName: AdaptableFunctionName): string {
     return (
       StyleConstants.AB_HEADER +
-      strategyId +
+      functionName +
       '-' +
       this.blotter.blotterOptions.blotterId
         .trim()
@@ -56,12 +56,12 @@ export class StyleService implements IStyleService {
   }
 
   public CreateUniqueStyleName(
-    strategyId: AdaptableFunctionName,
+    functionName: AdaptableFunctionName,
     adaqptableBlotterObject: AdaptableObject
   ): string {
     return (
       StyleConstants.AB_HEADER +
-      strategyId +
+      functionName +
       '-' +
       this.blotter.blotterOptions.blotterId
         .trim()

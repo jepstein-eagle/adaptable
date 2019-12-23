@@ -139,10 +139,10 @@ export function CheckBlotterOptions(blotterOptions: AdaptableBlotterOptions): vo
 
 export function getEntitlementAccessLevelForStrategy(
   entitlements: Entitlement[],
-  strategyId: AdaptableFunctionName
+  functionName: AdaptableFunctionName
 ): AccessLevel {
   if (ArrayExtensions.IsNotNullOrEmpty(entitlements)) {
-    let entitlement: Entitlement = entitlements.find(e => e.FunctionName == strategyId);
+    let entitlement: Entitlement = entitlements.find(e => e.FunctionName == functionName);
     if (entitlement) {
       return entitlement.AccessLevel as AccessLevel;
     }

@@ -25,7 +25,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ShortcutStrategyName,
+      Label: StrategyConstants.ShortcutStrategyFriendlyName,
       ComponentName: ScreenPopups.ShortcutPopup,
       Icon: StrategyConstants.ShortcutGlyph,
     });

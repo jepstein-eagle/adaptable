@@ -28,7 +28,11 @@ export class DataSourceApiImpl extends ApiBase implements DataSourceApi {
       a => a.Name == dataSourceName
     );
     if (
-      this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)
+      this.checkItemExists(
+        dataSource,
+        dataSourceName,
+        StrategyConstants.DataSourceStrategyFriendlyName
+      )
     ) {
       this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource.Name));
     }

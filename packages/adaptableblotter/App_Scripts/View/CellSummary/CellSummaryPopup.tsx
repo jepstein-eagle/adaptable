@@ -30,7 +30,7 @@ class CellSummaryPopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.CellSummaryStrategyName}
+        headerText={StrategyConstants.CellSummaryStrategyFriendlyName}
         glyphicon={StrategyConstants.CellSummaryGlyph}
         infoBody={infoBody}
         border="none"

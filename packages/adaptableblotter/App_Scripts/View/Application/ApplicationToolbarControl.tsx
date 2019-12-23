@@ -33,7 +33,7 @@ class ApplicationToolbarControlComponent extends React.Component<
       ? this.props.ApplicationToolbarTitle
       : StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitleDashboard)
       ? this.props.ApplicationToolbarTitleDashboard
-      : StrategyConstants.ApplicationStrategyName;
+      : StrategyConstants.ApplicationStrategyFriendlyName;
 
     return (
       <PanelDashboard

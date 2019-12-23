@@ -133,7 +133,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         className="ab-DashboardToolbar__CellSummary"
-        headerText={StrategyConstants.CellSummaryStrategyName}
+        headerText={StrategyConstants.CellSummaryStrategyFriendlyName}
         glyphicon={StrategyConstants.CellSummaryGlyph}
         onClose={() => this.props.onClose(StrategyConstants.CellSummaryStrategyId)}
         onConfigure={() => this.props.onConfigure()}

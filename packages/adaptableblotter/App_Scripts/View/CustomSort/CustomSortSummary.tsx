@@ -48,12 +48,12 @@ export class CustomSortSummaryComponent extends React.Component<
     if (!this.props.SummarisedColumn.Sortable) {
       customSortRow = (
         <StrategyHeader
-          key={StrategyConstants.CustomSortStrategyName}
-          StrategyId={StrategyConstants.CustomSortStrategyId}
+          key={StrategyConstants.CustomSortStrategyFriendlyName}
+          FunctionName={StrategyConstants.CustomSortStrategyId}
           StrategySummary={'Column is not sortable'}
           NewButtonDisabled={true}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.CustomSortStrategyName}
+          NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
           AccessLevel={this.props.AccessLevel}
         />
       );
@@ -61,22 +61,22 @@ export class CustomSortSummaryComponent extends React.Component<
       // title row
       customSortRow = (
         <StrategyHeader
-          key={StrategyConstants.CustomSortStrategyName}
-          StrategyId={StrategyConstants.CustomSortStrategyId}
+          key={StrategyConstants.CustomSortStrategyFriendlyName}
+          FunctionName={StrategyConstants.CustomSortStrategyId}
           StrategySummary={'No Custom Sort Set'}
           onNew={() => this.onNew()}
           AccessLevel={this.props.AccessLevel}
-          NewButtonTooltip={StrategyConstants.CustomSortStrategyName}
+          NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
         />
       );
     } else {
       customSortRow = (
         <StrategyDetail
-          key={StrategyConstants.CustomSortStrategyName}
-          Item1={<StrategyProfile StrategyId={StrategyConstants.CustomSortStrategyId} />}
+          key={StrategyConstants.CustomSortStrategyFriendlyName}
+          Item1={<StrategyProfile FunctionName={StrategyConstants.CustomSortStrategyId} />}
           Item2={customSort.SortedValues.join(', ')}
           ConfigEnity={customSort}
-          EntityType={StrategyConstants.CustomSortStrategyName}
+          EntityType={StrategyConstants.CustomSortStrategyFriendlyName}
           onEdit={() => this.onEdit(customSort)}
           onShare={() => this.props.onShare(customSort)}
           showShare={this.props.TeamSharingActivated}

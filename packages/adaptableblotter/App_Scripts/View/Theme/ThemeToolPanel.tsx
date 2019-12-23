@@ -54,7 +54,7 @@ class ThemeToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__Theme"
-        headerText={StrategyConstants.ThemeStrategyName}
+        headerText={StrategyConstants.ThemeStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}

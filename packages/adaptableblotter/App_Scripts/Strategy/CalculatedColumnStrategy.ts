@@ -15,7 +15,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.CalculatedColumnStrategyName,
+      Label: StrategyConstants.CalculatedColumnStrategyFriendlyName,
       ComponentName: ScreenPopups.CalculatedColumnPopup,
       Icon: StrategyConstants.CalculatedColumnGlyph,
     });
@@ -35,7 +35,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
         };
 
         return this.createColumnMenuItemShowPopup(
-          'Edit ' + StrategyConstants.CalculatedColumnStrategyName,
+          'Edit ' + StrategyConstants.CalculatedColumnStrategyFriendlyName,
           ScreenPopups.CalculatedColumnPopup,
           StrategyConstants.CalculatedColumnGlyph,
           popupParam

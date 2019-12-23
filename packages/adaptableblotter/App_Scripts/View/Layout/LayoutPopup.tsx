@@ -110,7 +110,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.LayoutStrategyName}
+          headerText={StrategyConstants.LayoutStrategyFriendlyName}
           infoBody={infoBody}
           button={newSearchButton}
           glyphicon={StrategyConstants.LayoutGlyph}

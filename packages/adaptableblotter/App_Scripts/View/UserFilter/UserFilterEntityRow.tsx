@@ -40,7 +40,7 @@ export class UserFilterEntityRow extends React.Component<
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={false}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.UserFilterStrategyName}
+        EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

@@ -166,7 +166,7 @@ class CellSummaryToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__ColumnFilter"
-        headerText={StrategyConstants.CellSummaryStrategyName}
+        headerText={StrategyConstants.CellSummaryStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}

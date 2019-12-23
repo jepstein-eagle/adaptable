@@ -125,7 +125,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__AdvancedSearch"
-        headerText={StrategyConstants.AdvancedSearchStrategyName}
+        headerText={StrategyConstants.AdvancedSearchStrategyFriendlyName}
         // glyphicon={StrategyConstants.AdvancedSearchGlyph}
         //  onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}
         onConfigure={() => this.props.onConfigure()}

@@ -132,7 +132,7 @@ class PercentBarPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.PercentBarStrategyName}
+          headerText={StrategyConstants.PercentBarStrategyFriendlyName}
           style={{ height: '100%' }}
           button={newButton}
           glyphicon={StrategyConstants.PercentBarGlyph}

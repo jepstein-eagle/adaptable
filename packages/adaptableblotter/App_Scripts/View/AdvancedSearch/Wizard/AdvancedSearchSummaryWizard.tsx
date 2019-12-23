@@ -36,7 +36,7 @@ export class AdvancedSearchSummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.AdvancedSearchStrategyName}
+        header={StrategyConstants.AdvancedSearchStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

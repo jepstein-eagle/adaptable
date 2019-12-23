@@ -41,7 +41,7 @@ export class FreeTextColumnSummaryWizard
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.FreeTextColumnStrategyName}
+        header={StrategyConstants.FreeTextColumnStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

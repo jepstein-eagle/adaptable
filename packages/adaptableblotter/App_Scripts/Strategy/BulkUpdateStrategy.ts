@@ -27,7 +27,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.BulkUpdateStrategyName,
+      Label: StrategyConstants.BulkUpdateStrategyFriendlyName,
       ComponentName: ScreenPopups.BulkUpdatePopup,
       Icon: StrategyConstants.BulkUpdateGlyph,
     });
@@ -49,7 +49,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         source: 'ContextMenu',
       };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'Apply ' + StrategyConstants.BulkUpdateStrategyName,
+        Label: 'Apply ' + StrategyConstants.BulkUpdateStrategyFriendlyName,
         ComponentName: ScreenPopups.BulkUpdatePopup,
         Icon: StrategyConstants.BulkUpdateGlyph,
         PopupParams: popUpParams,

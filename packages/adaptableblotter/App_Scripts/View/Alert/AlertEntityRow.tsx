@@ -54,7 +54,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
         editClick={() => this.props.onEdit(alertDefinition)}
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={!this.props.Column}
-        EntityType={StrategyConstants.AlertStrategyName}
+        EntityType={StrategyConstants.AlertStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

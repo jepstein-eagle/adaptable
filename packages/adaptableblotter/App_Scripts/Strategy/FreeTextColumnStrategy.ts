@@ -15,7 +15,7 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.FreeTextColumnStrategyName,
+      Label: StrategyConstants.FreeTextColumnStrategyFriendlyName,
       ComponentName: ScreenPopups.FreeTextColumnPopup,
       Icon: StrategyConstants.FreeTextColumnGlyph,
     });
@@ -34,7 +34,7 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
           source: 'ColumnMenu',
         };
         return this.createColumnMenuItemShowPopup(
-          'Edit ' + StrategyConstants.FreeTextColumnStrategyName,
+          'Edit ' + StrategyConstants.FreeTextColumnStrategyFriendlyName,
           ScreenPopups.FreeTextColumnPopup,
           StrategyConstants.FreeTextColumnGlyph,
           popupParam

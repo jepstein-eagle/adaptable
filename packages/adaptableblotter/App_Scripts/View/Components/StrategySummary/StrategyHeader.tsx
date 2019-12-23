@@ -8,7 +8,7 @@ import { AdaptableFunctionName } from '../../../PredefinedConfig/Common/Types';
 
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
   key: string;
-  StrategyId: AdaptableFunctionName;
+  FunctionName: AdaptableFunctionName;
   StrategySummary: any;
   onNew: () => void;
   NewButtonTooltip: string;
@@ -28,7 +28,7 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
       />
     );
 
-    summaryItems.push(<b>{<StrategyProfile StrategyId={this.props.StrategyId} />}</b>);
+    summaryItems.push(<b>{<StrategyProfile FunctionName={this.props.FunctionName} />}</b>);
     summaryItems.push(this.props.StrategySummary);
     summaryItems.push(newButton);
     return <SummaryRowItem SummaryItems={summaryItems} />;

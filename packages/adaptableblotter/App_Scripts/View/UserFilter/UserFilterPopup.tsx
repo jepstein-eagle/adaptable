@@ -122,7 +122,7 @@ class UserFilterPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.UserFilterStrategyName}
+          headerText={StrategyConstants.UserFilterStrategyFriendlyName}
           infoBody={infoBody}
           button={newButton}
           glyphicon={StrategyConstants.UserFilterGlyph}

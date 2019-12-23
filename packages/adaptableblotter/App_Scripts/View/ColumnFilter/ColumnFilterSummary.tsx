@@ -43,7 +43,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
     let description: string = this.getDescription(columnFilter);
     let summaryItems: any[] = [];
     summaryItems.push(
-      <b>{<StrategyProfile StrategyId={StrategyConstants.ColumnFilterStrategyId} />}</b>
+      <b>{<StrategyProfile FunctionName={StrategyConstants.ColumnFilterStrategyId} />}</b>
     );
     summaryItems.push(description);
     summaryItems.push(

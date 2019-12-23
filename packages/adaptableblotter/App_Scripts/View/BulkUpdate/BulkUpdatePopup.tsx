@@ -109,7 +109,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
     }
     return (
       <PanelWithImage
-        header={StrategyConstants.BulkUpdateStrategyName}
+        header={StrategyConstants.BulkUpdateStrategyFriendlyName}
         glyphicon={StrategyConstants.BulkUpdateGlyph}
         infoBody={infoBody}
         variant="primary"

@@ -12,7 +12,7 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.CalendarStrategyName,
+      Label: StrategyConstants.CalendarStrategyFriendlyName,
       ComponentName: ScreenPopups.CalendarsPopup,
       Icon: StrategyConstants.CalendarGlyph,
     });

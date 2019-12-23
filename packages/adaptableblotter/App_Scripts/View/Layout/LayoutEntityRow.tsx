@@ -51,7 +51,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={false}
         overrideDisableDelete={layout.Name == DEFAULT_LAYOUT}
-        EntityType={StrategyConstants.LayoutStrategyName}
+        EntityType={StrategyConstants.LayoutStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

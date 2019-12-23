@@ -79,7 +79,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         className="ab-DashboardToolbar__SystemStatus"
-        headerText={StrategyConstants.SystemStatusStrategyName}
+        headerText={StrategyConstants.SystemStatusStrategyFriendlyName}
         glyphicon={StrategyConstants.SystemStatusGlyph}
         onClose={() => this.props.onClose(StrategyConstants.SystemStatusStrategyId)}
         onConfigure={() => this.props.onConfigure()}

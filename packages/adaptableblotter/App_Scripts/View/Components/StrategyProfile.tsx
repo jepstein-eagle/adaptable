@@ -8,7 +8,7 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 // Simple compnent which just shows the Icon and Name for any strategy
 
 export interface StrategyProfileProps extends React.ClassAttributes<StrategyProfile> {
-  StrategyId: AdaptableFunctionName;
+  FunctionName: AdaptableFunctionName;
 }
 
 export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {
@@ -16,12 +16,12 @@ export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {
     return (
       <div>
         <Icon
-          name={StrategyConstants.getGhyphiconForStrategyId(this.props.StrategyId)}
+          name={StrategyConstants.getGhyphiconForStrategyId(this.props.FunctionName)}
           style={{
             fill: 'var(--ab-color-text-on-primary)',
           }}
         />{' '}
-        {StrategyConstants.getNameForStrategyId(this.props.StrategyId)}
+        {StrategyConstants.getFriendlyNameForStrategyId(this.props.FunctionName)}
       </div>
     );
   }

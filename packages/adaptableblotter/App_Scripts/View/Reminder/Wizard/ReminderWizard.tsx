@@ -14,7 +14,7 @@ export class ReminderWizard extends React.Component<ReminderWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ReminderStrategyName}
+          FriendlyName={StrategyConstants.ReminderStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

@@ -19,7 +19,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ConditionalStyleStrategyName,
+      Label: StrategyConstants.ConditionalStyleStrategyFriendlyName,
       ComponentName: ScreenPopups.ConditionalStylePopup,
       Icon: StrategyConstants.ConditionalStyleGlyph,
     });
@@ -33,7 +33,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
         source: 'ColumnMenu',
       };
       return this.createColumnMenuItemShowPopup(
-        'Create ' + StrategyConstants.ConditionalStyleStrategyName,
+        'Create ' + StrategyConstants.ConditionalStyleStrategyFriendlyName,
         ScreenPopups.ConditionalStylePopup,
         StrategyConstants.ConditionalStyleGlyph,
         popupParam

@@ -145,7 +145,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
       <Flex flex={1} flexDirection="column">
         <PanelWithImage
           variant="primary"
-          header={StrategyConstants.FlashingCellsStrategyName}
+          header={StrategyConstants.FlashingCellsStrategyFriendlyName}
           glyphicon={StrategyConstants.FlashingCellGlyph}
           infoBody={infoBody}
           bodyProps={{ padding: 0 }}

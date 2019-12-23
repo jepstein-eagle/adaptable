@@ -18,7 +18,7 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ReminderStrategyName,
+      Label: StrategyConstants.ReminderStrategyFriendlyName,
       ComponentName: ScreenPopups.ReminderPopup,
       Icon: StrategyConstants.ReminderGlyph,
     });

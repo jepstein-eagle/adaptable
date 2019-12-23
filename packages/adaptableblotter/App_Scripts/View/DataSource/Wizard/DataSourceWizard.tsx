@@ -16,7 +16,7 @@ export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}>
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.DataSourceStrategyName}
+          FriendlyName={StrategyConstants.DataSourceStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

@@ -42,7 +42,7 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.UserFilterStrategyName}
+        header={StrategyConstants.UserFilterStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

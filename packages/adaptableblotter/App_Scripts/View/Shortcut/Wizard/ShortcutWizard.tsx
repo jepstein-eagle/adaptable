@@ -17,7 +17,7 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ShortcutStrategyName}
+          FriendlyName={StrategyConstants.ShortcutStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

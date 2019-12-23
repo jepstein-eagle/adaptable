@@ -41,7 +41,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.ChartStrategyName}
+        header={StrategyConstants.ChartStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

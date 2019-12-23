@@ -93,7 +93,7 @@ class SystemStatusToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel_SystemStatus"
-        headerText={StrategyConstants.SystemStatusStrategyName}
+        headerText={StrategyConstants.SystemStatusStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}

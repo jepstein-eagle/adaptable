@@ -18,7 +18,7 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.CalculatedColumnStrategyName}
+          FriendlyName={StrategyConstants.CalculatedColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

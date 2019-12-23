@@ -188,7 +188,7 @@ class ChartToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__Chart"
-        headerText={StrategyConstants.ChartStrategyName}
+        headerText={StrategyConstants.ChartStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}

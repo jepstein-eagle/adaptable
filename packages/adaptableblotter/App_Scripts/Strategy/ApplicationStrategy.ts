@@ -12,7 +12,7 @@ export class ApplicationStrategy extends AdaptableStrategyBase implements IAppli
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ApplicationStrategyName,
+      Label: StrategyConstants.ApplicationStrategyFriendlyName,
       ComponentName: ScreenPopups.ApplicationPopup,
       Icon: StrategyConstants.ApplicationGlyph,
     });

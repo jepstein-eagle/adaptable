@@ -17,7 +17,7 @@ export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}>
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.PercentBarStrategyName}
+          FriendlyName={StrategyConstants.PercentBarStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

@@ -55,7 +55,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
         editClick={() => this.props.onEdit(cellValidationRule)}
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={!this.props.Column}
-        EntityType={StrategyConstants.CellValidationStrategyName}
+        EntityType={StrategyConstants.CellValidationStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

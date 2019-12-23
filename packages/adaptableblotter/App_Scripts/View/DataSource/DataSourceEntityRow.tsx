@@ -27,7 +27,7 @@ export class DataSourceEntityRow extends React.Component<DataSourceEntityRowProp
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.DataSourceStrategyName}
+        EntityType={StrategyConstants.DataSourceStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

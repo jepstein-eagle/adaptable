@@ -16,7 +16,7 @@ export class SparklineColumnWizard extends React.Component<SparklineColumnWizard
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.SparklineColumnStrategyName}
+          FriendlyName={StrategyConstants.SparklineColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

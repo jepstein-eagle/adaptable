@@ -70,7 +70,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.StateManagementStrategyName}
+          headerText={StrategyConstants.StateManagementStrategyFriendlyName}
           button={null}
           glyphicon={StrategyConstants.StateManagementGlyph}
           infoBody={infoBody}

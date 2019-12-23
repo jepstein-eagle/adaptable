@@ -13,7 +13,7 @@ export class ColumnCategoryStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ColumnCategoryStrategyName,
+      Label: StrategyConstants.ColumnCategoryStrategyFriendlyName,
       ComponentName: ScreenPopups.ColumnCategoryPopup,
       Icon: StrategyConstants.ColumnCategoryGlyph,
     });

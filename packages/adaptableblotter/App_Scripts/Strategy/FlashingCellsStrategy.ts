@@ -19,7 +19,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.FlashingCellsStrategyName,
+      Label: StrategyConstants.FlashingCellsStrategyFriendlyName,
       ComponentName: ScreenPopups.FlashingCellsPopup,
       Icon: StrategyConstants.FlashingCellGlyph,
     });

@@ -93,7 +93,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.ShortcutStrategyName}
+        EntityType={StrategyConstants.ShortcutStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

@@ -40,7 +40,7 @@ export class CalculatedColumnEntityRow extends React.Component<
         editClick={() => this.props.onEdit(calculatedColumn)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
-        EntityType={StrategyConstants.CalculatedColumnStrategyName}
+        EntityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

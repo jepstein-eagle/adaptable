@@ -14,7 +14,7 @@ export class StateManagementStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.StateManagementStrategyName,
+      Label: StrategyConstants.StateManagementStrategyFriendlyName,
       ComponentName: ScreenPopups.StateManagementPopup,
       Icon: StrategyConstants.StateManagementGlyph,
     });

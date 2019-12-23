@@ -46,7 +46,7 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.ExportStrategyName}
+        header={StrategyConstants.ExportStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

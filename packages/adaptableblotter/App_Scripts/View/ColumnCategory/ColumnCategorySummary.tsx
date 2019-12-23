@@ -48,23 +48,23 @@ export class ColumnCategorySummaryComponent extends React.Component<
     if (noColumnCategory) {
       ColumnCategoryRow = (
         <StrategyHeader
-          key={StrategyConstants.ColumnCategoryStrategyName}
-          StrategyId={StrategyConstants.ColumnCategoryStrategyId}
+          key={StrategyConstants.ColumnCategoryStrategyFriendlyName}
+          FunctionName={StrategyConstants.ColumnCategoryStrategyId}
           StrategySummary={'None'}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.ColumnCategoryStrategyName}
+          NewButtonTooltip={StrategyConstants.ColumnCategoryStrategyFriendlyName}
           AccessLevel={this.props.AccessLevel}
         />
       );
     } else {
       ColumnCategoryRow = (
         <StrategyDetail
-          key={StrategyConstants.ColumnCategoryStrategyName}
-          Item1={<StrategyProfile StrategyId={StrategyConstants.ColumnCategoryStrategyId} />}
+          key={StrategyConstants.ColumnCategoryStrategyFriendlyName}
+          Item1={<StrategyProfile FunctionName={StrategyConstants.ColumnCategoryStrategyId} />}
           Item2={ColumnCategory.ColumnCategoryId}
           ConfigEnity={ColumnCategory}
           showShare={this.props.TeamSharingActivated}
-          EntityType={StrategyConstants.ColumnCategoryStrategyName}
+          EntityType={StrategyConstants.ColumnCategoryStrategyFriendlyName}
           onEdit={() => this.onEdit(ColumnCategory)}
           onShare={() => this.props.onShare(ColumnCategory)}
           onDelete={ColumnCategoryRedux.ColumnCategoryDelete(ColumnCategory)}

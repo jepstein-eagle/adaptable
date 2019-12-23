@@ -56,7 +56,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.ThemeStrategyName}
+          headerText={StrategyConstants.ThemeStrategyFriendlyName}
           glyphicon={StrategyConstants.ThemeGlyph}
           infoBody={infoBody}
         >

@@ -132,7 +132,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.ExportStrategyName}
+        headerText={StrategyConstants.ExportStrategyFriendlyName}
         bodyProps={{ padding: 0 }}
         glyphicon={StrategyConstants.ExportGlyph}
         infoBody={infoBody}

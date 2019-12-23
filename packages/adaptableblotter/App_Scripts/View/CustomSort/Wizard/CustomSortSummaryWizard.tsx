@@ -32,7 +32,7 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.CustomSortStrategyName}
+        header={StrategyConstants.CustomSortStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

@@ -141,7 +141,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             this.props.DashboardState.VisibleToolbars,
             toolbar
           );
-          let functionName = StrategyConstants.getNameForStrategyId(toolbar);
+          let functionName = StrategyConstants.getFriendlyNameForStrategyId(toolbar);
           toolbarItems.push({
             id: toolbar,
             onClick: (e: React.SyntheticEvent) => {

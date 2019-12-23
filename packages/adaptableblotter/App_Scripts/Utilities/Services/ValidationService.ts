@@ -106,7 +106,7 @@ export class ValidationService implements IValidationService {
             // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
             if (expressionRule.ActionMode == 'Stop Edit') {
               this.logAuditValidationEvent(
-                StrategyConstants.CellValidationStrategyName,
+                StrategyConstants.CellValidationStrategyFriendlyName,
                 'Validating Cell Edit',
                 'Failed',
                 {
@@ -130,7 +130,7 @@ export class ValidationService implements IValidationService {
         if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo, columns)) {
           if (noExpressionRule.ActionMode == 'Stop Edit') {
             this.logAuditValidationEvent(
-              StrategyConstants.CellValidationStrategyName,
+              StrategyConstants.CellValidationStrategyFriendlyName,
               'Validating Cell Edit',
               'Failed',
               {
@@ -147,7 +147,7 @@ export class ValidationService implements IValidationService {
     }
     if (failedWarningRules.length > 0) {
       this.logAuditValidationEvent(
-        StrategyConstants.CellValidationStrategyName,
+        StrategyConstants.CellValidationStrategyFriendlyName,
         'Validating Cell Edit',
         'Warning Shown',
         {
@@ -157,7 +157,7 @@ export class ValidationService implements IValidationService {
       );
     } else {
       this.logAuditValidationEvent(
-        StrategyConstants.CellValidationStrategyName,
+        StrategyConstants.CellValidationStrategyFriendlyName,
         'Validating Cell Edit',
         'Success',
         {

@@ -109,7 +109,7 @@ class FormatColumnPopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.FormatColumnStrategyName}
+          headerText={StrategyConstants.FormatColumnStrategyFriendlyName}
           button={newButton}
           glyphicon={StrategyConstants.FormatColumnGlyph}
           infoBody={infoBody}

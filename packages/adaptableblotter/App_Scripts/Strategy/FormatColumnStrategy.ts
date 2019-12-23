@@ -16,7 +16,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.FormatColumnStrategyName,
+      Label: StrategyConstants.FormatColumnStrategyFriendlyName,
       ComponentName: ScreenPopups.FormatColumnPopup,
       Icon: StrategyConstants.FormatColumnGlyph,
     });
@@ -37,7 +37,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
       };
 
       return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.FormatColumnStrategyName,
+        label + StrategyConstants.FormatColumnStrategyFriendlyName,
         ScreenPopups.FormatColumnPopup,
         StrategyConstants.FormatColumnGlyph,
         popupParam

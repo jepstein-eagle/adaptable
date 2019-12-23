@@ -117,7 +117,7 @@ class AlertToolPanelComponent extends React.Component<AlertToolPanelProps, Alert
     return (
       <PanelToolPanel
         className="ab-ToolPanel__Alert"
-        headerText={StrategyConstants.AlertStrategyName}
+        headerText={StrategyConstants.AlertStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}

@@ -51,7 +51,10 @@ export class FlashingCellSummaryComponent extends React.Component<
     );
 
     let colItems: IColItem[] = [];
-    colItems.push({ Size: 3, Content: <b>{StrategyConstants.FlashingCellsStrategyName}</b> });
+    colItems.push({
+      Size: 3,
+      Content: <b>{StrategyConstants.FlashingCellsStrategyFriendlyName}</b>,
+    });
     colItems.push({ Size: 7, Content: message });
     colItems.push({ Size: 2, Content: showFlashingButton });
 

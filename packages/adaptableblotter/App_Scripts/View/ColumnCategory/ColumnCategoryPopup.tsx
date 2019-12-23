@@ -99,7 +99,7 @@ class ColumnCategoryPopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.ColumnCategoryStrategyName}
+        headerText={StrategyConstants.ColumnCategoryStrategyFriendlyName}
         infoBody={infoBody}
         button={newSearchButton}
         glyphicon={StrategyConstants.ColumnCategoryGlyph}

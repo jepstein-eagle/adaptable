@@ -43,12 +43,12 @@ export class UserFilterSummaryComponent extends React.Component<
     // title row
     let titleRow = (
       <StrategyHeader
-        key={StrategyConstants.UserFilterStrategyName}
-        StrategyId={StrategyConstants.UserFilterStrategyId}
+        key={StrategyConstants.UserFilterStrategyFriendlyName}
+        FunctionName={StrategyConstants.UserFilterStrategyId}
         StrategySummary={this.getSummary()}
         onNew={() => this.onNew()}
         NewButtonDisabled={!this.isFilterable()}
-        NewButtonTooltip={StrategyConstants.UserFilterStrategyName}
+        NewButtonTooltip={StrategyConstants.UserFilterStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -65,7 +65,7 @@ export class UserFilterSummaryComponent extends React.Component<
             ConfigEnity={item}
             showShare={this.props.TeamSharingActivated}
             showEdit={this.isFilterable()}
-            EntityType={StrategyConstants.UserFilterStrategyName}
+            EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}
             onDelete={UserFilterRedux.UserFilterDelete(item)}
@@ -108,7 +108,7 @@ export class UserFilterSummaryComponent extends React.Component<
 
     return Helper.ReturnItemCount(
       this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId),
-      StrategyConstants.UserFilterStrategyName
+      StrategyConstants.UserFilterStrategyFriendlyName
     );
   }
 

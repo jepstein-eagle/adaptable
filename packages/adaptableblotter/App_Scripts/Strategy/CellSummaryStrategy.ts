@@ -20,7 +20,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.CellSummaryStrategyName,
+      Label: StrategyConstants.CellSummaryStrategyFriendlyName,
       ComponentName: ScreenPopups.CellSummaryPopup,
       Icon: StrategyConstants.CellSummaryGlyph,
     });

@@ -4,7 +4,7 @@ import { AdaptableColumn } from './AdaptableColumn';
 import { AdaptableFunctionName } from './Types';
 
 /*
-The Adaptable Blotter provides 3 menus:
+Note for devs:  The Adaptable Blotter provides 3 menus:
 
 1. Main Menu (or Function Menu).
 This is the menu that appears when you click the home button in the first toolbar.
@@ -20,7 +20,7 @@ This is created EACH TIME that a column header menu is opened and nothing is per
 3.  Context Menu
 The menu that appears when the user right clicks in a cell in the Blotter
 Currently we ONLY react to non-grouped cells.
-We create a ContextMenu object which contains deatils of the cell and column clicked
+We create a MenuInfo object which contains deatils of the cell and column clicked
 It also stipulates whethere the cell clicked is one which is part of the current cell selection, and whether the column is the only column with selected cells (both required info for some strategies)
 Like with the Column Menu,the Context menu is created EACH TIME that it is opened and nothing is persisted in State.
 
@@ -44,29 +44,51 @@ export interface AdaptableMenuItem {
   Label: string;
 
   /**
-   * The name of the function
+   * The name of the function.
    */
   FunctionName: AdaptableFunctionName;
+
   ReduxAction?: Redux.Action;
   ClickFunction?: () => void;
   IsVisible: boolean;
   Icon: string;
 }
 
+/**
+ * Provides details about the context for the current Menu
+ *
+ * Used for both Column and Context Menus though for the former only the `column' property is populated.
+ */
 export interface MenuInfo {
-  // the cell that has been clicked
+  /**
+   *  The cell that has been clicked.  Contains the current value of the cell
+   */
   gridCell: GridCell;
-  // the column in which the cell was clicked
+  /**
+   * The current Column
+   */
   column: AdaptableColumn;
-  // whether or not the cell clicked is one that is currently selected.
-  // important for strategies like Smart Edit where we act on more than one cell
-  // our assumption is that we will only do things if the cell clicked is also selected
+  /**
+   * Whether or not the cell clicked is one that is currently selected.
+   *
+   * If it is not, then some options are not available.
+   */
   isSelectedCell: boolean;
-  // whether or not the column that has been clicked is the ONLY column with selected cells
-  // important as some strategies will only do stuff if there is just one selected column (e.g. Pie chart) but others dont mind (e.g. cell summary)
+
+  /**
+   * Whether or not the column that has been clicked is the ONLY column with selected cells.
+   *
+   * If it is not, then some options are not available.
+   */
   isSingleSelectedColumn: boolean;
-  // this will be the node
+
+  /**
+   * The current row node
+   */
   rowNode: any;
 
+  /**
+   * The value of the primary key column in the current row
+   */
   primaryKeyValue: any;
 }

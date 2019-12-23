@@ -138,7 +138,7 @@ class QuickSearchPopupComponent extends React.Component<
     return (
       <PanelWithImage
         variant="primary"
-        header={StrategyConstants.QuickSearchStrategyName}
+        header={StrategyConstants.QuickSearchStrategyFriendlyName}
         glyphicon={StrategyConstants.QuickSearchGlyph}
         infoBody={infoBody}
         bodyProps={{ padding: 2 }}

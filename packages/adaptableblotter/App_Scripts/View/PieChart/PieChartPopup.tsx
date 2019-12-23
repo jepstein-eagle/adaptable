@@ -338,7 +338,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithImage
-          header={StrategyConstants.PieChartStrategyName}
+          header={StrategyConstants.PieChartStrategyFriendlyName}
           glyphicon={StrategyConstants.PieChartGlyph}
           infoBody={infoBody}
           variant="primary"

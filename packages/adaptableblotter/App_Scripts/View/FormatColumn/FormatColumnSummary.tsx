@@ -55,23 +55,23 @@ export class FormatColumnSummaryComponent extends React.Component<
     if (noFormatColumn) {
       formatColumnRow = (
         <StrategyHeader
-          key={StrategyConstants.FormatColumnStrategyName}
-          StrategyId={StrategyConstants.FormatColumnStrategyId}
+          key={StrategyConstants.FormatColumnStrategyFriendlyName}
+          FunctionName={StrategyConstants.FormatColumnStrategyId}
           StrategySummary={'No Format Column Set'}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.FormatColumnStrategyName}
+          NewButtonTooltip={StrategyConstants.FormatColumnStrategyFriendlyName}
           AccessLevel={this.props.AccessLevel}
         />
       );
     } else {
       formatColumnRow = (
         <StrategyDetail
-          key={StrategyConstants.FormatColumnStrategyName}
-          Item1={<StrategyProfile StrategyId={StrategyConstants.FormatColumnStrategyId} />}
+          key={StrategyConstants.FormatColumnStrategyFriendlyName}
+          Item1={<StrategyProfile FunctionName={StrategyConstants.FormatColumnStrategyId} />}
           Item2={<StyleVisualItem Style={formatColumn.Style} />}
           ConfigEnity={formatColumn}
           showShare={this.props.TeamSharingActivated}
-          EntityType={StrategyConstants.FormatColumnStrategyName}
+          EntityType={StrategyConstants.FormatColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={() => this.props.onShare(formatColumn)}
           onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}

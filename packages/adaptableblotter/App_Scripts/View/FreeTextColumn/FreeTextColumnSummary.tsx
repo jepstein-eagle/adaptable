@@ -61,12 +61,12 @@ export class FreeTextColumnSummaryComponent extends React.Component<
       );
       FreeTextColumnRow = (
         <StrategyDetail
-          key={StrategyConstants.FreeTextColumnStrategyName}
-          Item1={<StrategyProfile StrategyId={StrategyConstants.FreeTextColumnStrategyId} />}
+          key={StrategyConstants.FreeTextColumnStrategyFriendlyName}
+          Item1={<StrategyProfile FunctionName={StrategyConstants.FreeTextColumnStrategyId} />}
           Item2={description}
           ConfigEnity={freeTextColumn}
           showShare={this.props.TeamSharingActivated}
-          EntityType={StrategyConstants.FreeTextColumnStrategyName}
+          EntityType={StrategyConstants.FreeTextColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(freeTextColumn)}
           onShare={() => this.props.onShare(freeTextColumn)}
           onDelete={FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn)}

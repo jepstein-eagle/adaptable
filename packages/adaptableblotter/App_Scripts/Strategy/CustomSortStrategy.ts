@@ -24,7 +24,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.CustomSortStrategyName,
+      Label: StrategyConstants.CustomSortStrategyFriendlyName,
       ComponentName: ScreenPopups.CustomSortPopup,
       Icon: StrategyConstants.CustomSortGlyph,
     });
@@ -42,7 +42,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
       };
 
       return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.CustomSortStrategyName,
+        label + StrategyConstants.CustomSortStrategyFriendlyName,
         ScreenPopups.CustomSortPopup,
         StrategyConstants.CustomSortGlyph,
         popupParam

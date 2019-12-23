@@ -34,7 +34,7 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
     let summaryPage = (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.FormatColumnStrategyName}
+        header={StrategyConstants.FormatColumnStrategyFriendlyName}
       />
     );
     return <div>{summaryPage}</div>;

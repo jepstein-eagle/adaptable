@@ -152,7 +152,7 @@ class LayoutToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__Layout"
-        headerText={StrategyConstants.LayoutStrategyName}
+        headerText={StrategyConstants.LayoutStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}

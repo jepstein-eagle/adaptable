@@ -111,7 +111,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     return (
       <PanelWithButton
         bodyProps={{ padding: 0 }}
-        headerText={StrategyConstants.AlertStrategyName}
+        headerText={StrategyConstants.AlertStrategyFriendlyName}
         button={newButton}
         glyphicon={StrategyConstants.AlertGlyph}
         infoBody={infoBody}

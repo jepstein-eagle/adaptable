@@ -76,7 +76,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
       ? this.state.SelectedColumn.ColumnId
       : null;
 
-    let headerText = StrategyConstants.ColumnInfoStrategyName;
+    let headerText = StrategyConstants.ColumnInfoStrategyFriendlyName;
 
     let summaries: any[] = [];
 
@@ -407,18 +407,18 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null });
   }
 
-  private isStrategyVisible(strategyId: AdaptableFunctionName): boolean {
-    return this.getAccessLevel(strategyId) == AccessLevel.Full;
+  private isStrategyVisible(functionName: AdaptableFunctionName): boolean {
+    return this.getAccessLevel(functionName) == AccessLevel.Full;
   }
 
-  private isStrategyReadOnly(strategyId: AdaptableFunctionName): boolean {
-    return this.getAccessLevel(strategyId) == AccessLevel.ReadOnly;
+  private isStrategyReadOnly(functionName: AdaptableFunctionName): boolean {
+    return this.getAccessLevel(functionName) == AccessLevel.ReadOnly;
   }
 
-  private getAccessLevel(strategyId: AdaptableFunctionName): AccessLevel {
+  private getAccessLevel(functionName: AdaptableFunctionName): AccessLevel {
     return AdaptableHelper.getEntitlementAccessLevelForStrategy(
       this.props.FunctionEntitlements,
-      strategyId
+      functionName
     );
   }
 }

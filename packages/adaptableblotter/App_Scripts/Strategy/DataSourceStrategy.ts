@@ -12,7 +12,7 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.DataSourceStrategyName,
+      Label: StrategyConstants.DataSourceStrategyFriendlyName,
       ComponentName: ScreenPopups.DataSourcePopup,
       Icon: StrategyConstants.DataSourceGlyph,
     });

@@ -56,7 +56,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
     return (
       <PanelWithImage
         variant="primary"
-        header={StrategyConstants.ColumnChooserStrategyName}
+        header={StrategyConstants.ColumnChooserStrategyFriendlyName}
         glyphicon={StrategyConstants.ColumnChooserGlyph}
         infoBody={infoBody}
         bodyProps={{

@@ -88,11 +88,11 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   public showPopupScreen(
-    strategyId: AdaptableFunctionName,
+    functionName: AdaptableFunctionName,
     componentName: string,
     popupParams?: StrategyParams
   ): void {
-    this.dispatchAction(PopupRedux.PopupShowScreen(strategyId, componentName, popupParams));
+    this.dispatchAction(PopupRedux.PopupShowScreen(functionName, componentName, popupParams));
   }
 
   public setColumns(columns: AdaptableColumn[]): void {

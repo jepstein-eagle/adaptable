@@ -33,7 +33,7 @@ export class CalculatedColumnSummaryWizard
     return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.CalculatedColumnStrategyName}
+        header={StrategyConstants.CalculatedColumnStrategyFriendlyName}
       />
     );
   }

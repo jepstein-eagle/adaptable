@@ -64,7 +64,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.SystemStatusStrategyName,
+      Label: StrategyConstants.SystemStatusStrategyFriendlyName,
       ComponentName: ScreenPopups.SystemStatusPopup,
       Icon: StrategyConstants.SystemStatusGlyph,
     });
@@ -72,7 +72,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     return this.createColumnMenuItemShowPopup(
-      'Show ' + StrategyConstants.SystemStatusStrategyName,
+      'Show ' + StrategyConstants.SystemStatusStrategyFriendlyName,
       ScreenPopups.SystemStatusPopup,
       StrategyConstants.SystemStatusGlyph
     );
@@ -83,7 +83,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
       source: 'ContextMenu',
     };
     return this.createMainMenuItemShowPopup({
-      Label: 'Show ' + StrategyConstants.SystemStatusStrategyName,
+      Label: 'Show ' + StrategyConstants.SystemStatusStrategyFriendlyName,
       ComponentName: ScreenPopups.SystemStatusPopup,
       Icon: StrategyConstants.SystemStatusGlyph,
       PopupParams: popUpParams,

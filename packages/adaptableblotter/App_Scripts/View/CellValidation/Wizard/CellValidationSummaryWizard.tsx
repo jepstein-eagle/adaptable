@@ -55,7 +55,7 @@ export class CellValidationSummaryWizard
     return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.CellValidationStrategyName}
+        header={StrategyConstants.CellValidationStrategyFriendlyName}
       />
     );
   }

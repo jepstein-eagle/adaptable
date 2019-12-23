@@ -18,7 +18,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.AlertStrategyName}
+          FriendlyName={StrategyConstants.AlertStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

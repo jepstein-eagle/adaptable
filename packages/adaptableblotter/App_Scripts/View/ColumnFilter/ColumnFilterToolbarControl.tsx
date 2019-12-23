@@ -101,7 +101,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         className="ab-DashboardToolbar__ColumnFilter"
-        headerText={StrategyConstants.ColumnFilterStrategyName}
+        headerText={StrategyConstants.ColumnFilterStrategyFriendlyName}
         glyphicon={StrategyConstants.ColumnFilterGlyph}
         onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)}
         onConfigure={() => this.props.onConfigure()}

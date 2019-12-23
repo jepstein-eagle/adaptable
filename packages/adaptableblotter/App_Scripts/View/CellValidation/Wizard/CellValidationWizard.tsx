@@ -17,7 +17,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.CellValidationStrategyName}
+          FriendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Blotter={this.props.Blotter}
           Columns={this.props.Columns}

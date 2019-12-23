@@ -118,7 +118,7 @@ class ConditionalStylePopupComponent extends React.Component<
     return (
       <Flex flex={1} flexDirection="column">
         <PanelWithButton
-          headerText={StrategyConstants.ConditionalStyleStrategyName}
+          headerText={StrategyConstants.ConditionalStyleStrategyFriendlyName}
           button={newButton}
           bodyProps={{ padding: 0 }}
           glyphicon={StrategyConstants.ConditionalStyleGlyph}

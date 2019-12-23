@@ -47,7 +47,7 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
       this.checkItemExists(
         advancedSearch,
         advancedSearchName,
-        StrategyConstants.AdvancedSearchStrategyName
+        StrategyConstants.AdvancedSearchStrategyFriendlyName
       )
     ) {
       this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName));

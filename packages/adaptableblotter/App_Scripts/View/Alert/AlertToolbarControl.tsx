@@ -122,7 +122,7 @@ class AlertToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         className="ab-DashboardToolbar__Alert"
-        headerText={StrategyConstants.AlertStrategyName}
+        headerText={StrategyConstants.AlertStrategyFriendlyName}
         glyphicon={StrategyConstants.AlertGlyph}
         onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)}
         onConfigure={() => this.props.onConfigure()}

@@ -110,7 +110,7 @@ class ChartDisplayPopupComponent extends React.Component<
 
     return (
       <PanelWithImageThreeButtons
-        header={StrategyConstants.ChartStrategyName}
+        header={StrategyConstants.ChartStrategyFriendlyName}
         firstButton={editButton}
         secondButton={minmaxButton}
         thirdButton={closeButton}

@@ -16,7 +16,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.PieChartStrategyName,
+      Label: StrategyConstants.PieChartStrategyFriendlyName,
       ComponentName: ScreenPopups.PieChartPopup,
       Icon: StrategyConstants.PieChartGlyph,
     });

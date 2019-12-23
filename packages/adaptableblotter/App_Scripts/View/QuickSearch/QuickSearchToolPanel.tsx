@@ -51,7 +51,7 @@ class QuickSearchToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__QuickSearch"
-        headerText={StrategyConstants.QuickSearchStrategyName}
+        headerText={StrategyConstants.QuickSearchStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
