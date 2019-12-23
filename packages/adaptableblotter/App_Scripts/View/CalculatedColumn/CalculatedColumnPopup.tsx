@@ -28,6 +28,7 @@ import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface CalculatedColumnPopupProps
   extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
@@ -223,7 +224,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.CalculatedColumnStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

@@ -25,7 +25,7 @@ import { CellSummaryPopover } from './CellSummaryPopover';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface CellSummaryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {

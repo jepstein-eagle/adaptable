@@ -7,18 +7,13 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import {
-  DashboardState,
-  AdaptableDashboardToolbar,
-  AdaptableDashboardToolbars,
-} from '../../PredefinedConfig/DashboardState';
+import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-
 import {
   Visibility,
   AccessLevel,
@@ -28,7 +23,6 @@ import {
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
 import Checkbox from '../../components/CheckBox';
 import SimpleButton from '../../components/SimpleButton';
@@ -36,7 +30,10 @@ import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { Icon } from '../../components/icons';
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
-import ObjectFactory from '../../Utilities/ObjectFactory';
+import {
+  AdaptableDashboardToolbar,
+  AdaptableDashboardToolbars,
+} from '../../PredefinedConfig/Common/Types';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 

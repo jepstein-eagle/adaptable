@@ -21,6 +21,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface FreeTextColumnSummaryProps
   extends StrategySummaryProps<FreeTextColumnSummaryComponent> {
@@ -161,7 +162,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.FreeTextColumnStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

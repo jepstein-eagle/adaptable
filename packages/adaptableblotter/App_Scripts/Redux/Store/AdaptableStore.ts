@@ -2743,7 +2743,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               entity: actionTyped.Entity,
               user: blotter.blotterOptions.userName,
               blotter_id: blotter.blotterOptions.blotterId,
-              strategy: actionTyped.Strategy,
+              functionName: actionTyped.FunctionName,
               timestamp: new Date(),
             };
             xhr.send(JSON.stringify(obj));
@@ -2784,7 +2784,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             const actionTyped = action as TeamSharingRedux.TeamSharingImportItemAction;
             let importAction: Redux.Action;
             let overwriteConfirmation = false;
-            switch (actionTyped.Strategy) {
+            switch (actionTyped.FunctionName) {
               case StrategyConstants.CellValidationStrategyId:
                 importAction = CellValidationRedux.CellValidationAdd(
                   actionTyped.Entity as CellValidationRule

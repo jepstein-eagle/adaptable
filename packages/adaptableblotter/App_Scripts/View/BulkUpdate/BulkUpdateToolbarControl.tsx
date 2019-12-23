@@ -25,7 +25,7 @@ import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import join from '../../components/utils/join';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 
 interface BulkUpdateToolbarControlComponentProps

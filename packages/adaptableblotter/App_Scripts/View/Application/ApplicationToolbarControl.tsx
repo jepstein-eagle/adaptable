@@ -12,7 +12,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
 import SimpleButton from '../../components/SimpleButton';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import {
   ApplicationToolbarButtonClickedEventArgs,
   ApplicationToolbarButtonClickedInfo,

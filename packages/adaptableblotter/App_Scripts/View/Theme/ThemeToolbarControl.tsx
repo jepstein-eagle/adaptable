@@ -15,7 +15,7 @@ import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
 import DropdownButton from '../../components/DropdownButton';
 import join from '../../components/utils/join';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface ThemeToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ThemeToolbarControlComponent> {

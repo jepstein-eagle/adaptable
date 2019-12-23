@@ -29,6 +29,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
   onAddCustomSort: (customSort: CustomSort) => CustomSortRedux.CustomSortAddAction;
@@ -226,7 +227,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(CustomSortRedux.CustomSortEdit(customSort)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.CustomSortStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

@@ -27,6 +27,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { SparklineColumnWizard } from './Wizard/SparklineColumnWizard';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface SparklineColumnPopupProps extends StrategyViewPopupProps<SparklineColumnPopupComponent> {
   SparklineColumns: SparklineColumn[];
@@ -246,7 +247,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditSparklineColumn: (sparklineColumn: SparklineColumn) =>
       dispatch(SparklineColumnRedux.SparklineColumnsEdit(sparklineColumn)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.SparklineStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.SparklineStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

@@ -28,6 +28,7 @@ import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import SimpleButton from '../../components/SimpleButton';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
@@ -206,7 +207,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onAddAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(alert)),
     onEditAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(alert)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.AlertStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

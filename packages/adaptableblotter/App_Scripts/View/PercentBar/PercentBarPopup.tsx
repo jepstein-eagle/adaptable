@@ -26,6 +26,7 @@ import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
   PercentBars: PercentBar[];
@@ -273,7 +274,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.PercentBarStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

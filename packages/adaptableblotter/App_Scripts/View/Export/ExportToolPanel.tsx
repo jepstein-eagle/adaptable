@@ -24,7 +24,7 @@ import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import {
   LiveReport,
   LiveReportUpdatedInfo,

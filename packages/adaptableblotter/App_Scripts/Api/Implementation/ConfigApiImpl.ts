@@ -25,13 +25,25 @@ import { RunTimeState } from '../../PredefinedConfig/RunTimeState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ResetUserData, LoadState, InitState } from '../../Redux/Store/AdaptableStore';
 import { ApiBase } from './ApiBase';
-import { ConfigApi, AdaptableStateKey, AdaptableStateKeys } from '../ConfigApi';
 import Helper from '../../Utilities/Helpers/Helper';
 import { ActionColumnState } from '../../PredefinedConfig/ActionColumnState';
 import { ApplicationState } from '../../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../../PredefinedConfig/SparklineColumnState';
 import { PartnerState } from '../../PredefinedConfig/PartnerState';
+import { ColumnCategoryState } from '../../PredefinedConfig/ColumnCategoryState';
+import { EntitlementState } from '../../PredefinedConfig/EntitlementState';
+import { FreeTextColumnState } from '../../PredefinedConfig/FreeTextColumnState';
+import { NamedFilterState } from '../../PredefinedConfig/NamedFilterState';
+import { PercentBarState } from '../../PredefinedConfig/PercentBarState';
+import { ReminderState } from '../../PredefinedConfig/ReminderState';
+import { SystemFilterState } from '../../PredefinedConfig/SystemFilterState';
+import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
+import { TeamSharingState } from '../../PredefinedConfig/TeamSharingState';
+import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
+import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';
+import { ConfigApi } from '../ConfigApi';
+import { AdaptableStateKey } from '../../PredefinedConfig/Common/Types';
 
 export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configInit(): void {
@@ -258,6 +270,9 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetCalendarState(returnJson: boolean = false): CalendarState {
     return this.configGetUserStateByStateKey('Calendar', returnJson) as CalendarState;
   }
+  public configGetCellSummaryState(returnJson: boolean = false): CellSummaryState {
+    return this.configGetUserStateByStateKey('CellSummary', returnJson) as CellSummaryState;
+  }
   public configGetCellValidationState(returnJson: boolean = false): CellValidationState {
     return this.configGetUserStateByStateKey('CellValidation', returnJson) as CellValidationState;
   }
@@ -266,6 +281,9 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   }
   public configGetColumnFilterState(returnJson: boolean = false): ColumnFilterState {
     return this.configGetUserStateByStateKey('ColumnFilter', returnJson) as ColumnFilterState;
+  }
+  public configGetColumnCategoryState(returnJson: boolean): ColumnCategoryState {
+    return this.configGetUserStateByStateKey('ColumnCategory', returnJson) as ColumnCategoryState;
   }
   public configGetConditionalStyleState(returnJson: boolean = false): ConditionalStyleState {
     return this.configGetUserStateByStateKey(
@@ -282,11 +300,17 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetDataSourceState(returnJson: boolean = false): DataSourceState {
     return this.configGetUserStateByStateKey('DataSource', returnJson) as DataSourceState;
   }
+  public configGetEntitlementState(returnJson: boolean): EntitlementState {
+    return this.configGetUserStateByStateKey('Entitlement', returnJson) as EntitlementState;
+  }
   public configGetExportState(returnJson: boolean = false): ExportState {
     return this.configGetUserStateByStateKey('Export', returnJson) as ExportState;
   }
   public configGetFlashingCellState(returnJson: boolean = false): FlashingCellState {
     return this.configGetUserStateByStateKey('FlashingCell', returnJson) as FlashingCellState;
+  }
+  public configGetFreeTextColumnState(returnJson: boolean = false): FreeTextColumnState {
+    return this.configGetUserStateByStateKey('FreeTextColumn', returnJson) as FreeTextColumnState;
   }
   public configGetFormatColumnState(returnJson: boolean = false): FormatColumnState {
     return this.configGetUserStateByStateKey('FormatColumn', returnJson) as FormatColumnState;
@@ -294,8 +318,14 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetLayoutState(returnJson: boolean = false): LayoutState {
     return this.configGetUserStateByStateKey('Layout', returnJson) as LayoutState;
   }
+  public configGetNamedFilterState(returnJson: boolean = false): NamedFilterState {
+    return this.configGetUserStateByStateKey('NamedFilter', returnJson) as NamedFilterState;
+  }
   public configGetPartnerState(returnJson: boolean = false): PartnerState {
     return this.configGetUserStateByStateKey('Partner', returnJson) as PartnerState;
+  }
+  public configGetPercentBarState(returnJson: boolean = false): PercentBarState {
+    return this.configGetUserStateByStateKey('PercentBar', returnJson) as PercentBarState;
   }
   public configGetPlusMinusState(returnJson: boolean = false): PlusMinusState {
     return this.configGetUserStateByStateKey('PlusMinus', returnJson) as PlusMinusState;
@@ -303,8 +333,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetQuickSearchState(returnJson: boolean = false): QuickSearchState {
     return this.configGetUserStateByStateKey('QuickSearch', returnJson) as QuickSearchState;
   }
-  public configGetCellSummaryState(returnJson: boolean = false): CellSummaryState {
-    return this.configGetUserStateByStateKey('CellSummary', returnJson) as CellSummaryState;
+  public configGetReminderState(returnJson: boolean = false): ReminderState {
+    return this.configGetUserStateByStateKey('Reminder', returnJson) as ReminderState;
   }
   public configGetShortcutState(returnJson: boolean = false): ShortcutState {
     return this.configGetUserStateByStateKey('Shortcut', returnJson) as ShortcutState;
@@ -315,13 +345,28 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetSparklineColumnState(returnJson: boolean = false): SparklineColumnState {
     return this.configGetUserStateByStateKey('SparklineColumn', returnJson) as SparklineColumnState;
   }
+  public configGetSystemFilterState(returnJson: boolean = false): SystemFilterState {
+    return this.configGetUserStateByStateKey('SystemFilter', returnJson) as SystemFilterState;
+  }
+  public configGetSystemStatusState(returnJson: boolean = false): SystemStatusState {
+    return this.configGetUserStateByStateKey('SystemStatus', returnJson) as SystemStatusState;
+  }
+  public configGetTeamSharingState(returnJson: boolean = false): TeamSharingState {
+    return this.configGetUserStateByStateKey('TeamSharing', returnJson) as TeamSharingState;
+  }
   public configGetThemeState(returnJson: boolean = false): ThemeState {
     return this.configGetUserStateByStateKey('Theme', returnJson) as ThemeState;
+  }
+  public configGetToolPanelState(returnJson: boolean = false): ToolPanelState {
+    return this.configGetUserStateByStateKey('ToolPanel', returnJson) as ToolPanelState;
   }
   public configGetUpdatedRowState(returnJson: boolean = false): UpdatedRowState {
     return this.configGetUserStateByStateKey('UpdatedRow', returnJson) as UpdatedRowState;
   }
   public configGetUserFilterState(returnJson: boolean = false): UserFilterState {
     return this.configGetUserStateByStateKey('UserFilter', returnJson) as UserFilterState;
+  }
+  public configGetUserInterfaceState(returnJson: boolean = false): UserInterfaceState {
+    return this.configGetUserStateByStateKey('UserInterface', returnJson) as UserInterfaceState;
   }
 }

@@ -16,7 +16,7 @@ import join from '../../components/utils/join';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import Dropdown from '../../components/Dropdown';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 
 interface ThemeToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<ThemeToolPanelComponent> {

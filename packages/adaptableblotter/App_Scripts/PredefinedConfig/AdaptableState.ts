@@ -30,7 +30,7 @@ import { ThemeState } from './ThemeState';
 import { UserFilterState } from './UserFilterState';
 import { ReminderState } from './ReminderState';
 import { ConfigState } from './ConfigState';
-import { EntitlementsState } from './EntitlementsState';
+import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';
 import { SystemFilterState } from './SystemFilterState';
 import { ActionColumnState } from './ActionColumnState';
@@ -55,7 +55,7 @@ export interface AdaptableState {
 
   // Set at design time only
   ActionColumn: ActionColumnState;
-  Entitlements: EntitlementsState;
+  Entitlements: EntitlementState;
   NamedFilter: NamedFilterState;
   Partner: PartnerState;
   SparklineColumn: SparklineColumnState;

@@ -1,9 +1,9 @@
+import { DashboardState } from '../PredefinedConfig/DashboardState';
 import {
-  DashboardState,
   AdaptableDashboardToolbars,
   AdaptableDashboardToolbar,
   AdaptableFunctionButtons,
-} from '../PredefinedConfig/DashboardState';
+} from '../PredefinedConfig/Common/Types';
 
 /**
  * Provides access to the Dashboard state

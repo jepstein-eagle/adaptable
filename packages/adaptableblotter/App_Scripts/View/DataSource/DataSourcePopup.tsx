@@ -24,6 +24,7 @@ import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {
   onAddDataSource: (DataSource: DataSource) => DataSourceRedux.DataSourceAddAction;
@@ -205,7 +206,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onSelectDataSource: (SelectedDataSource: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(SelectedDataSource)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.DataSourceStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.DataSourceStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

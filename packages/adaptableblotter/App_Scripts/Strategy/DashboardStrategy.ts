@@ -8,11 +8,11 @@ import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
-import { AdaptableDashboardToolbar } from '../PredefinedConfig/DashboardState';
 import {
   ToolbarVisibilityChangedEventArgs,
   ToolbarVisibilityChangedInfo,
 } from '../Api/Events/ToolbarVisibilityChanged';
+import { AdaptableDashboardToolbar } from '../PredefinedConfig/Common/Types';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   private visibleToolbars: string[];

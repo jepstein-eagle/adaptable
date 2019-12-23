@@ -25,7 +25,7 @@ import { Flex } from 'rebass';
 import Input from '../../components/Input';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import Dropdown from '../../components/Dropdown';
 
 interface SmartEditToolPanelComponentProps

@@ -6,7 +6,7 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
-import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { AdaptableBlotterEventData, BlotterEventArgs } from '../../Api/Events/BlotterEvents';

@@ -13,7 +13,7 @@ import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface SystemStatusToolbarControlProps
   extends ToolbarStrategyViewPopupProps<SystemStatusToolbarControlComponent> {

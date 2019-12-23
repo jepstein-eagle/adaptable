@@ -32,6 +32,7 @@ import HelpBlock from '../../components/HelpBlock';
 import EmptyContent from '../../components/EmptyContent';
 import DropdownButton from '../../components/DropdownButton';
 import PlusIcon from '../../components/icons/plus';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onAddChartDefinition: (chartDefinition: ChartDefinition) => ChartRedux.ChartDefinitionAddAction;
@@ -316,7 +317,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ChartStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

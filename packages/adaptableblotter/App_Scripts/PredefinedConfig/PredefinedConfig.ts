@@ -1,4 +1,4 @@
-import { EntitlementsState } from './EntitlementsState';
+import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';
 import { SystemFilterState } from './SystemFilterState';
 import { ApplicationState } from './ApplicationState';
@@ -254,7 +254,7 @@ export interface PredefinedConfig {
    *
    * (Note: Entitlement State can be updated via the Blotter API but these updates **will not be persisted**).
    */
-  Entitlements?: EntitlementsState;
+  Entitlements?: EntitlementState;
 
   /**
    * Manges the System Status function which allows messages to be sent to the User detailing the health of the running application.

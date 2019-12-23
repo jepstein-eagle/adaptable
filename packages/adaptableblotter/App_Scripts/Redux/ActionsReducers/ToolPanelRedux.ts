@@ -1,12 +1,6 @@
 import * as Redux from 'redux';
-import {
-  ToolPanelState,
-  AdaptableToolPanels,
-  AdaptableToolPanel,
-} from '../../PredefinedConfig/ToolPanelState';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { Visibility } from '../../PredefinedConfig/Common/Enums';
+import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanels, AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 
 const TOOLPANEL_SET_AVAILABLE_TOOLPANELS = 'TOOLPANEL_SET_AVAILABLE_TOOLPANELS';
 export const TOOLPANEL_SET_TOOLPANELS = 'TOOLPANEL_SET_TOOLPANELS';

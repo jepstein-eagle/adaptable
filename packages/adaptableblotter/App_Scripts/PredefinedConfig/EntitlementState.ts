@@ -1,4 +1,5 @@
 import { DesignTimeState } from './DesignTimeState';
+import { AdaptableFunctionName } from './Common/Types';
 
 /**
  *
@@ -29,7 +30,7 @@ import { DesignTimeState } from './DesignTimeState';
  * } as PredefinedConfig;
  * ```
  */
-export interface EntitlementsState extends DesignTimeState {
+export interface EntitlementState extends DesignTimeState {
   /**
    * A collection of Entitlement objects.
    */
@@ -44,7 +45,7 @@ export interface Entitlement {
    *
    * **Default Value**:  Empty array
    */
-  FunctionName: string;
+  FunctionName: AdaptableFunctionName;
 
   /**
    * What type of Access Level the Entitlement provides.  The options are:

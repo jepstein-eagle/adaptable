@@ -13,7 +13,7 @@ import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 
 interface SystemStatusToolPanelProps
   extends ToolPanelStrategyViewPopupProps<SystemStatusToolPanelComponent> {

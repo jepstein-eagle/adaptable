@@ -28,90 +28,18 @@ import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { PartnerState } from '../PredefinedConfig/PartnerState';
-
-export type AdaptableStateKeys = AdaptableStateKey[];
-
-export type AdaptableStateKey =
-  | 'ActionColumn'
-  | 'AdvancedSearch'
-  | 'Alert'
-  | 'Application'
-  | 'BulkUpdate'
-  | 'CalculatedColumn'
-  | 'Calendar'
-  | 'CellSummary'
-  | 'CellValidation'
-  | 'Chart'
-  | 'ColumnCategory'
-  | 'ColumnFilter'
-  | 'ConditionalStyle'
-  | 'CustomSort'
-  | 'Dashboard'
-  | 'DataSource'
-  | 'Entitlement'
-  | 'Export'
-  | 'FlashingCell'
-  | 'FormatColumn'
-  | 'FreeTextColumn'
-  | 'Layout'
-  | 'NamedFilter'
-  | 'Partner'
-  | 'PercentBar'
-  | 'PlusMinus'
-  | 'QuickSearch'
-  | 'Reminder'
-  | 'Shortcut'
-  | 'SmartEdit'
-  | 'SparklineColumn'
-  | 'SystemFilter'
-  | 'SystemStatus'
-  | 'TeamSharing'
-  | 'Theme'
-  | 'ToolPanel'
-  | 'UpdatedRow'
-  | 'UserFilter'
-  | 'UserInterface';
-
-export type AdaptableFunctionName =
-  | 'ActionColumn'
-  | 'AdvancedSearch'
-  | 'Alert'
-  | 'Application'
-  | 'BulkUpdate'
-  | 'CalculatedColumn'
-  | 'Calendar'
-  | 'CellSummary'
-  | 'CellValidation'
-  | 'Chart'
-  | 'ColumnCategory'
-  | 'ColumnChooser'
-  | 'ColumnFilter'
-  | 'ColumnInfo'
-  | 'ConditionalStyle'
-  | 'CustomSort'
-  | 'Dashboard'
-  | 'DataSource'
-  | 'Export'
-  | 'FlashingCells'
-  | 'FormatColumn'
-  | 'FreeTextColumn'
-  | 'Home'
-  | 'Layout'
-  | 'PercentBar'
-  | 'PieChart'
-  | 'PlusMinus'
-  | 'QuickSearch'
-  | 'Reminder'
-  | 'Shortcut'
-  | 'SmartEdit'
-  | 'SparklineColumn'
-  | 'Sparkline'
-  | 'StateManagement'
-  | 'SystemStatus'
-  | 'TeamSharing'
-  | 'Theme'
-  | 'UpdatedRow'
-  | 'UserFilter';
+import { ColumnCategoryState } from '../PredefinedConfig/ColumnCategoryState';
+import { EntitlementState } from '../PredefinedConfig/EntitlementState';
+import { FreeTextColumnState } from '../PredefinedConfig/FreeTextColumnState';
+import { NamedFilterState } from '../PredefinedConfig/NamedFilterState';
+import { PercentBarState } from '../PredefinedConfig/PercentBarState';
+import { ReminderState } from '../PredefinedConfig/ReminderState';
+import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
+import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
+import { TeamSharingState } from '../PredefinedConfig/TeamSharingState';
+import { ToolPanelState } from '../PredefinedConfig/ToolPanelState';
+import { UserInterfaceState } from '../PredefinedConfig/UserInterfaceState';
+import { AdaptableStateKey } from '../PredefinedConfig/Common/Types';
 
 export interface ConfigApi {
   configInit(): void;
@@ -146,14 +74,6 @@ export interface ConfigApi {
 
   configGetUserStateByStateKey(stateKey: AdaptableStateKey, returnJson: boolean): RunTimeState;
 
-  /*
-
-Need to include this bit:
-By default the method (and all those below) will return the actual object that we store.  
-
-However if you pass in true for the returnJson parameter, then the method will return a JSON string.
-
-  */
   configGetActionColumnState(returnJson: boolean): ActionColumnState;
   configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;
   configGetAlertState(returnJson: boolean): AlertState;
@@ -161,25 +81,36 @@ However if you pass in true for the returnJson parameter, then the method will r
   configGetBulkUpdateState(returnJson: boolean): BulkUpdateState;
   configGetCalculatedColumnState(returnJson: boolean): CalculatedColumnState;
   configGetCalendarState(returnJson: boolean): CalendarState;
+  configGetCellSummaryState(returnJson: boolean): CellSummaryState;
   configGetCellValidationState(returnJson: boolean): CellValidationState;
   configGetChartState(returnJson: boolean): ChartState;
+  configGetColumnCategoryState(returnJson: boolean): ColumnCategoryState;
   configGetColumnFilterState(returnJson: boolean): ColumnFilterState;
   configGetConditionalStyleState(returnJson: boolean): ConditionalStyleState;
   configGetCustomSortState(returnJson: boolean): CustomSortState;
   configGetDashboardState(returnJson: boolean): DashboardState;
   configGetDataSourceState(returnJson: boolean): DataSourceState;
+  configGetEntitlementState(returnJson: boolean): EntitlementState;
   configGetExportState(returnJson: boolean): ExportState;
   configGetFlashingCellState(returnJson: boolean): FlashingCellState;
   configGetFormatColumnState(returnJson: boolean): FormatColumnState;
+  configGetFreeTextColumnState(returnJson: boolean): FreeTextColumnState;
   configGetLayoutState(returnJson: boolean): LayoutState;
+  configGetNamedFilterState(returnJson: boolean): NamedFilterState;
+  configGetPartnerState(returnJson: boolean): PartnerState;
+  configGetPercentBarState(returnJson: boolean): PercentBarState;
   configGetPlusMinusState(returnJson: boolean): PlusMinusState;
+  configGetReminderState(returnJson: boolean): ReminderState;
   configGetQuickSearchState(returnJson: boolean): QuickSearchState;
-  configGetCellSummaryState(returnJson: boolean): CellSummaryState;
   configGetShortcutState(returnJson: boolean): ShortcutState;
   configGetSmartEditState(returnJson: boolean): SmartEditState;
   configGetSparklineColumnState(returnJson: boolean): SparklineColumnState;
+  configGetSystemFilterState(returnJson: boolean): SystemFilterState;
+  configGetSystemStatusState(returnJson: boolean): SystemStatusState;
+  configGetTeamSharingState(returnJson: boolean): TeamSharingState;
   configGetThemeState(returnJson: boolean): ThemeState;
+  configGetToolPanelState(returnJson: boolean): ToolPanelState;
   configGetUpdatedRowState(returnJson: boolean): UpdatedRowState;
   configGetUserFilterState(returnJson: boolean): UserFilterState;
-  configGetPartnerState(returnJson: boolean): PartnerState;
+  configGetUserInterfaceState(returnJson: boolean): UserInterfaceState;
 }

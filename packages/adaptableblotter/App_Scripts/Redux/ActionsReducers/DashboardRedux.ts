@@ -1,13 +1,13 @@
 import * as Redux from 'redux';
-import {
-  DashboardState,
-  AdaptableDashboardToolbar,
-  AdaptableDashboardToolbars,
-  AdaptableFunctionButtons,
-} from '../../PredefinedConfig/DashboardState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import { ButtonStyle } from '../../PredefinedConfig/Common/ButtonStyle';
+import {
+  AdaptableDashboardToolbars,
+  AdaptableDashboardToolbar,
+  AdaptableFunctionButtons,
+} from '../../PredefinedConfig/Common/Types';
+import { DashboardState } from '../../PredefinedConfig/DashboardState';
 
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
 export const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';

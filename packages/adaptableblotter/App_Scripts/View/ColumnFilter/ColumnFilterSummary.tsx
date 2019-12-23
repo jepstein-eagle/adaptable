@@ -15,8 +15,9 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
-import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { Column } from 'ag-grid-community';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface ColumnFilterSummaryProps
   extends StrategySummaryProps<ColumnFilterSummaryComponent> {
@@ -85,7 +86,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnFilterStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ColumnFilterStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

@@ -21,6 +21,7 @@ import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
   PlusMinusRules: PlusMinusRule[];
@@ -182,7 +183,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(PlusMinusRule)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.PlusMinusStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

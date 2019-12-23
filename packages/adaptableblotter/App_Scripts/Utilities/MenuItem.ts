@@ -2,8 +2,7 @@ import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import { AdaptableFunctionName } from '../Api/ConfigApi';
-import { func } from 'prop-types';
+import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 // A menu item which performs a Redux Action when it is clicke
 export class MenuItemDoReduxAction implements AdaptableMenuItem {

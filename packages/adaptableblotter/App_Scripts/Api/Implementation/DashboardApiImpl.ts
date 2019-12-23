@@ -3,15 +3,15 @@ import * as ApplicationRedux from '../../Redux/ActionsReducers/ApplicationRedux'
 import { ApiBase } from './ApiBase';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import { DashboardApi } from '../DashboardApi';
-import {
-  DashboardState,
-  AdaptableDashboardToolbars,
-  AdaptableDashboardToolbar,
-  AdaptableFunctionButtons,
-} from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
+import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import {
+  AdaptableDashboardToolbars,
+  AdaptableDashboardToolbar,
+  AdaptableFunctionButtons,
+} from '../../PredefinedConfig/Common/Types';
 
 export class DashboardApiImpl extends ApiBase implements DashboardApi {
   public GetState(): DashboardState {

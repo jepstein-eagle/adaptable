@@ -28,6 +28,7 @@ import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
@@ -238,7 +239,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ConditionalStyleStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

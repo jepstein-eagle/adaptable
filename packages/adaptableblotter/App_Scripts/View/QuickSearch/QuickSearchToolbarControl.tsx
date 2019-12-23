@@ -11,7 +11,7 @@ import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
 
 interface QuickSearchToolbarControlComponentProps

@@ -10,7 +10,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Text, Flex, Box } from 'rebass';
 import { IAdaptableBlotter } from '../../../types';
-import { Entitlement } from '../../../PredefinedConfig/EntitlementsState';
+import { Entitlement } from '../../../PredefinedConfig/EntitlementState';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
 import { AdaptableToolPanelFactory } from '../../AdaptableViewFactory';
@@ -19,10 +19,10 @@ import { Icon } from '../../../components/icons';
 import Checkbox from '../../../components/CheckBox';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
-import { AdaptableToolPanels } from '../../../PredefinedConfig/ToolPanelState';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import DropdownButton from '../../../components/DropdownButton';
 import { AdaptableToolPanelContext } from '../../../Utilities/Interface/AdaptableToolPanelContext';
+import { AdaptableToolPanels } from '../../../PredefinedConfig/Common/Types';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 

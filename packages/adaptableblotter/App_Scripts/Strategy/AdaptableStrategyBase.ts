@@ -4,7 +4,7 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
-import { Entitlement } from '../PredefinedConfig/EntitlementsState';
+import { Entitlement } from '../PredefinedConfig/EntitlementState';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import {
   MenuItemShowPopup,
@@ -13,7 +13,7 @@ import {
 } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableFunctionName } from '../Api/ConfigApi';
+import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
@@ -104,14 +104,16 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         source: 'FunctionMenu',
       };
     }
-    return new MenuItemShowPopup(
-      Label,
-      this.Id as AdaptableFunctionName,
-      ComponentName,
-      Icon,
-      this.isVisible,
-      PopupParams
-    );
+    if (this.isVisible && !this.isReadOnly) {
+      return new MenuItemShowPopup(
+        Label,
+        this.Id as AdaptableFunctionName,
+        ComponentName,
+        Icon,
+        this.isVisible,
+        PopupParams
+      );
+    }
   }
 
   // direct actions called by the column menu - invisible if strategy is hidden or readonly

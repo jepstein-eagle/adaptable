@@ -20,6 +20,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface CellValidationSummaryProps
   extends StrategySummaryProps<CellValidationSummaryComponent> {
@@ -178,7 +179,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.CellValidationStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

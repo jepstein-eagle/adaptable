@@ -23,6 +23,7 @@ import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface FormatColumnSummaryProps
   extends StrategySummaryProps<FormatColumnSummaryComponent> {
@@ -172,7 +173,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditFormatColumn: (FormatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.FormatColumnStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

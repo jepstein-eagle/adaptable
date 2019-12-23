@@ -25,6 +25,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow';
 import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard';
 import EmptyContent from '../../components/EmptyContent';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategoryPopupComponent> {
   ColumnCategorys: ColumnCategory[];
@@ -201,7 +202,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ColumnCategoryStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

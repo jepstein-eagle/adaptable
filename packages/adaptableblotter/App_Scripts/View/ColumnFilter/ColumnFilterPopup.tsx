@@ -18,6 +18,7 @@ import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import EmptyContent from '../../components/EmptyContent';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
   ColumnFilters: ColumnFilter[];
@@ -117,7 +118,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ColumnFilterStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

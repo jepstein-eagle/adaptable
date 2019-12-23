@@ -24,7 +24,7 @@ import DropdownButton from '../../components/DropdownButton';
 import icons from '../../components/icons';
 import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import {
   LiveReportUpdatedEventArgs,
   LiveReport,

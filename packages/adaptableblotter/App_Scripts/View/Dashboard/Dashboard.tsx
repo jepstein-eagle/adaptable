@@ -16,7 +16,7 @@ import { Visibility, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { EntitlementsState, Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { EntitlementState, Entitlement } from '../../PredefinedConfig/EntitlementState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';
@@ -24,7 +24,7 @@ import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
-  EntitlementsState: EntitlementsState;
+  EntitlementState: EntitlementState;
   onClick: (action: Redux.Action) => Redux.Action;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
 }
@@ -41,7 +41,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     }
 
     let showBlotterName: string = 'Show ' + blotterName + ' Dashboard';
-    let hiddenEntitlements: Entitlement[] = this.props.EntitlementsState.FunctionEntitlements.filter(
+    let hiddenEntitlements: Entitlement[] = this.props.EntitlementState.FunctionEntitlements.filter(
       e => e.AccessLevel == 'Hidden'
     );
     let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt =>
@@ -49,7 +49,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     );
     let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
       let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
-        this.props.EntitlementsState.FunctionEntitlements,
+        this.props.EntitlementState.FunctionEntitlements,
         control
       );
       if (accessLevel != AccessLevel.Hidden) {
@@ -131,7 +131,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     DashboardState: state.Dashboard,
-    EntitlementsState: state.Entitlements,
+    EntitlementState: state.Entitlements,
     // need to get these props so we can 'feed' the toolbars...
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,

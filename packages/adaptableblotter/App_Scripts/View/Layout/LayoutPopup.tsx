@@ -28,6 +28,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
   Layouts: Layout[];
@@ -228,7 +229,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.LayoutStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

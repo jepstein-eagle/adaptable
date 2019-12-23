@@ -21,7 +21,7 @@ import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 
 interface AdvancedSearchToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<AdvancedSearchToolPanelComponent> {

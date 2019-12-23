@@ -21,6 +21,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
   CustomSorts: CustomSort[];
@@ -174,7 +175,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortEdit(customSort)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.CustomSortStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

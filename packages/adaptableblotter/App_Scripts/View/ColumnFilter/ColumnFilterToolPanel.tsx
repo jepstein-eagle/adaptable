@@ -21,12 +21,12 @@ import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 
 interface ColumnFilterToolPanelComponentProps

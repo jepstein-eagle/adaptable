@@ -23,6 +23,7 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface FreeTextColumnPopupProps extends StrategyViewPopupProps<FreeTextColumnPopupComponent> {
   FreeTextColumns: Array<FreeTextColumn>;
@@ -200,7 +201,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.FreeTextColumnStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

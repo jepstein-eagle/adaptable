@@ -29,6 +29,7 @@ import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
   CellValidations: CellValidationRule[];
@@ -240,7 +241,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.CellValidationStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

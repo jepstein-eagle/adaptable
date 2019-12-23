@@ -18,6 +18,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
   Alerts: AlertDefinition[];
@@ -164,7 +165,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onAddAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(Alert)),
     onEditAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(Alert)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.AlertStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

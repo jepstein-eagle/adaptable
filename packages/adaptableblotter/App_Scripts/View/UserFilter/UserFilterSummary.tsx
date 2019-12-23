@@ -20,6 +20,7 @@ import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
   onAddUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
@@ -200,7 +201,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditUserFilter: (UserFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterEdit(UserFilter)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.UserFilterStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

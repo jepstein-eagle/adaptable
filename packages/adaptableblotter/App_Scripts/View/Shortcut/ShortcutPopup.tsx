@@ -27,6 +27,7 @@ import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { Shortcut } from '../../PredefinedConfig/ShortcutState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
   onAddShortcut: (shortcut: Shortcut) => ShortcutRedux.ShortcutAddAction;
@@ -262,7 +263,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onAddShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
     onEditShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutEdit(shortcut)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ShortcutStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

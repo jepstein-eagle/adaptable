@@ -21,6 +21,7 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyProfile } from '../Components/StrategyProfile';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface ColumnCategorySummaryProps
   extends StrategySummaryProps<ColumnCategorySummaryComponent> {
@@ -153,7 +154,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ColumnCategoryStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

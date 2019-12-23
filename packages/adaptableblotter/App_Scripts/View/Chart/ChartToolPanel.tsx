@@ -25,7 +25,7 @@ import DropdownButton from '../../components/DropdownButton';
 import { StrategyParams } from '../Components/SharedProps/StrategyViewPopupProps';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 
 const AddIcon = icons.add as ReactComponentLike;
 

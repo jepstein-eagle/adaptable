@@ -3,6 +3,7 @@ import * as Redux from 'redux';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
 export const TEAMSHARING_SET = 'TEAMSHARING_SET';
@@ -11,7 +12,7 @@ export const TEAMSHARING_GET = 'TEAMSHARING_GET';
 
 export interface TeamSharingShareAction extends Redux.Action {
   Entity: AdaptableObject;
-  Strategy: string;
+  FunctionName: AdaptableFunctionName;
 }
 
 export interface TeamSharingSetAction extends Redux.Action {
@@ -20,18 +21,18 @@ export interface TeamSharingSetAction extends Redux.Action {
 
 export interface TeamSharingImportItemAction extends Redux.Action {
   Entity: AdaptableObject;
-  Strategy: string;
+  FunctionName: AdaptableFunctionName;
 }
 
 export interface TeamSharingGetAction extends Redux.Action {}
 
 export const TeamSharingShare = (
   Entity: AdaptableObject,
-  Strategy: string
+  FunctionName: AdaptableFunctionName
 ): TeamSharingShareAction => ({
   type: TEAMSHARING_SHARE,
   Entity,
-  Strategy,
+  FunctionName,
 });
 
 export const TeamSharingSet = (Entities: ISharedEntity[]): TeamSharingSetAction => ({
@@ -41,11 +42,11 @@ export const TeamSharingSet = (Entities: ISharedEntity[]): TeamSharingSetAction 
 
 export const TeamSharingImportItem = (
   Entity: AdaptableObject,
-  Strategy: string
+  FunctionName: AdaptableFunctionName
 ): TeamSharingImportItemAction => ({
   type: TEAMSHARING_IMPORT_ITEM,
   Entity,
-  Strategy,
+  FunctionName,
 });
 
 export const TeamSharingGet = (): TeamSharingGetAction => ({

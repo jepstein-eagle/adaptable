@@ -13,7 +13,7 @@ import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import EnumExtensions from '../../Utilities/Extensions/EnumExtensions';
 import Dropdown from '../../components/Dropdown';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 
 interface DashboardToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<DashboardToolPanelComponentProps> {

@@ -29,7 +29,7 @@ import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
-import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {

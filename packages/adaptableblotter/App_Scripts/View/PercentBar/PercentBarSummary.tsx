@@ -23,6 +23,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarSummaryComponent> {
   PercentBars: PercentBar[];
@@ -178,7 +179,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.PercentBarStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

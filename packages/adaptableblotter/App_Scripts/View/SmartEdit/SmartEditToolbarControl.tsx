@@ -26,7 +26,7 @@ import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface SmartEditToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {

@@ -25,6 +25,7 @@ import { Reminder } from '../../PredefinedConfig/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupComponent> {
   Reminders: Reminder[];
@@ -189,7 +190,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onAddReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderAdd(reminder)),
     onEditReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderEdit(reminder)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ReminderStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ReminderStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

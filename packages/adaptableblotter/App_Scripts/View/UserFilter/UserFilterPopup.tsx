@@ -26,6 +26,7 @@ import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
   onAddUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
@@ -229,7 +230,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditUserFilter: (userFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterEdit(userFilter)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.UserFilterStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

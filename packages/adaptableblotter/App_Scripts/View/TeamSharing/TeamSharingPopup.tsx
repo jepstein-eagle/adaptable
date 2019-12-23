@@ -33,13 +33,14 @@ import { Flex } from 'rebass';
 import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
 import ListGroup from '../../components/List/ListGroup';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<ISharedEntity>;
   onGetSharedItems: () => TeamSharingRedux.TeamSharingShareAction;
   onImportItem: (
     entity: AdaptableObject,
-    strategy: string
+    strategy: AdaptableFunctionName
   ) => TeamSharingRedux.TeamSharingImportItemAction;
 }
 
@@ -58,13 +59,13 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
       { Content: '', Size: 1 },
     ];
     let sharedItems = this.props.Entities.sort((a, b) => {
-      return a.strategy < b.strategy ? -1 : 1;
+      return a.functionName < b.functionName ? -1 : 1;
     }).map((x, index) => {
       return (
         <li className="list-group-item" key={index}>
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={2}>
-              <StrategyProfile StrategyId={x.strategy} />
+              <StrategyProfile StrategyId={x.functionName} />
             </Flex>
             <Flex flex={3}>
               {x.user}
@@ -78,7 +79,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
               <SimpleButton
                 variant="text"
                 tooltip="import"
-                onClick={() => this.props.onImportItem(x.entity, x.strategy)}
+                onClick={() => this.props.onImportItem(x.entity, x.functionName)}
               >
                 <Icon name="import-export" />
               </SimpleButton>
@@ -105,7 +106,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
   }
 
   getSharedItemDetails(sharedEntity: ISharedEntity) {
-    switch (sharedEntity.strategy) {
+    switch (sharedEntity.functionName) {
       case StrategyConstants.CustomSortStrategyId: {
         let customSort = sharedEntity.entity as CustomSort;
         return (
@@ -268,7 +269,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onGetSharedItems: () => dispatch(TeamSharingRedux.TeamSharingGet()),
-    onImportItem: (entity: AdaptableObject, strategy: string) =>
+    onImportItem: (entity: AdaptableObject, strategy: AdaptableFunctionName) =>
       dispatch(TeamSharingRedux.TeamSharingImportItem(entity, strategy)),
   };
 }

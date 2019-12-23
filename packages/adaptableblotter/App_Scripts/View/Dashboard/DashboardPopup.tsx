@@ -4,11 +4,6 @@ import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import {
-  DashboardState,
-  AdaptableFunctionButtons,
-  AdaptableDashboardToolbars,
-} from '../../PredefinedConfig/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { DualListBoxEditor, DisplaySize } from '../Components/ListBox/DualListBoxEditor';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -16,10 +11,15 @@ import Checkbox from '../../components/CheckBox';
 import Radio from '../../components/Radio';
 import Input from '../../components/Input';
 
-import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { Box, Flex, Text } from 'rebass';
 import { GridState } from '../../PredefinedConfig/GridState';
 import HelpBlock from '../../components/HelpBlock';
+import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import {
+  AdaptableFunctionButtons,
+  AdaptableDashboardToolbars,
+} from '../../PredefinedConfig/Common/Types';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;

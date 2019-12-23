@@ -26,6 +26,7 @@ import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
   AdvancedSearches: AdvancedSearch[];
@@ -258,7 +259,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AdvancedSearchStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.AdvancedSearchStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

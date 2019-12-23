@@ -16,7 +16,7 @@ import { Flex } from 'rebass';
 import UIHelper from '../UIHelper';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 
 interface AlertToolPanelProps extends ToolPanelStrategyViewPopupProps<AlertToolPanelComponent> {
   AlertDefinitions: AlertDefinition[];

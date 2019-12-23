@@ -22,7 +22,7 @@ import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import join from '../../components/utils/join';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 

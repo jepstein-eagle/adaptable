@@ -23,10 +23,10 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface ColumnFilterToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {

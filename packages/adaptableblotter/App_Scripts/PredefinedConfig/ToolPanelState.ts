@@ -1,21 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-
-export type AdaptableToolPanels = AdaptableToolPanel[];
-
-export type AdaptableToolPanel =
-  | 'AdvancedSearch'
-  | 'Alert'
-  | 'BulkUpdate'
-  | 'CellSummary'
-  | 'Chart'
-  | 'ColumnFilter'
-  | 'Dashboard'
-  | 'Export'
-  | 'Layout'
-  | 'QuickSearch'
-  | 'SmartEdit'
-  | 'SystemStatus'
-  | 'Theme';
+import { AdaptableToolPanels } from './Common/Types';
 
 export interface ToolPanelState extends RunTimeState {
   AvailableToolPanels?: AdaptableToolPanels;

@@ -24,6 +24,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface ConditionalStyleSummaryProps
   extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
@@ -194,7 +195,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ConditionalStyleStrategyId as AdaptableFunctionName
+        )
       ),
   };
 }

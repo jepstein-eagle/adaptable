@@ -10,7 +10,7 @@ import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { AdaptableToolPanel } from '../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
 
 interface QuickSearchToolPanelComponentProps

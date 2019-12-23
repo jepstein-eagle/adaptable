@@ -4,7 +4,7 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import * as ToolPanelRedux from '../../../Redux/ActionsReducers/ToolPanelRedux';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { BlotterApi, IAdaptableBlotter } from '../../../types';
-import { AdaptableToolPanel } from '../../../PredefinedConfig/ToolPanelState';
+import { AdaptableToolPanel } from '../../../PredefinedConfig/Common/Types';
 
 export interface ToolPanelStrategyViewPopupProps<View> extends StrategyViewPopupProps<View> {
   onClick: (action: Redux.Action) => Redux.Action;

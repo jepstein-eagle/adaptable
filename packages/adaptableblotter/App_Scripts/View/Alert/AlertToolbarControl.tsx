@@ -18,7 +18,7 @@ import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { Flex } from 'rebass';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import UIHelper from '../UIHelper';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {

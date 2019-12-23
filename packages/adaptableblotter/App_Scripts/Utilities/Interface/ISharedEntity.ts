@@ -1,8 +1,9 @@
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface ISharedEntity {
   entity: AdaptableObject;
-  strategy: string;
+  functionName: AdaptableFunctionName;
   timestamp: Date;
   user: string;
   blotter_id: string;

@@ -43,7 +43,7 @@ function InitAdaptableBlotter() {
 let demoConfig: PredefinedConfig = {
   Partner: {
     Glue42: {
-      RunLiveData: true,
+      RunLiveData: false,
       Glue: glue42Desktop, // this is the glue object
       Glue4Office: glue42office, // this is the Glue4Office object
       Glue42Config: {

@@ -24,6 +24,7 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
   FormatColumns: Array<FormatColumn>;
@@ -215,7 +216,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditFormatColumn: (formatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.FormatColumnStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

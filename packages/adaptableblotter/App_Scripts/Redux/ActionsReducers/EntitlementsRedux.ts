@@ -1,4 +1,4 @@
-import { EntitlementsState, Entitlement } from '../../PredefinedConfig/EntitlementsState';
+import { EntitlementState, Entitlement } from '../../PredefinedConfig/EntitlementState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
@@ -33,14 +33,14 @@ export const EntitlementDelete = (FunctionName: string): EntitlementDeleteAction
   FunctionName,
 });
 
-const initialEntitlementsState: EntitlementsState = {
+const initialEntitlementState: EntitlementState = {
   FunctionEntitlements: EMPTY_ARRAY,
 };
 
-export const EntitlementsReducer: Redux.Reducer<EntitlementsState> = (
-  state: EntitlementsState = initialEntitlementsState,
+export const EntitlementsReducer: Redux.Reducer<EntitlementState> = (
+  state: EntitlementState = initialEntitlementState,
   action: Redux.Action
-): EntitlementsState => {
+): EntitlementState => {
   let index: number;
   let functionEntitlements: Entitlement[];
 

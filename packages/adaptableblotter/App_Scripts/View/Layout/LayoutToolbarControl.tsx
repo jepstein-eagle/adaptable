@@ -20,7 +20,7 @@ import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
 import join from '../../components/utils/join';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {

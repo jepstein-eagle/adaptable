@@ -30,6 +30,7 @@ import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
   DefaultNudgeValue: number;
@@ -278,7 +279,12 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.PlusMinusStrategyId as AdaptableFunctionName
+        )
+      ),
   };
 }
 

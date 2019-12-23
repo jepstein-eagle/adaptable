@@ -25,7 +25,7 @@ import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import DropdownButton from '../../components/DropdownButton';
 import { StrategyParams } from '../Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 const AddIcon = icons.add as ReactComponentLike;
 
