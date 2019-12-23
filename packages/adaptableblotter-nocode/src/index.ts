@@ -1,15 +1,13 @@
 import XLSX from 'xlsx';
 import AdaptableBlotter, {
   AdaptableNoCodeWizard as ABWizard,
-} from '../../adaptableblotter/App_Scripts/agGrid';
+} from '@adaptabletools/adaptableblotter/agGrid';
 
 import {
   AdaptableBlotterOptions,
   BlotterApi,
   IAdaptableNoCodeWizardOptions,
-} from '../../adaptableblotter/types';
-
-export * from '../../adaptableblotter/types';
+} from '@adaptabletools/adaptableblotter/types';
 
 export const readJSONFile = async (file: File, toJSON?: (str: string) => Promise<any> | any) => {
   const reader = new FileReader();

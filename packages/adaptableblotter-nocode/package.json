@@ -96,9 +96,11 @@
   },
   "peerDependencies": {
     "ag-grid-community": "^21.0.0",
-    "ag-grid-enterprise": "^21.0.0"
+    "ag-grid-enterprise": "^21.0.0",
+    "@adaptabletools/adaptableblotter": ">=5.1.1"
   },
   "scripts": {
+    "link-core": "rimraf node_modules/@adaptabletools && npx symlink-dir ../adaptableblotter ./node_modules/@adaptabletools/adaptableblotter",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
     "registry-publish": "npm run build-package-json && npm publish dist",
     "registry-publish-canary": "npm run build-package-json && npm publish --tag canary dist",
