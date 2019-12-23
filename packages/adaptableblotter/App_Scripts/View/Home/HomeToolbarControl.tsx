@@ -135,25 +135,25 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     this.props.DashboardState.AvailableToolbars.forEach(
       (toolbar: AdaptableDashboardToolbar, index) => {
-        let myToolbar: string = toolbar as string;
-        if (ArrayExtensions.ContainsItem(allowedMenuNames, myToolbar)) {
+        // let myToolbar: string = toolbar as string;
+        if (ArrayExtensions.ContainsItem(allowedMenuNames, toolbar)) {
           let isVisible: boolean = ArrayExtensions.ContainsItem(
             this.props.DashboardState.VisibleToolbars,
             toolbar
           );
-          let functionName = StrategyConstants.getNameForStrategyId(myToolbar);
+          let functionName = StrategyConstants.getNameForStrategyId(toolbar);
           toolbarItems.push({
-            id: myToolbar,
+            id: toolbar,
             onClick: (e: React.SyntheticEvent) => {
-              this.onSetToolbarVisibility(myToolbar, !isVisible);
+              this.onSetToolbarVisibility(toolbar, !isVisible);
             },
             label: (
               <Checkbox
                 className="ab-dd-checkbox"
                 my={0}
                 as="div"
-                value={myToolbar}
-                key={myToolbar}
+                value={toolbar}
+                key={toolbar}
                 checked={isVisible}
                 onMouseDown={preventDefault}
               >

@@ -1,42 +1,44 @@
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+
 // Strategy Ids
-export const AdvancedSearchStrategyId: string = 'AdvancedSearch';
-export const AlertStrategyId: string = 'Alert';
-export const ApplicationStrategyId: string = 'Application';
-export const BulkUpdateStrategyId: string = 'BulkUpdate';
-export const CalculatedColumnStrategyId: string = 'CalculatedColumn';
-export const CalendarStrategyId: string = 'Calendar';
-export const CellSummaryStrategyId: string = 'CellSummary';
-export const CellValidationStrategyId: string = 'CellValidation';
-export const ChartStrategyId: string = 'Chart';
-export const ColumnCategoryStrategyId: string = 'ColumnCategory';
-export const ColumnChooserStrategyId: string = 'ColumnChooser';
-export const ColumnFilterStrategyId: string = 'ColumnFilter';
-export const ColumnInfoStrategyId: string = 'ColumnInfo';
-export const ConditionalStyleStrategyId: string = 'ConditionalStyle';
-export const CustomSortStrategyId: string = 'CustomSort';
-export const DashboardStrategyId: string = 'Dashboard';
-export const DataSourceStrategyId: string = 'DataSource';
-export const ExportStrategyId: string = 'Export';
-export const FlashingCellsStrategyId: string = 'FlashingCells';
-export const FormatColumnStrategyId: string = 'FormatColumn';
-export const FreeTextColumnStrategyId: string = 'FreeTextColumn';
-export const HomeStrategyId: string = 'Home';
-export const LayoutStrategyId: string = 'Layout';
-export const PercentBarStrategyId: string = 'PercentBar';
-export const SparklineColumnStrategyId: string = 'SparklineColumn';
-export const SparklineStrategyId: string = 'Sparkline';
-export const PieChartStrategyId: string = 'PieChart';
-export const PlusMinusStrategyId: string = 'PlusMinus';
-export const QuickSearchStrategyId: string = 'QuickSearch';
-export const ReminderStrategyId: string = 'Reminder';
-export const ShortcutStrategyId: string = 'Shortcut';
-export const SmartEditStrategyId: string = 'SmartEdit';
-export const StateManagementStrategyId: string = 'StateManagement';
-export const SystemStatusStrategyId: string = 'SystemStatus';
-export const TeamSharingStrategyId: string = 'TeamSharing';
-export const ThemeStrategyId: string = 'Theme';
-export const UpdatedRowStrategyId: string = 'UpdatedRow';
-export const UserFilterStrategyId: string = 'UserFilter';
+export const AdvancedSearchStrategyId: AdaptableFunctionName = 'AdvancedSearch';
+export const AlertStrategyId: AdaptableFunctionName = 'Alert';
+export const ApplicationStrategyId: AdaptableFunctionName = 'Application';
+export const BulkUpdateStrategyId: AdaptableFunctionName = 'BulkUpdate';
+export const CalculatedColumnStrategyId: AdaptableFunctionName = 'CalculatedColumn';
+export const CalendarStrategyId: AdaptableFunctionName = 'Calendar';
+export const CellSummaryStrategyId: AdaptableFunctionName = 'CellSummary';
+export const CellValidationStrategyId: AdaptableFunctionName = 'CellValidation';
+export const ChartStrategyId: AdaptableFunctionName = 'Chart';
+export const ColumnCategoryStrategyId: AdaptableFunctionName = 'ColumnCategory';
+export const ColumnChooserStrategyId: AdaptableFunctionName = 'ColumnChooser';
+export const ColumnFilterStrategyId: AdaptableFunctionName = 'ColumnFilter';
+export const ColumnInfoStrategyId: AdaptableFunctionName = 'ColumnInfo';
+export const ConditionalStyleStrategyId: AdaptableFunctionName = 'ConditionalStyle';
+export const CustomSortStrategyId: AdaptableFunctionName = 'CustomSort';
+export const DashboardStrategyId: AdaptableFunctionName = 'Dashboard';
+export const DataSourceStrategyId: AdaptableFunctionName = 'DataSource';
+export const ExportStrategyId: AdaptableFunctionName = 'Export';
+export const FlashingCellsStrategyId: AdaptableFunctionName = 'FlashingCells';
+export const FormatColumnStrategyId: AdaptableFunctionName = 'FormatColumn';
+export const FreeTextColumnStrategyId: AdaptableFunctionName = 'FreeTextColumn';
+export const HomeStrategyId: AdaptableFunctionName = 'Home';
+export const LayoutStrategyId: AdaptableFunctionName = 'Layout';
+export const PercentBarStrategyId: AdaptableFunctionName = 'PercentBar';
+export const SparklineColumnStrategyId: AdaptableFunctionName = 'SparklineColumn';
+export const SparklineStrategyId: AdaptableFunctionName = 'Sparkline';
+export const PieChartStrategyId: AdaptableFunctionName = 'PieChart';
+export const PlusMinusStrategyId: AdaptableFunctionName = 'PlusMinus';
+export const QuickSearchStrategyId: AdaptableFunctionName = 'QuickSearch';
+export const ReminderStrategyId: AdaptableFunctionName = 'Reminder';
+export const ShortcutStrategyId: AdaptableFunctionName = 'Shortcut';
+export const SmartEditStrategyId: AdaptableFunctionName = 'SmartEdit';
+export const StateManagementStrategyId: AdaptableFunctionName = 'StateManagement';
+export const SystemStatusStrategyId: AdaptableFunctionName = 'SystemStatus';
+export const TeamSharingStrategyId: AdaptableFunctionName = 'TeamSharing';
+export const ThemeStrategyId: AdaptableFunctionName = 'Theme';
+export const UpdatedRowStrategyId: AdaptableFunctionName = 'UpdatedRow';
+export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
 
 // Strategy Names
 export const AdvancedSearchStrategyName: string = 'Advanced Search';
@@ -194,7 +196,7 @@ export function getIdForStrategyName(strategyName: string) {
   }
 }
 
-export function getNameForStrategyId(strategyID: string) {
+export function getNameForStrategyId(strategyID: AdaptableFunctionName) {
   switch (strategyID) {
     case AdvancedSearchStrategyId:
       return AdvancedSearchStrategyName;

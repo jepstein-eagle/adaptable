@@ -190,12 +190,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onAddReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderAdd(reminder)),
     onEditReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderEdit(reminder)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.ReminderStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ReminderStrategyId)),
   };
 }
 

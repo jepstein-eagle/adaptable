@@ -13,6 +13,7 @@ import { Flex } from 'rebass';
 import { PopupWithFooter } from '../../../components/PopupWithFooter';
 
 import PopupContext from './PopupContext';
+import { AdaptableFunctionName } from '../../../PredefinedConfig/Common/Types';
 
 /**
  * This is the main popup that we use - so all function popups will appear here.
@@ -21,7 +22,7 @@ import PopupContext from './PopupContext';
 export interface AdaptablePopupProps extends React.ClassAttributes<AdaptablePopup> {
   showModal: boolean;
   ComponentName?: string;
-  ComponentStrategy: string;
+  ComponentStrategy: AdaptableFunctionName;
   onHide?: () => void;
   Blotter: IAdaptableBlotter;
   PopupParams: StrategyParams;

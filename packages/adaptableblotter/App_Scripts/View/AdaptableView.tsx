@@ -20,6 +20,7 @@ import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { AdaptableGridInfo } from './Components/Popups/AdaptableGridInfo';
 import { AdaptableLoadingScreen } from './Components/Popups/AdaptableLoadingScreen';
+import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 interface AdaptableViewProps extends React.ClassAttributes<AdaptableView> {
   PopupState: PopupState;
@@ -27,7 +28,7 @@ interface AdaptableViewProps extends React.ClassAttributes<AdaptableView> {
   ChartState: ChartState;
   Blotter: IAdaptableBlotter;
   showPopup: (
-    ComponentStrategy: string,
+    ComponentStrategy: AdaptableFunctionName,
     ComponentName: string,
     IsReadOnly: boolean
   ) => PopupRedux.PopupShowScreenAction;
@@ -142,7 +143,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onConfirmConfirmationPopup: (comment: string) =>
       dispatch(PopupRedux.PopupConfirmConfirmation(comment)),
     onCancelConfirmationPopup: () => dispatch(PopupRedux.PopupCancelConfirmation()),
-    showPopup: (componentStrategy: string, componentName: string, params?: any) =>
+    showPopup: (componentStrategy: AdaptableFunctionName, componentName: string, params?: any) =>
       dispatch(PopupRedux.PopupShowScreen(componentStrategy, componentName, params)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
   };

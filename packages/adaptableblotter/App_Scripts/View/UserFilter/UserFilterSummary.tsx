@@ -201,12 +201,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditUserFilter: (UserFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterEdit(UserFilter)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.UserFilterStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
   };
 }
 

@@ -263,12 +263,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onAddShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
     onEditShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutEdit(shortcut)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.ShortcutStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId)),
   };
 }
 

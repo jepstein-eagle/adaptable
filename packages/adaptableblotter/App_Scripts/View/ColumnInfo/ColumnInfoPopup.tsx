@@ -31,6 +31,7 @@ import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;
@@ -406,15 +407,15 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     this.setState({ SelectedColumn: columns.length > 0 ? columns[0] : null });
   }
 
-  private isStrategyVisible(strategyId: string): boolean {
+  private isStrategyVisible(strategyId: AdaptableFunctionName): boolean {
     return this.getAccessLevel(strategyId) == AccessLevel.Full;
   }
 
-  private isStrategyReadOnly(strategyId: string): boolean {
+  private isStrategyReadOnly(strategyId: AdaptableFunctionName): boolean {
     return this.getAccessLevel(strategyId) == AccessLevel.ReadOnly;
   }
 
-  private getAccessLevel(strategyId: string): AccessLevel {
+  private getAccessLevel(strategyId: AdaptableFunctionName): AccessLevel {
     return AdaptableHelper.getEntitlementAccessLevelForStrategy(
       this.props.FunctionEntitlements,
       strategyId

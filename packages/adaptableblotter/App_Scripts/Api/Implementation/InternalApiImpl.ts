@@ -20,6 +20,7 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
 import { LiveReport } from '../Events/LiveReportUpdated';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions
@@ -87,7 +88,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   public showPopupScreen(
-    strategyId: string,
+    strategyId: AdaptableFunctionName,
     componentName: string,
     popupParams?: StrategyParams
   ): void {

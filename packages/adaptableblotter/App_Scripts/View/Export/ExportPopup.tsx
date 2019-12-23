@@ -279,12 +279,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
         | ExportDestination.Glue42
     ) => dispatch(SystemRedux.ReportStopLive(report, exportDestination)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.ExportStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId)),
   };
 }
 

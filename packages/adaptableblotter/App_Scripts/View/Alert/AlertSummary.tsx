@@ -165,12 +165,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onAddAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(Alert)),
     onEditAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(Alert)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.AlertStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
   };
 }
 

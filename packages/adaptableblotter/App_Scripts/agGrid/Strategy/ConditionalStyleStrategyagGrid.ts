@@ -88,7 +88,6 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           let styleName: string = StringExtensions.IsNullOrEmpty(cs.Style.ClassName)
             ? theBlotter.StyleService.CreateUniqueStyleName(
                 StrategyConstants.ConditionalStyleStrategyId,
-                this.blotter,
                 cs
               )
             : cs.Style.ClassName;

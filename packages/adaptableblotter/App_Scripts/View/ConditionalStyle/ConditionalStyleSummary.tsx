@@ -195,10 +195,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.ConditionalStyleStrategyId as AdaptableFunctionName
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
       ),
   };
 }

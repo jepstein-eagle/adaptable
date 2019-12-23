@@ -241,10 +241,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.CellValidationStrategyId as AdaptableFunctionName
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId)
       ),
   };
 }

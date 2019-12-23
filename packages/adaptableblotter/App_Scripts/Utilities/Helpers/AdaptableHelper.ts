@@ -12,6 +12,7 @@ import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { AdaptableBlotterEventData, BlotterEventArgs } from '../../Api/Events/BlotterEvents';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export function assignBlotterOptions(
   blotterOptions: AdaptableBlotterOptions
@@ -138,7 +139,7 @@ export function CheckBlotterOptions(blotterOptions: AdaptableBlotterOptions): vo
 
 export function getEntitlementAccessLevelForStrategy(
   entitlements: Entitlement[],
-  strategyId: string
+  strategyId: AdaptableFunctionName
 ): AccessLevel {
   if (ArrayExtensions.IsNotNullOrEmpty(entitlements)) {
     let entitlement: Entitlement = entitlements.find(e => e.FunctionName == strategyId);

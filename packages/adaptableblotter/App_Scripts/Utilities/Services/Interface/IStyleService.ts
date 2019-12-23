@@ -1,11 +1,10 @@
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
 import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
+import { AdaptableFunctionName } from '../../../PredefinedConfig/Common/Types';
 // Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 export interface IStyleService {
-  CreateStyleName(strategyId: string, blotter: IAdaptableBlotter): string;
+  CreateStyleName(strategyId: AdaptableFunctionName): string;
   CreateUniqueStyleName(
-    strategyId: string,
-    blotter: IAdaptableBlotter,
+    strategyId: AdaptableFunctionName,
     adaqptableBlotterObject: AdaptableObject
   ): string;
 }

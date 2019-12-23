@@ -3,11 +3,12 @@ import * as React from 'react';
 
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { Icon } from '../../components/icons';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 // Simple compnent which just shows the Icon and Name for any strategy
 
 export interface StrategyProfileProps extends React.ClassAttributes<StrategyProfile> {
-  StrategyId: string;
+  StrategyId: AdaptableFunctionName;
 }
 
 export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {

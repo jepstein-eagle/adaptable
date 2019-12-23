@@ -229,12 +229,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.LayoutStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId)),
   };
 }
 

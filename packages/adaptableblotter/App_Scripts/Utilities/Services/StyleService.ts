@@ -20,6 +20,7 @@ import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IStyleService } from './Interface/IStyleService';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export class StyleService implements IStyleService {
   private style: HTMLStyleElement;
@@ -42,12 +43,12 @@ export class StyleService implements IStyleService {
     });
   }
 
-  public CreateStyleName(strategyId: string, blotter: IAdaptableBlotter): string {
+  public CreateStyleName(strategyId: AdaptableFunctionName): string {
     return (
       StyleConstants.AB_HEADER +
       strategyId +
       '-' +
-      blotter.blotterOptions.blotterId
+      this.blotter.blotterOptions.blotterId
         .trim()
         .replace(/\s/g, '')
         .replace('.', '')
@@ -55,15 +56,14 @@ export class StyleService implements IStyleService {
   }
 
   public CreateUniqueStyleName(
-    strategyId: string,
-    blotter: IAdaptableBlotter,
+    strategyId: AdaptableFunctionName,
     adaqptableBlotterObject: AdaptableObject
   ): string {
     return (
       StyleConstants.AB_HEADER +
       strategyId +
       '-' +
-      blotter.blotterOptions.blotterId
+      this.blotter.blotterOptions.blotterId
         .trim()
         .replace(/\s/g, '')
         .replace('.', '') +
@@ -129,7 +129,6 @@ export class StyleService implements IStyleService {
     this.blotter.api.formatColumnApi.getAllFormatColumn().forEach(formatColumn => {
       const styleName = this.CreateUniqueStyleName(
         StrategyConstants.FormatColumnStrategyId,
-        this.blotter,
         formatColumn
       );
       this.addCSSRule(
@@ -155,7 +154,6 @@ export class StyleService implements IStyleService {
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
-          this.blotter,
           element
         );
         this.addCSSRule(
@@ -178,7 +176,6 @@ export class StyleService implements IStyleService {
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
-          this.blotter,
           element
         );
         this.addCSSRule(
@@ -201,7 +198,6 @@ export class StyleService implements IStyleService {
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
-          this.blotter,
           element
         );
         this.addCSSRule(
@@ -240,7 +236,7 @@ export class StyleService implements IStyleService {
     // quick search
     const quickSearchStyle: IStyle = this.blotter.api.quickSearchApi.getQuickSearchStyle();
     if (StringExtensions.IsNullOrEmpty(quickSearchStyle.ClassName)) {
-      const styleName = this.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this.blotter);
+      const styleName = this.CreateStyleName(StrategyConstants.QuickSearchStrategyId);
 
       this.addCSSRule(
         `.${styleName}`,

@@ -20,7 +20,7 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  * Each strategy is reponsible for managing state (through InitState())
  */
 export abstract class AdaptableStrategyBase implements IStrategy {
-  constructor(public Id: string, protected blotter: IAdaptableBlotter) {
+  constructor(public Id: AdaptableFunctionName, protected blotter: IAdaptableBlotter) {
     this.Id = Id;
     this.blotter = blotter;
   }
@@ -107,7 +107,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     if (this.isVisible && !this.isReadOnly) {
       return new MenuItemShowPopup(
         Label,
-        this.Id as AdaptableFunctionName,
+        this.Id,
         ComponentName,
         Icon,
         this.isVisible,
@@ -123,13 +123,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     ClickFunction: () => void
   ): MenuItemDoClickFunction {
     if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemDoClickFunction(
-        Label,
-        this.Id as AdaptableFunctionName,
-        ClickFunction,
-        Icon,
-        true
-      );
+      return new MenuItemDoClickFunction(Label, this.Id, ClickFunction, Icon, true);
     }
   }
 
@@ -139,7 +133,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Action: Action
   ): MenuItemDoReduxAction {
     if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemDoReduxAction(Label, this.Id as AdaptableFunctionName, Action, Icon, true);
+      return new MenuItemDoReduxAction(Label, this.Id, Action, Icon, true);
     }
   }
 
@@ -151,14 +145,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     PopupParams?: StrategyParams
   ): MenuItemShowPopup {
     if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemShowPopup(
-        Label,
-        this.Id as AdaptableFunctionName,
-        ComponentName,
-        Icon,
-        true,
-        PopupParams
-      );
+      return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
     }
   }
 

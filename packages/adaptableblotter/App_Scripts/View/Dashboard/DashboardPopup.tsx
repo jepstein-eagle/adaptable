@@ -19,6 +19,7 @@ import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import {
   AdaptableFunctionButtons,
   AdaptableDashboardToolbars,
+  AdaptableFunctionName,
 } from '../../PredefinedConfig/Common/Types';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
@@ -251,7 +252,7 @@ class DashboardPopupComponent extends React.Component<
     this.props.onDashboardSetToolbars(selectedToolbars);
   }
 
-  isVisibleStrategy(strategyId: string): boolean {
+  isVisibleStrategy(strategyId: AdaptableFunctionName): boolean {
     let entitlement: Entitlement = this.props.Entitlements.find(x => x.FunctionName == strategyId);
     if (entitlement) {
       return entitlement.AccessLevel != 'Hidden';

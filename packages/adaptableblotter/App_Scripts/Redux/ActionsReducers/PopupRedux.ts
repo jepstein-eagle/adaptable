@@ -14,6 +14,7 @@ import {
   AdaptableAlert,
 } from '../../Utilities/Interface/IMessage';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export const POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 export const POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
@@ -32,7 +33,7 @@ export const POPUP_CANCEL_CONFIRMATION = 'POPUP_CANCEL_CONFIRMATION';
 export const POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
 
 export interface PopupShowScreenAction extends Redux.Action {
-  ComponentStrategy: string;
+  ComponentStrategy: AdaptableFunctionName;
   ComponentName: string;
   Params?: StrategyParams;
   PopupProps?: { [key: string]: any };
@@ -77,7 +78,7 @@ export interface PopupClearParamAction extends Redux.Action {}
 export interface PopupChartClearParamAction extends Redux.Action {}
 
 export const PopupShowScreen = (
-  ComponentStrategy: string,
+  ComponentStrategy: AdaptableFunctionName,
   ComponentName: string,
   Params?: StrategyParams,
   PopupProps?: { [key: string]: any }
@@ -157,7 +158,7 @@ export const PopupClearParam = (): PopupClearParamAction => ({
 const initialPopupState: PopupState = {
   ScreenPopup: {
     ShowScreenPopup: false,
-    ComponentStrategy: '',
+    ComponentStrategy: undefined,
     ComponentName: '',
     Params: null,
   },
@@ -213,7 +214,7 @@ export const PopupReducer: Redux.Reducer<PopupState> = (
     case POPUP_HIDE_SCREEN: {
       let newScreenPopup: IScreenPopup = {
         ShowScreenPopup: false,
-        ComponentStrategy: '',
+        ComponentStrategy: undefined,
         ComponentName: '',
         Params: null,
       };

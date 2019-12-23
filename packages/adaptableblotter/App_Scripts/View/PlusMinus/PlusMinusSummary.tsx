@@ -183,12 +183,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(PlusMinusRule)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.PlusMinusStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
   };
 }
 

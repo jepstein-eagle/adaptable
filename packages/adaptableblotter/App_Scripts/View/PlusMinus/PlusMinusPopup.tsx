@@ -279,12 +279,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.PlusMinusStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
   };
 }
 

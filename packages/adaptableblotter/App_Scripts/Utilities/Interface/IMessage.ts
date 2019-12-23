@@ -4,6 +4,7 @@ import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPo
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface AdaptableAlert extends AdaptableObject {
   Header: string;
@@ -35,7 +36,7 @@ export interface IUIPrompt {
 
 export interface IScreenPopup {
   ShowScreenPopup: boolean;
-  ComponentStrategy: string;
+  ComponentStrategy: AdaptableFunctionName;
   ComponentName: string;
   Params: StrategyParams;
   PopupProps?: { [key: string]: any };

@@ -154,10 +154,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.ColumnCategoryStrategyId as AdaptableFunctionName
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
       ),
   };
 }

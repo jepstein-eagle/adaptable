@@ -224,10 +224,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.CalculatedColumnStrategyId as AdaptableFunctionName
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId)
       ),
   };
 }

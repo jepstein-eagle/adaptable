@@ -259,10 +259,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.AdvancedSearchStrategyId as AdaptableFunctionName
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AdvancedSearchStrategyId)
       ),
   };
 }

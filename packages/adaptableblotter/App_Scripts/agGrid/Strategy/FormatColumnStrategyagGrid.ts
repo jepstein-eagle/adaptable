@@ -25,7 +25,6 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy
             let styleName: string = StringExtensions.IsNullOrEmpty(fc.Style.ClassName)
               ? theBlotter.StyleService.CreateUniqueStyleName(
                   StrategyConstants.FormatColumnStrategyId,
-                  this.blotter,
                   fc
                 )
               : fc.Style.ClassName;

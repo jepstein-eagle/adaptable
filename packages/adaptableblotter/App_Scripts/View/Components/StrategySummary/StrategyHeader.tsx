@@ -4,10 +4,11 @@ import { ButtonNew } from '../Buttons/ButtonNew';
 import { SummaryRowItem } from './SummaryRowItem';
 import { StrategyProfile } from '../StrategyProfile';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
+import { AdaptableFunctionName } from '../../../PredefinedConfig/Common/Types';
 
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
   key: string;
-  StrategyId: string;
+  StrategyId: AdaptableFunctionName;
   StrategySummary: any;
   onNew: () => void;
   NewButtonTooltip: string;

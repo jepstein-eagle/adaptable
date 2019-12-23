@@ -168,6 +168,7 @@ import {
   IAdaptableNoCodeWizardOptions,
   IAdaptableNoCodeWizardInitFn,
 } from '../BlotterInterfaces/IAdaptableNoCodeWizard';
+import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -710,7 +711,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.api.quickSearchApi.getQuickSearchStyle().ClassName
     )
       ? this.api.quickSearchApi.getQuickSearchStyle().ClassName
-      : this.StyleService.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this);
+      : this.StyleService.CreateStyleName(StrategyConstants.QuickSearchStrategyId);
     return quickSearchClassName;
   }
 

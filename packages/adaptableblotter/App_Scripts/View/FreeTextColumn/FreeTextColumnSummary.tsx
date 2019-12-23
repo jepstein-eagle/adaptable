@@ -162,10 +162,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
     onShare: (entity: AdaptableObject) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.FreeTextColumnStrategyId as AdaptableFunctionName
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)
       ),
   };
 }

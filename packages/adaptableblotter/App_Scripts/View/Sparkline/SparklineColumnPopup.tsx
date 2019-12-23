@@ -247,12 +247,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditSparklineColumn: (sparklineColumn: SparklineColumn) =>
       dispatch(SparklineColumnRedux.SparklineColumnsEdit(sparklineColumn)),
     onShare: (entity: AdaptableObject) =>
-      dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.SparklineStrategyId as AdaptableFunctionName
-        )
-      ),
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.SparklineStrategyId)),
   };
 }
 

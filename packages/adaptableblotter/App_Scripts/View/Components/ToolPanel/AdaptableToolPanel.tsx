@@ -22,15 +22,15 @@ import theme from '../../../theme';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import DropdownButton from '../../../components/DropdownButton';
 import { AdaptableToolPanelContext } from '../../../Utilities/Interface/AdaptableToolPanelContext';
-import { AdaptableToolPanels } from '../../../PredefinedConfig/Common/Types';
+import { AdaptableToolPanels, AdaptableToolPanel } from '../../../PredefinedConfig/Common/Types';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface AdaptableToolPanelProps {
   Blotter: IAdaptableBlotter;
   TeamSharingActivated?: boolean;
-  VisibleToolsPanels: string[];
-  AvailableToolPanels: string[];
+  VisibleToolsPanels: AdaptableToolPanels;
+  AvailableToolPanels: AdaptableToolPanels;
   FunctionEntitlements: Entitlement[];
   MainMenuItems: AdaptableMenuItem[];
   // wondering if this shoudl take some base props like others?  though i know we dont like that...
@@ -133,7 +133,7 @@ class AdaptableToolPanelComponent extends React.Component<
         </div>
       ),
     });
-    this.props.AvailableToolPanels.forEach((toolPanel: string, index) => {
+    this.props.AvailableToolPanels.forEach((toolPanel: AdaptableToolPanel, index) => {
       if (ArrayExtensions.ContainsItem(allowedMenuNames, toolPanel)) {
         let isVisible: boolean = ArrayExtensions.ContainsItem(
           this.props.VisibleToolsPanels,

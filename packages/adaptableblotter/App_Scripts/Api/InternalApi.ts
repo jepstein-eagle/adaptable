@@ -14,6 +14,7 @@ import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInf
 import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { LiveReport } from './Events/LiveReportUpdated';
+import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 /**
  * This set of api methods is designed for **internal use of the Adaptable Blotter** only.
  *
@@ -48,7 +49,11 @@ export interface InternalApi {
   showLoadingScreen(): void;
   hideLoadingScreen(): void;
 
-  showPopupScreen(strategyId: string, componentName: string, popupParams?: StrategyParams): void;
+  showPopupScreen(
+    strategyId: AdaptableFunctionName,
+    componentName: string,
+    popupParams?: StrategyParams
+  ): void;
 
   setColumns(columns: AdaptableColumn[]): void;
 
