@@ -76,6 +76,7 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { iconToString } from '../components/icons';
 import { DataType } from '../PredefinedConfig/Common/Enums';
+import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -98,8 +99,8 @@ export class agGridHelper {
     return 'ag-theme-balham-dark';
   }
 
-  public setUpStrategies(): Map<string, IStrategy> {
-    const strategies = new Map<string, IStrategy>();
+  public setUpStrategies(): Map<AdaptableFunctionName, IStrategy> {
+    const strategies = new Map<AdaptableFunctionName, IStrategy>();
     const blotter = this.blotter as AdaptableBlotter;
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(blotter));
     strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(blotter));

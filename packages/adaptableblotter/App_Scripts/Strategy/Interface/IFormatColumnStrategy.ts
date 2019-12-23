@@ -1,5 +1,3 @@
-import { IStrategy } from './IStrategy';
+import { IStrategy, IStyleStrategy } from './IStrategy';
 
-export interface IFormatColumnStrategy extends IStrategy {
-  initStyles(): void;
-}
+export interface IFormatColumnStrategy extends IStyleStrategy {}

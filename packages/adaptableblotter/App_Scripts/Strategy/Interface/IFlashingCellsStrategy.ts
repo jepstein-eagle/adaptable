@@ -1,5 +1,3 @@
-import { IStrategy } from './IStrategy';
+import { IStyleStrategy } from './IStrategy';
 
-export interface IFlashingCellsStrategy extends IStrategy {
-  initStyles(): void;
-}
+export interface IFlashingCellsStrategy extends IStyleStrategy {}

@@ -1,5 +1,3 @@
-import { IStrategy } from './IStrategy';
+import { IStyleStrategy } from './IStrategy';
 
-export interface IConditionalStyleStrategy extends IStrategy {
-  initStyles(): void;
-}
+export interface IConditionalStyleStrategy extends IStyleStrategy {}

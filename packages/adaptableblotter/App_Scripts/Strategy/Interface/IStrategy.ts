@@ -1,5 +1,6 @@
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem, MenuInfo } from '../../PredefinedConfig/Common/Menu';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 /**
  * This is the interface that all Strategies implement (as well as all deriving from AdaptableStrategyBase).
@@ -16,7 +17,7 @@ import { AdaptableMenuItem, MenuInfo } from '../../PredefinedConfig/Common/Menu'
  */
 
 export interface IStrategy {
-  Id: string;
+  Id: AdaptableFunctionName;
   addFunctionMenuItem(): AdaptableMenuItem | undefined;
   initializeWithRedux(): void;
   addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined;
@@ -24,7 +25,11 @@ export interface IStrategy {
   setStrategyEntitlement(): void;
 }
 
+export interface IStyleStrategy extends IStrategy {
+  initStyles(): void;
+}
+
 /**
  * A Wrapper around the strategies
  */
-export interface IStrategyCollection extends Map<string, IStrategy> {}
+export interface IStrategyCollection extends Map<AdaptableFunctionName, IStrategy> {}
