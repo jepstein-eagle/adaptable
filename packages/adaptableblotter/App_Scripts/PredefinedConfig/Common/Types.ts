@@ -20,10 +20,12 @@ export type AdaptableDashboardToolbar =
   | 'CellSummary'
   | 'Chart'
   | 'ColumnFilter'
+  | 'Dashboard'
+  | 'DataSource'
   | 'Export'
   | 'Layout'
-  | 'SmartEdit'
   | 'QuickSearch'
+  | 'SmartEdit'
   | 'SystemStatus'
   | 'Theme';
 

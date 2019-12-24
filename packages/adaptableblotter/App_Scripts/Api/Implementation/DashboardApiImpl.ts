@@ -6,7 +6,7 @@ import { DashboardApi } from '../DashboardApi';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
 import {
   AdaptableDashboardToolbars,
   AdaptableDashboardToolbar,
@@ -14,7 +14,7 @@ import {
 } from '../../PredefinedConfig/Common/Types';
 
 export class DashboardApiImpl extends ApiBase implements DashboardApi {
-  public GetState(): DashboardState {
+  public GetDashboardState(): DashboardState {
     return this.getBlotterState().Dashboard;
   }
 
@@ -105,6 +105,19 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
       'This method is deprecated.  Use ApplicationApi.SetApplicationToolbarTitle instead.'
     );
     this.dispatchAction(ApplicationRedux.ApplicationSetApplicationToolbarTitle(title));
+  }
+
+  public getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | null {
+    let customToolbar: CustomToolbar = this.getCustomToolbarByName(customToolbarName);
+    if (customToolbar) {
+      let divId: string = 'ab-CustomToolbar__' + customToolbar.Name + '__contents';
+      return document.getElementById(divId);
+    }
+    return null;
+  }
+
+  public getCustomToolbarByName(customToolbarName: string): CustomToolbar {
+    return this.GetDashboardState().CustomToolbars.find(ct => ct.Name == customToolbarName);
   }
 
   public showDashboardPopup(): void {

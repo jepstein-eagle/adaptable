@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { ButtonStyle } from './Common/ButtonStyle';
+import { ButtonStyle, ToolbarButton } from './Common/ToolbarButton';
 import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/Types';
 
 /**
@@ -65,7 +65,7 @@ export interface DashboardState extends RunTimeState {
    *
    * **Default Value**:  'QuickSearch', 'Layout', 'Export', 'ColumnFilter'
    */
-  VisibleToolbars?: AdaptableDashboardToolbars;
+  VisibleToolbars?: AdaptableDashboardToolbars | string[];
 
   /**
    * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
@@ -168,4 +168,13 @@ export interface DashboardState extends RunTimeState {
    * **note: this property is deprecated**  Please use the `ApplicationToolbarTitle` property of Application State instead.
    */
   ApplicationToolbarTitle?: string;
+
+  CustomToolbars?: CustomToolbar[];
+}
+
+export interface CustomToolbar {
+  Name: string;
+  Title: string;
+  Glyph?: string;
+  ToolbarButtons?: ToolbarButton[];
 }

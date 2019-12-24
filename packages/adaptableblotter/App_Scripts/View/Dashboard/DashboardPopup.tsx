@@ -9,13 +9,12 @@ import { DualListBoxEditor, DisplaySize } from '../Components/ListBox/DualListBo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import Checkbox from '../../components/CheckBox';
 import Radio from '../../components/Radio';
-import Input from '../../components/Input';
 
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { Box, Flex, Text } from 'rebass';
 import { GridState } from '../../PredefinedConfig/GridState';
 import HelpBlock from '../../components/HelpBlock';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
 import {
   AdaptableFunctionButtons,
   AdaptableDashboardToolbars,
@@ -82,10 +81,25 @@ class DashboardPopupComponent extends React.Component<
       return StrategyConstants.getFriendlyNameForStrategyId(at);
     });
 
-    let visibleToolbarNames: string[] = this.props.DashboardState.VisibleToolbars.filter(at =>
-      this.isVisibleStrategy(at)
+    let customToolbarNames: string[] = this.props.DashboardState.CustomToolbars.map(ct => {
+      return ct.Name;
+    });
+
+    availableToolbarNames.push(...customToolbarNames);
+    let visibleToolbarNames: string[] = this.props.DashboardState.VisibleToolbars.filter(
+      at => at
     ).map(vt => {
-      return StrategyConstants.getFriendlyNameForStrategyId(vt);
+      let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
+        ct => ct.Name == vt
+      );
+      if (customToolbar) {
+        return vt;
+      } else {
+        let vtFunctionName = vt as AdaptableFunctionName;
+        if (this.isVisibleStrategy(vtFunctionName)) {
+          return StrategyConstants.getFriendlyNameForStrategyId(vtFunctionName);
+        }
+      }
     });
 
     let availableValues = this.props.GridState.MainMenuItems.filter(
@@ -249,7 +263,10 @@ class DashboardPopupComponent extends React.Component<
 
   onDashboardToolbarsChanged(selectedValues: string[]) {
     let selectedToolbars: string[] = selectedValues.map(sv => {
-      return StrategyConstants.getIdForStrategyFriendlyName(sv);
+      let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
+        ct => ct.Name == sv
+      );
+      return customToolbar ? sv : StrategyConstants.getIdForStrategyFriendlyName(sv);
     });
     this.props.onDashboardSetToolbars(selectedToolbars);
   }

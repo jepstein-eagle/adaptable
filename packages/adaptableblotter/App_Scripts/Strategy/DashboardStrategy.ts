@@ -23,17 +23,18 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   }
 
   protected InitState() {
-    if (this.visibleToolbars != this.blotter.api.dashboardApi.GetState().VisibleToolbars) {
+    if (this.visibleToolbars != this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars) {
       const oldVisibleToolbars = arrayToKeyMap(this.visibleToolbars);
       const newVisibleToolbars = arrayToKeyMap(
-        this.blotter.api.dashboardApi.GetState().VisibleToolbars
+        this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars
       );
 
-      [...(this.blotter.api.dashboardApi.GetState().VisibleToolbars || [])].forEach(
+      [...(this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars || [])].forEach(
         (toolbar: string) => {
           if (!oldVisibleToolbars[toolbar]) {
             if (
-              this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Visible
+              this.blotter.api.dashboardApi.GetDashboardState().DashboardVisibility ==
+              Visibility.Visible
             ) {
               this.fireToolbarVisibilityChangedEvent(toolbar);
             }
@@ -47,18 +48,22 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         }
       });
 
-      this.visibleToolbars = this.blotter.api.dashboardApi.GetState().VisibleToolbars;
+      this.visibleToolbars = this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars;
     }
 
-    if (this.dashboardVisibility != this.blotter.api.dashboardApi.GetState().DashboardVisibility) {
-      this.dashboardVisibility = this.blotter.api.dashboardApi.GetState()
+    if (
+      this.dashboardVisibility !=
+      this.blotter.api.dashboardApi.GetDashboardState().DashboardVisibility
+    ) {
+      this.dashboardVisibility = this.blotter.api.dashboardApi.GetDashboardState()
         .DashboardVisibility as Visibility;
 
       if (this.dashboardVisibility == Visibility.Visible) {
-        [...(this.blotter.api.dashboardApi.GetState().VisibleToolbars || [])].forEach(
+        [...(this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars || [])].forEach(
           (toolbar: string) => {
             if (
-              this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Visible
+              this.blotter.api.dashboardApi.GetDashboardState().DashboardVisibility ==
+              Visibility.Visible
             ) {
               this.fireToolbarVisibilityChangedEvent(toolbar);
             }
@@ -78,7 +83,9 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
   public addColumnMenuItem(): AdaptableMenuItem | undefined {
     // for now just show / hide = lets worry about minimise later..
-    if (this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Hidden) {
+    if (
+      this.blotter.api.dashboardApi.GetDashboardState().DashboardVisibility == Visibility.Hidden
+    ) {
       return this.createColumnMenuItemReduxAction(
         'Show Dashboard',
         StrategyConstants.DashboardGlyph,

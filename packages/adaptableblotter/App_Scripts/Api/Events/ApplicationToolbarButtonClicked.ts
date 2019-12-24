@@ -1,5 +1,5 @@
 import { BlotterEventArgs, AdaptableBlotterEventData } from './BlotterEvents';
-import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
+import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 
 export interface ApplicationToolbarButtonClickedEventArgs extends BlotterEventArgs {
   data: ApplicationToolbarButtonClickedEventData[];
@@ -10,5 +10,5 @@ export interface ApplicationToolbarButtonClickedEventData extends AdaptableBlott
 }
 
 export interface ApplicationToolbarButtonClickedInfo {
-  applicationToolbarButton: ApplicationToolbarButton;
+  applicationToolbarButton: ToolbarButton;
 }

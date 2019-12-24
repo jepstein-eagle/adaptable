@@ -83,7 +83,6 @@ export class PushPullService implements IPushPullService {
     return this.ppInstance.api
       .getDomainsAndPages(this.ppInstance.config.api_key)
       .then((response: any) => {
-        console.log(response);
         return response.data.domains.map((domain: any) => ({
           Name: domain.name,
           FolderId: domain.id,

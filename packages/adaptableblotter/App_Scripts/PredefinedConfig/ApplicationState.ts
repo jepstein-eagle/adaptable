@@ -1,6 +1,5 @@
-import { AdaptableObject } from './Common/AdaptableObject';
 import { RunTimeState } from './RunTimeState';
-import { ButtonStyle } from './Common/ButtonStyle';
+import { ToolbarButton } from './Common/ToolbarButton';
 
 /**
  * The Predefined Configuration for the Application function
@@ -108,7 +107,7 @@ import { ButtonStyle } from './Common/ButtonStyle';
  *  ......
  *
  *  blotterApi.eventApi.on('ApplicationToolbarButtonClicked', applicationToolbarButtonClickedEventArgs)  => {
- *      // respond as appropriate - the button argument is the ApplicationToolbarButton we provided in the state
+ *      // respond as appropriate - the button argument is the ToolbarButton we provided in the state
  *  });
  * ```
  *
@@ -154,7 +153,7 @@ export interface ApplicationState extends RunTimeState {
    *
    * When one of these buttons is clicked the on('ApplicationToolbarButtonClicked') event is fired.
    */
-  ApplicationToolbarButtons?: ApplicationToolbarButton[];
+  ApplicationToolbarButtons?: ToolbarButton[];
 
   /**
    * An array of Application Data Entries (essentially Key / Value pairs) enabling you to provide the Adaptable Blotter with your own data.
@@ -171,36 +170,6 @@ export interface ApplicationState extends RunTimeState {
    * **Default Value: 'Application**
    */
   ApplicationToolbarTitle?: string;
-}
-
-/**
- * Defines an Application Toolbar Button that is specified at design time by users and rendered dynamically by the Adaptable Blotter at run-time.
- *
- * It is hosted in the Application Toolbar
- *
- * When an Application Toolbar Button is clicked, the Adaptable Blotter will fire an *ApplicationToolbarButtonClicked* event to which you can subscribe via the Event API.
- */
-export interface ApplicationToolbarButton extends AdaptableObject {
-  /**
-   * The name of the button
-   *
-   * **This should be a name that is valid as an HTML element**
-   */
-  Name: string;
-
-  /**
-   * What text will appear on the button
-   *
-   * *Currently you cannot provide an image for this button but that will be made available in a forthcoming release*
-   */
-  Caption: string;
-
-  /**
-   * The style to use for the Application Button.
-   *
-   * Includes 'Variant' and 'Tone'
-   */
-  ButtonStyle?: ButtonStyle;
 }
 
 /**

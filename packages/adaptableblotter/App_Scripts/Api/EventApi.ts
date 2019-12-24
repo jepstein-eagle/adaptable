@@ -13,6 +13,7 @@ import {
   ALERT_FIRED_EVENT,
   ACTION_COLUMN_CLICKED_EVENT,
   LIVE_REPORT_UPDATED_EVENT,
+  TOOLBAR_BUTTON_CLICKED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import {
   SearchChangedEventArgs,
@@ -25,6 +26,7 @@ import { ActionColumnClickedEventArgs } from './Events/ActionColumnClicked';
 import { ApplicationToolbarButtonClickedEventArgs } from './Events/ApplicationToolbarButtonClicked';
 import { LiveReportUpdatedEventArgs } from './Events/LiveReportUpdated';
 import { ToolbarVisibilityChangedEventArgs } from './Events/ToolbarVisibilityChanged';
+import { ToolbarButtonClickedEventArgs } from './Events/ToolbarButtonClicked';
 
 /**
  * The Adaptable Blotter publishes a large number of events to which users can subscribe as required.
@@ -159,7 +161,7 @@ export interface EventApi {
   /**
    * Event fired whenever **when a button in the Application Toolbar is clicked**
    *
-   * Used when the Application State contains an ApplicationToolbarButton that has been clicked.
+   * Used when the Application State contains an ToolbarButton that has been clicked.
    *
    * @param eventName ApplicationToolbarButtonClicked - use as: blotterApi.eventApi.on('ApplicationToolbarButtonClicked', (args: ApplicationToolbarButtonClickedEventArgs) => { .....[do stuff]...})
    *
@@ -170,6 +172,11 @@ export interface EventApi {
     callback: (
       applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs
     ) => void
+  ): () => void;
+
+  on(
+    eventName: 'ToolbarButtonClicked',
+    callback: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void
   ): () => void;
 
   /**
@@ -247,6 +254,7 @@ export interface EventApi {
       | ACTION_COLUMN_CLICKED_EVENT
       | COLUMN_STATE_CHANGED_EVENT
       | APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT
+      | TOOLBAR_BUTTON_CLICKED_EVENT
       | TOOLBAR_VISIBILITY_CHANGED_EVENT
       | LIVE_REPORT_UPDATED_EVENT
       | BLOTTER_READY_EVENT,

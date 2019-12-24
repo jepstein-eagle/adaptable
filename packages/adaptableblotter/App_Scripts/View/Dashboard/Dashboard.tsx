@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
 
 import {
   AdaptableDashboardFactory,
@@ -21,6 +21,8 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';
 import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
+import { PanelDashboard } from '../Components/Panels/PanelDashboard';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -48,35 +50,76 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
     );
     let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
-      let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
-        this.props.EntitlementState.FunctionEntitlements,
-        control
+      let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
+        ct => ct.Name == control
       );
-      if (accessLevel != AccessLevel.Hidden) {
-        let dashboardControl = AdaptableDashboardFactory.get(control);
-        if (dashboardControl) {
-          let dashboardElememt = React.createElement(dashboardControl, {
-            Blotter: this.props.Blotter,
-            Columns: this.props.Columns,
-            UserFilters: this.props.UserFilters,
-            SystemFilters: this.props.SystemFilters,
-            ColorPalette: this.props.ColorPalette,
-            ColumnSorts: this.props.ColumnSorts,
-
-            AccessLevel: accessLevel,
-          });
-          return (
-            <Box
-              key={control}
-              marginTop={1}
-              marginRight={1}
-              className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
-            >
-              {dashboardElememt}
-            </Box>
+      if (customToolbar) {
+        let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
+          this.props.EntitlementState.FunctionEntitlements,
+          StrategyConstants.DashboardStrategyId
+        );
+        if (accessLevel != AccessLevel.Hidden) {
+          let customToolbarControl = AdaptableDashboardFactory.get(
+            StrategyConstants.DashboardStrategyId
           );
-        } else {
-          LoggingHelper.LogAdaptableError('Cannot find Dashboard Control for ' + control);
+          if (customToolbarControl) {
+            let customDshboardElememt = React.createElement(customToolbarControl, {
+              Blotter: this.props.Blotter,
+              Columns: this.props.Columns,
+              UserFilters: this.props.UserFilters,
+              SystemFilters: this.props.SystemFilters,
+              ColorPalette: this.props.ColorPalette,
+              ColumnSorts: this.props.ColumnSorts,
+              AccessLevel: accessLevel,
+              CustomToolbar: customToolbar,
+            });
+            return (
+              <Box
+                key={customToolbar.Name}
+                marginTop={1}
+                marginRight={1}
+                className={`ab-Dashboard__container ab-Dashboard__container--customToolbar`}
+              >
+                {customDshboardElememt}
+              </Box>
+            );
+          } else {
+            LoggingHelper.LogAdaptableError(
+              'Cannot find CustomToolbar entitled: ' + customToolbar.Name
+            );
+          }
+        }
+      } else {
+        let shippedToolbar = control as AdaptableFunctionName;
+        let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
+          this.props.EntitlementState.FunctionEntitlements,
+          shippedToolbar
+        );
+        if (accessLevel != AccessLevel.Hidden) {
+          let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
+          if (dashboardControl) {
+            let dashboardElememt = React.createElement(dashboardControl, {
+              Blotter: this.props.Blotter,
+              Columns: this.props.Columns,
+              UserFilters: this.props.UserFilters,
+              SystemFilters: this.props.SystemFilters,
+              ColorPalette: this.props.ColorPalette,
+              ColumnSorts: this.props.ColumnSorts,
+              AccessLevel: accessLevel,
+            });
+            return (
+              <Box
+                key={control}
+                marginTop={1}
+                marginRight={1}
+                className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
+              >
+                {dashboardElememt}
+              </Box>
+            );
+          } else {
+            LoggingHelper.LogAdaptableError('Cannot find Dashboard Control for ' + control);
+          }
         }
       }
     });

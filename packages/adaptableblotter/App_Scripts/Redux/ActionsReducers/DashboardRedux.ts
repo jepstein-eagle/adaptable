@@ -1,13 +1,14 @@
 import * as Redux from 'redux';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
-import { ButtonStyle } from '../../PredefinedConfig/Common/ButtonStyle';
+import { ButtonStyle } from '../../PredefinedConfig/Common/ToolbarButton';
 import {
   AdaptableDashboardToolbars,
   AdaptableDashboardToolbar,
   AdaptableFunctionButtons,
 } from '../../PredefinedConfig/Common/Types';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
 export const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';
@@ -35,15 +36,15 @@ export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
 }
 
 export interface DashboardSetToolbarsAction extends Redux.Action {
-  toolbars: AdaptableDashboardToolbars;
+  toolbars: AdaptableDashboardToolbars | string[];
 }
 
 export interface DashboardShowToolbarAction extends Redux.Action {
-  toolbar: AdaptableDashboardToolbar;
+  toolbar: AdaptableDashboardToolbar | string;
 }
 
 export interface DashboardHideToolbarAction extends Redux.Action {
-  toolbar: AdaptableDashboardToolbar;
+  toolbar: AdaptableDashboardToolbar | string;
 }
 
 export interface DashboardMoveItemAction extends Redux.Action {
@@ -95,21 +96,21 @@ export const DashboardSetAvailableToolbars = (
 });
 
 export const DashboardSetToolbars = (
-  toolbars: AdaptableDashboardToolbar[]
+  toolbars: AdaptableDashboardToolbar[] | string[]
 ): DashboardSetToolbarsAction => ({
   type: DASHBOARD_SET_TOOLBARS,
   toolbars,
 });
 
 export const DashboardShowToolbar = (
-  toolbar: AdaptableDashboardToolbar
+  toolbar: AdaptableDashboardToolbar | string
 ): DashboardShowToolbarAction => ({
   type: DASHBOARD_SHOW_TOOLBAR,
   toolbar,
 });
 
 export const DashboardHideToolbar = (
-  toolbar: AdaptableDashboardToolbar
+  toolbar: AdaptableDashboardToolbar | string
 ): DashboardHideToolbarAction => ({
   type: DASHBOARD_HIDE_TOOLBAR,
   toolbar,
@@ -209,6 +210,7 @@ const initialDashboardState: DashboardState = {
   ],
   VisibleToolbars: ['QuickSearch', 'Layout', 'Export', 'ColumnFilter'],
   VisibleButtons: ['Dashboard', 'SmartEdit', 'ColumnChooser', 'ConditionalStyle'],
+  CustomToolbars: EMPTY_ARRAY,
   DashboardVisibility: Visibility.Visible,
   ShowSystemStatusButton: true,
   ShowGridInfoButton: true,
@@ -228,11 +230,11 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
   action: Redux.Action
 ): DashboardState => {
   let index: number;
-  let dashboardControls: AdaptableDashboardToolbars;
+  let dashboardControls: AdaptableDashboardToolbars | string[];
 
   const setToolbars = (
     state: DashboardState,
-    toolbars: AdaptableDashboardToolbars
+    toolbars: AdaptableDashboardToolbars | string[]
   ): DashboardState => {
     return { ...state, VisibleToolbars: toolbars };
   };
@@ -245,7 +247,6 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_SET_TOOLBARS: {
       const actionTyped = action as DashboardSetToolbarsAction;
       const dashboardToolbars = actionTyped.toolbars;
-
       return setToolbars(state, dashboardToolbars);
     }
     case DASHBOARD_MOVE_ITEM: {

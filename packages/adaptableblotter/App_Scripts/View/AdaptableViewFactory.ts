@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { CustomSortPopup } from './CustomSort/CustomSortPopup';
 import { SmartEditPopup } from './SmartEdit/SmartEditPopup';
 import { ShortcutPopup } from './Shortcut/ShortcutPopup';
@@ -43,6 +42,7 @@ import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl'
 import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { SystemStatusToolbarControl } from './SystemStatus/SystemStatusToolbarControl';
+import { CustomToolbarControl } from './Dashboard/CustomToolbarControl';
 import { ChartPopup } from './Chart/ChartPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
@@ -69,6 +69,7 @@ import { ColumnFilterToolPanel } from './ColumnFilter/ColumnFilterToolPanel';
 import { CellSummaryToolPanel } from './CellSummary/CellSummaryToolPanel';
 import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
 import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
+import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -114,24 +115,32 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 };
 
 // here we put the dashboard control for each strategy
-export const AdaptableDashboardFactory = new Map<string, ConnectedComponent<any, any>>([
+export const AdaptableDashboardFactory = new Map<
+  AdaptableFunctionName,
+  ConnectedComponent<any, any>
+>([
   [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
-  [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],
-  [StrategyConstants.QuickSearchStrategyId, QuickSearchToolbarControl],
-  [StrategyConstants.LayoutStrategyId, LayoutToolbarControl],
-  [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolbarControl],
-  [StrategyConstants.ApplicationStrategyId, ApplicationToolbarControl],
-  [StrategyConstants.ExportStrategyId, ExportToolbarControl],
-  [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
-  [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl],
-  [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl],
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
+  [StrategyConstants.ApplicationStrategyId, ApplicationToolbarControl],
+  [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
+  [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl],
   [StrategyConstants.ChartStrategyId, ChartToolbarControl],
-  [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
+  [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolbarControl],
+  [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],
+  [StrategyConstants.ExportStrategyId, ExportToolbarControl],
+  [StrategyConstants.LayoutStrategyId, LayoutToolbarControl],
+  [StrategyConstants.QuickSearchStrategyId, QuickSearchToolbarControl],
+  [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl],
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolbarControl],
+  [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
+  // this is special
+  [StrategyConstants.DashboardStrategyId, CustomToolbarControl],
 ]);
 
-export const AdaptableToolPanelFactory = new Map<string, ConnectedComponent<any, any>>([
+export const AdaptableToolPanelFactory = new Map<
+  AdaptableFunctionName,
+  ConnectedComponent<any, any>
+>([
   [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolPanel],
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolPanel],

@@ -147,7 +147,6 @@ import AdaptableWizardView from '../View/AdaptableWizardView';
 import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
 import { Glue42Service } from '../Utilities/Services/Glue42Service';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
-import { ApplicationToolbarButton } from '../PredefinedConfig/ApplicationState';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { BlotterApi } from '../Api/BlotterApi';
@@ -3065,11 +3064,6 @@ import "adaptableblotter/themes/${themeName}.css"`);
       });
 
       this.safeSetColDefs(colDefs);
-    }
-
-    const applicationToolbarButtons: ApplicationToolbarButton[] = this.api.applicationApi.getApplicationToolbarButtons();
-    if (ArrayExtensions.IsNotNullOrEmpty(applicationToolbarButtons)) {
-      //   this.api.applicationApi.RenderButtons(applicationToolbarButtons);
     }
 
     // sometimes the header row looks wrong when using quick filter so to be sure...

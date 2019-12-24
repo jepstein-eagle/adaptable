@@ -1,8 +1,5 @@
-import {
-  ApplicationToolbarButton,
-  ApplicationState,
-  ApplicationDataEntry,
-} from '../PredefinedConfig/ApplicationState';
+import { ApplicationState, ApplicationDataEntry } from '../PredefinedConfig/ApplicationState';
+import { ToolbarButton } from '../PredefinedConfig/Common/ToolbarButton';
 
 /**
  * Provides access to an empty Toolbar and Popup, allowing developers to populate it as they wish.
@@ -21,7 +18,7 @@ export interface ApplicationApi {
   /**
    * Retrieves all the Application Toolbar Buttons in the Application state
    */
-  getApplicationToolbarButtons(): ApplicationToolbarButton[];
+  getApplicationToolbarButtons(): ToolbarButton[];
 
   /**
    * Returns the id of the 'div' element in the Application Toolbar that is assigned for uses to render themselves

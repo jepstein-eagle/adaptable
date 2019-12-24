@@ -250,12 +250,6 @@ export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
         </Provider>,
         this.gui
       );
-
-      if (params && params.api) {
-        params.api.addEventListener('modelUpdated', () => {
-          //    console.log('Model updated', newModel);
-        });
-      }
     }
 
     public getGui(): HTMLElement {

@@ -9,7 +9,6 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ApplicationToolbarButton } from '../../PredefinedConfig/ApplicationState';
 import SimpleButton from '../../components/SimpleButton';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
@@ -17,12 +16,13 @@ import {
   ApplicationToolbarButtonClickedEventArgs,
   ApplicationToolbarButtonClickedInfo,
 } from '../../Api/Events/ApplicationToolbarButtonClicked';
+import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 
 interface ApplicationToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
   ApplicationToolbarTitle: string | undefined;
   ApplicationToolbarTitleDashboard: string | undefined;
-  ApplicationToolbarButtons: ApplicationToolbarButton[] | undefined;
+  ToolbarButtons: ToolbarButton[] | undefined;
 }
 class ApplicationToolbarControlComponent extends React.Component<
   ApplicationToolbarControlComponentProps,
@@ -53,42 +53,38 @@ class ApplicationToolbarControlComponent extends React.Component<
           className="ab-ApplicationToolbar__buttons"
           style={{ minHeight: 22 }}
         >
-          {this.props.ApplicationToolbarButtons &&
-            this.props.ApplicationToolbarButtons.map(
-              (button: ApplicationToolbarButton, index: number) => {
-                let applicationToolbarButtonClickedInfo: ApplicationToolbarButtonClickedInfo = {
-                  applicationToolbarButton: button,
-                };
-                const applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
-                  'Application Toolbar Button Clicked Args',
-                  applicationToolbarButtonClickedInfo
-                );
-                let buttonVariant =
-                  button.ButtonStyle && button.ButtonStyle.Variant
-                    ? button.ButtonStyle.Variant
-                    : 'outlined';
-                let buttonTone =
-                  button.ButtonStyle && button.ButtonStyle.Tone
-                    ? button.ButtonStyle.Tone
-                    : 'neutral';
-                return (
-                  <SimpleButton
-                    style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
-                    key={button.Name}
-                    variant={buttonVariant}
-                    tone={buttonTone}
-                    onClick={() => {
-                      this.props.Blotter.api.eventApi.emit(
-                        'ApplicationToolbarButtonClicked',
-                        applicationToolbarButtonClickedEventArgs
-                      );
-                    }}
-                  >
-                    {button.Caption}
-                  </SimpleButton>
-                );
-              }
-            )}
+          {this.props.ToolbarButtons &&
+            this.props.ToolbarButtons.map((button: ToolbarButton, index: number) => {
+              let applicationToolbarButtonClickedInfo: ApplicationToolbarButtonClickedInfo = {
+                applicationToolbarButton: button,
+              };
+              const applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
+                'Application Toolbar Button Clicked Args',
+                applicationToolbarButtonClickedInfo
+              );
+              let buttonVariant =
+                button.ButtonStyle && button.ButtonStyle.Variant
+                  ? button.ButtonStyle.Variant
+                  : 'outlined';
+              let buttonTone =
+                button.ButtonStyle && button.ButtonStyle.Tone ? button.ButtonStyle.Tone : 'neutral';
+              return (
+                <SimpleButton
+                  style={{ marginLeft: index ? 'var(--ab-space-1)' : 0 }}
+                  key={button.Name}
+                  variant={buttonVariant}
+                  tone={buttonTone}
+                  onClick={() => {
+                    this.props.Blotter.api.eventApi.emit(
+                      'ApplicationToolbarButtonClicked',
+                      applicationToolbarButtonClickedEventArgs
+                    );
+                  }}
+                >
+                  {button.Caption}
+                </SimpleButton>
+              );
+            })}
         </div>
       </PanelDashboard>
     );

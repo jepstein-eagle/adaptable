@@ -1,4 +1,4 @@
-import { DashboardState } from '../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar } from '../PredefinedConfig/DashboardState';
 import {
   AdaptableDashboardToolbars,
   AdaptableDashboardToolbar,
@@ -17,7 +17,7 @@ export interface DashboardApi {
   /**
    * Retrieves the Dashboard section from the Adaptable Blotter State
    */
-  GetState(): DashboardState;
+  GetDashboardState(): DashboardState;
 
   /**
    * Sets which toolbars should be available in the Adaptable Blotter
@@ -151,6 +151,10 @@ export interface DashboardApi {
    * This is deprecated.  Use the method of the same name in Application Api
    */
   SetApplicationToolbarTitle(title: string): void;
+
+  getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | null;
+
+  getCustomToolbarByName(customToolbarName: string): CustomToolbar;
 
   /**
    * Opens the Dashboard popup screen
