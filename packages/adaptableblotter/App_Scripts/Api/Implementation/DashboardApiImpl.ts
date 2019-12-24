@@ -100,13 +100,6 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title));
   }
 
-  public SetApplicationToolbarTitle(title: string): void {
-    LoggingHelper.LogAdaptableWarning(
-      'This method is deprecated.  Use ApplicationApi.SetApplicationToolbarTitle instead.'
-    );
-    this.dispatchAction(ApplicationRedux.ApplicationSetApplicationToolbarTitle(title));
-  }
-
   public getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | null {
     let customToolbar: CustomToolbar = this.getCustomToolbarByName(customToolbarName);
     if (customToolbar) {

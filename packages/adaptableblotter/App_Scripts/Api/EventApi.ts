@@ -5,7 +5,6 @@ import { IEvent } from '../Utilities/Interface/IEvent';
 import {
   SELECTION_CHANGED_EVENT,
   BLOTTER_READY_EVENT,
-  APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT,
   TOOLBAR_VISIBILITY_CHANGED_EVENT,
   SEARCH_CHANGED_EVENT,
   THEME_CHANGED_EVENT,
@@ -15,18 +14,16 @@ import {
   LIVE_REPORT_UPDATED_EVENT,
   TOOLBAR_BUTTON_CLICKED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
-import {
-  SearchChangedEventArgs,
-  ThemeChangedEventArgs,
-  AlertFiredEventArgs,
-  ColumnStateChangedEventArgs,
-} from '../types';
+
 import { SelectionChangedEventArgs } from './Events/SelectionChanged';
 import { ActionColumnClickedEventArgs } from './Events/ActionColumnClicked';
-import { ApplicationToolbarButtonClickedEventArgs } from './Events/ApplicationToolbarButtonClicked';
 import { LiveReportUpdatedEventArgs } from './Events/LiveReportUpdated';
 import { ToolbarVisibilityChangedEventArgs } from './Events/ToolbarVisibilityChanged';
 import { ToolbarButtonClickedEventArgs } from './Events/ToolbarButtonClicked';
+import { ThemeChangedEventArgs } from './Events/ThemeChanged';
+import { AlertFiredEventArgs } from './Events/AlertFired';
+import { ColumnStateChangedEventArgs } from './Events/ColumnStateChanged';
+import { SearchChangedEventArgs } from './Events/SearchChanged';
 
 /**
  * The Adaptable Blotter publishes a large number of events to which users can subscribe as required.
@@ -45,9 +42,9 @@ import { ToolbarButtonClickedEventArgs } from './Events/ToolbarButtonClicked';
  *
  * - **ColumnStateChanged** - fired when the Column visibility or order changes
  *
- * - **ApplicationToolbarButtonClicked** - when a button is clicked in the Application toolbar
+ * - **ToolbarButtonClicked** - when a button is clicked in a Custom Toolbar
  *
- * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering the Application toolbar)
+ * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering Custom toolbars)
  *
  * - **BlotterReady** - fired whenever the Blotter is initialised and ready for use (has no Args class)
  *
@@ -159,21 +156,12 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever **when a button in the Application Toolbar is clicked**
+   * Event fired whenever **when a button in a Custom Toolbar is clicked**
    *
-   * Used when the Application State contains an ToolbarButton that has been clicked.
+   * @param eventName ToolbarButtonClicked - use as: blotterApi.eventApi.on('ToolbarButtonClicked', (args: ToolbarButtonClickedEventArgs) => { .....[do stuff]...})
    *
-   * @param eventName ApplicationToolbarButtonClicked - use as: blotterApi.eventApi.on('ApplicationToolbarButtonClicked', (args: ApplicationToolbarButtonClickedEventArgs) => { .....[do stuff]...})
-   *
-   * @param callback  ApplicationToolbarButtonClickedEventArgs which provides details of the button that was clicked.
+   * @param callback  ToolbarButtonClickedEventArgs which provides details of the button that was clicked.
    */
-  on(
-    eventName: 'ApplicationToolbarButtonClicked',
-    callback: (
-      applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs
-    ) => void
-  ): () => void;
-
   on(
     eventName: 'ToolbarButtonClicked',
     callback: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void
@@ -182,7 +170,7 @@ export interface EventApi {
   /**
    * Event fired whenever **a toolbar in the Adaptable Blotter becomes visible**
    *
-   * Primarily used for rendering the Application toolbar (which is deliberately created empty for this purpose).
+   * Primarily used for rendering Custom toolbars.
    *
    * @param eventName ToolbarVisibilityChanged - use as: blotterApi.eventApi.on('ToolbarVisibilityChanged', (args: ToolbarVisibilityChangedEventArgs) => { .....[do stuff]...})
    *
@@ -207,43 +195,6 @@ export interface EventApi {
    */
   on(eventName: 'BlotterReady', callback: () => void): () => void;
 
-  /**
-   * **This event is deprecated - please use the new on('SearchChanged') event instead which returns the same SearchChangedEventArgs**
-   */
-  onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs>;
-
-  /**
-   * **This event is deprecated - please use the new on('ThemeChanged') event instead which returns the same ThemeChangedEventArgs**
-   */
-  onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs>;
-
-  /**
-   * **This event is deprecated - please use the new on('ColumnStateChanged') event instead which returns the same ColumnStateChangedEventArgs**
-   */
-  onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs>;
-
-  /**
-   * **This event is deprecated - please use the new on('AlertFired') event instead which returns the same AlertFiredEventArgs**
-   */
-  onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs>;
-
-  /**
-   * **This event is deprecated - please use the new on('ActionColumnClicked') event instead which returns the same ActionColumnClickedEventArgs**
-   */
-  onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnClickedEventArgs>;
-
-  /**
-   * **This event is deprecated - please use the new on('SelectionChangedEventArgs') event instead which returns the same SelectionChangedEventArgs**
-   */
-  onSelectionChanged(): IEvent<IAdaptableBlotter, SelectionChangedEventArgs>;
-
-  _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
-  _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
-  _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
-  _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
-  _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnClickedEventArgs>;
-  _onSelectionChanged: EventDispatcher<IAdaptableBlotter, SelectionChangedEventArgs>;
-
   emit(
     eventName:
       | SELECTION_CHANGED_EVENT
@@ -253,7 +204,6 @@ export interface EventApi {
       | ALERT_FIRED_EVENT
       | ACTION_COLUMN_CLICKED_EVENT
       | COLUMN_STATE_CHANGED_EVENT
-      | APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT
       | TOOLBAR_BUTTON_CLICKED_EVENT
       | TOOLBAR_VISIBILITY_CHANGED_EVENT
       | LIVE_REPORT_UPDATED_EVENT

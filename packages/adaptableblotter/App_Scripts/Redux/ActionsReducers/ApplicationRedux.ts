@@ -5,8 +5,6 @@ import { ApplicationState, ApplicationDataEntry } from '../../PredefinedConfig/A
 export const APPLICATION_DATA_ENTRY_ADD = 'APPLICATION_DATA_ENTRY_ADD';
 export const APPLICATION_DATA_ENTRY_EDIT = 'APPLICATION_DATA_ENTRY_EDIT';
 export const APPLICATION_DATA_ENTRY_DELETE = 'APPLICATION_DATA_ENTRY_DELETE';
-export const APPLICATION_SET_APPLICATION_TOOLBAR_TITLE =
-  'APPLICATION_SET_APPLICATION_TOOLBAR_TITLE';
 
 export interface ApplicationDataEntryAddAction extends Redux.Action {
   applicationDataEntry: ApplicationDataEntry;
@@ -18,10 +16,6 @@ export interface ApplicationDataEntryEditAction extends Redux.Action {
 
 export interface ApplicationDataEntryDeleteAction extends Redux.Action {
   applicationDataEntry: ApplicationDataEntry;
-}
-
-export interface ApplicationSetApplicationToolbarTitleAction extends Redux.Action {
-  Title: string;
 }
 
 export const ApplicationDataEntryAdd = (
@@ -45,17 +39,8 @@ export const ApplicationDataEntryDelete = (
   applicationDataEntry,
 });
 
-export const ApplicationSetApplicationToolbarTitle = (
-  Title: string
-): ApplicationSetApplicationToolbarTitleAction => ({
-  type: APPLICATION_SET_APPLICATION_TOOLBAR_TITLE,
-  Title,
-});
-
 const initialFilterState: ApplicationState = {
-  ApplicationToolbarButtons: EMPTY_ARRAY,
   ApplicationDataEntries: EMPTY_ARRAY,
-  ApplicationToolbarTitle: 'Application',
 };
 
 export const ApplicationReducer: Redux.Reducer<ApplicationState> = (
@@ -89,10 +74,6 @@ export const ApplicationReducer: Redux.Reducer<ApplicationState> = (
       applicationDataEntries.splice(index, 1);
       return Object.assign({}, state, { ApplicationDataEntries: applicationDataEntries });
 
-    case APPLICATION_SET_APPLICATION_TOOLBAR_TITLE: {
-      const actionTyped = action as ApplicationSetApplicationToolbarTitleAction;
-      return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
-    }
     default:
       return state;
   }

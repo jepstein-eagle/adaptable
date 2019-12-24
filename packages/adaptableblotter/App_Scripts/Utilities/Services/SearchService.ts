@@ -126,9 +126,6 @@ export class SearchService implements ISearchService {
         searchChangedInfo
       );
 
-      // now depprecated and shortly to be removed...
-      this.blotter.api.eventApi._onSearchChanged.Dispatch(this.blotter, searchChangedArgs);
-      // new way (and soon only way)
       this.blotter.api.eventApi.emit('SearchChanged', searchChangedArgs);
     }
   }

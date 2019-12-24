@@ -15,7 +15,6 @@ export type AdaptableDashboardToolbars = AdaptableDashboardToolbar[];
 export type AdaptableDashboardToolbar =
   | 'AdvancedSearch'
   | 'Alert'
-  | 'Application'
   | 'BulkUpdate'
   | 'CellSummary'
   | 'Chart'
@@ -61,7 +60,6 @@ export type AdaptableFunctionButtons = AdaptableFunctionButton[];
 export type AdaptableFunctionButton =
   | 'AdvancedSearch'
   | 'Alert'
-  | 'Application'
   | 'BulkUpdate'
   | 'CalculatedColumn'
   | 'Calendar'
@@ -145,7 +143,6 @@ export type AdaptableFunctionName =
   | 'ActionColumn'
   | 'AdvancedSearch'
   | 'Alert'
-  | 'Application'
   | 'BulkUpdate'
   | 'CalculatedColumn'
   | 'Calendar'

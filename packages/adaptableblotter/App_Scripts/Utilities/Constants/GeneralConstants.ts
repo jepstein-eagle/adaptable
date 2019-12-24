@@ -134,7 +134,6 @@ export const PRIVATE_KEY_DOWN_EVENT: string = 'KeyDown';
 export type BLOTTER_READY_EVENT = 'BlotterReady';
 export type TOOLBAR_VISIBILITY_CHANGED_EVENT = 'ToolbarVisibilityChanged';
 export type SEARCH_CHANGED_EVENT = 'SearchChanged';
-export type APPLICATION_TOOLBAR_BUTTON_CLICKED_EVENT = 'ApplicationToolbarButtonClicked';
 export type TOOLBAR_BUTTON_CLICKED_EVENT = 'ToolbarButtonClicked';
 export type THEME_CHANGED_EVENT = 'ThemeChanged';
 export type COLUMN_STATE_CHANGED_EVENT = 'ColumnStateChanged';

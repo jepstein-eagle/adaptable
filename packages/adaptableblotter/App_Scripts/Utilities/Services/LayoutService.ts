@@ -90,12 +90,6 @@ export class LayoutService implements ILayoutService {
         columnStateChangedInfo
       );
 
-      // now depprecated and shortly to be removed...
-      this.blotter.api.eventApi._onColumnStateChanged.Dispatch(
-        this.blotter,
-        columnStateChangedEventArgs
-      );
-      // new way (and soon only way)
       this.blotter.api.eventApi.emit('ColumnStateChanged', columnStateChangedEventArgs);
     }
   }

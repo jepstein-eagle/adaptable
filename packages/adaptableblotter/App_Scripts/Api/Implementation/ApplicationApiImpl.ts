@@ -10,18 +10,6 @@ export class ApplicationApiImpl extends ApiBase implements ApplicationApi {
     return this.getBlotterState().Application;
   }
 
-  public getApplicationToolbarButtons(): ToolbarButton[] {
-    return this.getApplicationState().ApplicationToolbarButtons;
-  }
-
-  public getApplicationToolbarContentsDivId(): string {
-    return 'ab-ApplicationToolbar__contents';
-  }
-
-  public getApplicationToolbarContentsDiv(): HTMLElement | null {
-    return document.getElementById(this.getApplicationToolbarContentsDivId());
-  }
-
   public getApplicationDataEntries(): ApplicationDataEntry[] {
     return this.getApplicationState().ApplicationDataEntries;
   }
@@ -54,9 +42,5 @@ export class ApplicationApiImpl extends ApiBase implements ApplicationApi {
   public getApplicationDataEntriesByValue(value: any): ApplicationDataEntry[] {
     let entries = this.getApplicationState().ApplicationDataEntries;
     return entries.filter(e => e.Value === value);
-  }
-
-  public SetApplicationToolbarTitle(title: string): void {
-    this.dispatchAction(ApplicationRedux.ApplicationSetApplicationToolbarTitle(title));
   }
 }

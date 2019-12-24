@@ -13,7 +13,6 @@ import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
 import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl';
 import { ThemeToolbarControl } from './Theme/ThemeToolbarControl';
-import { ApplicationToolbarControl } from './Application/ApplicationToolbarControl';
 import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl';
@@ -29,7 +28,6 @@ import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
 import { IPushPullLogin } from './Export/IPushPullLogin';
 import { HomeToolbarControl } from './Home/HomeToolbarControl';
-import { ApplicationPopup } from './Application/ApplicationPopup';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { StateManagementPopup } from './StateManagement/StateManagementPopup';
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
@@ -74,7 +72,6 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
   AlertPopup,
-  ApplicationPopup,
   BulkUpdatePopup,
   CalculatedColumnPopup,
   CalendarsPopup,
@@ -121,7 +118,6 @@ export const AdaptableDashboardFactory = new Map<
 >([
   [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
-  [StrategyConstants.ApplicationStrategyId, ApplicationToolbarControl],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl],
   [StrategyConstants.ChartStrategyId, ChartToolbarControl],

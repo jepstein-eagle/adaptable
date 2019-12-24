@@ -35,9 +35,6 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
       themeChangedInfo
     );
 
-    // now depprecated and shortly to be removed...
-    this.blotter.api.eventApi._onThemeChanged.Dispatch(this.blotter, themeChangedEventArgs);
-    // new way (and soon only way)
     this.blotter.api.eventApi.emit('ThemeChanged', themeChangedEventArgs);
   }
 

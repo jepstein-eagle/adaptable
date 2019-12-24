@@ -41,9 +41,6 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
       alertFiredInfo
     );
 
-    // now depprecated and shortly to be removed...
-    this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, alertFiredArgs);
-    // new way (and soon only way)
     this.blotter.api.eventApi.emit('AlertFired', alertFiredArgs);
 
     // 3. Log it to the Console

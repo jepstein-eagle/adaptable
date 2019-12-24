@@ -15,10 +15,10 @@ import {
   ActionColumnClickedEventArgs,
   SelectionChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,
-  ApplicationToolbarButtonClickedEventArgs,
   LiveReportUpdatedEventArgs,
 } from '../../adaptableblotter/types';
 import { AuditLogEventArgs } from '../../adaptableblotter/App_Scripts/Api/Events/AuditEvents';
+import { ToolbarButtonClickedEventArgs } from '../../adaptableblotter/App_Scripts/Api/Events/ToolbarButtonClicked';
 export * from '../../adaptableblotter/types';
 
 type TypeFactory =
@@ -119,7 +119,7 @@ const AdaptableBlotterReact = ({
   render,
   onActionColumnClicked,
   onAlertFired,
-  onApplicationToolbarButtonClicked,
+  onToolbarButtonClicked,
   onColumnStateChanged,
   onLiveReportUpdated,
   onSearchChanged,
@@ -142,9 +142,7 @@ const AdaptableBlotterReact = ({
     toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs
   ) => void;
   onSearchChanged?: (searchChangedEventArgs: SearchChangedEventArgs) => void;
-  onApplicationToolbarButtonClicked?: (
-    applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs
-  ) => void;
+  onToolbarButtonClicked?: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void;
   onThemeChanged?: (themeChangedEventArgs: ThemeChangedEventArgs) => void;
   onColumnStateChanged?: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void;
   onAlertFired?: (alertFiredEventArgs: AlertFiredEventArgs) => void;
@@ -185,11 +183,8 @@ const AdaptableBlotterReact = ({
       if (onSearchChanged) {
         blotter.api.eventApi.on('SearchChanged', onSearchChanged);
       }
-      if (onApplicationToolbarButtonClicked) {
-        blotter.api.eventApi.on(
-          'ApplicationToolbarButtonClicked',
-          onApplicationToolbarButtonClicked
-        );
+      if (onToolbarButtonClicked) {
+        blotter.api.eventApi.on('ToolbarButtonClicked', onToolbarButtonClicked);
       }
       if (onThemeChanged) {
         blotter.api.eventApi.on('ThemeChanged', onThemeChanged);

@@ -15,16 +15,15 @@ import {
   SearchChangedEventArgs,
   PredefinedConfig,
   BlotterApi,
+  ToolbarButtonClickedEventArgs,
+  ThemeChangedEventArgs,
+  ActionColumnClickedEventArgs,
+  SelectionChangedEventArgs,
+  ToolbarVisibilityChangedEventArgs,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import {
-  ActionColumnClickedEventArgs,
-  SelectionChangedEventArgs,
-  ThemeChangedEventArgs,
-  ApplicationToolbarButtonClickedEventArgs,
-  ToolbarVisibilityChangedEventArgs,
-} from '../../../../App_Scripts/Api/Events/BlotterEvents';
+
 import ReactDOM from 'react-dom';
 
 var blotterApi: BlotterApi;
@@ -50,100 +49,66 @@ function InitAdaptableBlotter() {
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  let runNewEvents: boolean = true;
+  // new way
+  blotterApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
+    listenToThemeChanged(themeChangedEventArgs);
+  });
+  blotterApi.eventApi.on(
+    'ColumnStateChanged',
+    (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => {
+      listenToColumnStateChange(columnStateChangedEventArgs);
+    }
+  );
+  blotterApi.eventApi.on('AlertFired', (alertFiredArgs: AlertFiredEventArgs) => {
+    listenToAlertFired(alertFiredArgs);
+  });
+  blotterApi.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
+    listenToSearchChange(searchChangedArgs);
+  });
+  blotterApi.eventApi.on(
+    'ActionColumnClicked',
+    (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
+      listenToActionColumnClicked(actionColumnEventArgs);
+    }
+  );
+  blotterApi.eventApi.on(
+    'SelectionChanged',
+    (selectionChangedEventArgs: SelectionChangedEventArgs) => {
+      listenToSelectionChanged(selectionChangedEventArgs);
+    }
+  );
 
-  if (!runNewEvents) {
-    // old way
-    blotterApi.eventApi
-      .onThemeChanged()
-      .Subscribe((sender, themeChangedEventArgs) => listenToThemeChanged(themeChangedEventArgs));
-    blotterApi.eventApi
-      .onColumnStateChanged()
-      .Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs));
-    blotterApi.eventApi
-      .onAlertFired()
-      .Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
-    blotterApi.eventApi
-      .onSearchChanged()
-      .Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
-    blotterApi.eventApi
-      .onActionColumnClicked()
-      .Subscribe((sender, actionColumnEventArgs) =>
-        listenToActionColumnClicked(actionColumnEventArgs)
-      );
-    blotterApi.eventApi
-      .onSelectionChanged()
-      .Subscribe((sender, selectionChangedEventArgs) =>
-        listenToSelectionChanged(selectionChangedEventArgs)
-      );
-  } else {
-    // new way
-    blotterApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
-      listenToThemeChanged(themeChangedEventArgs);
-    });
-    blotterApi.eventApi.on(
-      'ColumnStateChanged',
-      (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => {
-        listenToColumnStateChange(columnStateChangedEventArgs);
-      }
-    );
-    blotterApi.eventApi.on('AlertFired', (alertFiredArgs: AlertFiredEventArgs) => {
-      listenToAlertFired(alertFiredArgs);
-    });
-    blotterApi.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-      listenToSearchChange(searchChangedArgs);
-    });
-    blotterApi.eventApi.on(
-      'ActionColumnClicked',
-      (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
-        listenToActionColumnClicked(actionColumnEventArgs);
-      }
-    );
-    blotterApi.eventApi.on(
-      'SelectionChanged',
-      (selectionChangedEventArgs: SelectionChangedEventArgs) => {
-        listenToSelectionChanged(selectionChangedEventArgs);
-      }
-    );
+  blotterApi.eventApi.on(
+    'ToolbarButtonClicked',
+    (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => {
+      console.log(' Toolbar Button Clicked');
+      console.log('name: ' + toolbarButtonClickedEventArgs.data[0].id.toolbarButton.Name);
+      console.log('caption: ' + toolbarButtonClickedEventArgs.data[0].id.toolbarButton.Caption);
+    }
+  );
 
-    blotterApi.eventApi.on(
-      'ApplicationToolbarButtonClicked',
-      (applicationToolbarButtonClickedEventArgs: ApplicationToolbarButtonClickedEventArgs) => {
-        console.log('Application Toolbar Button Clicked');
-        console.log(
-          'name: ' +
-            applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Name
+  blotterApi.eventApi.on(
+    'ToolbarVisibilityChanged',
+    (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
+      if (
+        toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Demo' &&
+        toolbarVisibilityChangedEventArgs.data[0].id.visibility == 'Visible'
+      ) {
+        let toolbarContents: any = (
+          <div style={{ display: 'flex' }}>
+            <button onClick={onTestRenderClicked} style={{ marginRight: '3px' }}>
+              Render Test
+            </button>
+          </div>
         );
-        console.log(
-          'caption: ' +
-            applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Caption
+
+        ReactDOM.render(
+          toolbarContents,
+          blotterApi.dashboardApi.getCustomToolbarContentsDiv('Demo')
         );
       }
-    );
-
-    blotterApi.eventApi.on(
-      'ToolbarVisibilityChanged',
-      (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
-        if (
-          toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Application' &&
-          toolbarVisibilityChangedEventArgs.data[0].id.visibility == 'Visible'
-        ) {
-          let toolbarContents: any = (
-            <div style={{ display: 'flex' }}>
-              <button onClick={onTestRenderClicked} style={{ marginRight: '3px' }}>
-                Render Test
-              </button>
-            </div>
-          );
-
-          ReactDOM.render(
-            toolbarContents,
-            blotterApi.applicationApi.getApplicationToolbarContentsDiv()
-          );
-        }
-      }
-    );
-  }
+    }
+  );
 }
 
 function onTestRenderClicked() {
@@ -180,17 +145,26 @@ function listenToThemeChanged(themeChangedEventArgs: ThemeChangedEventArgs) {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout', 'Application'],
-    AvailableToolbars: ['Theme', 'Export', 'Layout', 'Application', 'AdvancedSearch', 'SmartEdit'],
-  },
-  Application: {
-    ApplicationToolbarButtons: [
+    VisibleToolbars: ['Theme', 'Export', 'Layout', 'Demo'],
+    AvailableToolbars: ['Theme', 'Export', 'Layout', 'AdvancedSearch', 'SmartEdit'],
+    CustomToolbars: [
       {
-        Name: 'btnTestEvent',
-        Caption: 'State Test',
+        Name: 'Demo',
+        Title: 'Demo',
+        ToolbarButtons: [
+          {
+            Name: 'btnTestEvent',
+            Caption: 'State Test',
+            ButtonStyle: {
+              Variant: 'text',
+              Tone: 'info',
+            },
+          },
+        ],
       },
     ],
   },
+
   ActionColumn: {
     ActionColumns: [
       {

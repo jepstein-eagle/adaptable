@@ -196,7 +196,6 @@ const initialDashboardState: DashboardState = {
   AvailableToolbars: [
     'AdvancedSearch',
     'Alert',
-    'Application',
     'BulkUpdate',
     'CellSummary',
     'Chart',
@@ -218,7 +217,6 @@ const initialDashboardState: DashboardState = {
   ShowColumnsDropdown: true,
   ShowToolbarsDropdown: true,
   HomeToolbarTitle: '',
-  ApplicationToolbarTitle: '',
   MinimisedHomeToolbarButtonStyle: {
     Variant: 'outlined',
     Tone: 'neutral',

@@ -22,7 +22,6 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { IStrategy } from '../Strategy/Interface/IStrategy';
 import { AlertStrategy } from '../Strategy/AlertStrategy';
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
-import { ApplicationStrategy } from '../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import { CalendarStrategy } from '../Strategy/CalendarStrategy';
@@ -104,7 +103,6 @@ export class agGridHelper {
     const blotter = this.blotter as AdaptableBlotter;
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(blotter));
     strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(blotter));
-    strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(blotter));
     strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(blotter));
     strategies.set(
       StrategyConstants.CalculatedColumnStrategyId,
@@ -446,9 +444,6 @@ export class agGridHelper {
       selectionChangedInfo
     );
 
-    // now depprecated and shortly to be removed...
-    this.blotter.api.eventApi._onSelectionChanged.Dispatch(this.blotter, selectionChangedArgs);
-    // new way (and soon only way)
     this.blotter.api.eventApi.emit('SelectionChanged', selectionChangedArgs);
   }
 

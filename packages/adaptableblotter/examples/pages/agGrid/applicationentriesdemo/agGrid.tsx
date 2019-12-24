@@ -9,12 +9,10 @@ import '../../../../App_Scripts/index.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import {
   AdaptableBlotterOptions,
   PredefinedConfig,
-  IAdaptableBlotter,
   BlotterApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -44,58 +42,49 @@ function InitAdaptableBlotter() {
 
   blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  blotterApi.eventApi.on(
-    'ApplicationToolbarButtonClicked',
-    applicationToolbarButtonClickedEventArgs => {
-      console.log('fetching');
-      console.log(blotterApi.applicationApi.getApplicationDataEntries());
-      console.log('adding');
-      let kvp: ApplicationDataEntry = {
-        Key: 'team',
-        Value: 'liverpool',
+  blotterApi.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
+    console.log('fetching');
+    console.log(blotterApi.applicationApi.getApplicationDataEntries());
+    console.log('adding');
+    let kvp: ApplicationDataEntry = {
+      Key: 'team',
+      Value: 'liverpool',
+    };
+    blotterApi.applicationApi.addApplicationDataEntry(kvp);
+    console.log(blotterApi.applicationApi.getApplicationDataEntries());
+
+    console.log('editing');
+    let kvpToEdit = blotterApi.applicationApi.getApplicationDataEntryByKey('Name');
+    if (kvpToEdit) {
+      let newKVP: ApplicationDataEntry = {
+        Key: kvpToEdit.Key,
+        Value: 'Danielle',
       };
-      blotterApi.applicationApi.addApplicationDataEntry(kvp);
+      blotterApi.applicationApi.editApplicationDataEntry(newKVP);
       console.log(blotterApi.applicationApi.getApplicationDataEntries());
-
-      console.log('editing');
-      let kvpToEdit = blotterApi.applicationApi.getApplicationDataEntryByKey('Name');
-      if (kvpToEdit) {
-        let newKVP: ApplicationDataEntry = {
-          Key: kvpToEdit.Key,
-          Value: 'Danielle',
-        };
-        blotterApi.applicationApi.editApplicationDataEntry(newKVP);
-        console.log(blotterApi.applicationApi.getApplicationDataEntries());
-      }
-
-      console.log('deleting');
-      let newkvps = blotterApi.applicationApi.getApplicationDataEntries();
-      let kvpToDelete = newkvps[1];
-      if (kvpToDelete) {
-        blotterApi.applicationApi.deleteApplicationDataEntry(kvpToDelete);
-        console.log(blotterApi.applicationApi.getApplicationDataEntries());
-      }
-
-      console.log('getting');
-      let newkvpsget = blotterApi.applicationApi.getApplicationDataEntriesByValue(33);
-      console.log(newkvpsget);
     }
-  );
+
+    console.log('deleting');
+    let newkvps = blotterApi.applicationApi.getApplicationDataEntries();
+    let kvpToDelete = newkvps[1];
+    if (kvpToDelete) {
+      blotterApi.applicationApi.deleteApplicationDataEntry(kvpToDelete);
+      console.log(blotterApi.applicationApi.getApplicationDataEntries());
+    }
+
+    console.log('getting');
+    let newkvpsget = blotterApi.applicationApi.getApplicationDataEntriesByValue(33);
+    console.log(newkvpsget);
+  });
 
   // global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout', 'Application'],
+    VisibleToolbars: ['Theme', 'Export', 'Layout'],
   },
   Application: {
-    ApplicationToolbarButtons: [
-      {
-        Name: 'testing',
-        Caption: 'Test Entries',
-      },
-    ],
     ApplicationDataEntries: [
       {
         Key: 'Name',

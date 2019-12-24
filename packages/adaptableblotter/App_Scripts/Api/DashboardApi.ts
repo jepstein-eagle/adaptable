@@ -147,10 +147,6 @@ export interface DashboardApi {
    * If no value is set, the title of the Home Toolbar will be the ​​blotterId​​ property in AdaptableBlotterOptions
    */
   SetHomeToolbarTitle(title: string): void;
-  /**
-   * This is deprecated.  Use the method of the same name in Application Api
-   */
-  SetApplicationToolbarTitle(title: string): void;
 
   getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | null;
 

@@ -11,24 +11,9 @@ import { ToolbarButton } from '../PredefinedConfig/Common/ToolbarButton';
  */
 export interface ApplicationApi {
   /**
-   * Retrieves the Application section from the Adaptable Blotter State - currently just a list of Application Toolbar butons
+   * Retrieves the Application section from the Adaptable Blotter State
    */
   getApplicationState(): ApplicationState;
-
-  /**
-   * Retrieves all the Application Toolbar Buttons in the Application state
-   */
-  getApplicationToolbarButtons(): ToolbarButton[];
-
-  /**
-   * Returns the id of the 'div' element in the Application Toolbar that is assigned for uses to render themselves
-   */
-  getApplicationToolbarContentsDivId(): string;
-
-  /**
-   * Returns the 'div' element in the Application Toolbar that is assigned for uses to render themselves
-   */
-  getApplicationToolbarContentsDiv(): HTMLElement | null;
 
   /**
    * Retrieves all the Key Value Pairs in the Application state
@@ -78,13 +63,4 @@ export interface ApplicationApi {
    * @param value the Value of the Application Data Entry to retrieve
    */
   getApplicationDataEntriesByValue(value: any): ApplicationDataEntry[];
-
-  /**
-   * Sets the title of the Application Toolbar
-   *
-   * If not set, then the default is 'Application'
-   *
-   * @param title text to use for the Application toolbar
-   */
-  SetApplicationToolbarTitle(title: string): void;
 }

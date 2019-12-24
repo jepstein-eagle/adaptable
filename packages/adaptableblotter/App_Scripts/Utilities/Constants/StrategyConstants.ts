@@ -3,7 +3,6 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 // Strategy Ids used in Config so have made it a type of AdaptableFunctionName
 export const AdvancedSearchStrategyId: AdaptableFunctionName = 'AdvancedSearch';
 export const AlertStrategyId: AdaptableFunctionName = 'Alert';
-export const ApplicationStrategyId: AdaptableFunctionName = 'Application';
 export const BulkUpdateStrategyId: AdaptableFunctionName = 'BulkUpdate';
 export const CalculatedColumnStrategyId: AdaptableFunctionName = 'CalculatedColumn';
 export const CalendarStrategyId: AdaptableFunctionName = 'Calendar';
@@ -43,7 +42,6 @@ export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
 // Strategy Names - only used internally
 export const AdvancedSearchStrategyFriendlyName: string = 'Advanced Search';
 export const AlertStrategyFriendlyName: string = 'Alert';
-export const ApplicationStrategyFriendlyName: string = 'Application';
 export const BulkUpdateStrategyFriendlyName: string = 'Bulk Update';
 export const CalculatedColumnStrategyFriendlyName: string = 'Calculated Column';
 export const CalendarStrategyFriendlyName: string = 'Calendar';
@@ -82,7 +80,6 @@ export const UserFilterStrategyFriendlyName: string = 'User Filter';
 // Strategy Glyphs
 export const AdvancedSearchGlyph: string = 'advanced-search';
 export const AlertGlyph: string = 'alert';
-export const ApplicationGlyph: string = 'application';
 export const BulkUpdateGlyph: string = 'bulk-update';
 export const CalculatedColumnGlyph: string = 'calculated-column';
 export const CalendarGlyph: string = 'calendar';
@@ -125,8 +122,6 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return AdvancedSearchStrategyId;
     case AlertStrategyFriendlyName:
       return AlertStrategyId;
-    case ApplicationStrategyFriendlyName:
-      return ApplicationStrategyId;
     case BulkUpdateStrategyFriendlyName:
       return BulkUpdateStrategyId;
     case CalculatedColumnStrategyFriendlyName:
@@ -202,8 +197,6 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return AdvancedSearchStrategyFriendlyName;
     case AlertStrategyId:
       return AlertStrategyFriendlyName;
-    case ApplicationStrategyId:
-      return ApplicationStrategyFriendlyName;
     case BulkUpdateStrategyId:
       return BulkUpdateStrategyFriendlyName;
     case CalculatedColumnStrategyId:
@@ -281,8 +274,6 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return AdvancedSearchGlyph;
     case AlertStrategyId:
       return AlertGlyph;
-    case ApplicationStrategyId:
-      return ApplicationGlyph;
     case BulkUpdateStrategyId:
       return BulkUpdateGlyph;
     case CalculatedColumnStrategyId:

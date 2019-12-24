@@ -44,14 +44,9 @@ function InitAdaptableBlotter() {
 
   blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  tickingDataHelper.startTickingDataagGridTradesUpdateData(
-    gridOptions,
-    blotterApi,
-    3000,
-    tradeCount
-  );
+  tickingDataHelper.useTickingDataagGrid(gridOptions, blotterApi, 3000, tradeCount);
 
-  blotterApi.eventApi.on('ApplicationToolbarButtonClicked', () => {
+  blotterApi.eventApi.on('ToolbarButtonClicked', () => {
     blotterApi.updatedRowApi.deleteAllUpdatedRowInfo();
   });
 }

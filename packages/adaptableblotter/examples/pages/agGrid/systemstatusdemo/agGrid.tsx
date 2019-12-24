@@ -33,91 +33,90 @@ function InitAdaptableBlotter() {
 
   const blotterApi: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  blotterApi.eventApi.on(
-    'ApplicationToolbarButtonClicked',
-    applicationToolbarButtonClickedEventArgs => {
-      switch (applicationToolbarButtonClickedEventArgs.data[0].id.applicationToolbarButton.Name) {
-        case 'info':
-          blotterApi.systemStatusApi.setInfoSystemStatus('No issues');
-          break;
-        case 'success':
-          blotterApi.systemStatusApi.setSuccessSystemStatus('All working fine');
-          break;
-        case 'warning':
-          blotterApi.systemStatusApi.setWarningSystemStatus(
-            'Problems with server',
-            'It should be back up again in 1 hour'
-          );
-          break;
-        case 'error':
-          blotterApi.systemStatusApi.setErrorSystemStatus(
-            'The server is down.  Yikes!',
-            'Please make sure you dont make any changes.'
-          );
-          break;
-        case 'clear':
-          blotterApi.systemStatusApi.clearSystemStatus();
-          break;
-      }
+  blotterApi.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
+    switch (toolbarButtonClickedEventArgs.data[0].id.toolbarButton.Name) {
+      case 'info':
+        blotterApi.systemStatusApi.setInfoSystemStatus('No issues');
+        break;
+      case 'success':
+        blotterApi.systemStatusApi.setSuccessSystemStatus('All working fine');
+        break;
+      case 'warning':
+        blotterApi.systemStatusApi.setWarningSystemStatus(
+          'Problems with server',
+          'It should be back up again in 1 hour'
+        );
+        break;
+      case 'error':
+        blotterApi.systemStatusApi.setErrorSystemStatus(
+          'The server is down.  Yikes!',
+          'Please make sure you dont make any changes.'
+        );
+        break;
+      case 'clear':
+        blotterApi.systemStatusApi.clearSystemStatus();
+        break;
     }
-  );
+  });
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Application', 'SystemStatus'],
+    VisibleToolbars: ['Demo', 'SystemStatus'],
+    CustomToolbars: [
+      {
+        Name: 'Demo',
+        Title: 'Demo',
+        ToolbarButtons: [
+          {
+            Name: 'info',
+            Caption: 'Set Info',
+            ButtonStyle: {
+              Variant: 'text',
+              Tone: 'info',
+            },
+          },
+          {
+            Name: 'success',
+            Caption: 'Set Success',
+            ButtonStyle: {
+              Variant: 'text',
+              Tone: 'success',
+            },
+          },
+          {
+            Name: 'warning',
+            Caption: 'Set Warning',
+            ButtonStyle: {
+              Variant: 'text',
+              Tone: 'warning',
+            },
+          },
+          {
+            Name: 'error',
+            Caption: 'Set Error',
+            ButtonStyle: {
+              Variant: 'text',
+              Tone: 'error',
+            },
+          },
+          {
+            Name: 'clear',
+            Caption: 'Clear',
+            ButtonStyle: {
+              Variant: 'raised',
+            },
+          },
+        ],
+      },
+    ],
   },
-
   SystemStatus: {
     ShowAlert: false,
     DefaultStatusMessage: 'Server is running fine.',
     DefaultStatusType: 'Info',
     StatusMessage: 'Please check you have sent End of Day report.',
     StatusType: 'Warning',
-  },
-
-  Application: {
-    ApplicationToolbarButtons: [
-      {
-        Name: 'info',
-        Caption: 'Set Info',
-        ButtonStyle: {
-          Variant: 'text',
-          Tone: 'info',
-        },
-      },
-      {
-        Name: 'success',
-        Caption: 'Set Success',
-        ButtonStyle: {
-          Variant: 'text',
-          Tone: 'success',
-        },
-      },
-      {
-        Name: 'warning',
-        Caption: 'Set Warning',
-        ButtonStyle: {
-          Variant: 'text',
-          Tone: 'warning',
-        },
-      },
-      {
-        Name: 'error',
-        Caption: 'Set Error',
-        ButtonStyle: {
-          Variant: 'text',
-          Tone: 'error',
-        },
-      },
-      {
-        Name: 'clear',
-        Caption: 'Clear',
-        ButtonStyle: {
-          Variant: 'raised',
-        },
-      },
-    ],
   },
 };
 

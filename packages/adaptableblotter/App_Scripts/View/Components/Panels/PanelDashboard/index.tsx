@@ -78,7 +78,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
           className="ab-DashboardPanel__header-text"
           flex={1}
           alignItems="center"
-          marginLeft={showGlyphIcon || showMinimiseButton ? 2 : 0}
+          marginLeft={2}
         >
           {headerText}
         </Flex>

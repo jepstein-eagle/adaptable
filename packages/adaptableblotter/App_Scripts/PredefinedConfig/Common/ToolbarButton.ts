@@ -1,11 +1,11 @@
 import { AdaptableObject } from './AdaptableObject';
 
 /**
- * Defines an Application Toolbar Button that is specified at design time by users and rendered dynamically by the Adaptable Blotter at run-time.
+ * Defines a Toolbar Button that is specified at design time by users and rendered dynamically by the Adaptable Blotter at run-time.
  *
- * It is hosted in the Application Toolbar
+ * It is hosted in a Cuatom Toolbar
  *
- * When an Application Toolbar Button is clicked, the Adaptable Blotter will fire an *ApplicationToolbarButtonClicked* event to which you can subscribe via the Event API.
+ * When a Custom Toolbar Button is clicked, the Adaptable Blotter will fire an *ToolbarButtonClicked* event to which you can subscribe via the Event API.
  */
 export interface ToolbarButton extends AdaptableObject {
   /**
@@ -23,7 +23,7 @@ export interface ToolbarButton extends AdaptableObject {
   Caption: string;
 
   /**
-   * The style to use for the Application Button.
+   * The style to use for the Custom Toolbar Button.
    *
    * Includes 'Variant' and 'Tone'
    */
