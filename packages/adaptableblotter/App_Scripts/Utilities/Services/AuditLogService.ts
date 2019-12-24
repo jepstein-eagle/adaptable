@@ -106,9 +106,9 @@ export class AuditLogService implements IAuditLogService {
 
     // set up the listener if we are auditing Data Changes
     if (this.isAuditTickingDataChangesEnabled) {
-      blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
-        this.handleDataSourceChanged(eventText)
-      );
+      this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+        this.handleDataSourceChanged(dataChangedInfo);
+      });
     }
 
     // set up the Audit Queue if any of the Audits is set to use HTTP Channel
@@ -462,28 +462,13 @@ export class AuditLogService implements IAuditLogService {
 
     switch (auditLogType) {
       case AuditLogType.CellEdit:
-        // old way
-        this.blotter.api.auditEventApi._onAuditCellEdited.Dispatch(this.blotter, stateChangedArgs);
-        // new way
         this.blotter.api.auditEventApi.emit('AuditCellEdited', stateChangedArgs);
         break;
       case AuditLogType.FunctionApplied:
-        // old way
-        this.blotter.api.auditEventApi._onAuditFunctionApplied.Dispatch(
-          this.blotter,
-          stateChangedArgs
-        );
-        // new way
         this.blotter.api.auditEventApi.emit('AuditFunctionApplied', stateChangedArgs);
         break;
       case AuditLogType.InternalStateChange:
       case AuditLogType.UserStateChange:
-        // old way
-        this.blotter.api.auditEventApi._onAuditStateChanged.Dispatch(
-          this.blotter,
-          stateChangedArgs
-        );
-        // new way
         this.blotter.api.auditEventApi.emit('AuditStateChanged', stateChangedArgs);
         break;
     }

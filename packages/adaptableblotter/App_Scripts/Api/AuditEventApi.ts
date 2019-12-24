@@ -1,7 +1,4 @@
-import { EventDispatcher } from '../Utilities/EventDispatcher';
-import { IAdaptableBlotter } from '../types';
 import { AuditLogEventArgs } from './Events/AuditEvents';
-import { IEvent } from '../Utilities/Interface/IEvent';
 import {
   AUDIT_STATE_CHANGED_EVENT,
   AUDIT_CELL_EDITED_EVENT,
@@ -25,7 +22,7 @@ import {
  *  const auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id
  *  ```
  *
- * The preferred way to listen to the Audit Event is as follows:
+ * The way to listen to the Audit Event is as follows:
  *
  *  ```ts
  * blotterApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
@@ -37,25 +34,6 @@ import {
  *
  */
 export interface AuditEventApi {
-  _onAuditStateChanged: EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>;
-  _onAuditCellEdited: EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>;
-  _onAuditFunctionApplied: EventDispatcher<IAdaptableBlotter, AuditLogEventArgs>;
-
-  /**
-   * **This event is deprecated - please use the new on('AuditStateChanged') event instead which returns the same AuditLogEventArgs**
-   */
-  onAuditStateChanged(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
-
-  /**
-   * **This event is deprecated - please use the new on('AuditCellEdited') event instead which returns the same AuditLogEventArgs**
-   */
-  onAuditCellEdited(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
-
-  /**
-   * **This event is deprecated - please use the new on('AuditFunctionApplied') event instead which returns the same AuditLogEventArgs**
-   */
-  onAuditFunctionApplied(): IEvent<IAdaptableBlotter, AuditLogEventArgs>;
-
   /**
    * Fired whenever the Redux state changes.
    *

@@ -17,6 +17,7 @@ import {
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { LiveReport } from '../Api/Events/LiveReportUpdated';
+import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 
 // this page needs some thought as currently we only send live data to iPushpull and Excel but soon we will send it to Glue42
 // we need something that will work for all 3 (e.g. all 3 will want to listen to Selected Cells) but allows you to manage throttling time differently for each
@@ -83,7 +84,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       );
     });
     // if a piece of data has updated then update any live reports
-    this.blotter.DataService.OnDataSourceChanged().Subscribe(() => {
+    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+      // we currently always refresh - is that right??
       this.refreshLiveReports();
     });
     // if the grid has refreshed then update any live reports

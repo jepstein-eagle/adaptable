@@ -30,11 +30,11 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ChartStrategyId, blotter);
 
-    this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
+    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       setTimeout(() => {
-        this.handleDataSourceChanged(eventText);
-      }, 500)
-    );
+        this.handleDataSourceChanged(dataChangedInfo);
+      }, 500);
+    });
 
     this.blotter._on('SearchApplied', () => {
       this.handleSearchChanged();

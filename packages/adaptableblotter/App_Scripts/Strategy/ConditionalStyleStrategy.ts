@@ -12,9 +12,9 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ConditionalStyleStrategyId, blotter);
-    this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
-      this.handleDataSourceChanged(eventText)
-    );
+    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+      this.handleDataSourceChanged(dataChangedInfo);
+    });
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {

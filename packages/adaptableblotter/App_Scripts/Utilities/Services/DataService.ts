@@ -1,35 +1,32 @@
-import { EventDispatcher } from '../EventDispatcher';
 import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
-import { IEvent } from '../Interface/IEvent';
-import ArrayExtensions from '../Extensions/ArrayExtensions';
+import Emitter, { EmitterCallback } from '../../Utilities/Emitter';
 
 // Used to be the Audit Service - now much reduced
 // Doesnt store any data (other than for flashing cell) - simply responsible for publishing DataChanged Events
 
 export class DataService implements IDataService {
   private _columnValueList: Map<string, Map<any, number>>;
+  private emitter: Emitter;
 
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     // create the _columnValueList - will be empty - used currrently only for flashing cell
     this._columnValueList = new Map();
+
+    this.emitter = new Emitter();
   }
+
+  on = (eventName: string, callback: EmitterCallback): (() => void) =>
+    this.emitter.on(eventName, callback);
+
+  public emit = (eventName: string, data?: any): Promise<any> => this.emitter.emit(eventName, data);
 
   public CreateDataChangedEvent(dataChangedInfo: DataChangedInfo): void {
     if (dataChangedInfo.NewValue != dataChangedInfo.OldValue) {
-      this._onDataSourceChanged.Dispatch(this, dataChangedInfo);
+      this.emitter.emit('DataChanged', dataChangedInfo);
     }
-  }
-
-  private _onDataSourceChanged: EventDispatcher<
-    IDataService,
-    DataChangedInfo
-  > = new EventDispatcher<IDataService, DataChangedInfo>();
-
-  OnDataSourceChanged(): IEvent<IDataService, DataChangedInfo> {
-    return this._onDataSourceChanged;
   }
 
   public GetPreviousColumnValue(

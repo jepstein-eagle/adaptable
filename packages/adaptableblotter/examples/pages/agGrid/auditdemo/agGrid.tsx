@@ -33,43 +33,40 @@ function InitAdaptableBlotter() {
     auditOptions: {
       auditInternalStateChanges: {
         auditAsEvent: true,
+        auditToConsole: true,
+      },
+      auditFunctionEvents: {
+        auditAsEvent: true,
+        //    auditToConsole: true,
       },
       auditUserStateChanges: {
         auditAsEvent: true,
+        auditToConsole: true,
       },
       auditCellEdits: {
         auditAsEvent: true,
+        auditToConsole: true,
       },
     },
   };
 
   blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 
-  let runNewEvents: boolean = true;
-
-  if (!runNewEvents) {
-    blotterApi.auditEventApi
-      .onAuditStateChanged()
-      .Subscribe((sender, auditLogEventArgs) =>
-        listenToAuditLogEvent('audit state', auditLogEventArgs)
-      );
-  } else {
-    blotterApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
-      listenToAuditLogEvent('cell edit', auditLogEventArgs);
-    });
-    blotterApi.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
-      listenToAuditLogEvent('function applied', auditLogEventArgs);
-    });
-    blotterApi.auditEventApi.on('AuditStateChanged', auditLogEventArgs => {
-      listenToAuditLogEvent('state changed', auditLogEventArgs);
-    });
-  }
+  blotterApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
+    listenToAuditLogEvent('cell edit', auditLogEventArgs);
+  });
+  blotterApi.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
+    listenToAuditLogEvent('function applied', auditLogEventArgs);
+  });
+  blotterApi.auditEventApi.on('AuditStateChanged', auditLogEventArgs => {
+    listenToAuditLogEvent('state changed', auditLogEventArgs);
+  });
 }
 
 function listenToAuditLogEvent(auditType: string, auditLogEventArgs: AuditLogEventArgs) {
   console.log('audit event received: ' + auditType);
-  console.log(auditLogEventArgs.data[0].id);
   let auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id;
+  console.log(auditLogEntry);
 }
 
 export default () => {

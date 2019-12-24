@@ -147,6 +147,9 @@ export type AUDIT_STATE_CHANGED_EVENT = 'AuditStateChanged';
 export type AUDIT_CELL_EDITED_EVENT = 'AuditCellEdited';
 export type AUDIT_FUNCTION_APPLIED_EVENT = 'AuditFunctionApplied';
 
+// Internal Data Event
+export type DATA_CHANGED_EVENT = 'DataChanged';
+
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
 export const SELECTED_CELLS_REPORT = 'Selected Cells';

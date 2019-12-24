@@ -18,9 +18,9 @@ import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.AlertStrategyId, blotter);
-    this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
-      this.handleDataSourceChanged(eventText)
-    );
+    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+      this.handleDataSourceChanged(dataChangedInfo);
+    });
   }
 
   public abstract initStyles(): void;

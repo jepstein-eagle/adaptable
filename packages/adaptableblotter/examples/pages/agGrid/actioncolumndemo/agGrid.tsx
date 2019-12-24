@@ -37,22 +37,12 @@ function InitAdaptableBlotter() {
   // userFunctions
 
   blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
-  let runNewEvents: boolean = true;
-
-  if (runNewEvents) {
-    blotterApi.eventApi.on(
-      'ActionColumnClicked',
-      (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
-        listenToActionColumnClicked(actionColumnEventArgs);
-      }
-    );
-  } else {
-    blotterApi.eventApi
-      .onActionColumnClicked()
-      .Subscribe((sender, actionColumnEventArgs) =>
-        listenToActionColumnClicked(actionColumnEventArgs)
-      );
-  }
+  blotterApi.eventApi.on(
+    'ActionColumnClicked',
+    (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
+      listenToActionColumnClicked(actionColumnEventArgs);
+    }
+  );
 }
 
 function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedEventArgs) {

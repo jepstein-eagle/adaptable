@@ -21,9 +21,9 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.UpdatedRowStrategyId, blotter);
 
-    this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
-      this.handleDataSourceChanged(eventText)
-    );
+    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+      this.handleDataSourceChanged(dataChangedInfo);
+    });
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {

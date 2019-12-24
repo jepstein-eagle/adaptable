@@ -1,7 +1,3 @@
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { EventDispatcher } from '../Utilities/EventDispatcher';
-
-import { IEvent } from '../Utilities/Interface/IEvent';
 import {
   SELECTION_CHANGED_EVENT,
   BLOTTER_READY_EVENT,

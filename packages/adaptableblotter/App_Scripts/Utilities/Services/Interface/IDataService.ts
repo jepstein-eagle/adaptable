@@ -1,5 +1,5 @@
 import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
-import { IEvent } from '../../Interface/IEvent';
+import { DATA_CHANGED_EVENT } from '../../Constants/GeneralConstants';
 
 export enum ChangeDirection {
   Up = 'Up',
@@ -14,11 +14,15 @@ export interface UpdatedRowInfo {
 
 export interface IDataService {
   CreateDataChangedEvent(dataChangedInfo: DataChangedInfo): void;
-  OnDataSourceChanged(): IEvent<IDataService, DataChangedInfo>;
   GetPreviousColumnValue(
     columnId: string,
     identifierValue: any,
     newValue: number,
     changeDirection: ChangeDirection
   ): number;
+
+  on(
+    eventName: DATA_CHANGED_EVENT,
+    callback: (dataChangedInfo: DataChangedInfo) => void
+  ): () => void;
 }
