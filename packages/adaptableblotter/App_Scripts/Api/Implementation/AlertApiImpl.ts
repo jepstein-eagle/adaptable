@@ -6,7 +6,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertApi } from '../AlertApi';
-import { AlertState, AlertProperties, AlertDefinition } from '../../PredefinedConfig/AlertState';
+import { AlertState, AlertDefinition, AlertProperties } from '../../PredefinedConfig/AlertState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import OpenfinHelper from '../../Utilities/Helpers/OpenfinHelper';
@@ -47,34 +47,35 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     LoggingHelper.LogAlert(alertToShow.Header + ': ' + alertToShow.Msg, alertToShow.AlertDefinition
       .MessageType as MessageType);
 
-    // There are 3 possible other actions that could happen
+    if (alertToShow.AlertDefinition && alertToShow.AlertDefinition.AlertProperties != undefined) {
+      let alertProperties: AlertProperties = alertToShow.AlertDefinition.AlertProperties;
+      // There are 4 possible other actions that could happen
 
-    // 1.
-
-    if (alertToShow.AlertDefinition.AlertProperties.ShowPopup) {
-      if (StringExtensions.IsNotNullOrEmpty(this.getBlotterState().Alert.AlertPopupDiv)) {
-        let alertString: string = alertToShow.Header + ': ' + alertToShow.Msg;
-        let alertDiv = document.getElementById(this.getBlotterState().Alert.AlertPopupDiv);
-        if (alertDiv) {
-          alertDiv.innerHTML = alertString;
-        }
-      } else {
+      // 1. Show a Popup
+      if (alertProperties.ShowPopup) {
         this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow));
       }
-    }
-
-    if (
-      alertToShow.AlertDefinition &&
-      alertToShow.AlertDefinition.AlertProperties != undefined &&
-      alertToShow.AlertDefinition.AlertProperties.JumpToCell &&
-      alertToShow.DataChangedInfo
-    ) {
-      this.blotter.jumpToCell(
-        alertToShow.DataChangedInfo.ColumnId,
-        alertToShow.DataChangedInfo.RowNode
-      );
+      // 1. Show it in a Div (if one has been set)
+      if (alertProperties.ShowInDiv) {
+        if (StringExtensions.IsNotNullOrEmpty(this.getBlotterState().Alert.AlertDisplayDiv)) {
+          let alertString: string = alertToShow.Header + ': ' + alertToShow.Msg;
+          let alertDiv = document.getElementById(this.getBlotterState().Alert.AlertDisplayDiv);
+          if (alertDiv) {
+            alertDiv.innerHTML = alertString;
+          }
+        }
+      }
+      // 3: Jump to the Cell
+      if (alertProperties.JumpToCell && alertToShow.DataChangedInfo) {
+        this.blotter.jumpToCell(
+          alertToShow.DataChangedInfo.ColumnId,
+          alertToShow.DataChangedInfo.RowNode
+        );
+      }
     }
   }
+
+  // 4: Hight the cell - though that is taken care of in the Style Service
 
   public displayMessageAlertPopup(alertToDisplayAsPopup: AdaptableAlert): void {
     this.dispatchAction(PopupRedux.PopupShowAlert(alertToDisplayAsPopup));

@@ -50,7 +50,7 @@ console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout', 'AdvancedSearch'],
+    VisibleToolbars: ['Layout', 'Export'],
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',

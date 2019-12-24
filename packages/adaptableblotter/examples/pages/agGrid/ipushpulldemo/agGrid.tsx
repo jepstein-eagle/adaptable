@@ -121,7 +121,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
+    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'Alert'],
   },
 };
 

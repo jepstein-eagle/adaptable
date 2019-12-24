@@ -81,11 +81,11 @@ export interface AlertState extends RunTimeState {
    *
    * Leave blank if you want them to show using the main Adaptable Blotter popup.
    *
-   * **This property is only used if the Alert itself has ShowPopup set to true**.
+   * **This property is only used if the Alert itself being displayed has <i>ShowInDiv</i> set to true**.
    *
    * **Default Value**:  Empty string
    */
-  AlertPopupDiv?: string;
+  AlertDisplayDiv?: string;
 }
 
 /**
@@ -126,4 +126,5 @@ export interface AlertProperties {
   ShowPopup?: boolean;
   HighlightCell?: boolean;
   JumpToCell?: boolean;
+  ShowInDiv?: boolean;
 }

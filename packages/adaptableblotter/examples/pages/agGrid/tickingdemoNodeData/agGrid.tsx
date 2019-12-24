@@ -85,7 +85,7 @@ let json: PredefinedConfig = {
         },
       },
     ],
-    AlertPopupDiv: '',
+    AlertDisplayDiv: '',
     MaxAlertsInStore: 50,
   },
 };

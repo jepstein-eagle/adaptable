@@ -43,7 +43,7 @@ export const AlertDefinitionDelete = (
 const initialAlertState: AlertState = {
   AlertDefinitions: EMPTY_ARRAY,
   MaxAlertsInStore: ALERT_DEFAULT_MAX_ALERTS_IN_STORE,
-  AlertPopupDiv: EMPTY_STRING,
+  AlertDisplayDiv: EMPTY_STRING,
 };
 
 export const AlertReducer: Redux.Reducer<AlertState> = (

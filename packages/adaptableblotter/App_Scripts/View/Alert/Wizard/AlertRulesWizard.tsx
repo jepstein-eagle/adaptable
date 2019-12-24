@@ -60,7 +60,7 @@ export class AlertRulesWizard
         <Flex flexDirection="column" padding={2}>
           <Box>
             <HelpBlock>
-              {'Show alerts for any data change to the ' + columnFriendlyName + ' column.'}
+              {'Show Alerts for any data change to the ' + columnFriendlyName + ' column.'}
             </HelpBlock>
             <Radio
               marginLeft={1}

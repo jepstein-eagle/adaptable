@@ -38,8 +38,10 @@ export class CellValidationSelectQueryWizard
     return (
       <WizardPanel>
         <HelpBlock marginBottom={2}>
-          <p>A Query is used if the rule is dependent on other values in the row.</p>
-          <p>The rule will only be activated and checked if the Query passes.</p>
+          A Query is used if the rule is dependent on other values in the row.
+          <br />
+          <br />
+          The rule will only be activated and checked if the Query passes.
         </HelpBlock>
         <Flex flexDirection="row" alignItems="center">
           <Checkbox

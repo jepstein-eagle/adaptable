@@ -17,20 +17,22 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 Demo for checking alerts work
 */
 
-LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'alert demo'
+    'Alerts Demo'
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Layout', 'Alert'],
+  },
   Alert: {
     AlertDefinitions: [
       {
@@ -46,10 +48,12 @@ let demoConfig: PredefinedConfig = {
         },
         AlertProperties: {
           ShowPopup: false,
+          ShowInDiv: true,
         },
       },
     ],
-    AlertPopupDiv: '',
+    AlertDisplayDiv: 'alertDiv', // for when testing showing alerts in the User nominated Div
+    // AlertDisplayDiv: '',
     MaxAlertsInStore: 5,
   },
 };
