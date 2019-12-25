@@ -1,5 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { ToolbarButton } from './Common/ToolbarButton';
+import { DesignTimeState } from './DesignTimeState';
 
 /**
  * The Predefined Configuration for the Application function
@@ -46,7 +47,7 @@ import { ToolbarButton } from './Common/ToolbarButton';
  * ```
  *
  **/
-export interface ApplicationState extends RunTimeState {
+export interface ApplicationState extends DesignTimeState {
   /**
    * An array of Application Data Entries (essentially Key / Value pairs) enabling you to provide the Adaptable Blotter with your own data.
    *

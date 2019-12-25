@@ -107,7 +107,6 @@ export interface ConfigApi {
   configGetSparklineColumnState(returnJson: boolean): SparklineColumnState;
   configGetSystemFilterState(returnJson: boolean): SystemFilterState;
   configGetSystemStatusState(returnJson: boolean): SystemStatusState;
-  configGetTeamSharingState(returnJson: boolean): TeamSharingState;
   configGetThemeState(returnJson: boolean): ThemeState;
   configGetToolPanelState(returnJson: boolean): ToolPanelState;
   configGetUpdatedRowState(returnJson: boolean): UpdatedRowState;

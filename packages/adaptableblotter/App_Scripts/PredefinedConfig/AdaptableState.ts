@@ -55,6 +55,7 @@ export interface AdaptableState {
 
   // Set at design time only
   ActionColumn: ActionColumnState;
+  Application: ApplicationState;
   Entitlements: EntitlementState;
   NamedFilter: NamedFilterState;
   Partner: PartnerState;
@@ -64,7 +65,6 @@ export interface AdaptableState {
   UserInterface: UserInterfaceState;
 
   // Set at design time and / or run time => only state which is persisted
-  Application: ApplicationState;
   AdvancedSearch: AdvancedSearchState;
   Alert: AlertState;
   BulkUpdate: BulkUpdateState;

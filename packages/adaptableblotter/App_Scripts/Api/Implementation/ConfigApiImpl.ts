@@ -39,7 +39,6 @@ import { PercentBarState } from '../../PredefinedConfig/PercentBarState';
 import { ReminderState } from '../../PredefinedConfig/ReminderState';
 import { SystemFilterState } from '../../PredefinedConfig/SystemFilterState';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
-import { TeamSharingState } from '../../PredefinedConfig/TeamSharingState';
 import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
 import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';
 import { ConfigApi } from '../ConfigApi';
@@ -350,9 +349,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   }
   public configGetSystemStatusState(returnJson: boolean = false): SystemStatusState {
     return this.configGetUserStateByStateKey('SystemStatus', returnJson) as SystemStatusState;
-  }
-  public configGetTeamSharingState(returnJson: boolean = false): TeamSharingState {
-    return this.configGetUserStateByStateKey('TeamSharing', returnJson) as TeamSharingState;
   }
   public configGetThemeState(returnJson: boolean = false): ThemeState {
     return this.configGetUserStateByStateKey('Theme', returnJson) as ThemeState;

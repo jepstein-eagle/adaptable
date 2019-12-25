@@ -320,13 +320,14 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.POPUP,
       ConfigConstants.TEAM_SHARING,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
-      ConfigConstants.USER_INTERFACE,
+      ConfigConstants.APPLICATION,
       ConfigConstants.ENTITLEMENTS,
-      ConfigConstants.SYSTEM_FILTER,
       ConfigConstants.PARTNER,
+      ConfigConstants.SYSTEM_FILTER,
+      ConfigConstants.USER_INTERFACE,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
-      ConfigConstants.NAMED_FILTER,
       ConfigConstants.ACTION_COLUMN,
+      ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
     ];
 

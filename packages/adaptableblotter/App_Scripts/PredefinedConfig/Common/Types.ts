@@ -132,7 +132,6 @@ export type AdaptableStateKey =
   | 'SparklineColumn'
   | 'SystemFilter'
   | 'SystemStatus'
-  | 'TeamSharing'
   | 'Theme'
   | 'ToolPanel'
   | 'UpdatedRow'

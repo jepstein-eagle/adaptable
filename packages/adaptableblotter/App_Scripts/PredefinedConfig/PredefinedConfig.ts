@@ -44,39 +44,19 @@ import { ToolPanelState } from './ToolPanelState';
  *
  * Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
  *
- * The items in Predefined Config can be conceptually be put into 2 categories:
+ * The State items in Predefined Config can be conceptually be put into 2 categories:
  *
- * - Design Time State: Never overriden by users at run-time - e.g. UI colours, more...
+ * - Design Time: Never overriden by users at run-time - e.g. UI colours, more...
  *
- * - Run Time State - Can be overriden' by user's actions (which are then persisted as part of State Management)
+ * - Run Time: Can be overriden' by user's actions (and then persisted through State Management)
  *
  *
  *
  *  | State Property 	                                                                      | State Type          | Details                                     	|
  *  |----------------	                                                                      |-------------------	|---------------------------------------------	|
  *  | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)   	      | Design Time 	      | Used to create dynamic columns with Buttons 	|
- *  | AdvancedSearch 	                                                                      | Run Time    	      | Create saveable multi-column searches       	|
- *  |                	|                   	|                                             	|
+ *  | [AdvancedSearch](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)   	| Design Time 	      | Create saveable multi-column searches	        |
  *
- *
- *
- *  | Property                | Type
- *  | -----------             | -----------
- *  | ActionColumn            | Design Time State
- *  | Entitlements            | Design Time State
- *  | NamedFilter             | Design Time State
- *  | Partner                 | Design Time State
- *  | SparklineColumn         | Design Time State
- *  | SystemFilter            | Design Time State
- *  | SystemStatus            | Design Time State
- *  | UserInterface           | Design Time State
- *  | In Past                 | Date
- *  | In Future               | Date
- *  | Yesterday               | Date
- *  | Tomorrow                | Date
- *  | Next Working Day        | Date
- *  | Previous Working Day    | Date
- *  | This Year               | Date
  *
  *
  * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
