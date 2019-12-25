@@ -52,10 +52,10 @@ import { ToolPanelState } from './ToolPanelState';
  *
  *
  *
- *  | State Property 	| Type              	| Details                                     	|
- *  |----------------	|-------------------	|---------------------------------------------	|
- *  | ActionColumn   	| Design Time State 	| Used to create dynamic columns with Buttons 	|
- *  | AdvancedSearch 	| Run Time State    	| Create saveable multi-column searches       	|
+ *  | State Property 	                                                                      | State Type          | Details                                     	|
+ *  |----------------	                                                                      |-------------------	|---------------------------------------------	|
+ *  | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)   	      | Design Time 	      | Used to create dynamic columns with Buttons 	|
+ *  | AdvancedSearch 	                                                                      | Run Time    	      | Create saveable multi-column searches       	|
  *  |                	|                   	|                                             	|
  *
  *
