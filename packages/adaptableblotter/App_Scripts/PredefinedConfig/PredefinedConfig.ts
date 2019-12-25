@@ -50,12 +50,12 @@ import { ToolPanelState } from './ToolPanelState';
  *
  * - Run Time State - Can be overriden' by user's actions (which are then persisted as part of State Management)
  *
- *  | State Property          | Type                | Link
- *  | -----------             | -----------         | -----------
- *  | ActionColumn            | Design Time State   | [More Info](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
- *  | Application             | Run Time State
+ *  | State Property          | Type
+ *  | -----------             | -----------
+ *  | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)            | Design Time State   |
  *  | AdvancedSearch          | Run Time State
  *  | Alert                   | Run Time State
+ *  | Application             | Run Time State
  *  | BulkUpdate              | Run Time State
  *  | CalculatedColumn        | Run Time State
  *  | Calendar                | Run Time State
