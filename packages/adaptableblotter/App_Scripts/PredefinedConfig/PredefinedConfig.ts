@@ -50,45 +50,10 @@ import { ToolPanelState } from './ToolPanelState';
  *
  * - Run Time State - Can be overriden' by user's actions (which are then persisted as part of State Management)
  *
- *  | State Property          | Type
- *  | -----------             | -----------
- *  | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)            | Design Time State   |
- *  | AdvancedSearch          | Run Time State
- *  | Alert                   | Run Time State
- *  | Application             | Run Time State
- *  | BulkUpdate              | Run Time State
- *  | CalculatedColumn        | Run Time State
- *  | Calendar                | Run Time State
- *  | CellSummary             | Run Time State
- *  | CellValidation          | Run Time State
- *  | Chart                   | Run Time State
- *  | ColumnCategory          | Run Time State
- *  | ColumnFilter            | Run Time State
- *  | ConditionalStyle        | Run Time State
- *  | CustomSort              | Run Time State
- *  | Dashboard               | Run Time State
- *  | DataSource              | Run Time State
- *  | Entitlements            | Design Time State
- *  | Export                  | Run Time State
- *  | FreeTextColumn          | Run Time State
- *  | Layout                  | Run Time State
- *  | NamedFilter             | Design Time State
- *  | Partner                 | Design Time State
- *  | PercentBar              | Run Time State
- *  | PlusMinus               | Run Time State
- *  | QuickSearch             | Run Time State
- *  | Reminder                | Run Time State
- *  | Shortcut                | Run Time State
- *  | SmartEdit               | Run Time State
- *  | SparklineColumn         | Design Time State
- *  | SystemFilter            | Design Time State
- *  | SystemStatus            | Design Time State
- *  | TeamSharing             | Run Time State
- *  | Theme                   | Run Time State
- *  | ToolPanel               | Run Time State
- *  | UpdatedRow              | Run Time State
- *  | UserFilter              | Run Time State
- *  | UserInterface           | Design Time State
+ *  | State Property                                                                         | Type                      | Details
+ *  | -----------                                                                            | -----------               | -----------
+ *  | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)            | Design Time State         | Used to create dynamic columns with Buttons
+ *  | AdvancedSearch                                                                         | Run Time State            | Create saveable multi-column searches
  *
  * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
  *
@@ -491,3 +456,43 @@ export interface PredefinedConfig {
    */
   UserFilter?: UserFilterState;
 }
+
+/*
+
+ *  | Alert                   | Run Time State
+ *  | Application             | Run Time State
+ *  | BulkUpdate              | Run Time State
+ *  | CalculatedColumn        | Run Time State
+ *  | Calendar                | Run Time State
+ *  | CellSummary             | Run Time State
+ *  | CellValidation          | Run Time State
+ *  | Chart                   | Run Time State
+ *  | ColumnCategory          | Run Time State
+ *  | ColumnFilter            | Run Time State
+ *  | ConditionalStyle        | Run Time State
+ *  | CustomSort              | Run Time State
+ *  | Dashboard               | Run Time State
+ *  | DataSource              | Run Time State
+ *  | Entitlements            | Design Time State
+ *  | Export                  | Run Time State
+ *  | FreeTextColumn          | Run Time State
+ *  | Layout                  | Run Time State
+ *  | NamedFilter             | Design Time State
+ *  | Partner                 | Design Time State
+ *  | PercentBar              | Run Time State
+ *  | PlusMinus               | Run Time State
+ *  | QuickSearch             | Run Time State
+ *  | Reminder                | Run Time State
+ *  | Shortcut                | Run Time State
+ *  | SmartEdit               | Run Time State
+ *  | SparklineColumn         | Design Time State
+ *  | SystemFilter            | Design Time State
+ *  | SystemStatus            | Design Time State
+ *  | TeamSharing             | Run Time State
+ *  | Theme                   | Run Time State
+ *  | ToolPanel               | Run Time State
+ *  | UpdatedRow              | Run Time State
+ *  | UserFilter              | Run Time State
+ *  | UserInterface           | Design Time State
+ * 
+ * */
