@@ -7,15 +7,13 @@ import { DesignTimeState } from './DesignTimeState';
  *
  *  **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardapplicationtoolbardemo/) | [API](_api_applicationapi_.applicationapi.html) |
+ * [API](_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-Blotter-State-FAQ)
  *
  * **The Application Data Entries**
  *
- * The Application State provides an ApplicationDataEntries array.
+ * The `ApplicationDataEntries` array enables you to provide the Adaptable Blotter with your own data (which needs to be provided in key / value form) that the Adaptable Blotter will then store in its State.
  *
- * This enables you to provide the Adaptable Blotter with your own data (which needs to be provided in key / value form) that the Adaptable Blotter will then store in its State.
- *
- *  **Because these entries are stored as JSON, the value must be something that is capable of being 'stringified'**
+ *  **Note** Because these entries are stored as JSON, the value must be something that is capable of being 'stringified'.
  *
  * **Application Data Entries Predefined Config Example**
  *

@@ -16,6 +16,7 @@ module.exports = {
     './App_Scripts/env.ts',
     './App_Scripts/theme.ts',
     './App_Scripts/types.ts',
+    './App_Scripts/PredefinedConfig/AdaptableState.ts',
   ],
   tsconfig: 'tsconfig.json',
   out: './apidoc',
