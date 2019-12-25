@@ -53,9 +53,9 @@ import { ToolPanelState } from './ToolPanelState';
  *  | Property                | Type
  *  | -----------             | -----------
  *  | ActionColumn            | Design Time State
+ *  | Application             | Run Time State
  *  | AdvancedSearch          | Run Time State
  *  | Alert                   | Run Time State
- *  | Application             | Run Time State
  *  | BulkUpdate              | Run Time State
  *  | CalculatedColumn        | Run Time State
  *  | Calendar                | Run Time State
@@ -88,7 +88,7 @@ import { ToolPanelState } from './ToolPanelState';
  *  | ToolPanel               | Run Time State
  *  | UpdatedRow              | Run Time State
  *  | UserFilter              | Run Time State
- *  | UserInterface           | Design Time State
+ * | UserInterface           | Design Time State
  *
  * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
  *
