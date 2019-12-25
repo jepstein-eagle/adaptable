@@ -50,11 +50,11 @@ import { ToolPanelState } from './ToolPanelState';
  *
  * - Run Time State - Can be overriden' by user's actions (which are then persisted as part of State Management)
  *
- *  | State Property                                                                         | Type                      | Details
- *  | -----------                                                                            | -----------               | -----------
- *  | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)            | Design Time State         | Used to create dynamic columns with Buttons
- *  | AdvancedSearch                                                                         | Run Time State            | Create saveable multi-column searches
- *
+ *  | State Property                                                              | Type              | Details                                     |
+ * |-----------------------------------------------------------------------------|-------------------|---------------------------------------------|
+ * | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) | Design Time State | Used to create dynamic columns with Buttons |
+ * | AdvancedSearch                                                              | Run Time State    | Create saveable multi-column searches       |
+ *|                                                                             |                   |                                             |
  * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
  *
  * ## Predefined Config example
