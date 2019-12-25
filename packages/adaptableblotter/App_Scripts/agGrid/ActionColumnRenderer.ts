@@ -1,11 +1,7 @@
 import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
-import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { ActionColumn, ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
-import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
 import AdaptableBlotter from '../../agGrid';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
-import Helper from '../Utilities/Helpers/Helper';
 import {
   ActionColumnClickedEventArgs,
   ActionColumnClickedInfo,
@@ -42,26 +38,8 @@ export class ActionColumnRenderer implements ICellRendererComp {
         }
       }
 
-      // bit complicated for the moment until we get rid of deprecated options rendering
-      // first we try to get the render func from the object; if that doesnt work we get from Advanced Options
-      let renderFunc: any = actionCol.RenderFunction;
-
-      if (Helper.objectNotExists(renderFunc)) {
-        if (StringExtensions.IsNotNullOrEmpty(actionCol.RenderFunctionName)) {
-          if (
-            ArrayExtensions.IsNotNullOrEmpty(
-              blotter.blotterOptions.advancedOptions!.userFunctions!.actionColumnFunctions!
-            )
-          ) {
-            let actionColumnFunction: ActionColumnFunction = blotter.blotterOptions.advancedOptions!.userFunctions!.actionColumnFunctions!.find(
-              acf => acf.name == actionCol!.RenderFunctionName
-            );
-            renderFunc = actionColumnFunction.func;
-          }
-        }
-      }
-
       // If we have a render Func then we use that, otherwise we use the name of the Button Text
+      let renderFunc: any = actionCol.RenderFunction;
       if (renderFunc) {
         this.eGui.innerHTML = renderFunc(actionColumnRenderParams);
       } else {

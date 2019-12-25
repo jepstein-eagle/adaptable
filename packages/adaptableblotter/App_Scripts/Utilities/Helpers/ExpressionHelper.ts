@@ -21,7 +21,6 @@ import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
-import { NamedFilterFunction } from '../../BlotterOptions/AdvancedOptions';
 import Helper from './Helper';
 
 export interface IRangeEvaluation {
@@ -278,32 +277,10 @@ export function IsSatisfied(
           for (let namedFilter of filteredNamedFilters) {
             // see if there is a predicate function in the object itself - the new way
             let satisfyFunction = namedFilter.FilterPredicate;
-            if (satisfyFunction != null) {
+            if (satisfyFunction) {
               isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
               if (isColumnSatisfied) {
                 break;
-              }
-            } else {
-              // there is no predicate function in the object so lets get from the deprecated AdvancedOptions
-              let funcName: string = namedFilter.PredicateName;
-
-              if (StringExtensions.IsNotNullOrEmpty(funcName)) {
-                if (
-                  ArrayExtensions.IsNotNullOrEmpty(
-                    blotter.blotterOptions.advancedOptions.userFunctions.namedFilterFunctions
-                  )
-                ) {
-                  let namedFilterFunction: NamedFilterFunction = blotter.blotterOptions.advancedOptions.userFunctions.namedFilterFunctions.find(
-                    nff => nff.name == funcName
-                  );
-                  if (namedFilterFunction) {
-                    let satisfyFunction = namedFilterFunction.func;
-                    isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
-                    if (isColumnSatisfied) {
-                      break;
-                    }
-                  }
-                }
               }
             }
           }

@@ -7,7 +7,6 @@ import { QueryOptions } from './QueryOptions';
 import { GeneralOptions } from './GeneralOptions';
 import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
-import { AdvancedOptions } from './AdvancedOptions';
 import { EditOptions } from './EditOptions';
 import { StateOptions } from './StateOptions';
 
@@ -171,17 +170,6 @@ export interface AdaptableBlotterOptions {
    * Includes options for managing Server Searching, themes and how to manage Primary Keys.
    */
   generalOptions?: GeneralOptions;
-
-  //  flashingUpdateOptions?: FlashingUpdateOptions;
-
-  /**
-   * A set of advanced options for the Adaptable Blotter.
-   *
-   * The properties in this section are used for more advanced scenarios.
-   *
-   * Currently it contains properties for managing functions which developers provide (that cannot be stored in the 'normal' way with JSON).
-   */
-  advancedOptions?: AdvancedOptions;
 
   /**
    * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.

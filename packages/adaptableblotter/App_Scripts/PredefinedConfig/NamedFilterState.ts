@@ -76,11 +76,6 @@ export interface NamedFilter extends AdaptableObject {
   Scope: Scope;
 
   /**
-   * **This property is deprecated; instead provide the full function using the *FilterPredicate* property below**
-   */
-  PredicateName?: string;
-
-  /**
    * The name of the Predicate Function that will be run each time the Named Filter is applied.
    */
   FilterPredicate?: (record: any, columnId: string, cellValue: any) => boolean;

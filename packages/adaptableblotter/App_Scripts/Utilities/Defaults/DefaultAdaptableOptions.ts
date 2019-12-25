@@ -99,12 +99,6 @@ export const DefaultAdaptableOptions: AdaptableBlotterOptions = {
     showAdaptableContextMenu: true,
     // checkIfLatestVersionOnStartup: true,
   },
-  advancedOptions: {
-    userFunctions: {
-      namedFilterFunctions: [],
-      actionColumnFunctions: [],
-    },
-  },
   stateOptions: {
     applyState: state => state,
     saveState: state => state,
