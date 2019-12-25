@@ -1,13 +1,26 @@
 # Accessing Adaptable Blotter through code
 
-There are 3 main ways that developers / users 'interact' with the code in the Adaptable Blotter:
+There are 3 primary ways that developers / users 'interact' with the code in the Adaptable Blotter:
 
-- **Setting up** the Adaptable Blotter through configuring [Blotter Options](./interfaces/_blotteroptions_adaptableblotteroptions_.adaptableblotteroptions.html) which are passed in to the Adaptable Blotter implementation
+- **Setting up** the Adaptable Blotter through configuring [Blotter Options](./interfaces/_blotteroptions_adaptableblotteroptions_.adaptableblotteroptions.html) which are passed in to the Adaptable Blotter instance when constructed.
 
 - **Pre-populating** the Adaptable Blotter with the objects it requires at startup with all the objects it requires through writing [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
 - **Accessing all the functionality and state** in the Adaptable Blotter through code (at runtime) via the [Adaptable Blotter API](interfaces/_api_blotterapi_.blotterapi.html).
 
+These 3 objects are linked in this way: **Predefined Configuration** is one of the properties of **BlotterOptions** which is passed into the Adaptable Blotter static constructor.  That constructor returns the **Blotter Api**
+
+```tsx
+// Create an Adaptable Blotter Options object to pass in to the constructor
+ const adaptableBlotterOptions: AdaptableBlotterOptions = {
+    primaryKey: 'tradeId', // a unique column
+    vendorGrid: gridOptions, // the underlying vendor DataGrid
+    predefinedConfig: predefinedConfig, // the predefined config we created
+  };
+
+  // the Adaptable Blotter constructor will return a Blotter API object that we can use
+ const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+```
 
 ## Blotter Options
 
