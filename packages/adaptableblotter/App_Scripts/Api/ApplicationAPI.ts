@@ -1,6 +1,6 @@
 import { ApplicationState, ApplicationDataEntry } from '../PredefinedConfig/ApplicationState';
 /**
- * Provides Application Data Entries allowing developers to store their own data in the State (as Key / Value Pairs).
+ * Provides an `ApplicationDataEntry` array allowing developers to store their own data in the Adaptable Blotter State (as Key / Value Pairs).
  *
  *  **Further Resources**
  *
