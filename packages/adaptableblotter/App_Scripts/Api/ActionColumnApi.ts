@@ -5,25 +5,25 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  *  **Further Resources**
  *
- * - [Demo Site](https://demo.adaptableblotter.com/column/aggridactioncolumnsdemo/)
+ * - [Action Column Demo](https://demo.adaptableblotter.com/column/aggridactioncolumnsdemo/)
  *
- * - [State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
+ * - [Action Column State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
  *
- * - [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ)
+ * - [Action Column FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ)
  *
- * - [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos)
+ * - [Action Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos)
  *
- * - [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
+ * - [Adaptable Blotter User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *
  */
 export interface ActionColumnApi {
   /**
-   * Retrieves the Action Column section from the Adaptable Blotter State
+   * Retrieves the `ActionColumn` section from the Adaptable Blotter State
    */
   getActionColumnState(): ActionColumnState;
 
   /**
-   * Returns all the Advanced Searches in the Adaptable Blotter State
+   * Returns all the `ActionColumn` objects in the Action Column section of Adaptable Blotter State
    */
   getAllActionColumn(): ActionColumn[];
 }
