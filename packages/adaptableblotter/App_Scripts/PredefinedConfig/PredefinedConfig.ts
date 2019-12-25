@@ -43,52 +43,36 @@ import { ToolPanelState } from './ToolPanelState';
  * The interface consists of a series of (nullable) properties that themselves each implement *ConfigState*.
  *
  * Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
- *
+ * 
  * The items in Predefined Config can be conceptually be put into 2 categories:
- *
+ * 
  * - Design Time State: Never overriden by users at run-time - e.g. UI colours, more...
- *
+ * 
  * - Run Time State - Can be overriden' by user's actions (which are then persisted as part of State Management)
+ * 
+
+ 
+ 
+
  *
  *  | Property                | Type
  *  | -----------             | -----------
  *  | ActionColumn            | Design Time State
- *  | Application             | Run Time State
- *  | AdvancedSearch          | Run Time State
- *  | Alert                   | Run Time State
- *  | BulkUpdate              | Run Time State
- *  | CalculatedColumn        | Run Time State
- *  | Calendar                | Run Time State
- *  | CellSummary             | Run Time State
- *  | CellValidation          | Run Time State
- *  | Chart                   | Run Time State
- *  | ColumnCategory          | Run Time State
- *  | ColumnFilter            | Run Time State
- *  | ConditionalStyle        | Run Time State
- *  | CustomSort              | Run Time State
- *  | Dashboard               | Run Time State
- *  | DataSource              | Run Time State
  *  | Entitlements            | Design Time State
- *  | Export                  | Run Time State
- *  | FreeTextColumn          | Run Time State
- *  | Layout                  | Run Time State
  *  | NamedFilter             | Design Time State
  *  | Partner                 | Design Time State
- *  | PercentBar              | Run Time State
- *  | PlusMinus               | Run Time State
- *  | QuickSearch             | Run Time State
- *  | Reminder                | Run Time State
- *  | Shortcut                | Run Time State
- *  | SmartEdit               | Run Time State
  *  | SparklineColumn         | Design Time State
  *  | SystemFilter            | Design Time State
  *  | SystemStatus            | Design Time State
- *  | TeamSharing             | Run Time State
- *  | Theme                   | Run Time State
- *  | ToolPanel               | Run Time State
- *  | UpdatedRow              | Run Time State
- *  | UserFilter              | Run Time State
- * | UserInterface           | Design Time State
+ *  | UserInterface           | Design Time State
+ *  | In Past                 | Date
+ *  | In Future               | Date
+ *  | Yesterday               | Date
+ *  | Tomorrow                | Date
+ *  | Next Working Day        | Date
+ *  | Previous Working Day    | Date
+ *  | This Year               | Date
+ *
  *
  * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
  *
