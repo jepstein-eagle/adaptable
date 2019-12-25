@@ -8,17 +8,18 @@ There are 3 primary ways that developers / users 'interact' with the code in the
 
 - **Accessing all the functionality and state** in the Adaptable Blotter through code (at runtime) via the [Adaptable Blotter API](interfaces/_api_blotterapi_.blotterapi.html).
 
-These 3 objects are linked in this way: **Predefined Configuration** is one of the properties of **BlotterOptions** which is passed into the Adaptable Blotter static constructor.  That constructor returns the **Blotter Api**
+These 3 objects are linked as follows: 
+**Predefined Configuration** is a property of **BlotterOptions** which is passed into the Adaptable Blotter constructor, that returns the **Blotter Api**
 
 ```tsx
 // Create an Adaptable Blotter Options object to pass in to the constructor
- const adaptableBlotterOptions: AdaptableBlotterOptions = {
+ const adaptableOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId', // a unique column
     vendorGrid: gridOptions, // the underlying vendor DataGrid
     predefinedConfig: predefinedConfig, // the predefined config we created
   };
 
-  // the Adaptable Blotter constructor will return a Blotter API object that we can use
+  // the Adaptable constructor returns an API object that we can use
  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
 ```
 
@@ -30,7 +31,7 @@ You use the Blotter Options to set up the Adaptabble Blotter at design time so t
 
 ## Predefined Configuration
 
-You can provide the Adaptable Blotter at start-up with _Predefined Configuration_ which ensures that when the Blotter first loads it contains all the objects that users need. This includes entitlements.
+You can provide the Adaptable Blotter at start-up with _Predefined Configuration_ which ensures that when the Blotter first loads it contains all the objects that users need. This includes *Entitlements*.
 
 [See Predefined Configuration Code](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
