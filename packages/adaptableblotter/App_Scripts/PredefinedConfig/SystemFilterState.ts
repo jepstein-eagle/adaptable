@@ -29,15 +29,6 @@ import { DesignTimeState } from './DesignTimeState';
  * } as PredefinedConfig;
  * ```
  *
- *  | State Property 	| Type              	| Details                                     	|
- *  |----------------	|-------------------	|---------------------------------------------	|
- *  | ActionColumn   	| Design Time State 	| Used to create dynamic columns with Buttons 	|
- *  | AdvancedSearch 	| Run Time State    	| Create saveable multi-column searches       	|
- *  |                	|                   	|                                             	|
- *
- *
- *
- *
  * The full list of available System Filters is:
  *
  *  | Filter                  | Columns

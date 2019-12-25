@@ -51,6 +51,15 @@ import { ToolPanelState } from './ToolPanelState';
  * - Run Time State - Can be overriden' by user's actions (which are then persisted as part of State Management)
  *
  *
+ *
+ *  | State Property 	| Type              	| Details                                     	|
+ *  |----------------	|-------------------	|---------------------------------------------	|
+ *  | ActionColumn   	| Design Time State 	| Used to create dynamic columns with Buttons 	|
+ *  | AdvancedSearch 	| Run Time State    	| Create saveable multi-column searches       	|
+ *  |                	|                   	|                                             	|
+ *
+ *
+ *
  *  | Property                | Type
  *  | -----------             | -----------
  *  | ActionColumn            | Design Time State
