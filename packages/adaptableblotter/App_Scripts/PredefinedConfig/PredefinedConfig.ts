@@ -52,42 +52,42 @@ import { ToolPanelState } from './ToolPanelState';
  *
  *
  *
- *  | State Property 	                                                                        | State Type          | Details                                     	                |
+ *  | State Property 	                                                                        | Saveable            | Details                                     	                |
  *  |----------------	                                                                        |-------------------	|---------------------------------------------	                |
- *  | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)   	        | Design Time 	      | Create dynamic columns with Buttons that fire events 	        |
- *  | [AdvancedSearch](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)   	  | Run Time 	          | Create saveable multi-column searches with multiple criteria  |
- *  | [Alert](_predefinedconfig_alertstate_.alertstate.html)   	                              | Run Time 	          | Provide Alert Definitions which will trigger run-time alerts  |
- *  | [Application](_predefinedconfig_applicationstate_.applicationstate.html)   	            | Design Time 	      | Save your own state as key / value pairs 	                    |
- *  | [BulkUpdate](_predefinedconfig__bulkupdatestate_.bulkupdatestate.html)   	              | Run Time 	          | Update multiple cells in a column to contain a new value      |
- *  | [CalculatedColumn](_predefinedconfig_calculatedcolumnstate_.calculatedcolumn.html)   	  | Run Time 	          | Create custom columns with dynamic values based on expression |
- *  | [Calendar](_predefinedconfig_calendarstate_.calendar.html)   	                          | Run Time 	          | Select or provide your own calendar for dealing with holidays |
- *  | [CellSummary](_predefinedconfig_cellsummarystate_.cellsummarystate.html)   	            | Run Time 	          | Choose which summary operations to see for selected cells     |
- *  | [CellValidation](_predefinedconfig_cellvalidationstate_.cellvalidationstate.html)     	| Run Time 	          | Provide (complex) rules to validate cell edits                |
- *  | [Chart](_predefinedconfig_chartstate_.chartstate.html)   	                              | Run Time 	          | Visualise grid data using a variety of different chart types  |
- *  | [ColumnCategory](_predefinedconfig_columncategorystate_.columncategorystate.html)       | Run Time 	          | Group columns into category for easier column management      |
- *  | [ColumnFilter](_predefinedconfig_columnfilterstate_.columnfilterstate.html)             | Run Time 	          | Supply your own filters for columns to findy your data easily |
- *  | [ConditionalStyle](_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) | Run Time 	          | Dynamically Style columns & rows according to rules provided  |
- *  | [CustomSort](_predefinedconfig_customsortstate_.customsortstate.html)                   | Run Time 	          | Build your own sort orders for columns with non-standard sorts|
- *  | [Dashboard](_predefinedconfig_dashboardstate_.dashboardstate.html)                      | Run Time 	          | Configure & populate the Dasboard area (abov the main grid)   |
- *  | [DataSource](_predefinedconfig_datasourcestate.datasourcestate.html)                    | Run Time 	          | Provide Data Sources that will populate Grid via the server   |
- *  | [Entitlements](_predefinedconfig_entitlementstate_.entitlementstate.html)               | Design Time 	      | Manage permissions so users only see relevant functions       |
- *  | [Export](_predefinedconfig_exportstate_.exportstate.html)                               | Run Time 	          | Create reports to export data from grid to numerous loctions  |
- *  | [FreeTextColumn](_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Run Time 	          | Speical free entry columns (e.g. Comments) saved with state   |
- *  | [Layout](_predefinedconfig_layoutstate_.layoutstate.html)                               | Run Time 	          | Named views of column sorts, order, pivots, visbility & groups|
- *  | [NamedFilter](_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | Design Time         | Bespoke filters for which you provide a predicate function    |
- *  | [Partner](_predefinedconfig_partnerstate_.partnerstate.html)                            | Design Time         | State required for partners (e.g. iPushPull, OpenFin, Glue42) |
- *  | [QuickSearch](_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Run Time 	          | Run a text based search across whole grid (using wildcards)   |
- *  | [Reminder](_predefinedconfig_reminderstate_.reminder.html)                              | Run Time 	          | Schedule alerts to run to remind you of actions to perform    |
- *  | [Shortcut](_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Run Time 	          | Avoid fat finger issues by creating keyboard shortcuts        |
- *  | [SmartEdit](_predefinedconfig_smarteditstate_.smarteditstate.html)                      | Run Time 	          | Update multiple numeric cells with a single maths operation   |
- *  | [SparklineColumn](_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html)    | Design Time         | See columns containing ranges of data as a sparkline          |
- *  | [SystemFilter](_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | Design Time         | Select availability of System Filters (e.g. Today, Blanks)    |
- *  | [SystemStatus](_predefinedconfig_systemstatusstate_.systemstatusstate.html)             | Design Time         | Show Messages and Alerts describing curent Status of the App  |
- *  | [Theme](_predefinedconfig_themestate_.themestate.html)                                  | Run Time            | Select with shipped Theme is used or provide a custom one     |
- *  | [ToolPanel](_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Run Time            | Manage the Blotter ToolPanel (the area to the right of grid)  |
- *  | [UpdatedRow](_predefinedconfig_updatedrowstate_.updatedrowstate.html)                   | Run Time            | Colour (and jump to) rows whose contents have changed         |
- *  | [UserFilter](_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Run Time            | Create your own filters baseed on your data and requirements  |
- *  | [UserInterface](_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | Design Time         | Provide your own menus, styles and colour palettes            |
+ *  | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)   	        | No	                | Create dynamic columns with Buttons that fire events 	        |
+ *  | [AdvancedSearch](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)   	  | Yes 	              | Create saveable multi-column searches with multiple criteria  |
+ *  | [Alert](_predefinedconfig_alertstate_.alertstate.html)   	                              | Yes 	              | Provide Alert Definitions which will trigger run-time alerts  |
+ *  | [Application](_predefinedconfig_applicationstate_.applicationstate.html)   	            | No	                | Save your own state as key / value pairs 	                    |
+ *  | [BulkUpdate](_predefinedconfig__bulkupdatestate_.bulkupdatestate.html)   	              | Yes 	              | Update multiple cells in a column to contain a new value      |
+ *  | [CalculatedColumn](_predefinedconfig_calculatedcolumnstate_.calculatedcolumn.html)   	  | Yes 	              | Create custom columns with dynamic values based on expression |
+ *  | [Calendar](_predefinedconfig_calendarstate_.calendar.html)   	                          | Yes 	              | Select or provide your own calendar for dealing with holidays |
+ *  | [CellSummary](_predefinedconfig_cellsummarystate_.cellsummarystate.html)   	            | Yes 	              | Choose which summary operations to see for selected cells     |
+ *  | [CellValidation](_predefinedconfig_cellvalidationstate_.cellvalidationstate.html)     	| Yes 	              | Provide (complex) rules to validate cell edits                |
+ *  | [Chart](_predefinedconfig_chartstate_.chartstate.html)   	                              | Yes 	              | Visualise grid data using a variety of different chart types  |
+ *  | [ColumnCategory](_predefinedconfig_columncategorystate_.columncategorystate.html)       | Yes     	          | Group columns into category for easier column management      |
+ *  | [ColumnFilter](_predefinedconfig_columnfilterstate_.columnfilterstate.html)             | Yes 	              | Supply your own filters for columns to findy your data easily |
+ *  | [ConditionalStyle](_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) | Yes 	              | Dynamically Style columns & rows according to rules provided  |
+ *  | [CustomSort](_predefinedconfig_customsortstate_.customsortstate.html)                   | Yes 	              | Build your own sort orders for columns with non-standard sorts|
+ *  | [Dashboard](_predefinedconfig_dashboardstate_.dashboardstate.html)                      | Yes 	              | Configure & populate the Dasboard area (abov the main grid)   |
+ *  | [DataSource](_predefinedconfig_datasourcestate.datasourcestate.html)                    | Yes 	              | Provide Data Sources that will populate Grid via the server   |
+ *  | [Entitlements](_predefinedconfig_entitlementstate_.entitlementstate.html)               | No	                | Manage permissions so users only see relevant functions       |
+ *  | [Export](_predefinedconfig_exportstate_.exportstate.html)                               | Yes 	              | Create reports to export data from grid to numerous loctions  |
+ *  | [FreeTextColumn](_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Speical free entry columns (e.g. Comments) saved with state   |
+ *  | [Layout](_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
+ *  | [NamedFilter](_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
+ *  | [Partner](_predefinedconfig_partnerstate_.partnerstate.html)                            | No                  | State required for partners (e.g. iPushPull, OpenFin, Glue42) |
+ *  | [QuickSearch](_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
+ *  | [Reminder](_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
+ *  | [Shortcut](_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
+ *  | [SmartEdit](_predefinedconfig_smarteditstate_.smarteditstate.html)                      | Yes 	              | Update multiple numeric cells with a single maths operation   |
+ *  | [SparklineColumn](_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html)    | No                  | See columns containing ranges of data as a sparkline          |
+ *  | [SystemFilter](_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | No                  | Select availability of System Filters (e.g. Today, Blanks)    |
+ *  | [SystemStatus](_predefinedconfig_systemstatusstate_.systemstatusstate.html)             | No                  | Show Messages and Alerts describing curent Status of the App  |
+ *  | [Theme](_predefinedconfig_themestate_.themestate.html)                                  | Yes                 | Select with shipped Theme is used or provide a custom one     |
+ *  | [ToolPanel](_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Yes                 | Manage the Blotter ToolPanel (the area to the right of grid)  |
+ *  | [UpdatedRow](_predefinedconfig_updatedrowstate_.updatedrowstate.html)                   | Yes                 | Colour (and jump to) rows whose contents have changed         |
+ *  | [UserFilter](_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Yes                 | Create your own filters baseed on your data and requirements  |
+ *  | [UserInterface](_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
  *
  *
  * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
@@ -278,7 +278,7 @@ export interface PredefinedConfig {
   /**
    * Columns that contain buttons which, when clicked, fire an event giving detials of the button and the row in which its placed.
    *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
    * (Note: Action Column State can be updated via the Blotter API but these updates **will not be persisted**).
    */
@@ -286,7 +286,7 @@ export interface PredefinedConfig {
   /**
    * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of the Adaptable Blotter state.
    *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
    * (Note: Application State can be updated via the Blotter API but these updates **will not be persisted**).
    */
@@ -296,7 +296,7 @@ export interface PredefinedConfig {
    *
    * The default is that all functions are fully availalbe so apply Entitlements Config if you wish to restrict access.
    *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
    * (Note: Entitlement State can be updated via the Blotter API but these updates **will not be persisted**).
    */
@@ -307,9 +307,9 @@ export interface PredefinedConfig {
    */
   SystemStatus?: SystemStatusState;
   /**
-   *  Filters defined by Developers at design time which include a predicate function that is called by the Adaptable Blotter each time the filter is evaluated.
+   *  Filters defined by Developers at Nowhich include a predicate function that is called by the Adaptable Blotter each time the filter is evaluated.
    *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
    * (Note: Named Filter State can be updated via the Blotter API but these updates **will not be persisted**).
    */
@@ -317,7 +317,7 @@ export interface PredefinedConfig {
   /**
    * Config required to run features provided by partners of the Adaptable Blotter such as iPushPull and Glue42.
    *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
    * (Note: Partner Config State can be updated via the Blotter API but these updates **will not be persisted**).
    */
@@ -325,7 +325,7 @@ export interface PredefinedConfig {
   /**
    * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
    *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
    * (Note: Sparkline Column State can be updated via the Blotter API but these updates **will not be persisted**).
    */
@@ -335,7 +335,7 @@ export interface PredefinedConfig {
    *
    * If no values are listed, then **all System Filters** are available.
    *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    */
   SystemFilter?: SystemFilterState;
   /**
@@ -343,7 +343,7 @@ export interface PredefinedConfig {
    *
    * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
    *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
    * (Note: User Interface State can be updated via the Blotter API but these updates **will not be persisted**).
    */
