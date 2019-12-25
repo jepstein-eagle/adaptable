@@ -25,6 +25,8 @@ import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 import ReactDOM from 'react-dom';
+import { AlertFiredInfo } from '../../../../App_Scripts/Api/Events/AlertFired';
+import { AdaptableAlert } from '../../../../App_Scripts/Utilities/Interface/IMessage';
 
 var blotterApi: BlotterApi;
 
@@ -126,6 +128,8 @@ function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
 }
 
 function listenToAlertFired(alertFiredArgs: AlertFiredEventArgs) {
+  const alertFiredInfo: AlertFiredInfo = alertFiredArgs.data[0].id;
+  const triggeredAlert: AdaptableAlert = alertFiredInfo.alert;
   console.log('alert fired event received');
   console.log(alertFiredArgs.data[0].id.alert);
 }

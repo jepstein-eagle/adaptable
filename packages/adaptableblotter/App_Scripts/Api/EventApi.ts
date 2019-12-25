@@ -31,12 +31,15 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  *
  * - **BlotterReady** - fired whenever the Blotter is initialised and ready for use (has no Args class)
  *
- * Each event contains an *xxxEventArgs* object that wraps relevant information for the event.
+ * Note: The Adaptable Blotter uses the [FDC3 Standard for messaging](https://fdc3.finos.org/docs/1.0/context-intro) so to get hold of the data packaged in the event, you will need to access the xxxArgs.data[0].id property.
  *
- * The Adaptable Blotter uses **FDC3 Standard for messaging** so to get hold of the data packaged in the event, you will need to access the xxxArgs.data[0].id property e.g.:
+ * This means that each event contains an *xxxEventArgs* object that wraps relevant information for the event as *xxxInfo* and that object packages the actual data relevant to the event.
  *
- *   ```ts
- *  const firedAlert: Alert = alertFiredArgs.data[0].id.alert
+ * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredinfo.html) object.  And that `AlertFiredInfo` object will contain the actual `AdaptableAlert` that was triggered.
+ *
+ *  ```ts
+ *  const alertFiredInfo: AlertFiredInfo = alertFiredArgs.data[0].id;
+ *  const triggeredAlert: AdaptableAlert = alertFiredInfo.alert;
  *  ```
  *
  * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_auditeventapi_.auditeventapi.html#onauditstatechanged).
