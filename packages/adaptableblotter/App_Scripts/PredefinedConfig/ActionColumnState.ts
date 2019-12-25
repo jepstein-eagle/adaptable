@@ -4,9 +4,9 @@ import { AdaptableObject } from './Common/AdaptableObject';
 /**
  * The Predefined Configuration for Action Columns
  *
- * An Action Column is one which dynamically displays a button.
+ * An Action Column is a column which dynamically displays a button (you can specify how it renders).
  *
- * When that button is clicked, the Adaptable Blotter fires an *ActionColumnClicked* event (see [Event Api](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html))
+ * When the button is clicked, the Adaptable Blotter fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html))
  *
  *  **Further Resources**
  *

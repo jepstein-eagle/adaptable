@@ -305,7 +305,7 @@ export interface DashboardState extends RunTimeState {
    *
    * Each Custom toolbar contains a Name (to identify it) and a Title.
    *
-   * It can optionsall also contain a Glyph and an array of `ToolbarButton`.
+   * It can optionally also contain a Glyph and an array of `ToolbarButton`.
    */
   CustomToolbars?: CustomToolbar[];
 }

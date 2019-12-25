@@ -46,9 +46,9 @@ import { ToolPanelState } from './ToolPanelState';
  *
  * The State items in Predefined Config can be conceptually be put into 2 categories:
  *
- * - Design Time: Never overriden by users at run-time - e.g. Menus, Entitlements, System Filters etc.
+ * - **Design-Time**: Cannot be overriden & saved by users (e.g. Menus, Entitlements etc.)
  *
- * - Run Time: Can be overriden' by user's actions (and then persisted through State Management)
+ * - **Run-Time**: Can be overriden & saved by user's actions (and persisted through State Management)
  *
  *
  *
