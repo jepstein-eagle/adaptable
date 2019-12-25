@@ -43,17 +43,13 @@ import { ToolPanelState } from './ToolPanelState';
  * The interface consists of a series of (nullable) properties that themselves each implement *ConfigState*.
  *
  * Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
- * 
+ *
  * The items in Predefined Config can be conceptually be put into 2 categories:
- * 
+ *
  * - Design Time State: Never overriden by users at run-time - e.g. UI colours, more...
- * 
+ *
  * - Run Time State - Can be overriden' by user's actions (which are then persisted as part of State Management)
- * 
-
- 
- 
-
+ *
  *
  *  | Property                | Type
  *  | -----------             | -----------
