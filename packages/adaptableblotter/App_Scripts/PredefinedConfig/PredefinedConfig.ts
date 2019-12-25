@@ -46,7 +46,7 @@ import { ToolPanelState } from './ToolPanelState';
  *
  * The State items in Predefined Config can be conceptually be put into 2 categories:
  *
- * - Design Time: Never overriden by users at run-time - e.g. Menus, Entitlments etc.
+ * - Design Time: Never overriden by users at run-time - e.g. Menus, Entitlements, System Filters etc.
  *
  * - Run Time: Can be overriden' by user's actions (and then persisted through State Management)
  *
@@ -69,7 +69,7 @@ import { ToolPanelState } from './ToolPanelState';
  *  | [ConditionalStyle](_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) | Run Time 	          | Dynamically Style columns & rows according to rules provided  |
  *  | [CustomSort](_predefinedconfig_customsortstate_.customsortstate.html)                   | Run Time 	          | Build your own sort orders for columns with non-standard sorts|
  *  | [Dashboard](_predefinedconfig_dashboardstate_.dashboardstate.html)                      | Run Time 	          | Configure & populate the Dasboard area (abov the main grid)   |
- *  | [DataSource](_predefinedconfig_datasourcestate.datasource  state.html)                  | Run Time 	          | Provide Data Sources that will populate Grid via the server   |
+ *  | [DataSource](_predefinedconfig_datasourcestate.datasourcestate.html)                    | Run Time 	          | Provide Data Sources that will populate Grid via the server   |
  *  | [Entitlements](_predefinedconfig_entitlementstate_.entitlementstate.html)               | Design Time 	      | Manage permissions so users only see relevant functions       |
  *  | [Export](_predefinedconfig_exportstate_.exportstate.html)                               | Run Time 	          | Create reports to export data from grid to numerous loctions  |
  *  | [FreeTextColumn](_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Run Time 	          | Speical free entry columns (e.g. Comments) saved with state   |
