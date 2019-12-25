@@ -77,9 +77,9 @@ export interface AlertState extends RunTimeState {
   MaxAlertsInStore?: number;
 
   /**
-   * The name of the *div* in which you want the alerts to display.
+   * The name of a *<div>* in which you want alerts to display.
    *
-   * Leave blank if you want them to show using the main Adaptable Blotter popup.
+   * Leave unset if you want them never to show in a <div>.
    *
    * **This property is only used if the Alert itself being displayed has <i>ShowInDiv</i> set to true**.
    *
@@ -122,9 +122,36 @@ export interface AlertDefinition extends AdaptableObject {
   AlertProperties?: AlertProperties;
 }
 
+/**
+ * Additional properties that describe how / where an Alert will display
+ *
+ * Note: All Alerts will display in the Alert Dasbhoard Toolbar and the Alert ToolPanel, and be sent to the Console.
+ *
+ * These provide **additional** options for you to use.
+ */
 export interface AlertProperties {
+  /**
+   * Displays a popup in the middle of the screen
+   */
   ShowPopup?: boolean;
+  /**
+   * If a cell change triggered tthe Alert it will colour that cell
+   *
+   * The Colour used will vary accoriding to the `MessageType` property of the triggering Alert Definitition
+   *
+   * e.g. if the Alert Derfinition has a `MessageType` of 'Success' then the cell will be coloured green.
+   */
   HighlightCell?: boolean;
+
+  /**
+   * Whether the Grid should 'jump' to show tell which triggered the Alert (if it was the result of a cell change).
+   */
   JumpToCell?: boolean;
+
+  /**
+   * Whether to show the text of the Alert in whichever <div> you specificed for the `AlertDisplayDiv` property of the Alert State.
+   *
+   * If this property is not set, then the `ShowInDiv` is ignored.
+   */
   ShowInDiv?: boolean;
 }
