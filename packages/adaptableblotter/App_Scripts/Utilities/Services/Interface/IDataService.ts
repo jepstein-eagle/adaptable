@@ -1,5 +1,4 @@
 import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
-import { DATA_CHANGED_EVENT } from '../../Constants/GeneralConstants';
 
 export enum ChangeDirection {
   Up = 'Up',
@@ -21,8 +20,5 @@ export interface IDataService {
     changeDirection: ChangeDirection
   ): number;
 
-  on(
-    eventName: DATA_CHANGED_EVENT,
-    callback: (dataChangedInfo: DataChangedInfo) => void
-  ): () => void;
+  on(eventName: 'DataChanged', callback: (dataChangedInfo: DataChangedInfo) => void): () => void;
 }

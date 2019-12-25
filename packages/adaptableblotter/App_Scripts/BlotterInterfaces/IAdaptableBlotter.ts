@@ -24,14 +24,6 @@ import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
 
-import {
-  PRIVATE_CELLS_SELECTED_EVENT,
-  PRIVATE_ROWS_SELECTED_EVENT,
-  PRIVATE_SEARCH_APPLIED_EVENT,
-  PRIVATE_GRID_REFRESHED_EVENT,
-  PRIVATE_GRID_RELOADED_EVENT,
-  PRIVATE_KEY_DOWN_EVENT,
-} from '../Utilities/Constants/GeneralConstants';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { BlotterApi } from '../Api/BlotterApi';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
@@ -129,13 +121,12 @@ export interface IAdaptableBlotter {
   FilterService: IFilterService;
 
   // These are private events only
-  _on(eventName: PRIVATE_CELLS_SELECTED_EVENT, callback: () => void): () => void;
-  _on(eventName: PRIVATE_ROWS_SELECTED_EVENT, callback: () => void): () => void;
-  _on(eventName: PRIVATE_SEARCH_APPLIED_EVENT, callback: () => void): () => void;
-  _on(eventName: PRIVATE_GRID_REFRESHED_EVENT, callback: () => void): () => void;
-  _on(eventName: PRIVATE_GRID_RELOADED_EVENT, callback: () => void): () => void;
-  _on(eventName: PRIVATE_GRID_RELOADED_EVENT, callback: () => void): () => void;
-  _on(eventName: PRIVATE_KEY_DOWN_EVENT, callback: (keyDownEvent: any) => void): () => void;
+  _on(eventName: 'CellsSelected', callback: () => void): () => void;
+  _on(eventName: 'RowsSelected', callback: () => void): () => void;
+  _on(eventName: 'SearchApplied', callback: () => void): () => void;
+  _on(eventName: 'GridRefreshed', callback: () => void): () => void;
+  _on(eventName: 'GridReloaded', callback: () => void): () => void;
+  _on(eventName: 'KeyDown', callback: (keyDownEvent: any) => void): () => void;
 
   // onAny(callback: EmitterCallback): () => void;
   //emit(eventName: string, data?: any): Promise<any>;

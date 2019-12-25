@@ -102,14 +102,8 @@ import { BlotterApiImpl } from '../Api/Implementation/BlotterApiImpl';
 import {
   DEFAULT_LAYOUT,
   HALF_SECOND,
-  PRIVATE_GRID_RELOADED_EVENT,
-  PRIVATE_SEARCH_APPLIED_EVENT,
-  PRIVATE_GRID_REFRESHED_EVENT,
-  PRIVATE_KEY_DOWN_EVENT,
   LIGHT_THEME,
   DARK_THEME,
-  PRIVATE_ROWS_SELECTED_EVENT,
-  PRIVATE_CELLS_SELECTED_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { agGridHelper } from './agGridHelper';
@@ -534,13 +528,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public reloadGrid(): void {
-    this._emit(PRIVATE_GRID_RELOADED_EVENT);
+    this._emit('GridReloaded');
   }
 
   public applyGridFiltering() {
     this.gridOptions.api!.onFilterChanged();
-    this._emit(PRIVATE_SEARCH_APPLIED_EVENT);
-    this._emit(PRIVATE_GRID_REFRESHED_EVENT);
+    this._emit('SearchApplied');
+    this._emit('GridRefreshed');
   }
 
   private applyDataChange(rowNodes: RowNode[]) {
@@ -549,7 +543,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
       this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
-      this._emit(PRIVATE_GRID_REFRESHED_EVENT);
+      this._emit('GridRefreshed');
     }
   }
 
@@ -872,7 +866,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const selectedCellInfo: SelectedCellInfo = { Columns: columns, GridCells: selectedCells };
     this.api.internalApi.setSelectedCells(selectedCellInfo);
 
-    this._emit(PRIVATE_CELLS_SELECTED_EVENT);
+    this._emit('CellsSelected');
 
     this.agGridHelper.fireSelectionChangedEvent();
   }
@@ -906,7 +900,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const selectedRowInfo: SelectedRowInfo = { GridRows: selectedRows };
     this.api.internalApi.setSelectedRows(selectedRowInfo);
 
-    this._emit(PRIVATE_ROWS_SELECTED_EVENT);
+    this._emit('RowsSelected');
     this.agGridHelper.fireSelectionChangedEvent();
   }
 
@@ -1336,7 +1330,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public redraw() {
     this.gridOptions.api!.redrawRows();
     this.gridOptions.api!.refreshHeader();
-    this._emit(PRIVATE_GRID_REFRESHED_EVENT);
+    this._emit('GridRefreshed');
   }
 
   public redrawRow(rowNode: any) {
@@ -1790,9 +1784,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     const gridContainerElement = this.getGridContainerElement();
     if (gridContainerElement) {
-      gridContainerElement.addEventListener('keydown', event =>
-        this._emit(PRIVATE_KEY_DOWN_EVENT, event)
-      );
+      gridContainerElement.addEventListener('keydown', event => this._emit('KeyDown', event));
     }
 
     this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {

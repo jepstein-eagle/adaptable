@@ -114,42 +114,6 @@ export const SYSTEM_THEMES: Array<AdaptableBlotterTheme> = [
   },
 ];
 
-// these are the internal events that the AB fires that other strategies and classes listen to
-// this is NOT quite right as we need to define each one twice but its not a big problem
-// and at least we are able to listen to the events nicely
-export type PRIVATE_CELLS_SELECTED_EVENT = 'CellsSelected';
-export const PRIVATE_CELLS_SELECTED_EVENT: string = 'CellsSelected';
-export type PRIVATE_ROWS_SELECTED_EVENT = 'RowsSelected';
-export const PRIVATE_ROWS_SELECTED_EVENT: string = 'RowsSelected';
-export type PRIVATE_SEARCH_APPLIED_EVENT = 'SearchApplied';
-export const PRIVATE_SEARCH_APPLIED_EVENT: string = 'SearchApplied';
-export type PRIVATE_GRID_REFRESHED_EVENT = 'GridRefreshed';
-export const PRIVATE_GRID_REFRESHED_EVENT: string = 'GridRefreshed';
-export type PRIVATE_GRID_RELOADED_EVENT = 'GridReloaded';
-export const PRIVATE_GRID_RELOADED_EVENT: string = 'GridReloaded';
-export type PRIVATE_KEY_DOWN_EVENT = 'KeyDown';
-export const PRIVATE_KEY_DOWN_EVENT: string = 'KeyDown';
-
-// these are now external events that will replace the current event model
-export type BLOTTER_READY_EVENT = 'BlotterReady';
-export type TOOLBAR_VISIBILITY_CHANGED_EVENT = 'ToolbarVisibilityChanged';
-export type SEARCH_CHANGED_EVENT = 'SearchChanged';
-export type TOOLBAR_BUTTON_CLICKED_EVENT = 'ToolbarButtonClicked';
-export type THEME_CHANGED_EVENT = 'ThemeChanged';
-export type COLUMN_STATE_CHANGED_EVENT = 'ColumnStateChanged';
-export type ALERT_FIRED_EVENT = 'AlertFired';
-export type ACTION_COLUMN_CLICKED_EVENT = 'ActionColumnClicked';
-export type SELECTION_CHANGED_EVENT = 'SelectionChanged';
-export type LIVE_REPORT_UPDATED_EVENT = 'LiveReportUpdated';
-
-// Audit Events
-export type AUDIT_STATE_CHANGED_EVENT = 'AuditStateChanged';
-export type AUDIT_CELL_EDITED_EVENT = 'AuditCellEdited';
-export type AUDIT_FUNCTION_APPLIED_EVENT = 'AuditFunctionApplied';
-
-// Internal Data Event
-export type DATA_CHANGED_EVENT = 'DataChanged';
-
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
 export const SELECTED_CELLS_REPORT = 'Selected Cells';

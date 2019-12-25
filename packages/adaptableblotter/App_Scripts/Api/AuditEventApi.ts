@@ -1,9 +1,4 @@
 import { AuditLogEventArgs } from './Events/AuditEvents';
-import {
-  AUDIT_STATE_CHANGED_EVENT,
-  AUDIT_CELL_EDITED_EVENT,
-  AUDIT_FUNCTION_APPLIED_EVENT,
-} from '../Utilities/Constants/GeneralConstants';
 
 /**
  * The Adaptable Blotter publishes 3 Audit Events that users can subscribe to as needed.
@@ -72,7 +67,7 @@ export interface AuditEventApi {
    * @param data
    */
   emit(
-    eventName: AUDIT_STATE_CHANGED_EVENT | AUDIT_CELL_EDITED_EVENT | AUDIT_FUNCTION_APPLIED_EVENT,
+    eventName: 'AuditStateChanged' | 'AuditCellEdited' | 'AuditFunctionApplied',
     data?: any
   ): Promise<any>;
 }

@@ -1,16 +1,3 @@
-import {
-  SELECTION_CHANGED_EVENT,
-  BLOTTER_READY_EVENT,
-  TOOLBAR_VISIBILITY_CHANGED_EVENT,
-  SEARCH_CHANGED_EVENT,
-  THEME_CHANGED_EVENT,
-  COLUMN_STATE_CHANGED_EVENT,
-  ALERT_FIRED_EVENT,
-  ACTION_COLUMN_CLICKED_EVENT,
-  LIVE_REPORT_UPDATED_EVENT,
-  TOOLBAR_BUTTON_CLICKED_EVENT,
-} from '../Utilities/Constants/GeneralConstants';
-
 import { SelectionChangedEventArgs } from './Events/SelectionChanged';
 import { ActionColumnClickedEventArgs } from './Events/ActionColumnClicked';
 import { LiveReportUpdatedEventArgs } from './Events/LiveReportUpdated';
@@ -54,29 +41,15 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  *
  * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_auditeventapi_.auditeventapi.html#onauditstatechanged).
  *
- * There are currently 2 ways to subscribe to these events.
- *
- * The preferred way is as follows:
+ * There way to subscribe to these events is as follows:
  *
  *  ```ts
- * blotterApi.eventApi
- *    .on('ActionColumnClicked', (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
+ * api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
  *        onActionColumnClickedListener(actionColumnEventArgs.data[0].id)
  *    }
  *  );
  * ```
  *
- * However we also have an older, now deprecated, way of listening to the events as follows;
- *
- * **note: this event model will be removed in Adaptable Blotter v.6**
- *
- * ```ts
- * blotterApi.eventApi
- *    .onActionColumnClicked()
- *    .Subscribe((sender, actionColumnEventArgs) =>
- *        onActionColumnClickedListener(actionColumnEventArgs)
- *  );
- * ```
  */
 export interface EventApi {
   /**
@@ -193,17 +166,16 @@ export interface EventApi {
 
   emit(
     eventName:
-      | SELECTION_CHANGED_EVENT
-      | SEARCH_CHANGED_EVENT
-      | ACTION_COLUMN_CLICKED_EVENT
-      | THEME_CHANGED_EVENT
-      | ALERT_FIRED_EVENT
-      | ACTION_COLUMN_CLICKED_EVENT
-      | COLUMN_STATE_CHANGED_EVENT
-      | TOOLBAR_BUTTON_CLICKED_EVENT
-      | TOOLBAR_VISIBILITY_CHANGED_EVENT
-      | LIVE_REPORT_UPDATED_EVENT
-      | BLOTTER_READY_EVENT,
+      | 'SelectionChanged'
+      | 'SearchChanged'
+      | 'ActionColumnClicked'
+      | 'ThemeChanged'
+      | 'AlertFired'
+      | 'ColumnStateChanged'
+      | 'ToolbarButtonClicked'
+      | 'ToolbarVisibilityChanged'
+      | 'LiveReportUpdated'
+      | 'BlotterReady',
     data?: any
   ): Promise<any>;
 }
