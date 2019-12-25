@@ -44,9 +44,11 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *  --------------
  *
  * // we listen to the ActionColumnClicked event (via the eventAPI in Blotter API) and
- * // delete the row using *deleteGridData* method in gridAPI (also in Blotter API)
+ * // delete the row using the deleteGridData method in gridAPI (also in Blotter API)
  *  api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
- *    api.gridApi.deleteGridData([args.data[0].id.rowData]);
+ *    const actionColumnClickedInfo: ActionColumnClickedInfo = args.data[0].id;
+ *    const rowData: any = actionColumnClickedInfo.rowData;
+ *    api.gridApi.deleteGridData([rowData]);
  * });
  *
  *  --------------
@@ -60,9 +62,11 @@ export interface ActionColumnState extends DesignTimeState {
 }
 
 /**
- * The `ActionColumn` object used in the Action Column function.
+ * The `ActionColumn` object used in [Action Column State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html).
  *
- * An Action Column will be dynamically added to your Grid and display a button, which when clicked will trigger the 'ActionColumnClicked' event.
+ * An Action Column will be dynamically added to your Grid and display a button, which when clicked will trigger the `ActionColumnClicked` event.
+ *
+ * You are, optionally, able to provide your own render function and specify for each row whether the button is displayed.
  */
 export interface ActionColumn extends AdaptableObject {
   /**

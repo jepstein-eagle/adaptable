@@ -27,6 +27,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 import { AlertFiredInfo } from '../../../../App_Scripts/Api/Events/AlertFired';
 import { AdaptableAlert } from '../../../../App_Scripts/Utilities/Interface/IMessage';
+import { ActionColumnClickedInfo } from '../../../../App_Scripts/Api/Events/ActionColumnClicked';
 
 var blotterApi: BlotterApi;
 
@@ -134,9 +135,12 @@ function listenToAlertFired(alertFiredArgs: AlertFiredEventArgs) {
   console.log(alertFiredArgs.data[0].id.alert);
 }
 
-function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedEventArgs) {
+function listenToActionColumnClicked(args: ActionColumnClickedEventArgs) {
+  const actionColumnClickedInfo: ActionColumnClickedInfo = args.data[0].id;
+  const rowData: any = actionColumnClickedInfo.rowData;
+  blotterApi.gridApi.deleteGridData([rowData]);
   console.log('action fired event received');
-  console.log(actionColumnEventArgs);
+  console.log(args);
 }
 function listenToSelectionChanged(selectionChangedEventArgs: SelectionChangedEventArgs) {
   console.log('selection changed event received');
