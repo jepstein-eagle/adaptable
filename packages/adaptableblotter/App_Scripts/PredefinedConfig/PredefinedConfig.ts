@@ -54,7 +54,10 @@ import { ToolPanelState } from './ToolPanelState';
  * |-----------------------------------------------------------------------------|-------------------|---------------------------------------------|
  * | [ActionColumn](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) | Design Time State | Used to create dynamic columns with Buttons |
  * | AdvancedSearch                                                              | Run Time State    | Create saveable multi-column searches       |
- *|                                                                             |                   |                                             |
+ *|
+ *
+ *
+ *
  * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
  *
  * ## Predefined Config example
