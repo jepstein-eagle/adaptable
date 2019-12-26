@@ -19,7 +19,7 @@ import { ConditionalStyleApi } from './ConditionalStyleApi';
 import { CustomSortApi } from './CustomSortApi';
 import { DashboardApi } from './DashboardApi';
 import { DataSourceApi } from './DataSourceApi';
-import { EntitlementApi } from './EntitlementApi';
+import { EntitlementsApi } from './EntitlementsApi';
 import { EventApi } from './EventApi';
 import { ExportApi } from './ExportApi';
 import { FlashingCellApi } from './FlashingCellApi';
@@ -169,7 +169,7 @@ export interface BlotterApi {
   /**
    * Provides methods to manager User Entitlements (or Permissions)
    */
-  entitlementApi: EntitlementApi;
+  entitlementsApi: EntitlementsApi;
 
   /**
    * The Api used for listenning / subscribing to the various Events fired / published by the Adaptable Blotter e.g. the SearchChanged event.

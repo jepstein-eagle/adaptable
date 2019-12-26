@@ -9,7 +9,7 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * By default every function has the Entitlement of <i>Full</i>, so only set those which you want to be different to that default.
  *
- * **Entitlement Predefined Config Example**
+ * **Entitlements Predefined Config Example**
  *
  * ```ts
  * export default {
@@ -37,9 +37,9 @@ import { AdaptableFunctionName } from './Common/Types';
  * ```
  * In this example we have set:
  *
- * - 2 ReadOnly Entitlements: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
+ * - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
  *
- * - 2 Hidden Entitlements: Column Category and Advanced Search.  This means that these functions wont be available in any menus, and nor will any associcated toolbars and tool panel elements.
+ * - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these functions wont be available in any menus, and nor will any associcated toolbars and tool panel elements.
  */
 export interface EntitlementState extends DesignTimeState {
   /**
@@ -53,14 +53,16 @@ export interface EntitlementState extends DesignTimeState {
  */
 export interface Entitlement {
   /**
-   * The name of the function that has the Entitlement applied.
+   * The name of the Adaptable Function that has the Entitlement applied.
    *
-   * The property is of type 'AdaptableFunctionName' which provides a strongly typed list of all Functions.
+   * The property is of type `AdaptableFunctionName` which provides a strongly typed list of all available Functions.
    */
   FunctionName: AdaptableFunctionName;
 
   /**
-   * What type of Access Level the Entitlement provides.  The options are:
+   * What type of Access Level the Entitlement provides.
+   *
+   * The options are:
    *
    * - **Full** - Complete Read / Write Access
    *

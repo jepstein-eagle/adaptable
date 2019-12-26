@@ -37,7 +37,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
       document
     );
     let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
-      this.props.Blotter.api.entitlementApi.getAllEntitlement(),
+      this.props.Blotter.api.entitlementsApi.getAllEntitlements(),
       this.props.ComponentStrategy
     );
 

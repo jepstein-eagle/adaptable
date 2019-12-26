@@ -66,7 +66,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   private getStrategyEntitlement(): Entitlement {
-    let functionEntitlements: Entitlement[] = this.blotter.api.entitlementApi.getEntitlementState()
+    let functionEntitlements: Entitlement[] = this.blotter.api.entitlementsApi.getEntitlementsState()
       .FunctionEntitlements;
     return functionEntitlements.find(x => x.FunctionName == this.Id);
   }

@@ -46,7 +46,7 @@ export class AdaptableChart extends React.Component<
         this.props.showModal
       ),
       accessLevel: AdaptableHelper.getEntitlementAccessLevelForStrategy(
-        this.props.AdaptableBlotter.api.entitlementApi.getAllEntitlement(),
+        this.props.AdaptableBlotter.api.entitlementsApi.getAllEntitlements(),
         StrategyConstants.ChartStrategyId
       ),
       isValidUserChartContainer: UIHelper.isValidUserChartContainer(
