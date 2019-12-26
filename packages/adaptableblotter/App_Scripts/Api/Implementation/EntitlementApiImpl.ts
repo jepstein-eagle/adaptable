@@ -13,13 +13,13 @@ export class EntitlementApiImpl extends ApiBase implements EntitlementApi {
     return this.getBlotterState().Entitlements.FunctionEntitlements;
   }
 
-  public getEntitlementByFunction(functionName: AdaptableFunctionName): Entitlement {
+  public getEntitlementByFunctionName(functionName: AdaptableFunctionName): Entitlement {
     return this.getBlotterState().Entitlements.FunctionEntitlements.find(
       f => f.FunctionName == functionName
     );
   }
 
-  public getEntitlementAccessLevelForFunction(functionName: AdaptableFunctionName): string {
+  public getEntitlementAccessLevelForFunctionName(functionName: AdaptableFunctionName): string {
     return this.getBlotterState().Entitlements.FunctionEntitlements.find(
       f => f.FunctionName == functionName
     ).AccessLevel;

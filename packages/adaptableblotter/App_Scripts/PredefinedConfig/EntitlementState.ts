@@ -5,9 +5,11 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * The Predefined Configuration for Entitlements
  *
- * This lets you manage which functions are available for which user and in which form.
+ * The Entitlement section of the Adaptable State allows you to manage which functions are available for which user and in which form.
  *
  * By default every function has the Entitlement of <i>Full</i>, so only set those which you want to be different to that default.
+ *
+ * **Entitlement Predefined Config Example**
  *
  * ```ts
  * export default {
@@ -25,36 +27,46 @@ import { AdaptableFunctionName } from './Common/Types';
  *        FunctionName: 'Layout',
  *        AccessLevel: 'ReadOnly',
  *     },
+ *      {
+ *        FunctionName: 'Export',
+ *        AccessLevel: 'ReadOnly',
+ *     },
  *    ],
  *  },
  * } as PredefinedConfig;
  * ```
+ * In this example we have set:
+ *
+ * - 2 ReadOnly Entitlements: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
+ *
+ * - 2 Hidden Entitlements: Column Category and Advanced Search.  This means that these functions wont be available in any menus, and nor will any associcated toolbars and tool panel elements.
  */
 export interface EntitlementState extends DesignTimeState {
   /**
-   * A collection of Entitlement objects.
+   * A collection of `Entitlement` objects.
    */
   FunctionEntitlements?: Entitlement[];
 }
 
+/**
+ * The object used in the [Entitlement](_predefinedconfig_entitlementstate_.entitlementstate.html) section of Predefined Config.
+ */
 export interface Entitlement {
   /**
-   * The name of the function that has the Entitlement applied
+   * The name of the function that has the Entitlement applied.
    *
-   * You can see a full list of function names in the [Help Appendix](https://adaptabletools.zendesk.com/hc/en-us/articles/360024889311-Appendix).
-   *
-   * **Default Value**:  Empty array
+   * The property is of type 'AdaptableFunctionName' which provides a strongly typed list of all Functions.
    */
   FunctionName: AdaptableFunctionName;
 
   /**
    * What type of Access Level the Entitlement provides.  The options are:
    *
-   * **Full** - Complete Read / Write Access
+   * - **Full** - Complete Read / Write Access
    *
-   * **ReadOnly** - Users can run existing objects for the Function (e.g Searches, Layouts, Reports) but cannot add, edit or delete.
+   * - **ReadOnly** - Users can access existing objects related to the Function (e.g Searches, Layouts, Reports) but cannot add, edit or delete them.
    *
-   * **Hidden** - The Function is invisible to the User.
+   * - **Hidden** - The Function is invisible to the User.
    */
   AccessLevel: 'ReadOnly' | 'Hidden' | 'Full';
 }
