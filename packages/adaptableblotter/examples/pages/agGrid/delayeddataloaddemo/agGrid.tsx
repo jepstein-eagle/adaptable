@@ -34,7 +34,7 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.generalOptions = {
+  adaptableBlotterOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
 

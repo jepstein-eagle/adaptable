@@ -28,7 +28,7 @@ function InitAdaptableBlotter() {
     'context menu demo'
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.generalOptions = {
+  adaptableBlotterOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
     //showAdaptableContextMenu: true,
     //showAdaptableContextMenu: false,

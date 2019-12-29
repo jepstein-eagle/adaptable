@@ -28,7 +28,7 @@ function InitAdaptableBlotter() {
     'column menu demo'
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.generalOptions = {
+  adaptableBlotterOptions.userInterfaceOptions = {
     // showAdaptableColumnMenu: true,
     // showAdaptableColumnMenu: false,
 

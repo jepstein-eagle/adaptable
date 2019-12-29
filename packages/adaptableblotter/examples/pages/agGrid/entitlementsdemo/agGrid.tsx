@@ -26,7 +26,7 @@ function InitAdaptableBlotter() {
     // useAdaptableBlotterFilterForm: false,
   };
 
-  adaptableBlotterOptions.generalOptions = {
+  adaptableBlotterOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;

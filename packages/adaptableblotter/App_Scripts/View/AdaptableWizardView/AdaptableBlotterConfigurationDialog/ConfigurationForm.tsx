@@ -13,6 +13,7 @@ import { QueryOptions } from '../../../BlotterOptions/QueryOptions';
 import { ChartOptions } from '../../../BlotterOptions/ChartOptions';
 import { Flex, Text } from 'rebass';
 import { DefaultAdaptableOptions } from '../../../Utilities/Defaults/DefaultAdaptableOptions';
+import { UserInterfaceOptions } from '../../../BlotterOptions/UserInterfaceOptions';
 
 interface ConfigurationFormOptions {
   adaptableBlotterOptions: AdaptableBlotterOptions;
@@ -35,6 +36,11 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
   const generalOptions: GeneralOptions = {
     ...DefaultAdaptableOptions.generalOptions,
     ...abOptions.generalOptions,
+  };
+
+  const userInterfaceOptions: UserInterfaceOptions = {
+    ...DefaultAdaptableOptions.userInterfaceOptions,
+    ...abOptions.userInterfaceOptions,
   };
 
   const queryOptions: QueryOptions = {
@@ -67,11 +73,11 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
       >
         <FormRow label="Use Default Vendor Grid Themes">
           <CheckBox
-            checked={generalOptions.useDefaultVendorGridThemes}
+            checked={userInterfaceOptions.useDefaultVendorGridThemes}
             onChange={(useDefaultVendorGridThemes: boolean) => {
               abOptions = { ...abOptions };
-              abOptions.generalOptions = { ...abOptions.generalOptions };
-              abOptions.generalOptions.useDefaultVendorGridThemes = useDefaultVendorGridThemes;
+              abOptions.userInterfaceOptions = { ...abOptions.userInterfaceOptions };
+              abOptions.userInterfaceOptions.useDefaultVendorGridThemes = useDefaultVendorGridThemes;
 
               props.onChangeBlotterOptions(abOptions);
             }}
@@ -104,11 +110,11 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         {/* 
         <FormRow label="Show Adaptable Blotter Tool Panel">
           <CheckBox
-            checked={generalOptions.showAdaptableToolPanel}
+            checked={userInterfaceOptions.showAdaptableToolPanel}
             onChange={(showAdaptableToolPanel: boolean) => {
               abOptions = { ...abOptions };
-              abOptions.generalOptions = { ...abOptions.generalOptions };
-              abOptions.generalOptions.showAdaptableToolPanel = showAdaptableToolPanel;
+              abOptions.userInterfaceOptions = { ...abOptions.userInterfaceOptions };
+              abOptions.userInterfaceOptions.showAdaptableToolPanel = showAdaptableToolPanel;
 
               props.onChangeBlotterOptions(abOptions);
             }}

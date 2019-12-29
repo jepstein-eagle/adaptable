@@ -58,6 +58,11 @@ export function assignBlotterOptions(
     DefaultAdaptableOptions.generalOptions,
     blotterOptions.generalOptions
   );
+  returnBlotterOptions.userInterfaceOptions = Object.assign(
+    {},
+    DefaultAdaptableOptions.userInterfaceOptions,
+    blotterOptions.userInterfaceOptions
+  );
   returnBlotterOptions.chartOptions = Object.assign(
     {},
     DefaultAdaptableOptions.chartOptions,
@@ -94,7 +99,7 @@ export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: Adaptable
 
   if (pkColumn == null) {
     const errorMessage: string = `The PK Column '${blotter.blotterOptions.primaryKey}' does not exist.  This will affect many functions in the Adaptable Blotter.`;
-    if (blotter.blotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) {
+    if (blotter.blotterOptions.generalOptions!.showMissingPrimaryKeyWarning == true) {
       // show an alert if that is the option
       blotter.api.alertApi.showAlertError('No Primary Key', errorMessage);
     } else {
@@ -142,7 +147,9 @@ export function getEntitlementAccessLevelForStrategy(
   functionName: AdaptableFunctionName
 ): AccessLevel {
   if (ArrayExtensions.IsNotNullOrEmpty(entitlements)) {
-    let entitlement: Entitlement = entitlements.find(e => e.FunctionName == functionName);
+    let entitlement: Entitlement | undefined = entitlements.find(
+      e => e.FunctionName == functionName
+    );
     if (entitlement) {
       return entitlement.AccessLevel as AccessLevel;
     }

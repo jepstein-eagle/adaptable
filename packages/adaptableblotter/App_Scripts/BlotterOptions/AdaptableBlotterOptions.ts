@@ -9,6 +9,7 @@ import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { EditOptions } from './EditOptions';
 import { StateOptions } from './StateOptions';
+import { UserInterfaceOptions } from './UserInterfaceOptions';
 
 /**
  * `AdaptableBlotterOptions` is the class injected into the Adaptable Blotter at startup.
@@ -167,9 +168,16 @@ export interface AdaptableBlotterOptions {
    *
    * Essentially those options that didn't fit into of the specific categories.
    *
-   * Includes options for managing Server Searching, themes and how to manage Primary Keys.
+   * Includes options for managing Server Searching, and how to manage Primary Keys.
    */
   generalOptions?: GeneralOptions;
+
+  /**
+   * Options for managing the User Interface Adaptable Blotter.
+   *
+   * Includes options for themes, menus, tool panels etc.
+   */
+  userInterfaceOptions?: UserInterfaceOptions;
 
   /**
    * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.

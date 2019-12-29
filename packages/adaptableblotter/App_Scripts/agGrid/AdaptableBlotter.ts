@@ -431,7 +431,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
 
     // Create Adaptable Blotter Tool Panel
-    if (this.blotterOptions!!.generalOptions!.showAdaptableToolPanel) {
+    if (this.blotterOptions!!.userInterfaceOptions!.showAdaptableToolPanel) {
       LoggingHelper.LogAdaptableInfo('Adding Adaptable Tool Panel');
       this.gridOptions.sideBar = this.gridOptions.sideBar || {};
       this.gridOptions.components = this.gridOptions.components || {};
@@ -2261,7 +2261,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         primaryKeyValue: undefined,
       };
 
-      let showAdaptableColumnMenu = this.blotterOptions.generalOptions!.showAdaptableColumnMenu;
+      let showAdaptableColumnMenu = this.blotterOptions.userInterfaceOptions!
+        .showAdaptableColumnMenu;
 
       if (showAdaptableColumnMenu == null || showAdaptableColumnMenu !== false) {
         AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
@@ -2334,7 +2335,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             // here we create Adaptable Blotter Menu items from OUR internal collection
             // user has ability to decide whether to show or not
             if (ArrayExtensions.IsNotNullOrEmpty(AdaptableMenuItems)) {
-              let showAdaptableContextMenu = this.blotterOptions.generalOptions!
+              let showAdaptableContextMenu = this.blotterOptions.userInterfaceOptions!
                 .showAdaptableContextMenu;
               if (showAdaptableContextMenu == null || showAdaptableContextMenu !== false) {
                 contextMenuItems.push('separator');

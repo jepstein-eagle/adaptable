@@ -335,10 +335,6 @@ const App = () => {
       showModal: false,
       // pieChartMaxItems: 100
     },
-    generalOptions: {
-      showAdaptableToolPanel: true,
-      // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
-    },
   };
   return (
     <div>

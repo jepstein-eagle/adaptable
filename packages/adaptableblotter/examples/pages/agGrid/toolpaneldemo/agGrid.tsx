@@ -37,7 +37,7 @@ function InitAdaptableBlotter() {
     autoSizeColumnsInLayout: true,
   };
 
-  adaptableBlotterOptions.generalOptions = {
+  adaptableBlotterOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
 

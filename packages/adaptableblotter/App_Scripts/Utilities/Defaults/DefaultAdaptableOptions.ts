@@ -91,13 +91,15 @@ export const DefaultAdaptableOptions: AdaptableBlotterOptions = {
     pieChartMaxItems: 50,
   },
   generalOptions: {
-    useDefaultVendorGridThemes: true,
     showMissingPrimaryKeyWarning: true,
     preventDuplicatePrimaryKeyValues: true,
     serverSearchOption: 'None',
+    // checkIfLatestVersionOnStartup: true,
+  },
+  userInterfaceOptions: {
+    useDefaultVendorGridThemes: true,
     showAdaptableToolPanel: false,
     showAdaptableContextMenu: true,
-    // checkIfLatestVersionOnStartup: true,
   },
   stateOptions: {
     applyState: state => state,
