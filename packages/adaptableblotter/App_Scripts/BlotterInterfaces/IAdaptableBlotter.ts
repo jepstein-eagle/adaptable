@@ -202,10 +202,12 @@ export interface IAdaptableBlotter {
 
   // FreeTextColumn
   addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void;
+  removeFreeTextColumnFromGrid(freeTextColumnId: string): void;
+  editFreeTextColumnInGrid(freeTextColumn: FreeTextColumn): void;
 
   // CalculatedColumn
   addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
-  removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
+  removeCalculatedColumnFromGrid(calculatedColumnId: string): void;
   editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
 
   // actionColumn

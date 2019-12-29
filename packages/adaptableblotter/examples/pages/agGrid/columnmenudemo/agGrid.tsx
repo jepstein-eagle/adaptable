@@ -63,69 +63,6 @@ let demoConfig: PredefinedConfig = {
         },
       ];
     },
-
-    /*
-      {
-        Label: 'Column Menu 1',
-        UserMenuItemClickedFunction: (menuInfo: MenuInfo) => {
-          console.log(menuInfo.column.FriendlyName);
-        },
-        Icon:
-          '<img border="0" width="15" height="10" src="https://flags.fmcdn.net/data/flags/mini/gb.png"/>',
-      },
-      {
-        Label: 'Column Menu 2',
-      },
-      {
-        Label: 'Column Menu 3',
-        SubMenuItems: [
-          {
-            Label: 'Column Sub Menu 1',
-          },
-          {
-            Label: 'Column Sub Menu 2',
-          },
-        ],
-      },
-      */
-
-    ContextMenuItems: [
-      {
-        Label: 'Mimise Dashboard',
-        UserMenuItemClickedFunction: () => {
-          blotterApi.dashboardApi.Minimise();
-        },
-      },
-      {
-        Label: 'Set System Status',
-        SubMenuItems: [
-          {
-            Label: 'Set Error',
-            UserMenuItemClickedFunction: () => {
-              blotterApi.systemStatusApi.setErrorSystemStatus('System Down');
-            },
-          },
-          {
-            Label: 'Set Warning',
-            UserMenuItemClickedFunction: () => {
-              blotterApi.systemStatusApi.setWarningSystemStatus('System Slow');
-            },
-          },
-          {
-            Label: 'Set Success',
-            UserMenuItemClickedFunction: () => {
-              blotterApi.systemStatusApi.setSuccessSystemStatus('System Fine');
-            },
-          },
-          {
-            Label: 'Set Info',
-            UserMenuItemClickedFunction: () => {
-              blotterApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
-            },
-          },
-        ],
-      },
-    ],
   },
 };
 

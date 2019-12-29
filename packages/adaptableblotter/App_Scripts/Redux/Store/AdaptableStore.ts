@@ -2079,9 +2079,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
 
           /**
-           * Use Case: User has created a calculated column
+           * Use Cases: User has created / edited / deleted a Calculated Column
            * Action:  Tell the blotter so it can do what it needs
            */
+
           case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
             let returnAction = next(action);
             let calculatedColumn: CalculatedColumn = (action as CalculatedColumnRedux.CalculatedColumnAddAction)
@@ -2090,37 +2091,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             return returnAction;
           }
 
-          /**
-           * Use Case: User has deleted a calculated column
-           * Action (1):  Tell the blotter so it can do what it needs
-           * Action (2):  Set a new column list order so we can remove it
-           * N.B. This will NOT update any layouts that reference the column
-           */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
-            let columnsLocalLayout = middlewareAPI.getState().Grid.Columns;
-
             blotter.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
-            // do we need this?
-            let test = columnsLocalLayout.filter(
-              col => col.ColumnId !== actionTyped.calculatedColumn.ColumnId
-            );
-            middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(test));
             let returnAction = next(action);
             return returnAction;
           }
 
-          /**
-           * Use Case: User has edited an existing calculated column
-           * If the name has changed in the Calculated Column (rare but possible):
-           * Action (1):  Tell the blotter to edit the calculated column
-           * Action (2):  Set a new column list order so it appears as a new column
-           */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
-            let columnsLocalLayout = middlewareAPI.getState().Grid.Columns;
             blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
-            middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(columnsLocalLayout));
             let returnAction = next(action);
             return returnAction;
           }
@@ -2130,28 +2110,29 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
 
           /**
-           * Use Case: User has created a Free Text column
+           * Use Cases: User has created / edited / deleted a Free Text column
            * Action:  Tell the blotter so it can do what it needs
            */
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnAddAction;
+            blotter.addFreeTextColumnToGrid(actionTyped.freeTextColumn);
             let returnAction = next(action);
-            let freeTextColumn: FreeTextColumn = (<FreeTextColumnRedux.FreeTextColumnAddAction>(
-              action
-            )).freeTextColumn;
-            blotter.addFreeTextColumnToGrid(freeTextColumn);
             return returnAction;
           }
 
-          /**
-           * Use Case: User has created a Free Text column
-           * Action:  Tell the blotter so it can do what it needs
-           */
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
-            // not too sure what I need to do - perhaps just refresh everything?
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnEditAction;
+            blotter.editFreeTextColumnInGrid(actionTyped.freeTextColumn);
             let returnAction = next(action);
             return returnAction;
           }
-          // TODO:  Need to do Delete for free text column?
+
+          case FreeTextColumnRedux.FREE_TEXT_COLUMN_DELETE: {
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnDeleteAction;
+            blotter.removeFreeTextColumnFromGrid(actionTyped.freeTextColumn.ColumnId);
+            let returnAction = next(action);
+            return returnAction;
+          }
 
           /*******************
            * COLUMN CATEGORY ACTIONS

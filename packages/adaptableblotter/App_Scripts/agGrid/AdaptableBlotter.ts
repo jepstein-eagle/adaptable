@@ -161,7 +161,6 @@ import {
   IAdaptableNoCodeWizardOptions,
   IAdaptableNoCodeWizardInitFn,
 } from '../BlotterInterfaces/IAdaptableNoCodeWizard';
-import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -1468,6 +1467,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       existingABColumn.DataType = dataType;
       this.api.internalApi.addAdaptableColumn(existingABColumn);
     }
+    this.postSpecialColumnEditDelete(true);
   }
 
   public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
@@ -1493,23 +1493,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     }
 
-    if (this.isInitialised) {
-      //  reload the existing layout if its not default
-      let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
-      if (currentlayout != DEFAULT_LAYOUT) {
-        this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
-        setTimeout(() => {
-          this.api.layoutApi.setLayout(currentlayout);
-          this.setColumnIntoStore();
-        }, 300);
-      }
-    }
-    // if grid is initialised then emit the Blotter Ready event so we can reapply any styles
-    // and reapply any specially rendered columns
-    if (this.isInitialised) {
-      this.api.eventApi.emit('BlotterReady');
-      this.addSpecialRendereredColumns();
-    }
+    this.postSpecialColumnEditDelete(true);
   }
 
   public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
@@ -1547,14 +1531,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           4
         ),
     };
-
-    // if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
-    // newColDef.tooltipField = 'changeOnYear';
-    // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
-    //  coldDef.tooltipComponent = PercentBarTooltip;
-    // } else {
-    //   coldDef.tooltipField = '';
-    // }
 
     colDefs.push(newColDef);
     this.safeSetColDefs(colDefs);
@@ -1604,6 +1580,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.addSpecialColumnToState(freeTextColumn.Uuid, freeTextColumn.ColumnId, DataType.String);
   }
 
+  public removeFreeTextColumnFromGrid(freeTextColumnId: string): void {
+    let foundColDef: boolean = false;
+    const newColDefs = this.mapColumnDefs(
+      (colDef: ColDef) => {
+        if (colDef.headerName === freeTextColumnId) {
+          foundColDef = true;
+          return null;
+        }
+        return colDef;
+      },
+      { removeEmpty: true }
+    );
+
+    if (foundColDef) {
+      this.safeSetColDefs(newColDefs);
+    }
+
+    this.postSpecialColumnEditDelete(true);
+  }
+
+  public editFreeTextColumnInGrid(freeTextColumn: FreeTextColumn): void {
+    this.postSpecialColumnEditDelete(true);
+  }
+
   public addActionColumnToGrid(actionColumn: ActionColumn) {
     const colDefs: (ColDef | ColGroupDef)[] = [...this.getColumnDefs()];
     const newColDef: ColDef = {
@@ -1647,19 +1647,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       this.applyStylingToColumn(vendorColumn, specialColumn);
 
-      if (this.isInitialised) {
-        // and reload the existing layout if its not default
-        let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
-        if (currentlayout != DEFAULT_LAYOUT) {
-          this.api.layoutApi.setLayout(currentlayout);
-        }
-      }
-      // if grid is initialised then emit the Blotter Ready event so we can reapply any styles
-      // and reapply any specially rendered columns
-      if (this.isInitialised) {
-        this.api.eventApi.emit('BlotterReady');
-        this.addSpecialRendereredColumns();
-      }
+      this.postSpecialColumnEditDelete(false);
     }
   }
 
@@ -2383,6 +2371,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
   }
 
+  private postSpecialColumnEditDelete(doReload: boolean) {
+    if (this.isInitialised) {
+      //  reload the existing layout if its not default
+      let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
+      if (currentlayout != DEFAULT_LAYOUT) {
+        if (doReload) {
+          this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
+          //   setTimeout(() => {
+          this.api.layoutApi.setLayout(currentlayout);
+          this.setColumnIntoStore();
+          //   }, 300);
+        } else {
+          this.api.layoutApi.setLayout(currentlayout);
+        }
+      }
+    }
+    // if grid is initialised then emit the Blotter Ready event so we can reapply any styles
+    // and reapply any specially rendered columns
+    if (this.isInitialised) {
+      this.api.eventApi.emit('BlotterReady');
+      this.addSpecialRendereredColumns();
+    }
+  }
+
   private addSpecialRendereredColumns(): void {
     this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
       this.addPercentBar(pcr);
@@ -3030,11 +3042,12 @@ import "adaptableblotter/themes/${themeName}.css"`);
 
     // not sure if this is the right place here.
     // perhaps we need some onDataLoaded event??
-    const editLookUpCols: EditLookUpColumn[] = this.api.userInterfaceApi.getUserInterfaceState()
-      .EditLookUpColumns;
+    const editLookUpCols:
+      | EditLookUpColumn[]
+      | undefined = this.api.userInterfaceApi.getUserInterfaceState().EditLookUpColumns;
     if (ArrayExtensions.IsNotNullOrEmpty(editLookUpCols)) {
       const colDefs: (ColDef | ColGroupDef)[] = this.mapColumnDefs((colDef: ColDef) => {
-        editLookUpCols.forEach((e: EditLookUpColumn) => {
+        editLookUpCols!.forEach((e: EditLookUpColumn) => {
           if (colDef.field === e.ColumnId) {
             colDef.cellEditor = 'agRichSelectCellEditor';
             if (ArrayExtensions.IsNullOrEmpty(e.LookUpValues)) {
