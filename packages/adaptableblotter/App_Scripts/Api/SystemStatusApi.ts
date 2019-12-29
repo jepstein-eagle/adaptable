@@ -49,7 +49,7 @@ export interface SystemStatusApi {
    */
   setInfoSystemStatus(statusMessage: string, statusFurtherInformation?: string): void;
   /**
-   * Clears any System Status messages (and sets the type to the default type - 'success' unless overriden)
+   * Clears any System Status messages (and sets the type to the default type - 'success')
    */
   clearSystemStatus(): void;
 
