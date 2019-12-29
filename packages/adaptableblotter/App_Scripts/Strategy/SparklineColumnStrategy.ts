@@ -66,11 +66,11 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
       if (this.blotter.isInitialised) {
         // if we have made any changes then first delete them all
         this.SparklinesState.SparklineColumns.forEach(sparklineColumn => {
-          this.blotter.removeSparkline(sparklineColumn);
+          this.blotter.removeSparklineColumn(sparklineColumn);
         });
 
         this.GetSparklinesState().SparklineColumns.forEach(sparklineColumn => {
-          this.blotter.editSparkline(sparklineColumn);
+          this.blotter.editSparklineColumn(sparklineColumn);
         });
         this.blotter.redraw();
       }

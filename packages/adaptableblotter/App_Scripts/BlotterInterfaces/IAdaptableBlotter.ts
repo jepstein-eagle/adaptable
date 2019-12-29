@@ -219,9 +219,9 @@ export interface IAdaptableBlotter {
   editPercentBar(percentBar: PercentBar): void;
 
   // sparklines
-  addSparkline(sparklineColumn: SparklineColumn): void;
-  removeSparkline(sparklineColumn: SparklineColumn): void;
-  editSparkline(sparklineColumn: SparklineColumn): void;
+  addSparklineColumn(sparklineColumn: SparklineColumn): void;
+  removeSparklineColumn(sparklineColumn: SparklineColumn): void;
+  editSparklineColumn(sparklineColumn: SparklineColumn): void;
 
   // Filtering
   hideFilterForm(): void;

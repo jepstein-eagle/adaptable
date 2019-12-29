@@ -625,7 +625,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             existingColumn.DataType = this.agGridHelper.getColumnDataType(vendorColumn);
           }
         } else {
-          existingColumn = this.createColumn(vendorColumn);
+          existingColumn = this.createAdaptableColumn(vendorColumn);
         }
         allColumns.push(existingColumn);
       }
@@ -635,24 +635,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.LayoutService.autoSaveLayout();
   }
 
-  private createColumn(vendorColumn: Column): AdaptableColumn {
-    const colId: string = vendorColumn.getColId();
-    const colDef: ColDef = vendorColumn.getColDef();
-    const abColumn: AdaptableColumn = {
-      Uuid: createUuid(),
-      ColumnId: colId,
-      FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
-      DataType: this.agGridHelper.getColumnDataType(vendorColumn),
-      Visible: vendorColumn.isVisible(),
-      ReadOnly: this.agGridHelper.isColumnReadonly(colDef),
-      Sortable: this.agGridHelper.isColumnSortable(colDef),
-      Filterable: this.agGridHelper.isColumnFilterable(colDef),
-      IsSparkline: this.api.sparklineColumnApi.isSparklineColumn(colId),
-      Groupable: this.agGridHelper.isColumnGroupable(colDef),
-      Pivotable: this.agGridHelper.isColumnPivotable(colDef),
-      Aggregatable: this.agGridHelper.isColumnAggregetable(colDef),
-    };
-
+  private createAdaptableColumn(vendorColumn: Column): AdaptableColumn {
+    const abColumn: AdaptableColumn = this.agGridHelper.createAdaptableColumnFromVendorColumn(
+      vendorColumn
+    );
     this.applyStylingToColumn(vendorColumn, abColumn);
     return abColumn;
   }
@@ -1641,6 +1627,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         Pivotable: this.agGridHelper.isColumnPivotable(vendorColDef),
         Aggregatable: this.agGridHelper.isColumnAggregetable(vendorColDef),
         IsSparkline: dataType == DataType.NumberArray,
+        SpecialColumn: true,
       };
 
       this.api.internalApi.addAdaptableColumn(specialColumn);
@@ -1677,7 +1664,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  // TEMPORARY : JO
+  // This horrible method is used to get the grid style for when we export to iPushPull
+  // We need to find a better implementation
   public getIPPStyle(): IPPStyle {
     const headerFirstCol: HTMLElement = document
       .querySelectorAll('.ag-header-cell')
@@ -2312,7 +2300,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           );
 
           if (adaptableColumn != null) {
-            menuInfo = this.agGridHelper.getMenuInfo(params, adaptableColumn);
+            menuInfo = this.agGridHelper.createMenuInfo(params, adaptableColumn);
             this.strategies.forEach(s => {
               let menuItem: AdaptableMenuItem | undefined = s.addContextMenuItem(menuInfo);
               if (menuItem) {
@@ -2378,17 +2366,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       if (currentlayout != DEFAULT_LAYOUT) {
         if (doReload) {
           this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
-          //   setTimeout(() => {
           this.api.layoutApi.setLayout(currentlayout);
           this.setColumnIntoStore();
-          //   }, 300);
         } else {
           this.api.layoutApi.setLayout(currentlayout);
         }
       }
     }
-    // if grid is initialised then emit the Blotter Ready event so we can reapply any styles
-    // and reapply any specially rendered columns
+    // if grid is initialised then emit the Blotter Ready event so we can re-apply any styles
+    // and re-apply any specially rendered columns
     if (this.isInitialised) {
       this.api.eventApi.emit('BlotterReady');
       this.addSpecialRendereredColumns();
@@ -2400,11 +2386,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.addPercentBar(pcr);
     });
     this.api.sparklineColumnApi.getAllSparklineColumn().forEach(sparklineColumn => {
-      this.addSparkline(sparklineColumn);
+      this.addSparklineColumn(sparklineColumn);
     });
   }
 
-  public addSparkline(sparklineColumn: SparklineColumn): void {
+  public addSparklineColumn(sparklineColumn: SparklineColumn): void {
     // check that the brushes are set as might not be
     if (sparklineColumn.LineColor == null || sparklineColumn.LineColor == undefined) {
       sparklineColumn.LineColor = DefaultSparklinesChartProperties.Brush;
@@ -2466,7 +2452,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public removeSparkline(sparklineColumn: SparklineColumn): void {
+  public removeSparklineColumn(sparklineColumn: SparklineColumn): void {
     const renderedColumn = ColumnHelper.getColumnFromId(
       sparklineColumn.ColumnId,
       this.api.gridApi.getColumns()
@@ -2569,9 +2555,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.addPercentBar(pcr);
   }
 
-  public editSparkline(sparklineColumn: SparklineColumn): void {
-    this.removeSparkline(sparklineColumn);
-    this.addSparkline(sparklineColumn);
+  public editSparklineColumn(sparklineColumn: SparklineColumn): void {
+    this.removeSparklineColumn(sparklineColumn);
+    this.addSparklineColumn(sparklineColumn);
   }
 
   private onSortChanged(): void {

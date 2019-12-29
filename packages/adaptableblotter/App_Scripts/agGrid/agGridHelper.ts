@@ -76,6 +76,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { iconToString } from '../components/icons';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
+import { createUuid } from '../PredefinedConfig/Uuid';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -285,6 +286,27 @@ export class agGridHelper {
     return render({ value: valueToRender }) || '';
   }
 
+  public createAdaptableColumnFromVendorColumn(vendorColumn: Column): AdaptableColumn {
+    const colId: string = vendorColumn.getColId();
+    const colDef: ColDef = vendorColumn.getColDef();
+    const abColumn: AdaptableColumn = {
+      Uuid: createUuid(),
+      ColumnId: colId,
+      FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
+      DataType: this.getColumnDataType(vendorColumn),
+      Visible: vendorColumn.isVisible(),
+      ReadOnly: this.isColumnReadonly(colDef),
+      Sortable: this.isColumnSortable(colDef),
+      Filterable: this.isColumnFilterable(colDef),
+      IsSparkline: this.blotter.api.sparklineColumnApi.isSparklineColumn(colId),
+      Groupable: this.isColumnGroupable(colDef),
+      Pivotable: this.isColumnPivotable(colDef),
+      Aggregatable: this.isColumnAggregetable(colDef),
+      SpecialColumn: false,
+    };
+    return abColumn;
+  }
+
   public createAdaptableSideBarDefs(
     showFilterPanel: boolean,
     showColumnsPanel: boolean
@@ -443,13 +465,11 @@ export class agGridHelper {
       'Selection Changed Args',
       selectionChangedInfo
     );
-
     this.blotter.api.eventApi.emit('SelectionChanged', selectionChangedArgs);
   }
 
-  public getMenuInfo(params: GetContextMenuItemsParams, column: AdaptableColumn): MenuInfo {
+  public createMenuInfo(params: GetContextMenuItemsParams, column: AdaptableColumn): MenuInfo {
     // lets build a picture of what has been right clicked.  Will take time to get right but lets start
-
     const colId = params.column.getColId();
     const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRowNode(params.node);
     let isSingleSelectedColumn: boolean = false;

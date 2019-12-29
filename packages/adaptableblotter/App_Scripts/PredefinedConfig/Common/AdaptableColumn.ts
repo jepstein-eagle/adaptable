@@ -25,4 +25,5 @@ export interface AdaptableColumn {
   Groupable: boolean;
   Pivotable: boolean;
   Aggregatable: boolean;
+  SpecialColumn: boolean;
 }
