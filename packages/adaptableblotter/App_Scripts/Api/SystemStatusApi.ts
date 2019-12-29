@@ -45,7 +45,7 @@ export interface SystemStatusApi {
   /**
    * Sets System Status to INFO with an accompany message to display when the button is clicked.
    *
-   * The (optional) statusFurtherInformation allows further details to be provided if required.
+   * The (optional) statusFurtherInformation property allows further details to be provided if required.
    */
   setInfoSystemStatus(statusMessage: string, statusFurtherInformation?: string): void;
   /**
