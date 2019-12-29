@@ -2,11 +2,11 @@ import { EntitlementState, Entitlement } from '../PredefinedConfig/EntitlementSt
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
- * Provides access to the Entitlements section of the Adaptable Blotter State.
+ * Provides access to the **Entitlements** section of the Adaptable Blotter State.
  *
  *  **Further Resources**
  *
- * [State](_predefinedconfig_entitlementstate_.entitlementstate.html)
+ * [Demo Site](https://demo.adaptableblotter.com/admin/aggridentitlementsdemo/) | [Entitlements State](_predefinedconfig_entitlementstate_.entitlementstate.html)
  *
  */
 export interface EntitlementsApi {
