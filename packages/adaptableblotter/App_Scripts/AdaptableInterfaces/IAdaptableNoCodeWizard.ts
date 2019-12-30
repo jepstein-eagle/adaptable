@@ -34,7 +34,7 @@ export interface IAdaptableNoCodeWizardOptions {
  *
  * // So instead of doing
  *
- * const adaptableblotter = new Adaptable(adaptableOptions);
+ * const adaptable = new Adaptable(adaptableOptions);
  *
  * // you have to do
  *

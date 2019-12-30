@@ -13,7 +13,7 @@ import Dialog from '../../../components/Dialog';
  * Used when giving the user 2 choices with the option of adding text also
  */
 
-export interface AdaptableBlotterPopupConfirmationProps
+export interface AdaptablePopupConfirmationProps
   extends React.ClassAttributes<AdaptablePopupConfirmation> {
   ShowPopup: boolean;
   onConfirm: (comment: string) => void;
@@ -27,15 +27,15 @@ export interface AdaptableBlotterPopupConfirmationProps
   Adaptable: IAdaptable;
 }
 
-export interface AdaptableBlotterPopupConfirmationState {
+export interface AdaptablePopupConfirmationState {
   PromptText: string;
 }
 
 export class AdaptablePopupConfirmation extends React.Component<
-  AdaptableBlotterPopupConfirmationProps,
-  AdaptableBlotterPopupConfirmationState
+  AdaptablePopupConfirmationProps,
+  AdaptablePopupConfirmationState
 > {
-  constructor(props: AdaptableBlotterPopupConfirmationProps) {
+  constructor(props: AdaptablePopupConfirmationProps) {
     super(props);
     this.state = { PromptText: '' };
   }
@@ -103,18 +103,18 @@ export class AdaptablePopupConfirmation extends React.Component<
   }
 
   onCancelForm(): void {
-    this.setState({ PromptText: '' } as AdaptableBlotterPopupConfirmationState);
+    this.setState({ PromptText: '' } as AdaptablePopupConfirmationState);
     this.props.onCancel();
   }
 
   onConfirmmForm(): void {
     let promptText = this.state.PromptText;
-    this.setState({ PromptText: '' } as AdaptableBlotterPopupConfirmationState);
+    this.setState({ PromptText: '' } as AdaptablePopupConfirmationState);
     this.props.onConfirm(promptText);
   }
 
   changeContent = (e: any) => {
-    this.setState({ PromptText: e.target.value } as AdaptableBlotterPopupConfirmationState);
+    this.setState({ PromptText: e.target.value } as AdaptablePopupConfirmationState);
   };
 
   canConfirm(): boolean {

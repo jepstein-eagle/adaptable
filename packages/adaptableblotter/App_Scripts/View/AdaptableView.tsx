@@ -149,7 +149,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-let AdaptableBlotterWrapper: ConnectedComponent<typeof AdaptableView, any> = connect(
+let AdaptableWrapper: ConnectedComponent<typeof AdaptableView, any> = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AdaptableView);
@@ -157,7 +157,7 @@ let AdaptableBlotterWrapper: ConnectedComponent<typeof AdaptableView, any> = con
 export const AdaptableApp = ({ Adaptable }: { Adaptable: IAdaptable }) => (
   <Provider store={Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
-      <AdaptableBlotterWrapper Adaptable={Adaptable} />
+      <AdaptableWrapper Adaptable={Adaptable} />
     </ThemeProvider>
   </Provider>
 );

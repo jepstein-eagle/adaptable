@@ -314,7 +314,7 @@ const App = () => {
     },
     configServerOptions: {
       //   enableConfigServer: true,
-      //   configServerUrl: 'http://localhost:8080/adaptableblotter-config',
+      //   configServerUrl: 'http://localhost:8080/adaptable-config',
     },
     layoutOptions: {
       includeVendorStateInLayouts: true,

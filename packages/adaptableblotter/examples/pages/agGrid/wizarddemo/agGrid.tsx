@@ -40,9 +40,6 @@ function InitAdaptableDemo() {
           headerName: startCase((c as ColDef).field),
         };
       });
-      // const adaptableblotter = new Adaptable(adaptableOptions);
-      //
-      // return adaptableblotter;
     },
   });
 }

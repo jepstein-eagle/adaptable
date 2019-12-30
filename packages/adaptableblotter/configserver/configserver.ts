@@ -14,7 +14,7 @@ import * as bunyan from 'bunyan';
  * create app config if doesnt exist
  */
 
-let log = bunyan.createLogger({ name: 'AdaptableBlotterConfigServer', level: 'debug' });
+let log = bunyan.createLogger({ name: 'AdaptableConfigServer', level: 'debug' });
 
 if (process.argv.length <= 2) {
   log.error('Wrong number of arguments');
@@ -64,7 +64,7 @@ let app = express();
 app.use(BodyParser.urlencoded({ extended: false }));
 app.use(BodyParser.json());
 
-app.get('/adaptableblotter-config', function(req, res) {
+app.get('/adaptable-config', function(req, res) {
   let username = req.headers['ab_username'];
   let adaptableblotter_id = req.headers['ab_id'];
   try {
@@ -103,7 +103,7 @@ app.get('/adaptableblotter-config', function(req, res) {
   }
 });
 
-app.post('/adaptableblotter-config', function(req, res) {
+app.post('/adaptable-config', function(req, res) {
   var username = req.headers['ab_username'];
   var adaptableblotter_id = req.headers['ab_id'];
   if (!username || !adaptableblotter_id) {
@@ -115,7 +115,7 @@ app.post('/adaptableblotter-config', function(req, res) {
   res.json({ ok: true });
 });
 
-app.post('/adaptableblotter-teamsharing', function(req, res) {
+app.post('/adaptable-teamsharing', function(req, res) {
   let filename =
     TeamSharingFolder +
     '_' +
@@ -137,7 +137,7 @@ app.post('/adaptableblotter-teamsharing', function(req, res) {
   });
 });
 
-app.get('/adaptableblotter-teamsharing', function(req, res) {
+app.get('/adaptable-teamsharing', function(req, res) {
   var files = getFiles(TeamSharingFolder);
   let entities = [];
   for (let file of files) {

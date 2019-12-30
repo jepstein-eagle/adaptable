@@ -56,7 +56,7 @@ let demoConfig: PredefinedConfig = {
       Glue4Office: glue42office, // this is the Glue4Office object
       Glue42Config: {
         initialization: {
-          application: 'AdaptableBlotterDemo',
+          application: 'AdaptableBlotterDemo', // need to change?
           gateway: {
             protocolVersion: 3,
             ws: 'ws://localhost:8385',
