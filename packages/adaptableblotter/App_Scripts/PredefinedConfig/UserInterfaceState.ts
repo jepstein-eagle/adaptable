@@ -39,16 +39,14 @@ export interface UserInterfaceState extends DesignTimeState {
   /**
    *  An optional list of colours that will be displayed in the Colour Picker in place of the default set that ships with the Adaptable Blotter.
    *
-   * This is used for those Functions that create a Style (e.g. Conditional Style, Format Column)
+   * This is used in Functions which create a Style (e.g. Conditional Style, Format Column, Flashing Cells etc.)
    *
    * **Please provide a list of hex values**
-   *
-   *  * **ColorPalette Predefined Config Example**
    *
    * ```ts
    * export default {
    *   UserInterface: {
-   *      ColorPalette: ['660033', 'CCFFFF', 'FFCCFF', 'B2FF66', 'FF3333', 'FFFFFF', '0000FF'],
+   *      ColorPalette: ['660033', 'CCFFFF', 'FFCCFF', 'B2FF66', 'FF3333', 'FFFFFF'],
    *   },
    * } as PredefinedConfig;
    * ```
@@ -88,6 +86,25 @@ export interface UserInterfaceState extends DesignTimeState {
    * If there are no Permitted Values for the Column then the Adaptable Blotter will fetch all the distinct values in the Column and populate the Dropdown with them.
    *
    * **The column must also be marked as editable in the column schema for the Dropdown to appear.**
+   *
+   * ```ts
+   * export default {
+   *  UserInterface: {
+   *     EditLookUpColumns: [
+   *      {
+   *        ColumnId: 'CustomerReference',
+   *        LookUpValues: ['SANTG', 'LINOD','ROMEY', 'FRANK','ALFKI','REGGC']
+   *      },
+   *      {
+   *        ColumnId: 'ContactName',
+   *      },
+   *      {
+   *        ColumnId: 'Employee',
+   *      },
+   *    ],
+   *  },
+   * } as PredefinedConfig;
+   * ```
    *
    *  **Default Value**:  Empty array
    */
@@ -161,42 +178,6 @@ export interface PermittedColumnValues {
  *
  * However if Permitted Values have been set for that column then they will be displayed in the Dropdown instead.
  *
- *  **Edit LookUp Columm Example**
- *
- * ```ts
- * export default {
- *  UserInterface: {
- *     EditLookUpColumns: [
- * {
- *    ColumnId: 'CustomerReference',
- *    LookUpValues: [
- *      'SANTG',
- *      'LINOD',
- *      'ROMEY',
- *      'FRANK',
- *      'ALFKI',
- *      'REGGC',
- *      'GODOS',
- *      'PRINI',
- *      'GREAL',
- *      'WILMK',
- *      'MAISD',
- *      'THECR',
- *      'SAVEA',
- *      'FOLKO',
- *      'RATTC',
- *    ],
- *  },
- *  {
- *    ColumnId: 'ContactName',
- *  },
- *  {
- *    ColumnId: 'Employee',
- *  },
- * ],
- * },
- * } as PredefinedConfig;
- * ```
  */
 export interface EditLookUpColumn {
   /**
