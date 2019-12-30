@@ -10,7 +10,7 @@ export interface PartnerState extends DesignTimeState {
   /**
    * State required to run iPushPull from the Adaptable
    *
-   * Primarily consists of an iPushPull object injected in to the Blotter
+   * Primarily consists of an iPushPull object injected in to Adaptable
    */
   iPushPull?: IPushPullState;
 

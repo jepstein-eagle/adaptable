@@ -84,7 +84,7 @@ export interface AdaptableOptions {
   userName?: string;
 
   /**
-   * User State (a.ka. `predefinedConfig`) set at design-time and shipped with the Blotter for first use.
+   * User State (a.ka. `predefinedConfig`) set at design-time and shipped with Adaptable for first use.
    *
    * Contains a mixture of objects and properties.
    *
@@ -113,7 +113,7 @@ export interface AdaptableOptions {
   /**
    * Options for mananging the **Audit Log**.
    *
-   * Depending on the options you set audit messages will send details of actions in the Blotter to an Audit destination.
+   * Depending on the options you set audit messages will send details of actions in Adaptable to an Audit destination.
    *
    * You can choose to listen to any mixture of Audits for: **CellEdit**, **TickingDataChange**, **FunctionEvent**, **UserStateChange** and **InternalStateChange**.
    *
@@ -188,7 +188,7 @@ export interface AdaptableOptions {
   /**
    * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
    *
-   * By default, the Adaptable state is persisted in the local storage of the user browser, under the `blotterId` key.
+   * By default, the Adaptable state is persisted in the local storage of the user browser, under the `adaptableId` key.
    *
    * Using various state options allows you to change this default behavior and also add custom properties in the persisted state.
    *

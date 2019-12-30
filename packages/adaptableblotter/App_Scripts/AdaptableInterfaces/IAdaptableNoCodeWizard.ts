@@ -63,11 +63,11 @@ export interface IAdaptableNoCodeWizardOptions {
  *
  *      // OR instantiate the Adaptable yourself with
  *
- *      const adaptableBlotter = new Adaptable(adaptableOptions);
+ *      const adaptable = new Adaptable(adaptableOptions);
  *      // in case you need a reference to it for later use (api stuff...)
  *      // and return the adaptable instance
  *
- *      return adaptableBlotter
+ *      return adaptable
  *    }
  * });
  *

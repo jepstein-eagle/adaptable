@@ -78,7 +78,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
           <Box>
             <HelpBlock>
               {
-                'Clear all current user state that has been applied.   When you restart / refresh the Blotter any state that you have previously created will be lost.  However your Predefined Config will then be re-applied.'
+                'Clear all current user state that has been applied.   When you restart / refresh Adaptable any state that you have previously created will be lost.  However your Predefined Config will then be re-applied.'
               }
             </HelpBlock>
             {clearButton}

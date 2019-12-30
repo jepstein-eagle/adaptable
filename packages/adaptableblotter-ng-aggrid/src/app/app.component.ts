@@ -23,7 +23,7 @@ export class AppComponent {
     userName: 'demo user',
     adaptableId: 'an angular wrapper',
     containerOptions: {
-      vendorContainer: 'adaptableBlotter',
+      vendorContainer: 'vendorDiv', // is this rights
     },
     predefinedConfig: {},
     auditOptions: {

@@ -19,7 +19,7 @@ export interface GridApi {
    */
   getGridState(): GridState;
   /**
-   * Repopulates the grid; typically used after listening to a SearchChanged event, so appropriately filtered data on the server can be sent to the Blotter.
+   * Repopulates the grid; typically used after listening to a SearchChanged event, so appropriately filtered data on the server can be sent to Adaptable.
    *
    * @param data can be any data from any datasource that is suitable for the underlying grid.
    */
@@ -145,7 +145,7 @@ export interface GridApi {
   getVendorGrid(): any;
 
   /**
-   * Returns the Blotter Options object passed into the Adaptable at the start
+   * Returns Adaptable Options object passed into the Adaptable at the start
    */
   getadaptableOptions(): AdaptableOptions;
 

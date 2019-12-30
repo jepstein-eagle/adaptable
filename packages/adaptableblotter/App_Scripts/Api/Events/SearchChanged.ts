@@ -49,7 +49,7 @@ export interface SearchChangedInfo {
    *
    * Take care when translating a Search or Column Filter expression because they might contain System Filters which are "special" filters that have a bespoke resolution (e.g "This Year", "Positive").
    *
-   * (You can set in System Filter state which and how many of these System Filters are available in the Blotter).
+   * (You can set in System Filter state which and how many of these System Filters are available in Adaptable).
    */
   blotterSearchState: BlotterSearchState;
   /**
@@ -67,7 +67,7 @@ export interface SearchChangedInfo {
 }
 
 /**
- * The current Search and Filter in the Blotter
+ * The current Search and Filter in Adaptable
  */
 export interface BlotterSearchState {
   /**

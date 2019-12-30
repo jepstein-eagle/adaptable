@@ -18,7 +18,7 @@ If so, then it provides the menu item, together with any params that are require
 This is created EACH TIME that a column header menu is opened and nothing is persisted in State.  The reason being that it is context dependent and so the contents might be different to the previous time it was opened.
 
 3.  Context Menu
-The menu that appears when the user right clicks in a cell in the Blotter
+The menu that appears when the user right clicks in a cell in Adaptable
 Currently we ONLY react to non-grouped cells.
 We create a MenuInfo object which contains deatils of the cell and column clicked
 It also stipulates whethere the cell clicked is one which is part of the current cell selection, and whether the column is the only column with selected cells (both required info for some strategies)

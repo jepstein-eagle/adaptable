@@ -49,7 +49,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     configServerUrl: '',
   },
   containerOptions: {
-    adaptableContainer: 'adaptableBlotter',
+    adaptableContainer: 'adaptable',
     vendorContainer: 'grid',
     modalContainer: undefined,
     chartContainer: undefined,

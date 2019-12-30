@@ -10,9 +10,9 @@ import join from '../../components/utils/join';
 import FileDroppable from '../../components/FileDroppable';
 
 import { prepareDataSource, WizardDataSourceInfo, prepareGridOptions } from './helper';
-import ConfigurationDialog from './AdaptableBlotterConfigurationDialog';
 import { Flex } from 'rebass';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
+import ConfigurationDialog from './AdaptableConfigurationDialog';
 
 interface AdaptableWizardViewProps {
   adaptableOptions: AdaptableOptions;

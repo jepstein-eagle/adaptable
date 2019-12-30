@@ -191,7 +191,7 @@ export class ShortcutSettingsWizard
                     <br />,
                     <br />,
                     <b>Dynamic dates</b>,
-                    " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').",
+                    " are predefined dates that come with Adaptable and are re-evaluated each day (e.g. 'Today').",
                     <br />,
                     <br />,
                     'Dynamic dates that use working days are based on the current holiday calendar.',

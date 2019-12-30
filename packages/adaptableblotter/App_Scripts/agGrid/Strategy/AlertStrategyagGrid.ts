@@ -14,7 +14,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
 
   public initStyles(): void {
     let allColumns = this.adaptable.api.gridApi.getColumns();
-    let theBlotter = this.adaptable as Adaptable;
+    let theAdaptableInstance = this.adaptable as Adaptable;
 
     let alertDefsWithHighlightCells: AlertDefinition[] = this.adaptable.api.alertApi
       .getAlertDefinitions()
@@ -31,7 +31,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
             let styleName = StyleConstants.ALERT_STYLE + alertDefinition.MessageType.toLowerCase();
 
             cellClassRules[styleName] = function(params: any) {
-              let currentAlerts: AdaptableAlert[] = theBlotter.api.internalApi.getAdaptableAlerts();
+              let currentAlerts: AdaptableAlert[] = theAdaptableInstance.api.internalApi.getAdaptableAlerts();
               if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
                 let relevantAlerts: AdaptableAlert[] = currentAlerts.filter(
                   aa =>
@@ -40,7 +40,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
                     aa.AlertDefinition.MessageType == alertDefinition.MessageType &&
                     aa.DataChangedInfo &&
                     aa.DataChangedInfo.PrimaryKeyValue ==
-                      theBlotter.getPrimaryKeyValueFromRowNode(params.node)
+                      theAdaptableInstance.getPrimaryKeyValueFromRowNode(params.node)
                 );
 
                 return relevantAlerts.length > 0;
@@ -49,7 +49,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
             };
           });
 
-          theBlotter.setCellClassRules(cellClassRules, col.ColumnId, 'Alert');
+          theAdaptableInstance.setCellClassRules(cellClassRules, col.ColumnId, 'Alert');
         }
       });
     }

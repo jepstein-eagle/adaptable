@@ -34,12 +34,8 @@ function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
 }
 
 export default () => {
-  const onReady = (adaptableblotter: Adaptable) => {
-    // you can subscribe to events like this
-    // adaptableblotter.api.eventApi
-    //   .onSearchChanged()
-    //   .Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
-    // but better use the react way below
+  const onReady = (adaptable: Adaptable) => {
+    // do stuff
   };
   return (
     <AdaptableBlotterReact
@@ -47,8 +43,10 @@ export default () => {
       gridOptions={gridOptions}
       adaptableOptions={adaptableOptions}
       onReady={onReady}
-      onSearchChanged={(sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs)}
-      onThemeChanged={(sender, arg: ThemeChangedEventArgs) => {
+      onSearchChanged={(searchChangedArgs: SearchChangedEventArgs) =>
+        listenToSearchChange(searchChangedArgs)
+      }
+      onThemeChanged={(arg: ThemeChangedEventArgs) => {
         console.log('theme:', arg.themeName);
       }}
     />

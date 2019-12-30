@@ -5,7 +5,6 @@ import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCe
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
@@ -65,8 +64,8 @@ export interface GridSetSortAction extends Redux.Action {
   ColumnSorts: ColumnSort[];
 }
 
-export interface GridSetBlotterRestrictionsAction extends Redux.Action {
-  BlotterRestrictions: string[];
+export interface GridSetAdaptableRestrictionsAction extends Redux.Action {
+  AdaptableRestrictions: string[];
 }
 
 export interface GridSetSelectedCellsAction extends Redux.Action {

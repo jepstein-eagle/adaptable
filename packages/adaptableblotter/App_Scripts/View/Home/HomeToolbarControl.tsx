@@ -67,7 +67,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     const colsGlyph: any = <Icon name={'list'} />;
     const toolbarsGlyph: any = <Icon name={'align-justify'} />;
 
-    // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
+    // List strategies that are allowed - i.e. are offered by Adaptable instance and are not Hidden Entitlement
     let strategyKeys: string[] = [...this.props.Adaptable.strategies.keys()];
     let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)

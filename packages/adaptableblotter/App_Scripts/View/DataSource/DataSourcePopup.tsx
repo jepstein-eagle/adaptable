@@ -47,7 +47,7 @@ class DataSourcePopupComponent extends React.Component<
 
   render() {
     let infoBody: any[] = [
-      'Use DataSources to select from existing server queries what data to show in the Blotter.',
+      'Use DataSources to select from existing server queries what data to show in Adaptable.',
     ];
 
     let colItems: IColItem[] = [

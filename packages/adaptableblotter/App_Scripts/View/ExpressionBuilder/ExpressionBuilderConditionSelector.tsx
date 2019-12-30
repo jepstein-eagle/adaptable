@@ -268,7 +268,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         let columnValuePairs: IRawValueDisplayValuePair[] = [];
         // we have got the result back from the function we've invoked; if the return value is null then lets get distinct values instead
         if (result == null) {
-          //  nothing returned so get the distinct column values via the Blotter method
+          //  nothing returned so get the distinct column values via Adaptable method
           columnValuePairs = props.Adaptable.getColumnValueDisplayValuePairDistinctList(
             props.SelectedColumnId,
             DistinctCriteriaPairValue.DisplayValue,

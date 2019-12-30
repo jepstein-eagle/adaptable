@@ -144,7 +144,7 @@ export interface DashboardApi {
   /**
    * Sets the title of the Home Toolbar - the one on the left of the Dashboard
    *
-   * If no value is set, the title of the Home Toolbar will be the ​​blotterId​​ property in AdaptableOptions
+   * If no value is set, the title of the Home Toolbar will be the adaptableId property in AdaptableOptions
    */
   SetHomeToolbarTitle(title: string): void;
 

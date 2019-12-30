@@ -41,7 +41,7 @@ import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
  *
  *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
  *
- *  It also contains an api property which gives access to the Blotter API - this is the ONLY way that developers should access Adaptable methods.
+ *  It also contains an api property which gives access to Adaptable API - this is the ONLY way that developers should access Adaptable methods.
  */
 export interface IAdaptable {
   /**
@@ -49,12 +49,12 @@ export interface IAdaptable {
    *
    * Ideally ALL access to and from the Store should be via api methods.
    *
-   * Likewise ALL access to methods in the Blotter by external developers should be via the API
+   * Likewise ALL access to methods in Adaptable by external developers should be via the API
    */
   api: AdaptableApi;
 
   /**
-   * The main configuration object which contains all the options that users needs to set up the Blotter.
+   * The main configuration object which contains all the options that users needs to set up Adaptable.
    *
    * Most properties are nullable with sensible defaults provided in DefaultAdaptableOptions that is merged at initialisation.
    *
@@ -67,7 +67,7 @@ export interface IAdaptable {
   /**
    * The redux store that we use to manage state
    *
-   * Ideally all access to and from the store should be via the Blotter API and this store should NOT be accessed directly.
+   * Ideally all access to and from the store should be via Adaptable API and this store should NOT be accessed directly.
    */
   AdaptableStore: IAdaptableStore;
 
@@ -93,7 +93,7 @@ export interface IAdaptable {
   embedColumnMenu: boolean;
 
   /**
-   * Set when the Blotter is fully initialised
+   * Set when Adaptable is fully initialised
    *
    * Avoid unnecessary store calls and rendering
    */

@@ -22,7 +22,7 @@ Basic demo of wizard that allow d&d of a json with an array contents
 function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'dtmKey', // will be added later ...
-    //blotterId: 'Position Monitor',
+    //adaptableId: 'Position Monitor',
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };

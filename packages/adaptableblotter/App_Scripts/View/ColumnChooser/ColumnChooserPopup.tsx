@@ -50,7 +50,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
       "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.",
       <br />,
       <br />,
-      'All changes made while using the Column Chooser are implemented in the Blotter immediately.',
+      'All changes made while using the Column Chooser are implemented in Adaptable immediately.',
     ];
 
     return (

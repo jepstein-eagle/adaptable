@@ -12,7 +12,7 @@ import { AdaptableColumn } from './Common/AdaptableColumn';
  *
  * - [PermittedColumnValues](#permittedcolumnvalues): List of allowed values to show in a given column's filter (or Query Builder).
  *
- * - [RowStyles](#rowstyles): Defines how alternating (or all) rows in the Blotter should look.
+ * - [RowStyles](#rowstyles): Defines how alternating (or all) rows in Adaptable should look.
  *
  * - [EditLookupColumns](#editlookupcolumns): Columns which will display a Dropdown when being edited.
  *
@@ -136,7 +136,7 @@ export interface UserInterfaceState extends DesignTimeState {
   EditLookUpColumns?: EditLookUpColumn[];
 
   /**
-   * A list of RowStyles which allow you to specifiy how the Blotter should look.
+   * A list of RowStyles which allow you to specifiy how Adaptable should look.
    *
    * You can choose to style All, Odd or Even rows (the last 2 are used for when wanting to have alternating row styles).
    *
@@ -213,7 +213,7 @@ export interface EditLookUpColumn {
   /**
    * Any particular values to show in the Lookup - the list can be either hard-coded or returned by a function.
    *
-   * If this is left empty then the Blotter will first get any Permitted Values if any, and failiing that will dynamically get the distinct values for the column.
+   * If this is left empty then Adaptable will first get any Permitted Values if any, and failiing that will dynamically get the distinct values for the column.
    */
   LookUpValues?: any[] | ((column: AdaptableColumn) => any[]);
 }

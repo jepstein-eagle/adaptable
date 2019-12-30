@@ -35,7 +35,7 @@ export interface UserInterfaceOptions {
   /**
    * Whether or not to show the Adaptable specific Context Menu items.
    *
-   * Can either be a boolean value or a function that will be called for every context menu item the Blotter provides.
+   * Can either be a boolean value or a function that will be called for every context menu item Adaptable provides.
    *
    * The two params to the function are:
    *
@@ -52,7 +52,7 @@ export interface UserInterfaceOptions {
   /**
    * Whether or not to show the Adaptable specific Column Menu items.
    *
-   * Can either be a boolean value or a function that will be called for every context menu item the Blotter provides.
+   * Can either be a boolean value or a function that will be called for every context menu item Adaptable provides.
    *
    * The two params to the function are:
    *

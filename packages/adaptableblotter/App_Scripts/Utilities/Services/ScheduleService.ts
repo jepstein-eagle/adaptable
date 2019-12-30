@@ -50,7 +50,7 @@ const NodeSchedule = {
 /**
  * This class is used for managing scheduling of Reports and Reminders
  * It listens to any changes in the Reminder or the Export state and tells the respective stragies to refresh
- * It also createsa daily job to run at midnight that will refresh the Blotter - this is so that date-based schedules can jump to the new day
+ * It also createsa daily job to run at midnight that will refresh Adaptable - this is so that date-based schedules can jump to the new day
  */
 export class ScheduleService implements IScheduleService {
   private reminderJobs: ScheduleJob[];

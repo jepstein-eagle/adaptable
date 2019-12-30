@@ -17,7 +17,7 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  *
  * - **SelectionChanged** - fired whenever the user changes the Cell or Rows selection
  *
- * - **ThemeChanged** - fired when the Theme in the Blotter changes
+ * - **ThemeChanged** - fired when the Theme in Adaptable changes
  *
  * - **AlertFired** - fired whenever an alert is triggered in the Adaptable
  *
@@ -159,7 +159,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Fired when the Blotter is up and running - has no arguments.
+   * Fired when Adaptable is up and running - has no arguments.
    *
    * @param eventName AdaptableReady
    *

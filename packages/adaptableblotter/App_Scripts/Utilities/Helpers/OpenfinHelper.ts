@@ -1,8 +1,12 @@
 import { LoggingHelper } from './LoggingHelper';
 import { ExcelWorkbook } from '../Services/OpenfinLiveExcel/ExcelWorkbook';
-import { IEvent } from '../Interface/IEvent';
 
 // putting this here as we dont use it elswhere - so keeping it here until we redo the OpenFin one day...
+export interface IEvent<TSender, TArgs> {
+  Subscribe(fn: (sender: TSender, args: TArgs) => void): void;
+  Unsubscribe(fn: (sender: TSender, args: TArgs) => void): void;
+}
+
 export class EventDispatcher<TSender, TArgs> implements IEvent<TSender, TArgs> {
   private _subscriptions: Array<(sender: TSender, args: TArgs) => void> = new Array<
     (sender: TSender, args: TArgs) => void

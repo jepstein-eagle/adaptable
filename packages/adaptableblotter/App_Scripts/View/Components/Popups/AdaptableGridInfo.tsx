@@ -22,13 +22,13 @@ import SimpleButton from '../../../components/SimpleButton';
 import Radio from '../../../components/Radio';
 import { AdaptableOptions } from '../../../AdaptableOptions/AdaptableOptions';
 
-interface AdaptableBlotterGridInfoProps extends React.ClassAttributes<AdaptableGridInfo> {
+interface AdaptableGridInfoProps extends React.ClassAttributes<AdaptableGridInfo> {
   Adaptable: IAdaptable;
   onClose?: () => void;
   showAbout: boolean;
 }
 
-export interface GridInfoBlotterState {
+export interface AdaptableGridInfoState {
   // General
   ShowGridProperties: boolean;
   //  Options Minimised
@@ -43,10 +43,10 @@ export interface GridInfoBlotterState {
 }
 
 export class AdaptableGridInfo extends React.Component<
-  AdaptableBlotterGridInfoProps,
-  GridInfoBlotterState
+  AdaptableGridInfoProps,
+  AdaptableGridInfoState
 > {
-  constructor(props: AdaptableBlotterGridInfoProps) {
+  constructor(props: AdaptableGridInfoProps) {
     super(props);
     this.state = {
       ShowGridProperties: true,
@@ -140,10 +140,10 @@ export class AdaptableGridInfo extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as GridInfoBlotterState);
+          } as AdaptableGridInfoState);
         })
       : this.createMinimiseButton('Base', () => {
-          this.setState({ IsBaseOptionsMinimised: true } as GridInfoBlotterState);
+          this.setState({ IsBaseOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
     let showContainerOptionsButton = this.state.IsContainerOptionsMinimised
@@ -157,10 +157,10 @@ export class AdaptableGridInfo extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as GridInfoBlotterState);
+          } as AdaptableGridInfoState);
         })
       : this.createMinimiseButton('Container', () => {
-          this.setState({ IsContainerOptionsMinimised: true } as GridInfoBlotterState);
+          this.setState({ IsContainerOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
     let showAuditOptionsButton = this.state.IsAuditOptionsMinimised
@@ -174,10 +174,10 @@ export class AdaptableGridInfo extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as GridInfoBlotterState);
+          } as AdaptableGridInfoState);
         })
       : this.createMinimiseButton('Audit', () => {
-          this.setState({ IsAuditOptionsMinimised: true } as GridInfoBlotterState);
+          this.setState({ IsAuditOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
     let showConfigServerOptionsButton = this.state.IsConfigServerOptionsMinimised
@@ -191,10 +191,10 @@ export class AdaptableGridInfo extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as GridInfoBlotterState);
+          } as AdaptableGridInfoState);
         })
       : this.createMinimiseButton('Config Server', () => {
-          this.setState({ IsConfigServerOptionsMinimised: true } as GridInfoBlotterState);
+          this.setState({ IsConfigServerOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
     let showQueryOptionsButton = this.state.IsQueryOptionsMinimised
@@ -208,10 +208,10 @@ export class AdaptableGridInfo extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as GridInfoBlotterState);
+          } as AdaptableGridInfoState);
         })
       : this.createMinimiseButton('Query', () => {
-          this.setState({ IsQueryOptionsMinimised: true } as GridInfoBlotterState);
+          this.setState({ IsQueryOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
     let showLayoutOptionsButton = this.state.IsLayoutOptionsMinimised
@@ -225,10 +225,10 @@ export class AdaptableGridInfo extends React.Component<
             IsLayoutOptionsMinimised: false,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: true,
-          } as GridInfoBlotterState);
+          } as AdaptableGridInfoState);
         })
       : this.createMinimiseButton('Layout', () => {
-          this.setState({ IsLayoutOptionsMinimised: true } as GridInfoBlotterState);
+          this.setState({ IsLayoutOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
     let showFilterOptionsButton = this.state.IsFilterOptionsMinimised
@@ -242,10 +242,10 @@ export class AdaptableGridInfo extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: false,
             IsGeneralOptionsMinimised: true,
-          } as GridInfoBlotterState);
+          } as AdaptableGridInfoState);
         })
       : this.createMinimiseButton('Filter', () => {
-          this.setState({ IsFilterOptionsMinimised: true } as GridInfoBlotterState);
+          this.setState({ IsFilterOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
     let showGeneralOptionsButton = this.state.IsGeneralOptionsMinimised
@@ -259,10 +259,10 @@ export class AdaptableGridInfo extends React.Component<
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
             IsGeneralOptionsMinimised: false,
-          } as GridInfoBlotterState);
+          } as AdaptableGridInfoState);
         })
       : this.createMinimiseButton('General', () => {
-          this.setState({ IsGeneralOptionsMinimised: true } as GridInfoBlotterState);
+          this.setState({ IsGeneralOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
     return (
@@ -516,7 +516,7 @@ export class AdaptableGridInfo extends React.Component<
           colItems,
           'adaptableContainer',
           options.containerOptions.adaptableContainer,
-          'Id of <div> element which contains the Blotter'
+          'Id of <div> element which contains Adaptable'
         )
       );
       returnRows.push(
@@ -569,7 +569,7 @@ export class AdaptableGridInfo extends React.Component<
           colItems,
           'auditFunctionEvents',
           options.auditOptions.auditFunctionEvents == true ? 'Yes' : 'No',
-          " Whether to audit function events in the Blotter (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)"
+          " Whether to audit function events in Adaptable (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)"
         )
       );
       returnRows.push(
@@ -804,6 +804,6 @@ export class AdaptableGridInfo extends React.Component<
 
   onShowGridPropertiesChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.setState({ ShowGridProperties: e.value == 'GridProperties' } as GridInfoBlotterState);
+    this.setState({ ShowGridProperties: e.value == 'GridProperties' } as AdaptableGridInfoState);
   }
 }

@@ -55,7 +55,7 @@ export interface AuditOptions {
   auditCellEdits?: AuditDestinationOptions;
 
   /**
-   * Whether to audit function events in the Blotter.
+   * Whether to audit function events in Adaptable.
    *
    * These are events that happen when a Function does something (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)
    *

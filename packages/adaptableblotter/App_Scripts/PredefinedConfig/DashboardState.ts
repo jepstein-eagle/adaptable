@@ -287,9 +287,9 @@ export interface DashboardState extends RunTimeState {
   /**
    * The title of the Home Toolbar - the first toolbar visible.
    *
-   * If no value is provided then the Home Toolbar will show the 'blotterId' property in Blotter Options
+   * If no value is provided then the Home Toolbar will show the 'adaptableId' property in Blotter Options
    *
-   * **Default Value**:  'blotterId' property in Blotter Options
+   * **Default Value**:  `adaptableId` property in Blotter Options
    */
   HomeToolbarTitle?: string;
 

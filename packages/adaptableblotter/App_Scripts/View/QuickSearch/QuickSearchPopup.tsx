@@ -117,7 +117,7 @@ class QuickSearchPopupComponent extends React.Component<
 
   render() {
     let infoBody: any[] = [
-      'Run a simple text search across all visible cells in the Blotter.',
+      'Run a simple text search across all visible cells in Adaptable.',
       <br />,
       <br />,
       'Use Quick Search Options to set search operator, behaviour and back colour (all automatically saved).',

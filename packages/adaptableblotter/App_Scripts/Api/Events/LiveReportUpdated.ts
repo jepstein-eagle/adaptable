@@ -82,7 +82,7 @@ export interface LiveReportUpdatedInfo {
 }
 
 /**
- * Defines which Adaptable are 'Live' (i.e. they will update the destination as the data in the Blotter ticks or changes)
+ * Defines which Adaptable are 'Live' (i.e. they will update the destination as the data in Adaptable ticks or changes)
  *
  * You can currently sent Live Reports to 3 Destinations:
  *

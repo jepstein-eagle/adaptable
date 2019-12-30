@@ -67,7 +67,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  */
 export interface LayoutState extends RunTimeState {
   /**
-   * The name of the Layout which will be in use when the Blotter starts / loads.
+   * The name of the Layout which will be in use when Adaptable starts / loads.
    *
    * This will be the selected value in the Layout Toolbar and the Adaptable will apply it automatically.
    *

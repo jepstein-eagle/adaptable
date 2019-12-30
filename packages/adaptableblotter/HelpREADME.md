@@ -25,20 +25,20 @@ These 3 objects are linked as follows:
 
 ## Blotter Options
 
-You use the Blotter Options to set up the Adaptabble Blotter at design time so that it fits your requirements. There are 2 mandatory properties (_primaryKey_ and _vendorGrid_) and a host of optional ones (including _Predefined Config_ - see below). Where a property is not provided, the Adaptable provides a default. The code documentation lists all the available properties and their default values.
+You use Adaptable Options to set up the Adaptabble Blotter at design time so that it fits your requirements. There are 2 mandatory properties (_primaryKey_ and _vendorGrid_) and a host of optional ones (including _Predefined Config_ - see below). Where a property is not provided, the Adaptable provides a default. The code documentation lists all the available properties and their default values.
 
 [See Blotter Options Code](./interfaces/_adaptableOptions_adaptableOptions_.adaptableOptions.html)
 
 ## Predefined Configuration
 
-You can provide the Adaptable at start-up with _Predefined Configuration_ which ensures that when the Blotter first loads it contains all the objects that users need. This includes *Entitlements*.
+You can provide the Adaptable at start-up with _Predefined Configuration_ which ensures that when Adaptable first loads it contains all the objects that users need. This includes *Entitlements*.
 
 [See Predefined Configuration Code](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
 
 ## Blotter API
 
-The Adaptable API provides full safe, run-time access - through code - to all the functionality and state of the Adaptable. This allows you to create, save and delete Adaptable objects in your our screens bypassing the Blotter's UI, or to access the Store in a safe non-mutable manner.
+The Adaptable API provides full safe, run-time access - through code - to all the functionality and state of the Adaptable. This allows you to create, save and delete Adaptable objects in your our screens bypassing Adaptable's UI, or to access the Store in a safe non-mutable manner.
 
 [See Adaptable API Code](interfaces/_api_adaptableApi_.adaptableApi.html)
 

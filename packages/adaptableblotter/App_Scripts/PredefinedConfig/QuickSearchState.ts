@@ -18,7 +18,7 @@ DisplayAction
 
 string
 
-How the Blotter should show the results. There are 3 options for this property:
+How Adaptable should show the results. There are 3 options for this property:
 
 HighlightCell - The grid shows all rows and cells that match the quick search are highlighted
 

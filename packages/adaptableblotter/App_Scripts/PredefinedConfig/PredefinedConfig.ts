@@ -84,7 +84,7 @@ import { ToolPanelState } from './ToolPanelState';
  *  | [SystemFilter](_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | No                  | Select availability of System Filters (e.g. Today, Blanks)    |
  *  | [SystemStatus](_predefinedconfig_systemstatusstate_.systemstatusstate.html)             | No                  | Show Messages and Alerts describing curent Status of the App  |
  *  | [Theme](_predefinedconfig_themestate_.themestate.html)                                  | Yes                 | Select with shipped Theme is used or provide a custom one     |
- *  | [ToolPanel](_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Yes                 | Manage the Blotter ToolPanel (the area to the right of grid)  |
+ *  | [ToolPanel](_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Yes                 | Manage Adaptable ToolPanel (the area to the right of grid)  |
  *  | [UpdatedRow](_predefinedconfig_updatedrowstate_.updatedrowstate.html)                   | Yes                 | Colour (and jump to) rows whose contents have changed         |
  *  | [UserFilter](_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Yes                 | Create your own filters baseed on your data and requirements  |
  *  | [UserInterface](_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
@@ -280,7 +280,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Action Column State can be updated via the Blotter API but these updates **will not be persisted**).
+   * (Note: Action Column State can be updated via Adaptable API but these updates **will not be persisted**).
    */
   ActionColumn?: ActionColumnState;
   /**
@@ -288,7 +288,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Application State can be updated via the Blotter API but these updates **will not be persisted**).
+   * (Note: Application State can be updated via Adaptable API but these updates **will not be persisted**).
    */
   Application?: ApplicationState;
   /**
@@ -298,7 +298,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Entitlement State can be updated via the Blotter API but these updates **will not be persisted**).
+   * (Note: Entitlement State can be updated via Adaptable API but these updates **will not be persisted**).
    */
   Entitlements?: EntitlementState;
 
@@ -311,7 +311,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Named Filter State can be updated via the Blotter API but these updates **will not be persisted**).
+   * (Note: Named Filter State can be updated via Adaptable API but these updates **will not be persisted**).
    */
   NamedFilter?: NamedFilterState;
   /**
@@ -319,7 +319,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Partner Config State can be updated via the Blotter API but these updates **will not be persisted**).
+   * (Note: Partner Config State can be updated via Adaptable API but these updates **will not be persisted**).
    */
   Partner?: PartnerState;
   /**
@@ -327,7 +327,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Sparkline Column State can be updated via the Blotter API but these updates **will not be persisted**).
+   * (Note: Sparkline Column State can be updated via Adaptable API but these updates **will not be persisted**).
    */
   SparklineColumn?: SparklineColumnState;
   /**
@@ -345,7 +345,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: User Interface State can be updated via the Blotter API but these updates **will not be persisted**).
+   * (Note: User Interface State can be updated via Adaptable API but these updates **will not be persisted**).
    */
   UserInterface?: UserInterfaceState;
 

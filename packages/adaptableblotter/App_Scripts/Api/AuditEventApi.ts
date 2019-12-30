@@ -40,7 +40,7 @@ export interface AuditEventApi {
   ): () => void;
 
   /**
-   * Fired whenever a cell is edited in the Blotter.
+   * Fired whenever a cell is edited in Adaptable.
    *
    * It does **not** fire if the data changes outside of direct user action in the Grid (e.g. for ticking data)
    *

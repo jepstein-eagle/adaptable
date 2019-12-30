@@ -43,7 +43,7 @@ import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
 
 /**
- * The Blotter API provides developers with run-time access to the Adaptable.
+ * Adaptable API provides developers with run-time access to the Adaptable.
  *
  * It attempts to offer ALL the functionality provided by the Adaptable UI in code form.
  *
@@ -53,7 +53,7 @@ import { GridApi } from './GridApi';
  *
  * *Note to Adaptable users: If there is a method missing that you would like implemented please contact support@adaptabletools.com*
  *
- * The Blotter API consists of over 40 sets of properties grouped against a particular function.
+ * Adaptable API consists of over 40 sets of properties grouped against a particular function.
  *
  * Each of these properties is a class that contains a set of API method grouped either by Adaptable Function (e.g. *AdvancedSearchAPI*) or type (e.g. *AuditEventApi*)
  */
