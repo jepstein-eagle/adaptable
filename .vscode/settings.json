@@ -1,5 +1,5 @@
 {
     "editor.formatOnSave": true,
-    "typescript.tsdk": "./packages/adaptableblotter/node_modules/typescript/lib",
+    "typescript.tsdk": "./packages/adaptable/node_modules/typescript/lib",
     "prettier.prettierPath": "./node_modules/prettier"
 }

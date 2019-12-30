@@ -1,0 +1,5 @@
+{
+  "extends": "../adaptable/tsconfig.json",
+  "include": ["src/**/*","../adaptable/App_Scripts/@types/**/*"],
+  "exclude": ["node_modules", ".next", "typings"]
+}

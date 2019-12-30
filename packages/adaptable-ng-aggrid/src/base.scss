@@ -1,0 +1,16 @@
+@import '../../adaptable/App_Scripts/base.scss';
+
+:root {
+  --ab_flex-direction: column;
+  --ab_min-height: 100px;
+}
+
+.ab__react-wrapper {
+  display: flex;
+  flex-flow: var(--ab_flex-direction);
+  min-height: var(--ab_min-height);
+}
+
+.ab--flex-fill {
+  flex: 100;
+}

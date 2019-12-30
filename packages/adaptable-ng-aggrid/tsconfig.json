@@ -1,0 +1,29 @@
+{
+  "extends": "../adaptable/tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "adaptable-angular-aggrid": [
+        "dist/adaptable-angular-aggrid"
+      ],
+      "adaptable-angular-aggrid/*": [
+        "dist/adaptable-angular-aggrid/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "../adaptable/App_Scripts/**/*"
+  ]
+}

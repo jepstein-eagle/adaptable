@@ -1,0 +1,22 @@
+@import '../../adaptable/App_Scripts/base.scss';
+
+:root {
+  --ab_flex-direction: column;
+  --ab_min-height: 100px;
+}
+
+.ab__react-wrapper {
+  display: flex;
+  flex-flow: var(--ab_flex-direction);
+  min-height: var(--ab_min-height);
+}
+
+.ab--flex-fill {
+  flex: 100;
+}
+
+.ab__react-wrapper [data-ab-name='ab__aggrid-container'] > div:not(.ag-root-wrapper) {
+  // a div with height: 100% is generated before the ag grid root - where it would have been rendered
+  // by the default aggrid wrapper
+  display: none;
+}
