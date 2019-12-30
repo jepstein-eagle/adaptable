@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';

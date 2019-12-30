@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
 
 /**
  * Event Args used as part of the **on('ColumnStateChanged')** event.

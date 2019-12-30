@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
 
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 

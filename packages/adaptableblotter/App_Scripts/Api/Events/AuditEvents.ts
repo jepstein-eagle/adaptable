@@ -1,4 +1,4 @@
-import { FDC3Schema, AdaptableEventData, AdaptableEventArgs } from './BlotterEvents';
+import { FDC3Schema, AdaptableEventData, AdaptableEventArgs } from './AdaptableEvents';
 import { AuditLogEntry } from '../../Utilities/Interface/AuditLogEntry';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';

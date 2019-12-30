@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 
 /**

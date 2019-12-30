@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
 import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 
 export interface ToolbarButtonClickedEventArgs extends AdaptableEventArgs {

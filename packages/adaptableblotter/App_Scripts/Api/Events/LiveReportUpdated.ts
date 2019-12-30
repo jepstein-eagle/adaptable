@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
 import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
 import { Report } from '../../PredefinedConfig/ExportState';
 

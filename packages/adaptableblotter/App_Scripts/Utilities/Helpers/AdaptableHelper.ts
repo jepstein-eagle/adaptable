@@ -8,12 +8,12 @@ import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
-import { AdaptableEventData, AdaptableEventArgs } from '../../Api/Events/adaptableEvents';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
 import { ADAPTABLE_ID } from '../Constants/GeneralConstants';
+import { AdaptableEventArgs, AdaptableEventData } from '../../Api/Events/AdaptableEvents';
 
 export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
   const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
