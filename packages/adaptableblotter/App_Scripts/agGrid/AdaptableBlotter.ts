@@ -120,11 +120,7 @@ import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { ColumnSort, VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
-import {
-  PermittedColumnValues,
-  EditLookUpColumn,
-  UserMenuItem,
-} from '../PredefinedConfig/UserInterfaceState';
+import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 
@@ -161,6 +157,7 @@ import {
   IAdaptableNoCodeWizardOptions,
   IAdaptableNoCodeWizardInitFn,
 } from '../BlotterInterfaces/IAdaptableNoCodeWizard';
+import edit from '../components/icons/edit';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -988,11 +985,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
-    const permittedValuesForColumn: PermittedColumnValues = this.api.userInterfaceApi.getPermittedValuesForColumn(
+    const permittedValuesForColumn: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(
       columnId
     );
-    if (permittedValuesForColumn != undefined) {
-      permittedValuesForColumn.PermittedValues.forEach(pv => {
+    if (ArrayExtensions.IsNotNullOrEmpty(permittedValuesForColumn)) {
+      permittedValuesForColumn.forEach(pv => {
         returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
       });
     } else {
@@ -1025,11 +1022,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
-    const permittedValuesForColumn: PermittedColumnValues = this.api.userInterfaceApi.getPermittedValuesForColumn(
+    const permittedValuesForColumn: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(
       columnId
     );
-    if (permittedValuesForColumn != undefined) {
-      permittedValuesForColumn.PermittedValues.forEach(pv => {
+    if (ArrayExtensions.IsNotNullOrEmpty(permittedValuesForColumn)) {
+      permittedValuesForColumn.forEach(pv => {
         permittedMap.set(pv, { RawValue: pv, DisplayValue: pv });
       });
     } else {
@@ -3037,21 +3034,12 @@ import "adaptableblotter/themes/${themeName}.css"`);
         editLookUpCols!.forEach((editLookUpColumn: EditLookUpColumn) => {
           if (colDef.field === editLookUpColumn.ColumnId) {
             colDef.cellEditor = 'agRichSelectCellEditor';
-            // first see if we have a function to get it
             if (editLookUpColumn.LookUpValues) {
-              if (typeof editLookUpColumn.LookUpValues === 'function') {
-                let column: AdaptableColumn = ColumnHelper.getColumnFromId(
-                  editLookUpColumn.ColumnId,
-                  this.api.gridApi.getColumns()
-                );
-                colDef.cellEditorParams = {
-                  values: editLookUpColumn.LookUpValues(column),
-                };
-              } else {
-                colDef.cellEditorParams = {
-                  values: editLookUpColumn.LookUpValues,
-                };
-              }
+              colDef.cellEditorParams = {
+                values: this.api.userInterfaceApi.getEditLookUpValuesForColumn(
+                  editLookUpColumn.ColumnId
+                ),
+              };
             } else {
               colDef.cellEditorParams = {
                 values: this.getColumnValueDisplayValuePairDistinctList(

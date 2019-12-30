@@ -1,9 +1,9 @@
 import {
   UserInterfaceState,
-  PermittedColumnValues,
   EditLookUpColumn,
   RowStyle,
   UserMenuItem,
+  PermittedValuesColumn,
 } from '../PredefinedConfig/UserInterfaceState';
 
 export interface UserInterfaceApi {
@@ -56,13 +56,17 @@ export interface UserInterfaceApi {
    */
   clearColumnPermittedValues(column: string): void;
 
-  getAllPermittedValues(): PermittedColumnValues[];
+  getAllPermittedValuesColumns(): any[];
 
-  getPermittedValuesForColumn(columnId: string): PermittedColumnValues;
+  getPermittedValuesColumnForColumn(columnId: string): PermittedValuesColumn;
+
+  getPermittedValuesForColumn(columnId: string): any[];
 
   getAllEditLookUpColumns(): EditLookUpColumn[];
 
   getEditLookUpColumnForColumn(columnId: string): EditLookUpColumn;
+
+  getEditLookUpValuesForColumn(columnId: string): any[];
 
   isEditLookUpColumn(columnId: string): boolean;
 

@@ -24,11 +24,10 @@ function InitAdaptableBlotter() {
   const tradeCount: number = 5000;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  gridOptions.singleClickEdit = true;
   const adaptableBlotterOptions: AdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Edit Lookup Columns Demo',
+    blotterId: 'Permitted Columns Demo',
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
@@ -41,29 +40,21 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['AdvancedSearch'],
+  },
   UserInterface: {
-    EditLookUpColumns: [
-      {
-        ColumnId: 'country',
-        LookUpValues: ['UK', 'France', 'Italy', 'Germany'],
-      },
-      {
-        ColumnId: 'counterparty',
-        LookUpValues: (column: AdaptableColumn) => {
-          return ['BAML', 'Nomura', 'UBS'];
-        },
-      },
-      {
-        ColumnId: 'currency',
-      },
-      {
-        ColumnId: 'status',
-      },
-    ],
     PermittedValuesColumns: [
       {
         ColumnId: 'status',
         PermittedValues: ['Rejected', 'Pending'],
+      },
+      {
+        ColumnId: 'counterparty',
+        PermittedValues: (column: AdaptableColumn) => {
+          console.log(column);
+          return ['BAML', 'Nomura', 'UBS'];
+        },
       },
     ],
   },

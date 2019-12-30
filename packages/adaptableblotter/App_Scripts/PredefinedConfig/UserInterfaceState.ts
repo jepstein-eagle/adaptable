@@ -75,14 +75,14 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * If set, then only these values will appear in the Column Filter, Query Builder, Bulk Update dropdown etc when that column is selected.
    */
-  PermittedColumnValues?: PermittedColumnValues[];
+  PermittedValuesColumns?: PermittedValuesColumn[];
 
   /**
    * A list of Columns which, when being edited, will automatically display a Dropdown allowing the user easily to select a value.
    *
    * The values which will be displayed in the dropdown will be shown according to the following logic:
    *
-   * 1. **LookUpValues**: You can, optionally, provide a list of `LookUpValues` that will be displayed in the Dropdown.  This can be either a 'hardcoded' or returned from a function.
+   * 1. **LookUpValues**: You can, optionally, provide a list of `LookUpValues` that will be displayed in the Dropdown.  This list can be either 'hardcoded' or returned from a function.
    *
    * 2. **PermittedColumnValues**:  If no LookUpValues are provided, the Adaptable Blotter will show a list of [PermittedColumnValues](#permittedcolumnvalues) (if one has been provided).
    *
@@ -111,7 +111,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *        ColumnId: 'currency',
    *     },
    *   ],
-   *   PermittedColumnValues: [
+   *   PermittedValuesColumns: [
    *   {
    *        ColumnId: 'status',
    *        PermittedValues: ['Rejected', 'Pending'],
@@ -121,7 +121,7 @@ export interface UserInterfaceState extends DesignTimeState {
    * } as PredefinedConfig;
    * ```
    *
-   * In this example we have said that 4 columns wil show dropdowns on being edited with the logic as follows:
+   * In this example 4 columns wil display dropdowns when being edited with the logic as follows:
    *
    * - 'country': using the hardcoded values we provide in `LookUpValues`
    *
@@ -184,7 +184,7 @@ export interface UserInterfaceState extends DesignTimeState {
  *
  * The values listed are those that will be shown in any Dropdown, in the filter for the Column and when using that Column in a Query.
  */
-export interface PermittedColumnValues {
+export interface PermittedValuesColumn {
   /**
    * Which Column has the Permitted Values
    */
@@ -193,7 +193,7 @@ export interface PermittedColumnValues {
   /**
    * The Permitted Values that will be shown in the Column Filter and when building a Query.
    */
-  PermittedValues: any[];
+  PermittedValues?: any[] | ((column: AdaptableColumn) => any[]);
 }
 
 /**
@@ -211,9 +211,9 @@ export interface EditLookUpColumn {
   ColumnId: string;
 
   /**
-   * Any values to show in the Lookup.
+   * Any particular values to show in the Lookup - the list can be either hard-coded or returned by a function.
    *
-   * **note If this is left empty then the Blotter will first get any Permitted Values if any, and failiing that will get distinct values for the column dynamically**
+   * If this is left empty then the Blotter will first get any Permitted Values if any, and failiing that will dynamically get the distinct values for the column.
    */
   LookUpValues?: any[] | ((column: AdaptableColumn) => any[]);
 }

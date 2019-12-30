@@ -4,11 +4,13 @@ import { UserInterfaceApi } from '../UserInterfaceApi';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import {
   UserInterfaceState,
-  PermittedColumnValues,
   EditLookUpColumn,
   RowStyle,
   UserMenuItem,
+  PermittedValuesColumn,
 } from '../../PredefinedConfig/UserInterfaceState';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
 
 export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
   public getUserInterfaceState(): UserInterfaceState {
@@ -31,28 +33,47 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     this.dispatchAction(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames));
   }
 
-  public getAllPermittedValues(): PermittedColumnValues[] {
-    return this.getBlotterState().UserInterface.PermittedColumnValues;
+  public getAllPermittedValuesColumns(): PermittedValuesColumn[] {
+    return this.getBlotterState().UserInterface.PermittedValuesColumns;
   }
 
-  public getPermittedValuesForColumn(columnId: string): PermittedColumnValues {
-    let permittedValues: PermittedColumnValues[] = this.getAllPermittedValues();
+  public getPermittedValuesColumnForColumn(columnId: string): PermittedValuesColumn {
+    let permittedValues: PermittedValuesColumn[] = this.getAllPermittedValuesColumns();
     if (ArrayExtensions.IsNotNullOrEmpty(permittedValues)) {
       return permittedValues.find(pc => pc.ColumnId == columnId);
     }
     return undefined;
   }
 
+  public getPermittedValuesForColumn(columnId: string): any[] {
+    let permittedValuesColumn: PermittedValuesColumn = this.getPermittedValuesColumnForColumn(
+      columnId
+    );
+    if (!permittedValuesColumn) {
+      return [];
+    }
+
+    if (typeof permittedValuesColumn.PermittedValues === 'function') {
+      let column: AdaptableColumn = ColumnHelper.getColumnFromId(
+        permittedValuesColumn.ColumnId,
+        this.blotter.api.gridApi.getColumns()
+      );
+      return permittedValuesColumn.PermittedValues(column);
+    } else {
+      return permittedValuesColumn.PermittedValues;
+    }
+  }
+
   public setColumnPermittedValues(column: string, permittedValues: string[]): void {
-    let permittedColumnValues: PermittedColumnValues = {
+    let permittedColumnValues: PermittedValuesColumn = {
       ColumnId: column,
       PermittedValues: permittedValues,
     };
-    this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesSet(permittedColumnValues));
+    this.dispatchAction(UserInterfaceRedux.PermittedValuesColumnSet(permittedColumnValues));
   }
 
   public clearColumnPermittedValues(column: string): void {
-    this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesDelete(column));
+    this.dispatchAction(UserInterfaceRedux.PermittedValuesColumnDelete(column));
   }
 
   public getAllEditLookUpColumns(): EditLookUpColumn[] {
@@ -65,6 +86,23 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
       return editLookUpColumns.find(pc => pc.ColumnId == columnId);
     }
     return undefined;
+  }
+
+  public getEditLookUpValuesForColumn(columnId: string): any[] {
+    let editLookUpColumn: EditLookUpColumn = this.getEditLookUpColumnForColumn(columnId);
+    if (!editLookUpColumn) {
+      return [];
+    }
+
+    if (typeof editLookUpColumn.LookUpValues === 'function') {
+      let column: AdaptableColumn = ColumnHelper.getColumnFromId(
+        editLookUpColumn.ColumnId,
+        this.blotter.api.gridApi.getColumns()
+      );
+      return editLookUpColumn.LookUpValues(column);
+    } else {
+      return editLookUpColumn.LookUpValues;
+    }
   }
 
   public isEditLookUpColumn(columnId: string): boolean {
