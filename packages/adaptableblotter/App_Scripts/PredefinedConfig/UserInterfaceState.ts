@@ -5,17 +5,25 @@ import { MenuInfo } from './Common/Menu';
 /**
  * The Predefined Configuration for managing the User Interface
  *
- * Contains a number of properties and collections that allow users to define column lookups, colour schemes and other UI related things.
+ * Contains a number of properties and collections that allow users to manage the User Interface of the grid.
  *
  * These include:
  *
- * - [PermittedColumnValues](/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#permittedcolumnvalues): a of allowed values to show in a filter (or the Query Builder) for a given column.
+ * - [PermittedColumnValues](#permittedcolumnvalues): List of allowed values to show in a given column's filter (or Query Builder).
  *
- * - [PermittedColumnValues](#permittedcolumnvalues): a of allowed values to show in a filter (or the Query Builder) for a given column.
+ * - [RowStyles](#rowstyles): Defines how alternating (or all) rows in the Blotter should look.
  *
- * - EditLookupColumns: a list of Columns which, when edited, will automatically display a Dropdown allowing the user easily to select a value.
+ * - [EditLookupColumns](#editlookupcolumns): List of Columns which, when edited, will automatically display a Dropdown allowing the user easily to select a value.
  *
- * - ColorPalette: the colours which will be available by default im style-related functions (like Conditional Styles, Flashing Cells etc.)
+ * - [ColorPalette](#colorpalette): Colours available by default im style-related functions (e.g. Conditional Style)
+ *
+ * - [ColumnMenuItems](#columnmenuitems): Additional items to add to the Column Header menu
+ *
+ * - [ContextMenuItems](#contextmenuitems): Additional items to add to the Context menu
+ *
+ * - [StyleClassNames](#styleclassnames): List of (existing and available) CSS styles to be used in styling functions.
+ *
+ * See each section for further details and a code example.
  *
  * **Further Resources**
  *
