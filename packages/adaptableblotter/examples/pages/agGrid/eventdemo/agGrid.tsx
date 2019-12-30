@@ -4,17 +4,17 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
 import {
-  AdaptableBlotterOptions,
+  AdaptableOptions,
   AlertFiredEventArgs,
   ColumnStateChangedEventArgs,
   SearchChangedEventArgs,
   PredefinedConfig,
-  BlotterApi,
+  AdaptableApi,
   ToolbarButtonClickedEventArgs,
   ThemeChangedEventArgs,
   ActionColumnClickedEventArgs,
@@ -29,7 +29,7 @@ import { AlertFiredInfo } from '../../../../App_Scripts/Api/Events/AlertFired';
 import { AdaptableAlert } from '../../../../App_Scripts/Utilities/Interface/IMessage';
 import { ActionColumnClickedInfo } from '../../../../App_Scripts/Api/Events/ActionColumnClicked';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 /*
 This example runs all the events we fire.
@@ -42,46 +42,46 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'event handling demo'
   );
-  adaptableBlotterOptions.generalOptions = {
+  adaptableOptions.generalOptions = {
     serverSearchOption: 'AllSearchandSort',
   };
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableOptions.predefinedConfig = demoConfig;
+  adaptableApi = Adaptable.init(adaptableOptions);
 
   // new way
-  blotterApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
+  adaptableApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
     listenToThemeChanged(themeChangedEventArgs);
   });
-  blotterApi.eventApi.on(
+  adaptableApi.eventApi.on(
     'ColumnStateChanged',
     (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => {
       listenToColumnStateChange(columnStateChangedEventArgs);
     }
   );
-  blotterApi.eventApi.on('AlertFired', (alertFiredArgs: AlertFiredEventArgs) => {
+  adaptableApi.eventApi.on('AlertFired', (alertFiredArgs: AlertFiredEventArgs) => {
     listenToAlertFired(alertFiredArgs);
   });
-  blotterApi.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
+  adaptableApi.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
     listenToSearchChange(searchChangedArgs);
   });
-  blotterApi.eventApi.on(
+  adaptableApi.eventApi.on(
     'ActionColumnClicked',
     (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
       listenToActionColumnClicked(actionColumnEventArgs);
     }
   );
-  blotterApi.eventApi.on(
+  adaptableApi.eventApi.on(
     'SelectionChanged',
     (selectionChangedEventArgs: SelectionChangedEventArgs) => {
       listenToSelectionChanged(selectionChangedEventArgs);
     }
   );
 
-  blotterApi.eventApi.on(
+  adaptableApi.eventApi.on(
     'ToolbarButtonClicked',
     (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => {
       console.log(' Toolbar Button Clicked');
@@ -90,7 +90,7 @@ function InitAdaptableBlotter() {
     }
   );
 
-  blotterApi.eventApi.on(
+  adaptableApi.eventApi.on(
     'ToolbarVisibilityChanged',
     (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
       if (
@@ -107,7 +107,7 @@ function InitAdaptableBlotter() {
 
         ReactDOM.render(
           toolbarContents,
-          blotterApi.dashboardApi.getCustomToolbarContentsDiv('Demo')
+          adaptableApi.dashboardApi.getCustomToolbarContentsDiv('Demo')
         );
       }
     }
@@ -138,7 +138,7 @@ function listenToAlertFired(alertFiredArgs: AlertFiredEventArgs) {
 function listenToActionColumnClicked(args: ActionColumnClickedEventArgs) {
   const actionColumnClickedInfo: ActionColumnClickedInfo = args.data[0].id;
   const rowData: any = actionColumnClickedInfo.rowData;
-  blotterApi.gridApi.deleteGridData([rowData]);
+  adaptableApi.gridApi.deleteGridData([rowData]);
   console.log('action fired event received');
   console.log(args);
 }

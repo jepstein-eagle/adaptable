@@ -1,6 +1,6 @@
-import { AdaptableBlotterOptions } from '../adaptableblotter/types';
+import { AdaptableOptions } from '../adaptableblotter/types';
 
-import AdaptableBlotter from '../adaptableblotter/App_Scripts/agGrid';
+import Adaptable from '../adaptableblotter/App_Scripts/agGrid';
 import { Grid, GridOptions } from 'ag-grid-community';
 
 export function createBlotter({
@@ -9,13 +9,13 @@ export function createBlotter({
   blotterContainerId,
   gridContainerId,
 }: {
-  blotterOptions: AdaptableBlotterOptions;
+  blotterOptions: AdaptableOptions;
 
   blotterContainerId: string;
   gridContainerId: string;
 }) {
   return (gridOptions: GridOptions, gridParams: any) => {
-    return new AdaptableBlotter(
+    return new Adaptable(
       {
         ...blotterOptions,
         containerOptions: {

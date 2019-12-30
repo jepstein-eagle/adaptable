@@ -9,7 +9,7 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 
 /*
 Basic demo of wizard that allows dropping a file that's not an array
@@ -31,13 +31,13 @@ but a plain JSON object like the one below
 */
 
 function InitAdaptableBlotter() {
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
 
     predefinedConfig: demoConfig,
   };
 
-  new AdaptableNoCodeWizard(adaptableBlotterOptions, {
+  new AdaptableNoCodeWizard(adaptableOptions, {
     prepareData: data => {
       const result = {
         columns: ['name', 'value'],

@@ -1,14 +1,14 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptableHelper } from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IStateManagementStrategy } from './Interface/IStateManagementStrategy';
 
 export class StateManagementStrategy extends AdaptableStrategyBase
   implements IStateManagementStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.StateManagementStrategyId, blotter);
   }
 

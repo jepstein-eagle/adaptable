@@ -1,14 +1,14 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ColumnChooserStrategyId, blotter);
   }
 

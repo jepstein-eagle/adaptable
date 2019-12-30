@@ -2,7 +2,7 @@ import { IAlertStrategy } from './Interface/IAlertStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
@@ -16,7 +16,7 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.AlertStrategyId, blotter);
     this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);

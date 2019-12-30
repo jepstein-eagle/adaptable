@@ -2,7 +2,7 @@ import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
@@ -10,7 +10,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ConditionalStyleStrategyId, blotter);
     this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);

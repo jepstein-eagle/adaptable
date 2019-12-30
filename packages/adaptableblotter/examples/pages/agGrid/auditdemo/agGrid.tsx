@@ -3,20 +3,16 @@ import { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-blue.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
-import {
-  IAdaptableBlotter,
-  AdaptableBlotterOptions,
-  BlotterApi,
-} from '../../../../App_Scripts/types';
+import { IAdaptable, AdaptableOptions, AdaptableApi } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
 import { AuditLogEntry } from '../../../../App_Scripts/Utilities/Interface/AuditLogEntry';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -24,7 +20,7 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating blotter options here so we can add audit
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
@@ -50,15 +46,15 @@ function InitAdaptableBlotter() {
     },
   };
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableApi = Adaptable.init(adaptableOptions);
 
-  blotterApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
+  adaptableApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
     listenToAuditLogEvent('cell edit', auditLogEventArgs);
   });
-  blotterApi.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
+  adaptableApi.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
     listenToAuditLogEvent('function applied', auditLogEventArgs);
   });
-  blotterApi.auditEventApi.on('AuditStateChanged', auditLogEventArgs => {
+  adaptableApi.auditEventApi.on('AuditStateChanged', auditLogEventArgs => {
     listenToAuditLogEvent('state changed', auditLogEventArgs);
   });
 }

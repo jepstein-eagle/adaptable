@@ -8,13 +8,13 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
-import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
+import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 import { Flex, Box, Text } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
-  SystemThemes: Array<AdaptableBlotterTheme>;
-  UserThemes: Array<AdaptableBlotterTheme>;
+  SystemThemes: Array<AdaptableTheme>;
+  UserThemes: Array<AdaptableTheme>;
   CurrentTheme: string;
   SelectTheme: (newTheme: string) => ThemeRedux.ThemeSelectAction;
 }
@@ -32,8 +32,8 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
       ' to use the standard theme.',
     ];
 
-    let availableThemes: AdaptableBlotterTheme[] = [];
-    this.props.SystemThemes.forEach((st: AdaptableBlotterTheme) => {
+    let availableThemes: AdaptableTheme[] = [];
+    this.props.SystemThemes.forEach((st: AdaptableTheme) => {
       availableThemes.push(st);
     });
     this.props.UserThemes.forEach(ut => {

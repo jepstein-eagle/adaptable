@@ -14,7 +14,7 @@ import {
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
@@ -151,7 +151,7 @@ export function checkForExpression(
   Expression: Expression,
   identifierValue: any,
   columns: AdaptableColumn[],
-  blotter: IAdaptableBlotter
+  blotter: IAdaptable
 ): boolean {
   return IsSatisfied(
     Expression,
@@ -170,7 +170,7 @@ export function checkForExpressionFromRowNode(
   Expression: Expression,
   rowNode: any,
   columns: AdaptableColumn[],
-  blotter: IAdaptableBlotter
+  blotter: IAdaptable
 ): boolean {
   return IsSatisfied(
     Expression,
@@ -199,7 +199,7 @@ export function IsSatisfied(
   userFilters: UserFilter[],
   systemFilters: string[],
   namedFilters: NamedFilter[],
-  blotter: IAdaptableBlotter,
+  blotter: IAdaptable,
   rowNode?: any
 ): boolean {
   let expressionColumnList = GetColumnListFromExpression(Expression);
@@ -661,7 +661,7 @@ export function GetRangeEvaluation(
   newValue: any,
   initialValue: any,
   column: AdaptableColumn,
-  blotter: IAdaptableBlotter,
+  blotter: IAdaptable,
   getOtherColumnValue: (columnId: string) => any
 ): IRangeEvaluation {
   let rangeEvaluation: IRangeEvaluation = ObjectFactory.CreateRangeEvaluation(
@@ -742,7 +742,7 @@ export function GetRangeEvaluation(
 
 export function TestRangeEvaluation(
   rangeEvaluation: IRangeEvaluation,
-  blotter: IAdaptableBlotter
+  blotter: IAdaptable
 ): boolean {
   if (Helper.objectNotExists(rangeEvaluation.newValue)) {
     return false;
@@ -858,7 +858,7 @@ export function AddMissingProperties(expression: Expression): void {
   }
 }
 
-function getExistingItem(blotter: IAdaptableBlotter, rangeEvaluation: IRangeEvaluation): any {
+function getExistingItem(blotter: IAdaptable, rangeEvaluation: IRangeEvaluation): any {
   let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(
     rangeEvaluation.columnId,
     DistinctCriteriaPairValue.DisplayValue,

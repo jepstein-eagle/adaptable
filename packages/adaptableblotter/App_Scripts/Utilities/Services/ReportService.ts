@@ -9,7 +9,7 @@ import {
   ExportDestination,
   LiveReportTrigger,
 } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { Report } from '../../PredefinedConfig/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { SelectedRowInfo } from '../Interface/Selection/SelectedRowInfo';
@@ -33,7 +33,7 @@ export const SELECTED_CELLS_REPORT = 'Selected Cells';
 export const SELECTED_ROWS_REPORT = 'Selected Rows';
 
 export class ReportService implements IReportService {
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
   }
 

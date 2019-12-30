@@ -8,23 +8,19 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  BlotterApi,
-} from '../../../../App_Scripts/types';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import AdaptableBlotter from '../../../../agGrid';
+import Adaptable from '../../../../agGrid';
 import { AdaptableColumn } from '../../../../App_Scripts/PredefinedConfig/Common/AdaptableColumn';
 
-var api: BlotterApi;
+var api: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 5000;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'Permitted Columns Demo',
@@ -32,11 +28,11 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.layoutOptions = {
+  adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
-  api = AdaptableBlotter.init(adaptableBlotterOptions);
+  api = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

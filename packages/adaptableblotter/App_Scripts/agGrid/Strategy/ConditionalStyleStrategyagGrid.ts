@@ -2,7 +2,7 @@ import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditional
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableBlotter } from '../AdaptableBlotter';
+import { Adaptable } from '../Adaptable';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -13,7 +13,7 @@ import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
-  constructor(blotter: AdaptableBlotter) {
+  constructor(blotter: Adaptable) {
     super(blotter);
     this.conditionalStyleColumnIds = [];
     this.columnsForConditionalStyles = new Map<TypeUuid, string[]>();
@@ -62,7 +62,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             listOfColumnsToRefresh.splice(index, 1);
           }
           if (listOfColumnsToRefresh.length > 0) {
-            let theBlotter = this.blotter as AdaptableBlotter;
+            let theBlotter = this.blotter as Adaptable;
             theBlotter.refreshCells([dataChangedEvent.RowNode], listOfColumnsToRefresh);
           }
         }
@@ -73,7 +73,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   // this initialises styles and creates the list of which columns have styles (will be used in onDataChanged)
   public initStyles(): void {
     let columns = this.blotter.api.gridApi.getColumns();
-    let theBlotter = this.blotter as AdaptableBlotter;
+    let theBlotter = this.blotter as Adaptable;
     let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
     this.conditionalStyleColumnIds = [];
     this.columnsForConditionalStyles.clear();

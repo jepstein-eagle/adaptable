@@ -1,14 +1,14 @@
 import { ICalculatedColumnExpressionService } from './Interface/ICalculatedColumnExpressionService';
 import * as math from 'mathjs';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import ColumnHelper from '../Helpers/ColumnHelper';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
   constructor(
-    private blotter: IAdaptableBlotter,
+    private blotter: IAdaptable,
     private colFunctionValue: (columnId: string, record: any) => any
   ) {
     this.blotter = blotter;

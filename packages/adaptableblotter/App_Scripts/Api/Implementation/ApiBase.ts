@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 
@@ -9,9 +9,9 @@ import Helper from '../../Utilities/Helpers/Helper';
 export abstract class ApiBase {
   /**
    * Constructor for all the api classes which simply takes and assigns an instance of the Adaptable Blotter
-   * @param blotter the core IAdaptableBlotter object
+   * @param blotter the core IAdaptable object
    */
-  constructor(protected blotter: IAdaptableBlotter) {
+  constructor(protected blotter: IAdaptable) {
     this.blotter = blotter;
   }
 

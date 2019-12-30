@@ -1,6 +1,6 @@
 import * as React from 'react';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
-import { AdaptableBlotterOptions } from '../../../types';
+import { AdaptableOptions } from '../../../types';
 import CheckBox from '../../../components/CheckBox';
 import { FilterOptions } from '../../../BlotterOptions/FilterOptions';
 import { LayoutOptions } from '../../../BlotterOptions/LayoutOptions';
@@ -16,12 +16,12 @@ import { DefaultAdaptableOptions } from '../../../Utilities/Defaults/DefaultAdap
 import { UserInterfaceOptions } from '../../../BlotterOptions/UserInterfaceOptions';
 
 interface ConfigurationFormOptions {
-  adaptableBlotterOptions: AdaptableBlotterOptions;
-  onChangeBlotterOptions: (adaptableBlotterOptions: AdaptableBlotterOptions) => void;
+  adaptableOptions: AdaptableOptions;
+  onChangeBlotterOptions: (adaptableOptions: AdaptableOptions) => void;
 }
 
 const ConfigurationForm = (props: ConfigurationFormOptions) => {
-  let abOptions = props.adaptableBlotterOptions;
+  let abOptions = props.adaptableOptions;
 
   const filterOptions: FilterOptions = {
     ...DefaultAdaptableOptions.filterOptions,

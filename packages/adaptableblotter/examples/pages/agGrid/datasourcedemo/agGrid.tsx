@@ -10,12 +10,12 @@ import '../../../../App_Scripts/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import {
-  AdaptableBlotterOptions,
+  AdaptableOptions,
   PredefinedConfig,
   SearchChangedEventArgs,
-  BlotterApi,
+  AdaptableApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { BlotterSearchState } from '../../../../App_Scripts/Api/Events/SearchChanged/BlotterSearchState';
@@ -27,19 +27,19 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(null);
 
   //gridOptions.singleClickEdit = true;
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'Data Source demo'
   );
   /*
-  adaptableBlotterOptions.eventOptions = {
+  adaptableOptions.eventOptions = {
     onSearchChanged: searchChangedArgs => {
       listenToSearchChange(adaptableblotter, examplesHelper, searchChangedArgs);
     },
     onAlertFired: () => {},
   };*/
 
-  adaptableBlotterOptions.auditOptions = {
+  adaptableOptions.auditOptions = {
     auditCellEdits: {
       auditAsAlert: true,
     },
@@ -47,18 +47,18 @@ function InitAdaptableBlotter() {
       auditToConsole: true,
     },
   };
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableOptions.predefinedConfig = demoConfig;
+  const adaptableApi = Adaptable.init(adaptableOptions);
 
-  blotterApi.eventApi
+  adaptableApi.eventApi
     .onSearchChanged()
     .Subscribe((sender, searchChangedArgs) =>
-      listenToSearchChange(blotterApi, examplesHelper, searchChangedArgs)
+      listenToSearchChange(adaptableApi, examplesHelper, searchChangedArgs)
     );
 }
 
 function listenToSearchChange(
-  blotterApi: BlotterApi,
+  adaptableApi: AdaptableApi,
   examplesHelper: ExamplesHelper,
   searchChangedArgs: SearchChangedEventArgs
 ) {
@@ -70,17 +70,17 @@ function listenToSearchChange(
       switch (searchState.dataSource.Name) {
         case 'Euro':
           let euroTrades = examplesHelper.getEuroTrades(500);
-          blotterApi.gridApi.setGridData(euroTrades);
+          adaptableApi.gridApi.setGridData(euroTrades);
           break;
 
         case 'Dollar':
           let dollarTrades = examplesHelper.getDollarTrades(500);
-          blotterApi.gridApi.setGridData(dollarTrades);
+          adaptableApi.gridApi.setGridData(dollarTrades);
           break;
 
         case 'GBP':
           let sterlingTrades = examplesHelper.getGBPTrades(500);
-          blotterApi.gridApi.setGridData(sterlingTrades);
+          adaptableApi.gridApi.setGridData(sterlingTrades);
           break;
       }
     }

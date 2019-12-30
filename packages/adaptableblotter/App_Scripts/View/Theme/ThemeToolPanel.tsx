@@ -10,7 +10,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
+import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 import DropdownButton from '../../components/DropdownButton';
 import join from '../../components/utils/join';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
@@ -21,8 +21,8 @@ import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 interface ThemeToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<ThemeToolPanelComponent> {
   onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction;
-  SystemThemes: AdaptableBlotterTheme[];
-  UserThemes: AdaptableBlotterTheme[];
+  SystemThemes: AdaptableTheme[];
+  UserThemes: AdaptableTheme[];
   CurrentTheme: string;
 }
 
@@ -40,9 +40,9 @@ class ThemeToolPanelComponent extends React.Component<
   }
 
   render(): any {
-    let allThemes: AdaptableBlotterTheme[] = [...this.props.SystemThemes, ...this.props.UserThemes];
+    let allThemes: AdaptableTheme[] = [...this.props.SystemThemes, ...this.props.UserThemes];
 
-    let themes: any[] = allThemes.map((theme: AdaptableBlotterTheme, index) => {
+    let themes: any[] = allThemes.map((theme: AdaptableTheme, index) => {
       return {
         label: theme.Description,
         value: theme.Description,
@@ -85,7 +85,7 @@ class ThemeToolPanelComponent extends React.Component<
   }
 
   private onSelectTheme(themeDescription: string) {
-    let allThemes: AdaptableBlotterTheme[] = [...this.props.SystemThemes, ...this.props.UserThemes];
+    let allThemes: AdaptableTheme[] = [...this.props.SystemThemes, ...this.props.UserThemes];
     let selectedTheme = allThemes.find(theme => theme.Description === themeDescription);
     if (selectedTheme) {
       this.props.onSelectTheme(selectedTheme.Name);

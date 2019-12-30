@@ -1,5 +1,5 @@
 import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy';
-import { AdaptableBlotter } from '../AdaptableBlotter';
+import { Adaptable } from '../Adaptable';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
@@ -9,7 +9,7 @@ import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {
-  constructor(blotter: AdaptableBlotter) {
+  constructor(blotter: Adaptable) {
     super(blotter);
     this.currentFlashing = new Map();
   }
@@ -17,7 +17,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
 
   public initStyles(): void {
     let numericColumns = this.blotter.api.gridApi.getNumericColumns();
-    let theBlotter = this.blotter as AdaptableBlotter;
+    let theBlotter = this.blotter as Adaptable;
     let currentFlashing = this.currentFlashing;
     let flashingCells: FlashingCell[] = this.blotter.api.flashingCellApi.getAllFlashingCell();
     numericColumns.forEach(col => {

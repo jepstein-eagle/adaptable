@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IExportStrategy } from './Interface/IExportStrategy';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
@@ -28,7 +28,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
   private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
 
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ExportStrategyId, blotter);
 
     this.blotter.api.eventApi.on('BlotterReady', () => {

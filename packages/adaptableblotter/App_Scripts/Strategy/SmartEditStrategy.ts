@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { MathOperation, DataType, MessageType } from '../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
@@ -21,7 +21,7 @@ import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.SmartEditStrategyId, blotter);
   }
 

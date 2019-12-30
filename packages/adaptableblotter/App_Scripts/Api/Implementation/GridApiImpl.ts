@@ -8,7 +8,7 @@ import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
-import { AdaptableBlotterOptions } from '../../types';
+import { AdaptableOptions } from '../../types';
 
 export class GridApiImpl extends ApiBase implements GridApi {
   public getGridState(): GridState {
@@ -170,7 +170,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
     return this.blotter.blotterOptions.vendorGrid;
   }
 
-  public getBlotterOptions(): AdaptableBlotterOptions {
+  public getBlotterOptions(): AdaptableOptions {
     return this.blotter.blotterOptions;
   }
 }

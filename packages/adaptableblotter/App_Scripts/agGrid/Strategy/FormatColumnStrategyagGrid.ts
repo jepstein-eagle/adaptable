@@ -1,12 +1,12 @@
 import { IFormatColumnStrategy } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { FormatColumnStrategy } from '../../Strategy/FormatColumnStrategy';
-import { AdaptableBlotter } from '../AdaptableBlotter';
+import { Adaptable } from '../Adaptable';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
 export class FormatColumnStrategyagGrid extends FormatColumnStrategy
   implements IFormatColumnStrategy {
-  constructor(private blotterBypass: AdaptableBlotter) {
+  constructor(private blotterBypass: Adaptable) {
     super(blotterBypass);
     this.blotterBypass = blotterBypass;
   }
@@ -14,7 +14,7 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy
   public initStyles(): void {
     let columns = this.blotter.api.gridApi.getColumns();
     let formatColumns = this.blotter.api.formatColumnApi.getAllFormatColumn();
-    let theBlotter = this.blotter as AdaptableBlotter;
+    let theBlotter = this.blotter as Adaptable;
 
     // adding this check as things can get mixed up during 'clean user data'
     if (columns.length > 0 && formatColumns.length > 0) {

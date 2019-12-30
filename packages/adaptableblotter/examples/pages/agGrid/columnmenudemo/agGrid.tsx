@@ -5,17 +5,13 @@ import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  BlotterApi,
-} from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AdaptableMenuItem, MenuInfo } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
 import { ALL_DATA_REPORT } from '../../../../App_Scripts/Utilities/Constants/GeneralConstants';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
@@ -23,12 +19,12 @@ function InitAdaptableBlotter() {
   //gridOptions.getContextMenuItems = getContextMenuItems;
 
   //gridOptions.singleClickEdit = true;
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'column menu demo'
   );
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.userInterfaceOptions = {
+  adaptableOptions.predefinedConfig = demoConfig;
+  adaptableOptions.userInterfaceOptions = {
     // showAdaptableColumnMenu: true,
     // showAdaptableColumnMenu: false,
 
@@ -43,7 +39,7 @@ function InitAdaptableBlotter() {
     },
   };
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

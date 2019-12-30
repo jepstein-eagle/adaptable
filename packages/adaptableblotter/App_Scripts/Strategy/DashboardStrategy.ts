@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
 import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
@@ -18,7 +18,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   private visibleToolbars: string[];
   private dashboardVisibility: Visibility;
 
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.DashboardStrategyId, blotter);
   }
 

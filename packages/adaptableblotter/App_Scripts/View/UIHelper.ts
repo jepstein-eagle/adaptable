@@ -12,7 +12,6 @@ import {
   DayOfWeek,
 } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../PredefinedConfig/Common/Expression';
@@ -22,6 +21,7 @@ import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
+import { AdaptableOptions } from '../types';
 
 export const BLACK: string = 'Black';
 export const WHITE: string = 'White';
@@ -176,7 +176,7 @@ export function getPlaceHolderforDataType(dataType: DataType) {
 }
 
 export function getModalContainer(
-  blotterOptions: AdaptableBlotterOptions,
+  blotterOptions: AdaptableOptions,
   document: Document
 ): HTMLElement {
   let modalContainer: HTMLElement;
@@ -197,7 +197,7 @@ export function getModalContainer(
 }
 
 export function getChartContainer(
-  blotterOptions: AdaptableBlotterOptions,
+  blotterOptions: AdaptableOptions,
   document: Document,
   showModal: boolean
 ): HTMLElement {
@@ -224,7 +224,7 @@ export function getChartContainer(
 }
 
 export function isValidUserChartContainer(
-  blotterOptions: AdaptableBlotterOptions,
+  blotterOptions: AdaptableOptions,
   document: Document
 ): boolean {
   if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) {

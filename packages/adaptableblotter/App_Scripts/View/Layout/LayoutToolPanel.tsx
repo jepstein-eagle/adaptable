@@ -19,7 +19,7 @@ import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
 import join from '../../components/utils/join';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { BlotterApi } from '../../Api/BlotterApi';
+import { AdaptableApi } from '../../Api/AdaptableApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
@@ -32,7 +32,7 @@ interface LayoutToolPanelComponentProps
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
   CurrentLayout: string;
-  BlotterApi: BlotterApi;
+  AdaptableApi: AdaptableApi;
 }
 
 interface LayoutToolPanelComponentState {
@@ -64,7 +64,7 @@ class LayoutToolPanelComponent extends React.Component<
     let isModifiedLayout: boolean = this.props.Blotter.LayoutService.isLayoutModified(layoutEntity);
 
     let isManualSaveLayout: boolean =
-      this.props.BlotterApi.gridApi.getBlotterOptions().layoutOptions!.autoSaveLayouts == false;
+      this.props.AdaptableApi.gridApi.getBlotterOptions().layoutOptions!.autoSaveLayouts == false;
 
     let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
       return {

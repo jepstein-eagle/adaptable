@@ -1,4 +1,4 @@
-import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
+import { ThemeState, AdaptableTheme } from '../PredefinedConfig/ThemeState';
 
 /**
  * Provides full and comprehensive run-time access to the Theme function and associated state.
@@ -39,29 +39,29 @@ export interface ThemeApi {
    *
    * @param systemThemes system themes to use ('light', 'dark', both, or none)
    */
-  setSystemThemes(systemThemes: AdaptableBlotterTheme[]): void;
+  setSystemThemes(systemThemes: AdaptableTheme[]): void;
 
   /**
    * Sets which user (a.k.a. custom) themes are available in the Adaptable Blotter
    *
    * @param userThemes user themes to use - each has a name and a description
    */
-  setUserThemes(userThemes: AdaptableBlotterTheme[]): void;
+  setUserThemes(userThemes: AdaptableTheme[]): void;
 
   /**
    * Retrieves all the System Themes in the State
    */
-  getAllSystemTheme(): AdaptableBlotterTheme[];
+  getAllSystemTheme(): AdaptableTheme[];
 
   /**
    * Retrieves all the User Themes in the State
    */
-  getAllUserTheme(): AdaptableBlotterTheme[];
+  getAllUserTheme(): AdaptableTheme[];
 
   /**
    * Retrieves all Themes - both System Theme and User Theme - in the State
    */
-  getAllTheme(): AdaptableBlotterTheme[];
+  getAllTheme(): AdaptableTheme[];
 
   /**
    * Opens the Theme popup screen

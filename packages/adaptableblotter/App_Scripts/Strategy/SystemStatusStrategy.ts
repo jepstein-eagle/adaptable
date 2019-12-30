@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { ISystemStatusStrategy } from './Interface/ISystemStatusStrategy';
 import * as SystemStatusRedux from '../Redux/ActionsReducers/SystemStatusRedux';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
@@ -14,7 +14,7 @@ import Helper from '../Utilities/Helpers/Helper';
 
 export class SystemStatusStrategy extends AdaptableStrategyBase implements ISystemStatusStrategy {
   private systemStatusState: SystemStatusState;
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.SystemStatusStrategyId, blotter);
 
     blotter.AdaptableStore.onAny((eventName: string) => {

@@ -2,7 +2,7 @@ import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import { AuditLogEntry, AuditLogType } from '../Interface/AuditLogEntry';
 import { IAuditLogService } from './Interface/IAuditLogService';
-import { IAdaptableBlotter } from '../../types';
+import { IAdaptable } from '../../types';
 import {
   StateChangedDetails,
   FunctionAppliedDetails,
@@ -20,7 +20,7 @@ export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<AuditLogEntry>;
   private canSendLog: boolean = true;
   private numberOfMissedPing: number = 0;
-  private blotter: IAdaptableBlotter;
+  private blotter: IAdaptable;
 
   public isAuditEnabled: boolean;
   public isAuditStateChangesEnabled: boolean;
@@ -30,7 +30,7 @@ export class AuditLogService implements IAuditLogService {
   public isAuditInternalStateChangesEnabled: boolean;
   public isAuditTickingDataChangesEnabled: boolean;
 
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     this.auditLogQueue = [];
     this.blotter = blotter;
 

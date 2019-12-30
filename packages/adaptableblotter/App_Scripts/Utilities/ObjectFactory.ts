@@ -53,8 +53,6 @@ import { FlashingCell } from '../PredefinedConfig/FlashingCellState';
 import { Reminder } from '../PredefinedConfig/ReminderState';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
-import { IAdaptableBlotter } from '../types';
-import ColumnHelper from './Helpers/ColumnHelper';
 import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
@@ -66,7 +64,6 @@ import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
 import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
-import { AlertDefinitionDeleteAction } from '../Redux/ActionsReducers/AlertRedux';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 
 export function CreateEmptyCustomSort(): CustomSort {

@@ -80,7 +80,6 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
@@ -98,7 +97,7 @@ import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
-import { BlotterApiImpl } from '../Api/Implementation/BlotterApiImpl';
+import { AdaptableApiImpl } from '../Api/Implementation/AdaptableApiImpl';
 import {
   DEFAULT_LAYOUT,
   HALF_SECOND,
@@ -123,9 +122,8 @@ import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
-
 import { ActionColumnRenderer } from './ActionColumnRenderer';
-import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
+import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
@@ -134,12 +132,12 @@ import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import AdaptableWizardView from '../View/AdaptableWizardView';
 
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { Glue42Service } from '../Utilities/Services/Glue42Service';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
-import { BlotterApi } from '../Api/BlotterApi';
+import { AdaptableApi } from '../Api/AdaptableApi';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { PushPullService } from '../Utilities/Services/PushPullService';
 import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
@@ -150,6 +148,7 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { FilterService } from '../Utilities/Services/FilterService';
 import { DefaultAdaptableOptions } from '../Utilities/Defaults/DefaultAdaptableOptions';
+import { AdaptableOptions } from '../BlotterOptions/AdaptableOptions';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableToolPanelContext } from '../Utilities/Interface/AdaptableToolPanelContext';
 import {
@@ -157,7 +156,6 @@ import {
   IAdaptableNoCodeWizardOptions,
   IAdaptableNoCodeWizardInitFn,
 } from '../BlotterInterfaces/IAdaptableNoCodeWizard';
-import edit from '../components/icons/edit';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -191,14 +189,14 @@ const forEachColumn = (
   });
 };
 
-export class AdaptableBlotter implements IAdaptableBlotter {
-  public api: BlotterApi;
+export class Adaptable implements IAdaptable {
+  public api: AdaptableApi;
 
   public strategies: IStrategyCollection;
 
   public AdaptableStore: IAdaptableStore;
 
-  public blotterOptions: AdaptableBlotterOptions;
+  public blotterOptions: AdaptableOptions;
 
   public vendorGridName: any;
 
@@ -271,15 +269,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   // new static constructor which takes an Adaptable Blotter object and returns the api object
   // going forward this should be the only way that we instantiate and use the Adaptable Blotter and everything should be accessible via the API
-  public static init(blotterOptions: AdaptableBlotterOptions): BlotterApi {
-    const ab = new AdaptableBlotter(blotterOptions);
+  public static init(blotterOptions: AdaptableOptions): AdaptableApi {
+    const ab = new Adaptable(blotterOptions);
     return ab.api;
   }
 
   // the 'old' constructor which takes an Adaptable Blotter object
   // this is still used internally but should not be used externally as a preference
   constructor(
-    blotterOptions: AdaptableBlotterOptions,
+    blotterOptions: AdaptableOptions,
     renderGrid: boolean = true,
     runtimeConfig?: RuntimeConfig
   ) {
@@ -302,7 +300,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
 
     // get the api ready
-    this.api = new BlotterApiImpl(this);
+    this.api = new AdaptableApiImpl(this);
 
     // data source needs to be created before Audit Log Service
     this.DataService = new DataService(this);
@@ -388,14 +386,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement != null) {
         this.abContainerElement.innerHTML = '';
-        ReactDOM.render(AdaptableApp({ AdaptableBlotter: this }), this.abContainerElement);
+        ReactDOM.render(AdaptableApp({ Adaptable: this }), this.abContainerElement);
       }
     }
 
     // create debounce methods that take a time based on user settings
     this.throttleOnDataChangedUser = _.throttle(
       this.applyDataChange,
-      this.blotterOptions!.filterOptions.filterActionOnUserDataChange.ThrottleDelay
+      this.blotterOptions!.filterOptions!.filterActionOnUserDataChange.ThrottleDelay
     );
     this.throttleOnDataChangedExternal = _.throttle(
       this.applyDataChange,
@@ -2897,19 +2895,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public applyBlotterTheme(theme: AdaptableBlotterTheme | string) {
+  public applyBlotterTheme(theme: AdaptableTheme | string) {
     const themeName: string = typeof theme === 'string' ? theme : theme.Name;
 
     const themeNamesToRemove: string[] = [];
-    const themesToRemove: AdaptableBlotterTheme[] = [];
+    const themesToRemove: AdaptableTheme[] = [];
 
     const allThemes = this.api.themeApi.getAllTheme();
-    const allThemesMap: Record<string, AdaptableBlotterTheme> = allThemes.reduce(
-      (acc: Record<string, AdaptableBlotterTheme>, theme: AdaptableBlotterTheme) => {
+    const allThemesMap: Record<string, AdaptableTheme> = allThemes.reduce(
+      (acc: Record<string, AdaptableTheme>, theme: AdaptableTheme) => {
         acc[theme.Name] = theme;
         return acc;
       },
-      {} as Record<string, AdaptableBlotterTheme>
+      {} as Record<string, AdaptableTheme>
     );
 
     // const themePrefix = 'ab--theme-'
@@ -2927,7 +2925,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     themeNamesToRemove.forEach(cssClassName => el.classList.remove(cssClassName));
 
-    const newTheme: AdaptableBlotterTheme = allThemesMap[themeName];
+    const newTheme: AdaptableTheme = allThemesMap[themeName];
     const newThemeClassName: string = StyleConstants.THEME_STYLE + themeName;
 
     el.classList.add(newThemeClassName);
@@ -2996,7 +2994,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     if (abLoaded !== '777') {
       LoggingHelper.LogError(
-        'Please import the AdaptableBlotter styles from "adaptableblotter/index.css"'
+        'Please import the Adaptable styles from "adaptableblotter/index.css"'
       );
     }
 
@@ -3087,32 +3085,29 @@ import "adaptableblotter/themes/${themeName}.css"`);
   }
 }
 
-//export const init = (blotterOptions: AdaptableBlotterOptions): BlotterApi =>
-//  AdaptableBlotter.init(blotterOptions);
+//export const init = (blotterOptions: AdaptableOptions): AdaptableApi =>
+//  Adaptable.init(blotterOptions);
 
 export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
   private init: IAdaptableNoCodeWizardInitFn;
 
-  private adaptableBlotterOptions: AdaptableBlotterOptions;
+  private adaptableOptions: AdaptableOptions;
   private extraOptions: IAdaptableNoCodeWizardOptions;
 
   /**
-   * @param adaptableBlotterOptions
+   * @param adaptableOptions
    */
   constructor(
-    adaptableBlotterOptions: AdaptableBlotterOptions,
+    adaptableOptions: AdaptableOptions,
     extraOptions: IAdaptableNoCodeWizardOptions = {}
   ) {
-    const defaultInit: IAdaptableNoCodeWizardInitFn = ({
-      gridOptions,
-      adaptableBlotterOptions,
-    }) => {
-      adaptableBlotterOptions.vendorGrid = gridOptions;
+    const defaultInit: IAdaptableNoCodeWizardInitFn = ({ gridOptions, adaptableOptions }) => {
+      adaptableOptions.vendorGrid = gridOptions;
 
-      return new AdaptableBlotter(adaptableBlotterOptions);
+      return new Adaptable(adaptableOptions);
     };
 
-    this.adaptableBlotterOptions = adaptableBlotterOptions;
+    this.adaptableOptions = adaptableOptions;
     this.init = extraOptions.onInit || defaultInit;
     this.extraOptions = extraOptions;
 
@@ -3124,10 +3119,8 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
       DefaultAdaptableOptions.containerOptions!.adaptableBlotterContainer || 'adaptableBlotter';
 
     if (!container) {
-      if (this.adaptableBlotterOptions.containerOptions) {
-        id =
-          this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer ||
-          'adaptableBlotter';
+      if (this.adaptableOptions.containerOptions) {
+        id = this.adaptableOptions.containerOptions.adaptableBlotterContainer || 'adaptableBlotter';
       }
     }
 
@@ -3139,19 +3132,19 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
 
     ReactDOM.render(
       React.createElement(AdaptableWizardView, {
-        adaptableBlotterOptions: this.adaptableBlotterOptions,
+        adaptableOptions: this.adaptableOptions,
         ...this.extraOptions,
-        onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => {
-          let adaptableBlotter: IAdaptableBlotter | void;
+        onInit: (adaptableOptions: AdaptableOptions) => {
+          let adaptableBlotter: IAdaptable | void;
 
           ReactDOM.unmountComponentAtNode(container!);
 
           adaptableBlotter = this.init({
-            adaptableBlotterOptions,
-            gridOptions: adaptableBlotterOptions.vendorGrid,
+            adaptableOptions,
+            gridOptions: adaptableOptions.vendorGrid,
           });
 
-          adaptableBlotter = adaptableBlotter || new AdaptableBlotter(adaptableBlotterOptions);
+          adaptableBlotter = adaptableBlotter || new Adaptable(adaptableOptions);
         },
       }),
       container

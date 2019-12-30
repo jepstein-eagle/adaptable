@@ -1,6 +1,6 @@
 import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
 import { ActionColumn, ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
-import AdaptableBlotter from '../../agGrid';
+import Adaptable from '../../agGrid';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import {
   ActionColumnClickedEventArgs,
@@ -12,7 +12,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
 
   // gets called once before the renderer is used
   init(params: ICellRendererParams): void {
-    const blotter = (params.api as any).__blotter as AdaptableBlotter;
+    const blotter = (params.api as any).__blotter as Adaptable;
 
     let actionCol: ActionColumn | undefined = blotter.api.actionColumnApi
       .getAllActionColumn()

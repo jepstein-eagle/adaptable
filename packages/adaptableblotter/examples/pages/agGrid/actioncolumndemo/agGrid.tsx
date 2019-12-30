@@ -2,19 +2,19 @@ import { useEffect } from 'react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
 import {
-  AdaptableBlotterOptions,
+  AdaptableOptions,
   PredefinedConfig,
-  BlotterApi,
+  AdaptableApi,
   ActionColumnClickedEventArgs,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -23,21 +23,21 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating blotter options here so we can add audit
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'action column demo',
   };
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.layoutOptions = {
+  adaptableOptions.predefinedConfig = demoConfig;
+  adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
   // userFunctions
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
-  blotterApi.eventApi.on(
+  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi.eventApi.on(
     'ActionColumnClicked',
     (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
       listenToActionColumnClicked(actionColumnEventArgs);
@@ -52,7 +52,7 @@ function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedE
   let rowData = actionColumnEventArgs.data[0].id.rowData;
   let multiplier: number = rowData.notional > 100 ? 2 : 3;
   let newNotional = rowData.notional * multiplier;
-  blotterApi.gridApi.setCellValue(rowData.tradeId, 'notional', newNotional, false);
+  adaptableApi.gridApi.setCellValue(rowData.tradeId, 'notional', newNotional, false);
 }
 
 let demoConfig: PredefinedConfig = {

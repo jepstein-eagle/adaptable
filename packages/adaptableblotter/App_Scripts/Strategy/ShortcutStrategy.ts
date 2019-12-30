@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { DataType, MathOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -15,7 +15,7 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ShortcutStrategyId, blotter);
 
     this.blotter._on('KeyDown', keyDownEvent => {

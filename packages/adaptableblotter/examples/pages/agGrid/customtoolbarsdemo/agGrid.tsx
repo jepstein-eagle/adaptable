@@ -9,8 +9,8 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 
@@ -19,7 +19,7 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'Custom Toolbars Demo',
@@ -28,7 +28,7 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  const api = AdaptableBlotter.init(adaptableBlotterOptions);
+  const api = Adaptable.init(adaptableOptions);
 
   api.eventApi.on('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs => {
     if (toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Toolbar1') {
@@ -86,6 +86,7 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Toolbar1', 'Layout', 'Toolbar2', 'Export'],
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
+    // make this not persistable
     CustomToolbars: [
       {
         Name: 'Toolbar1',

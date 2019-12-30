@@ -2,8 +2,8 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IThemeStrategy } from './Interface/IThemeStrategy';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { ThemeState, AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { ThemeState, AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/ThemeChanged';
@@ -11,7 +11,7 @@ import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/ThemeChan
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
   private ThemeState: ThemeState;
 
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ThemeStrategyId, blotter);
   }
 
@@ -46,7 +46,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
         ...(this.ThemeState.UserThemes || []),
       ];
 
-      const currentTheme: AdaptableBlotterTheme | string = allThemeNames.filter(theme =>
+      const currentTheme: AdaptableTheme | string = allThemeNames.filter(theme =>
         typeof theme === 'string'
           ? theme === this.ThemeState.CurrentTheme
           : theme.Name === this.ThemeState.CurrentTheme

@@ -3,11 +3,11 @@ import { useState, useEffect, ReactNode, useMemo } from 'react';
 import * as AgGrid from 'ag-grid-community';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import { AdaptableApp } from '../../adaptableblotter/App_Scripts/View/AdaptableView';
-import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
-import { BlotterApi } from '../../adaptableblotter/types';
+import Adaptable from '../../adaptableblotter/App_Scripts/agGrid';
+import { AdaptableApi } from '../../adaptableblotter/types';
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 import {
-  AdaptableBlotterOptions,
+  AdaptableOptions,
   SearchChangedEventArgs,
   ThemeChangedEventArgs,
   ColumnStateChangedEventArgs,
@@ -81,13 +81,13 @@ const createBlotter = ({
   gridContainerId,
   agGridReactWrapperInstance,
 }: {
-  blotterOptions: AdaptableBlotterOptions;
+  blotterOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
   blotterContainerId: string;
   gridContainerId: string;
   agGridReactWrapperInstance: AgGridReactOverride;
-}): AdaptableBlotter => {
-  return new AdaptableBlotter(
+}): Adaptable => {
+  return new Adaptable(
     {
       ...blotterOptions,
       containerOptions: {
@@ -134,10 +134,10 @@ const AdaptableBlotterReact = ({
   ...props
 }: {
   agGridTheme?: string;
-  blotterOptions: AdaptableBlotterOptions;
+  blotterOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
 
-  onBlotterReady?: (api: BlotterApi) => void;
+  onBlotterReady?: (api: AdaptableApi) => void;
   onToolbarVisibilityChanged?: (
     toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs
   ) => void;
@@ -215,12 +215,12 @@ const AdaptableBlotterReact = ({
     };
   }, []);
 
-  let [blotter, setBlotter] = useState<AdaptableBlotter | null>(null);
+  let [blotter, setBlotter] = useState<Adaptable | null>(null);
 
   const TagName = tagName || 'div';
   agGridTheme = agGridTheme || 'balham';
 
-  const blotterNode = blotter ? <AdaptableApp key="blotter" AdaptableBlotter={blotter} /> : null;
+  const blotterNode = blotter ? <AdaptableApp key="blotter" Adaptable={blotter} /> : null;
 
   const overrideProps = {
     ...gridOptions,

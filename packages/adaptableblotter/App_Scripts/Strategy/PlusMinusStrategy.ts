@@ -6,7 +6,7 @@ import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -23,7 +23,7 @@ import { AlertProperties } from '../PredefinedConfig/AlertState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.PlusMinusStrategyId, blotter);
 
     this.blotter._on('KeyDown', keyDownEvent => {

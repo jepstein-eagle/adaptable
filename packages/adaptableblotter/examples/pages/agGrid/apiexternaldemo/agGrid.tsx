@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 import { GridOptions } from 'ag-grid-community';
 import {
-  IAdaptableBlotter,
-  AdaptableBlotterOptions,
+  IAdaptable,
+  AdaptableOptions,
   PredefinedConfig,
-  BlotterApi,
+  AdaptableApi,
 } from '../../../../App_Scripts/types';
 
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -18,40 +18,40 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 Demo that shows how we can use the api 'externally' via textboxes and buttons
 */
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 //  NOTE:  this is not currently being able to be called by index.tsx
 export function runQuickSearchViaAPI() {
   const element: any = document.getElementById('txtQuickSearchText');
-  blotterApi.quickSearchApi.applyQuickSearch(element.value);
+  adaptableApi.quickSearchApi.applyQuickSearch(element.value);
 }
 
 export function clearQuickSearchViaAPI() {
   const element: any = document.getElementById('txtQuickSearchText');
   element.value = '';
-  blotterApi.quickSearchApi.clearQuickSearch();
+  adaptableApi.quickSearchApi.clearQuickSearch();
 }
 
 export function setDarkTheme() {
-  blotterApi.themeApi.loadDarkTheme();
+  adaptableApi.themeApi.loadDarkTheme();
 }
 export function setLightTheme() {
-  blotterApi.themeApi.loadLightTheme();
+  adaptableApi.themeApi.loadLightTheme();
 }
 export function setCustomTheme() {
-  blotterApi.themeApi.loadTheme('custom-theme');
+  adaptableApi.themeApi.loadTheme('custom-theme');
 }
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'api external demo'
   );
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableOptions.predefinedConfig = demoConfig;
+  adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

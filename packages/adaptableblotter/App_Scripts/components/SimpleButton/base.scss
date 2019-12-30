@@ -39,6 +39,14 @@
   &--tone-error {
     color: var(--ab-color-error);
   }
+
+  &--tone-warning {
+    color: var(--ab-color-warn);
+  }
+
+  &--tone-info {
+    color: var(--ab-color-info);
+  }
   
   &--disabled {
     opacity: 0.5;

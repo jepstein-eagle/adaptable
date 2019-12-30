@@ -3,7 +3,7 @@ import * as React from 'react';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Flex, Box } from 'rebass';
@@ -26,7 +26,7 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
   FriendlyName?: string;
   ModalContainer: HTMLElement;
   canFinishWizard: Function;
-  Blotter: IAdaptableBlotter;
+  Blotter: IAdaptable;
   Columns: Array<AdaptableColumn>;
 }
 

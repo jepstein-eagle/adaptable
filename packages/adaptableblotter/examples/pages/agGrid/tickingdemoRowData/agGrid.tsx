@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  IAdaptableBlotter,
-} from '../../../../App_Scripts/types';
+import { AdaptableOptions, PredefinedConfig, IAdaptable } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
@@ -25,12 +21,12 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
 
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'ticking data row demo '
   );
-  adaptableBlotterOptions.predefinedConfig = flashingJson;
-  const api = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableOptions.predefinedConfig = flashingJson;
+  const api = Adaptable.init(adaptableOptions);
 
   // turn on mimicing ticking data
   tickingDataHelper.useTickingDataagGrid(gridOptions, api, 5000, tradeCount);

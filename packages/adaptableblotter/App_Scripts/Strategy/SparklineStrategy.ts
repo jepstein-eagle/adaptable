@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { ISparklineStrategy } from './Interface/ISparklineStrategy';
 
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -11,7 +11,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import { DataType } from '../PredefinedConfig/Common/Enums';
 
 export class SparklineStrategy extends AdaptableStrategyBase implements ISparklineStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.SparklineStrategyId, blotter);
   }
 

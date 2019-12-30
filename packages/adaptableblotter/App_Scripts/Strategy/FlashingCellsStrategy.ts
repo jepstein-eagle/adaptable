@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux';
 import { FlashingCellState, FlashingCell } from '../PredefinedConfig/FlashingCellState';
@@ -13,7 +13,7 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.FlashingCellsStrategyId, blotter);
   }
 

@@ -58,7 +58,7 @@ import { GridApi } from './GridApi';
  * Each of these properties is a class that contains a set of API method grouped either by Adaptable Blotter Function (e.g. *AdvancedSearchAPI*) or type (e.g. *AuditEventApi*)
  */
 
-export interface BlotterApi {
+export interface AdaptableApi {
   /**
    * Enables use of the Application Function which lets developers render their own toolbar and screen (if required).
    */

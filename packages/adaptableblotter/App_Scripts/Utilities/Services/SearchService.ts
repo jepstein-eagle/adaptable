@@ -16,7 +16,7 @@ import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import {
   BlotterSearchState,
@@ -26,9 +26,9 @@ import {
 import { SearchChangedEventArgs } from '../../types';
 
 export class SearchService implements ISearchService {
-  private blotter: IAdaptableBlotter;
+  private blotter: IAdaptable;
 
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     this.blotter = blotter;
 
     this.blotter.AdaptableStore.onAny((eventName: string) => {

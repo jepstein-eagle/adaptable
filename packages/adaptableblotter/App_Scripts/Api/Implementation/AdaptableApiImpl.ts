@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 
 import { ApplicationApi } from '../ApplicationAPI';
 import { ApplicationApiImpl } from './ApplicationApiImpl';
@@ -45,7 +45,7 @@ import { NamedFilterApiImpl } from './NamedFilterApiImpl';
 import { InternalApiImpl } from './InternalApiImpl';
 import { PartnerApiImpl } from './PartnerApiImpl';
 import { ColumnChooserApiImpl } from './ColumnChooserApiImpl';
-import { BlotterApi } from '../../types';
+import { AdaptableApi } from '../../types';
 import { ActionColumnApi } from '../ActionColumnApi';
 import { AdvancedSearchApi } from '../AdvancedSearchApi';
 import { AlertApi } from '../AlertApi';
@@ -89,7 +89,7 @@ import { PartnerAPI } from '../PartnerAPI';
 import { ThemeApi } from '../ThemeApi';
 import { GridApi } from '../GridApi';
 
-export class BlotterApiImpl implements BlotterApi {
+export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;
   public applicationApi: ApplicationApi;
   public advancedSearchApi: AdvancedSearchApi;
@@ -134,7 +134,7 @@ export class BlotterApiImpl implements BlotterApi {
   public namedFilterApi: NamedFilterApi;
   public partnerApi: PartnerAPI;
 
-  constructor(protected blotter: IAdaptableBlotter) {
+  constructor(protected blotter: IAdaptable) {
     this.blotter = blotter;
     this.actionColumnApi = new ActionColumnApiImpl(blotter);
     this.applicationApi = new ApplicationApiImpl(blotter);

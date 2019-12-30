@@ -1,5 +1,5 @@
 import { IScheduleService } from './Interface/IScheduleService';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
@@ -61,7 +61,7 @@ export class ScheduleService implements IScheduleService {
 
   private exportState: ExportState;
 
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
     this.blotter.AdaptableStore.TheStore.subscribe(() => this.listenToScheduleStoreChanges());
     this.reminderJobs = [];

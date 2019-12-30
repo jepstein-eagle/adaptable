@@ -8,8 +8,8 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 function InitAdaptableBlotter() {
@@ -17,16 +17,16 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(100000);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     `free text column demo`
   );
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.layoutOptions = {
+  adaptableOptions.predefinedConfig = demoConfig;
+  adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

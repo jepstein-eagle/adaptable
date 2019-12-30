@@ -2,7 +2,7 @@ import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import {
   Layout,
   ColumnSort,
@@ -19,7 +19,7 @@ import {
 } from '../../Api/Events/ColumnStateChanged';
 
 export class LayoutService implements ILayoutService {
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
   }
 

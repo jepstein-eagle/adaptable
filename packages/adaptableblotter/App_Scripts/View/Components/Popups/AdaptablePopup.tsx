@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
 import * as React from 'react';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
@@ -24,7 +24,7 @@ export interface AdaptablePopupProps extends React.ClassAttributes<AdaptablePopu
   ComponentName?: string;
   ComponentStrategy: AdaptableFunctionName;
   onHide?: () => void;
-  Blotter: IAdaptableBlotter;
+  Blotter: IAdaptable;
   PopupParams: StrategyParams;
   PopupProps?: { [key: string]: any };
   onClearPopupParams?: () => PopupRedux.PopupClearParamAction;

@@ -15,7 +15,7 @@ import { DataChangedInfo } from './CommonObjects/DataChangedInfo';
  * Any edits that dont break those rules - or which are not for the 'amount' column - we ignore (so they will be processed normally)
  *
  * ```ts
- * adaptableBlotterOptions.editOptions = {
+ * adaptableOptions.editOptions = {
  *     validateOnServer: (dataChangedInfo: DataChangedInfo) => {
  *       return new Promise((resolve, reject) => {
  *         setTimeout(() => resolve(getServerEditResponse(dataChangedInfo)), 2000);

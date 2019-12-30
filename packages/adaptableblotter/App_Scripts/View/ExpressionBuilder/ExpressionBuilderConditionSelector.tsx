@@ -30,7 +30,7 @@ import {
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 import { Waiting } from '../Components/FilterForm/Waiting';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
@@ -51,7 +51,7 @@ export interface ExpressionBuilderConditionSelectorProps
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
-  Blotter: IAdaptableBlotter;
+  Blotter: IAdaptable;
 }
 
 export interface ExpressionBuilderConditionSelectorState {

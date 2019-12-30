@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../types';
+import { IAdaptable } from '../../types';
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { IPPStyle } from '../Interface/IPPStyle';
 import { IPushPullService } from './Interface/IPushPullService';
@@ -20,7 +20,7 @@ export class PushPullService implements IPushPullService {
 
   private pages: Map<string, any> = new Map();
 
-  constructor(public blotter: IAdaptableBlotter) {
+  constructor(public blotter: IAdaptable) {
     this.blotter = blotter;
 
     this.blotter.api.eventApi.on('BlotterReady', () => {

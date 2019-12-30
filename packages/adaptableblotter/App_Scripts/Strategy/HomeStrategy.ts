@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as GlyphConstants from '../Utilities/Constants/GlyphConstants';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
@@ -10,7 +10,7 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 // This is a special strategy that the user can never remove but which is useful to us
 // We use it to manage internal state changes and menu items that are not directly strategy related
 export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.HomeStrategyId, blotter);
     // useful for when grid reloads (e.g. at midnight);
     this.blotter._on('GridReloaded', () => {

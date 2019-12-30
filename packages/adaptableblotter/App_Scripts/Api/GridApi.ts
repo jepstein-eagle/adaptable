@@ -5,7 +5,7 @@ import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
+import { AdaptableOptions } from '../BlotterOptions/AdaptableOptions';
 
 /**
  * Provides access to important elements of the Adaptable Blotter like columns, sorting, selected cells etc.
@@ -147,7 +147,7 @@ export interface GridApi {
   /**
    * Returns the Blotter Options object passed into the Adaptable Blotter at the start
    */
-  getBlotterOptions(): AdaptableBlotterOptions;
+  getBlotterOptions(): AdaptableOptions;
 
   /**
    * Retrieves the value in the cell which is in the given Column and in the Row that contains that given Primary Key Value

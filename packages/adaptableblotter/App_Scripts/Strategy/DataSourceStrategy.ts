@@ -1,12 +1,12 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IDataSourceStrategy } from './Interface/IDataSourceStrategy';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSourceStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.DataSourceStrategyId, blotter);
   }
 

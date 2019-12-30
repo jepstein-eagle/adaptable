@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
@@ -23,19 +23,19 @@ function InitAdaptableBlotter() {
 
   // tickingDataHelper.startTickingDataagGridSetData(gridOptions);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'ticking demo set value'
   );
-  adaptableBlotterOptions.predefinedConfig = flashingJson;
+  adaptableOptions.predefinedConfig = flashingJson;
 
-  adaptableBlotterOptions.filterOptions = {
+  adaptableOptions.filterOptions = {
     //   filterActionOnExternalDataChange: {
     //    RunFilter: 'Always',
     //  },
   };
 
-  adaptableBlotterOptions.auditOptions = {
+  adaptableOptions.auditOptions = {
     auditCellEdits: {
       //   auditAsAlert: true,
       //   auditToConsole: true,
@@ -55,10 +55,10 @@ function InitAdaptableBlotter() {
     alertShowAsPopup: true,
   };
 
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi = Adaptable.init(adaptableOptions);
 
   // turn on mimicing ticking data
-  tickingDataHelper.useTickingDataagGrid(gridOptions, blotterApi, 500, tradeCount);
+  tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 500, tradeCount);
 }
 
 let flashingJson: PredefinedConfig = {

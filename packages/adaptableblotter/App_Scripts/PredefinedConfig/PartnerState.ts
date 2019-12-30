@@ -60,7 +60,7 @@ export interface PartnerState extends DesignTimeState {
  *
  * // 3. pass in this config as 'iPushPullInstance' property in iPushPull / Partner state
  * // You can add your iPushPull username & password to help pre-fill the login page
- * const adaptableBlotterOptions: AdaptableBlotterOptions = {
+ * const adaptableOptions: AdaptableOptions = {
  *   .........
  *   predefinedConfig: {
  *      Partner: {
@@ -84,7 +84,7 @@ export interface PartnerState extends DesignTimeState {
  *  **Example: Subscribing to the 'LiveReportUpdated' event**
  *
  * ```ts
- * blotterAPI.eventApi.on(
+ * adaptableApi.eventApi.on(
  *    'LiveReportUpdated',
  *      (eventArgs: LiveReportUpdatedEventArgs) => {
  *        let reportUpdatedInfo: LiveReportUpdatedInfo = eventArgs.data[0].id;

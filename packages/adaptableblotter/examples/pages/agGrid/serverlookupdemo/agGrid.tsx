@@ -10,17 +10,17 @@ import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import {
-  AdaptableBlotterOptions,
+  AdaptableOptions,
   PredefinedConfig,
-  IAdaptableBlotter,
-  BlotterApi,
+  IAdaptable,
+  AdaptableApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { IServerColumnValues } from '../../../../App_Scripts/BlotterOptions/QueryOptions';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -28,7 +28,7 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'Server Lookup Demo',
@@ -37,11 +37,11 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.filterOptions = {
+  adaptableOptions.filterOptions = {
     autoApplyFilter: false,
   };
 
-  adaptableBlotterOptions.queryOptions = {
+  adaptableOptions.queryOptions = {
     getColumnValues: (columnName: string) => {
       return new Promise((resolve, reject) => {
         setTimeout(() => resolve(getValuesForColumn(columnName)), 500);
@@ -49,9 +49,7 @@ function InitAdaptableBlotter() {
     },
   };
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
-
-  // global.adaptableblotter = adaptableblotter;
+  adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

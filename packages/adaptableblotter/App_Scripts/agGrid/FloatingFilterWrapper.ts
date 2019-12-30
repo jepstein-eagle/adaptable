@@ -8,7 +8,7 @@ import {
   IAfterGuiAttachedParams,
 } from 'ag-grid-community';
 import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContext';
-import { AdaptableBlotter } from './AdaptableBlotter';
+import { Adaptable } from './Adaptable';
 
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
@@ -17,7 +17,7 @@ import { QuickFilterFormReact } from '../View/Components/FilterForm/QuickFilterF
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
-export const FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) =>
+export const FloatingFilterWrapperFactory = (blotter: Adaptable) =>
   <any>class FloatingFilterWrapper implements IFloatingFilterComp {
     onParentModelChanged(parentModel: any, filterChangedEvent?: FilterChangedEvent): void {
       // todo?

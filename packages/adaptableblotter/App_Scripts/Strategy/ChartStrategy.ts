@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import {
   ChartState,
@@ -27,7 +27,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   private SystemState: SystemState;
   private throttleSetChartData: (() => void) & _.Cancelable;
 
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ChartStrategyId, blotter);
 
     this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {

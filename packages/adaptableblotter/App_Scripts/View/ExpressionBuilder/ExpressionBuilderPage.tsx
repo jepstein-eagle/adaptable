@@ -15,7 +15,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Expression } from '../../PredefinedConfig/Common/Expression';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import SimpleButton from '../../components/SimpleButton';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
@@ -30,7 +30,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
   Columns?: Array<AdaptableColumn>;
-  Blotter?: IAdaptableBlotter;
+  Blotter?: IAdaptable;
 }
 
 export interface ExpressionBuilderPageState {

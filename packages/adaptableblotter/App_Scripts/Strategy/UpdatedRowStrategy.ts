@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IUpdatedRowStrategy } from './Interface/IUpdatedRowStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
@@ -18,7 +18,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   implements IUpdatedRowStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.UpdatedRowStrategyId, blotter);
 
     this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {

@@ -1,5 +1,5 @@
 import * as CalendarConstants from '../../Utilities/Constants/CalendarConstants';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { ICalendarService } from './Interface/ICalendarService';
 import { CalendarState } from '../../PredefinedConfig/CalendarState';
 
@@ -14,7 +14,7 @@ import { CalendarState } from '../../PredefinedConfig/CalendarState';
 // Hence why we store the details of the shipped calendars the way we do, rather than reading from a file like we do with WPF version.
 
 export class CalendarService implements ICalendarService {
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
   }
 

@@ -3,19 +3,19 @@ import { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-blue.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
 import {
-  IAdaptableBlotter,
-  AdaptableBlotterOptions,
+  IAdaptable,
+  AdaptableOptions,
   SearchChangedEventArgs,
-  BlotterApi,
+  AdaptableApi,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -23,16 +23,16 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating blotter options here so we can add audit
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'audit demo',
   };
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableApi = Adaptable.init(adaptableOptions);
 
-  blotterApi.eventApi
+  adaptableApi.eventApi
     .onSearchChanged()
     .Subscribe((sender, searchChangedArgs) => listenToSearchChangedEvent(searchChangedArgs));
 }

@@ -12,19 +12,19 @@ import { StateOptions } from './StateOptions';
 import { UserInterfaceOptions } from './UserInterfaceOptions';
 
 /**
- * `AdaptableBlotterOptions` is the class injected into the Adaptable Blotter at startup.
+ * `AdaptableOptions` is the class injected into the Adaptable Blotter at startup.
  *
  * **This forms the only parameter requried by the Adaptable Blotter constructor.**
  *
- * `AdaptableBlotterOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
+ * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
  *
- * The `AdaptableBlotterOptions` class contains a few *normal* properties of which 2 (`vendorGrid` and `primaryKey`) are mandatory - and a number of `*xxxOptions` properties where the type is itself a collection of related properties.
+ * The `AdaptableOptions` class contains a few *normal* properties of which 2 (`vendorGrid` and `primaryKey`) are mandatory - and a number of `*xxxOptions` properties where the type is itself a collection of related properties.
  *
- * Typically users will ony populate a few of the properties in `AdaptableBlotterOptions`, and only a few properties in each class.
+ * Typically users will ony populate a few of the properties in `AdaptableOptions`, and only a few properties in each class.
  *
  * Any property that is not supplied by the user when populating the object, will use the default value (which is listed here for each property).
  */
-export interface AdaptableBlotterOptions {
+export interface AdaptableOptions {
   /**
    * **MANDATORY property**
    *

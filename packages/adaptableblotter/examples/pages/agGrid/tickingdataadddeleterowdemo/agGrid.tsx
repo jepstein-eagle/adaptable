@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -10,7 +10,7 @@ import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
@@ -27,17 +27,17 @@ function InitAdaptableBlotter() {
 
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'ticking data add delete row'
   );
-  adaptableBlotterOptions.predefinedConfig = json;
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableOptions.predefinedConfig = json;
+  const adaptableApi = Adaptable.init(adaptableOptions);
 
   // turn on mimicing adding rows
-  tickingDataHelper.startTickingDataagGridAddRow(blotterApi, tradeData, rowCount);
+  tickingDataHelper.startTickingDataagGridAddRow(adaptableApi, tradeData, rowCount);
   // turn on mimicing removing rows
-  tickingDataHelper.startTickingDataagGridDeleteRow(blotterApi, tradeData, rowCount);
+  tickingDataHelper.startTickingDataagGridDeleteRow(adaptableApi, tradeData, rowCount);
 }
 
 let json: PredefinedConfig = {};

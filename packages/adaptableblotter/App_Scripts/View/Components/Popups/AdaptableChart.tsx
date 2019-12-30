@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
@@ -20,37 +20,34 @@ Otherwise we use the default.
 TODO:  put the stuff n state if we redraw every time?
 */
 
-export interface IAdaptableBlotterChartProps extends React.ClassAttributes<AdaptableChart> {
+export interface IAdaptableChartProps extends React.ClassAttributes<AdaptableChart> {
   showChart: boolean;
   onClose?: () => void;
-  AdaptableBlotter: IAdaptableBlotter;
+  Adaptable: IAdaptable;
   showModal: boolean;
 }
 
-export interface AdaptableBlotterChartState {
+export interface AdaptableChartState {
   chartContainer: HTMLElement;
   accessLevel: AccessLevel;
   isValidUserChartContainer: boolean;
 }
 
-export class AdaptableChart extends React.Component<
-  IAdaptableBlotterChartProps,
-  AdaptableBlotterChartState
-> {
-  constructor(props: IAdaptableBlotterChartProps) {
+export class AdaptableChart extends React.Component<IAdaptableChartProps, AdaptableChartState> {
+  constructor(props: IAdaptableChartProps) {
     super(props);
     this.state = {
       chartContainer: UIHelper.getChartContainer(
-        this.props.AdaptableBlotter.blotterOptions,
+        this.props.Adaptable.blotterOptions,
         document,
         this.props.showModal
       ),
       accessLevel: AdaptableHelper.getEntitlementAccessLevelForStrategy(
-        this.props.AdaptableBlotter.api.entitlementsApi.getAllEntitlements(),
+        this.props.Adaptable.api.entitlementsApi.getAllEntitlements(),
         StrategyConstants.ChartStrategyId
       ),
       isValidUserChartContainer: UIHelper.isValidUserChartContainer(
-        this.props.AdaptableBlotter.blotterOptions,
+        this.props.Adaptable.blotterOptions,
         document
       ),
     };
@@ -58,17 +55,17 @@ export class AdaptableChart extends React.Component<
 
   render() {
     let commonProps: ChartDisplayPopupPropsBase<this> = {
-      Columns: this.props.AdaptableBlotter.api.gridApi.getColumns(),
+      Columns: this.props.Adaptable.api.gridApi.getColumns(),
       ModalContainer: this.state.chartContainer,
       onClose: this.props.onClose,
       ShowModal: this.props.showModal,
-      Blotter: this.props.AdaptableBlotter,
-      UserFilters: this.props.AdaptableBlotter.api.userFilterApi.getAllUserFilter(),
-      SystemFilters: this.props.AdaptableBlotter.api.systemFilterApi.getAllSystemFilter(),
-      NamedFilters: this.props.AdaptableBlotter.api.namedFilterApi.getAllNamedFilter(),
-      ColumnCategories: this.props.AdaptableBlotter.api.columnCategoryApi.getAllColumnCategory(),
-      ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.getAllColumnFilter(),
-      ColorPalette: this.props.AdaptableBlotter.api.userInterfaceApi.getColorPalette(),
+      Blotter: this.props.Adaptable,
+      UserFilters: this.props.Adaptable.api.userFilterApi.getAllUserFilter(),
+      SystemFilters: this.props.Adaptable.api.systemFilterApi.getAllSystemFilter(),
+      NamedFilters: this.props.Adaptable.api.namedFilterApi.getAllNamedFilter(),
+      ColumnCategories: this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory(),
+      ColumnFilters: this.props.Adaptable.api.columnFilterApi.getAllColumnFilter(),
+      ColorPalette: this.props.Adaptable.api.userInterfaceApi.getColorPalette(),
       AccessLevel: this.state.accessLevel,
     };
 
@@ -79,7 +76,7 @@ export class AdaptableChart extends React.Component<
 
     return this.props.showModal ? (
       <AdaptablePopup
-        Blotter={this.props.AdaptableBlotter}
+        Blotter={this.props.Adaptable}
         onHide={this.props.onClose}
         showModal
         PopupParams={null}

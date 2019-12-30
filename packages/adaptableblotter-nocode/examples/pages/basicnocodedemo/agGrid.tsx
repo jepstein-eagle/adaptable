@@ -9,19 +9,17 @@ import '../../../src/themes/dark.scss'; // from '@adaptabletools/adaptableblotte
 
 import './index.css';
 
-import AdaptableNoCodeWizard, { AdaptableBlotterOptions, PredefinedConfig } from '../../../src'; // from '@adaptabletools/adaptableblotter-nocode'
-
 /*
 Basic demo of wizard that allow d&d of a json with an array contents
 */
 
 function InitAdaptableBlotter() {
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: '', // will be added later ...
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
-  AdaptableNoCodeWizard.init(adaptableBlotterOptions).then(api => {
+  AdaptableNoCodeWizard.init(adaptableOptions).then(api => {
     console.log(api);
   });
 }

@@ -1,7 +1,7 @@
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -25,7 +25,7 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 export class StyleService implements IStyleService {
   private style: HTMLStyleElement;
 
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
     // Create the <style> tag
     this.style = document.createElement('style');
@@ -79,7 +79,7 @@ export class StyleService implements IStyleService {
     this.setUpUpdatedRow();
     this.setUpAlerts();
     this.setUpConditionalStyle();
-    this.createAdaptableBlotterFunctionStyles();
+    this.createAdaptableFunctionStyles();
   }
 
   private setUpFormatColumn() {
@@ -122,7 +122,7 @@ export class StyleService implements IStyleService {
    * this class is still not perfect as we still delete and recreate all styles every time we create a conditional style, format column or flashing cell
    * but actually that is not the end of the world as it doenst happen so often and at least we are not doing it when quick search is applied.
    */
-  private createAdaptableBlotterFunctionStyles() {
+  private createAdaptableFunctionStyles() {
     this.clearCSSRules();
 
     // Format Column
@@ -285,92 +285,92 @@ export class StyleService implements IStyleService {
   private setUpStoreListeners() {
     //  Quick Search - no need to set up styles for Quick Search as done in AB not the Strategy = need to test!!!
     this.blotter.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY, () => {
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_STYLE, () => {
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
 
     // Format Column
     this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_ADD, () => {
       this.setUpFormatColumn();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_EDIT, () => {
       this.setUpFormatColumn();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_DELETE, () => {
       this.setUpFormatColumn();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
 
     // Conditional Style
     this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_ADD, () => {
       this.setUpConditionalStyle();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT, () => {
       this.setUpConditionalStyle();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE, () => {
       this.setUpConditionalStyle();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
 
     // Alert Definition (note we dont need to create styles)
     this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
       this.setUpAlerts();
-      // this.createAdaptableBlotterFunctionStyles();
+      // this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
       this.setUpAlerts();
-      // this.createAdaptableBlotterFunctionStyles();
+      // this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
       this.setUpAlerts();
-      //  this.createAdaptableBlotterFunctionStyles();
+      //  this.createAdaptableFunctionStyles();
     });
 
     // Updated Row
     this.blotter.AdaptableStore.on(UpdatedRowRedux.UPDATED_ROW_ENABLE_DISABLE, () => {
       this.setUpUpdatedRow();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(UpdatedRowRedux.UP_COLOR_SET, () => {
       this.setUpUpdatedRow();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(UpdatedRowRedux.DOWN_COLOR_SET, () => {
       this.setUpUpdatedRow();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(UpdatedRowRedux.NEUTRAL_COLOR_SET, () => {
       this.setUpUpdatedRow();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
 
     // Flashing Cell
     this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT, () => {
       this.setUpFlashingCells();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT_ALL, () => {
       this.setUpFlashingCells();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_UP_COLOR, () => {
       this.setUpFlashingCells();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR, () => {
       this.setUpFlashingCells();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
     this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION, () => {
       this.setUpFlashingCells();
-      this.createAdaptableBlotterFunctionStyles();
+      this.createAdaptableFunctionStyles();
     });
   }
 }

@@ -338,7 +338,7 @@ const App = () => {
   };
   return (
     <div>
-      <div agTheme="balham-dark" AdaptableBlotterOptions={abOptions} GridOptions={gridOptions} />
+      <div agTheme="balham-dark" AdaptableOptions={abOptions} GridOptions={gridOptions} />
     </div>
   );
 };

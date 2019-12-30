@@ -3,7 +3,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
 import FieldWrap from '../../../components/FieldWrap';
@@ -15,7 +15,7 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
   SelectedColumn: AdaptableColumn;
   SelectedColumnValue: string;
   onColumnValueChange: (columnvalue: any) => void;
-  Blotter: IAdaptableBlotter;
+  Blotter: IAdaptable;
   AllowNew?: boolean; // defaults to true if not provided
   style?: React.CSSProperties;
   newLabel?: string;

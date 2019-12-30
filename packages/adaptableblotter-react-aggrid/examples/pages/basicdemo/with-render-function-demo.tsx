@@ -6,7 +6,7 @@ import { GridOptions } from 'ag-grid-community';
 import AdaptableBlotterReact from '../../../src';
 import '../../../src/index.scss';
 
-import { AdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
+import { AdaptableOptions } from '../../../../adaptableblotter/App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -17,7 +17,7 @@ const examplesHelper = new ExamplesHelper();
 const tradeData: any = examplesHelper.getTrades(500);
 const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-const adaptableBlotterOptions: AdaptableBlotterOptions = {
+const adaptableOptions: AdaptableOptions = {
   vendorGrid: gridOptions,
   primaryKey: 'tradeId',
   userName: 'demo user',
@@ -28,7 +28,7 @@ export default () => (
   <AdaptableBlotterReact
     style={{ height: '100vh' }}
     gridOptions={gridOptions}
-    blotterOptions={adaptableBlotterOptions}
+    blotterOptions={adaptableOptions}
     render={({ grid, blotter }) => (
       <>
         {grid}

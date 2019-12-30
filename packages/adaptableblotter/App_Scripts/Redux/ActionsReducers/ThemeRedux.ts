@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { ThemeState, AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
+import { ThemeState, AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 import {
   EMPTY_ARRAY,
   THEME_DEFAULT_CURRENT_THEME,
@@ -11,11 +11,11 @@ const THEME_SET_USER_THEMES = 'THEME_SET_USER_THEMES';
 export const THEME_SELECT = 'THEME_SELECT';
 
 export interface ThemeSetSystemThemesAction extends Redux.Action {
-  SystemThemes: AdaptableBlotterTheme[];
+  SystemThemes: AdaptableTheme[];
 }
 
 export interface ThemeSetUserThemesAction extends Redux.Action {
-  UserThemes: AdaptableBlotterTheme[];
+  UserThemes: AdaptableTheme[];
 }
 
 export interface ThemeSelectAction extends Redux.Action {
@@ -23,15 +23,13 @@ export interface ThemeSelectAction extends Redux.Action {
 }
 
 export const ThemeSetSystemThemes = (
-  SystemThemes: AdaptableBlotterTheme[]
+  SystemThemes: AdaptableTheme[]
 ): ThemeSetSystemThemesAction => ({
   type: THEME_SET_SYSTEM_THEMES,
   SystemThemes,
 });
 
-export const ThemeSetUserThemes = (
-  UserThemes: AdaptableBlotterTheme[]
-): ThemeSetUserThemesAction => ({
+export const ThemeSetUserThemes = (UserThemes: AdaptableTheme[]): ThemeSetUserThemesAction => ({
   type: THEME_SET_USER_THEMES,
   UserThemes,
 });

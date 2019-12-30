@@ -1,10 +1,10 @@
 import {
-  AdaptableBlotter,
+  Adaptable,
   //init as initFn,
   AdaptableNoCodeWizard as ABWizard,
-} from './AdaptableBlotter';
+} from './Adaptable';
 
-export default AdaptableBlotter;
+export default Adaptable;
 
 export const AdaptableNoCodeWizard = ABWizard;
 //export const init = initFn;

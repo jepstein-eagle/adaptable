@@ -16,7 +16,7 @@ import { Report } from '../../PredefinedConfig/ExportState';
  *  **Example: Subscribing to the 'LiveReportUpdated' event**
  *
  * ```ts
- * blotterAPI.eventApi.on(
+ * adaptableApi.eventApi.on(
  *    'LiveReportUpdated',
  *      (eventArgs: LiveReportUpdatedEventArgs) => {
  *        let reportUpdatedInfo: LiveReportUpdatedInfo = eventArgs.data[0].id;

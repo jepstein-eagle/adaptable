@@ -6,7 +6,7 @@ import '../../../src/base.scss';
 import '../../../src/themes/light.scss';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { AdaptableBlotterOptions } from '../../../../adaptableblotter/types';
+import { AdaptableOptions } from '../../../../adaptableblotter/types';
 
 /*
 Very similar to the basic demo but with just light theme and with the GridOptions created on the page to make it easier to see
@@ -27,7 +27,7 @@ const gridOptions: GridOptions = {
   },
 };
 
-const adaptableBlotterOptions: AdaptableBlotterOptions = {
+const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
   blotterId: 'react demo',
@@ -37,6 +37,6 @@ export default () => (
   <AdaptableBlotterReact
     style={{ height: '100vh' }}
     gridOptions={gridOptions}
-    blotterOptions={adaptableBlotterOptions}
+    blotterOptions={adaptableOptions}
   />
 );

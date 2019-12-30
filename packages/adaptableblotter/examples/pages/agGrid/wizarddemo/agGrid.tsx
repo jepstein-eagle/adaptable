@@ -11,7 +11,7 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { IAdaptableNoCodeWizard } from '../../../../App_Scripts/BlotterInterfaces/IAdaptableNoCodeWizard';
 import { ColDef } from 'ag-grid-community';
 
@@ -20,28 +20,28 @@ Basic demo of wizard that allow d&d of a json with an array contents
 */
 
 function InitAdaptableBlotter() {
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'dtmKey', // will be added later ...
     //blotterId: 'Position Monitor',
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
-  let abWizard: IAdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableBlotterOptions, {
+  let abWizard: IAdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableOptions, {
     //  fetchData: () => {
     //    return fetch(
     //      'https://dl.dropboxusercontent.com/s/effei2a3g7bc4dt/positionMonitor_ARBITRAGE-ALPHA-STRAT.json?dl=0'
     //    ).then(response => response.json());
     //  },
-    onInit: ({ adaptableBlotterOptions, gridOptions }) => {
-      adaptableBlotterOptions.filterOptions = adaptableBlotterOptions.filterOptions || {};
+    onInit: ({ adaptableOptions, gridOptions }) => {
+      adaptableOptions.filterOptions = adaptableOptions.filterOptions || {};
       gridOptions.columnDefs = gridOptions.columnDefs!.map(c => {
         return {
           ...c,
           headerName: startCase((c as ColDef).field),
         };
       });
-      // const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-      //   // global.adaptableblotter = adaptableblotter;
+      // const adaptableblotter = new Adaptable(adaptableOptions);
+      //
       // return adaptableblotter;
     },
   });

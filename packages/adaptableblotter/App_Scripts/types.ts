@@ -13,9 +13,9 @@ export {
   IAdaptableNoCodeWizardOptions,
 } from './BlotterInterfaces/IAdaptableNoCodeWizard';
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
-export { IAdaptableBlotter } from './BlotterInterfaces/IAdaptableBlotter';
-export { BlotterApi } from './Api/BlotterApi';
-export { AdaptableBlotterOptions } from './BlotterOptions/AdaptableBlotterOptions';
+export { IAdaptable } from './BlotterInterfaces/IAdaptable';
+export { AdaptableApi } from './Api/AdaptableApi';
+export { AdaptableOptions } from './BlotterOptions/AdaptableOptions';
 
 export {
   EventApi,

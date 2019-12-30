@@ -91,7 +91,7 @@ class ExportToolPanelComponent extends React.Component<
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
 
-    let currentReport: Report = this.props.BlotterApi.exportApi.getCurrentReport();
+    let currentReport: Report = this.props.AdaptableApi.exportApi.getCurrentReport();
 
     let savedReport: Report | undefined = allReports.find(s => s.Name == this.props.CurrentReport);
 

@@ -3,7 +3,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { ThemeApi } from '../ThemeApi';
-import { ThemeState, AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
+import { ThemeState, AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 
 export class ThemeApiImpl extends ApiBase implements ThemeApi {
   public getThemeState(): ThemeState {
@@ -26,18 +26,18 @@ export class ThemeApiImpl extends ApiBase implements ThemeApi {
     return this.getBlotterState().Theme.CurrentTheme;
   }
 
-  public setSystemThemes(systemThemes: AdaptableBlotterTheme[]): void {
+  public setSystemThemes(systemThemes: AdaptableTheme[]): void {
     this.dispatchAction(ThemeRedux.ThemeSetSystemThemes(systemThemes));
   }
 
-  public setUserThemes(userThemes: AdaptableBlotterTheme[]): void {
+  public setUserThemes(userThemes: AdaptableTheme[]): void {
     this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes));
   }
 
-  public getAllSystemTheme(): AdaptableBlotterTheme[] {
+  public getAllSystemTheme(): AdaptableTheme[] {
     const themes = this.getBlotterState().Theme.SystemThemes;
 
-    return themes.map((theme: AdaptableBlotterTheme | string) => {
+    return themes.map((theme: AdaptableTheme | string) => {
       if (typeof theme === 'string') {
         return {
           Name: theme,
@@ -49,11 +49,11 @@ export class ThemeApiImpl extends ApiBase implements ThemeApi {
     });
   }
 
-  public getAllUserTheme(): AdaptableBlotterTheme[] {
+  public getAllUserTheme(): AdaptableTheme[] {
     return this.getBlotterState().Theme.UserThemes;
   }
 
-  public getAllTheme(): AdaptableBlotterTheme[] {
+  public getAllTheme(): AdaptableTheme[] {
     return [...this.getAllSystemTheme(), ...this.getAllUserTheme()];
   }
 

@@ -1,10 +1,10 @@
 ﻿import { GridOptions, RowNode } from 'ag-grid-community';
 import { ITrade, ExamplesHelper } from './ExamplesHelper';
 import ArrayExtensions from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
-import { BlotterApi } from '../../App_Scripts/types';
+import { AdaptableApi } from '../../App_Scripts/types';
 
 export class TickingDataHelper {
-  startTickingDatSystemStatus(api: BlotterApi) {
+  startTickingDatSystemStatus(api: AdaptableApi) {
     setInterval(() => {
       let systemStatusTyps: any = api.systemStatusApi.getSystemStatusState().StatusType;
       if (systemStatusTyps == 'Info') {
@@ -17,14 +17,14 @@ export class TickingDataHelper {
 
   useTickingDataagGrid(
     gridOptions: any,
-    blotterApi: BlotterApi,
+    adaptableApi: AdaptableApi,
     tickingFrequency: number,
     tradeCount: number
   ) {
     if (gridOptions != null && gridOptions.api != null) {
       const examplesHelper = new ExamplesHelper();
-      let useBlotterAPIUpdateGridData: boolean = false;
-      let useBlotterAPISetCellValue: boolean = false;
+      let useadaptableApiUpdateGridData: boolean = false;
+      let useadaptableApiSetCellValue: boolean = false;
       let useRowNodeSetDataValue: boolean = false;
       let useRowNodeSetData: boolean = false;
       let gridOptionsUpdateRowData: boolean = true;
@@ -46,7 +46,7 @@ export class TickingDataHelper {
         const notional = this.getRandomItem(examplesHelper.getNotionals());
         const changeOnYear = examplesHelper.getMeaningfulDouble();
 
-        if (useBlotterAPIUpdateGridData) {
+        if (useadaptableApiUpdateGridData) {
           trade.price = price;
           trade.bid = bid;
           trade.ask = ask;
@@ -54,7 +54,7 @@ export class TickingDataHelper {
           trade.bloombergBid = bloombergBid;
           trade.notional = notional;
           trade.changeOnYear = changeOnYear;
-          blotterApi.gridApi.updateGridData([trade]);
+          adaptableApi.gridApi.updateGridData([trade]);
         }
 
         if (gridOptionsUpdateRowData) {
@@ -68,14 +68,14 @@ export class TickingDataHelper {
           gridOptions.api!.updateRowData({ update: [trade] });
         }
 
-        if (useBlotterAPISetCellValue) {
-          blotterApi.gridApi.setCellValue('price', price, tradeId, false);
-          blotterApi.gridApi.setCellValue('bid', bid, tradeId, false);
-          blotterApi.gridApi.setCellValue('ask', ask, tradeId, false);
-          blotterApi.gridApi.setCellValue('bloombergAsk', bloombergAsk, tradeId, false);
-          blotterApi.gridApi.setCellValue('bloombergBid', bloombergBid, tradeId, false);
-          blotterApi.gridApi.setCellValue('notional', notional, tradeId, false);
-          blotterApi.gridApi.setCellValue('changeOnYear', changeOnYear, tradeId, false);
+        if (useadaptableApiSetCellValue) {
+          adaptableApi.gridApi.setCellValue('price', price, tradeId, false);
+          adaptableApi.gridApi.setCellValue('bid', bid, tradeId, false);
+          adaptableApi.gridApi.setCellValue('ask', ask, tradeId, false);
+          adaptableApi.gridApi.setCellValue('bloombergAsk', bloombergAsk, tradeId, false);
+          adaptableApi.gridApi.setCellValue('bloombergBid', bloombergBid, tradeId, false);
+          adaptableApi.gridApi.setCellValue('notional', notional, tradeId, false);
+          adaptableApi.gridApi.setCellValue('changeOnYear', changeOnYear, tradeId, false);
         }
 
         if (useRowNodeSetDataValue) {
@@ -103,8 +103,8 @@ export class TickingDataHelper {
     }
   }
 
-  startTickingDataagGridAddRow(blotterApi: BlotterApi, rowData: any, rowCount: number) {
-    let gridOptions: GridOptions = blotterApi.gridApi.getVendorGrid() as GridOptions;
+  startTickingDataagGridAddRow(adaptableApi: AdaptableApi, rowData: any, rowCount: number) {
+    let gridOptions: GridOptions = adaptableApi.gridApi.getVendorGrid() as GridOptions;
     if (
       gridOptions != null &&
       gridOptions.api != null &&
@@ -119,15 +119,15 @@ export class TickingDataHelper {
         const trade: ITrade = examplesHelper.createTrade(newRowCount);
         if (trade) {
           console.log('adding row with tradeid: ' + newRowCount);
-          blotterApi.gridApi.addGridData([trade]);
+          adaptableApi.gridApi.addGridData([trade]);
           //  gridOptions.api!.updateRowData({ add: [trade] });
         }
       }, 2000);
     }
   }
 
-  startTickingDataagGridDeleteRow(blotterApi: BlotterApi, rowData: any, rowCount: number) {
-    let gridOptions: GridOptions = blotterApi.gridApi.getVendorGrid() as GridOptions;
+  startTickingDataagGridDeleteRow(adaptableApi: AdaptableApi, rowData: any, rowCount: number) {
+    let gridOptions: GridOptions = adaptableApi.gridApi.getVendorGrid() as GridOptions;
     if (
       gridOptions != null &&
       gridOptions.api != null &&
@@ -140,7 +140,7 @@ export class TickingDataHelper {
         if (ArrayExtensions.NotContainsItem(deletedTradeIds, tradeId)) {
           deletedTradeIds.push(tradeId);
           console.log('deleting row with tradeid: ' + (tradeId + 1));
-          blotterApi.gridApi.deleteGridData([rowData[tradeId]]);
+          adaptableApi.gridApi.deleteGridData([rowData[tradeId]]);
           //   gridOptions.api!.updateRowData({ remove: [rowData[tradeId]] });
         }
       }, 5000);

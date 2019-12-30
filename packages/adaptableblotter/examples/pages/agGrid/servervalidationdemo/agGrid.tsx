@@ -8,18 +8,18 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import {
-  AdaptableBlotterOptions,
+  AdaptableOptions,
   PredefinedConfig,
-  BlotterApi,
+  AdaptableApi,
   ActionColumnClickedEventArgs,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { DataChangedInfo } from '../../../../App_Scripts/BlotterOptions/CommonObjects/DataChangedInfo';
 import { ValidationResult } from '../../../../App_Scripts/BlotterOptions/EditOptions';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -29,7 +29,7 @@ function InitAdaptableBlotter() {
 
   const runServerValidation: boolean = true;
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'Server Validation Demo',
@@ -38,7 +38,7 @@ function InitAdaptableBlotter() {
   };
 
   if (runServerValidation) {
-    adaptableBlotterOptions.editOptions = {
+    adaptableOptions.editOptions = {
       validateOnServer: (dataChangedInfo: DataChangedInfo) => {
         return new Promise((resolve, reject) => {
           setTimeout(() => resolve(getServerEditResponse(dataChangedInfo)), 500);
@@ -47,10 +47,10 @@ function InitAdaptableBlotter() {
     };
   }
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableApi = Adaptable.init(adaptableOptions);
 
-  blotterApi.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
-    blotterApi.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue, false);
+  adaptableApi.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
+    adaptableApi.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue, false);
   });
 }
 

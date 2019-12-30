@@ -1,15 +1,15 @@
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy';
 import { RowNode } from 'ag-grid-community';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 
 export class CustomSortStrategyagGrid extends CustomSortStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(blotter);
   }
 
   public getComparerFunction(customSort: CustomSort): Function {
-    let theBlotter = this.blotter as IAdaptableBlotter;
+    let theBlotter = this.blotter as IAdaptable;
     return function compareItemsOfCustomSort(
       valueA: any,
       valueB: any,

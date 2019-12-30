@@ -9,20 +9,20 @@ import '../../../src/base.scss';
 import '../../../src/themes/light.scss';
 import '../../../src/themes/dark.scss';
 
-import { AdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
+import { AdaptableOptions } from '../../../../adaptableblotter/App_Scripts/types';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import AdaptableBlotter from '../../../../adaptableblotter/App_Scripts/agGrid';
+import Adaptable from '../../../../adaptableblotter/App_Scripts/agGrid';
 
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 
 const dataGen = new DataGenerator();
 const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
 
-const adaptableBlotterOptions: AdaptableBlotterOptions = {
+const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
   blotterId: 'basic demo',
@@ -34,7 +34,7 @@ function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
 }
 
 export default () => {
-  const onReady = (adaptableblotter: AdaptableBlotter) => {
+  const onReady = (adaptableblotter: Adaptable) => {
     // you can subscribe to events like this
     // adaptableblotter.api.eventApi
     //   .onSearchChanged()
@@ -45,7 +45,7 @@ export default () => {
     <AdaptableBlotterReact
       style={{ height: '100vh' }}
       gridOptions={gridOptions}
-      blotterOptions={adaptableBlotterOptions}
+      blotterOptions={adaptableOptions}
       onReady={onReady}
       onSearchChanged={(sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs)}
       onThemeChanged={(sender, arg: ThemeChangedEventArgs) => {

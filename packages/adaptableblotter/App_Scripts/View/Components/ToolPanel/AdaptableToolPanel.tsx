@@ -9,7 +9,7 @@ import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Text, Flex, Box } from 'rebass';
-import { IAdaptableBlotter } from '../../../types';
+import { IAdaptable } from '../../../types';
 import { Entitlement } from '../../../PredefinedConfig/EntitlementState';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
@@ -27,7 +27,7 @@ import { AdaptableToolPanels, AdaptableToolPanel } from '../../../PredefinedConf
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface AdaptableToolPanelProps {
-  Blotter: IAdaptableBlotter;
+  Blotter: IAdaptable;
   TeamSharingActivated?: boolean;
   VisibleToolsPanels: AdaptableToolPanels;
   AvailableToolPanels: AdaptableToolPanels;
@@ -72,7 +72,7 @@ class AdaptableToolPanelComponent extends React.Component<
         if (toolPanel) {
           let dashboardElememt = React.createElement(toolPanel, {
             AccessLevel: accessLevel,
-            BlotterApi: this.props.Blotter.api,
+            AdaptableApi: this.props.Blotter.api,
             Blotter: this.props.Blotter,
             Columns: this.props.Blotter.api.gridApi.getColumns(),
           });

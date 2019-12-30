@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { AdaptableBlotterOptions } from '../adaptableblotter/types';
+import { AdaptableOptions } from '../adaptableblotter/types';
 
 import { GridOptions } from 'ag-grid-community';
 import { createBlotter as blotterFactory } from './createBlotter';
-import { BlotterApi } from '../adaptableblotter/types';
+import { AdaptableApi } from '../adaptableblotter/types';
 
 function getRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max));
@@ -46,10 +46,10 @@ function getRandomInt(max: number): number {
   ],
 })
 export class AdaptableBlotterAngularAgGridComponent implements OnInit {
-  @Input() blotterOptions: AdaptableBlotterOptions;
+  @Input() blotterOptions: AdaptableOptions;
   @Input() gridOptions: GridOptions;
   @Input() agGridContainerClassName: string;
-  @Input() onBlotterReady?: (api: BlotterApi) => void;
+  @Input() onBlotterReady?: (api: AdaptableApi) => void;
 
   public blotterContainerId: string;
   public gridContainerId: string;

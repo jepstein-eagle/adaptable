@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
@@ -10,7 +10,7 @@ import { ICustomSortStrategy } from './Interface/ICustomSortStrategy';
 
 export class CustomSortStrategy extends AdaptableStrategyBase implements ICustomSortStrategy {
   private CustomSorts: CustomSort[];
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.CustomSortStrategyId, blotter);
   }
 
@@ -66,7 +66,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
 
   // make this an abstract function?
   public getComparerFunction(customSort: CustomSort): Function {
-    let theBlotter = this.blotter as IAdaptableBlotter;
+    let theBlotter = this.blotter as IAdaptable;
     return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
       let firstElementValueString = theBlotter.getDisplayValue(
         theBlotter.getPrimaryKeyValueFromRowNode(firstElement),

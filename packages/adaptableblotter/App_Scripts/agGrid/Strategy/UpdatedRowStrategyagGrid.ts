@@ -1,5 +1,5 @@
 import { UpdatedRowStrategy } from '../../Strategy/UpdatedRowStrategy';
-import { AdaptableBlotter } from '../AdaptableBlotter';
+import { Adaptable } from '../Adaptable';
 import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
@@ -7,13 +7,13 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 
 export class UpdatedRowStrategyagGrid extends UpdatedRowStrategy implements IUpdatedRowStrategy {
-  constructor(blotter: AdaptableBlotter) {
+  constructor(blotter: Adaptable) {
     super(blotter);
   }
 
   public initStyles(): void {
     let columns = this.blotter.api.gridApi.getColumns();
-    let theBlotter = this.blotter as AdaptableBlotter;
+    let theBlotter = this.blotter as Adaptable;
     let updatedRowState: UpdatedRowState = this.blotter.api.updatedRowApi.getUpdatedRowState();
     if (ArrayExtensions.IsNotNullOrEmpty(columns) && updatedRowState.EnableUpdatedRow) {
       for (let column of columns) {

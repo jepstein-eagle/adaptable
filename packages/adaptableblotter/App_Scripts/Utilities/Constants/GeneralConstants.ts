@@ -7,7 +7,7 @@ import {
   CellSummaryOptionalOperation,
 } from '../../PredefinedConfig/Common/Enums';
 import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common/ChartEnums';
-import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
+import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 import { LIGHT_YELLOW, BLACK, getHexForName } from '../../View/UIHelper';
 
 export const MISSING_COLUMN: string = ' [MISSING]';
@@ -103,7 +103,7 @@ export const SMART_EDIT_VALUE_STATE_PROPERTY: string = 'SmartEditValue';
 export const SMART_EDIT_MATH_OPERATION_STATE_PROPERTY: string = 'MathOperationz';
 
 // consts for Themes
-export const SYSTEM_THEMES: Array<AdaptableBlotterTheme> = [
+export const SYSTEM_THEMES: Array<AdaptableTheme> = [
   {
     Name: LIGHT_THEME,
     Description: 'Light Theme',

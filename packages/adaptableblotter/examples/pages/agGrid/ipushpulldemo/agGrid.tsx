@@ -8,12 +8,8 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  BlotterApi,
-} from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ipushpull from 'ipushpull-js';
 import { IPageService } from 'ipushpull-js/dist/Page/Page';
@@ -44,7 +40,7 @@ function InitAdaptableBlotter() {
   const tickingDataHelper = new TickingDataHelper();
   const useTickingData: boolean = true;
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'iPushPull Demo',
@@ -53,21 +49,21 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.userInterfaceOptions = {
+  adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
 
-  adaptableBlotterOptions.layoutOptions = {
+  adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
-  const blotterAPI: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 
   if (useTickingData) {
-    tickingDataHelper.useTickingDataagGrid(gridOptions, blotterAPI, 1000, tradeCount);
+    tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, tradeCount);
   }
 
-  blotterAPI.eventApi.on(
+  adaptableApi.eventApi.on(
     'LiveReportUpdated',
     (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
       let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;

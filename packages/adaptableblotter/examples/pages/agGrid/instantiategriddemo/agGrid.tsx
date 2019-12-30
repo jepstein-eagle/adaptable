@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/index.scss';
 
 import { GridOptions, Grid } from 'ag-grid-community';
-import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 function InitAdaptableBlotter() {
@@ -18,11 +18,11 @@ function InitAdaptableBlotter() {
   gridcontainer.innerHTML = '';
   const grid = new Grid(gridcontainer, gridOptions);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'instantiate demo'
   );
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 export default () => {

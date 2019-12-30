@@ -1,5 +1,5 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotter } from '../../App_Scripts/types';
+import { IAdaptable } from '../../App_Scripts/types';
 import LoggingHelper from '../../adaptableblotter/App_Scripts/Utilities/Helpers/LoggingHelper';
 
 interface ITrade {
@@ -1126,24 +1126,24 @@ export class ExamplesHelper {
     return schema;
   }
 
-  public createAdaptableBlotterOptionsTrade(gridOptions: GridOptions, blotterId: string) {
-    const adaptableBlotterOptions = {
+  public createAdaptableOptionsTrade(gridOptions: GridOptions, blotterId: string) {
+    const adaptableOptions = {
       vendorGrid: gridOptions,
       primaryKey: 'tradeId',
       userName: 'demo user',
       blotterId: blotterId,
     };
-    return adaptableBlotterOptions;
+    return adaptableOptions;
   }
 
-  public createAdaptableBlotterOptionsFtse(gridOptions: GridOptions, blotterId: string) {
-    const adaptableBlotterOptions = {
+  public createAdaptableOptionsFtse(gridOptions: GridOptions, blotterId: string) {
+    const adaptableOptions = {
       vendorGrid: gridOptions,
       primaryKey: 'date',
       userName: 'demo user',
       blotterId: blotterId,
     };
-    return adaptableBlotterOptions;
+    return adaptableOptions;
   }
 
   private dateParseragGrid = (params: any) => {

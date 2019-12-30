@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
 import { PercentBarState } from '../PredefinedConfig/PercentBarState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -12,7 +12,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
   protected PercentBarState: PercentBarState;
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.PercentBarStrategyId, blotter);
   }
 

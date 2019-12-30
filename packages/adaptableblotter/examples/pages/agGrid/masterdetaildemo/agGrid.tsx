@@ -10,8 +10,8 @@ import '../../../../App_Scripts/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*
@@ -22,12 +22,12 @@ function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getMasterGridOptionsFTSE(200);
   // gridOptions.rowSelection = 'multiple';
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsFtse(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsFtse(
     gridOptions,
     'master detail demo'
   );
 
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 export default () => {

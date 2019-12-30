@@ -68,7 +68,7 @@ import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/T
  * **Custom Toolbar Rendering Example** (Using React)
  *
  *  ```ts
- * blotterApi.eventApi.on('ToolbarVisibilityChanged',
+ * adaptableApi.eventApi.on('ToolbarVisibilityChanged',
  *  (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
  * if (
  *   toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'myToolbar' &&
@@ -93,7 +93,7 @@ import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/T
  *
  *  ReactDOM.render(
  *    toolbarContents,
- *    blotterApi.dashboardApi.getCustomToolbarContentsDiv('myToolbar')
+ *    adaptableApi.dashboardApi.getCustomToolbarContentsDiv('myToolbar')
  *    );
  *  }
  * });
@@ -178,7 +178,7 @@ import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/T
  *
  *  ......
  *
- *  blotterApi.eventApi.on('ToolbarButtonClicked', tolbarButtonClickedEventArgs)  => {
+ *  adaptableApi.eventApi.on('ToolbarButtonClicked', tolbarButtonClickedEventArgs)  => {
  *      // respond as appropriate - the button argument is the ToolbarButton we provided in the state
  *  });
  * ```

@@ -1,5 +1,5 @@
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
@@ -17,7 +17,7 @@ export interface AdaptableWizardStep {
 export interface AdaptableWizardStepProps<T> {
   Data?: T;
   UpdateGoBackState?(): void;
-  Blotter?: IAdaptableBlotter;
+  Blotter?: IAdaptable;
   Columns?: AdaptableColumn[];
 }
 
@@ -37,7 +37,7 @@ export interface AdaptableObjectExpressionAdaptableWizardProps<View>
   SystemFilters: string[];
   NamedFilters: NamedFilter[];
   ColumnCategories: ColumnCategory[];
-  Blotter: IAdaptableBlotter;
+  Blotter: IAdaptable;
 }
 
 // props for a basic wizard

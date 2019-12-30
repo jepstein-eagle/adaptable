@@ -38,9 +38,9 @@ export interface FilterOptions {
   useAdaptableBlotterFilterForm?: boolean;
 
   /**
-   * Only applicable when the AdaptableBlotter filter form is being used.
+   * Only applicable when the Adaptable filter form is being used.
    *
-   * By default, the filter form will be styled to match the AdaptableBlotter styles. Setting this to `true` will style it to match the styling of the current vendor grid.
+   * By default, the filter form will be styled to match the Adaptable styles. Setting this to `true` will style it to match the styling of the current vendor grid.
    *
    * **Default Value: false**
    */

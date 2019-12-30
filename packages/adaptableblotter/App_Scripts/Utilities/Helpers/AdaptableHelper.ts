@@ -1,11 +1,10 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
-import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
@@ -13,10 +12,9 @@ import { AdaptableBlotterEventData, BlotterEventArgs } from '../../Api/Events/Bl
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { AdaptableOptions } from '../../BlotterOptions/AdaptableOptions';
 
-export function assignBlotterOptions(
-  blotterOptions: AdaptableBlotterOptions
-): AdaptableBlotterOptions {
+export function assignBlotterOptions(blotterOptions: AdaptableOptions): AdaptableOptions {
   const returnBlotterOptions = Object.assign({}, DefaultAdaptableOptions, blotterOptions);
   returnBlotterOptions.auditOptions = Object.assign(
     {},
@@ -91,7 +89,7 @@ export function assignBlotterOptions(
   return returnBlotterOptions;
 }
 
-export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: AdaptableColumn[]): boolean {
+export function isValidPrimaryKey(blotter: IAdaptable, columns: AdaptableColumn[]): boolean {
   const pkColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
     blotter.blotterOptions.primaryKey,
     columns
@@ -111,7 +109,7 @@ export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: Adaptable
   return true;
 }
 
-export function isConfigServerEnabled(blotterOptions: AdaptableBlotterOptions): boolean {
+export function isConfigServerEnabled(blotterOptions: AdaptableOptions): boolean {
   return (
     blotterOptions.configServerOptions != null &&
     blotterOptions.configServerOptions.enableConfigServer != null &&
@@ -132,7 +130,7 @@ export function BlotterObjectExistsInState(
 
 // perform any checks that are necessary here
 // for now just blotterId
-export function CheckBlotterOptions(blotterOptions: AdaptableBlotterOptions): void {
+export function CheckBlotterOptions(blotterOptions: AdaptableOptions): void {
   if (blotterOptions.blotterId) {
     if (blotterOptions.blotterId.includes('.')) {
       LoggingHelper.LogWarning(

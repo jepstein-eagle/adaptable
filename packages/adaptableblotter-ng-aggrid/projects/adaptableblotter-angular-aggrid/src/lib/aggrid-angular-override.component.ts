@@ -8,8 +8,8 @@ import {
   AngularFrameworkComponentWrapper,
   AgGridColumn,
 } from 'ag-grid-angular';
-import AdaptableBlotter from '../adaptableblotter/App_Scripts/agGrid';
-import { BlotterApi } from '../adaptableblotter/types';
+import Adaptable from '../adaptableblotter/App_Scripts/agGrid';
+import { AdaptableApi } from '../adaptableblotter/types';
 
 @Component({
   selector: 'ag-grid-override',
@@ -19,9 +19,9 @@ import { BlotterApi } from '../adaptableblotter/types';
   // encapsulation: ViewEncapsulation.None
 })
 export class AgGridOverrideComponent extends AgGridAngular {
-  @Input() blotterFactory: (...args: any) => AdaptableBlotter;
+  @Input() blotterFactory: (...args: any) => Adaptable;
   @Input() gridContainerId: string;
-  @Input() onBlotterReady?: (api: BlotterApi) => void;
+  @Input() onBlotterReady?: (api: AdaptableApi) => void;
 
   ngAfterViewInit(): void {
     (this as any).checkForDeprecatedEvents();

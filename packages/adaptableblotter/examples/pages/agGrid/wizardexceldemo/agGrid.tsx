@@ -10,21 +10,21 @@ import './index.css';
 
 import XLSX from 'xlsx';
 
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
-import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid/AdaptableBlotter';
+import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid/Adaptable';
 
 /*
 Basic demo of wizard that allow d&d of a json with an array contents
 */
 
 function InitAdaptableBlotter() {
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'dtmKey', // will be added later ...
     //blotterId: 'Position Monitor',
     userName: 'No Data User',
     predefinedConfig: demoConfig,
   };
-  new AdaptableNoCodeWizard(adaptableBlotterOptions, {
+  new AdaptableNoCodeWizard(adaptableOptions, {
     readFile: (file: File): Promise<any> => {
       /* Boilerplate to set up FileReader */
       const reader = new FileReader();

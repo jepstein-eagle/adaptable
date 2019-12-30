@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { DataType, MessageType } from '../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IBulkUpdateStrategy, BulkUpdateValidationResult } from './Interface/IBulkUpdateStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
@@ -21,7 +21,7 @@ import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.BulkUpdateStrategyId, blotter);
   }
 

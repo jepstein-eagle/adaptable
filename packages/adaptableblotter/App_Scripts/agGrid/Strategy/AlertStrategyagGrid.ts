@@ -1,5 +1,5 @@
 import { AlertStrategy } from '../../Strategy/AlertStrategy';
-import { AdaptableBlotter } from '../AdaptableBlotter';
+import { Adaptable } from '../Adaptable';
 import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -8,13 +8,13 @@ import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy {
-  constructor(blotter: AdaptableBlotter) {
+  constructor(blotter: Adaptable) {
     super(blotter);
   }
 
   public initStyles(): void {
     let allColumns = this.blotter.api.gridApi.getColumns();
-    let theBlotter = this.blotter as AdaptableBlotter;
+    let theBlotter = this.blotter as Adaptable;
 
     let alertDefsWithHighlightCells: AlertDefinition[] = this.blotter.api.alertApi
       .getAlertDefinitions()

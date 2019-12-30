@@ -56,8 +56,8 @@ import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
 import { SystemStatusStrategy } from '../Strategy/SystemStatusStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
-import { AdaptableBlotter } from './AdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { Adaptable } from './Adaptable';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
@@ -79,14 +79,14 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
 
 /**
- * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
+ * Adaptable ag-Grid implementation is getting really big and unwieldy
  * So lets put some of the more obvious 'Helper' functions here
  * This is a bit crap - it should take a GridOptions object...
  */
 
 // tslint:disable-next-line: class-name
 export class agGridHelper {
-  constructor(private blotter: IAdaptableBlotter, private gridOptions: GridOptions) {
+  constructor(private blotter: IAdaptable, private gridOptions: GridOptions) {
     this.blotter = blotter;
     this.gridOptions = gridOptions;
   }
@@ -101,7 +101,7 @@ export class agGridHelper {
 
   public setUpStrategies(): Map<AdaptableFunctionName, IStrategy> {
     const strategies = new Map<AdaptableFunctionName, IStrategy>();
-    const blotter = this.blotter as AdaptableBlotter;
+    const blotter = this.blotter as Adaptable;
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(blotter));
     strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(blotter));
     strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(blotter));

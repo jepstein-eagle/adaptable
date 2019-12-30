@@ -10,7 +10,7 @@ import { AdaptablePopup } from './Components/Popups/AdaptablePopup';
 import { ChartState } from '../PredefinedConfig/ChartState';
 import { PopupState } from '../PredefinedConfig/PopupState';
 import { SystemState } from '../PredefinedConfig/SystemState';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptablePopupPrompt } from './Components/Popups/AdaptablePopupPrompt';
 import { Dashboard } from './Dashboard/Dashboard';
 import { AdaptablePopupConfirmation } from './Components/Popups/AdaptablePopupConfirmation';
@@ -26,7 +26,7 @@ interface AdaptableViewProps extends React.ClassAttributes<AdaptableView> {
   PopupState: PopupState;
   SystemState: SystemState;
   ChartState: ChartState;
-  Blotter: IAdaptableBlotter;
+  Blotter: IAdaptable;
   showPopup: (
     ComponentStrategy: AdaptableFunctionName,
     ComponentName: string,
@@ -56,7 +56,7 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
                 Or in a div otherwise (if a div then the Chart screen will work out WHICH div...) */}
         {this.props.SystemState.ChartVisibility != ChartVisibility.Hidden && (
           <AdaptableChart
-            AdaptableBlotter={this.props.Blotter}
+            Adaptable={this.props.Blotter}
             onClose={this.props.onCloseChartPopup}
             showChart={this.props.SystemState.ChartVisibility == ChartVisibility.Maximised}
             showModal={this.props.Blotter.blotterOptions.chartOptions!.showModal!}
@@ -65,13 +65,13 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
 
         {/*  These are all popups that we show at different times */}
         <AdaptableGridInfo
-          AdaptableBlotter={this.props.Blotter}
+          Adaptable={this.props.Blotter}
           onClose={this.props.onCloseGridInfoPopup}
           showAbout={this.props.PopupState.GridInfoPopup.ShowGridInfoPopup}
         />
 
         <AdaptableLoadingScreen
-          AdaptableBlotter={this.props.Blotter}
+          Adaptable={this.props.Blotter}
           onClose={this.props.onCloseLoadingPopup}
           showLoadingScreen={this.props.PopupState.LoadingPopup.ShowLoadingPopup}
         />
@@ -82,7 +82,7 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
           onClose={this.props.onCloseAlertPopup}
           ShowPopup={this.props.PopupState.AlertPopup.ShowAlertPopup}
           MessageType={this.props.PopupState.AlertPopup.MessageType}
-          AdaptableBlotter={this.props.Blotter}
+          Adaptable={this.props.Blotter}
         />
 
         <AdaptablePopupPrompt
@@ -91,7 +91,7 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
           onClose={this.props.onClosePromptPopup}
           onConfirm={this.props.onConfirmPromptPopup}
           ShowPopup={this.props.PopupState.PromptPopup.ShowPromptPopup}
-          AdaptableBlotter={this.props.Blotter}
+          Adaptable={this.props.Blotter}
         />
 
         <AdaptablePopupConfirmation
@@ -104,7 +104,7 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
           onConfirm={this.props.onConfirmConfirmationPopup}
           ShowInputBox={this.props.PopupState.ConfirmationPopup.ShowInputBox}
           MessageType={this.props.PopupState.ConfirmationPopup.MessageType}
-          AdaptableBlotter={this.props.Blotter}
+          Adaptable={this.props.Blotter}
         />
 
         {/*  The main model window where function screens are 'hosted' */}
@@ -128,7 +128,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
     PopupState: state.Popup,
     SystemState: state.System,
     ChartState: state.Chart,
-    AdaptableBlotter: ownProps.Blotter,
+    Adaptable: ownProps.Blotter,
   };
 }
 
@@ -154,10 +154,10 @@ let AdaptableBlotterWrapper: ConnectedComponent<typeof AdaptableView, any> = con
   mapDispatchToProps
 )(AdaptableView);
 
-export const AdaptableApp = ({ AdaptableBlotter }: { AdaptableBlotter: IAdaptableBlotter }) => (
-  <Provider store={AdaptableBlotter.AdaptableStore.TheStore}>
+export const AdaptableApp = ({ Adaptable }: { Adaptable: IAdaptable }) => (
+  <Provider store={Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
-      <AdaptableBlotterWrapper Blotter={AdaptableBlotter} />
+      <AdaptableBlotterWrapper Blotter={Adaptable} />
     </ThemeProvider>
   </Provider>
 );

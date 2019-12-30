@@ -24,7 +24,7 @@ export interface ConfigServerOptions {
    *
    * Only used if enableConfigServer is true.
    *
-   * AdaptableBlotter will send a POST request to this URL to persist the state with the follower parameters:
+   * Adaptable will send a POST request to this URL to persist the state with the follower parameters:
    *
    * Headers: { ab_username: string, ab_id: string }
    *
@@ -32,7 +32,7 @@ export interface ConfigServerOptions {
    *
    * Each ab_username & ab_id combination is unique, so your server should persist the state and use that combination as a key.
    *
-   * AdaptableBlotter will send a GET request to this URL to get the persisted state with the follower parameters:
+   * Adaptable will send a GET request to this URL to get the persisted state with the follower parameters:
    *
    * Headers: { ab_username: string, ab_id: string }
    *

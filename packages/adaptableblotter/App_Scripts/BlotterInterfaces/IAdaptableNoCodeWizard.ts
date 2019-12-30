@@ -1,14 +1,14 @@
 import { GridOptions } from 'ag-grid-community';
 
-import { AdaptableBlotterOptions, IAdaptableBlotter } from '../types';
+import { AdaptableOptions, IAdaptable } from '../types';
 
 export type IAdaptableNoCodeWizardInitFn = ({
   gridOptions,
-  adaptableBlotterOptions,
+  adaptableOptions,
 }: {
   gridOptions: GridOptions;
-  adaptableBlotterOptions: AdaptableBlotterOptions;
-}) => IAdaptableBlotter | void;
+  adaptableOptions: AdaptableOptions;
+}) => IAdaptable | void;
 
 export interface IAdaptableNoCodeWizardOptions {
   onInit?: IAdaptableNoCodeWizardInitFn;
@@ -30,15 +30,15 @@ export interface IAdaptableNoCodeWizardOptions {
 }
 
 /**
- * When you want to configure an Adaptable Blotter via json file D&D, use this instead of the AdaptableBlotter constructor
+ * When you want to configure an Adaptable Blotter via json file D&D, use this instead of the Adaptable constructor
  *
  * // So instead of doing
  *
- * const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
+ * const adaptableblotter = new Adaptable(adaptableOptions);
  *
  * // you have to do
  *
- * const adaptableBlotterOptions: AdaptableBlotterOptions = {
+ * const adaptableOptions: AdaptableOptions = {
  *
  *  userName: 'Demo User',
  *  predefinedConfig: demoConfig,
@@ -47,7 +47,7 @@ export interface IAdaptableNoCodeWizardOptions {
  *  // the user configured the columns
  * };
  *
- * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableBlotterOptions);
+ * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableOptions);
  *
  * // in the most simple case.
  *
@@ -56,14 +56,14 @@ export interface IAdaptableNoCodeWizardOptions {
  * the developer to override some configuration in case this is needed. This is how it looks like:
  *
  *
- * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableBlotterOptions, {
- *    onInit: ({ adaptableBlotterOptions, gridOptions }) => {
+ * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableOptions, {
+ *    onInit: ({ adaptableOptions, gridOptions }) => {
  *      // here you can either change some of the ab options or the gridOptions
  *      // and don't return anything
  *
- *      // OR instantiate the AdaptableBlotter yourself with
+ *      // OR instantiate the Adaptable yourself with
  *
- *      const adaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
+ *      const adaptableBlotter = new Adaptable(adaptableOptions);
  *      // in case you need a reference to it for later use (api stuff...)
  *      // and return the blotter instance
  *
@@ -73,7 +73,7 @@ export interface IAdaptableNoCodeWizardOptions {
  *
  * you can also have a `prepareData` config
  *
- * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableBlotterOptions, {
+ * const AdaptableNoCodeWizard = new AdaptableNoCodeWizard(adaptableOptions, {
  *   prepareData: (dataFromFile) => {
  *     return {
  *       columns: ['name','value']

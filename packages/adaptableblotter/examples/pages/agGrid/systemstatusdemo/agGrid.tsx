@@ -9,12 +9,8 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  BlotterApi,
-} from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 function InitAdaptableBlotter() {
@@ -22,7 +18,7 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'System Status Demo',
@@ -31,30 +27,30 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  const blotterApi: BlotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 
-  blotterApi.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
+  adaptableApi.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     switch (toolbarButtonClickedEventArgs.data[0].id.toolbarButton.Name) {
       case 'info':
-        blotterApi.systemStatusApi.setInfoSystemStatus('No issues');
+        adaptableApi.systemStatusApi.setInfoSystemStatus('No issues');
         break;
       case 'success':
-        blotterApi.systemStatusApi.setSuccessSystemStatus('All working fine');
+        adaptableApi.systemStatusApi.setSuccessSystemStatus('All working fine');
         break;
       case 'warning':
-        blotterApi.systemStatusApi.setWarningSystemStatus(
+        adaptableApi.systemStatusApi.setWarningSystemStatus(
           'Problems with server',
           'It should be back up again in 1 hour'
         );
         break;
       case 'error':
-        blotterApi.systemStatusApi.setErrorSystemStatus(
+        adaptableApi.systemStatusApi.setErrorSystemStatus(
           'The server is down.  Yikes!',
           'Please make sure you dont make any changes.'
         );
         break;
       case 'clear':
-        blotterApi.systemStatusApi.clearSystemStatus();
+        adaptableApi.systemStatusApi.clearSystemStatus();
         break;
     }
   });

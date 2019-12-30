@@ -1,21 +1,18 @@
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
 import * as React from 'react';
 
 import { UIHelper } from '../../UIHelper';
 import Dialog from '../../../components/Dialog';
 import { Box } from 'rebass';
 
-export interface IAdaptableBlotterLoadingScreenProps
+export interface IAdaptableLoadingScreenProps
   extends React.ClassAttributes<AdaptableLoadingScreen> {
   showLoadingScreen: boolean;
   onClose?: () => {};
-  AdaptableBlotter: IAdaptableBlotter;
+  Adaptable: IAdaptable;
 }
 
-export class AdaptableLoadingScreen extends React.Component<
-  IAdaptableBlotterLoadingScreenProps,
-  {}
-> {
+export class AdaptableLoadingScreen extends React.Component<IAdaptableLoadingScreenProps, {}> {
   render() {
     return (
       <Dialog

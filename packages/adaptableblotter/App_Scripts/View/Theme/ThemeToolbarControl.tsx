@@ -12,7 +12,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
-import { AdaptableBlotterTheme } from '../../PredefinedConfig/ThemeState';
+import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 import DropdownButton from '../../components/DropdownButton';
 import join from '../../components/utils/join';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
@@ -20,16 +20,16 @@ import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 interface ThemeToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ThemeToolbarControlComponent> {
   onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction;
-  SystemThemes: AdaptableBlotterTheme[];
-  UserThemes: AdaptableBlotterTheme[];
+  SystemThemes: AdaptableTheme[];
+  UserThemes: AdaptableTheme[];
   CurrentTheme: string;
 }
 
 class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlComponentProps, {}> {
   render(): any {
-    let allThemes: AdaptableBlotterTheme[] = [...this.props.SystemThemes, ...this.props.UserThemes];
+    let allThemes: AdaptableTheme[] = [...this.props.SystemThemes, ...this.props.UserThemes];
 
-    let themes: any[] = allThemes.map((theme: AdaptableBlotterTheme, index) => {
+    let themes: any[] = allThemes.map((theme: AdaptableTheme, index) => {
       if (typeof theme === 'string') {
         // protection against old state, which could be string
         theme = {
@@ -82,7 +82,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
     );
   }
 
-  private onSelectTheme(theme: AdaptableBlotterTheme) {
+  private onSelectTheme(theme: AdaptableTheme) {
     this.props.onSelectTheme(theme.Name);
   }
 }

@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IPieChartStrategy } from './Interface/IPieChartStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
@@ -10,7 +10,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.PieChartStrategyId, blotter);
   }
 

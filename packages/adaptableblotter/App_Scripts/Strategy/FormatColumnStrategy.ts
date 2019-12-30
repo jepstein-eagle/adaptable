@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -10,7 +10,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.FormatColumnStrategyId, blotter);
   }
 

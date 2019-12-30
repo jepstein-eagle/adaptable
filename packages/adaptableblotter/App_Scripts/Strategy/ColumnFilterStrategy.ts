@@ -3,13 +3,13 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ColumnFilterStrategyId, blotter);
   }
 

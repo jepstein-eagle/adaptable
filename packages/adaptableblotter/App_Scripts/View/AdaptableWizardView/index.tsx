@@ -4,7 +4,6 @@ import { ThemeProvider } from 'styled-components';
 import { useReducer, Reducer, useState, useEffect, ReactNode } from 'react';
 import { GridOptions } from 'ag-grid-community';
 import theme from '../../theme';
-import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 
 import join from '../../components/utils/join';
 
@@ -13,10 +12,11 @@ import FileDroppable from '../../components/FileDroppable';
 import { prepareDataSource, WizardDataSourceInfo, prepareGridOptions } from './helper';
 import ConfigurationDialog from './AdaptableBlotterConfigurationDialog';
 import { Flex } from 'rebass';
+import { AdaptableOptions } from '../../BlotterOptions/AdaptableOptions';
 
 interface AdaptableWizardViewProps {
-  adaptableBlotterOptions: AdaptableBlotterOptions;
-  onInit: (adaptableBlotterOptions: AdaptableBlotterOptions) => any;
+  adaptableOptions: AdaptableOptions;
+  onInit: (adaptableOptions: AdaptableOptions) => any;
   fileContentsToJSON?: (str: string) => Promise<any> | any;
   readFile?: (file: File) => Promise<any>;
   fileAccept?: string;
@@ -43,7 +43,7 @@ const AdaptableWizardView = (props: AdaptableWizardViewProps) => (
 interface WizardState {
   dropped: boolean;
   error: any;
-  adaptableBlotterOptions: AdaptableBlotterOptions;
+  adaptableOptions: AdaptableOptions;
 }
 const initialState: Partial<WizardState> = {
   dropped: false,
@@ -53,7 +53,7 @@ const reducer: Reducer<WizardState, any> = (state: WizardState, action: any) => 
   if (action.type === 'DROPPED') {
     return {
       ...state,
-      adaptableBlotterOptions: action.payload,
+      adaptableOptions: action.payload,
       dropped: true,
       error: null,
     };
@@ -108,7 +108,7 @@ const validDataSource = (dataSourceInfo: any) => {
 const Wizard = (props: AdaptableWizardViewProps) => {
   const [state, dispatch] = useReducer<Reducer<WizardState, any>>(reducer, {
     ...initialState,
-    adaptableBlotterOptions: props.adaptableBlotterOptions,
+    adaptableOptions: props.adaptableOptions,
   } as WizardState);
 
   const [droppableKey, setDroppableKey] = useState(Date.now());
@@ -129,22 +129,21 @@ const Wizard = (props: AdaptableWizardViewProps) => {
     }
     const gridOptions: GridOptions = prepareGridOptions(dataSourceInfo);
 
-    const adaptableBlotterOptions = { ...props.adaptableBlotterOptions };
+    const adaptableOptions = { ...props.adaptableOptions };
 
-    adaptableBlotterOptions.blotterId =
-      adaptableBlotterOptions.blotterId || (file ? file.name : '');
+    adaptableOptions.blotterId = adaptableOptions.blotterId || (file ? file.name : '');
 
-    adaptableBlotterOptions.vendorGrid = gridOptions;
+    adaptableOptions.vendorGrid = gridOptions;
     if (dataSourceInfo.primaryKey) {
-      adaptableBlotterOptions.primaryKey = dataSourceInfo.primaryKey;
+      adaptableOptions.primaryKey = dataSourceInfo.primaryKey;
     }
 
     if (props.fetchData) {
-      props.onInit(adaptableBlotterOptions);
+      props.onInit(adaptableOptions);
     } else {
       dispatch({
         type: 'DROPPED',
-        payload: adaptableBlotterOptions,
+        payload: adaptableOptions,
       });
     }
   };
@@ -154,7 +153,7 @@ const Wizard = (props: AdaptableWizardViewProps) => {
   if (state.dropped) {
     wizard = (
       <ConfigurationDialog
-        adaptableBlotterOptions={state.adaptableBlotterOptions}
+        adaptableOptions={state.adaptableOptions}
         onCancel={() => {
           // change the file droppable component key
           // so it's remounted and it's in the initial state
@@ -163,8 +162,8 @@ const Wizard = (props: AdaptableWizardViewProps) => {
             type: 'CANCEL',
           });
         }}
-        onFinish={adaptableBlotterOptions => {
-          props.onInit(adaptableBlotterOptions);
+        onFinish={adaptableOptions => {
+          props.onInit(adaptableOptions);
         }}
       />
     );

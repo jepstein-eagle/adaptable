@@ -9,16 +9,12 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  BlotterApi,
-} from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -29,7 +25,7 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'Updated Rows Demo',
@@ -38,16 +34,16 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.filterOptions = {
+  adaptableOptions.filterOptions = {
     autoApplyFilter: false,
   };
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableApi = Adaptable.init(adaptableOptions);
 
-  tickingDataHelper.useTickingDataagGrid(gridOptions, blotterApi, 3000, tradeCount);
+  tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 3000, tradeCount);
 
-  blotterApi.eventApi.on('ToolbarButtonClicked', () => {
-    blotterApi.updatedRowApi.deleteAllUpdatedRowInfo();
+  adaptableApi.eventApi.on('ToolbarButtonClicked', () => {
+    adaptableApi.updatedRowApi.deleteAllUpdatedRowInfo();
   });
 }
 

@@ -1,7 +1,7 @@
 import * as GeneralConstants from '../Constants/GeneralConstants';
-import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
+import { AdaptableOptions } from '../../BlotterOptions/AdaptableOptions';
 
-export const DefaultAdaptableOptions: AdaptableBlotterOptions = {
+export const DefaultAdaptableOptions: AdaptableOptions = {
   vendorGrid: null,
   primaryKey: '',
   userName: GeneralConstants.USER_NAME,

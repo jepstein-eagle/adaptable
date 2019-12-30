@@ -54,7 +54,7 @@ import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
 import * as PartnerRedux from '../ActionsReducers/PartnerRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
 import {
   IBulkUpdateStrategy,
@@ -286,7 +286,7 @@ export class AdaptableStore implements IAdaptableStore {
     return this.emitter.emit(eventName, data);
   };
 
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     let storageEngine: IStorageEngine;
 
     this.emitter = new Emitter();
@@ -412,7 +412,7 @@ export class AdaptableStore implements IAdaptableStore {
 // this function checks for any differences in the state and sends it to AUDIT LOGGER (for use in Audit Log)
 // we now allow users to differentiate between user and internal state so we check for both
 // NOTE: the Audit Logger is also responsible for firing AuditEventApi changes if that has been set
-var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
+var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
@@ -1690,7 +1690,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
 // there are relatively few - primarily relating to search and edit functions
 // note it does not capture when something happens automatically as the result of a function (e.g. if a conditional style gets applied because a value has changed)
 // e.g. this should say when the current Advanced search has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
-var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
+var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
@@ -1947,7 +1947,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 
 // this is the main function for dealing with Redux Actions which require additional functionality to be triggered.
 // Please document each use case where we have to use the Store rather than a strategy or a popup screen
-var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
+var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {

@@ -1,11 +1,11 @@
 import XLSX from 'xlsx';
-import AdaptableBlotter, {
+import Adaptable, {
   AdaptableNoCodeWizard as ABWizard,
 } from '@adaptabletools/adaptableblotter/agGrid';
 
 import {
-  AdaptableBlotterOptions,
-  BlotterApi,
+  AdaptableOptions,
+  AdaptableApi,
   IAdaptableNoCodeWizardOptions,
 } from '@adaptabletools/adaptableblotter/types';
 
@@ -57,15 +57,15 @@ export const readExcelFile = (file: File): Promise<any> => {
 
 export default class AdaptableNoCodeWizard {
   public static init(
-    adaptableBlotterOptions: AdaptableBlotterOptions,
+    adaptableOptions: AdaptableOptions,
     extraOptions?: IAdaptableNoCodeWizardOptions
-  ): Promise<BlotterApi> {
-    let adaptableBlotter;
+  ): Promise<AdaptableApi> {
+    let adaptable;
 
     let isJSON: boolean;
 
     return new Promise((resolve, reject) => {
-      const wizard = new ABWizard(adaptableBlotterOptions, {
+      const wizard = new ABWizard(adaptableOptions, {
         defaultActionMessage:
           'Click here to select an Excel or JSON file to load — or drag it here',
 
@@ -80,21 +80,21 @@ export default class AdaptableNoCodeWizard {
           return readExcelFile(file);
         },
         ...extraOptions,
-        onInit: ({ adaptableBlotterOptions, gridOptions }) => {
+        onInit: ({ adaptableOptions, gridOptions }) => {
           let onInitResult;
           if (extraOptions && typeof extraOptions.onInit === 'function') {
-            onInitResult = extraOptions.onInit({ adaptableBlotterOptions, gridOptions });
+            onInitResult = extraOptions.onInit({ adaptableOptions, gridOptions });
           }
 
-          if (!(onInitResult instanceof AdaptableBlotter)) {
-            adaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
+          if (!(onInitResult instanceof Adaptable)) {
+            adaptable = new Adaptable(adaptableOptions);
           } else {
-            adaptableBlotter = onInitResult;
+            adaptable = onInitResult;
           }
 
-          resolve(adaptableBlotter.api);
+          resolve(adaptable.api);
 
-          return adaptableBlotter;
+          return adaptable;
         },
       });
     });

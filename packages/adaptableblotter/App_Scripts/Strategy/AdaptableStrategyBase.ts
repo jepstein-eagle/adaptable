@@ -12,7 +12,7 @@ import {
   MenuItemDoClickFunction,
 } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
@@ -20,7 +20,7 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  * Each strategy is reponsible for managing state (through InitState())
  */
 export abstract class AdaptableStrategyBase implements IStrategy {
-  constructor(public Id: AdaptableFunctionName, protected blotter: IAdaptableBlotter) {
+  constructor(public Id: AdaptableFunctionName, protected blotter: IAdaptable) {
     this.Id = Id;
     this.blotter = blotter;
   }
@@ -151,7 +151,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
   canCreateColumnMenuItem(
     column: AdaptableColumn,
-    blotter: IAdaptableBlotter,
+    blotter: IAdaptable,
     functionType?:
       | 'sort'
       | 'editable'

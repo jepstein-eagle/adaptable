@@ -1,2 +1,2 @@
-# AdaptableBlotter no-code wizard
+# Adaptable no-code wizard
 

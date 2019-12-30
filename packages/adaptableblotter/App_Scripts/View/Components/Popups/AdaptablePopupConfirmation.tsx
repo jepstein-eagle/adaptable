@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { UIHelper } from '../../UIHelper';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { Flex, Box, Text } from 'rebass';
@@ -24,7 +24,7 @@ export interface AdaptableBlotterPopupConfirmationProps
   CancelButtonText: string;
   ShowInputBox: boolean;
   MessageType: MessageType;
-  AdaptableBlotter: IAdaptableBlotter;
+  Adaptable: IAdaptable;
 }
 
 export interface AdaptableBlotterPopupConfirmationState {

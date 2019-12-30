@@ -44,7 +44,7 @@ export interface ThemeState extends RunTimeState {
    *
    * If you have  [*useDefaultVendorGridThemes*]( https://api.adaptableblotter.com/interfaces/_blotteroptions_generaloptions_.generaloptions.html#usedefaultvendorgridthemes) set to true in **generalOptions** section of *Blotter Options* then setting (or changing to) either of the shipped System Themes will set the theme of the underlying vendor grid too.
    */
-  SystemThemes?: (AdaptableBlotterTheme | string)[];
+  SystemThemes?: (AdaptableTheme | string)[];
 
   /**
    * User / Custom themes provided by the User.
@@ -59,13 +59,13 @@ export interface ThemeState extends RunTimeState {
    *
    * To learn how to create a Custom Theme please refer to the [Online Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360025111951-Themes).
    */
-  UserThemes?: AdaptableBlotterTheme[];
+  UserThemes?: AdaptableTheme[];
 }
 
 /**
- * The AdaptableBlotterTheme object used in the Theme function - required for when creating User (Custom) Themes.
+ * The AdaptableTheme object used in the Theme function - required for when creating User (Custom) Themes.
  */
-export interface AdaptableBlotterTheme extends AdaptableObject {
+export interface AdaptableTheme extends AdaptableObject {
   /**
    * The name of the css file which will be applied
    */
@@ -77,7 +77,7 @@ export interface AdaptableBlotterTheme extends AdaptableObject {
   Description: string;
 
   /**
-   * The css className to be applied on the vendor grid - this can be used to style the vendor grid with a theme that matches the current theme of the AdaptableBlotter
+   * The css className to be applied on the vendor grid - this can be used to style the vendor grid with a theme that matches the current theme of the Adaptable
    */
   VendorGridClassName?: string;
 }

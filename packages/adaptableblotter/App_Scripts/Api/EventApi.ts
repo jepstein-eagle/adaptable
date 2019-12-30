@@ -58,7 +58,7 @@ export interface EventApi {
   /**
    * Event fired whenever **search criteria in the Adaptable Blotter changes**
    *
-   * @param eventName SearchChanged - use as: blotterApieventApi.on('SearchChanged', (args: SearchChangedEventArgs) => { .....[do stuff]...})
+   * @param eventName SearchChanged - use as: api.eventApi.on('SearchChanged', (args: SearchChangedEventArgs) => { .....[do stuff]...})
    *
    * @param callback SearchChangedEventArgs which includes full details of what triggered the change and the current state of all Search and Filter related functions.
    */
@@ -70,7 +70,7 @@ export interface EventApi {
   /**
    * Event fired whenever the **Selection in the Adaptable Blotter changes**.
    *
-   * @param eventName SelectionChanged - use as: blotterApi.eventApi.on('SelectionChanged', (args: SelectionChangedEventArgs) => { .....[do stuff]...})
+   * @param eventName SelectionChanged - use as: adaptableApi.eventApi.on('SelectionChanged', (args: SelectionChangedEventArgs) => { .....[do stuff]...})
    *
    * @param callback SelectionChangedEventArgs which contains information of any cells or rows that are selected.
    */
@@ -82,7 +82,7 @@ export interface EventApi {
   /**
    * Event fired whenever the **selected theme of the Adaptable Blotter is changed**.
    *
-   * @param eventName ThemeChanged- use as: blotterApi.eventApi.on('ThemeChanged', (args: ThemeChangedEventArgs) => { .....[do stuff]...})
+   * @param eventName ThemeChanged- use as: adaptableApi.eventApi.on('ThemeChanged', (args: ThemeChangedEventArgs) => { .....[do stuff]...})
    *
    * @param callback ThemeChangedEventArgs which just contains the name of the current Theme
    */
@@ -94,7 +94,7 @@ export interface EventApi {
   /**
    * Event fired whenever an **Alert is triggered**.
    *
-   * @param eventName AlertFired - use as: blotterApi.eventApi.on('AlertFired', (args: AlertFiredEventArgs) => { .....[do stuff]...})
+   * @param eventName AlertFired - use as: adaptableApi.eventApi.on('AlertFired', (args: AlertFiredEventArgs) => { .....[do stuff]...})
    *
    * @param callback AlertFiredEventArgs which wrap the Alert that was fired
    */
@@ -106,7 +106,7 @@ export interface EventApi {
   /**
    * Event fired whenever the **Button in an Action Column is clicked**.
    *
-   * @param eventName ActionColumnClicked - use as: blotterApi.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => { .....[do stuff]...})
+   * @param eventName ActionColumnClicked - use as: adaptableApi.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => { .....[do stuff]...})
    *
    * @param callback ActionColumnClickedEventArgs which includes details of the ActionColumn
    */
@@ -118,7 +118,7 @@ export interface EventApi {
   /**
    * Event fired whenever **column order, visibility and sorts are changed in the Adaptable Blotter**.
    *
-   * @param eventName ColumnStateChanged - use as: blotterApi.eventApi.on('ColumnStateChanged', (args: ColumnStateChangedEventArgs) => { .....[do stuff]...})
+   * @param eventName ColumnStateChanged - use as: adaptableApi.eventApi.on('ColumnStateChanged', (args: ColumnStateChangedEventArgs) => { .....[do stuff]...})
    *
    * @param callback ColumnStateChangedEventArgs which includes just the name of the currently selected Layout.
    */
@@ -130,7 +130,7 @@ export interface EventApi {
   /**
    * Event fired whenever **when a button in a Custom Toolbar is clicked**
    *
-   * @param eventName ToolbarButtonClicked - use as: blotterApi.eventApi.on('ToolbarButtonClicked', (args: ToolbarButtonClickedEventArgs) => { .....[do stuff]...})
+   * @param eventName ToolbarButtonClicked - use as: adaptableApi.eventApi.on('ToolbarButtonClicked', (args: ToolbarButtonClickedEventArgs) => { .....[do stuff]...})
    *
    * @param callback  ToolbarButtonClickedEventArgs which provides details of the button that was clicked.
    */
@@ -144,7 +144,7 @@ export interface EventApi {
    *
    * Primarily used for rendering Custom toolbars.
    *
-   * @param eventName ToolbarVisibilityChanged - use as: blotterApi.eventApi.on('ToolbarVisibilityChanged', (args: ToolbarVisibilityChangedEventArgs) => { .....[do stuff]...})
+   * @param eventName ToolbarVisibilityChanged - use as: adaptableApi.eventApi.on('ToolbarVisibilityChanged', (args: ToolbarVisibilityChangedEventArgs) => { .....[do stuff]...})
    *
    * @param callback ToolbarVisibilityChangedEventArgs which includes just the name of the toolbar that has become visible.
    */

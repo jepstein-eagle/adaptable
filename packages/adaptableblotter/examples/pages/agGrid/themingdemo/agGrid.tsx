@@ -10,12 +10,8 @@ import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  IAdaptableBlotter,
-} from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig, IAdaptable } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 function InitAdaptableBlotter() {
@@ -24,7 +20,7 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // console.log(tradeData);
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo theming demo',
     blotterId: 'Theming demo',
@@ -33,17 +29,17 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.vendorGrid.onCellValueChanged = function() {
+  adaptableOptions.vendorGrid.onCellValueChanged = function() {
     //   console.log(`onCellValueChanged: ${event.colDef.field} = ${event.newValue}`);
   };
-  adaptableBlotterOptions.vendorGrid.onRowValueChanged = function(event) {
+  adaptableOptions.vendorGrid.onRowValueChanged = function(event) {
     //  console.log(`onRowValueChanged: (${data.make}, ${data.model}, ${data.price})`);
   };
-  adaptableBlotterOptions.filterOptions = {
+  adaptableOptions.filterOptions = {
     autoApplyFilter: false,
   };
 
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

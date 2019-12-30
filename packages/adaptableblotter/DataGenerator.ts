@@ -1007,24 +1007,24 @@ export class DataGenerator {
     return schema;
   }
 
-  public createAdaptableBlotterOptionsTrade(gridOptions: GridOptions, blotterId: string) {
-    const adaptableBlotterOptions = {
+  public createAdaptableOptionsTrade(gridOptions: GridOptions, blotterId: string) {
+    const adaptableOptions = {
       vendorGrid: gridOptions,
       primaryKey: 'tradeId',
       userName: 'demo user',
       blotterId: blotterId,
     };
-    return adaptableBlotterOptions;
+    return adaptableOptions;
   }
 
-  public createAdaptableBlotterOptionsFtse(gridOptions: GridOptions, blotterId: string) {
-    const adaptableBlotterOptions = {
+  public createAdaptableOptionsFtse(gridOptions: GridOptions, blotterId: string) {
+    const adaptableOptions = {
       vendorGrid: gridOptions,
       primaryKey: 'date',
       userName: 'demo user',
       blotterId: blotterId,
     };
-    return adaptableBlotterOptions;
+    return adaptableOptions;
   }
 
   private dateParseragGrid = (params: any) => {

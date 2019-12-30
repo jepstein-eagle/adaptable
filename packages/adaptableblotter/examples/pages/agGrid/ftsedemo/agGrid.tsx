@@ -4,23 +4,23 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 
 import '../../../../App_Scripts/index.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
-import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsFTSE(50);
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsFtse(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsFtse(
     gridOptions,
     'ftse demo'
   );
-  const api = AdaptableBlotter.init(adaptableBlotterOptions);
+  const api = Adaptable.init(adaptableOptions);
 }
 
 export default () => {

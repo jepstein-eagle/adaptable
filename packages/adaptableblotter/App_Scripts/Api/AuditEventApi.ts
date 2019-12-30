@@ -20,7 +20,7 @@ import { AuditLogEventArgs } from './Events/AuditEvents';
  * The way to listen to the Audit Event is as follows:
  *
  *  ```ts
- * blotterApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
+ * adaptableApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
  *        // listen to audit event as required
  *        const auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id
  *    }

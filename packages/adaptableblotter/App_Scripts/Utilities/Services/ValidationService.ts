@@ -7,7 +7,7 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import {
   DistinctCriteriaPairValue,
   LeafExpressionOperator,
@@ -32,7 +32,7 @@ import StringExtensions from '../Extensions/StringExtensions';
 import { EMPTY_STRING } from '../Constants/GeneralConstants';
 
 export class ValidationService implements IValidationService {
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
   }
 

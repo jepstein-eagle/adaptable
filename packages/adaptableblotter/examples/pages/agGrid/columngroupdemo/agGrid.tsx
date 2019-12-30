@@ -10,8 +10,8 @@ import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 function InitAdaptableBlotter() {
@@ -19,14 +19,14 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeColumnGrouping(tradeData);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'grouping-demo'
   );
 
-  //adaptableBlotterOptions.predefinedConfig = demoConfig;
+  //adaptableOptions.predefinedConfig = demoConfig;
 
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

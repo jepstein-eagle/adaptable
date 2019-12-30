@@ -3,8 +3,8 @@ import { GridOptions } from 'ag-grid-community';
 
 import rowData from './rowData';
 import columns from './columns';
-import { AdaptableBlotterOptions } from '../../../adaptableblotter/types';
-import { BlotterApi } from '../../../adaptableblotter/types';
+import { AdaptableOptions } from '../../../adaptableblotter/types';
+import { AdaptableApi } from '../../../adaptableblotter/types';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent {
 
   public gridOptions: GridOptions;
 
-  theOptions: AdaptableBlotterOptions = {
+  theOptions: AdaptableOptions = {
     primaryKey: 'OrderId',
     userName: 'demo user',
     blotterId: 'an angular wrapper',
@@ -58,10 +58,10 @@ export class AppComponent {
     };
   }
 
-  onBlotterReady(api: BlotterApi) {
+  onBlotterReady(api: AdaptableApi) {
     console.log('blotter ready!!!', api);
 
-    api.auditEventApi.on('AuditCellEdited', function (args) {
+    api.auditEventApi.on('AuditCellEdited', function(args) {
       console.warn(args, '!!!!!');
     });
   }

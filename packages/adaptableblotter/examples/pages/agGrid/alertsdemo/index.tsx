@@ -13,7 +13,7 @@ export default () => {
       <div id="alertDiv"></div>
       <div id="adaptableBlotter" style={{ margin: 0 }} />
 
-      {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in AdaptableBlotterOptions-- >*/}
+      {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in AdaptableOptions-- >*/}
 
       <div id="grid" className="ag-theme-balham" style={{ margin: 5 }} />
 

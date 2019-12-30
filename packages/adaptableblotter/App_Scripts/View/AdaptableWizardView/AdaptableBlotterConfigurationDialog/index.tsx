@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Flex } from 'rebass';
 import { useState } from 'react';
 import Dialog from '../../../components/Dialog';
-import { AdaptableBlotterOptions } from '../../../types';
+import { AdaptableOptions } from '../../../types';
 import Panel from '../../../components/Panel';
 import SimpleButton from '../../../components/SimpleButton';
 
@@ -14,15 +14,13 @@ import ConfigurationForm from './ConfigurationForm';
 import { humanize } from '../../../Utilities/Helpers/Helper';
 
 interface ConfigurationDialogProps extends React.HTMLProps<HTMLElement> {
-  adaptableBlotterOptions: AdaptableBlotterOptions;
-  onFinish: (adaptableBlotterOptions: AdaptableBlotterOptions) => void;
+  adaptableOptions: AdaptableOptions;
+  onFinish: (adaptableOptions: AdaptableOptions) => void;
   onCancel: () => void;
 }
 
 const ConfigurationDialog = (props: ConfigurationDialogProps) => {
-  const [abOptions, setABOptions] = useState<AdaptableBlotterOptions>(
-    props.adaptableBlotterOptions
-  );
+  const [abOptions, setABOptions] = useState<AdaptableOptions>(props.adaptableOptions);
 
   const [finishEnabled, setFinishEnabled] = useState(true);
   const [currentStep, setCurrentStep] = useState<0 | 1>(0);
@@ -104,7 +102,7 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
     <>
       <Panel header={'Configure blotter'} border="none" style={{ flex: 1, overflow: 'auto' }}>
         <ConfigurationForm
-          adaptableBlotterOptions={abOptions}
+          adaptableOptions={abOptions}
           onChangeBlotterOptions={abOptions => {
             setABOptions(abOptions);
           }}

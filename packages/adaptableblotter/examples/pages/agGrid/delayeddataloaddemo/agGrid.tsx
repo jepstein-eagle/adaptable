@@ -8,16 +8,16 @@ import '../../../../App_Scripts/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import {
-  AdaptableBlotterOptions,
+  AdaptableOptions,
   PredefinedConfig,
-  IAdaptableBlotter,
-  BlotterApi,
+  IAdaptable,
+  AdaptableApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -25,7 +25,7 @@ function InitAdaptableBlotter() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(null);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'Delayed Data Load Demo',
@@ -34,15 +34,15 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.userInterfaceOptions = {
+  adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
 
-  adaptableBlotterOptions.layoutOptions = {
+  adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableApi = Adaptable.init(adaptableOptions);
 
   setTimeout(() => {
     gridOptions.api!.setRowData(tradeData);

@@ -1,8 +1,8 @@
 # adaptableblotter
 
-Repository for the Core Adaptable Blotter HTML5 version - AdaptableBlotter.JS - developed by Adaptable Tools.
+Repository for the Core Adaptable Blotter HTML5 version - Adaptable.JS - developed by Adaptable Tools.
 
-AdaptableBlotter.JS is a powerful DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their grids and blotters.
+Adaptable.JS is a powerful DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their grids and blotters.
 
 It offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment. Try it out for yourself at https://demo.adaptableblotter.com.
 
@@ -15,7 +15,7 @@ Grid components supported include:
 
 More grid components are being added all the time so contact us if you would like us to implement your favourite HTML5 grid control.
 
-AdaptableBlotter.JS is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
+Adaptable.JS is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
 
 There are additional React and Angular wrappers - please see the relevant packages.
 
@@ -58,7 +58,7 @@ for the Angular wrapper, use
 
 ## Styling
 
-In order for the AdaptableBlotter to look right, you have to import the index.css file
+In order for the Adaptable to look right, you have to import the index.css file
 
 ```tsx
 import "@adaptabletools/adaptableblotter/index.css"
@@ -79,11 +79,11 @@ import "@adaptabletools/adaptableblotter/index.css"
 import "@adaptabletools/adaptableblotter/themes/dark.css"
 ```
 
-This makes both the `light` and the `dark` themes available. You can also write your own custom theme for the AdaptableBlotter - see the section below for this.
+This makes both the `light` and the `dark` themes available. You can also write your own custom theme for the Adaptable - see the section below for this.
 
-A theme is basically a collection of css variables that the AdaptableBlotter exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
+A theme is basically a collection of css variables that the Adaptable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
-When the AdaptableBlotter applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
+When the Adaptable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
 **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**.
 
 ### Writing a theme
@@ -132,7 +132,7 @@ html.ab--theme-dark {
   /* this is here so we detect when the dark theme has been correctly loaded */
   --ab-theme-loaded: dark;
 
-  /* the background for the whole AdaptableBlotter Dashboard - only used once */
+  /* the background for the whole Adaptable Dashboard - only used once */
   --ab-dashboard__background: #232323;   
   --ab-cmp-input--disabled__background:#b6b7b8;
   
@@ -190,7 +190,7 @@ html.ab--theme-my-theme {
   /* use this to specify the font family you want for the blotter */
   --ab__font-family: inherit;
   
-  /* customise the border radius for some of the AdaptableBlotter elements */
+  /* customise the border radius for some of the Adaptable elements */
   --ab__border-radius: var(--ab-space-1);
 }
 ```
@@ -211,7 +211,7 @@ html.ab--theme-light {
 
 ### Styling icons
 
-The AdaptableBlotter uses inline SVG for icons, since that's very performant and doesn't require any additional download.
+The Adaptable uses inline SVG for icons, since that's very performant and doesn't require any additional download.
 
 However, you might want to style icons differently - in this case, you can customize that through css. Every icon has the `ab-Icon` css class, and also `ab-Icon--NAME` where `NAME` is the name of the icon. So for example, if you want to use a background image, you can do the following:
 
@@ -230,7 +230,7 @@ However, you might want to style icons differently - in this case, you can custo
 
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 
-The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.
+The Adaptable Blotter licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
 
 If you wish to evaluate the Adaptable Blotter before purchase, please contact us requesting a Trial Licence.
 
@@ -243,7 +243,7 @@ Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for mo
 ## Usage
 
 ```js
-import AdaptableBlotter from '@adaptabletools/adaptableblotter/agGrid';
+import Adaptable from '@adaptabletools/adaptableblotter/agGrid';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -254,7 +254,7 @@ import '@adaptabletools/adaptableblotter/themes/dark.css'; // if you want to use
 
 ## Demo
 
-To see AdaptableBlotter.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable Blotter running againt a number of different dummy data sets using various underlying DataGrids.
+To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable Blotter running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 

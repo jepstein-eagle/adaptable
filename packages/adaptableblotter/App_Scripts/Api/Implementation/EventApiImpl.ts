@@ -1,10 +1,10 @@
 import { ApiBase } from './ApiBase';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { EventApi } from '../EventApi';
 import Emitter, { EmitterCallback } from '../../Utilities/Emitter';
 
 export class EventApiImpl extends ApiBase implements EventApi {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(blotter);
 
     this.emitter = new Emitter();

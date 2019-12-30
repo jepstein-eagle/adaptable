@@ -12,32 +12,32 @@ import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../App_Scripts/agGrid';
 import {
-  AdaptableBlotterOptions,
+  AdaptableOptions,
   PredefinedConfig,
   ThemeChangedEventArgs,
-  IAdaptableBlotter,
-  BlotterApi,
+  IAdaptable,
+  AdaptableApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { RowStyle } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(5000);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
     gridOptions,
     'custom theme demo'
   );
 
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableOptions.predefinedConfig = demoConfig;
+  adaptableApi = Adaptable.init(adaptableOptions);
 
-  blotterApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
+  adaptableApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {
     listenToThemeChanged(themeChangedEventArgs);
   });
 }
@@ -63,9 +63,9 @@ function listenToThemeChanged(args: ThemeChangedEventArgs) {
     };
     rowStyles.push(evenStyle);
     rowStyles.push(oddStyle);
-    blotterApi.userInterfaceApi.setRowStyles(rowStyles);
+    adaptableApi.userInterfaceApi.setRowStyles(rowStyles);
   } else {
-    blotterApi.userInterfaceApi.clearRowStyles();
+    adaptableApi.userInterfaceApi.clearRowStyles();
   }
 }
 

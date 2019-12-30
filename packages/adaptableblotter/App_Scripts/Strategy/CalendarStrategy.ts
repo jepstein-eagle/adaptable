@@ -2,11 +2,11 @@ import { ICalendarStrategy } from './Interface/ICalendarStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.CalendarStrategyId, blotter);
   }
 

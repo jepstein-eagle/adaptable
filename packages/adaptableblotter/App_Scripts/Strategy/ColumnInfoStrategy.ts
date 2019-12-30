@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
@@ -10,7 +10,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import { DataType } from '../PredefinedConfig/Common/Enums';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ColumnInfoStrategyId, blotter);
   }
 

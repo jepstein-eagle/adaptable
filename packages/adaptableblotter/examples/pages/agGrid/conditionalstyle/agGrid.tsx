@@ -9,8 +9,8 @@ import '../../../../App_Scripts/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions } from '../../../../App_Scripts/types';
 
 import config from './config';
 
@@ -224,7 +224,7 @@ function InitAdaptableBlotter() {
       abColDefObject: {},
     },
   };
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
@@ -232,9 +232,9 @@ function InitAdaptableBlotter() {
     predefinedConfig: config as PredefinedConfig,
   };
 
-  const blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  const adaptableApi = Adaptable.init(adaptableOptions);
   setTimeout(() => {
-    if (blotterApi.layoutApi.getCurrentLayoutName() === 'Ab_Default_Layout') {
+    if (adaptableApi.layoutApi.getCurrentLayoutName() === 'Ab_Default_Layout') {
       gridOptions.columnApi!.autoSizeAllColumns();
     }
   });

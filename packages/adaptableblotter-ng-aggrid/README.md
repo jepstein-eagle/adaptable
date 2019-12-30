@@ -4,7 +4,7 @@ Repository for the Adaptable Blotter Angular ag-Grid Wrapper.
 
 This allows you to install, instantiate and reference the Adaptable Blotter using ag-Grid in an "Angular-friendly" manner.
 
-The AdaptableBlotter angular package wraps the ag-Grid angular wrapper - so you can use all the goodies of angular custom rendering wherever the ag-Grid angular wrapper supports them.
+The Adaptable angular package wraps the ag-Grid angular wrapper - so you can use all the goodies of angular custom rendering wherever the ag-Grid angular wrapper supports them.
 
 ## Installation
 
@@ -58,7 +58,7 @@ After that, you can use the blotter component in your app
 
 ## Styling
 
-In order for the AdaptableBlotter to look right, you have to import the index.css file
+In order for the Adaptable to look right, you have to import the index.css file
 
 ```
 @import '~@adaptabletools/adaptableblotter-angular-aggrid/index.css'
@@ -79,11 +79,11 @@ So if you want the dark theme in your app, you have to do
 @import "~@adaptabletools/adaptableblotter-angular-aggrid/themes/dark.css"
 ```
 
-This makes both the `light` and the `dark` themes available. You can also write your own custom theme for the AdaptableBlotter - see the section below for this.
+This makes both the `light` and the `dark` themes available. You can also write your own custom theme for the Adaptable - see the section below for this.
 
-A theme is basically a collection of css variables that the AdaptableBlotter exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
+A theme is basically a collection of css variables that the Adaptable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
-When the AdaptableBlotter applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
+When the Adaptable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
 **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
 
 ### Writing a theme
@@ -133,7 +133,7 @@ html.ab--theme-dark {
   /* this is here so we detect when the dark theme has been correctly loaded */
   --ab-theme-loaded: dark;
 
-  /* the background for the whole AdaptableBlotter Dashboard - only used once */
+  /* the background for the whole Adaptable Dashboard - only used once */
   --ab-dashboard__background: #232323;   
   --ab-cmp-input--disabled__background:#b6b7b8;
   
@@ -185,7 +185,7 @@ html.ab--theme-my-theme {
   /* use this to specify the font family you want for the blotter */
   --ab__font-family: inherit;
   
-  /* customise the border radius for some of the AdaptableBlotter elements */
+  /* customise the border radius for some of the Adaptable elements */
   --ab__border-radius: var(--ab-space-1);
 }
 ```
@@ -207,7 +207,7 @@ html.ab--theme-light {
 
 ### Styling icons
 
-The AdaptableBlotter uses inline SVG for icons, since that's very performant and doesn't require any additional download.
+The Adaptable uses inline SVG for icons, since that's very performant and doesn't require any additional download.
 
 However, you might want to style icons differently - in this case, you can customize that through css. Every icon has the `ab-Icon` css class, and also `ab-Icon--NAME` where `NAME` is the name of the icon. So for example, if you want to use a background image, you can do the following:
 
@@ -227,17 +227,17 @@ However, you might want to style icons differently - in this case, you can custo
 #### Mandatory:
 
 - gridOptions: ag-Grid GridOptions object
-- blotterOptions: AdaptableBlotterOptions object
+- blotterOptions: AdaptableOptions object
 
 #### Optional
 
-- onBlotterReady: (blotterApi: BlotterApi) - gives you access to the blotter api object
+- onBlotterReady: (adaptableApi: AdaptableApi) - gives you access to the blotter api object
 
 ## Licences
 
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 
-The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.
+The Adaptable Blotter licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
 
 If you wish to evaluate the Adaptable Blotter before purchase, please contact us requesting a Trial Licence.
 
@@ -249,7 +249,7 @@ Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for mo
 
 ## Demo
 
-To see AdaptableBlotter.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable Blotter running againt a number of different dummy data sets using various underlying DataGrids.
+To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable Blotter running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 

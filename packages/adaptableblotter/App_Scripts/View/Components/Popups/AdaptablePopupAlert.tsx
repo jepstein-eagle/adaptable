@@ -6,7 +6,7 @@ import { UIHelper } from '../../UIHelper';
 import { Flex, Text } from 'rebass';
 import Dialog from '../../../components/Dialog';
 import SimpleButton from '../../../components/SimpleButton';
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
 
 /**
  * The most simple of the alert type popups - just shows a message with a close button.  No user action required.
@@ -18,7 +18,7 @@ export interface AdaptableBlotterPopupAlertProps
   Msg: string;
   Header: string;
   MessageType: MessageType;
-  AdaptableBlotter: IAdaptableBlotter;
+  Adaptable: IAdaptable;
 }
 
 export class AdaptablePopupAlert extends React.Component<AdaptableBlotterPopupAlertProps, {}> {

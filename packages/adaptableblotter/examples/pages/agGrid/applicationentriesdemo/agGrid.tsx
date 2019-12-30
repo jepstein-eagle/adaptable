@@ -9,16 +9,12 @@ import '../../../../App_Scripts/index.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import {
-  AdaptableBlotterOptions,
-  PredefinedConfig,
-  BlotterApi,
-} from '../../../../App_Scripts/types';
+import Adaptable from '../../../../App_Scripts/agGrid';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ApplicationDataEntry } from '../../../../App_Scripts/PredefinedConfig/ApplicationState';
 
-var blotterApi: BlotterApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -27,7 +23,7 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   //gridOptions.rowSelection = true;
   // console.log(tradeData);
-  const adaptableBlotterOptions: AdaptableBlotterOptions = {
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     blotterId: 'Application Entries Demo',
@@ -36,48 +32,46 @@ function InitAdaptableBlotter() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableBlotterOptions.layoutOptions = {
+  adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
-  blotterApi = AdaptableBlotter.init(adaptableBlotterOptions);
+  adaptableApi = Adaptable.init(adaptableOptions);
 
-  blotterApi.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
+  adaptableApi.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     console.log('fetching');
-    console.log(blotterApi.applicationApi.getApplicationDataEntries());
+    console.log(adaptableApi.applicationApi.getApplicationDataEntries());
     console.log('adding');
     let kvp: ApplicationDataEntry = {
       Key: 'team',
       Value: 'liverpool',
     };
-    blotterApi.applicationApi.addApplicationDataEntry(kvp);
-    console.log(blotterApi.applicationApi.getApplicationDataEntries());
+    adaptableApi.applicationApi.addApplicationDataEntry(kvp);
+    console.log(adaptableApi.applicationApi.getApplicationDataEntries());
 
     console.log('editing');
-    let kvpToEdit = blotterApi.applicationApi.getApplicationDataEntryByKey('Name');
+    let kvpToEdit = adaptableApi.applicationApi.getApplicationDataEntryByKey('Name');
     if (kvpToEdit) {
       let newKVP: ApplicationDataEntry = {
         Key: kvpToEdit.Key,
         Value: 'Danielle',
       };
-      blotterApi.applicationApi.editApplicationDataEntry(newKVP);
-      console.log(blotterApi.applicationApi.getApplicationDataEntries());
+      adaptableApi.applicationApi.editApplicationDataEntry(newKVP);
+      console.log(adaptableApi.applicationApi.getApplicationDataEntries());
     }
 
     console.log('deleting');
-    let newkvps = blotterApi.applicationApi.getApplicationDataEntries();
+    let newkvps = adaptableApi.applicationApi.getApplicationDataEntries();
     let kvpToDelete = newkvps[1];
     if (kvpToDelete) {
-      blotterApi.applicationApi.deleteApplicationDataEntry(kvpToDelete);
-      console.log(blotterApi.applicationApi.getApplicationDataEntries());
+      adaptableApi.applicationApi.deleteApplicationDataEntry(kvpToDelete);
+      console.log(adaptableApi.applicationApi.getApplicationDataEntries());
     }
 
     console.log('getting');
-    let newkvpsget = blotterApi.applicationApi.getApplicationDataEntriesByValue(33);
+    let newkvpsget = adaptableApi.applicationApi.getApplicationDataEntriesByValue(33);
     console.log(newkvpsget);
   });
-
-  // global.adaptableblotter = adaptableblotter;
 }
 
 let demoConfig: PredefinedConfig = {

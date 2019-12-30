@@ -30,7 +30,7 @@ import { Waiting } from './Waiting';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxMenu } from './ListBoxMenu';
 
-import { IAdaptableBlotter } from '../../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
 import { FilterFormPanel } from '../Panels/FilterFormPanel';
 import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
@@ -44,7 +44,7 @@ import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: AdaptableColumn;
-  Blotter: IAdaptableBlotter;
+  Blotter: IAdaptable;
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];

@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { ICellSummaryStrategy } from './Interface/ICellSummaryStrategy';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ICellSummmary } from '../Utilities/Interface/Selection/ICellSummmary';
@@ -14,7 +14,7 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.CellSummaryStrategyId, blotter);
   }
 

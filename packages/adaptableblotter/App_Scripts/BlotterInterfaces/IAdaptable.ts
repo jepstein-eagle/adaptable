@@ -1,4 +1,4 @@
-import { AdaptableBlotterOptions } from '../types';
+import { AdaptableOptions } from '../types';
 import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection, IStrategy } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
@@ -20,12 +20,12 @@ import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
-import { AdaptableBlotterTheme } from '../PredefinedConfig/ThemeState';
+import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
 
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
-import { BlotterApi } from '../Api/BlotterApi';
+import { AdaptableApi } from '../Api/AdaptableApi';
 import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
@@ -33,17 +33,17 @@ import { IStrategyService } from '../Utilities/Services/StrategyService';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 
 /**
- *  The only interface for the AdaptableBlotter
+ *  The only interface for the Adaptable
  *
  *  Contains all the properties and methods that each implemenation must include
  *
- *  Each implemenation has a constructor that contains an AdaptableBlotterOptions object.
+ *  Each implemenation has a constructor that contains an AdaptableOptions object.
  *
  *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
  *
  *  It also contains an api property which gives access to the Blotter API - this is the ONLY way that developers should access Adaptable Blotter methods.
  */
-export interface IAdaptableBlotter {
+export interface IAdaptable {
   /**
    * The api - the main way to access our store in a way that ensures that things stay immutable.
    *
@@ -51,18 +51,18 @@ export interface IAdaptableBlotter {
    *
    * Likewise ALL access to methods in the Blotter by external developers should be via the API
    */
-  api: BlotterApi;
+  api: AdaptableApi;
 
   /**
    * The main configuration object which contains all the options that users needs to set up the Blotter.
    *
    * Most properties are nullable with sensible defaults provided in DefaultAdaptableOptions that is merged at initialisation.
    *
-   * Each implementation of the Adaptable Blotter has a constructor that contains an AdaptableBlotterOptions object.
+   * Each implementation of the Adaptable Blotter has a constructor that contains an AdaptableOptions object.
    *
    * This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use and the way that we can access the underlying grid and its data
    */
-  blotterOptions: AdaptableBlotterOptions;
+  blotterOptions: AdaptableOptions;
 
   /**
    * The redux store that we use to manage state
@@ -102,7 +102,7 @@ export interface IAdaptableBlotter {
   /**
    * The Adaptable Blotter contains a number of 'Services' which are created at Startup
    *
-   * Each takes an instance of the AdaptableBlotter and is used when it is preferable to accessing a Strategy directly
+   * Each takes an instance of the Adaptable and is used when it is preferable to accessing a Strategy directly
    */
   CalendarService: ICalendarService;
   DataService: IDataService;
@@ -254,7 +254,7 @@ export interface IAdaptableBlotter {
   hideQuickFilter(): void;
 
   // Theme
-  applyBlotterTheme(theme: AdaptableBlotterTheme | string): void;
+  applyBlotterTheme(theme: AdaptableTheme | string): void;
   setUpRowStyles(): void; // not sure about this...
   clearRowStyles(): void; // not sure about this...
 }

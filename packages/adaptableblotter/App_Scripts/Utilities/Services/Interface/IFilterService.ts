@@ -5,7 +5,7 @@ import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { KeyValuePair } from '../../Interface/KeyValuePair';
-import { IAdaptableBlotter } from '../../../types';
+import { IAdaptable } from '../../../types';
 
 export interface IFilterService {
   GetAllSystemFilters(): string[];

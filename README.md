@@ -18,7 +18,7 @@ The Adaptable Blotter is fully data agnostic and can work with any data set you 
 
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 
-The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.
+The Adaptable Blotter licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
 
 If you wish to evaluate the Adaptable Blotter before purchase, please contact us requesting a Trial Licence.
 

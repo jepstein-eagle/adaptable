@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import LoggingHelper, { LogAdaptableError } from '../Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
@@ -47,7 +47,7 @@ export class Glue42Service implements IGlue42Service {
     isResolved: false,
   };
 
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
 
     this.blotter.api.eventApi.on('BlotterReady', () => {

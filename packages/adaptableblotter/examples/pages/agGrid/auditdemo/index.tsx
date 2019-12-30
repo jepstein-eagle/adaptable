@@ -12,7 +12,7 @@ export default () => {
     <>
       <div id="adaptableBlotter" style={{ margin: 0 }} />
 
-      {/* className="ag-theme-blue"  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in AdaptableBlotterOptions-- >*/}
+      {/* className="ag-theme-blue"  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in AdaptableOptions-- >*/}
 
       <div id="grid" style={{ margin: 5 }} />
 

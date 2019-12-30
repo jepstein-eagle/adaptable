@@ -1,5 +1,5 @@
 import { IChartService } from './Interface/IChartService';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
@@ -28,7 +28,7 @@ Makes use of Expressions to get the data required.
 Returns a ChartData object that the ChartDisplay will receive and then show to teh user
 */
 export class ChartService implements IChartService {
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
   }
 

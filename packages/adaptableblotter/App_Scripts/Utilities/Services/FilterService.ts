@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../types';
+import { IAdaptable } from '../../types';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
@@ -35,7 +35,7 @@ export const TRUE_SYSTEM_FILTER = 'True';
 export const FALSE_SYSTEM_FILTER = 'False';
 
 export class FilterService implements IFilterService {
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
   }
 

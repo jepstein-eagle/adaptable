@@ -1,5 +1,5 @@
 import { IDataService, ChangeDirection } from './Interface/IDataService';
-import { IAdaptableBlotter } from '../../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
 import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
 import Emitter, { EmitterCallback } from '../../Utilities/Emitter';
 
@@ -10,7 +10,7 @@ export class DataService implements IDataService {
   private _columnValueList: Map<string, Map<any, number>>;
   private emitter: Emitter;
 
-  constructor(private blotter: IAdaptableBlotter) {
+  constructor(private blotter: IAdaptable) {
     this.blotter = blotter;
     // create the _columnValueList - will be empty - used currrently only for flashing cell
     this._columnValueList = new Map();

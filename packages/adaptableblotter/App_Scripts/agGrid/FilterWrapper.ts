@@ -4,12 +4,12 @@ import * as React from 'react';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContext';
-import { AdaptableBlotter } from './AdaptableBlotter';
+import { Adaptable } from './Adaptable';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
-export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
+export let FilterWrapperFactory = (blotter: Adaptable) => {
   return <any>class FilterWrapper implements IFilterComp {
     private params: IFilterParams;
     private filterContainer: HTMLDivElement;

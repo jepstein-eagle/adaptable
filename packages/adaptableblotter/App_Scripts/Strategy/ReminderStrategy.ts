@@ -1,14 +1,14 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptableBlotter } from '../BlotterInterfaces/IAdaptableBlotter';
+import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { IReminderStrategy } from './Interface/IReminderStrategy';
 import { ReminderState } from '../PredefinedConfig/ReminderState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ReminderStrategy extends AdaptableStrategyBase implements IReminderStrategy {
   protected ReminderState: ReminderState;
-  constructor(blotter: IAdaptableBlotter) {
+  constructor(blotter: IAdaptable) {
     super(StrategyConstants.ReminderStrategyId, blotter);
 
     this.blotter._on('GridReloaded', () => {
