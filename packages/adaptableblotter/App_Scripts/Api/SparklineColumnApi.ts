@@ -5,12 +5,12 @@ import { SparklineColumnState, SparklineColumn } from '../PredefinedConfig/Spark
  */
 export interface SparklineColumnApi {
   /**
-   * Retrieves the SparklineColumn section from the Adaptable State
+   * Retrieves the SparklineColumn section from Adaptable State
    */
   getSparklineColumnState(): SparklineColumnState;
 
   /**
-   * Returns all the Sparkline columns in the Adaptable State
+   * Returns all the Sparkline columns in Adaptable State
    */
   getAllSparklineColumn(): SparklineColumn[];
 

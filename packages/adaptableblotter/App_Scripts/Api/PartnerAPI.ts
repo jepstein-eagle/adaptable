@@ -16,12 +16,12 @@ import { LiveReport } from './Events/LiveReportUpdated';
  */
 export interface PartnerAPI {
   /**
-   * Retrieves the Partner Config section from the Adaptable State
+   * Retrieves the Partner Config section from Adaptable State
    */
   getPartnerState(): PartnerState;
 
   /**
-   * Retrieves the iPushPUll section from the  Partner Config section of the Adaptable State
+   * Retrieves the iPushPull section from the  Partner Config section of Adaptable State
    */
   getIPushPullState(): IPushPullState | undefined;
 
@@ -31,7 +31,7 @@ export interface PartnerAPI {
   getIPushPullInstance(): any;
 
   /**
-   * Retrieves the iPushPUll section from the  Partner Config section of the Adaptable State
+   * Retrieves the iPushPUll section from the  Partner Config section of Adaptable State
    */
   getGlue42State(): Glue42State | undefined;
 

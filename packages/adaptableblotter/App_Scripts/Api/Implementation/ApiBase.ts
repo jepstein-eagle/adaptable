@@ -8,7 +8,7 @@ import Helper from '../../Utilities/Helpers/Helper';
 // Base class for the API - provides checking dispatching methods
 export abstract class ApiBase {
   /**
-   * Constructor for all the api classes which simply takes and assigns an instance of the Adaptable adaptable
+   * Constructor for all the api classes which simply takes and assigns an instance of Adaptable
    * @param adaptable the core IAdaptable object
    */
   constructor(protected adaptable: IAdaptable) {
@@ -16,10 +16,10 @@ export abstract class ApiBase {
   }
 
   /**
-   * Base api helper method which ensure that the Adaptable adaptable Object being used in the function is not null or undefined
+   * Base api helper method which ensure that Adaptable Object being used in the function is not null or undefined
    *
    * If it does not exist then we log an error and the api method should stop
-   * @param item the AdaptableObject being checked
+   * @param item AdaptableObject being checked
    * @param name the name of the object if it has one (e.g. if its a search)
    * @param type the actual type of the object being checked
    */

@@ -9,7 +9,7 @@ import { ColumnStateChangedEventArgs } from './Events/ColumnStateChanged';
 import { SearchChangedEventArgs } from './Events/SearchChanged';
 
 /**
- * The Adaptable publishes a large number of events to which users can subscribe as required.
+ * Adaptable publishes a large number of events to which users can subscribe as required.
  *
  * These are:
  *
@@ -19,7 +19,7 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  *
  * - **ThemeChanged** - fired when the Theme in Adaptable changes
  *
- * - **AlertFired** - fired whenever an alert is triggered in the Adaptable
+ * - **AlertFired** - fired whenever an alert is triggered in Adaptable
  *
  * - **ActionColumnClicked** - fired when the button in an Action Column has been clicked
  *
@@ -29,9 +29,9 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  *
  * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering Custom toolbars)
  *
- * - **AdaptableReady** - fired whenever the Adaptable is initialised and ready for use (has no Args class)
+ * - **AdaptableReady** - fired whenever Adaptable is initialised and ready for use (has no Args class)
  *
- * Note: The Adaptable uses the [FDC3 Standard for messaging](https://fdc3.finos.org/docs/1.0/context-intro) so to get hold of the data packaged in the event, you will need to access the xxxArgs.data[0].id property.
+ * Note: Adaptable uses the [FDC3 Standard for messaging](https://fdc3.finos.org/docs/1.0/context-intro) so to get hold of the data packaged in the event, you will need to access the xxxArgs.data[0].id property.
  *
  * This means that each event contains an *xxxEventArgs* object that wraps relevant information for the event as *xxxInfo* and that object packages the actual data relevant to the event.
  *
@@ -56,7 +56,7 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  */
 export interface EventApi {
   /**
-   * Event fired whenever **search criteria in the Adaptable changes**
+   * Event fired whenever **search criteria in Adaptable changes**
    *
    * @param eventName SearchChanged - use as: api.eventApi.on('SearchChanged', (args: SearchChangedEventArgs) => { .....[do stuff]...})
    *
@@ -68,7 +68,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever the **Selection in the Adaptable changes**.
+   * Event fired whenever the **Selection in Adaptable changes**.
    *
    * @param eventName SelectionChanged - use as: adaptableApi.eventApi.on('SelectionChanged', (args: SelectionChangedEventArgs) => { .....[do stuff]...})
    *
@@ -80,7 +80,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever the **selected theme of the Adaptable is changed**.
+   * Event fired whenever the **selected theme of Adaptable is changed**.
    *
    * @param eventName ThemeChanged- use as: adaptableApi.eventApi.on('ThemeChanged', (args: ThemeChangedEventArgs) => { .....[do stuff]...})
    *
@@ -116,7 +116,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever **column order, visibility and sorts are changed in the Adaptable**.
+   * Event fired whenever **column order, visibility and sorts are changed in Adaptable**.
    *
    * @param eventName ColumnStateChanged - use as: adaptableApi.eventApi.on('ColumnStateChanged', (args: ColumnStateChangedEventArgs) => { .....[do stuff]...})
    *
@@ -140,7 +140,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever **a toolbar in the Adaptable becomes visible**
+   * Event fired whenever **a toolbar in Adaptable becomes visible**
    *
    * Primarily used for rendering Custom toolbars.
    *

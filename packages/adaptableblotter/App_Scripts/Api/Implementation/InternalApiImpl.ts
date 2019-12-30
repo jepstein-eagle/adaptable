@@ -188,7 +188,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     return Helper.objectExists(foundUpdatedRowInfo);
   }
 
-  // General way to get to store from inside the adaptable...
+  // General way to get to store from inside Adaptable...
   public dispatchReduxAction(action: Action): void {
     this.dispatchAction(action);
   }

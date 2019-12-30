@@ -1,11 +1,11 @@
 import { AdaptableObject } from './AdaptableObject';
 
 /**
- * Defines a Toolbar Button that is specified at design time by users and rendered dynamically by the Adaptable at run-time.
+ * Defines a Toolbar Button that is specified at design time by users and rendered dynamically by Adaptable at run-time.
  *
  * It is hosted in a Cuatom Toolbar
  *
- * When a Custom Toolbar Button is clicked, the Adaptable will fire an *ToolbarButtonClicked* event to which you can subscribe via the Event API.
+ * When a Custom Toolbar Button is clicked, Adaptable will fire an *ToolbarButtonClicked* event to which you can subscribe via the Event API.
  */
 export interface ToolbarButton extends AdaptableObject {
   /**

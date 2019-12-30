@@ -12,7 +12,7 @@ import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedIn
  */
 export interface AlertApi {
   /**
-   * Retrieves the Alert section from the Adaptable State
+   * Retrieves the Alert section from Adaptable State
    */
   getAlertState(): AlertState;
 

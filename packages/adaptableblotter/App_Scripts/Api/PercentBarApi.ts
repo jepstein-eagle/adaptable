@@ -6,12 +6,12 @@ import { PercentBarState, PercentBar } from '../PredefinedConfig/PercentBarState
  */
 export interface PercentBarApi {
   /**
-   * Retrieves the Percent Bar section from the Adaptable State
+   * Retrieves the Percent Bar section from Adaptable State
    */
   getPercentBarState(): PercentBarState;
 
   /**
-   * Retrieves all the Percent Bar objects in the Adaptable State
+   * Retrieves all the Percent Bar objects in Adaptable State
    */
   getAllPercentBar(): PercentBar[];
 
@@ -23,7 +23,7 @@ export interface PercentBarApi {
   getPercentBarByColumn(columnId: string): PercentBar;
 
   /**
-   * Adds a new Percent Bar to the Adaptable State
+   * Adds a new Percent Bar to Adaptable State
    *
    * @param percentBar the Percent Bar to add
    */
@@ -92,7 +92,7 @@ export interface PercentBarApi {
   editPercentBarShowValue(showValue: boolean, columnId: string): void;
 
   /**
-   * Deletes the Percent Bar from the Adaptable State
+   * Deletes the Percent Bar from Adaptable State
    * @param columnId the Column Id which contains the Percent Bar
    */
   deletePercentBar(columnId: string): void;

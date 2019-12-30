@@ -39,7 +39,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         SystemRedux.QuickSearchSetRange(quickSearchRange)
       );
 
-      // we just create expressions for the visible columns - in the adaptable we will check for those missing;
+      // we just create expressions for the visible columns - in Adaptable we will check for those missing;
       // we dont keep this updated - just set once as good for majority of use cases
       let quickSearchVisibleColumnExpressions: Expression[] = [];
       for (let column of this.adaptable.api.gridApi.getVisibleColumns()) {

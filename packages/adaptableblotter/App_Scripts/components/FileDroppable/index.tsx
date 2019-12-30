@@ -62,7 +62,7 @@ const FileDroppable = (props: FileDroppableProps) => {
     onDropSuccess,
     message,
     fileAccept = '.json',
-    helpText = 'The Adaptable No Code Version',
+    helpText = 'Adaptable No Code Version',
     defaultText = 'Click here to select a JSON file to load or drag it here',
     dragOverText = 'Drop file here to start Adaptable Wizard',
     icon = <Icon name="attach-file" size={48} />,

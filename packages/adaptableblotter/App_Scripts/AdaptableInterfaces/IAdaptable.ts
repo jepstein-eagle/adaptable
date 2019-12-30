@@ -33,7 +33,7 @@ import { IStrategyService } from '../Utilities/Services/StrategyService';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 
 /**
- *  The only interface for the Adaptable
+ *  The only interface for Adaptable
  *
  *  Contains all the properties and methods that each implemenation must include
  *
@@ -58,7 +58,7 @@ export interface IAdaptable {
    *
    * Most properties are nullable with sensible defaults provided in DefaultAdaptableOptions that is merged at initialisation.
    *
-   * Each implementation of the Adaptable has a constructor that contains an AdaptableOptions object.
+   * Adaptable's static constructor receives AdaptableOptions object.
    *
    * This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use and the way that we can access the underlying grid and its data
    */
@@ -72,7 +72,7 @@ export interface IAdaptable {
   AdaptableStore: IAdaptableStore;
 
   /**
-   * Each set of functionality in the Adaptable is called a strategy (e.g. Quick Search, Export)
+   * Each set of functionality in Adaptable is called a strategy (e.g. Quick Search, Export)
    *
    * There are about 30 strategies in total
    *
@@ -100,9 +100,9 @@ export interface IAdaptable {
   isInitialised: boolean;
 
   /**
-   * The Adaptable contains a number of 'Services' which are created at Startup
+   * Adaptable contains a number of 'Services' which are created at Startup
    *
-   * Each takes an instance of the Adaptable and is used when it is preferable to accessing a Strategy directly
+   * Each takes an instance of Adaptable and is used when it is preferable to accessing a Strategy directly
    */
   CalendarService: ICalendarService;
   DataService: IDataService;

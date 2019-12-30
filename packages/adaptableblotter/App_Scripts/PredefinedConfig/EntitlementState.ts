@@ -5,7 +5,7 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * The Predefined Configuration for Entitlements
  *
- * The Entitlement section of the Adaptable State allows you to manage which functions are available for which user and in which form.
+ * The Entitlement section of Adaptable State allows you to manage which functions are available for which user and in which form.
  *
  * By default every function has the Entitlement of <i>Full</i>, so only set those which you want to be different to that default.
  *
@@ -57,7 +57,7 @@ export interface EntitlementState extends DesignTimeState {
  */
 export interface Entitlement {
   /**
-   * The name of the Adaptable Function that has the Entitlement applied.
+   * The name of Adaptable Function that has the Entitlement applied.
    *
    * The property is of type `AdaptableFunctionName` which provides a strongly typed list of all available Functions.
    */

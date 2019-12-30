@@ -8,7 +8,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Each Calculated Column contains an **Expression** which is used to evaluate the contents of the cell.
  *
- * The Adaptable uses an external library [mathjs](https://mathjs.org) to create the Expression.
+ * Adaptable uses an external library [mathjs](https://mathjs.org) to create the Expression.
  *
  * Once created a Calculated Column is treated like any other Column in the Grid - though **only the name and Expression are stored** and not the cell data.
  *

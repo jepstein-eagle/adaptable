@@ -1,10 +1,10 @@
 # Adaptable Angular ag-Grid
 
-Repository for the Adaptable Angular ag-Grid Wrapper.
+Repository for Adaptable Angular ag-Grid Wrapper.
 
-This allows you to install, instantiate and reference the Adaptable using ag-Grid in an "Angular-friendly" manner.
+This allows you to install, instantiate and reference Adaptable using ag-Grid in an "Angular-friendly" manner.
 
-The Adaptable angular package wraps the ag-Grid angular wrapper - so you can use all the goodies of angular custom rendering wherever the ag-Grid angular wrapper supports them.
+Adaptable angular package wraps the ag-Grid angular wrapper - so you can use all the goodies of angular custom rendering wherever the ag-Grid angular wrapper supports them.
 
 ## Installation
 
@@ -38,13 +38,13 @@ it should display the username you received from use as the current login on the
 
 ## Usage
 
-In your app module, import the AdaptableBlotterAngularAgGridModule module
+In your app module, import AdaptableBlotterAngularAgGridModule module
 
 ```
 import { AdaptableBlotterAngularAgGridModule } from '@adaptabletools/adaptableblotter-angular-aggrid';
 ```
 
-After that, you can use the adaptable component in your app
+After that, you can use Adaptablecomponent in your app
 
 ```html
 <adaptableblotter-angular-aggrid
@@ -58,7 +58,7 @@ After that, you can use the adaptable component in your app
 
 ## Styling
 
-In order for the Adaptable to look right, you have to import the index.css file
+In order for Adaptable to look right, you have to import the index.css file
 
 ```
 @import '~@adaptabletools/adaptableblotter-angular-aggrid/index.css'
@@ -79,11 +79,11 @@ So if you want the dark theme in your app, you have to do
 @import "~@adaptabletools/adaptableblotter-angular-aggrid/themes/dark.css"
 ```
 
-This makes both the `light` and the `dark` themes available. You can also write your own custom theme for the Adaptable - see the section below for this.
+This makes both the `light` and the `dark` themes available. You can also write your own custom theme for Adaptable - see the section below for this.
 
-A theme is basically a collection of css variables that the Adaptable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
+A theme is basically a collection of css variables that Adaptable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
-When the Adaptable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
+When Adaptable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
 **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
 
 ### Writing a theme
@@ -182,10 +182,10 @@ html.ab--theme-my-theme {
   --ab-font-size-3: 0.875rem; /* 14px for 1rem=16px */
   --ab-font-size-4: 1rem; 
 
-  /* use this to specify the font family you want for the adaptable */
+  /* use this to specify the font family you want for Adaptable*/
   --ab__font-family: inherit;
   
-  /* customise the border radius for some of the Adaptable elements */
+  /* customise the border radius for some of Adaptable elements */
   --ab__border-radius: var(--ab-space-1);
 }
 ```
@@ -207,7 +207,7 @@ html.ab--theme-light {
 
 ### Styling icons
 
-The Adaptable uses inline SVG for icons, since that's very performant and doesn't require any additional download.
+Adaptable uses inline SVG for icons, since that's very performant and doesn't require any additional download.
 
 However, you might want to style icons differently - in this case, you can customize that through css. Every icon has the `ab-Icon` css class, and also `ab-Icon--NAME` where `NAME` is the name of the icon. So for example, if you want to use a background image, you can do the following:
 
@@ -231,32 +231,32 @@ However, you might want to style icons differently - in this case, you can custo
 
 #### Optional
 
-- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to the Adaptable Api object
+- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptable Api object
 
 ## Licences
 
-The Adaptable is a commercial product and requires a purchased licence for use.
+Adaptable is a commercial product and requires a purchased licence for use.
 
-The Adaptable licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
+Adaptable licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
 
-If you wish to evaluate the Adaptable before purchase, please contact us requesting a Trial Licence.
+If you wish to evaluate Adaptable before purchase, please contact us requesting a Trial Licence.
 
 Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
-Note: The Adaptable licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
+Note: Adaptable licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
-Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
+Please contact Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
 ## Demo
 
-To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
+To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
- Further information about the Adaptable is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+ Further information about Adaptable is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
-Developers can see how to access the Adaptable programmatically at https://api.adaptableblotter.com
+Developers can see how to access Adaptable programmatically at https://api.adaptableblotter.com
 
-For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
+For all enquiries please email Adaptable Tools Support Team at support@adaptabletools.com.
 
 [![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)

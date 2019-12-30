@@ -8,7 +8,7 @@ import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
  */
 export interface UpdatedRowApi {
   /**
-   * Retrieves the Updated Row section from the Adaptable State
+   * Retrieves the Updated Row section from Adaptable State
    *
    * This provides details of how the Updated Row function has been configured but **not** of which rows are currently coloured differently as a result of being updated.
    */
@@ -25,12 +25,12 @@ export interface UpdatedRowApi {
   updatedRowDisable(): void;
 
   /**
-   * Enables the 'Jump To Row' option where the Adaptable updates its scroll position to ensure the updated row is visible.
+   * Enables the 'Jump To Row' option where Adaptable updates its scroll position to ensure the updated row is visible.
    */
   jumpToRowEnable(): void;
 
   /**
-   * Disables the 'Jump To Row' option so that the Adaptable will no not update its scroll position to ensure the updated row is visible.
+   * Disables the 'Jump To Row' option so that Adaptable will no not update its scroll position to ensure the updated row is visible.
    */
   jumpToRowDisable(): void;
 

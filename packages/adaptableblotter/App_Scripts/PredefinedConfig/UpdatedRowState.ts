@@ -62,7 +62,7 @@ export interface UpdatedRowState extends RunTimeState {
   Duration?: 250 | 500 | 750 | 1000 | 'Always';
 
   /**
-   * Whether the Adaptable should jump (ie. change its vertical scroll position) so that the updated row is visible.
+   * Whether Adaptable should jump (ie. change its vertical scroll position) so that the updated row is visible.
    *
    * **Default Value: false**
    */

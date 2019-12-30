@@ -15,18 +15,18 @@ import {
  */
 export interface DashboardApi {
   /**
-   * Retrieves the Dashboard section from the Adaptable State
+   * Retrieves the Dashboard section from Adaptable State
    */
   GetDashboardState(): DashboardState;
 
   /**
-   * Sets which toolbars should be available in the Adaptable
+   * Sets which toolbars should be available in Adaptable
    *
    * @param availableToolbars toolbars to make available
    */
   SetAvailableToolbars(availableToolbars: AdaptableDashboardToolbars): void;
   /**
-   * Sets which toolbars should be visibile in the Adaptable
+   * Sets which toolbars should be visibile in Adaptable
    *
    * @param visibleToolbars toolbars to show
    */
@@ -144,7 +144,7 @@ export interface DashboardApi {
   /**
    * Sets the title of the Home Toolbar - the one on the left of the Dashboard
    *
-   * If no value is set, the title of the Home Toolbar will be the adaptableId property in AdaptableOptions
+   * If no value is set, the title of the Home Toolbar will be AdaptableId property in AdaptableOptions
    */
   SetHomeToolbarTitle(title: string): void;
 

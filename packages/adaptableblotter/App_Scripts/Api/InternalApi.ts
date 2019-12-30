@@ -16,9 +16,9 @@ import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { LiveReport } from './Events/LiveReportUpdated';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 /**
- * This set of api methods is designed for **internal use of the Adaptable** only.
+ * This set of api methods is designed for **internal use of Adaptable** only.
  *
- * None of these methods should be invoked by users of the Adaptable and no guarantee is made regarding performance or any after affects if used 'externally'.
+ * None of these methods should be invoked by users of Adaptable and no guarantee is made regarding performance or any after affects if used 'externally'.
  */
 export interface InternalApi {
   // System Redux

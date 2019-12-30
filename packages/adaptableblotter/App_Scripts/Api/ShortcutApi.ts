@@ -1,12 +1,12 @@
 import { ShortcutState, Shortcut } from '../PredefinedConfig/ShortcutState';
 export interface ShortcutApi {
   /**
-   * Retrieves the Shortcut section from the Adaptable State
+   * Retrieves the Shortcut section from Adaptable State
    */
   getShortcutState(): ShortcutState;
 
   /**
-   * Gets all Shortcuts in the Adaptable State
+   * Gets all Shortcuts in Adaptable State
    */
   getAllShortcut(): Shortcut[];
 
@@ -23,7 +23,7 @@ export interface ShortcutApi {
   deleteShortcut(shortcut: Shortcut): void;
 
   /**
-   * Deletes all shortcuts in the Adaptable State
+   * Deletes all shortcuts in Adaptable State
    */
   deleteAllShortcut(): void;
 

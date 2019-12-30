@@ -43,7 +43,7 @@ import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 
 /**
- * The main state object that the Adaptable persists
+ * The main state object that Adaptable persists
  */
 export interface AdaptableState {
   [s: string]: ConfigState;

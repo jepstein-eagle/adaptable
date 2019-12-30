@@ -1,7 +1,7 @@
 /**
- * Options related to Queries (aka Expressions) in the Adaptable.
+ * Options related to Queries (aka Expressions) in Adaptable.
  *
- * Many functions in the Adaptable use Queries to enable users to identify a set of rows for a particular task (e.g. Search, Export, Conditional Style, Chart etc.)
+ * Many functions in Adaptable use Queries to enable users to identify a set of rows for a particular task (e.g. Search, Export, Conditional Style, Chart etc.)
  *
  * Each Query / Expression can include multiple column conditions and can be include any or all of Column Value Lists, Filters and Query Ranges.
  *
@@ -30,7 +30,7 @@ export interface QueryOptions {
    *
    * If false (the default) the Query Builder UI will display 3 tabs: Column Values, Filters and Ranges.
    *
-   * This option is useful primarily if you are running Server Searching and want more easily to translate the Adaptable Query JSON into something you can readily understand.
+   * This option is useful primarily if you are running Server Searching and want more easily to translate Adaptable Query JSON into something you can readily understand.
    *
    * **Default Value: false**
    */
@@ -46,11 +46,11 @@ export interface QueryOptions {
   ignoreCaseInQueries?: boolean;
 
   /**
-   * Used when you want to dynamically provide the Adaptable with a list of column values each time its required (e.g. in Column Filters, or when building Queries or in Bulk Update).
+   * Used when you want to dynamically provide Adaptable with a list of column values each time its required (e.g. in Column Filters, or when building Queries or in Bulk Update).
    *
    * The property returns a promise that includes the Column Values whih the user (dev team) will provide each time it is needed.
    *
-   * If this not set the Adaptable Blottter will use PermittedColumnValues (in User Interface State) if they have been set.
+   * If this not set Adaptable will use PermittedColumnValues (in User Interface State) if they have been set.
    *
    * Otherwise it will build a list of distince values for the column dynamically.
    *

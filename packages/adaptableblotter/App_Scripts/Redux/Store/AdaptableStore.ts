@@ -138,7 +138,7 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 
 type EmitterCallback = (data?: any) => any;
 /*
-This is the main store for the Adaptable adaptable
+This is the main store for Adaptable State
 */
 
 const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<AdaptableState>({
@@ -2074,7 +2074,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
 
           /**
            * Use Cases: User has created / edited / deleted a Calculated Column
-           * Action:  Tell the adaptable so it can do what it needs
+           * Action:  Tell Adaptableso it can do what it needs
            */
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
@@ -2105,7 +2105,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
 
           /**
            * Use Cases: User has created / edited / deleted a Free Text column
-           * Action:  Tell the adaptable so it can do what it needs
+           * Action:  Tell Adaptableso it can do what it needs
            */
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
             const actionTyped = action as FreeTextColumnRedux.FreeTextColumnAddAction;
@@ -2404,7 +2404,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
           /**
            * Use Case: User has clicked 'Apply' in Smart Edit popup or toolbar
            * Action (1):  Gets the values that need to be applied from the Preview Info and passes to Preview Helper (incl. whether to bypass validation)
-           * Action (2):  Sends these new values to the Smart Edit Strategy (which will, in turn, apply them to the adaptable)
+           * Action (2):  Sends these new values to the Smart Edit Strategy (which will, in turn, apply them to Adaptable)
            */
           case SmartEditRedux.SMARTEDIT_APPLY: {
             let SmartEditStrategy = <ISmartEditStrategy>(

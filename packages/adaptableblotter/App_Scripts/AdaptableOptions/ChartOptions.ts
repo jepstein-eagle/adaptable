@@ -1,5 +1,5 @@
 /**
- * Options for managing Charts in the Adaptable
+ * Options for managing Charts in Adaptable
  *
  * Properties to set how and where charts are displayed
  *

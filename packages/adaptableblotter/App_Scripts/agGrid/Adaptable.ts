@@ -260,7 +260,7 @@ export class Adaptable implements IAdaptable {
 
   private _currentEditor: ICellEditor;
 
-  // only for our private / internal events used within the Adaptable adaptable
+  // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
   _on = (eventName: string, callback: EmitterCallback): (() => void) =>
     this.emitter.on(eventName, callback);
@@ -268,7 +268,7 @@ export class Adaptable implements IAdaptable {
     this.emitter.emit(eventName, data);
 
   // new static constructor which takes an Adaptable adaptable object and returns the api object
-  // going forward this should be the only way that we instantiate and use the Adaptable adaptable and everything should be accessible via the API
+  // going forward this should be the only way that we instantiate and use Adaptable and everything should be accessible via the API
   public static init(adaptableOptions: AdaptableOptions): AdaptableApi {
     const ab = new Adaptable(adaptableOptions);
     return ab.api;
@@ -284,7 +284,7 @@ export class Adaptable implements IAdaptable {
     this.emitter = new Emitter();
 
     this.renderGrid = renderGrid;
-    // we create the adaptable Options by merging the values provided by the user with the defaults (where no value has been set)
+    // we create AdaptableOptions by merging the values provided by the user with the defaults (where no value has been set)
     this.adaptableOptions = AdaptableHelper.assignadaptableOptions(adaptableOptions);
     AdaptableHelper.CheckadaptableOptions(this.adaptableOptions);
     this.runtimeConfig = runtimeConfig;
@@ -379,7 +379,7 @@ export class Adaptable implements IAdaptable {
         this.api.internalApi.hideLoadingScreen();
       });
 
-    // render the adaptable (not sure why this would ever be false?)
+    // render Adaptable(not sure why this would ever be false?)
     if (renderGrid) {
       if (this.abContainerElement == null) {
         this.abContainerElement = this.getadaptableContainerElement();
@@ -1747,7 +1747,7 @@ export class Adaptable implements IAdaptable {
         LoggingHelper.LogAdaptableError(
           `There is no DIV with id="${
             this.adaptableOptions!.containerOptions.adaptableContainer
-          }" so cannot render the Adaptable adaptable`
+          }" so cannot render Adaptable`
         );
         return;
       }
@@ -2368,7 +2368,7 @@ export class Adaptable implements IAdaptable {
         }
       }
     }
-    // if grid is initialised then emit the adaptable Ready event so we can re-apply any styles
+    // if grid is initialised then emit AdaptableReady event so we can re-apply any styles
     // and re-apply any specially rendered columns
     if (this.isInitialised) {
       this.api.eventApi.emit('AdaptableReady');
@@ -2502,7 +2502,7 @@ export class Adaptable implements IAdaptable {
 
         // we cannot check here for cell validation as it will be too late
         // so we have to hope that its been done already - though currently we ONLY do it for direct edits and setCellValue() but not other api updates
-        // if we have gone through the adaptable API we will be fine but not if they update ag-Grid directly
+        // if we have gone through AdaptableAPI we will be fine but not if they update ag-Grid directly
         // but we can perform the POST EDIT checks
         this.performPostEditChecks(dataChangedInfo);
       }
@@ -2993,9 +2993,7 @@ export class Adaptable implements IAdaptable {
     // }
 
     if (abLoaded !== '777') {
-      LoggingHelper.LogError(
-        'Please import the Adaptable styles from "adaptableadaptable/index.css"'
-      );
+      LoggingHelper.LogError('Please import Adaptable styles from "adaptableadaptable/index.css"');
     }
 
     // every theme should define a custom css variable: --ab-theme-loaded: <themeName> defined on the document element.
@@ -3126,7 +3124,7 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
     container = container || document.getElementById(id);
 
     if (!container) {
-      throw new Error('Cannot find container in which to render the Adaptable No Code Wizard');
+      throw new Error('Cannot find container in which to render Adaptable No Code Wizard');
     }
 
     ReactDOM.render(

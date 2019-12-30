@@ -8,7 +8,7 @@ import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 /**
  * EventArgs sent as part of the onSearchChanged Event
  *
- * It includes full and comprehensive details of the state of **all the search and filter related functions** in the Adaptable
+ * It includes full and comprehensive details of the state of **all the search and filter related functions** in Adaptable
  *
  * It also includes a SearchChangedTrigger which tells you **which function** was responsible for the change in Search state.
  */
@@ -17,7 +17,7 @@ export interface SearchChangedEventArgs extends AdaptableEventArgs {
 }
 
 /**
- * Provides details of the state of all Search and Filter related functions in the Adaptable.
+ * Provides details of the state of all Search and Filter related functions in Adaptable.
  */
 export interface SearchEventData extends AdaptableEventData {
   id: SearchChangedInfo;
@@ -25,15 +25,15 @@ export interface SearchEventData extends AdaptableEventData {
 /**
  * The main argument used in the **SearchChanged Event**
  *
- * Provides full details of the Search (and Sort) state in the Adaptable together with details of what triggered the event.
+ * Provides full details of the Search (and Sort) state in Adaptable together with details of what triggered the event.
  */
 export interface SearchChangedInfo {
   /**
-   * Which Function in the Adaptable caused the Search state to change
+   * Which Function in Adaptable caused the Search state to change
    *
    * **Note: UserFilter is one of the SearchChangedTriggers because it can be included in a current search or column filter**
    *
-   * (The Adaptable doesn't check whether the updated User Filter is being used - we aim on the side of caution and fire the event more often than is strictly necessary.)
+   * (Adaptable doesn't check whether the updated User Filter is being used - we aim on the side of caution and fire the event more often than is strictly necessary.)
    */
   searchChangedTrigger:
     | 'DataSource'
@@ -55,7 +55,7 @@ export interface SearchChangedInfo {
   /**
    * The current sort state in the Grid
    *
-   * The Adaptable lists **all custom sorts** in this object even if they are not currently being applied.
+   * Adaptable lists **all custom sorts** in this object even if they are not currently being applied.
    */
   blotterSortState: BlotterSortState;
   /**

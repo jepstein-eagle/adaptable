@@ -6,7 +6,7 @@ import { LayoutState, Layout } from '../PredefinedConfig/LayoutState';
  */
 export interface LayoutApi {
   /**
-   * Retrieves the Layout section from the Adaptable State
+   * Retrieves the Layout section from Adaptable State
    */
   getLayoutState(): LayoutState;
   /**

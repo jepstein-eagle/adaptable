@@ -14,9 +14,9 @@ import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStr
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 
 /**
- * This is for internal use of the Adaptable only during a session.
+ * This is for internal use of Adaptable only during a session.
  *
- * None of this State is provided to the Adaptable by users (through Predefined Config) and none of it is persisted.
+ * None of this State is provided to Adaptable by users (through Predefined Config) and none of it is persisted.
  */
 export interface SystemState extends InternalState {
   AdaptableAlerts: AdaptableAlert[];

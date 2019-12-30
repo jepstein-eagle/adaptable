@@ -488,11 +488,11 @@ export class AdaptableGridInfo extends React.Component<
           colItems,
           'adaptableId',
           options.adaptableId,
-          'Identifier for this instance of the Adaptable'
+          'Identifier for this instance of Adaptable'
         )
       );
       returnRows.push(
-        this.createColItem(colItems, 'userName', options.userName, 'Current user of the Adaptable')
+        this.createColItem(colItems, 'userName', options.userName, 'Current user of Adaptable')
       );
       returnRows.push(
         this.createColItem(
@@ -585,7 +585,7 @@ export class AdaptableGridInfo extends React.Component<
           colItems,
           'auditInternalStateChanges',
           options.auditOptions.auditInternalStateChanges == true ? 'Yes' : 'No',
-          "Whether to audit changes to the Adaptable's state; includes things like which popups are active, what are the selected cells (can potentially be very verbos)e"
+          "Whether to audit changes to Adaptable's state; includes things like which popups are active, what are the selected cells (can potentially be very verbos)e"
         )
       );
       returnRows.push(
@@ -717,7 +717,7 @@ export class AdaptableGridInfo extends React.Component<
           colItems,
           'useAdaptableFilterForm',
           options.filterOptions.useAdaptableFilterForm == true ? 'Yes' : 'No',
-          'If using the Adaptable filter form in column menu (or that provided by the vendor grid).'
+          'If using Adaptable filter form in column menu (or that provided by the vendor grid).'
         )
       );
       returnRows.push(
@@ -725,7 +725,7 @@ export class AdaptableGridInfo extends React.Component<
           colItems,
           'useAdaptableQuickFilter',
           options.filterOptions.useAdaptableQuickFilter == true ? 'Yes' : 'No',
-          'Use the Adaptable quick filter row (or that provided by the vendor grid).'
+          'Use Adaptable quick filter row (or that provided by the vendor grid).'
         )
       );
     }

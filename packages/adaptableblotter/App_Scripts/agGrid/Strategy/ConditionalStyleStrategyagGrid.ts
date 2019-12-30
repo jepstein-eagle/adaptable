@@ -22,7 +22,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   private conditionalStyleColumnIds: string[];
   private columnsForConditionalStyles: Map<TypeUuid, string[]>;
 
-  // The sole purpose that i can see for this method is to tell the adaptable to refresh the row or other columns in the case where the Grid would not automtically do it
+  // The sole purpose that i can see for this method is to tell Adaptable to refresh the row or other columns in the case where the Grid would not automtically do it
   // and we need to tell the grid that the whole row has changed and not just this column
   // Note that we can have Col A changing when Col B updates so need to look at all 3 but should make it as quick as possible: in and out.
   protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
@@ -144,7 +144,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
 
     this.conditionalStyleColumnIds = [...new Set(colList)];
 
-    // Redraw the adaptable to be on safe side (its rare use case)
+    // Redraw Adaptableto be on safe side (its rare use case)
     this.adaptable.redraw();
   }
 }

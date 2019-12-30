@@ -18,7 +18,7 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  */
 export interface ActionColumnApi {
   /**
-   * Retrieves the `ActionColumn` section from the Adaptable State
+   * Retrieves the `ActionColumn` section from Adaptable State
    */
   getActionColumnState(): ActionColumnState;
 

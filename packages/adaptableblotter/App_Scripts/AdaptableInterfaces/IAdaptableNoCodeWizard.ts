@@ -30,7 +30,7 @@ export interface IAdaptableNoCodeWizardOptions {
 }
 
 /**
- * When you want to configure an Adaptable via json file D&D, use this instead of the Adaptable constructor
+ * When you want to configure an Adaptable via json file D&D, use this instead of the normal Adaptable constructor
  *
  * // So instead of doing
  *
@@ -61,11 +61,11 @@ export interface IAdaptableNoCodeWizardOptions {
  *      // here you can either change some of the ab options or the gridOptions
  *      // and don't return anything
  *
- *      // OR instantiate the Adaptable yourself with
+ *      // OR instantiate Adaptable yourself with
  *
  *      const adaptable = new Adaptable(adaptableOptions);
  *      // in case you need a reference to it for later use (api stuff...)
- *      // and return the adaptable instance
+ *      // and return Adaptableinstance
  *
  *      return adaptable
  *    }

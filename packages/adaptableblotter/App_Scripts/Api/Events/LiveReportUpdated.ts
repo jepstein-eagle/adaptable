@@ -11,7 +11,7 @@ import { Report } from '../../PredefinedConfig/ExportState';
  *
  * The main property is the [`LiveReportUpdatedInfo`](_api_events_livereportupdated_.livereportupdatedinfo.html)
  *
- * The Adaptable uses [FDC3](https://fdc3.finos.org/) so you access the object using [FDC3 Context Data Specification](https://fdc3.finos.org/docs/1.0/context-spec) (e.g xxx.data[0].id;)
+ * Adaptable uses [FDC3](https://fdc3.finos.org/) so you access the object using [FDC3 Context Data Specification](https://fdc3.finos.org/docs/1.0/context-spec) (e.g xxx.data[0].id;)
  *
  *  **Example: Subscribing to the 'LiveReportUpdated' event**
  *
@@ -45,14 +45,14 @@ export interface LiveReportUpdatedEventData extends AdaptableEventData {
  *
  * -The `LiveReportTrigger` property defines **why** the event fired.
  *
- * -The `ExportDestination` property reflects which of the Adaptable Partners is being used (i.e. OpenFin, iPushPull or Glue42).
+ * -The `ExportDestination` property reflects which of Adaptable Partners is being used (i.e. OpenFin, iPushPull or Glue42).
  *
  * -The `CurrentLiveReports` property lists the 'Live Reports' in the State (ie. reports which will update the destination as the data ticks.)
  *
  */
 export interface LiveReportUpdatedInfo {
   /**
-   * Which of the Adaptable partners is being used as the export destination to which to send live data.
+   * Which of Adaptable partners is being used as the export destination to which to send live data.
    */
   ExportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42';
 
@@ -92,9 +92,9 @@ export interface LiveReportUpdatedInfo {
  *
  * - Glue42
  *
- * When the Adaptable creates a Live Report it will take care of updating the destination as the data in the Report changes (based on the throttle time you give it).
+ * When Adaptable creates a Live Report it will take care of updating the destination as the data in the Report changes (based on the throttle time you give it).
  *
- * The Adaptable will fire the `LiveReportUpdated` event each time a Live Report is stopped, started or updated.
+ * Adaptable will fire the `LiveReportUpdated` event each time a Live Report is stopped, started or updated.
  */
 export interface LiveReport {
   PageName: string; // for Excel this will be the workbook name, for iPushpull the page name.  for Glue42 the Spreadsheet name.

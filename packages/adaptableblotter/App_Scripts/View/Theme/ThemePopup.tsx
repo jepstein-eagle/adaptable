@@ -22,7 +22,7 @@ interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
 class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
   render() {
     let infoBody: any[] = [
-      'Choose a theme to change the look & feel of the Adaptable screens.',
+      'Choose a theme to change the look & feel of Adaptable screens.',
       <br />,
       <br />,
       'Select ',

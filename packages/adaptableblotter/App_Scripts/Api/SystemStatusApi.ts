@@ -17,7 +17,7 @@ import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
  *
  * - 'Error' (Red)
  *
- * You are also able to provide the Adaptable state (through the System Status section of Predefined Config) with a `DefaultStatusMessage` and `DefaultStatusType` to display when there is nothing specific to show.
+ * You are also able to provide Adaptable state (through the System Status section of Predefined Config) with a `DefaultStatusMessage` and `DefaultStatusType` to display when there is nothing specific to show.
  *
  *  **Further Resources**
  *
@@ -26,7 +26,7 @@ import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
  */
 export interface SystemStatusApi {
   /**
-   * Retrieves the System Status section from the Adaptable State
+   * Retrieves the System Status section from Adaptable State
    */
   getSystemStatusState(): SystemStatusState;
 

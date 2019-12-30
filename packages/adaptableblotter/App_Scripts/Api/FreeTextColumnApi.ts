@@ -12,24 +12,24 @@ import {
  */
 export interface FreeTextColumnApi {
   /**
-   * Retrieves the Free Text Column section from the Adaptable State
+   * Retrieves the Free Text Column section from Adaptable State
    */
   getFreeTextColumnState(): FreeTextColumnState;
 
   /**
-   * Gets all Free Text Columns in the Adaptable State
+   * Gets all Free Text Columns in Adaptable State
    */
   getAllFreeTextColumn(): FreeTextColumn[];
 
   /**
-   * Adds a new Free Text Column to the Adaptable State
+   * Adds a new Free Text Column to Adaptable State
    *
    * @param freeTextColumn the freeTextColumn to add
    */
   addFreeTextColumn(freeTextColumn: FreeTextColumn): void;
 
   /**
-   * Creates a new Free Text Column and adds it to the Adaptable State
+   * Creates a new Free Text Column and adds it to Adaptable State
    *
    * @param columnId the name for the column - try to keep this small and unique (and dont use spaces)
    *
@@ -38,7 +38,7 @@ export interface FreeTextColumnApi {
   createFreeTextColumn(columnId: string, defaultValue: string): void;
 
   /**
-   * Deletes an existing Free Text Column from the Adaptable State
+   * Deletes an existing Free Text Column from Adaptable State
    *
    * @param columnId the name of the Free Text Column to delete
    */

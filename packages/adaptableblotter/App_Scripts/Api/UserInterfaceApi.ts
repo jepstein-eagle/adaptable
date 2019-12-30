@@ -8,7 +8,7 @@ import {
 
 export interface UserInterfaceApi {
   /**
-   * Retrieves the User Interface section from the Adaptable State
+   * Retrieves the User Interface section from Adaptable State
    */
   getUserInterfaceState(): UserInterfaceState;
 
@@ -32,7 +32,7 @@ export interface UserInterfaceApi {
   addColorsToPalette(colorPalette: string[]): void;
 
   /**
-   * Adds StyleClass names to the User Interface section of the Adaptable State.
+   * Adds StyleClass names to the User Interface section of Adaptable State.
    *
    * You can then reference these style class names in functions like Conditional Style instead of having to create a Style object
    *

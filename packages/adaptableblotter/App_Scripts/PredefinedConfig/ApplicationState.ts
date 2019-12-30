@@ -3,7 +3,7 @@ import { DesignTimeState } from './DesignTimeState';
 /**
  * The Predefined Configuration for the Application function
  *
- * The Application function is designed to allow developers to provide the Adaptable with appliation-specific data
+ * The Application function is designed to allow developers to provide Adaptable with appliation-specific data
  *
  *  **Further Resources**
  *
@@ -11,7 +11,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * **The Application Data Entries**
  *
- * The `ApplicationDataEntries` array enables you to provide the Adaptable with your own data (which needs to be provided in key / value form) that the Adaptable will then store in its State.
+ * The `ApplicationDataEntries` array enables you to provide Adaptable with your own data (which needs to be provided in key / value form) that Adaptable will then store in its State.
  *
  *  **Note** Because these entries are stored as JSON, the value must be something that is capable of being 'stringified'.
  *
@@ -45,7 +45,7 @@ import { DesignTimeState } from './DesignTimeState';
  **/
 export interface ApplicationState extends DesignTimeState {
   /**
-   * An array of Application Data Entries (essentially Key / Value pairs) enabling you to provide the Adaptable with your own data.
+   * An array of Application Data Entries (essentially Key / Value pairs) enabling you to provide Adaptable with your own data.
    *
    * That data will then be persisted by Adaptable in its own State.
    */
@@ -55,7 +55,7 @@ export interface ApplicationState extends DesignTimeState {
 /**
  * Defines a simple Key / Value pair object.
  *
- * This can be used to store any inforrmation that is particular to your application in the Adaptable state.
+ * This can be used to store any inforrmation that is particular to your application in Adaptable state.
  *
  * **note: because this is stored as JSON the value must be something that is capable of being 'stringified'**
  */

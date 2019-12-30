@@ -69,7 +69,7 @@ export interface LayoutState extends RunTimeState {
   /**
    * The name of the Layout which will be in use when Adaptable starts / loads.
    *
-   * This will be the selected value in the Layout Toolbar and the Adaptable will apply it automatically.
+   * This will be the selected value in the Layout Toolbar and Adaptable will apply it automatically.
    *
    * **Make sure that the value appears in the name property of one of the Layouts that you provide**
    *
@@ -131,7 +131,7 @@ export interface Layout extends AdaptableObject {
   /**
    * **Do not set this when creating a layout**
    *
-   *  This is state saved automatically by the Adaptable for internal use to manage layouts
+   *  This is state saved automatically by Adaptable for internal use to manage layouts
    *
    *  Note: This is only used if `includeVendorStateInLayouts` is set to true in [LayoutOptions](_adaptableOptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
    */
@@ -139,7 +139,7 @@ export interface Layout extends AdaptableObject {
   /**
    * **Do not set this when creating a layout**
    *
-   *  This is state saved automatically by the Adaptable for internal use to manage layouts
+   *  This is state saved automatically by Adaptable for internal use to manage layouts
    */
   AdaptableGridInfo?: AdaptableGridInfo;
 }
@@ -169,7 +169,7 @@ export interface ColumnSort {
 /**
  * **Do not set use this property**
  *
- *  This is state saved automatically by the Adaptable for internal use to manage layouts
+ *  This is state saved automatically by Adaptable for internal use to manage layouts
  */
 export interface VendorGridInfo {
   GroupState?: any;
@@ -181,7 +181,7 @@ export interface VendorGridInfo {
 /**
  * **Do not set use this property**
  *
- *  This is state saved automatically by the Adaptable for internal use to manage layouts
+ *  This is state saved automatically by Adaptable for internal use to manage layouts
  */
 export interface AdaptableGridInfo {
   CurrentColumns?: string[];

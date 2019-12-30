@@ -2,7 +2,7 @@ import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { QuickSearchState } from '../PredefinedConfig/QuickSearchState';
 export interface QuickSearchApi {
   /**
-   * Retrieves all the Quick Search section from the Adaptable State
+   * Retrieves all the Quick Search section from Adaptable State
    */
   getQuickSearchState(): QuickSearchState;
 

@@ -27,27 +27,27 @@ export interface FilterOptions {
    */
   indicateFilteredColumns?: boolean;
   /**
-   * Whether to use the Adaptable filter form in the Column header menu.
+   * Whether to use Adaptable's filter form in the Column header menu.
    *
    * If false, the one supplied by the vendor grid will be used instead.
    *
-   * Only applicable in DataGrids where the vendor offers a filter form.  If not then only the Adaptable form is used.
+   * Only applicable in DataGrids where the vendor offers a filter form.  If not then only Adaptable's form is used.
    *
    * **Default Value: true**
    */
   useAdaptableFilterForm?: boolean;
 
   /**
-   * Only applicable when the Adaptable filter form is being used.
+   * Only applicable when Adaptable's filter form is being used.
    *
-   * By default, the filter form will be styled to match the Adaptable styles. Setting this to `true` will style it to match the styling of the current vendor grid.
+   * By default, the filter form will be styled to match Adaptable's styles. Setting this to `true` will style it to match the styling of the current vendor grid.
    *
    * **Default Value: false**
    */
   useVendorFilterFormStyle?: boolean;
 
   /**
-   * Whether to use the Adaptable quick filter row or the one supplied by the Vendor grid.
+   * Whether to use Adaptable's quick filter row or the one supplied by the Vendor grid.
    *
    * If false, the one supplied by the vendor grid will be used instead.
    *

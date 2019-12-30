@@ -2,14 +2,14 @@
 
 There are 3 primary ways that developers / users 'interact' with the code in Adaptable:
 
-- **Setting up** the Adaptable through configuring [Adaptable Options](./interfaces/_adaptableOptions_adaptableOptions_.adaptableOptions.html) which are passed in to the Adaptable instance when constructed.
+- **Setting up** Adaptable through configuring [Adaptable Options](./interfaces/_adaptableOptions_adaptableOptions_.adaptableOptions.html) which are passed in to Adaptable instance when constructed.
 
-- **Pre-populating** the Adaptable with the objects it requires at startup with all the objects it requires through writing [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
+- **Pre-populating** Adaptable with the objects it requires at startup with all the objects it requires through writing [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
-- **Accessing all the functionality and state** in the Adaptable through code (at runtime) via the [Adaptable API](interfaces/_api_adaptableApi_.adaptableApi.html).
+- **Accessing all the functionality and state** in Adaptable through code (at runtime) via the [Adaptable API](interfaces/_api_adaptableApi_.adaptableApi.html).
 
 These 3 objects are linked as follows: 
-**Predefined Configuration** is a property of **adaptableOptions** which is passed into the Adaptable constructor, that returns the **Adaptable Api**
+**Predefined Configuration** is a property of **adaptableOptions** which is passed into Adaptable constructor, that returns the **Adaptable Api**
 
 ```tsx
 // Create an Adaptable Options object to pass in to the constructor
@@ -19,7 +19,7 @@ These 3 objects are linked as follows:
     predefinedConfig: predefinedConfig, // the predefined config we created
   };
 
-  // the Adaptable constructor returns an API object that we can use
+  // Adaptable constructor returns an API object that we can use
  const adaptableApi = Adaptable.init(adaptableOptions);
 ```
 
@@ -38,14 +38,14 @@ You can provide  Adaptable at start-up with _Predefined Configuration_ which ens
 
 ## Adaptable API
 
-The Adaptable API provides full safe, run-time access - through code - to all the functionality and state inside Adaptable. This allows you to create, save and delete Adaptable objects in your our screens bypassing Adaptable's UI, or to access the Store in a safe non-mutable manner.
+Adaptable API provides full safe, run-time access - through code - to all the functionality and state inside Adaptable. This allows you to create, save and delete Adaptable objects in your our screens bypassing Adaptable's UI, or to access the Store in a safe non-mutable manner.
 
 [See Adaptable API Code](interfaces/_api_adaptableApi_.adaptableApi.html)
 
 
 # Additional Resources
 
-You can find further information about the Adaptable at these sites:
+You can find further information about Adaptable at these sites:
 
 - [Demo Site](https://demo.adaptableblotter.com)
 - [Help Site](https://adaptabletools.zendesk.com/hc/en-us)

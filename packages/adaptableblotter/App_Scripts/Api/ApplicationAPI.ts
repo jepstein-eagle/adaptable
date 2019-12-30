@@ -1,6 +1,6 @@
 import { ApplicationState, ApplicationDataEntry } from '../PredefinedConfig/ApplicationState';
 /**
- * Provides an `ApplicationDataEntry` array allowing developers to store their own data in the Adaptable State (as Key / Value Pairs).
+ * Provides an `ApplicationDataEntry` array allowing developers to store their own data in Adaptable State (as Key / Value Pairs).
  *
  *  **Further Resources**
  *
@@ -9,7 +9,7 @@ import { ApplicationState, ApplicationDataEntry } from '../PredefinedConfig/Appl
  */
 export interface ApplicationApi {
   /**
-   * Retrieves the Application section from the Adaptable State
+   * Retrieves the Application section from Adaptable State
    */
   getApplicationState(): ApplicationState;
 

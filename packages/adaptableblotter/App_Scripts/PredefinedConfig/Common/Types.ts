@@ -3,14 +3,14 @@ This page includes frequently used typed - particularly helpful for State and AP
 */
 
 /**
- * The Adaptable Toolbar collection
+ * Adaptable Toolbar collection
  *
  * When setting the `AvailableToolbars` or `VisibleToolbars` properties in Dashboard state, only the Toolbars listed here can be included.
  */
 export type AdaptableDashboardToolbars = AdaptableDashboardToolbar[];
 
 /**
- * List of all the Toolbars that the Adaptable provides
+ * List of all the Toolbars that Adaptable provides
  */
 export type AdaptableDashboardToolbar =
   | 'AdvancedSearch'
@@ -46,16 +46,16 @@ export type AdaptableToolPanel =
   | 'Theme';
 
 /**
- * The Adaptable Function Button collection
+ * Adaptable Function Button collection
  *
  * When setting the VisibleButtons` properties in Dashboard state, only the Function Buttons listed here can be included.
  */
 export type AdaptableFunctionButtons = AdaptableFunctionButton[];
 
 /**
- * List of all the Function button that the Adaptable provides.
+ * List of all the Function button that Adaptable provides.
  *
- * Essentially it is a list of all the Functions in the Adaptable as each Function has a popup for which this is a shortcut button.
+ * Essentially it is a list of all the Functions in Adaptable as each Function has a popup for which this is a shortcut button.
  */
 export type AdaptableFunctionButton =
   | 'AdvancedSearch'

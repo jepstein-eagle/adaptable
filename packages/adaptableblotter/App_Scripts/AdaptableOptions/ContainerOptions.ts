@@ -1,5 +1,5 @@
 /**
- * Options for managing the different div elements required by the Adaptable.
+ * Options for managing the different div elements required by Adaptable.
  * ```ts
  * containerOptions = {
  *  adaptableContainer: 'adaptableDiv',

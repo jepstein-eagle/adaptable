@@ -18,7 +18,7 @@ import { AdaptableEventArgs, AdaptableEventData } from '../../Api/Events/Adaptab
 export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
   const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
 
-  // set the adaptableId as we are goign to use that in future only
+  // set AdaptableId as we are goign to use that in future only
   returnadaptableOptions.adaptableId = StringExtensions.IsNullOrEmpty(
     returnadaptableOptions.adaptableId
   )
@@ -105,7 +105,7 @@ export function isValidPrimaryKey(adaptable: IAdaptable, columns: AdaptableColum
   );
 
   if (pkColumn == null) {
-    const errorMessage: string = `The PK Column '${adaptable.adaptableOptions.primaryKey}' does not exist.  This will affect many functions in the Adaptable adaptable.`;
+    const errorMessage: string = `The PK Column '${adaptable.adaptableOptions.primaryKey}' does not exist.  This will affect many functions in Adaptable.`;
     if (adaptable.adaptableOptions.generalOptions!.showMissingPrimaryKeyWarning == true) {
       // show an alert if that is the option
       adaptable.api.alertApi.showAlertError('No Primary Key', errorMessage);

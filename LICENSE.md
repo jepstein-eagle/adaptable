@@ -10,7 +10,7 @@ TTL provides the following:
 
 •	User Licence: you may only use the Software in a production environment if you have executed a Sales Order with TTL and paid the applicable annual licence fees.
 
-•	Support:  The annual user licence fee includes extensive online help to support users and client support teams working with them. In addition, the annual user licence fee includes unlimited support for the first month after the contract period has started, and up to a further 20 queries per year to the Adaptable Tools support team.  Additional support, over and above these levels, can be provided if required but will attract an additional fee. Support services will be supplied under and subject to the terms and conditions of TTL’s Support Schedule for the time being in force..
+•	Support:  The annual user licence fee includes extensive online help to support users and client support teams working with them. In addition, the annual user licence fee includes unlimited support for the first month after the contract period has started, and up to a further 20 queries per year to Adaptable Tools support team.  Additional support, over and above these levels, can be provided if required but will attract an additional fee. Support services will be supplied under and subject to the terms and conditions of TTL’s Support Schedule for the time being in force..
 
 1. LICENCE
 

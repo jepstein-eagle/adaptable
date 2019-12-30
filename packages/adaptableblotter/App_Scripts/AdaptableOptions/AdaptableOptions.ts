@@ -12,15 +12,15 @@ import { StateOptions } from './StateOptions';
 import { UserInterfaceOptions } from './UserInterfaceOptions';
 
 /**
- * `AdaptableOptions` is the class injected into the Adaptable at startup.
+ * `AdaptableOptions` is the class injected into Adaptable at startup.
  *
- * **This forms the only parameter requried by the Adaptable constructor.**
+ * **This forms the only parameter requried by Adaptable's static constructor.**
  *
  * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
  *
- * The `AdaptableOptions` class contains a few *normal* properties of which 2 (`vendorGrid` and `primaryKey`) are mandatory - and a number of `*xxxOptions` properties where the type is itself a collection of related properties.
+ * The `AdaptableOptions` class contains a few regular properties of which 2 (`vendorGrid` and `primaryKey`) are mandatory - and a number of `xxxOptions` properties where the type is itself a collection of related properties.
  *
- * Typically users will ony populate a few of the properties in `AdaptableOptions`, and only a few properties in each class.
+ * Typically users will only populate a few of the properties in `AdaptableOptions`, and only a few properties in each class.
  *
  * Any property that is not supplied by the user when populating the object, will use the default value (which is listed here for each property).
  */
@@ -28,7 +28,7 @@ export interface AdaptableOptions {
   /**
    * **MANDATORY property**
    *
-   * This is the underlying vendor grid or grid object which the Adaptable will interact with.
+   * This is the underlying vendor grid or grid object which Adaptable will interact with.
    *
    * Depending on the vendor it is either a Grid or an Options object.
    *
@@ -104,7 +104,7 @@ export interface AdaptableOptions {
   licenceKey?: string;
 
   /**
-   * Options for setting the *Div elements* in which the Adaptable and underlying grid are placed.
+   * Options for setting the *Div elements* in which Adaptable and the underlying grid are placed.
    *
    * Also allows you to set where popups appear relative to the page and where charts are displayed.
    */
@@ -131,7 +131,7 @@ export interface AdaptableOptions {
   configServerOptions?: ConfigServerOptions;
 
   /**
-   * Options for running queries (or Expressions) in the Adaptable.
+   * Options for running queries (or Expressions) in Adaptable.
    *
    * Lets you specify how (and how many) values are returned when doing a column lookup, how to deal with case and what is in the Query.
    *
@@ -140,7 +140,7 @@ export interface AdaptableOptions {
   queryOptions?: QueryOptions;
 
   /**
-   * Options related to Editing the Adaptable.
+   * Options related to Editing in Adaptable.
    *
    * Includes a function enabling you to perform custom validation when a cell changes values.
    */
@@ -154,23 +154,23 @@ export interface AdaptableOptions {
   layoutOptions?: LayoutOptions;
 
   /**
-   * Related to creating and managing filters in the Adaptable.
+   * Related to creating and managing filters in Adaptable.
    *
-   * Includes options concerning whetehr to use the Adaptable filters (or those provided by the vendor grid).
+   * Includes options concerning whether to use Adaptable's filters (or those provided by the vendor grid).
    *
    * Also contains options to set if, how and when the Grid should repaint and refilter after user data edits and ticking data edits.
    */
   filterOptions?: FilterOptions;
 
   /**
-   * Options to manage the Adaptable charting.
+   * Options to manage Adaptable charting.
    *
    * Primarily concerned with how and where charts appear.
    */
   chartOptions?: ChartOptions;
 
   /**
-   * General options to manage the Adaptable.
+   * General options to manage  Adaptable.
    *
    * Essentially those options that didn't fit into of the specific categories.
    *
@@ -188,7 +188,7 @@ export interface AdaptableOptions {
   /**
    * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
    *
-   * By default, the Adaptable state is persisted in the local storage of the user browser, under the `adaptableId` key.
+   * By default, Adaptable state is persisted in the local storage of the user browser, under the `adaptableId` key.
    *
    * Using various state options allows you to change this default behavior and also add custom properties in the persisted state.
    *

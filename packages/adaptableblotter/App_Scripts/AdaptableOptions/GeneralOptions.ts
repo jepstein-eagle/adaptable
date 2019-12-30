@@ -42,7 +42,7 @@ export interface GeneralOptions {
   preventDuplicatePrimaryKeyValues?: boolean;
 
   /**
-   * Runs a check to see if the current version of the Adaptable is the latest version.
+   * Runs a check to see if the current version of Adaptable is the latest version.
    *
    * If set to true, then a check is run when Adaptable starts up and a message is written to the Console if its not the latest version.
    *

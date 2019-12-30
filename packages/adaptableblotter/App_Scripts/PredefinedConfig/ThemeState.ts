@@ -2,11 +2,11 @@ import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
- * The Theme State section of the Adaptable Predefined Config.
+ * The Theme State section of Adaptable Predefined Config.
  *
- * Theme State is used to tell the Adaptable which, if any, of the Shipped Themes ("Dark Theme" and "Light Theme") should be available.
+ * Theme State is used to tell Adaptable which, if any, of the Shipped Themes ("Dark Theme" and "Light Theme") should be available.
  *
- * It also enables you to ship your instance of the Adaptable with your own custom themes that you can create.
+ * It also enables you to ship your instance of Adaptable with your own custom themes that you can create.
  *
  * All Adaptable themes are simply collections of [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
  *
@@ -38,7 +38,7 @@ export interface ThemeState extends RunTimeState {
   CurrentTheme?: string;
 
   /**
-   * Which, if any, of the 2 themes shipped by the Adaptable should be available.
+   * Which, if any, of the 2 themes shipped by Adaptable should be available.
    *
    * If you dont set anything then **both** themes are available; if you set an empty array then **neither** theme is available.
    *
@@ -63,7 +63,7 @@ export interface ThemeState extends RunTimeState {
 }
 
 /**
- * The AdaptableTheme object used in the Theme function - required for when creating User (Custom) Themes.
+ * AdaptableTheme object used in the Theme function - required for when creating User (Custom) Themes.
  */
 export interface AdaptableTheme extends AdaptableObject {
   /**
@@ -77,7 +77,7 @@ export interface AdaptableTheme extends AdaptableObject {
   Description: string;
 
   /**
-   * The css className to be applied on the vendor grid - this can be used to style the vendor grid with a theme that matches the current theme of the Adaptable
+   * The css className to be applied on the vendor grid - this can be used to style the vendor grid with a theme that matches the current theme of Adaptable
    */
   VendorGridClassName?: string;
 }

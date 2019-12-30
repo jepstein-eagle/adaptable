@@ -15,7 +15,7 @@ export interface AdaptableObject {
    *
    * Used to compare State objects
    *
-   * **Do not provide this property when creating an Adaptable Object in Predefined Config as the Adaptable will do it for you when the application loads.**
+   * **Do not provide this property when creating an Adaptable Object in Predefined Config as Adaptable will do it for you when the application loads.**
    */
   Uuid?: TypeUuid;
 }

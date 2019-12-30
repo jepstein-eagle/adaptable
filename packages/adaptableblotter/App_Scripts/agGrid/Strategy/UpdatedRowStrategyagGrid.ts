@@ -47,7 +47,7 @@ export class UpdatedRowStrategyagGrid extends UpdatedRowStrategy implements IUpd
       }
     }
 
-    // Redraw the adaptable to be on safe side (its rare use case)
+    // Redraw Adaptableto be on safe side (its rare use case)
     //  this.adaptable.redraw();
   }
 }

@@ -5,25 +5,25 @@ import { ThemeState, AdaptableTheme } from '../PredefinedConfig/ThemeState';
  */
 export interface ThemeApi {
   /**
-   * Retrieves all the Theme section from the Adaptable State
+   * Retrieves all the Theme section from Adaptable State
    */
   getThemeState(): ThemeState;
 
   /**
-   * Sets the Adaptable to use the given theme
+   * Sets Adaptable to use the given theme
    * @param theme name of the theme to apply
    */
   loadTheme(theme: string): void;
 
   /**
-   * Sets the Light Theme of the Adaptable
+   * Sets the Light Theme of Adaptable
    *
    * This will also update the underlying vendor grid to match
    */
   loadLightTheme(): void;
 
   /**
-   * Sets the Dark Theme of the Adaptable
+   * Sets the Dark Theme of Adaptable
    *
    * This will also update the underlying vendor grid theme to match
    */
@@ -42,7 +42,7 @@ export interface ThemeApi {
   setSystemThemes(systemThemes: AdaptableTheme[]): void;
 
   /**
-   * Sets which user (a.k.a. custom) themes are available in the Adaptable
+   * Sets which user (a.k.a. custom) themes are available in Adaptable
    *
    * @param userThemes user themes to use - each has a name and a description
    */

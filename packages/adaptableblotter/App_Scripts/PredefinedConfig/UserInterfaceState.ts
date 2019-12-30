@@ -38,7 +38,7 @@ import { AdaptableColumn } from './Common/AdaptableColumn';
  **/
 export interface UserInterfaceState extends DesignTimeState {
   /**
-   *  An optional list of colours that will be displayed in the Colour Picker in place of the default set that ships with the Adaptable.
+   *  An optional list of colours that will be displayed in the Colour Picker in place of the default set that ships with Adaptable.
    *
    * This is used in Functions which create a Style (e.g. Conditional Style, Format Column, Flashing Cells etc.)
    *
@@ -64,7 +64,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * This will allow you quickly choose the css style name instead of having to build the style manually.
    *
-   * **You must ensure that any style name you list here is available to the Adaptable in a stylesheet that you provide**
+   * **You must ensure that any style name you list here is available to Adaptable in a stylesheet that you provide**
    *
    *  **Default Value**:  Empty array
    */
@@ -84,9 +84,9 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * 1. **LookUpValues**: You can, optionally, provide a list of `LookUpValues` that will be displayed in the Dropdown.  This list can be either 'hardcoded' or returned from a function.
    *
-   * 2. **PermittedColumnValues**:  If no LookUpValues are provided, the Adaptable will show a list of [PermittedColumnValues](#permittedcolumnvalues) (if one has been provided).
+   * 2. **PermittedColumnValues**:  If no LookUpValues are provided, Adaptable will show a list of [PermittedColumnValues](#permittedcolumnvalues) (if one has been provided).
    *
-   * 3. **Distinct Column Values**: Otherwise, the Adaptable will fetch all the distinct values in the Column and populate the Dropdown with them.
+   * 3. **Distinct Column Values**: Otherwise, Adaptable will fetch all the distinct values in the Column and populate the Dropdown with them.
    *
    * **The column must also be marked as editable in the column schema for the Dropdown to appear.**
    *
@@ -199,7 +199,7 @@ export interface PermittedValuesColumn {
 /**
  * Interface that allows user to stipulate if a column should show a Dropdown when in edit mode.
  *
- * Can optionally include which look up values the Dropdown will contain; if none are provided then the Adaptable will get the distinct values for the Column.
+ * Can optionally include which look up values the Dropdown will contain; if none are provided then Adaptable will get the distinct values for the Column.
  *
  * However if Permitted Values have been set for that column then they will be displayed in the Dropdown instead.
  *
@@ -221,7 +221,7 @@ export interface EditLookUpColumn {
 /**
  * Object that allows users to pre-define styles for Rows in the Vendor Grid.
  *
- * This is particularly useful for when you create a custom theme for the Adaptable and want the grid to share the same colour scheme.
+ * This is particularly useful for when you create a custom theme for Adaptable and want the grid to share the same colour scheme.
  *
  * It includes the Style - which can be just a classname or a set of properties .
  *

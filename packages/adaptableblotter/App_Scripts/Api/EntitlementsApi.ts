@@ -2,7 +2,7 @@ import { EntitlementState, Entitlement } from '../PredefinedConfig/EntitlementSt
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
- * Provides access to the **Entitlements** section of the Adaptable State.
+ * Provides access to the **Entitlements** section of Adaptable State.
  *
  *  **Further Resources**
  *
@@ -11,7 +11,7 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  */
 export interface EntitlementsApi {
   /**
-   * Retrieves the Entitlements section from the Adaptable State
+   * Retrieves the Entitlements section from Adaptable State
    */
   getEntitlementsState(): EntitlementState;
 
@@ -22,13 +22,13 @@ export interface EntitlementsApi {
 
   /**
    * Retrieves the Entitlement for a given Adaptable Function
-   * @param adaptableFunctionName the Adaptable Function for which to get the Entitlement
+   * @param adaptableFunctionName Adaptable Function for which to get the Entitlement
    */
   getEntitlementByAdaptableFunctionName(adaptableFunctionName: AdaptableFunctionName): Entitlement;
 
   /**
    * Retrieves the Entitlement Access Level for a given Adaptable Function
-   * @param adaptableFunctionName the Adaptable Function for which to get the Entitlement Access Level
+   * @param adaptableFunctionName Adaptable Function for which to get the Entitlement Access Level
    */
   getEntitlementAccessLevelForAdaptableFunctionName(
     adaptableFunctionName: AdaptableFunctionName
@@ -51,7 +51,7 @@ export interface EntitlementsApi {
   /**
    * Creates a new Entitlement and adds it to the Entitlement section of Adaptable State
    *
-   * @param adaptableFunctionName the Adaptable Function for which to add the Entitlement
+   * @param adaptableFunctionName Adaptable Function for which to add the Entitlement
    * @param accessLevel the Access Level for the new Entitlement
    */
   createEntitlement(
@@ -61,7 +61,7 @@ export interface EntitlementsApi {
 
   /**
    * Edits an existing Entitlement
-   * @param adaptableFunctionName the Adaptable Function for which the Entitlement is being edited
+   * @param adaptableFunctionName Adaptable Function for which the Entitlement is being edited
    * @param accessLevel the new Access Level for the Entitlement
    */
   editEntitlement(
@@ -71,7 +71,7 @@ export interface EntitlementsApi {
 
   /**
    * Deletes an existing Entitlement
-   * @param adaptableFunctionName the Adaptable Function for which the Entitlement is being removed
+   * @param adaptableFunctionName Adaptable Function for which the Entitlement is being removed
    */
   deleteEntitlement(adaptableFunctionName: AdaptableFunctionName): void;
 }

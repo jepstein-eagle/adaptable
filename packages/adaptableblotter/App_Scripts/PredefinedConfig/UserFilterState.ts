@@ -15,7 +15,7 @@ export interface UserFilterState extends RunTimeState {
 }
 
 /**
- * A User Filter is a filter provided to the Adaptable by users (or created through the UI).
+ * A User Filter is a filter provided to Adaptable by users (or created through the UI).
  *
  * It wraps an Expression object (aka a Query) and operates on a single column
  *

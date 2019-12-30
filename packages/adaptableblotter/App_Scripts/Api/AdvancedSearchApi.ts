@@ -11,7 +11,7 @@ import { TypeUuid } from '../PredefinedConfig/Uuid';
  */
 export interface AdvancedSearchApi {
   /**
-   * Retrieves the Advanced Search section from the Adaptable State
+   * Retrieves the Advanced Search section from Adaptable State
    */
   getAdvancedSearchState(): AdvancedSearchState;
 
@@ -27,7 +27,7 @@ export interface AdvancedSearchApi {
   /**
    * Applies the Advanced Search function using the given Advanced Search name
    *
-   * **note: the name provided must be in one of the Advanced Searches currently in the Adaptable State**
+   * **note: the name provided must be in one of the Advanced Searches currently in Adaptable State**
    *
    * @param advancedSearchName the name of the Advanced Search that should be applied
    */
