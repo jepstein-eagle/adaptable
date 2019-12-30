@@ -78,7 +78,7 @@ export interface SystemStatusApi {
   clearSystemStatus(): void;
 
   /**
-   * Sets the Default Status Message (and Default Status Type) if they have been supplied.
+   * Sets the System Status message to be the `DefaultStatusMessage` (and associated `DefaultStatusType`) if they have been supplied.
    */
   setDefaultMessage(): void;
 

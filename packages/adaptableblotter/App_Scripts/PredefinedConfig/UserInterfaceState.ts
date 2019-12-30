@@ -7,6 +7,16 @@ import { MenuInfo } from './Common/Menu';
  *
  * Contains a number of properties and collections that allow users to define column lookups, colour schemes and other UI related things.
  *
+ * These include:
+ *
+ * - [PermittedColumnValues](/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#permittedcolumnvalues): a of allowed values to show in a filter (or the Query Builder) for a given column.
+ *
+ * - [PermittedColumnValues](#permittedcolumnvalues): a of allowed values to show in a filter (or the Query Builder) for a given column.
+ *
+ * - EditLookupColumns: a list of Columns which, when edited, will automatically display a Dropdown allowing the user easily to select a value.
+ *
+ * - ColorPalette: the colours which will be available by default im style-related functions (like Conditional Styles, Flashing Cells etc.)
+ *
  * **Further Resources**
  *
  * - [Column Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcolumnmenudemo/)

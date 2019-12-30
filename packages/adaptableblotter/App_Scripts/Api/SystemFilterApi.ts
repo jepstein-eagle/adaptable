@@ -1,5 +1,4 @@
 import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
-import { UserFilter } from '../PredefinedConfig/UserFilterState';
 
 /**
  * Provides run-time access to the System Filter section of Adaptable Blotter State.
