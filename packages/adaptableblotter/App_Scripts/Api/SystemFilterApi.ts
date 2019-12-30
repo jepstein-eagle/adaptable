@@ -6,7 +6,7 @@ import { UserFilter } from '../PredefinedConfig/UserFilterState';
  *
  *  **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/filters/aggridsystemfiltersdemo/) | [State](_predefinedconfig_systemfilterstate_.systemfilterstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
+ * [Demo Site](https://demo.adaptableblotter.com/filters/aggridsystemfiltersdemo/) | [System Filter State](_predefinedconfig_systemfilterstate_.systemfilterstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
  *
  */
 export interface SystemFilterApi {

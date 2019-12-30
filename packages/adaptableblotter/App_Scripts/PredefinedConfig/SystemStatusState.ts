@@ -31,9 +31,9 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * - In the System Status ToolPanel
  *
- *  **Further Resources**
+ * **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridsystemstatusdemo/) | [API](_api_systemstatusapi_.systemstatusapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754957-Messages-and-Alerts)
+ * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridsystemstatusdemo/) | [System Status API](_api_systemstatusapi_.systemstatusapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754957-Run-Time-Access)
  *
  * **System Status Predefined Config Example**
  *
@@ -48,25 +48,25 @@ import { DesignTimeState } from './DesignTimeState';
  *  },
  * } as PredefinedConfig;
  * ```
- * In this example we have set an initial Message and Type (of Warning) and also set the Default Message and Type to be used when the message is cleared / or there is no explicit System Status message.
+ * In this example we have set an initial Message and Type (of Warning) and also provided a Default Message and Type to be used when the message is cleared / or there is no explicit System Status message.
  *
  */
 export interface SystemStatusState extends DesignTimeState {
   /**
    * A default status message to show.
    *
-   * If this is set, then it is used whenever there is not an explicit value for the `StatusMessage` property and it overrides the default message provided by the Adaptable Blotter.
+   * If this is set, then it is used whenever there is not an explicit value for the `StatusMessage` property.
    *
-   * If this is not set, then the Adaptable Blotter default message is an empty string.
+   * **Default Value**: [empty string]
    */
   DefaultStatusMessage?: string;
 
   /**
    * A default status type to use.
    *
-   * If this is set, then it is used whenever there is not an explicit value for the `StatusType` property and it overrides the default message type provided by the Adaptable Blotter.
+   * If this is set, then it is used whenever there is not an explicit value for the `StatusType` property.
    *
-   * If this is not set, then the Adaptable Blotter default message type is [undefined].
+   * **Default Value**: [undefined]
    */
   DefaultStatusType?: 'Info' | 'Success' | 'Warning' | 'Error';
 
@@ -74,6 +74,8 @@ export interface SystemStatusState extends DesignTimeState {
    * The System Status message to show.
    *
    * This is shown in the System Status Toolbar (and tool panel).
+   *
+   * **Default Value**: [empty string]
    */
   StatusMessage?: string;
 
@@ -82,7 +84,9 @@ export interface SystemStatusState extends DesignTimeState {
    *
    * Each type is colour coded according to variables set in the theme.
    *
-   * The default associated colours are: Info - blue; Success- green; Warning: amber; Error: red.
+   * By default the associated colours are: Info - blue; Success- green; Warning: amber; Error: red; though this can be changed if you provide a custom theme.
+   *
+   * **Default Value**: [undefined]
    */
   StatusType?: 'Info' | 'Success' | 'Warning' | 'Error';
 
@@ -90,13 +94,15 @@ export interface SystemStatusState extends DesignTimeState {
    * Any further information to be included with the System Status message.
    *
    * Any 'Further Information' is displayed when the System Status popup is opened but it is not displayed in the System Status toolbar.
+   *
+   * **Default Value**: [empty string]
    */
   StatusFurtherInformation?: string;
 
   /**
    * Whether to show an Alert when the System Status changes.
    *
-   * If true whenever a System Status is sent, an Alert will popup and also be inserted in the Alert toolbar.
+   * If true whenever a System Status message is sent, an Alert will popup (and also be inserted in the Alert toolbar and tool panel).
    *
    * **Default Value: false**
    */
