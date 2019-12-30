@@ -1,5 +1,15 @@
 import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
 
+/**
+ * Provides access to the System Status function and associated System Status state.
+ *
+ * The System Status function allows you to send a message
+ *
+ *  **Further Resources**
+ *
+ * [Demo Site](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/) | [State](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
+ *
+ */
 export interface SystemStatusApi {
   /**
    * Retrieves the System Status section from the Adaptable Blotter State
@@ -52,6 +62,11 @@ export interface SystemStatusApi {
    * Clears any System Status messages (and sets the type to the default type - 'success')
    */
   clearSystemStatus(): void;
+
+  /**
+   * Sets the default message (and message Type) if they have been supplied.
+   */
+  setDefaultMessage(): void;
 
   /**
    * Opens the System Status popup

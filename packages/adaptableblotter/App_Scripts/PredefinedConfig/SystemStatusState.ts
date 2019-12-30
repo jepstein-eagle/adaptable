@@ -43,7 +43,7 @@ export interface SystemStatusState extends DesignTimeState {
    *
    * If this is set, then it is used whenever there is not an explicit value for the `StatusMessage` property and it overrides the default message provided by the Adaptable Blotter.
    *
-   * If this is not set, then the Adaptable Blotter default message is "All fine".
+   * If this is not set, then the Adaptable Blotter default message is an empty string.
    */
   DefaultStatusMessage?: string;
 
@@ -52,7 +52,7 @@ export interface SystemStatusState extends DesignTimeState {
    *
    * If this is set, then it is used whenever there is not an explicit value for the `StatusType` property and it overrides the default message type provided by the Adaptable Blotter.
    *
-   * If this is not set, then the Adaptable Blotter default message type is "Success".
+   * If this is not set, then the Adaptable Blotter default message type is [undefined].
    */
   DefaultStatusType?: 'Info' | 'Success' | 'Warning' | 'Error';
 
@@ -68,7 +68,7 @@ export interface SystemStatusState extends DesignTimeState {
    *
    * Each type is colour coded according to variables set in the theme.
    *
-   * The defaults are: Info - blue; Success- green; Warning: amber; Error: red.
+   * The default associated colours are: Info - blue; Success- green; Warning: amber; Error: red.
    */
   StatusType?: 'Info' | 'Success' | 'Warning' | 'Error';
 

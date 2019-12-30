@@ -50,14 +50,14 @@ console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout', 'Export'],
+    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
     }, //
   },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
   },
   SystemStatus: {
     // ShowAlert: false,

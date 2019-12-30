@@ -2,6 +2,7 @@ import * as Redux from 'redux';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import { SystemStatusUpdate } from '../../Utilities/Interface/SystemStatusUpdate';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 export const SYSTEM_SYSTEM_SET_UPDATE = 'SYSTEM_SYSTEM_SET_UPDATE';
 export const SYSTEM_SYSTEM_SET_SHOW_ALERT = 'SYSTEM_SYSTEM_SET_SHOW_ALERT';
@@ -39,10 +40,10 @@ export const SystemStatusClear = (): SystemStatusClearAction => ({
 });
 
 const initialSystemStatusState: SystemStatusState = {
-  DefaultStatusMessage: 'All fine',
-  DefaultStatusType: MessageType.Success,
-  StatusMessage: '',
-  StatusFurtherInformation: '',
+  DefaultStatusMessage: EMPTY_STRING,
+  DefaultStatusType: undefined,
+  StatusMessage: EMPTY_STRING,
+  StatusFurtherInformation: EMPTY_STRING,
   StatusType: undefined,
   ShowAlert: false,
 };

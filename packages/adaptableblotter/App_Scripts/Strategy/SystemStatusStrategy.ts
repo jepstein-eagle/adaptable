@@ -23,12 +23,18 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
         eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_SHOW_ALERT ||
         eventName == SystemStatusRedux.SYSTEM_STATUS_CLEAR
       ) {
-        this.doStuff();
+        this.setSystemMessage();
       }
+    });
+
+    this.blotter.api.eventApi.on('BlotterReady', () => {
+      setTimeout(() => {
+        this.blotter.api.systemStatusApi.setDefaultMessage();
+      }, 300);
     });
   }
 
-  protected doStuff(): void {
+  protected setSystemMessage(): void {
     let systemStatusState = this.blotter.api.systemStatusApi.getSystemStatusState();
     if (StringExtensions.IsNullOrEmpty(systemStatusState.StatusMessage)) {
       this.blotter.api.systemStatusApi.setSystemStatus(

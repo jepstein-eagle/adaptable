@@ -8,6 +8,7 @@ import { SystemStatusUpdate } from '../../Utilities/Interface/SystemStatusUpdate
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
+import Helper from '../../Utilities/Helpers/Helper';
 
 export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
   public getSystemStatusState(): SystemStatusState {
@@ -77,6 +78,19 @@ export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
 
   public clearSystemStatus(): void {
     this.dispatchAction(SystemStatusRedux.SystemStatusClear());
+  }
+
+  public setDefaultMessage(): void {
+    if (
+      StringExtensions.IsNullOrEmpty(this.getSystemStatusState().StatusMessage) &&
+      StringExtensions.IsNotNullOrEmpty(this.getSystemStatusState().DefaultStatusMessage) &&
+      Helper.objectExists(this.getSystemStatusState().DefaultStatusType)
+    ) {
+      this.setSystemStatus(
+        this.getSystemStatusState().DefaultStatusMessage,
+        this.getSystemStatusState().DefaultStatusType
+      );
+    }
   }
 
   public showSystemStatusPopup(): void {

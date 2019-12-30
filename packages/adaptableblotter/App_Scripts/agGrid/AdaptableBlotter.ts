@@ -3020,6 +3020,7 @@ import "adaptableblotter/themes/${themeName}.css"`);
   public clearRowStyles() {
     this.agGridHelper.clearRowStyles();
   }
+
   // Method called after we have rendered the grid
   // where we apply our stuff but also any ag-Grid props that we control
   private applyFinalRendering(): void {
