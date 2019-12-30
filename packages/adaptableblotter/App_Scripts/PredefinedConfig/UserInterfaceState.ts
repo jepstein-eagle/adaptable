@@ -13,7 +13,7 @@ import { MenuInfo } from './Common/Menu';
  *
  * - [RowStyles](#rowstyles): Defines how alternating (or all) rows in the Blotter should look.
  *
- * - [EditLookupColumns](#editlookupcolumns): List of Columns which, when edited, will automatically display a Dropdown allowing the user easily to select a value.
+ * - [EditLookupColumns](#editlookupcolumns): Columns which will display a Dropdown when being edited.
  *
  * - [ColorPalette](#colorpalette): Colours available by default im style-related functions (e.g. Conditional Style)
  *
@@ -23,7 +23,7 @@ import { MenuInfo } from './Common/Menu';
  *
  * - [StyleClassNames](#styleclassnames): List of (existing and available) CSS styles to be used in styling functions.
  *
- * See each section for further details and a code example.
+ * See each section below for further details and a code example.
  *
  * **Further Resources**
  *
@@ -42,6 +42,16 @@ export interface UserInterfaceState extends DesignTimeState {
    * This is used for those Functions that create a Style (e.g. Conditional Style, Format Column)
    *
    * **Please provide a list of hex values**
+   *
+   *  * **ColorPalette Predefined Config Example**
+   *
+   * ```ts
+   * export default {
+   *   UserInterface: {
+   *      ColorPalette: ['660033', 'CCFFFF', 'FFCCFF', 'B2FF66', 'FF3333', 'FFFFFF', '0000FF'],
+   *   },
+   * } as PredefinedConfig;
+   * ```
    *
    *  **Default Value**:  Empty array
    * */

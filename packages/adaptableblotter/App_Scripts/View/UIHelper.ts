@@ -60,7 +60,6 @@ export function getHexForName(name: string): string {
       return '#808080';
     case BROWN:
       return '#A52A2A';
-
     case DARK_GREEN:
       return '#006400';
     case GREEN:
@@ -71,7 +70,6 @@ export function getHexForName(name: string): string {
       return '#FFFF00';
     case LIGHT_YELLOW:
       return '#FFFFE0';
-
     case DARK_BLUE:
       return '#00008B';
     case BLUE:
@@ -82,7 +80,6 @@ export function getHexForName(name: string): string {
       return '#00FFFF';
     case MAGENTA:
       return '#FF00FF';
-
     case PURPLE:
       return '#800080';
     case DARK_RED:
