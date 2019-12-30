@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --max-old-space-size=4096 ./node_modules/.bin/next -p 8083",
+    "dev": "npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/next -p 8083",
     "build": "next build",
-    "start": "next start",
+    "start": "npm run link-core && next start",
+    "link-core": "npm run --prefix ../ link-core",
     "test-browser-w": "jest --config=jest.config.js --watch"
   },
   "author": "",
