@@ -11,7 +11,7 @@ import { LiveReport } from '../Events/LiveReportUpdated';
 
 export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   public getPartnerState(): PartnerState {
-    return this.getBlotterState().Partner || {};
+    return this.getAdaptableState().Partner || {};
   }
 
   public getIPushPullState(): IPushPullState | undefined {
@@ -40,26 +40,26 @@ export class PartnerApiImpl extends ApiBase implements PartnerAPI {
   }
 
   public isGlue42Available(): boolean {
-    return this.getBlotterState().Grid.IsGlue42Available;
+    return this.getAdaptableState().Grid.IsGlue42Available;
   }
 
   public isLiveReportRunning(): boolean {
-    return this.getBlotterState().Grid.IsLiveReportRunning;
+    return this.getAdaptableState().Grid.IsLiveReportRunning;
   }
 
   public isIPushPullAvailable(): boolean {
-    return this.getBlotterState().Grid.IsIPushPullAvailable;
+    return this.getAdaptableState().Grid.IsIPushPullAvailable;
   }
   public isOpenFinAvailable(): boolean {
     return false; // TODO
   }
 
   public getCurrentLiveReports(): LiveReport[] {
-    return this.getBlotterState().System.CurrentLiveReports;
+    return this.getAdaptableState().System.CurrentLiveReports;
   }
 
   public getIPushPullDomainsPages(): IPushPullDomain[] {
-    return this.getBlotterState().System.IPushPullDomainsPages;
+    return this.getAdaptableState().System.IPushPullDomainsPages;
   }
 
   public getIPushPullThrottleTime(): number | undefined {

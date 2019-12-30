@@ -11,7 +11,7 @@ export default () => {
   return (
     <>
       <div id="alertDiv"></div>
-      <div id="adaptableBlotter" style={{ margin: 0 }} />
+      <div id="adaptable" style={{ margin: 0 }} />
 
       {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in AdaptableOptions-- >*/}
 

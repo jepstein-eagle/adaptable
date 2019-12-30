@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { ICellSummaryStrategy } from './Interface/ICellSummaryStrategy';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ICellSummmary } from '../Utilities/Interface/Selection/ICellSummmary';
@@ -14,8 +14,8 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.CellSummaryStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.CellSummaryStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -85,10 +85,10 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         Min: hasNumericColumns ? Helper.RoundNumberTo4dp(Math.min(...numericValues)) : '',
         Count: allValues.length,
       };
-      if (this.blotter.api.cellSummaryApi.hasOnlySummary()) {
+      if (this.adaptable.api.cellSummaryApi.hasOnlySummary()) {
         selectedCellSummary.Only = this.calculateOnly(distinctCount, allValues);
       }
-      if (this.blotter.api.cellSummaryApi.hasVWAPSummary()) {
+      if (this.adaptable.api.cellSummaryApi.hasVWAPSummary()) {
         selectedCellSummary.VWAP = this.calculateVwap(numericValues, numericColumns);
       }
     }

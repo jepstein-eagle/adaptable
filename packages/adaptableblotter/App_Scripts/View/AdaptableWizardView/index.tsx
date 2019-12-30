@@ -12,7 +12,7 @@ import FileDroppable from '../../components/FileDroppable';
 import { prepareDataSource, WizardDataSourceInfo, prepareGridOptions } from './helper';
 import ConfigurationDialog from './AdaptableBlotterConfigurationDialog';
 import { Flex } from 'rebass';
-import { AdaptableOptions } from '../../BlotterOptions/AdaptableOptions';
+import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
 
 interface AdaptableWizardViewProps {
   adaptableOptions: AdaptableOptions;
@@ -124,14 +124,14 @@ const Wizard = (props: AdaptableWizardViewProps) => {
     } catch (err) {
       return dispatch({
         type: 'ERROR',
-        payload: `Invalid blotter configuration - ${err}`,
+        payload: `Invalid adaptable configuration - ${err}`,
       });
     }
     const gridOptions: GridOptions = prepareGridOptions(dataSourceInfo);
 
     const adaptableOptions = { ...props.adaptableOptions };
 
-    adaptableOptions.blotterId = adaptableOptions.blotterId || (file ? file.name : '');
+    adaptableOptions.adaptableId = adaptableOptions.adaptableId || (file ? file.name : '');
 
     adaptableOptions.vendorGrid = gridOptions;
     if (dataSourceInfo.primaryKey) {

@@ -1,11 +1,11 @@
-import { BlotterEventArgs, AdaptableBlotterEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
 import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 
-export interface ToolbarButtonClickedEventArgs extends BlotterEventArgs {
+export interface ToolbarButtonClickedEventArgs extends AdaptableEventArgs {
   data: ToolbarButtonClickedEventData[];
 }
 
-export interface ToolbarButtonClickedEventData extends AdaptableBlotterEventData {
+export interface ToolbarButtonClickedEventData extends AdaptableEventData {
   id: ToolbarButtonClickedInfo;
 }
 

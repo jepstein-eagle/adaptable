@@ -34,7 +34,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       },
       {
         Key: 'Rule',
-        Value: this.props.Blotter.StrategyService.createAlertDescription(
+        Value: this.props.Adaptable.StrategyService.createAlertDescription(
           alertDefinition,
           this.props.Columns
         ),

@@ -1,4 +1,3 @@
-import { IAdaptable } from '../../types';
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { IPPStyle } from '../Interface/IPPStyle';
 import { IPushPullService } from './Interface/IPushPullService';
@@ -7,6 +6,7 @@ import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Com
 
 import env from '../../env';
 import folder from '../../components/icons/folder';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 
 export enum ServiceStatus {
   Unknown = 'Unknown',
@@ -20,12 +20,12 @@ export class PushPullService implements IPushPullService {
 
   private pages: Map<string, any> = new Map();
 
-  constructor(public blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(public adaptable: IAdaptable) {
+    this.adaptable = adaptable;
 
-    this.blotter.api.eventApi.on('BlotterReady', () => {
+    this.adaptable.api.eventApi.on('AdaptableReady', () => {
       if (!this.ppInstance) {
-        let instance = this.blotter.api.partnerApi.getIPushPullInstance();
+        let instance = this.adaptable.api.partnerApi.getIPushPullInstance();
 
         if (instance) {
           let userPushPullConfig = instance.config;
@@ -42,9 +42,9 @@ export class PushPullService implements IPushPullService {
             hsts: false, // strict cors policy
           });
           this.ppInstance = instance;
-          this.blotter.api.internalApi.setIPushPullAvailableOn();
+          this.adaptable.api.internalApi.setIPushPullAvailableOn();
         } else {
-          this.blotter.api.internalApi.setIPushPullAvailableOff();
+          this.adaptable.api.internalApi.setIPushPullAvailableOff();
         }
       }
     });
@@ -138,7 +138,7 @@ export class PushPullService implements IPushPullService {
 
   public pushData(page: string, data: any[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      const style: IPPStyle = this.blotter.getIPPStyle();
+      const style: IPPStyle = this.adaptable.getIPPStyle();
       var newData = data.map((row: any, i: number) =>
         row.map((cell: any, y: number) => {
           const col =
@@ -200,7 +200,7 @@ export class PushPullService implements IPushPullService {
       const pageIPP = this.pages.get(page);
       pageIPP.Content.canDoDelta = false;
       pageIPP.Content.update(newData, true);
-      this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+      this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
         ExportDestination.iPushPull,
         LiveReportTrigger.LiveDataUpdated
       );

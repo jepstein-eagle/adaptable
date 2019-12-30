@@ -9,7 +9,7 @@ import {
   ExportDestination,
   LiveReportTrigger,
 } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Report } from '../../PredefinedConfig/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { SelectedRowInfo } from '../Interface/Selection/SelectedRowInfo';
@@ -33,8 +33,8 @@ export const SELECTED_CELLS_REPORT = 'Selected Cells';
 export const SELECTED_ROWS_REPORT = 'Selected Rows';
 
 export class ReportService implements IReportService {
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   public IsSystemReport(Report: Report): boolean {
@@ -63,7 +63,7 @@ export class ReportService implements IReportService {
   public GetReportExpressionDescription(Report: Report, cols: AdaptableColumn[]): string {
     if (this.IsSystemReport(Report)) {
       if (Report.Name == ALL_DATA_REPORT) {
-        return '[All Blotter Data]';
+        return '[All adaptable Data]';
       } else if (Report.Name == VISIBLE_DATA_REPORT) {
         return '[All Visible Data]';
       } else if (Report.Name == SELECTED_CELLS_REPORT) {
@@ -94,9 +94,9 @@ export class ReportService implements IReportService {
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
       case ExportDestination.iPushPull:
-        return this.blotter.api.partnerApi.isIPushPullAvailable();
+        return this.adaptable.api.partnerApi.isIPushPullAvailable();
       case ExportDestination.Glue42:
-        return this.blotter.api.partnerApi.isGlue42Available();
+        return this.adaptable.api.partnerApi.isGlue42Available();
     }
 
     return false;
@@ -104,7 +104,7 @@ export class ReportService implements IReportService {
 
   private getReportColumnsForReport(report: Report): any {
     let reportColumns: AdaptableColumn[] = [];
-    let gridColumns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
+    let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
 
     // first get the cols depending on the Column Scope
     switch (report.ReportColumnScope) {
@@ -115,7 +115,7 @@ export class ReportService implements IReportService {
         reportColumns = gridColumns.filter(c => c.Visible);
         break;
       case ReportColumnScope.SelectedColumns:
-        let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+        let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         // otherwise get columns
         reportColumns = selectedCellInfo.Columns;
@@ -150,14 +150,14 @@ export class ReportService implements IReportService {
     // now populate the rest of the rows
     switch (report.ReportRowScope) {
       case ReportRowScope.AllRows:
-        this.blotter.forAllRowNodesDo(row => {
+        this.adaptable.forAllRowNodesDo(row => {
           let newRow = this.getRowValues(row, reportColumns);
           dataToExport.push(newRow);
         });
         break;
 
       case ReportRowScope.VisibleRows:
-        this.blotter.forAllVisibleRowNodesDo(row => {
+        this.adaptable.forAllVisibleRowNodesDo(row => {
           let newRow = this.getRowValues(row, reportColumns);
           dataToExport.push(newRow);
         });
@@ -165,13 +165,13 @@ export class ReportService implements IReportService {
 
       case ReportRowScope.ExpressionRows:
         let expressionToCheck: Expression = report.Expression;
-        this.blotter.forAllRowNodesDo(row => {
+        this.adaptable.forAllRowNodesDo(row => {
           if (
             ExpressionHelper.checkForExpressionFromRowNode(
               expressionToCheck,
               row,
               reportColumns,
-              this.blotter
+              this.adaptable
             )
           ) {
             let newRow = this.getRowValues(row, reportColumns);
@@ -181,7 +181,7 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.SelectedCells:
-        const selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+        const selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         const { GridCells } = selectedCellInfo;
 
@@ -217,7 +217,7 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.SelectedRows:
-        const selectedRowInfo: SelectedRowInfo = this.blotter.api.gridApi.getSelectedRowInfo();
+        const selectedRowInfo: SelectedRowInfo = this.adaptable.api.gridApi.getSelectedRowInfo();
         if (selectedRowInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedRowInfo.GridRows)) {
           let columnIds: string[] = reportColumns.map(rc => rc.ColumnId);
           selectedRowInfo.GridRows.filter(gr => gr.rowInfo.isGroup == false).forEach(
@@ -243,15 +243,15 @@ export class ReportService implements IReportService {
 
     switch (report.ReportRowScope) {
       case ReportRowScope.AllRows:
-        this.blotter.forAllRowNodesDo(row => {
-          let pkValue: any = this.blotter.getPrimaryKeyValueFromRowNode(row);
+        this.adaptable.forAllRowNodesDo(row => {
+          let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(row);
           pkValues.push(pkValue);
         });
         break;
 
       case ReportRowScope.VisibleRows:
-        this.blotter.forAllVisibleRowNodesDo(row => {
-          let pkValue: any = this.blotter.getPrimaryKeyValueFromRowNode(row);
+        this.adaptable.forAllVisibleRowNodesDo(row => {
+          let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(row);
           pkValues.push(pkValue);
         });
         break;
@@ -259,23 +259,23 @@ export class ReportService implements IReportService {
       case ReportRowScope.ExpressionRows:
         let expressionToCheck: Expression = report.Expression;
 
-        this.blotter.forAllRowNodesDo(row => {
+        this.adaptable.forAllRowNodesDo(row => {
           if (
             ExpressionHelper.checkForExpressionFromRowNode(
               expressionToCheck,
               row,
               reportColumns,
-              this.blotter
+              this.adaptable
             )
           ) {
-            let pkValue: any = this.blotter.getPrimaryKeyValueFromRowNode(row);
+            let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(row);
             pkValues.push(pkValue);
           }
         });
         break;
 
       case ReportRowScope.SelectedCells:
-        const selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+        const selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         const { Columns, GridCells } = selectedCellInfo;
         const colCount = Columns.length;
@@ -291,7 +291,7 @@ export class ReportService implements IReportService {
 
         break;
       case ReportRowScope.SelectedRows:
-        const selectedRowInfo: SelectedRowInfo = this.blotter.api.gridApi.getSelectedRowInfo();
+        const selectedRowInfo: SelectedRowInfo = this.adaptable.api.gridApi.getSelectedRowInfo();
         if (selectedRowInfo != null && ArrayExtensions.IsNotNullOrEmpty(selectedRowInfo.GridRows)) {
           selectedRowInfo.GridRows.filter(gr => gr.rowInfo.isGroup == false).forEach(
             (gridRow: GridRow) => {
@@ -308,7 +308,7 @@ export class ReportService implements IReportService {
   private getRowValues(rowNode: any, reportColumns: AdaptableColumn[]): any[] {
     let newRow: any[] = [];
     reportColumns.forEach(col => {
-      let columnValue: any = this.blotter.getDisplayValueFromRowNode(rowNode, col.ColumnId);
+      let columnValue: any = this.adaptable.getDisplayValueFromRowNode(rowNode, col.ColumnId);
       newRow.push(columnValue);
     });
     return newRow;
@@ -324,13 +324,13 @@ export class ReportService implements IReportService {
     let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
       ExportDestination: exportDestination,
       LiveReportTrigger: liveReportTrigger,
-      CurrentLiveReports: this.blotter.api.partnerApi.getCurrentLiveReports(),
+      CurrentLiveReports: this.adaptable.api.partnerApi.getCurrentLiveReports(),
     };
     const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = AdaptableHelper.createFDC3Message(
       'Live Report Updated Args',
       liveReportUpdatedInfo
     );
-    this.blotter.api.eventApi.emit('LiveReportUpdated', liveReportUpdatedEventArgs);
+    this.adaptable.api.eventApi.emit('LiveReportUpdated', liveReportUpdatedEventArgs);
   }
 
   public IsReportLiveReport(report: Report, exportDestination: ExportDestination): boolean {
@@ -343,11 +343,11 @@ export class ReportService implements IReportService {
       case ExportDestination.OpenfinExcel:
         return true;
       case ExportDestination.iPushPull:
-        let liveReports: LiveReport[] = this.blotter.api.internalApi.getLiveReports();
+        let liveReports: LiveReport[] = this.adaptable.api.internalApi.getLiveReports();
         let currentLiveReport = liveReports.find(lr => lr.Report.Name == report.Name);
         return currentLiveReport != null;
       case ExportDestination.Glue42:
-        return this.blotter.api.partnerApi.isGlue42RunLiveData();
+        return this.adaptable.api.partnerApi.isGlue42RunLiveData();
     }
   }
 }

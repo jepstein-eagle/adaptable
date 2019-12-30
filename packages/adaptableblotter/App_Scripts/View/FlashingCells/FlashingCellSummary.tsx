@@ -66,7 +66,7 @@ export class FlashingCellSummaryComponent extends React.Component<
       e => e.ColumnId == this.props.SummarisedColumn.ColumnId
     );
     if (!existingfc) {
-      let flashingCellState: FlashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(
+      let flashingCellState: FlashingCellState = this.props.Adaptable.api.configApi.configGetFlashingCellState(
         false
       );
       let col: AdaptableColumn = ColumnHelper.getColumnFromId(

@@ -176,13 +176,13 @@ export function getPlaceHolderforDataType(dataType: DataType) {
 }
 
 export function getModalContainer(
-  blotterOptions: AdaptableOptions,
+  adaptableOptions: AdaptableOptions,
   document: Document
 ): HTMLElement {
   let modalContainer: HTMLElement;
-  if (blotterOptions.containerOptions.modalContainer) {
+  if (adaptableOptions.containerOptions.modalContainer) {
     // this has been set, so we use the property
-    modalContainer = document.getElementById(blotterOptions.containerOptions.modalContainer);
+    modalContainer = document.getElementById(adaptableOptions.containerOptions.modalContainer);
     if (modalContainer) {
       const modalContainerClassName: string = ' modal-container';
       if (!modalContainer.className.includes(modalContainerClassName)) {
@@ -197,14 +197,14 @@ export function getModalContainer(
 }
 
 export function getChartContainer(
-  blotterOptions: AdaptableOptions,
+  adaptableOptions: AdaptableOptions,
   document: Document,
   showModal: boolean
 ): HTMLElement {
   let chartContainer: HTMLElement;
-  if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) {
+  if (StringExtensions.IsNotNullOrEmpty(adaptableOptions.containerOptions.chartContainer)) {
     // they have provided one so get that
-    chartContainer = document.getElementById(blotterOptions.containerOptions.chartContainer);
+    chartContainer = document.getElementById(adaptableOptions.containerOptions.chartContainer);
     if (chartContainer) {
       const chartContainerClassName: string = ' chart-container';
       if (!chartContainer.className.includes(chartContainerClassName)) {
@@ -212,7 +212,7 @@ export function getChartContainer(
       }
     } else {
       LoggingHelper.LogAdaptableError(
-        `Chart div called '${blotterOptions.containerOptions.chartContainer}' not found: so creating standard div`
+        `Chart div called '${adaptableOptions.containerOptions.chartContainer}' not found: so creating standard div`
       );
       chartContainer = document.getElementById('ad');
     }
@@ -224,11 +224,11 @@ export function getChartContainer(
 }
 
 export function isValidUserChartContainer(
-  blotterOptions: AdaptableOptions,
+  adaptableOptions: AdaptableOptions,
   document: Document
 ): boolean {
-  if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) {
-    return document.getElementById(blotterOptions.containerOptions.chartContainer) != null;
+  if (StringExtensions.IsNotNullOrEmpty(adaptableOptions.containerOptions.chartContainer)) {
+    return document.getElementById(adaptableOptions.containerOptions.chartContainer) != null;
   }
   return false;
 }

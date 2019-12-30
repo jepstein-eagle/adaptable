@@ -97,7 +97,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
         )}
         <CheckBox
           className="ab-ToolPanel__ColumnFilter__active-check"
-          disabled={this.props.Blotter.api.internalApi.isGridInPivotMode()}
+          disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
           marginLeft={1}
           marginTop={0}
           padding={1}
@@ -128,12 +128,12 @@ class ColumnFilterToolPanelComponent extends React.Component<
   private onClearFilters() {
     // better to put in store but lets test first...
     this.props.onClearAllFilters();
-    this.props.Blotter.clearGridFiltering();
+    this.props.Adaptable.clearGridFiltering();
   }
 
   private onClearColumnFilter(columnFilter: ColumnFilter) {
     this.props.onClearColumnFilter(columnFilter);
-    this.props.Blotter.clearColumnFiltering([columnFilter.ColumnId]);
+    this.props.Adaptable.clearColumnFiltering([columnFilter.ColumnId]);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {

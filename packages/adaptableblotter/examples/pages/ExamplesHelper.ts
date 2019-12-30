@@ -1763,22 +1763,22 @@ export class ExamplesHelper {
     return schema;
   }
 
-  public createAdaptableOptionsTrade(gridOptions: GridOptions, blotterId: string) {
+  public createAdaptableOptionsTrade(gridOptions: GridOptions, adaptableId: string) {
     const adaptableOptions = {
       vendorGrid: gridOptions,
       primaryKey: 'tradeId',
       userName: 'demo user',
-      blotterId,
+      adaptableId,
     };
     return adaptableOptions;
   }
 
-  public createAdaptableOptionsFtse(gridOptions: GridOptions, blotterId: string) {
+  public createAdaptableOptionsFtse(gridOptions: GridOptions, adaptableId: string) {
     const adaptableOptions = {
       vendorGrid: gridOptions,
       primaryKey: 'date',
       userName: 'demo user',
-      blotterId,
+      adaptableId,
     };
     return adaptableOptions;
   }

@@ -1,7 +1,7 @@
 import { AuditLogEventArgs } from './Events/AuditEvents';
 
 /**
- * The Adaptable Blotter publishes 3 Audit Events that users can subscribe to as needed.
+ * The Adaptable publishes 3 Audit Events that users can subscribe to as needed.
  *
  * - **AuditStateChanged**: fired when the Internal or User state of the Application has changed
  *
@@ -9,9 +9,9 @@ import { AuditLogEventArgs } from './Events/AuditEvents';
  *
  * - **AuditFunctionApplied**: fired when a Function has been run
  *
- * These events are **only fired if the Audit Log** has been configured with the property *auditAsEvent* set to **true** in [Audit Options](_blotteroptions_auditoptions_.auditoptions.html).
+ * These events are **only fired if the Audit Log** has been configured with the property *auditAsEvent* set to **true** in [Audit Options](_adaptableOptions_auditoptions_.auditoptions.html).
  *
- *  The Adaptable Blotter uses **FDC3 Standard for messaging** so to get the full audit data, you will need to access the auditLogEventArgs.data[0].id property e.g.:
+ *  The Adaptable uses **FDC3 Standard for messaging** so to get the full audit data, you will need to access the auditLogEventArgs.data[0].id property e.g.:
  *
  *  ```ts
  *  const auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id

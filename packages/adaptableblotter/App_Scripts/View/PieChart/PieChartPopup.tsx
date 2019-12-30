@@ -403,7 +403,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
       pieChartDefinition.PrimaryKeyValues = primaryKeyValues;
     }
 
-    let chartData: ChartData = this.props.Blotter.ChartService.BuildPieChartData(
+    let chartData: ChartData = this.props.Adaptable.ChartService.BuildPieChartData(
       pieChartDefinition
     );
     let dataSource: PieChartDataItem[] = chartData.Data;

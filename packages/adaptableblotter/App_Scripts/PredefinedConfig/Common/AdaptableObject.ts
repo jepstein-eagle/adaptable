@@ -1,11 +1,11 @@
 import { TypeUuid } from '../Uuid';
 
 /**
- * The base empty Adaptable Blotter Object interface which all other State-related interfaces should extend.
+ * The base empty Adaptable Object interface which all other State-related interfaces should extend.
  *
  * Contains a single **Uuid** property which uniquely identifies the object.
  *
- * Note: this property is assigned by the adaptable blotter when the object is created.
+ * Note: this property is assigned by Adaptable when the object is created.
  *
  * If the user has provided Predefined Config, the Uuid is assigned BEFORE the Config is read.
  */
@@ -15,7 +15,7 @@ export interface AdaptableObject {
    *
    * Used to compare State objects
    *
-   * **Do not provide this property when creating an Adaptable Blotter Object in Predefined Config as the Adaptable Blotter will do it for you when the application loads.**
+   * **Do not provide this property when creating an Adaptable Object in Predefined Config as the Adaptable will do it for you when the application loads.**
    */
   Uuid?: TypeUuid;
 }

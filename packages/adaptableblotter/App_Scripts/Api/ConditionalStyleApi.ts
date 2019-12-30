@@ -5,12 +5,12 @@ import { ConditionalStyleState, ConditionalStyle } from '../PredefinedConfig/Con
  */
 export interface ConditionalStyleApi {
   /**
-   * Retrieves the Conditional Style section from the Adaptable Blotter State
+   * Retrieves the Conditional Style section from the Adaptable State
    */
   getConditionalStyleState(): ConditionalStyleState;
 
   /**
-   * Gets all Conditional Styles in the Adaptable Blotter State
+   * Gets all Conditional Styles in the Adaptable State
    */
   getAllConditionalStyle(): ConditionalStyle[];
 

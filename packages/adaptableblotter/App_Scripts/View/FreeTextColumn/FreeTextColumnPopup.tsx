@@ -128,7 +128,7 @@ class FreeTextColumnPopupComponent extends React.Component<
               NamedFilters={this.props.NamedFilters}
               ColumnCategories={this.props.ColumnCategories}
               Columns={this.props.Columns}
-              Blotter={this.props.Blotter}
+              Adaptable={this.props.Adaptable}
               ConfigEntities={this.props.FreeTextColumns}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

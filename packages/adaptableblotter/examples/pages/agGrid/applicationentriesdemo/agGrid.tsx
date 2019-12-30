@@ -16,7 +16,7 @@ import { ApplicationDataEntry } from '../../../../App_Scripts/PredefinedConfig/A
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -26,7 +26,7 @@ function InitAdaptableBlotter() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Application Entries Demo',
+    adaptableId: 'Application Entries Demo',
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
@@ -114,7 +114,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

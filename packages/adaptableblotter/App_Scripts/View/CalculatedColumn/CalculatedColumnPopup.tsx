@@ -101,7 +101,9 @@ class CalculatedColumnPopupComponent extends React.Component<
             onEdit={calculatedColumn => this.onEdit(calculatedColumn as CalculatedColumn)}
             onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
             AccessLevel={this.props.AccessLevel}
-            CalculatedColumnExpressionService={this.props.Blotter.CalculatedColumnExpressionService}
+            CalculatedColumnExpressionService={
+              this.props.Adaptable.CalculatedColumnExpressionService
+            }
           />
         );
       }
@@ -146,7 +148,7 @@ class CalculatedColumnPopupComponent extends React.Component<
             ColumnCategories={this.props.ColumnCategories}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

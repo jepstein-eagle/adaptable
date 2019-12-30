@@ -298,7 +298,7 @@ const App = () => {
     vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
     primaryKey: 'ab-react-wrapper',
     userName: 'demo user',
-    blotterId: 'trade demo',
+    adaptableId: 'trade demo',
 
     //   predefinedConfig: dataSourceJson,
     auditOptions: {
@@ -327,8 +327,8 @@ const App = () => {
       // getColumnValues: retrieveValues,
     },
     filterOptions: {
-      useAdaptableBlotterFilterForm: true,
-      useAdaptableBlotterQuickFilter: true,
+      useAdaptableFilterForm: true,
+      useAdaptableQuickFilter: true,
     },
     chartOptions: {
       displayOnStartUp: true,

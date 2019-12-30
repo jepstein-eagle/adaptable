@@ -19,7 +19,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
         <AdaptableWizard
           FriendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

@@ -13,17 +13,17 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  * - [Action Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos)
  *
- * - [Adaptable Blotter User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
+ * - [Adaptable User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *
  */
 export interface ActionColumnApi {
   /**
-   * Retrieves the `ActionColumn` section from the Adaptable Blotter State
+   * Retrieves the `ActionColumn` section from the Adaptable State
    */
   getActionColumnState(): ActionColumnState;
 
   /**
-   * Returns all the `ActionColumn` objects in the Action Column section of Adaptable Blotter State
+   * Returns all the `ActionColumn` objects in the Action Column section of Adaptable State
    */
   getAllActionColumn(): ActionColumn[];
 }

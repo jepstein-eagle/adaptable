@@ -27,7 +27,7 @@ export class CustomSortValuesWizard
   constructor(props: CustomSortValuesWizardProps) {
     super(props);
     this.state = {
-      ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+      ColumnValues: this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
         this.props.Data.ColumnId,
         DistinctCriteriaPairValue.DisplayValue,
         false

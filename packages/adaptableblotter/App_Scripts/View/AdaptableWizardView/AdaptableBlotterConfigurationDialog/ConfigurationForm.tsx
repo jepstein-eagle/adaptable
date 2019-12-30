@@ -2,22 +2,22 @@ import * as React from 'react';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import { AdaptableOptions } from '../../../types';
 import CheckBox from '../../../components/CheckBox';
-import { FilterOptions } from '../../../BlotterOptions/FilterOptions';
-import { LayoutOptions } from '../../../BlotterOptions/LayoutOptions';
+import { FilterOptions } from '../../../AdaptableOptions/FilterOptions';
+import { LayoutOptions } from '../../../AdaptableOptions/LayoutOptions';
 import { GridOptions } from 'ag-grid-community';
 import HelpBlock from '../../../components/HelpBlock';
-import { ConfigServerOptions } from '../../../BlotterOptions/ConfigServerOptions';
+import { ConfigServerOptions } from '../../../AdaptableOptions/ConfigServerOptions';
 import Input from '../../../components/Input';
-import { GeneralOptions } from '../../../BlotterOptions/GeneralOptions';
-import { QueryOptions } from '../../../BlotterOptions/QueryOptions';
-import { ChartOptions } from '../../../BlotterOptions/ChartOptions';
+import { GeneralOptions } from '../../../AdaptableOptions/GeneralOptions';
+import { QueryOptions } from '../../../AdaptableOptions/QueryOptions';
+import { ChartOptions } from '../../../AdaptableOptions/ChartOptions';
 import { Flex, Text } from 'rebass';
 import { DefaultAdaptableOptions } from '../../../Utilities/Defaults/DefaultAdaptableOptions';
-import { UserInterfaceOptions } from '../../../BlotterOptions/UserInterfaceOptions';
+import { UserInterfaceOptions } from '../../../AdaptableOptions/UserInterfaceOptions';
 
 interface ConfigurationFormOptions {
   adaptableOptions: AdaptableOptions;
-  onChangeBlotterOptions: (adaptableOptions: AdaptableOptions) => void;
+  onChangeadaptableOptions: (adaptableOptions: AdaptableOptions) => void;
 }
 
 const ConfigurationForm = (props: ConfigurationFormOptions) => {
@@ -79,7 +79,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.userInterfaceOptions = { ...abOptions.userInterfaceOptions };
               abOptions.userInterfaceOptions.useDefaultVendorGridThemes = useDefaultVendorGridThemes;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -91,7 +91,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.generalOptions = { ...abOptions.generalOptions };
               abOptions.generalOptions.showMissingPrimaryKeyWarning = showMissingPrimaryKeyWarning;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -103,12 +103,12 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.generalOptions = { ...abOptions.generalOptions };
               abOptions.generalOptions.preventDuplicatePrimaryKeyValues = preventDuplicatePrimaryKeyValues;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
         {/* 
-        <FormRow label="Show Adaptable Blotter Tool Panel">
+        <FormRow label="Show Adaptable Tool Panel">
           <CheckBox
             checked={userInterfaceOptions.showAdaptableToolPanel}
             onChange={(showAdaptableToolPanel: boolean) => {
@@ -116,7 +116,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.userInterfaceOptions = { ...abOptions.userInterfaceOptions };
               abOptions.userInterfaceOptions.showAdaptableToolPanel = showAdaptableToolPanel;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -136,7 +136,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.vendorGrid = { ...abOptions.vendorGrid };
               abOptions.vendorGrid.enableRangeSelection = enableRangeSelection;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -148,7 +148,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.vendorGrid = { ...abOptions.vendorGrid };
               abOptions.vendorGrid.floatingFilter = floatingFilter;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -160,7 +160,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.vendorGrid = { ...abOptions.vendorGrid };
               abOptions.vendorGrid.suppressColumnVirtualisation = suppressColumnVirtualisation;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -172,7 +172,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.vendorGrid = { ...abOptions.vendorGrid };
               abOptions.vendorGrid.suppressMenuHide = suppressMenuHide;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -191,33 +191,33 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.filterOptions = { ...abOptions.filterOptions };
               abOptions.filterOptions.useVendorFilterFormStyle = useVendorFilterFormStyle;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
 
-        <FormRow label="Use Adaptable Blotter Quick Filter">
+        <FormRow label="Use Adaptable Quick Filter">
           <CheckBox
-            checked={filterOptions.useAdaptableBlotterQuickFilter}
-            onChange={(useAdaptableBlotterQuickFilter: boolean) => {
+            checked={filterOptions.useAdaptableQuickFilter}
+            onChange={(useAdaptableQuickFilter: boolean) => {
               abOptions = { ...abOptions };
               abOptions.filterOptions = { ...abOptions.filterOptions };
-              abOptions.filterOptions.useAdaptableBlotterQuickFilter = useAdaptableBlotterQuickFilter;
+              abOptions.filterOptions.useAdaptableQuickFilter = useAdaptableQuickFilter;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
 
-        <FormRow label="Use Adaptable Blotter Filter Form">
+        <FormRow label="Use Adaptable Filter Form">
           <CheckBox
-            checked={filterOptions.useAdaptableBlotterFilterForm}
-            onChange={(useAdaptableBlotterFilterForm: boolean) => {
+            checked={filterOptions.useAdaptableFilterForm}
+            onChange={(useAdaptableFilterForm: boolean) => {
               abOptions = { ...abOptions };
               abOptions.filterOptions = { ...abOptions.filterOptions };
-              abOptions.filterOptions.useAdaptableBlotterFilterForm = useAdaptableBlotterFilterForm;
+              abOptions.filterOptions.useAdaptableFilterForm = useAdaptableFilterForm;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -230,7 +230,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.filterOptions = { ...abOptions.filterOptions };
               abOptions.filterOptions.indicateFilteredColumns = indicateFilteredColumns;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -243,7 +243,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.filterOptions = { ...abOptions.filterOptions };
               abOptions.filterOptions.autoApplyFilter = autoApplyFilter;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -262,7 +262,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.layoutOptions = { ...abOptions.layoutOptions };
               abOptions.layoutOptions.includeVendorStateInLayouts = includeVendorStateInLayouts;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -274,7 +274,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.layoutOptions = { ...abOptions.layoutOptions };
               abOptions.layoutOptions.autoSaveLayouts = autoSaveLayouts;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -286,7 +286,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.layoutOptions = { ...abOptions.layoutOptions };
               abOptions.layoutOptions.autoSizeColumnsInLayout = autoSizeColumnsInLayout;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -305,7 +305,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.queryOptions = { ...abOptions.queryOptions };
               abOptions.queryOptions.columnValuesOnlyInQueries = columnValuesOnlyInQueries;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -317,7 +317,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions.queryOptions = { ...abOptions.queryOptions };
               abOptions.queryOptions.ignoreCaseInQueries = ignoreCaseInQueries;
 
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -339,7 +339,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions = { ...abOptions };
               abOptions.queryOptions = { ...abOptions.queryOptions };
               abOptions.queryOptions.maxColumnValueItemsDisplayed = maxColumnValueItemsDisplayed;
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
             value={queryOptions.maxColumnValueItemsDisplayed}
             marginRight={3}
@@ -359,7 +359,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions = { ...abOptions };
               abOptions.chartOptions = { ...abOptions.chartOptions };
               abOptions.chartOptions.displayOnStartUp = displayOnStartUp;
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -370,7 +370,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions = { ...abOptions };
               abOptions.chartOptions = { ...abOptions.chartOptions };
               abOptions.chartOptions.showModal = showModal;
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -391,7 +391,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions = { ...abOptions };
               abOptions.chartOptions = { ...abOptions.chartOptions };
               abOptions.chartOptions.pieChartMaxItems = pieChartMaxItems;
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
             value={chartOptions.pieChartMaxItems}
             marginRight={3}
@@ -411,7 +411,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions = { ...abOptions };
               abOptions.configServerOptions = { ...abOptions.configServerOptions };
               abOptions.configServerOptions.enableConfigServer = enableConfigServer;
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
           />
         </FormRow>
@@ -432,7 +432,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
               abOptions = { ...abOptions };
               abOptions.configServerOptions = { ...abOptions.configServerOptions };
               abOptions.configServerOptions.configServerUrl = configServerUrl;
-              props.onChangeBlotterOptions(abOptions);
+              props.onChangeadaptableOptions(abOptions);
             }}
             value={configServerOptions.configServerUrl}
             marginRight={3}

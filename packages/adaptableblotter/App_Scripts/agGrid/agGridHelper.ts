@@ -56,7 +56,6 @@ import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
 import { SystemStatusStrategy } from '../Strategy/SystemStatusStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
 import { Adaptable } from './Adaptable';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
@@ -77,6 +76,7 @@ import { iconToString } from '../components/icons';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -86,8 +86,8 @@ import { createUuid } from '../PredefinedConfig/Uuid';
 
 // tslint:disable-next-line: class-name
 export class agGridHelper {
-  constructor(private blotter: IAdaptable, private gridOptions: GridOptions) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable, private gridOptions: GridOptions) {
+    this.adaptable = adaptable;
     this.gridOptions = gridOptions;
   }
 
@@ -101,67 +101,79 @@ export class agGridHelper {
 
   public setUpStrategies(): Map<AdaptableFunctionName, IStrategy> {
     const strategies = new Map<AdaptableFunctionName, IStrategy>();
-    const blotter = this.blotter as Adaptable;
-    strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(blotter));
-    strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(blotter));
-    strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(blotter));
+    const adaptable = this.adaptable as Adaptable;
+    strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(adaptable));
+    strategies.set(
+      StrategyConstants.AdvancedSearchStrategyId,
+      new AdvancedSearchStrategy(adaptable)
+    );
+    strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(adaptable));
     strategies.set(
       StrategyConstants.CalculatedColumnStrategyId,
-      new CalculatedColumnStrategy(blotter)
+      new CalculatedColumnStrategy(adaptable)
     );
-    strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(blotter));
-    strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(blotter));
-    strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(blotter));
-    strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(blotter));
-    strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(blotter));
-    strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(blotter));
+    strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(adaptable));
+    strategies.set(
+      StrategyConstants.CellValidationStrategyId,
+      new CellValidationStrategy(adaptable)
+    );
+    strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(adaptable));
+    strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(adaptable));
+    strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(adaptable));
+    strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(adaptable));
     strategies.set(
       StrategyConstants.ConditionalStyleStrategyId,
-      new ConditionalStyleStrategyagGrid(blotter)
+      new ConditionalStyleStrategyagGrid(adaptable)
     );
-    strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid(blotter));
-    strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(blotter));
-    strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(blotter));
-    strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(blotter));
+    strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid(adaptable));
+    strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(adaptable));
+    strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(adaptable));
+    strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(adaptable));
     strategies.set(
       StrategyConstants.FlashingCellsStrategyId,
-      new FlashingCellStrategyagGrid(blotter)
+      new FlashingCellStrategyagGrid(adaptable)
     );
-    strategies.set(StrategyConstants.UpdatedRowStrategyId, new UpdatedRowStrategyagGrid(blotter));
+    strategies.set(StrategyConstants.UpdatedRowStrategyId, new UpdatedRowStrategyagGrid(adaptable));
     strategies.set(
       StrategyConstants.FormatColumnStrategyId,
-      new FormatColumnStrategyagGrid(blotter)
+      new FormatColumnStrategyagGrid(adaptable)
     );
-    strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(blotter));
-    strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(blotter));
-    strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(blotter));
-    strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(blotter));
-    strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(blotter));
-    strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(blotter));
-    strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(blotter));
-    strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(blotter));
-    strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(blotter));
-    strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(blotter));
+    strategies.set(
+      StrategyConstants.FreeTextColumnStrategyId,
+      new FreeTextColumnStrategy(adaptable)
+    );
+    strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(adaptable));
+    strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(adaptable));
+    strategies.set(
+      StrategyConstants.ColumnCategoryStrategyId,
+      new ColumnCategoryStrategy(adaptable)
+    );
+    strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(adaptable));
+    strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(adaptable));
+    strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(adaptable));
+    strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(adaptable));
+    strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(adaptable));
+    strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(adaptable));
     strategies.set(
       StrategyConstants.StateManagementStrategyId,
-      new StateManagementStrategy(blotter)
+      new StateManagementStrategy(adaptable)
     );
-    strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(blotter));
-    strategies.set(StrategyConstants.SystemStatusStrategyId, new SystemStatusStrategy(blotter));
-    strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(blotter));
-    strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter));
-    strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(blotter));
+    strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(adaptable));
+    strategies.set(StrategyConstants.SystemStatusStrategyId, new SystemStatusStrategy(adaptable));
+    strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(adaptable));
+    strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(adaptable));
+    strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(adaptable));
     strategies.set(
       StrategyConstants.SparklineColumnStrategyId,
-      new SparklineColumnStrategy(blotter)
+      new SparklineColumnStrategy(adaptable)
     );
-    strategies.set(StrategyConstants.SparklineStrategyId, new SparklineStrategy(blotter));
-    strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(blotter));
+    strategies.set(StrategyConstants.SparklineStrategyId, new SparklineStrategy(adaptable));
+    strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     return strategies;
   }
 
   public TrySetUpNodeIds(): boolean {
-    if (StringExtensions.IsNullOrEmpty(this.blotter.blotterOptions.primaryKey)) {
+    if (StringExtensions.IsNullOrEmpty(this.adaptable.adaptableOptions.primaryKey)) {
       // if no valid pk then always false
       return false;
     }
@@ -171,7 +183,7 @@ export class agGridHelper {
     }
 
     // also we can check if they have done it
-    const primaryKey: any = this.blotter.blotterOptions.primaryKey;
+    const primaryKey: any = this.adaptable.adaptableOptions.primaryKey;
     // otherwise lets set the Id so that it returns the primaryKey
     this.gridOptions.getRowNodeId = function(data) {
       return data[primaryKey];
@@ -181,12 +193,12 @@ export class agGridHelper {
 
   public createSparklineCellRendererComp(
     sparkline: SparklineColumn,
-    blotterId: string
+    adaptableId: string
   ): ICellRendererFunc {
     return getSparklineRendererForColumn(sparkline);
   }
 
-  public createPercentBarCellRendererFunc(pcr: PercentBar, blotterId: string): ICellRendererFunc {
+  public createPercentBarCellRendererFunc(pcr: PercentBar, adaptableId: string): ICellRendererFunc {
     const showNegatives: boolean = pcr.MinValue < 0;
     const showPositives: boolean = pcr.MaxValue > 0;
 
@@ -198,10 +210,10 @@ export class agGridHelper {
       }
 
       const maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId)
-        ? this.blotter.getRawValueFromRowNode(params.node, pcr.MaxValueColumnId)
+        ? this.adaptable.getRawValueFromRowNode(params.node, pcr.MaxValueColumnId)
         : pcr.MaxValue;
       const minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId)
-        ? this.blotter.getRawValueFromRowNode(params.node, pcr.MinValueColumnId)
+        ? this.adaptable.getRawValueFromRowNode(params.node, pcr.MinValueColumnId)
         : pcr.MinValue;
 
       if (isNegativeValue) {
@@ -220,7 +232,7 @@ export class agGridHelper {
       eOuterDiv.className = 'ab_div-colour-render-div';
       if (pcr.ShowValue) {
         const showValueBar = document.createElement('div');
-        showValueBar.id = `ab_div-colour-render-text_${blotterId}_${pcr.ColumnId}`;
+        showValueBar.id = `ab_div-colour-render-text_${adaptableId}_${pcr.ColumnId}`;
         showValueBar.className = 'ab_div-colour-render-text';
         if (showNegatives && showPositives) {
           showValueBar.style.paddingLeft = isNegativeValue ? '50%' : '20%';
@@ -236,13 +248,13 @@ export class agGridHelper {
 
         const negativeDivBlankBar = document.createElement('div');
         negativeDivBlankBar.className = 'ab_div-colour-render-bar';
-        negativeDivBlankBar.id = `ab_div-colour-blank-bar_${blotterId}_${pcr.ColumnId}`;
+        negativeDivBlankBar.id = `ab_div-colour-blank-bar_${adaptableId}_${pcr.ColumnId}`;
         negativeDivBlankBar.style.width = `${fullWidth - percentageNegativeValue}%`;
         eOuterDiv.appendChild(negativeDivBlankBar);
 
         const negativeDivPercentBar = document.createElement('div');
         negativeDivPercentBar.className = 'ab_div-colour-render-bar';
-        negativeDivBlankBar.id = `ab_div-colour-negative-bar_${blotterId}_${pcr.ColumnId}`;
+        negativeDivBlankBar.id = `ab_div-colour-negative-bar_${adaptableId}_${pcr.ColumnId}`;
         negativeDivPercentBar.style.width = `${percentageNegativeValue}%`;
         if (isNegativeValue) {
           negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
@@ -253,7 +265,7 @@ export class agGridHelper {
       if (showPositives) {
         const positivePercentBarDiv = document.createElement('div');
         positivePercentBarDiv.className = 'ab_div-colour-render-bar';
-        positivePercentBarDiv.id = `ab_div-colour-positive-bar_${blotterId}_${pcr.ColumnId}`;
+        positivePercentBarDiv.id = `ab_div-colour-positive-bar_${adaptableId}_${pcr.ColumnId}`;
         positivePercentBarDiv.style.width = `${percentagePositiveValue}%`;
         if (!isNegativeValue) {
           positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
@@ -298,7 +310,7 @@ export class agGridHelper {
       ReadOnly: this.isColumnReadonly(colDef),
       Sortable: this.isColumnSortable(colDef),
       Filterable: this.isColumnFilterable(colDef),
-      IsSparkline: this.blotter.api.sparklineColumnApi.isSparklineColumn(colId),
+      IsSparkline: this.adaptable.api.sparklineColumnApi.isSparklineColumn(colId),
       Groupable: this.isColumnGroupable(colDef),
       Pivotable: this.isColumnPivotable(colDef),
       Aggregatable: this.isColumnAggregetable(colDef),
@@ -379,7 +391,7 @@ export class agGridHelper {
   }
 
   public setUpRowStyles(): void {
-    const rowStyles: RowStyle[] = this.blotter.api.userInterfaceApi.getUserInterfaceState()
+    const rowStyles: RowStyle[] = this.adaptable.api.userInterfaceApi.getUserInterfaceState()
       .RowStyles;
     if (ArrayExtensions.IsNotNullOrEmpty(rowStyles)) {
       // First lets deal with Alls - we will get the first one and then get out
@@ -458,20 +470,20 @@ export class agGridHelper {
 
   public fireSelectionChangedEvent(): void {
     let selectionChangedInfo: SelectionChangedInfo = {
-      selectedCellInfo: this.blotter.api.gridApi.getGridState().SelectedCellInfo,
-      selectedRowInfo: this.blotter.api.gridApi.getGridState().SelectedRowInfo,
+      selectedCellInfo: this.adaptable.api.gridApi.getGridState().SelectedCellInfo,
+      selectedRowInfo: this.adaptable.api.gridApi.getGridState().SelectedRowInfo,
     };
     const selectionChangedArgs: SelectionChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Selection Changed Args',
       selectionChangedInfo
     );
-    this.blotter.api.eventApi.emit('SelectionChanged', selectionChangedArgs);
+    this.adaptable.api.eventApi.emit('SelectionChanged', selectionChangedArgs);
   }
 
   public createMenuInfo(params: GetContextMenuItemsParams, column: AdaptableColumn): MenuInfo {
     // lets build a picture of what has been right clicked.  Will take time to get right but lets start
     const colId = params.column.getColId();
-    const primaryKeyValue = this.blotter.getPrimaryKeyValueFromRowNode(params.node);
+    const primaryKeyValue = this.adaptable.getPrimaryKeyValueFromRowNode(params.node);
     let isSingleSelectedColumn: boolean = false;
     let isSelectedCell: boolean = false;
     let clickedCell: GridCell = {
@@ -479,7 +491,7 @@ export class agGridHelper {
       value: params.value,
       primaryKeyValue: primaryKeyValue,
     };
-    let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+    let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
     if (selectedCellInfo) {
       let matchedCell: GridCell = selectedCellInfo.GridCells.find(
         gc =>
@@ -509,7 +521,7 @@ export class agGridHelper {
       name: x.Label,
       action: x.ClickFunction
         ? x.ClickFunction
-        : () => this.blotter.api.internalApi.dispatchReduxAction(x.ReduxAction),
+        : () => this.adaptable.api.internalApi.dispatchReduxAction(x.ReduxAction),
       icon: iconToString(x.Icon, {
         style: {
           fill: 'var(--ab-color-text-on-primary)',
@@ -584,7 +596,7 @@ export class agGridHelper {
     // get the column type if already in store (and not unknown)
     const existingColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
       column.getId(),
-      this.blotter.api.gridApi.getColumns()
+      this.adaptable.api.gridApi.getColumns()
     );
     if (existingColumn && existingColumn.DataType != DataType.Unknown) {
       return existingColumn.DataType;

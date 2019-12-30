@@ -6,5 +6,5 @@ export interface ISharedEntity {
   functionName: AdaptableFunctionName;
   timestamp: Date;
   user: string;
-  blotter_id: string;
+  adaptable_id: string;
 }

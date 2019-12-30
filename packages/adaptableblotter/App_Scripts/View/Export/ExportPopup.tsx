@@ -116,7 +116,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
             AccessLevel={this.props.AccessLevel}
-            ReportService={this.props.Blotter.ReportService}
+            ReportService={this.props.Adaptable.ReportService}
           />
         );
       }
@@ -159,7 +159,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             SystemFilters={this.props.SystemFilters}
             NamedFilters={this.props.NamedFilters}
             ColumnCategories={this.props.ColumnCategories}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -248,7 +248,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   onApplyExport(report: Report, exportDestination: ExportDestination) {
-    let isLiveReport: boolean = this.props.Blotter.ReportService.IsReportLiveReport(
+    let isLiveReport: boolean = this.props.Adaptable.ReportService.IsReportLiveReport(
       report,
       exportDestination
     );

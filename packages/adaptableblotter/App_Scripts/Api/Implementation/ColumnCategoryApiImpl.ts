@@ -7,7 +7,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class ColumnCategoryApiImpl extends ApiBase implements ColumnCategoryApi {
   public getColumnCategoryState(): ColumnCategoryState {
-    return this.getBlotterState().ColumnCategory;
+    return this.getAdaptableState().ColumnCategory;
   }
 
   public getAllColumnCategory(): ColumnCategory[] {
@@ -61,7 +61,7 @@ export class ColumnCategoryApiImpl extends ApiBase implements ColumnCategoryApi 
   }
 
   public showColumnCategoryPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ColumnCategoryStrategyId,
       ScreenPopups.ColumnCategoryPopup
     );

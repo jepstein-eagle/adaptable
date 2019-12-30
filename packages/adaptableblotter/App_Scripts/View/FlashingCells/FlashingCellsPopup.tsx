@@ -80,7 +80,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     );
 
     let allPotentialFlashingCells: FlashingCell[] = [];
-    let flashingCellState: FlashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(
+    let flashingCellState: FlashingCellState = this.props.Adaptable.api.configApi.configGetFlashingCellState(
       false
     );
     numericNonCalcColumns.forEach(nc => {

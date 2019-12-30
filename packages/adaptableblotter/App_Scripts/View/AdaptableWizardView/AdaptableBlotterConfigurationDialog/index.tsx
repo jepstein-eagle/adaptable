@@ -27,7 +27,7 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
 
   let canFinish = finishEnabled;
 
-  if (!abOptions.blotterId) {
+  if (!abOptions.adaptableId) {
     canFinish = false;
   }
 
@@ -38,10 +38,10 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
     getPrimaryKey: () => string;
   }>();
 
-  const onBlotterIdChange = (event: React.SyntheticEvent) => {
+  const onadaptableIdChange = (event: React.SyntheticEvent) => {
     const newABOptions = { ...abOptions };
 
-    newABOptions.blotterId = (event.target as any).value;
+    newABOptions.adaptableId = (event.target as any).value;
     setABOptions(newABOptions);
   };
 
@@ -73,7 +73,7 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
   const stepOne = (
     <>
       <Panel
-        header={'Configure blotter'}
+        header={'Configure adaptable'}
         border="none"
         bodyScroll
         bodyProps={{ padding: 0 }}
@@ -90,8 +90,8 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
       </Panel>
       <Panel border="none">
         <FormLayout>
-          <FormRow label="Blotter ID">
-            <Input value={abOptions.blotterId} onChange={onBlotterIdChange} />
+          <FormRow label="adaptable ID">
+            <Input value={abOptions.adaptableId} onChange={onadaptableIdChange} />
           </FormRow>
         </FormLayout>
       </Panel>
@@ -100,10 +100,10 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
 
   const stepTwo = (
     <>
-      <Panel header={'Configure blotter'} border="none" style={{ flex: 1, overflow: 'auto' }}>
+      <Panel header={'Configure adaptable'} border="none" style={{ flex: 1, overflow: 'auto' }}>
         <ConfigurationForm
           adaptableOptions={abOptions}
-          onChangeBlotterOptions={abOptions => {
+          onChangeadaptableOptions={abOptions => {
             setABOptions(abOptions);
           }}
         />

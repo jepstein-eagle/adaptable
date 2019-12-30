@@ -10,7 +10,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class CalculatedColumnApiImpl extends ApiBase implements CalculatedColumnApi {
   public getCalculatedColumnState(): CalculatedColumnState {
-    return this.getBlotterState().CalculatedColumn;
+    return this.getAdaptableState().CalculatedColumn;
   }
 
   public getAllCalculatedColumn(): CalculatedColumn[] {
@@ -37,7 +37,7 @@ export class CalculatedColumnApiImpl extends ApiBase implements CalculatedColumn
   }
 
   public showCalculatedColumnPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.CalculatedColumnStrategyId,
       ScreenPopups.CalculatedColumnPopup
     );

@@ -25,7 +25,7 @@ const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
-  blotterId: 'basic demo',
+  adaptableId: 'basic demo',
 };
 
 function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
@@ -45,7 +45,7 @@ export default () => {
     <AdaptableBlotterReact
       style={{ height: '100vh' }}
       gridOptions={gridOptions}
-      blotterOptions={adaptableOptions}
+      adaptableOptions={adaptableOptions}
       onReady={onReady}
       onSearchChanged={(sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs)}
       onThemeChanged={(sender, arg: ThemeChangedEventArgs) => {

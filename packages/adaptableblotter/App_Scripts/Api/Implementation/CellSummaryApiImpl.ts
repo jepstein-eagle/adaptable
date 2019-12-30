@@ -11,7 +11,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class CellSummaryApiImpl extends ApiBase implements CellSummaryApi {
   public getCellSummaryState(): CellSummaryState {
-    return this.getBlotterState().CellSummary;
+    return this.getAdaptableState().CellSummary;
   }
 
   public getCellSummaryOperation(): CellSummaryOperation | CellSummaryOptionalOperation {
@@ -31,7 +31,7 @@ export class CellSummaryApiImpl extends ApiBase implements CellSummaryApi {
   }
 
   public showCellSummaryPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.CellSummaryStrategyId,
       ScreenPopups.CellSummaryPopup
     );

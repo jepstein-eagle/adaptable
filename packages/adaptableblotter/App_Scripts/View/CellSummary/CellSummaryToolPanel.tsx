@@ -59,8 +59,8 @@ class CellSummaryToolPanelComponent extends React.Component<
     this.state = { IsMinimised: true };
   }
   public componentDidMount() {
-    if (this.props.Blotter) {
-      this.props.Blotter._on('CellsSelected', () => {
+    if (this.props.Adaptable) {
+      this.props.Adaptable._on('CellsSelected', () => {
         this.props.onCreateCellSummary();
       });
     }
@@ -100,7 +100,7 @@ class CellSummaryToolPanelComponent extends React.Component<
 
     let shouldDisable: boolean =
       this.props.AccessLevel == AccessLevel.ReadOnly ||
-      this.props.Blotter.api.internalApi.isGridInPivotMode() ||
+      this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
       this.props.CellSummary == null;
 
     let operationValue = shouldDisable ? null : this.getOperationValue();

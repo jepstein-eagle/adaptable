@@ -53,8 +53,8 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    if (this.props.Blotter) {
-      this.props.Blotter._on('CellsSelected', () => {
+    if (this.props.Adaptable) {
+      this.props.Adaptable._on('CellsSelected', () => {
         this.checkSelectedCells();
       });
     }
@@ -73,14 +73,14 @@ class BulkUpdateToolbarControlComponent extends React.Component<
         SelectedColumn={selectedColumn}
         ShowPanel={true}
         ShowHeader={false}
-        ValidationService={this.props.Blotter.ValidationService}
+        ValidationService={this.props.Adaptable.ValidationService}
       />
     );
 
     let shouldDisable: boolean =
       this.props.AccessLevel == AccessLevel.ReadOnly ||
       !this.props.BulkUpdateValidationResult.IsValid ||
-      this.props.Blotter.api.internalApi.isGridInPivotMode();
+      this.props.Adaptable.api.internalApi.isGridInPivotMode();
 
     const applyStyle = {
       color: statusColour,
@@ -104,7 +104,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
           disabled={shouldDisable}
           SelectedColumnValue={this.props.BulkUpdateValue}
           SelectedColumn={selectedColumn}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
         />
 
@@ -186,7 +186,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = this.props.Blotter.ValidationService.createCellValidationUIConfirmation(
+    let confirmation: IUIConfirmation = this.props.Adaptable.ValidationService.createCellValidationUIConfirmation(
       confirmAction,
       cancelAction
     );

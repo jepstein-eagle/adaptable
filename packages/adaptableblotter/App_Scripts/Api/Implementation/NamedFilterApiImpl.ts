@@ -4,7 +4,7 @@ import { NamedFilter, NamedFilterState } from '../../PredefinedConfig/NamedFilte
 
 export class NamedFilterApiImpl extends ApiBase implements NamedFilterApi {
   public getNamedFilterState(): NamedFilterState {
-    return this.getBlotterState().NamedFilter;
+    return this.getAdaptableState().NamedFilter;
   }
 
   public getAllNamedFilter(): NamedFilter[] {

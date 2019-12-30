@@ -7,7 +7,7 @@ import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 
 export class SystemFilterApiImpl extends ApiBase implements SystemFilterApi {
   public getSystemFilterState(): SystemFilterState {
-    return this.getBlotterState().SystemFilter;
+    return this.getAdaptableState().SystemFilter;
   }
 
   public setSystemFilters(systemFilters: string[]): void {
@@ -19,10 +19,10 @@ export class SystemFilterApiImpl extends ApiBase implements SystemFilterApi {
   }
 
   public getAllSystemFilter(): string[] {
-    return this.getBlotterState().SystemFilter.SystemFilters;
+    return this.getAdaptableState().SystemFilter.SystemFilters;
   }
 
   public getAllPotentialSystemFilters(): string[] {
-    return this.blotter.FilterService.GetAllSystemFilters();
+    return this.adaptable.FilterService.GetAllSystemFilters();
   }
 }

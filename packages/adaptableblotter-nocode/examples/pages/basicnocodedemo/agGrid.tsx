@@ -13,7 +13,7 @@ import './index.css';
 Basic demo of wizard that allow d&d of a json with an array contents
 */
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: '', // will be added later ...
     userName: 'No Data User',
@@ -36,7 +36,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

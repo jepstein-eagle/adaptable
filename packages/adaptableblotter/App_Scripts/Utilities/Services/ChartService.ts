@@ -1,5 +1,5 @@
 import { IChartService } from './Interface/IChartService';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
@@ -28,8 +28,8 @@ Makes use of Expressions to get the data required.
 Returns a ChartData object that the ChartDisplay will receive and then show to teh user
 */
 export class ChartService implements IChartService {
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   public BuildCategoryChartData(
@@ -97,17 +97,17 @@ export class ChartService implements IChartService {
             chartDefinition.Expression,
             row,
             columns,
-            this.blotter
+            this.adaptable
           )
         ) {
-          let columnValue = this.blotter.getRawValueFromRowNode(row, chartDefinition.ColumnId);
+          let columnValue = this.adaptable.getRawValueFromRowNode(row, chartDefinition.ColumnId);
           values.push(columnValue);
         }
       };
       if (chartDefinition.VisibleRowsOnly) {
-        this.blotter.forAllVisibleRowNodesDo(forEach);
+        this.adaptable.forAllVisibleRowNodesDo(forEach);
       } else {
-        this.blotter.forAllRowNodesDo(forEach);
+        this.adaptable.forAllRowNodesDo(forEach);
       }
     } else {
       values = [];
@@ -123,7 +123,7 @@ export class ChartService implements IChartService {
           {} as { [key: string]: boolean }
         );
       }
-      values = this.blotter
+      values = this.adaptable
         .getColumnValueDisplayValuePairList(
           chartDefinition.ColumnId,
           chartDefinition.VisibleRowsOnly,
@@ -170,32 +170,32 @@ export class ChartService implements IChartService {
     let returnedRecordCount: number = 0;
 
     if (chartDefinition.VisibleRowsOnly) {
-      this.blotter.forAllVisibleRowNodesDo(row => {
+      this.adaptable.forAllVisibleRowNodesDo(row => {
         if (
           ExpressionHelper.checkForExpressionFromRowNode(
             completedExpression,
             row,
             columns,
-            this.blotter
+            this.adaptable
           )
         ) {
           returnedRecordCount++;
-          let columnValue = this.blotter.getRawValueFromRowNode(row, yAxisColumn);
+          let columnValue = this.adaptable.getRawValueFromRowNode(row, yAxisColumn);
           finalTotal += Number(columnValue);
         }
       });
     } else {
-      this.blotter.forAllRowNodesDo(row => {
+      this.adaptable.forAllRowNodesDo(row => {
         if (
           ExpressionHelper.checkForExpressionFromRowNode(
             completedExpression,
             row,
             columns,
-            this.blotter
+            this.adaptable
           )
         ) {
           returnedRecordCount++;
-          let columnValue = this.blotter.getRawValueFromRowNode(row, yAxisColumn);
+          let columnValue = this.adaptable.getRawValueFromRowNode(row, yAxisColumn);
           finalTotal += Number(columnValue);
         }
       });
@@ -214,7 +214,7 @@ export class ChartService implements IChartService {
   ): string[] {
     let xAxisColValues: string[] = [];
     if (ExpressionHelper.IsNullOrEmptyExpression(chartDefinition.XAxisExpression)) {
-      xAxisColValues = this.blotter
+      xAxisColValues = this.adaptable
         .getColumnValueDisplayValuePairDistinctList(
           chartDefinition.XAxisColumnId,
           DistinctCriteriaPairValue.DisplayValue,
@@ -226,11 +226,11 @@ export class ChartService implements IChartService {
         });
     } else {
       if (chartDefinition.VisibleRowsOnly) {
-        this.blotter.forAllVisibleRowNodesDo(row => {
+        this.adaptable.forAllVisibleRowNodesDo(row => {
           this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
         });
       } else {
-        this.blotter.forAllRowNodesDo(row => {
+        this.adaptable.forAllRowNodesDo(row => {
           this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
         });
       }
@@ -249,10 +249,13 @@ export class ChartService implements IChartService {
         chartDefinition.XAxisExpression,
         row,
         columns,
-        this.blotter
+        this.adaptable
       )
     ) {
-      let columnValue = this.blotter.getDisplayValueFromRowNode(row, chartDefinition.XAxisColumnId);
+      let columnValue = this.adaptable.getDisplayValueFromRowNode(
+        row,
+        chartDefinition.XAxisColumnId
+      );
       ArrayExtensions.AddItem(xAxisColValues, columnValue);
     }
   }
@@ -274,18 +277,18 @@ export class ChartService implements IChartService {
 
     if (ArrayExtensions.IsNotNullOrEmpty(chartDefinition.PrimaryKeyValues)) {
       // if doing Primary Key Values then we know that we have no secondary column and no need to worry about visible rows
-      this.blotter.getRowNodesForPrimaryKeys(chartDefinition.PrimaryKeyValues).forEach(row => {
+      this.adaptable.getRowNodesForPrimaryKeys(chartDefinition.PrimaryKeyValues).forEach(row => {
         this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
       });
     } else {
       if (chartDefinition.VisibleRowsOnly) {
-        this.blotter.forAllVisibleRowNodesDo(row => {
+        this.adaptable.forAllVisibleRowNodesDo(row => {
           valueTotal = hasSecondaryColumn
             ? this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
             : this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
         });
       } else {
-        this.blotter.forAllRowNodesDo(row => {
+        this.adaptable.forAllRowNodesDo(row => {
           valueTotal = hasSecondaryColumn
             ? this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
             : this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
@@ -295,14 +298,14 @@ export class ChartService implements IChartService {
 
     let dataItems: PieChartDataItem[] = [];
 
-    let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
     let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
 
     // if we don't use ranges but there are too many slices then we return an error
     if (
       !useRanges &&
-      dataCounter.size > this.blotter.blotterOptions.chartOptions.pieChartMaxItems
+      dataCounter.size > this.adaptable.adaptableOptions.chartOptions.pieChartMaxItems
     ) {
       let message: string = 'Cannot create pie chart as it contains too many items.';
       LoggingHelper.LogAdaptableWarning(message);
@@ -438,11 +441,11 @@ export class ChartService implements IChartService {
     dataCounter: Map<any, number>,
     valueTotal: number
   ): number {
-    let primaryCellValue = this.blotter.getRawValueFromRowNode(
+    let primaryCellValue = this.adaptable.getRawValueFromRowNode(
       row,
       chartDefinition.PrimaryColumnId
     );
-    let secondaryCellValue = this.blotter.getRawValueFromRowNode(
+    let secondaryCellValue = this.adaptable.getRawValueFromRowNode(
       row,
       chartDefinition.SecondaryColumnId
     );
@@ -475,7 +478,7 @@ export class ChartService implements IChartService {
     dataCounter: Map<any, number>,
     valueTotal: number
   ): number {
-    let cellValue = this.blotter.getRawValueFromRowNode(row, chartDefinition.PrimaryColumnId);
+    let cellValue = this.adaptable.getRawValueFromRowNode(row, chartDefinition.PrimaryColumnId);
     if (Helper.objectNotExists(cellValue)) {
       return valueTotal;
     }

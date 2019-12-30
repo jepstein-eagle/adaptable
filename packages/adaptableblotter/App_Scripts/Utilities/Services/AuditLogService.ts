@@ -1,5 +1,5 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AuditLogEntry, AuditLogType } from '../Interface/AuditLogEntry';
 import { IAuditLogService } from './Interface/IAuditLogService';
 import { IAdaptable } from '../../types';
@@ -9,7 +9,7 @@ import {
   AuditLogEventData,
   AuditLogEventArgs,
 } from '../../Api/Events/AuditEvents';
-import { AuditDestinationOptions, AuditOptions } from '../../BlotterOptions/AuditOptions';
+import { AuditDestinationOptions, AuditOptions } from '../../AdaptableOptions/AuditOptions';
 import { AdaptableAlert } from '../Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import ColumnHelper from '../Helpers/ColumnHelper';
@@ -20,7 +20,7 @@ export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<AuditLogEntry>;
   private canSendLog: boolean = true;
   private numberOfMissedPing: number = 0;
-  private blotter: IAdaptable;
+  private adaptable: IAdaptable;
 
   public isAuditEnabled: boolean;
   public isAuditStateChangesEnabled: boolean;
@@ -30,17 +30,17 @@ export class AuditLogService implements IAuditLogService {
   public isAuditInternalStateChangesEnabled: boolean;
   public isAuditTickingDataChangesEnabled: boolean;
 
-  constructor(blotter: IAdaptable) {
+  constructor(adaptable: IAdaptable) {
     this.auditLogQueue = [];
-    this.blotter = blotter;
+    this.adaptable = adaptable;
 
     // Internal State
     if (
-      blotter.blotterOptions.auditOptions != null &&
-      blotter.blotterOptions.auditOptions.auditInternalStateChanges != null
+      adaptable.adaptableOptions.auditOptions != null &&
+      adaptable.adaptableOptions.auditOptions.auditInternalStateChanges != null
     ) {
       this.isAuditInternalStateChangesEnabled = this.isAuditOptionEnabled(
-        blotter.blotterOptions.auditOptions.auditInternalStateChanges
+        adaptable.adaptableOptions.auditOptions.auditInternalStateChanges
       );
     } else {
       this.isAuditInternalStateChangesEnabled = false;
@@ -48,11 +48,11 @@ export class AuditLogService implements IAuditLogService {
 
     // User State
     if (
-      blotter.blotterOptions.auditOptions != null &&
-      blotter.blotterOptions.auditOptions.auditUserStateChanges != null
+      adaptable.adaptableOptions.auditOptions != null &&
+      adaptable.adaptableOptions.auditOptions.auditUserStateChanges != null
     ) {
       this.isAuditUserStateChangesEnabled = this.isAuditOptionEnabled(
-        blotter.blotterOptions.auditOptions.auditUserStateChanges
+        adaptable.adaptableOptions.auditOptions.auditUserStateChanges
       );
     } else {
       this.isAuditUserStateChangesEnabled = false;
@@ -60,11 +60,11 @@ export class AuditLogService implements IAuditLogService {
 
     // Function Events
     if (
-      blotter.blotterOptions.auditOptions != null &&
-      blotter.blotterOptions.auditOptions.auditFunctionEvents != null
+      adaptable.adaptableOptions.auditOptions != null &&
+      adaptable.adaptableOptions.auditOptions.auditFunctionEvents != null
     ) {
       this.isAuditFunctionEventsEnabled = this.isAuditOptionEnabled(
-        blotter.blotterOptions.auditOptions.auditFunctionEvents
+        adaptable.adaptableOptions.auditOptions.auditFunctionEvents
       );
     } else {
       this.isAuditFunctionEventsEnabled = false;
@@ -72,11 +72,11 @@ export class AuditLogService implements IAuditLogService {
 
     // Cell Edit
     if (
-      blotter.blotterOptions.auditOptions != null &&
-      blotter.blotterOptions.auditOptions.auditCellEdits != null
+      adaptable.adaptableOptions.auditOptions != null &&
+      adaptable.adaptableOptions.auditOptions.auditCellEdits != null
     ) {
       this.isAuditCellEditsEnabled = this.isAuditOptionEnabled(
-        blotter.blotterOptions.auditOptions.auditCellEdits
+        adaptable.adaptableOptions.auditOptions.auditCellEdits
       );
     } else {
       this.isAuditCellEditsEnabled = false;
@@ -84,11 +84,11 @@ export class AuditLogService implements IAuditLogService {
 
     // Ticking Data Changes
     if (
-      blotter.blotterOptions.auditOptions != null &&
-      blotter.blotterOptions.auditOptions.auditTickingDataChanges != null
+      adaptable.adaptableOptions.auditOptions != null &&
+      adaptable.adaptableOptions.auditOptions.auditTickingDataChanges != null
     ) {
       this.isAuditTickingDataChangesEnabled = this.isAuditOptionEnabled(
-        blotter.blotterOptions.auditOptions.auditTickingDataChanges
+        adaptable.adaptableOptions.auditOptions.auditTickingDataChanges
       );
     } else {
       this.isAuditTickingDataChangesEnabled = false;
@@ -106,24 +106,27 @@ export class AuditLogService implements IAuditLogService {
 
     // set up the listener if we are auditing Data Changes
     if (this.isAuditTickingDataChangesEnabled) {
-      this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+      this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
         this.handleDataSourceChanged(dataChangedInfo);
       });
     }
 
     // set up the Audit Queue if any of the Audits is set to use HTTP Channel
     if (this.isAuditEnabled) {
-      if (blotter.blotterOptions.auditOptions != undefined) {
-        if (this.shouldAuditToHttpChannel(blotter.blotterOptions.auditOptions)) {
+      if (adaptable.adaptableOptions.auditOptions != undefined) {
+        if (this.shouldAuditToHttpChannel(adaptable.adaptableOptions.auditOptions)) {
           if (
-            blotter.blotterOptions.auditOptions.pingInterval != undefined &&
-            blotter.blotterOptions.auditOptions.auditLogsSendInterval != undefined
+            adaptable.adaptableOptions.auditOptions.pingInterval != undefined &&
+            adaptable.adaptableOptions.auditOptions.auditLogsSendInterval != undefined
           ) {
             this.ping();
-            setInterval(() => this.ping(), blotter.blotterOptions.auditOptions.pingInterval * 1000);
+            setInterval(
+              () => this.ping(),
+              adaptable.adaptableOptions.auditOptions.pingInterval * 1000
+            );
             setInterval(
               () => this.flushAuditQueue(),
-              blotter.blotterOptions.auditOptions.auditLogsSendInterval * 1000
+              adaptable.adaptableOptions.auditOptions.auditLogsSendInterval * 1000
             );
           }
         }
@@ -137,7 +140,7 @@ export class AuditLogService implements IAuditLogService {
         dataChangedInfo,
         AuditLogType.CellEdit
       );
-      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!.auditCellEdits!;
+      let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!.auditCellEdits!;
 
       if (auditDestinationOptions.auditToConsole) {
         LoggingHelper.LogObject(auditLogEntry);
@@ -153,7 +156,7 @@ export class AuditLogService implements IAuditLogService {
           'Column: ' +
           ColumnHelper.getFriendlyNameFromColumnId(
             dataChangedInfo.ColumnId,
-            this.blotter.api.gridApi.getColumns()
+            this.adaptable.api.gridApi.getColumns()
           ) +
           '.  Identifier: ' +
           dataChangedInfo.PrimaryKeyValue +
@@ -171,11 +174,11 @@ export class AuditLogService implements IAuditLogService {
       let auditLogEntry: AuditLogEntry = {
         auditlog_type: AuditLogType.UserStateChange,
         client_timestamp: new Date(),
-        username: this.blotter.blotterOptions.userName!,
-        blotter_id: this.blotter.blotterOptions.blotterId!,
+        username: this.adaptable.adaptableOptions.userName!,
+        blotter_id: this.adaptable.adaptableOptions.adaptableId!,
         state_change_details: stateChangeDetails,
       };
-      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!
+      let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
         .auditUserStateChanges!;
 
       if (auditDestinationOptions.auditToConsole) {
@@ -198,11 +201,11 @@ export class AuditLogService implements IAuditLogService {
       let auditLogEntry: AuditLogEntry = {
         auditlog_type: AuditLogType.InternalStateChange,
         client_timestamp: new Date(),
-        username: this.blotter.blotterOptions.userName!,
-        blotter_id: this.blotter.blotterOptions.blotterId!,
+        username: this.adaptable.adaptableOptions.userName!,
+        blotter_id: this.adaptable.adaptableOptions.adaptableId!,
         state_change_details: stateChangeDetails,
       };
-      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!
+      let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
         .auditInternalStateChanges!;
 
       if (auditDestinationOptions.auditToConsole) {
@@ -226,11 +229,12 @@ export class AuditLogService implements IAuditLogService {
       let auditLogEntry: AuditLogEntry = {
         auditlog_type: AuditLogType.FunctionApplied,
         client_timestamp: new Date(),
-        username: this.blotter.blotterOptions.userName!,
-        blotter_id: this.blotter.blotterOptions.blotterId!,
+        username: this.adaptable.adaptableOptions.userName!,
+        blotter_id: this.adaptable.adaptableOptions.adaptableId!,
         function_applied_details: functionAppliedDetails,
       };
-      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!.auditFunctionEvents!;
+      let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
+        .auditFunctionEvents!;
 
       if (auditDestinationOptions.auditToConsole) {
         LoggingHelper.LogObject(auditLogEntry);
@@ -256,7 +260,7 @@ export class AuditLogService implements IAuditLogService {
         AuditLogType.TickingDataChange
       );
 
-      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!
+      let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
         .auditTickingDataChanges!;
       if (auditDestinationOptions.auditToConsole) {
         LoggingHelper.LogObject(auditLogEntry);
@@ -272,7 +276,7 @@ export class AuditLogService implements IAuditLogService {
           'Column: ' +
           ColumnHelper.getFriendlyNameFromColumnId(
             dataChangedInfo.ColumnId,
-            this.blotter.api.gridApi.getColumns()
+            this.adaptable.api.gridApi.getColumns()
           ) +
           '.  Identifier: ' +
           dataChangedInfo.PrimaryKeyValue +
@@ -292,15 +296,15 @@ export class AuditLogService implements IAuditLogService {
     return {
       auditlog_type: auditLogType,
       client_timestamp: new Date(),
-      username: this.blotter.blotterOptions.userName!,
-      blotter_id: this.blotter.blotterOptions.blotterId!,
+      username: this.adaptable.adaptableOptions.userName!,
+      blotter_id: this.adaptable.adaptableOptions.adaptableId!,
       data_change_details: {
         primarykey_column_value: String(dataChangedInfo.PrimaryKeyValue),
-        primarykey_column_id: this.blotter.blotterOptions.primaryKey,
+        primarykey_column_id: this.adaptable.adaptableOptions.primaryKey,
         column_id: dataChangedInfo.ColumnId,
         previous_value: String(dataChangedInfo.OldValue),
         new_value: String(dataChangedInfo.NewValue),
-        row_data: this.blotter.getDataRowFromRowNode(dataChangedInfo.RowNode),
+        row_data: this.adaptable.getDataRowFromRowNode(dataChangedInfo.RowNode),
       },
     };
   }
@@ -309,8 +313,8 @@ export class AuditLogService implements IAuditLogService {
     let pingMessage: AuditLogEntry = {
       auditlog_type: AuditLogType.Ping,
       client_timestamp: new Date(),
-      username: this.blotter.blotterOptions.userName,
-      blotter_id: this.blotter.blotterOptions.blotterId,
+      username: this.adaptable.adaptableOptions.userName,
+      blotter_id: this.adaptable.adaptableOptions.adaptableId,
       number_of_missed_ping: this.numberOfMissedPing,
     };
     let xhr = new XMLHttpRequest();
@@ -448,10 +452,10 @@ export class AuditLogService implements IAuditLogService {
       Msg: message,
       AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
         MessageType.Error,
-        this.blotter.blotterOptions.auditOptions!.alertShowAsPopup as boolean
+        this.adaptable.adaptableOptions.auditOptions!.alertShowAsPopup as boolean
       ),
     };
-    this.blotter.api.alertApi.displayAlert(alert);
+    this.adaptable.api.alertApi.displayAlert(alert);
   }
 
   publishStateChanged(auditLogEntry: AuditLogEntry, auditLogType: AuditLogType): void {
@@ -462,14 +466,14 @@ export class AuditLogService implements IAuditLogService {
 
     switch (auditLogType) {
       case AuditLogType.CellEdit:
-        this.blotter.api.auditEventApi.emit('AuditCellEdited', stateChangedArgs);
+        this.adaptable.api.auditEventApi.emit('AuditCellEdited', stateChangedArgs);
         break;
       case AuditLogType.FunctionApplied:
-        this.blotter.api.auditEventApi.emit('AuditFunctionApplied', stateChangedArgs);
+        this.adaptable.api.auditEventApi.emit('AuditFunctionApplied', stateChangedArgs);
         break;
       case AuditLogType.InternalStateChange:
       case AuditLogType.UserStateChange:
-        this.blotter.api.auditEventApi.emit('AuditStateChanged', stateChangedArgs);
+        this.adaptable.api.auditEventApi.emit('AuditStateChanged', stateChangedArgs);
         break;
     }
   }

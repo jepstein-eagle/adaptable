@@ -4,11 +4,11 @@ import { ActionColumnState, ActionColumn } from '../../PredefinedConfig/ActionCo
 
 export class ActionColumnApiImpl extends ApiBase implements ActionColumnApi {
   public getActionColumnState(): ActionColumnState {
-    return this.getBlotterState().ActionColumn;
+    return this.getAdaptableState().ActionColumn;
   }
 
   public getAllActionColumn(): ActionColumn[] {
-    let actionColumns: ActionColumn[] | undefined = this.getBlotterState().ActionColumn
+    let actionColumns: ActionColumn[] | undefined = this.getAdaptableState().ActionColumn
       .ActionColumns;
     if (actionColumns == undefined) {
       actionColumns = [];

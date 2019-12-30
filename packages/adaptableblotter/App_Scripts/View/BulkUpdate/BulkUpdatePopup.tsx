@@ -100,7 +100,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
         SelectedColumn={col}
         ShowPanel={showPanel}
         ShowHeader={true}
-        ValidationService={this.props.Blotter.ValidationService}
+        ValidationService={this.props.Adaptable.ValidationService}
       />
     ) : null;
 
@@ -140,7 +140,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                   <ColumnValueSelector
                     SelectedColumnValue={this.props.BulkUpdateValue}
                     SelectedColumn={col}
-                    Blotter={this.props.Blotter}
+                    Adaptable={this.props.Adaptable}
                     onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                     AllowNew={false}
                     style={{ width: '100%', maxWidth: 'inherit' }}
@@ -182,7 +182,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                 <ColumnValueSelector
                   SelectedColumnValue={this.props.BulkUpdateValue}
                   SelectedColumn={col}
-                  Blotter={this.props.Blotter}
+                  Adaptable={this.props.Adaptable}
                   onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                   style={{ width: '100%', maxWidth: 'inherit' }}
                 />
@@ -262,7 +262,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = this.props.Blotter.ValidationService.createCellValidationUIConfirmation(
+    let confirmation: IUIConfirmation = this.props.Adaptable.ValidationService.createCellValidationUIConfirmation(
       confirmAction,
       cancelAction
     );

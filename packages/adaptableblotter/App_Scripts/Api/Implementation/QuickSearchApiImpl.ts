@@ -9,7 +9,7 @@ import { QuickSearchState } from '../../PredefinedConfig/QuickSearchState';
 
 export class QuickSearchApiImpl extends ApiBase implements QuickSearchApi {
   public getQuickSearchState(): QuickSearchState {
-    return this.getBlotterState().QuickSearch;
+    return this.getAdaptableState().QuickSearch;
   }
 
   public setQuickSearchState(quickSearchState: QuickSearchState): void {
@@ -57,7 +57,7 @@ export class QuickSearchApiImpl extends ApiBase implements QuickSearchApi {
   }
 
   public showQuickSearchPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.QuickSearchStrategyId,
       ScreenPopups.QuickSearchPopup
     );

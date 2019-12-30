@@ -6,17 +6,17 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export class EntitlementsApiImpl extends ApiBase implements EntitlementsApi {
   public getEntitlementsState(): EntitlementState {
-    return this.getBlotterState().Entitlements;
+    return this.getAdaptableState().Entitlements;
   }
 
   public getAllEntitlements(): Entitlement[] {
-    return this.getBlotterState().Entitlements.FunctionEntitlements;
+    return this.getAdaptableState().Entitlements.FunctionEntitlements;
   }
 
   public getEntitlementByAdaptableFunctionName(
     adaptableFunctionName: AdaptableFunctionName
   ): Entitlement {
-    return this.getBlotterState().Entitlements.FunctionEntitlements.find(
+    return this.getAdaptableState().Entitlements.FunctionEntitlements.find(
       f => f.FunctionName == adaptableFunctionName
     );
   }
@@ -24,7 +24,7 @@ export class EntitlementsApiImpl extends ApiBase implements EntitlementsApi {
   public getEntitlementAccessLevelForAdaptableFunctionName(
     adaptableFunctionName: AdaptableFunctionName
   ): string {
-    return this.getBlotterState().Entitlements.FunctionEntitlements.find(
+    return this.getAdaptableState().Entitlements.FunctionEntitlements.find(
       f => f.FunctionName == adaptableFunctionName
     ).AccessLevel;
   }

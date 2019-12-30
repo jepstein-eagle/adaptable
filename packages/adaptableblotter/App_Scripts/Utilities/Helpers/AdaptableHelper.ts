@@ -4,75 +4,84 @@ import { LoggingHelper } from './LoggingHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
-import { AdaptableBlotterEventData, BlotterEventArgs } from '../../Api/Events/BlotterEvents';
+import { AdaptableEventData, AdaptableEventArgs } from '../../Api/Events/adaptableEvents';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
-import { AdaptableOptions } from '../../BlotterOptions/AdaptableOptions';
+import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
+import { ADAPTABLE_ID } from '../Constants/GeneralConstants';
 
-export function assignBlotterOptions(blotterOptions: AdaptableOptions): AdaptableOptions {
-  const returnBlotterOptions = Object.assign({}, DefaultAdaptableOptions, blotterOptions);
-  returnBlotterOptions.auditOptions = Object.assign(
+export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
+  const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
+
+  // set the adaptableId as we are goign to use that in future only
+  returnadaptableOptions.adaptableId = StringExtensions.IsNullOrEmpty(
+    returnadaptableOptions.adaptableId
+  )
+    ? ADAPTABLE_ID
+    : returnadaptableOptions.adaptableId;
+
+  returnadaptableOptions.auditOptions = Object.assign(
     {},
     DefaultAdaptableOptions.auditOptions,
-    blotterOptions.auditOptions
+    adaptableOptions.auditOptions
   );
-  returnBlotterOptions.configServerOptions = Object.assign(
+  returnadaptableOptions.configServerOptions = Object.assign(
     {},
     DefaultAdaptableOptions.configServerOptions,
-    blotterOptions.configServerOptions
+    adaptableOptions.configServerOptions
   );
-  returnBlotterOptions.layoutOptions = Object.assign(
+  returnadaptableOptions.layoutOptions = Object.assign(
     {},
     DefaultAdaptableOptions.layoutOptions,
-    blotterOptions.layoutOptions
+    adaptableOptions.layoutOptions
   );
-  returnBlotterOptions.filterOptions = Object.assign(
+  returnadaptableOptions.filterOptions = Object.assign(
     {},
     DefaultAdaptableOptions.filterOptions,
-    blotterOptions.filterOptions
+    adaptableOptions.filterOptions
   );
-  returnBlotterOptions.queryOptions = Object.assign(
+  returnadaptableOptions.queryOptions = Object.assign(
     {},
     DefaultAdaptableOptions.queryOptions,
-    blotterOptions.queryOptions
+    adaptableOptions.queryOptions
   );
-  returnBlotterOptions.editOptions = Object.assign(
+  returnadaptableOptions.editOptions = Object.assign(
     {},
     DefaultAdaptableOptions.editOptions,
-    blotterOptions.editOptions
+    adaptableOptions.editOptions
   );
-  returnBlotterOptions.containerOptions = Object.assign(
+  returnadaptableOptions.containerOptions = Object.assign(
     {},
     DefaultAdaptableOptions.containerOptions,
-    blotterOptions.containerOptions
+    adaptableOptions.containerOptions
   );
-  returnBlotterOptions.generalOptions = Object.assign(
+  returnadaptableOptions.generalOptions = Object.assign(
     {},
     DefaultAdaptableOptions.generalOptions,
-    blotterOptions.generalOptions
+    adaptableOptions.generalOptions
   );
-  returnBlotterOptions.userInterfaceOptions = Object.assign(
+  returnadaptableOptions.userInterfaceOptions = Object.assign(
     {},
     DefaultAdaptableOptions.userInterfaceOptions,
-    blotterOptions.userInterfaceOptions
+    adaptableOptions.userInterfaceOptions
   );
-  returnBlotterOptions.chartOptions = Object.assign(
+  returnadaptableOptions.chartOptions = Object.assign(
     {},
     DefaultAdaptableOptions.chartOptions,
-    blotterOptions.chartOptions
+    adaptableOptions.chartOptions
   );
-  returnBlotterOptions.stateOptions = Object.assign(
+  returnadaptableOptions.stateOptions = Object.assign(
     {},
     DefaultAdaptableOptions.stateOptions,
-    blotterOptions.stateOptions
+    adaptableOptions.stateOptions
   );
 
-  const { predefinedConfig } = returnBlotterOptions;
+  const { predefinedConfig } = returnadaptableOptions;
   if (predefinedConfig) {
     // this customizer function is called by lodash.cloneDeepWith
     // to determine how to clone each property
@@ -84,22 +93,22 @@ export function assignBlotterOptions(blotterOptions: AdaptableOptions): Adaptabl
       }
     };
 
-    returnBlotterOptions.predefinedConfig = cloneDeepWith(predefinedConfig, customizer);
+    returnadaptableOptions.predefinedConfig = cloneDeepWith(predefinedConfig, customizer);
   }
-  return returnBlotterOptions;
+  return returnadaptableOptions;
 }
 
-export function isValidPrimaryKey(blotter: IAdaptable, columns: AdaptableColumn[]): boolean {
+export function isValidPrimaryKey(adaptable: IAdaptable, columns: AdaptableColumn[]): boolean {
   const pkColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-    blotter.blotterOptions.primaryKey,
+    adaptable.adaptableOptions.primaryKey,
     columns
   );
 
   if (pkColumn == null) {
-    const errorMessage: string = `The PK Column '${blotter.blotterOptions.primaryKey}' does not exist.  This will affect many functions in the Adaptable Blotter.`;
-    if (blotter.blotterOptions.generalOptions!.showMissingPrimaryKeyWarning == true) {
+    const errorMessage: string = `The PK Column '${adaptable.adaptableOptions.primaryKey}' does not exist.  This will affect many functions in the Adaptable adaptable.`;
+    if (adaptable.adaptableOptions.generalOptions!.showMissingPrimaryKeyWarning == true) {
       // show an alert if that is the option
-      blotter.api.alertApi.showAlertError('No Primary Key', errorMessage);
+      adaptable.api.alertApi.showAlertError('No Primary Key', errorMessage);
     } else {
       // otherwise just log it
       LoggingHelper.LogAdaptableError(errorMessage);
@@ -109,16 +118,16 @@ export function isValidPrimaryKey(blotter: IAdaptable, columns: AdaptableColumn[
   return true;
 }
 
-export function isConfigServerEnabled(blotterOptions: AdaptableOptions): boolean {
+export function isConfigServerEnabled(adaptableOptions: AdaptableOptions): boolean {
   return (
-    blotterOptions.configServerOptions != null &&
-    blotterOptions.configServerOptions.enableConfigServer != null &&
-    blotterOptions.configServerOptions.enableConfigServer == true &&
-    StringExtensions.IsNotNullOrEmpty(blotterOptions.configServerOptions.configServerUrl)
+    adaptableOptions.configServerOptions != null &&
+    adaptableOptions.configServerOptions.enableConfigServer != null &&
+    adaptableOptions.configServerOptions.enableConfigServer == true &&
+    StringExtensions.IsNotNullOrEmpty(adaptableOptions.configServerOptions.configServerUrl)
   );
 }
 
-export function BlotterObjectExistsInState(
+export function AdaptableObjectExistsInState(
   array: AdaptableObject[],
   itemToCheck: AdaptableObject
 ): boolean {
@@ -129,12 +138,12 @@ export function BlotterObjectExistsInState(
 }
 
 // perform any checks that are necessary here
-// for now just blotterId
-export function CheckBlotterOptions(blotterOptions: AdaptableOptions): void {
-  if (blotterOptions.blotterId) {
-    if (blotterOptions.blotterId.includes('.')) {
+// for now just adaptableId
+export function CheckadaptableOptions(adaptableOptions: AdaptableOptions): void {
+  if (adaptableOptions.adaptableId) {
+    if (adaptableOptions.adaptableId.includes('.')) {
       LoggingHelper.LogWarning(
-        "The 'blotterId' property in BlotterOptions should not include a '.'.  We strongly recommend that you remove this."
+        "The 'adaptableId' property in adaptableOptions should not include a '.'.  We strongly recommend that you remove this."
       );
     }
   }
@@ -155,9 +164,9 @@ export function getEntitlementAccessLevelForStrategy(
   return AccessLevel.Full;
 }
 
-export function createFDC3Message(type: string, id: any): BlotterEventArgs {
-  let eventData: AdaptableBlotterEventData = {
-    name: 'Adaptable Blotter',
+export function createFDC3Message(type: string, id: any): AdaptableEventArgs {
+  let eventData: AdaptableEventData = {
+    name: 'Adaptable adaptable',
     type: type,
     id: id,
   };
@@ -171,11 +180,11 @@ export function createFDC3Message(type: string, id: any): BlotterEventArgs {
 }
 
 export const AdaptableHelper = {
-  assignBlotterOptions,
+  assignadaptableOptions,
   isValidPrimaryKey,
   isConfigServerEnabled,
-  BlotterObjectExistsInState,
-  CheckBlotterOptions,
+  AdaptableObjectExistsInState,
+  CheckadaptableOptions,
   getEntitlementAccessLevelForStrategy,
   createFDC3Message,
 };

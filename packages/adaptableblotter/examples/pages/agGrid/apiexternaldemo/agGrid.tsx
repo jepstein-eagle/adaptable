@@ -42,7 +42,7 @@ export function setCustomTheme() {
   adaptableApi.themeApi.loadTheme('custom-theme');
 }
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -75,14 +75,14 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return (
     <div>
       <br />
       &nbsp;
-      <label>Quick Search (from client application via Adaptable Blotter API): </label>
+      <label>Quick Search (from client application via Adaptable API): </label>
       &nbsp;
       <input type="text" id="txtQuickSearchText" />
       <button

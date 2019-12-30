@@ -90,7 +90,7 @@ import { ToolPanelState } from './ToolPanelState';
  *  | [UserInterface](_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
  *
  *
- * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
+ * This object when populated forms the **predefinedConfig** property in *adaptableOptions*.
  *
  * ## Predefined Config example
  *
@@ -284,7 +284,7 @@ export interface PredefinedConfig {
    */
   ActionColumn?: ActionColumnState;
   /**
-   * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of the Adaptable Blotter state.
+   * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of the Adaptable state.
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
@@ -307,7 +307,7 @@ export interface PredefinedConfig {
    */
   SystemStatus?: SystemStatusState;
   /**
-   *  Filters defined by Developers at Nowhich include a predicate function that is called by the Adaptable Blotter each time the filter is evaluated.
+   *  Filters defined by Developers at Nowhich include a predicate function that is called by the Adaptable each time the filter is evaluated.
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
@@ -315,7 +315,7 @@ export interface PredefinedConfig {
    */
   NamedFilter?: NamedFilterState;
   /**
-   * Config required to run features provided by partners of the Adaptable Blotter such as iPushPull and Glue42.
+   * Config required to run features provided by partners of the Adaptable such as iPushPull and Glue42.
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
@@ -331,7 +331,7 @@ export interface PredefinedConfig {
    */
   SparklineColumn?: SparklineColumnState;
   /**
-   * List of which System Filters should be available to users - see the list at [Adaptable Blotter Help](http://www.bbc.co.uk)
+   * List of which System Filters should be available to users - see the list at [Adaptable Help](http://www.bbc.co.uk)
    *
    * If no values are listed, then **all System Filters** are available.
    *
@@ -339,7 +339,7 @@ export interface PredefinedConfig {
    */
   SystemFilter?: SystemFilterState;
   /**
-   * State that manages UI elements in the Adaptable Blotter e.g. which colours to put in the default palette.
+   * State that manages UI elements in the Adaptable e.g. which colours to put in the default palette.
    *
    * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
    *
@@ -395,7 +395,7 @@ export interface PredefinedConfig {
   ColumnCategory?: ColumnCategoryState;
 
   /**
-   * Supplies a collection of *ColumnFilter* objects to provide the Adaptable Blotter with initial filtering.
+   * Supplies a collection of *ColumnFilter* objects to provide the Adaptable with initial filtering.
    */
   ColumnFilter?: ColumnFilterState;
 
@@ -422,7 +422,7 @@ export interface PredefinedConfig {
   DataSource?: DataSourceState;
 
   /**
-   * Supplies a collection of *Report* objects, together with name of the Current Report, as part of the Adaptable Blotter export Function.
+   * Supplies a collection of *Report* objects, together with name of the Current Report, as part of the Adaptable export Function.
    */
   Export?: ExportState;
 

@@ -17,7 +17,7 @@ import glue42Desktop from '@glue42/desktop';
 import glue42office from '@glue42/office';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 30;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -112,7 +112,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo()();
   }, []);
 
   return null;

@@ -30,7 +30,7 @@ but a plain JSON object like the one below
 
 */
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
 
@@ -66,7 +66,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

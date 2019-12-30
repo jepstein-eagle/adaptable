@@ -3,7 +3,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
 import FieldWrap from '../../../components/FieldWrap';
@@ -15,7 +15,7 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
   SelectedColumn: AdaptableColumn;
   SelectedColumnValue: string;
   onColumnValueChange: (columnvalue: any) => void;
-  Blotter: IAdaptable;
+  Adaptable: IAdaptable;
   AllowNew?: boolean; // defaults to true if not provided
   style?: React.CSSProperties;
   newLabel?: string;
@@ -76,10 +76,10 @@ export class ColumnValueSelector extends React.Component<
         options={() => {
           if (
             this.props.SelectedColumn != null &&
-            this.props.Blotter != null &&
-            this.props.Blotter.getColumnValueDisplayValuePairDistinctList != null
+            this.props.Adaptable != null &&
+            this.props.Adaptable.getColumnValueDisplayValuePairDistinctList != null
           ) {
-            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
               this.props.SelectedColumn.ColumnId,
               DistinctCriteriaPairValue.DisplayValue,
               false

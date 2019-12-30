@@ -149,7 +149,7 @@ class PlusMinusPopupComponent extends React.Component<
               ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={null}
-              Blotter={this.props.Blotter}
+              Adaptable={this.props.Adaptable}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

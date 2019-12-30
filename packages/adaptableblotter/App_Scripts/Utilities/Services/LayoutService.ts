@@ -2,7 +2,7 @@ import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import {
   Layout,
   ColumnSort,
@@ -19,8 +19,8 @@ import {
 } from '../../Api/Events/ColumnStateChanged';
 
 export class LayoutService implements ILayoutService {
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   public getLayoutDescription(layout: Layout, columns: AdaptableColumn[]): string {
@@ -50,18 +50,18 @@ export class LayoutService implements ILayoutService {
   }
 
   public autoSaveLayout(): void {
-    let currentLayoutName: string = this.blotter.api.layoutApi.getCurrentLayoutName();
-    if (this.blotter.isInitialised && currentLayoutName != GeneralConstants.DEFAULT_LAYOUT) {
+    let currentLayoutName: string = this.adaptable.api.layoutApi.getCurrentLayoutName();
+    if (this.adaptable.isInitialised && currentLayoutName != GeneralConstants.DEFAULT_LAYOUT) {
       if (
-        this.blotter.blotterOptions.layoutOptions != null &&
-        this.blotter.blotterOptions.layoutOptions.autoSaveLayouts != null &&
-        this.blotter.blotterOptions.layoutOptions.autoSaveLayouts
+        this.adaptable.adaptableOptions.layoutOptions != null &&
+        this.adaptable.adaptableOptions.layoutOptions.autoSaveLayouts != null &&
+        this.adaptable.adaptableOptions.layoutOptions.autoSaveLayouts
       ) {
-        let layout = this.blotter.api.layoutApi.getCurrentLayout();
+        let layout = this.adaptable.api.layoutApi.getCurrentLayout();
         if (layout != null) {
-          let visibleColumns: AdaptableColumn[] = this.blotter.api.gridApi.getVisibleColumns();
+          let visibleColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getVisibleColumns();
 
-          let currentGridVendorInfo: VendorGridInfo = this.blotter.getVendorGridLayoutInfo(
+          let currentGridVendorInfo: VendorGridInfo = this.adaptable.getVendorGridLayoutInfo(
             visibleColumns.map(vc => vc.ColumnId)
           );
 
@@ -73,12 +73,12 @@ export class LayoutService implements ILayoutService {
             GroupedColumns: layout.GroupedColumns,
             PivotDetails: layout.PivotDetails,
             VendorGridInfo: currentGridVendorInfo,
-            BlotterGridInfo: {
+            AdaptableGridInfo: {
               CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-              CurrentColumnSorts: this.blotter.api.gridApi.getColumnSorts(),
+              CurrentColumnSorts: this.adaptable.api.gridApi.getColumnSorts(),
             },
           };
-          this.blotter.api.layoutApi.saveLayout(layoutToSave);
+          this.adaptable.api.layoutApi.saveLayout(layoutToSave);
         }
       }
 
@@ -90,7 +90,7 @@ export class LayoutService implements ILayoutService {
         columnStateChangedInfo
       );
 
-      this.blotter.api.eventApi.emit('ColumnStateChanged', columnStateChangedEventArgs);
+      this.adaptable.api.eventApi.emit('ColumnStateChanged', columnStateChangedEventArgs);
     }
   }
 
@@ -111,7 +111,7 @@ export class LayoutService implements ILayoutService {
       if (
         !ArrayExtensions.areArraysEqualWithOrder(
           layoutEntity.Columns,
-          layoutEntity.BlotterGridInfo.CurrentColumns
+          layoutEntity.AdaptableGridInfo.CurrentColumns
         )
       ) {
         return true;
@@ -119,7 +119,7 @@ export class LayoutService implements ILayoutService {
       if (
         !ArrayExtensions.areArraysEqualWithOrderandProperties(
           layoutEntity.ColumnSorts,
-          layoutEntity.BlotterGridInfo.CurrentColumnSorts
+          layoutEntity.AdaptableGridInfo.CurrentColumnSorts
         )
       ) {
         return true;

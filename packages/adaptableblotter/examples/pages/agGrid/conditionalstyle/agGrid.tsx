@@ -207,7 +207,7 @@ const getBasicNorthwindColumnSchema = (): any[] => {
   return schema;
 };
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const gridOptions: GridOptions = {
     columnDefs: getBasicNorthwindColumnSchema(),
     rowData: jsonData,
@@ -228,7 +228,7 @@ function InitAdaptableBlotter() {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
-    blotterId: 'config blotter demo',
+    adaptableId: 'config demo',
     predefinedConfig: config as PredefinedConfig,
   };
 
@@ -246,7 +246,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

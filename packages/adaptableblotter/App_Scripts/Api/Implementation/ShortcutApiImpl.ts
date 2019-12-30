@@ -7,11 +7,11 @@ import { ShortcutState, Shortcut } from '../../PredefinedConfig/ShortcutState';
 
 export class ShortcutApiImpl extends ApiBase implements ShortcutApi {
   public getShortcutState(): ShortcutState {
-    return this.getBlotterState().Shortcut;
+    return this.getAdaptableState().Shortcut;
   }
 
   public getAllShortcut(): Shortcut[] {
-    return this.getBlotterState().Shortcut.Shortcuts;
+    return this.getAdaptableState().Shortcut.Shortcuts;
   }
 
   public addShortcut(shortcut: Shortcut): void {
@@ -29,7 +29,7 @@ export class ShortcutApiImpl extends ApiBase implements ShortcutApi {
   }
 
   public showShortcutPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ShortcutStrategyId,
       ScreenPopups.ShortcutPopup
     );

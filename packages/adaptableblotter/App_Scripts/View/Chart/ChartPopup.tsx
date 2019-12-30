@@ -160,7 +160,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 SystemFilters={this.props.SystemFilters}
                 NamedFilters={this.props.NamedFilters}
                 ColumnCategories={this.props.ColumnCategories}
-                Blotter={this.props.Blotter}
+                Adaptable={this.props.Adaptable}
                 WizardStartIndex={this.state.WizardStartIndex}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -177,7 +177,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 SystemFilters={this.props.SystemFilters}
                 NamedFilters={this.props.NamedFilters}
                 ColumnCategories={this.props.ColumnCategories}
-                Blotter={this.props.Blotter}
+                Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -195,7 +195,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 SystemFilters={this.props.SystemFilters}
                 NamedFilters={this.props.NamedFilters}
                 ColumnCategories={this.props.ColumnCategories}
-                Blotter={this.props.Blotter}
+                Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -260,7 +260,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       this.props.PopupParams.source == 'Toolbar'
     ) {
       if (
-        this.props.ChartDefinitions === this.props.Blotter.api.chartApi.getAllChartDefinitions()
+        this.props.ChartDefinitions === this.props.Adaptable.api.chartApi.getAllChartDefinitions()
       ) {
         this.props.onClosePopup();
       }

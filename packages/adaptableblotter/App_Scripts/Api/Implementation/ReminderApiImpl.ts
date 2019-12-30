@@ -6,15 +6,15 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class ReminderApiImpl extends ApiBase implements ReminderApi {
   public getReminderState(): ReminderState {
-    return this.getBlotterState().Reminder;
+    return this.getAdaptableState().Reminder;
   }
 
   public getAllReminder(): Reminder[] {
-    return this.getBlotterState().Reminder.Reminders;
+    return this.getAdaptableState().Reminder.Reminders;
   }
 
   public showReminderPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ReminderStrategyId,
       ScreenPopups.ReminderPopup
     );

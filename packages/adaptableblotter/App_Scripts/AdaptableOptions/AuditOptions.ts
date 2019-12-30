@@ -1,7 +1,7 @@
 /**
  * Options for managing Audit Log.
  *
- * ​​**Note: Adaptable Blotter has no knowledge of which messages Audit Log is given and where they are sent.**
+ * ​​**Note: Adaptable has no knowledge of which messages Audit Log is given and where they are sent.**
  *
  * And it has no ability to access this data: any data sent to the Audit Log is known only to our users, and is accessible only by them.​​
  *
@@ -73,7 +73,7 @@ export interface AuditOptions {
   auditUserStateChanges?: AuditDestinationOptions;
 
   /**
-   * Whether to audit changes to the Adaptable Blotter's *internal* state.
+   * Whether to audit changes to the Adaptable's *internal* state.
    *
    * Includes things like which popups are active, what are the selected cells etc.
    *
@@ -86,7 +86,7 @@ export interface AuditOptions {
   /**
    * Whether or not to audit changes to underlying Grid data (i.e. those not caused by a user edit)
    *
-   * Note: The Adaptable Blotter is NOT a ticking database so  **this option should be used sparingly if you have very high-frequency ticking data**.
+   * Note: The Adaptable is NOT a ticking database so  **this option should be used sparingly if you have very high-frequency ticking data**.
    *
    * The primary use case is where data changes rarely in the underlying data set but the user wishes to be notified (presumably) by Alert when that does happen.
    *
@@ -156,7 +156,7 @@ export interface AuditDestinationOptions {
   /**
    * Fires the Audit Message as an Audit Log (AuditLogEventArgs) event.
    *
-   * You listen to this Event the same way that you do all other Adaptable Blotter events.
+   * You listen to this Event the same way that you do all other Adaptable events.
    *
    * **Default Value: false**
    */

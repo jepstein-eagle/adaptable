@@ -8,7 +8,7 @@ import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 
 export class PlusMinusApiImpl extends ApiBase implements PlusMinusApi {
   public getPlusMinusState(): PlusMinusState {
-    return this.getBlotterState().PlusMinus;
+    return this.getAdaptableState().PlusMinus;
   }
 
   public getAllPlusMinus(): PlusMinusRule[] {
@@ -17,13 +17,13 @@ export class PlusMinusApiImpl extends ApiBase implements PlusMinusApi {
 
   public applyPlusMinus(cellsToUpdate: GridCell[]): void {
     let plusMinusStrategy = <IPlusMinusStrategy>(
-      this.blotter.strategies.get(StrategyConstants.PlusMinusStrategyId)
+      this.adaptable.strategies.get(StrategyConstants.PlusMinusStrategyId)
     );
     //   plusMinusStrategy.applyPlusMinus(this.getAllPlusMinus(),);
   }
 
   public showPlusMinusPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.PlusMinusStrategyId,
       ScreenPopups.PlusMinusPopup
     );

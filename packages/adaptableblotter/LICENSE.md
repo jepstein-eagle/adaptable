@@ -1,5 +1,5 @@
 End User Licence Agreement
-This End User Licence Agreement (“Licence”) is a legal agreement between you the client (“Client” or “you”), and Traders Tools Limited (“TTL”) relating to the use of TTL’s Adaptable Blotter™ software Adaptable.NET (for use in WPF and WinForms applications) or Adaptable.JS (for use in HTML5 applications) (together, the “Software”).
+This End User Licence Agreement (“Licence”) is a legal agreement between you the client (“Client” or “you”), and Traders Tools Limited (“TTL”) relating to the use of TTL’s Adaptable™ software Adaptable.NET (for use in WPF and WinForms applications) or Adaptable.JS (for use in HTML5 applications) (together, the “Software”).
 
 By accepting the terms of this Licence or downloading, installing, copying, or otherwise using the Software, you represent and warrant that you are an authorized representative of Client and have the authority to bind Client to the terms of this Licence.
 If you do not accept the terms of this Licence, you must not download, install, copy, or otherwise use the Software and TTL will not grant a licence of the Software to you.  In such an event, please contact the TTL as soon as possible to obtain a refund of any amounts paid for the Software.
@@ -10,7 +10,7 @@ TTL provides the following:
 
 •	User Licence: you may only use the Software in a production environment if you have executed a Sales Order with TTL and paid the applicable annual licence fees.
 
-•	Support:  The annual user licence fee includes extensive online help to support users and client support teams working with them. In addition, the annual user licence fee includes unlimited support for the first month after the contract period has started, and up to a further 20 queries per year to the Adaptable Blotter support team.  Additional support, over and above these levels, can be provided if required but will attract an additional fee. Support services will be supplied under and subject to the terms and conditions of TTL’s Support Schedule for the time being in force..
+•	Support:  The annual user licence fee includes extensive online help to support users and client support teams working with them. In addition, the annual user licence fee includes unlimited support for the first month after the contract period has started, and up to a further 20 queries per year to the Adaptable support team.  Additional support, over and above these levels, can be provided if required but will attract an additional fee. Support services will be supplied under and subject to the terms and conditions of TTL’s Support Schedule for the time being in force..
 
 1. LICENCE
 

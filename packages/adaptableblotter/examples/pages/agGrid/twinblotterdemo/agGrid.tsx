@@ -7,10 +7,10 @@ import { GridOptions } from 'ag-grid-community';
 import { AdaptableOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
 
-  // first blotter
+  // first grid
   const tradeData1: any = examplesHelper.getTrades(500);
   const gridOptions1: GridOptions = examplesHelper.getGridOptionsTrade(tradeData1);
   const adaptableOptions1: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
@@ -18,12 +18,12 @@ function InitAdaptableBlotter() {
     'grid1'
   );
   adaptableOptions1.containerOptions = {
-    adaptableBlotterContainer: 'adaptableBlotter1',
+    adaptableContainer: 'adaptable1',
     vendorContainer: 'grid1',
   };
   const api1 = Adaptable.init(adaptableOptions1);
 
-  // second blotter
+  // second grid
   const tradeData2: any = examplesHelper.getTrades(500);
   const gridOptions2: GridOptions = examplesHelper.getGridOptionsTrade(tradeData2);
   const adaptableOptions2: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
@@ -31,7 +31,7 @@ function InitAdaptableBlotter() {
     'grid2'
   );
   adaptableOptions2.containerOptions = {
-    adaptableBlotterContainer: 'adaptableBlotter2',
+    adaptableContainer: 'adaptable2',
     vendorContainer: 'grid2',
   };
   const api2 = Adaptable.init(adaptableOptions2);
@@ -43,7 +43,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

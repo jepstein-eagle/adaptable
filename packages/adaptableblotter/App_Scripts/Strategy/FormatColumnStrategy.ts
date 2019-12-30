@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -10,8 +10,8 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.FormatColumnStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.FormatColumnStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -23,9 +23,9 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter, 'style')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'style')) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
-        this.blotter.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
+        this.adaptable.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
         column.ColumnId
       );
       let label = formatExists ? 'Edit ' : 'Create ';

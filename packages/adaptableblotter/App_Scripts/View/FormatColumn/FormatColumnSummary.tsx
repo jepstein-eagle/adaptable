@@ -100,7 +100,7 @@ export class FormatColumnSummaryComponent extends React.Component<
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
           />
         )}
       </div>

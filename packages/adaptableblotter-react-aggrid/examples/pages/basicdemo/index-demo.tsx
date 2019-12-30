@@ -27,8 +27,8 @@ export default () => (
     onSearchChanged={(...args: any[]) => {
       LoggingHelper.LogAdaptableWarning('search changed', args);
     }}
-    onBlotterReady={api => {
-      console.log('blotter ready!!!', api);
+    onAdaptableReady={api => {
+      console.log('Adaptable ready', api);
     }}
     onSelectionChanged={selargs => {
       console.log(selargs);
@@ -47,9 +47,9 @@ export default () => (
       floatingFilter: true,
       suppressMenuHide: true,
     }}
-    blotterOptions={{
+    adaptableOptions={{
       primaryKey: 'tradeId',
-      blotterId: 'BYOP demos',
+      adaptableId: 'BYOP demos',
     }}
   />
 );

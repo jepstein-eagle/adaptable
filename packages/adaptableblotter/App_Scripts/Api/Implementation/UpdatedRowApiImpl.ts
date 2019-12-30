@@ -12,7 +12,7 @@ import { Thickness } from 'igniteui-react-core/ES5/Thickness';
  */
 export class UpdatedRowApiImpl extends ApiBase implements UpdatedRowApi {
   public getUpdatedRowState(): UpdatedRowState {
-    return this.getBlotterState().UpdatedRow;
+    return this.getAdaptableState().UpdatedRow;
   }
 
   public updatedRowEnable(): void {
@@ -48,7 +48,7 @@ export class UpdatedRowApiImpl extends ApiBase implements UpdatedRowApi {
     // if we exceed the amount allowed then we need to delete oldest item first
     // we do it here (and not in Redux) so that the store can listen and refresh the row.
     if (maxUpdatedRowsInStore != Infinity) {
-      let updatedRowInfos: UpdatedRowInfo[] = this.getBlotterState().System.UpdatedRowInfos;
+      let updatedRowInfos: UpdatedRowInfo[] = this.getAdaptableState().System.UpdatedRowInfos;
       if (updatedRowInfos.length === maxUpdatedRowsInStore) {
         // need to delete the oldest one
         let oldestUpdatedRowInfo: UpdatedRowInfo = updatedRowInfos[0];
@@ -65,7 +65,7 @@ export class UpdatedRowApiImpl extends ApiBase implements UpdatedRowApi {
   }
 
   public deleteAllUpdatedRowInfo(): void {
-    let updatedRowInfos: UpdatedRowInfo[] = this.blotter.api.internalApi.getUpdatedRowInfos();
+    let updatedRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
     this.dispatchAction(SystemRedux.SystemUpdatedRowDeleteAll(updatedRowInfos));
   }
 }

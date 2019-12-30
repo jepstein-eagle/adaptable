@@ -1,4 +1,4 @@
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
@@ -14,7 +14,7 @@ import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
 The Chart popup or Div.
 If ShowModal prop is true (set via Predefined Config then we show the chart modally - the same we do for all popups)
 Otherwise we show it in a Div.
-If the user has set the name of a div in BlotterOptions / ContainerOptions / ChartContainer, then we use that;
+If the user has set the name of a div in adaptableOptions / ContainerOptions / ChartContainer, then we use that;
 Otherwise we use the default.
 
 TODO:  put the stuff n state if we redraw every time?
@@ -38,7 +38,7 @@ export class AdaptableChart extends React.Component<IAdaptableChartProps, Adapta
     super(props);
     this.state = {
       chartContainer: UIHelper.getChartContainer(
-        this.props.Adaptable.blotterOptions,
+        this.props.Adaptable.adaptableOptions,
         document,
         this.props.showModal
       ),
@@ -47,7 +47,7 @@ export class AdaptableChart extends React.Component<IAdaptableChartProps, Adapta
         StrategyConstants.ChartStrategyId
       ),
       isValidUserChartContainer: UIHelper.isValidUserChartContainer(
-        this.props.Adaptable.blotterOptions,
+        this.props.Adaptable.adaptableOptions,
         document
       ),
     };
@@ -59,7 +59,7 @@ export class AdaptableChart extends React.Component<IAdaptableChartProps, Adapta
       ModalContainer: this.state.chartContainer,
       onClose: this.props.onClose,
       ShowModal: this.props.showModal,
-      Blotter: this.props.Adaptable,
+      Adaptable: this.props.Adaptable,
       UserFilters: this.props.Adaptable.api.userFilterApi.getAllUserFilter(),
       SystemFilters: this.props.Adaptable.api.systemFilterApi.getAllSystemFilter(),
       NamedFilters: this.props.Adaptable.api.namedFilterApi.getAllNamedFilter(),
@@ -76,7 +76,7 @@ export class AdaptableChart extends React.Component<IAdaptableChartProps, Adapta
 
     return this.props.showModal ? (
       <AdaptablePopup
-        Blotter={this.props.Adaptable}
+        Adaptable={this.props.Adaptable}
         onHide={this.props.onClose}
         showModal
         PopupParams={null}

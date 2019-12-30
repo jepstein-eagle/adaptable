@@ -6,7 +6,7 @@ import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
 
 export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
   public getColumnFilterState(): ColumnFilterState {
-    return this.getBlotterState().ColumnFilter;
+    return this.getAdaptableState().ColumnFilter;
   }
 
   public setColumnFilter(columnFilters: ColumnFilter[]): void {
@@ -45,11 +45,11 @@ export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
   }
 
   public getAllColumnFilter(): ColumnFilter[] {
-    return this.getBlotterState().ColumnFilter.ColumnFilters;
+    return this.getAdaptableState().ColumnFilter.ColumnFilters;
   }
 
   public getAllColumnFilterForColumn(column: string): ColumnFilter[] {
-    let columnFilters: ColumnFilter[] | undefined = this.getBlotterState().ColumnFilter
+    let columnFilters: ColumnFilter[] | undefined = this.getAdaptableState().ColumnFilter
       .ColumnFilters;
     if (columnFilters) {
       return columnFilters.filter(cf => cf.ColumnId == column);
@@ -63,9 +63,9 @@ export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
     let rawValues: any[] = [];
 
     primarykeyValues.forEach(pk => {
-      let rowNode = this.blotter.getRowNodeForPrimaryKey(pk);
-      displayValues.push(this.blotter.getDisplayValueFromRowNode(rowNode, column));
-      rawValues.push(this.blotter.getRawValueFromRowNode(rowNode, column));
+      let rowNode = this.adaptable.getRowNodeForPrimaryKey(pk);
+      displayValues.push(this.adaptable.getDisplayValueFromRowNode(rowNode, column));
+      rawValues.push(this.adaptable.getRawValueFromRowNode(rowNode, column));
     });
 
     let filter: ColumnFilter = {

@@ -92,7 +92,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
       columnFilters.forEach(cf => {
         this.props.onClearColumnFilter(cf);
       });
-      this.props.Blotter.clearColumnFiltering([columnId]);
+      this.props.Adaptable.clearColumnFiltering([columnId]);
     }
   }
 

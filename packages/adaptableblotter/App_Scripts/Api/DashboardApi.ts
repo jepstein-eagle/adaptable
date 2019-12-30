@@ -15,18 +15,18 @@ import {
  */
 export interface DashboardApi {
   /**
-   * Retrieves the Dashboard section from the Adaptable Blotter State
+   * Retrieves the Dashboard section from the Adaptable State
    */
   GetDashboardState(): DashboardState;
 
   /**
-   * Sets which toolbars should be available in the Adaptable Blotter
+   * Sets which toolbars should be available in the Adaptable
    *
    * @param availableToolbars toolbars to make available
    */
   SetAvailableToolbars(availableToolbars: AdaptableDashboardToolbars): void;
   /**
-   * Sets which toolbars should be visibile in the Adaptable Blotter
+   * Sets which toolbars should be visibile in the Adaptable
    *
    * @param visibleToolbars toolbars to show
    */

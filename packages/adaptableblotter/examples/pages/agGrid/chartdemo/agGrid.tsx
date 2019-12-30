@@ -15,7 +15,7 @@ import { TickingDataHelper } from '../../TickingDataHelper';
 
 var api: AdaptableApi;
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 500;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -26,8 +26,7 @@ function InitAdaptableBlotter() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Chart Demo',
-
+    adaptableId: 'Chart Demo',
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
@@ -57,7 +56,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

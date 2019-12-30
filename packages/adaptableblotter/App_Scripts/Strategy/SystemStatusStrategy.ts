@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { ISystemStatusStrategy } from './Interface/ISystemStatusStrategy';
 import * as SystemStatusRedux from '../Redux/ActionsReducers/SystemStatusRedux';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
@@ -14,10 +14,10 @@ import Helper from '../Utilities/Helpers/Helper';
 
 export class SystemStatusStrategy extends AdaptableStrategyBase implements ISystemStatusStrategy {
   private systemStatusState: SystemStatusState;
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.SystemStatusStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.SystemStatusStrategyId, adaptable);
 
-    blotter.AdaptableStore.onAny((eventName: string) => {
+    adaptable.AdaptableStore.onAny((eventName: string) => {
       if (
         eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_UPDATE ||
         eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_SHOW_ALERT ||
@@ -27,23 +27,23 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
       }
     });
 
-    this.blotter.api.eventApi.on('BlotterReady', () => {
+    this.adaptable.api.eventApi.on('AdaptableReady', () => {
       setTimeout(() => {
-        this.blotter.api.systemStatusApi.setDefaultMessage();
+        this.adaptable.api.systemStatusApi.setDefaultMessage();
       }, 300);
     });
   }
 
   protected setSystemMessage(): void {
-    let systemStatusState = this.blotter.api.systemStatusApi.getSystemStatusState();
+    let systemStatusState = this.adaptable.api.systemStatusApi.getSystemStatusState();
     if (StringExtensions.IsNullOrEmpty(systemStatusState.StatusMessage)) {
-      this.blotter.api.systemStatusApi.setSystemStatus(
+      this.adaptable.api.systemStatusApi.setSystemStatus(
         systemStatusState.DefaultStatusMessage,
         systemStatusState.StatusType
       );
     }
     if (Helper.objectNotExists(systemStatusState.StatusType)) {
-      this.blotter.api.systemStatusApi.setSystemStatus(
+      this.adaptable.api.systemStatusApi.setSystemStatus(
         systemStatusState.StatusMessage,
         systemStatusState.DefaultStatusType
       );
@@ -51,16 +51,16 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
   }
 
   protected InitStateOld() {
-    if (this.systemStatusState != this.blotter.api.systemStatusApi.getSystemStatusState()) {
-      this.systemStatusState = this.blotter.api.systemStatusApi.getSystemStatusState();
+    if (this.systemStatusState != this.adaptable.api.systemStatusApi.getSystemStatusState()) {
+      this.systemStatusState = this.adaptable.api.systemStatusApi.getSystemStatusState();
       if (StringExtensions.IsNullOrEmpty(this.systemStatusState.StatusMessage)) {
-        this.blotter.api.systemStatusApi.setSystemStatus(
+        this.adaptable.api.systemStatusApi.setSystemStatus(
           this.systemStatusState.DefaultStatusMessage,
           this.systemStatusState.StatusType
         );
       }
       if (Helper.objectNotExists(this.systemStatusState.StatusType)) {
-        this.blotter.api.systemStatusApi.setSystemStatus(
+        this.adaptable.api.systemStatusApi.setSystemStatus(
           this.systemStatusState.StatusMessage,
           this.systemStatusState.DefaultStatusType
         );

@@ -12,9 +12,9 @@ import { StateOptions } from './StateOptions';
 import { UserInterfaceOptions } from './UserInterfaceOptions';
 
 /**
- * `AdaptableOptions` is the class injected into the Adaptable Blotter at startup.
+ * `AdaptableOptions` is the class injected into the Adaptable at startup.
  *
- * **This forms the only parameter requried by the Adaptable Blotter constructor.**
+ * **This forms the only parameter requried by the Adaptable constructor.**
  *
  * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
  *
@@ -28,7 +28,7 @@ export interface AdaptableOptions {
   /**
    * **MANDATORY property**
    *
-   * This is the underlying vendor grid or grid object which the Adaptable Blotter will interact with.
+   * This is the underlying vendor grid or grid object which the Adaptable will interact with.
    *
    * Depending on the vendor it is either a Grid or an Options object.
    *
@@ -54,20 +54,26 @@ export interface AdaptableOptions {
   primaryKey: string;
 
   /**
-   * Identifier for this instance of the Adaptable Blotter
+   * Identifier for this instance of Adaptable
    *
-   * Useful if Audit Log is turned on or you are using multiple Blotters
+   * Useful if Audit Log is turned on or you are using multiple grids
    *
    * **Note** it cannot contain a '.' (as this value is used to name styles which raises issues if it contains a full stop).
    *
    * The value provided here is also that used to name the *Home Toolbar* (the toolbar that appears first in the Dashboard on the left).
    *
-   * **Default Value: adaptable_blotter_id**
+   * **Default Value: adaptable_id**
+   */
+
+  adaptableId?: string;
+
+  /**
+   * Deprecated and no long required - please use the `adaptableId` key instead
    */
   blotterId?: string;
 
   /**
-   * The name of the current user of the Adaptable Blotter
+   * The name of the current Adaptable user
    *
    * Strongly recommended to be set if using Config Server
    *
@@ -98,7 +104,7 @@ export interface AdaptableOptions {
   licenceKey?: string;
 
   /**
-   * Options for setting the *Div elements* in which the Adaptable Blotter and underlying grid are placed.
+   * Options for setting the *Div elements* in which the Adaptable and underlying grid are placed.
    *
    * Also allows you to set where popups appear relative to the page and where charts are displayed.
    */
@@ -125,7 +131,7 @@ export interface AdaptableOptions {
   configServerOptions?: ConfigServerOptions;
 
   /**
-   * Options for running queries (or Expressions) in the Adaptable Blotter.
+   * Options for running queries (or Expressions) in the Adaptable.
    *
    * Lets you specify how (and how many) values are returned when doing a column lookup, how to deal with case and what is in the Query.
    *
@@ -134,7 +140,7 @@ export interface AdaptableOptions {
   queryOptions?: QueryOptions;
 
   /**
-   * Options related to Editing the Adaptable Blotter.
+   * Options related to Editing the Adaptable.
    *
    * Includes a function enabling you to perform custom validation when a cell changes values.
    */
@@ -148,23 +154,23 @@ export interface AdaptableOptions {
   layoutOptions?: LayoutOptions;
 
   /**
-   * Related to creating and managing filters in the Adaptable Blotter.
+   * Related to creating and managing filters in the Adaptable.
    *
-   * Includes options concerning whetehr to use the Adaptable Blotter filters (or those provided by the vendor grid).
+   * Includes options concerning whetehr to use the Adaptable filters (or those provided by the vendor grid).
    *
    * Also contains options to set if, how and when the Grid should repaint and refilter after user data edits and ticking data edits.
    */
   filterOptions?: FilterOptions;
 
   /**
-   * Options to manage the Adaptable Blotter charting.
+   * Options to manage the Adaptable charting.
    *
    * Primarily concerned with how and where charts appear.
    */
   chartOptions?: ChartOptions;
 
   /**
-   * General options to manage the Adaptable Blotter.
+   * General options to manage the Adaptable.
    *
    * Essentially those options that didn't fit into of the specific categories.
    *
@@ -173,7 +179,7 @@ export interface AdaptableOptions {
   generalOptions?: GeneralOptions;
 
   /**
-   * Options for managing the User Interface Adaptable Blotter.
+   * Options for managing the User Interface Adaptable.
    *
    * Includes options for themes, menus, tool panels etc.
    */
@@ -182,7 +188,7 @@ export interface AdaptableOptions {
   /**
    * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
    *
-   * By default, the adaptable blotter state is persisted in the local storage of the user browser, under the `blotterId` key.
+   * By default, the Adaptable state is persisted in the local storage of the user browser, under the `blotterId` key.
    *
    * Using various state options allows you to change this default behavior and also add custom properties in the persisted state.
    *

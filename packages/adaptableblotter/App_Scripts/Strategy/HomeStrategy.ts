@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as GlyphConstants from '../Utilities/Constants/GlyphConstants';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
@@ -10,19 +10,19 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 // This is a special strategy that the user can never remove but which is useful to us
 // We use it to manage internal state changes and menu items that are not directly strategy related
 export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.HomeStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.HomeStrategyId, adaptable);
     // useful for when grid reloads (e.g. at midnight);
-    this.blotter._on('GridReloaded', () => {
-      this.blotter.applyGridFiltering();
+    this.adaptable._on('GridReloaded', () => {
+      this.adaptable.applyGridFiltering();
     });
   }
 
   public addBaseColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] {
     let baseMenuItems: AdaptableMenuItem[] = [];
 
-    if (this.canCreateColumnMenuItem(column, this.blotter, 'quickfilter')) {
-      const isFilterActive: boolean = this.blotter.api.gridApi.getGridState().IsQuickFilterActive;
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'quickfilter')) {
+      const isFilterActive: boolean = this.adaptable.api.gridApi.getGridState().IsQuickFilterActive;
       baseMenuItems.push(
         this.createColumnMenuItemReduxAction(
           isFilterActive ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
@@ -31,8 +31,8 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
         )
       );
     }
-    if (this.blotter.isSelectable()) {
-      if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.adaptable.isSelectable()) {
+      if (this.canCreateColumnMenuItem(column, this.adaptable)) {
         baseMenuItems.push(
           this.createColumnMenuItemReduxAction(
             'Select Column',
@@ -42,7 +42,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
         );
       }
     }
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       baseMenuItems.push(
         this.createColumnMenuItemReduxAction(
           'Hide Column',

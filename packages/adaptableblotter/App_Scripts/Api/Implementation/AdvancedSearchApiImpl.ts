@@ -10,7 +10,7 @@ import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
 export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi {
   public getAdvancedSearchState(): AdvancedSearchState {
-    return this.getBlotterState().AdvancedSearch;
+    return this.getAdaptableState().AdvancedSearch;
   }
 
   public setAdvancedSearchState(advancedSearchState: AdvancedSearchState): void {
@@ -19,7 +19,7 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
 
     if (advancedSearches != advancedSearchState.AdvancedSearches) {
       advancedSearchState.AdvancedSearches.forEach((advancedSearch: AdvancedSearch) => {
-        if (AdaptableHelper.BlotterObjectExistsInState(advancedSearches, advancedSearch)) {
+        if (AdaptableHelper.AdaptableObjectExistsInState(advancedSearches, advancedSearch)) {
           this.editAdvancedSearch(advancedSearch);
         } else {
           this.addAdvancedSearch(advancedSearch);
@@ -40,7 +40,7 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
   }
 
   public setAdvancedSearch(advancedSearchName: string): void {
-    const advancedSearch: AdvancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches!.find(
+    const advancedSearch: AdvancedSearch = this.getAdaptableState().AdvancedSearch.AdvancedSearches!.find(
       (a: AdvancedSearch) => a.Name == advancedSearchName
     );
     if (
@@ -88,7 +88,7 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
   }
 
   public getCurrentAdvancedSearchName(): string | undefined {
-    return this.getBlotterState().AdvancedSearch.CurrentAdvancedSearch;
+    return this.getAdaptableState().AdvancedSearch.CurrentAdvancedSearch;
   }
 
   public getAdvancedSearchByName(
@@ -102,7 +102,7 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
   }
 
   public getAllAdvancedSearch(): AdvancedSearch[] {
-    let searches: AdvancedSearch[] | undefined = this.getBlotterState().AdvancedSearch
+    let searches: AdvancedSearch[] | undefined = this.getAdaptableState().AdvancedSearch
       .AdvancedSearches;
     if (searches == undefined) {
       searches = [];
@@ -111,7 +111,7 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
   }
 
   public showAdvancedSearchPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.AdvancedSearchStrategyId,
       ScreenPopups.AdvancedSearchPopup
     );

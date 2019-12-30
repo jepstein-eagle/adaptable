@@ -19,7 +19,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * In this System Status section of Predefined Config you can also set a `DefaultStatusMessage` and `DefaultStatusType` to display when there is nothing specific to show.
  *
- * The Adaptable Blotter will ensure that this Default Message is displayed any time there is no actual Status Message to show.
+ * The Adaptable will ensure that this Default Message is displayed any time there is no actual Status Message to show.
  *
  * You can display the System Status message (or Default Message) in 4 ways:
  *

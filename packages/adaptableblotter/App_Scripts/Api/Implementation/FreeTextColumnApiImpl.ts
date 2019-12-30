@@ -12,11 +12,11 @@ import {
 
 export class FreeTextColumnApiImpl extends ApiBase implements FreeTextColumnApi {
   public getFreeTextColumnState(): FreeTextColumnState {
-    return this.getBlotterState().FreeTextColumn;
+    return this.getAdaptableState().FreeTextColumn;
   }
 
   public getAllFreeTextColumn(): FreeTextColumn[] {
-    return this.getBlotterState().FreeTextColumn.FreeTextColumns;
+    return this.getAdaptableState().FreeTextColumn.FreeTextColumns;
   }
 
   public addFreeTextColumn(freeTextColumn: FreeTextColumn): void {
@@ -51,7 +51,7 @@ export class FreeTextColumnApiImpl extends ApiBase implements FreeTextColumnApi 
   }
 
   public showFreeTextColumnPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.FreeTextColumnStrategyId,
       ScreenPopups.FreeTextColumnPopup
     );

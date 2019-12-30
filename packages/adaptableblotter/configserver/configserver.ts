@@ -155,7 +155,7 @@ function getFiles(srcpath: string) {
 }
 
 app.listen(3000, function() {
-  log.info('Adaptable Blotter Config Server listening on port 3000!');
+  log.info('Adaptable Config Server listening on port 3000!');
 });
 
 function customizer(objValue: any, srcValue: any) {

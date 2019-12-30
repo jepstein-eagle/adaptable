@@ -7,7 +7,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class PercentBarApiImpl extends ApiBase implements PercentBarApi {
   public getPercentBarState(): PercentBarState {
-    return this.getBlotterState().PercentBar;
+    return this.getAdaptableState().PercentBar;
   }
 
   public getAllPercentBar(): PercentBar[] {
@@ -15,7 +15,7 @@ export class PercentBarApiImpl extends ApiBase implements PercentBarApi {
   }
 
   public getPercentBarByColumn(columnId: string): PercentBar {
-    let percentBar: PercentBar = this.getBlotterState().PercentBar.PercentBars.find(
+    let percentBar: PercentBar = this.getAdaptableState().PercentBar.PercentBars.find(
       pcb => pcb.ColumnId == columnId
     );
     return percentBar;
@@ -87,7 +87,7 @@ export class PercentBarApiImpl extends ApiBase implements PercentBarApi {
   }
 
   public showPercentBarPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.PercentBarStrategyId,
       ScreenPopups.PercentBarPopup
     );

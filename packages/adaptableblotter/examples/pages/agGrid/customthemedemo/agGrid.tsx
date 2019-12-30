@@ -24,7 +24,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { RowStyle } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(5000);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -99,7 +99,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

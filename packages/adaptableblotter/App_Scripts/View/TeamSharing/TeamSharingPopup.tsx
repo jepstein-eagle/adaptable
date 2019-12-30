@@ -135,7 +135,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
               {ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
             </Flex>
             <Flex flex={4}>
-              {this.props.Blotter.ValidationService.createCellValidationDescription(
+              {this.props.Adaptable.ValidationService.createCellValidationDescription(
                 cellVal,
                 this.props.Columns
               )}

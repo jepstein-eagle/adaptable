@@ -1,14 +1,14 @@
-# Adaptable Blotter Angular ag-Grid
+# Adaptable Angular ag-Grid
 
-Repository for the Adaptable Blotter Angular ag-Grid Wrapper.
+Repository for the Adaptable Angular ag-Grid Wrapper.
 
-This allows you to install, instantiate and reference the Adaptable Blotter using ag-Grid in an "Angular-friendly" manner.
+This allows you to install, instantiate and reference the Adaptable using ag-Grid in an "Angular-friendly" manner.
 
 The Adaptable angular package wraps the ag-Grid angular wrapper - so you can use all the goodies of angular custom rendering wherever the ag-Grid angular wrapper supports them.
 
 ## Installation
 
-The Angular wrapper of the Adaptable Blotter is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
+The Angular wrapper for Adaptable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
 
 1. get a commercial license - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), so we'll provide you with a username.
 
@@ -31,7 +31,7 @@ if you're using yarn
 
 it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
 
-5. install the Angular wrapper of the Adaptable Blotter
+5. install the Angular wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptableblotter-angular-aggrid```
 
@@ -44,14 +44,14 @@ In your app module, import the AdaptableBlotterAngularAgGridModule module
 import { AdaptableBlotterAngularAgGridModule } from '@adaptabletools/adaptableblotter-angular-aggrid';
 ```
 
-After that, you can use the blotter component in your app
+After that, you can use the adaptable component in your app
 
 ```html
 <adaptableblotter-angular-aggrid
   style="height: 100vh"
-  [blotterOptions]="..."
+  [adaptableOptions]="..."
   [gridOptions]="..."
-  [onBlotterReady]="..."
+  [onAdaptableReady]="..."
 >
 </adaptableblotter-angular-aggrid>
 ```
@@ -182,7 +182,7 @@ html.ab--theme-my-theme {
   --ab-font-size-3: 0.875rem; /* 14px for 1rem=16px */
   --ab-font-size-4: 1rem; 
 
-  /* use this to specify the font family you want for the blotter */
+  /* use this to specify the font family you want for the adaptable */
   --ab__font-family: inherit;
   
   /* customise the border radius for some of the Adaptable elements */
@@ -227,35 +227,35 @@ However, you might want to style icons differently - in this case, you can custo
 #### Mandatory:
 
 - gridOptions: ag-Grid GridOptions object
-- blotterOptions: AdaptableOptions object
+- adaptableOptions: AdaptableOptions object
 
 #### Optional
 
-- onBlotterReady: (adaptableApi: AdaptableApi) - gives you access to the blotter api object
+- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to the Adaptable Api object
 
 ## Licences
 
-The Adaptable Blotter is a commercial product and requires a purchased licence for use.
+The Adaptable is a commercial product and requires a purchased licence for use.
 
-The Adaptable Blotter licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
+The Adaptable licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
 
-If you wish to evaluate the Adaptable Blotter before purchase, please contact us requesting a Trial Licence.
+If you wish to evaluate the Adaptable before purchase, please contact us requesting a Trial Licence.
 
 Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
-Note: The Adaptable Blotter licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
+Note: The Adaptable licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
 Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
 ## Demo
 
-To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable Blotter running againt a number of different dummy data sets using various underlying DataGrids.
+To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
- Further information about the Adaptable Blotter is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+ Further information about the Adaptable is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
-Developers can see how to access the Adaptable Blotter programmatically at https://api.adaptableblotter.com
+Developers can see how to access the Adaptable programmatically at https://api.adaptableblotter.com
 
 For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
 

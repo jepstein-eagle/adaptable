@@ -64,7 +64,7 @@ import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
 import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -375,7 +375,7 @@ export function CreateEmptyLayout(): Layout {
     PivotDetails: null,
     Name: '',
     VendorGridInfo: null,
-    BlotterGridInfo: null,
+    AdaptableGridInfo: null,
   };
 }
 
@@ -393,7 +393,7 @@ export function CreateLayout(
     PivotDetails: null,
     Name: name,
     VendorGridInfo: vendorGridInfo,
-    BlotterGridInfo: {
+    AdaptableGridInfo: {
       CurrentColumns: columns ? columns.map(x => x.ColumnId) : [],
       CurrentColumnSorts: columnSorts,
     },

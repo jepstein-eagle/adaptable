@@ -21,7 +21,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { BlotterSearchState } from '../../../../App_Scripts/Api/Events/SearchChanged/BlotterSearchState';
 import { SearchChangedInfo } from '../../../../App_Scripts/Api/Events/SearchChanged/SearchChangedInfo';
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   // const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(null);
@@ -125,7 +125,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

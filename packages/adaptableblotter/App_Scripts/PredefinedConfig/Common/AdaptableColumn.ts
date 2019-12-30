@@ -2,7 +2,7 @@ import { DataType } from './Enums';
 import { TypeUuid } from '../Uuid';
 
 /**
- * Definition of an Adaptable Blotter Column
+ * Definition of an Adaptable Column
  *
  * Most (all?) of the properties are created by the Blotter when the grid is loaded
  *

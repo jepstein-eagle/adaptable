@@ -8,11 +8,11 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
   public getFormatColumnState(): FormatColumnState {
-    return this.getBlotterState().FormatColumn;
+    return this.getAdaptableState().FormatColumn;
   }
 
   public getAllFormatColumn(): FormatColumn[] {
-    return this.getBlotterState().FormatColumn.FormatColumns;
+    return this.getAdaptableState().FormatColumn.FormatColumns;
   }
 
   public addFormatColumn(column: string, style: IStyle): void {
@@ -36,7 +36,7 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
   }
 
   public showFormatColumnPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.FormatColumnStrategyId,
       ScreenPopups.FormatColumnPopup
     );

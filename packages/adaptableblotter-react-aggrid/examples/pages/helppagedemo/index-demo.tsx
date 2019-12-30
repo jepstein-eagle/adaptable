@@ -30,13 +30,13 @@ const gridOptions: GridOptions = {
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
-  blotterId: 'react demo',
+  adaptableId: 'react demo',
 };
 
 export default () => (
   <AdaptableBlotterReact
     style={{ height: '100vh' }}
     gridOptions={gridOptions}
-    blotterOptions={adaptableOptions}
+    adaptableOptions={adaptableOptions}
   />
 );

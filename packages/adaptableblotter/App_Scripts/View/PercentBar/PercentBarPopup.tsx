@@ -53,7 +53,7 @@ class PercentBarPopupComponent extends React.Component<
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
         let columnId: string = this.props.PopupParams.columnId;
         if (this.props.PopupParams.action == 'New') {
-          let distinctColumnsValues: number[] = this.props.Blotter.StrategyService.getDistinctColumnValues(
+          let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
             columnId
           );
 
@@ -155,7 +155,7 @@ class PercentBarPopupComponent extends React.Component<
             <PercentBarWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
               ConfigEntities={null}
-              Blotter={this.props.Blotter}
+              Adaptable={this.props.Adaptable}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
               ColorPalette={this.props.ColorPalette}

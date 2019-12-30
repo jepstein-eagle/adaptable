@@ -14,11 +14,11 @@ import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
 
 export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
   public getUserInterfaceState(): UserInterfaceState {
-    return this.getBlotterState().UserInterface;
+    return this.getAdaptableState().UserInterface;
   }
 
   public getColorPalette(): string[] {
-    return this.getBlotterState().UserInterface.ColorPalette;
+    return this.getAdaptableState().UserInterface.ColorPalette;
   }
 
   public setColorPalette(colorPalette: string[]): void {
@@ -34,7 +34,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
   }
 
   public getAllPermittedValuesColumns(): PermittedValuesColumn[] {
-    return this.getBlotterState().UserInterface.PermittedValuesColumns;
+    return this.getAdaptableState().UserInterface.PermittedValuesColumns;
   }
 
   public getPermittedValuesColumnForColumn(columnId: string): PermittedValuesColumn {
@@ -56,7 +56,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     if (typeof permittedValuesColumn.PermittedValues === 'function') {
       let column: AdaptableColumn = ColumnHelper.getColumnFromId(
         permittedValuesColumn.ColumnId,
-        this.blotter.api.gridApi.getColumns()
+        this.adaptable.api.gridApi.getColumns()
       );
       return permittedValuesColumn.PermittedValues(column);
     } else {
@@ -77,7 +77,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
   }
 
   public getAllEditLookUpColumns(): EditLookUpColumn[] {
-    return this.getBlotterState().UserInterface.EditLookUpColumns;
+    return this.getAdaptableState().UserInterface.EditLookUpColumns;
   }
 
   public getEditLookUpColumnForColumn(columnId: string): EditLookUpColumn {
@@ -97,7 +97,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     if (typeof editLookUpColumn.LookUpValues === 'function') {
       let column: AdaptableColumn = ColumnHelper.getColumnFromId(
         editLookUpColumn.ColumnId,
-        this.blotter.api.gridApi.getColumns()
+        this.adaptable.api.gridApi.getColumns()
       );
       return editLookUpColumn.LookUpValues(column);
     } else {
@@ -112,14 +112,14 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
 
   public clearRowStyles(): void {
     this.dispatchAction(UserInterfaceRedux.RowStylesClear());
-    this.blotter.clearRowStyles();
-    this.blotter.redraw();
+    this.adaptable.clearRowStyles();
+    this.adaptable.redraw();
   }
 
   public setRowStyles(rowStyles: RowStyle[]): void {
     this.dispatchAction(UserInterfaceRedux.RowStylesSet(rowStyles));
-    this.blotter.setUpRowStyles();
-    this.blotter.redraw();
+    this.adaptable.setUpRowStyles();
+    this.adaptable.redraw();
   }
 
   public addContextMenuItem(contextMenuItem: UserMenuItem): void {

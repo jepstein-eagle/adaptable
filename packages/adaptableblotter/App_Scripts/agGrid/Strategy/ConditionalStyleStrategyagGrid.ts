@@ -6,15 +6,15 @@ import { Adaptable } from '../Adaptable';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
-  constructor(blotter: Adaptable) {
-    super(blotter);
+  constructor(adaptable: Adaptable) {
+    super(adaptable);
     this.conditionalStyleColumnIds = [];
     this.columnsForConditionalStyles = new Map<TypeUuid, string[]>();
   }
@@ -22,11 +22,11 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   private conditionalStyleColumnIds: string[];
   private columnsForConditionalStyles: Map<TypeUuid, string[]>;
 
-  // The sole purpose that i can see for this method is to tell the Blotter to refresh the row or other columns in the case where the Grid would not automtically do it
+  // The sole purpose that i can see for this method is to tell the adaptable to refresh the row or other columns in the case where the Grid would not automtically do it
   // and we need to tell the grid that the whole row has changed and not just this column
   // Note that we can have Col A changing when Col B updates so need to look at all 3 but should make it as quick as possible: in and out.
   protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
-    let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
     if (ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)) {
       if (ArrayExtensions.ContainsItem(this.conditionalStyleColumnIds, dataChangedEvent.ColumnId)) {
         let colsToRefresh: Array<string> = [];
@@ -35,11 +35,11 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           if (ArrayExtensions.ContainsItem(colList, dataChangedEvent.ColumnId)) {
             switch (cs.ConditionalStyleScope) {
               case ConditionalStyleScope.Row:
-                colsToRefresh.push(...this.blotter.api.gridApi.getColumns().map(c => c.ColumnId));
+                colsToRefresh.push(...this.adaptable.api.gridApi.getColumns().map(c => c.ColumnId));
                 break;
 
               case ConditionalStyleScope.ColumnCategory:
-                let columnCategory: ColumnCategory = this.blotter.api.columnCategoryApi
+                let columnCategory: ColumnCategory = this.adaptable.api.columnCategoryApi
                   .getAllColumnCategory()
                   .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
                 if (columnCategory) {
@@ -62,8 +62,8 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             listOfColumnsToRefresh.splice(index, 1);
           }
           if (listOfColumnsToRefresh.length > 0) {
-            let theBlotter = this.blotter as Adaptable;
-            theBlotter.refreshCells([dataChangedEvent.RowNode], listOfColumnsToRefresh);
+            let theadaptable = this.adaptable as Adaptable;
+            theadaptable.refreshCells([dataChangedEvent.RowNode], listOfColumnsToRefresh);
           }
         }
       }
@@ -72,9 +72,9 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
 
   // this initialises styles and creates the list of which columns have styles (will be used in onDataChanged)
   public initStyles(): void {
-    let columns = this.blotter.api.gridApi.getColumns();
-    let theBlotter = this.blotter as Adaptable;
-    let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    let columns = this.adaptable.api.gridApi.getColumns();
+    let theadaptable = this.adaptable as Adaptable;
+    let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
     this.conditionalStyleColumnIds = [];
     this.columnsForConditionalStyles.clear();
 
@@ -86,7 +86,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
         let cellClassRules: any = {};
         conditionalStyles.forEach((cs, index) => {
           let styleName: string = StringExtensions.IsNullOrEmpty(cs.Style.ClassName)
-            ? theBlotter.StyleService.CreateUniqueStyleName(
+            ? theadaptable.StyleService.CreateUniqueStyleName(
                 StrategyConstants.ConditionalStyleStrategyId,
                 cs
               )
@@ -100,11 +100,11 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
                 cs.Expression,
                 params.node,
                 columns,
-                theBlotter
+                theadaptable
               );
             };
           } else if (cs.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-            let columnCategory: ColumnCategory = this.blotter.api.columnCategoryApi
+            let columnCategory: ColumnCategory = this.adaptable.api.columnCategoryApi
               .getAllColumnCategory()
               .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
             if (columnCategory) {
@@ -114,7 +114,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
                     cs.Expression,
                     params.node,
                     columns,
-                    theBlotter
+                    theadaptable
                   );
                 };
               }
@@ -125,12 +125,12 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
                 cs.Expression,
                 params.node,
                 columns,
-                theBlotter
+                theadaptable
               );
             };
           }
         });
-        theBlotter.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
+        theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
       }
     }
 
@@ -144,7 +144,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
 
     this.conditionalStyleColumnIds = [...new Set(colList)];
 
-    // Redraw the Blotter to be on safe side (its rare use case)
-    this.blotter.redraw();
+    // Redraw the adaptable to be on safe side (its rare use case)
+    this.adaptable.redraw();
   }
 }

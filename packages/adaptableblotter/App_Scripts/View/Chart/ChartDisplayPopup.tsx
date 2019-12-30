@@ -173,7 +173,7 @@ class ChartDisplayPopupComponent extends React.Component<
                 SystemFilters={this.props.SystemFilters}
                 NamedFilters={this.props.NamedFilters}
                 ColumnCategories={this.props.ColumnCategories}
-                Blotter={this.props.Blotter}
+                Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -190,7 +190,7 @@ class ChartDisplayPopupComponent extends React.Component<
                 SystemFilters={this.props.SystemFilters}
                 NamedFilters={this.props.NamedFilters}
                 ColumnCategories={this.props.ColumnCategories}
-                Blotter={this.props.Blotter}
+                Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -208,7 +208,7 @@ class ChartDisplayPopupComponent extends React.Component<
                 SystemFilters={this.props.SystemFilters}
                 NamedFilters={this.props.NamedFilters}
                 ColumnCategories={this.props.ColumnCategories}
-                Blotter={this.props.Blotter}
+                Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}

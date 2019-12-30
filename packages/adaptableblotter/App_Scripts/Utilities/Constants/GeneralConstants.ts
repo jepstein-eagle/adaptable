@@ -16,7 +16,7 @@ export const LIGHT_THEME: string = 'light';
 export const DARK_THEME: string = 'dark';
 
 export const USER_NAME: string = 'anonymous';
-export const BLOTTER_ID: string = 'adaptable_blotter_id';
+export const ADAPTABLE_ID: string = 'adaptable_id';
 export const MENU_PREFIX: string = 'ab_';
 export const READ_ONLY_STYLE: string = 'ab_readonly';
 

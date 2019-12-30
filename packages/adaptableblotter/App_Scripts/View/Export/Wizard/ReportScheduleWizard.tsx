@@ -56,7 +56,7 @@ export class ReportScheduleWizard
   render(): any {
     let destinations = EnumExtensions.getNames(ExportDestination)
       .filter(type =>
-        this.props.Blotter!.ReportService.IsReportDestinationActive(type as ExportDestination)
+        this.props.Adaptable!.ReportService.IsReportDestinationActive(type as ExportDestination)
       )
       .map(type => {
         return {

@@ -102,7 +102,7 @@ class CellValidationPopupComponent extends React.Component<
           onDeleteConfirm={CellValidationRedux.CellValidationDelete(cellValidationRule)}
           onChangeActionMode={(x, actionMode) => this.onActionModeChanged(x, actionMode)}
           AccessLevel={this.props.AccessLevel}
-          ValidationService={this.props.Blotter.ValidationService}
+          ValidationService={this.props.Adaptable.ValidationService}
         />
       );
     });
@@ -143,7 +143,7 @@ class CellValidationPopupComponent extends React.Component<
           <CellValidationWizard
             EditedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
             ConfigEntities={null}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
@@ -218,7 +218,7 @@ class CellValidationPopupComponent extends React.Component<
       StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
       ExpressionHelper.IsNullOrEmptyOrValidExpression(cellValidationRule.Expression) &&
       StringExtensions.IsNotNullOrEmpty(
-        this.props.Blotter.ValidationService.createCellValidationDescription(
+        this.props.Adaptable.ValidationService.createCellValidationDescription(
           cellValidationRule,
           this.props.Columns
         )

@@ -2,7 +2,7 @@ import { IQuickSearchStrategy } from './Interface/IQuickSearchStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import RangeHelper from '../Utilities/Helpers/RangeHelper';
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
@@ -12,8 +12,8 @@ import { DisplayAction, LeafExpressionOperator } from '../PredefinedConfig/Commo
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.QuickSearchStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.QuickSearchStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -26,23 +26,23 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
 
   public createQuickSearchRange() {
     // if searchText is empty then set clear both types, otherwise set them
-    if (StringExtensions.IsNullOrEmpty(this.blotter.api.quickSearchApi.getQuickSearchValue())) {
-      this.blotter.AdaptableStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
-      this.blotter.AdaptableStore.TheStore.dispatch(
+    if (StringExtensions.IsNullOrEmpty(this.adaptable.api.quickSearchApi.getQuickSearchValue())) {
+      this.adaptable.AdaptableStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
+      this.adaptable.AdaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchClearVisibleColumnExpressions()
       );
     } else {
       let quickSearchRange: QueryRange = RangeHelper.CreateValueRangeFromOperand(
-        this.blotter.api.quickSearchApi.getQuickSearchValue()
+        this.adaptable.api.quickSearchApi.getQuickSearchValue()
       );
-      this.blotter.AdaptableStore.TheStore.dispatch(
+      this.adaptable.AdaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchSetRange(quickSearchRange)
       );
 
-      // we just create expressions for the visible columns - in the Blotter we will check for those missing;
+      // we just create expressions for the visible columns - in the adaptable we will check for those missing;
       // we dont keep this updated - just set once as good for majority of use cases
       let quickSearchVisibleColumnExpressions: Expression[] = [];
-      for (let column of this.blotter.api.gridApi.getVisibleColumns()) {
+      for (let column of this.adaptable.api.gridApi.getVisibleColumns()) {
         if (
           RangeHelper.IsColumnAppropriateForRange(
             quickSearchRange.Operator as LeafExpressionOperator,
@@ -59,7 +59,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
           quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
         }
       }
-      this.blotter.AdaptableStore.TheStore.dispatch(
+      this.adaptable.AdaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions)
       );
     }

@@ -17,7 +17,7 @@ import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid/Adaptable'
 Basic demo of wizard that allow d&d of a json with an array contents
 */
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'dtmKey', // will be added later ...
     //blotterId: 'Position Monitor',
@@ -78,7 +78,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

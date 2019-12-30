@@ -71,7 +71,7 @@ export class CellValidationSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CV' + index}
             Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
-            Item2={this.props.Blotter.ValidationService.createCellValidationDescription(
+            Item2={this.props.Adaptable.ValidationService.createCellValidationDescription(
               item,
               this.props.Columns
             )}
@@ -101,7 +101,7 @@ export class CellValidationSummaryComponent extends React.Component<
             SystemFilters={this.props.SystemFilters}
             NamedFilters={this.props.NamedFilters}
             ColumnCategories={this.props.ColumnCategories}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

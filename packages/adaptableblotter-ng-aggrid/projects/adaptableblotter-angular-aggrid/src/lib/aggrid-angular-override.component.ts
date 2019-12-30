@@ -19,9 +19,9 @@ import { AdaptableApi } from '../adaptableblotter/types';
   // encapsulation: ViewEncapsulation.None
 })
 export class AgGridOverrideComponent extends AgGridAngular {
-  @Input() blotterFactory: (...args: any) => Adaptable;
+  @Input() adaptableFactory: (...args: any) => Adaptable;
   @Input() gridContainerId: string;
-  @Input() onBlotterReady?: (api: AdaptableApi) => void;
+  @Input() onAdaptableReady?: (api: AdaptableApi) => void;
 
   ngAfterViewInit(): void {
     (this as any).checkForDeprecatedEvents();
@@ -46,7 +46,7 @@ export class AgGridOverrideComponent extends AgGridAngular {
       });
     }
 
-    const blotter = this.blotterFactory(
+    const adaptable = this.adaptableFactory(
       this.gridOptions,
       (this as any).gridParams
     );
@@ -57,12 +57,12 @@ export class AgGridOverrideComponent extends AgGridAngular {
     //   (this as any).gridParams
     // );
 
-    if (blotter.gridOptions.api) {
-      this.api = blotter.gridOptions.api;
+    if (adaptable.gridOptions.api) {
+      this.api = adaptable.gridOptions.api;
     }
 
-    if (blotter.gridOptions.columnApi) {
-      this.columnApi = blotter.gridOptions.columnApi;
+    if (adaptable.gridOptions.columnApi) {
+      this.columnApi = adaptable.gridOptions.columnApi;
     }
 
     (this as any)._initialised = true;
@@ -72,9 +72,9 @@ export class AgGridOverrideComponent extends AgGridAngular {
     // the actual containing component's ngAfterViewInit will fire just after agGridAngular's
     (this as any)._fullyReady.resolveNow(null, (resolve: any) => resolve);
 
-    if (this.onBlotterReady) {
-      blotter.api.eventApi.on('BlotterReady', () => {
-        this.onBlotterReady(blotter.api);
+    if (this.onAdaptableReady) {
+      adaptable.api.eventApi.on('AdaptableReady', () => {
+        this.onAdaptableReady(adaptable.api);
       });
     }
   }

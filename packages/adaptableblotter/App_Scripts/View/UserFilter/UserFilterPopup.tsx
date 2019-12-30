@@ -153,7 +153,7 @@ class UserFilterPopupComponent extends React.Component<
               ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={selectedColumnId}
-              Blotter={this.props.Blotter}
+              Adaptable={this.props.Adaptable}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

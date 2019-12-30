@@ -7,15 +7,15 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class CustomSortApiImpl extends ApiBase implements CustomSortApi {
   public getCustomSortState(): CustomSortState {
-    return this.getBlotterState().CustomSort;
+    return this.getAdaptableState().CustomSort;
   }
 
   public getAllCustomSort(): CustomSort[] {
-    return this.getBlotterState().CustomSort.CustomSorts;
+    return this.getAdaptableState().CustomSort.CustomSorts;
   }
 
   public getCustomSortByColumn(column: string): CustomSort {
-    return this.getBlotterState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
+    return this.getAdaptableState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
   }
 
   public addCustomSort(customSort: CustomSort): void {
@@ -40,7 +40,7 @@ export class CustomSortApiImpl extends ApiBase implements CustomSortApi {
   }
 
   public showCustomSortPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.CustomSortStrategyId,
       ScreenPopups.CustomSortPopup
     );

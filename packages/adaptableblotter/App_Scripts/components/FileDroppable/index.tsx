@@ -62,9 +62,9 @@ const FileDroppable = (props: FileDroppableProps) => {
     onDropSuccess,
     message,
     fileAccept = '.json',
-    helpText = 'The Adaptable Blotter No Code Version',
+    helpText = 'The Adaptable No Code Version',
     defaultText = 'Click here to select a JSON file to load or drag it here',
-    dragOverText = 'Drop file here to start Adaptable Blotter Wizard',
+    dragOverText = 'Drop file here to start Adaptable Wizard',
     icon = <Icon name="attach-file" size={48} />,
     ...domProps
   } = props;
@@ -115,7 +115,7 @@ const FileDroppable = (props: FileDroppableProps) => {
         dispatch({
           type: ActionTypes.DROP_SUCCES,
           payload: {
-            message: <Box>{'Initializing blotter...'}</Box>,
+            message: <Box>{'Initializing adaptable...'}</Box>,
           },
         });
         requestAnimationFrame(() => {

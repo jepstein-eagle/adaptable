@@ -10,12 +10,12 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export class LayoutApiImpl extends ApiBase implements LayoutApi {
   public getLayoutState(): LayoutState {
-    return this.getBlotterState().Layout;
+    return this.getAdaptableState().Layout;
   }
 
   public setLayout(layoutName: string): void {
     if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
-      let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
+      let layout: Layout = this.getAdaptableState().Layout.Layouts.find(l => l.Name == layoutName);
       if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyFriendlyName)) {
         this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
       }
@@ -27,12 +27,12 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
   }
 
   public getCurrentLayout(): Layout {
-    let layoutName = this.getBlotterState().Layout.CurrentLayout;
+    let layoutName = this.getAdaptableState().Layout.CurrentLayout;
     return this.getLayoutByName(layoutName);
   }
 
   public getCurrentLayoutName(): string {
-    return this.getBlotterState().Layout.CurrentLayout;
+    return this.getAdaptableState().Layout.CurrentLayout;
   }
 
   public isDefaultLayout(): boolean {
@@ -41,7 +41,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
 
   public getLayoutByName(layoutName: string): Layout {
     if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
-      let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
+      let layout: Layout = this.getAdaptableState().Layout.Layouts.find(l => l.Name == layoutName);
       if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyFriendlyName)) {
         return layout;
       }
@@ -49,21 +49,21 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
   }
 
   public getAllLayout(): Layout[] {
-    return this.getBlotterState().Layout.Layouts;
+    return this.getAdaptableState().Layout.Layouts;
   }
 
   public saveCurrentLayout(): void {
-    let currentLayoutName: string = this.getBlotterState().Layout.CurrentLayout;
+    let currentLayoutName: string = this.getAdaptableState().Layout.CurrentLayout;
     if (currentLayoutName != DEFAULT_LAYOUT) {
-      let currentLayoutObject: Layout = this.getBlotterState().Layout.Layouts.find(
+      let currentLayoutObject: Layout = this.getAdaptableState().Layout.Layouts.find(
         l => l.Name == currentLayoutName
       );
       if (currentLayoutObject) {
         let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
-        let visibleColumns: AdaptableColumn[] = this.getBlotterState().Grid.Columns.filter(
+        let visibleColumns: AdaptableColumn[] = this.getAdaptableState().Grid.Columns.filter(
           c => c.Visible
         );
-        let columnSorts: ColumnSort[] = this.getBlotterState().Grid.ColumnSorts;
+        let columnSorts: ColumnSort[] = this.getAdaptableState().Grid.ColumnSorts;
 
         let layoutToSave: Layout = {
           Uuid: currentLayoutObject.Uuid,
@@ -73,7 +73,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
           GroupedColumns: currentLayoutObject.GroupedColumns,
           PivotDetails: currentLayoutObject.PivotDetails,
           VendorGridInfo: gridState,
-          BlotterGridInfo: {
+          AdaptableGridInfo: {
             CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
             CurrentColumnSorts: columnSorts,
           },
@@ -93,7 +93,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
   }
 
   public showLayoutPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.LayoutStrategyId,
       ScreenPopups.LayoutPopup
     );

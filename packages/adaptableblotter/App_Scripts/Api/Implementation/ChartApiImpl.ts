@@ -6,7 +6,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class ChartApiImpl extends ApiBase implements ChartApi {
   public getChartState(): ChartState {
-    return this.getBlotterState().Chart;
+    return this.getAdaptableState().Chart;
   }
 
   public getAllChartDefinitions(): ChartDefinition[] {
@@ -14,7 +14,7 @@ export class ChartApiImpl extends ApiBase implements ChartApi {
   }
 
   public showChartPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ChartStrategyId,
       ScreenPopups.ChartPopup
     );

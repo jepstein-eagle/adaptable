@@ -14,7 +14,7 @@ import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/type
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -22,7 +22,7 @@ function InitAdaptableBlotter() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Custom Toolbars Demo',
+    adaptableId: 'Custom Toolbars Demo',
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
@@ -150,7 +150,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

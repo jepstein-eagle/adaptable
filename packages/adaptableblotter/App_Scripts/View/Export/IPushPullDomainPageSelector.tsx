@@ -225,7 +225,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
         // this should be a proper Alert - need to do properly
         alert('A page with that name already exists in the folder');
       } else {
-        this.props.Blotter.PushPullService.AddNewPage(x.FolderId, page);
+        this.props.Adaptable.PushPullService.AddNewPage(x.FolderId, page);
       }
     }
   }
@@ -273,7 +273,7 @@ function mapStateToProps(state: AdaptableState, ownProps: IPushPullDomainPageSel
     IPushPullDomainsPages: state.System.IPushPullDomainsPages,
     ErrorMsg: state.System.ReportErrorMessage,
     LiveReports: state.System.CurrentLiveReports,
-    Report: ownProps.Blotter.api.exportApi.getCurrentReport(),
+    Report: ownProps.Adaptable.api.exportApi.getCurrentReport(),
   };
 }
 

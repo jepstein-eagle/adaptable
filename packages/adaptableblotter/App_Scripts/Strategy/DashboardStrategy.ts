@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
 import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
@@ -18,22 +18,24 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   private visibleToolbars: string[];
   private dashboardVisibility: Visibility;
 
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.DashboardStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.DashboardStrategyId, adaptable);
   }
 
   protected InitState() {
-    if (this.visibleToolbars != this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars) {
+    if (
+      this.visibleToolbars != this.adaptable.api.dashboardApi.GetDashboardState().VisibleToolbars
+    ) {
       const oldVisibleToolbars = arrayToKeyMap(this.visibleToolbars);
       const newVisibleToolbars = arrayToKeyMap(
-        this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars
+        this.adaptable.api.dashboardApi.GetDashboardState().VisibleToolbars
       );
 
-      [...(this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars || [])].forEach(
+      [...(this.adaptable.api.dashboardApi.GetDashboardState().VisibleToolbars || [])].forEach(
         (toolbar: string) => {
           if (!oldVisibleToolbars[toolbar]) {
             if (
-              this.blotter.api.dashboardApi.GetDashboardState().DashboardVisibility ==
+              this.adaptable.api.dashboardApi.GetDashboardState().DashboardVisibility ==
               Visibility.Visible
             ) {
               this.fireToolbarVisibilityChangedEvent(toolbar);
@@ -48,21 +50,21 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         }
       });
 
-      this.visibleToolbars = this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars;
+      this.visibleToolbars = this.adaptable.api.dashboardApi.GetDashboardState().VisibleToolbars;
     }
 
     if (
       this.dashboardVisibility !=
-      this.blotter.api.dashboardApi.GetDashboardState().DashboardVisibility
+      this.adaptable.api.dashboardApi.GetDashboardState().DashboardVisibility
     ) {
-      this.dashboardVisibility = this.blotter.api.dashboardApi.GetDashboardState()
+      this.dashboardVisibility = this.adaptable.api.dashboardApi.GetDashboardState()
         .DashboardVisibility as Visibility;
 
       if (this.dashboardVisibility == Visibility.Visible) {
-        [...(this.blotter.api.dashboardApi.GetDashboardState().VisibleToolbars || [])].forEach(
+        [...(this.adaptable.api.dashboardApi.GetDashboardState().VisibleToolbars || [])].forEach(
           (toolbar: string) => {
             if (
-              this.blotter.api.dashboardApi.GetDashboardState().DashboardVisibility ==
+              this.adaptable.api.dashboardApi.GetDashboardState().DashboardVisibility ==
               Visibility.Visible
             ) {
               this.fireToolbarVisibilityChangedEvent(toolbar);
@@ -84,7 +86,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   public addColumnMenuItem(): AdaptableMenuItem | undefined {
     // for now just show / hide = lets worry about minimise later..
     if (
-      this.blotter.api.dashboardApi.GetDashboardState().DashboardVisibility == Visibility.Hidden
+      this.adaptable.api.dashboardApi.GetDashboardState().DashboardVisibility == Visibility.Hidden
     ) {
       return this.createColumnMenuItemReduxAction(
         'Show Dashboard',
@@ -110,6 +112,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
       toolbarVisibilityChangedInfo
     );
 
-    this.blotter.api.eventApi.emit('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs);
+    this.adaptable.api.eventApi.emit('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs);
   }
 }

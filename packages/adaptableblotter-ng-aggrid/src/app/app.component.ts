@@ -21,7 +21,7 @@ export class AppComponent {
   theOptions: AdaptableOptions = {
     primaryKey: 'OrderId',
     userName: 'demo user',
-    blotterId: 'an angular wrapper',
+    adaptableId: 'an angular wrapper',
     containerOptions: {
       vendorContainer: 'adaptableBlotter',
     },
@@ -58,8 +58,8 @@ export class AppComponent {
     };
   }
 
-  onBlotterReady(api: AdaptableApi) {
-    console.log('blotter ready!!!', api);
+  onAdaptableReady(api: AdaptableApi) {
+    console.log('adaptable ready!!!', api);
 
     api.auditEventApi.on('AuditCellEdited', function(args) {
       console.warn(args, '!!!!!');

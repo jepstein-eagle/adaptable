@@ -55,14 +55,14 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   }
 
   public configCopyAllStateToClipboard(): void {
-    let state: AdaptableState = this.getBlotterState();
+    let state: AdaptableState = this.getAdaptableState();
     let stringifiedState = JSON.stringify(state);
     Helper.copyToClipboard(stringifiedState);
   }
 
   public configCopyUserStateToClipboard(): void {
     // This doesnt currently work...
-    let state: AdaptableState = this.getBlotterState();
+    let state: AdaptableState = this.getAdaptableState();
     //  let userState = state
     let stringifiedState = JSON.stringify(state);
     Helper.copyToClipboard(stringifiedState);
@@ -70,12 +70,12 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
 
   public configDeleteLocalStorage(): void {
     //   a horrible rough and ready method which clears local storage and refreshes but is not nice.
-    localStorage.removeItem(this.blotter.blotterOptions.blotterId);
+    localStorage.removeItem(this.adaptable.adaptableOptions.adaptableId);
     window.location.reload();
   }
 
   public configGetAllState(): AdaptableState {
-    return this.getBlotterState();
+    return this.getAdaptableState();
   }
 
   // im sure we can do this better
@@ -131,116 +131,116 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     switch (stateKey) {
       case 'ActionColumn':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().ActionColumn)
-          : this.getBlotterState().ActionColumn;
+          ? JSON.stringify(this.getAdaptableState().ActionColumn)
+          : this.getAdaptableState().ActionColumn;
       case 'AdvancedSearch':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().AdvancedSearch)
-          : this.getBlotterState().AdvancedSearch;
+          ? JSON.stringify(this.getAdaptableState().AdvancedSearch)
+          : this.getAdaptableState().AdvancedSearch;
       case 'Alert':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Alert)
-          : this.getBlotterState().Alert;
+          ? JSON.stringify(this.getAdaptableState().Alert)
+          : this.getAdaptableState().Alert;
       case 'Application':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Application)
-          : this.getBlotterState().Application;
+          ? JSON.stringify(this.getAdaptableState().Application)
+          : this.getAdaptableState().Application;
       case 'BulkUpdate':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().BulkUpdate)
-          : this.getBlotterState().BulkUpdate;
+          ? JSON.stringify(this.getAdaptableState().BulkUpdate)
+          : this.getAdaptableState().BulkUpdate;
       case 'CalculatedColumn':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().CalculatedColumn)
-          : this.getBlotterState().CalculatedColumn;
+          ? JSON.stringify(this.getAdaptableState().CalculatedColumn)
+          : this.getAdaptableState().CalculatedColumn;
       case 'Calendar':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Calendar)
-          : this.getBlotterState().Calendar;
+          ? JSON.stringify(this.getAdaptableState().Calendar)
+          : this.getAdaptableState().Calendar;
       case 'CellValidation':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().CellValidation)
-          : this.getBlotterState().CellValidation;
+          ? JSON.stringify(this.getAdaptableState().CellValidation)
+          : this.getAdaptableState().CellValidation;
       case 'Chart':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Chart)
-          : this.getBlotterState().Chart;
+          ? JSON.stringify(this.getAdaptableState().Chart)
+          : this.getAdaptableState().Chart;
       case 'ColumnFilter':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().ColumnFilter)
-          : this.getBlotterState().ColumnFilter;
+          ? JSON.stringify(this.getAdaptableState().ColumnFilter)
+          : this.getAdaptableState().ColumnFilter;
       case 'ConditionalStyle':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().ConditionalStyle)
-          : this.getBlotterState().ConditionalStyle;
+          ? JSON.stringify(this.getAdaptableState().ConditionalStyle)
+          : this.getAdaptableState().ConditionalStyle;
       case 'CustomSort':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().CustomSort)
-          : this.getBlotterState().CustomSort;
+          ? JSON.stringify(this.getAdaptableState().CustomSort)
+          : this.getAdaptableState().CustomSort;
       case 'Dashboard':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Dashboard)
-          : this.getBlotterState().Dashboard;
+          ? JSON.stringify(this.getAdaptableState().Dashboard)
+          : this.getAdaptableState().Dashboard;
       case 'DataSource':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().DataSource)
-          : this.getBlotterState().DataSource;
+          ? JSON.stringify(this.getAdaptableState().DataSource)
+          : this.getAdaptableState().DataSource;
       case 'Export':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Export)
-          : this.getBlotterState().Export;
+          ? JSON.stringify(this.getAdaptableState().Export)
+          : this.getAdaptableState().Export;
       case 'FlashingCell':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().FlashingCell)
-          : this.getBlotterState().FlashingCell;
+          ? JSON.stringify(this.getAdaptableState().FlashingCell)
+          : this.getAdaptableState().FlashingCell;
       case 'FormatColumn':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().FormatColumn)
-          : this.getBlotterState().FormatColumn;
+          ? JSON.stringify(this.getAdaptableState().FormatColumn)
+          : this.getAdaptableState().FormatColumn;
       case 'Layout':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Layout)
-          : this.getBlotterState().Layout;
+          ? JSON.stringify(this.getAdaptableState().Layout)
+          : this.getAdaptableState().Layout;
       case 'Partner':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Partner)
-          : this.getBlotterState().Partner;
+          ? JSON.stringify(this.getAdaptableState().Partner)
+          : this.getAdaptableState().Partner;
       case 'PlusMinus':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().PlusMinus)
-          : this.getBlotterState().PlusMinus;
+          ? JSON.stringify(this.getAdaptableState().PlusMinus)
+          : this.getAdaptableState().PlusMinus;
       case 'QuickSearch':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().QuickSearch)
-          : this.getBlotterState().QuickSearch;
+          ? JSON.stringify(this.getAdaptableState().QuickSearch)
+          : this.getAdaptableState().QuickSearch;
       case 'CellSummary':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().SelectedCells)
-          : this.getBlotterState().CellSummary;
+          ? JSON.stringify(this.getAdaptableState().SelectedCells)
+          : this.getAdaptableState().CellSummary;
       case 'Shortcut':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Shortcut)
-          : this.getBlotterState().Shortcut;
+          ? JSON.stringify(this.getAdaptableState().Shortcut)
+          : this.getAdaptableState().Shortcut;
       case 'SmartEdit':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().SmartEdit)
-          : this.getBlotterState().SmartEdit;
+          ? JSON.stringify(this.getAdaptableState().SmartEdit)
+          : this.getAdaptableState().SmartEdit;
       case 'SparklineColumn':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().SparklineColumn)
-          : this.getBlotterState().SparklineColumn;
+          ? JSON.stringify(this.getAdaptableState().SparklineColumn)
+          : this.getAdaptableState().SparklineColumn;
       case 'Theme':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().Theme)
-          : this.getBlotterState().Theme;
+          ? JSON.stringify(this.getAdaptableState().Theme)
+          : this.getAdaptableState().Theme;
       case 'UpdatedRow':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().UpdatedRow)
-          : this.getBlotterState().UpdatedRow;
+          ? JSON.stringify(this.getAdaptableState().UpdatedRow)
+          : this.getAdaptableState().UpdatedRow;
       case 'UserFilter':
         return returnJson
-          ? JSON.stringify(this.getBlotterState().UserFilter)
-          : this.getBlotterState().UserFilter;
+          ? JSON.stringify(this.getAdaptableState().UserFilter)
+          : this.getAdaptableState().UserFilter;
     }
   }
 

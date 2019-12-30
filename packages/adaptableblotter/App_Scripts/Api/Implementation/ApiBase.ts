@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 
@@ -8,15 +8,15 @@ import Helper from '../../Utilities/Helpers/Helper';
 // Base class for the API - provides checking dispatching methods
 export abstract class ApiBase {
   /**
-   * Constructor for all the api classes which simply takes and assigns an instance of the Adaptable Blotter
-   * @param blotter the core IAdaptable object
+   * Constructor for all the api classes which simply takes and assigns an instance of the Adaptable adaptable
+   * @param adaptable the core IAdaptable object
    */
-  constructor(protected blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(protected adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   /**
-   * Base api helper method which ensure that the Adaptable Blotter Object being used in the function is not null or undefined
+   * Base api helper method which ensure that the Adaptable adaptable Object being used in the function is not null or undefined
    *
    * If it does not exist then we log an error and the api method should stop
    * @param item the AdaptableObject being checked
@@ -44,7 +44,7 @@ export abstract class ApiBase {
    * @param action the Redux Action to be dispatched
    */
   protected dispatchAction(action: Action): void {
-    this.blotter.AdaptableStore.TheStore.dispatch(action);
+    this.adaptable.AdaptableStore.TheStore.dispatch(action);
   }
 
   /**
@@ -52,7 +52,7 @@ export abstract class ApiBase {
    *
    * This is a simple *getState()* call
    */
-  public getBlotterState(): AdaptableState {
-    return this.blotter.AdaptableStore.TheStore.getState();
+  public getAdaptableState(): AdaptableState {
+    return this.adaptable.AdaptableStore.TheStore.getState();
   }
 }

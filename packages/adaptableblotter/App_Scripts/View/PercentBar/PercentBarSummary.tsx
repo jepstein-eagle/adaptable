@@ -96,7 +96,7 @@ export class PercentBarSummaryComponent extends React.Component<
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
           />
         )}
       </div>
@@ -107,7 +107,7 @@ export class PercentBarSummaryComponent extends React.Component<
     let configEntity: PercentBar = ObjectFactory.CreateEmptyPercentBar();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Blotter.StrategyService.getDistinctColumnValues(
+    let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
       this.props.SummarisedColumn.ColumnId
     );
 

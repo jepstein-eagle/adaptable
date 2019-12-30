@@ -17,17 +17,16 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  // creating blotter options here so we can add audit
   const adaptableOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
-    blotterId: 'audit demo',
+    adaptableId: 'audit demo',
   };
 
   adaptableApi = Adaptable.init(adaptableOptions);
@@ -48,7 +47,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

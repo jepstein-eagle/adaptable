@@ -63,8 +63,8 @@ class ExportToolbarControlComponent extends React.Component<
   {}
 > {
   public componentDidMount() {
-    if (this.props.Blotter) {
-      this.props.Blotter.api.eventApi.on(
+    if (this.props.Adaptable) {
+      this.props.Adaptable.api.eventApi.on(
         'LiveReportUpdated',
         (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
           let liveReportUpdatedInfo: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
@@ -82,7 +82,7 @@ class ExportToolbarControlComponent extends React.Component<
   render(): any {
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
-    let currentReport: Report = this.props.Blotter.api.exportApi.getCurrentReport();
+    let currentReport: Report = this.props.Adaptable.api.exportApi.getCurrentReport();
     let savedReport: Report | undefined = allReports.find(s => s.Name == this.props.CurrentReport);
     let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport)
       ? selectReportString
@@ -137,7 +137,7 @@ class ExportToolbarControlComponent extends React.Component<
         label: 'iPushPull (Stop Sync)',
       };
     } else {
-      let isIPushPullLiveReport = this.props.Blotter.ReportService.IsReportLiveReport(
+      let isIPushPullLiveReport = this.props.Adaptable.ReportService.IsReportLiveReport(
         currentReport,
         ExportDestination.iPushPull
       );
@@ -152,7 +152,7 @@ class ExportToolbarControlComponent extends React.Component<
       };
     }
 
-    let isGlueLiveReport: boolean = this.props.Blotter.ReportService.IsReportLiveReport(
+    let isGlueLiveReport: boolean = this.props.Adaptable.ReportService.IsReportLiveReport(
       currentReport,
       ExportDestination.Glue42
     );
@@ -171,11 +171,12 @@ class ExportToolbarControlComponent extends React.Component<
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      this.props.Blotter.ReportService.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
-        openfinExcelMenuItem,
-      this.props.Blotter.ReportService.IsReportDestinationActive(ExportDestination.iPushPull) &&
+      this.props.Adaptable.ReportService.IsReportDestinationActive(
+        ExportDestination.OpenfinExcel
+      ) && openfinExcelMenuItem,
+      this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.iPushPull) &&
         iPushPullExcelMenuItem,
-      this.props.Blotter.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
+      this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
         glue42MenuItem,
     ].filter(x => !!x);
 
@@ -214,7 +215,7 @@ class ExportToolbarControlComponent extends React.Component<
             tooltip="Edit Report"
             className="ab-DashboardToolbar__Export__edit"
             disabled={
-              savedReport == null || this.props.Blotter.ReportService.IsSystemReport(savedReport)
+              savedReport == null || this.props.Adaptable.ReportService.IsSystemReport(savedReport)
             }
             AccessLevel={this.props.AccessLevel}
           />
@@ -233,7 +234,7 @@ class ExportToolbarControlComponent extends React.Component<
             tooltip="Delete Report"
             className="ab-DashboardToolbar__Export__delete"
             disabled={
-              savedReport == null || this.props.Blotter.ReportService.IsSystemReport(savedReport)
+              savedReport == null || this.props.Adaptable.ReportService.IsSystemReport(savedReport)
             }
             ConfirmAction={ExportRedux.ReportDelete(savedReport as Report)}
             ConfirmationMsg={deleteMessage}

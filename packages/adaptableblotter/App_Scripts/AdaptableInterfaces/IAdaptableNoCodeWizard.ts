@@ -30,7 +30,7 @@ export interface IAdaptableNoCodeWizardOptions {
 }
 
 /**
- * When you want to configure an Adaptable Blotter via json file D&D, use this instead of the Adaptable constructor
+ * When you want to configure an Adaptable via json file D&D, use this instead of the Adaptable constructor
  *
  * // So instead of doing
  *
@@ -65,7 +65,7 @@ export interface IAdaptableNoCodeWizardOptions {
  *
  *      const adaptableBlotter = new Adaptable(adaptableOptions);
  *      // in case you need a reference to it for later use (api stuff...)
- *      // and return the blotter instance
+ *      // and return the adaptable instance
  *
  *      return adaptableBlotter
  *    }

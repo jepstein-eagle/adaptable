@@ -2,13 +2,13 @@ import { IAdvancedSearchStrategy } from './Interface/IAdvancedSearchStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase
   implements IAdvancedSearchStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.AdvancedSearchStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.AdvancedSearchStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {

@@ -1,8 +1,8 @@
 /**
- * Options for managing the different div elements required by the Adaptable Blotter.
+ * Options for managing the different div elements required by the Adaptable.
  * ```ts
  * containerOptions = {
- *  adaptableBlotterContainer: 'blotterDiv',
+ *  adaptableContainer: 'adaptableDiv',
  *  vendorContainer: 'vendorGridDiv',
  *  modalContainer: 'modelDiv',
  *  chartContainer: 'chartDiv',
@@ -11,15 +11,15 @@
  */
 export interface ContainerOptions {
   /**
-   * Name of the **div** element which contains the Adaptable Blotter.
+   * Name of the **div** element which contains Adaptable.
    *
    * Only set if you are not using a div with the default value.
    *
    * This is **only required if using the vanilla JavaScript version** (and not the Angular or React wrappers).
    *
-   * **Default Value: adaptableBlotter**
+   * **Default Value: adaptable**
    */
-  adaptableBlotterContainer?: string;
+  adaptableContainer?: string;
 
   /**
    * Name of the **div** element which contains the underlying vendor grid.

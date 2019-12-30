@@ -17,7 +17,7 @@ import { QuickFilterFormReact } from '../View/Components/FilterForm/QuickFilterF
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
-export const FloatingFilterWrapperFactory = (blotter: Adaptable) =>
+export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
   <any>class FloatingFilterWrapper implements IFloatingFilterComp {
     onParentModelChanged(parentModel: any, filterChangedEvent?: FilterChangedEvent): void {
       // todo?
@@ -32,18 +32,18 @@ export const FloatingFilterWrapperFactory = (blotter: Adaptable) =>
     init(params: IFloatingFilterParams): void {
       const colId = params.column.getColId();
       this.filterContainer = document.createElement('div');
-      this.filterContainer.id = `floatingFilter_${colId}_${blotter.blotterOptions.blotterId}`;
+      this.filterContainer.id = `floatingFilter_${colId}_${adaptable.adaptableOptions.adaptableId}`;
       this.filterContainer.style.display = 'flex';
       const column: AdaptableColumn = ColumnHelper.getColumnFromId(
         colId,
-        blotter.api.gridApi.getColumns()
+        adaptable.api.gridApi.getColumns()
       );
 
       const width: number = params.column.getActualWidth() - 40;
 
       const filterContext: IColumnFilterContext = {
         Column: column,
-        Blotter: blotter,
+        Adaptable: adaptable,
         ColumnWidth: width,
         ShowCloseButton: false,
       };

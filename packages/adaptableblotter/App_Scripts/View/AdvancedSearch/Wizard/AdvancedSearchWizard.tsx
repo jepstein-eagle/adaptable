@@ -17,7 +17,7 @@ export class AdvancedSearchWizard extends React.Component<
         <AdaptableWizard
           FriendlyName={StrategyConstants.AdvancedSearchStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

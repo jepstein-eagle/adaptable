@@ -62,7 +62,7 @@ export class AlertSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CV' + index}
             Item1={'something here?'}
-            Item2={this.props.Blotter.StrategyService.createAlertDescription(
+            Item2={this.props.Adaptable.StrategyService.createAlertDescription(
               item,
               this.props.Columns
             )}
@@ -92,7 +92,7 @@ export class AlertSummaryComponent extends React.Component<
             SystemFilters={this.props.SystemFilters}
             NamedFilters={this.props.NamedFilters}
             ColumnCategories={this.props.ColumnCategories}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

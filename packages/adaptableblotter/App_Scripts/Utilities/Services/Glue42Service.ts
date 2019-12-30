@@ -1,4 +1,4 @@
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import LoggingHelper, { LogAdaptableError } from '../Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
@@ -6,7 +6,7 @@ import Helper from '../Helpers/Helper';
 import ColumnHelper from '../Helpers/ColumnHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { Glue42State } from '../../PredefinedConfig/PartnerState';
@@ -47,16 +47,16 @@ export class Glue42Service implements IGlue42Service {
     isResolved: false,
   };
 
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
 
-    this.blotter.api.eventApi.on('BlotterReady', () => {
+    this.adaptable.api.eventApi.on('AdaptableReady', () => {
       if (!this.glueInstance) {
-        let glue42State: Glue42State | undefined = this.blotter.api.partnerApi.getGlue42State();
+        let glue42State: Glue42State | undefined = this.adaptable.api.partnerApi.getGlue42State();
         if (glue42State) {
           this.init(glue42State);
         } else {
-          this.blotter.api.internalApi.setGlue42AvailableOff();
+          this.adaptable.api.internalApi.setGlue42AvailableOff();
         }
       }
     });
@@ -78,10 +78,10 @@ export class Glue42Service implements IGlue42Service {
       const glue4OfficeInstance = await glue4Office(glue4OfficeConfig);
       this.glue4ExcelInstance = glue4OfficeInstance.excel; // as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
-      this.blotter.api.internalApi.setGlue42AvailableOn();
+      this.adaptable.api.internalApi.setGlue42AvailableOn();
     } catch (error) {
       LogAdaptableError(error);
-      this.blotter.api.internalApi.setGlue42AvailableOff();
+      this.adaptable.api.internalApi.setGlue42AvailableOff();
     }
   }
 
@@ -212,7 +212,7 @@ export class Glue42Service implements IGlue42Service {
       delta: any[]
     ) => {
       let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(
-        this.blotter.blotterOptions.primaryKey,
+        this.adaptable.adaptableOptions.primaryKey,
         gridColumns
       );
 
@@ -278,7 +278,7 @@ export class Glue42Service implements IGlue42Service {
       });
       dataChangedInfos.forEach(dc => {
         // I think we should be using one of our API methods here as that might give us the server validation we need...
-        this.blotter.setValue(dc, false);
+        this.adaptable.setValue(dc, false);
       });
 
       if (ArrayExtensions.IsNullOrEmpty(errors)) {
@@ -363,7 +363,7 @@ export class Glue42Service implements IGlue42Service {
     };
 
     // check for any validation issues
-    let cellValidationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
+    let cellValidationRules: CellValidationRule[] = this.adaptable.ValidationService.GetValidationRulesForDataChange(
       dataChangedInfo
     );
     if (ArrayExtensions.IsNotNullOrEmpty(cellValidationRules)) {

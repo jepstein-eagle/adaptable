@@ -60,4 +60,4 @@ function sendToSlack(s, theUsername, theIconUrl, theIconEmoji, theChannel) {
   });
 }
 
-sendToSlack(tag + ' of Adaptable Blotter has been pushed to NPM');
+sendToSlack(tag + ' of Adaptable has been pushed to NPM');

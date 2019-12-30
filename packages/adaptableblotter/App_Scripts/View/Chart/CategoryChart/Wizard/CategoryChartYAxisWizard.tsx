@@ -34,7 +34,7 @@ export class CategoryChartYAxisWizard
     };
   }
   render(): any {
-    let numericColumnIds = this.props.Blotter.api.gridApi.getNumericColumns().map(c => {
+    let numericColumnIds = this.props.Adaptable.api.gridApi.getNumericColumns().map(c => {
       return c.ColumnId;
     });
     let availableColumns: string[] = numericColumnIds

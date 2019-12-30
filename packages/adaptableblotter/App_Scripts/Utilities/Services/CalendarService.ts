@@ -1,5 +1,5 @@
 import * as CalendarConstants from '../../Utilities/Constants/CalendarConstants';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ICalendarService } from './Interface/ICalendarService';
 import { CalendarState } from '../../PredefinedConfig/CalendarState';
 
@@ -14,8 +14,8 @@ import { CalendarState } from '../../PredefinedConfig/CalendarState';
 // Hence why we store the details of the shipped calendars the way we do, rather than reading from a file like we do with WPF version.
 
 export class CalendarService implements ICalendarService {
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   public GetDynamicDate(dynamicDateName: string): Date {
@@ -64,8 +64,8 @@ export class CalendarService implements ICalendarService {
 
   // pretty sure this can be improved as pretty expensive - though rarely used to be honest
   private isNotWorkingDay(dateToCheck: Date): Boolean {
-    let calendarStore: CalendarState = this.blotter.api.calendarApi.getCalendarState();
-    let currentHoliday = this.blotter.api.internalApi
+    let calendarStore: CalendarState = this.adaptable.api.calendarApi.getCalendarState();
+    let currentHoliday = this.adaptable.api.internalApi
       .getAvailableCalendars()
       .find(c => c.Name == calendarStore.CurrentCalendar);
     for (var holiday of currentHoliday.CalendarEntries) {

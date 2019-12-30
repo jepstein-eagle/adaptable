@@ -1,11 +1,11 @@
 import * as GeneralConstants from '../Constants/GeneralConstants';
-import { AdaptableOptions } from '../../BlotterOptions/AdaptableOptions';
+import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
 
 export const DefaultAdaptableOptions: AdaptableOptions = {
   vendorGrid: null,
   primaryKey: '',
   userName: GeneralConstants.USER_NAME,
-  blotterId: GeneralConstants.BLOTTER_ID,
+  // blotterID now deprecated - instead we set the adaptableId - currently in helper for backward compatability
   predefinedConfig: undefined,
   licenceKey: '',
   auditOptions: {
@@ -49,7 +49,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     configServerUrl: '',
   },
   containerOptions: {
-    adaptableBlotterContainer: 'adaptableBlotter',
+    adaptableContainer: 'adaptableBlotter',
     vendorContainer: 'grid',
     modalContainer: undefined,
     chartContainer: undefined,
@@ -62,9 +62,9 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   },
   filterOptions: {
     indicateFilteredColumns: true,
-    useAdaptableBlotterFilterForm: true,
+    useAdaptableFilterForm: true,
     useVendorFilterFormStyle: true,
-    useAdaptableBlotterQuickFilter: true,
+    useAdaptableQuickFilter: true,
     filterActionOnUserDataChange: {
       RunFilter: GeneralConstants.FILTER_ALWAYS,
       ThrottleDelay: 0,

@@ -12,14 +12,14 @@ import './index.css';
 
 import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
-import { IAdaptableNoCodeWizard } from '../../../../App_Scripts/BlotterInterfaces/IAdaptableNoCodeWizard';
+import { IAdaptableNoCodeWizard } from '../../../../App_Scripts/AdaptableInterfaces/IAdaptableNoCodeWizard';
 import { ColDef } from 'ag-grid-community';
 
 /*
 Basic demo of wizard that allow d&d of a json with an array contents
 */
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'dtmKey', // will be added later ...
     //blotterId: 'Position Monitor',
@@ -87,7 +87,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

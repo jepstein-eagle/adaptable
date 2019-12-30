@@ -5,7 +5,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class ColumnChooserApiImpl extends ApiBase implements ColumnChooserAPI {
   public showColumnChooserPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ColumnChooserStrategyId,
       ScreenPopups.ColumnChooserPopup
     );

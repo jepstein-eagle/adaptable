@@ -127,6 +127,7 @@
     "table",
     "openfin",
     "ag-grid",
+    "adaptable",
     "blotter"
   ],
   "maintainers": [

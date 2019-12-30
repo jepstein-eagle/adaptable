@@ -1,4 +1,4 @@
-import { BlotterEventArgs, AdaptableBlotterEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
@@ -8,32 +8,32 @@ import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 /**
  * EventArgs sent as part of the onSearchChanged Event
  *
- * It includes full and comprehensive details of the state of **all the search and filter related functions** in the Adaptable Blotter
+ * It includes full and comprehensive details of the state of **all the search and filter related functions** in the Adaptable
  *
  * It also includes a SearchChangedTrigger which tells you **which function** was responsible for the change in Search state.
  */
-export interface SearchChangedEventArgs extends BlotterEventArgs {
+export interface SearchChangedEventArgs extends AdaptableEventArgs {
   data: SearchEventData[];
 }
 
 /**
- * Provides details of the state of all Search and Filter related functions in the Adaptable Blotter.
+ * Provides details of the state of all Search and Filter related functions in the Adaptable.
  */
-export interface SearchEventData extends AdaptableBlotterEventData {
+export interface SearchEventData extends AdaptableEventData {
   id: SearchChangedInfo;
 }
 /**
  * The main argument used in the **SearchChanged Event**
  *
- * Provides full details of the Search (and Sort) state in the Adaptable Blotter together with details of what triggered the event.
+ * Provides full details of the Search (and Sort) state in the Adaptable together with details of what triggered the event.
  */
 export interface SearchChangedInfo {
   /**
-   * Which Function in the Adaptable Blotter caused the Search state to change
+   * Which Function in the Adaptable caused the Search state to change
    *
    * **Note: UserFilter is one of the SearchChangedTriggers because it can be included in a current search or column filter**
    *
-   * (The Adaptable Blotter doesn't check whether the updated User Filter is being used - we aim on the side of caution and fire the event more often than is strictly necessary.)
+   * (The Adaptable doesn't check whether the updated User Filter is being used - we aim on the side of caution and fire the event more often than is strictly necessary.)
    */
   searchChangedTrigger:
     | 'DataSource'
@@ -55,7 +55,7 @@ export interface SearchChangedInfo {
   /**
    * The current sort state in the Grid
    *
-   * The Adaptable Blotter lists **all custom sorts** in this object even if they are not currently being applied.
+   * The Adaptable lists **all custom sorts** in this object even if they are not currently being applied.
    */
   blotterSortState: BlotterSortState;
   /**

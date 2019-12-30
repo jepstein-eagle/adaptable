@@ -26,7 +26,7 @@ type TypeFactory =
   | typeof React.Component
   | (({ children }: { children: ReactNode }) => ReactNode);
 
-type TypeChildren = ({ blotter, grid }: { blotter: ReactNode; grid: ReactNode }) => ReactNode;
+type TypeChildren = ({ adaptable, grid }: { adaptable: ReactNode; grid: ReactNode }) => ReactNode;
 
 const join = (...args: any[]): string => args.filter(x => !!x).join(' ');
 
@@ -62,37 +62,37 @@ class AgGridReactOverride extends AgGridReact {
       this.props
     );
 
-    const { blotterFactory } = this.props as any;
+    const { adaptableFactory } = this.props as any;
 
-    const blotter = blotterFactory(this);
+    const adaptable = adaptableFactory(this);
 
     // don't need the return value
     // new AgGrid.Grid(this.eGridDiv, this.gridOptions, gridParams);
 
-    this.api = blotter.gridOptions.api;
-    this.columnApi = blotter.gridOptions.columnApi;
+    this.api = adaptable.gridOptions.api;
+    this.columnApi = adaptable.gridOptions.columnApi;
   }
 }
 
-const createBlotter = ({
-  blotterOptions,
+const createAdaptable = ({
+  adaptableOptions,
   gridOptions,
-  blotterContainerId,
+  adaptableContainerId,
   gridContainerId,
   agGridReactWrapperInstance,
 }: {
-  blotterOptions: AdaptableOptions;
+  adaptableOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
-  blotterContainerId: string;
+  adaptableContainerId: string;
   gridContainerId: string;
   agGridReactWrapperInstance: AgGridReactOverride;
 }): Adaptable => {
   return new Adaptable(
     {
-      ...blotterOptions,
+      ...adaptableOptions,
       containerOptions: {
-        ...blotterOptions.containerOptions,
-        adaptableBlotterContainer: blotterContainerId,
+        ...adaptableOptions.containerOptions,
+        adaptableContainer: adaptableContainerId,
         vendorContainer: gridContainerId,
       },
       vendorGrid: gridOptions,
@@ -112,7 +112,7 @@ const createBlotter = ({
 };
 
 const AdaptableBlotterReact = ({
-  blotterOptions,
+  adaptableOptions,
   gridOptions,
   tagName,
   agGridTheme,
@@ -130,14 +130,14 @@ const AdaptableBlotterReact = ({
   onAuditCellEdited,
   onAuditFunctionApplied,
 
-  onBlotterReady,
+  onAdaptableReady,
   ...props
 }: {
   agGridTheme?: string;
-  blotterOptions: AdaptableOptions;
+  adaptableOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
 
-  onBlotterReady?: (api: AdaptableApi) => void;
+  onAdaptableReady?: (api: AdaptableApi) => void;
   onToolbarVisibilityChanged?: (
     toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs
   ) => void;
@@ -157,74 +157,74 @@ const AdaptableBlotterReact = ({
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
   const seedId = useMemo(() => `${getRandomInt(1000)}-${Date.now()}`, []);
-  const blotterContainerId = `blotter-${seedId}`;
+  const adaptableContainerId = `adaptable-${seedId}`;
   const gridContainerId = `grid-${seedId}`;
 
   const [mounted, setMounted] = useState<boolean>(false);
 
-  const blotterFactory = useMemo(() => {
+  const adaptableFactory = useMemo(() => {
     return (agGridReactWrapperInstance: AgGridReactOverride) => {
-      const blotter = createBlotter({
+      const adaptable = createAdaptable({
         gridOptions,
-        blotterOptions,
+        adaptableOptions,
         gridContainerId,
-        blotterContainerId,
+        adaptableContainerId,
         agGridReactWrapperInstance,
       });
-      if (onBlotterReady) {
-        blotter.api.eventApi.on('BlotterReady', () => {
-          onBlotterReady(blotter.api);
+      if (onAdaptableReady) {
+        adaptable.api.eventApi.on('AdaptableReady', () => {
+          onAdaptableReady(adaptable.api);
         });
       }
 
       if (onToolbarVisibilityChanged) {
-        blotter.api.eventApi.on('ToolbarVisibilityChanged', onToolbarVisibilityChanged);
+        adaptable.api.eventApi.on('ToolbarVisibilityChanged', onToolbarVisibilityChanged);
       }
       if (onSearchChanged) {
-        blotter.api.eventApi.on('SearchChanged', onSearchChanged);
+        adaptable.api.eventApi.on('SearchChanged', onSearchChanged);
       }
       if (onToolbarButtonClicked) {
-        blotter.api.eventApi.on('ToolbarButtonClicked', onToolbarButtonClicked);
+        adaptable.api.eventApi.on('ToolbarButtonClicked', onToolbarButtonClicked);
       }
       if (onThemeChanged) {
-        blotter.api.eventApi.on('ThemeChanged', onThemeChanged);
+        adaptable.api.eventApi.on('ThemeChanged', onThemeChanged);
       }
       if (onColumnStateChanged) {
-        blotter.api.eventApi.on('ColumnStateChanged', onColumnStateChanged);
+        adaptable.api.eventApi.on('ColumnStateChanged', onColumnStateChanged);
       }
       if (onAlertFired) {
-        blotter.api.eventApi.on('AlertFired', onAlertFired);
+        adaptable.api.eventApi.on('AlertFired', onAlertFired);
       }
       if (onActionColumnClicked) {
-        blotter.api.eventApi.on('ActionColumnClicked', onActionColumnClicked);
+        adaptable.api.eventApi.on('ActionColumnClicked', onActionColumnClicked);
       }
       if (onSelectionChanged) {
-        blotter.api.eventApi.on('SelectionChanged', onSelectionChanged);
+        adaptable.api.eventApi.on('SelectionChanged', onSelectionChanged);
       }
       if (onAuditStateChanged) {
-        blotter.api.auditEventApi.on('AuditStateChanged', onAuditStateChanged);
+        adaptable.api.auditEventApi.on('AuditStateChanged', onAuditStateChanged);
       }
       if (onAuditCellEdited) {
-        blotter.api.auditEventApi.on('AuditCellEdited', onAuditCellEdited);
+        adaptable.api.auditEventApi.on('AuditCellEdited', onAuditCellEdited);
       }
       if (onAuditFunctionApplied) {
-        blotter.api.auditEventApi.on('AuditFunctionApplied', onAuditFunctionApplied);
+        adaptable.api.auditEventApi.on('AuditFunctionApplied', onAuditFunctionApplied);
       }
-      setBlotter(blotter);
-      return blotter;
+      setAdaptable(adaptable);
+      return adaptable;
     };
   }, []);
 
-  let [blotter, setBlotter] = useState<Adaptable | null>(null);
+  let [adaptable, setAdaptable] = useState<Adaptable | null>(null);
 
   const TagName = tagName || 'div';
   agGridTheme = agGridTheme || 'balham';
 
-  const blotterNode = blotter ? <AdaptableApp key="blotter" Adaptable={blotter} /> : null;
+  const adaptableNode = adaptable ? <AdaptableApp key="adaptable" Adaptable={adaptable} /> : null;
 
   const overrideProps = {
     ...gridOptions,
-    blotterFactory: blotterFactory,
+    adaptableFactory: adaptableFactory,
   };
 
   const gridWrapperNode = (
@@ -244,20 +244,20 @@ const AdaptableBlotterReact = ({
     setMounted(true);
   }, []);
 
-  let children: ReactNode | ReactNode[] = [blotterNode, gridWrapperNode];
+  let children: ReactNode | ReactNode[] = [adaptableNode, gridWrapperNode];
 
   const renderFn = render || props.children;
 
   if (typeof renderFn === 'function') {
     children = renderFn({
-      blotter: blotterNode,
+      adaptable: adaptableNode,
       grid: gridWrapperNode,
     });
   }
   return (
     <TagName
       {...props}
-      id={blotterContainerId}
+      id={adaptableContainerId}
       className={join(props.className, 'ab__react-wrapper')}
     >
       {children}

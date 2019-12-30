@@ -1,5 +1,5 @@
 /**
- * General options section of Adaptable Blotter Options.
+ * General options section of Adaptable Options.
  *
  * Essentially those options that didnt fit into an obvious group (e.g. Layout, Filter etc.) but we didnt want at root.
  *
@@ -42,7 +42,7 @@ export interface GeneralOptions {
   preventDuplicatePrimaryKeyValues?: boolean;
 
   /**
-   * Runs a check to see if the current version of the Adaptable Blotter is the latest version.
+   * Runs a check to see if the current version of the Adaptable is the latest version.
    *
    * If set to true, then a check is run when the Blotter starts up and a message is written to the Console if its not the latest version.
    *

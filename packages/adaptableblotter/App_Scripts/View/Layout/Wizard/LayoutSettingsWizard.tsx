@@ -94,6 +94,6 @@ export class LayoutSettingsWizard
   }
   public GetIndexStepDecrement() {
     // this is wrong as its only decrementing on pivot - but we need someway to know whether its ne or existing
-    return this.props.Blotter.LayoutService.isPivotedLayout(this.props.Data.PivotDetails) ? 1 : 3;
+    return this.props.Adaptable.LayoutService.isPivotedLayout(this.props.Data.PivotDetails) ? 1 : 3;
   }
 }

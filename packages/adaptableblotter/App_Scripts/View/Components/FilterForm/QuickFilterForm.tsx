@@ -14,7 +14,7 @@ import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
@@ -28,7 +28,7 @@ import theme from '../../../theme';
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: AdaptableColumn;
   ColumnWidth: number;
-  Blotter: IAdaptable;
+  Adaptable: IAdaptable;
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
@@ -317,7 +317,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CurrentColumn: ownProps.CurrentColumn,
-    Blotter: ownProps.Blotter,
+    Adaptable: ownProps.Adaptable,
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
@@ -343,14 +343,14 @@ export let QuickFilterForm = connect(
 )(QuickFilterFormComponent);
 
 export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Blotter.AdaptableStore.TheStore}>
+  <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <QuickFilterForm
-        Blotter={FilterContext.Blotter}
+        Adaptable={FilterContext.Adaptable}
         CurrentColumn={FilterContext.Column}
         TeamSharingActivated={false}
         ColumnWidth={FilterContext.ColumnWidth}
-        EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
+        EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
       />
     </ThemeProvider>
   </Provider>

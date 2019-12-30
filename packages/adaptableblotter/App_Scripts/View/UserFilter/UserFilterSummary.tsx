@@ -90,7 +90,7 @@ export class UserFilterSummaryComponent extends React.Component<
             NamedFilters={this.props.NamedFilters}
             ColumnCategories={this.props.ColumnCategories}
             SelectedColumnId={this.props.SummarisedColumn.ColumnId}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

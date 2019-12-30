@@ -7,7 +7,7 @@ import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 
 export class ApplicationApiImpl extends ApiBase implements ApplicationApi {
   public getApplicationState(): ApplicationState {
-    return this.getBlotterState().Application;
+    return this.getAdaptableState().Application;
   }
 
   public getApplicationDataEntries(): ApplicationDataEntry[] {

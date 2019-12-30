@@ -8,7 +8,7 @@ import { SmartEditState } from '../../PredefinedConfig/SmartEditState';
 
 export class SmartEditApiImpl extends ApiBase implements SmartEditApi {
   public getSmartEditState(): SmartEditState {
-    return this.getBlotterState().SmartEdit;
+    return this.getAdaptableState().SmartEdit;
   }
 
   public setSmartEditMathOperation(
@@ -18,7 +18,7 @@ export class SmartEditApiImpl extends ApiBase implements SmartEditApi {
   }
 
   public getSmartEditMathOperation(): string {
-    return this.getBlotterState().SmartEdit.MathOperation;
+    return this.getAdaptableState().SmartEdit.MathOperation;
   }
 
   public setSmartEditValue(smartEditValue: number): void {
@@ -26,11 +26,11 @@ export class SmartEditApiImpl extends ApiBase implements SmartEditApi {
   }
 
   public getSmartEditValue(): number {
-    return this.getBlotterState().SmartEdit.SmartEditValue;
+    return this.getAdaptableState().SmartEdit.SmartEditValue;
   }
 
   public showSmartEditPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.SmartEditStrategyId,
       ScreenPopups.SmartEditPopup
     );

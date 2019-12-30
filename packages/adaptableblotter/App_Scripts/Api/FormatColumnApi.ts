@@ -8,12 +8,12 @@ import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColum
  */
 export interface FormatColumnApi {
   /**
-   * Retrieves the Format Column section from the Adaptable Blotter State
+   * Retrieves the Format Column section from the Adaptable State
    */
   getFormatColumnState(): FormatColumnState;
 
   /**
-   * Gets all Format Columns in the Adaptable Blotter State
+   * Gets all Format Columns in the Adaptable State
    */
   getAllFormatColumn(): FormatColumn[];
 

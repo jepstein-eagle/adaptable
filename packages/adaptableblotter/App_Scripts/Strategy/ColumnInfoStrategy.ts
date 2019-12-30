@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
@@ -10,8 +10,8 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import { DataType } from '../PredefinedConfig/Common/Enums';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.ColumnInfoStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.ColumnInfoStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -23,7 +23,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
@@ -39,7 +39,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (this.canCreateColumnMenuItem(menuInfo.column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(menuInfo.column, this.adaptable)) {
       let popupParam: StrategyParams = {
         columnId: menuInfo.column.ColumnId,
         source: 'ContextMenu',

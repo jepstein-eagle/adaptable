@@ -5,7 +5,7 @@ import { FlashingCellState, FlashingCell } from '../PredefinedConfig/FlashingCel
  */
 export interface FlashingCellApi {
   /**
-   * Retrieves the Flashing Cell section from the Adaptable Blotter State
+   * Retrieves the Flashing Cell section from the Adaptable State
    */
   getFlashingCellState(): FlashingCellState;
 

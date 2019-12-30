@@ -10,7 +10,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  *  **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/gridmanagement/aggridlayoutdemo/) | [API](_api_layoutapi_.layoutapi.html) | [Options](_blotteroptions_layoutoptions_.layoutoptions.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170317-Layouts-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743312-Layout-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptableblotter.com/gridmanagement/aggridlayoutdemo/) | [API](_api_layoutapi_.layoutapi.html) | [Options](_adaptableOptions_layoutoptions_.layoutoptions.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170317-Layouts-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743312-Layout-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  * **Layout Predefined Config Example**
  *
@@ -69,7 +69,7 @@ export interface LayoutState extends RunTimeState {
   /**
    * The name of the Layout which will be in use when the Blotter starts / loads.
    *
-   * This will be the selected value in the Layout Toolbar and the Adaptable Blotter will apply it automatically.
+   * This will be the selected value in the Layout Toolbar and the Adaptable will apply it automatically.
    *
    * **Make sure that the value appears in the name property of one of the Layouts that you provide**
    *
@@ -131,17 +131,17 @@ export interface Layout extends AdaptableObject {
   /**
    * **Do not set this when creating a layout**
    *
-   *  This is state saved automatically by the Adaptable Blotter for internal use to manage layouts
+   *  This is state saved automatically by the Adaptable for internal use to manage layouts
    *
-   *  Note: This is only used if `includeVendorStateInLayouts` is set to true in [LayoutOptions](_blotteroptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
+   *  Note: This is only used if `includeVendorStateInLayouts` is set to true in [LayoutOptions](_adaptableOptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
    */
   VendorGridInfo?: VendorGridInfo;
   /**
    * **Do not set this when creating a layout**
    *
-   *  This is state saved automatically by the Adaptable Blotter for internal use to manage layouts
+   *  This is state saved automatically by the Adaptable for internal use to manage layouts
    */
-  BlotterGridInfo?: BlotterGridInfo;
+  AdaptableGridInfo?: AdaptableGridInfo;
 }
 
 /**
@@ -169,7 +169,7 @@ export interface ColumnSort {
 /**
  * **Do not set use this property**
  *
- *  This is state saved automatically by the Adaptable Blotter for internal use to manage layouts
+ *  This is state saved automatically by the Adaptable for internal use to manage layouts
  */
 export interface VendorGridInfo {
   GroupState?: any;
@@ -181,9 +181,9 @@ export interface VendorGridInfo {
 /**
  * **Do not set use this property**
  *
- *  This is state saved automatically by the Adaptable Blotter for internal use to manage layouts
+ *  This is state saved automatically by the Adaptable for internal use to manage layouts
  */
-export interface BlotterGridInfo {
+export interface AdaptableGridInfo {
   CurrentColumns?: string[];
   CurrentColumnSorts?: ColumnSort[];
 }

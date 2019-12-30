@@ -10,14 +10,14 @@ import { AlertState, AlertDefinition, AlertProperties } from '../../PredefinedCo
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import OpenfinHelper from '../../Utilities/Helpers/OpenfinHelper';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/AlertFired';
 
 export class AlertApiImpl extends ApiBase implements AlertApi {
   public getAlertState(): AlertState {
-    return this.getBlotterState().Alert;
+    return this.getAdaptableState().Alert;
   }
 
   public getAlertDefinitions(): AlertDefinition[] {
@@ -41,7 +41,7 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
       alertFiredInfo
     );
 
-    this.blotter.api.eventApi.emit('AlertFired', alertFiredArgs);
+    this.adaptable.api.eventApi.emit('AlertFired', alertFiredArgs);
 
     // 3. Log it to the Console
     LoggingHelper.LogAlert(alertToShow.Header + ': ' + alertToShow.Msg, alertToShow.AlertDefinition
@@ -57,9 +57,9 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
       }
       // 1. Show it in a Div (if one has been set)
       if (alertProperties.ShowInDiv) {
-        if (StringExtensions.IsNotNullOrEmpty(this.getBlotterState().Alert.AlertDisplayDiv)) {
+        if (StringExtensions.IsNotNullOrEmpty(this.getAdaptableState().Alert.AlertDisplayDiv)) {
           let alertString: string = alertToShow.Header + ': ' + alertToShow.Msg;
-          let alertDiv = document.getElementById(this.getBlotterState().Alert.AlertDisplayDiv);
+          let alertDiv = document.getElementById(this.getAdaptableState().Alert.AlertDisplayDiv);
           if (alertDiv) {
             alertDiv.innerHTML = alertString;
           }
@@ -67,7 +67,7 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
       }
       // 3: Jump to the Cell
       if (alertProperties.JumpToCell && alertToShow.DataChangedInfo) {
-        this.blotter.jumpToCell(
+        this.adaptable.jumpToCell(
           alertToShow.DataChangedInfo.ColumnId,
           alertToShow.DataChangedInfo.RowNode
         );
@@ -138,7 +138,7 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
   }
 
   public showAlertPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.AlertStrategyId,
       ScreenPopups.AlertPopup
     );

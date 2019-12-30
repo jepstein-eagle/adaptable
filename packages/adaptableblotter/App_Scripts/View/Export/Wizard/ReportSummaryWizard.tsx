@@ -28,14 +28,14 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
       { Key: 'Name', Value: this.props.Data.Name },
       {
         Key: 'Columns',
-        Value: this.props.Blotter!.ReportService.GetReportColumnsDescription(
+        Value: this.props.Adaptable!.ReportService.GetReportColumnsDescription(
           this.props.Data,
           this.props.Columns
         ),
       },
       {
         Key: 'Rows',
-        Value: this.props.Blotter!.ReportService.GetReportExpressionDescription(
+        Value: this.props.Adaptable!.ReportService.GetReportExpressionDescription(
           this.props.Data,
           this.props.Columns
         ),

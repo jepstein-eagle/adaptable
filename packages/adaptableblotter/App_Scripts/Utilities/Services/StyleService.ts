@@ -1,7 +1,7 @@
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -25,12 +25,12 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 export class StyleService implements IStyleService {
   private style: HTMLStyleElement;
 
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
     // Create the <style> tag
     this.style = document.createElement('style');
-    this.style.id = `${blotter.blotterOptions.containerOptions!.adaptableBlotterContainer}_${
-      blotter.blotterOptions.blotterId
+    this.style.id = `${adaptable.adaptableOptions.containerOptions!.adaptableContainer}_${
+      adaptable.adaptableOptions.adaptableId
     }-style`;
     // WebKit hack :(
     this.style.appendChild(document.createTextNode(''));
@@ -38,7 +38,7 @@ export class StyleService implements IStyleService {
     document.head.appendChild(this.style);
 
     this.setUpStoreListeners();
-    this.blotter.api.eventApi.on('BlotterReady', () => {
+    this.adaptable.api.eventApi.on('AdaptableReady', () => {
       this.setUpFirstUsage();
     });
   }
@@ -48,7 +48,7 @@ export class StyleService implements IStyleService {
       StyleConstants.AB_HEADER +
       functionName +
       '-' +
-      this.blotter.blotterOptions.blotterId
+      this.adaptable.adaptableOptions.adaptableId
         .trim()
         .replace(/\s/g, '')
         .replace('.', '')
@@ -63,7 +63,7 @@ export class StyleService implements IStyleService {
       StyleConstants.AB_HEADER +
       functionName +
       '-' +
-      this.blotter.blotterOptions.blotterId
+      this.adaptable.adaptableOptions.adaptableId
         .trim()
         .replace(/\s/g, '')
         .replace('.', '') +
@@ -83,35 +83,35 @@ export class StyleService implements IStyleService {
   }
 
   private setUpFormatColumn() {
-    const formatColumnStrategy = this.blotter.strategies.get(
+    const formatColumnStrategy = this.adaptable.strategies.get(
       StrategyConstants.FormatColumnStrategyId
     ) as IFormatColumnStrategy;
     formatColumnStrategy.initStyles();
   }
 
   private setUpFlashingCells() {
-    const flashingCellsStrategy = this.blotter.strategies.get(
+    const flashingCellsStrategy = this.adaptable.strategies.get(
       StrategyConstants.FlashingCellsStrategyId
     ) as IFlashingCellsStrategy;
     flashingCellsStrategy.initStyles();
   }
 
   private setUpUpdatedRow() {
-    const updatedRowStrategy = this.blotter.strategies.get(
+    const updatedRowStrategy = this.adaptable.strategies.get(
       StrategyConstants.UpdatedRowStrategyId
     ) as IUpdatedRowStrategy;
     updatedRowStrategy.initStyles();
   }
 
   private setUpAlerts() {
-    const alertStrategy = this.blotter.strategies.get(
+    const alertStrategy = this.adaptable.strategies.get(
       StrategyConstants.AlertStrategyId
     ) as IAlertStrategy;
     alertStrategy.initStyles();
   }
 
   private setUpConditionalStyle() {
-    const conditionalStyleStrategy = this.blotter.strategies.get(
+    const conditionalStyleStrategy = this.adaptable.strategies.get(
       StrategyConstants.ConditionalStyleStrategyId
     ) as IConditionalStyleStrategy;
     conditionalStyleStrategy.initStyles();
@@ -126,7 +126,7 @@ export class StyleService implements IStyleService {
     this.clearCSSRules();
 
     // Format Column
-    this.blotter.api.formatColumnApi.getAllFormatColumn().forEach(formatColumn => {
+    this.adaptable.api.formatColumnApi.getAllFormatColumn().forEach(formatColumn => {
       const styleName = this.CreateUniqueStyleName(
         StrategyConstants.FormatColumnStrategyId,
         formatColumn
@@ -148,7 +148,7 @@ export class StyleService implements IStyleService {
     });
 
     // we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
-    const conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
     conditionalStyles
       .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
       .forEach(element => {
@@ -217,7 +217,7 @@ export class StyleService implements IStyleService {
       });
 
     // next we do Updated Rows - still not quite sure how this will work...
-    const updatedRowState: UpdatedRowState = this.blotter.api.updatedRowApi.getUpdatedRowState();
+    const updatedRowState: UpdatedRowState = this.adaptable.api.updatedRowApi.getUpdatedRowState();
     if (updatedRowState.EnableUpdatedRow) {
       this.addCSSRule(
         `.${StyleConstants.UPDATED_ROW_UP_STYLE}`,
@@ -234,7 +234,7 @@ export class StyleService implements IStyleService {
     }
 
     // quick search
-    const quickSearchStyle: IStyle = this.blotter.api.quickSearchApi.getQuickSearchStyle();
+    const quickSearchStyle: IStyle = this.adaptable.api.quickSearchApi.getQuickSearchStyle();
     if (StringExtensions.IsNullOrEmpty(quickSearchStyle.ClassName)) {
       const styleName = this.CreateStyleName(StrategyConstants.QuickSearchStrategyId);
 
@@ -258,7 +258,7 @@ export class StyleService implements IStyleService {
     // nothing to do as it uses existing styles
 
     // we define last Flash since it has the highest priority
-    this.blotter.api.flashingCellApi.getAllFlashingCell().forEach(element => {
+    this.adaptable.api.flashingCellApi.getAllFlashingCell().forEach(element => {
       if (element.IsLive) {
         this.addCSSRule(
           `.${StyleConstants.FLASH_CELL_UP_STYLE}-${element.Uuid}`,
@@ -284,91 +284,91 @@ export class StyleService implements IStyleService {
   // I suspsect it is so we dont have lots of bits of state being stored and compared
   private setUpStoreListeners() {
     //  Quick Search - no need to set up styles for Quick Search as done in AB not the Strategy = need to test!!!
-    this.blotter.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY, () => {
+    this.adaptable.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY, () => {
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_STYLE, () => {
+    this.adaptable.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_STYLE, () => {
       this.createAdaptableFunctionStyles();
     });
 
     // Format Column
-    this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_ADD, () => {
+    this.adaptable.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_ADD, () => {
       this.setUpFormatColumn();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_EDIT, () => {
+    this.adaptable.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_EDIT, () => {
       this.setUpFormatColumn();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_DELETE, () => {
+    this.adaptable.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_DELETE, () => {
       this.setUpFormatColumn();
       this.createAdaptableFunctionStyles();
     });
 
     // Conditional Style
-    this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_ADD, () => {
+    this.adaptable.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_ADD, () => {
       this.setUpConditionalStyle();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT, () => {
+    this.adaptable.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT, () => {
       this.setUpConditionalStyle();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE, () => {
+    this.adaptable.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE, () => {
       this.setUpConditionalStyle();
       this.createAdaptableFunctionStyles();
     });
 
     // Alert Definition (note we dont need to create styles)
-    this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
+    this.adaptable.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
       this.setUpAlerts();
       // this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
+    this.adaptable.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
       this.setUpAlerts();
       // this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
+    this.adaptable.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
       this.setUpAlerts();
       //  this.createAdaptableFunctionStyles();
     });
 
     // Updated Row
-    this.blotter.AdaptableStore.on(UpdatedRowRedux.UPDATED_ROW_ENABLE_DISABLE, () => {
+    this.adaptable.AdaptableStore.on(UpdatedRowRedux.UPDATED_ROW_ENABLE_DISABLE, () => {
       this.setUpUpdatedRow();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(UpdatedRowRedux.UP_COLOR_SET, () => {
+    this.adaptable.AdaptableStore.on(UpdatedRowRedux.UP_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(UpdatedRowRedux.DOWN_COLOR_SET, () => {
+    this.adaptable.AdaptableStore.on(UpdatedRowRedux.DOWN_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(UpdatedRowRedux.NEUTRAL_COLOR_SET, () => {
+    this.adaptable.AdaptableStore.on(UpdatedRowRedux.NEUTRAL_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableFunctionStyles();
     });
 
     // Flashing Cell
-    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT, () => {
+    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT_ALL, () => {
+    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT_ALL, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_UP_COLOR, () => {
+    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_UP_COLOR, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR, () => {
+    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });
-    this.blotter.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION, () => {
+    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });

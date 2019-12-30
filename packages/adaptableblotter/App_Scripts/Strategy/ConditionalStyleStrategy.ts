@@ -2,17 +2,17 @@ import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.ConditionalStyleStrategyId, blotter);
-    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.ConditionalStyleStrategyId, adaptable);
+    this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
   }
@@ -26,7 +26,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter, 'style')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'style')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

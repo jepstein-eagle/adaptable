@@ -26,7 +26,7 @@ import { IPushPullService } from '../Utilities/Services/Interface/IPushPullServi
 
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';
@@ -41,7 +41,7 @@ import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
  *
  *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
  *
- *  It also contains an api property which gives access to the Blotter API - this is the ONLY way that developers should access Adaptable Blotter methods.
+ *  It also contains an api property which gives access to the Blotter API - this is the ONLY way that developers should access Adaptable methods.
  */
 export interface IAdaptable {
   /**
@@ -58,11 +58,11 @@ export interface IAdaptable {
    *
    * Most properties are nullable with sensible defaults provided in DefaultAdaptableOptions that is merged at initialisation.
    *
-   * Each implementation of the Adaptable Blotter has a constructor that contains an AdaptableOptions object.
+   * Each implementation of the Adaptable has a constructor that contains an AdaptableOptions object.
    *
    * This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use and the way that we can access the underlying grid and its data
    */
-  blotterOptions: AdaptableOptions;
+  adaptableOptions: AdaptableOptions;
 
   /**
    * The redux store that we use to manage state
@@ -72,7 +72,7 @@ export interface IAdaptable {
   AdaptableStore: IAdaptableStore;
 
   /**
-   * Each set of functionality in the Adaptable Blotter is called a strategy (e.g. Quick Search, Export)
+   * Each set of functionality in the Adaptable is called a strategy (e.g. Quick Search, Export)
    *
    * There are about 30 strategies in total
    *
@@ -100,7 +100,7 @@ export interface IAdaptable {
   isInitialised: boolean;
 
   /**
-   * The Adaptable Blotter contains a number of 'Services' which are created at Startup
+   * The Adaptable contains a number of 'Services' which are created at Startup
    *
    * Each takes an instance of the Adaptable and is used when it is preferable to accessing a Strategy directly
    */
@@ -254,7 +254,7 @@ export interface IAdaptable {
   hideQuickFilter(): void;
 
   // Theme
-  applyBlotterTheme(theme: AdaptableTheme | string): void;
+  applyAdaptableTheme(theme: AdaptableTheme | string): void;
   setUpRowStyles(): void; // not sure about this...
   clearRowStyles(): void; // not sure about this...
 }

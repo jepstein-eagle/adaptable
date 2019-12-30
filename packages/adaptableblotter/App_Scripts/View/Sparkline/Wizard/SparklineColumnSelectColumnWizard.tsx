@@ -46,7 +46,7 @@ export class SparklineColumnSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      // let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+      // let distinctColumnsValues: number[] = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
       //   columns[0].ColumnId,
       //   DistinctCriteriaPairValue.RawValue,
       //   false

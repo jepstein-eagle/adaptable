@@ -1,22 +1,22 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { IAdaptable } from '../../types';
 import { FreeTextColumn, FreeTextStoredValue } from '../../PredefinedConfig/FreeTextColumnState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 export class FreeTextColumnService implements IFreeTextColumnService {
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   GetFreeTextValue(freeTextColumn: FreeTextColumn, record: any): any {
     try {
-      if (this.blotter.isGroupRowNode(record)) {
+      if (this.adaptable.isGroupRowNode(record)) {
         return null;
       }
       if (ArrayExtensions.IsNotNullOrEmpty(freeTextColumn.FreeTextStoredValues)) {
-        let pkValue: any = this.blotter.getPrimaryKeyValueFromRowNode(record);
+        let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(record);
         let freeTextStoredValue:
           | FreeTextStoredValue
           | undefined = freeTextColumn.FreeTextStoredValues.find(fdx => fdx.PrimaryKey == pkValue);
@@ -32,7 +32,7 @@ export class FreeTextColumnService implements IFreeTextColumnService {
   }
 
   CheckIfDataChangingColumnIsFreeText(dataChangedEvent: DataChangedInfo): void {
-    let freeTextColumn: FreeTextColumn = this.blotter.api.freeTextColumnApi
+    let freeTextColumn: FreeTextColumn = this.adaptable.api.freeTextColumnApi
       .getAllFreeTextColumn()
       .find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
     if (freeTextColumn) {
@@ -40,7 +40,7 @@ export class FreeTextColumnService implements IFreeTextColumnService {
         PrimaryKey: dataChangedEvent.PrimaryKeyValue,
         FreeText: dataChangedEvent.NewValue,
       };
-      this.blotter.api.freeTextColumnApi.addEditFreeTextColumnStoredValue(
+      this.adaptable.api.freeTextColumnApi.addEditFreeTextColumnStoredValue(
         freeTextColumn,
         freeTextStoredValue
       );

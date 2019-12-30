@@ -2,13 +2,13 @@ import { IAlertStrategy } from './Interface/IAlertStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
@@ -16,9 +16,9 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.AlertStrategyId, blotter);
-    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.AlertStrategyId, adaptable);
+    this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
   }
@@ -36,7 +36,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (menuInfo.column && menuInfo.rowNode) {
-      let currentAlerts: AdaptableAlert[] = this.blotter.api.internalApi
+      let currentAlerts: AdaptableAlert[] = this.adaptable.api.internalApi
         .getAdaptableAlerts()
         .filter(a => a.DataChangedInfo && a.AlertDefinition.AlertProperties.HighlightCell);
       if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
@@ -62,12 +62,12 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       dataChangedInfo
     );
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
-      let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
       alertDefinitions.forEach((alertDefintion: AlertDefinition) => {
         // might be better to do a single alert with all the messages?
-        this.blotter.api.alertApi.showAlert(
+        this.adaptable.api.alertApi.showAlert(
           ColumnHelper.getFriendlyNameFromColumnId(alertDefintion.ColumnId, columns),
-          this.blotter.StrategyService.createAlertDescription(alertDefintion, columns),
+          this.adaptable.StrategyService.createAlertDescription(alertDefintion, columns),
           alertDefintion,
           dataChangedInfo
         );
@@ -76,12 +76,12 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   }
 
   private getAlertDefinitionsForDataChange(dataChangedEvent: DataChangedInfo): AlertDefinition[] {
-    let relatedAlertDefinitions = this.blotter.api.alertApi
+    let relatedAlertDefinitions = this.adaptable.api.alertApi
       .getAlertDefinitions()
       .filter(v => v.ColumnId == dataChangedEvent.ColumnId);
     let triggeredAlerts: AlertDefinition[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
-      let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
 
       // first check the rules which have expressions
       let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
@@ -94,7 +94,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
             expressionAlertDefinition.Expression,
             dataChangedEvent.PrimaryKeyValue,
             columns,
-            this.blotter
+            this.adaptable
           );
           if (
             isSatisfiedExpression &&
@@ -134,9 +134,9 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       dataChangedEvent.NewValue,
       dataChangedEvent.OldValue,
       column,
-      this.blotter,
+      this.adaptable,
       null
     );
-    return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter);
+    return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.adaptable);
   }
 }

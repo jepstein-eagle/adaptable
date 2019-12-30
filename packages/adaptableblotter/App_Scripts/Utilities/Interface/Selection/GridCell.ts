@@ -1,5 +1,5 @@
 /**
- * Defines a Cell in the Adaptable Blotter
+ * Defines a Cell in the Adaptable
  *
  * Ever cell is an intersection of a ColumnID and a Primary Key Value
  */
@@ -14,7 +14,7 @@ export interface GridCell {
   value: any;
 
   /**
-   * The value in the primary key column for that row - this is how the Adaptable Blotter will find the cell
+   * The value in the primary key column for that row - this is how the Adaptable will find the cell
    */
   primaryKeyValue: any;
 }

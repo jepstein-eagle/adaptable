@@ -96,7 +96,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AdaptableApiImpl } from '../Api/Implementation/AdaptableApiImpl';
 import {
   DEFAULT_LAYOUT,
@@ -124,7 +124,7 @@ import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
-import { GeneralOptions } from '../BlotterOptions/GeneralOptions';
+import { GeneralOptions } from '../AdaptableOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
@@ -132,7 +132,7 @@ import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import AdaptableWizardView from '../View/AdaptableWizardView';
 
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { Glue42Service } from '../Utilities/Services/Glue42Service';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
@@ -148,14 +148,14 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { FilterService } from '../Utilities/Services/FilterService';
 import { DefaultAdaptableOptions } from '../Utilities/Defaults/DefaultAdaptableOptions';
-import { AdaptableOptions } from '../BlotterOptions/AdaptableOptions';
+import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableToolPanelContext } from '../Utilities/Interface/AdaptableToolPanelContext';
 import {
   IAdaptableNoCodeWizard,
   IAdaptableNoCodeWizardOptions,
   IAdaptableNoCodeWizardInitFn,
-} from '../BlotterInterfaces/IAdaptableNoCodeWizard';
+} from '../AdaptableInterfaces/IAdaptableNoCodeWizard';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -196,7 +196,7 @@ export class Adaptable implements IAdaptable {
 
   public AdaptableStore: IAdaptableStore;
 
-  public blotterOptions: AdaptableOptions;
+  public adaptableOptions: AdaptableOptions;
 
   public vendorGridName: any;
 
@@ -260,36 +260,36 @@ export class Adaptable implements IAdaptable {
 
   private _currentEditor: ICellEditor;
 
-  // only for our private / internal events used within the Adaptable Blotter
+  // only for our private / internal events used within the Adaptable adaptable
   // public events are emitted through the EventApi
   _on = (eventName: string, callback: EmitterCallback): (() => void) =>
     this.emitter.on(eventName, callback);
   private _emit = (eventName: string, data?: any): Promise<any> =>
     this.emitter.emit(eventName, data);
 
-  // new static constructor which takes an Adaptable Blotter object and returns the api object
-  // going forward this should be the only way that we instantiate and use the Adaptable Blotter and everything should be accessible via the API
-  public static init(blotterOptions: AdaptableOptions): AdaptableApi {
-    const ab = new Adaptable(blotterOptions);
+  // new static constructor which takes an Adaptable adaptable object and returns the api object
+  // going forward this should be the only way that we instantiate and use the Adaptable adaptable and everything should be accessible via the API
+  public static init(adaptableOptions: AdaptableOptions): AdaptableApi {
+    const ab = new Adaptable(adaptableOptions);
     return ab.api;
   }
 
-  // the 'old' constructor which takes an Adaptable Blotter object
+  // the 'old' constructor which takes an Adaptable adaptable object
   // this is still used internally but should not be used externally as a preference
   constructor(
-    blotterOptions: AdaptableOptions,
+    adaptableOptions: AdaptableOptions,
     renderGrid: boolean = true,
     runtimeConfig?: RuntimeConfig
   ) {
     this.emitter = new Emitter();
 
     this.renderGrid = renderGrid;
-    // we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
-    this.blotterOptions = AdaptableHelper.assignBlotterOptions(blotterOptions);
-    AdaptableHelper.CheckBlotterOptions(this.blotterOptions);
+    // we create the adaptable Options by merging the values provided by the user with the defaults (where no value has been set)
+    this.adaptableOptions = AdaptableHelper.assignadaptableOptions(adaptableOptions);
+    AdaptableHelper.CheckadaptableOptions(this.adaptableOptions);
     this.runtimeConfig = runtimeConfig;
 
-    this.gridOptions = this.blotterOptions!.vendorGrid;
+    this.gridOptions = this.adaptableOptions!.vendorGrid;
     if (this.gridOptions.allowContextMenuWithControlKey === undefined) {
       this.gridOptions.allowContextMenuWithControlKey = true;
     }
@@ -344,10 +344,10 @@ export class Adaptable implements IAdaptable {
       }
     }
 
-    // add our blotter to the grid options api object
-    // this is VERY useful for when we need to access the Blotter inside of agGrid only functions
+    // add our adaptable object to the grid options api object
+    // this is VERY useful for when we need to access Adaptable inside of agGrid only functions
     if (this.gridOptions.api) {
-      (this.gridOptions.api as any).__blotter = this;
+      (this.gridOptions.api as any).__adaptable = this;
     }
 
     // Set up strategies - we set up all the strategies suitable for the vendor grid
@@ -379,10 +379,10 @@ export class Adaptable implements IAdaptable {
         this.api.internalApi.hideLoadingScreen();
       });
 
-    // render the Blotter (not sure why this would ever be false?)
+    // render the adaptable (not sure why this would ever be false?)
     if (renderGrid) {
       if (this.abContainerElement == null) {
-        this.abContainerElement = this.getBlotterContainerElement();
+        this.abContainerElement = this.getadaptableContainerElement();
       }
       if (this.abContainerElement != null) {
         this.abContainerElement.innerHTML = '';
@@ -393,11 +393,11 @@ export class Adaptable implements IAdaptable {
     // create debounce methods that take a time based on user settings
     this.throttleOnDataChangedUser = _.throttle(
       this.applyDataChange,
-      this.blotterOptions!.filterOptions!.filterActionOnUserDataChange.ThrottleDelay
+      this.adaptableOptions!.filterOptions!.filterActionOnUserDataChange.ThrottleDelay
     );
     this.throttleOnDataChangedExternal = _.throttle(
       this.applyDataChange,
-      this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
+      this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
     );
   }
 
@@ -406,7 +406,7 @@ export class Adaptable implements IAdaptable {
     this.AdaptableStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
         // and reset state also?
-        this.api.eventApi.emit('BlotterReady', this.blotterOptions.blotterId);
+        this.api.eventApi.emit('AdaptableReady', this.adaptableOptions.adaptableId);
       }
     });
   }
@@ -424,8 +424,8 @@ export class Adaptable implements IAdaptable {
     // can only do that here as the gridOptions not yet set up
     this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
 
-    // Create Adaptable Blotter Tool Panel
-    if (this.blotterOptions!!.userInterfaceOptions!.showAdaptableToolPanel) {
+    // Create Adaptable adaptable Tool Panel
+    if (this.adaptableOptions!!.userInterfaceOptions!.showAdaptableToolPanel) {
       LoggingHelper.LogAdaptableInfo('Adding Adaptable Tool Panel');
       this.gridOptions.sideBar = this.gridOptions.sideBar || {};
       this.gridOptions.components = this.gridOptions.components || {};
@@ -443,14 +443,14 @@ export class Adaptable implements IAdaptable {
           // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that
           this.gridOptions.sideBar = this.agGridHelper.createAdaptableSideBarDefs(true, false);
         } else {
-          // Possibilty 4: either no sidebar or they created their own; in either case, should add Blotter Tool panel
+          // Possibilty 4: either no sidebar or they created their own; in either case, should add adaptable Tool panel
           const sidebarDef = this.gridOptions.sideBar as SideBarDef;
           if (sidebarDef) {
             sidebarDef.toolPanels = sidebarDef.toolPanels || [];
             sidebarDef.toolPanels.push(this.agGridHelper.createAdaptableToolPanel());
           }
         }
-        const toolpanelContext: AdaptableToolPanelContext = { Blotter: this };
+        const toolpanelContext: AdaptableToolPanelContext = { Adaptable: this };
         this.gridOptions.components.AdaptableToolPanel = AdaptableToolPanelBuilder(
           toolpanelContext
         );
@@ -479,12 +479,12 @@ export class Adaptable implements IAdaptable {
 
   private filterOnUserDataChange(rowNodes: RowNode[]): void {
     if (
-      this.blotterOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
+      this.adaptableOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
     ) {
       this.applyDataChange(rowNodes);
     } else if (
-      this.blotterOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
+      this.adaptableOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
       FilterOnDataChangeOptions.Throttle
     ) {
       this.throttleOnDataChangedUser(rowNodes);
@@ -493,12 +493,12 @@ export class Adaptable implements IAdaptable {
 
   private filterOnExternalDataChange(rowNodes: RowNode[]): void {
     if (
-      this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
+      this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
     ) {
       this.applyDataChange(rowNodes);
     } else if (
-      this.blotterOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
+      this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
       FilterOnDataChangeOptions.Throttle
     ) {
       this.throttleOnDataChangedExternal(rowNodes);
@@ -595,7 +595,7 @@ export class Adaptable implements IAdaptable {
       .forEach(col => {
         this.setColumnVisible(this.gridOptions.columnApi, col, false, 'api');
       });
-    // we need to do this to make sure agGrid and Blotter column collections are in sync
+    // we need to do this to make sure agGrid and adaptable column collections are in sync
     this.setColumnIntoStore();
   }
 
@@ -641,7 +641,7 @@ export class Adaptable implements IAdaptable {
   private applyStylingToColumn(vendorColumn: Column, abColumn: AdaptableColumn): void {
     if (
       vendorColumn.getColDef().filter &&
-      this.blotterOptions!.filterOptions.useAdaptableBlotterFilterForm
+      this.adaptableOptions!.filterOptions.useAdaptableFilterForm
     ) {
       this.createFilterWrapper(vendorColumn);
     }
@@ -689,12 +689,12 @@ export class Adaptable implements IAdaptable {
   }
 
   private addQuickSearchStyleToColumn(col: AdaptableColumn, quickSearchClassName: string): void {
-    const blotter = this;
+    const adaptable = this;
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
       if (params.node && !params.node.group) {
         const columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
-        const quickSearchState = blotter.api.quickSearchApi.getQuickSearchState();
+        const quickSearchState = adaptable.api.quickSearchApi.getQuickSearchState();
         if (
           StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText) &&
           (quickSearchState.DisplayAction == DisplayAction.HighlightCell ||
@@ -718,7 +718,7 @@ export class Adaptable implements IAdaptable {
                   expression,
                   params.node,
                   [col],
-                  blotter
+                  adaptable
                 )
               ) {
                 return true;
@@ -748,7 +748,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public getPrimaryKeyValueFromRowNode(rowNode: RowNode): any {
-    return this.gridOptions.api!.getValue(this.blotterOptions!.primaryKey, rowNode);
+    return this.gridOptions.api!.getValue(this.adaptableOptions!.primaryKey, rowNode);
   }
 
   public gridHasCurrentEditValue(): boolean {
@@ -785,9 +785,9 @@ export class Adaptable implements IAdaptable {
 
   public saveGridLayout() {
     if (
-      this.blotterOptions!.layoutOptions != null &&
-      this.blotterOptions!.layoutOptions.includeVendorStateInLayouts != null &&
-      this.blotterOptions!.layoutOptions.includeVendorStateInLayouts
+      this.adaptableOptions!.layoutOptions != null &&
+      this.adaptableOptions!.layoutOptions.includeVendorStateInLayouts != null &&
+      this.adaptableOptions!.layoutOptions.includeVendorStateInLayouts
     ) {
       this.LayoutService.autoSaveLayout();
     }
@@ -1005,7 +1005,7 @@ export class Adaptable implements IAdaptable {
     }
     return Array.from(returnMap.values()).slice(
       0,
-      this.blotterOptions!.queryOptions.maxColumnValueItemsDisplayed
+      this.adaptableOptions!.queryOptions.maxColumnValueItemsDisplayed
     );
   }
 
@@ -1060,7 +1060,7 @@ export class Adaptable implements IAdaptable {
       });
     }
 
-    return returnArray.slice(0, this.blotterOptions!.queryOptions.maxColumnValueItemsDisplayed);
+    return returnArray.slice(0, this.adaptableOptions!.queryOptions.maxColumnValueItemsDisplayed);
   }
 
   private addDistinctColumnValue(
@@ -1653,7 +1653,7 @@ export class Adaptable implements IAdaptable {
   // need to destroy more than just this...
   // TODO;  manage destruction properly
   destroy() {
-    const abContainerElement = this.getBlotterContainerElement();
+    const abContainerElement = this.getadaptableContainerElement();
     if (abContainerElement != null) {
       ReactDOM.unmountComponentAtNode(abContainerElement);
     }
@@ -1720,10 +1720,10 @@ export class Adaptable implements IAdaptable {
     };
   }
 
-  private getBlotterContainerElement(): HTMLElement | null {
+  private getadaptableContainerElement(): HTMLElement | null {
     if (!this.abContainerElement) {
       this.abContainerElement = document.getElementById(
-        this.blotterOptions!.containerOptions.adaptableBlotterContainer
+        this.adaptableOptions!.containerOptions.adaptableContainer
       );
     }
     return this.abContainerElement;
@@ -1732,7 +1732,7 @@ export class Adaptable implements IAdaptable {
   private getGridContainerElement(): HTMLElement | null {
     if (!this.gridContainerElement) {
       this.gridContainerElement = document.getElementById(
-        this.blotterOptions!.containerOptions.vendorContainer
+        this.adaptableOptions!.containerOptions.vendorContainer
       );
     }
     return this.gridContainerElement;
@@ -1741,13 +1741,13 @@ export class Adaptable implements IAdaptable {
   private initInternalGridLogic() {
     if (this.renderGrid) {
       if (this.abContainerElement == null) {
-        this.abContainerElement = this.getBlotterContainerElement();
+        this.abContainerElement = this.getadaptableContainerElement();
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableError(
           `There is no DIV with id="${
-            this.blotterOptions!.containerOptions.adaptableBlotterContainer
-          }" so cannot render the Adaptable Blotter`
+            this.adaptableOptions!.containerOptions.adaptableContainer
+          }" so cannot render the Adaptable adaptable`
         );
         return;
       }
@@ -1794,7 +1794,7 @@ export class Adaptable implements IAdaptable {
         this.debouncedFilterGrid();
       }
     });
-    // dealing with scenario where the data is poured into the blotter after grid has been setup
+    // dealing with scenario where the data is providee to adaptable after grid has been setup
     this.gridOptions.api!.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, () => {
       this.debouncedSetColumnIntoStore();
     });
@@ -1812,7 +1812,7 @@ export class Adaptable implements IAdaptable {
           params.columnApi.columnController != null &&
           params.columnApi.columnController.pivotMode == true
         ) {
-          if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
+          if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
             this.gridOptions.columnApi!.autoSizeAllColumns();
           }
 
@@ -1829,7 +1829,7 @@ export class Adaptable implements IAdaptable {
         params.columnApi.columnController != null &&
         params.columnApi.columnController.pivotMode == true
       ) {
-        if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
+        if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInPivotLayout == true) {
           this.gridOptions.columnApi!.autoSizeAllColumns();
         }
       }
@@ -1917,7 +1917,7 @@ export class Adaptable implements IAdaptable {
           return whatToReturn;
         };
 
-        const isCancelAfterEnd = this.blotterOptions.editOptions.validateOnServer
+        const isCancelAfterEnd = this.adaptableOptions.editOptions.validateOnServer
           ? this.ValidationService.PerformServerValidation(dataChangedInfo, {
               onServerValidationCompleted,
             })
@@ -2029,7 +2029,7 @@ export class Adaptable implements IAdaptable {
           if (colId) {
             // 24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             // so we manually raise.
-            // https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
+            // https://github.com/JonnyAdaptableTools/adaptableadaptable/issues/118
             const refreshColumnList: string[] = [colId];
             const columnList = this.calculatedColumnPathMap.get(colId);
             if (columnList) {
@@ -2108,7 +2108,7 @@ export class Adaptable implements IAdaptable {
       const columns = this.api.gridApi.getColumns();
 
       // first we assess AdvancedSearch (if its running locally)
-      if (this.blotterOptions!.generalOptions!.serverSearchOption == 'None') {
+      if (this.adaptableOptions!.generalOptions!.serverSearchOption == 'None') {
         const currentSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
         if (currentSearch) {
           // See if our rowNode passes the Expression - using Expression Helper; if not then return false
@@ -2232,7 +2232,7 @@ export class Adaptable implements IAdaptable {
         primaryKeyValue: undefined,
       };
 
-      let showAdaptableColumnMenu = this.blotterOptions.userInterfaceOptions!
+      let showAdaptableColumnMenu = this.adaptableOptions.userInterfaceOptions!
         .showAdaptableColumnMenu;
 
       if (showAdaptableColumnMenu == null || showAdaptableColumnMenu !== false) {
@@ -2303,10 +2303,10 @@ export class Adaptable implements IAdaptable {
               }
             });
 
-            // here we create Adaptable Blotter Menu items from OUR internal collection
+            // here we create Adaptable adaptable Menu items from OUR internal collection
             // user has ability to decide whether to show or not
             if (ArrayExtensions.IsNotNullOrEmpty(AdaptableMenuItems)) {
-              let showAdaptableContextMenu = this.blotterOptions.userInterfaceOptions!
+              let showAdaptableContextMenu = this.adaptableOptions.userInterfaceOptions!
                 .showAdaptableContextMenu;
               if (showAdaptableContextMenu == null || showAdaptableContextMenu !== false) {
                 contextMenuItems.push('separator');
@@ -2368,10 +2368,10 @@ export class Adaptable implements IAdaptable {
         }
       }
     }
-    // if grid is initialised then emit the Blotter Ready event so we can re-apply any styles
+    // if grid is initialised then emit the adaptable Ready event so we can re-apply any styles
     // and re-apply any specially rendered columns
     if (this.isInitialised) {
-      this.api.eventApi.emit('BlotterReady');
+      this.api.eventApi.emit('AdaptableReady');
       this.addSpecialRendereredColumns();
     }
   }
@@ -2399,7 +2399,7 @@ export class Adaptable implements IAdaptable {
     if (renderedColumn) {
       const cellRendererComp: any = this.agGridHelper.createSparklineCellRendererComp(
         sparklineColumn,
-        this.blotterOptions!.blotterId!
+        this.adaptableOptions!.adaptableId!
       );
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
         sparklineColumn.ColumnId
@@ -2423,7 +2423,7 @@ export class Adaptable implements IAdaptable {
     if (renderedColumn) {
       const cellRendererFunc: ICellRendererFunc = this.agGridHelper.createPercentBarCellRendererFunc(
         pcr,
-        this.blotterOptions!.blotterId!
+        this.adaptableOptions!.adaptableId!
       );
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       const colDef: ColDef = vendorGridColumn.getColDef();
@@ -2502,7 +2502,7 @@ export class Adaptable implements IAdaptable {
 
         // we cannot check here for cell validation as it will be too late
         // so we have to hope that its been done already - though currently we ONLY do it for direct edits and setCellValue() but not other api updates
-        // if we have gone through the Blotter API we will be fine but not if they update ag-Grid directly
+        // if we have gone through the adaptable API we will be fine but not if they update ag-Grid directly
         // but we can perform the POST EDIT checks
         this.performPostEditChecks(dataChangedInfo);
       }
@@ -2722,9 +2722,9 @@ export class Adaptable implements IAdaptable {
 
   public getVendorGridLayoutInfo(visibleCols: string[]): VendorGridInfo {
     if (
-      this.blotterOptions!.layoutOptions != null &&
-      this.blotterOptions!.layoutOptions.includeVendorStateInLayouts != null &&
-      this.blotterOptions!.layoutOptions.includeVendorStateInLayouts
+      this.adaptableOptions!.layoutOptions != null &&
+      this.adaptableOptions!.layoutOptions.includeVendorStateInLayouts != null &&
+      this.adaptableOptions!.layoutOptions.includeVendorStateInLayouts
     ) {
       let groupedState: any = null;
       const displayedColumns: Column[] = this.gridOptions.columnApi!.getAllDisplayedColumns();
@@ -2803,7 +2803,7 @@ export class Adaptable implements IAdaptable {
       this.gridOptions.columnApi.setRowGroupColumns([]);
     }
 
-    if (this.blotterOptions!.layoutOptions!.autoSizeColumnsInLayout == true) {
+    if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout == true) {
       this.gridOptions.columnApi!.autoSizeAllColumns();
     }
   }
@@ -2874,12 +2874,12 @@ export class Adaptable implements IAdaptable {
   private isQuickFilterActive(): boolean {
     return (
       this.gridOptions.floatingFilter === true &&
-      this.blotterOptions!.filterOptions.useAdaptableBlotterQuickFilter
+      this.adaptableOptions!.filterOptions.useAdaptableQuickFilter
     );
   }
 
   public showQuickFilter(): void {
-    if (this.blotterOptions!.filterOptions!.useAdaptableBlotterQuickFilter) {
+    if (this.adaptableOptions!.filterOptions!.useAdaptableQuickFilter) {
       this.gridOptions.floatingFilter = true;
       this.gridOptions.columnApi!.getAllGridColumns().forEach(col => {
         this.createQuickFilterWrapper(col);
@@ -2889,13 +2889,13 @@ export class Adaptable implements IAdaptable {
   }
 
   public hideQuickFilter(): void {
-    if (this.blotterOptions!.filterOptions!.useAdaptableBlotterQuickFilter) {
+    if (this.adaptableOptions!.filterOptions!.useAdaptableQuickFilter) {
       this.gridOptions.floatingFilter = false;
       this.gridOptions.api!.refreshHeader();
     }
   }
 
-  public applyBlotterTheme(theme: AdaptableTheme | string) {
+  public applyAdaptableTheme(theme: AdaptableTheme | string) {
     const themeName: string = typeof theme === 'string' ? theme : theme.Name;
 
     const themeNamesToRemove: string[] = [];
@@ -2974,7 +2974,7 @@ export class Adaptable implements IAdaptable {
 
       container.classList.add('ab-Grid');
 
-      if (this.blotterOptions!.filterOptions!.indicateFilteredColumns) {
+      if (this.adaptableOptions!.filterOptions!.indicateFilteredColumns) {
         container.classList.add('ab-Grid--indicate-filtered-columns');
       }
     }
@@ -2994,7 +2994,7 @@ export class Adaptable implements IAdaptable {
 
     if (abLoaded !== '777') {
       LoggingHelper.LogError(
-        'Please import the Adaptable styles from "adaptableblotter/index.css"'
+        'Please import the Adaptable styles from "adaptableadaptable/index.css"'
       );
     }
 
@@ -3004,7 +3004,7 @@ export class Adaptable implements IAdaptable {
 
 If it's a default theme, try
 
-import "adaptableblotter/themes/${themeName}.css"`);
+import "adaptableadaptable/themes/${themeName}.css"`);
     }
   }
 
@@ -3076,7 +3076,7 @@ import "adaptableblotter/themes/${themeName}.css"`);
   }
 
   private getGeneralOptions(): GeneralOptions {
-    return this.blotterOptions!.generalOptions!;
+    return this.adaptableOptions!.generalOptions!;
   }
 
   // A couple of state management functions
@@ -3085,8 +3085,8 @@ import "adaptableblotter/themes/${themeName}.css"`);
   }
 }
 
-//export const init = (blotterOptions: AdaptableOptions): AdaptableApi =>
-//  Adaptable.init(blotterOptions);
+//export const init = (adaptableOptions: AdaptableOptions): AdaptableApi =>
+//  Adaptable.init(adaptableOptions);
 
 export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
   private init: IAdaptableNoCodeWizardInitFn;
@@ -3115,12 +3115,11 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
   }
 
   render(container?: HTMLElement | null) {
-    let id: string =
-      DefaultAdaptableOptions.containerOptions!.adaptableBlotterContainer || 'adaptableBlotter';
+    let id: string = DefaultAdaptableOptions.containerOptions!.adaptableContainer || 'adaptable';
 
     if (!container) {
       if (this.adaptableOptions.containerOptions) {
-        id = this.adaptableOptions.containerOptions.adaptableBlotterContainer || 'adaptableBlotter';
+        id = this.adaptableOptions.containerOptions.adaptableContainer || 'adaptable';
       }
     }
 
@@ -3135,16 +3134,16 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
         adaptableOptions: this.adaptableOptions,
         ...this.extraOptions,
         onInit: (adaptableOptions: AdaptableOptions) => {
-          let adaptableBlotter: IAdaptable | void;
+          let adaptable: IAdaptable | void;
 
           ReactDOM.unmountComponentAtNode(container!);
 
-          adaptableBlotter = this.init({
+          adaptable = this.init({
             adaptableOptions,
             gridOptions: adaptableOptions.vendorGrid,
           });
 
-          adaptableBlotter = adaptableBlotter || new Adaptable(adaptableOptions);
+          adaptable = adaptable || new Adaptable(adaptableOptions);
         },
       }),
       container

@@ -1,7 +1,7 @@
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 
 /**
- * Options for managing the User Interface Adaptable Blotter.
+ * Options for managing the User Interface Adaptable.
  *
  * Includes options for themes, menus, tool panels etc.
  *
@@ -33,7 +33,7 @@ export interface UserInterfaceOptions {
   showAdaptableToolPanel?: boolean;
 
   /**
-   * Whether or not to show the Adaptable Blotter specific Context Menu items.
+   * Whether or not to show the Adaptable specific Context Menu items.
    *
    * Can either be a boolean value or a function that will be called for every context menu item the Blotter provides.
    *
@@ -50,7 +50,7 @@ export interface UserInterfaceOptions {
     | ((menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => boolean);
 
   /**
-   * Whether or not to show the Adaptable Blotter specific Column Menu items.
+   * Whether or not to show the Adaptable specific Column Menu items.
    *
    * Can either be a boolean value or a function that will be called for every context menu item the Blotter provides.
    *

@@ -9,7 +9,7 @@ import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
-export let FilterWrapperFactory = (blotter: Adaptable) => {
+export let FilterWrapperFactory = (adaptable: Adaptable) => {
   return <any>class FilterWrapper implements IFilterComp {
     private params: IFilterParams;
     private filterContainer: HTMLDivElement;
@@ -19,12 +19,12 @@ export let FilterWrapperFactory = (blotter: Adaptable) => {
       this.column = params.column;
       this.filterContainer = document.createElement('div');
       this.filterContainer.id =
-        'filter_' + this.params.column.getColId() + '_' + blotter.blotterOptions.blotterId;
+        'filter_' + this.params.column.getColId() + '_' + adaptable.adaptableOptions.adaptableId;
     }
     isFilterActive() {
       //make the small filter icon to appear when there is a filter
       return (
-        blotter.api.columnFilterApi
+        adaptable.api.columnFilterApi
           .getAllColumnFilter()
           .findIndex(x => x.ColumnId == this.params.column.getColId()) > -1
       );
@@ -50,14 +50,14 @@ export let FilterWrapperFactory = (blotter: Adaptable) => {
       ReactDOM.unmountComponentAtNode(this.filterContainer);
       let column: AdaptableColumn = ColumnHelper.getColumnFromId(
         this.column.getColId(),
-        blotter.api.gridApi.getColumns()
+        adaptable.api.gridApi.getColumns()
       );
       let filterContext: IColumnFilterContext = {
         Column: column,
-        Blotter: blotter,
+        Adaptable: adaptable,
         ShowCloseButton: params != null && params.hidePopup != null,
       };
-      blotter.hideFilterFormPopup = params ? params.hidePopup : null;
+      adaptable.hideFilterFormPopup = params ? params.hidePopup : null;
 
       ReactDOM.render(
         React.createElement(ThemeProvider, { theme }, FilterFormReact(filterContext)),

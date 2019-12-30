@@ -2,7 +2,7 @@ import { SmartEditState } from '../PredefinedConfig/SmartEditState';
 
 export interface SmartEditApi {
   /**
-   * Retrieves the Smart Edit section from the Adaptable Blotter State
+   * Retrieves the Smart Edit section from the Adaptable State
    */
   getSmartEditState(): SmartEditState;
 

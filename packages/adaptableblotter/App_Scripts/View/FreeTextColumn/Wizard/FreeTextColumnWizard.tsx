@@ -16,7 +16,7 @@ export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardPr
         <AdaptableWizard
           FriendlyName={StrategyConstants.FreeTextColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

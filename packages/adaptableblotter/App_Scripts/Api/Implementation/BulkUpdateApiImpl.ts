@@ -6,7 +6,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class BulkUpdateApiImpl extends ApiBase implements BulkUpdateApi {
   public getBulkUpdateState(): BulkUpdateState {
-    return this.getBlotterState().BulkUpdate;
+    return this.getAdaptableState().BulkUpdate;
   }
 
   public getBulkUpdateValue(): string {
@@ -14,7 +14,7 @@ export class BulkUpdateApiImpl extends ApiBase implements BulkUpdateApi {
   }
 
   public showBulkUpdatePopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.BulkUpdateStrategyId,
       ScreenPopups.BulkUpdatePopup
     );

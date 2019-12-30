@@ -12,7 +12,7 @@ import Helper from '../../Utilities/Helpers/Helper';
 
 export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
   public getSystemStatusState(): SystemStatusState {
-    return this.getBlotterState().SystemStatus;
+    return this.getAdaptableState().SystemStatus;
   }
 
   public setSystemStatus(
@@ -21,7 +21,7 @@ export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
     statusFurtherInformation?: string
   ): void {
     if (StringExtensions.IsNullOrEmpty(statusMessage)) {
-      if (this.blotter.isInitialised) {
+      if (this.adaptable.isInitialised) {
         LoggingHelper.LogAdaptableWarning('System Status Message cannot be empty.');
       }
       return;
@@ -44,16 +44,16 @@ export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
         }
         switch (messageType) {
           case MessageType.Success:
-            this.blotter.api.alertApi.showAlertSuccess('System Status Success', fullMessage);
+            this.adaptable.api.alertApi.showAlertSuccess('System Status Success', fullMessage);
             return;
           case MessageType.Info:
-            this.blotter.api.alertApi.showAlertInfo('System Status Info', fullMessage);
+            this.adaptable.api.alertApi.showAlertInfo('System Status Info', fullMessage);
             return;
           case MessageType.Warning:
-            this.blotter.api.alertApi.showAlertWarning('System Status Warning', fullMessage);
+            this.adaptable.api.alertApi.showAlertWarning('System Status Warning', fullMessage);
             return;
           case MessageType.Error:
-            this.blotter.api.alertApi.showAlertError('System Status Error', fullMessage);
+            this.adaptable.api.alertApi.showAlertError('System Status Error', fullMessage);
             return;
         }
       }
@@ -94,7 +94,7 @@ export class SystemStatusApiImpl extends ApiBase implements SystemStatusApi {
   }
 
   public showSystemStatusPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.SystemStatusStrategyId,
       ScreenPopups.SystemStatusPopup
     );

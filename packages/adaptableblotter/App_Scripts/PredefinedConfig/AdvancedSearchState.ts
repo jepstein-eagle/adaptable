@@ -85,7 +85,7 @@ export interface AdvancedSearchState extends RunTimeState {
   /**
    * The name of the Advanced Search which will be in use when the Blotter starts.
    *
-   * It will be the selected value in the Advanced Search Toolbar and the Adaptable Blotter will apply it automatically.
+   * It will be the selected value in the Advanced Search Toolbar and the Adaptable will apply it automatically.
    *
    * **Make sure that the value appears in the name property of one of the Advanced Searches that you provide**
    *

@@ -132,7 +132,7 @@ class SparklineColumnPopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as SparklineColumn}
               ConfigEntities={null}
               ColorPalette={this.props.ColorPalette}
-              Blotter={this.props.Blotter}
+              Adaptable={this.props.Adaptable}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
               UserFilters={this.props.UserFilters}

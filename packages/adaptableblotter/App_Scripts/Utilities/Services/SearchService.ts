@@ -16,7 +16,7 @@ import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import {
   BlotterSearchState,
@@ -26,13 +26,13 @@ import {
 import { SearchChangedEventArgs } from '../../types';
 
 export class SearchService implements ISearchService {
-  private blotter: IAdaptable;
+  private adaptable: IAdaptable;
 
-  constructor(blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(adaptable: IAdaptable) {
+    this.adaptable = adaptable;
 
-    this.blotter.AdaptableStore.onAny((eventName: string) => {
-      if (this.blotter.isInitialised) {
+    this.adaptable.AdaptableStore.onAny((eventName: string) => {
+      if (this.adaptable.isInitialised) {
         if (
           eventName == AdvancedSearchRedux.ADVANCED_SEARCH_ADD ||
           eventName == AdvancedSearchRedux.ADVANCED_SEARCH_EDIT ||
@@ -47,7 +47,7 @@ export class SearchService implements ISearchService {
           eventName == ColumnFilterRedux.COLUMN_FILTER_CLEAR_ALL ||
           eventName == ColumnFilterRedux.COLUMN_FILTER_CLEAR
         ) {
-          setTimeout(() => this.blotter.applyGridFiltering(), 5);
+          setTimeout(() => this.adaptable.applyGridFiltering(), 5);
           this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
         } else if (
           eventName == DataSourceRedux.DATA_SOURCE_SELECT ||
@@ -63,16 +63,16 @@ export class SearchService implements ISearchService {
         ) {
           // if not highlighting cell then lets tell quick search strategy to create a range
           if (
-            this.blotter.api.quickSearchApi.getQuickSearchDisplayAction() !=
+            this.adaptable.api.quickSearchApi.getQuickSearchDisplayAction() !=
             DisplayAction.HighlightCell
           ) {
-            const quickSearchStrategy = this.blotter.strategies.get(
+            const quickSearchStrategy = this.adaptable.strategies.get(
               StrategyConstants.QuickSearchStrategyId
             ) as IQuickSearchStrategy;
             quickSearchStrategy.createQuickSearchRange();
           }
-          this.blotter.applyGridFiltering();
-          this.blotter.redraw();
+          this.adaptable.applyGridFiltering();
+          this.adaptable.redraw();
           this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
         } else if (
           eventName == UserFilterRedux.USER_FILTER_ADD ||
@@ -80,7 +80,7 @@ export class SearchService implements ISearchService {
           eventName == UserFilterRedux.USER_FILTER_DELETE ||
           eventName == UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER
         ) {
-          setTimeout(() => this.blotter.applyGridFiltering(), 5);
+          setTimeout(() => this.adaptable.applyGridFiltering(), 5);
           this.publishSearchChanged(SearchChangedTrigger.UserFilter);
         } else if (eventName == GridRedux.GRID_SET_SORT) {
           this.publishSearchChanged(SearchChangedTrigger.Sort);
@@ -95,23 +95,23 @@ export class SearchService implements ISearchService {
    * @param searchChangedTrigger function that triggered the event
    */
   publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
-    if (this.blotter.isInitialised) {
-      const currentDataSource: DataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
+    if (this.adaptable.isInitialised) {
+      const currentDataSource: DataSource = this.adaptable.api.dataSourceApi.getCurrentDataSource();
       const currentAdvancedSearch:
         | AdvancedSearch
-        | undefined = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
+        | undefined = this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch();
 
       // lets get the searchstate
       const blotterSearchState: BlotterSearchState = {
         dataSource: currentDataSource == null ? undefined : currentDataSource,
         advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
-        quickSearch: this.blotter.api.quickSearchApi.getQuickSearchValue(),
-        columnFilters: this.blotter.api.columnFilterApi.getAllColumnFilter(),
+        quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
+        columnFilters: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
       };
 
       const blotterSortState: BlotterSortState = {
-        columnSorts: this.blotter.api.gridApi.getColumnSorts(),
-        customSorts: this.blotter.api.customSortApi.getAllCustomSort(),
+        columnSorts: this.adaptable.api.gridApi.getColumnSorts(),
+        customSorts: this.adaptable.api.customSortApi.getAllCustomSort(),
       };
 
       const searchChangedInfo: SearchChangedInfo = {
@@ -126,7 +126,7 @@ export class SearchService implements ISearchService {
         searchChangedInfo
       );
 
-      this.blotter.api.eventApi.emit('SearchChanged', searchChangedArgs);
+      this.adaptable.api.eventApi.emit('SearchChanged', searchChangedArgs);
     }
   }
 }

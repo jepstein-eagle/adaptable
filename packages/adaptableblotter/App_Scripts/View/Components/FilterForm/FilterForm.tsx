@@ -30,7 +30,7 @@ import { Waiting } from './Waiting';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxMenu } from './ListBoxMenu';
 
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { FilterFormPanel } from '../Panels/FilterFormPanel';
 import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
@@ -44,7 +44,7 @@ import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: AdaptableColumn;
-  Blotter: IAdaptable;
+  Adaptable: IAdaptable;
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
@@ -111,14 +111,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         );
       }
 
-      if (this.props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
+      if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
         this.setState({ ShowWaitingMessage: true });
-        this.props.Blotter.blotterOptions.queryOptions
+        this.props.Adaptable.adaptableOptions.queryOptions
           .getColumnValues(this.props.CurrentColumn.ColumnId)
           .then(result => {
             if (result == null) {
               // if nothing returned then default to normal
-              columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+              columnValuePairs = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
                 this.props.CurrentColumn.ColumnId,
                 DistinctCriteriaPairValue.DisplayValue,
                 false
@@ -138,12 +138,12 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
               // get the distinct items and make sure within max items that can be displayed
               let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
                 0,
-                this.props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
+                this.props.Adaptable.adaptableOptions.queryOptions.maxColumnValueItemsDisplayed
               );
               distinctItems.forEach(distinctItem => {
                 let displayValue =
                   result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue
-                    ? this.props.Blotter.getDisplayValueFromRawValue(
+                    ? this.props.Adaptable.getDisplayValueFromRawValue(
                         this.props.CurrentColumn.ColumnId,
                         distinctItem
                       )
@@ -161,14 +161,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 editedColumnFilter: existingColumnFilter,
               });
               // set the UIPermittedValues for this column to what has been sent
-              this.props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
+              this.props.Adaptable.api.userInterfaceApi.setColumnPermittedValues(
                 this.props.CurrentColumn.ColumnId,
                 distinctItems
               );
             }
           });
       } else {
-        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+        columnValuePairs = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
           this.props.CurrentColumn.ColumnId,
           DistinctCriteriaPairValue.DisplayValue,
           false
@@ -192,24 +192,24 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     let isFilterable: string = this.isFilterable();
 
     // get user filter expressions appropriate for this column
-    let appropriateFilters: string[] = this.props.Blotter.FilterService.GetUserFiltersForColumn(
+    let appropriateFilters: string[] = this.props.Adaptable.FilterService.GetUserFiltersForColumn(
       this.props.CurrentColumn,
       this.props.UserFilters
     )
       .map(uf => uf.Name)
       .concat(
-        this.props.Blotter.FilterService.GetNamedFiltersForColumn(
+        this.props.Adaptable.FilterService.GetNamedFiltersForColumn(
           this.props.CurrentColumn,
           this.props.NamedFilters,
           this.props.ColumnCategories
         ).map(nf => nf.Name)
       )
       .concat(
-        this.props.Blotter.FilterService.GetSystemFiltersForColumn(
+        this.props.Adaptable.FilterService.GetSystemFiltersForColumn(
           this.props.CurrentColumn,
           this.props.SystemFilters
         ).map(sf => sf)
-      ); //.filter(u => this.props.Blotter.FilterService.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
+      ); //.filter(u => this.props.Adaptable.FilterService.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
 
     let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map(uf => {
       return { RawValue: uf, DisplayValue: uf };
@@ -283,7 +283,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       ></ButtonSave>
     );
 
-    const useVendorStyle = !!this.props.Blotter.blotterOptions.filterOptions!
+    const useVendorStyle = !!this.props.Adaptable.adaptableOptions.filterOptions!
       .useVendorFilterFormStyle;
 
     return (
@@ -299,7 +299,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             closeButton={closeButton}
             showCloseButton={this.props.ShowCloseButton}
             autoApplyFilter={
-              this.props.Blotter.blotterOptions.filterOptions!.autoApplyFilter ? true : false
+              this.props.Adaptable.adaptableOptions.filterOptions!.autoApplyFilter ? true : false
             }
             useVendorStyle={useVendorStyle}
             applyFilterButtonDisabled={ExpressionHelper.IsEmptyExpression(
@@ -469,7 +469,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     ) {
       this.props.onClearColumnFilter(columnFilter);
     } else {
-      if (this.props.Blotter.blotterOptions!.filterOptions!.autoApplyFilter) {
+      if (this.props.Adaptable.adaptableOptions!.filterOptions!.autoApplyFilter) {
         this.props.onSetColumnFilter(columnFilter);
       }
     }
@@ -511,7 +511,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CurrentColumn: ownProps.CurrentColumn,
-    Blotter: ownProps.Blotter,
+    Adaptable: ownProps.Adaptable,
     Columns: state.Grid.Columns,
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     UserFilters: state.UserFilter.UserFilters,
@@ -544,13 +544,13 @@ export let FilterForm = connect(
 )(FilterFormComponent);
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Blotter.AdaptableStore.TheStore}>
+  <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <FilterForm
-        Blotter={FilterContext.Blotter}
+        Adaptable={FilterContext.Adaptable}
         CurrentColumn={FilterContext.Column}
         TeamSharingActivated={false}
-        EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
+        EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
         ShowCloseButton={FilterContext.ShowCloseButton}
       />
     </ThemeProvider>

@@ -110,7 +110,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             ColumnCategories={this.props.ColumnCategories}
             ColorPalette={this.props.ColorPalette}
             StyleClassNames={this.props.StyleClassNames}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

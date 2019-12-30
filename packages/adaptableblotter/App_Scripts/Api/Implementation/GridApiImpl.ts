@@ -7,29 +7,29 @@ import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCe
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AdaptableOptions } from '../../types';
 
 export class GridApiImpl extends ApiBase implements GridApi {
   public getGridState(): GridState {
-    return this.getBlotterState().Grid;
+    return this.getAdaptableState().Grid;
   }
 
   public setGridData(dataSource: any): void {
-    this.blotter.setDataSource(dataSource);
+    this.adaptable.setDataSource(dataSource);
   }
 
   public updateGridData(dataRows: any[]): void {
-    this.blotter.updateRows(dataRows);
+    this.adaptable.updateRows(dataRows);
   }
 
   public addGridData(dataRows: any[]): void {
-    this.blotter.addRows(dataRows);
+    this.adaptable.addRows(dataRows);
   }
 
   public deleteGridData(dataRows: any[]): void {
     if (this.checkArrayExists(dataRows)) {
-      this.blotter.deleteRows(dataRows);
+      this.adaptable.deleteRows(dataRows);
     }
   }
 
@@ -55,17 +55,17 @@ export class GridApiImpl extends ApiBase implements GridApi {
   ): void {
     let dataChangedInfo: DataChangedInfo = this.createDataChangedInfoFromGridCell(gridCell);
     if (validateChange) {
-      if (!this.blotter.ValidationService.PerformCellValidation(dataChangedInfo)) {
+      if (!this.adaptable.ValidationService.PerformCellValidation(dataChangedInfo)) {
         return;
       }
     }
 
     const onServerValidationCompleted = () => {
-      this.blotter.setValue(dataChangedInfo, reselectSelectedCells);
+      this.adaptable.setValue(dataChangedInfo, reselectSelectedCells);
     };
 
-    const mimicPromise = this.blotter.blotterOptions.editOptions!.validateOnServer
-      ? this.blotter.ValidationService.PerformServerValidation(dataChangedInfo, {
+    const mimicPromise = this.adaptable.adaptableOptions.editOptions!.validateOnServer
+      ? this.adaptable.ValidationService.PerformServerValidation(dataChangedInfo, {
           onServerValidationCompleted,
         })
       : onServerValidationCompleted;
@@ -74,8 +74,8 @@ export class GridApiImpl extends ApiBase implements GridApi {
   }
 
   private createDataChangedInfoFromGridCell(gridCell: GridCell): DataChangedInfo {
-    let currentValue = this.blotter.getDisplayValue(gridCell.primaryKeyValue, gridCell.columnId);
-    let currentRowNode = this.blotter.getRowNodeForPrimaryKey(gridCell.primaryKeyValue);
+    let currentValue = this.adaptable.getDisplayValue(gridCell.primaryKeyValue, gridCell.columnId);
+    let currentRowNode = this.adaptable.getRowNodeForPrimaryKey(gridCell.primaryKeyValue);
     let dataChangedInfo: DataChangedInfo = {
       OldValue: currentValue,
       NewValue: gridCell.value,
@@ -147,19 +147,19 @@ export class GridApiImpl extends ApiBase implements GridApi {
   }
 
   public getCellDisplayValue(primaryKeyValue: any, columnId: string): string {
-    return this.blotter.getDisplayValue(primaryKeyValue, columnId);
+    return this.adaptable.getDisplayValue(primaryKeyValue, columnId);
   }
 
   public hideFilterForm(): void {
-    this.blotter.hideFilterForm();
+    this.adaptable.hideFilterForm();
   }
 
   public applyGridFiltering(): void {
-    this.blotter.applyGridFiltering();
+    this.adaptable.applyGridFiltering();
   }
 
   public clearGridFiltering(): void {
-    this.blotter.clearGridFiltering();
+    this.adaptable.clearGridFiltering();
   }
 
   public getColumnSorts(): ColumnSort[] {
@@ -167,10 +167,10 @@ export class GridApiImpl extends ApiBase implements GridApi {
   }
 
   public getVendorGrid(): any {
-    return this.blotter.blotterOptions.vendorGrid;
+    return this.adaptable.adaptableOptions.vendorGrid;
   }
 
-  public getBlotterOptions(): AdaptableOptions {
-    return this.blotter.blotterOptions;
+  public getadaptableOptions(): AdaptableOptions {
+    return this.adaptable.adaptableOptions;
   }
 }

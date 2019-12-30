@@ -13,7 +13,7 @@ import { AdaptableOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsFTSE(50);
   const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsFtse(
@@ -29,7 +29,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

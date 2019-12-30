@@ -68,7 +68,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     const toolbarsGlyph: any = <Icon name={'align-justify'} />;
 
     // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
-    let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
+    let strategyKeys: string[] = [...this.props.Adaptable.strategies.keys()];
     let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
@@ -266,7 +266,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     let toolbarTitle = this.props.DashboardState.HomeToolbarTitle;
     if (StringExtensions.IsNullOrEmpty(toolbarTitle)) {
-      toolbarTitle = this.props.Blotter.blotterOptions.blotterId;
+      toolbarTitle = this.props.Adaptable.adaptableOptions.adaptableId;
       if (toolbarTitle == GeneralConstants.USER_NAME) {
         toolbarTitle = 'Blotter ';
       }
@@ -304,7 +304,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   onShowSystemStatus() {
-    this.props.Blotter.api.systemStatusApi.showSystemStatusPopup();
+    this.props.Adaptable.api.systemStatusApi.showSystemStatusPopup();
   }
 
   onClickGridInfo() {

@@ -8,7 +8,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * You are able, optionally, to specify for each row, if and how the button will render.
  *
- * When the button is clicked, the Adaptable Blotter fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
+ * When the button is clicked, the Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
  *
  * **Further Resources**
  *
@@ -56,7 +56,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  */
 export interface ActionColumnState extends DesignTimeState {
   /**
-   * An array of `ActionColumn` which the Adaptable Blotter will dynamically render.
+   * An array of `ActionColumn` which the Adaptable will dynamically render.
    */
   ActionColumns?: ActionColumn[];
 }
@@ -82,7 +82,7 @@ export interface ActionColumn extends AdaptableObject {
    */
   FriendlyName?: string;
   /**
-   * The text to display on the button (its caption) when rendered automatically by the Adaptable Blotter.
+   * The text to display on the button (its caption) when rendered automatically by the Adaptable.
    *
    * Don't set this property if you are rendering the Button yourself using `RenderFunction`.
    */

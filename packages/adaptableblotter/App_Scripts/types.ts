@@ -11,11 +11,11 @@ import { ToolbarButtonClickedEventArgs } from './Api/Events/ToolbarButtonClicked
 export {
   IAdaptableNoCodeWizard,
   IAdaptableNoCodeWizardOptions,
-} from './BlotterInterfaces/IAdaptableNoCodeWizard';
+} from './AdaptableInterfaces/IAdaptableNoCodeWizard';
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
-export { IAdaptable } from './BlotterInterfaces/IAdaptable';
+export { IAdaptable } from './AdaptableInterfaces/IAdaptable';
 export { AdaptableApi } from './Api/AdaptableApi';
-export { AdaptableOptions } from './BlotterOptions/AdaptableOptions';
+export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';
 
 export {
   EventApi,

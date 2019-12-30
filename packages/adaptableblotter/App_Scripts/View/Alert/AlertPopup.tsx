@@ -90,7 +90,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             this.onMessageTypeChanged(alertDef, messageType)
           }
           AccessLevel={this.props.AccessLevel}
-          StrategyService={this.props.Blotter.StrategyService}
+          StrategyService={this.props.Adaptable.StrategyService}
         />
       );
     });
@@ -132,7 +132,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             SystemFilters={this.props.SystemFilters}
             NamedFilters={this.props.NamedFilters}
             ColumnCategories={this.props.ColumnCategories}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

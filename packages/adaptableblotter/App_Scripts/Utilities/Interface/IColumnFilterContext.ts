@@ -1,9 +1,9 @@
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 
 export interface IColumnFilterContext {
   Column: AdaptableColumn;
-  Blotter: IAdaptable;
+  Adaptable: IAdaptable;
   ColumnWidth?: number;
   ShowCloseButton: boolean;
 }

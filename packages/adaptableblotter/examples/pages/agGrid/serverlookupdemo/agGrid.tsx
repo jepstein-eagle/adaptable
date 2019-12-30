@@ -18,11 +18,11 @@ import {
   AdaptableApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { IServerColumnValues } from '../../../../App_Scripts/BlotterOptions/QueryOptions';
+import { IServerColumnValues } from '../../../../App_Scripts/adaptableOptions/QueryOptions';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(25);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -31,7 +31,7 @@ function InitAdaptableBlotter() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Server Lookup Demo',
+    adaptableId: 'Server Lookup Demo',
 
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
@@ -82,7 +82,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

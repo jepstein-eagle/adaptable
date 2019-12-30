@@ -7,7 +7,7 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import {
   DistinctCriteriaPairValue,
   LeafExpressionOperator,
@@ -22,18 +22,18 @@ import {
   CellValidationState,
   CellValidationRule,
 } from '../../PredefinedConfig/CellValidationState';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 import { IUIConfirmation, AdaptableAlert } from '../Interface/IMessage';
-import { ValidationResult } from '../../BlotterOptions/EditOptions';
+import { ValidationResult } from '../../AdaptableOptions/EditOptions';
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
 import StringExtensions from '../Extensions/StringExtensions';
 import { EMPTY_STRING } from '../Constants/GeneralConstants';
 
 export class ValidationService implements IValidationService {
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
@@ -45,10 +45,10 @@ export class ValidationService implements IValidationService {
     }
 
     // first check that if primary key change, the new value is unique
-    if (dataChangedInfo.ColumnId == this.blotter.blotterOptions.primaryKey) {
-      if (this.blotter.blotterOptions.generalOptions!.preventDuplicatePrimaryKeyValues) {
+    if (dataChangedInfo.ColumnId == this.adaptable.adaptableOptions.primaryKey) {
+      if (this.adaptable.adaptableOptions.generalOptions!.preventDuplicatePrimaryKeyValues) {
         if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {
-          let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(
+          let displayValuePair: IRawValueDisplayValuePair[] = this.adaptable.getColumnValueDisplayValuePairDistinctList(
             dataChangedInfo.ColumnId,
             DistinctCriteriaPairValue.DisplayValue,
             false
@@ -81,7 +81,7 @@ export class ValidationService implements IValidationService {
     );
 
     if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
-      let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
 
       // first check the rules which have expressions
       let expressionRules: CellValidationRule[] = editingRules.filter(r =>
@@ -97,7 +97,7 @@ export class ValidationService implements IValidationService {
             expressionRule.Expression,
             dataChangedInfo.PrimaryKeyValue,
             columns,
-            this.blotter
+            this.adaptable
           );
           if (
             isSatisfiedExpression &&
@@ -169,14 +169,14 @@ export class ValidationService implements IValidationService {
   }
 
   public PerformCellValidation(dataChangedInfo: DataChangedInfo): boolean {
-    const failedRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
+    const failedRules: CellValidationRule[] = this.adaptable.ValidationService.GetValidationRulesForDataChange(
       dataChangedInfo
     );
     if (failedRules.length > 0) {
       // first see if its an error = should only be one item in array if so
       if (failedRules[0].ActionMode == 'Stop Edit') {
         const errorMessage: string = this.CreateCellValidationMessage(failedRules[0]);
-        this.blotter.api.alertApi.showAlertError('Validation Error', errorMessage);
+        this.adaptable.api.alertApi.showAlertError('Validation Error', errorMessage);
         return false;
       }
       let warningMessage: string = '';
@@ -191,7 +191,7 @@ export class ValidationService implements IValidationService {
         warningMessage
       );
 
-      this.blotter.api.internalApi.showPopupConfirmation(confirmation);
+      this.adaptable.api.internalApi.showPopupConfirmation(confirmation);
       // we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
       return false;
     }
@@ -214,25 +214,25 @@ export class ValidationService implements IValidationService {
       dataChangedEvent.NewValue,
       dataChangedEvent.OldValue,
       column,
-      this.blotter,
+      this.adaptable,
       null
     );
-    return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter);
+    return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.adaptable);
   }
 
   private GetCellValidationState(): CellValidationState {
-    return this.blotter.api.cellValidationApi.getCellValidationState();
+    return this.adaptable.api.cellValidationApi.getCellValidationState();
   }
 
   private logAuditValidationEvent(name: string, action: string, info: string, data?: any): void {
-    if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
+    if (this.adaptable.AuditLogService.isAuditFunctionEventsEnabled) {
       let functionAppliedDetails: FunctionAppliedDetails = {
         name: name,
         action: action,
         info: info,
         data: data,
       };
-      this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+      this.adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
   }
 
@@ -241,7 +241,7 @@ export class ValidationService implements IValidationService {
     config: { onServerValidationCompleted: () => void }
   ) {
     return (): boolean => {
-      this.blotter.blotterOptions.editOptions
+      this.adaptable.adaptableOptions.editOptions
         .validateOnServer(dataChangedInfo)
         .then((validationResult: ValidationResult) => {
           if (validationResult.NewValue === undefined) {
@@ -251,7 +251,7 @@ export class ValidationService implements IValidationService {
           // otherwise the value will persist
           if (validationResult.NewValue !== dataChangedInfo.NewValue) {
             dataChangedInfo.NewValue = validationResult.NewValue;
-            this.blotter.setValue(dataChangedInfo, false);
+            this.adaptable.setValue(dataChangedInfo, false);
 
             this.logAuditValidationEvent(
               'Server Validation',
@@ -263,9 +263,9 @@ export class ValidationService implements IValidationService {
             );
             if (
               StringExtensions.IsNotNullOrEmpty(validationResult.ValidationMessage) &&
-              this.blotter.blotterOptions.editOptions.displayServerValidationMessages
+              this.adaptable.adaptableOptions.editOptions.displayServerValidationMessages
             ) {
-              this.blotter.api.alertApi.showAlertInfo(
+              this.adaptable.api.alertApi.showAlertInfo(
                 'Server Validation Message',
                 validationResult.ValidationMessage
               );
@@ -339,7 +339,7 @@ export class ValidationService implements IValidationService {
   }
 
   public CreateCellValidationMessage(CellValidation: CellValidationRule): string {
-    let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
     let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
       CellValidation.ColumnId,
       columns

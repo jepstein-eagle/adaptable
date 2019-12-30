@@ -100,7 +100,7 @@ export class CustomSortSummaryComponent extends React.Component<
             SystemFilters={this.props.SystemFilters}
             NamedFilters={this.props.NamedFilters}
             ColumnCategories={this.props.ColumnCategories}
-            Blotter={this.props.Blotter}
+            Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

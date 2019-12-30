@@ -7,7 +7,7 @@ import { ThemeState, AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 
 export class ThemeApiImpl extends ApiBase implements ThemeApi {
   public getThemeState(): ThemeState {
-    return this.getBlotterState().Theme;
+    return this.getAdaptableState().Theme;
   }
 
   public loadTheme(theme: string): void {
@@ -23,7 +23,7 @@ export class ThemeApiImpl extends ApiBase implements ThemeApi {
   }
 
   public getCurrentTheme(): string {
-    return this.getBlotterState().Theme.CurrentTheme;
+    return this.getAdaptableState().Theme.CurrentTheme;
   }
 
   public setSystemThemes(systemThemes: AdaptableTheme[]): void {
@@ -35,7 +35,7 @@ export class ThemeApiImpl extends ApiBase implements ThemeApi {
   }
 
   public getAllSystemTheme(): AdaptableTheme[] {
-    const themes = this.getBlotterState().Theme.SystemThemes;
+    const themes = this.getAdaptableState().Theme.SystemThemes;
 
     return themes.map((theme: AdaptableTheme | string) => {
       if (typeof theme === 'string') {
@@ -50,7 +50,7 @@ export class ThemeApiImpl extends ApiBase implements ThemeApi {
   }
 
   public getAllUserTheme(): AdaptableTheme[] {
-    return this.getBlotterState().Theme.UserThemes;
+    return this.getAdaptableState().Theme.UserThemes;
   }
 
   public getAllTheme(): AdaptableTheme[] {
@@ -58,7 +58,7 @@ export class ThemeApiImpl extends ApiBase implements ThemeApi {
   }
 
   public showThemePopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ThemeStrategyId,
       ScreenPopups.ThemePopup
     );

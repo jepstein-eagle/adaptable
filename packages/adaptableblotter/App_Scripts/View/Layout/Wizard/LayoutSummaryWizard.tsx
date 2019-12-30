@@ -24,7 +24,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
       { Key: 'Columns', Value: this.getColumnNames(this.props.Data.Columns) },
       {
         Key: 'Column Sorts',
-        Value: this.props.Blotter.LayoutService.getColumnSort(
+        Value: this.props.Adaptable.LayoutService.getColumnSort(
           this.props.Data.ColumnSorts,
           this.props.Columns
         ),
@@ -32,7 +32,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
       { Key: 'Grouped Columns', Value: this.getColumnNames(this.props.Data.GroupedColumns) },
     ];
     let pivotKeyValuePairs: KeyValuePair[] = [];
-    if (this.props.Blotter.LayoutService.isPivotedLayout(this.props.Data.PivotDetails)) {
+    if (this.props.Adaptable.LayoutService.isPivotedLayout(this.props.Data.PivotDetails)) {
       pivotKeyValuePairs = [
         {
           Key: 'Pivot Columns',

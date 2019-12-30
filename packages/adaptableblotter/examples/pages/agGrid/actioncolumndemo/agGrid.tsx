@@ -16,27 +16,26 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
 
   const tradeData: any = examplesHelper.getTrades(300);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  // creating blotter options here so we can add audit
-  const adaptableBlotterOptions: AdaptableOptions = {
+  const adaptableadaptableOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
-    blotterId: 'action column demo',
+    adaptableId: 'action column demo',
   };
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
-  adaptableBlotterOptions.layoutOptions = {
+  adaptableadaptableOptions.predefinedConfig = demoConfig;
+  adaptableadaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
   // userFunctions
 
-  adaptableApi = Adaptable.init(adaptableBlotterOptions);
+  adaptableApi = Adaptable.init(adaptableadaptableOptions);
   adaptableApi.eventApi.on(
     'ActionColumnClicked',
     (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
@@ -133,7 +132,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

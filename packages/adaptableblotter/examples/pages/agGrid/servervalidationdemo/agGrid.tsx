@@ -16,12 +16,12 @@ import {
   ActionColumnClickedEventArgs,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { DataChangedInfo } from '../../../../App_Scripts/BlotterOptions/CommonObjects/DataChangedInfo';
-import { ValidationResult } from '../../../../App_Scripts/BlotterOptions/EditOptions';
+import { DataChangedInfo } from '../../../../App_Scripts/adaptableOptions/CommonObjects/DataChangedInfo';
+import { ValidationResult } from '../../../../App_Scrip../AdaptableOptions/EditOptions';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -32,7 +32,7 @@ function InitAdaptableBlotter() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Server Validation Demo',
+    adaptableId: 'Server Validation Demo',
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
@@ -106,7 +106,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

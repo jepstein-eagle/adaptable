@@ -63,8 +63,8 @@ class SmartEditToolPanelComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    if (this.props.Blotter) {
-      this.props.Blotter._on('CellsSelected', () => {
+    if (this.props.Adaptable) {
+      this.props.Adaptable._on('CellsSelected', () => {
         this.props.onSmartEditCheckSelectedCells();
       });
     }
@@ -85,7 +85,7 @@ class SmartEditToolPanelComponent extends React.Component<
         SelectedColumn={selectedColumn}
         ShowPanel={true}
         ShowHeader={false}
-        ValidationService={this.props.Blotter.ValidationService}
+        ValidationService={this.props.Adaptable.ValidationService}
       />
     );
 
@@ -106,7 +106,7 @@ class SmartEditToolPanelComponent extends React.Component<
     let shouldDisable: boolean =
       this.props.AccessLevel == AccessLevel.ReadOnly ||
       !this.props.IsValidSelection ||
-      this.props.Blotter.api.internalApi.isGridInPivotMode();
+      this.props.Adaptable.api.internalApi.isGridInPivotMode();
 
     let content = (
       <Flex flexDirection="column" alignItems="stretch" className="ab-ToolPanel__SmartEdit__wrap">
@@ -212,7 +212,7 @@ class SmartEditToolPanelComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true);
     let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
-    let confirmation: IUIConfirmation = this.props.Blotter.ValidationService.createCellValidationUIConfirmation(
+    let confirmation: IUIConfirmation = this.props.Adaptable.ValidationService.createCellValidationUIConfirmation(
       confirmAction,
       cancelAction
     );

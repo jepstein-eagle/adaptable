@@ -1,6 +1,6 @@
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { AlertState, AlertProperties, AlertDefinition } from '../PredefinedConfig/AlertState';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 
 /**
  * Provides full and comprehensive run-time access to the Alert function and associated state.
@@ -12,7 +12,7 @@ import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo
  */
 export interface AlertApi {
   /**
-   * Retrieves the Alert section from the Adaptable Blotter State
+   * Retrieves the Alert section from the Adaptable State
    */
   getAlertState(): AlertState;
 

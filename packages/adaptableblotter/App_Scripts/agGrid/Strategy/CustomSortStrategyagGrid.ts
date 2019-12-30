@@ -1,26 +1,26 @@
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy';
 import { RowNode } from 'ag-grid-community';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 
 export class CustomSortStrategyagGrid extends CustomSortStrategy {
-  constructor(blotter: IAdaptable) {
-    super(blotter);
+  constructor(adaptable: IAdaptable) {
+    super(adaptable);
   }
 
   public getComparerFunction(customSort: CustomSort): Function {
-    let theBlotter = this.blotter as IAdaptable;
+    let theadaptable = this.adaptable as IAdaptable;
     return function compareItemsOfCustomSort(
       valueA: any,
       valueB: any,
       nodeA?: RowNode,
       nodeB?: RowNode
     ): number {
-      let firstElementValueString = theBlotter.getDisplayValueFromRowNode(
+      let firstElementValueString = theadaptable.getDisplayValueFromRowNode(
         nodeA,
         customSort.ColumnId
       );
-      let secondElementValueString = theBlotter.getDisplayValueFromRowNode(
+      let secondElementValueString = theadaptable.getDisplayValueFromRowNode(
         nodeB,
         customSort.ColumnId
       );

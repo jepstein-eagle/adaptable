@@ -12,7 +12,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AdaptableMenuItem } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
 
 var adaptableApi: AdaptableApi;
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -94,7 +94,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

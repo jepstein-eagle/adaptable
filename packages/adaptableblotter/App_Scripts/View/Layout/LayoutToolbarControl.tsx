@@ -46,10 +46,12 @@ class LayoutToolbarControlComponent extends React.Component<
     // this is wrong at the moment an always returning true
     // but not going to worry until we test with non autosavelayouts (that dont think anyone uses)
     // but worth fixing and then making that save button enabled depending on whether this is true
-    let isModifiedLayout: boolean = this.props.Blotter.LayoutService.isLayoutModified(layoutEntity);
+    let isModifiedLayout: boolean = this.props.Adaptable.LayoutService.isLayoutModified(
+      layoutEntity
+    );
 
     let isManualSaveLayout: boolean =
-      this.props.Blotter.blotterOptions.layoutOptions!.autoSaveLayouts == false;
+      this.props.Adaptable.adaptableOptions.layoutOptions!.autoSaveLayouts == false;
 
     let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
       return {
@@ -169,7 +171,7 @@ class LayoutToolbarControlComponent extends React.Component<
         Columns: currentLayoutObject.Columns,
         ColumnSorts: currentLayoutObject.ColumnSorts,
         VendorGridInfo: gridState,
-        BlotterGridInfo: {
+        AdaptableGridInfo: {
           CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
           CurrentColumnSorts: this.props.ColumnSorts,
         },

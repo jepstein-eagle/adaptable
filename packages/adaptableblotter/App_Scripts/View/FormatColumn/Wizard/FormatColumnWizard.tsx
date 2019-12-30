@@ -20,7 +20,7 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
         <AdaptableWizard
           FriendlyName={StrategyConstants.FormatColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

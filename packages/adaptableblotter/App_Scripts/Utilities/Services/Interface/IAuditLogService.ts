@@ -1,4 +1,4 @@
-import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { StateChangedDetails, FunctionAppliedDetails } from '../../../Api/Events/AuditEvents';
 
 export interface IAuditLogService {

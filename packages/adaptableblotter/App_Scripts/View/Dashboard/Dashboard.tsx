@@ -36,7 +36,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     // this logic is repeated from Home Toolbar where we get the Title  - perhaps put it one place?
     let blotterName = this.props.DashboardState.HomeToolbarTitle;
     if (StringExtensions.IsNullOrEmpty(blotterName)) {
-      blotterName = this.props.Blotter.blotterOptions.blotterId;
+      blotterName = this.props.Adaptable.adaptableOptions.adaptableId;
       if (blotterName == GeneralConstants.USER_NAME) {
         blotterName = 'Blotter ';
       }
@@ -64,7 +64,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
           );
           if (customToolbarControl) {
             let customDshboardElememt = React.createElement(customToolbarControl, {
-              Blotter: this.props.Blotter,
+              Adaptable: this.props.Adaptable,
               Columns: this.props.Columns,
               UserFilters: this.props.UserFilters,
               SystemFilters: this.props.SystemFilters,
@@ -99,7 +99,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
           let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
           if (dashboardControl) {
             let dashboardElememt = React.createElement(dashboardControl, {
-              Blotter: this.props.Blotter,
+              Adaptable: this.props.Adaptable,
               Columns: this.props.Columns,
               UserFilters: this.props.UserFilters,
               SystemFilters: this.props.SystemFilters,
@@ -135,7 +135,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         className="ab-Dashboard__container ab-Dashboard__container--Home"
       >
         {React.createElement(homeToolbar, {
-          Blotter: this.props.Blotter,
+          Adaptable: this.props.Adaptable,
         })}
       </Box>
     );

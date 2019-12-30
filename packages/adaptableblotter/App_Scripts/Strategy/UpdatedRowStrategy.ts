@@ -2,11 +2,11 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IUpdatedRowStrategy } from './Interface/IUpdatedRowStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
@@ -18,10 +18,10 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   implements IUpdatedRowStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.UpdatedRowStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.UpdatedRowStrategyId, adaptable);
 
-    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+    this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
   }
@@ -35,7 +35,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(): AdaptableMenuItem | undefined {
-    let currentRowInfos: UpdatedRowInfo[] = this.blotter.api.internalApi.getUpdatedRowInfos();
+    let currentRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
     if (ArrayExtensions.IsNotNullOrEmpty(currentRowInfos)) {
       return this.createColumnMenuItemReduxAction(
         'Clear Updated Rows',
@@ -48,7 +48,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (menuInfo.column && menuInfo.rowNode) {
-      let updatedRowInfos: UpdatedRowInfo[] = this.blotter.api.internalApi.getUpdatedRowInfos();
+      let updatedRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
       if (ArrayExtensions.IsNotNullOrEmpty(updatedRowInfos)) {
         let updatedRowInfo: UpdatedRowInfo = updatedRowInfos.find(
           a => a.primaryKeyValue == menuInfo.primaryKeyValue
@@ -66,22 +66,24 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   }
 
   protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
-    let updatedRowState: UpdatedRowState = this.blotter.api.updatedRowApi.getUpdatedRowState();
+    let updatedRowState: UpdatedRowState = this.adaptable.api.updatedRowApi.getUpdatedRowState();
     if (updatedRowState.EnableUpdatedRow) {
-      let colsToRefresh: Array<string> = this.blotter.api.gridApi.getColumns().map(c => c.ColumnId);
+      let colsToRefresh: Array<string> = this.adaptable.api.gridApi
+        .getColumns()
+        .map(c => c.ColumnId);
 
       if (ArrayExtensions.IsNotNullOrEmpty(colsToRefresh)) {
         let updatedRowInfo: UpdatedRowInfo = {
           primaryKeyValue: dataChangedInfo.PrimaryKeyValue,
           changeDirection: this.getChangeDirection(dataChangedInfo),
         };
-        this.blotter.api.updatedRowApi.addUpdatedRowInfo(updatedRowInfo);
+        this.adaptable.api.updatedRowApi.addUpdatedRowInfo(updatedRowInfo);
 
         if (updatedRowState.JumpToRow) {
-          this.blotter.jumpToRow(dataChangedInfo.RowNode);
+          this.adaptable.jumpToRow(dataChangedInfo.RowNode);
         }
 
-        this.blotter.refreshCells([dataChangedInfo.RowNode], colsToRefresh);
+        this.adaptable.refreshCells([dataChangedInfo.RowNode], colsToRefresh);
       }
     }
   }
@@ -97,7 +99,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
 
     let columnDataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
       dataChangedInfo.ColumnId,
-      this.blotter.api.gridApi.getColumns()
+      this.adaptable.api.gridApi.getColumns()
     );
 
     if (columnDataType != DataType.Number && columnDataType != DataType.Date) {

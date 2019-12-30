@@ -15,7 +15,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Expression } from '../../PredefinedConfig/Common/Expression';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import SimpleButton from '../../components/SimpleButton';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
@@ -30,7 +30,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
   Columns?: Array<AdaptableColumn>;
-  Blotter?: IAdaptable;
+  Adaptable?: IAdaptable;
 }
 
 export interface ExpressionBuilderPageState {
@@ -97,7 +97,7 @@ export class ExpressionBuilderPage
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
             SelectedColumnId={this.state.SelectedColumnId}
             SelectedTab={this.state.SelectedTab}
-            Blotter={this.props.Blotter!}
+            Adaptable={this.props.Adaptable!}
           />
 
           <ExpressionBuilderPreview

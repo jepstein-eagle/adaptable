@@ -18,7 +18,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 Demo for checking alerts work
 */
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getMasterGridOptionsFTSE(200);
   // gridOptions.rowSelection = 'multiple';
@@ -36,7 +36,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

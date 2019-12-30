@@ -30,7 +30,7 @@ import {
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 import { Waiting } from '../Components/FilterForm/Waiting';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
@@ -51,7 +51,7 @@ export interface ExpressionBuilderConditionSelectorProps
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
-  Blotter: IAdaptable;
+  Adaptable: IAdaptable;
 }
 
 export interface ExpressionBuilderConditionSelectorState {
@@ -212,13 +212,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
       // Note: if we invoke this function and the result is null then we get the distinct values for the column
       // 2. If the property above is not set then instead, we get the distinct values for the column
 
-      if (props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
+      if (props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
         // The dev has provided us with a function to call that will retrieve the column values
 
         newState = { ShowWaitingMessage: true };
       } else {
         // the developer hasnt given us a property that we need to invoke to get column values, so lets get the distinct values for the column instead
-        columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
+        columnValuePairs = props.Adaptable.getColumnValueDisplayValuePairDistinctList(
           props.SelectedColumnId,
           DistinctCriteriaPairValue.DisplayValue,
           false
@@ -240,7 +240,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.Blotter!.blotterOptions.queryOptions.getColumnValues) {
+    if (this.props.Adaptable!.adaptableOptions.queryOptions.getColumnValues) {
       this.setStateForColumnValues();
     }
   }
@@ -254,7 +254,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
   componentDidUpdate(_prevState: any, prevProps: any) {
     if (
       this.props.SelectedColumnId != prevProps.SelectedColumnId &&
-      this.props.Blotter!.blotterOptions.queryOptions.getColumnValues
+      this.props.Adaptable!.adaptableOptions.queryOptions.getColumnValues
     ) {
       this.setStateForColumnValues();
     }
@@ -262,14 +262,14 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
   lazyLoadColumnValues = async (props: ExpressionBuilderConditionSelectorProps) => {
     return props
-      .Blotter!.blotterOptions.queryOptions.getColumnValues(props.SelectedColumnId)
+      .Adaptable!.adaptableOptions.queryOptions.getColumnValues(props.SelectedColumnId)
       .then(result => {
         let newState = {};
         let columnValuePairs: IRawValueDisplayValuePair[] = [];
         // we have got the result back from the function we've invoked; if the return value is null then lets get distinct values instead
         if (result == null) {
           //  nothing returned so get the distinct column values via the Blotter method
-          columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
+          columnValuePairs = props.Adaptable.getColumnValueDisplayValuePairDistinctList(
             props.SelectedColumnId,
             DistinctCriteriaPairValue.DisplayValue,
             false
@@ -290,10 +290,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<
           // make sure that we only return within max items that can be displayed
           let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
             0,
-            props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
+            props.Adaptable.adaptableOptions.queryOptions.maxColumnValueItemsDisplayed
           );
           distinctItems.forEach(di => {
-            let displayValue = props.Blotter.getDisplayValueFromRawValue(
+            let displayValue = props.Adaptable.getDisplayValueFromRawValue(
               props.SelectedColumnId,
               di
             );
@@ -306,7 +306,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
             SelectedColumnId: props.SelectedColumnId,
           };
           // set the UIPermittedValues for this column to what has been sent
-          props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
+          props.Adaptable.api.userInterfaceApi.setColumnPermittedValues(
             props.SelectedColumnId,
             distinctItems
           );
@@ -324,7 +324,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
     // get filter names
     // first system filters
-    let availableSystemFilterNames: string[] = this.props.Blotter.FilterService.GetSystemFiltersForColumn(
+    let availableSystemFilterNames: string[] = this.props.Adaptable.FilterService.GetSystemFiltersForColumn(
       selectedColumn,
       this.props.SystemFilters
     ).map(sf => {
@@ -332,7 +332,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     });
 
     // then user filters
-    let availableUserFilterNames: string[] = this.props.Blotter.FilterService.GetUserFiltersForColumn(
+    let availableUserFilterNames: string[] = this.props.Adaptable.FilterService.GetUserFiltersForColumn(
       selectedColumn,
       this.props.UserFilters
     ).map(uf => {
@@ -340,7 +340,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     });
 
     // then named filters
-    let availableNamedFilterNames: string[] = this.props.Blotter.FilterService.GetNamedFiltersForColumn(
+    let availableNamedFilterNames: string[] = this.props.Adaptable.FilterService.GetNamedFiltersForColumn(
       selectedColumn,
       this.props.NamedFilters,
       this.props.ColumnCategories
@@ -423,7 +423,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
           <Flex flex={1} flexDirection="column">
             {selectedColumn && (
               <>
-                {this.props.Blotter.blotterOptions.queryOptions.columnValuesOnlyInQueries ? (
+                {this.props.Adaptable.adaptableOptions.queryOptions.columnValuesOnlyInQueries ? (
                   <>
                     {this.state.ShowWaitingMessage ? (
                       <Waiting WaitingMessage="Retrieving Column Values..." />

@@ -2,13 +2,13 @@ import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
- * The Theme State section of the Adaptable Blotter Predefined Config.
+ * The Theme State section of the Adaptable Predefined Config.
  *
- * Theme State is used to tell the Adaptable Blotter which, if any, of the Shipped Themes ("Dark Theme" and "Light Theme") should be available.
+ * Theme State is used to tell the Adaptable which, if any, of the Shipped Themes ("Dark Theme" and "Light Theme") should be available.
  *
- * It also enables you to ship your instance of the Adaptable Blotter with your own custom themes that you can create.
+ * It also enables you to ship your instance of the Adaptable with your own custom themes that you can create.
  *
- * All Adaptable Blotter themes are simply collections of [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
+ * All Adaptable themes are simply collections of [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
  *
  * ```ts
  * export default {
@@ -18,7 +18,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *    {
  *      Name:"blue",
  *      Description:"Blue Theme",
- *      VendorGridClassName: 'ag-theme-blue' // optional - sets the current theme of the underlying vendor grid to be used in association to the blue blotter theme
+ *      VendorGridClassName: 'ag-theme-blue' // optional - sets the current theme of the underlying vendor grid to be used in association to the blue theme
  *     }
  *  ],
  *  }
@@ -38,11 +38,11 @@ export interface ThemeState extends RunTimeState {
   CurrentTheme?: string;
 
   /**
-   * Which, if any, of the 2 themes shipped by the Adaptable Blotter should be available.
+   * Which, if any, of the 2 themes shipped by the Adaptable should be available.
    *
    * If you dont set anything then **both** themes are available; if you set an empty array then **neither** theme is available.
    *
-   * If you have  [*useDefaultVendorGridThemes*]( https://api.adaptableblotter.com/interfaces/_blotteroptions_generaloptions_.generaloptions.html#usedefaultvendorgridthemes) set to true in **generalOptions** section of *Blotter Options* then setting (or changing to) either of the shipped System Themes will set the theme of the underlying vendor grid too.
+   * If you have  [*useDefaultVendorGridThemes*]( https://api.adaptableblotter.com/interfaces/_adaptableOptions_generaloptions_.generaloptions.html#usedefaultvendorgridthemes) set to true in **generalOptions** section of *Blotter Options* then setting (or changing to) either of the shipped System Themes will set the theme of the underlying vendor grid too.
    */
   SystemThemes?: (AdaptableTheme | string)[];
 

@@ -59,9 +59,9 @@ import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/T
  *
  * **Rendering Bespoke Content**
  *
- * The Adaptable Blotter provides the [dashboardAPI](_api_dashboardapi_.dasbhoardapi.html) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
+ * The Adaptable provides the [dashboardAPI](_api_dashboardapi_.dasbhoardapi.html) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
  *
- * You can listen to the **ToolbarVisibilityChanged** event published by the Adaptable Blotter which provides the name of relevant toolbar and its new visibility.
+ * You can listen to the **ToolbarVisibilityChanged** event published by the Adaptable which provides the name of relevant toolbar and its new visibility.
  *
  * The list of potential values for the Toolbar name are: "AdvancedSearch", "Alert", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "QuickSearch" and "Theme"
  *
@@ -190,7 +190,7 @@ export interface DashboardState extends RunTimeState {
    *
    * Only those toolbars listed here will be selectable
    *
-   * If you don't provide any value for this property, then ALL Adaptable Blotter toolbars will be available.
+   * If you don't provide any value for this property, then ALL Adaptable toolbars will be available.
    *
    * **Default Value**:  Empty array
    */
@@ -208,7 +208,7 @@ export interface DashboardState extends RunTimeState {
   /**
    * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
    *
-   * Each button is connected to a Function in the Adaptable Blotter and opens the main popup screen for that Strategy.
+   * Each button is connected to a Function in the Adaptable and opens the main popup screen for that Strategy.
    *
    * **Default Value**:  'Dashboard', 'SmartEdit', 'ColumnChooser', 'ConditionalStyle', ''
    */

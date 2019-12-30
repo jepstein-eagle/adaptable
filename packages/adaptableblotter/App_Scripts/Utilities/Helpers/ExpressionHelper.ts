@@ -14,7 +14,7 @@ import {
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
@@ -151,18 +151,21 @@ export function checkForExpression(
   Expression: Expression,
   identifierValue: any,
   columns: AdaptableColumn[],
-  blotter: IAdaptable
+  adaptable: IAdaptable
 ): boolean {
   return IsSatisfied(
     Expression,
-    blotter.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // this value raw
-    blotter.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value display
-    blotter.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // other column value
+    adaptable.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // this value raw
+    adaptable.getRowNodeIsSatisfiedFunction(
+      identifierValue,
+      DistinctCriteriaPairValue.DisplayValue
+    ), // this value display
+    adaptable.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // other column value
     columns,
-    blotter.api.userFilterApi.getAllUserFilter(),
-    blotter.api.systemFilterApi.getAllSystemFilter(),
-    blotter.api.namedFilterApi.getAllNamedFilter(),
-    blotter
+    adaptable.api.userFilterApi.getAllUserFilter(),
+    adaptable.api.systemFilterApi.getAllSystemFilter(),
+    adaptable.api.namedFilterApi.getAllNamedFilter(),
+    adaptable
   );
 }
 
@@ -170,21 +173,21 @@ export function checkForExpressionFromRowNode(
   Expression: Expression,
   rowNode: any,
   columns: AdaptableColumn[],
-  blotter: IAdaptable
+  adaptable: IAdaptable
 ): boolean {
   return IsSatisfied(
     Expression,
-    blotter.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // this value
-    blotter.getRowNodeIsSatisfiedFunctionFromRowNode(
+    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // this value
+    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(
       rowNode,
       DistinctCriteriaPairValue.DisplayValue
     ), // this value
-    blotter.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // other column value
+    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // other column value
     columns,
-    blotter.api.userFilterApi.getAllUserFilter(),
-    blotter.api.systemFilterApi.getAllSystemFilter(),
-    blotter.api.namedFilterApi.getAllNamedFilter(),
-    blotter,
+    adaptable.api.userFilterApi.getAllUserFilter(),
+    adaptable.api.systemFilterApi.getAllSystemFilter(),
+    adaptable.api.namedFilterApi.getAllNamedFilter(),
+    adaptable,
     rowNode
   );
 }
@@ -195,11 +198,11 @@ export function IsSatisfied(
   getColumnValue: (columnId: string) => any,
   getDisplayColumnValue: (columnId: string) => string,
   getOtherColumnValue: (columnId: string) => any,
-  columnBlotterList: AdaptableColumn[],
+  columnadaptableList: AdaptableColumn[],
   userFilters: UserFilter[],
   systemFilters: string[],
   namedFilters: NamedFilter[],
-  blotter: IAdaptable,
+  adaptable: IAdaptable,
   rowNode?: any
 ): boolean {
   let expressionColumnList = GetColumnListFromExpression(Expression);
@@ -209,7 +212,7 @@ export function IsSatisfied(
     //we need either a column value or user filter expression or range to match the column
     let isColumnSatisfied = false;
 
-    let column = columnBlotterList.find(x => x.ColumnId == columnId);
+    let column = columnadaptableList.find(x => x.ColumnId == columnId);
     if (!column) {
       LoggingHelper.LogAdaptableWarning('Could not find column id:' + columnId);
       isColumnSatisfied = true;
@@ -232,7 +235,7 @@ export function IsSatisfied(
       let filtersForColumn = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
       if (filtersForColumn) {
         // first evaluate any user filters
-        let filteredUserFilters: UserFilter[] = blotter.FilterService.GetUserFilters(
+        let filteredUserFilters: UserFilter[] = adaptable.FilterService.GetUserFilters(
           userFilters,
           filtersForColumn.Filters
         );
@@ -242,11 +245,11 @@ export function IsSatisfied(
             getColumnValue,
             getDisplayColumnValue,
             getOtherColumnValue,
-            columnBlotterList,
+            columnadaptableList,
             userFilters,
             systemFilters,
             namedFilters,
-            blotter
+            adaptable
           );
           if (isColumnSatisfied) {
             break;
@@ -259,10 +262,10 @@ export function IsSatisfied(
             f => filtersForColumn.Filters.find(u => u == f) != null
           );
           for (let systemFilter of filteredSystemFilters) {
-            let satisfyFunction: any = blotter.FilterService.GetFunctionForSystemFilter(
+            let satisfyFunction: any = adaptable.FilterService.GetFunctionForSystemFilter(
               systemFilter
             );
-            isColumnSatisfied = satisfyFunction.IsExpressionSatisfied(columnValue, blotter);
+            isColumnSatisfied = satisfyFunction.IsExpressionSatisfied(columnValue, adaptable);
             if (isColumnSatisfied) {
               break;
             }
@@ -292,7 +295,7 @@ export function IsSatisfied(
     if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.RangeExpressions)) {
       let columnRanges = Expression.RangeExpressions.find(x => x.ColumnId == columnId);
       if (columnRanges) {
-        let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnId);
+        let column = columnadaptableList.find(x => x.ColumnId == columnRanges.ColumnId);
         let colValue = getColumnValue(columnRanges.ColumnId);
         for (let range of columnRanges.Ranges) {
           let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
@@ -300,10 +303,10 @@ export function IsSatisfied(
             colValue,
             null,
             column,
-            blotter,
+            adaptable,
             getOtherColumnValue
           );
-          isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, blotter);
+          isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, adaptable);
           if (isColumnSatisfied) {
             break;
           }
@@ -661,7 +664,7 @@ export function GetRangeEvaluation(
   newValue: any,
   initialValue: any,
   column: AdaptableColumn,
-  blotter: IAdaptable,
+  adaptable: IAdaptable,
   getOtherColumnValue: (columnId: string) => any
 ): IRangeEvaluation {
   let rangeEvaluation: IRangeEvaluation = ObjectFactory.CreateRangeEvaluation(
@@ -730,7 +733,7 @@ export function GetRangeEvaluation(
           ? null
           : rangeExpression.Operand2;
 
-      if (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) {
+      if (adaptable.adaptableOptions.queryOptions.ignoreCaseInQueries) {
         rangeEvaluation.newValue = StringExtensions.ToLowerCase(rangeEvaluation.newValue);
         rangeEvaluation.operand1 = StringExtensions.ToLowerCase(rangeEvaluation.operand1);
         rangeEvaluation.operand2 = StringExtensions.ToLowerCase(rangeEvaluation.operand2);
@@ -742,7 +745,7 @@ export function GetRangeEvaluation(
 
 export function TestRangeEvaluation(
   rangeEvaluation: IRangeEvaluation,
-  blotter: IAdaptable
+  adaptable: IAdaptable
 ): boolean {
   if (Helper.objectNotExists(rangeEvaluation.newValue)) {
     return false;
@@ -813,9 +816,9 @@ export function TestRangeEvaluation(
       let regex = new RegExp(rangeEvaluation.operand1);
       return regex.test(rangeEvaluation.newValue);
     case LeafExpressionOperator.NoDuplicateValues:
-      return getExistingItem(blotter, rangeEvaluation) != null;
+      return getExistingItem(adaptable, rangeEvaluation) != null;
     case LeafExpressionOperator.ExistingValuesOnly:
-      return getExistingItem(blotter, rangeEvaluation) == null;
+      return getExistingItem(adaptable, rangeEvaluation) == null;
   }
   return false;
 }
@@ -858,8 +861,8 @@ export function AddMissingProperties(expression: Expression): void {
   }
 }
 
-function getExistingItem(blotter: IAdaptable, rangeEvaluation: IRangeEvaluation): any {
-  let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(
+function getExistingItem(adaptable: IAdaptable, rangeEvaluation: IRangeEvaluation): any {
+  let displayValuePairs: IRawValueDisplayValuePair[] = adaptable.getColumnValueDisplayValuePairDistinctList(
     rangeEvaluation.columnId,
     DistinctCriteriaPairValue.DisplayValue,
     false

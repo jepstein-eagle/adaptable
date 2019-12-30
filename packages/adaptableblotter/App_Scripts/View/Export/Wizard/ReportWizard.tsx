@@ -21,7 +21,7 @@ export class ReportWizard extends React.Component<
         <AdaptableWizard
           FriendlyName={StrategyConstants.ExportStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

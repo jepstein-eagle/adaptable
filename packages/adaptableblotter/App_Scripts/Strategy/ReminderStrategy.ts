@@ -1,17 +1,17 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IReminderStrategy } from './Interface/IReminderStrategy';
 import { ReminderState } from '../PredefinedConfig/ReminderState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ReminderStrategy extends AdaptableStrategyBase implements IReminderStrategy {
   protected ReminderState: ReminderState;
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.ReminderStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.ReminderStrategyId, adaptable);
 
-    this.blotter._on('GridReloaded', () => {
+    this.adaptable._on('GridReloaded', () => {
       this.scheduleReminders();
     });
   }
@@ -26,10 +26,10 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
 
   public scheduleReminders(): void {
     // just clear all jobs and recreate - simplest thing to do...
-    this.blotter.ScheduleService.ClearAllReminderJobs();
+    this.adaptable.ScheduleService.ClearAllReminderJobs();
 
-    this.blotter.api.reminderApi.getAllReminder().forEach(r => {
-      this.blotter.ScheduleService.AddReminderSchedule(r);
+    this.adaptable.api.reminderApi.getAllReminder().forEach(r => {
+      this.adaptable.ScheduleService.AddReminderSchedule(r);
     });
   }
 }

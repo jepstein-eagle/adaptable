@@ -47,7 +47,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   public getSystemState(): SystemState {
-    return this.getBlotterState().System;
+    return this.getAdaptableState().System;
   }
 
   public getAvailableCalendars(): Calendar[] {
@@ -117,7 +117,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public setGlue42AvailableOn(): void {
     this.dispatchAction(GridRedux.SetGlue42AvailableOn());
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
       ExportDestination.Glue42,
       LiveReportTrigger.Connected
     );
@@ -125,7 +125,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public setGlue42AvailableOff(): void {
     this.dispatchAction(GridRedux.SetGlue42AvailableOff());
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
       ExportDestination.Glue42,
       LiveReportTrigger.Disconnected
     );
@@ -133,7 +133,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public setIPushPullAvailableOn(): void {
     this.dispatchAction(GridRedux.SetIPushPullAvailableOn());
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
       ExportDestination.iPushPull,
       LiveReportTrigger.Connected
     );
@@ -141,7 +141,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public setIPushPullAvailableOff(): void {
     this.dispatchAction(GridRedux.SetIPushPullAvailableOff());
-    this.blotter.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
       ExportDestination.iPushPull,
       LiveReportTrigger.Disconnected
     );
@@ -164,7 +164,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   public isGridInPivotMode(): boolean {
-    return this.getBlotterState().Grid.IsGridInPivotMode;
+    return this.getAdaptableState().Grid.IsGridInPivotMode;
   }
 
   public addAdaptableColumn(AdaptableColumn: AdaptableColumn): void {
@@ -188,7 +188,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     return Helper.objectExists(foundUpdatedRowInfo);
   }
 
-  // General way to get to store from inside the Blotter...
+  // General way to get to store from inside the adaptable...
   public dispatchReduxAction(action: Action): void {
     this.dispatchAction(action);
   }

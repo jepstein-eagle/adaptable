@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import {
   ChartState,
@@ -14,7 +14,7 @@ import {
 } from '../PredefinedConfig/ChartState';
 import { SystemState } from '../PredefinedConfig/SystemState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 
 import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
@@ -27,16 +27,16 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   private SystemState: SystemState;
   private throttleSetChartData: (() => void) & _.Cancelable;
 
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.ChartStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.ChartStrategyId, adaptable);
 
-    this.blotter.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+    this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       setTimeout(() => {
         this.handleDataSourceChanged(dataChangedInfo);
       }, 500);
     });
 
-    this.blotter._on('SearchApplied', () => {
+    this.adaptable._on('SearchApplied', () => {
       this.handleSearchChanged();
     });
 
@@ -61,7 +61,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         isChartRelatedStateChanged = true;
         // if user has set display at startup to be true and there is a current chart then show it
         if (
-          this.blotter.blotterOptions.chartOptions.displayOnStartUp &&
+          this.adaptable.adaptableOptions.chartOptions.displayOnStartUp &&
           StringExtensions.IsNotNullOrEmpty(this.GetChartState().CurrentChartName)
         ) {
           displayChartAtStartUp = true;
@@ -106,11 +106,11 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         this.ChartState.CurrentChartName == null &&
         this.SystemState.ChartVisibility == ChartVisibility.Maximised
       ) {
-        this.blotter.api.internalApi.setChartVisibility(ChartVisibility.Hidden);
+        this.adaptable.api.internalApi.setChartVisibility(ChartVisibility.Hidden);
       }
 
       if (displayChartAtStartUp) {
-        this.blotter.api.internalApi.setChartVisibility(ChartVisibility.Maximised);
+        this.adaptable.api.internalApi.setChartVisibility(ChartVisibility.Maximised);
         this.setChartData();
       }
     }
@@ -229,7 +229,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
   private isCurrentChartVisibiilityMaximised(): boolean {
     return (
-      this.blotter.isInitialised &&
+      this.adaptable.isInitialised &&
       this.SystemState != null &&
       this.ChartState != null &&
       this.SystemState.ChartVisibility == ChartVisibility.Maximised &&
@@ -269,40 +269,40 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     if (chartDefinition) {
       let chartData: ChartData;
       if (chartDefinition.ChartType == ChartType.CategoryChart) {
-        chartData = this.blotter.ChartService.BuildCategoryChartData(
+        chartData = this.adaptable.ChartService.BuildCategoryChartData(
           chartDefinition as CategoryChartDefinition,
           this.GetColumnState()
         );
       } else if (chartDefinition.ChartType == ChartType.PieChart) {
-        chartData = this.blotter.ChartService.BuildPieChartData(
+        chartData = this.adaptable.ChartService.BuildPieChartData(
           chartDefinition as PieChartDefinition
         );
       } else if (chartDefinition.ChartType == ChartType.SparklinesChart) {
-        chartData = this.blotter.ChartService.BuildSparklinesChartData(
+        chartData = this.adaptable.ChartService.BuildSparklinesChartData(
           chartDefinition as SparklinesChartDefinition,
           this.GetColumnState()
         );
       }
-      this.blotter.api.internalApi.setChartData(chartData);
+      this.adaptable.api.internalApi.setChartData(chartData);
     }
   }
 
   private clearChartData() {
     if (this.GetSystemState().ChartData != null) {
-      this.blotter.api.internalApi.setChartData(null);
+      this.adaptable.api.internalApi.setChartData(null);
     }
   }
 
   private GetSystemState(): SystemState {
-    return this.blotter.api.internalApi.getSystemState();
+    return this.adaptable.api.internalApi.getSystemState();
   }
 
   private GetChartState(): ChartState {
-    return this.blotter.api.chartApi.getChartState();
+    return this.adaptable.api.chartApi.getChartState();
   }
 
   private GetColumnState(): AdaptableColumn[] {
-    return this.blotter.api.gridApi.getColumns();
+    return this.adaptable.api.gridApi.getColumns();
   }
 
   private GetCurrentChartDefinition(): ChartDefinition {

@@ -8,15 +8,15 @@ import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy {
-  constructor(blotter: Adaptable) {
-    super(blotter);
+  constructor(adaptable: Adaptable) {
+    super(adaptable);
   }
 
   public initStyles(): void {
-    let allColumns = this.blotter.api.gridApi.getColumns();
-    let theBlotter = this.blotter as Adaptable;
+    let allColumns = this.adaptable.api.gridApi.getColumns();
+    let theBlotter = this.adaptable as Adaptable;
 
-    let alertDefsWithHighlightCells: AlertDefinition[] = this.blotter.api.alertApi
+    let alertDefsWithHighlightCells: AlertDefinition[] = this.adaptable.api.alertApi
       .getAlertDefinitions()
       .filter(a => a.AlertProperties.HighlightCell);
 

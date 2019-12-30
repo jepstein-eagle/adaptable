@@ -10,7 +10,7 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export class ExportApiImpl extends ApiBase implements ExportApi {
   public getExportState(): ExportState {
-    return this.getBlotterState().Export;
+    return this.getAdaptableState().Export;
   }
 
   public getCurrentReportName(): string {
@@ -27,25 +27,25 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
   }
 
   public getAllReports(): Report[] {
-    return this.blotter.api.internalApi
+    return this.adaptable.api.internalApi
       .getSystemReports()
-      .concat(this.getBlotterState().Export.Reports);
+      .concat(this.getAdaptableState().Export.Reports);
   }
 
   public getScheduledReports(): Report[] {
-    return this.getBlotterState().Export.Reports.filter(r => r.AutoExport);
+    return this.getAdaptableState().Export.Reports.filter(r => r.AutoExport);
   }
 
   public sendReport(reportName: string, destination: ExportDestination): void {
     let report: Report = this.getReportByName(reportName);
-    let isLiveReport = this.blotter.ReportService.IsReportLiveReport(report, destination);
+    let isLiveReport = this.adaptable.ReportService.IsReportLiveReport(report, destination);
     if (this.checkItemExists(report, reportName, 'Report')) {
       this.dispatchAction(ExportRedux.ExportApply(report, destination, isLiveReport));
     }
   }
 
   public showExportPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ExportStrategyId,
       ScreenPopups.ExportPopup
     );

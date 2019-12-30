@@ -14,7 +14,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -23,8 +23,7 @@ function InitAdaptableBlotter() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'Basic Demo',
-
+    adaptableId: 'Basic Demo',
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
     stateOptions: {
@@ -73,7 +72,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

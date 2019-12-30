@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { UIHelper } from '../../UIHelper';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { Flex, Box, Text } from 'rebass';

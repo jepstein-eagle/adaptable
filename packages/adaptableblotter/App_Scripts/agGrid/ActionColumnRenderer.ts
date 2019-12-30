@@ -12,9 +12,11 @@ export class ActionColumnRenderer implements ICellRendererComp {
 
   // gets called once before the renderer is used
   init(params: ICellRendererParams): void {
-    const blotter = (params.api as any).__blotter as Adaptable;
+    const adaptable = (params.api as any).__adaptable as Adaptable;
 
-    let actionCol: ActionColumn | undefined = blotter.api.actionColumnApi
+    let actionCol:
+      | ActionColumn
+      | undefined = adaptable.api.actionColumnApi
       .getAllActionColumn()
       .find(ac => ac.ColumnId == params.colDef.colId);
 
@@ -53,7 +55,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
       this.eventListener = function() {
         let actionColumnClickedInfo: ActionColumnClickedInfo = {
           actionColumn: actionCol as ActionColumn,
-          primaryKeyValue: blotter.getPrimaryKeyValueFromRowNode(params.node),
+          primaryKeyValue: adaptable.getPrimaryKeyValueFromRowNode(params.node),
           rowData: params.data,
         };
         const actionColumnClickedEventArgs: ActionColumnClickedEventArgs = AdaptableHelper.createFDC3Message(
@@ -61,7 +63,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
           actionColumnClickedInfo
         );
 
-        blotter.api.eventApi.emit('ActionColumnClicked', actionColumnClickedEventArgs);
+        adaptable.api.eventApi.emit('ActionColumnClicked', actionColumnClickedEventArgs);
       };
       this.eGui.addEventListener('click', this.eventListener);
     }

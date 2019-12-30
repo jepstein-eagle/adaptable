@@ -7,7 +7,7 @@ import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceSt
 
 export class DataSourceApiImpl extends ApiBase implements DataSourceApi {
   public getDataSourceState(): DataSourceState {
-    return this.getBlotterState().DataSource;
+    return this.getAdaptableState().DataSource;
   }
 
   public getAllDataSource(): DataSource[] {
@@ -24,7 +24,7 @@ export class DataSourceApiImpl extends ApiBase implements DataSourceApi {
   }
 
   public setDataSource(dataSourceName: string): void {
-    let dataSource: DataSource = this.getBlotterState().DataSource.DataSources.find(
+    let dataSource: DataSource = this.getAdaptableState().DataSource.DataSources.find(
       a => a.Name == dataSourceName
     );
     if (
@@ -55,7 +55,7 @@ export class DataSourceApiImpl extends ApiBase implements DataSourceApi {
   }
 
   public showDataSourcePopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.DataSourceStrategyId,
       ScreenPopups.DataSourcePopup
     );

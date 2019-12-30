@@ -3,9 +3,9 @@ import { DesignTimeState } from './DesignTimeState';
 /**
  * The Predefined Configuration for System Filters
  *
- * This allows you to specify which of the filters shipped by the Adaptable Blotter are available to the User.
+ * This allows you to specify which of the filters shipped by the Adaptable are available to the User.
  *
- * By default **all** the System Filters provided by the Adaptable Blotter will be used, so only set this property if you dont want to use the full range.
+ * By default **all** the System Filters provided by the Adaptable will be used, so only set this property if you dont want to use the full range.
  *
  * **If this section is not set then all System Filters will be used**
  *

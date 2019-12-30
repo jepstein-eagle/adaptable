@@ -12,7 +12,7 @@ import {
   MenuItemDoClickFunction,
 } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
@@ -20,9 +20,9 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  * Each strategy is reponsible for managing state (through InitState())
  */
 export abstract class AdaptableStrategyBase implements IStrategy {
-  constructor(public Id: AdaptableFunctionName, protected blotter: IAdaptable) {
+  constructor(public Id: AdaptableFunctionName, protected adaptable: IAdaptable) {
     this.Id = Id;
-    this.blotter = blotter;
+    this.adaptable = adaptable;
   }
 
   private isVisible: boolean;
@@ -30,7 +30,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
   public initializeWithRedux() {
     this.InitState();
-    this.blotter.AdaptableStore.TheStore.subscribe(() => this.InitState());
+    this.adaptable.AdaptableStore.TheStore.subscribe(() => this.InitState());
   }
 
   public setStrategyEntitlement(): void {
@@ -66,7 +66,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   private getStrategyEntitlement(): Entitlement {
-    let functionEntitlements: Entitlement[] = this.blotter.api.entitlementsApi.getEntitlementsState()
+    let functionEntitlements: Entitlement[] = this.adaptable.api.entitlementsApi.getEntitlementsState()
       .FunctionEntitlements;
     return functionEntitlements.find(x => x.FunctionName == this.Id);
   }
@@ -151,7 +151,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
   canCreateColumnMenuItem(
     column: AdaptableColumn,
-    blotter: IAdaptable,
+    adaptable: IAdaptable,
     functionType?:
       | 'sort'
       | 'editable'
@@ -178,7 +178,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       } else if (functionType == 'columnfilter') {
         return column.Filterable;
       } else if (functionType == 'quickfilter') {
-        return blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter;
+        return adaptable.adaptableOptions.filterOptions.useAdaptableQuickFilter;
       }
     }
     return true;

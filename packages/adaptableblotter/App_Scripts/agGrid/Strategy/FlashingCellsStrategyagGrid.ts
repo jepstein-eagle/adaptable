@@ -2,37 +2,37 @@ import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy';
 import { Adaptable } from '../Adaptable';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {
-  constructor(blotter: Adaptable) {
-    super(blotter);
+  constructor(adaptable: Adaptable) {
+    super(adaptable);
     this.currentFlashing = new Map();
   }
   private currentFlashing: Map<any, number>;
 
   public initStyles(): void {
-    let numericColumns = this.blotter.api.gridApi.getNumericColumns();
-    let theBlotter = this.blotter as Adaptable;
+    let numericColumns = this.adaptable.api.gridApi.getNumericColumns();
+    let theadaptable = this.adaptable as Adaptable;
     let currentFlashing = this.currentFlashing;
-    let flashingCells: FlashingCell[] = this.blotter.api.flashingCellApi.getAllFlashingCell();
+    let flashingCells: FlashingCell[] = this.adaptable.api.flashingCellApi.getAllFlashingCell();
     numericColumns.forEach(col => {
       let fc = flashingCells.find(x => x.ColumnId == col.ColumnId && x.IsLive);
       let cellClassRules: any = {};
       if (fc) {
         cellClassRules[StyleConstants.FLASH_CELL_UP_STYLE + '-' + fc.Uuid] = function(params: any) {
-          let primaryKey = theBlotter.getPrimaryKeyValueFromRowNode(params.node);
+          let primaryKey = theadaptable.getPrimaryKeyValueFromRowNode(params.node);
           let key = primaryKey + col.ColumnId + 'up';
           let currentFlashTimer = currentFlashing.get(key);
           if (currentFlashTimer) {
             return true;
           }
 
-          let oldValue = theBlotter.DataService.GetPreviousColumnValue(
+          let oldValue = theadaptable.DataService.GetPreviousColumnValue(
             col.ColumnId,
             primaryKey,
             params.value,
@@ -44,7 +44,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
             }
             let timer: number = window.setTimeout(() => {
               currentFlashing.set(key, null);
-              theBlotter.refreshCells([params.node], [col.ColumnId]);
+              theadaptable.refreshCells([params.node], [col.ColumnId]);
             }, fc.FlashingCellDuration);
             currentFlashing.set(key, timer);
             return true;
@@ -56,13 +56,13 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
         cellClassRules[StyleConstants.FLASH_CELL_DOWN_STYLE + '-' + fc.Uuid] = function(
           params: any
         ) {
-          let primaryKey = theBlotter.getPrimaryKeyValueFromRowNode(params.node);
+          let primaryKey = theadaptable.getPrimaryKeyValueFromRowNode(params.node);
           let key = primaryKey + col.ColumnId + 'down';
           let currentFlashTimer = currentFlashing.get(key);
           if (currentFlashTimer) {
             return true;
           }
-          let oldValue = theBlotter.DataService.GetPreviousColumnValue(
+          let oldValue = theadaptable.DataService.GetPreviousColumnValue(
             col.ColumnId,
             primaryKey,
             params.value,
@@ -74,7 +74,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
             }
             let timer: any = window.setTimeout(() => {
               currentFlashing.set(key, null);
-              theBlotter.refreshCells([params.node], [col.ColumnId]);
+              theadaptable.refreshCells([params.node], [col.ColumnId]);
             }, fc.FlashingCellDuration);
             currentFlashing.set(key, timer);
             return true;
@@ -83,7 +83,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
           }
         };
       }
-      theBlotter.setCellClassRules(cellClassRules, col.ColumnId, 'FlashingCell');
+      theadaptable.setCellClassRules(cellClassRules, col.ColumnId, 'FlashingCell');
     });
   }
 }

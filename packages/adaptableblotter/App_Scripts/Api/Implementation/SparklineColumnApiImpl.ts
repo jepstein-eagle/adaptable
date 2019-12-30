@@ -4,11 +4,11 @@ import { SparklineColumnState, SparklineColumn } from '../../PredefinedConfig/Sp
 
 export class SparklineColumnApiImpl extends ApiBase implements SparklineColumnApi {
   public getSparklineColumnState(): SparklineColumnState {
-    return this.getBlotterState().SparklineColumn;
+    return this.getAdaptableState().SparklineColumn;
   }
 
   public getAllSparklineColumn(): SparklineColumn[] {
-    let sparklineColumns: SparklineColumn[] | undefined = this.getBlotterState().SparklineColumn
+    let sparklineColumns: SparklineColumn[] | undefined = this.getAdaptableState().SparklineColumn
       .SparklineColumns;
     if (sparklineColumns == undefined) {
       sparklineColumns = [];

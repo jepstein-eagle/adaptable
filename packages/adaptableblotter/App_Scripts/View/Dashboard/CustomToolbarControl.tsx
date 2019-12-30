@@ -69,7 +69,7 @@ class CustomToolbarControlComponent extends React.Component<
                   variant={buttonVariant}
                   tone={buttonTone}
                   onClick={() => {
-                    this.props.Blotter.api.eventApi.emit(
+                    this.props.Adaptable.api.eventApi.emit(
                       'ToolbarButtonClicked',
                       toolbarButtonClickedEventArgs
                     );

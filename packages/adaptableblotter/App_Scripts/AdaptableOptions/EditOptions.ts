@@ -1,9 +1,9 @@
 import { DataChangedInfo } from './CommonObjects/DataChangedInfo';
 
 /**
- * Options related to Editing in the Adaptable Blotter.
+ * Options related to Editing in the Adaptable.
  *
- * Allows you to provide the Adaptable Blotter with Server Validation that works in conjunction with Client (aka Cell) Validation
+ * Allows you to provide the Adaptable with Server Validation that works in conjunction with Client (aka Cell) Validation
  *
  * **EditOptions Example**
  *
@@ -53,9 +53,9 @@ import { DataChangedInfo } from './CommonObjects/DataChangedInfo';
  */
 export interface EditOptions {
   /**
-   * Used when you want to check an Edit made in the Adaptable Blotter on your Server
+   * Used when you want to check an Edit made in the Adaptable on your Server
    *
-   * The argument provided is the [DataChangedInfo](_blotteroptions_commonobjects_datachangedinfo_.datachangedinfo.html) object which provides the old and new values, the column, and also the node in which the cell lives.
+   * The argument provided is the [DataChangedInfo](_adaptableOptions_commonobjects_datachangedinfo_.datachangedinfo.html) object which provides the old and new values, the column, and also the node in which the cell lives.
    *
    * The property returns a promise that includes a Validation Result
    *
@@ -80,7 +80,7 @@ export interface EditOptions {
 }
 
 /**
- * Used for Server Validation ie. after an edit has been made in the Adaptable Blotter which you want to check on your server.
+ * Used for Server Validation ie. after an edit has been made in the Adaptable which you want to check on your server.
  *
  * It contains 2 properties:
  *

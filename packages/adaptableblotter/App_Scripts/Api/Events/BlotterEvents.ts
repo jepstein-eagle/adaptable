@@ -9,11 +9,11 @@ export interface FDC3Schema {
   version: string;
 }
 
-export interface BlotterEventArgs extends FDC3Schema {
+export interface AdaptableEventArgs extends FDC3Schema {
   data: any[];
 }
 
-export interface AdaptableBlotterEventData {
+export interface AdaptableEventData {
   name: string;
   type: string;
   id: any;

@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IPieChartStrategy } from './Interface/IPieChartStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
@@ -10,8 +10,8 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.PieChartStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.PieChartStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -24,7 +24,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
     if (
-      this.canCreateColumnMenuItem(column, this.blotter) &&
+      this.canCreateColumnMenuItem(column, this.adaptable) &&
       column.DataType !== DataType.NumberArray
     ) {
       let popUpParams: StrategyParams = {
@@ -47,7 +47,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
     if (menuInfo.column && menuInfo.isSelectedCell && menuInfo.isSingleSelectedColumn) {
-      let pkValues: any[] = this.blotter.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
+      let pkValues: any[] = this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
         return gc.primaryKeyValue;
       });
       let popUpParams: StrategyParams = {

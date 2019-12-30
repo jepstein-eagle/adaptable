@@ -5,12 +5,12 @@ import { NamedFilter, NamedFilterState } from '../PredefinedConfig/NamedFilterSt
  */
 export interface NamedFilterApi {
   /**
-   * Retrieves the Named Filter section from the Adaptable Blotter State
+   * Retrieves the Named Filter section from the Adaptable State
    */
   getNamedFilterState(): NamedFilterState;
 
   /**
-   * Returns all the Named Filters in the Adaptable Blotter State
+   * Returns all the Named Filters in the Adaptable State
    */
   getAllNamedFilter(): NamedFilter[];
 

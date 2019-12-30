@@ -35,8 +35,8 @@ export const TRUE_SYSTEM_FILTER = 'True';
 export const FALSE_SYSTEM_FILTER = 'False';
 
 export class FilterService implements IFilterService {
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   public GetAllSystemFilters(): string[] {
@@ -221,7 +221,7 @@ export class FilterService implements IFilterService {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
             return (
-              this.blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) ==
+              this.adaptable.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) ==
               new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
             );
           },
@@ -231,7 +231,7 @@ export class FilterService implements IFilterService {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
             return (
-              this.blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) ==
+              this.adaptable.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) ==
               new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
             );
           },

@@ -6,9 +6,9 @@ import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import IStorageEngine from './Interface/IStorageEngine';
 import { PredefinedConfig } from '../../PredefinedConfig/PredefinedConfig';
 import {
-  AdaptableBlotterLoadStateFunction,
-  AdaptableBlotterPersistStateFunction,
-} from '../../BlotterOptions/StateOptions';
+  AdaptableLoadStateFunction,
+  AdaptablePersistStateFunction,
+} from '../../AdaptableOptions/StateOptions';
 
 const checkStatus = (response: Response) => {
   const error = new Error(response.statusText);
@@ -19,13 +19,13 @@ const checkStatus = (response: Response) => {
   throw error;
 };
 
-const persistState: AdaptableBlotterPersistStateFunction = (
+const persistState: AdaptablePersistStateFunction = (
   state: any,
-  config: { blotterId?: string; userName?: string }
+  config: { adaptableId?: string; userName?: string }
 ): Promise<any> => {
   return new Promise((resolve, reject) => {
     try {
-      localStorage.setItem(config.blotterId!, JSON.stringify(state));
+      localStorage.setItem(config.adaptableId!, JSON.stringify(state));
       resolve();
     } catch (ex) {
       reject(ex);
@@ -33,28 +33,28 @@ const persistState: AdaptableBlotterPersistStateFunction = (
   });
 };
 
-const loadState: AdaptableBlotterLoadStateFunction = ({ blotterId }) => {
-  const jsonState = localStorage.getItem(blotterId);
+const loadState: AdaptableLoadStateFunction = ({ adaptableId }) => {
+  const jsonState = localStorage.getItem(adaptableId);
   const parsedJsonState = JSON.parse(jsonState) || {};
 
   return Promise.resolve(parsedJsonState);
 };
 
 class AdaptableReduxLocalStorageEngine implements IStorageEngine {
-  private blotterId: string;
+  private adaptableId: string;
   private userName: string;
   private predefinedConfig: PredefinedConfig | string;
-  private loadState?: AdaptableBlotterLoadStateFunction;
-  private persistState?: AdaptableBlotterPersistStateFunction;
+  private loadState?: AdaptableLoadStateFunction;
+  private persistState?: AdaptablePersistStateFunction;
 
   constructor(config: {
-    blotterId: string;
+    adaptableId: string;
     userName: string;
     predefinedConfig: PredefinedConfig | string;
-    loadState?: AdaptableBlotterLoadStateFunction;
-    persistState?: AdaptableBlotterPersistStateFunction;
+    loadState?: AdaptableLoadStateFunction;
+    persistState?: AdaptablePersistStateFunction;
   }) {
-    this.blotterId = config.blotterId;
+    this.adaptableId = config.adaptableId;
     this.userName = config.userName;
     this.predefinedConfig = config.predefinedConfig;
     this.loadState = config.loadState;
@@ -63,7 +63,7 @@ class AdaptableReduxLocalStorageEngine implements IStorageEngine {
 
   load(): Promise<any> {
     return (this.loadState || loadState)({
-      blotterId: this.blotterId,
+      adaptableId: this.adaptableId,
       userName: this.userName,
     }).then((parsedJsonState: any) => {
       if (
@@ -92,7 +92,7 @@ class AdaptableReduxLocalStorageEngine implements IStorageEngine {
 
   save(state: any): Promise<any> {
     return (this.persistState || persistState)(state, {
-      blotterId: this.blotterId,
+      adaptableId: this.adaptableId,
       userName: this.userName,
     }).catch(rejectWithMessage);
   }
@@ -103,11 +103,11 @@ function rejectWithMessage(error: any) {
 }
 
 export function createEngine(config: {
-  blotterId: string;
+  adaptableId: string;
   userName: string;
   predefinedConfig: PredefinedConfig | string;
-  loadState?: AdaptableBlotterLoadStateFunction;
-  persistState?: AdaptableBlotterPersistStateFunction;
+  loadState?: AdaptableLoadStateFunction;
+  persistState?: AdaptablePersistStateFunction;
 }): IStorageEngine {
   return new AdaptableReduxLocalStorageEngine(config);
 }

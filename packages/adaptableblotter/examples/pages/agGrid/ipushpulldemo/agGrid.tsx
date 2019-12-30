@@ -32,7 +32,7 @@ ipushpull.config.set({
   hsts: false, // strict cors policy
 });
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 25;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -43,8 +43,7 @@ function InitAdaptableBlotter() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    blotterId: 'iPushPull Demo',
-
+    adaptableId: 'iPushPull Demo',
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
@@ -127,7 +126,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

@@ -1,4 +1,4 @@
-import { BlotterEventArgs, AdaptableBlotterEventData } from './BlotterEvents';
+import { AdaptableEventArgs, AdaptableEventData } from './BlotterEvents';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 
 /**
@@ -6,11 +6,11 @@ import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
  *
  * Includes the Action Column that was clicked, the row that contained the cell that was clicked (and its Primary Key value).
  */
-export interface ActionColumnClickedEventArgs extends BlotterEventArgs {
+export interface ActionColumnClickedEventArgs extends AdaptableEventArgs {
   data: ActionColumnClickedEventData[];
 }
 
-export interface ActionColumnClickedEventData extends AdaptableBlotterEventData {
+export interface ActionColumnClickedEventData extends AdaptableEventData {
   id: ActionColumnClickedInfo;
 }
 

@@ -6,7 +6,7 @@ import { Helper } from '../../../Utilities/Helpers/Helper';
 import { AdaptableObjectCollection } from '../AdaptableObjectCollection';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { UIHelper } from '../../UIHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { PanelWithButton } from '../Panels/PanelWithButton';
@@ -20,7 +20,7 @@ import Dialog from '../../../components/Dialog';
 import { Flex } from 'rebass';
 import SimpleButton from '../../../components/SimpleButton';
 import Radio from '../../../components/Radio';
-import { AdaptableOptions } from '../../../BlotterOptions/AdaptableOptions';
+import { AdaptableOptions } from '../../../AdaptableOptions/AdaptableOptions';
 
 interface AdaptableBlotterGridInfoProps extends React.ClassAttributes<AdaptableGridInfo> {
   Adaptable: IAdaptable;
@@ -62,7 +62,7 @@ export class AdaptableGridInfo extends React.Component<
   }
   render() {
     let modalContainer: HTMLElement = UIHelper.getModalContainer(
-      this.props.Adaptable.blotterOptions,
+      this.props.Adaptable.adaptableOptions,
       document
     );
 
@@ -71,7 +71,7 @@ export class AdaptableGridInfo extends React.Component<
       { Content: 'Value', Size: 7 },
     ];
 
-    let blotterOptionsColItems: IColItem[] = [
+    let adaptableOptionsColItems: IColItem[] = [
       { Content: 'Property', Size: 6 },
       { Content: 'Value', Size: 4 },
       { Content: '', Size: 2 },
@@ -81,47 +81,49 @@ export class AdaptableGridInfo extends React.Component<
       return <AdaptableObjectRow key={index} colItems={x} />;
     });
 
-    let baseBlotterOptions = this.CreateBaseOptionsInfo(blotterOptionsColItems).map((x, index) => {
+    let baseadaptableOptions = this.CreateBaseOptionsInfo(adaptableOptionsColItems).map(
+      (x, index) => {
+        return <AdaptableObjectRow key={index} colItems={x} />;
+      }
+    );
+
+    let containeradaptableOptions = this.CreateContainerOptionsInfo(adaptableOptionsColItems).map(
+      (x, index) => {
+        return <AdaptableObjectRow key={index} colItems={x} />;
+      }
+    );
+
+    let auditadaptableOptions = this.CreateAuditOptionsInfo(adaptableOptionsColItems).map(
+      (x, index) => {
+        return <AdaptableObjectRow key={index} colItems={x} />;
+      }
+    );
+
+    let configServeradaptableOptions = this.CreateConfigServerOptionsInfo(
+      adaptableOptionsColItems
+    ).map((x, index) => {
       return <AdaptableObjectRow key={index} colItems={x} />;
     });
 
-    let containerBlotterOptions = this.CreateContainerOptionsInfo(blotterOptionsColItems).map(
+    let queryadaptableOptions = this.CreateQueryOptionsInfo(adaptableOptionsColItems).map(
       (x, index) => {
         return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
-    let auditBlotterOptions = this.CreateAuditOptionsInfo(blotterOptionsColItems).map(
+    let layoutadaptableOptions = this.CreateLayoutOptionsInfo(adaptableOptionsColItems).map(
       (x, index) => {
         return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
-    let configServerBlotterOptions = this.CreateConfigServerOptionsInfo(blotterOptionsColItems).map(
+    let filteradaptableOptions = this.CreateFilterOptionsInfo(adaptableOptionsColItems).map(
       (x, index) => {
         return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
-    let queryBlotterOptions = this.CreateQueryOptionsInfo(blotterOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
-
-    let layoutBlotterOptions = this.CreateLayoutOptionsInfo(blotterOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
-
-    let filterBlotterOptions = this.CreateFilterOptionsInfo(blotterOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
-
-    let generalBlotterOptions = this.CreateGeneralOptionsInfo(blotterOptionsColItems).map(
+    let generaladaptableOptions = this.CreateGeneralOptionsInfo(adaptableOptionsColItems).map(
       (x, index) => {
         return <AdaptableObjectRow key={index} colItems={x} />;
       }
@@ -287,7 +289,7 @@ export class AdaptableGridInfo extends React.Component<
                 Grid Properties
               </Radio>
               <Radio
-                value="BlotterOptions"
+                value="adaptableOptions"
                 checked={this.state.ShowGridProperties == false}
                 onChange={(_, e: any) => this.onShowGridPropertiesChanged(e)}
               >
@@ -311,8 +313,8 @@ export class AdaptableGridInfo extends React.Component<
                 >
                   {this.state.IsBaseOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      colItems={blotterOptionsColItems}
-                      items={baseBlotterOptions}
+                      colItems={adaptableOptionsColItems}
+                      items={baseadaptableOptions}
                     />
                   )}
                 </PanelWithButton>
@@ -324,8 +326,8 @@ export class AdaptableGridInfo extends React.Component<
                 >
                   {this.state.IsContainerOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      colItems={blotterOptionsColItems}
-                      items={containerBlotterOptions}
+                      colItems={adaptableOptionsColItems}
+                      items={containeradaptableOptions}
                     />
                   )}
                 </PanelWithButton>
@@ -336,8 +338,8 @@ export class AdaptableGridInfo extends React.Component<
                 >
                   {this.state.IsAuditOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      colItems={blotterOptionsColItems}
-                      items={auditBlotterOptions}
+                      colItems={adaptableOptionsColItems}
+                      items={auditadaptableOptions}
                     />
                   )}
                 </PanelWithButton>
@@ -348,8 +350,8 @@ export class AdaptableGridInfo extends React.Component<
                 >
                   {this.state.IsConfigServerOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      colItems={blotterOptionsColItems}
-                      items={configServerBlotterOptions}
+                      colItems={adaptableOptionsColItems}
+                      items={configServeradaptableOptions}
                     />
                   )}
                 </PanelWithButton>
@@ -360,8 +362,8 @@ export class AdaptableGridInfo extends React.Component<
                 >
                   {this.state.IsQueryOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      colItems={blotterOptionsColItems}
-                      items={queryBlotterOptions}
+                      colItems={adaptableOptionsColItems}
+                      items={queryadaptableOptions}
                     />
                   )}
                 </PanelWithButton>
@@ -372,8 +374,8 @@ export class AdaptableGridInfo extends React.Component<
                 >
                   {this.state.IsLayoutOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      colItems={blotterOptionsColItems}
-                      items={layoutBlotterOptions}
+                      colItems={adaptableOptionsColItems}
+                      items={layoutadaptableOptions}
                     />
                   )}
                 </PanelWithButton>
@@ -384,8 +386,8 @@ export class AdaptableGridInfo extends React.Component<
                 >
                   {this.state.IsFilterOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      colItems={blotterOptionsColItems}
-                      items={filterBlotterOptions}
+                      colItems={adaptableOptionsColItems}
+                      items={filteradaptableOptions}
                     />
                   )}
                 </PanelWithButton>
@@ -396,8 +398,8 @@ export class AdaptableGridInfo extends React.Component<
                 >
                   {this.state.IsGeneralOptionsMinimised == false && (
                     <AdaptableObjectCollection
-                      colItems={blotterOptionsColItems}
-                      items={generalBlotterOptions}
+                      colItems={adaptableOptionsColItems}
+                      items={generaladaptableOptions}
                     />
                   )}
                 </PanelWithButton>
@@ -437,7 +439,7 @@ export class AdaptableGridInfo extends React.Component<
         this.createColItem(colItems, 'Vendor Grid', this.props.Adaptable.vendorGridName)
       );
 
-      returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', version));
+      returnRows.push(this.createColItem(colItems, 'Adaptable Version', version));
 
       returnRows.push(
         this.createColItem(
@@ -478,24 +480,19 @@ export class AdaptableGridInfo extends React.Component<
   private CreateBaseOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: AdaptableOptions = this.props.Adaptable.blotterOptions;
+      let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
 
       // base options
       returnRows.push(
         this.createColItem(
           colItems,
-          'blotterId',
-          options.blotterId,
-          'Identifier for this instance of the Adaptable Blotter'
+          'adaptableId',
+          options.adaptableId,
+          'Identifier for this instance of the Adaptable'
         )
       );
       returnRows.push(
-        this.createColItem(
-          colItems,
-          'userName',
-          options.userName,
-          'Current user of the Adaptable Blotter'
-        )
+        this.createColItem(colItems, 'userName', options.userName, 'Current user of the Adaptable')
       );
       returnRows.push(
         this.createColItem(
@@ -513,12 +510,12 @@ export class AdaptableGridInfo extends React.Component<
   private CreateContainerOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: AdaptableOptions = this.props.Adaptable.blotterOptions;
+      let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
       returnRows.push(
         this.createColItem(
           colItems,
-          'adaptableBlotterContainer',
-          options.containerOptions.adaptableBlotterContainer,
+          'adaptableContainer',
+          options.containerOptions.adaptableContainer,
           'Id of <div> element which contains the Blotter'
         )
       );
@@ -557,7 +554,7 @@ export class AdaptableGridInfo extends React.Component<
   private CreateAuditOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: AdaptableOptions = this.props.Adaptable.blotterOptions;
+      let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
 
       returnRows.push(
         this.createColItem(
@@ -588,7 +585,7 @@ export class AdaptableGridInfo extends React.Component<
           colItems,
           'auditInternalStateChanges',
           options.auditOptions.auditInternalStateChanges == true ? 'Yes' : 'No',
-          "Whether to audit changes to the Adaptable Blotter's state; includes things like which popups are active, what are the selected cells (can potentially be very verbos)e"
+          "Whether to audit changes to the Adaptable's state; includes things like which popups are active, what are the selected cells (can potentially be very verbos)e"
         )
       );
       returnRows.push(
@@ -614,7 +611,7 @@ export class AdaptableGridInfo extends React.Component<
   private CreateConfigServerOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: AdaptableOptions = this.props.Adaptable.blotterOptions;
+      let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
 
       returnRows.push(
         this.createColItem(
@@ -639,7 +636,7 @@ export class AdaptableGridInfo extends React.Component<
   private CreateQueryOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: AdaptableOptions = this.props.Adaptable.blotterOptions;
+      let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
 
       returnRows.push(
         this.createColItem(
@@ -680,7 +677,7 @@ export class AdaptableGridInfo extends React.Component<
   private CreateLayoutOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: AdaptableOptions = this.props.Adaptable.blotterOptions;
+      let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
 
       returnRows.push(
         this.createColItem(
@@ -705,7 +702,7 @@ export class AdaptableGridInfo extends React.Component<
   private CreateFilterOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: AdaptableOptions = this.props.Adaptable.blotterOptions;
+      let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
 
       returnRows.push(
         this.createColItem(
@@ -718,17 +715,17 @@ export class AdaptableGridInfo extends React.Component<
       returnRows.push(
         this.createColItem(
           colItems,
-          'useAdaptableBlotterFilterForm',
-          options.filterOptions.useAdaptableBlotterFilterForm == true ? 'Yes' : 'No',
-          'If using the Adaptable Blotter filter form in column menu (or that provided by the vendor grid).'
+          'useAdaptableFilterForm',
+          options.filterOptions.useAdaptableFilterForm == true ? 'Yes' : 'No',
+          'If using the Adaptable filter form in column menu (or that provided by the vendor grid).'
         )
       );
       returnRows.push(
         this.createColItem(
           colItems,
-          'useAdaptableBlotterQuickFilter',
-          options.filterOptions.useAdaptableBlotterQuickFilter == true ? 'Yes' : 'No',
-          'Use the Adaptable Blotter quick filter row (or that provided by the vendor grid).'
+          'useAdaptableQuickFilter',
+          options.filterOptions.useAdaptableQuickFilter == true ? 'Yes' : 'No',
+          'Use the Adaptable quick filter row (or that provided by the vendor grid).'
         )
       );
     }
@@ -738,7 +735,7 @@ export class AdaptableGridInfo extends React.Component<
   private CreateGeneralOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: AdaptableOptions = this.props.Adaptable.blotterOptions;
+      let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
 
       returnRows.push(
         this.createColItem(

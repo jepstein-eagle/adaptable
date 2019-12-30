@@ -12,5 +12,5 @@ export interface ToolPanelStrategyViewPopupProps<View> extends StrategyViewPopup
   onConfigure: () => PopupRedux.PopupShowScreenAction;
   AccessLevel: AccessLevel;
   AdaptableApi: AdaptableApi;
-  Blotter: IAdaptable;
+  Adaptable: IAdaptable;
 }

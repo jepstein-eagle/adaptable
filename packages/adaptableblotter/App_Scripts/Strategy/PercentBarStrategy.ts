@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
 import { PercentBarState } from '../PredefinedConfig/PercentBarState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -12,8 +12,8 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
   protected PercentBarState: PercentBarState;
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.PercentBarStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.PercentBarStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -25,7 +25,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter, 'numeric')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'numeric')) {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
         this.PercentBarState.PercentBars.map(f => f.ColumnId),
         column.ColumnId
@@ -69,22 +69,22 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
 
   protected InitState() {
     if (this.PercentBarState != this.GetPercentBarState()) {
-      if (this.blotter.isInitialised) {
+      if (this.adaptable.isInitialised) {
         // if we have made any changes then first delete them all
         this.PercentBarState.PercentBars.forEach(pb => {
-          this.blotter.removePercentBar(pb);
+          this.adaptable.removePercentBar(pb);
         });
 
         this.GetPercentBarState().PercentBars.forEach(pb => {
-          this.blotter.editPercentBar(pb);
+          this.adaptable.editPercentBar(pb);
         });
-        this.blotter.redraw();
+        this.adaptable.redraw();
       }
       this.PercentBarState = this.GetPercentBarState();
     }
   }
 
   protected GetPercentBarState(): PercentBarState {
-    return this.blotter.api.percentBarApi.getPercentBarState();
+    return this.adaptable.api.percentBarApi.getPercentBarState();
   }
 }

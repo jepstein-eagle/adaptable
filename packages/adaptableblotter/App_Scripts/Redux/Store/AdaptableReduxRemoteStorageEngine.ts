@@ -3,9 +3,9 @@ import { debounce } from 'lodash';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import IStorageEngine from './Interface/IStorageEngine';
 import {
-  AdaptableBlotterLoadStateFunction,
-  AdaptableBlotterPersistStateFunction,
-} from '../../BlotterOptions/StateOptions';
+  AdaptableLoadStateFunction,
+  AdaptablePersistStateFunction,
+} from '../../AdaptableOptions/StateOptions';
 
 const DEBOUNCE_DELAY = 500;
 
@@ -19,9 +19,9 @@ const checkStatus = (response: Response) => {
   throw error;
 };
 
-const persistState: AdaptableBlotterPersistStateFunction = (
+const persistState: AdaptablePersistStateFunction = (
   state: any,
-  config: { blotterId?: string; userName?: string; url?: string }
+  config: { adaptableId?: string; userName?: string; url?: string }
 ): Promise<any> => {
   const saveOptions = {
     method: 'POST',
@@ -30,18 +30,18 @@ const persistState: AdaptableBlotterPersistStateFunction = (
       Accept: 'application/json',
       'Content-Type': 'application/json',
       ab_username: config.userName,
-      ab_id: config.blotterId,
+      ab_id: config.adaptableId,
     },
   };
 
   return fetch(config.url, saveOptions).then(checkStatus);
 };
 
-const loadState: AdaptableBlotterLoadStateFunction = ({ userName, blotterId, url }) => {
+const loadState: AdaptableLoadStateFunction = ({ userName, adaptableId, url }) => {
   const loadOptions = {
     headers: {
       ab_username: userName,
-      ab_id: blotterId,
+      ab_id: adaptableId,
     },
   };
   return fetch(url, loadOptions)
@@ -52,20 +52,20 @@ const loadState: AdaptableBlotterLoadStateFunction = ({ userName, blotterId, url
 class AdaptableRemoteStorageEngine implements IStorageEngine {
   private url: string;
   private userName: string;
-  private blotterId: string;
-  private loadState?: AdaptableBlotterLoadStateFunction;
-  private persistState?: AdaptableBlotterPersistStateFunction;
+  private adaptableId: string;
+  private loadState?: AdaptableLoadStateFunction;
+  private persistState?: AdaptablePersistStateFunction;
 
   constructor(config: {
     url: string;
     userName: string;
-    blotterId: string;
-    loadState?: AdaptableBlotterLoadStateFunction;
-    persistState?: AdaptableBlotterPersistStateFunction;
+    adaptableId: string;
+    loadState?: AdaptableLoadStateFunction;
+    persistState?: AdaptablePersistStateFunction;
   }) {
     this.url = config.url;
     this.userName = config.userName;
-    this.blotterId = config.blotterId;
+    this.adaptableId = config.adaptableId;
     this.loadState = config.loadState;
     this.persistState = config.persistState;
     this.save = debounce(this.save, DEBOUNCE_DELAY);
@@ -74,7 +74,7 @@ class AdaptableRemoteStorageEngine implements IStorageEngine {
   load(): Promise<any> {
     return (this.loadState || loadState)({
       userName: this.userName,
-      blotterId: this.blotterId,
+      adaptableId: this.adaptableId,
       url: this.url,
     }).catch(error => Promise.reject(error.message));
   }
@@ -82,7 +82,7 @@ class AdaptableRemoteStorageEngine implements IStorageEngine {
   save(state: any): Promise<any> {
     return (this.persistState || persistState)(state, {
       userName: this.userName,
-      blotterId: this.blotterId,
+      adaptableId: this.adaptableId,
       url: this.url,
     }).catch(error => {
       LoggingHelper.LogAdaptableError(`Cannot Save Config: ${error.message}`);
@@ -94,21 +94,21 @@ class AdaptableRemoteStorageEngine implements IStorageEngine {
 export function createEngine({
   url,
   userName,
-  blotterId,
+  adaptableId,
   persistState,
   loadState,
 }: {
   url: string;
   userName: string;
-  blotterId: string;
+  adaptableId: string;
 
-  persistState?: AdaptableBlotterPersistStateFunction;
-  loadState?: AdaptableBlotterLoadStateFunction;
+  persistState?: AdaptablePersistStateFunction;
+  loadState?: AdaptableLoadStateFunction;
 }): IStorageEngine {
   return new AdaptableRemoteStorageEngine({
     url,
     userName,
-    blotterId,
+    adaptableId,
     persistState,
     loadState,
   });

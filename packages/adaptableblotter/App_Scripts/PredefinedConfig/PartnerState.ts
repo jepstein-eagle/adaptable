@@ -8,30 +8,30 @@ import { DesignTimeState } from './DesignTimeState';
  */
 export interface PartnerState extends DesignTimeState {
   /**
-   * State required to run iPushPull from the Adaptable Blotter
+   * State required to run iPushPull from the Adaptable
    *
    * Primarily consists of an iPushPull object injected in to the Blotter
    */
   iPushPull?: IPushPullState;
 
   /**
-   * Config required allow the Adaptable Blotter to interract with Glue42.
+   * Config required allow the Adaptable to interract with Glue42.
    */
   Glue42?: Glue42State;
 }
 
 /**
- * The objects required to run the [iPushPull](https://ipushpull.com) integration from within the Adaptable Blotter.
+ * The objects required to run the [iPushPull](https://ipushpull.com) integration from within the Adaptable.
  *
- * This state is created by the user / developer at design time and injected into the Adaptable Blotter as Predefined Config
+ * This state is created by the user / developer at design time and injected into the Adaptable as Predefined Config
  *
- * If iPushPull state is provided, then the Adaptable Blotter will include an 'Export to iPushPull' option in the Export Toolbar.
+ * If iPushPull state is provided, then the Adaptable will include an 'Export to iPushPull' option in the Export Toolbar.
  *
- * If this option is selected, the Adaptable Blotter will show iPushPull login and domain-page retrieval screens.
+ * If this option is selected, the Adaptable will show iPushPull login and domain-page retrieval screens.
  *
  * To use iPushPull you will need to have your own iPushPull username and login credentials.
  *
- * However you will automatically use the Adaptable Blotter credentials (i.e. the `api_secret` and `api_key` properties), so please **always use the config as set in the example below**.
+ * However you will automatically use the Adaptable credentials (i.e. the `api_secret` and `api_key` properties), so please **always use the config as set in the example below**.
  *
  * **iPushPull Predefined Config Example**
  *
@@ -45,8 +45,8 @@ export interface PartnerState extends DesignTimeState {
  * // 2. immediately thereafter set the config for the ipushpull object as follows:
  * // (note: we will  add the real values for the `api_secret` & `api_key` properties)
  *  ipushpull.config.set({
- *    api_secret: '',  // will be added by the Adaptable Blotter
- *    api_key: '',     // will be added by the Adaptable Blotter
+ *    api_secret: '',  // will be added by the Adaptable
+ *    api_key: '',     // will be added by the Adaptable
  *    api_url: 'https://www.ipushpull.com/api/1.0',
  *    ws_url: 'https://www.ipushpull.com',
  *    web_url: 'https://www.ipushpull.com',
@@ -117,7 +117,7 @@ export interface IPushPullState {
   Password?: string;
 
   /**
-   * How long (in miliseconds) the Adaptable Blotter should throttle when sending a data update to iPushPull.
+   * How long (in miliseconds) the Adaptable should throttle when sending a data update to iPushPull.
    *
    * **Default Value: 2000**
    */
@@ -137,7 +137,7 @@ export interface Glue42State {
   RunLiveData?: boolean; // keep this?????
 
   /**
-   * How long (in miliseconds) the Adaptable Blotter should throttle when sending an update to Glue42.
+   * How long (in miliseconds) the Adaptable should throttle when sending an update to Glue42.
    *
    * **Default Value: 2000**
    */

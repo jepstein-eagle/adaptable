@@ -88,7 +88,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         SelectedColumn={col}
         ShowPanel={showPanel}
         ShowHeader={true}
-        ValidationService={this.props.Blotter.ValidationService}
+        ValidationService={this.props.Adaptable.ValidationService}
       />
     ) : null;
 
@@ -188,7 +188,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true);
     let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
-    let confirmation: IUIConfirmation = this.props.Blotter.ValidationService.createCellValidationUIConfirmation(
+    let confirmation: IUIConfirmation = this.props.Adaptable.ValidationService.createCellValidationUIConfirmation(
       confirmAction,
       cancelAction
     );

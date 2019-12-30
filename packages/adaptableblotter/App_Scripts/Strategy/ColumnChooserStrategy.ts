@@ -1,15 +1,15 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.ColumnChooserStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.ColumnChooserStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {

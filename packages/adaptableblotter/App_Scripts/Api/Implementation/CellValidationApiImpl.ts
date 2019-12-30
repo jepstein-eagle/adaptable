@@ -10,7 +10,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class CellValidationApiImpl extends ApiBase implements CellValidationApi {
   public getCellValidationState(): CellValidationState {
-    return this.getBlotterState().CellValidation;
+    return this.getAdaptableState().CellValidation;
   }
 
   public getAllCellValidation(): CellValidationRule[] {
@@ -26,7 +26,7 @@ export class CellValidationApiImpl extends ApiBase implements CellValidationApi 
   }
 
   public showCellValidationPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.CellValidationStrategyId,
       ScreenPopups.CellValidationPopup
     );

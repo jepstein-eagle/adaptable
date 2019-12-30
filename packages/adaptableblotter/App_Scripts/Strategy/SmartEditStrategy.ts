@@ -3,10 +3,10 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { MathOperation, DataType, MessageType } from '../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
@@ -21,8 +21,8 @@ import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.SmartEditStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.SmartEditStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -60,7 +60,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
   }
 
   public ApplySmartEdit(newValues: GridCell[]): void {
-    if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
+    if (this.adaptable.AuditLogService.isAuditFunctionEventsEnabled) {
       // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
       let functionAppliedDetails: FunctionAppliedDetails = {
         name: StrategyConstants.SmartEditStrategyId,
@@ -68,14 +68,14 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         info: 'Smart Edit Applied',
         data: newValues,
       };
-      this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+      this.adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
-    this.blotter.api.gridApi.setGridCells(newValues, true, false);
+    this.adaptable.api.gridApi.setGridCells(newValues, true, false);
   }
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-    let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
-    if (this.blotter.api.internalApi.isGridInPivotMode()) {
+    let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
+    if (this.adaptable.api.internalApi.isGridInPivotMode()) {
       return {
         Alert: {
           Header: 'Smart Edit Error',
@@ -144,11 +144,11 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     smartEditValue: number,
     smartEditOperation: MathOperation
   ): IPreviewInfo {
-    let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+    let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
     let previewResults: IPreviewResult[] = [];
     let columnId: string = '';
 
-    if (!this.blotter.api.internalApi.isGridInPivotMode()) {
+    if (!this.adaptable.api.internalApi.isGridInPivotMode()) {
       if (ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
         let column: AdaptableColumn = selectedCellInfo.Columns[0];
         if (column) {
@@ -185,7 +185,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
               PrimaryKeyValue: selectedCell.primaryKeyValue,
             };
 
-            let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
+            let validationRules: CellValidationRule[] = this.adaptable.ValidationService.GetValidationRulesForDataChange(
               dataChangedEvent
             );
 

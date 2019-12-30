@@ -6,7 +6,7 @@ import { UIHelper } from '../../UIHelper';
 import { Flex, Text } from 'rebass';
 import Dialog from '../../../components/Dialog';
 import SimpleButton from '../../../components/SimpleButton';
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 
 /**
  * The most simple of the alert type popups - just shows a message with a close button.  No user action required.

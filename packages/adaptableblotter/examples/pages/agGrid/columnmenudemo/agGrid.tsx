@@ -12,7 +12,7 @@ import { AdaptableMenuItem, MenuInfo } from '../../../../App_Scripts/PredefinedC
 import { ALL_DATA_REPORT } from '../../../../App_Scripts/Utilities/Constants/GeneralConstants';
 
 var adaptableApi: AdaptableApi;
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -68,7 +68,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

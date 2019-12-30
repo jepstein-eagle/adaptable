@@ -2,19 +2,19 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux';
 import { FlashingCellState, FlashingCell } from '../PredefinedConfig/FlashingCellState';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.FlashingCellsStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.FlashingCellsStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -26,14 +26,14 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       if (column.DataType == DataType.Number) {
         if (
-          this.blotter.api.calculatedColumnApi
+          this.adaptable.api.calculatedColumnApi
             .getAllCalculatedColumn()
             .find(c => c.ColumnId == column.ColumnId) == null
         ) {
-          let flashingCell = this.blotter.api.flashingCellApi
+          let flashingCell = this.adaptable.api.flashingCellApi
             .getAllFlashingCell()
             .find(x => x.ColumnId == column.ColumnId);
           if (flashingCell && flashingCell.IsLive) {
@@ -44,7 +44,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
             );
           } else {
             if (!flashingCell) {
-              let flashingCellState: FlashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
+              let flashingCellState: FlashingCellState = this.adaptable.api.flashingCellApi.getFlashingCellState();
               flashingCell = ObjectFactory.CreateDefaultFlashingCell(
                 column,
                 flashingCellState.DefaultUpColor,

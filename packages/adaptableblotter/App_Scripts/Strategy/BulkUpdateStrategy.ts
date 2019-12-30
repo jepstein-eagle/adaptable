@@ -2,10 +2,10 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { DataType, MessageType } from '../PredefinedConfig/Common/Enums';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IBulkUpdateStrategy, BulkUpdateValidationResult } from './Interface/IBulkUpdateStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
@@ -21,8 +21,8 @@ import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.BulkUpdateStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.BulkUpdateStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -59,7 +59,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
   }
 
   public ApplyBulkUpdate(newValues: GridCell[]): void {
-    if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
+    if (this.adaptable.AuditLogService.isAuditFunctionEventsEnabled) {
       // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
       let functionAppliedDetails: FunctionAppliedDetails = {
         name: StrategyConstants.BulkUpdateStrategyId,
@@ -67,15 +67,15 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         info: 'Bulk Update Applied',
         data: newValues,
       };
-      this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+      this.adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
-    this.blotter.api.gridApi.setGridCells(newValues, true, false);
+    this.adaptable.api.gridApi.setGridCells(newValues, true, false);
   }
 
   public CheckCorrectCellSelection(): BulkUpdateValidationResult {
-    let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+    let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
-    if (this.blotter.api.internalApi.isGridInPivotMode()) {
+    if (this.adaptable.api.internalApi.isGridInPivotMode()) {
       return {
         IsValid: false,
         Alert: {
@@ -136,10 +136,10 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     if (StringExtensions.IsNullOrEmpty(String(bulkUpdateValue))) {
       return null;
     }
-    let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+    let selectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
     let columnId: string = '';
-    if (!this.blotter.api.internalApi.isGridInPivotMode()) {
+    if (!this.adaptable.api.internalApi.isGridInPivotMode()) {
       if (selectedCellInfo != null && selectedCellInfo.Columns.length > 0) {
         columnId = selectedCellInfo.Columns[0].ColumnId;
         let typedBulkUpdateValue: any;
@@ -163,7 +163,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             PrimaryKeyValue: selectedCell.primaryKeyValue,
           };
 
-          let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
+          let validationRules: CellValidationRule[] = this.adaptable.ValidationService.GetValidationRulesForDataChange(
             dataChangedEvent
           );
           let previewResult: IPreviewResult = {

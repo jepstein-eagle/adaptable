@@ -1,4 +1,4 @@
-import { DataChangedInfo } from '../../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../../AdaptableOptions/CommonObjects/DataChangedInfo';
 
 export enum ChangeDirection {
   Up = 'Up',

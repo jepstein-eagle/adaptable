@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { UIHelper } from '../../UIHelper';
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import Dialog from '../../../components/Dialog';
 import { Flex, Box } from 'rebass';
@@ -32,7 +32,7 @@ export class AdaptablePopupPrompt extends React.Component<
 
   render() {
     let modalContainer: HTMLElement = UIHelper.getModalContainer(
-      this.props.Adaptable.blotterOptions,
+      this.props.Adaptable.adaptableOptions,
       document
     );
 

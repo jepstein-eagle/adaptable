@@ -12,11 +12,11 @@ import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/type
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*
-Demo that hopefully will demonstrate how to create a dark themed blotter
+Demo that hopefully will demonstrate how to create a dark theme
 Needs other things to work but it should be possible to stipulate a Current Theme and then that will make it all work?
 */
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(10);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -50,7 +50,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

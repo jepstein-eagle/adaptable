@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { DataType, MathOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -15,10 +15,10 @@ import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.ShortcutStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.ShortcutStrategyId, adaptable);
 
-    this.blotter._on('KeyDown', keyDownEvent => {
+    this.adaptable._on('KeyDown', keyDownEvent => {
       this.handleKeyDown(keyDownEvent);
     });
   }
@@ -32,17 +32,17 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
   }
 
   private handleKeyDown(keyEvent: KeyboardEvent | any) {
-    let shortcuts = this.blotter.api.shortcutApi.getAllShortcut();
+    let shortcuts = this.adaptable.api.shortcutApi.getAllShortcut();
     if (ArrayExtensions.IsNullOrEmpty(shortcuts)) {
       return;
     }
-    let activeCell: GridCell = this.blotter.getActiveCell();
+    let activeCell: GridCell = this.adaptable.getActiveCell();
     if (!activeCell) {
       return;
     }
     let selectedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
       activeCell.columnId,
-      this.blotter.api.gridApi.getColumns()
+      this.adaptable.api.gridApi.getColumns()
     );
     if (activeCell && !selectedColumn.ReadOnly) {
       let columnDataType: DataType = selectedColumn.DataType;
@@ -57,8 +57,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
           if (activeShortcut) {
             let currentCellValue: any;
             // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
-            if (this.blotter.gridHasCurrentEditValue()) {
-              currentCellValue = this.blotter.getCurrentCellEditValue();
+            if (this.adaptable.gridHasCurrentEditValue()) {
+              currentCellValue = this.adaptable.getCurrentCellEditValue();
               valueToReplace = this.CalculateShortcut(
                 currentCellValue,
                 activeShortcut.ShortcutResult,
@@ -82,7 +82,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
           if (activeShortcut) {
             // Date we ONLY replace so dont need to worry about replacing values
             if (activeShortcut.IsDynamic) {
-              valueToReplace = this.blotter.CalendarService.GetDynamicDate(
+              valueToReplace = this.adaptable.CalendarService.GetDynamicDate(
                 activeShortcut.ShortcutResult
               );
             } else {
@@ -95,7 +95,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
 
       if (activeShortcut) {
         //We cancel the edit before doing anything so there is no issue when showing a popup or performing the shortcut
-        this.blotter.cancelEdit();
+        this.adaptable.cancelEdit();
 
         this.applyShortcut(activeShortcut, activeCell, valueToReplace, keyEventString);
         keyEvent.preventDefault();
@@ -127,7 +127,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     newValue: any,
     keyEventString: string
   ): void {
-    this.blotter.api.gridApi.setCellValue(
+    this.adaptable.api.gridApi.setCellValue(
       activeCell.primaryKeyValue,
       activeCell.columnId,
       newValue,
@@ -145,6 +145,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         NewValue: newValue,
       },
     };
-    this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+    this.adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
   }
 }

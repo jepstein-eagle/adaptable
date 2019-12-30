@@ -1,4 +1,4 @@
-import { IAdaptable } from '../../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import * as React from 'react';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
@@ -24,7 +24,7 @@ export interface AdaptablePopupProps extends React.ClassAttributes<AdaptablePopu
   ComponentName?: string;
   ComponentStrategy: AdaptableFunctionName;
   onHide?: () => void;
-  Blotter: IAdaptable;
+  Adaptable: IAdaptable;
   PopupParams: StrategyParams;
   PopupProps?: { [key: string]: any };
   onClearPopupParams?: () => PopupRedux.PopupClearParamAction;
@@ -33,11 +33,11 @@ export interface AdaptablePopupProps extends React.ClassAttributes<AdaptablePopu
 export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
   render() {
     let modalContainer: HTMLElement = UIHelper.getModalContainer(
-      this.props.Blotter.blotterOptions,
+      this.props.Adaptable.adaptableOptions,
       document
     );
     let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
-      this.props.Blotter.api.entitlementsApi.getAllEntitlements(),
+      this.props.Adaptable.api.entitlementsApi.getAllEntitlements(),
       this.props.ComponentStrategy
     );
 
@@ -55,19 +55,19 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
           }
         },
         TeamSharingActivated: AdaptableHelper.isConfigServerEnabled(
-          this.props.Blotter.blotterOptions
+          this.props.Adaptable.adaptableOptions
         ),
-        Columns: this.props.Blotter.api.gridApi.getColumns(),
-        UserFilters: this.props.Blotter.api.userFilterApi.getAllUserFilter(),
-        SystemFilters: this.props.Blotter.api.systemFilterApi.getAllSystemFilter(),
-        NamedFilters: this.props.Blotter.api.namedFilterApi.getAllNamedFilter(),
-        ColumnFilters: this.props.Blotter.api.columnFilterApi.getAllColumnFilter(),
+        Columns: this.props.Adaptable.api.gridApi.getColumns(),
+        UserFilters: this.props.Adaptable.api.userFilterApi.getAllUserFilter(),
+        SystemFilters: this.props.Adaptable.api.systemFilterApi.getAllSystemFilter(),
+        NamedFilters: this.props.Adaptable.api.namedFilterApi.getAllNamedFilter(),
+        ColumnFilters: this.props.Adaptable.api.columnFilterApi.getAllColumnFilter(),
         ModalContainer: modalContainer,
-        ColumnCategories: this.props.Blotter.api.columnCategoryApi.getAllColumnCategory(),
-        ColorPalette: this.props.Blotter.api.userInterfaceApi.getColorPalette(),
-        ColumnSorts: this.props.Blotter.api.gridApi.getColumnSorts(),
+        ColumnCategories: this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory(),
+        ColorPalette: this.props.Adaptable.api.userInterfaceApi.getColorPalette(),
+        ColumnSorts: this.props.Adaptable.api.gridApi.getColumnSorts(),
         AccessLevel: accessLevel,
-        Blotter: this.props.Blotter,
+        Adaptable: this.props.Adaptable,
       };
 
       var body: any = React.createElement(bodyElement, commonProps);

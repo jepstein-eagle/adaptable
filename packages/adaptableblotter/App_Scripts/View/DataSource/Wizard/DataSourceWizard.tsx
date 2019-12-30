@@ -18,7 +18,7 @@ export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}>
         <AdaptableWizard
           FriendlyName={StrategyConstants.DataSourceStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

@@ -3,24 +3,22 @@ import { AdaptableOptions } from '../adaptableblotter/types';
 import Adaptable from '../adaptableblotter/App_Scripts/agGrid';
 import { Grid, GridOptions } from 'ag-grid-community';
 
-export function createBlotter({
-  blotterOptions,
-
-  blotterContainerId,
+export function createAdaptable({
+  adaptableOptions,
+  adaptableContainerId,
   gridContainerId,
 }: {
-  blotterOptions: AdaptableOptions;
-
-  blotterContainerId: string;
+  adaptableOptions: AdaptableOptions;
+  adaptableContainerId: string;
   gridContainerId: string;
 }) {
   return (gridOptions: GridOptions, gridParams: any) => {
     return new Adaptable(
       {
-        ...blotterOptions,
+        ...adaptableOptions,
         containerOptions: {
-          ...blotterOptions.containerOptions,
-          adaptableBlotterContainer: blotterContainerId,
+          ...adaptableOptions.containerOptions,
+          adaptableContainer: adaptableContainerId,
           vendorContainer: gridContainerId,
         },
         vendorGrid: gridOptions,

@@ -129,7 +129,7 @@ class ShortcutPopupComponent extends React.Component<
               SystemFilters={this.props.SystemFilters}
               NamedFilters={this.props.NamedFilters}
               ColumnCategories={this.props.ColumnCategories}
-              Blotter={this.props.Blotter}
+              Adaptable={this.props.Adaptable}
               DateKeysAvailable={
                 shortcut.ShortcutKey
                   ? keys

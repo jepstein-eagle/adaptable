@@ -23,7 +23,7 @@ export class CalculatedColumnSummaryWizard
       { Key: 'Name', Value: this.props.Data.ColumnId },
       {
         Key: 'Expression',
-        Value: this.props.Blotter.CalculatedColumnExpressionService.GetExpressionString(
+        Value: this.props.Adaptable.CalculatedColumnExpressionService.GetExpressionString(
           this.props.Data.ColumnExpression,
           this.props.Columns
         ),

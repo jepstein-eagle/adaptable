@@ -43,19 +43,19 @@ import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
 
 /**
- * The Blotter API provides developers with run-time access to the Adaptable Blotter.
+ * The Blotter API provides developers with run-time access to the Adaptable.
  *
- * It attempts to offer ALL the functionality provided by the Adaptable Blotter UI in code form.
+ * It attempts to offer ALL the functionality provided by the Adaptable UI in code form.
  *
- * This enables developers to access the Adaptable Blotter Store at a run-time in a 'safe' way.
+ * This enables developers to access the Adaptable Store at a run-time in a 'safe' way.
  *
- * It also allows them to access all the functionality in the Adaptable Blotter while bypassing the UI screens altogether if they so wish.
+ * It also allows them to access all the functionality in the Adaptable while bypassing the UI screens altogether if they so wish.
  *
- * *Note to Adaptable Blotter users: If there is a method missing that you would like implemented please contact support@adaptabletools.com*
+ * *Note to Adaptable users: If there is a method missing that you would like implemented please contact support@adaptabletools.com*
  *
  * The Blotter API consists of over 40 sets of properties grouped against a particular function.
  *
- * Each of these properties is a class that contains a set of API method grouped either by Adaptable Blotter Function (e.g. *AdvancedSearchAPI*) or type (e.g. *AuditEventApi*)
+ * Each of these properties is a class that contains a set of API method grouped either by Adaptable Function (e.g. *AdvancedSearchAPI*) or type (e.g. *AuditEventApi*)
  */
 
 export interface AdaptableApi {
@@ -172,7 +172,7 @@ export interface AdaptableApi {
   entitlementsApi: EntitlementsApi;
 
   /**
-   * The Api used for listenning / subscribing to the various Events fired / published by the Adaptable Blotter e.g. the SearchChanged event.
+   * The Api used for listenning / subscribing to the various Events fired / published by the Adaptable e.g. the SearchChanged event.
    */
   eventApi: EventApi;
 
@@ -242,7 +242,7 @@ export interface AdaptableApi {
   smartEditApi: SmartEditApi;
 
   /**
-   * Provides access to [System Filter State](_predefinedconfig_runtimestate_systemfilterstate_.systemfilterstate.html) that manages the Filters that the Adaptable Blotter ships with.
+   * Provides access to [System Filter State](_predefinedconfig_runtimestate_systemfilterstate_.systemfilterstate.html) that manages the Filters that the Adaptable ships with.
    */
   systemFilterApi: SystemFilterApi;
 
@@ -267,9 +267,9 @@ export interface AdaptableApi {
   userFilterApi: UserFilterApi;
 
   /**
-   * API methods used internally within the Adaptable Blotter.
+   * API methods used internally within the Adaptable.
    *
-   * **It is not recommended to use this section if using the Adaptable Blotter externally**
+   * **It is not recommended to use this section if using the Adaptable externally**
    */
   internalApi: InternalApi;
 

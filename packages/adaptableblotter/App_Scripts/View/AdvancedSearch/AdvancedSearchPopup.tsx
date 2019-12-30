@@ -145,7 +145,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             <AdvancedSearchWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject}
               ConfigEntities={this.props.AdvancedSearches}
-              Blotter={this.props.Blotter}
+              Adaptable={this.props.Adaptable}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
               UserFilters={this.props.UserFilters}
@@ -196,7 +196,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     ) {
       if (
         this.props.AdvancedSearches ===
-        this.props.Blotter.api.advancedSearchApi.getAllAdvancedSearch()
+        this.props.Adaptable.api.advancedSearchApi.getAllAdvancedSearch()
       ) {
         this.props.onClosePopup();
       }

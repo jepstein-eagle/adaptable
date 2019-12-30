@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
@@ -9,8 +9,8 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export class FreeTextColumnStrategy extends AdaptableStrategyBase
   implements IFreeTextColumnStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.FreeTextColumnStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.FreeTextColumnStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -22,9 +22,9 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       if (
-        this.blotter.api.freeTextColumnApi
+        this.adaptable.api.freeTextColumnApi
           .getAllFreeTextColumn()
           .find(ftc => ftc.ColumnId == column.ColumnId)
       ) {

@@ -23,7 +23,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
         <AdaptableWizard
           FriendlyName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

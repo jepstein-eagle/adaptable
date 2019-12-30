@@ -8,7 +8,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Each Calculated Column contains an **Expression** which is used to evaluate the contents of the cell.
  *
- * The Adaptable Blotter uses an external library [mathjs](https://mathjs.org) to create the Expression.
+ * The Adaptable uses an external library [mathjs](https://mathjs.org) to create the Expression.
  *
  * Once created a Calculated Column is treated like any other Column in the Grid - though **only the name and Expression are stored** and not the cell data.
  *
@@ -45,7 +45,7 @@ export interface CalculatedColumn extends AdaptableObject {
   /**
    * An **Expression** which will retrieve the value to display in the Column and is re-evaluated each time cells in the columns in the expression change.
    *
-   * The expression (which is not the same as an Adaptable Blotter expression) evaluates using the [mathjs library](https://mathjs.org).
+   * The expression (which is not the same as an Adaptable expression) evaluates using the [mathjs library](https://mathjs.org).
    */
   ColumnExpression: string;
 }

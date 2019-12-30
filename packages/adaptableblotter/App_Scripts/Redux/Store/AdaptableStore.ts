@@ -54,7 +54,7 @@ import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
 import * as PartnerRedux from '../ActionsReducers/PartnerRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
 import {
   IBulkUpdateStrategy,
@@ -130,7 +130,7 @@ import { ChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
-import { DataChangedInfo } from '../../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ServiceStatus } from '../../Utilities/Services/PushPullService';
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
@@ -138,7 +138,7 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 
 type EmitterCallback = (data?: any) => any;
 /*
-This is the main store for the Adaptable Blotter
+This is the main store for the Adaptable adaptable
 */
 
 const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<AdaptableState>({
@@ -265,8 +265,8 @@ const rootReducerWithResetManagement = (state: AdaptableState, action: Redux.Act
   return rootReducer(state, action);
 };
 
-// const configServerUrl = "/adaptableblotter-config"
-const configServerTeamSharingUrl = '/adaptableblotter-teamsharing';
+// const configServerUrl = "/adaptableadaptable-config"
+const configServerTeamSharingUrl = '/adaptableadaptable-teamsharing';
 
 export class AdaptableStore implements IAdaptableStore {
   public TheStore: Redux.Store<AdaptableState>;
@@ -286,30 +286,30 @@ export class AdaptableStore implements IAdaptableStore {
     return this.emitter.emit(eventName, data);
   };
 
-  constructor(blotter: IAdaptable) {
+  constructor(adaptable: IAdaptable) {
     let storageEngine: IStorageEngine;
 
     this.emitter = new Emitter();
 
     // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
-    // not sure we can do this as we need to be backwardly compatible with existing users so need to stick with blotter id (which should be unique)
-    // const localStorageKey =  'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey;
+    // not sure we can do this as we need to be backwardly compatible with existing users so need to stick with adaptable id (which should be unique)
+    // const localStorageKey =  'adaptable-adaptable-state-' + adaptable.adaptableOptions.primaryKey;
 
-    if (AdaptableHelper.isConfigServerEnabled(blotter.blotterOptions)) {
+    if (AdaptableHelper.isConfigServerEnabled(adaptable.adaptableOptions)) {
       storageEngine = createEngineRemote({
-        url: blotter.blotterOptions.configServerOptions.configServerUrl,
-        userName: blotter.blotterOptions.userName,
-        blotterId: blotter.blotterOptions.blotterId,
-        loadState: blotter.blotterOptions.stateOptions.loadState,
-        persistState: blotter.blotterOptions.stateOptions.persistState,
+        url: adaptable.adaptableOptions.configServerOptions.configServerUrl,
+        userName: adaptable.adaptableOptions.userName,
+        adaptableId: adaptable.adaptableOptions.adaptableId,
+        loadState: adaptable.adaptableOptions.stateOptions.loadState,
+        persistState: adaptable.adaptableOptions.stateOptions.persistState,
       });
     } else {
       storageEngine = createEngineLocal({
-        blotterId: blotter.blotterOptions.blotterId,
-        userName: blotter.blotterOptions.userName,
-        predefinedConfig: blotter.blotterOptions.predefinedConfig,
-        loadState: blotter.blotterOptions.stateOptions.loadState,
-        persistState: blotter.blotterOptions.stateOptions.persistState,
+        adaptableId: adaptable.adaptableOptions.adaptableId,
+        userName: adaptable.adaptableOptions.userName,
+        predefinedConfig: adaptable.adaptableOptions.predefinedConfig,
+        loadState: adaptable.adaptableOptions.stateOptions.loadState,
+        persistState: adaptable.adaptableOptions.stateOptions.persistState,
       });
     }
 
@@ -360,7 +360,7 @@ export class AdaptableStore implements IAdaptableStore {
           delete storageState[key];
         });
 
-        storageEngine.save(blotter.blotterOptions.stateOptions.saveState(storageState));
+        storageEngine.save(adaptable.adaptableOptions.stateOptions.saveState(storageState));
       }
 
       return newState;
@@ -372,9 +372,9 @@ export class AdaptableStore implements IAdaptableStore {
       persistedReducer,
       composeEnhancers(
         Redux.applyMiddleware(
-          stateChangedAuditLogMiddleware(blotter), // checks for changes in internal / user state and sends to audit log
-          adaptableBlotterMiddleware(blotter), // the main middleware that actually does stuff
-          functionAppliedLogMiddleware(blotter) // looks at when functions are applied (e..g Quick Search) and logs accordingly
+          stateChangedAuditLogMiddleware(adaptable), // checks for changes in internal / user state and sends to audit log
+          adaptableadaptableMiddleware(adaptable), // the main middleware that actually does stuff
+          functionAppliedLogMiddleware(adaptable) // looks at when functions are applied (e..g Quick Search) and logs accordingly
         )
       )
     );
@@ -384,15 +384,15 @@ export class AdaptableStore implements IAdaptableStore {
       .then(storedState => {
         if (storedState && this.loadStartOnStartup) {
           this.TheStore.dispatch(
-            LoadState(blotter.blotterOptions.stateOptions.applyState(storedState))
+            LoadState(adaptable.adaptableOptions.stateOptions.applyState(storedState))
           );
         }
       })
       .then(
         () => this.TheStore.dispatch(InitState()),
         e => {
-          LoggingHelper.LogAdaptableError('Failed to load previous adaptable blotter state : ', e);
-          //for now i'm still initializing the AB even if loading state has failed....
+          LoggingHelper.LogAdaptableError('Failed to load previous Adaptable State : ', e);
+          //for now i'm still initializing Adaptable even if loading state has failed....
           //we may revisit that later
           this.TheStore.dispatch(InitState());
           this.TheStore.dispatch(
@@ -412,7 +412,7 @@ export class AdaptableStore implements IAdaptableStore {
 // this function checks for any differences in the state and sends it to AUDIT LOGGER (for use in Audit Log)
 // we now allow users to differentiate between user and internal state so we check for both
 // NOTE: the Audit Logger is also responsible for firing AuditEventApi changes if that has been set
-var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
+var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
@@ -420,8 +420,8 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
       return function(action: Redux.Action) {
         if (
           // if audit state is turned off, then get out
-          !adaptableBlotter.isInitialised ||
-          !adaptableBlotter.AuditLogService.isAuditStateChangesEnabled
+          !adaptable.isInitialised ||
+          !adaptable.AuditLogService.isAuditStateChangesEnabled
         ) {
           return next(action);
         }
@@ -435,11 +435,11 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
         // we audit state changes only if audit is set to log internal state
         // and we send a diff of the change to Audit Log for Internal Changes
         if (ArrayExtensions.ContainsItem(getNonPersistedReduxActions(), action.type)) {
-          if (adaptableBlotter.AuditLogService.isAuditInternalStateChangesEnabled) {
+          if (adaptable.AuditLogService.isAuditInternalStateChangesEnabled) {
             let oldState = middlewareAPI.getState();
             let ret = next(action);
             let newState = middlewareAPI.getState();
-            let diff = adaptableBlotter.AuditLogService.convertAuditMessageToText(
+            let diff = adaptable.AuditLogService.convertAuditMessageToText(
               DeepDiff.diff(oldState, newState)
             );
 
@@ -450,7 +450,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               diffInfo: diff,
             };
 
-            adaptableBlotter.AuditLogService.addInternalStateChangeAuditLog(stateChangedDetails);
+            adaptable.AuditLogService.addInternalStateChangeAuditLog(stateChangedDetails);
             return ret;
           } else {
             return next(action);
@@ -458,7 +458,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
         }
 
         // Unlikely but possible that ONLY Internal Audit is on so get out if so...
-        if (!adaptableBlotter.AuditLogService.isAuditUserStateChangesEnabled) {
+        if (!adaptable.AuditLogService.isAuditUserStateChangesEnabled) {
           return next(action);
         }
 
@@ -467,7 +467,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
         let oldState = middlewareAPI.getState();
         let ret = next(action);
         let newState = middlewareAPI.getState();
-        let diff = adaptableBlotter.AuditLogService.convertAuditMessageToText(
+        let diff = adaptable.AuditLogService.convertAuditMessageToText(
           DeepDiff.diff(oldState, newState)
         );
 
@@ -489,7 +489,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.AdvancedSearch.CurrentAdvancedSearch,
               newValue: actionTyped.selectedSearchName,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case AdvancedSearchRedux.ADVANCED_SEARCH_ADD: {
@@ -502,7 +502,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.advancedSearch,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case AdvancedSearchRedux.ADVANCED_SEARCH_EDIT: {
@@ -515,7 +515,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.advancedSearch,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
@@ -528,7 +528,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.advancedSearch,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -546,7 +546,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.alertDefinition,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case AlertRedux.ALERT_DEFIINITION_EDIT: {
@@ -559,7 +559,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.alertDefinition,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case AlertRedux.ALERT_DEFIINITION_DELETE: {
@@ -572,7 +572,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.alertDefinition,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -591,7 +591,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.BulkUpdate.BulkUpdateValue,
               newValue: actionTyped.bulkUpdateValue,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
 
@@ -610,7 +610,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.calculatedColumn,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
@@ -623,7 +623,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.calculatedColumn,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case CalculatedColumnRedux.CalculatedColumnDelete: {
@@ -636,7 +636,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.calculatedColumn,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -655,7 +655,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.Calendar.CurrentCalendar,
               newValue: actionTyped.selectedCalendarName,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -674,7 +674,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.CellSummary.SummaryOperation,
               newValue: actionTyped.SummaryOperation,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -692,7 +692,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.cellValidationRule,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case CellValidationRedux.CELL_VALIDATION_EDIT: {
@@ -705,7 +705,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.cellValidationRule,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case CellValidationRedux.CELL_VALIDATION_DELETE: {
@@ -718,7 +718,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.cellValidationRule,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -737,7 +737,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.Chart.CurrentChartName,
               newValue: actionTyped.chartName,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ChartRedux.CHART_DEFINITION_ADD: {
@@ -750,7 +750,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.chartDefinition,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ChartRedux.CHART_DEFINITION_EDIT: {
@@ -763,7 +763,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.chartDefinition,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ChartRedux.CHART_DEFINITION_DELETE: {
@@ -776,7 +776,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.chartDefinition,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -794,7 +794,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.columnCategory,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ColumnCategoryRedux.COLUMN_CATEGORY_EDIT: {
@@ -807,7 +807,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.columnCategory,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
@@ -820,7 +820,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.columnCategory,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -838,7 +838,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.columnFilter,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ColumnFilterRedux.COLUMN_FILTER_EDIT: {
@@ -851,7 +851,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.columnFilter,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ColumnFilterRedux.COLUMN_FILTER_CLEAR: {
@@ -864,7 +864,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: undefined, // TODO: actionTyped.columnId - this should have the object not te column?
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ColumnFilterRedux.COLUMN_FILTER_CLEAR_ALL: {
@@ -876,7 +876,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: null,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
 
@@ -895,7 +895,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.conditionalStyle,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT: {
@@ -908,7 +908,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.conditionalStyle,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE: {
@@ -921,7 +921,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.conditionalStyle,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -939,7 +939,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.customSort,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case CustomSortRedux.CUSTOM_SORT_EDIT: {
@@ -953,7 +953,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.customSort,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case CustomSortRedux.CUSTOM_SORT_DELETE: {
@@ -967,7 +967,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.customSort,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -986,7 +986,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.DataSource.CurrentDataSource,
               newValue: actionTyped.SelectedDataSource,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case DataSourceRedux.DATA_SOURCE_ADD: {
@@ -999,7 +999,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.dataSource,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case DataSourceRedux.DATA_SOURCE_EDIT: {
@@ -1012,7 +1012,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.dataSource,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case DataSourceRedux.DATA_SOURCE_DELETE: {
@@ -1025,7 +1025,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.dataSource,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1044,7 +1044,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.Export.CurrentReport,
               newValue: actionTyped.SelectedReport,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ExportRedux.REPORT_ADD: {
@@ -1057,7 +1057,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.report,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ExportRedux.REPORT_EDIT: {
@@ -1070,7 +1070,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.report,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ExportRedux.REPORT_DELETE: {
@@ -1083,7 +1083,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.report,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           } /*
           **********************
@@ -1101,7 +1101,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.FlashingCell.DefaultUpColor,
               newValue: actionTyped.UpColor,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR: {
@@ -1115,7 +1115,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.FlashingCell.DefautDownColor,
               newValue: actionTyped.DownColor,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION: {
@@ -1129,7 +1129,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.FlashingCell.DefaultDuration.toString(),
               newValue: actionTyped.NewFlashDuration.toString(),
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1147,7 +1147,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.formatColumn,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case FormatColumnRedux.FORMAT_COLUMN_EDIT: {
@@ -1160,7 +1160,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.formatColumn,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case FormatColumnRedux.FORMAT_COLUMN_DELETE: {
@@ -1173,7 +1173,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.formatColumn,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1191,7 +1191,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.freeTextColumn,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
@@ -1204,7 +1204,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.freeTextColumn,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_DELETE: {
@@ -1217,7 +1217,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.freeTextColumn,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
 
@@ -1237,7 +1237,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.Layout.CurrentLayout,
               newValue: actionTyped.LayoutName,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case LayoutRedux.LAYOUT_SAVE: {
@@ -1250,7 +1250,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.layout,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case LayoutRedux.LAYOUT_ADD: {
@@ -1263,7 +1263,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.layout,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case LayoutRedux.LAYOUT_EDIT: {
@@ -1276,7 +1276,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.layout,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case LayoutRedux.LAYOUT_DELETE: {
@@ -1289,7 +1289,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.layout,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1307,7 +1307,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.percentBar,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case PercentBarRedux.PERCENT_BAR_EDIT: {
@@ -1320,7 +1320,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.percentBar,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case PercentBarRedux.PERCENT_BAR_DELETE: {
@@ -1333,7 +1333,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.percentBar,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
 
@@ -1352,7 +1352,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.sparklineColumn,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case SparklineColumnRedux.SPARKLINE_COLUMNS_EDIT: {
@@ -1365,7 +1365,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.sparklineColumn,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case SparklineColumnRedux.SPARKLINE_COLUMNS_DELETE: {
@@ -1378,7 +1378,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.sparklineColumn,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1396,7 +1396,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.plusMinusRule,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case PlusMinusRedux.PLUS_MINUS_RULE_EDIT: {
@@ -1409,7 +1409,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.plusMinusRule,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case PlusMinusRedux.PLUS_MINUS_RULE_DELETE: {
@@ -1422,7 +1422,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.plusMinusRule,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1441,7 +1441,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.QuickSearch.QuickSearchText,
               newValue: actionTyped.quickSearchText,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
@@ -1455,7 +1455,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.QuickSearch.DisplayAction,
               newValue: actionTyped.DisplayAction,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
@@ -1466,14 +1466,12 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               state: newState.QuickSearch,
               diffInfo: diff,
               propertyName: QUICK_SEARCH_STYLE_STATE_PROPERTY,
-              oldValue: adaptableBlotter.AuditLogService.convertAuditMessageToText(
+              oldValue: adaptable.AuditLogService.convertAuditMessageToText(
                 oldState.QuickSearch.Style
               ),
-              newValue: adaptableBlotter.AuditLogService.convertAuditMessageToText(
-                actionTyped.style
-              ),
+              newValue: adaptable.AuditLogService.convertAuditMessageToText(actionTyped.style),
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
 
@@ -1492,7 +1490,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.reminder,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ReminderRedux.REMINDER_EDIT: {
@@ -1505,7 +1503,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.reminder,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ReminderRedux.REMINDER_DELETE: {
@@ -1518,7 +1516,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.reminder,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1536,7 +1534,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.shortcut,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ShortcutRedux.SHORTCUT_EDIT: {
@@ -1549,7 +1547,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.shortcut,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case ShortcutRedux.SHORTCUT_DELETE: {
@@ -1562,7 +1560,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.shortcut,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1581,7 +1579,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.SmartEdit.SmartEditValue.toString(),
               newValue: actionTyped.value.toString(),
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION: {
@@ -1595,7 +1593,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.SmartEdit.MathOperation,
               newValue: actionTyped.MathOperation,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1615,7 +1613,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               oldValue: oldState.Theme.CurrentTheme,
               newValue: actionTyped.type,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /*
@@ -1633,7 +1631,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.userFilter,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case UserFilterRedux.USER_FILTER_EDIT: {
@@ -1646,7 +1644,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.userFilter,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           case UserFilterRedux.USER_FILTER_DELETE: {
@@ -1659,7 +1657,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               objectChanged: actionTyped.userFilter,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
           /**
@@ -1678,7 +1676,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               diffInfo: diff,
             };
 
-            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(stateChangedDetails);
+            adaptable.AuditLogService.addUserStateChangeAuditLog(stateChangedDetails);
             return ret;
           }
         }
@@ -1690,13 +1688,13 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptable): any =>
 // there are relatively few - primarily relating to search and edit functions
 // note it does not capture when something happens automatically as the result of a function (e.g. if a conditional style gets applied because a value has changed)
 // e.g. this should say when the current Advanced search has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
-var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
+var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
     return function(next: Redux.Dispatch<Redux.Action<AdaptableState>>) {
       return function(action: Redux.Action) {
-        if (!adaptableBlotter.AuditLogService.isAuditFunctionEventsEnabled) {
+        if (!adaptable.AuditLogService.isAuditFunctionEventsEnabled) {
           // not logging functions so leave...
           return next(action);
         }
@@ -1722,7 +1720,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               info: actionTyped.selectedSearchName,
               data: advancedSearch,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1735,7 +1733,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               info: CURRENT_CALENDAR_STATE_PROPERTY,
               data: actionTyped.selectedCalendarName,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1748,7 +1746,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               info: actionTyped.chartName,
               data: chart,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1763,7 +1761,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               info: actionTyped.SelectedDataSource,
               data: dataSource,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1775,7 +1773,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               info: actionTyped.Report.Name,
               data: actionTyped.Report,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1784,12 +1782,10 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.FlashingCellsStrategyId,
               action: action.type,
-              info: adaptableBlotter.AuditLogService.convertAuditMessageToText(
-                actionTyped.FlashingCell
-              ),
+              info: adaptable.AuditLogService.convertAuditMessageToText(actionTyped.FlashingCell),
               data: actionTyped.FlashingCell,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1798,12 +1794,10 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.FlashingCellsStrategyId,
               action: action.type,
-              info: adaptableBlotter.AuditLogService.convertAuditMessageToText(
-                actionTyped.FlashingCells
-              ),
+              info: adaptable.AuditLogService.convertAuditMessageToText(actionTyped.FlashingCells),
               data: actionTyped.FlashingCells,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1815,7 +1809,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               info: actionTyped.FreeTextColumn.ColumnId,
               data: actionTyped.FreeTextStoredValue,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1830,7 +1824,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               data: state.QuickSearch,
             };
 
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
           case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
@@ -1843,7 +1837,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               data: state.QuickSearch,
             };
 
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
           case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
@@ -1855,7 +1849,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               data: state.QuickSearch,
             };
 
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
           case PlusMinusRedux.PLUS_MINUS_APPLY: {
@@ -1867,7 +1861,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               data: actionTyped.GridCells,
             };
 
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1880,7 +1874,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               info: CURRENT_THEME_STATE_PROPERTY,
               data: actionTyped.Theme,
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1898,7 +1892,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
                 ),
               },
             };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
           case ColumnFilterRedux.COLUMN_FILTER_EDIT: {
@@ -1916,7 +1910,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               },
             };
 
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1932,7 +1926,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
               },
             };
 
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
 
@@ -1947,7 +1941,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptable): any =>
 
 // this is the main function for dealing with Redux Actions which require additional functionality to be triggered.
 // Please document each use case where we have to use the Store rather than a strategy or a popup screen
-var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
+var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
@@ -1964,7 +1958,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
            */
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
             let ret = next(action);
-            blotter.applyGridFiltering();
+            adaptable.applyGridFiltering();
             return ret;
           }
 
@@ -1978,7 +1972,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
               .CurrentAdvancedSearch;
             let ret = next(action);
             if (CurrentAdvancedSearch == actionTyped.advancedSearch.Name) {
-              blotter.applyGridFiltering();
+              adaptable.applyGridFiltering();
             }
             return ret;
           }
@@ -1999,7 +1993,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
               actionTyped.Alert.DataChangedInfo
             ) {
               let record = actionTyped.Alert.DataChangedInfo.RowNode;
-              blotter.refreshCells([record], [actionTyped.Alert.DataChangedInfo.ColumnId]);
+              adaptable.refreshCells([record], [actionTyped.Alert.DataChangedInfo.ColumnId]);
             }
             return ret;
           }
@@ -2016,7 +2010,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             alerts.forEach(alert => {
               if (alert.AlertDefinition.AlertProperties.HighlightCell && alert.DataChangedInfo) {
                 let record = alert.DataChangedInfo.RowNode;
-                blotter.refreshCells([record], [alert.DataChangedInfo.ColumnId]);
+                adaptable.refreshCells([record], [alert.DataChangedInfo.ColumnId]);
               }
             });
 
@@ -2034,10 +2028,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
           case SystemRedux.SYSTEM_UPDATED_ROW_DELETE: {
             const actionTyped = action as SystemRedux.SystemUpdatedRowDeleteAction;
             let ret = next(action);
-            let rowNode: any[] = blotter.getRowNodeForPrimaryKey(
+            let rowNode: any[] = adaptable.getRowNodeForPrimaryKey(
               actionTyped.updatedRowInfo.primaryKeyValue
             );
-            blotter.redrawRow(rowNode);
+            adaptable.redrawRow(rowNode);
             return ret;
           }
 
@@ -2050,8 +2044,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             let ret = next(action);
             let updatedRowInfos: UpdatedRowInfo[] = actionTyped.updatedRowInfos;
             updatedRowInfos.forEach(uri => {
-              let rowNode: any[] = blotter.getRowNodeForPrimaryKey(uri.primaryKeyValue);
-              blotter.redrawRow(rowNode);
+              let rowNode: any[] = adaptable.getRowNodeForPrimaryKey(uri.primaryKeyValue);
+              adaptable.redrawRow(rowNode);
             });
             return ret;
           }
@@ -2065,7 +2059,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
            * Action: If it is valid, then clear any error; otherwise set one
            */
           case SystemRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
-            let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid(
+            let returnObj = adaptable.CalculatedColumnExpressionService.IsExpressionValid(
               (action as SystemRedux.CalculatedColumnIsExpressionValidAction).expression
             );
             if (!returnObj.IsValid) {
@@ -2080,27 +2074,27 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
 
           /**
            * Use Cases: User has created / edited / deleted a Calculated Column
-           * Action:  Tell the blotter so it can do what it needs
+           * Action:  Tell the adaptable so it can do what it needs
            */
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
             let returnAction = next(action);
             let calculatedColumn: CalculatedColumn = (action as CalculatedColumnRedux.CalculatedColumnAddAction)
               .calculatedColumn;
-            blotter.addCalculatedColumnToGrid(calculatedColumn);
+            adaptable.addCalculatedColumnToGrid(calculatedColumn);
             return returnAction;
           }
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
-            blotter.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
+            adaptable.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
             let returnAction = next(action);
             return returnAction;
           }
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
-            blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
+            adaptable.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
             let returnAction = next(action);
             return returnAction;
           }
@@ -2111,25 +2105,25 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
 
           /**
            * Use Cases: User has created / edited / deleted a Free Text column
-           * Action:  Tell the blotter so it can do what it needs
+           * Action:  Tell the adaptable so it can do what it needs
            */
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
             const actionTyped = action as FreeTextColumnRedux.FreeTextColumnAddAction;
-            blotter.addFreeTextColumnToGrid(actionTyped.freeTextColumn);
+            adaptable.addFreeTextColumnToGrid(actionTyped.freeTextColumn);
             let returnAction = next(action);
             return returnAction;
           }
 
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
             const actionTyped = action as FreeTextColumnRedux.FreeTextColumnEditAction;
-            blotter.editFreeTextColumnInGrid(actionTyped.freeTextColumn);
+            adaptable.editFreeTextColumnInGrid(actionTyped.freeTextColumn);
             let returnAction = next(action);
             return returnAction;
           }
 
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_DELETE: {
             const actionTyped = action as FreeTextColumnRedux.FreeTextColumnDeleteAction;
-            blotter.removeFreeTextColumnFromGrid(actionTyped.freeTextColumn.ColumnId);
+            adaptable.removeFreeTextColumnFromGrid(actionTyped.freeTextColumn.ColumnId);
             let returnAction = next(action);
             return returnAction;
           }
@@ -2217,8 +2211,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             let layoutState = middlewareAPI.getState().Layout;
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
             if (currentLayout) {
-              if (currentLayout.BlotterGridInfo == null) {
-                currentLayout.BlotterGridInfo = {
+              if (currentLayout.AdaptableGridInfo == null) {
+                currentLayout.AdaptableGridInfo = {
                   CurrentColumns: currentLayout.Columns,
                   CurrentColumnSorts: currentLayout.ColumnSorts,
                 };
@@ -2226,41 +2220,43 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
 
               let hasNoVendorGridInfo: boolean = currentLayout.VendorGridInfo == null;
               if (hasNoVendorGridInfo) {
-                blotter.setGroupedColumns(currentLayout.GroupedColumns);
-                blotter.setPivotingDetails(currentLayout.PivotDetails);
+                adaptable.setGroupedColumns(currentLayout.GroupedColumns);
+                adaptable.setPivotingDetails(currentLayout.PivotDetails);
               }
 
               let gridState: GridState = middlewareAPI.getState().Grid;
               // set columns
-              let blotterColumns: AdaptableColumn[] = [];
-              currentLayout.BlotterGridInfo.CurrentColumns.forEach(c => {
+              let adaptableColumns: AdaptableColumn[] = [];
+              currentLayout.AdaptableGridInfo.CurrentColumns.forEach(c => {
                 let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
                 if (column) {
-                  blotterColumns.push(column);
+                  adaptableColumns.push(column);
                 } else {
                   LoggingHelper.LogAdaptableWarning(
                     "Column '" + c + "' not found while selecting layout: " + currentLayout
                   );
                 }
               });
-              middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(blotterColumns));
+              middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(adaptableColumns));
               // set sort
               middlewareAPI.dispatch(
-                GridRedux.GridSetSort(currentLayout.BlotterGridInfo.CurrentColumnSorts)
+                GridRedux.GridSetSort(currentLayout.AdaptableGridInfo.CurrentColumnSorts)
               );
-              blotter.setColumnSort(currentLayout.BlotterGridInfo.CurrentColumnSorts);
+              adaptable.setColumnSort(currentLayout.AdaptableGridInfo.CurrentColumnSorts);
 
               // set pivot mode
-              blotter.setPivotMode(currentLayout.PivotDetails, currentLayout.VendorGridInfo);
+              adaptable.setPivotMode(currentLayout.PivotDetails, currentLayout.VendorGridInfo);
 
               // set vendor specific info
-              blotter.setVendorGridLayoutInfo(currentLayout.VendorGridInfo);
-              //  blotter.reloadGrid();
+              adaptable.setVendorGridLayoutInfo(currentLayout.VendorGridInfo);
+              //  adaptable.reloadGrid();
               if (hasNoVendorGridInfo) {
                 let currentGridVendorInfo =
                   currentLayout.Name == DEFAULT_LAYOUT
-                    ? blotter.getVendorGridDefaultLayoutInfo()
-                    : blotter.getVendorGridLayoutInfo(currentLayout.BlotterGridInfo.CurrentColumns);
+                    ? adaptable.getVendorGridDefaultLayoutInfo()
+                    : adaptable.getVendorGridLayoutInfo(
+                        currentLayout.AdaptableGridInfo.CurrentColumns
+                      );
 
                 currentLayout.VendorGridInfo = currentGridVendorInfo;
                 middlewareAPI.dispatch(LayoutRedux.LayoutSave(currentLayout));
@@ -2283,18 +2279,18 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             let returnAction = next(action);
             const actionTyped = action as LayoutRedux.LayoutSaveAction;
             let layout: Layout = Helper.cloneObject(actionTyped.layout);
-            if (layout.BlotterGridInfo == null) {
-              layout.BlotterGridInfo = {
+            if (layout.AdaptableGridInfo == null) {
+              layout.AdaptableGridInfo = {
                 CurrentColumns: layout.Columns,
                 CurrentColumnSorts: layout.ColumnSorts,
               };
             }
             if (layout.VendorGridInfo == null) {
-              blotter.setGroupedColumns(layout.GroupedColumns);
-              blotter.setPivotingDetails(layout.PivotDetails);
+              adaptable.setGroupedColumns(layout.GroupedColumns);
+              adaptable.setPivotingDetails(layout.PivotDetails);
             }
 
-            let layouts: Layout[] = blotter.api.layoutApi.getAllLayout();
+            let layouts: Layout[] = adaptable.api.layoutApi.getAllLayout();
             let isExistingLayout: boolean = layouts.find(l => l.Uuid == layout.Uuid) != null;
 
             // if its default layout then we need to use the id for that one to prevent 2 layouts being created
@@ -2309,8 +2305,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             if (isExistingLayout) {
               let currentGridVendorInfo =
                 layout.Name == DEFAULT_LAYOUT
-                  ? blotter.getVendorGridDefaultLayoutInfo()
-                  : blotter.getVendorGridLayoutInfo(layout.BlotterGridInfo.CurrentColumns);
+                  ? adaptable.getVendorGridDefaultLayoutInfo()
+                  : adaptable.getVendorGridLayoutInfo(layout.AdaptableGridInfo.CurrentColumns);
 
               layout.VendorGridInfo = currentGridVendorInfo;
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
@@ -2324,12 +2320,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             const actionTyped = action as LayoutRedux.LayoutRestoreAction;
             let layout: Layout = Helper.cloneObject(actionTyped.layout);
             layout.VendorGridInfo = null;
-            layout.BlotterGridInfo = null;
+            layout.AdaptableGridInfo = null;
             if (layout.GroupedColumns == null) {
               layout.GroupedColumns = [];
             }
-            blotter.setGroupedColumns(layout.GroupedColumns);
-            blotter.setPivotingDetails(layout.PivotDetails);
+            adaptable.setGroupedColumns(layout.GroupedColumns);
+            adaptable.setPivotingDetails(layout.PivotDetails);
 
             middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             middlewareAPI.dispatch(LayoutRedux.LayoutSelect(layout.Name));
@@ -2352,7 +2348,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
            */
           case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
             let SmartEditStrategy = <ISmartEditStrategy>(
-              blotter.strategies.get(StrategyConstants.SmartEditStrategyId)
+              adaptable.strategies.get(StrategyConstants.SmartEditStrategyId)
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
@@ -2394,7 +2390,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             let returnAction = next(action);
 
             let SmartEditStrategy = <ISmartEditStrategy>(
-              blotter.strategies.get(StrategyConstants.SmartEditStrategyId)
+              adaptable.strategies.get(StrategyConstants.SmartEditStrategyId)
             );
             let state = middlewareAPI.getState();
             let apiReturn = SmartEditStrategy.BuildPreviewValues(
@@ -2408,11 +2404,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
           /**
            * Use Case: User has clicked 'Apply' in Smart Edit popup or toolbar
            * Action (1):  Gets the values that need to be applied from the Preview Info and passes to Preview Helper (incl. whether to bypass validation)
-           * Action (2):  Sends these new values to the Smart Edit Strategy (which will, in turn, apply them to the Blotter)
+           * Action (2):  Sends these new values to the Smart Edit Strategy (which will, in turn, apply them to the adaptable)
            */
           case SmartEditRedux.SMARTEDIT_APPLY: {
             let SmartEditStrategy = <ISmartEditStrategy>(
-              blotter.strategies.get(StrategyConstants.SmartEditStrategyId)
+              adaptable.strategies.get(StrategyConstants.SmartEditStrategyId)
             );
             const actionTyped = action as SmartEditRedux.SmartEditApplyAction;
             let thePreview = middlewareAPI.getState().System.SmartEditPreviewInfo;
@@ -2430,7 +2426,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
            *******************/
           case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
             let BulkUpdateStrategy = <IBulkUpdateStrategy>(
-              blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId)
+              adaptable.strategies.get(StrategyConstants.BulkUpdateStrategyId)
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
@@ -2457,7 +2453,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             let returnAction = next(action);
 
             let BulkUpdateStrategy = <IBulkUpdateStrategy>(
-              blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId)
+              adaptable.strategies.get(StrategyConstants.BulkUpdateStrategyId)
             );
             let state = middlewareAPI.getState();
             let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
@@ -2467,7 +2463,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
 
           case BulkUpdateRedux.BULK_UPDATE_APPLY: {
             let BulkUpdateStrategy = <IBulkUpdateStrategy>(
-              blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId)
+              adaptable.strategies.get(StrategyConstants.BulkUpdateStrategyId)
             );
             const actionTyped = action as BulkUpdateRedux.BulkUpdateApplyAction;
             let thePreview = middlewareAPI.getState().System.BulkUpdatePreviewInfo;
@@ -2491,14 +2487,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             if (ArrayExtensions.IsNotNullOrEmpty(actionTyped.GridCells)) {
               let dataChangedInfos: DataChangedInfo[] = actionTyped.GridCells.map(gc => {
                 return {
-                  OldValue: blotter.getDisplayValue(gc.primaryKeyValue, gc.columnId),
+                  OldValue: adaptable.getDisplayValue(gc.primaryKeyValue, gc.columnId),
                   NewValue: gc.value,
                   ColumnId: gc.columnId,
                   PrimaryKeyValue: gc.primaryKeyValue,
                 };
               });
               dataChangedInfos.forEach(dc => {
-                blotter.setValue(dc, true);
+                adaptable.setValue(dc, true);
               });
             }
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
@@ -2511,13 +2507,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
 
           case ExportRedux.EXPORT_APPLY: {
             let exportStrategy = <IExportStrategy>(
-              blotter.strategies.get(StrategyConstants.ExportStrategyId)
+              adaptable.strategies.get(StrategyConstants.ExportStrategyId)
             );
             const actionTyped = action as ExportRedux.ExportApplyAction;
             if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
               // for ipushpull we neeed to show a series of pages (login, domain pages etc.) before we actually get to export
               // so we have a series of actions depending on where we are in the process
-              if (blotter.PushPullService.getIPPStatus() != ServiceStatus.Connected) {
+              if (adaptable.PushPullService.getIPPStatus() != ServiceStatus.Connected) {
                 let params: StrategyParams = {
                   value: actionTyped.Report.Name,
                   source: 'Other',
@@ -2532,7 +2528,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
                   )
                 );
               } else if (!actionTyped.Folder) {
-                blotter.PushPullService.GetDomainPages()
+                adaptable.PushPullService.GetDomainPages()
                   .then((domainpages: IPushPullDomain[]) => {
                     middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2578,13 +2574,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
 
           case ExportRedux.IPP_LOGIN: {
             const actionTyped = action as ExportRedux.IPPLoginAction;
-            blotter.PushPullService.Login(actionTyped.Login, actionTyped.Password)
+            adaptable.PushPullService.Login(actionTyped.Login, actionTyped.Password)
               .then(() => {
                 let report = middlewareAPI.getState().Popup.ScreenPopup.Params;
                 middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                 middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
 
-                const result = blotter.PushPullService.GetDomainPages()
+                const result = adaptable.PushPullService.GetDomainPages()
                   .then((domainpages: IPushPullDomain[]) => {
                     middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
                     middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
@@ -2617,12 +2613,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             let ret = next(action);
             const actionTyped = action as SystemRedux.ReportStartLiveAction;
             // fire the Live Report event for Export Started
-            blotter.ReportService.PublishLiveReportUpdatedEvent(
+            adaptable.ReportService.PublishLiveReportUpdatedEvent(
               actionTyped.ExportDestination,
               LiveReportTrigger.ExportStarted
             );
             // set livereport on
-            blotter.api.internalApi.setLiveReportRunningOn();
+            adaptable.api.internalApi.setLiveReportRunningOn();
             return ret;
           }
           case SystemRedux.REPORT_STOP_LIVE: {
@@ -2634,16 +2630,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
                   x.Report == actionTyped.Report &&
                   x.ExportDestination == actionTyped.ExportDestination
               );
-              blotter.PushPullService.UnloadPage(lre.PageName);
+              adaptable.PushPullService.UnloadPage(lre.PageName);
             }
             let ret = next(action);
             // fire the Live Report event for Export Stopped
-            blotter.ReportService.PublishLiveReportUpdatedEvent(
+            adaptable.ReportService.PublishLiveReportUpdatedEvent(
               actionTyped.ExportDestination,
               LiveReportTrigger.ExportStopped
             );
             // set livereport off
-            blotter.api.internalApi.setLiveReportRunningOff();
+            adaptable.api.internalApi.setLiveReportRunningOff();
             return ret;
           }
 
@@ -2723,8 +2719,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             xhr.setRequestHeader('Content-type', 'application/json');
             let obj: ISharedEntity = {
               entity: actionTyped.Entity,
-              user: blotter.blotterOptions.userName,
-              blotter_id: blotter.blotterOptions.blotterId,
+              user: adaptable.adaptableOptions.userName,
+              adaptable_id: adaptable.adaptableOptions.adaptableId,
               functionName: actionTyped.FunctionName,
               timestamp: new Date(),
             };
@@ -2928,7 +2924,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
 
           case SystemRedux.SET_NEW_COLUMN_LIST_ORDER:
             const actionTyped = action as SystemRedux.SetNewColumnListOrderAction;
-            blotter.setNewColumnListOrder(actionTyped.VisibleColumnList);
+            adaptable.setNewColumnListOrder(actionTyped.VisibleColumnList);
             return next(action);
 
           /*******************
@@ -2936,14 +2932,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
            *******************/
           case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
             const actionTyped = action as GridRedux.GridSetValueLikeEditAction;
-            blotter.setValue(actionTyped.DataChangedInfo, true);
+            adaptable.setValue(actionTyped.DataChangedInfo, true);
             return next(action);
           }
 
           case GridRedux.GRID_SET_VALUE_LIKE_EDIT_BATCH: {
             const actionTyped = action as GridRedux.GridSetValueLikeEditBatchAction;
             actionTyped.DataChangedInfoBatch.forEach(dc => {
-              blotter.setValue(dc, true);
+              adaptable.setValue(dc, true);
             });
 
             return next(action);
@@ -2956,17 +2952,17 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             );
             let columnIndex = columnList.findIndex(x => x.ColumnId == actionTyped.ColumnId);
             columnList.splice(columnIndex, 1);
-            blotter.setNewColumnListOrder(columnList);
+            adaptable.setNewColumnListOrder(columnList);
             return next(action);
           }
           case GridRedux.GRID_SELECT_COLUMN: {
             const actionTyped = action as GridRedux.GridSelectColumnAction;
-            blotter.selectColumn(actionTyped.ColumnId);
+            adaptable.selectColumn(actionTyped.ColumnId);
             return next(action);
           }
           case GridRedux.GRID_CREATE_CELLS_SUMMARY: {
             let SelectedCellsStrategy = <ICellSummaryStrategy>(
-              blotter.strategies.get(StrategyConstants.CellSummaryStrategyId)
+              adaptable.strategies.get(StrategyConstants.CellSummaryStrategyId)
             );
             let returnAction = next(action);
             let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo;
@@ -2981,7 +2977,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             const actionTyped = action as GridRedux.GridRefreshCellsAction;
 
             let ret = next(action);
-            blotter.refreshCells(actionTyped.rows, actionTyped.columnIds);
+            adaptable.refreshCells(actionTyped.rows, actionTyped.columnIds);
 
             return ret;
           }
@@ -3017,17 +3013,17 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
            * HOME (INTERNAL) ACTIONS (Filter Bar)
            *******************/
           case GridRedux.GRID_QUICK_FILTER_BAR_SHOW: {
-            blotter.showQuickFilter();
+            adaptable.showQuickFilter();
             return next(action);
           }
 
           case GridRedux.GRID_QUICK_FILTER_BAR_HIDE: {
-            blotter.hideQuickFilter();
+            adaptable.hideQuickFilter();
             return next(action);
           }
 
           case GridRedux.FILTER_FORM_HIDE: {
-            blotter.hideFilterForm();
+            adaptable.hideFilterForm();
             return next(action);
           }
 
@@ -3041,7 +3037,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             let returnAction = next(action);
 
             //we set the column list from the datasource
-            blotter.setColumnIntoStore();
+            adaptable.setColumnIntoStore();
 
             let gridState: GridState = middlewareAPI.getState().Grid;
             let layoutState: LayoutState = middlewareAPI.getState().Layout;
@@ -3051,7 +3047,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             let defaultLayout: Layout = ObjectFactory.CreateLayout(
               gridState.Columns,
               [],
-              blotter.getVendorGridDefaultLayoutInfo(),
+              adaptable.getVendorGridDefaultLayoutInfo(),
               DEFAULT_LAYOUT
             );
             middlewareAPI.dispatch(LayoutRedux.LayoutSave(defaultLayout));
@@ -3063,19 +3059,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             middlewareAPI
               .getState()
               .CalculatedColumn.CalculatedColumns.forEach((cc: CalculatedColumn) => {
-                blotter.addCalculatedColumnToGrid(cc);
+                adaptable.addCalculatedColumnToGrid(cc);
               });
 
             //Create all free text columns before we load the layout
             middlewareAPI
               .getState()
               .FreeTextColumn.FreeTextColumns.forEach((ftc: FreeTextColumn) => {
-                blotter.addFreeTextColumnToGrid(ftc);
+                adaptable.addFreeTextColumnToGrid(ftc);
               });
 
             //Create all action columns before we load the layout
             middlewareAPI.getState().ActionColumn.ActionColumns.forEach((ac: ActionColumn) => {
-              blotter.addActionColumnToGrid(ac);
+              adaptable.addActionColumnToGrid(ac);
             });
 
             //load the default layout if its current
@@ -3084,7 +3080,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptable): any =>
             }
 
             // create the functions menu (for use in the home toolbar and the toolpanel)
-            blotter.createFunctionMenu();
+            adaptable.createFunctionMenu();
 
             return returnAction;
           }

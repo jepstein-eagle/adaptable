@@ -14,7 +14,7 @@ import Adaptable from '../../../../App_Scripts/agGrid';
 import { AdaptableOptions, PredefinedConfig, IAdaptable } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -23,8 +23,7 @@ function InitAdaptableBlotter() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo theming demo',
-    blotterId: 'Theming demo',
-
+    adaptableId: 'Theming demo',
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
@@ -64,7 +63,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

@@ -13,7 +13,7 @@ import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../Ap
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableApi: AdaptableApi;
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -234,7 +234,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

@@ -15,7 +15,7 @@ import {
 
 export class DashboardApiImpl extends ApiBase implements DashboardApi {
   public GetDashboardState(): DashboardState {
-    return this.getBlotterState().Dashboard;
+    return this.getAdaptableState().Dashboard;
   }
 
   public SetAvailableToolbars(availableToolbars: AdaptableDashboardToolbars): void {
@@ -114,7 +114,7 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
   }
 
   public showDashboardPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.DashboardStrategyId,
       ScreenPopups.DashboardPopup
     );

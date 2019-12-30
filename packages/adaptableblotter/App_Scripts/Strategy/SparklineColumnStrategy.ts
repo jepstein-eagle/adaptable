@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { ISparklineColumnStrategy } from './Interface/ISparklineColumnStrategy';
 
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -15,8 +15,8 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
   implements ISparklineColumnStrategy {
   protected SparklinesState: SparklineColumnState;
 
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.SparklineColumnStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.SparklineColumnStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -28,7 +28,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter, 'sparkline')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'sparkline')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
@@ -46,7 +46,7 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (
       menuInfo.column &&
-      this.canCreateColumnMenuItem(menuInfo.column, this.blotter, 'sparkline')
+      this.canCreateColumnMenuItem(menuInfo.column, this.adaptable, 'sparkline')
     ) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',
@@ -63,22 +63,22 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
 
   protected InitState() {
     if (this.SparklinesState != this.GetSparklinesState()) {
-      if (this.blotter.isInitialised) {
+      if (this.adaptable.isInitialised) {
         // if we have made any changes then first delete them all
         this.SparklinesState.SparklineColumns.forEach(sparklineColumn => {
-          this.blotter.removeSparklineColumn(sparklineColumn);
+          this.adaptable.removeSparklineColumn(sparklineColumn);
         });
 
         this.GetSparklinesState().SparklineColumns.forEach(sparklineColumn => {
-          this.blotter.editSparklineColumn(sparklineColumn);
+          this.adaptable.editSparklineColumn(sparklineColumn);
         });
-        this.blotter.redraw();
+        this.adaptable.redraw();
       }
       this.SparklinesState = this.GetSparklinesState();
     }
   }
 
   protected GetSparklinesState(): SparklineColumnState {
-    return this.blotter.api.sparklineColumnApi.getSparklineColumnState();
+    return this.adaptable.api.sparklineColumnApi.getSparklineColumnState();
   }
 }

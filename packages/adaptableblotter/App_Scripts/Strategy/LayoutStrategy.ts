@@ -2,7 +2,7 @@ import { ILayoutStrategy } from './Interface/ILayoutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { LayoutState } from '../PredefinedConfig/LayoutState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
@@ -10,8 +10,8 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
   public CurrentLayout: string;
   protected LayoutState: LayoutState;
 
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.LayoutStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.LayoutStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {

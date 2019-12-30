@@ -14,7 +14,7 @@ Has pseudo ticking data together with some JSON that sets flashing in 3 columns
 This uses the agGrid setDataValue method which DOES call cell value changed
 */
 
-function InitAdaptableBlotter() {
+function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
   const tradeCount: number = 30;
@@ -95,7 +95,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableBlotter();
+    InitAdaptableDemo();
   }, []);
 
   return null;

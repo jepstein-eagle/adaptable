@@ -20,7 +20,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
         <AdaptableWizard
           FriendlyName={StrategyConstants.AlertStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {
@@ -58,7 +58,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
                   SystemFilters={this.props.SystemFilters}
                   NamedFilters={this.props.NamedFilters}
                   ColumnCategories={this.props.ColumnCategories}
-                  Blotter={this.props.Blotter}
+                  Adaptable={this.props.Adaptable}
                 />
               ),
             },

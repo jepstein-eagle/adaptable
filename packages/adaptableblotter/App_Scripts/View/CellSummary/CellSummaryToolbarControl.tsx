@@ -47,8 +47,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
     super(props);
   }
   public componentDidMount() {
-    if (this.props.Blotter) {
-      this.props.Blotter._on('CellsSelected', () => {
+    if (this.props.Adaptable) {
+      this.props.Adaptable._on('CellsSelected', () => {
         this.props.onCreateCellSummary();
       });
     }
@@ -56,8 +56,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
 
   // needed?
   // public componentWillUnmount() {
-  //   if (this.props.Blotter) {
-  //     this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
+  //   if (this.props.Adaptable) {
+  //     this.props.Adaptable.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
   //   }
   // }
 
@@ -85,7 +85,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
 
     let shouldDisable: boolean =
       this.props.AccessLevel == AccessLevel.ReadOnly ||
-      this.props.Blotter.api.internalApi.isGridInPivotMode() ||
+      this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
       this.props.CellSummary == null;
 
     let content = (

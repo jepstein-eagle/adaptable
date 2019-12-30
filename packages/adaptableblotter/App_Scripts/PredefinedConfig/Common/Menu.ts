@@ -4,7 +4,7 @@ import { AdaptableColumn } from './AdaptableColumn';
 import { AdaptableFunctionName } from './Types';
 
 /*
-Note for devs:  The Adaptable Blotter provides 3 menus:
+Note for devs:  The Adaptable provides 3 menus:
 
 1. Main Menu (or Function Menu).
 This is the menu that appears when you click the home button in the first toolbar.
@@ -27,7 +27,7 @@ Like with the Column Menu,the Context menu is created EACH TIME that it is opene
 */
 
 /**
- * The main menu item used by the Adaptable Blotter.
+ * The main menu item used by the Adaptable.
  *
  * It is used in 3 places:
  *

@@ -88,7 +88,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
             onSelect={() => this.props.onSelectLayout(x.Name)}
             AccessLevel={this.props.AccessLevel}
-            LayoutService={this.props.Blotter.LayoutService}
+            LayoutService={this.props.Adaptable.LayoutService}
           />
         );
       }
@@ -133,7 +133,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
               NamedFilters={this.props.NamedFilters}
               ColumnCategories={this.props.ColumnCategories}
               ColumnSorts={this.props.ColumnSorts}
-              Blotter={this.props.Blotter}
+              Adaptable={this.props.Adaptable}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

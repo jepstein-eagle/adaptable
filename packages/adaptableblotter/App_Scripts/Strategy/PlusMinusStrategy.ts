@@ -6,13 +6,13 @@ import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { DataChangedInfo } from '../BlotterOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
@@ -23,10 +23,10 @@ import { AlertProperties } from '../PredefinedConfig/AlertState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.PlusMinusStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.PlusMinusStrategyId, adaptable);
 
-    this.blotter._on('KeyDown', keyDownEvent => {
+    this.adaptable._on('KeyDown', keyDownEvent => {
       this.handleKeyDown(keyDownEvent);
     });
   }
@@ -40,7 +40,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       if (column && column.DataType == DataType.Number) {
         let popupParam: StrategyParams = {
           columnId: column.ColumnId,
@@ -62,14 +62,14 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
     let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
     if (keyEventString == '-' || keyEventString == '+') {
-      let plusMinusRules = this.blotter.api.plusMinusApi.getAllPlusMinus();
+      let plusMinusRules = this.adaptable.api.plusMinusApi.getAllPlusMinus();
 
       if (ArrayExtensions.IsNotNullOrEmpty(plusMinusRules)) {
         let side = 1;
         if (keyEventString == '-') {
           side = -1;
         }
-        let selectedCellInfo: SelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+        let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         let isPlusMinusApplicable: boolean = this.applyPlusMinus(
           plusMinusRules,
@@ -89,7 +89,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     side: number
   ): boolean {
     let shouldApplyPlusMinus = false;
-    let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
     let successfulValues: GridCell[] = [];
     let failedPreventEdits: CellValidationRule[] = [];
     let failedWarningEdits: CellValidationRule[] = [];
@@ -119,7 +119,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 columnNudge.Expression,
                 selectedCell.primaryKeyValue,
                 columns,
-                this.blotter
+                this.adaptable
               )
             ) {
               newValue = {
@@ -158,7 +158,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             PrimaryKeyValue: selectedCell.primaryKeyValue,
           };
 
-          let validationRules: CellValidationRule[] = this.blotter.ValidationService.GetValidationRulesForDataChange(
+          let validationRules: CellValidationRule[] = this.adaptable.ValidationService.GetValidationRulesForDataChange(
             dataChangedEvent
           );
 
@@ -182,7 +182,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       this.ShowWarningMessages(failedWarningEdits, warningValues, successfulValues);
     } else {
       if (ArrayExtensions.IsNotNullOrEmpty(successfulValues)) {
-        this.blotter.api.gridApi.setGridCells(successfulValues, true, false);
+        this.adaptable.api.gridApi.setGridCells(successfulValues, true, false);
       }
     }
 
@@ -194,14 +194,14 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       let failedMessages: string[] = [];
       failedRules.forEach(fr => {
         let failedMessage: string =
-          this.blotter.ValidationService.CreateCellValidationMessage(fr) + '\n';
+          this.adaptable.ValidationService.CreateCellValidationMessage(fr) + '\n';
         let existingMessage = failedMessages.find(f => f == failedMessage);
         if (existingMessage == null) {
           failedMessages.push(failedMessage);
         }
       });
 
-      this.blotter.api.alertApi.showAlertError('Nudge(s) failed rule', failedMessages.toString());
+      this.adaptable.api.alertApi.showAlertError('Nudge(s) failed rule', failedMessages.toString());
     }
   }
 
@@ -216,7 +216,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       let warningMessages: string[] = [];
       failedRules.forEach(fr => {
         let warningMessage: string =
-          this.blotter.ValidationService.CreateCellValidationMessage(fr) + '\n';
+          this.adaptable.ValidationService.CreateCellValidationMessage(fr) + '\n';
         let existingMessage = warningMessages.find(w => w == warningMessage);
         if (existingMessage == null) {
           warningMessages.push(warningMessage);
@@ -227,12 +227,12 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
       let confirmAction: Redux.Action = PlusMinusRedux.PlusMinusApply(allValues);
       let cancelAction: Redux.Action = PlusMinusRedux.PlusMinusApply(successfulValues);
-      let confirmation: IUIConfirmation = this.blotter.ValidationService.createCellValidationUIConfirmation(
+      let confirmation: IUIConfirmation = this.adaptable.ValidationService.createCellValidationUIConfirmation(
         confirmAction,
         cancelAction,
         warningMessage
       );
-      this.blotter.api.internalApi.showPopupConfirmation(confirmation);
+      this.adaptable.api.internalApi.showPopupConfirmation(confirmation);
     }
   }
 }

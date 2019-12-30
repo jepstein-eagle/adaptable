@@ -3,14 +3,14 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.ColumnFilterStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.ColumnFilterStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -28,12 +28,12 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
       let isMultiple: boolean = menuInfo.isSelectedCell && menuInfo.isSingleSelectedColumn;
 
       let pkValues: any[] = isMultiple
-        ? this.blotter.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
+        ? this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
             return gc.primaryKeyValue;
           })
         : [menuInfo.gridCell.primaryKeyValue];
       let clickFunction = () => {
-        this.blotter.api.columnFilterApi.createColumnFilterForCell(
+        this.adaptable.api.columnFilterApi.createColumnFilterForCell(
           menuInfo.column.ColumnId,
           pkValues
         );
@@ -48,8 +48,8 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter, 'columnfilter')) {
-      let existingColumnFilter = this.blotter.api.columnFilterApi
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'columnfilter')) {
+      let existingColumnFilter = this.adaptable.api.columnFilterApi
         .getAllColumnFilter()
         .find(x => x.ColumnId == column.ColumnId);
       if (existingColumnFilter) {

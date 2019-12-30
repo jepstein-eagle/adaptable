@@ -9,7 +9,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyleApi {
   public getConditionalStyleState(): ConditionalStyleState {
-    return this.getBlotterState().ConditionalStyle;
+    return this.getAdaptableState().ConditionalStyle;
   }
 
   public getAllConditionalStyle(): ConditionalStyle[] {
@@ -17,7 +17,7 @@ export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyle
   }
 
   public showConditionalStylePopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ConditionalStyleStrategyId,
       ScreenPopups.ConditionalStylePopup
     );

@@ -22,7 +22,7 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
         <AdaptableWizard
           FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

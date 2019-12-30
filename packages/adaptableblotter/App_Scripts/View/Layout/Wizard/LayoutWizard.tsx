@@ -28,7 +28,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
         <AdaptableWizard
           FriendlyName={StrategyConstants.LayoutStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Blotter={this.props.Blotter}
+          Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {

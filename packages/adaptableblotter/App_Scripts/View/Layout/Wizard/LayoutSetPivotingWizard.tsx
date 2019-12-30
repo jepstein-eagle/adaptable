@@ -22,7 +22,9 @@ export class LayoutSetPivotingWizard
   constructor(props: LayoutSetPivotingWizardProps) {
     super(props);
     this.state = {
-      IsPivotLayout: this.props.Blotter.LayoutService.isPivotedLayout(this.props.Data.PivotDetails),
+      IsPivotLayout: this.props.Adaptable.LayoutService.isPivotedLayout(
+        this.props.Data.PivotDetails
+      ),
     };
   }
 

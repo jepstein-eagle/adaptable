@@ -1,14 +1,14 @@
 /**
  * Options for managing Filters.
  *
- * Includes settings for how Filters should look and whether to use Adaptable Blotter or Vendor filters.
+ * Includes settings for how Filters should look and whether to use Adaptable or Vendor filters.
  *
  * ```ts
  * filterOptions = {
  *  indicateFilteredColumns: false,
- *  useAdaptableBlotterFilterForm: false,
+ *  useAdaptableFilterForm: false,
  *  useVendorFilterFormStyle: true,
- *  useAdaptableBlotterQuickFilter: false,
+ *  useAdaptableQuickFilter: false,
  *  autoApplyFilter: false,
  *  filterActionOnUserDataChange: {
  *   RunFilter: 'Throttle',
@@ -27,15 +27,15 @@ export interface FilterOptions {
    */
   indicateFilteredColumns?: boolean;
   /**
-   * Whether to use the Adaptable Blotter filter form in the Column header menu.
+   * Whether to use the Adaptable filter form in the Column header menu.
    *
    * If false, the one supplied by the vendor grid will be used instead.
    *
-   * Only applicable in DataGrids where the vendor offers a filter form.  If not then only the Adaptable Blotter form is used.
+   * Only applicable in DataGrids where the vendor offers a filter form.  If not then only the Adaptable form is used.
    *
    * **Default Value: true**
    */
-  useAdaptableBlotterFilterForm?: boolean;
+  useAdaptableFilterForm?: boolean;
 
   /**
    * Only applicable when the Adaptable filter form is being used.
@@ -47,7 +47,7 @@ export interface FilterOptions {
   useVendorFilterFormStyle?: boolean;
 
   /**
-   * Whether to use the Adaptable Blotter quick filter row or the one supplied by the Vendor grid.
+   * Whether to use the Adaptable quick filter row or the one supplied by the Vendor grid.
    *
    * If false, the one supplied by the vendor grid will be used instead.
    *
@@ -55,9 +55,9 @@ export interface FilterOptions {
    *
    * **Default Value: true**
    */
-  useAdaptableBlotterQuickFilter?: boolean;
+  useAdaptableQuickFilter?: boolean;
   /**
-   * Whether to re-apply Adaptable Blotter filtering whenever the user edits data in the Grid.
+   * Whether to re-apply filtering whenever the user edits data in the Grid.
    *
    * The choice is 'Always' (the default value), 'Never' or 'Throttle'
    *
@@ -67,7 +67,7 @@ export interface FilterOptions {
    */
   filterActionOnUserDataChange?: FilterActionOnDataChange;
   /**
-   * Whether to re-apply Adaptable Blotter filtering whenever data updates or ticks in the background (ie. not result of user action)
+   * Whether to re-apply filtering whenever data updates or ticks in the background (ie. not result of user action)
    *
    * The choice is 'Always', 'Never' (the default value) or 'Throttle'
    *
@@ -89,7 +89,7 @@ export interface FilterOptions {
 }
 
 /**
- * Used to determine when the Adaptable Blotter should re-apply filtering.
+ * Used to determine when Adaptable should re-apply filtering.
  *
  * It is set for both user cell edits and external (e.g. ticking) data edits.
  *

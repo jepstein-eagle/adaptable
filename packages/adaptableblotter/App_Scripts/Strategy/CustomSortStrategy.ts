@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
@@ -10,14 +10,14 @@ import { ICustomSortStrategy } from './Interface/ICustomSortStrategy';
 
 export class CustomSortStrategy extends AdaptableStrategyBase implements ICustomSortStrategy {
   private CustomSorts: CustomSort[];
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.CustomSortStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.CustomSortStrategyId, adaptable);
   }
 
   protected InitState() {
-    if (this.CustomSorts != this.blotter.api.customSortApi.getAllCustomSort()) {
+    if (this.CustomSorts != this.adaptable.api.customSortApi.getAllCustomSort()) {
       this.removeCustomSorts();
-      this.CustomSorts = this.blotter.api.customSortApi.getAllCustomSort();
+      this.CustomSorts = this.adaptable.api.customSortApi.getAllCustomSort();
       this.applyCustomSorts();
     }
   }
@@ -31,7 +31,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
   }
 
   public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.blotter, 'sort')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'sort')) {
       let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
       let label = customSort ? 'Edit ' : 'Create ';
 
@@ -53,27 +53,27 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
   removeCustomSorts() {
     if (this.CustomSorts) {
       this.CustomSorts.forEach(customSort => {
-        this.blotter.removeCustomSort(customSort.ColumnId);
+        this.adaptable.removeCustomSort(customSort.ColumnId);
       });
     }
   }
 
   applyCustomSorts() {
     this.CustomSorts.forEach(customSort => {
-      this.blotter.setCustomSort(customSort.ColumnId, this.getComparerFunction(customSort));
+      this.adaptable.setCustomSort(customSort.ColumnId, this.getComparerFunction(customSort));
     });
   }
 
   // make this an abstract function?
   public getComparerFunction(customSort: CustomSort): Function {
-    let theBlotter = this.blotter as IAdaptable;
+    let theadaptable = this.adaptable as IAdaptable;
     return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
-      let firstElementValueString = theBlotter.getDisplayValue(
-        theBlotter.getPrimaryKeyValueFromRowNode(firstElement),
+      let firstElementValueString = theadaptable.getDisplayValue(
+        theadaptable.getPrimaryKeyValueFromRowNode(firstElement),
         customSort.ColumnId
       ); //firstElement[customSort.ColumnId];
-      let secondElementValueString = theBlotter.getDisplayValue(
-        theBlotter.getPrimaryKeyValueFromRowNode(secondElement),
+      let secondElementValueString = theadaptable.getDisplayValue(
+        theadaptable.getPrimaryKeyValueFromRowNode(secondElement),
         customSort.ColumnId
       ); //secondElement[customSort.ColumnId];
       let firstElementValue = firstElement[customSort.ColumnId];

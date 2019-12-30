@@ -6,7 +6,7 @@ import { ApiBase } from './ApiBase';
 
 export class UserFilterApiImpl extends ApiBase implements UserFilterApi {
   public getUserFilterState(): UserFilterState {
-    return this.getBlotterState().UserFilter;
+    return this.getAdaptableState().UserFilter;
   }
 
   public getAllUserFilter(): UserFilter[] {
@@ -14,7 +14,7 @@ export class UserFilterApiImpl extends ApiBase implements UserFilterApi {
   }
 
   public showUserFilterPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.UserFilterStrategyId,
       ScreenPopups.UserFilterPopup
     );

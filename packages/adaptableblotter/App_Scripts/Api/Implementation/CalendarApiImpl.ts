@@ -5,7 +5,7 @@ import { CalendarState } from '../../PredefinedConfig/CalendarState';
 
 export class CalendarApiImpl extends ApiBase implements CalendarApi {
   public getCalendarState(): CalendarState {
-    return this.getBlotterState().Calendar;
+    return this.getAdaptableState().Calendar;
   }
 
   public setCurrentCalendar(calendar: string): void {
@@ -13,6 +13,6 @@ export class CalendarApiImpl extends ApiBase implements CalendarApi {
   }
 
   public getCurrentCalendar(): string {
-    return this.getBlotterState().Calendar.CurrentCalendar;
+    return this.getAdaptableState().Calendar.CurrentCalendar;
   }
 }

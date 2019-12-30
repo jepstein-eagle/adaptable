@@ -36,7 +36,7 @@ export class CellValidationSummaryWizard
       { Key: 'Mode', Value: this.props.Data.ActionMode },
       {
         Key: 'Rule',
-        Value: this.props.Blotter.ValidationService.createCellValidationDescription(
+        Value: this.props.Adaptable.ValidationService.createCellValidationDescription(
           this.props.Data,
           this.props.Columns
         ),

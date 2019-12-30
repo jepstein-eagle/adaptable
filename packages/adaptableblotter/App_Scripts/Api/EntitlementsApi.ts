@@ -2,7 +2,7 @@ import { EntitlementState, Entitlement } from '../PredefinedConfig/EntitlementSt
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
- * Provides access to the **Entitlements** section of the Adaptable Blotter State.
+ * Provides access to the **Entitlements** section of the Adaptable State.
  *
  *  **Further Resources**
  *
@@ -11,7 +11,7 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  */
 export interface EntitlementsApi {
   /**
-   * Retrieves the Entitlements section from the Adaptable Blotter State
+   * Retrieves the Entitlements section from the Adaptable State
    */
   getEntitlementsState(): EntitlementState;
 

@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IThemeStrategy } from './Interface/IThemeStrategy';
-import { IAdaptable } from '../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { ThemeState, AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
@@ -11,8 +11,8 @@ import { ThemeChangedEventArgs, ThemeChangedInfo } from '../Api/Events/ThemeChan
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
   private ThemeState: ThemeState;
 
-  constructor(blotter: IAdaptable) {
-    super(StrategyConstants.ThemeStrategyId, blotter);
+  constructor(adaptable: IAdaptable) {
+    super(StrategyConstants.ThemeStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
@@ -34,12 +34,12 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
       themeChangedInfo
     );
 
-    this.blotter.api.eventApi.emit('ThemeChanged', themeChangedEventArgs);
+    this.adaptable.api.eventApi.emit('ThemeChanged', themeChangedEventArgs);
   }
 
   protected InitState() {
-    if (this.ThemeState != this.blotter.api.themeApi.getThemeState()) {
-      this.ThemeState = this.blotter.api.themeApi.getThemeState();
+    if (this.ThemeState != this.adaptable.api.themeApi.getThemeState()) {
+      this.ThemeState = this.adaptable.api.themeApi.getThemeState();
 
       const allThemeNames = [
         ...(this.ThemeState.SystemThemes || []),
@@ -56,7 +56,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
         return;
       }
 
-      this.blotter.applyBlotterTheme(currentTheme);
+      this.adaptable.applyAdaptableTheme(currentTheme);
 
       // publish the theme changed event even on initialization
       this.publishThemeChanged(this.ThemeState);

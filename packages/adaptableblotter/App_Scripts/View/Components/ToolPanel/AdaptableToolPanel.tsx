@@ -27,7 +27,7 @@ import { AdaptableToolPanels, AdaptableToolPanel } from '../../../PredefinedConf
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface AdaptableToolPanelProps {
-  Blotter: IAdaptable;
+  Adaptable: IAdaptable;
   TeamSharingActivated?: boolean;
   VisibleToolsPanels: AdaptableToolPanels;
   AvailableToolPanels: AdaptableToolPanels;
@@ -72,9 +72,9 @@ class AdaptableToolPanelComponent extends React.Component<
         if (toolPanel) {
           let dashboardElememt = React.createElement(toolPanel, {
             AccessLevel: accessLevel,
-            AdaptableApi: this.props.Blotter.api,
-            Blotter: this.props.Blotter,
-            Columns: this.props.Blotter.api.gridApi.getColumns(),
+            AdaptableApi: this.props.Adaptable.api,
+            Adaptable: this.props.Adaptable,
+            Columns: this.props.Adaptable.api.gridApi.getColumns(),
           });
           return (
             <Box
@@ -92,7 +92,7 @@ class AdaptableToolPanelComponent extends React.Component<
       }
     });
 
-    let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
+    let strategyKeys: string[] = [...this.props.Adaptable.strategies.keys()];
     let allowedMenuItems = this.props.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
@@ -241,11 +241,14 @@ export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
 
     public init(params?: IToolPanelParams): void {
       this.gui = document.createElement('div');
-      this.gui.id = 'adaptable-blotter-tool-panel_' + this.ctx.Blotter.blotterOptions.blotterId;
+      this.gui.id = 'adaptable-tool-panel_' + this.ctx.Adaptable.adaptableOptions.adaptableId;
       render(
-        <Provider store={this.ctx.Blotter.AdaptableStore.TheStore}>
+        <Provider store={this.ctx.Adaptable.AdaptableStore.TheStore}>
           <ThemeProvider theme={theme}>
-            <ConnectedAdaptableToolPanel Blotter={this.ctx.Blotter} TeamSharingActivated={false} />
+            <ConnectedAdaptableToolPanel
+              Adaptable={this.ctx.Adaptable}
+              TeamSharingActivated={false}
+            />
           </ThemeProvider>
         </Provider>,
         this.gui

@@ -1,23 +1,23 @@
 import { ICalculatedColumnExpressionService } from './Interface/ICalculatedColumnExpressionService';
 import * as math from 'mathjs';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import ColumnHelper from '../Helpers/ColumnHelper';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
   constructor(
-    private blotter: IAdaptable,
+    private adaptable: IAdaptable,
     private colFunctionValue: (columnId: string, record: any) => any
   ) {
-    this.blotter = blotter;
+    this.adaptable = adaptable;
     this.colFunctionValue = colFunctionValue;
   }
 
   public GetCalculatedColumnDataType(expression: string): DataType {
     try {
-      let firstRecord = this.blotter.getFirstRowNode();
+      let firstRecord = this.adaptable.getFirstRowNode();
       let firstRowValue: any = math.eval(expression, {
         Col: (columnId: string) => {
           try {
@@ -36,9 +36,9 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
   public IsExpressionValid(expression: string): { IsValid: Boolean; ErrorMsg?: string } {
     try {
-      let columns: AdaptableColumn[] = this.blotter.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
       let cleanedExpression: string = this.CleanExpressionColumnNames(expression, columns);
-      let firstRecord = this.blotter.getFirstRowNode();
+      let firstRecord = this.adaptable.getFirstRowNode();
       math.eval(cleanedExpression, {
         Col: (columnId: string) => {
           try {
@@ -57,7 +57,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
   public ComputeExpressionValue(expression: string, record: any): any {
     try {
-      if (this.blotter.isGroupRowNode(record)) {
+      if (this.adaptable.isGroupRowNode(record)) {
         return undefined;
       }
       return math.eval(expression, {

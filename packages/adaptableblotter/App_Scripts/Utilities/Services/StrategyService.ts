@@ -6,7 +6,7 @@ import {
   LeafExpressionOperator,
   DistinctCriteriaPairValue,
 } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import StringExtensions from '../Extensions/StringExtensions';
@@ -17,12 +17,12 @@ export interface IStrategyService {
   getDistinctColumnValues(columnId: string): number[];
 }
 export class StrategyService implements IStrategyService {
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
   }
 
   public getDistinctColumnValues(columnId: string): number[] {
-    let distinctColumnsValues: number[] = this.blotter
+    let distinctColumnsValues: number[] = this.adaptable
       .getColumnValueDisplayValuePairDistinctList(
         columnId,
         DistinctCriteriaPairValue.RawValue,

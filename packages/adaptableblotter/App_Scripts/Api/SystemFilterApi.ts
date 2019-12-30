@@ -1,7 +1,7 @@
 import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
 
 /**
- * Provides run-time access to the System Filter section of Adaptable Blotter State.
+ * Provides run-time access to the System Filter section of Adaptable State.
  *
  *  **Further Resources**
  *
@@ -10,7 +10,7 @@ import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
  */
 export interface SystemFilterApi {
   /**
-   * Retrieves the System Filter section from the Adaptable Blotter State
+   * Retrieves the System Filter section from the Adaptable State
    */
   getSystemFilterState(): SystemFilterState;
 
@@ -32,7 +32,7 @@ export interface SystemFilterApi {
   getAllSystemFilter(): string[];
 
   /**
-   * Gets all the System Filters which could be created by the Adaptable Blotter
+   * Gets all the System Filters which could be created by the Adaptable
    *
    * If no System Filters have been set by the users then these will be all in the state
    */

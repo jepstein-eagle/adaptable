@@ -6,7 +6,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class FlashingCellApiImpl extends ApiBase implements FlashingCellApi {
   public getFlashingCellState(): FlashingCellState {
-    return this.getBlotterState().FlashingCell;
+    return this.getAdaptableState().FlashingCell;
   }
 
   public getAllFlashingCell(): FlashingCell[] {
@@ -14,7 +14,7 @@ export class FlashingCellApiImpl extends ApiBase implements FlashingCellApi {
   }
 
   public showFlashingCellPopup(): void {
-    this.blotter.api.internalApi.showPopupScreen(
+    this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.FlashingCellsStrategyId,
       ScreenPopups.FlashingCellsPopup
     );

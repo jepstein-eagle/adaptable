@@ -35,7 +35,7 @@ export class PercentBarSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Blotter.api.gridApi.getNumericColumns()}
+          ColumnList={this.props.Adaptable.api.gridApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -45,7 +45,7 @@ export class PercentBarSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = this.props.Blotter.StrategyService.getDistinctColumnValues(
+      let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
         columns[0].ColumnId
       );
       let minValue = Math.min(...distinctColumnsValues);

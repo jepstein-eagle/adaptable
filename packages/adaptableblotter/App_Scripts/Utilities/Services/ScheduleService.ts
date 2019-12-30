@@ -1,5 +1,5 @@
 import { IScheduleService } from './Interface/IScheduleService';
-import { IAdaptable } from '../../BlotterInterfaces/IAdaptable';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
@@ -61,9 +61,9 @@ export class ScheduleService implements IScheduleService {
 
   private exportState: ExportState;
 
-  constructor(private blotter: IAdaptable) {
-    this.blotter = blotter;
-    this.blotter.AdaptableStore.TheStore.subscribe(() => this.listenToScheduleStoreChanges());
+  constructor(private adaptable: IAdaptable) {
+    this.adaptable = adaptable;
+    this.adaptable.AdaptableStore.TheStore.subscribe(() => this.listenToScheduleStoreChanges());
     this.reminderJobs = [];
     this.exportJobs = [];
 
@@ -71,10 +71,10 @@ export class ScheduleService implements IScheduleService {
   }
 
   protected listenToScheduleStoreChanges(): void {
-    if (this.blotter.isInitialised) {
+    if (this.adaptable.isInitialised) {
       if (this.reminderState != this.getReminderState()) {
         this.reminderState = this.getReminderState();
-        const reminderStrategy = this.blotter.strategies.get(
+        const reminderStrategy = this.adaptable.strategies.get(
           StrategyConstants.ReminderStrategyId
         ) as IReminderStrategy;
         reminderStrategy.scheduleReminders();
@@ -82,7 +82,7 @@ export class ScheduleService implements IScheduleService {
 
       if (this.exportState != this.getExportState()) {
         this.exportState = this.getExportState();
-        const exportStrategy = this.blotter.strategies.get(
+        const exportStrategy = this.adaptable.strategies.get(
           StrategyConstants.ExportStrategyId
         ) as IExportStrategy;
         exportStrategy.scheduleReports();
@@ -94,7 +94,7 @@ export class ScheduleService implements IScheduleService {
     const date: Date = this.getDateFromSchedule(reminder.Schedule);
     if (date != null) {
       var alertJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-        this.blotter.api.alertApi.displayAlert(reminder.Alert);
+        this.adaptable.api.alertApi.displayAlert(reminder.Alert);
       });
       this.reminderJobs.push(alertJob);
     }
@@ -105,7 +105,7 @@ export class ScheduleService implements IScheduleService {
       const date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
       if (date != null) {
         var exportJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-          this.blotter.api.exportApi.sendReport(report.Name, report.AutoExport.ExportDestination);
+          this.adaptable.api.exportApi.sendReport(report.Name, report.AutoExport.ExportDestination);
         });
         this.exportJobs.push(exportJob);
       }
@@ -122,7 +122,7 @@ export class ScheduleService implements IScheduleService {
     const date: Date = this.getDateFromSchedule(reloadSchedule);
     if (date != null) {
       var refreshGridJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-        this.blotter.reloadGrid();
+        this.adaptable.reloadGrid();
       });
     }
   }
@@ -171,10 +171,10 @@ export class ScheduleService implements IScheduleService {
   }
 
   private getReminderState(): ReminderState {
-    return this.blotter.api.reminderApi.getReminderState();
+    return this.adaptable.api.reminderApi.getReminderState();
   }
 
   private getExportState(): ExportState {
-    return this.blotter.api.exportApi.getExportState();
+    return this.adaptable.api.exportApi.getExportState();
   }
 }
