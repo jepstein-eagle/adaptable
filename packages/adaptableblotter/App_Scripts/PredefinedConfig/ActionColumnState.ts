@@ -43,8 +43,8 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  *  --------------
  *
- * // we listen to the ActionColumnClicked event (via the eventAPI in Blotter API) and
- * // delete the row using the deleteGridData method in gridAPI (also in Blotter API)
+ * // we listen to the ActionColumnClicked event (via the eventAPI in Adaptable API) and
+ * // delete the row using the deleteGridData method in gridAPI (also in Adaptable API)
  *  api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
  *    const actionColumnClickedInfo: ActionColumnClickedInfo = args.data[0].id;
  *    const rowData: any = actionColumnClickedInfo.rowData;

@@ -31,7 +31,7 @@ function InitAdaptableDemo() {
 
   adaptableOptions.predefinedConfig = demoConfig;
 
-  const adaptableblotter = Adaptable.init(adaptableOptions);
+  const adaptable = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {
