@@ -3,11 +3,25 @@ import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
 /**
  * Provides access to the System Status function and associated System Status state.
  *
- * The System Status function allows you to send a message
+ * The System Status function allows you to display a `StatusMessage` to the user with important information.
+ *
+ * Each message is associated with a `StatusType` that has a default colour (though you can change this through CSS Variables when you create a custom theme).
+ *
+ * The default Message Types are:
+ *
+ * - 'Info' (Blue)
+ *
+ * - 'Success' (Green)
+ *
+ * - 'Warning' (Amber)
+ *
+ * - 'Error' (Red)
+ *
+ * You are also able to provide the Adaptable Blotter state (through the System Status section of Predefined Config) with a `DefaultStatusMessage` and `DefaultStatusType` to display when there is nothing specific to show.
  *
  *  **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/) | [State](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
+ * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridsystemstatusdemo/) | [State](_predefinedconfig_systemstatusstate_.systemstatusstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754957-Messages-and-Alerts)
  *
  */
 export interface SystemStatusApi {
@@ -17,11 +31,11 @@ export interface SystemStatusApi {
   getSystemStatusState(): SystemStatusState;
 
   /**
-   * Sets s System Status messages.
+   * Sets a System Status messages.
    *
-   * This will appear in the System Status toolbar (and popup).
+   * This will appear in the System Status toolbar, tool panel (and popup).
    *
-   * Additionally it will colour, as appropriate, the 'SystemStatus' button which coloured System Status button in the Home Toolbar
+   * Additionally it will colour, as appropriate, the 'SystemStatus' button which is an option to display in the Home Toolbar
    *
    * The (optional) statusFurtherInformation allows further details to be provided if required.
    */

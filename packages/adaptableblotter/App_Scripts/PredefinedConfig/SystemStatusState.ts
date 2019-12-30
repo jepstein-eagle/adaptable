@@ -3,23 +3,37 @@ import { DesignTimeState } from './DesignTimeState';
 /**
  * The Predefined Configuration for the System Status function.
  *
- * System Status will display a message sent to the user at run-time, together with a status type.
+ * The System Status function allows you to display a `StatusMessage` to the user with important information.
  *
- * You can display this message in 4 ways:
+ * Each message is associated with a `StatusType` that has a default colour (though you can change this through CSS Variables when you create a custom theme).
  *
- * - As an Alert (which will popup and appear in the Alert Toolbar and ToolPanel)
+ * The default Message Types are:
  *
- * - Through the SystemStatus Button which will show an appropriate icon - when the Button is clicked the System Status Popup will display showing the message adn any further information
+ * - 'Info' (Blue)
+ *
+ * - 'Success' (Green)
+ *
+ * - 'Warning' (Amber)
+ *
+ * - 'Error' (Red)
+ *
+ * In this System Status section of Predefined Config you can also set a `DefaultStatusMessage` and `DefaultStatusType` to display when there is nothing specific to show.
+ *
+ * The Adaptable Blotter will ensure that this Default Message is displayed any time there is no actual Status Message to show.
+ *
+ * You can display the System Status message (or Default Message) in 4 ways:
+ *
+ * - As an Alert (which will popup and also appear in the Alert Toolbar and ToolPanel)
+ *
+ * - Via the SystemStatus Button in the Home Toolbar which will show an appropriate icon - when the Button is clicked the System Status Popup will display showing the message and any further information.  Set visibility via the `ShowSystemStatusButton` in [Dashboard State](_predefinedconfig_dashboardstate_.dashboardstate.html#showsystemstatusbutton).
  *
  * - In the System Status Toolbar
  *
  * - In the System Status ToolPanel
  *
- * You are, additionally, able to provide a Default System Status Message and Status Type which will be used when no specific message has been sent.
- *
  *  **Further Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/) | [API](_api_advancedsearchapi_.advancedsearchapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
+ * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridsystemstatusdemo/) | [API](_api_systemstatusapi_.systemstatusapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754957-Messages-and-Alerts)
  *
  * **System Status Predefined Config Example**
  *
