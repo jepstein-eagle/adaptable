@@ -1,6 +1,7 @@
 import { DesignTimeState } from './DesignTimeState';
 import { IStyle } from './Common/IStyle';
 import { MenuInfo } from './Common/Menu';
+import { AdaptableColumn } from './Common/AdaptableColumn';
 
 /**
  * The Predefined Configuration for managing the User Interface
@@ -77,13 +78,15 @@ export interface UserInterfaceState extends DesignTimeState {
   PermittedColumnValues?: PermittedColumnValues[];
 
   /**
-   * A list of Columns which, when edited, will automatically display a Dropdown allowing the user easily to select a value.
+   * A list of Columns which, when being edited, will automatically display a Dropdown allowing the user easily to select a value.
    *
-   * You can, optionally, also provide a list of values that will appear in the Dropdown.
+   * The values which will be displayed in the dropdown will be shown according to the following logic:
    *
-   * If not list of LookUp Values is provided, the Adaptable Blotter will show a list of Permitted Values (if one has been provided).
+   * 1. **LookUpValues**: You can, optionally, provide a list of `LookUpValues` that will be displayed in the Dropdown.  This can be either a 'hardcoded' or returned from a function.
    *
-   * If there are no Permitted Values for the Column then the Adaptable Blotter will fetch all the distinct values in the Column and populate the Dropdown with them.
+   * 2. **PermittedColumnValues**:  If no LookUpValues are provided, the Adaptable Blotter will show a list of [PermittedColumnValues](#permittedcolumnvalues) (if one has been provided).
+   *
+   * 3. **Distinct Column Values**: Otherwise, the Adaptable Blotter will fetch all the distinct values in the Column and populate the Dropdown with them.
    *
    * **The column must also be marked as editable in the column schema for the Dropdown to appear.**
    *
@@ -91,20 +94,42 @@ export interface UserInterfaceState extends DesignTimeState {
    * export default {
    *  UserInterface: {
    *     EditLookUpColumns: [
-   *      {
-   *        ColumnId: 'CustomerReference',
-   *        LookUpValues: ['SANTG', 'LINOD','ROMEY', 'FRANK','ALFKI','REGGC']
-   *      },
-   *      {
-   *        ColumnId: 'ContactName',
-   *      },
-   *      {
-   *        ColumnId: 'Employee',
-   *      },
-   *    ],
+   *     {
+   *        ColumnId: 'country',
+   *        LookUpValues: ['UK', 'France', 'Italy', 'Germany'],
+   *     },
+   *     {
+   *        ColumnId: 'counterparty',
+   *        LookUpValues: (column: AdaptableColumn) => {
+   *          return ['BAML', 'Nomura', 'UBS'];
+   *        },
+   *     },
+   *     {
+   *        ColumnId: 'status',
+   *     },
+   *     {
+   *        ColumnId: 'currency',
+   *     },
+   *   ],
+   *   PermittedColumnValues: [
+   *   {
+   *        ColumnId: 'status',
+   *        PermittedValues: ['Rejected', 'Pending'],
+   *    },
+   *   ],
    *  },
    * } as PredefinedConfig;
    * ```
+   *
+   * In this example we have said that 4 columns wil show dropdowns on being edited with the logic as follows:
+   *
+   * - 'country': using the hardcoded values we provide in `LookUpValues`
+   *
+   * - 'counterparty': using the values we return from the `LookUpValues` function
+   *
+   * - 'status': using the `PermittedColumnValues` list that we also supply to the User Interface state
+   *
+   * - 'currency': using the distinct values in that column
    *
    *  **Default Value**:  Empty array
    */
@@ -190,7 +215,7 @@ export interface EditLookUpColumn {
    *
    * **note If this is left empty then the Blotter will first get any Permitted Values if any, and failiing that will get distinct values for the column dynamically**
    */
-  LookUpValues?: any[];
+  LookUpValues?: any[] | ((column: AdaptableColumn) => any[]);
 }
 
 /**

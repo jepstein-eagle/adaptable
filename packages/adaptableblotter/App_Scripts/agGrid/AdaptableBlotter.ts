@@ -3034,20 +3034,31 @@ import "adaptableblotter/themes/${themeName}.css"`);
       | undefined = this.api.userInterfaceApi.getUserInterfaceState().EditLookUpColumns;
     if (ArrayExtensions.IsNotNullOrEmpty(editLookUpCols)) {
       const colDefs: (ColDef | ColGroupDef)[] = this.mapColumnDefs((colDef: ColDef) => {
-        editLookUpCols!.forEach((e: EditLookUpColumn) => {
-          if (colDef.field === e.ColumnId) {
+        editLookUpCols!.forEach((editLookUpColumn: EditLookUpColumn) => {
+          if (colDef.field === editLookUpColumn.ColumnId) {
             colDef.cellEditor = 'agRichSelectCellEditor';
-            if (ArrayExtensions.IsNullOrEmpty(e.LookUpValues)) {
+            // first see if we have a function to get it
+            if (editLookUpColumn.LookUpValues) {
+              if (typeof editLookUpColumn.LookUpValues === 'function') {
+                let column: AdaptableColumn = ColumnHelper.getColumnFromId(
+                  editLookUpColumn.ColumnId,
+                  this.api.gridApi.getColumns()
+                );
+                colDef.cellEditorParams = {
+                  values: editLookUpColumn.LookUpValues(column),
+                };
+              } else {
+                colDef.cellEditorParams = {
+                  values: editLookUpColumn.LookUpValues,
+                };
+              }
+            } else {
               colDef.cellEditorParams = {
                 values: this.getColumnValueDisplayValuePairDistinctList(
-                  e.ColumnId,
+                  editLookUpColumn.ColumnId,
                   DistinctCriteriaPairValue.DisplayValue,
                   false
                 ).map(t => t.DisplayValue),
-              };
-            } else {
-              colDef.cellEditorParams = {
-                values: e.LookUpValues,
               };
             }
           }
