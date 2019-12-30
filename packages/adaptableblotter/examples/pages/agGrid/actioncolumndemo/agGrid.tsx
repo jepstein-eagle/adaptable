@@ -8,8 +8,8 @@ import '../../../../App_Scripts/index.scss';
 import {
   AdaptableOptions,
   PredefinedConfig,
-  AdaptableApi,
   ActionColumnClickedEventArgs,
+  AdaptableApi,
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -23,20 +23,20 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating blotter options here so we can add audit
-  const adaptableOptions: AdaptableOptions = {
+  const adaptableBlotterOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'action column demo',
   };
-  adaptableOptions.predefinedConfig = demoConfig;
-  adaptableOptions.layoutOptions = {
+  adaptableBlotterOptions.predefinedConfig = demoConfig;
+  adaptableBlotterOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
   // userFunctions
 
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = Adaptable.init(adaptableBlotterOptions);
   adaptableApi.eventApi.on(
     'ActionColumnClicked',
     (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
@@ -129,7 +129,7 @@ let demoConfig: PredefinedConfig = {
 
 export default () => {
   useEffect(() => {
-    if (!process.browser) {
+    if (!(process as any).browser) {
       return;
     }
 

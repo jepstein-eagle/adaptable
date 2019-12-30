@@ -44,7 +44,7 @@ function listenToSearchChangedEvent(searchChangedArgs: SearchChangedEventArgs) {
 
 export default () => {
   useEffect(() => {
-    if (!process.browser) {
+    if (!(process as any).browser) {
       return;
     }
 
