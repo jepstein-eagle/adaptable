@@ -48,7 +48,6 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'counterparty',
         PermittedValues: (column: AdaptableColumn) => {
-          console.log(column);
           return ['BAML', 'Nomura', 'UBS'];
         },
       },

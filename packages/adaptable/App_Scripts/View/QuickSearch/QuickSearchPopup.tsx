@@ -17,7 +17,7 @@ import {
   QUICK_SEARCH_DEFAULT_FORE_COLOR,
 } from '../../Utilities/Constants/GeneralConstants';
 import { DisplayAction, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
-import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 import { AdaptablePopover } from '../AdaptablePopover';
 
 import WizardPanel from '../../components/WizardPanel';
@@ -33,18 +33,18 @@ import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableForm
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
   DisplayAction: DisplayAction;
-  QuickSearchStyle: IStyle;
+  QuickSearchStyle: AdaptableStyle;
 
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
   onSetSearchDisplayType: (
     DisplayAction: DisplayAction
   ) => QuickSearchRedux.QuickSearchSetDisplayAction;
-  onSetStyle: (style: IStyle) => QuickSearchRedux.QuickSearchSetStyleAction;
+  onSetStyle: (style: AdaptableStyle) => QuickSearchRedux.QuickSearchSetStyleAction;
 }
 
 interface QuickSearchPopupState {
   EditedQuickSearchText: string;
-  EditedStyle: IStyle;
+  EditedStyle: AdaptableStyle;
 }
 
 class QuickSearchPopupComponent extends React.Component<
@@ -78,7 +78,7 @@ class QuickSearchPopupComponent extends React.Component<
   }
 
   private onUseBackColorCheckChange(checked: boolean) {
-    let style: IStyle = this.state.EditedStyle;
+    let style: AdaptableStyle = this.state.EditedStyle;
     style.BackColor = checked
       ? this.props.QuickSearchStyle.BackColor
         ? this.props.QuickSearchStyle.BackColor
@@ -89,7 +89,7 @@ class QuickSearchPopupComponent extends React.Component<
   }
 
   private onUseForeColorCheckChange(checked: boolean) {
-    let style: IStyle = this.state.EditedStyle;
+    let style: AdaptableStyle = this.state.EditedStyle;
     style.ForeColor = checked
       ? this.props.QuickSearchStyle.ForeColor
         ? this.props.QuickSearchStyle.ForeColor
@@ -101,7 +101,7 @@ class QuickSearchPopupComponent extends React.Component<
 
   private onBackColorSelectChange(event: React.FormEvent<ColorPicker>) {
     let e = event.target as HTMLInputElement;
-    let style: IStyle = this.state.EditedStyle;
+    let style: AdaptableStyle = this.state.EditedStyle;
     style.BackColor = e.value;
     this.setState({ EditedStyle: style });
     this.props.onSetStyle(style);
@@ -109,7 +109,7 @@ class QuickSearchPopupComponent extends React.Component<
 
   private onForeColorSelectChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let style: IStyle = this.state.EditedStyle;
+    let style: AdaptableStyle = this.state.EditedStyle;
     style.ForeColor = e.value;
     this.setState({ EditedStyle: style });
     this.props.onSetStyle(style);
@@ -268,7 +268,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText)),
     onSetSearchDisplayType: (searchDisplayType: DisplayAction) =>
       dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
-    onSetStyle: (style: IStyle) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),
+    onSetStyle: (style: AdaptableStyle) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),
   };
 }
 

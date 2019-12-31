@@ -14,7 +14,7 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux';
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
-import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 import { IAlertStrategy } from '../../Strategy/Interface/IAlertStrategy';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrategy';
@@ -234,7 +234,7 @@ export class StyleService implements IStyleService {
     }
 
     // quick search
-    const quickSearchStyle: IStyle = this.adaptable.api.quickSearchApi.getQuickSearchStyle();
+    const quickSearchStyle: AdaptableStyle = this.adaptable.api.quickSearchApi.getQuickSearchStyle();
     if (StringExtensions.IsNullOrEmpty(quickSearchStyle.ClassName)) {
       const styleName = this.CreateStyleName(StrategyConstants.QuickSearchStrategyId);
 

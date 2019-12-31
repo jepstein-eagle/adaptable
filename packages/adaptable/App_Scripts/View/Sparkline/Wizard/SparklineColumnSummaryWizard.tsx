@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { SparklineColumn } from '../../../PredefinedConfig/SparklineColumnState';
-import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../../PredefinedConfig/Common/AdaptableStyle';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 
@@ -24,7 +24,7 @@ export class SparklineColumnSummaryWizard
   }
 
   render(): any {
-    let lineColorStyle: IStyle = ObjectFactory.CreateEmptyStyle();
+    let lineColorStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
     lineColorStyle.BackColor = this.props.Data!.LineColor;
     lineColorStyle.ForeColor = this.props.Data!.LineColor;
 

@@ -6,7 +6,7 @@ import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
 
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 import Checkbox from '../../components/CheckBox';
 import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
@@ -21,13 +21,13 @@ export interface StyleComponentProps extends React.ClassAttributes<StyleComponen
   style?: CSSProperties;
   ColorPalette: string[];
   StyleClassNames: string[];
-  Style: IStyle;
-  UpdateStyle: (style: IStyle) => void;
+  Style: AdaptableStyle;
+  UpdateStyle: (style: AdaptableStyle) => void;
   CanUseClassName: boolean;
 }
 
 export interface StyleComponentState {
-  myStyle: IStyle;
+  myStyle: AdaptableStyle;
   ShowClassName: boolean;
 }
 

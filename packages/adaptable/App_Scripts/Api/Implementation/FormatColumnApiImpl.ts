@@ -1,4 +1,4 @@
-import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux';
 import { ApiBase } from './ApiBase';
 import { FormatColumnApi } from '../FormatColumnApi';
@@ -15,12 +15,12 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     return this.getAdaptableState().FormatColumn.FormatColumns;
   }
 
-  public addFormatColumn(column: string, style: IStyle): void {
+  public addFormatColumn(column: string, style: AdaptableStyle): void {
     let formatColumn: FormatColumn = { ColumnId: column, Style: style };
     this.dispatchAction(FormatColumnRedux.FormatColumnAdd(formatColumn));
   }
 
-  public updateFormatColumn(column: string, style: IStyle): void {
+  public updateFormatColumn(column: string, style: AdaptableStyle): void {
     let formatColumn: FormatColumn = { ColumnId: column, Style: style };
     this.dispatchAction(FormatColumnRedux.FormatColumnEdit(formatColumn));
   }

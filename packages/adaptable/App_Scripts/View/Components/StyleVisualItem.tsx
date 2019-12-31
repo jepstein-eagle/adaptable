@@ -2,10 +2,10 @@ import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { FontWeight, FontStyle } from '../../PredefinedConfig/Common/Enums';
-import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 
 export interface StyleVisualItemProps extends React.ClassAttributes<StyleVisualItem> {
-  Style: IStyle;
+  Style: AdaptableStyle;
 }
 
 export class StyleVisualItem extends React.Component<StyleVisualItemProps, {}> {

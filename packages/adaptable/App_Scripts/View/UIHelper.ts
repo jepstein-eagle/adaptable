@@ -12,7 +12,7 @@ import {
   DayOfWeek,
 } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IStyle } from '../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../PredefinedConfig/Common/Expression';
 
@@ -233,7 +233,7 @@ export function isValidUserChartContainer(
   return false;
 }
 
-export function IsNotEmptyStyle(style: IStyle): boolean {
+export function IsNotEmptyStyle(style: AdaptableStyle): boolean {
   return (
     style.BackColor != null ||
     style.ForeColor != null ||
