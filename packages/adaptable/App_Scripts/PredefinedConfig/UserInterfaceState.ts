@@ -74,6 +74,28 @@ export interface UserInterfaceState extends DesignTimeState {
    * An optional list of values which are permitted for a given column.
    *
    * If set, then only these values will appear in the Column Filter, Query Builder, Bulk Update dropdown etc when that column is selected.
+   *
+   * ```ts
+   * export default {
+   *  UserInterface: {
+   *     PermittedValuesColumns: [
+   *     {
+   *        ColumnId: 'status',
+   *        PermittedValues: ['Rejected', 'Pending'],
+   *     },
+   *     {
+   *        ColumnId: 'counterparty',
+   *        PermittedValues: (column: AdaptableColumn) => {
+   *          return ['BAML', 'Nomura', 'UBS'];
+   *        },
+   *     },
+   *   ],
+   *  },
+   * } as PredefinedConfig;
+   * ```
+   *
+   * In this example we have set Permitted Values for the 'Status' and 'Counterparty' columns using a hard-coded list and a function respectively.
+   *
    */
   PermittedValuesColumns?: PermittedValuesColumn[];
 
@@ -268,9 +290,38 @@ export interface RowStyle {
   RowType: 'All' | 'Odd' | 'Even';
 }
 
+/**
+ * Defines a Menu Item created at design-time
+ *
+ * A Menu Item can be added to either the Adaptable Column Header Menu or the Adaptable Context Menu.
+ *
+ * Each Menu Item contains a label and optional glyph.
+ *
+ * You can also provide an implementation for the `UserMenuItemClickedFunction` for when the menu item is clicked.
+ *
+ * Each Menu Item can contain an array of Menu Items to allow you to create sub menus.
+ */
 export interface UserMenuItem {
+  /**
+   * The text that will appear in the Menu Item
+   */
   Label: string;
+  /**
+   * Function to run when the Menu Item is selected by the User
+   *
+   * The `MenuInfo` class provides full information of the column / cell where the menu is being run
+   */
   UserMenuItemClickedFunction?: (menuInfo: MenuInfo) => void;
+
+  /**
+   * An optional icon to show in the Menu Item
+   */
   Icon?: string;
+
+  /**
+   * An array of Menu Items - this allows you to create sub menus.
+   *
+   * You can create sub menus as many levels deep as you require.
+   */
   SubMenuItems?: UserMenuItem[];
 }
