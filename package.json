@@ -55,10 +55,11 @@
     "build-react": "npm run --prefix packages/adaptable-react-aggrid build",
     "build-angular": "npm run --prefix packages/adaptable-ng-aggrid build",
     "build": "npm run tsc-core && npm run build-core && npm run build-react && npm run build-angular",
-    "tsc": "npm run tsc-core && npm run tsc-react && npm run tsc-angular",
+    "tsc": "npm run tsc-core && npm run tsc-react && npm run tsc-angular && npm run tsc-nocode",
     "tsc-core": "npm run --prefix packages/adaptable tsc",
     "tsc-react": "npm run --prefix packages/adaptable-react-aggrid tsc",
     "tsc-angular": "npm run --prefix packages/adaptable-ng-aggrid tsc",
+    "tsc-nocode": "npm run --prefix packages/adaptable-nocode tsc",
     "echo": "echo xxx"
   },
   "husky": {

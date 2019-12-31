@@ -71,7 +71,7 @@
     "ensure-clean-on-local": "node ../../scripts/ensure-clean-on-local",
     "test": "ng test",
     "lint": "ng lint",
-    "tsc": "tsc",
+    "tsc": "npm run link-core && tsc",
     "e2e": "ng e2e",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
     "registry-publish": "npm run build-package-json && npm publish dist/adaptable-angular-aggrid",

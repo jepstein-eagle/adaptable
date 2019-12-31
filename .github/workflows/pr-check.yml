@@ -32,9 +32,17 @@ jobs:
         CI: true
     - name: tsc-react
       run: npm run --prefix packages/adaptable-react-aggrid tsc
+
     - name: Executing npm install in angular
       run: npm install --prefix packages/adaptable-ng-aggrid
       env:
         CI: true
     - name: tsc-angular
-      run: npm run --prefix packages/adaptable-ng-aggrid link-core && npm run --prefix packages/adaptable-ng-aggrid tsc
+      run: npm run --prefix packages/adaptable-ng-aggrid tsc
+
+    - name: Executing npm install in nocode
+      run: npm install --prefix packages/adaptable-nocode
+      env:
+        CI: true
+    - name: tsc-nocode
+      run: npm run --prefix packages/adaptable-nocode tsc

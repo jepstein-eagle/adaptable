@@ -42,4 +42,4 @@ jobs:
       env:
         CI: true
     - name: tsc-nocode
-      run: npm run --prefix packages/adaptable-nocode tsc
+      run: npm run --prefix packages/adaptable-nocode link-core && npm run --prefix packages/adaptable-nocode tsc
