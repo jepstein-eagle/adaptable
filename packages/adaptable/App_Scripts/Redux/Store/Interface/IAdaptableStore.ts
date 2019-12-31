@@ -6,6 +6,6 @@ export interface IAdaptableStore {
   Load: PromiseLike<any>;
 
   on: (eventName: string, callback: (data?: any) => any) => () => void;
-  onAny: (callback: (data?: any) => any) => () => void;
+  onAny: (callback: (eventName: string, data?: any) => any) => () => void;
   emit: (eventName: string, data: any) => Promise<any>;
 }

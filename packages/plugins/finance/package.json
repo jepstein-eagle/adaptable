@@ -1,0 +1,24 @@
+{
+  "name": "@adaptabletools/adaptable-plugin-finance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "link-core": "rimraf node_modules/@adaptabletools && symlink-dir ../../adaptable ./node_modules/@adaptabletools/adaptable",
+    "tsc": "npm run link-core && tsc --outDir dist"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.3",
+    "typescript": "3.6.2",
+    "symlink-dir": "^3.1.1",
+    "prettier": "^1.17.0"
+  },
+  "peerDependencies": {
+    "@adaptabletools/adaptable": ">=5.1.1"
+  },
+  "author": {
+    "name": "Jonny Wolfson",
+    "email": "jonny.wolfson@adaptabletools.com"
+  },
+  "homepage": "http://www.adaptabletools.com/"
+}

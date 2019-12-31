@@ -156,6 +156,7 @@ import {
   IAdaptableNoCodeWizardOptions,
   IAdaptableNoCodeWizardInitFn,
 } from '../AdaptableInterfaces/IAdaptableNoCodeWizard';
+import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -270,7 +271,30 @@ export class Adaptable implements IAdaptable {
   // new static constructor which takes an Adaptable adaptable object and returns the api object
   // going forward this should be the only way that we instantiate and use Adaptable and everything should be accessible via the API
   public static init(adaptableOptions: AdaptableOptions): AdaptableApi {
-    const ab = new Adaptable(adaptableOptions);
+    const extraOptions = {
+      renderGrid: undefined as boolean,
+      runtimeConfig: null as RuntimeConfig,
+    };
+
+    if (Array.isArray(adaptableOptions.plugins)) {
+      adaptableOptions.plugins.forEach(plugin => {
+        plugin.beforeInit(adaptableOptions, extraOptions);
+      });
+    }
+
+    const ab = new Adaptable(
+      adaptableOptions,
+      extraOptions.renderGrid,
+      extraOptions.runtimeConfig,
+      true
+    );
+
+    if (Array.isArray(adaptableOptions.plugins)) {
+      adaptableOptions.plugins.forEach(plugin => {
+        plugin.afterInit(ab);
+      });
+    }
+
     return ab.api;
   }
 
@@ -279,8 +303,17 @@ export class Adaptable implements IAdaptable {
   constructor(
     adaptableOptions: AdaptableOptions,
     renderGrid: boolean = true,
-    runtimeConfig?: RuntimeConfig
+    runtimeConfig?: RuntimeConfig,
+    _staticInit?: boolean
   ) {
+    if (!_staticInit) {
+      console.warn(`
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!! You should not use the "Adaptable" constructor directly, as it is deprecated and will not work in a future version!
+!!!!!!!
+!!!!!!! Use Adaptable.init(adaptableOptions) instead.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`);
+    }
     this.emitter = new Emitter();
 
     this.renderGrid = renderGrid;
@@ -299,8 +332,11 @@ export class Adaptable implements IAdaptable {
 
     this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
 
+    this.forPlugins(plugin => plugin.afterInitOptions(this, this.adaptableOptions));
+
     // get the api ready
     this.api = new AdaptableApiImpl(this);
+    this.forPlugins(plugin => plugin.afterInitApi(this, this.api));
 
     // data source needs to be created before Audit Log Service
     this.DataService = new DataService(this);
@@ -330,6 +366,8 @@ export class Adaptable implements IAdaptable {
       this,
       (columnId, rowNode) => this.gridOptions.api!.getValue(columnId, rowNode)
     );
+
+    this.forPlugins(plugin => plugin.afterInitServices(this));
 
     // we prefer the grid to be NOT instantiated so that we can do it
     // perhaps in future we will force instantiation only?
@@ -379,7 +417,8 @@ export class Adaptable implements IAdaptable {
         this.api.internalApi.hideLoadingScreen();
       });
 
-    // render Adaptable(not sure why this would ever be false?)
+    // render Adaptable - might be false because for example the react wrapper will skip rendering
+    // as it will do rendering by itself
     if (renderGrid) {
       if (this.abContainerElement == null) {
         this.abContainerElement = this.getadaptableContainerElement();
@@ -401,11 +440,25 @@ export class Adaptable implements IAdaptable {
     );
   }
 
+  forPlugins(callback: (plugin: AdaptablePlugin) => any) {
+    if (Array.isArray(this.adaptableOptions.plugins)) {
+      this.adaptableOptions.plugins.forEach(plugin => {
+        callback(plugin);
+      });
+    }
+  }
+
   private initStore() {
     this.AdaptableStore = new AdaptableStore(this);
-    this.AdaptableStore.onAny((eventName: string) => {
+
+    this.forPlugins(plugin => plugin.afterInitStore(this, this.AdaptableStore));
+
+    this.AdaptableStore.onAny((eventName: string, data: any) => {
+      this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
+
       if (eventName == INIT_STATE) {
         // and reset state also?
+        this.forPlugins(plugin => plugin.onAdaptableReady(this, this.adaptableOptions));
         this.api.eventApi.emit('AdaptableReady', this.adaptableOptions.adaptableId);
       }
     });
@@ -1102,7 +1155,10 @@ export class Adaptable implements IAdaptable {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
+    return ArrayExtensions.ContainsItem(
+      percentBars.map(pb => pb.ColumnId),
+      columnId
+    );
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -1721,10 +1777,27 @@ export class Adaptable implements IAdaptable {
   }
 
   private getadaptableContainerElement(): HTMLElement | null {
+    debugger;
     if (!this.abContainerElement) {
       this.abContainerElement = document.getElementById(
         this.adaptableOptions!.containerOptions.adaptableContainer
       );
+
+      if (!this.abContainerElement) {
+        let oldContainer = document.getElementById('adaptableBlotter');
+
+        if (oldContainer) {
+          console.warn(`
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!! The old default container element for the Adaptable was "#adaptableContainer", configured via 'containerOptions.adaptableContainer="adaptableBlotter"'.
+!!!!! Seems like you haven't updated your html container selector, so we're falling back to using that one.
+!!!!!
+!!!!! To make this warning go away, update your html structure and make sure you have an element with id="adaptable" in your app!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+`);
+          this.abContainerElement = oldContainer;
+        }
+      }
     }
     return this.abContainerElement;
   }

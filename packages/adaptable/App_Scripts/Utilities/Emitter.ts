@@ -1,6 +1,7 @@
 /** based on emittery npm package, which is MIT */
 
 export type EmitterCallback = (data?: any) => any;
+export type EmitterAnyCallback = (eventName: string, data?: any) => any;
 
 const anyMap = new WeakMap();
 const eventsMap = new WeakMap();
@@ -169,7 +170,7 @@ class Emittery {
     /* eslint-enable no-await-in-loop */
   }
 
-  onAny(listener: EmitterCallback) {
+  onAny(listener: EmitterAnyCallback) {
     assertListener(listener);
     anyMap.get(this).add(listener);
     return this.offAny.bind(this, listener);

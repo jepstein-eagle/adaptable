@@ -16,6 +16,7 @@ export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { IAdaptable } from './AdaptableInterfaces/IAdaptable';
 export { AdaptableApi } from './Api/AdaptableApi';
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';
+export { AdaptablePlugin } from './AdaptableOptions/AdaptablePlugin';
 
 export {
   EventApi,

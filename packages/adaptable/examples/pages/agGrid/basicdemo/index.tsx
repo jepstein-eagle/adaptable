@@ -9,7 +9,7 @@ const DynamicComponent = dynamic(() => import('./agGrid'), {
 
 export default () => (
   <>
-    <div id="adaptable" style={{ margin: 0 }} />
+    <div id="adaptableBlotter" style={{ margin: 0 }} />
 
     {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in AdaptableOptions-- > */}
 

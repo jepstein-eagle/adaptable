@@ -10,6 +10,7 @@ import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { EditOptions } from './EditOptions';
 import { StateOptions } from './StateOptions';
 import { UserInterfaceOptions } from './UserInterfaceOptions';
+import { AdaptablePlugin } from './AdaptablePlugin';
 
 /**
  * `AdaptableOptions` is the class injected into Adaptable at startup.
@@ -97,6 +98,8 @@ export interface AdaptableOptions {
    * **Default Value: undefined**
    */
   predefinedConfig?: PredefinedConfig | string;
+
+  plugins?: AdaptablePlugin[];
 
   /**
    * **This property is deprecated.  It is no longer used or required; licencing by key was removed in version 5**

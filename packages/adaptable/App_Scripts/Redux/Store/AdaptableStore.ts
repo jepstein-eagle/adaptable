@@ -137,6 +137,7 @@ import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 
 type EmitterCallback = (data?: any) => any;
+type EmitterAnyCallback = (eventName: string, data?: any) => any;
 /*
 This is the main store for Adaptable State
 */
@@ -278,7 +279,7 @@ export class AdaptableStore implements IAdaptableStore {
   public on = (eventName: string, callback: EmitterCallback): (() => void) => {
     return this.emitter.on(eventName, callback);
   };
-  public onAny = (callback: EmitterCallback): (() => void) => {
+  public onAny = (callback: EmitterAnyCallback): (() => void) => {
     return this.emitter.onAny(callback);
   };
 
@@ -2352,9 +2353,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
