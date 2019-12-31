@@ -6,11 +6,11 @@ import { CELL_SUMMARY_DEFAULT_OPERATION } from '../../Utilities/Constants/Genera
 export const CELL_SUMMARY_CHANGE_OPERATION = 'CELL_SUMMARY_CHANGE_OPERATION';
 
 export interface CellSummaryChangeOperationAction extends Redux.Action {
-  SummaryOperation: CellSummaryOperation;
+  SummaryOperation: CellSummaryOperation | string;
 }
 
 export const CellSummaryChangeOperation = (
-  SummaryOperation: CellSummaryOperation
+  SummaryOperation: CellSummaryOperation | string
 ): CellSummaryChangeOperationAction => ({
   type: CELL_SUMMARY_CHANGE_OPERATION,
   SummaryOperation,
