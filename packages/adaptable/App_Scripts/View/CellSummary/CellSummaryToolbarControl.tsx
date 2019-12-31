@@ -15,7 +15,7 @@ import { AccessLevel, CellSummaryOperation } from '../../PredefinedConfig/Common
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
+import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -34,7 +34,7 @@ interface CellSummaryToolbarControlComponentProps
     summaryOperation: CellSummaryOperation | string
   ) => SelectedCellsRedux.CellSummaryChangeOperationAction;
   onCreateCellSummary: () => GridRedux.GridCreateCellSummaryAction;
-  CellSummary: ICellSummmary;
+  CellSummary: CellSummmary;
 }
 
 class CellSummaryToolbarControlComponent extends React.Component<
@@ -73,8 +73,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
     const operationDefinitions = CellSummaryOperationDefinitions.map(
       (operationDefinition: CellSummaryOperationDefinition) => {
         return {
-          onClick: () => this.props.onCellSummaryOperationChange(operationDefinition.name),
-          label: operationDefinition.name,
+          onClick: () => this.props.onCellSummaryOperationChange(operationDefinition.OperationName),
+          label: operationDefinition.OperationName,
         };
       }
     );
@@ -172,7 +172,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SelectedCellInfo: state.Grid.SelectedCellInfo,
     CellSummaryOperation: state.CellSummary.SummaryOperation,
-    CellSummaryOperationDefinitions: state.System.CellSummaryOperations,
+    CellSummaryOperationDefinitions: state.System.CellSummaryOperationDefinitions,
     CellSummary: state.Grid.CellSummary,
   };
 }

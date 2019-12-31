@@ -62,8 +62,7 @@ export const CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
 export const CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
 
 // Cell summary operations
-
-export const CELL_SUMMARY_OPERATIONS_SET = 'CELL_SUMMARY_OPERATIONS_SET';
+export const CELL_SUMMARY_OPERATION_DEFINITIONS_SET = 'CELL_SUMMARY_OPERATION_DEFINITIONS_SET';
 
 // Error Messages
 export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
@@ -148,10 +147,6 @@ export interface ChartSetChartDataAction extends Redux.Action {
   chartData: ChartData;
 }
 
-export interface CellSummaryOperationsSetAction extends Redux.Action {
-  operations: CellSummaryOperationDefinition[];
-}
-
 export interface ChartSetChartVisibiityAction extends Redux.Action {
   ChartVisibility: ChartVisibility;
 }
@@ -182,6 +177,10 @@ export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Ac
 
 export interface SetNewColumnListOrderAction extends Redux.Action {
   VisibleColumnList: Array<AdaptableColumn>;
+}
+
+export interface CellSummaryOperationDefinitionssSetAction extends Redux.Action {
+  operationDefinitions: CellSummaryOperationDefinition[];
 }
 
 export const SystemAlertAdd = (Alert: AdaptableAlert, MaxAlerts: number): SystemAlertAddAction => ({
@@ -286,13 +285,6 @@ export const ChartSetChartData = (chartData: ChartData): ChartSetChartDataAction
   chartData,
 });
 
-export const CellSummaryOperationsSet = (
-  operations: CellSummaryOperationDefinition[]
-): CellSummaryOperationsSetAction => ({
-  type: CELL_SUMMARY_OPERATIONS_SET,
-  operations,
-});
-
 export const ChartSetChartVisibility = (
   ChartVisibility: ChartVisibility
 ): ChartSetChartVisibiityAction => ({
@@ -353,6 +345,13 @@ export const SetNewColumnListOrder = (
   VisibleColumnList,
 });
 
+export const CellSummaryOperationDefinitionsSet = (
+  operationDefinitions: CellSummaryOperationDefinition[]
+): CellSummaryOperationDefinitionssSetAction => ({
+  type: CELL_SUMMARY_OPERATION_DEFINITIONS_SET,
+  operationDefinitions,
+});
+
 const initialSystemState: SystemState = {
   AdaptableAlerts: EMPTY_ARRAY,
   UpdatedRowInfos: EMPTY_ARRAY,
@@ -370,7 +369,7 @@ const initialSystemState: SystemState = {
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
   QuickSearchVisibleColumnExpressions: EMPTY_ARRAY,
-  CellSummaryOperations: EMPTY_ARRAY,
+  CellSummaryOperationDefinitions: EMPTY_ARRAY,
 };
 
 export const SystemReducer: Redux.Reducer<SystemState> = (
@@ -385,10 +384,11 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     case IPP_LOGIN_FAILED: {
       return { ...state, IPPLoginMessage: (action as IPPLoginFailedAction).Message };
     }
-    case CELL_SUMMARY_OPERATIONS_SET: {
+    case CELL_SUMMARY_OPERATION_DEFINITIONS_SET: {
       return {
         ...state,
-        CellSummaryOperations: (action as CellSummaryOperationsSetAction).operations,
+        CellSummaryOperationDefinitions: (action as CellSummaryOperationDefinitionssSetAction)
+          .operationDefinitions,
       };
     }
     case SYSTEM_ALERT_ADD: {

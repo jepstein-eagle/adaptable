@@ -4,7 +4,7 @@ import { MenuInfo } from './Common/Menu';
 import { AdaptableColumn } from './Common/AdaptableColumn';
 
 /**
- * The Predefined Configuration for managing the User Interface
+ * The User Interface section of Predefined Configuration
  *
  * Contains a number of properties and collections that allow users to manage the User Interface of the grid.
  *
@@ -196,6 +196,18 @@ export interface UserInterfaceState extends DesignTimeState {
    *    ],
    * },
    * } as PredefinedConfig;
+   *
+   *  ........
+   *
+   * // in css file
+   *  .evenRowStyle {
+   *    background: lightgrey !important;
+   *    font-weight: normal !important;
+   *    font-style: italic !important;
+   *  }
+   *
+   *  ........
+   *
    * ```
    *
    * In this example we have created Even and Odd Row styles.

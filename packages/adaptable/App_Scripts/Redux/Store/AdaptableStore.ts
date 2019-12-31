@@ -102,7 +102,7 @@ import {
 } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
-import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
+import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -2357,7 +2357,9 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<
+              boolean
+            > = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -2969,7 +2971,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let returnAction = next(action);
             let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo;
-            let apiSummaryReturn: ICellSummmary = SelectedCellsStrategy.CreateCellSummary(
+            let apiSummaryReturn: CellSummmary = SelectedCellsStrategy.CreateCellSummary(
               selectedCellInfo
             );
             middlewareAPI.dispatch(GridRedux.GridSetCellSummary(apiSummaryReturn));

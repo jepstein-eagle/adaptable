@@ -37,5 +37,5 @@ export interface SystemState extends InternalState {
   ReportErrorMessage: string;
   QuickSearchRange: QueryRange;
   QuickSearchVisibleColumnExpressions: Expression[];
-  CellSummaryOperations: CellSummaryOperationDefinition[];
+  CellSummaryOperationDefinitions: CellSummaryOperationDefinition[];
 }

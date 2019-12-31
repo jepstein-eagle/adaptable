@@ -59,7 +59,7 @@ import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
-import { ICellSummmary } from './Interface/Selection/ICellSummmary';
+import { CellSummmary } from './Interface/Selection/CellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
@@ -486,7 +486,7 @@ export function CreateEmptyStyle(): AdaptableStyle {
   };
 }
 
-export function CreateEmptyCellSummmary(): ICellSummmary {
+export function CreateEmptyCellSummmary(): CellSummmary {
   return {
     Sum: null,
     Average: null,
@@ -496,8 +496,6 @@ export function CreateEmptyCellSummmary(): ICellSummmary {
     Max: null,
     Min: null,
     Count: null,
-    Only: null,
-    VWAP: null,
   };
 }
 

@@ -2,9 +2,33 @@ import { RunTimeState } from './RunTimeState';
 import { CellSummaryOperation } from './Common/Enums';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 
+/**
+ *  | Operation | Description                                      |
+ *  |---------  |-------------------	                             |
+ *  | Sum       | Total of all selected cells	                     |
+ *  | Average   | Average of all selected cells 	                 |
+ *  | Median    | Median of all selected cells 	                   |
+ *  | Distinct  | Lists all distinct values in the selected cells	 |
+ *  | Max  	    | Highest value in selected cells 	               |
+ *  | Min   	  | Lowest value in selected cells 	                 |
+ *  | Count  	  | Count of selected cells 	                       |
+ *
+ * *Finance Plugin*
+ *
+ *  | Operation | Description                                      |
+ *  |---------  |-------------------	                             |
+ *  | Sum       | Total of all selected cells	                     |
+ *  | Average   | Average of all selected cells 	                 |
+ *
+ *
+ */
+export interface CellSummaryState extends RunTimeState {
+  SummaryOperation?: CellSummaryOperation | string;
+}
+
 export interface CellSummaryOperationDefinition {
-  name: string;
-  fn: (operationParam: {
+  OperationName: string;
+  OperationFunction: (operationParam: {
     selectedCellInfo: SelectedCellInfo;
     allValues: any[];
     numericColumns: string[];
@@ -12,42 +36,3 @@ export interface CellSummaryOperationDefinition {
     distinctCount: number;
   }) => any;
 }
-
-export interface CellSummaryState extends RunTimeState {
-  SummaryOperation?: CellSummaryOperation | string;
-}
-
-/*
-SummaryOperation
-
-string
-
-Which operation will be used by Cell Summary function at startup.  Possible values include:
-
-Sum
-
-Average
-
-Mode
-
-Median
-
-Distinct
-
-Max
-
-Min
-
-Count
-
-OptionalSummaryOperations
-
-string[]
-
-Which of the non-standard Cell Summaries to use. Current options include:
-
-Only
-
-VWAP
-
-*/

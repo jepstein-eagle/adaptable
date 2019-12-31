@@ -24,20 +24,18 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
-  // System Redux Actions
   public getCellSummaryOperationDefinitions(): CellSummaryOperationDefinition[] {
-    return this.getSystemState().CellSummaryOperations;
+    return this.getSystemState().CellSummaryOperationDefinitions;
   }
 
   public addCellSummaryOperationDefinitions(
     cellSummaryOperationDefinitions: CellSummaryOperationDefinition[]
   ) {
-    const operations = [
+    const operationDefinitions = [
       ...this.getCellSummaryOperationDefinitions(),
       ...cellSummaryOperationDefinitions,
     ];
-
-    this.dispatchAction(SystemRedux.CellSummaryOperationsSet(operations));
+    this.dispatchAction(SystemRedux.CellSummaryOperationDefinitionsSet(operationDefinitions));
   }
 
   public startLiveReport(

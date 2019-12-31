@@ -3,20 +3,16 @@ import { IColItem } from '../UIInterfaces';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
-import { CellSummaryOperation } from '../../PredefinedConfig/Common/Enums';
+import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import EmptyContent from '../../components/EmptyContent';
 
 interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetails> {
-  CellSummary: ICellSummmary;
+  CellSummary: CellSummmary;
 }
 
 export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps, {}> {
   render() {
-    let colItems: IColItem[] = [
-      { Content: 'Operation', Size: 5 },
-      { Content: 'Value', Size: 7 },
-    ];
+    let colItems: IColItem[] = [{ Content: 'Operation', Size: 5 }, { Content: 'Value', Size: 7 }];
 
     let rowElements: any[] = [];
     if (this.props.CellSummary != null) {

@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { ICellSummaryStrategy } from './Interface/ICellSummaryStrategy';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { ICellSummmary } from '../Utilities/Interface/Selection/ICellSummmary';
+import { CellSummmary } from '../Utilities/Interface/Selection/CellSummmary';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -42,8 +42,8 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     return menuItemShowPopup;
   }
 
-  public CreateCellSummary(selectedCellInfo: SelectedCellInfo): ICellSummmary {
-    let selectedCellSummary: ICellSummmary;
+  public CreateCellSummary(selectedCellInfo: SelectedCellInfo): CellSummmary {
+    let selectedCellSummary: CellSummmary;
 
     if (selectedCellInfo && ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
       let numericValues: number[] = [];
@@ -88,7 +88,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
       const operations = this.adaptable.api.internalApi.getCellSummaryOperationDefinitions();
 
       operations.forEach(operation => {
-        selectedCellSummary[operation.name] = operation.fn({
+        selectedCellSummary[operation.OperationName] = operation.OperationFunction({
           selectedCellInfo,
           distinctCount,
           allValues,

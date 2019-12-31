@@ -1,4 +1,4 @@
-export interface ICellSummmary {
+export interface CellSummmary {
   Sum: any; // can be number or blank
   Average: any; // can be number or blank
   Median: any; // can be number or blank

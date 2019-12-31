@@ -1,6 +1,6 @@
 import { AdaptableColumn } from './Common/AdaptableColumn';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { ICellSummmary } from '../Utilities/Interface/Selection/ICellSummmary';
+import { CellSummmary } from '../Utilities/Interface/Selection/CellSummmary';
 import { InternalState } from './InternalState';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ColumnSort } from './LayoutState';
@@ -11,7 +11,7 @@ export interface GridState extends InternalState {
   ColumnSorts: ColumnSort[];
   SelectedCellInfo: SelectedCellInfo;
   SelectedRowInfo: SelectedRowInfo;
-  CellSummary: ICellSummmary;
+  CellSummary: CellSummmary;
   IsQuickFilterActive: boolean;
   MainMenuItems: AdaptableMenuItem[];
   IsGlue42Available: boolean;

@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
-import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
+import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
@@ -79,7 +79,7 @@ export interface GridSetSelectedRowsAction extends Redux.Action {
 export interface GridCreateCellSummaryAction extends Redux.Action {}
 
 export interface GridSetCellSummaryAction extends Redux.Action {
-  CellSummary: ICellSummmary;
+  CellSummary: CellSummmary;
 }
 
 export interface GridRefreshCellsAction extends Redux.Action {
@@ -175,7 +175,7 @@ export const GridCreateCellSummary = (): GridCreateCellSummaryAction => ({
   type: GRID_CREATE_CELLS_SUMMARY,
 });
 
-export const GridSetCellSummary = (CellSummary: ICellSummmary): GridSetCellSummaryAction => ({
+export const GridSetCellSummary = (CellSummary: CellSummmary): GridSetCellSummaryAction => ({
   type: GRID_SET_CELLS_SUMMARY,
   CellSummary,
 });

@@ -7,11 +7,11 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
-import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
+import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { CellSummaryDetails } from './CellSummaryDetails';
 
 interface CellSummaryPopupProps extends StrategyViewPopupProps<CellSummaryPopupComponent> {
-  CellSummary: ICellSummmary;
+  CellSummary: CellSummmary;
   onSetSelectedCellSummary: () => GridRedux.GridSetCellSummaryAction;
 }
 

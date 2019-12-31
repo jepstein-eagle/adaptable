@@ -24,7 +24,9 @@ export interface IStrategy {
   addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined;
   setStrategyEntitlement(): void;
 }
-
+/**
+ * An interface for those strategies which have sytles - e.g. Conditional Style, Format Column, Flashing Cell etc.
+ */
 export interface IStyleStrategy extends IStrategy {
   initStyles(): void;
 }
