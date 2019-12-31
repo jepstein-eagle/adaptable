@@ -52,6 +52,9 @@ export interface AdaptableState {
   Popup: PopupState;
   Grid: GridState;
   System: SystemState;
+  Plugins: {
+    [key: string]: any;
+  };
 
   // Set at design time only
   ActionColumn: ActionColumnState;

@@ -4,7 +4,6 @@ import {
   LeafExpressionOperator,
   CellSummaryOperation,
   MessageType,
-  CellSummaryOptionalOperation,
 } from '../../PredefinedConfig/Common/Enums';
 import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common/ChartEnums';
 import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
@@ -55,7 +54,7 @@ export const SMART_EDIT_DEFAULT_VALUE: number = 1;
 export const SMART_EDIT_DEFAULT_OPERATION: Exclude<MathOperation, MathOperation.Replace> =
   MathOperation.Multiply;
 // Cells Summary
-export const CELL_SUMMARY_DEFAULT_OPERATION: CellSummaryOperation | CellSummaryOptionalOperation =
+export const CELL_SUMMARY_DEFAULT_OPERATION: CellSummaryOperation | string =
   CellSummaryOperation.Sum;
 // system
 export const SYSTEM_DEFAULT_CHART_VISIBILITY: ChartVisibility = ChartVisibility.Hidden;

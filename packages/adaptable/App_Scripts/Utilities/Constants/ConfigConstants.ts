@@ -12,3 +12,4 @@ export const ACTION_COLUMN = 'ActionColumn';
 export const SPARKLINE_COLUMN = 'SparklineColumn';
 export const PARTNER = 'Partner';
 export const SYSTEM_FILTER = 'SystemFilter';
+export const PLUGINS = 'Plugins';

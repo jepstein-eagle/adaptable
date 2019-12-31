@@ -15,6 +15,7 @@ import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { LiveReport } from './Events/LiveReportUpdated';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
+import { CellSummaryOperationDefinition } from '../PredefinedConfig/CellSummaryState';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
  *
@@ -53,6 +54,11 @@ export interface InternalApi {
     functionName: AdaptableFunctionName,
     componentName: string,
     popupParams?: StrategyParams
+  ): void;
+
+  getCellSummaryOperationDefinitions(): CellSummaryOperationDefinition[];
+  addCellSummaryOperationDefinitions(
+    cellSummaryOperationDefinitions: CellSummaryOperationDefinition[]
   ): void;
 
   setColumns(columns: AdaptableColumn[]): void;

@@ -4,6 +4,7 @@ import { SparklineColumnApi } from './SparklineColumnApi';
 import { PartnerAPI } from './PartnerAPI';
 import { AdvancedSearchApi } from './AdvancedSearchApi';
 import { AlertApi } from './AlertApi';
+import { PluginsApi } from './PluginsApi';
 import { AuditEventApi } from './AuditEventApi';
 import { BulkUpdateApi } from './BulkUpdateApi';
 import { CalculatedColumnApi } from './CalculatedColumnApi';
@@ -220,6 +221,11 @@ export interface AdaptableApi {
    * Provides access to the *Plus Minus* function, the *Plus Minus* object and [Plus Minus State](_predefinedconfig_runtimestate_plusminusstate_.plusminusstate.html).
    */
   plusMinusApi: PlusMinusApi;
+
+  /**
+   * Provides access to the *Plugins*
+   */
+  pluginsApi: PluginsApi;
 
   /**
    * Provides access to the *Reminder* function, the *Reminder* object and [Reminder State](_predefinedconfig_runtimestate_reminderstate_.reminderstate.html).

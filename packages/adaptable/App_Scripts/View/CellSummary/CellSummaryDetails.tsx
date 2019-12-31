@@ -4,10 +4,7 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { ICellSummmary } from '../../Utilities/Interface/Selection/ICellSummmary';
-import {
-  CellSummaryOperation,
-  CellSummaryOptionalOperation,
-} from '../../PredefinedConfig/Common/Enums';
+import { CellSummaryOperation } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
 
 interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetails> {
@@ -23,40 +20,36 @@ export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps,
 
     let rowElements: any[] = [];
     if (this.props.CellSummary != null) {
-      rowElements.push(
-        this.createRow(colItems, CellSummaryOperation.Sum, this.props.CellSummary.Sum)
-      );
-      rowElements.push(
-        this.createRow(colItems, CellSummaryOperation.Average, this.props.CellSummary.Average)
-      );
-      rowElements.push(
-        this.createRow(colItems, CellSummaryOperation.Median, this.props.CellSummary.Median)
-      );
-      rowElements.push(
-        this.createRow(colItems, CellSummaryOperation.Mode, this.props.CellSummary.Mode)
-      );
-      rowElements.push(
-        this.createRow(colItems, CellSummaryOperation.Distinct, this.props.CellSummary.Distinct)
-      );
-      rowElements.push(
-        this.createRow(colItems, CellSummaryOperation.Max, this.props.CellSummary.Max)
-      );
-      rowElements.push(
-        this.createRow(colItems, CellSummaryOperation.Min, this.props.CellSummary.Min)
-      );
-      rowElements.push(
-        this.createRow(colItems, CellSummaryOperation.Count, this.props.CellSummary.Count)
-      );
-      if (this.props.CellSummary.Only != null) {
+      // rowElements.push(
+      //   this.createRow(colItems, CellSummaryOperation.Sum, this.props.CellSummary.Sum)
+      // );
+      // rowElements.push(
+      //   this.createRow(colItems, CellSummaryOperation.Average, this.props.CellSummary.Average)
+      // );
+      // rowElements.push(
+      //   this.createRow(colItems, CellSummaryOperation.Median, this.props.CellSummary.Median)
+      // );
+      // rowElements.push(
+      //   this.createRow(colItems, CellSummaryOperation.Mode, this.props.CellSummary.Mode)
+      // );
+      // rowElements.push(
+      //   this.createRow(colItems, CellSummaryOperation.Distinct, this.props.CellSummary.Distinct)
+      // );
+      // rowElements.push(
+      //   this.createRow(colItems, CellSummaryOperation.Max, this.props.CellSummary.Max)
+      // );
+      // rowElements.push(
+      //   this.createRow(colItems, CellSummaryOperation.Min, this.props.CellSummary.Min)
+      // );
+      // rowElements.push(
+      //   this.createRow(colItems, CellSummaryOperation.Count, this.props.CellSummary.Count)
+      // );
+
+      Object.keys(this.props.CellSummary).forEach((operationName: string) => {
         rowElements.push(
-          this.createRow(colItems, CellSummaryOptionalOperation.Only, this.props.CellSummary.Only)
+          this.createRow(colItems, operationName, this.props.CellSummary[operationName])
         );
-      }
-      if (this.props.CellSummary.VWAP != null) {
-        rowElements.push(
-          this.createRow(colItems, CellSummaryOptionalOperation.VWAP, this.props.CellSummary.VWAP)
-        );
-      }
+      });
     }
 
     return (

@@ -14,6 +14,7 @@ export {
 } from './AdaptableInterfaces/IAdaptableNoCodeWizard';
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { IAdaptable } from './AdaptableInterfaces/IAdaptable';
+export { IAdaptableStore } from './Redux/Store/Interface/IAdaptableStore';
 export { AdaptableApi } from './Api/AdaptableApi';
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';
 export { AdaptablePlugin } from './AdaptableOptions/AdaptablePlugin';

@@ -21,6 +21,8 @@ import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './ExportRedux
 import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 import { LiveReport } from '../../Api/Events/LiveReportUpdated';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
+import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
+import { CellSummaryChangeOperationAction } from './CellSummaryRedux';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -58,6 +60,10 @@ export const BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
 // Chart Managemet
 export const CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
 export const CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
+
+// Cell summary operations
+
+export const CELL_SUMMARY_OPERATIONS_SET = 'CELL_SUMMARY_OPERATIONS_SET';
 
 // Error Messages
 export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
@@ -140,6 +146,10 @@ export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
 
 export interface ChartSetChartDataAction extends Redux.Action {
   chartData: ChartData;
+}
+
+export interface CellSummaryOperationsSetAction extends Redux.Action {
+  operations: CellSummaryOperationDefinition[];
 }
 
 export interface ChartSetChartVisibiityAction extends Redux.Action {
@@ -276,6 +286,13 @@ export const ChartSetChartData = (chartData: ChartData): ChartSetChartDataAction
   chartData,
 });
 
+export const CellSummaryOperationsSet = (
+  operations: CellSummaryOperationDefinition[]
+): CellSummaryOperationsSetAction => ({
+  type: CELL_SUMMARY_OPERATIONS_SET,
+  operations,
+});
+
 export const ChartSetChartVisibility = (
   ChartVisibility: ChartVisibility
 ): ChartSetChartVisibiityAction => ({
@@ -353,6 +370,7 @@ const initialSystemState: SystemState = {
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
   QuickSearchVisibleColumnExpressions: EMPTY_ARRAY,
+  CellSummaryOperations: EMPTY_ARRAY,
 };
 
 export const SystemReducer: Redux.Reducer<SystemState> = (
@@ -366,6 +384,12 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     }
     case IPP_LOGIN_FAILED: {
       return { ...state, IPPLoginMessage: (action as IPPLoginFailedAction).Message };
+    }
+    case CELL_SUMMARY_OPERATIONS_SET: {
+      return {
+        ...state,
+        CellSummaryOperations: (action as CellSummaryOperationsSetAction).operations,
+      };
     }
     case SYSTEM_ALERT_ADD: {
       const actionTypedAdd = action as SystemAlertAddAction;

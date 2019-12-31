@@ -4,6 +4,12 @@ import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableApi } from '../types';
 
 export class AdaptablePlugin {
+  public options?: any;
+
+  constructor(options?: any) {
+    this.options = options;
+  }
+
   beforeInit(
     adaptableOptions: AdaptableOptions,
     extraOptions: {

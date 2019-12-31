@@ -21,9 +21,24 @@ import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interf
 import Helper from '../../Utilities/Helpers/Helper';
 import { LiveReport } from '../Events/LiveReportUpdated';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   // System Redux Actions
+  public getCellSummaryOperationDefinitions(): CellSummaryOperationDefinition[] {
+    return this.getSystemState().CellSummaryOperations;
+  }
+
+  public addCellSummaryOperationDefinitions(
+    cellSummaryOperationDefinitions: CellSummaryOperationDefinition[]
+  ) {
+    const operations = [
+      ...this.getCellSummaryOperationDefinitions(),
+      ...cellSummaryOperationDefinitions,
+    ];
+
+    this.dispatchAction(SystemRedux.CellSummaryOperationsSet(operations));
+  }
 
   public startLiveReport(
     report: Report,

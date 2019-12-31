@@ -6,7 +6,7 @@ import { ICellSummaryStrategy } from './Interface/ICellSummaryStrategy';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { ICellSummmary } from '../Utilities/Interface/Selection/ICellSummmary';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Common/Enums';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
@@ -85,12 +85,17 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         Min: hasNumericColumns ? Helper.RoundNumberTo4dp(Math.min(...numericValues)) : '',
         Count: allValues.length,
       };
-      if (this.adaptable.api.cellSummaryApi.hasOnlySummary()) {
-        selectedCellSummary.Only = this.calculateOnly(distinctCount, allValues);
-      }
-      if (this.adaptable.api.cellSummaryApi.hasVWAPSummary()) {
-        selectedCellSummary.VWAP = this.calculateVwap(numericValues, numericColumns);
-      }
+      const operations = this.adaptable.api.internalApi.getCellSummaryOperationDefinitions();
+
+      operations.forEach(operation => {
+        selectedCellSummary[operation.name] = operation.fn({
+          selectedCellInfo,
+          distinctCount,
+          allValues,
+          numericValues,
+          numericColumns,
+        });
+      });
     }
     return selectedCellSummary;
   }
@@ -159,31 +164,5 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
       });
 
     return m[0].value;
-  }
-
-  private calculateOnly(distinctCount: number, allValues: any[]): any {
-    return distinctCount == 1 ? allValues[0] : '';
-  }
-
-  private calculateVwap(numericValues: number[], numericColumns: string[]): any {
-    if (numericColumns.length == 2) {
-      return '';
-    }
-
-    let firstColValues: number[] = [];
-    let secondColComputedValues: number[] = [];
-    for (var i = 0; i < numericValues.length; i++) {
-      if (i % 2 === 0) {
-        // index is odd
-        firstColValues.push(numericValues[i]);
-      } else {
-        let newValue: any = numericValues[i] * numericValues[i - 1];
-        secondColComputedValues.push(newValue);
-      }
-    }
-    let firstColTotal: number = this.sumNumberArray(firstColValues);
-    let secondColTotal: number = this.sumNumberArray(secondColComputedValues);
-    let result: any = Helper.RoundNumberTo4dp(secondColTotal / firstColTotal);
-    return result;
   }
 }

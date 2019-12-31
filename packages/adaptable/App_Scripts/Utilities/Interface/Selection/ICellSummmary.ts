@@ -7,6 +7,5 @@ export interface ICellSummmary {
   Max: any; // can be number or blank
   Min: any; // can be number or blank
   Count: any; // always a number
-  Only?: any; // can be value or blank
-  VWAP?: any; // number
+  [key: string]: any;
 }

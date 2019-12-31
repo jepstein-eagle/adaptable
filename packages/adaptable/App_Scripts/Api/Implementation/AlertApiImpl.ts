@@ -44,8 +44,10 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     this.adaptable.api.eventApi.emit('AlertFired', alertFiredArgs);
 
     // 3. Log it to the Console
-    LoggingHelper.LogAlert(alertToShow.Header + ': ' + alertToShow.Msg, alertToShow.AlertDefinition
-      .MessageType as MessageType);
+    LoggingHelper.LogAlert(
+      alertToShow.Header + ': ' + alertToShow.Msg,
+      alertToShow.AlertDefinition.MessageType as MessageType
+    );
 
     if (alertToShow.AlertDefinition && alertToShow.AlertDefinition.AlertProperties != undefined) {
       let alertProperties: AlertProperties = alertToShow.AlertDefinition.AlertProperties;

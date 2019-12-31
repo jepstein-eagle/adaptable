@@ -12,11 +12,8 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
-import {
-  AccessLevel,
-  CellSummaryOperation,
-  CellSummaryOptionalOperation,
-} from '../../PredefinedConfig/Common/Enums';
+import { AccessLevel, CellSummaryOperation } from '../../PredefinedConfig/Common/Enums';
+import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
@@ -37,10 +34,11 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 interface CellSummaryToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<CellSummaryToolPanelComponent> {
   SelectedCellInfo: SelectedCellInfo;
-  CellSummaryOperation: CellSummaryOperation | CellSummaryOptionalOperation;
+  CellSummaryOperationDefinitions: CellSummaryOperationDefinition[];
+  CellSummaryOperation: CellSummaryOperation | string;
   OptionalSummaryOperations: string[];
   onCellSummaryOperationChange: (
-    summaryOperation: CellSummaryOperation | CellSummaryOptionalOperation
+    summaryOperation: CellSummaryOperation | string
   ) => SelectedCellsRedux.CellSummaryChangeOperationAction;
   onCreateCellSummary: () => GridRedux.GridCreateCellSummaryAction;
   CellSummary: ICellSummmary;
@@ -76,18 +74,17 @@ class CellSummaryToolPanelComponent extends React.Component<
       }
     );
 
-    let operationOptionalMenuItems = EnumExtensions.getNames(CellSummaryOptionalOperation)
-      .map((summaryOperation: CellSummaryOptionalOperation, index) => {
-        if (ArrayExtensions.ContainsItem(this.props.OptionalSummaryOperations, summaryOperation)) {
-          return {
-            onClick: () => this.props.onCellSummaryOperationChange(summaryOperation),
-            label: summaryOperation as CellSummaryOptionalOperation,
-          };
-        }
-      })
-      .filter(x => !!x);
+    const { CellSummaryOperationDefinitions } = this.props;
 
-    let options = [...operationMenuItems, ...operationOptionalMenuItems];
+    const operationDefinitions = CellSummaryOperationDefinitions.map(
+      (operationDefinition: CellSummaryOperationDefinition) => {
+        return {
+          onClick: () => this.props.onCellSummaryOperationChange(operationDefinition.name),
+          label: operationDefinition.name,
+        };
+      }
+    );
+    let options = [...operationMenuItems, ...operationDefinitions];
 
     let availableOptions: any[] = options.map((option, index) => {
       return {
@@ -199,10 +196,8 @@ class CellSummaryToolPanelComponent extends React.Component<
         return this.props.CellSummary.Distinct;
       case CellSummaryOperation.Count:
         return this.props.CellSummary.Count;
-      case CellSummaryOptionalOperation.Only:
-        return this.props.CellSummary.Only;
-      case CellSummaryOptionalOperation.VWAP:
-        return this.props.CellSummary.VWAP;
+      default:
+        return this.props.CellSummary[this.props.CellSummaryOperation];
     }
   }
 }
@@ -211,16 +206,16 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SelectedCellInfo: state.Grid.SelectedCellInfo,
     CellSummaryOperation: state.CellSummary.SummaryOperation,
-    OptionalSummaryOperations: state.CellSummary.OptionalSummaryOperations,
+    CellSummaryOperationDefinitions: state.System.CellSummaryOperations,
+
     CellSummary: state.Grid.CellSummary,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onCellSummaryOperationChange: (
-      summaryOperation: CellSummaryOperation | CellSummaryOptionalOperation
-    ) => dispatch(SelectedCellsRedux.CellSummaryChangeOperation(summaryOperation)),
+    onCellSummaryOperationChange: (summaryOperation: CellSummaryOperation | string) =>
+      dispatch(SelectedCellsRedux.CellSummaryChangeOperation(summaryOperation)),
     onCreateCellSummary: () => dispatch(GridRedux.GridCreateCellSummary()),
     onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),

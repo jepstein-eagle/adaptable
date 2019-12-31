@@ -1777,7 +1777,6 @@ export class Adaptable implements IAdaptable {
   }
 
   private getadaptableContainerElement(): HTMLElement | null {
-    debugger;
     if (!this.abContainerElement) {
       this.abContainerElement = document.getElementById(
         this.adaptableOptions!.containerOptions.adaptableContainer

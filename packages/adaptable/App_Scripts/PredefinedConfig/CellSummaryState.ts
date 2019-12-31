@@ -1,9 +1,20 @@
 import { RunTimeState } from './RunTimeState';
-import { CellSummaryOperation, CellSummaryOptionalOperation } from './Common/Enums';
+import { CellSummaryOperation } from './Common/Enums';
+import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+
+export interface CellSummaryOperationDefinition {
+  name: string;
+  fn: (operationParam: {
+    selectedCellInfo: SelectedCellInfo;
+    allValues: any[];
+    numericColumns: string[];
+    numericValues: number[];
+    distinctCount: number;
+  }) => any;
+}
 
 export interface CellSummaryState extends RunTimeState {
-  SummaryOperation?: CellSummaryOperation | CellSummaryOptionalOperation;
-  OptionalSummaryOperations?: string[]; // for now just 'VWaP' and 'Only' are available
+  SummaryOperation?: CellSummaryOperation | string;
 }
 
 /*

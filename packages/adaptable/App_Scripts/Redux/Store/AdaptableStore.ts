@@ -12,6 +12,7 @@ import { createEngine as createEngineLocal } from './AdaptableReduxLocalStorageE
 import { mergeReducer } from './AdaptableReduxMerger';
 
 import * as PopupRedux from '../ActionsReducers/PopupRedux';
+import * as PluginsRedux from '../ActionsReducers/PluginsRedux';
 import * as ChartRedux from '../ActionsReducers/ChartRedux';
 import * as AlertRedux from '../ActionsReducers/AlertRedux';
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux';
@@ -149,6 +150,7 @@ const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<Adaptab
   System: SystemRedux.SystemReducer,
   SystemStatus: SystemStatusRedux.SystemStatusReducer,
   TeamSharing: TeamSharingRedux.TeamSharingReducer,
+  Plugins: PluginsRedux.PluginsReducer,
 
   ActionColumn: ActionColumnRedux.ActionColumnReducer,
   Entitlements: EntitlementsRedux.EntitlementsReducer,
@@ -320,6 +322,8 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.GRID,
       ConfigConstants.POPUP,
       ConfigConstants.TEAM_SHARING,
+      ConfigConstants.PLUGINS,
+
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.APPLICATION,
       ConfigConstants.ENTITLEMENTS,

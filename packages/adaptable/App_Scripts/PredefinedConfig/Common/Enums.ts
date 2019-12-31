@@ -225,11 +225,6 @@ export enum CellSummaryOperation {
   Count = 'Count',
 }
 
-export enum CellSummaryOptionalOperation {
-  Only = 'Only',
-  VWAP = 'VWAP',
-}
-
 export enum PinnedColumnDirection {
   Left = 'Leftt',
   Right = 'Right',

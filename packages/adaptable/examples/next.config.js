@@ -2,7 +2,7 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 // make the app accept sources from everywhere in the monorepo
-const SRC_PATH = path.resolve('../');
+const SRC_PATH = path.resolve('../../');
 
 const TS_PRESET = '@babel/preset-typescript';
 
