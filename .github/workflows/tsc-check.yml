@@ -21,7 +21,7 @@ jobs:
       env:
         CI: true
     - name: tsc-core
-      run: npm run --prefix packages/adaptableble tsc
+      run: npm run --prefix packages/adaptable tsc
 
     - name: Executing npm install in react
       run: npm install --prefix packages/adaptable-react-aggrid
