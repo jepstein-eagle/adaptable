@@ -4,17 +4,14 @@ import { FontWeight, FontStyle, FontSize } from '../../PredefinedConfig/Common/E
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
-
+import { Text, Flex, Box } from 'rebass';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 import Checkbox from '../../components/CheckBox';
 import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
-import { Flex, Box } from 'rebass';
 import Dropdown from '../../components/Dropdown';
-import join from '../../components/utils/join';
 import { CSSProperties } from 'react';
-import WizardPanel from '../../components/WizardPanel';
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
   className?: string;
@@ -56,9 +53,10 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
     });
 
     return (
-      <Panel header="Style">
+      <Panel header="Style" margin={2}>
         {this.props.CanUseClassName && this.props.StyleClassNames.length > 0 && (
           <Checkbox
+            margin={2}
             onChange={checked => this.onShowClassNameChanged(checked)}
             checked={this.state.ShowClassName}
           >
@@ -68,14 +66,14 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
 
         {this.state.ShowClassName ? (
           <div>
-            <HelpBlock>{'Choose a style from the dropdown.'}</HelpBlock>
-            <HelpBlock>
-              {
-                'Note: This assumes that you have provided a style with the same name in a stylesheet.'
-              }
-            </HelpBlock>
+            <HelpBlock>{'Choose a style name from the dropdown.'}</HelpBlock>
+            <Text color={'var(--ab-color-warn)'} style={{ flex: 2 }} margin={2}>
+              {'Note: You need to ensure that the styles listed are in the current stylesheet.'}
+            </Text>
             <Dropdown
               placeholder="select"
+              showEmptyItem={false}
+              showClearButton={false}
               value={this.state.myStyle.ClassName}
               onChange={(value: any) => this.onStyleClassNameChanged(value)}
               options={[

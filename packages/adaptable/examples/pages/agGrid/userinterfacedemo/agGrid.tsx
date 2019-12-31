@@ -38,6 +38,7 @@ function InitAdaptableDemo() {
 let demoConfig: PredefinedConfig = {
   UserInterface: {
     ColorPalette: ['660033', 'CCFFFF', 'FFCCFF', 'B2FF66', 'FF3333', 'FFFFFF', '0000FF'],
+    StyleClassNames: ['evenRowStyle', 'oddRowStyle', 'allRowStyle '],
   },
 };
 

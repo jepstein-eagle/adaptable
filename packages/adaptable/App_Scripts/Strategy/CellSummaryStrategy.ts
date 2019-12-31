@@ -12,6 +12,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { CellSummaryOperationDefinition } from '../PredefinedConfig/CellSummaryState';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
   constructor(adaptable: IAdaptable) {
@@ -85,9 +86,9 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         Min: hasNumericColumns ? Helper.RoundNumberTo4dp(Math.min(...numericValues)) : '',
         Count: allValues.length,
       };
-      const operations = this.adaptable.api.internalApi.getCellSummaryOperationDefinitions();
+      const operationDefinitions = this.adaptable.api.internalApi.getCellSummaryOperationDefinitions();
 
-      operations.forEach(operation => {
+      operationDefinitions.forEach((operation: CellSummaryOperationDefinition) => {
         selectedCellSummary[operation.OperationName] = operation.OperationFunction({
           selectedCellInfo,
           distinctCount,

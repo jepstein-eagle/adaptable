@@ -164,13 +164,13 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * This is particularly useful for when you create a custom theme for Adaptable and want the grid to share the same colour scheme.
    *
-   * The `RowStyle' object contains 2 properties:
+   * The `RowStyle` object contains 2 properties:
    *
-   * - Style: the Adaptable `Style` object can be just a classname or a set of style-related properties.
+   * - *Style*: the `AdaptableStyle` object can be either a classname or a set of style-related properties.
    *
-   * - RowType: which rows the Style will be applied - can be 'All', 'Odd' or 'Even'
+   * - *RowType*: specifies which rows the Style will be applied on - can be 'All', 'Odd' or 'Even'
    *
-   * **note if this is left empty (the default) then the row style in the Grid theme will be used**
+   * **note** if this property is left empty (the default) then the row style in the Grid theme will be used
    *
    * **Row Style Example**
    *
