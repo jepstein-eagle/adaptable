@@ -1,4 +1,4 @@
-import { IStyle } from '../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
 import { QuickSearchState } from '../PredefinedConfig/QuickSearchState';
 export interface QuickSearchApi {
   /**
@@ -31,7 +31,7 @@ export interface QuickSearchApi {
   /**
    *  Retrieves the current Quick Search style
    */
-  getQuickSearchStyle(): IStyle;
+  getQuickSearchStyle(): AdaptableStyle;
 
   /**
    *  Retrieves the current Quick Search display action
@@ -52,7 +52,7 @@ export interface QuickSearchApi {
    * This style can be the name of a css style (which you must provide)
    * @param style the style to use
    */
-  setQuickSearchStyle(style: IStyle): void;
+  setQuickSearchStyle(style: AdaptableStyle): void;
 
   /**
    * Opens the Quick Search popup screen

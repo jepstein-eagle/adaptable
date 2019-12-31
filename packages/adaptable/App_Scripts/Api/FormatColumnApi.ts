@@ -1,4 +1,4 @@
-import { IStyle } from '../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
 import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColumnState';
 
 /**
@@ -22,14 +22,14 @@ export interface FormatColumnApi {
    * @param column The column to apply the Style to
    * @param style The Style to apply - (see [Style Object](https://api.adaptableblotter.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
    */
-  addFormatColumn(column: string, style: IStyle): void;
+  addFormatColumn(column: string, style: AdaptableStyle): void;
 
   /**
    * Updates an existing Format Column
    * @param column The colunn to update the style for.
    * @param style The Style to update - (see [Style Object](https://api.adaptableblotter.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
    */
-  updateFormatColumn(column: string, style: IStyle): void;
+  updateFormatColumn(column: string, style: AdaptableStyle): void;
 
   /**
    * Deletes an existing Format Column

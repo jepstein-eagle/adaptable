@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { QuickSearchState } from '../../PredefinedConfig/QuickSearchState';
 import { DisplayAction } from '../../PredefinedConfig/Common/Enums';
-import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 import {
   QUICK_SEARCH_DEFAULT_BACK_COLOR,
   QUICK_SEARCH_DEFAULT_FORE_COLOR,
@@ -24,7 +24,7 @@ export interface QuickSearchSetDisplayAction extends Redux.Action {
 }
 
 export interface QuickSearchSetStyleAction extends Redux.Action {
-  style: IStyle;
+  style: AdaptableStyle;
 }
 
 export const QuickSearchApply = (quickSearchText: string): QuickSearchApplyAction => ({
@@ -39,7 +39,7 @@ export const QuickSearchSetDisplay = (
   DisplayAction,
 });
 
-export const QuickSearchSetStyle = (style: IStyle): QuickSearchSetStyleAction => ({
+export const QuickSearchSetStyle = (style: AdaptableStyle): QuickSearchSetStyleAction => ({
   type: QUICK_SEARCH_SET_STYLE,
   style,
 });

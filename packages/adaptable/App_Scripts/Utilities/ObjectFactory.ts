@@ -58,7 +58,7 @@ import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
-import { IStyle } from '../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
 import { ICellSummmary } from './Interface/Selection/ICellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
@@ -475,7 +475,7 @@ export function CreateCellValidationRule(
   };
 }
 
-export function CreateEmptyStyle(): IStyle {
+export function CreateEmptyStyle(): AdaptableStyle {
   return {
     BackColor: undefined,
     ForeColor: undefined,

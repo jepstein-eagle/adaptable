@@ -1,4 +1,4 @@
-import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 import { DisplayAction } from '../../PredefinedConfig/Common/Enums';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -38,7 +38,7 @@ export class QuickSearchApiImpl extends ApiBase implements QuickSearchApi {
     return this.getQuickSearchState().QuickSearchText;
   }
 
-  public getQuickSearchStyle(): IStyle {
+  public getQuickSearchStyle(): AdaptableStyle {
     return this.getQuickSearchState().Style;
   }
 
@@ -52,7 +52,7 @@ export class QuickSearchApiImpl extends ApiBase implements QuickSearchApi {
     this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction as DisplayAction));
   }
 
-  public setQuickSearchStyle(style: IStyle): void {
+  public setQuickSearchStyle(style: AdaptableStyle): void {
     this.dispatchAction(QuickSearchRedux.QuickSearchSetStyle(style));
   }
 

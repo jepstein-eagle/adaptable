@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../../PredefinedConfig/Common/AdaptableStyle';
 import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
@@ -22,10 +22,10 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
   }
 
   render(): any {
-    let positiveStyle: IStyle = ObjectFactory.CreateEmptyStyle();
+    let positiveStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
     positiveStyle.BackColor = this.props.Data.PositiveColor;
     positiveStyle.ForeColor = this.props.Data.PositiveColor;
-    let negativeStyle: IStyle = ObjectFactory.CreateEmptyStyle();
+    let negativeStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
     negativeStyle.BackColor = this.props.Data.NegativeColor;
     negativeStyle.ForeColor = this.props.Data.NegativeColor;
 

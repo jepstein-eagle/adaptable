@@ -1,4 +1,4 @@
-export interface IStyle {
+export interface AdaptableStyle {
   BackColor?: string;
   ForeColor?: string;
   FontWeight?: 'Normal' | 'Bold';

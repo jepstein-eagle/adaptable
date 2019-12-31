@@ -7,7 +7,7 @@ import { FontWeight, FontStyle, FontSize } from '../../../PredefinedConfig/Commo
 import { StyleComponent } from '../../Components/StyleComponent';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { UIHelper } from '../../UIHelper';
-import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../../PredefinedConfig/Common/AdaptableStyle';
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
 
 export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<FormatColumn> {
@@ -16,7 +16,7 @@ export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<F
 }
 
 export interface FormatColumnStyleWizardState {
-  Style: IStyle;
+  Style: AdaptableStyle;
 }
 
 export class FormatColumnStyleWizard
@@ -36,7 +36,7 @@ export class FormatColumnStyleWizard
           ColorPalette={this.props.ColorPalette}
           StyleClassNames={this.props.StyleClassNames}
           Style={this.props.Data.Style}
-          UpdateStyle={(style: IStyle) => this.onUpdateStyle(style)}
+          UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}
           CanUseClassName={canUseClassName}
         />
       </div>
@@ -63,7 +63,7 @@ export class FormatColumnStyleWizard
     return 1;
   }
 
-  private onUpdateStyle(style: IStyle) {
+  private onUpdateStyle(style: AdaptableStyle) {
     this.setState({ Style: style } as FormatColumnStyleWizardState, () =>
       this.props.UpdateGoBackState()
     );

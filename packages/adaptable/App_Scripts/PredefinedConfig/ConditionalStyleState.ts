@@ -1,7 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
-import { IStyle } from './Common/IStyle';
+import { AdaptableStyle } from './Common/AdaptableStyle';
 
 /**
  * The Predefined Configuration for the Conditional Style function
@@ -120,7 +120,7 @@ export interface ConditionalStyle extends AdaptableObject {
    *
    * The Style object defines fore and back colours, font size and other basic style properties.  See [Style](_predefinedconfig_common_istyle_.istyle.html) for more details.
    */
-  Style?: IStyle;
+  Style?: AdaptableStyle;
 }
 
 /*

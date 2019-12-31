@@ -1,6 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
-import { IStyle } from './Common/IStyle';
+import { AdaptableStyle } from './Common/AdaptableStyle';
 
 export interface FormatColumnState extends RunTimeState {
   FormatColumns?: FormatColumn[];
@@ -18,5 +18,5 @@ export interface FormatColumn extends AdaptableObject {
   /**
    * The Style to apply to the Column.  See [Style](_predefinedconfig_common_istyle_.istyle.html) for more details.
    */
-  Style: IStyle;
+  Style: AdaptableStyle;
 }

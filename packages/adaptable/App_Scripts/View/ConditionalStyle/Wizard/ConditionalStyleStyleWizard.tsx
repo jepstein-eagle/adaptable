@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { UIHelper } from '../../UIHelper';
-import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import { AdaptableStyle } from '../../../PredefinedConfig/Common/AdaptableStyle';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 
 export interface ConditionalStyleStyleWizardProps
@@ -15,7 +15,7 @@ export interface ConditionalStyleStyleWizardProps
 }
 
 export interface ConditionalStyleStyleWizardState {
-  Style: IStyle;
+  Style: AdaptableStyle;
 }
 
 export class ConditionalStyleStyleWizard
@@ -35,14 +35,14 @@ export class ConditionalStyleStyleWizard
           ColorPalette={this.props.ColorPalette}
           StyleClassNames={this.props.StyleClassNames}
           Style={this.props.Data.Style}
-          UpdateStyle={(style: IStyle) => this.onUpdateStyle(style)}
+          UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}
           CanUseClassName={canUseClassName}
         />
       </div>
     );
   }
 
-  private onUpdateStyle(style: IStyle) {
+  private onUpdateStyle(style: AdaptableStyle) {
     this.setState({ Style: style } as ConditionalStyleStyleWizardState, () =>
       this.props.UpdateGoBackState()
     );

@@ -1,5 +1,5 @@
 import { DesignTimeState } from './DesignTimeState';
-import { IStyle } from './Common/IStyle';
+import { AdaptableStyle } from './Common/AdaptableStyle';
 import { MenuInfo } from './Common/Menu';
 import { AdaptableColumn } from './Common/AdaptableColumn';
 
@@ -162,7 +162,47 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * You can choose to style All, Odd or Even rows (the last 2 are used for when wanting to have alternating row styles).
    *
+   * This is particularly useful for when you create a custom theme for Adaptable and want the grid to share the same colour scheme.
+   *
+   * The `RowStyle' object contains 2 properties:
+   *
+   * - Style: the Adaptable `Style` object can be just a classname or a set of style-related properties.
+   *
+   * - RowType: which rows the Style will be applied - can be 'All', 'Odd' or 'Even'
+   *
    * **note if this is left empty (the default) then the row style in the Grid theme will be used**
+   *
+   * **Row Style Example**
+   *
+   * ```ts
+   * export default {
+   *  UserInterface: {
+   *    RowStyles: [
+   *      {
+   *        Style: {
+   *          ClassName: 'evenRowStyle',
+   *        },
+   *        RowType: 'Even',
+   *     },
+   *     {
+   *        Style: {
+   *          ForeColor: 'lightyellow',
+   *          BackColor: 'brown',
+   *          FontStyle: 'Italic',
+   *          FontWeight: 'Bold',
+   *        },
+   *        RowType: 'Odd',
+   *      },
+   *    ],
+   * },
+   * } as PredefinedConfig;
+   * ```
+   *
+   * In this example we have created Even and Odd Row styles.
+   *
+   * The Even Row style uses the `ClassName` property of `AdaptableStyle` to leverage a Style provided in CSS (its your repsonsiblity to ensure the named style is there).
+   *
+   * The Odd Row style is created in line with the `ForeColor`, `BackColor`, `FontStyle`, and `FontWeight` properties all set.
    *
    *  **Default Value**:  Empty array
    */
@@ -249,36 +289,12 @@ export interface EditLookUpColumn {
  *
  * Also contains the RowType - e.g. All Rows, or Just Odd or Even (used for when requiring an Alternate Row style)
  *
- * **Row Style Example**
- *
- * ```ts
- * export default {
- *  UserInterface: {
- *    RowStyles: [
- *      {
- *     Style: {
- *       ClassName: 'evenRowStyle',
- *      },
- *      RowType: 'Even',
- *     },
- *     {
- *       Style: {
- *         ForeColor: 'lightyellow',
- *         BackColor: 'brown',
- *        FontStyle: 'Italic',
- *     },
- *     RowType: 'Odd',
- *   },
- *  ],
- * },
- * } as PredefinedConfig;
- * ```
  */
 export interface RowStyle {
   /**
-   * The Style to use for the Row. For more details see the [Style](_predefinedconfig_common_istyle_.istyle.html) object.
+   * The `AdaptableStyle` to use for the Row. For more details see the [Style](_predefinedconfig_common_istyle_.istyle.html) object.
    */
-  Style: IStyle;
+  Style: AdaptableStyle;
 
   /**
    * Which Row should be Styled.
