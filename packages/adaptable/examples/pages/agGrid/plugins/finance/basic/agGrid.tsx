@@ -61,9 +61,6 @@ let demoConfig: PredefinedConfig = {
       Tone: 'success',
     }, //
   },
-  CellSummary: {
-    OptionalSummaryOperations: ['VWAP', 'Only'],
-  },
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
   },
