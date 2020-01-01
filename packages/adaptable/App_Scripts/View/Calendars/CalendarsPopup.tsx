@@ -109,7 +109,11 @@ class CalendarsPopupComponent extends React.Component<
               borderRadius="none"
               header={<div>Calendar Details: {this.state.DisplayedCalendar.Name}</div>}
             >
-              <Flex flexDirection="column" flex={1} style={{ overflow: 'auto', maxHeight: '60vh' }}>
+              <Flex
+                flexDirection="column"
+                flex={1}
+                style={{ overflow: 'auto', maxHeight: '60vh', minWidth: '300px' }}
+              >
                 <PanelWithRow
                   style={{ flex: 1 }}
                   bodyProps={{ padding: 0 }}
