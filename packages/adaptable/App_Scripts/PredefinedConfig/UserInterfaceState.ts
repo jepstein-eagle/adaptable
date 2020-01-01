@@ -58,11 +58,44 @@ export interface UserInterfaceState extends DesignTimeState {
   ColorPalette?: string[];
 
   /**
-   * An optional list of css styles(existing and available) that can be used when creating Conditional Styles or Format Columns.
+   * An optional list of css styles (existing and available) that can be used when creating styles in Adaptable (e.g. in the Conditional Styles, Format Column and other functions that use an `AdaptableStyle`).
    *
-   * If this collection is not empty then they will be listed in a dropdown that will be visible in the Syle Creation dialog.
+   * This allows you quickly to select the css style name instead of having to build a style manually.
    *
-   * This will allow you quickly choose the css style name instead of having to build the style manually.
+   * When this collection is not empty the Syle Creation dialog will include a 'Use Style Class Name' checkbox.
+   *
+   * If that checkbox is checked, the dialog will displa a dropdown containing the contents of this collection.
+   *
+   * ```ts
+   * export default {
+   *  UserInterface: {
+   *     StyleClassNames: ['evenRowStyle', 'oddRowStyle', 'allRowStyle '],
+   *  },
+   * } as PredefinedConfig;
+   *
+   *  ........
+   *
+   * // in css file
+   *  .evenRowStyle {
+   *    background: lightgrey !important;
+   *    font-weight: normal !important;
+   *    font-style: italic !important;
+   *  }
+   *
+   * .oddRowStyle {
+   *    background: lightgreen !important;
+   *    font-weight: normal !important;
+   *    font-style: italic !important;
+   *  }
+   * .allRowStyle {
+   *    background: pink !important;
+   *    font-weight: normal !important;
+   *    font-style: italic !important;
+   *  }
+   *
+   *  ........
+   *
+   * ```
    *
    * **You must ensure that any style name you list here is available to Adaptable in a stylesheet that you provide**
    *
