@@ -10,7 +10,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  *
  * Conditional Styles uses an [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
  *
- * **Further Resources**
+ * **Further Adaptable Help Resources**
  *
  * [Conditional Style Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030602892-Conditional-Style-Videos)
  *

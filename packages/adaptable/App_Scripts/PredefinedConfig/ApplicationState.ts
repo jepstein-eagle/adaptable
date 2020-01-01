@@ -5,7 +5,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * The Application function is designed to allow developers to provide Adaptable with appliation-specific data
  *
- *  **Further Resources**
+ *  **Further Adaptable Help Resources**
  *
  * [API](_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-Blotter-State-FAQ)
  *

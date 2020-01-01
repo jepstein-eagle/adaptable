@@ -12,7 +12,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Once created a Calculated Column is treated like any other Column in the Grid - though **only the name and Expression are stored** and not the cell data.
  *
- * **Further Resources**
+ * **Further Adaptable Help Resources**
  *
  * [Calculated Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *

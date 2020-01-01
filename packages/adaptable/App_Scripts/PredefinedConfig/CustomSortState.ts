@@ -6,7 +6,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Custom Sort enables you to build saveable searches using *Queries* that can be run across multiple columns using a wide variety of *Search Criteria*.
  *
- * **Further Resources**
+ * **Further Adaptable Help Resources**
  *
  * [Custom Sort Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078431-Custom-Sort-Videos)
  *

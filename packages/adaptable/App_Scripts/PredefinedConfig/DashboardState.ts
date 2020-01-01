@@ -11,7 +11,7 @@ import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/T
  *
  * You use the Dashboard State to set which elements are availalbe (and visible) in the Home Toolbar and to select which Function Toolbars are available (and visible).
  *
- *  **Further Resources**
+ *  **Further Adaptable Help Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/dashboard/aggriddashboardtoolbarsdemo/) | [API](_api_dashboardapi_.dashboardapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030944511-Dashboard-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
  *

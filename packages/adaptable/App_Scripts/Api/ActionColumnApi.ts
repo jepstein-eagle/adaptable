@@ -3,7 +3,7 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
 /**
  * Provides full and comprehensive run-time access to the Action Column function and associated state.
  *
- *  **Further Resources**
+ *  **Further Adaptable Help Resources**
  *
  * - [Action Column Demo](https://demo.adaptableblotter.com/column/aggridactioncolumnsdemo/)
  *

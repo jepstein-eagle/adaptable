@@ -4,7 +4,7 @@ import { RunTimeState } from './/RunTimeState';
  *
  * Bulk Update is a convenience function that allows you to update a group of selected cells in the same column to hold the same value with a single click.
  *
- * **Further Resources**
+ * **Further Adaptable Help Resources**
  *
  * [Bulk Update Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028638032-Bulk-Update-Videos)
  *

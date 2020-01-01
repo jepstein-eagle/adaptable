@@ -8,7 +8,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * You can also specify which Column grouping and pivoting information for the Layout.
  *
- *  **Further Resources**
+ *  **Further Adaptable Help Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/gridmanagement/aggridlayoutdemo/) | [API](_api_layoutapi_.layoutapi.html) | [Options](_adaptableOptions_layoutoptions_.layoutoptions.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170317-Layouts-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743312-Layout-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *

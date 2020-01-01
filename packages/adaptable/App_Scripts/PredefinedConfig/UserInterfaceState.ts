@@ -26,7 +26,7 @@ import { AdaptableColumn } from './Common/AdaptableColumn';
  *
  * See each section below for further details and a code example.
  *
- * **Further Resources**
+ * **Further Adaptable Help Resources**
  *
  * - [Column Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcolumnmenudemo/)
  *
@@ -254,13 +254,76 @@ export interface UserInterfaceState extends DesignTimeState {
   RowStyles?: RowStyle[];
 
   /**
-   * Additional items to add to the Column Menu (the one that appears as a dropdown in each Column Header).
+   * A collection of `UserMenuItem` objects to be added to the Column Header Menu (the one that appears as a dropdown in each Column Header).
    *
-   * You can add as many `UserMenuItem`s as you wish.  And each Menu Item can take an array of sub items.
+   * You can add as many items as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
    *
-   * You can provide either a standard arry of Menu Items or a function which will return an array of MenuItems depending on the `MenuInfo`.
+   * The property allows you to provide either a standard array of UserMenuItem or a function which will return the array - depending on the `MenuInfo`.
    *
-   * If you want to control which of the shipped Adaptable Column Menu items are showns use the `showAdaptableColumnMenu` property in [General Options](_adaptableOptions_generaloptions_.generaloptions.html)
+   * If you want to control which of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
+   *
+   * **Column Menu Item Example**
+   *
+   * ```ts
+   * // using an array
+   * export default {
+   *  UserInterface: {
+   *     ColumnMenuItems: [
+   *     {
+   *        Label: 'Mimise Dashboard',
+   *        UserMenuItemClickedFunction: () => {
+   *            adaptableApi.dashboardApi.Minimise();
+   *        },
+   *     },
+   *     {
+   *        Label: 'Set System Status',
+   *        SubMenuItems: [
+   *        {
+   *          Label: 'Set Error',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+   *          },
+   *        },
+   *        {
+   *          Label: 'Set Warning',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+   *          },
+   *        },
+   *        {
+   *          Label: 'Set Success',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
+   *        },
+   *        },
+   *        {
+   *          Label: 'Set Info',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
+   *        },
+   *      },
+   *    ],
+   *  },
+   *  ],
+   * },
+   * } as PredefinedConfig;
+   *
+   * // using a function
+   * export default {
+   *  UserInterface: {
+   *     ColumnMenuItems: (menuinfo: MenuInfo) => {
+   *      return [
+   *        {
+   *          Label: 'Mimise Dashboard',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.dashboardApi.Minimise();
+   *          },
+   *        },
+   *      ];
+   *   },
+   * } as PredefinedConfig;
+   *
+   * ```
    *
    * **Default Value**:  Empty array
    */

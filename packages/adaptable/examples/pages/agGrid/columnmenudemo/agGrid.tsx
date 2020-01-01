@@ -54,8 +54,10 @@ let demoConfig: PredefinedConfig = {
     ColumnMenuItems: (menuinfo: MenuInfo) => {
       return [
         {
-          Label: 'hello',
-          UserMenuItemClickedFunction: (menuInfo: MenuInfo) => null,
+          Label: 'Mimise Dashboard',
+          UserMenuItemClickedFunction: () => {
+            adaptableApi.dashboardApi.Minimise();
+          },
         },
       ];
     },
