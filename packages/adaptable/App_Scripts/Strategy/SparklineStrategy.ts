@@ -33,16 +33,16 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
     if (
-      menuInfo.column &&
-      menuInfo.isSelectedCell &&
-      menuInfo.column.DataType == DataType.Number &&
-      menuInfo.isSingleSelectedColumn
+      menuInfo.Column &&
+      menuInfo.IsSelectedCell &&
+      menuInfo.Column.DataType == DataType.Number &&
+      menuInfo.IsSingleSelectedColumn
     ) {
       let pkValues: any[] = this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
         return gc.primaryKeyValue;
       });
       let popUpParams: StrategyParams = {
-        columnId: menuInfo.column.ColumnId,
+        columnId: menuInfo.Column.ColumnId,
         primaryKeyValues: pkValues,
         source: 'ContextMenu',
       };

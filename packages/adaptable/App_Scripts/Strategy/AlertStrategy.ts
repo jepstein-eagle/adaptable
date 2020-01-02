@@ -35,15 +35,15 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (menuInfo.column && menuInfo.rowNode) {
+    if (menuInfo.Column && menuInfo.RowNode) {
       let currentAlerts: AdaptableAlert[] = this.adaptable.api.internalApi
         .getAdaptableAlerts()
         .filter(a => a.DataChangedInfo && a.AlertDefinition.AlertProperties.HighlightCell);
       if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
         let relevantAlert: AdaptableAlert = currentAlerts.find(
           a =>
-            a.AlertDefinition.ColumnId == menuInfo.column.ColumnId &&
-            a.DataChangedInfo.RowNode == menuInfo.rowNode
+            a.AlertDefinition.ColumnId == menuInfo.Column.ColumnId &&
+            a.DataChangedInfo.RowNode == menuInfo.RowNode
         );
         if (relevantAlert) {
           menuItemShowPopup = this.createColumnMenuItemReduxAction(

@@ -46,12 +46,12 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   // not that we pass the primary kev values in the Strategy params
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
-    if (menuInfo.column && menuInfo.isSelectedCell && menuInfo.isSingleSelectedColumn) {
+    if (menuInfo.Column && menuInfo.IsSelectedCell && menuInfo.IsSingleSelectedColumn) {
       let pkValues: any[] = this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
         return gc.primaryKeyValue;
       });
       let popUpParams: StrategyParams = {
-        columnId: menuInfo.column.ColumnId,
+        columnId: menuInfo.Column.ColumnId,
         primaryKeyValues: pkValues,
         source: 'ContextMenu',
       };

@@ -45,8 +45,8 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (
-      menuInfo.column &&
-      this.canCreateColumnMenuItem(menuInfo.column, this.adaptable, 'sparkline')
+      menuInfo.Column &&
+      this.canCreateColumnMenuItem(menuInfo.Column, this.adaptable, 'sparkline')
     ) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',

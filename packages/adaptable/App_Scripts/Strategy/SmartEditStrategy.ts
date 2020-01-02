@@ -40,11 +40,11 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     // perhaps this is faulty logic though?
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (
-      menuInfo.column &&
-      menuInfo.column.DataType == DataType.Number &&
-      !menuInfo.column.ReadOnly &&
-      menuInfo.isSelectedCell &&
-      menuInfo.isSingleSelectedColumn
+      menuInfo.Column &&
+      menuInfo.Column.DataType == DataType.Number &&
+      !menuInfo.Column.ReadOnly &&
+      menuInfo.IsSelectedCell &&
+      menuInfo.IsSingleSelectedColumn
     ) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',

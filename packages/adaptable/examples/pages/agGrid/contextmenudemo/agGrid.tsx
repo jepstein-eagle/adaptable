@@ -9,7 +9,8 @@ import { GridOptions } from 'ag-grid-community';
 import Adaptable from '../../../../App_Scripts/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AdaptableMenuItem } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
+import { AdaptableMenuItem, MenuInfo } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
+import { ColumnSort } from '../../../../App_Scripts/PredefinedConfig/Common/ColumnSort';
 
 var adaptableApi: AdaptableApi;
 function InitAdaptableDemo() {
@@ -48,6 +49,8 @@ let demoConfig: PredefinedConfig = {
     ShowAlert: false,
   },
   UserInterface: {
+    // the hardcoded way
+    /*
     ContextMenuItems: [
       {
         Label: 'Mimise Dashboard',
@@ -85,6 +88,27 @@ let demoConfig: PredefinedConfig = {
         ],
       },
     ],
+*/
+
+    // the function way
+    ContextMenuItems: (menuinfo: MenuInfo) => {
+      return menuinfo.Column.Sortable
+        ? [
+            {
+              Label: 'Sort Column',
+              Icon:
+                '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+              UserMenuItemClickedFunction: () => {
+                let customSort: ColumnSort = {
+                  Column: menuinfo.Column.ColumnId,
+                  SortOrder: 'Ascending',
+                };
+                adaptableApi.gridApi.sortAdaptable([customSort]);
+              },
+            },
+          ]
+        : [];
+    },
   },
 };
 

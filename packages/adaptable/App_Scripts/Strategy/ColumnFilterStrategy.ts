@@ -24,17 +24,17 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemClickFunction: MenuItemDoClickFunction | undefined = undefined;
 
-    if (menuInfo.column && menuInfo.gridCell != null) {
-      let isMultiple: boolean = menuInfo.isSelectedCell && menuInfo.isSingleSelectedColumn;
+    if (menuInfo.Column && menuInfo.GridCell != null) {
+      let isMultiple: boolean = menuInfo.IsSelectedCell && menuInfo.IsSingleSelectedColumn;
 
       let pkValues: any[] = isMultiple
         ? this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
             return gc.primaryKeyValue;
           })
-        : [menuInfo.gridCell.primaryKeyValue];
+        : [menuInfo.GridCell.primaryKeyValue];
       let clickFunction = () => {
         this.adaptable.api.columnFilterApi.createColumnFilterForCell(
-          menuInfo.column.ColumnId,
+          menuInfo.Column.ColumnId,
           pkValues
         );
       };

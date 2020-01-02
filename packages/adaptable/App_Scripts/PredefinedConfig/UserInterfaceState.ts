@@ -258,9 +258,11 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * You can add as many items as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
    *
-   * The property allows you to provide either a standard array of UserMenuItem or a function which will return the array - depending on the `MenuInfo`.
+   * The property allows you to provide either a standard array of UserMenuItem or a function which will return the array`.
    *
-   * If you want to control which of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
+   * The function takes a [`MenuInfo`](_predefinedconfig_common_menu_.menuin) object and returns an array of `UserMenuItem`. signature is:
+   *
+   * If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
    *
    * **Column Menu Item Example**
    *
@@ -312,14 +314,14 @@ export interface UserInterfaceState extends DesignTimeState {
    * export default {
    *  UserInterface: {
    * ColumnMenuItems: (menuinfo: MenuInfo) => {
-   *    return menuinfo.column.Sortable
+   *    return menuinfo.Column.Sortable
    *      ? [
    *          {
    *            Label: 'Sort Column',
    *            Icon: '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
    *            UserMenuItemClickedFunction: () => {
    *              let customSort: ColumnSort = {
-   *                Column: menuinfo.column.ColumnId,
+   *                Column: menuinfo.Column.ColumnId,
    *                SortOrder: 'Ascending',
    *              };
    *              adaptableApi.gridApi.sortAdaptable([customSort]);
@@ -341,15 +343,85 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * You can add as many `UserMenuItem`s as you wish.  And each Menu Item can take an array of sub items.
    *
-   * You can provide either a standard arry of Menu Items or a function which will return an array of MenuItems depending on the `MenuInfo`.
+   * The property allows you to provide either a standard array of UserMenuItem or a function which will return the array.
    *
-   * The function takes a [General Options](_adaptableOptions_generaloptions_.generaloptions.html) object and returns an array of UserMenuItem. signature is:
+   * The function takes a [`MenuInfo`](_predefinedconfig_common_menu_.menuin) object and returns an array of `UserMenuItem`. signature is:
    *
    *  ```ts
    * ((menuInfo: MenuInfo) => UserMenuItem[])
    *  ```
    *
-   * If you want to control which of the shipped Adaptable Context Menu items are showns use the `showAdaptableContextMenu` property in [General Options](_adaptableOptions_generaloptions_.generaloptions.html)
+   * If you want to control which, if any, of the shipped Adaptable Context Menu items are displayed use the `showAdaptableContextMenu` property in [General Options](_adaptableOptions_generaloptions_.generaloptions.html)
+   *
+   * **Column Menu Item Example**
+   *
+   * ```ts
+   * // using an array
+   * export default {
+   *  UserInterface: {
+   *     ContextMenuItems: [
+   *     {
+   *        Label: 'Mimise Dashboard',
+   *        UserMenuItemClickedFunction: () => {
+   *            adaptableApi.dashboardApi.Minimise();
+   *        },
+   *     },
+   *     {
+   *        Label: 'Set System Status',
+   *        SubMenuItems: [
+   *        {
+   *          Label: 'Set Error',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+   *          },
+   *        },
+   *        {
+   *          Label: 'Set Warning',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+   *          },
+   *        },
+   *        {
+   *          Label: 'Set Success',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
+   *        },
+   *        },
+   *        {
+   *          Label: 'Set Info',
+   *          UserMenuItemClickedFunction: () => {
+   *            adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
+   *        },
+   *      },
+   *    ],
+   *  },
+   *  ],
+   * },
+   * } as PredefinedConfig;
+   *
+   * // using a function
+   * export default {
+   *  UserInterface: {
+   *    ContextMenuItems: (menuinfo: MenuInfo) => {
+   *      return menuinfo.Column.Sortable
+   *      ? [
+   *          {
+   *            Label: 'Sort Column',
+   *            Icon: '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+   *            UserMenuItemClickedFunction: () => {
+   *              let customSort: ColumnSort = {
+   *                Column: menuinfo.Column.ColumnId,
+   *                SortOrder: 'Ascending',
+   *              };
+   *              adaptableApi.gridApi.sortAdaptable([customSort]);
+   *            },
+   *          },
+   *        ]
+   *     : [];
+   * },
+   * } as PredefinedConfig;
+   *
+   * ```
    *
    * **Default Value**:  Empty array
    */

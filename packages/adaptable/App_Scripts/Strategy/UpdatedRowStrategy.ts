@@ -47,11 +47,11 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (menuInfo.column && menuInfo.rowNode) {
+    if (menuInfo.Column && menuInfo.RowNode) {
       let updatedRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
       if (ArrayExtensions.IsNotNullOrEmpty(updatedRowInfos)) {
         let updatedRowInfo: UpdatedRowInfo = updatedRowInfos.find(
-          a => a.primaryKeyValue == menuInfo.primaryKeyValue
+          a => a.primaryKeyValue == menuInfo.PrimaryKeyValue
         );
         if (updatedRowInfo) {
           menuItemShowPopup = this.createColumnMenuItemReduxAction(

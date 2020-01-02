@@ -51,9 +51,9 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     let percentBarExists: boolean = ArrayExtensions.ContainsItem(
       this.PercentBarState.PercentBars.map(f => f.ColumnId),
-      menuInfo.column.ColumnId
+      menuInfo.Column.ColumnId
     );
-    if (menuInfo.column && percentBarExists) {
+    if (menuInfo.Column && percentBarExists) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',
       };

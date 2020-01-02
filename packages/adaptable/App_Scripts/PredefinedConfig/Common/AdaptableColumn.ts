@@ -1,5 +1,4 @@
 import { DataType } from './Enums';
-import { TypeUuid } from '../Uuid';
 import { AdaptableObject } from './AdaptableObject';
 
 /**

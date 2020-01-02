@@ -507,12 +507,12 @@ export class agGridHelper {
     }
 
     return {
-      isSelectedCell: isSelectedCell,
-      gridCell: clickedCell,
-      column: column,
-      rowNode: params.node,
-      isSingleSelectedColumn: isSingleSelectedColumn,
-      primaryKeyValue: primaryKeyValue,
+      IsSelectedCell: isSelectedCell,
+      GridCell: clickedCell,
+      Column: column,
+      RowNode: params.node,
+      IsSingleSelectedColumn: isSingleSelectedColumn,
+      PrimaryKeyValue: primaryKeyValue,
     };
   }
 

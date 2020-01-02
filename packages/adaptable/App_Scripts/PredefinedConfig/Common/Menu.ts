@@ -63,32 +63,32 @@ export interface MenuInfo {
   /**
    *  The cell that has been clicked.  Contains the current value of the cell
    */
-  gridCell: GridCell;
+  GridCell: GridCell;
   /**
    * The current Column
    */
-  column: AdaptableColumn;
+  Column: AdaptableColumn;
   /**
    * Whether or not the cell clicked is one that is currently selected.
    *
    * If it is not, then some options are not available.
    */
-  isSelectedCell: boolean;
+  IsSelectedCell: boolean;
 
   /**
    * Whether or not the column that has been clicked is the ONLY column with selected cells.
    *
    * If it is not, then some options are not available.
    */
-  isSingleSelectedColumn: boolean;
+  IsSingleSelectedColumn: boolean;
 
   /**
    * The current row node
    */
-  rowNode: any;
+  RowNode: any;
 
   /**
    * The value of the primary key column in the current row
    */
-  primaryKeyValue: any;
+  PrimaryKeyValue: any;
 }

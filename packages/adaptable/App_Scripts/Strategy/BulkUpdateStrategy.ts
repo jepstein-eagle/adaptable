@@ -40,10 +40,10 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     // perhaps this is faulty logic though?
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (
-      menuInfo.column &&
-      !menuInfo.column.ReadOnly &&
-      menuInfo.isSelectedCell &&
-      menuInfo.isSingleSelectedColumn
+      menuInfo.Column &&
+      !menuInfo.Column.ReadOnly &&
+      menuInfo.IsSelectedCell &&
+      menuInfo.IsSingleSelectedColumn
     ) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',

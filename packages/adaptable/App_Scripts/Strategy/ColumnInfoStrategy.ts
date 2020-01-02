@@ -39,12 +39,12 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (this.canCreateColumnMenuItem(menuInfo.column, this.adaptable)) {
+    if (this.canCreateColumnMenuItem(menuInfo.Column, this.adaptable)) {
       let popupParam: StrategyParams = {
-        columnId: menuInfo.column.ColumnId,
+        columnId: menuInfo.Column.ColumnId,
         source: 'ContextMenu',
       };
-      if (menuInfo.column) {
+      if (menuInfo.Column) {
         menuItemShowPopup = this.createMainMenuItemShowPopup({
           Label: StrategyConstants.ColumnInfoStrategyFriendlyName,
           ComponentName: ScreenPopups.ColumnInfoPopup,

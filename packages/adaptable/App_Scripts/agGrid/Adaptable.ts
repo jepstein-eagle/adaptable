@@ -2294,12 +2294,12 @@ export class Adaptable implements IAdaptable {
       colMenuItems.push('separator');
 
       let menuInfo: MenuInfo = {
-        gridCell: undefined,
-        column: adaptableColumn,
-        isSelectedCell: false,
-        isSingleSelectedColumn: false,
-        rowNode: undefined,
-        primaryKeyValue: undefined,
+        GridCell: undefined,
+        Column: adaptableColumn,
+        IsSelectedCell: false,
+        IsSingleSelectedColumn: false,
+        RowNode: undefined,
+        PrimaryKeyValue: undefined,
       };
 
       let showAdaptableColumnMenu = this.adaptableOptions.userInterfaceOptions!
