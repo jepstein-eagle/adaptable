@@ -258,11 +258,17 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * You can add as many `UserMenuItem` as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
    *
-   * The property allows you to provide either a standard array of UserMenuItem or a function which will return the array`.
+   * The property allows you to provide the `UserMenuItem` array in 2 ways:
    *
-   * The function takes a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`. signature is:
+   * 1. Through a standard 'hard-coded' array:
    *
-   * If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
+   * 2. Via a function which receives a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`:
+   *
+   * The Signature of the function is:
+   *
+   * ```ts
+   * ((menuInfo: MenuInfo) => UserMenuItem[])
+   *  ```
    *
    * **Column Menu Item Example (using Array)**
    *
@@ -314,7 +320,6 @@ export interface UserInterfaceState extends DesignTimeState {
    * **Column Menu Item Example (using Function)**
    *
    * ```ts
-   *
    * export default {
    *  UserInterface: {
    * ColumnMenuItems: (menuinfo: MenuInfo) => {
@@ -335,8 +340,9 @@ export interface UserInterfaceState extends DesignTimeState {
    *     : [];
    * },
    * } as PredefinedConfig;
-   *
    * ```
+   *
+   *  If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
    *
    * **Default Value**:  Empty array
    */
