@@ -3,8 +3,8 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { CellSummmary } from '../Utilities/Interface/Selection/CellSummmary';
 import { InternalState } from './InternalState';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
-import { ColumnSort } from './LayoutState';
 import { AdaptableMenuItem } from './Common/Menu';
+import { ColumnSort } from './Common/ColumnSort';
 
 export interface GridState extends InternalState {
   Columns: AdaptableColumn[];

@@ -7,15 +7,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ISearchService } from './Interface/ISearchService';
 import * as StrategyConstants from '../Constants/StrategyConstants';
 import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Common/Enums';
-import { UserFilterState } from '../../PredefinedConfig/UserFilterState';
-import { QuickSearchState } from '../../PredefinedConfig/QuickSearchState';
-import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceState';
-import { ColumnFilterState } from '../../PredefinedConfig/ColumnFilterState';
-import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
-import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import {
@@ -24,6 +16,8 @@ import {
   SearchChangedInfo,
 } from '../../Api/Events/SearchChanged';
 import { SearchChangedEventArgs } from '../../types';
+import { DataSource } from '../../PredefinedConfig/DataSourceState';
+import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 
 export class SearchService implements ISearchService {
   private adaptable: IAdaptable;

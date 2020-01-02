@@ -5,14 +5,13 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 
 import { LayoutSource } from '../../../PredefinedConfig/Common/Enums';
-
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { Layout, ColumnSort } from '../../../PredefinedConfig/LayoutState';
+import { Layout } from '../../../PredefinedConfig/LayoutState';
 
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { Flex } from 'rebass';
 import Radio from '../../../components/Radio';
+import { ColumnSort } from '../../../PredefinedConfig/Common/ColumnSort';
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<Layout> {
   Layouts: Array<Layout>;

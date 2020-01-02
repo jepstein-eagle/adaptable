@@ -1,5 +1,6 @@
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { Layout, ColumnSort, PivotDetails } from '../../../PredefinedConfig/LayoutState';
+import { Layout, PivotDetails } from '../../../PredefinedConfig/LayoutState';
+import { ColumnSort } from '../../../PredefinedConfig/Common/ColumnSort';
 export interface ILayoutService {
   getLayoutDescription(layout: Layout, columns: AdaptableColumn[]): string;
   getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string;

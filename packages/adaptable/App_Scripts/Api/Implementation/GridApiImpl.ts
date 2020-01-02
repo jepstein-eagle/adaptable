@@ -1,14 +1,15 @@
 import { ApiBase } from './ApiBase';
 import { GridApi } from '../GridApi';
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../../PredefinedConfig/GridState';
-import { DataType } from '../../PredefinedConfig/Common/Enums';
+import { DataType, SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
-import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
 import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AdaptableOptions } from '../../types';
+import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 export class GridApiImpl extends ApiBase implements GridApi {
   public getGridState(): GridState {
@@ -172,5 +173,10 @@ export class GridApiImpl extends ApiBase implements GridApi {
 
   public getadaptableOptions(): AdaptableOptions {
     return this.adaptable.adaptableOptions;
+  }
+
+  public sortAdaptable(columnSorts: ColumnSort[]): void {
+    this.adaptable.setColumnSort(columnSorts);
+    this.adaptable.api.internalApi.setColumnSorts(columnSorts);
   }
 }

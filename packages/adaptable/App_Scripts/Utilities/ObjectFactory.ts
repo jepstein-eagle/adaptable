@@ -43,7 +43,7 @@ import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
-import { ColumnSort, VendorGridInfo, Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { VendorGridInfo, Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { UserFilter } from '../PredefinedConfig/UserFilterState';
@@ -65,6 +65,7 @@ import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
 import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };

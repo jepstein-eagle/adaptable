@@ -2,8 +2,8 @@ import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
-import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
+import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 /**
  * EventArgs sent as part of the onSearchChanged Event

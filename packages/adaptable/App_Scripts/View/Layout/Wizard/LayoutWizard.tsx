@@ -8,12 +8,13 @@ import { LayoutGridSortWizard } from './LayoutGridSortWizard';
 import { LayoutSummaryWizard } from './LayoutSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { Layout, ColumnSort } from '../../../PredefinedConfig/LayoutState';
+import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { LayoutGroupedColumnWizard } from './LayoutGroupedColumnWizard';
 import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
 import { LayoutSetPivotingWizard } from './LayoutSetPivotingWizard';
 import { LayoutPivotColumnWizard } from './LayoutPivotColumnWizard';
 import { LayoutAggregationColumnWizard } from './LayoutPivotAggregationColumnWizard';
+import { ColumnSort } from '../../../PredefinedConfig/Common/ColumnSort';
 
 export interface LayoutWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<LayoutWizard> {

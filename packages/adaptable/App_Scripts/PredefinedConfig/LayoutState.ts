@@ -1,5 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
+import { ColumnSort } from './Common/ColumnSort';
 
 /**
  * The Predefined Configuration for the Layout function
@@ -142,28 +143,6 @@ export interface Layout extends AdaptableObject {
    *  This is state saved automatically by Adaptable for internal use to manage layouts
    */
   AdaptableGridInfo?: AdaptableGridInfo;
-}
-
-/**
- * Defines how a Column is sorted.
- *
- *  Contains 2 properties:
- *
- *  - `Column`: The name of the Column being sorted
- *
- * - `SortOrder`: Whether to sort the Column ascending or descending
- *
- */
-export interface ColumnSort {
-  /**
-   * The name of the Column being sorted
-   */
-  Column: string;
-
-  /**
-   * How the column will be sorted (i.e. either 'Ascending' or 'Descending')
-   */
-  SortOrder: 'Ascending' | 'Descending';
 }
 
 /**

@@ -11,11 +11,11 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
-import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { LiveReport } from './Events/LiveReportUpdated';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { CellSummaryOperationDefinition } from '../PredefinedConfig/CellSummaryState';
+import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
  *

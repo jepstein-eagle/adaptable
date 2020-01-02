@@ -117,7 +117,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
-import { ColumnSort, VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
@@ -157,6 +157,7 @@ import {
   IAdaptableNoCodeWizardInitFn,
 } from '../AdaptableInterfaces/IAdaptableNoCodeWizard';
 import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
+import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -1155,10 +1156,7 @@ export class Adaptable implements IAdaptable {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
   }
 
   public getDisplayValue(id: any, columnId: string): string {

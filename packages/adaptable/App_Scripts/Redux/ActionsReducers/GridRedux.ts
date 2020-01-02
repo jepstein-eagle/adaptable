@@ -4,10 +4,10 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';

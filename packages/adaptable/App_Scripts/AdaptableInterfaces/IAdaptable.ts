@@ -12,8 +12,8 @@ import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
-import { ColumnSort, VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { DistinctCriteriaPairValue, SortOrder } from '../PredefinedConfig/Common/Enums';
+import { VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
@@ -31,6 +31,7 @@ import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
+import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 /**
  *  The only interface for Adaptable

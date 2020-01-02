@@ -1,11 +1,11 @@
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../PredefinedConfig/GridState';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { ColumnSort } from '../PredefinedConfig/LayoutState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
-import { DataType } from '../PredefinedConfig/Common/Enums';
+import { DataType, SortOrder } from '../PredefinedConfig/Common/Enums';
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
+import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 /**
  * Provides access to important elements of Adaptable like columns, sorting, selected cells etc.
@@ -161,4 +161,6 @@ export interface GridApi {
   hideFilterForm(): void;
   applyGridFiltering(): void;
   clearGridFiltering(): void;
+
+  sortAdaptable(columnSorts: ColumnSort[]): void;
 }

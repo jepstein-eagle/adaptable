@@ -311,16 +311,23 @@ export interface UserInterfaceState extends DesignTimeState {
    * // using a function
    * export default {
    *  UserInterface: {
-   *     ColumnMenuItems: (menuinfo: MenuInfo) => {
-   *      return [
-   *        {
-   *          Label: 'Mimise Dashboard',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.dashboardApi.Minimise();
+   * ColumnMenuItems: (menuinfo: MenuInfo) => {
+   *    return menuinfo.column.Sortable
+   *      ? [
+   *          {
+   *            Label: 'Sort Column',
+   *            Icon: '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+   *            UserMenuItemClickedFunction: () => {
+   *              let customSort: ColumnSort = {
+   *                Column: menuinfo.column.ColumnId,
+   *                SortOrder: 'Ascending',
+   *              };
+   *              adaptableApi.gridApi.sortAdaptable([customSort]);
+   *            },
    *          },
-   *        },
-   *      ];
-   *   },
+   *        ]
+   *     : [];
+   * },
    * } as PredefinedConfig;
    *
    * ```

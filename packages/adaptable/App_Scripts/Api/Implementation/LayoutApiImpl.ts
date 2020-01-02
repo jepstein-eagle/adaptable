@@ -5,8 +5,9 @@ import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { LayoutApi } from '../LayoutApi';
-import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/LayoutState';
+import { LayoutState, Layout } from '../../PredefinedConfig/LayoutState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 export class LayoutApiImpl extends ApiBase implements LayoutApi {
   public getLayoutState(): LayoutState {

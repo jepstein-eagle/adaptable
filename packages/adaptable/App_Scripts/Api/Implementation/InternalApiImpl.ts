@@ -16,12 +16,12 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
-import { ColumnSort } from '../../PredefinedConfig/LayoutState';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
 import { LiveReport } from '../Events/LiveReportUpdated';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
+import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public getCellSummaryOperationDefinitions(): CellSummaryOperationDefinition[] {

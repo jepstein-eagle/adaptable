@@ -15,11 +15,12 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
-import { Layout, ColumnSort } from '../../../PredefinedConfig/LayoutState';
+import { Layout } from '../../../PredefinedConfig/LayoutState';
 import SimpleButton from '../../../components/SimpleButton';
 
 import EmptyContent from '../../../components/EmptyContent';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
+import { ColumnSort } from '../../../PredefinedConfig/Common/ColumnSort';
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<Layout> {
   SortableColumns: AdaptableColumn[];

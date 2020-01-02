@@ -3,12 +3,7 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import {
-  Layout,
-  ColumnSort,
-  PivotDetails,
-  VendorGridInfo,
-} from '../../PredefinedConfig/LayoutState';
+import { Layout, PivotDetails, VendorGridInfo } from '../../PredefinedConfig/LayoutState';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
@@ -17,6 +12,7 @@ import {
   ColumnStateChangedEventArgs,
   ColumnStateChangedInfo,
 } from '../../Api/Events/ColumnStateChanged';
+import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 export class LayoutService implements ILayoutService {
   constructor(private adaptable: IAdaptable) {
