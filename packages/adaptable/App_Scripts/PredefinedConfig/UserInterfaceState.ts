@@ -4,9 +4,9 @@ import { MenuInfo } from './Common/Menu';
 import { AdaptableColumn } from './Common/AdaptableColumn';
 
 /**
- * The User Interface section of Predefined Configuration
+ * The **User Interface section** of Predefined Configuration
  *
- * Contains a number of properties and collections that allow users to manage the User Interface of the grid.
+ * Contains a number of properties and collections that allow users to manage the User Interface of Adaptable and the underlying grid.
  *
  * These include:
  *
@@ -256,18 +256,17 @@ export interface UserInterfaceState extends DesignTimeState {
   /**
    * A collection of `UserMenuItem` objects to be added to the Column Header Menu (the one that appears as a dropdown in each Column Header).
    *
-   * You can add as many items as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
+   * You can add as many `UserMenuItem` as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
    *
    * The property allows you to provide either a standard array of UserMenuItem or a function which will return the array`.
    *
-   * The function takes a [`MenuInfo`](_predefinedconfig_common_menu_.menuin) object and returns an array of `UserMenuItem`. signature is:
+   * The function takes a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`. signature is:
    *
    * If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
    *
-   * **Column Menu Item Example**
+   * **Column Menu Item Example (using Array)**
    *
    * ```ts
-   * // using an array
    * export default {
    *  UserInterface: {
    *     ColumnMenuItems: [
@@ -310,7 +309,12 @@ export interface UserInterfaceState extends DesignTimeState {
    * },
    * } as PredefinedConfig;
    *
-   * // using a function
+   * ```
+   *
+   * **Column Menu Item Example (using Function)**
+   *
+   * ```ts
+   *
    * export default {
    *  UserInterface: {
    * ColumnMenuItems: (menuinfo: MenuInfo) => {
@@ -341,11 +345,11 @@ export interface UserInterfaceState extends DesignTimeState {
   /**
    * Additional items to add to the Context Menu (the one that appears when you right-click a cell in the Grid).
    *
-   * You can add as many `UserMenuItem`s as you wish.  And each Menu Item can take an array of sub items.
+   * You can add as many `UserMenuItem` as you wish.  And each Menu Item can take an array of sub items.
    *
    * The property allows you to provide either a standard array of UserMenuItem or a function which will return the array.
    *
-   * The function takes a [`MenuInfo`](_predefinedconfig_common_menu_.menuin) object and returns an array of `UserMenuItem`. signature is:
+   * The function takes a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`. signature is:
    *
    *  ```ts
    * ((menuInfo: MenuInfo) => UserMenuItem[])
@@ -353,10 +357,9 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * If you want to control which, if any, of the shipped Adaptable Context Menu items are displayed use the `showAdaptableContextMenu` property in [General Options](_adaptableOptions_generaloptions_.generaloptions.html)
    *
-   * **Column Menu Item Example**
+   * **Context Menu Item Example (using Array)**
    *
    * ```ts
-   * // using an array
    * export default {
    *  UserInterface: {
    *     ContextMenuItems: [
@@ -399,7 +402,10 @@ export interface UserInterfaceState extends DesignTimeState {
    * },
    * } as PredefinedConfig;
    *
-   * // using a function
+   * ```
+   *
+   * **Context Menu Item Example (Using function)**
+   *
    * export default {
    *  UserInterface: {
    *    ContextMenuItems: (menuinfo: MenuInfo) => {
