@@ -70,34 +70,6 @@ import { AdaptablePlugin } from './AdaptablePlugin';
  */
 export interface AdaptableOptions {
   /**
-   * **MANDATORY property**
-   *
-   * This is the underlying vendor grid or grid object which Adaptable will interact with.
-   *
-   * Depending on the vendor it is either a Grid or an Options object.
-   *
-   * The `vendorGrid` object should contain all the column definitions and data sources required.
-   *
-   * Note: if you are using the *React Wrapper* or the *Angular Wrapper* then **you do not need to populate this property** (as `gridOptions` is a separate parameter).
-   *
-   * **Default Value: N/A**
-   */
-  vendorGrid?: any;
-
-  /**
-   * **MANDATORY property**
-   *
-   * The name of unique column in the grid
-   *
-   * Required for cell identification purpose when using Audit and other related functions.
-   *
-   * Note: The column does not need to be visible but it does need to exist in the grid's data source.
-   *
-   * **Default Value: N/A**
-   */
-  primaryKey: string;
-
-  /**
    * Identifier for this instance of Adaptable
    *
    * Useful if Audit Log is turned on or you are using multiple grids
@@ -108,19 +80,7 @@ export interface AdaptableOptions {
    *
    * **Default Value: adaptable_id**
    */
-
   adaptableId?: string;
-
-  /**
-   * The name of the current Adaptable user
-   *
-   * Strongly recommended to be set if using Config Server
-   *
-   * Also used in Audit Log to identify the current user who has made edits or changed state.
-   *
-   * **Default Value: anonymous**
-   */
-  userName?: string;
 
   /**
    * User State (a.ka. `predefinedConfig`) set at design-time and shipped with Adaptable for first use.
@@ -136,6 +96,45 @@ export interface AdaptableOptions {
    * **Default Value: undefined**
    */
   predefinedConfig?: PredefinedConfig | string;
+
+  /**
+   * **MANDATORY property**
+   *
+   * The name of unique column in the grid
+   *
+   * Required for cell identification purpose when using Audit and other related functions.
+   *
+   * Note: The column does not need to be visible but it does need to exist in the grid's data source.
+   *
+   * **Default Value: N/A**
+   */
+  primaryKey: string;
+
+  /**
+   * The name of the current Adaptable user
+   *
+   * Strongly recommended to be set if using Config Server
+   *
+   * Also used in Audit Log to identify the current user who has made edits or changed state.
+   *
+   * **Default Value: anonymous**
+   */
+  userName?: string;
+
+  /**
+   * **MANDATORY property**
+   *
+   * This is the underlying vendor grid or grid object which Adaptable will interact with.
+   *
+   * Depending on the vendor it is either a Grid or an Options object.
+   *
+   * The `vendorGrid` object should contain all the column definitions and data sources required.
+   *
+   * Note: if you are using the *React Wrapper* or the *Angular Wrapper* then **you do not need to populate this property** (as `gridOptions` is a separate parameter).
+   *
+   * **Default Value: N/A**
+   */
+  vendorGrid?: any;
 
   /**
    * Options for setting the *Div elements* in which Adaptable and the underlying grid are placed.
