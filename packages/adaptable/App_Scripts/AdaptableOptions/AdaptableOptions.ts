@@ -15,8 +15,6 @@ import { AdaptablePlugin } from './AdaptablePlugin';
 /**
  * `AdaptableOptions` is the object created by you at design-time injected into the Adaptable constructor at startup.
  *
- * **AdaptableOptions is the only argument used in Adaptable's static constructor.**
- *
  * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
  *
  * The `AdaptableOptions` class contains a few regular properties of which 2 (`vendorGrid` and `primaryKey`) are mandatory - and a number of `xxxOptions` properties where the type is itself a collection of related properties.
@@ -25,47 +23,19 @@ import { AdaptablePlugin } from './AdaptablePlugin';
  *
  * Any property that is not supplied by the user when populating the object, will use the default value (which is listed here for each property).
  *
- * The properties are
+ * **AdaptableOptions is the only argument used in Adaptable's static constructor.**
  *
- *  | Option  	                                                                              | Mandatory            | Details                                     	                |
- *  |----------------	                                                                        |-------------------	|---------------------------------------------	                |
- *  | [vendorGrid](_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)      | No	                | Underlying vendor grid object (e.g. GridOptions for ag-Grid)	|
- *  | [AdvancedSearch](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)   	  | Yes 	              | Create saveable multi-column searches with multiple criteria  |
- *  | [Alert](_predefinedconfig_alertstate_.alertstate.html)   	                              | Yes 	              | Provide Alert Definitions which will trigger run-time alerts  |
- *  | [Application](_predefinedconfig_applicationstate_.applicationstate.html)   	            | No	                | Save your own state as key / value pairs 	                    |
- *  | [BulkUpdate](_predefinedconfig__bulkupdatestate_.bulkupdatestate.html)   	              | Yes 	              | Update multiple cells in a column to contain a new value      |
- *  | [CalculatedColumn](_predefinedconfig_calculatedcolumnstate_.calculatedcolumn.html)   	  | Yes 	              | Create custom columns with dynamic values based on expression |
- *  | [Calendar](_predefinedconfig_calendarstate_.calendar.html)   	                          | Yes 	              | Select or provide your own calendar for dealing with holidays |
- *  | [CellSummary](_predefinedconfig_cellsummarystate_.cellsummarystate.html)   	            | Yes 	              | Choose which summary operations to see for selected cells     |
- *  | [CellValidation](_predefinedconfig_cellvalidationstate_.cellvalidationstate.html)     	| Yes 	              | Provide (complex) rules to validate cell edits                |
- *  | [Chart](_predefinedconfig_chartstate_.chartstate.html)   	                              | Yes 	              | Visualise grid data using a variety of different chart types  |
- *  | [ColumnCategory](_predefinedconfig_columncategorystate_.columncategorystate.html)       | Yes     	          | Group columns into category for easier column management      |
- *  | [ColumnFilter](_predefinedconfig_columnfilterstate_.columnfilterstate.html)             | Yes 	              | Supply your own filters for columns to findy your data easily |
- *  | [ConditionalStyle](_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) | Yes 	              | Dynamically Style columns & rows according to rules provided  |
- *  | [CustomSort](_predefinedconfig_customsortstate_.customsortstate.html)                   | Yes 	              | Build your own sort orders for columns with non-standard sorts|
- *  | [Dashboard](_predefinedconfig_dashboardstate_.dashboardstate.html)                      | Yes 	              | Configure & populate the Dasboard area (abov the main grid)   |
- *  | [DataSource](_predefinedconfig_datasourcestate.datasourcestate.html)                    | Yes 	              | Provide Data Sources that will populate Grid via the server   |
- *  | [Entitlements](_predefinedconfig_entitlementstate_.entitlementstate.html)               | No	                | Manage permissions so users only see relevant functions       |
- *  | [Export](_predefinedconfig_exportstate_.exportstate.html)                               | Yes 	              | Create reports to export data from grid to numerous loctions  |
- *  | [FreeTextColumn](_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Speical free entry columns (e.g. Comments) saved with state   |
- *  | [Layout](_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
- *  | [NamedFilter](_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
- *  | [Partner](_predefinedconfig_partnerstate_.partnerstate.html)                            | No                  | State required for partners (e.g. iPushPull, OpenFin, Glue42) |
- *  | [QuickSearch](_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
- *  | [Reminder](_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
- *  | [Shortcut](_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
- *  | [SmartEdit](_predefinedconfig_smarteditstate_.smarteditstate.html)                      | Yes 	              | Update multiple numeric cells with a single maths operation   |
- *  | [SparklineColumn](_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html)    | No                  | See columns containing ranges of data as a sparkline          |
- *  | [SystemFilter](_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | No                  | Select availability of System Filters (e.g. Today, Blanks)    |
- *  | [SystemStatus](_predefinedconfig_systemstatusstate_.systemstatusstate.html)             | No                  | Show Messages and Alerts describing curent Status of the App  |
- *  | [Theme](_predefinedconfig_themestate_.themestate.html)                                  | Yes                 | Select with shipped Theme is used or provide a custom one     |
- *  | [ToolPanel](_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Yes                 | Manage Adaptable ToolPanel (the area to the right of grid)  |
- *  | [UpdatedRow](_predefinedconfig_updatedrowstate_.updatedrowstate.html)                   | Yes                 | Colour (and jump to) rows whose contents have changed         |
- *  | [UserFilter](_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Yes                 | Create your own filters baseed on your data and requirements  |
- *  | [UserInterface](_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
+ * The contents of `AdaptableOptions` are:
  *
+ *  | Option  	                                                                                    | Mandatory   | Details                                     	                |
+ *  |----------------	                                                                              |-----------  |---------------------------------------------	                |
+ *  | [adaptableId](_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableId)          | No	        | A unique ID for this instance of Adaptable	                  |
+ *  | [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedConfig)| No	        | User State shipped with Adaptable iinstance for first use.	  |
+ *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primaryKey)            | Yes	        | Name of column, contents of which are guaranteed to be unique	|
+ *  | [userName](_adaptableoptions_adaptableoptions_.adaptableoptions.html#userName)                | No	        | The current Adaptable user (useful for Audit purposes)      	|
+ *  | [vendorGrid](_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)            | Yes	        | Underlying vendor grid object (e.g. GridOptions for ag-Grid)	|
+ *  | [auditOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditOptions)        | No	        | Audit Log related options                                   	|
  *
- * This object when populated forms the **predefinedConfig** property in *adaptableOptions*.
  *
  */
 export interface AdaptableOptions {
