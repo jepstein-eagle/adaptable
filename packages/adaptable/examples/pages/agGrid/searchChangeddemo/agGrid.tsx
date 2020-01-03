@@ -3,15 +3,15 @@ import { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-blue.css';
-import Adaptable from '../../../../App_Scripts/agGrid';
-import '../../../../App_Scripts/index.scss';
+import Adaptable from '../../../../src/agGrid';
+import '../../../../src/index.scss';
 
 import {
   IAdaptable,
   AdaptableOptions,
   SearchChangedEventArgs,
   AdaptableApi,
-} from '../../../../App_Scripts/types';
+} from '../../../../src/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 

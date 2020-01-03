@@ -6,7 +6,7 @@ import { GridOptions } from 'ag-grid-community';
 import AdaptableReact from '../../../src';
 import '../../../src/index.scss';
 
-import { AdaptableOptions } from '../../../../adaptable/App_Scripts/types';
+import { AdaptableOptions } from '../../../../adaptable/src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';

@@ -1,5 +1,5 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
-import LoggingHelper from '../../adaptable/App_Scripts/Utilities/Helpers/LoggingHelper';
+import LoggingHelper from '../../adaptable/src/Utilities/Helpers/LoggingHelper';
 
 interface ITrade {
   tradeId: number;

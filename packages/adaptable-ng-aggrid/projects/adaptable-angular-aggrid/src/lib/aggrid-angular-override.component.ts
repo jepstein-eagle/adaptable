@@ -8,7 +8,7 @@ import {
   AngularFrameworkComponentWrapper,
   AgGridColumn,
 } from 'ag-grid-angular';
-import Adaptable from '../adaptable/App_Scripts/agGrid';
+import Adaptable from '../adaptable/src/agGrid';
 import { AdaptableApi } from '../adaptable/types';
 
 @Component({

@@ -1,7 +1,7 @@
-import Modal from '../../../../App_Scripts/components/Modal';
+import Modal from '../../../../src/components/Modal';
 
-import '../../../../App_Scripts/components/Modal/base.scss';
-import '../../../../App_Scripts/components/Modal/style.scss';
+import '../../../../src/components/Modal/base.scss';
+import '../../../../src/components/Modal/style.scss';
 
 import React, { useState } from 'react';
 

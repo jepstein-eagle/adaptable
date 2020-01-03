@@ -1,9 +1,9 @@
-import SimpleButton from '../../../../App_Scripts/components/SimpleButton';
-import DropdownButton from '../../../../App_Scripts/components/DropdownButton';
+import SimpleButton from '../../../../src/components/SimpleButton';
+import DropdownButton from '../../../../src/components/DropdownButton';
 
-import '../../../../App_Scripts/base.scss';
-import '../../../../App_Scripts/components/SimpleButton/base.scss';
-import '../../../../App_Scripts/components/SimpleButton/style.scss';
+import '../../../../src/base.scss';
+import '../../../../src/components/SimpleButton/base.scss';
+import '../../../../src/components/SimpleButton/style.scss';
 
 import React, { useState } from 'react';
 

@@ -4,14 +4,14 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import XLSX from 'xlsx';
 
-import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
-import { AdaptableNoCodeWizard } from '../../../../App_Scripts/agGrid/Adaptable';
+import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
+import { AdaptableNoCodeWizard } from '../../../../src/agGrid/Adaptable';
 
 /*
 Basic demo of wizard that allow d&d of a json with an array contents

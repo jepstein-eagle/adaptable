@@ -3,15 +3,15 @@ import { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
-import { AdaptableColumn } from '../../../../App_Scripts/PredefinedConfig/Common/AdaptableColumn';
+import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
 
 var api: AdaptableApi;
 

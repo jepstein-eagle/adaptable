@@ -4,22 +4,22 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import '../../../../App_Scripts/index.scss';
+import '../../../../src/index.scss';
 
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import Adaptable from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../src/agGrid';
 import {
   AdaptableOptions,
   PredefinedConfig,
   SearchChangedEventArgs,
   AdaptableApi,
-} from '../../../../App_Scripts/types';
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AdaptableSearchState } from '../../../../App_Scripts/Api/Events/SearchChanged/AdaptableSearchState';
-import { SearchChangedInfo } from '../../../../App_Scripts/Api/Events/SearchChanged/SearchChangedInfo';
+import { AdaptableSearchState } from '../../../../src/Api/Events/SearchChanged/AdaptableSearchState';
+import { SearchChangedInfo } from '../../../../src/Api/Events/SearchChanged/SearchChangedInfo';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();

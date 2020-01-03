@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import Adaptable from '../../../../App_Scripts/agGrid';
-import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
+import Adaptable from '../../../../src/agGrid';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AdaptableMenuItem, MenuInfo } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
-import { ColumnSort } from '../../../../App_Scripts/PredefinedConfig/Common/ColumnSort';
+import { AdaptableMenuItem, MenuInfo } from '../../../../src/PredefinedConfig/Common/Menu';
+import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var adaptableApi: AdaptableApi;
 function InitAdaptableDemo() {

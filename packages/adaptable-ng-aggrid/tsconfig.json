@@ -24,6 +24,6 @@
   },
   "include": [
     "src/**/*",
-    "../adaptable/App_Scripts/**/*"
+    "../adaptable/src/**/*"
   ]
 }

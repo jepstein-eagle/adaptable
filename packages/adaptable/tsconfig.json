@@ -16,7 +16,7 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "App_Scripts/**/*",
+    "src/**/*",
      "agGrid/**/*",
     "agGrid.ts",
     "types.ts",

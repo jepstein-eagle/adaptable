@@ -1,6 +1,6 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
 import { StarsCellRenderer } from './StarsCellRenderer';
-import LoggingHelper from '../../App_Scripts/Utilities/Helpers/LoggingHelper';
+import LoggingHelper from '../../src/Utilities/Helpers/LoggingHelper';
 
 export interface ITrade {
   tradeId: number;

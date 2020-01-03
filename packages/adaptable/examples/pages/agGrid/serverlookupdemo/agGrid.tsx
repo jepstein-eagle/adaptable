@@ -4,21 +4,21 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import Adaptable from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../src/agGrid';
 import {
   AdaptableOptions,
   PredefinedConfig,
   IAdaptable,
   AdaptableApi,
-} from '../../../../App_Scripts/types';
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { IServerColumnValues } from '../../../../App_Scripts/adaptableOptions/QueryOptions';
+import { IServerColumnValues } from '../../../../src/adaptableOptions/QueryOptions';
 
 var adaptableApi: AdaptableApi;
 

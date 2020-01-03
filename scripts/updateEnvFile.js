@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const resolve = require('path').resolve;
 
-const envFilePath = resolve(__dirname, '../packages/adaptable/App_Scripts/env.ts'); //'packages', 'adaptable', 'dist', 'env.js');
+const envFilePath = resolve(__dirname, '../packages/adaptable/src/env.ts'); //'packages', 'adaptable', 'dist', 'env.js');
 
 try {
   if (!fs.existsSync(envFilePath)) {

@@ -9,13 +9,13 @@ import '../../../src/base.scss';
 import '../../../src/themes/light.scss';
 import '../../../src/themes/dark.scss';
 
-import { AdaptableOptions } from '../../../../adaptable/App_Scripts/types';
+import { AdaptableOptions } from '../../../../adaptable/src/types';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import Adaptable from '../../../../adaptable/App_Scripts/agGrid';
+import Adaptable from '../../../../adaptable/src/agGrid';
 
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 

@@ -1,8 +1,8 @@
-import Dropdown from '../../../../App_Scripts/components/Dropdown';
+import Dropdown from '../../../../src/components/Dropdown';
 
-import '../../../../App_Scripts/base.scss';
-import '../../../../App_Scripts/components/Dropdown/base.scss';
-import '../../../../App_Scripts/components/Dropdown/style.scss';
+import '../../../../src/base.scss';
+import '../../../../src/components/Dropdown/base.scss';
+import '../../../../src/components/Dropdown/style.scss';
 
 import React, { useState } from 'react';
 

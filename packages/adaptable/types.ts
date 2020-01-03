@@ -1,1 +1,1 @@
-export * from './App_Scripts/types';
+export * from './src/types';

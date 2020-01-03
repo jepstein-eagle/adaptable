@@ -8,7 +8,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-import LoggingHelper from '../../../../adaptable/App_Scripts/Utilities/Helpers/LoggingHelper';
+import LoggingHelper from '../../../../adaptable/src/Utilities/Helpers/LoggingHelper';
 
 global.React = React;
 

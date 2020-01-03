@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import Adaptable from '../../../../App_Scripts/agGrid';
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import Adaptable from '../../../../src/agGrid';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 import './index.css';
 import { GridOptions } from 'ag-grid-community';
 import {
@@ -11,7 +11,7 @@ import {
   AdaptableOptions,
   PredefinedConfig,
   AdaptableApi,
-} from '../../../../App_Scripts/types';
+} from '../../../../src/types';
 
 import { ExamplesHelper } from '../../ExamplesHelper';
 /*

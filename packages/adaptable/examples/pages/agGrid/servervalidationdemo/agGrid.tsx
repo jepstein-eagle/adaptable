@@ -3,20 +3,20 @@ import { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import Adaptable from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../src/agGrid';
 import {
   AdaptableOptions,
   PredefinedConfig,
   AdaptableApi,
   ActionColumnClickedEventArgs,
-} from '../../../../App_Scripts/types';
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { DataChangedInfo } from '../../../../App_Scripts/adaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../../../src/adaptableOptions/CommonObjects/DataChangedInfo';
 import { ValidationResult } from '../../../../App_Scrip../AdaptableOptions/EditOptions';
 
 var adaptableApi: AdaptableApi;

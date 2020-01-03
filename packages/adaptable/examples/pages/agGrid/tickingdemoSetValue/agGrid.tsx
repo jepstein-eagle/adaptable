@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import Adaptable from '../../../../App_Scripts/agGrid';
-import '../../../../App_Scripts/index.scss';
+import Adaptable from '../../../../src/agGrid';
+import '../../../../src/index.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import { AdaptableOptions, PredefinedConfig } from '../../../../App_Scripts/types';
+import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
 

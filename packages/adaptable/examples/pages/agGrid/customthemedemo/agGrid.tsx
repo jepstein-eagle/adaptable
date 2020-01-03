@@ -5,23 +5,23 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import 'ag-grid-community/dist/styles/ag-theme-blue.css';
 
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import Adaptable from '../../../../App_Scripts/agGrid';
+import Adaptable from '../../../../src/agGrid';
 import {
   AdaptableOptions,
   PredefinedConfig,
   ThemeChangedEventArgs,
   IAdaptable,
   AdaptableApi,
-} from '../../../../App_Scripts/types';
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { RowStyle } from '../../../../App_Scripts/PredefinedConfig/UserInterfaceState';
+import { RowStyle } from '../../../../src/PredefinedConfig/UserInterfaceState';
 var adaptableApi: AdaptableApi;
 
 function InitAdaptableDemo() {

@@ -31,9 +31,9 @@
               "src/../node_modules/ag-grid-community/dist/styles/ag-grid.css",
               "src/../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css",
               "src/../node_modules/ag-grid-community/dist/styles/ag-theme-balham-dark.css",
-              "src/../../adaptable/App_Scripts/base.scss",
-              "src/../../adaptable/App_Scripts/themes/light.scss",
-              "src/../../adaptable/App_Scripts/themes/dark.scss"
+              "src/../../adaptable/src/base.scss",
+              "src/../../adaptable/src/themes/light.scss",
+              "src/../../adaptable/src/themes/dark.scss"
             ],
             "scripts": []
           },

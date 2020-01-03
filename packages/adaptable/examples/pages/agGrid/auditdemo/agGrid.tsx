@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-blue.css';
-import Adaptable from '../../../../App_Scripts/agGrid';
-import '../../../../App_Scripts/index.scss';
+import Adaptable from '../../../../src/agGrid';
+import '../../../../src/index.scss';
 
-import { IAdaptable, AdaptableOptions, AdaptableApi } from '../../../../App_Scripts/types';
+import { IAdaptable, AdaptableOptions, AdaptableApi } from '../../../../src/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
-import { AuditLogEntry } from '../../../../App_Scripts/Utilities/Interface/AuditLogEntry';
+import { AuditLogEventArgs } from '../../../../src/Api/Events/AuditEvents';
+import { AuditLogEntry } from '../../../../src/Utilities/Interface/AuditLogEntry';
 
 var adaptableApi: AdaptableApi;
 

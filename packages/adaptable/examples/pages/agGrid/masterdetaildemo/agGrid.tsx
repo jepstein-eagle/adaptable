@@ -4,14 +4,14 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import '../../../../App_Scripts/index.scss';
+import '../../../../src/index.scss';
 
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
-import Adaptable from '../../../../App_Scripts/agGrid';
-import { AdaptableOptions } from '../../../../App_Scripts/types';
+import Adaptable from '../../../../src/agGrid';
+import { AdaptableOptions } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*

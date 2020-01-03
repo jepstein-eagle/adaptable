@@ -5,8 +5,8 @@ import {
   IAdaptableStore,
 } from '@adaptabletools/adaptable/types';
 
-import { Helper } from '@adaptabletools/adaptable/App_Scripts/Utilities/Helpers/Helper';
-import { CellSummaryOperationDefinition } from '@adaptabletools/adaptable/App_Scripts/PredefinedConfig/CellSummaryState';
+import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
+import { CellSummaryOperationDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/CellSummaryState';
 
 const sumNumberArray = (numericValues: number[]): number => {
   if (numericValues.length) {

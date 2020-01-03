@@ -245,8 +245,8 @@ ModelManifest.xml
 .fake/
 
 # Ignores compiled TypeScript files
-#/App_Scripts/**/*.js
-#/App_Scripts/**/*.js.map
+#/src/**/*.js
+#/src/**/*.js.map
 #/Harness/**/*.js
 #/Harness/**/*.js.map
 /typings/globals/**/*.*

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useState, useEffect, ReactNode, useMemo } from 'react';
 import * as AgGrid from 'ag-grid-community';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import { AdaptableApp } from '../../adaptable/App_Scripts/View/AdaptableView';
-import Adaptable from '../../adaptable/App_Scripts/agGrid';
+import { AdaptableApp } from '../../adaptable/src/View/AdaptableView';
+import Adaptable from '../../adaptable/src/agGrid';
 import { AdaptableApi } from '../../adaptable/types';
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 import {
@@ -17,8 +17,8 @@ import {
   ToolbarVisibilityChangedEventArgs,
   LiveReportUpdatedEventArgs,
 } from '../../adaptable/types';
-import { AuditLogEventArgs } from '../../adaptable/App_Scripts/Api/Events/AuditEvents';
-import { ToolbarButtonClickedEventArgs } from '../../adaptable/App_Scripts/Api/Events/ToolbarButtonClicked';
+import { AuditLogEventArgs } from '../../adaptable/src/Api/Events/AuditEvents';
+import { ToolbarButtonClickedEventArgs } from '../../adaptable/src/Api/Events/ToolbarButtonClicked';
 export * from '../../adaptable/types';
 
 type TypeFactory =

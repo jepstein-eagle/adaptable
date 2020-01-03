@@ -1,4 +1,4 @@
-import { PredefinedConfig } from '../../../../App_Scripts/types';
+import { PredefinedConfig } from '../../../../src/types';
 
 export default {
   Dashboard: {

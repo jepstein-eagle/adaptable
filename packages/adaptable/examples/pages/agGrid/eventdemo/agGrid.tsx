@@ -4,9 +4,9 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import Adaptable from '../../../../App_Scripts/agGrid';
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import Adaptable from '../../../../src/agGrid';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 
 import {
   AdaptableOptions,
@@ -20,14 +20,14 @@ import {
   ActionColumnClickedEventArgs,
   SelectionChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,
-} from '../../../../App_Scripts/types';
+} from '../../../../src/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 import ReactDOM from 'react-dom';
-import { AlertFiredInfo } from '../../../../App_Scripts/Api/Events/AlertFired';
-import { AdaptableAlert } from '../../../../App_Scripts/Utilities/Interface/IMessage';
-import { ActionColumnClickedInfo } from '../../../../App_Scripts/Api/Events/ActionColumnClicked';
+import { AlertFiredInfo } from '../../../../src/Api/Events/AlertFired';
+import { AdaptableAlert } from '../../../../src/Utilities/Interface/IMessage';
+import { ActionColumnClickedInfo } from '../../../../src/Api/Events/ActionColumnClicked';
 
 var adaptableApi: AdaptableApi;
 

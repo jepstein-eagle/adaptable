@@ -80,6 +80,6 @@
     "update-version-file": "node ../../scripts/updateVersionFile",
     "update-env-file": "node ../../scripts/updateEnvFile",
     "sass": "node-sass ./src/index.scss ./dist/adaptable-angular-aggrid/index.css && ../../node_modules/.bin/postcss ./dist/adaptable-angular-aggrid/index.css --config ../../ --output ./dist/adaptable-angular-aggrid/index.css && node-sass ./src/base.scss ./dist/adaptable-angular-aggrid/base.css && ../../node_modules/.bin/postcss ./dist/adaptable-angular-aggrid/base.css --config ../../ --output ./dist/adaptable-angular-aggrid/base.css && node-sass ./src/themes/light.scss ./dist/adaptable-angular-aggrid/themes/light.css && ../../node_modules/.bin/postcss ./dist/adaptable-angular-aggrid/themes/light.css --config ../../ --output ./dist/adaptable-angular-aggrid/themes/light.css && node-sass ./src/themes/dark.scss ./dist/adaptable-angular-aggrid/themes/dark.css && ../../node_modules/.bin/postcss ./dist/adaptable-angular-aggrid/themes/dark.css --config ../../ --output ./dist/adaptable-angular-aggrid/themes/dark.css",
-    "copy-assets": "cp .npmignore ./dist/adaptable-angular-aggrid && cp -R ../adaptable/App_Scripts/fonts ./dist/adaptable-angular-aggrid/fonts/ && cp README.md ./dist/adaptable-angular-aggrid/"
+    "copy-assets": "cp .npmignore ./dist/adaptable-angular-aggrid && cp -R ../adaptable/src/fonts ./dist/adaptable-angular-aggrid/fonts/ && cp README.md ./dist/adaptable-angular-aggrid/"
   }
 }

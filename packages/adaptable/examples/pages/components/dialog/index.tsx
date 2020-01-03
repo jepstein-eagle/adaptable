@@ -1,8 +1,8 @@
-import Dialog from '../../../../App_Scripts/components/Dialog';
+import Dialog from '../../../../src/components/Dialog';
 
-import '../../../../App_Scripts/base.scss';
-import '../../../../App_Scripts/components/Dialog/base.scss';
-import '../../../../App_Scripts/components/Dialog/style.scss';
+import '../../../../src/base.scss';
+import '../../../../src/components/Dialog/base.scss';
+import '../../../../src/components/Dialog/style.scss';
 
 import React, { useState } from 'react';
 

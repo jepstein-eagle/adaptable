@@ -1,7 +1,7 @@
 ﻿import { GridOptions, RowNode } from 'ag-grid-community';
 import { ITrade, ExamplesHelper } from './ExamplesHelper';
-import ArrayExtensions from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
-import { AdaptableApi } from '../../App_Scripts/types';
+import ArrayExtensions from '../../src/Utilities/Extensions/ArrayExtensions';
+import { AdaptableApi } from '../../src/types';
 
 export class TickingDataHelper {
   startTickingDatSystemStatus(api: AdaptableApi) {

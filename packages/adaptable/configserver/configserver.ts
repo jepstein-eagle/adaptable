@@ -1,4 +1,4 @@
-import { AdaptableState } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore';
+import { AdaptableState } from '../src/Redux/Store/Interface/IAdaptableStore';
 import * as express from 'express';
 import * as BodyParser from 'body-parser';
 import * as fs from 'fs';

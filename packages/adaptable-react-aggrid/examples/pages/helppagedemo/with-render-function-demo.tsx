@@ -7,7 +7,7 @@ import AdaptableReact from '../../../src';
 import '../../../src/index.scss';
 
 import { DataGenerator } from '../../../../adaptable/Harness/DataGenerator';
-import { AdaptableOptions } from '../../../../adaptable/App_Scripts/types';
+import { AdaptableOptions } from '../../../../adaptable/src/types';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';

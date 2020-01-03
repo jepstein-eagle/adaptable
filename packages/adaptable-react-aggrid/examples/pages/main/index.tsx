@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { DataGenerator } from '../../../../../packages/adaptable/Harness/DataGenerator';
-import LoggingHelper from '../../../../adaptable/App_Scripts/Utilities/Helpers/LoggingHelper';
+import LoggingHelper from '../../../../adaptable/src/Utilities/Helpers/LoggingHelper';
 
 function getRowsForGrid(dataGen: DataGenerator) {
   return dataGen.getTrades(6000);

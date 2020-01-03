@@ -1,6 +1,6 @@
 import { AdaptableOptions } from '../adaptable/types';
 
-import Adaptable from '../adaptable/App_Scripts/agGrid';
+import Adaptable from '../adaptable/src/agGrid';
 import { Grid, GridOptions } from 'ag-grid-community';
 
 export function createAdaptable({

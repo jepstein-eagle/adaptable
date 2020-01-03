@@ -3,13 +3,13 @@ import { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import Adaptable from '../../../../App_Scripts/agGrid';
-import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
+import Adaptable from '../../../../src/agGrid';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ipushpull from 'ipushpull-js';
 import { IPageService } from 'ipushpull-js/dist/Page/Page';
@@ -18,7 +18,7 @@ import { TickingDataHelper } from '../../TickingDataHelper';
 import {
   LiveReportUpdatedEventArgs,
   LiveReportUpdatedInfo,
-} from '../../../../App_Scripts/Api/Events/LiveReportUpdated';
+} from '../../../../src/Api/Events/LiveReportUpdated';
 
 ipushpull.config.set({
   api_secret: '',

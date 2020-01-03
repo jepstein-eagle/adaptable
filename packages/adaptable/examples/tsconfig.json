@@ -7,7 +7,7 @@
     "target": "es6",
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "../App_Scripts/**/*.ts", "../App_Scripts/**/*.tsx"],
+  "include": ["./**/*.ts", "./**/*.tsx", "../src/**/*.ts", "../src/**/*.tsx"],
   "exclude": ["node_modules", "lib", ".next"],
   "awesomeTypescriptLoaderOptions": {}
 }

@@ -1,8 +1,8 @@
-import Panel from '../../../../App_Scripts/components/Panel';
+import Panel from '../../../../src/components/Panel';
 
-import '../../../../App_Scripts/base.scss';
-import '../../../../App_Scripts/components/Panel/base.scss';
-import '../../../../App_Scripts/components/Panel/style.scss';
+import '../../../../src/base.scss';
+import '../../../../src/components/Panel/base.scss';
+import '../../../../src/components/Panel/style.scss';
 
 import React, { useState } from 'react';
 
