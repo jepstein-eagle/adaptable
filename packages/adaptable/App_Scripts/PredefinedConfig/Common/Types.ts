@@ -175,5 +175,6 @@ export type AdaptableFunctionName =
   | 'SystemStatus'
   | 'TeamSharing'
   | 'Theme'
+  | 'ToolPanel'
   | 'UpdatedRow'
   | 'UserFilter';

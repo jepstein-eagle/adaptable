@@ -32,7 +32,7 @@ import { SearchOptions } from './SearchOptions';
  *  |----------------	                                                                                    |-----------  |---------------------------------------------	                |
  *  | [adaptableId](_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableId)                | No	        | A unique ID for this instance of Adaptable	                  |
  *  | [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)      | No	        | User State shipped with Adaptable iinstance for first use.	  |
- *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of column, contents of which are guaranteed to be unique	|
+ *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of column which guarantees to contain unique contents       |
  *  | [userName](_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                      | No	        | The current Adaptable user (useful for Audit purposes)      	|
  *  | [vendorGrid](_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Yes	        | Underlying vendor grid object (e.g. GridOptions for ag-Grid)	|
  *  | [auditOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)              | No	        | Audit Log related options                                   	|

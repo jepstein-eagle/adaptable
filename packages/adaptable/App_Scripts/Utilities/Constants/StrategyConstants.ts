@@ -36,6 +36,7 @@ export const StateManagementStrategyId: AdaptableFunctionName = 'StateManagement
 export const SystemStatusStrategyId: AdaptableFunctionName = 'SystemStatus';
 export const TeamSharingStrategyId: AdaptableFunctionName = 'TeamSharing';
 export const ThemeStrategyId: AdaptableFunctionName = 'Theme';
+export const ToolPanelId: AdaptableFunctionName = 'ToolPanel';
 export const UpdatedRowStrategyId: AdaptableFunctionName = 'UpdatedRow';
 export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
 

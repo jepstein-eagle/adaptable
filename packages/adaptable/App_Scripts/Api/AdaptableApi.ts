@@ -19,6 +19,7 @@ import { ConfigApi } from './ConfigApi';
 import { ConditionalStyleApi } from './ConditionalStyleApi';
 import { CustomSortApi } from './CustomSortApi';
 import { DashboardApi } from './DashboardApi';
+import { ToolPanelApi } from './ToolPanelApi';
 import { DataSourceApi } from './DataSourceApi';
 import { EntitlementsApi } from './EntitlementsApi';
 import { EventApi } from './EventApi';
@@ -161,6 +162,7 @@ export interface AdaptableApi {
    * Provides access to the *Dashboard* function, and [Dashboard State](_predefinedconfig_runtimestate_dashboardstate_.dashboardstate.html).
    */
   dashboardApi: DashboardApi;
+  toolPanelApi: ToolPanelApi;
 
   /**
    * Provides access to the *Data Source* function, the *Data Source* object and [Data Source State](_predefinedconfig_runtimestate_datasourcestate_.datasourcestate.html).

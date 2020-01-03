@@ -1,11 +1,17 @@
 import * as Redux from 'redux';
 import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
-import { AdaptableToolPanels, AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
+import {
+  AdaptableToolPanels,
+  AdaptableToolPanel,
+  AdaptableFunctionButtons,
+} from '../../PredefinedConfig/Common/Types';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 const TOOLPANEL_SET_AVAILABLE_TOOLPANELS = 'TOOLPANEL_SET_AVAILABLE_TOOLPANELS';
 export const TOOLPANEL_SET_TOOLPANELS = 'TOOLPANEL_SET_TOOLPANELS';
 const TOOLPANEL_SHOW_TOOLBAR = 'TOOLPANEL_SHOW_TOOLBAR';
 const TOOLPANEL_HIDE_TOOLBAR = 'TOOLPANEL_HIDE_TOOLBAR';
+const TOOLPANEL_SET_FUNCTION_BUTTONS = 'TOOLPANEL_SET_FUNCTION_BUTTONS';
 
 export interface ToolPanelSetAvailableToolPanelsAction extends Redux.Action {
   toolPanels: AdaptableToolPanels;
@@ -21,6 +27,10 @@ export interface ToolPanelShowToolPanelAction extends Redux.Action {
 
 export interface ToolPanelHideToolPanelAction extends Redux.Action {
   toolPanel: AdaptableToolPanel;
+}
+
+export interface ToolPanelSetFunctionButtonsAction extends Redux.Action {
+  functionButtons: AdaptableFunctionButtons;
 }
 
 export const ToolPanelSetAvailableToolPanels = (
@@ -49,6 +59,13 @@ export const ToolPanelHideToolPanel = (
 ): ToolPanelHideToolPanelAction => ({
   type: TOOLPANEL_HIDE_TOOLBAR,
   toolPanel,
+});
+
+export const ToolPanelSetFunctionButtons = (
+  functionButtons: AdaptableFunctionButtons
+): ToolPanelSetFunctionButtonsAction => ({
+  type: TOOLPANEL_SET_FUNCTION_BUTTONS,
+  functionButtons,
 });
 
 const initialToolPanelState: ToolPanelState = {
@@ -81,6 +98,19 @@ const initialToolPanelState: ToolPanelState = {
     'QuickSearch',
     'SystemStatus',
     'Theme',
+  ],
+  //VisibleButtons: EMPTY_ARRAY,
+  VisibleButtons: [
+    'Dashboard',
+    'SmartEdit',
+    'ColumnChooser',
+    'ConditionalStyle',
+    'ColumnCategory',
+    'DataSource',
+    'PlusMinus',
+    'Theme',
+    'SystemStatus',
+    'SparklineColumn',
   ],
 };
 
@@ -115,6 +145,11 @@ export const ToolPanelReducer: Redux.Reducer<ToolPanelState> = (
       const actionTyped = action as ToolPanelHideToolPanelAction;
       const toolPanels = (state.VisibleToolPanels || []).filter(a => a !== actionTyped.toolPanel);
       return setToolPanels(state, toolPanels);
+    }
+    case TOOLPANEL_SET_FUNCTION_BUTTONS: {
+      const actionTyped = action as ToolPanelSetFunctionButtonsAction;
+      const dashboardFunctionButtons = actionTyped.functionButtons;
+      return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
     }
 
     default:

@@ -20,6 +20,7 @@ import { ConditionalStyleApiImpl } from './ConditionalStyleApiImpl';
 import { ConfigApiImpl } from './ConfigApiImpl';
 import { CustomSortApiImpl } from './CustomSortApiImpl';
 import { DashboardApiImpl } from './DashboardApiImpl';
+import { ToolPanelApiImpl } from './ToolPanelApiImpl';
 import { DataSourceApiImpl } from './DataSourceApiImpl';
 import { EntitlementsApiImpl } from './EntitlementsApiImpl';
 import { EventApiImpl } from './EventApiImpl';
@@ -64,6 +65,7 @@ import { ConditionalStyleApi } from '../ConditionalStyleApi';
 import { ConfigApi } from '../ConfigApi';
 import { CustomSortApi } from '../CustomSortApi';
 import { DashboardApi } from '../DashboardApi';
+import { ToolPanelApi } from '../ToolPanelApi';
 import { DataSourceApi } from '../DataSourceApi';
 import { EntitlementsApi } from '../EntitlementsApi';
 import { EventApi } from '../EventApi';
@@ -136,6 +138,7 @@ export class AdaptableApiImpl implements AdaptableApi {
   public userFilterApi: UserFilterApi;
   public namedFilterApi: NamedFilterApi;
   public partnerApi: PartnerAPI;
+  public toolPanelApi: ToolPanelApi;
 
   constructor(protected adaptable: IAdaptable) {
     this.adaptable = adaptable;
@@ -182,6 +185,7 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.userFilterApi = new UserFilterApiImpl(adaptable);
     this.namedFilterApi = new NamedFilterApiImpl(adaptable);
     this.partnerApi = new PartnerApiImpl(adaptable);
+    this.toolPanelApi = new ToolPanelApiImpl(adaptable);
 
     this.internalApi = new InternalApiImpl(adaptable);
   }

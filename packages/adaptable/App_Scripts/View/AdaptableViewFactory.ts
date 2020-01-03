@@ -20,6 +20,7 @@ import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
 import { UserFilterPopup } from './UserFilter/UserFilterPopup';
 import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup';
 import { ThemePopup } from './Theme/ThemePopup';
+import { ToolPanelPopup } from './Components/ToolPanel/ToolPanelPopup';
 import { CellValidationPopup } from './CellValidation/CellValidationPopup';
 import { LayoutPopup } from './Layout/LayoutPopup';
 import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup';
@@ -106,6 +107,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ShortcutPopup,
   ThemePopup,
   TeamSharingPopup,
+  ToolPanelPopup,
   SystemStatusPopup,
   UserFilterPopup,
   ChartDisplayPopup,

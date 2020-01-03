@@ -1,12 +1,15 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
+import { kebabCase } from 'lodash';
 import * as ToolPanelRedux from '../../../Redux/ActionsReducers/ToolPanelRedux';
+import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
 import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Text, Flex, Box } from 'rebass';
 import { IAdaptable } from '../../../types';
@@ -22,7 +25,13 @@ import theme from '../../../theme';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import DropdownButton from '../../../components/DropdownButton';
 import { AdaptableToolPanelContext } from '../../../Utilities/Interface/AdaptableToolPanelContext';
-import { AdaptableToolPanels, AdaptableToolPanel } from '../../../PredefinedConfig/Common/Types';
+import {
+  AdaptableToolPanels,
+  AdaptableToolPanel,
+  AdaptableFunctionButtons,
+} from '../../../PredefinedConfig/Common/Types';
+import SimpleButton from '../../../components/SimpleButton';
+import { ButtonConfigure } from '../Buttons/ButtonConfigure';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -31,6 +40,7 @@ interface AdaptableToolPanelProps {
   TeamSharingActivated?: boolean;
   VisibleToolsPanels: AdaptableToolPanels;
   AvailableToolPanels: AdaptableToolPanels;
+  VisibleButtons: AdaptableFunctionButtons;
   FunctionEntitlements: Entitlement[];
   MainMenuItems: AdaptableMenuItem[];
   // wondering if this shoudl take some base props like others?  though i know we dont like that...
@@ -55,6 +65,29 @@ class AdaptableToolPanelComponent extends React.Component<
     const functionsGlyph: any = <Icon name={'home'} />;
     const toolPanelsGlyph: any = <Icon name={'align-justify'} />;
 
+    // shortcuts
+    let shortcutsArray: string[] = this.props.VisibleButtons;
+
+    let shortcuts: any = shortcutsArray
+      ? shortcutsArray.map(x => {
+          let menuItem = this.props.MainMenuItems.find(y => y.IsVisible && y.FunctionName == x);
+          if (menuItem) {
+            return (
+              <SimpleButton
+                key={menuItem.Label}
+                icon={menuItem.Icon}
+                variant="text"
+                className={`ab-ToolPanel__Home__${kebabCase(menuItem.Label)}`}
+                tooltip={menuItem.Label}
+                //  disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
+                onClick={() => this.props.onClick(menuItem.ReduxAction)}
+                AccessLevel={AccessLevel.Full}
+              />
+            );
+          }
+        })
+      : null;
+
     // Build the Tool Panels
     let hiddenEntitlements: Entitlement[] = this.props.FunctionEntitlements.filter(
       e => e.AccessLevel == 'Hidden'
@@ -70,7 +103,7 @@ class AdaptableToolPanelComponent extends React.Component<
       if (accessLevel != AccessLevel.Hidden) {
         let toolPanel = AdaptableToolPanelFactory.get(control);
         if (toolPanel) {
-          let dashboardElememt = React.createElement(toolPanel, {
+          let toolPanelElememt = React.createElement(toolPanel, {
             AccessLevel: accessLevel,
             AdaptableApi: this.props.Adaptable.api,
             Adaptable: this.props.Adaptable,
@@ -81,9 +114,9 @@ class AdaptableToolPanelComponent extends React.Component<
               key={control}
               marginTop={1}
               marginRight={1}
-              className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
+              className={`ab-ToolPanel__container ab-ToolPanel__container--${control}`}
             >
-              {dashboardElememt}
+              {toolPanelElememt}
             </Box>
           );
         } else {
@@ -111,7 +144,7 @@ class AdaptableToolPanelComponent extends React.Component<
         variant="text"
         items={menuItems}
         tooltip="Grid Functions"
-        className="ab-DashboardToolbar__Home__functions"
+        className="ab-ToolPanelToolbar__Home__functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
       >
@@ -175,6 +208,17 @@ class AdaptableToolPanelComponent extends React.Component<
         {toolPanelsGlyph}
       </DropdownButton>
     );
+    let configureButton = (
+      <ButtonConfigure
+        iconSize={16}
+        marginLeft={2}
+        className="ab-ToolPanel__configure-button"
+        tooltip={'Configure ToolPanels'}
+        onClick={() => {
+          this.props.Adaptable.api.toolPanelApi.showToolPanelPopup();
+        }}
+      />
+    );
 
     return (
       <Flex
@@ -183,13 +227,20 @@ class AdaptableToolPanelComponent extends React.Component<
         padding={2}
         style={{
           width: '100%',
-          ['--ab-cmp-dashboardpanel_body__background' as any]: 'var(--ab-color-primary)',
+          ['--ab-cmp-ToolPanelpanel_body__background' as any]: 'var(--ab-color-primary)',
         }}
       >
-        <Flex flexDirection="row" justifyContent="left" padding={2} style={{ width: '100%' }}>
+        <Flex flexDirection="row" justifyContent="left" padding={1} style={{ width: '100%' }}>
           {functionsDropdown}
           {toolPanelsDropDown}
+          {configureButton}
         </Flex>
+        {ArrayExtensions.IsNotNullOrEmpty(shortcuts) ? (
+          // To do : we should make sure that there are no more than 6 each in row
+          <Flex flexDirection="row" justifyContent="left" padding={1} style={{ width: '100%' }}>
+            {shortcuts}
+          </Flex>
+        ) : null}
         {visibleToolPanelControls}
       </Flex>
     );
@@ -212,6 +263,7 @@ function mapStateToProps(state: AdaptableState) {
   return {
     VisibleToolsPanels: state.ToolPanel.VisibleToolPanels,
     AvailableToolPanels: state.ToolPanel.AvailableToolPanels,
+    VisibleButtons: state.ToolPanel.VisibleButtons,
     FunctionEntitlements: state.Entitlements.FunctionEntitlements,
     MainMenuItems: state.Grid.MainMenuItems,
   };
