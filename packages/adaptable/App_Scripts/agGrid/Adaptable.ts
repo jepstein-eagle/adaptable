@@ -2178,7 +2178,7 @@ export class Adaptable implements IAdaptable {
       const columns = this.api.gridApi.getColumns();
 
       // first we assess AdvancedSearch (if its running locally)
-      if (this.adaptableOptions!.generalOptions!.serverSearchOption == 'None') {
+      if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
         const currentSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
         if (currentSearch) {
           // See if our rowNode passes the Expression - using Expression Helper; if not then return false
@@ -2196,8 +2196,8 @@ export class Adaptable implements IAdaptable {
       }
       // we then assess filters
       if (
-        this.getGeneralOptions().serverSearchOption == 'None' ||
-        this.getGeneralOptions().serverSearchOption == 'AdvancedSearch'
+        this.adaptableOptions.searchOptions.serverSearchOption == 'None' ||
+        this.adaptableOptions.searchOptions.serverSearchOption == 'AdvancedSearch'
       ) {
         const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {

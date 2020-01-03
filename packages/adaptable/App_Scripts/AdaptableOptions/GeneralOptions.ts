@@ -3,26 +3,15 @@
  *
  * Essentially those options that didnt fit into an obvious group (e.g. Layout, Filter etc.) but we didnt want at root.
  *
- * Includes options for Server Searching and managing Primary Keys.
+ * Includes options for managing Primary Keys.
  *
  * ```ts
  * generalOptions = {
- *  serverSearchOption: 'AdvancedSearch',
+ *  showMissingPrimaryKeyWarning: true,
  *};
  * ```
  */
 export interface GeneralOptions {
-  /**
-   * Which searching and filtering options, if any, should take place on the server.
-   *
-   * Leave unset (default is 'None') to perform everything on the client.
-   *
-   * This allows you to perform a mixture e.g. do Column Filters on the client but Advanced Seearch on the server.
-   *
-   * **Default Value: None**
-   */
-  serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort';
-
   /**
    * Whether or not to show a warning if the primary key column identified in the base Options does not exist.
    *

@@ -741,7 +741,7 @@ export class AdaptableGridInfo extends React.Component<
         this.createColItem(
           colItems,
           'serverSearchOption',
-          options.generalOptions.serverSearchOption,
+          options.searchOptions.serverSearchOption,
           'Which searching and filtering options, if any, are taking place on the server.'
         )
       );

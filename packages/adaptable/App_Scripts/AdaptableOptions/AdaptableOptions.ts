@@ -11,6 +11,7 @@ import { EditOptions } from './EditOptions';
 import { StateOptions } from './StateOptions';
 import { UserInterfaceOptions } from './UserInterfaceOptions';
 import { AdaptablePlugin } from './AdaptablePlugin';
+import { SearchOptions } from './SearchOptions';
 
 /**
  * `AdaptableOptions` is the object created by you at design-time injected into the Adaptable constructor at startup.
@@ -27,15 +28,21 @@ import { AdaptablePlugin } from './AdaptablePlugin';
  *
  * The contents of `AdaptableOptions` are:
  *
- *  | Option  	                                                                                    | Mandatory   | Details                                     	                |
- *  |----------------	                                                                              |-----------  |---------------------------------------------	                |
- *  | [adaptableId](_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableId)          | No	        | A unique ID for this instance of Adaptable	                  |
- *  | [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedConfig)| No	        | User State shipped with Adaptable iinstance for first use.	  |
- *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primaryKey)            | Yes	        | Name of column, contents of which are guaranteed to be unique	|
- *  | [userName](_adaptableoptions_adaptableoptions_.adaptableoptions.html#userName)                | No	        | The current Adaptable user (useful for Audit purposes)      	|
- *  | [vendorGrid](_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)            | Yes	        | Underlying vendor grid object (e.g. GridOptions for ag-Grid)	|
- *  | [auditOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditOptions)        | No	        | Audit Log related options                                   	|
- *
+ *  | Option  	                                                                                          | Mandatory   | Details                                     	                |
+ *  |----------------	                                                                                    |-----------  |---------------------------------------------	                |
+ *  | [adaptableId](_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableId)                | No	        | A unique ID for this instance of Adaptable	                  |
+ *  | [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)      | No	        | User State shipped with Adaptable iinstance for first use.	  |
+ *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of column, contents of which are guaranteed to be unique	|
+ *  | [userName](_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                      | No	        | The current Adaptable user (useful for Audit purposes)      	|
+ *  | [vendorGrid](_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Yes	        | Underlying vendor grid object (e.g. GridOptions for ag-Grid)	|
+ *  | [auditOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)              | No	        | Audit Log related options                                   	|
+ *  | [chartOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartptions)               | No	        | Chart-based options (used when using chart plugin)           	|
+ *  | [configServerOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions)| No	        | Options related to Config Server (external state management)  |
+ *  | [editOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                | No	        | Editing (and server-editing) related options                  |
+ *  | [filterOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in Adaptable      |
+ *  | [generalOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)          | No	        | General set of Options (e.g. for managing Primary Keys        |
+ *  | [layoutOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)            | No	        | Layout (Views) related Options                                |
+ *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryptions)               | No	        | Options when running a Query (aka [Expression](_predefinedconfig_common_expression_.html) ) in Adaptable    |
  *
  */
 export interface AdaptableOptions {
@@ -107,13 +114,6 @@ export interface AdaptableOptions {
   vendorGrid?: any;
 
   /**
-   * Options for setting the *Div elements* in which Adaptable and the underlying grid are placed.
-   *
-   * Also allows you to set where popups appear relative to the page and where charts are displayed.
-   */
-  containerOptions?: ContainerOptions;
-
-  /**
    * Options for mananging the **Audit Log**.
    *
    * Depending on the options you set audit messages will send details of actions in Adaptable to an Audit destination.
@@ -127,6 +127,13 @@ export interface AdaptableOptions {
   auditOptions?: AuditOptions;
 
   /**
+   * Options to manage Adaptable charting.
+   *
+   * Primarily concerned with how and where charts appear.
+   */
+  chartOptions?: ChartOptions;
+
+  /**
    * Options for setting Config Server.
    *
    * This feature allows for storing user state remotely (as opposed to in local storage, which is the default).
@@ -134,13 +141,11 @@ export interface AdaptableOptions {
   configServerOptions?: ConfigServerOptions;
 
   /**
-   * Options for running queries (or Expressions) in Adaptable.
+   * Options for setting the *Div elements* in which Adaptable and the underlying grid are placed.
    *
-   * Lets you specify how (and how many) values are returned when doing a column lookup, how to deal with case and what is in the Query.
-   *
-   * Also includes a callback function allowing devs to populate column lookups dynamically.
+   * Also allows you to set where popups appear relative to the page and where charts are displayed.
    */
-  queryOptions?: QueryOptions;
+  containerOptions?: ContainerOptions;
 
   /**
    * Options related to Editing in Adaptable.
@@ -148,13 +153,6 @@ export interface AdaptableOptions {
    * Includes a function enabling you to perform custom validation when a cell changes values.
    */
   editOptions?: EditOptions;
-
-  /**
-   * Options related to Layouts (ie. saveable views of column order, visibility and sort).
-   *
-   * Includes properties for whether to include vendor state in the Layout (e.g. Column Grouping) and whether layouts shoudl save automatically on clicking save.
-   */
-  layoutOptions?: LayoutOptions;
 
   /**
    * Related to creating and managing filters in Adaptable.
@@ -166,13 +164,6 @@ export interface AdaptableOptions {
   filterOptions?: FilterOptions;
 
   /**
-   * Options to manage Adaptable charting.
-   *
-   * Primarily concerned with how and where charts appear.
-   */
-  chartOptions?: ChartOptions;
-
-  /**
    * General options to manage  Adaptable.
    *
    * Essentially those options that didn't fit into of the specific categories.
@@ -182,11 +173,25 @@ export interface AdaptableOptions {
   generalOptions?: GeneralOptions;
 
   /**
-   * Options for managing the User Interface Adaptable.
+   * Options related to Layouts (ie. saveable views of column order, visibility and sort).
    *
-   * Includes options for themes, menus, tool panels etc.
+   * Includes properties for whether to include vendor state in the Layout (e.g. Column Grouping) and whether layouts shoudl save automatically on clicking save.
    */
-  userInterfaceOptions?: UserInterfaceOptions;
+  layoutOptions?: LayoutOptions;
+
+  /**
+   * Options for running queries (or Expressions) in Adaptable.
+   *
+   * Lets you specify how (and how many) values are returned when doing a column lookup, how to deal with case and what is in the Query.
+   *
+   * Also includes a callback function allowing devs to populate column lookups dynamically.
+   */
+  queryOptions?: QueryOptions;
+
+  /**
+   * Options for managing Search in Adaptable.
+   */
+  searchOptions?: SearchOptions;
 
   /**
    * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
@@ -197,6 +202,13 @@ export interface AdaptableOptions {
    *
    */
   stateOptions?: StateOptions;
+
+  /**
+   * Options for managing the User Interface Adaptable.
+   *
+   * Includes options for themes, menus, tool panels etc.
+   */
+  userInterfaceOptions?: UserInterfaceOptions;
 
   /**
    * Used by the Adaptable Plug-ins (e.g. Charting, Finance etc)

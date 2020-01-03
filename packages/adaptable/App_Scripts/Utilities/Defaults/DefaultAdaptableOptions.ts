@@ -92,8 +92,9 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   generalOptions: {
     showMissingPrimaryKeyWarning: true,
     preventDuplicatePrimaryKeyValues: true,
+  },
+  searchOptions: {
     serverSearchOption: 'None',
-    // checkIfLatestVersionOnStartup: true,
   },
   userInterfaceOptions: {
     useDefaultVendorGridThemes: true,

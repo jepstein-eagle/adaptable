@@ -57,6 +57,11 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
     DefaultAdaptableOptions.generalOptions,
     adaptableOptions.generalOptions
   );
+  returnadaptableOptions.searchOptions = Object.assign(
+    {},
+    DefaultAdaptableOptions.searchOptions,
+    adaptableOptions.searchOptions
+  );
   returnadaptableOptions.userInterfaceOptions = Object.assign(
     {},
     DefaultAdaptableOptions.userInterfaceOptions,

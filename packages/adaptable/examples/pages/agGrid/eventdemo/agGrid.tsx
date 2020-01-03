@@ -46,7 +46,7 @@ function InitAdaptableDemo() {
     gridOptions,
     'event handling demo'
   );
-  adaptableOptions.generalOptions = {
+  adaptableOptions.searchOptions = {
     serverSearchOption: 'AllSearchandSort',
   };
   adaptableOptions.predefinedConfig = demoConfig;
