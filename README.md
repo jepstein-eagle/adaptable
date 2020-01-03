@@ -6,7 +6,7 @@ Repository for the multiple Adaptable packages developed by Adaptable Tools, inc
 - React wrapper (adaptable-react-aggrid)
 - Angular wrapper (adaptable-ng-aggrid)
 
-Adaptable is a powerful HTML5 DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their grids and blotters.
+Adaptable is a powerful HTML5 DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
 
 It offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment. Try it out for yourself at https://demo.adaptableblotter.com.
 

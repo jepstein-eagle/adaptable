@@ -42,8 +42,8 @@ import { SearchOptions } from './SearchOptions';
  *  | [filterOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in Adaptable      |
  *  | [generalOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)          | No	        | General set of Options (e.g. for managing Primary Keys        |
  *  | [layoutOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)            | No	        | Layout (Views) related Options                                |
- *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryptions)               | No	        | Options when running a Query (aka [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) ) in Adaptable    |
- *  | [searchOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchptions)             | No	        | Search-related options (e.g. for managing Server searching    |
+ *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)               | No	        | Options when running a Query / [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) in Adaptable |
+ *  | [searchOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)             | No	        | Search-related options (e.g. for managing Server searching    |
  *  | [stateOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage Adaptable State    |
  *  | [userInterfaceOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| No	      | User Interface related functions                              |
  *  | [plugins](_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                        | No	        | Options used by the Adaptable plugins (e.g. charting, finance)|

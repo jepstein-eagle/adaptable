@@ -18,7 +18,7 @@ import {
   AdaptableApi,
 } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { BlotterSearchState } from '../../../../App_Scripts/Api/Events/SearchChanged/BlotterSearchState';
+import { AdaptableSearchState } from '../../../../App_Scripts/Api/Events/SearchChanged/AdaptableSearchState';
 import { SearchChangedInfo } from '../../../../App_Scripts/Api/Events/SearchChanged/SearchChangedInfo';
 
 function InitAdaptableDemo() {
@@ -65,7 +65,7 @@ function listenToSearchChange(
   console.log(searchChangedArgs);
   let searchChangedInfo: SearchChangedInfo = searchChangedArgs.data[0].id;
   if (searchChangedInfo.searchChangedTrigger == 'DataSource') {
-    let searchState: BlotterSearchState = searchChangedArgs.data[0].id.blotterSearchState;
+    let searchState: AdaptableSearchState = searchChangedArgs.data[0].id.AdaptableSearchState;
     if (searchState.dataSource != null) {
       switch (searchState.dataSource.Name) {
         case 'Euro':

@@ -4,7 +4,7 @@
     "registry": "https://registry.adaptabletools.com"
   },
   "version": "4.0.1",
-  "description": "No-code excel d&d support - data-agnostic HTML5 datagrid add-on that sits on top of the agGrid component and provides all the rich functionality that advanced users expect from their grids and blotters",
+  "description": "No-code excel d&d support - data-agnostic HTML5 datagrid add-on that sits on top of the agGrid component and provides all the rich functionality that advanced users expect from their DataGrids and Data Tables",
   "keywords": [],
   "main": "./adaptable-nocode/src/index.js",
   "repository": {

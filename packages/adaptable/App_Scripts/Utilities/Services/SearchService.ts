@@ -11,8 +11,8 @@ import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrat
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import {
-  BlotterSearchState,
-  BlotterSortState,
+  AdaptableSearchState,
+  AdaptableSortState,
   SearchChangedInfo,
 } from '../../Api/Events/SearchChanged';
 import { SearchChangedEventArgs } from '../../types';
@@ -96,22 +96,22 @@ export class SearchService implements ISearchService {
         | undefined = this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch();
 
       // lets get the searchstate
-      const blotterSearchState: BlotterSearchState = {
+      const AdaptableSearchState: AdaptableSearchState = {
         dataSource: currentDataSource == null ? undefined : currentDataSource,
         advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
         quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
         columnFilters: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
       };
 
-      const blotterSortState: BlotterSortState = {
+      const AdaptableSortState: AdaptableSortState = {
         columnSorts: this.adaptable.api.gridApi.getColumnSorts(),
         customSorts: this.adaptable.api.customSortApi.getAllCustomSort(),
       };
 
       const searchChangedInfo: SearchChangedInfo = {
         searchChangedTrigger,
-        blotterSearchState,
-        blotterSortState,
+        AdaptableSearchState,
+        AdaptableSortState,
         searchAsAtDate: new Date(),
       };
 

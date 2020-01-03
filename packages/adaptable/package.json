@@ -4,7 +4,7 @@
     "registry": "https://registry.adaptabletools.com"
   },
   "version": "4.0.1",
-  "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their grids and blotters",
+  "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their DataGrids and Data Tables",
   "main": "index.js",
   "typings": "index.d.ts",
   "dependencies": {

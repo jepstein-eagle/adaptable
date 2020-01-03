@@ -4,7 +4,7 @@
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
   },
-  "description": "Angular version of the powerful data-agnostic HTML5 datagrid add-on that sits on top of the agGrid component and provides all the rich functionality that advanced users expect from their grids and blotters",
+  "description": "Angular version of the powerful data-agnostic HTML5 datagrid add-on that sits on top of the agGrid component and provides all the rich functionality that advanced users expect from their DataGrids and Data Tables",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AdaptableTools/adaptableblotter.git",

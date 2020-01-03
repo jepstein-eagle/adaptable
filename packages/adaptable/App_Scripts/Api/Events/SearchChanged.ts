@@ -51,13 +51,13 @@ export interface SearchChangedInfo {
    *
    * (You can set in System Filter state which and how many of these System Filters are available in Adaptable).
    */
-  blotterSearchState: BlotterSearchState;
+  AdaptableSearchState: AdaptableSearchState;
   /**
    * The current sort state in the Grid
    *
    * Adaptable lists **all custom sorts** in this object even if they are not currently being applied.
    */
-  blotterSortState: BlotterSortState;
+  AdaptableSortState: AdaptableSortState;
   /**
    * Date the search should use - defaults to now
    *
@@ -69,7 +69,7 @@ export interface SearchChangedInfo {
 /**
  * The current Search and Filter in Adaptable
  */
-export interface BlotterSearchState {
+export interface AdaptableSearchState {
   /**
    * Current Data Source (if any selected)
    */
@@ -91,7 +91,7 @@ export interface BlotterSearchState {
 /**
  * Overview of the current sorting state in the grid
  */
-export interface BlotterSortState {
+export interface AdaptableSortState {
   /**
    * Which columns (if any) have sorting applied and,if so, which direction
    */
