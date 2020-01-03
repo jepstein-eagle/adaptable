@@ -12,18 +12,10 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
-import { ADAPTABLE_ID } from '../Constants/GeneralConstants';
 import { AdaptableEventArgs, AdaptableEventData } from '../../Api/Events/AdaptableEvents';
 
 export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
   const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
-
-  // set AdaptableId as we are goign to use that in future only
-  returnadaptableOptions.adaptableId = StringExtensions.IsNullOrEmpty(
-    returnadaptableOptions.adaptableId
-  )
-    ? ADAPTABLE_ID
-    : returnadaptableOptions.adaptableId;
 
   returnadaptableOptions.auditOptions = Object.assign(
     {},

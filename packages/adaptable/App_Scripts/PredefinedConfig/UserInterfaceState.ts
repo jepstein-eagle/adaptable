@@ -262,7 +262,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * 1. Through a standard 'hard-coded' array:
    *
-   * 2. Via a function which receives a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`:
+   * 2. Via a function which receives a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
    *
    * The Signature of the function is:
    *
@@ -349,19 +349,21 @@ export interface UserInterfaceState extends DesignTimeState {
   ColumnMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
 
   /**
-   * Additional items to add to the Context Menu (the one that appears when you right-click a cell in the Grid).
+   * A collection of `UserMenuItem` objects to be added to the Context Menu (the one that appears when you right-click a cell in the Grid).
    *
-   * You can add as many `UserMenuItem` as you wish.  And each Menu Item can take an array of sub items.
+   * You can add as many `UserMenuItem` as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
    *
-   * The property allows you to provide either a standard array of UserMenuItem or a function which will return the array.
+   * The property allows you to provide the `UserMenuItem` array in 2 ways:
    *
-   * The function takes a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`. signature is:
+   * 1. Through a standard 'hard-coded' array:
    *
-   *  ```ts
+   * 2. Via a function which receives a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
+   *
+   * The Signature of the function is:
+   *
+   * ```ts
    * ((menuInfo: MenuInfo) => UserMenuItem[])
    *  ```
-   *
-   * If you want to control which, if any, of the shipped Adaptable Context Menu items are displayed use the `showAdaptableContextMenu` property in [General Options](_adaptableOptions_generaloptions_.generaloptions.html)
    *
    * **Context Menu Item Example (using Array)**
    *
@@ -410,12 +412,13 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * ```
    *
-   * **Context Menu Item Example (Using function)**
+   * **Context Menu Item Example (using Function)**
    *
+   * ```ts
    * export default {
    *  UserInterface: {
-   *    ContextMenuItems: (menuinfo: MenuInfo) => {
-   *      return menuinfo.Column.Sortable
+   * ContextItems: (menuinfo: MenuInfo) => {
+   *    return menuinfo.Column.Sortable
    *      ? [
    *          {
    *            Label: 'Sort Column',
@@ -432,8 +435,9 @@ export interface UserInterfaceState extends DesignTimeState {
    *     : [];
    * },
    * } as PredefinedConfig;
-   *
    * ```
+   *
+   *  If you want to control which, if any, of the pre-shipped Adaptable Context Menu items are displayed use the [showAdaptableContextMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecontextmenu) property in UserInterfaceOptions.
    *
    * **Default Value**:  Empty array
    */

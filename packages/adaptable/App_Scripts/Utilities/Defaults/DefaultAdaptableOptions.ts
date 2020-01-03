@@ -5,9 +5,8 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   vendorGrid: null,
   primaryKey: '',
   userName: GeneralConstants.USER_NAME,
-  // blotterID now deprecated - instead we set AdaptableId - currently in helper for backward compatability
+  adaptableId: GeneralConstants.ADAPTABLE_ID,
   predefinedConfig: undefined,
-  licenceKey: '',
   auditOptions: {
     auditCellEdits: {
       auditToHttpChannel: false,

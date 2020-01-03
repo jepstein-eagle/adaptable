@@ -9,7 +9,7 @@ There are 3 primary ways that developers / users 'interact' with the code in Ada
 - **Accessing all functionality and state** in Adaptable through code (at runtime) via the [Adaptable API](interfaces/_api_adaptableApi_.adaptableApi.html).
 
 These 3 objects are linked as follows: 
-**Predefined Configuration** is a property of **Adaptabl eOptions** which is passed into the Adaptable constructor that returns the **Adaptable Api**
+**Predefined Configuration** is a property of **AdaptableOptions** which is passed into the Adaptable constructor that returns the **Adaptable Api**
 
 ```tsx
 // Create an Adaptable Options object to pass in to the constructor
@@ -31,7 +31,7 @@ You use Adaptable Options to set up Adaptable at design time so that it fits you
 
 ## Predefined Configuration
 
-You can provide  Adaptable at start-up with _Predefined Configuration_ which ensures that when Adaptable first loads it contains all the objects that users need. This includes *Entitlements*.
+You can provide  Adaptable at start-up with _Predefined Configuration_ which ensures that when Adaptable first loads it contains all the bespoke objects that your users will need. This includes *Entitlements*.
 
 [See Predefined Configuration Developer Documentation](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
