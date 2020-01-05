@@ -48,6 +48,10 @@ let demoConfig: PredefinedConfig = {
       Tone: 'success',
     }, //
   },
+  SystemStatus: {
+    StatusMessage: 'Hello',
+    StatusType: 'Info',
+  },
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
   },

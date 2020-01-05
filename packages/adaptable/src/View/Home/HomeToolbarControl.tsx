@@ -197,7 +197,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       <DropdownButton
         variant="text"
         items={menuItems}
-        tooltip="Grid Functions"
+        tooltip="Adaptable Functions"
         className="ab-DashboardToolbar__Home__functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}

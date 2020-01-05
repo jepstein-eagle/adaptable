@@ -7,24 +7,19 @@ import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
-import { Flex } from 'rebass';
+import { Flex, Box, Text } from 'rebass';
 import CheckBox from '../../components/CheckBox';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
@@ -70,44 +65,53 @@ class ColumnFilterToolPanelComponent extends React.Component<
     );
 
     let content = (
-      <Flex alignItems="stretch" className="ab-ToolPanel__ColumnFilter__wrap">
-        {/*<Text mx={1}>{collapsedText}</Text>*/}
-        {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
-          <>
-            <AdaptablePopover
-              className="ab-ToolPanel__ColumnFilter__info"
-              headerText=""
-              bodyText={[activeFiltersPanel]}
-              //  tooltipText={'Show Filter Details'}
-              useButton={true}
-              showEvent={'focus'}
-              hideEvent="blur"
-              popoverMinWidth={400}
-            />
-            <ButtonClear
-              marginLeft={1}
-              marginBottom={0}
-              className="ab-ToolPanel__ColumnFilter__clear"
-              onClick={() => this.onClearFilters()}
-              tooltip="Clear Column Filters"
-              disabled={this.props.ColumnFilters.length == 0}
-              AccessLevel={this.props.AccessLevel}
-            />
-          </>
-        )}
-        <CheckBox
-          className="ab-ToolPanel__ColumnFilter__active-check"
-          disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
-          marginLeft={1}
-          marginTop={0}
-          padding={1}
-          checked={this.props.IsQuickFilterActive}
-          onChange={(checked: boolean) => {
-            checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
-          }}
-        >
-          Quick Filter
-        </CheckBox>
+      <Flex
+        flexDirection="column"
+        alignItems="stretch"
+        className="ab-ToolPanel__ColumnFilter__wrap"
+      >
+        <Flex flexDirection="row" alignItems="stretch" className={'ab-ToolPanel__BulkUpdate__wrap'}>
+          {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
+            <>
+              <AdaptablePopover
+                className="ab-ToolPanel__ColumnFilter__info"
+                headerText=""
+                bodyText={[activeFiltersPanel]}
+                //  tooltipText={'Show Filter Details'}
+                useButton={true}
+                showEvent={'focus'}
+                hideEvent="blur"
+                popoverMinWidth={400}
+              />
+              <ButtonClear
+                marginLeft={1}
+                marginBottom={0}
+                className="ab-ToolPanel__ColumnFilter__clear"
+                onClick={() => this.onClearFilters()}
+                tooltip="Clear Column Filters"
+                disabled={this.props.ColumnFilters.length == 0}
+                AccessLevel={this.props.AccessLevel}
+              >
+                Clear
+              </ButtonClear>
+            </>
+          )}
+        </Flex>
+        <Flex flexDirection="row" alignItems="stretch" className={'ab-ToolPanel__BulkUpdate__wrap'}>
+          <CheckBox
+            className="ab-ToolPanel__ColumnFilter__active-check"
+            disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
+            marginLeft={1}
+            marginTop={0}
+            padding={1}
+            checked={this.props.IsQuickFilterActive}
+            onChange={(checked: boolean) => {
+              checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
+            }}
+          >
+            Show Quick Filter
+          </CheckBox>
+        </Flex>
       </Flex>
     );
 

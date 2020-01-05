@@ -8,10 +8,8 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { StatusColour, MathOperation, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
@@ -20,7 +18,6 @@ import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { UIHelper } from '../UIHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
@@ -124,7 +121,7 @@ class SmartEditToolPanelComponent extends React.Component<
             style={{
               width: '5rem',
             }}
-            className="ab-DashboardToolPanel__SmartEdit__select-value"
+            className="ab-ToolPanel__SmartEdit__select-value"
             value={this.props.SmartEditValue.toString()}
             type="number"
             placeholder="Enter a Number"
@@ -139,7 +136,7 @@ class SmartEditToolPanelComponent extends React.Component<
               marginLeft={2}
               onClick={() => this.onApplyClick()}
               style={applyButtonStyle}
-              className="ab-DashboardPanel__SmartEdit__apply"
+              className="ab-ToolPanel__SmartEdit__apply"
               tooltip="Apply Smart Edit"
               disabled={
                 StringExtensions.IsNullOrEmpty(`${this.props.SmartEditValue}`) ||
@@ -147,13 +144,15 @@ class SmartEditToolPanelComponent extends React.Component<
                   this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
               }
               AccessLevel={this.props.AccessLevel}
-            />
+            >
+              Edit
+            </ButtonApply>
           )}
 
           {!shouldDisable && (
             <AdaptablePopover
               headerText="Preview Results"
-              className="ab-DashboardPanel__SmartEdit__info"
+              className="ab-ToolPanel__SmartEdit__info"
               //  tooltipText="Preview Results"
               bodyText={[previewPanel]}
               MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}

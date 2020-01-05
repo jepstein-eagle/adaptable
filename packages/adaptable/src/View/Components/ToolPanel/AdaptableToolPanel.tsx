@@ -100,6 +100,19 @@ class AdaptableToolPanelComponent extends React.Component<
         })
       : null;
 
+    const clonedShortcuts = Object.assign([], shortcuts);
+    let grouped_shortcuts: any[] = clonedShortcuts
+      .map(() => clonedShortcuts.splice(0, 7))
+      .filter((a: any) => a);
+
+    let grouped_shortcut_rows = grouped_shortcuts.map(gs => {
+      return (
+        <Flex flexDirection="row" justifyContent="left" padding={1} style={{ width: '100%' }}>
+          {gs}
+        </Flex>
+      );
+    });
+
     // Build the Tool Panels
     let hiddenEntitlements: Entitlement[] = this.props.FunctionEntitlements.filter(
       e => e.AccessLevel == 'Hidden'
@@ -168,8 +181,8 @@ class AdaptableToolPanelComponent extends React.Component<
       <DropdownButton
         variant="text"
         items={menuItems}
-        tooltip="Grid Functions"
-        className="ab-ToolPanelToolbar__Home__functions"
+        tooltip="Adaptable Functions"
+        className="ab-ToolPanel__functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
       >
@@ -258,11 +271,12 @@ class AdaptableToolPanelComponent extends React.Component<
     // columns dropdown
     let columnsDropDown = (
       <DropdownButton
+        listMinWidth={150}
         variant="text"
         collapseOnItemClick={false}
         items={colItems}
         columns={['label']}
-        className="ab-DashboardToolbar__Home__columns"
+        className="ab-Toolpanel__columns"
         key={'dropdown-cols'}
         id={'dropdown-cols'}
         tooltip="Select Columns"
@@ -314,12 +328,7 @@ class AdaptableToolPanelComponent extends React.Component<
           {this.props.ShowGridInfoButton && gridInfoButton}
           {configureButton}
         </Flex>
-        {ArrayExtensions.IsNotNullOrEmpty(shortcuts) ? (
-          // To do : we should make sure that there are no more than 6 each in row
-          <Flex flexDirection="row" justifyContent="left" padding={1} style={{ width: '100%' }}>
-            {shortcuts}
-          </Flex>
-        ) : null}
+        {ArrayExtensions.IsNotNullOrEmpty(shortcuts) ? <div>{grouped_shortcut_rows}</div> : null}
         {visibleToolPanelControls}
       </Flex>
     );

@@ -8,12 +8,13 @@ import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { Flex } from 'rebass';
+import { Flex, Text } from 'rebass';
 import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 interface SystemStatusToolPanelProps
   extends ToolPanelStrategyViewPopupProps<SystemStatusToolPanelComponent> {
@@ -61,7 +62,7 @@ class SystemStatusToolPanelComponent extends React.Component<
       </SimpleButton>
     );
 
-    let content = (
+    let content = StringExtensions.IsNotNullOrEmpty(this.props.StatusMessage) ? (
       <Flex
         flexDirection="column"
         alignItems="stretch"
@@ -88,6 +89,8 @@ class SystemStatusToolPanelComponent extends React.Component<
           {clearButton}
         </Flex>
       </Flex>
+    ) : (
+      <Text fontSize={2}>No Status Message</Text>
     );
 
     return (

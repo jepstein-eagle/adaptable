@@ -11,6 +11,7 @@ import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Text, Flex } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
 import UIHelper from '../UIHelper';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 interface SystemStatusPopupProps extends StrategyViewPopupProps<SystemStatusPopupComponent> {
   StatusMessage: string;
@@ -65,14 +66,9 @@ class SystemStatusPopupComponent extends React.Component<
       </SimpleButton>
     );
 
-    return (
-      <PanelWithImage
-        variant="primary"
-        header={StrategyConstants.SystemStatusStrategyFriendlyName}
-        glyphicon={StrategyConstants.SystemStatusGlyph}
-        infoBody={infoBody}
-        bodyProps={{ padding: 2 }}
-      >
+    let content = (
+      <div>
+        {' '}
         <Flex
           style={{ borderRadius: 'var(--ab__border-radius)', fontWeight: 'bold' }}
           className="ab-DashboardToolbar__SystemStatus__text"
@@ -97,6 +93,22 @@ class SystemStatusPopupComponent extends React.Component<
           </Text>
         </Flex>
         {clearButton}
+      </div>
+    );
+
+    return (
+      <PanelWithImage
+        variant="primary"
+        header={StrategyConstants.SystemStatusStrategyFriendlyName}
+        glyphicon={StrategyConstants.SystemStatusGlyph}
+        infoBody={infoBody}
+        bodyProps={{ padding: 2 }}
+      >
+        {StringExtensions.IsNotNullOrEmpty(this.props.StatusMessage) ? (
+          { content }
+        ) : (
+          <Text fontSize={2}>No Status Message</Text>
+        )}
       </PanelWithImage>
     );
   }

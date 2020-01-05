@@ -10,10 +10,11 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { Flex } from 'rebass';
+import { Flex, Text } from 'rebass';
 import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 interface SystemStatusToolbarControlProps
   extends ToolbarStrategyViewPopupProps<SystemStatusToolbarControlComponent> {
@@ -58,7 +59,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
       </SimpleButton>
     );
 
-    let content = (
+    let content = StringExtensions.IsNotNullOrEmpty(this.props.StatusMessage) ? (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__SystemStatus__wrap">
         <Flex
           style={{ borderRadius: 'var(--ab__border-radius)' }}
@@ -74,6 +75,8 @@ class SystemStatusToolbarControlComponent extends React.Component<
         </Flex>
         <Flex alignItems="center">{clearButton}</Flex>
       </Flex>
+    ) : (
+      <Text fontSize={2}>No Status Message</Text>
     );
 
     return (

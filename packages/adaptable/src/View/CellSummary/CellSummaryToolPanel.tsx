@@ -2,14 +2,11 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as SelectedCellsRedux from '../../Redux/ActionsReducers/CellSummaryRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { AccessLevel, CellSummaryOperation } from '../../PredefinedConfig/Common/Enums';
@@ -20,16 +17,11 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import Dropdown from '../../components/Dropdown';
-import Helper from '../../Utilities/Helpers/Helper';
-import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 interface CellSummaryToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<CellSummaryToolPanelComponent> {

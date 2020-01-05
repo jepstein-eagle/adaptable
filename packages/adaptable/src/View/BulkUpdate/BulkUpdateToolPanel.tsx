@@ -113,7 +113,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
             dropdownButtonProps={{
               listMinWidth: 150,
             }}
-            className="ab-DashboardToolPanel__BulkUpdate__select"
+            className="ab-ToolPanel__BulkUpdate__select"
             disabled={shouldDisable}
             SelectedColumnValue={this.props.BulkUpdateValue}
             SelectedColumn={selectedColumn}
@@ -132,7 +132,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
           {!shouldDisable && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
             <ButtonApply
               marginLeft={2}
-              className="ab-DashboardToolPanel__BulkUpdate__apply"
+              className="ab-ToolPanel__BulkUpdate__apply"
               onClick={() => this.onApplyClick()}
               style={applyStyle}
               tooltip="Apply Bulk Update"
@@ -142,12 +142,14 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
                   this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
               }
               AccessLevel={this.props.AccessLevel}
-            />
+            >
+              Update
+            </ButtonApply>
           )}
 
           {!shouldDisable && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && (
             <AdaptablePopover
-              className="ab-DashboardToolPanel__BulkUpdate__info"
+              className="ab-ToolPanel__BulkUpdate__info"
               headerText="Preview Results"
               bodyText={[previewPanel]}
               MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)}
