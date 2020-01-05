@@ -241,7 +241,7 @@ export interface DashboardState extends RunTimeState {
    *
    * If 'true' then the button will be visible; clicking the button will open a Dialog giving details of the Current Grid, version, row count etc.
    *
-   * It will also include an Options tab allowing you to see what your Blotter Options are.
+   * It will also include an Options tab allowing you to see what your Adaptable Options are.
    *
    * **Default Value**:  true
    */
@@ -287,9 +287,9 @@ export interface DashboardState extends RunTimeState {
   /**
    * The title of the Home Toolbar - the first toolbar visible.
    *
-   * If no value is provided then the Home Toolbar will show the 'adaptableId' property in Blotter Options
+   * If no value is provided then the Home Toolbar will show the 'adaptableId' property in Adaptable Options
    *
-   * **Default Value**:  `adaptableId` property in Blotter Options
+   * **Default Value**:  `adaptableId` property in Adaptable Options
    */
   HomeToolbarTitle?: string;
 

@@ -12,7 +12,7 @@ import { AdaptableApi } from '../../../adaptable/types';
 })
 export class AppComponent {
   title = 'APP_ROOT';
-  blotterStyle = {
+  adaptableStyle = {
     height: '100vh',
   };
 

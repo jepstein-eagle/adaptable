@@ -70,7 +70,7 @@ export class ToolPanelApiImpl extends ApiBase implements ToolPanelApi {
 */
   public showToolPanelPopup(): void {
     this.adaptable.api.internalApi.showPopupScreen(
-      StrategyConstants.ToolPanelId,
+      StrategyConstants.ToolPanelStrategyId,
       ScreenPopups.ToolPanelPopup
     );
   }

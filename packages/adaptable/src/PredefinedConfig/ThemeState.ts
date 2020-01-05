@@ -42,7 +42,7 @@ export interface ThemeState extends RunTimeState {
    *
    * If you dont set anything then **both** themes are available; if you set an empty array then **neither** theme is available.
    *
-   * If you have  [*useDefaultVendorGridThemes*]( https://api.adaptableblotter.com/interfaces/_adaptableOptions_generaloptions_.generaloptions.html#usedefaultvendorgridthemes) set to true in **generalOptions** section of *Blotter Options* then setting (or changing to) either of the shipped System Themes will set the theme of the underlying vendor grid too.
+   * If you have  [*useDefaultVendorGridThemes*]( https://api.adaptableblotter.com/interfaces/_adaptableOptions_generaloptions_.generaloptions.html#usedefaultvendorgridthemes) set to true in **generalOptions** section of *Adaptable Options* then setting (or changing to) either of the shipped System Themes will set the theme of the underlying vendor grid too.
    */
   SystemThemes?: (AdaptableTheme | string)[];
 

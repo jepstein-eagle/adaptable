@@ -57,7 +57,7 @@ export class StyleService implements IStyleService {
 
   public CreateUniqueStyleName(
     functionName: AdaptableFunctionName,
-    adaqptableBlotterObject: AdaptableObject
+    adaptableObject: AdaptableObject
   ): string {
     return (
       StyleConstants.AB_HEADER +
@@ -68,7 +68,7 @@ export class StyleService implements IStyleService {
         .replace(/\s/g, '')
         .replace('.', '') +
       '-' +
-      adaqptableBlotterObject.Uuid
+      adaptableObject.Uuid
     );
   }
 

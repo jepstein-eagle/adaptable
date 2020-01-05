@@ -79,7 +79,6 @@ export interface DashboardHideColumnsDropdownAction extends Redux.Action {}
 export interface DashboardShowToolbarsDropdownAction extends Redux.Action {}
 
 export interface DashboardHideToolbarsDropdownAction extends Redux.Action {}
-
 export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
   Title: string;
 }

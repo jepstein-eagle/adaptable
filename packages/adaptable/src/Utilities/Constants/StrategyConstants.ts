@@ -36,7 +36,7 @@ export const StateManagementStrategyId: AdaptableFunctionName = 'StateManagement
 export const SystemStatusStrategyId: AdaptableFunctionName = 'SystemStatus';
 export const TeamSharingStrategyId: AdaptableFunctionName = 'TeamSharing';
 export const ThemeStrategyId: AdaptableFunctionName = 'Theme';
-export const ToolPanelId: AdaptableFunctionName = 'ToolPanel';
+export const ToolPanelStrategyId: AdaptableFunctionName = 'ToolPanel';
 export const UpdatedRowStrategyId: AdaptableFunctionName = 'UpdatedRow';
 export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
 
@@ -76,6 +76,7 @@ export const StateManagementStrategyFriendlyName: string = 'Manage State';
 export const SystemStatusStrategyFriendlyName: string = 'System Status';
 export const TeamSharingStrategyFriendlyName: string = 'Team Sharing';
 export const ThemeStrategyFriendlyName: string = 'Theme';
+export const ToolPanelStrategyFriendlyName: string = 'Tool Panel';
 export const UserFilterStrategyFriendlyName: string = 'User Filter';
 
 // Strategy Glyphs
@@ -114,6 +115,7 @@ export const StateManagementGlyph: string = 'state-management';
 export const SystemStatusGlyph: string = 'system-status';
 export const TeamSharingGlyph: string = 'team-share';
 export const ThemeGlyph: string = 'theme';
+export const ToolPanelGlyph: string = 'theme';
 export const UpdatedRowGlyph: string = 'updated-row';
 export const UserFilterGlyph: string = 'user-filter';
 
@@ -187,6 +189,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return TeamSharingStrategyId;
     case ThemeStrategyFriendlyName:
       return ThemeStrategyId;
+    case ToolPanelStrategyFriendlyName:
+      return ToolPanelStrategyId;
     case UserFilterStrategyFriendlyName:
       return UserFilterStrategyId;
   }
@@ -264,6 +268,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return TeamSharingStrategyFriendlyName;
     case ThemeStrategyId:
       return ThemeStrategyFriendlyName;
+    case ToolPanelStrategyId:
+      return ToolPanelStrategyFriendlyName;
     case UserFilterStrategyId:
       return UserFilterStrategyFriendlyName;
   }
@@ -335,6 +341,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return TeamSharingGlyph;
     case ThemeStrategyId:
       return ThemeGlyph;
+    case ToolPanelStrategyId:
+      return ToolPanelGlyph;
     case UserFilterStrategyId:
       return UserFilterGlyph;
   }

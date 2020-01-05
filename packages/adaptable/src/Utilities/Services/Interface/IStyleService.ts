@@ -5,6 +5,6 @@ export interface IStyleService {
   CreateStyleName(functionName: AdaptableFunctionName): string;
   CreateUniqueStyleName(
     functionName: AdaptableFunctionName,
-    adaqptableBlotterObject: AdaptableObject
+    adaqptableObject: AdaptableObject
   ): string;
 }

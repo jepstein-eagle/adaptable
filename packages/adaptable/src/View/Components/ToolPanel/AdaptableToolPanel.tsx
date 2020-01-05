@@ -3,15 +3,15 @@ import * as Redux from 'redux';
 import * as _ from 'lodash';
 import { kebabCase } from 'lodash';
 import * as ToolPanelRedux from '../../../Redux/ActionsReducers/ToolPanelRedux';
+import * as SystemRedux from '../../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
 import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
-import { Text, Flex, Box } from 'rebass';
+import { Flex, Box } from 'rebass';
 import { IAdaptable } from '../../../types';
 import { Entitlement } from '../../../PredefinedConfig/EntitlementState';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
@@ -32,6 +32,8 @@ import {
 } from '../../../PredefinedConfig/Common/Types';
 import SimpleButton from '../../../components/SimpleButton';
 import { ButtonConfigure } from '../Buttons/ButtonConfigure';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
+import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -41,13 +43,22 @@ interface AdaptableToolPanelProps {
   VisibleToolsPanels: AdaptableToolPanels;
   AvailableToolPanels: AdaptableToolPanels;
   VisibleButtons: AdaptableFunctionButtons;
+  ShowFunctionsDropdown: boolean;
+  ShowColumnsDropdown: boolean;
+  ShowToolPanelsDropdown: boolean;
+  ShowGridInfoButton: boolean;
   FunctionEntitlements: Entitlement[];
   MainMenuItems: AdaptableMenuItem[];
+  Columns: AdaptableColumn[];
   // wondering if this shoudl take some base props like others?  though i know we dont like that...
   onClick: (action: Redux.Action) => Redux.Action;
+  onNewColumnListOrder: (
+    VisibleColumnList: AdaptableColumn[]
+  ) => SystemRedux.SetNewColumnListOrderAction;
   onSetToolPanelVisibility: (
     toolPanels: AdaptableToolPanels
   ) => ToolPanelRedux.ToolPanelSetToolPanelsAction;
+  onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
 
 export interface AdaptableToolPanelState {}
@@ -63,6 +74,7 @@ class AdaptableToolPanelComponent extends React.Component<
 
   render(): any {
     const functionsGlyph: any = <Icon name={'home'} />;
+    const colsGlyph: any = <Icon name={'list'} />;
     const toolPanelsGlyph: any = <Icon name={'align-justify'} />;
 
     // shortcuts
@@ -139,6 +151,19 @@ class AdaptableToolPanelComponent extends React.Component<
         label: menuItem.Label,
       };
     });
+
+    // gridInfo button
+    let gridInfoButton = (
+      <SimpleButton
+        tooltip="Grid Info"
+        icon={'info'}
+        variant="text"
+        className="ab-ToolPanel__info"
+        onClick={() => this.onClickGridInfo()}
+        AccessLevel={AccessLevel.Full}
+      />
+    );
+
     let functionsDropdown = (
       <DropdownButton
         variant="text"
@@ -151,6 +176,41 @@ class AdaptableToolPanelComponent extends React.Component<
         {functionsGlyph}
       </DropdownButton>
     );
+
+    // column items
+    let colItems: any = [
+      {
+        clickable: false,
+        label: (
+          <div key="colTitle">
+            {' '}
+            &nbsp;&nbsp;<b>{'Columns'}</b>
+          </div>
+        ),
+      },
+    ];
+
+    this.props.Columns.forEach((col: AdaptableColumn, index) => {
+      colItems.push({
+        id: col.ColumnId,
+        onClick: (e: React.SyntheticEvent) => {
+          this.onSetColumnVisibility(col.ColumnId);
+        },
+        label: (
+          <Checkbox
+            as="div"
+            className="ab-dd-checkbox"
+            my={0}
+            value={col.ColumnId}
+            key={col.ColumnId}
+            checked={col.Visible}
+            onMouseDown={preventDefault}
+          >
+            {col.FriendlyName}
+          </Checkbox>
+        ),
+      });
+    });
 
     // toolpanel items
     let toolpanelItems: any = [];
@@ -194,6 +254,23 @@ class AdaptableToolPanelComponent extends React.Component<
         });
       }
     });
+
+    // columns dropdown
+    let columnsDropDown = (
+      <DropdownButton
+        variant="text"
+        collapseOnItemClick={false}
+        items={colItems}
+        columns={['label']}
+        className="ab-DashboardToolbar__Home__columns"
+        key={'dropdown-cols'}
+        id={'dropdown-cols'}
+        tooltip="Select Columns"
+      >
+        {colsGlyph}
+      </DropdownButton>
+    );
+
     let toolPanelsDropDown = (
       <DropdownButton
         variant="text"
@@ -231,8 +308,10 @@ class AdaptableToolPanelComponent extends React.Component<
         }}
       >
         <Flex flexDirection="row" justifyContent="left" padding={1} style={{ width: '100%' }}>
-          {functionsDropdown}
-          {toolPanelsDropDown}
+          {this.props.ShowFunctionsDropdown && functionsDropdown}
+          {this.props.ShowToolPanelsDropdown && toolPanelsDropDown}
+          {this.props.ShowColumnsDropdown && columnsDropDown}
+          {this.props.ShowGridInfoButton && gridInfoButton}
           {configureButton}
         </Flex>
         {ArrayExtensions.IsNotNullOrEmpty(shortcuts) ? (
@@ -244,6 +323,22 @@ class AdaptableToolPanelComponent extends React.Component<
         {visibleToolPanelControls}
       </Flex>
     );
+  }
+
+  onClickGridInfo() {
+    this.props.onShowGridInfo();
+  }
+
+  onSetColumnVisibility(name: string) {
+    let changedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(name, this.props.Columns);
+
+    let columns: AdaptableColumn[] = [].concat(this.props.Columns);
+    changedColumn = Object.assign({}, changedColumn, {
+      Visible: !changedColumn.Visible,
+    });
+    let index = columns.findIndex(x => x.ColumnId == name);
+    columns[index] = changedColumn;
+    this.props.onNewColumnListOrder(columns.filter(c => c.Visible));
   }
 
   onSetToolPanelVisibility(name: string, checked: boolean) {
@@ -264,16 +359,24 @@ function mapStateToProps(state: AdaptableState) {
     VisibleToolsPanels: state.ToolPanel.VisibleToolPanels,
     AvailableToolPanels: state.ToolPanel.AvailableToolPanels,
     VisibleButtons: state.ToolPanel.VisibleButtons,
+    ShowFunctionsDropdown: state.ToolPanel.ShowFunctionsDropdown,
+    ShowColumnsDropdown: state.ToolPanel.ShowColumnsDropdown,
+    ShowToolPanelsDropdown: state.ToolPanel.ShowToolPanelsDropdown,
+    ShowGridInfoButton: state.ToolPanel.ShowGridInfoButton,
     FunctionEntitlements: state.Entitlements.FunctionEntitlements,
     MainMenuItems: state.Grid.MainMenuItems,
+    Columns: state.Grid.Columns,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
+    onNewColumnListOrder: (VisibleColumnList: AdaptableColumn[]) =>
+      dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetToolPanelVisibility: (toolPanels: AdaptableToolPanels) =>
       dispatch(ToolPanelRedux.ToolPanelSetToolPanels(toolPanels)),
+    onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };
 }
 

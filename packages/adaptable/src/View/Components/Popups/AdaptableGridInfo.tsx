@@ -293,7 +293,7 @@ export class AdaptableGridInfo extends React.Component<
                 checked={this.state.ShowGridProperties == false}
                 onChange={(_, e: any) => this.onShowGridPropertiesChanged(e)}
               >
-                Blotter Options
+                Adaptable Options
               </Radio>
             </Flex>
 
