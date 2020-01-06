@@ -1107,6 +1107,7 @@ export class ExamplesHelper {
       columnGroupShow: 'closed',
       cellClass: 'number-cell',
       type: 'abColDefNumber',
+      valueFormatter: this.twoDecimalPlaceFormatter,
       sortable: true,
     });
     schema.push({

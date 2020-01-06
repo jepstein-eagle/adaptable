@@ -44,6 +44,10 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
     }
   }
 
+  public getRawValueColumns(): string[] {
+    return this.getExportState().RawValueColumns;
+  }
+
   public showExportPopup(): void {
     this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ExportStrategyId,

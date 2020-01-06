@@ -10,6 +10,7 @@ export interface ExportState extends RunTimeState {
    */
   CurrentReport?: string;
   Reports?: Report[];
+  RawValueColumns?: string[];
 }
 
 export interface Report extends AdaptableObject {
