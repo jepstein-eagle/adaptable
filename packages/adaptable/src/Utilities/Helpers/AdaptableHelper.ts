@@ -77,6 +77,11 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
     DefaultAdaptableOptions.stateOptions,
     adaptableOptions.stateOptions
   );
+  returnadaptableOptions.exportOptions = Object.assign(
+    {},
+    DefaultAdaptableOptions.exportOptions,
+    adaptableOptions.exportOptions
+  );
 
   const { predefinedConfig } = returnadaptableOptions;
   if (predefinedConfig) {

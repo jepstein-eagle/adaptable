@@ -8,14 +8,11 @@ import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
-import {
-  AdaptableOptions,
-  PredefinedConfig,
-  AdaptableApi,
-  SearchChangedEventArgs,
-} from '../../../../src/types';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
+import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
+import { Report } from '../../../../src/PredefinedConfig/ExportState';
 
 var api: AdaptableApi;
 
@@ -37,6 +34,17 @@ function InitAdaptableDemo() {
     autoSizeColumnsInLayout: true,
   };
 
+  adaptableOptions.exportOptions = {
+    exportColumnRawValue: (column: AdaptableColumn, report: Report) => {
+      if (column.ColumnId === 'bid') {
+        return true;
+      } else if (column.ColumnId === 'tradeDate' && report.Name === 'Visible Data') {
+        return true;
+      }
+      return false;
+    },
+  };
+
   api = Adaptable.init(adaptableOptions);
 }
 
@@ -45,7 +53,35 @@ let demoConfig: PredefinedConfig = {
     VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
   },
   Export: {
-    RawValueColumns: ['bid', 'tradeDate'],
+    Reports: [
+      {
+        Name: 'End of Day',
+        ColumnIds: [
+          'bid',
+          'changeOnYear',
+          'counterparty',
+          'country',
+          'currency',
+          'tradeDate',
+          'settlementDate',
+          'ask',
+          'moodysRating',
+          'bloombergBid',
+          'bloombergAsk',
+        ],
+        ReportColumnScope: 'BespokeColumns',
+        ReportRowScope: 'VisibleRows',
+        AutoExport: {
+          Schedule: {
+            Hour: 17,
+            Minute: 30,
+            DaysOfWeek: [5, 4, 3, 2, 1],
+          },
+          ExportDestination: 'JSON',
+        },
+      },
+    ],
+    CurrentReport: 'End of Day',
   },
   Layout: {
     Layouts: [

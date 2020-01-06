@@ -12,6 +12,7 @@ import { StateOptions } from './StateOptions';
 import { UserInterfaceOptions } from './UserInterfaceOptions';
 import { AdaptablePlugin } from './AdaptablePlugin';
 import { SearchOptions } from './SearchOptions';
+import { ExportOptions } from './ExportOptions';
 
 /**
  * `AdaptableOptions` is the object created by you at design-time injected into the Adaptable constructor at startup.
@@ -196,6 +197,8 @@ export interface AdaptableOptions {
    * Options for managing Search in Adaptable.
    */
   searchOptions?: SearchOptions;
+
+  exportOptions?: ExportOptions;
 
   /**
    * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.

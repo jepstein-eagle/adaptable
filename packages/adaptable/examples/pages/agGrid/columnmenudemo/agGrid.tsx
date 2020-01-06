@@ -9,8 +9,6 @@ import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AdaptableMenuItem, MenuInfo } from '../../../../src/PredefinedConfig/Common/Menu';
-import { CustomSort } from '../../../../src/PredefinedConfig/CustomSortState';
-import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var adaptableApi: AdaptableApi;
 function InitAdaptableDemo() {

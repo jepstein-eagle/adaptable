@@ -12,6 +12,42 @@ import { Schedule } from './Common/Schedule';
  *
  * Each Report has both Row and Column Scope to allow you define which Rows and Columns are contained in the Export
  *
+ *  * **Advanced Search Predefined Config Example**
+ *
+ * ```ts
+ * Export: {
+ *    RawValueColumns: ['bid', 'tradeDate'],
+ *    Reports: [
+ *      {
+ *        Name: 'End of Day',
+ *        ColumnIds: [
+ *          'bid',
+ *          'counterparty',
+ *          'currency',
+ *          'tradeDate',
+ *          'settlementDate',
+ *          'ask',
+ *          'moodysRating',
+ *          'bloombergBid',
+ *          'bloombergAsk',
+ *       ],
+ *        ReportColumnScope: 'BespokeColumns',
+ *        ReportRowScope: 'VisibleRows',
+ *        AutoExport: {
+ *          Schedule: {
+ *            Hour: 17,
+ *            Minute: 30,
+ *            DaysOfWeek: [1, 2, 3, 4, 5],
+ *          },
+ *          ExportDestination: 'JSON',
+ *       },
+ *      },
+ *    ],
+ *    CurrentReport: 'End of Day',
+ *  },
+ * } as PredefinedConfig;
+ * ```
+ *
  */
 export interface ExportState extends RunTimeState {
   /**
@@ -29,11 +65,6 @@ export interface ExportState extends RunTimeState {
    * **Default Value**:  Empty array
    */
   Reports?: Report[];
-
-  /**
-   * A list of columns which should show **raw values** when exported rather than **display values** (the default).
-   */
-  RawValueColumns?: string[];
 }
 
 export interface Report extends AdaptableObject {

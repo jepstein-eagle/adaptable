@@ -146,20 +146,19 @@ export class ReportService implements IReportService {
     // populate the first row
     var dataToExport: any[] = [];
     dataToExport[0] = reportColumns.map(c => c.FriendlyName);
-    let rawValueColumns: string[] = this.adaptable.api.exportApi.getRawValueColumns();
 
     // now populate the rest of the rows
     switch (report.ReportRowScope) {
       case ReportRowScope.AllRows:
         this.adaptable.forAllRowNodesDo(row => {
-          let newRow = this.getRowValues(row, reportColumns, rawValueColumns);
+          let newRow = this.getRowValues(row, reportColumns, report);
           dataToExport.push(newRow);
         });
         break;
 
       case ReportRowScope.VisibleRows:
         this.adaptable.forAllVisibleRowNodesDo(row => {
-          let newRow = this.getRowValues(row, reportColumns, rawValueColumns);
+          let newRow = this.getRowValues(row, reportColumns, report);
           dataToExport.push(newRow);
         });
         break;
@@ -175,7 +174,7 @@ export class ReportService implements IReportService {
               this.adaptable
             )
           ) {
-            let newRow = this.getRowValues(row, reportColumns, rawValueColumns);
+            let newRow = this.getRowValues(row, reportColumns, report);
             dataToExport.push(newRow);
           }
         });
@@ -212,7 +211,7 @@ export class ReportService implements IReportService {
             );
             // for now always adding raw value - but this might change...
             let cellValue: any = matchingGridCell
-              ? this.getCellValueFromGridCell(matchingGridCell, rawValueColumns)
+              ? this.getCellValueFromGridCell(matchingGridCell, rc, report)
               : null;
             newRow.push(cellValue);
           });
@@ -308,18 +307,17 @@ export class ReportService implements IReportService {
     return pkValues;
   }
 
-  private getRowValues(
-    rowNode: any,
-    reportColumns: AdaptableColumn[],
-    rawValueColumns: string[]
-  ): any[] {
+  private getRowValues(rowNode: any, reportColumns: AdaptableColumn[], report: Report): any[] {
     let newRow: any[] = [];
     reportColumns.forEach(col => {
       let columnValue: any;
-      if (
-        ArrayExtensions.IsNotNullOrEmpty(rawValueColumns) &&
-        ArrayExtensions.ContainsItem(rawValueColumns, col.ColumnId)
-      ) {
+      let useRawValue: boolean = false;
+      let exportColumnRawValue = this.adaptable.adaptableOptions.exportOptions!
+        .exportColumnRawValue;
+      if (exportColumnRawValue) {
+        useRawValue = exportColumnRawValue(col, report);
+      }
+      if (useRawValue) {
         columnValue = this.adaptable.getRawValueFromRowNode(rowNode, col.ColumnId);
       } else {
         columnValue = this.adaptable.getDisplayValueFromRowNode(rowNode, col.ColumnId);
@@ -329,13 +327,17 @@ export class ReportService implements IReportService {
     return newRow;
   }
 
-  private getCellValueFromGridCell(gridCell: GridCell, rawValueColumns: string[]): any {
-    if (ArrayExtensions.IsNotNullOrEmpty(rawValueColumns)) {
-      if (ArrayExtensions.ContainsItem(rawValueColumns, gridCell.columnId)) {
-        return gridCell.rawValue;
-      }
+  private getCellValueFromGridCell(
+    gridCell: GridCell,
+    reportColumn: AdaptableColumn,
+    report: Report
+  ): any {
+    let useRawValue: boolean = false;
+    let exportColumnRawValue = this.adaptable.adaptableOptions.exportOptions!.exportColumnRawValue;
+    if (exportColumnRawValue) {
+      useRawValue = exportColumnRawValue(reportColumn, report);
     }
-    return gridCell.displayValue;
+    return useRawValue ? gridCell.rawValue : gridCell.displayValue;
   }
 
   public PublishLiveReportUpdatedEvent(

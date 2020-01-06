@@ -102,6 +102,9 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     showAdaptableContextMenu: true,
     adaptableToolPanelTitle: GeneralConstants.ADAPTABLE,
   },
+  exportOptions: {
+    exportColumnRawValue: null,
+  },
   stateOptions: {
     applyState: state => state,
     saveState: state => state,

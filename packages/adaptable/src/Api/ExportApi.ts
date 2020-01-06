@@ -40,13 +40,6 @@ export interface ExportApi {
   sendReport(reportName: string, destination: ExportDestination): void;
 
   /**
-   * Retrieves the list of columns from Export State which show the underlying RAW value when exported
-   *
-   * Note: the default is to show the Display Value (ie. the value in the grid)
-   */
-  getRawValueColumns(): string[];
-
-  /**
    * Opens the Export popup screen
    */
   showExportPopup(): void;
