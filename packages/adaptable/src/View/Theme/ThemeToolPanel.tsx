@@ -73,6 +73,7 @@ class ThemeToolPanelComponent extends React.Component<
               style={{ minWidth: 170 }}
               className="ab-ToolPanel__Theme__select"
               placeholder="Select Theme"
+              showEmptyItem={false}
               value={currentTheme!.Description}
               options={themes}
               showClearButton={false}

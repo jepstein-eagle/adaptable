@@ -32,6 +32,8 @@ export interface UserInterfaceOptions {
    */
   showAdaptableToolPanel?: boolean;
 
+  adaptableToolPanelTitle?: string;
+
   /**
    * Whether or not to show Adaptable specific Context Menu items.
    *

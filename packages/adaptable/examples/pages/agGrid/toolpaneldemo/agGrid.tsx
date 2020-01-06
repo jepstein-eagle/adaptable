@@ -35,6 +35,7 @@ function InitAdaptableDemo() {
 
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
+    adaptableToolPanelTitle: 'hello world',
   };
 
   api = Adaptable.init(adaptableOptions);
@@ -43,17 +44,28 @@ function InitAdaptableDemo() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Layout', 'AdvancedSearch'],
+    HomeToolbarTitle: 'working',
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
     }, //
+  },
+  Entitlements: {
+    FunctionEntitlements: [
+      {
+        FunctionName: 'AdvancedSearch',
+        AccessLevel: 'Hidden',
+      },
+    ],
   },
   SystemStatus: {
     StatusMessage: 'Hello',
     StatusType: 'Info',
   },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
+    //   VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
+    //ToolPanelTitle: 'Hello',
+    ShowGridInfoButton: false,
   },
 };
 

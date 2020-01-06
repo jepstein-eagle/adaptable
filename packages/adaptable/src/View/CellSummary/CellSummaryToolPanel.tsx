@@ -104,6 +104,7 @@ class CellSummaryToolPanelComponent extends React.Component<
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__CellSummary__wrap">
           <Dropdown
             style={{ minWidth: 170 }}
+            showEmptyItem={false}
             className="ab-ToolPanel__CellSummary__select"
             placeholder="Select Summary Operation"
             value={this.props.CellSummaryOperation}

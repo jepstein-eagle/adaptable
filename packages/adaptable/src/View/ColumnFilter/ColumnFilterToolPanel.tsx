@@ -103,6 +103,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
             disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
             marginLeft={1}
             marginTop={0}
+            fontSize={2}
             padding={1}
             checked={this.props.IsQuickFilterActive}
             onChange={(checked: boolean) => {

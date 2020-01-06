@@ -68,6 +68,11 @@ export class ToolPanelApiImpl extends ApiBase implements ToolPanelApi {
     //  this.dispatchAction(ToolPanelRedux.ToolPanelHideToolbarsDropdown());
   }
 */
+
+  //  public getToolPanelTitle(): string | undefined {
+  //    return this.GetToolPanelState().ToolPanelTitle;
+  //  }
+
   public showToolPanelPopup(): void {
     this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ToolPanelStrategyId,

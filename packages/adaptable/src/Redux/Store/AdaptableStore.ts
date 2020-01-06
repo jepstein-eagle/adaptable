@@ -61,9 +61,8 @@ import {
   IBulkUpdateStrategy,
   BulkUpdateValidationResult,
 } from '../../Strategy/Interface/IBulkUpdateStrategy';
-import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
-import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
+import { SharedEntity } from '../../Utilities/Interface/SharedEntity';
 import { IAdaptableStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
@@ -2722,7 +2721,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             //we make the request async
             xhr.open('POST', configServerTeamSharingUrl, true);
             xhr.setRequestHeader('Content-type', 'application/json');
-            let obj: ISharedEntity = {
+            let obj: SharedEntity = {
               entity: actionTyped.Entity,
               user: adaptable.adaptableOptions.userName,
               adaptable_id: adaptable.adaptableOptions.adaptableId,

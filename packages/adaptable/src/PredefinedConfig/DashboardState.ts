@@ -192,23 +192,23 @@ export interface DashboardState extends RunTimeState {
    *
    * If you don't provide any value for this property, then ALL Adaptable toolbars will be available.
    *
-   * **Default Value**:  Empty array
+   * **Default Value**: Empty array
    */
   AvailableToolbars?: AdaptableDashboardToolbars;
 
   /**
-   * Which toolbars should be visible in the Dasbhoard when the application first loads.
+   * Which toolbars should be visible in the Dasbhoard when your application first loads.
    *
    * Note: If the `AvailableToolbars` property has been set, then the visible toolbars listed here must also be included there.
    *
-   * **Default Value**:  'QuickSearch', 'Layout', 'Export', 'ColumnFilter'
+   * **Default Value**: 'QuickSearch', 'Layout', 'Export', 'ColumnFilter'
    */
   VisibleToolbars?: AdaptableDashboardToolbars | string[];
 
   /**
    * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
    *
-   * Each button is connected to a Function in Adaptable and opens the main popup screen for that Strategy.
+   * Each button is connected to a Function in Adaptable and opens the relevant popup screen.
    *
    * **Default Value**:  'Dashboard', 'SmartEdit', 'ColumnChooser', 'ConditionalStyle', ''
    */
@@ -221,7 +221,7 @@ export interface DashboardState extends RunTimeState {
    *
    * If you want to hide the Dashboard altogether then select 'Hide Dashboard' from the Column Header menu (or 'Show Dashboard' to put it back).
    *
-   * **Default Value**:  'Visible'
+   * **Default Value**: 'Visible'
    */
   DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
 
@@ -232,18 +232,18 @@ export interface DashboardState extends RunTimeState {
    *
    * The colour of the button will reflect the `StatusType` of the last System Status message received.
    *
-   * **Default Value**:  true
+   * **Default Value**: true
    */
   ShowSystemStatusButton?: boolean;
 
   /**
    * Whether to show the Grid Info button in the Home Toolbar.
    *
-   * If 'true' then the button will be visible; clicking the button will open a Dialog giving details of the Current Grid, version, row count etc.
+   * If 'true' then the button will be visible; clicking the button will open the GridInfo screen giving details of the Current Grid, version, row count etc.
    *
-   * It will also include an Options tab allowing you to see what your Adaptable Options are.
+   * The GridInfo screen also a tab allowing you to see the currently selected set of Adaptable Options.
    *
-   * **Default Value**:  true
+   * **Default Value**: true
    */
   ShowGridInfoButton?: boolean;
 
@@ -252,9 +252,11 @@ export interface DashboardState extends RunTimeState {
    *
    * If 'true' then the dropdown will be visible as the first item (with a 'house' icon).
    *
-   * Clicking the button will open a Dropdown listing all the Functions in your `Entitlements`.  Clicking a menu item will open the popup for that Function.
+   * Clicking the button will open a dropdown listing all the Functions that your `Entitlements` allows.
    *
-   * **Default Value**:  true
+   * Selecting a menu item in the dropdown will open the popup for that Function.
+   *
+   * **Default Value**: true
    */
   ShowFunctionsDropdown?: boolean;
 
@@ -289,14 +291,14 @@ export interface DashboardState extends RunTimeState {
    *
    * If no value is provided then the Home Toolbar will show the 'adaptableId' property in Adaptable Options
    *
-   * **Default Value**:  `adaptableId` property in Adaptable Options
+   * **Default Value**: the `adaptableId` property in Adaptable Options
    */
   HomeToolbarTitle?: string;
 
   /**
    * How the Home Toolbar will appear (as a button) when Miminised
    *
-   * **Default Value**:   `Variant`: 'outlined', `Tone`: 'neutral',
+   * **Default Value**: `Variant`: 'outlined', `Tone`: 'neutral',
    */
   MinimisedHomeToolbarButtonStyle?: ButtonStyle;
 

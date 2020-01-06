@@ -358,7 +358,7 @@ export class agGridHelper {
   public createAdaptableToolPanel(): ToolPanelDef {
     return {
       id: 'AdaptableToolPanel',
-      labelDefault: 'Adaptable',
+      labelDefault: this.adaptable.adaptableOptions.userInterfaceOptions.adaptableToolPanelTitle,
       labelKey: 'AdaptableToolPanel',
       iconKey: 'menu',
       toolPanel: 'AdaptableToolPanel',

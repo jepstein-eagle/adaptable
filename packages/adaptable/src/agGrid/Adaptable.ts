@@ -11,6 +11,7 @@ import {
   ICellEditor,
   ICellRendererFunc,
   SideBarDef,
+  ToolPanelDef,
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 

@@ -16,6 +16,7 @@ export const DARK_THEME: string = 'dark';
 
 export const USER_NAME: string = 'anonymous';
 export const ADAPTABLE_ID: string = 'adaptable_id';
+export const ADAPTABLE: string = 'Adaptable';
 export const MENU_PREFIX: string = 'ab_';
 export const READ_ONLY_STYLE: string = 'ab_readonly';
 

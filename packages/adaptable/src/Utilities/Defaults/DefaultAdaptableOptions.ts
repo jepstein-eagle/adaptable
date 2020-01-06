@@ -100,6 +100,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     useDefaultVendorGridThemes: true,
     showAdaptableToolPanel: false,
     showAdaptableContextMenu: true,
+    adaptableToolPanelTitle: GeneralConstants.ADAPTABLE,
   },
   stateOptions: {
     applyState: state => state,

@@ -19,5 +19,6 @@ export interface ToolPanelApi {
   //  HideFunctionsDropdown(): void;
   //  ShowToolbarsDropdown(): void;
   //  HideToolbarsDropdown(): void;
+  // getToolPanelTitle(): string | undefined;
   showToolPanelPopup(): void;
 }

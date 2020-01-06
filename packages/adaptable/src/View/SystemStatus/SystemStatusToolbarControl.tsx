@@ -36,8 +36,11 @@ class SystemStatusToolbarControlComponent extends React.Component<
   }
 
   render() {
-    let messageTypeColor: string = UIHelper.getColorByMessageType(this.props
-      .StatusType as MessageType);
+    let messageTypeColor: string | undefined = StringExtensions.IsNotNullOrEmpty(
+      this.props.StatusMessage
+    )
+      ? UIHelper.getColorByMessageType(this.props.StatusType as MessageType)
+      : undefined;
 
     let buttonTextColor: string = UIHelper.getButtonTextColourForMessageType(this.props
       .StatusType as MessageType);
@@ -59,7 +62,11 @@ class SystemStatusToolbarControlComponent extends React.Component<
       </SimpleButton>
     );
 
-    let content = StringExtensions.IsNotNullOrEmpty(this.props.StatusMessage) ? (
+    let message: string = StringExtensions.IsNotNullOrEmpty(this.props.StatusMessage)
+      ? this.props.StatusMessage
+      : 'No Status Message';
+
+    let content = (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__SystemStatus__wrap">
         <Flex
           style={{ borderRadius: 'var(--ab__border-radius)' }}
@@ -71,12 +78,12 @@ class SystemStatusToolbarControlComponent extends React.Component<
           fontSize={'var( --ab-font-size-2)'}
           alignItems="center"
         >
-          {this.props.StatusMessage}
+          {message}
         </Flex>
-        <Flex alignItems="center">{clearButton}</Flex>
+        {StringExtensions.IsNotNullOrEmpty(this.props.StatusMessage) && (
+          <Flex alignItems="center">{clearButton}</Flex>
+        )}
       </Flex>
-    ) : (
-      <Text fontSize={2}>No Status Message</Text>
     );
 
     return (

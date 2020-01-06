@@ -7,7 +7,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
+import { SharedEntity } from '../../Utilities/Interface/SharedEntity';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -36,7 +36,7 @@ import ListGroup from '../../components/List/ListGroup';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
-  Entities: Array<ISharedEntity>;
+  Entities: Array<SharedEntity>;
   onGetSharedItems: () => TeamSharingRedux.TeamSharingShareAction;
   onImportItem: (
     entity: AdaptableObject,
@@ -105,7 +105,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
     );
   }
 
-  getSharedItemDetails(sharedEntity: ISharedEntity) {
+  getSharedItemDetails(sharedEntity: SharedEntity) {
     switch (sharedEntity.functionName) {
       case StrategyConstants.CustomSortStrategyId: {
         let customSort = sharedEntity.entity as CustomSort;

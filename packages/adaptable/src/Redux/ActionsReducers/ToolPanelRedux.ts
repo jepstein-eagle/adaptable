@@ -5,17 +5,12 @@ import {
   AdaptableToolPanel,
   AdaptableFunctionButtons,
 } from '../../PredefinedConfig/Common/Types';
-import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-
 const TOOLPANEL_SET_AVAILABLE_TOOLPANELS = 'TOOLPANEL_SET_AVAILABLE_TOOLPANELS';
 export const TOOLPANEL_SET_TOOLPANELS = 'TOOLPANEL_SET_TOOLPANELS';
 const TOOLPANEL_SHOW_TOOLPANEL = 'TOOLPANEL_SHOW_TOOLPANEL';
 const TOOLPANEL_HIDE_TOOLPANEL = 'TOOLPANEL_HIDE_TOOLPANEL';
 const TOOLPANEL_SET_FUNCTION_BUTTONS = 'TOOLPANEL_SET_FUNCTION_BUTTONS';
-
 const TOOLPANEL_MOVE_ITEM = 'TOOLPANEL_MOVE_ITEM';
-const TOOLPANEL_SHOW_SYSTEM_STATUS_BUTTON = 'TOOLPANEL_SHOW_SYSTEM_STATUS_BUTTON';
-const TOOLPANEL_HIDE_SYSTEM_STATUS_BUTTON = 'TOOLPANEL_HIDE_SYSTEM_STATUS_BUTTON';
 const TOOLPANEL_SHOW_GRID_INFO_BUTTON = 'TOOLPANEL_SHOW_GRID_INFO_BUTTON';
 const TOOLPANEL_HIDE_GRID_INFO_BUTTON = 'TOOLPANEL_HIDE_GRID_INFO_BUTTON';
 const TOOLPANEL_SHOW_FUNCTIONS_DROPDOWN = 'TOOLPANEL_SHOW_FUNCTIONS_DROPDOWN';
@@ -24,6 +19,7 @@ const TOOLPANEL_SHOW_COLUMNS_DROPDOWN = 'TOOLPANEL_SHOW_COLUMNS_DROPDOWN';
 const TOOLPANEL_HIDE_COLUMNS_DROPDOWN = 'TOOLPANEL_HIDE_COLUMNS_DROPDOWN';
 const TOOLPANEL_SHOW_TOOLPANELS_DROPDOWN = 'TOOLPANEL_SHOW_TOOLPANELS_DROPDOWN';
 const TOOLPANEL_HIDE_TOOLPANELS_DROPDOWN = 'TOOLPANEL_HIDE_TOOLPANELS_DROPDOWN';
+const TOOLPANEL_SET_TOOLPANEL_TITLE = 'TOOLPANEL_SET_TOOLPANEL_TITLE';
 
 export interface ToolPanelSetAvailableToolPanelsAction extends Redux.Action {
   toolPanels: AdaptableToolPanels;
@@ -65,6 +61,10 @@ export interface ToolPanelHideColumnsDropdownAction extends Redux.Action {}
 export interface ToolPanelShowToolPanelsDropdownAction extends Redux.Action {}
 
 export interface ToolPanelHideToolPanelsDropdownAction extends Redux.Action {}
+
+export interface ToolPanelSetToolPanelTitleAction extends Redux.Action {
+  Title: string;
+}
 
 export const ToolPanelSetAvailableToolPanels = (
   toolPanels: AdaptableToolPanels
@@ -142,6 +142,11 @@ export const ToolPanelHideToolPanelsDropdown = (): ToolPanelHideToolPanelsDropdo
   type: TOOLPANEL_HIDE_TOOLPANELS_DROPDOWN,
 });
 
+export const ToolPanelSetToolPanelTitle = (Title: string): ToolPanelSetToolPanelTitleAction => ({
+  type: TOOLPANEL_SET_TOOLPANEL_TITLE,
+  Title,
+});
+
 const initialToolPanelState: ToolPanelState = {
   AvailableToolPanels: [
     'AdvancedSearch',
@@ -173,27 +178,12 @@ const initialToolPanelState: ToolPanelState = {
     'SystemStatus',
     'Theme',
   ],
-  //VisibleButtons: EMPTY_ARRAY,
-  VisibleButtons: [
-    'Dashboard',
-    'SmartEdit',
-    'ColumnChooser',
-    'ConditionalStyle',
-    'ColumnCategory',
-    'DataSource',
-    'PlusMinus',
-    'Theme',
-    'SystemStatus',
-    'SparklineColumn',
-  ],
-
-  ShowGridInfoButton: false,
-
+  VisibleButtons: [],
+  ShowGridInfoButton: true,
   ShowFunctionsDropdown: true,
-
-  ShowColumnsDropdown: false,
-
+  ShowColumnsDropdown: true,
   ShowToolPanelsDropdown: true,
+  // ToolPanelTitle: '',
 };
 
 export const ToolPanelReducer: Redux.Reducer<ToolPanelState> = (
@@ -264,6 +254,11 @@ export const ToolPanelReducer: Redux.Reducer<ToolPanelState> = (
     case TOOLPANEL_HIDE_TOOLPANELS_DROPDOWN: {
       return Object.assign({}, state, { ShowToolPanelsDropdown: false });
     }
+
+    //  case TOOLPANEL_SET_TOOLPANEL_TITLE: {
+    //    const actionTyped = action as ToolPanelSetToolPanelTitleAction;
+    //    return Object.assign({}, state, { ToolPanelTitle: actionTyped.Title });
+    //  }
 
     default:
       return state;

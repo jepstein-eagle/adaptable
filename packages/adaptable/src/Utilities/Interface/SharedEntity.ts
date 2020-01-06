@@ -1,7 +1,7 @@
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
-export interface ISharedEntity {
+export interface SharedEntity {
   entity: AdaptableObject;
   functionName: AdaptableFunctionName;
   timestamp: Date;
