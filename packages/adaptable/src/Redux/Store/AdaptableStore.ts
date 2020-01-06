@@ -2492,7 +2492,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
               let dataChangedInfos: DataChangedInfo[] = actionTyped.GridCells.map(gc => {
                 return {
                   OldValue: adaptable.getDisplayValue(gc.primaryKeyValue, gc.columnId),
-                  NewValue: gc.value,
+                  NewValue: gc.rawValue,
                   ColumnId: gc.columnId,
                   PrimaryKeyValue: gc.primaryKeyValue,
                 };

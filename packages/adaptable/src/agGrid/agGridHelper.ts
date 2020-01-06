@@ -488,7 +488,8 @@ export class agGridHelper {
     let isSelectedCell: boolean = false;
     let clickedCell: GridCell = {
       columnId: colId,
-      value: params.value,
+      rawValue: params.value,
+      displayValue: this.adaptable.getDisplayValueFromRowNode(params.node, colId),
       primaryKeyValue: primaryKeyValue,
     };
     let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();

@@ -85,7 +85,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+import { ColumnHelper, getColumnsFromFriendlyNames } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
@@ -822,6 +822,7 @@ export class Adaptable implements IAdaptable {
     return '';
   }
 
+  // this is only used by Shortcut
   public getActiveCell(): GridCell {
     const activeCell = this.gridOptions.api!.getFocusedCell();
     if (activeCell) {
@@ -832,7 +833,8 @@ export class Adaptable implements IAdaptable {
         return {
           columnId: activeCell.column.getColId(),
           primaryKeyValue: this.getPrimaryKeyValueFromRowNode(rowNode),
-          value: this.gridOptions.api!.getValue(activeCell.column, rowNode),
+          rawValue: this.getRawValueFromRowNode(rowNode, activeCell.column.getColId()),
+          displayValue: this.getDisplayValueFromRowNode(rowNode, activeCell.column.getColId()),
         };
       }
     }
@@ -884,11 +886,12 @@ export class Adaptable implements IAdaptable {
               // that's a design choice as this is used only when editing and you cant edit those cells
               if (rowNode && !rowNode.group) {
                 const primaryKey = this.getPrimaryKeyValueFromRowNode(rowNode);
-                const value = this.gridOptions.api!.getValue(column, rowNode);
+                // const value = this.gridOptions.api!.getValue(column, rowNode);
 
                 const selectedCell: GridCell = {
                   columnId: colId,
-                  value,
+                  rawValue: this.getRawValueFromRowNode(rowNode, colId),
+                  displayValue: this.getDisplayValueFromRowNode(rowNode, colId),
                   primaryKeyValue: primaryKey,
                 };
                 selectedCells.push(selectedCell);

@@ -44,7 +44,8 @@ export class GridApiImpl extends ApiBase implements GridApi {
     let gridCell: GridCell = {
       primaryKeyValue: primaryKeyValue,
       columnId: columnId,
-      value: newValue,
+      rawValue: newValue,
+      displayValue: newValue,
     };
     this.setGridCell(gridCell, reselectSelectedCells, validateChange);
   }
@@ -79,7 +80,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
     let currentRowNode = this.adaptable.getRowNodeForPrimaryKey(gridCell.primaryKeyValue);
     let dataChangedInfo: DataChangedInfo = {
       OldValue: currentValue,
-      NewValue: gridCell.value,
+      NewValue: gridCell.rawValue,
       ColumnId: gridCell.columnId,
       PrimaryKeyValue: gridCell.primaryKeyValue,
       RowNode: currentRowNode,

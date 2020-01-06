@@ -13,13 +13,11 @@ import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
-import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { AlertProperties } from '../PredefinedConfig/AlertState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
@@ -107,8 +105,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         );
         if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
           //for aggrid as we are getting strings sometimes
-          if (typeof selectedCell.value != 'number') {
-            selectedCell.value = parseFloat(selectedCell.value);
+          if (typeof selectedCell.rawValue != 'number') {
+            selectedCell.rawValue = parseFloat(selectedCell.rawValue);
           }
           let newValue: GridCell;
           //we try to find a condition with an expression for that column that matches the record
@@ -125,7 +123,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
               newValue = {
                 primaryKeyValue: selectedCell.primaryKeyValue,
                 columnId: selectedCell.columnId,
-                value: selectedCell.value + columnNudge.NudgeValue * side,
+                rawValue: selectedCell.rawValue + columnNudge.NudgeValue * side,
+                displayValue: selectedCell.rawValue + columnNudge.NudgeValue * side,
               };
             }
           }
@@ -136,7 +135,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
               newValue = {
                 primaryKeyValue: selectedCell.primaryKeyValue,
                 columnId: selectedCell.columnId,
-                value: selectedCell.value + columnNudge.NudgeValue * side,
+                rawValue: selectedCell.rawValue + columnNudge.NudgeValue * side,
+                displayValue: selectedCell.rawValue + columnNudge.NudgeValue * side,
               };
             }
             //we havent found a condition so we return false - this will allow a minus to be entered into the column
@@ -149,11 +149,11 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             shouldApplyPlusMinus = true;
           }
           //avoid the 0.0000000000x
-          newValue.value = parseFloat(newValue.value.toFixed(12));
+          newValue.rawValue = parseFloat(newValue.rawValue.toFixed(12));
 
           let dataChangedEvent: DataChangedInfo = {
-            OldValue: Number(selectedCell.value),
-            NewValue: newValue.value,
+            OldValue: Number(selectedCell.rawValue),
+            NewValue: newValue.rawValue,
             ColumnId: selectedCell.columnId,
             PrimaryKeyValue: selectedCell.primaryKeyValue,
           };

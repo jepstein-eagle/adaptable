@@ -60,7 +60,8 @@ export function GetCellInfosFromPreview(
         newValues.push({
           primaryKeyValue: previewResult.Id,
           columnId: previewInfo.ColumnId,
-          value: previewResult.ComputedValue,
+          rawValue: previewResult.ComputedValue,
+          displayValue: previewResult.ComputedValue,
         });
       }
     }
@@ -69,7 +70,8 @@ export function GetCellInfosFromPreview(
       newValues.push({
         primaryKeyValue: pr.Id,
         columnId: previewInfo.ColumnId,
-        value: pr.ComputedValue,
+        rawValue: pr.ComputedValue,
+        displayValue: pr.ComputedValue,
       });
     });
   }

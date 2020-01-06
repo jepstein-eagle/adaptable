@@ -157,7 +157,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
         selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
           let dataChangedEvent: DataChangedInfo = {
-            OldValue: selectedCell.value,
+            OldValue: selectedCell.rawValue,
             NewValue: typedBulkUpdateValue,
             ColumnId: selectedCell.columnId,
             PrimaryKeyValue: selectedCell.primaryKeyValue,
@@ -168,7 +168,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
           );
           let previewResult: IPreviewResult = {
             Id: selectedCell.primaryKeyValue,
-            InitialValue: selectedCell.value,
+            InitialValue: selectedCell.rawValue,
             ComputedValue: typedBulkUpdateValue,
             ValidationRules: validationRules,
           };

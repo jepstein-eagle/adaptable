@@ -158,16 +158,16 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             let newValue: number;
             switch (smartEditOperation) {
               case MathOperation.Add:
-                newValue = Number(selectedCell.value) + smartEditValue;
+                newValue = Number(selectedCell.rawValue) + smartEditValue;
                 break;
               case MathOperation.Subtract:
-                newValue = Number(selectedCell.value) - smartEditValue;
+                newValue = Number(selectedCell.rawValue) - smartEditValue;
                 break;
               case MathOperation.Multiply:
-                newValue = Number(selectedCell.value) * smartEditValue;
+                newValue = Number(selectedCell.rawValue) * smartEditValue;
                 break;
               case MathOperation.Divide:
-                newValue = Number(selectedCell.value) / smartEditValue;
+                newValue = Number(selectedCell.rawValue) / smartEditValue;
                 break;
               case MathOperation.Replace:
                 newValue = smartEditValue;
@@ -179,7 +179,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             }
 
             let dataChangedEvent: DataChangedInfo = {
-              OldValue: Number(selectedCell.value),
+              OldValue: Number(selectedCell.rawValue),
               NewValue: newValue,
               ColumnId: selectedCell.columnId,
               PrimaryKeyValue: selectedCell.primaryKeyValue,
@@ -191,7 +191,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
             let previewResult: IPreviewResult = {
               Id: selectedCell.primaryKeyValue,
-              InitialValue: Number(selectedCell.value),
+              InitialValue: Number(selectedCell.rawValue),
               ComputedValue: newValue,
               ValidationRules: validationRules,
             };

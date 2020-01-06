@@ -209,7 +209,8 @@ export class ReportService implements IReportService {
             let matchingGridCell: GridCell = matchingGridCells.find(
               gc => gc.columnId === rc.ColumnId
             );
-            let cellValue: any = matchingGridCell ? matchingGridCell.value : null;
+            // for now always adding raw value - but this might change...
+            let cellValue: any = matchingGridCell ? matchingGridCell.rawValue : null;
             newRow.push(cellValue);
           });
           dataToExport.push(newRow);

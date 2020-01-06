@@ -58,7 +58,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
       });
 
       selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
-        let value = selectedCell.value;
+        let value = selectedCell.rawValue;
         allValues.push(value);
 
         if (ArrayExtensions.ContainsItem(numericColumns, selectedCell.columnId)) {

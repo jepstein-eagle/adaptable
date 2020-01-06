@@ -65,7 +65,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                 activeShortcut.ShortcutOperation as MathOperation
               );
             } else {
-              currentCellValue = activeCell.value;
+              currentCellValue = activeCell.rawValue;
               valueToReplace = this.CalculateShortcut(
                 currentCellValue,
                 activeShortcut.ShortcutResult,
@@ -128,9 +128,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     keyEventString: string
   ): void {
     this.adaptable.api.gridApi.setCellValue(
-      activeCell.primaryKeyValue,
       activeCell.columnId,
       newValue,
+      activeCell.primaryKeyValue,
+      true,
       true
     );
 

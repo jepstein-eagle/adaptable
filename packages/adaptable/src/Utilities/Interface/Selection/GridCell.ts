@@ -11,7 +11,9 @@ export interface GridCell {
   /**
    * The value which the cell contains
    */
-  value: any;
+  rawValue: any;
+
+  displayValue: any;
 
   /**
    * The value in the primary key column for that row - this is how Adaptable will find the cell

@@ -3,13 +3,15 @@ import { DesignTimeState } from './DesignTimeState';
 /**
  * The Predefined Configuration for the Application function
  *
- * The Application function is designed to allow developers to provide Adaptable with appliation-specific data
+ * The Application function is designed to allow developers to provide Adaptable with appliation-specific data.
+ *
+ * In previous version, Application State included an ApplicationToolbar for users to render application-specific content, but this has now been removed and you should use [Custom Toolbars](_predefinedconfig_dashboardstate_.dashboardstate.html#customtoolbars) in Dashboard State instead.
  *
  *  **Further Adaptable Help Resources**
  *
  * [API](_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-Blotter-State-FAQ)
  *
- * **The Application Data Entries**
+ * **Application Data Entries**
  *
  * The `ApplicationDataEntries` array enables you to provide Adaptable with your own data (which needs to be provided in key / value form) that Adaptable will then store in its State.
  *
