@@ -8,6 +8,7 @@ import { ExportState, Report } from '../../PredefinedConfig/ExportState';
 import { Schedule } from '../../PredefinedConfig/Common/Schedule';
 import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 
 interface ScheduleJob {
   cancel: () => any;
@@ -105,7 +106,8 @@ export class ScheduleService implements IScheduleService {
       const date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
       if (date != null) {
         var exportJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-          this.adaptable.api.exportApi.sendReport(report.Name, report.AutoExport.ExportDestination);
+          this.adaptable.api.exportApi.sendReport(report.Name, report.AutoExport
+            .ExportDestination as ExportDestination);
         });
         this.exportJobs.push(exportJob);
       }

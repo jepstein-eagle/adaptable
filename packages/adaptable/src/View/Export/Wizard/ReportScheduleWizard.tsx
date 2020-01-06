@@ -30,7 +30,7 @@ export interface ReportScheduleWizardState {
   Minute: number;
   DaysOfWeek: DayOfWeek[];
   OneOffDate: any;
-  ExportDestination: ExportDestination;
+  ExportDestination: 'CSV' | 'Clipboard' | 'JSON';
 }
 
 export class ReportScheduleWizard
