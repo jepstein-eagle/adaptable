@@ -33,18 +33,19 @@ import { ExportOptions } from './ExportOptions';
  *  |----------------	                                                                                    |-----------  |---------------------------------------------	                |
  *  | [adaptableId](_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableId)                | No	        | A unique ID for this instance of Adaptable	                  |
  *  | [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)      | No	        | User State shipped with Adaptable iinstance for first use.	  |
- *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of column which guarantees to contain unique contents       |
+ *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of column which guarantees to contain unique contents    |
  *  | [userName](_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                      | No	        | The current Adaptable user (useful for Audit purposes)      	|
  *  | [vendorGrid](_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Yes	        | Underlying vendor grid object (e.g. GridOptions for ag-Grid)	|
  *  | [auditOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)              | No	        | Audit Log related options                                   	|
  *  | [chartOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartptions)               | No	        | Chart-based options (used when using chart plugin)           	|
  *  | [configServerOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions)| No	        | Options related to Config Server (external state management)  |
  *  | [editOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                | No	        | Editing (and server-editing) related options                  |
+ *  | [exportOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#exportoptions)            | No	        | Export and Reporting options                                  |
  *  | [filterOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in Adaptable      |
  *  | [generalOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)          | No	        | General set of Options (e.g. for managing Primary Keys        |
  *  | [layoutOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)            | No	        | Layout (Views) related Options                                |
- *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)               | No	        | Options when running a Query / [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) in Adaptable |
- *  | [searchOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)             | No	        | Search-related options (e.g. for managing Server searching    |
+ *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query / [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) in Adaptable |
+ *  | [searchOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)            | No	        | Search-related options (e.g. for managing Server searching    |
  *  | [stateOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage Adaptable State    |
  *  | [userInterfaceOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| No	      | User Interface related functions                              |
  *  | [plugins](_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                        | No	        | Options used by the Adaptable plugins (e.g. charting, finance)|
@@ -198,6 +199,9 @@ export interface AdaptableOptions {
    */
   searchOptions?: SearchOptions;
 
+  /**
+   * Options for managing Exporting and Reports in Adaptable.
+   */
   exportOptions?: ExportOptions;
 
   /**

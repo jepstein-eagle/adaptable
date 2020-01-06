@@ -16,7 +16,6 @@ import { Schedule } from './Common/Schedule';
  *
  * ```ts
  * Export: {
- *    RawValueColumns: ['bid', 'tradeDate'],
  *    Reports: [
  *      {
  *        Name: 'End of Day',

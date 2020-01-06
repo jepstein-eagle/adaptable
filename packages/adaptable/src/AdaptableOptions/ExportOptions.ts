@@ -11,7 +11,7 @@ export interface ExportOptions {
   /**
    *  A function allowing you to specify for each Column (and Report) whether to export the DisplayValue (the default) or the RawValue.
    *
-   * * ```ts
+   * ```ts
    * adaptableOptions.exportOptions = {
    *    exportColumnRawValue: (column: AdaptableColumn, report: Report) => {
    *      if (column.ColumnId === 'bid') {
@@ -24,7 +24,7 @@ export interface ExportOptions {
    *  };
    * ```
    *
-   * In this example we have said that the 'bid' column for any report and the 'tradeDate' column for the 'Visible Data' report will export the `RawValue`.
+   * In this example, the 'bid' column (for any report) and the 'tradeDate' column (for 'Visible Data' report) will export the `RawValue`.
    *
    * And all other columns will always export the `DisplayValue`.
    *
