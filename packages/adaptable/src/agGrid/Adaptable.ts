@@ -755,6 +755,14 @@ export class Adaptable implements IAdaptable {
           (quickSearchState.DisplayAction == DisplayAction.HighlightCell ||
             quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)
         ) {
+          let excludeColumnFromQuickSearch = adaptable.adaptableOptions.searchOptions!
+            .excludeColumnFromQuickSearch;
+          if (excludeColumnFromQuickSearch) {
+            if (excludeColumnFromQuickSearch(col)) {
+              return false;
+            }
+          }
+
           const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
           if (range) {
             // not right but just checking...
