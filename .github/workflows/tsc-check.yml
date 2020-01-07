@@ -43,3 +43,17 @@ jobs:
         CI: true
     - name: tsc-nocode
       run: npm run --prefix packages/adaptable-nocode link-core && npm run --prefix packages/adaptable-nocode tsc
+
+    - name: Executing npm install in plugins:finance
+      run: npm install --prefix packages/plugins/finance
+      env:
+        CI: true
+
+    - name: tsc-plugins-charts
+      run: npm run --prefix packages/plugins/charts tsc
+    - name: Executing npm install in plugins:charts
+      run: npm install --prefix packages/plugins/charts
+      env:
+        CI: true
+    - name: tsc-plugins-charts
+      run: npm run --prefix packages/plugins/charts tsc
