@@ -13,6 +13,7 @@ import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
+import { ToolbarVisibilityChangedInfo } from '../../../../src/Api/Events/ToolbarVisibilityChanged';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -31,43 +32,47 @@ function InitAdaptableDemo() {
   const api = Adaptable.init(adaptableOptions);
 
   api.eventApi.on('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs => {
-    if (toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Toolbar1') {
-      let toolbarContents: any = (
-        <div style={{ display: 'flex' }}>
-          <button
-            className="ab-SimpleButton ab-SimpleButton--variant-outlined"
-            onClick={onNewTradeClicked}
-            style={{ marginRight: '3px' }}
-          >
-            Create New Trade
-          </button>
-        </div>
-      );
+    let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo =
+      toolbarVisibilityChangedEventArgs.data[0].id;
+    if (toolbarVisibilityChangedInfo.visibility === 'Visible') {
+      if (toolbarVisibilityChangedInfo.toolbar === 'Toolbar1') {
+        let toolbarContents: any = (
+          <div style={{ display: 'flex' }}>
+            <button
+              className="ab-SimpleButton ab-SimpleButton--variant-outlined"
+              onClick={onNewTradeClicked}
+              style={{ marginRight: '3px' }}
+            >
+              Create New Trade
+            </button>
+          </div>
+        );
 
-      let contentsDiv = api.dashboardApi.getCustomToolbarContentsDiv('Toolbar1');
-      if (contentsDiv) {
-        ReactDOM.render(toolbarContents, contentsDiv);
-      } else {
-        console.log('Couldnt find div to render custom content');
+        let contentsDiv = api.dashboardApi.getCustomToolbarContentsDiv('Toolbar1');
+        if (contentsDiv) {
+          ReactDOM.render(toolbarContents, contentsDiv);
+        } else {
+          console.log('Couldnt find div to render custom content');
+        }
       }
-    }
 
-    if (toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Toolbar2') {
-      let toolbarContents: any = (
-        <div style={{ display: 'flex' }}>
-          <select className="ab-Dropdown" style={{ marginRight: '3px' }}>
-            <option>Book 1</option>
-            <option>Book 2</option>
-            <option>Book 3</option>
-          </select>
-        </div>
-      );
+      if (toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Toolbar2') {
+        let toolbarContents: any = (
+          <div style={{ display: 'flex' }}>
+            <select className="ab-Dropdown" style={{ marginRight: '3px' }}>
+              <option>Book 1</option>
+              <option>Book 2</option>
+              <option>Book 3</option>
+            </select>
+          </div>
+        );
 
-      let contentsDiv = api.dashboardApi.getCustomToolbarContentsDiv('Toolbar2');
-      if (contentsDiv) {
-        ReactDOM.render(toolbarContents, contentsDiv);
-      } else {
-        console.log('Couldnt find div to render custom content');
+        let contentsDiv = api.dashboardApi.getCustomToolbarContentsDiv('Toolbar2');
+        if (contentsDiv) {
+          ReactDOM.render(toolbarContents, contentsDiv);
+        } else {
+          console.log('Couldnt find div to render custom content');
+        }
       }
     }
   });

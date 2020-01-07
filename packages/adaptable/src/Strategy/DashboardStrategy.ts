@@ -15,7 +15,7 @@ import {
 import { AdaptableDashboardToolbar } from '../PredefinedConfig/Common/Types';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
-  private visibleToolbars: string[];
+  private visibleToolbars: AdaptableDashboardToolbar[];
   private dashboardVisibility: Visibility;
 
   constructor(adaptable: IAdaptable) {
@@ -38,7 +38,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
               this.adaptable.api.dashboardApi.GetDashboardState().DashboardVisibility ==
               Visibility.Visible
             ) {
-              this.fireToolbarVisibilityChangedEvent(toolbar);
+              this.fireToolbarVisibilityChangedEvent(toolbar, 'Visible');
             }
           }
         }
@@ -46,7 +46,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
       [...(this.visibleToolbars || [])].forEach((toolbar: AdaptableDashboardToolbar) => {
         if (!newVisibleToolbars[toolbar]) {
-          this.fireToolbarVisibilityChangedEvent(toolbar);
+          this.fireToolbarVisibilityChangedEvent(toolbar, 'Hidden');
         }
       });
 
@@ -67,7 +67,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
               this.adaptable.api.dashboardApi.GetDashboardState().DashboardVisibility ==
               Visibility.Visible
             ) {
-              this.fireToolbarVisibilityChangedEvent(toolbar);
+              this.fireToolbarVisibilityChangedEvent(toolbar, 'Visible');
             }
           }
         );
@@ -102,10 +102,13 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     }
   }
 
-  private fireToolbarVisibilityChangedEvent(toolbar: string): void {
+  private fireToolbarVisibilityChangedEvent(
+    toolbar: string,
+    visibility: 'Visible' | 'Hidden'
+  ): void {
     let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo = {
       toolbar: toolbar,
-      visibility: Visibility.Visible,
+      visibility: visibility,
     };
     const toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Toolbar Visibility Changed Args',
