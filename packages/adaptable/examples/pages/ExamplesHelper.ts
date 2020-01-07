@@ -583,6 +583,7 @@ export class ExamplesHelper {
       'UBS',
       'Credit Suisse',
       'Nomura',
+      'Canada',
       undefined,
       null,
       //   "Lloyds TSB",
@@ -620,6 +621,7 @@ export class ExamplesHelper {
       'Belgium',
       'Brazil',
       'Canada',
+      /*
       'China',
       'Denmark',
       //   'Egypt',
@@ -638,6 +640,7 @@ export class ExamplesHelper {
       //   'Russia',
       'Spain',
       //   'Thailand',
+      */
     ];
     return countries;
   }

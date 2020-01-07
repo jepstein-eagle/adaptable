@@ -21,7 +21,7 @@ var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 5000;
+  const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -41,8 +41,8 @@ function InitAdaptableDemo() {
   api = Adaptable.init(adaptableOptions);
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    console.log('search changed');
-    console.log(searchChangedArgs.data[0].id);
+    //  console.log('search changed');
+    //  console.log(searchChangedArgs.data[0].id);
   });
 }
 

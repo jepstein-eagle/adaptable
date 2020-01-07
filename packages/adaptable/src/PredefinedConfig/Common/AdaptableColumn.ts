@@ -25,4 +25,5 @@ export interface AdaptableColumn extends AdaptableObject {
   Pivotable: boolean;
   Aggregatable: boolean;
   SpecialColumn: boolean;
+  IsExcludedFromQuickSearch: boolean;
 }

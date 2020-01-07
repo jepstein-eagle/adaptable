@@ -159,6 +159,7 @@ import {
 } from '../AdaptableInterfaces/IAdaptableNoCodeWizard';
 import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
+import { IQuickSearchStrategy } from '../Strategy/Interface/IQuickSearchStrategy';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -755,13 +756,17 @@ export class Adaptable implements IAdaptable {
           (quickSearchState.DisplayAction == DisplayAction.HighlightCell ||
             quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)
         ) {
-          let excludeColumnFromQuickSearch = adaptable.adaptableOptions.searchOptions!
-            .excludeColumnFromQuickSearch;
-          if (excludeColumnFromQuickSearch) {
-            if (excludeColumnFromQuickSearch(col)) {
-              return false;
-            }
+          if (col.IsExcludedFromQuickSearch) {
+            return false;
           }
+
+          //  let excludeColumnFromQuickSearch = adaptable.adaptableOptions.searchOptions!
+          //      .excludeColumnFromQuickSearch;
+          //    if (excludeColumnFromQuickSearch) {
+          //      if (excludeColumnFromQuickSearch(col)) {
+          //   return false;
+          //      }
+          //    }
 
           const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
           if (range) {
@@ -1689,6 +1694,7 @@ export class Adaptable implements IAdaptable {
         Aggregatable: this.agGridHelper.isColumnAggregetable(vendorColDef),
         IsSparkline: dataType == DataType.NumberArray,
         SpecialColumn: true,
+        IsExcludedFromQuickSearch: false,
       };
 
       this.api.internalApi.addAdaptableColumn(specialColumn);
@@ -2234,6 +2240,7 @@ export class Adaptable implements IAdaptable {
           }
           const quickSearchVisibleColumnExpresssions: Expression[] = this.getState().System
             .QuickSearchVisibleColumnExpressions;
+
           let quickSearchRange = this.getState().System.QuickSearchRange;
           if (quickSearchRange == null) {
             // might not have created so lets do it here
@@ -2242,7 +2249,7 @@ export class Adaptable implements IAdaptable {
             );
           }
           if (quickSearchRange != null) {
-            const visibleCols = columns.filter(c => c.Visible);
+            const visibleCols = columns.filter(c => c.Visible && !c.IsExcludedFromQuickSearch);
             for (const column of visibleCols) {
               const expression = quickSearchVisibleColumnExpresssions.find(
                 exp => exp.RangeExpressions[0].ColumnId == column.ColumnId
@@ -2750,35 +2757,37 @@ export class Adaptable implements IAdaptable {
         quickSearchState.DisplayAction != DisplayAction.HighlightCell &&
         StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
       ) {
-        const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
         const column: AdaptableColumn = ColumnHelper.getColumnFromId(
           columnId,
           this.api.gridApi.getColumns()
         );
+        if (!column.IsExcludedFromQuickSearch) {
+          const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
 
-        if (quickSearchRange != null) {
-          if (
-            RangeHelper.IsColumnAppropriateForRange(
-              quickSearchRange.Operator as LeafExpressionOperator,
-              column
-            )
-          ) {
-            const quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-              column.ColumnId,
-              null,
-              null,
-              null,
-              [quickSearchRange]
-            );
-            const quickSearchVisibleColumnExpressions: Expression[] = [].concat(
-              this.getState().System.QuickSearchVisibleColumnExpressions
-            );
-            quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
-            this.AdaptableStore.TheStore.dispatch(
-              SystemRedux.QuickSearchSetVisibleColumnExpressions(
-                quickSearchVisibleColumnExpressions
+          if (quickSearchRange != null) {
+            if (
+              RangeHelper.IsColumnAppropriateForRange(
+                quickSearchRange.Operator as LeafExpressionOperator,
+                column
               )
-            );
+            ) {
+              const quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
+                column.ColumnId,
+                null,
+                null,
+                null,
+                [quickSearchRange]
+              );
+              const quickSearchVisibleColumnExpressions: Expression[] = [].concat(
+                this.getState().System.QuickSearchVisibleColumnExpressions
+              );
+              quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
+              this.AdaptableStore.TheStore.dispatch(
+                SystemRedux.QuickSearchSetVisibleColumnExpressions(
+                  quickSearchVisibleColumnExpressions
+                )
+              );
+            }
           }
         }
       }
@@ -3153,10 +3162,9 @@ import "adaptableadaptable/themes/${themeName}.css"`);
 
     // at the end so load the current layout
     this.api.layoutApi.setLayout(currentlayout);
-  }
 
-  private getGeneralOptions(): GeneralOptions {
-    return this.adaptableOptions!.generalOptions!;
+    // in case we have an existing quick search we need to make sure its applied
+    this.api.quickSearchApi.applyQuickSearch(this.api.quickSearchApi.getQuickSearchValue());
   }
 
   // A couple of state management functions

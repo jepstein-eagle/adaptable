@@ -12,13 +12,12 @@ import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../sr
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
 import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
-import { Report } from '../../../../src/PredefinedConfig/ExportState';
 
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 5000;
+  const tradeCount: number = 10000;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -36,7 +35,7 @@ function InitAdaptableDemo() {
 
   adaptableOptions.searchOptions = {
     excludeColumnFromQuickSearch: (column: AdaptableColumn) => {
-      if (column.ColumnId === 'country') {
+      if (column.ColumnId === 'country' || column.ReadOnly) {
         return true;
       }
       return false;

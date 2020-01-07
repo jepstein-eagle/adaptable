@@ -31,7 +31,7 @@ export interface SearchOptions {
    * ```ts
    *   adaptableOptions.searchOptions = {
    *    excludeColumnFromQuickSearch: (column: AdaptableColumn) => {
-   *      if (column.ColumnId === 'country') {
+   *      if (column.ColumnId === 'country' || column.ReadOnly) {
    *        return true;
    *      }
    *      return false;
@@ -39,7 +39,7 @@ export interface SearchOptions {
    *  };
    * ```
    *
-   * In this example, the 'country' column will be excluded from Quick Search
+   * In this example, the 'country' column, and all ReadOnly columns, will be excluded from Quick Search
    *
    */
   excludeColumnFromQuickSearch?: (column: AdaptableColumn) => boolean;

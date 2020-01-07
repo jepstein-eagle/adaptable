@@ -315,7 +315,16 @@ export class agGridHelper {
       Pivotable: this.isColumnPivotable(colDef),
       Aggregatable: this.isColumnAggregetable(colDef),
       SpecialColumn: false,
+      IsExcludedFromQuickSearch: false,
     };
+    // lets set this here one as the function cannot change the result so dont need to run it each time
+    let excludeColumnFromQuickSearch = this.adaptable.adaptableOptions.searchOptions!
+      .excludeColumnFromQuickSearch;
+    if (excludeColumnFromQuickSearch) {
+      if (excludeColumnFromQuickSearch(abColumn)) {
+        abColumn.IsExcludedFromQuickSearch = true;
+      }
+    }
     return abColumn;
   }
 
