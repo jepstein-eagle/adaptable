@@ -57,7 +57,7 @@ import { GridApi } from './GridApi';
  *
  * Adaptable API consists of over 40 sets of properties grouped against a particular function.
  *
- * Each of these properties is a class that contains a set of API method grouped either by Adaptable Function (e.g. *AdvancedSearchAPI*) or type (e.g. *AuditEventApi*)
+ * Each of these properties is a class that contains a set of API method grouped either by Adaptable Function (e.g. `AdvancedSearchAPI`) or type (e.g. *`uditEventApi`)
  *
  * The full list is:
  *

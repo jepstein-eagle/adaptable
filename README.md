@@ -1,10 +1,6 @@
 # adaptable
 
-Repository for the multiple Adaptable packages developed by Adaptable Tools, including:
-
-- 'Core' HTML5 version (adaptable)
-- React wrapper (adaptable-react-aggrid)
-- Angular wrapper (adaptable-ng-aggrid)
+Repository for Adaptable - the market-leading Data Management toolkit developed by Adaptable Tools
 
 Adaptable is a powerful HTML5 DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
 
@@ -14,11 +10,21 @@ Adaptable supports a number of underlying vendor grid components, and new vendor
 
 Adaptable is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
 
+## PlugIns
+
+Todo 'Core' HTML5 version (adaptable)
+
+## Framework Wrappers
+
+- React wrapper (adaptable-react-aggrid)
+- Angular wrapper (adaptable-ng-aggrid)
+
+
 ## Licences
 
 Adaptable is a commercial product and requires a purchased licence for use.
 
-Adaptable licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
+The Adaptable licence covers both Adaptable.NET (WinForms / WPF) and Adaptable.JS (HTML5) versions, and offers regular updates and full support.
 
 If you wish to evaluate Adaptable before purchase, please contact us requesting a Trial Licence.
 
