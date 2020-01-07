@@ -2,9 +2,9 @@
 
 There are 3 primary ways that developers / users 'interact' with the code in Adaptable:
 
-- [Adaptable Options](./interfaces/_adaptableOptions_adaptableOptions_.adaptableOptions.html): **Set up** Adaptable to your requirements
+- [Adaptable Options](./interfaces/_adaptableOptions_adaptableOptions_.adaptableOptions.html): **Set up and configure** Adaptable to your requirements
 
-- [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html): **Pre-populate** Adaptable with all the objects it requires at startup 
+- [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html): **Pre-populate** your Adaptable instance with the objects required at startup 
 
 - [Adaptable API](interfaces/_api_adaptableApi_.adaptableApi.html): **Access all functionality and state** in Adaptable through code (at runtime) 
 
