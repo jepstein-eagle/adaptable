@@ -7,7 +7,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { DashboardState } from '../../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -34,6 +34,7 @@ import {
   AdaptableDashboardToolbar,
   AdaptableDashboardToolbars,
 } from '../../PredefinedConfig/Common/Types';
+import { string } from 'prop-types';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
@@ -141,29 +142,21 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             this.props.DashboardState.VisibleToolbars,
             toolbar
           );
-          let functionName = StrategyConstants.getFriendlyNameForStrategyId(toolbar);
-          toolbarItems.push({
-            id: toolbar,
-            onClick: (e: React.SyntheticEvent) => {
-              this.onSetToolbarVisibility(toolbar, !isVisible);
-            },
-            label: (
-              <Checkbox
-                className="ab-dd-checkbox"
-                my={0}
-                as="div"
-                value={toolbar}
-                key={toolbar}
-                checked={isVisible}
-                onMouseDown={preventDefault}
-              >
-                {functionName}
-              </Checkbox>
-            ),
-          });
+          let functionName: string = StrategyConstants.getFriendlyNameForStrategyId(toolbar);
+          let toolbarItem: any = this.createToolbar(toolbar, functionName, isVisible);
+          toolbarItems.push(toolbarItem);
         }
       }
     );
+
+    this.props.DashboardState.CustomToolbars.forEach((toolbar: CustomToolbar, index) => {
+      let isVisible: boolean = ArrayExtensions.ContainsItem(
+        this.props.DashboardState.VisibleToolbars,
+        toolbar.Name
+      );
+      let toolbarItem: any = this.createToolbar(toolbar.Name, toolbar.Title, isVisible);
+      toolbarItems.push(toolbarItem);
+    });
 
     // status button
     let statusButton = (
@@ -299,6 +292,33 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     );
   }
 
+  createToolbar(
+    toolbar: AdaptableDashboardToolbar | string,
+    title: string,
+    isVisible: boolean
+  ): any {
+    let test: any = {
+      id: toolbar,
+      onClick: (e: React.SyntheticEvent) => {
+        this.onSetToolbarVisibility(toolbar, !isVisible);
+      },
+      label: (
+        <Checkbox
+          className="ab-dd-checkbox"
+          my={0}
+          as="div"
+          value={toolbar}
+          key={toolbar}
+          checked={isVisible}
+          onMouseDown={preventDefault}
+        >
+          {title}
+        </Checkbox>
+      ),
+    };
+    return test;
+  }
+
   onClick(menuItem: AdaptableMenuItem) {
     this.props.onClick(menuItem.ReduxAction);
   }
@@ -324,12 +344,12 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
   }
 
   onSetToolbarVisibility(name: string, checked: boolean) {
-    const strategy: string = this.props.DashboardState.AvailableToolbars.find(at => at == name);
+    //const strategy: string = this.props.DashboardState.AvailableToolbars.find(at => at == name);
     const visibleToolbars = [].concat(this.props.DashboardState.VisibleToolbars);
     if (checked) {
-      visibleToolbars.push(strategy);
+      visibleToolbars.push(name);
     } else {
-      let index: number = visibleToolbars.findIndex(vt => vt == strategy);
+      let index: number = visibleToolbars.findIndex(vt => vt == name);
       visibleToolbars.splice(index, 1);
     }
     this.props.onSetToolbarVisibility(visibleToolbars);

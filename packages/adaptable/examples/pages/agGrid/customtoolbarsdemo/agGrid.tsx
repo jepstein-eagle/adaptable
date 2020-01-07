@@ -24,7 +24,6 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Custom Toolbars Demo',
-
     vendorGrid: gridOptions,
     predefinedConfig: demoConfig,
   };
