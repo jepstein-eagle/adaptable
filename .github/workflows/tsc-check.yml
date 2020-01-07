@@ -49,8 +49,9 @@ jobs:
       env:
         CI: true
 
-    - name: tsc-plugins-charts
-      run: npm run --prefix packages/plugins/charts tsc
+    - name: tsc-plugins-finance
+      run: npm run --prefix packages/plugins/finance tsc
+
     - name: Executing npm install in plugins:charts
       run: npm install --prefix packages/plugins/charts
       env:
