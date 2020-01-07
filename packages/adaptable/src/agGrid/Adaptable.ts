@@ -395,6 +395,8 @@ export class Adaptable implements IAdaptable {
     // But users can make some hidden or readonly in their entitlements
     this.strategies = this.agGridHelper.setUpStrategies();
 
+    this.forPlugins(plugin => plugin.afterInitStrategies(this, this.strategies));
+
     // Load the store
     this.AdaptableStore.Load.then(
       () => this.strategies.forEach(strat => strat.initializeWithRedux()),
@@ -448,6 +450,18 @@ export class Adaptable implements IAdaptable {
       this.adaptableOptions.plugins.forEach(plugin => {
         callback(plugin);
       });
+    }
+  }
+
+  lookupPlugins(propertyName: string, ...args: any): any {
+    const plugins = this.adaptableOptions.plugins || [];
+
+    for (let i = 0, len = plugins.length; i < len; i++) {
+      const plugin = plugins[i];
+
+      if (plugin.hasProperty(propertyName)) {
+        return plugin.getProperty(propertyName)(...args);
+      }
     }
   }
 
@@ -1173,7 +1187,10 @@ export class Adaptable implements IAdaptable {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
+    return ArrayExtensions.ContainsItem(
+      percentBars.map(pb => pb.ColumnId),
+      columnId
+    );
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -1945,15 +1962,8 @@ export class Adaptable implements IAdaptable {
         if (this.isQuickFilterActive()) {
           this.gridOptions.api!.refreshHeader();
         }
-        // redraw any sparklines if that has been changed
         if (params.column) {
-          let colId = params.column.colId;
-          const isSparklineColumn: boolean = this.api.sparklineColumnApi.isSparklineColumn(colId);
-
-          if (isSparklineColumn) {
-            // this is a bit brute force as its redrawing the whole grid but its quite a rare use case so probably ok
-            this.redraw();
-          }
+          this._emit('ColumnResized', params.column.colId);
         }
       }
     });
@@ -2466,6 +2476,7 @@ export class Adaptable implements IAdaptable {
   }
 
   private addSpecialRendereredColumns(): void {
+    this.forPlugins(() => {});
     this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
       this.addPercentBar(pcr);
     });
@@ -2494,7 +2505,9 @@ export class Adaptable implements IAdaptable {
         sparklineColumn.ColumnId
       );
       const colDef: ColDef = vendorGridColumn.getColDef();
-      colDef.cellRenderer = cellRendererComp;
+      if (cellRendererComp) {
+        colDef.cellRenderer = cellRendererComp;
+      }
 
       if (sparklineColumn.ShowToolTip != null && sparklineColumn.ShowToolTip == true) {
         colDef.tooltipField = colDef.field;

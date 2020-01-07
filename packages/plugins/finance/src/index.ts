@@ -1,9 +1,4 @@
-import {
-  AdaptablePlugin,
-  IAdaptable,
-  AdaptableApi,
-  IAdaptableStore,
-} from '@adaptabletools/adaptable/types';
+import { AdaptablePlugin, IAdaptable, IAdaptableStore } from '@adaptabletools/adaptable/types';
 
 import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
 import { CellSummaryOperationDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/CellSummaryState';
@@ -62,33 +57,31 @@ interface FinancePluginOptions {}
 class FinancePlugin extends AdaptablePlugin {
   public options: FinancePluginOptions;
   public pluginId: string = 'finance';
-  public api?: AdaptableApi;
 
   constructor(options?: FinancePluginOptions) {
     super(options);
     this.options = { ...defaultOptions, ...options };
   }
-  afterInitApi(adaptable: IAdaptable, api: AdaptableApi) {
-    this.api = api;
-  }
 
-  afterInitStore(adaptable: IAdaptable, store: IAdaptableStore) {
+  afterInitStore(adaptable: IAdaptable) {
     const pluginData = {
       OptionalSummaryOperations: [
         {
-          name: 'VWAP',
-          fn: calculateVwap,
+          OperationName: 'VWAP',
+          OperationFunction: calculateVwap,
         },
         {
-          name: 'Only',
-          fn: calculateOnly,
+          OperationName: 'Only',
+          OperationFunction: calculateOnly,
         },
       ] as CellSummaryOperationDefinition[],
     };
 
-    this.api!.pluginsApi.registerPlugin(this.pluginId, pluginData);
+    adaptable.api!.pluginsApi.registerPlugin(this.pluginId, pluginData);
 
-    this.api!.internalApi.addCellSummaryOperationDefinitions(pluginData.OptionalSummaryOperations);
+    adaptable.api!.internalApi.addCellSummaryOperationDefinitions(
+      pluginData.OptionalSummaryOperations
+    );
   }
 }
 
