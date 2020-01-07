@@ -9,7 +9,7 @@ import './index.css';
 
 import { GridOptions } from 'ag-grid-community';
 import Adaptable from '../../../../src/agGrid';
-import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 function InitAdaptableDemo() {
@@ -26,7 +26,7 @@ function InitAdaptableDemo() {
     autoSizeColumnsInLayout: true,
   };
 
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

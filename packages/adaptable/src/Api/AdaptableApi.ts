@@ -53,33 +53,25 @@ import { GridApi } from './GridApi';
  *
  * It also allows them to access all the functionality in Adaptable while bypassing the UI screens altogether if they so wish.
  *
- * *Note to Adaptable users: If there is a method missing that you would like implemented please contact support@adaptabletools.com*
+ * *Note to Adaptable users: If there is a method missing from the Adaptable API that you would like implemented please contact support@adaptabletools.com and we will add it*
  *
  * Adaptable API consists of over 40 sets of properties grouped against a particular function.
  *
  * Each of these properties is a class that contains a set of API method grouped either by Adaptable Function (e.g. *AdvancedSearchAPI*) or type (e.g. *AuditEventApi*)
+ *
+ * The full list is:
+ *
+ *  | API Class  	                                        | Details                                     	                                                                                                                                 |
+ *  |----------------	                                    |---------------------------------------------	                                                                                                                                 |
+ *  | [actionColumnApi](#actioncolumnapi)                 | Provides access to Action Column Function and [State](https://api.adaptableblotter.com/interfaces/_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)  	             |
+ *  |
  */
 
 export interface AdaptableApi {
   /**
-   * Enables use of the Application Function which lets developers render their own toolbar and screen (if required).
-   */
-  applicationApi: ApplicationApi;
-
-  /**
    * Provides access to the Action Column functionality, the *ActionColumn* object.
    */
   actionColumnApi: ActionColumnApi;
-
-  /**
-   * Provides access to the *Sparkline Column* functionality
-   */
-  sparklineColumnApi: SparklineColumnApi;
-
-  /**
-   * Enables developers to set up configuration when using our Partner tools (like iPushPull and Glue42)
-   */
-  partnerApi: PartnerAPI;
 
   /**
    * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_predefinedconfig_runtimestate_advancedsearchstate_.advancedsearchstate.html).
@@ -87,9 +79,14 @@ export interface AdaptableApi {
   advancedSearchApi: AdvancedSearchApi;
 
   /**
-   * Provides access to the *Alert* function (enabling the displyaing of **Alerts**) and [Alerrt State](_predefinedconfig_runtimestate_alertstate_.alertstate.html).
+   * Provides access to the *Alert* function (enabling the displaying of **Alerts**) and [Alerrt State](_predefinedconfig_runtimestate_alertstate_.alertstate.html).
    */
   alertApi: AlertApi;
+
+  /**
+   * Enables use of the Application Function which lets developers render their own toolbar and screen (if required).
+   */
+  applicationApi: ApplicationApi;
 
   /**
    * Publishes the 3 Audit Events - *onAuditStateChanged*, *onAuditCellEdited* and *onAuditFunctionApplied*
@@ -162,7 +159,6 @@ export interface AdaptableApi {
    * Provides access to the *Dashboard* function, and [Dashboard State](_predefinedconfig_runtimestate_dashboardstate_.dashboardstate.html).
    */
   dashboardApi: DashboardApi;
-  toolPanelApi: ToolPanelApi;
 
   /**
    * Provides access to the *Data Source* function, the *Data Source* object and [Data Source State](_predefinedconfig_runtimestate_datasourcestate_.datasourcestate.html).
@@ -190,11 +186,6 @@ export interface AdaptableApi {
   flashingCellApi: FlashingCellApi;
 
   /**
-   * Provides access to the *Updated Row* function and [Updated Row State](_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
-   */
-  updatedRowApi: UpdatedRowApi;
-
-  /**
    * Provides access to the *Format Column* function, the *Format Column* object and [Format Column State](_predefinedconfig_runtimestate_formatcolumnstate_.formatcolumnstate.html).
    */
   formatColumnApi: FormatColumnApi;
@@ -215,6 +206,16 @@ export interface AdaptableApi {
   layoutApi: LayoutApi;
 
   /**
+   * Provides access to the *Named Filter* function, the `NamedFilter` object and [NamedFilter State](_predefinedconfig_runtimestate_namedfilterstate_.namedfilterstate.html).
+   */
+  namedFilterApi: NamedFilterApi;
+
+  /**
+   * Enables developers to set up configuration when using our Partner tools (like iPushPull and Glue42)
+   */
+  partnerApi: PartnerAPI;
+
+  /**
    * Provides access to the *Percent Bar* function, the *Percent Bar* object and [Percent Bar State](_predefinedconfig_runtimestate_percentbarstate_.percentbarstate.html).
    */
   percentBarApi: PercentBarApi;
@@ -225,19 +226,19 @@ export interface AdaptableApi {
   plusMinusApi: PlusMinusApi;
 
   /**
-   * Provides access to the *Plugins*
+   * Provides access to the **Plugins** functionality of Adaptable - currently *Charting* and *Finance*, but with more to come in due course.
    */
   pluginsApi: PluginsApi;
-
-  /**
-   * Provides access to the *Reminder* function, the *Reminder* object and [Reminder State](_predefinedconfig_runtimestate_reminderstate_.reminderstate.html).
-   */
-  reminderApi: ReminderApi;
 
   /**
    * Provides access to the *Quick Search* function, the *Quick Search* object and [Quick Search State](_predefinedconfig_runtimestate_quicksearchstate_.quicksearchstate.html).
    */
   quickSearchApi: QuickSearchApi;
+
+  /**
+   * Provides access to the *Reminder* function, the *Reminder* object and [Reminder State](_predefinedconfig_runtimestate_reminderstate_.reminderstate.html).
+   */
+  reminderApi: ReminderApi;
 
   /**
    * Provides access to the *Shortcut* function, the *Shortcut* object and [Shortcut State](_predefinedconfig_runtimestate_shortcutstate_.shortcutstate.html).
@@ -248,6 +249,13 @@ export interface AdaptableApi {
    * Provides access to the *Layout* function, the *Layout* object and [Layout State](_predefinedconfig_runtimestate_layoutstate_.layoutstate.html).
    */
   smartEditApi: SmartEditApi;
+
+  /**
+   * Provides access to the *Sparkline Column* functionality
+   *
+   * Only used if the Charts Plugin has been enabled.
+   */
+  sparklineColumnApi: SparklineColumnApi;
 
   /**
    * Provides access to [System Filter State](_predefinedconfig_runtimestate_systemfilterstate_.systemfilterstate.html) that manages the Filters that Adaptable ships with.
@@ -265,6 +273,16 @@ export interface AdaptableApi {
   themeApi: ThemeApi;
 
   /**
+   * Provides access to the *ToolPanel* function, and [ToolPanel State](_predefinedconfig_runtimestate_toolpanelstate_.toolpanelstate.html).
+   */
+  toolPanelApi: ToolPanelApi;
+
+  /**
+   * Provides access to the *Updated Row* function and [Updated Row State](_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
+   */
+  updatedRowApi: UpdatedRowApi;
+
+  /**
    * Provides access to [User Interface State](_predefinedconfig_runtimestate_userinterfacestate_.userinterfacestate.html) which allows you to set up colours, permitted values etc.
    */
   userInterfaceApi: UserInterfaceApi;
@@ -277,9 +295,8 @@ export interface AdaptableApi {
   /**
    * API methods used internally within Adaptable.
    *
-   * **It is not recommended to use this section if using Adaptable externally**
+   * **This api class is not intended for developers to use and it is not recommended to use this section if accessing Adaptable through code**
+   *
    */
   internalApi: InternalApi;
-
-  namedFilterApi: NamedFilterApi;
 }
