@@ -42,11 +42,11 @@ Full developer documentation is available at [Adaptable Developer Documentation]
 
 ## Further Information
 
-Further information about Adaptable is available at the [Adaptable Tools Website](https://www.adaptabletools.com).
+Further information about Adaptable is available at the [Adaptable Tools Website](http://www.adaptabletools.com).
 
 And you can try out AdapTable for yourself at [Adaptable Demos](https://demo.adaptableblotter.com).
 
-For all enquiries please email the [mailto](support@adaptabletools.com).
+For all enquiries please email the [st](mailto:support@adaptabletools.com).
 
 ## Support
 

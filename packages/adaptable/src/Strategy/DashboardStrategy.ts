@@ -15,7 +15,7 @@ import {
 import { AdaptableDashboardToolbar } from '../PredefinedConfig/Common/Types';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
-  private visibleToolbars: AdaptableDashboardToolbar[];
+  private visibleToolbars: AdaptableDashboardToolbar[] | string[] | undefined;
   private dashboardVisibility: Visibility;
 
   constructor(adaptable: IAdaptable) {
@@ -44,7 +44,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         }
       );
 
-      [...(this.visibleToolbars || [])].forEach((toolbar: AdaptableDashboardToolbar) => {
+      [...(this.visibleToolbars || [])].forEach((toolbar: AdaptableDashboardToolbar | string) => {
         if (!newVisibleToolbars[toolbar]) {
           this.fireToolbarVisibilityChangedEvent(toolbar, 'Hidden');
         }
