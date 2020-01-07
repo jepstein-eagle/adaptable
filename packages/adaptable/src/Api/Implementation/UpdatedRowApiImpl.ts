@@ -4,7 +4,6 @@ import { UpdatedRowApi } from '../UpdatedRowApi';
 import * as UpdatedRowRedux from '../../Redux/ActionsReducers/UpdatedRowRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
-import { Thickness } from 'igniteui-react-core/ES5/Thickness';
 /**
  * Provides full and comprehensive run-time access to the Updated Rows function (which colours rows as they change based on a scheme set by the user).
  *

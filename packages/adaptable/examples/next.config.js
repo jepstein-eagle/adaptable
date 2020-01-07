@@ -68,6 +68,9 @@ const withTypescript = (nextConfig = {}) => {
       config.resolve.alias = config.resolve.alias || {};
       config.resolve.alias.react = path.resolve('../node_modules/react');
       config.resolve.alias['react-dom'] = path.resolve('../node_modules/react-dom');
+      config.resolve.alias['styled-components'] = path.resolve('../node_modules/styled-components');
+      config.resolve.alias.redux = path.resolve('../node_modules/redux');
+      config.resolve.alias['react-redux'] = path.resolve('../node_modules/react-redux');
 
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options);

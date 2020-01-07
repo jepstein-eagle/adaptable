@@ -26,7 +26,7 @@ import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import { CalendarStrategy } from '../Strategy/CalendarStrategy';
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy';
-import { ChartStrategy } from '../Strategy/ChartStrategy';
+
 import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy';
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
@@ -43,9 +43,6 @@ import { HomeStrategy } from '../Strategy/HomeStrategy';
 import { LayoutStrategy } from '../Strategy/LayoutStrategy';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { PercentBarStrategy } from '../Strategy/PercentBarStrategy';
-import { SparklineColumnStrategy } from '../Strategy/SparklineColumnStrategy';
-import { SparklineStrategy } from '../Strategy/SparklineStrategy';
-import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy';
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy';
@@ -65,7 +62,6 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
-import { getSparklineRendererForColumn } from './SparklineColumnRenderer';
 import Helper from '../Utilities/Helpers/Helper';
 import { SelectionChangedInfo, SelectionChangedEventArgs } from '../Api/Events/SelectionChanged';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
@@ -117,7 +113,7 @@ export class agGridHelper {
       StrategyConstants.CellValidationStrategyId,
       new CellValidationStrategy(adaptable)
     );
-    strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(adaptable));
+
     strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(adaptable));
     strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(adaptable));
     strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(adaptable));
@@ -149,7 +145,7 @@ export class agGridHelper {
       new ColumnCategoryStrategy(adaptable)
     );
     strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(adaptable));
-    strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(adaptable));
+
     strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(adaptable));
     strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(adaptable));
     strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(adaptable));
@@ -163,11 +159,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(adaptable));
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(adaptable));
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(adaptable));
-    strategies.set(
-      StrategyConstants.SparklineColumnStrategyId,
-      new SparklineColumnStrategy(adaptable)
-    );
-    strategies.set(StrategyConstants.SparklineStrategyId, new SparklineStrategy(adaptable));
+
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     return strategies;
   }
@@ -194,8 +186,8 @@ export class agGridHelper {
   public createSparklineCellRendererComp(
     sparkline: SparklineColumn,
     adaptableId: string
-  ): ICellRendererFunc {
-    return getSparklineRendererForColumn(sparkline);
+  ): ICellRendererFunc | void {
+    return this.adaptable.lookupPlugins('sparklineColumnRenderer', sparkline);
   }
 
   public createPercentBarCellRendererFunc(pcr: PercentBar, adaptableId: string): ICellRendererFunc {

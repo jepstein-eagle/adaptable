@@ -1,4 +1,4 @@
-import { AdaptableOptions } from '../types';
+import { AdaptableOptions, AdaptablePlugin } from '../types';
 import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection, IStrategy } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
@@ -127,6 +127,7 @@ export interface IAdaptable {
   _on(eventName: 'SearchApplied', callback: () => void): () => void;
   _on(eventName: 'GridRefreshed', callback: () => void): () => void;
   _on(eventName: 'GridReloaded', callback: () => void): () => void;
+  _on(eventName: 'ColumnResized', callback: (colId: string) => void): () => void;
   _on(eventName: 'KeyDown', callback: (keyDownEvent: any) => void): () => void;
 
   // onAny(callback: EmitterCallback): () => void;
@@ -183,6 +184,10 @@ export interface IAdaptable {
   getDataRowFromRowNode(rowNode: any): any;
   getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
   getRowNodeForPrimaryKey(primaryKeyValue: any): any;
+
+  forPlugins(callback: (plugin: AdaptablePlugin) => any): void;
+
+  lookupPlugins(propertyName: string, ...args: any): any;
 
   // editing related
   setValue(dataChangedInfo: DataChangedInfo, reselectSelectedCells: boolean): void;

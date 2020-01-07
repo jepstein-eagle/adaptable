@@ -42,16 +42,12 @@ import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { SystemStatusToolbarControl } from './SystemStatus/SystemStatusToolbarControl';
 import { CustomToolbarControl } from './Dashboard/CustomToolbarControl';
-import { ChartPopup } from './Chart/ChartPopup';
-import { ChartToolbarControl } from './Chart/ChartToolbarControl';
+
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
-import { SparklineColumnPopup } from './Sparkline/SparklineColumnPopup';
-import { ViewAsSparklinesPopup } from './Sparkline/ViewAsSparklinePopup';
-import { PieChartPopup } from './PieChart/PieChartPopup';
+
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
-import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ReminderPopup } from './Reminder/ReminderPopup';
 import { SystemStatusPopup } from './SystemStatus/SystemStatusPopup';
 import { ConnectedComponent } from 'react-redux';
@@ -63,7 +59,6 @@ import { ThemeToolPanel } from './Theme/ThemeToolPanel';
 import { ExportToolPanel } from './Export/ExportToolPanel';
 import { SystemStatusToolPanel } from './SystemStatus/SystemStatusToolPanel';
 import { AlertToolPanel } from './Alert/AlertToolPanel';
-import { ChartToolPanel } from './Chart/ChartToolPanel';
 import { ColumnFilterToolPanel } from './ColumnFilter/ColumnFilterToolPanel';
 import { CellSummaryToolPanel } from './CellSummary/CellSummaryToolPanel';
 import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
@@ -77,7 +72,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CalculatedColumnPopup,
   CalendarsPopup,
   CellValidationPopup,
-  ChartPopup,
   ColumnChooserPopup,
   ColumnFilterPopup,
   ColumnInfoPopup,
@@ -96,21 +90,17 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   LayoutPopup,
   ColumnCategoryPopup,
   PercentBarPopup,
-  PieChartPopup,
   PlusMinusPopup,
   QuickSearchPopup,
   ReminderPopup,
   CellSummaryPopup,
   SmartEditPopup,
-  SparklineColumnPopup,
-  ViewAsSparklinesPopup,
   ShortcutPopup,
   ThemePopup,
   TeamSharingPopup,
   ToolPanelPopup,
   SystemStatusPopup,
   UserFilterPopup,
-  ChartDisplayPopup,
 };
 
 // here we put the dashboard control for each strategy
@@ -122,7 +112,6 @@ export const AdaptableDashboardFactory = new Map<
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl],
-  [StrategyConstants.ChartStrategyId, ChartToolbarControl],
   [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolbarControl],
   [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],
   [StrategyConstants.ExportStrategyId, ExportToolbarControl],
@@ -143,7 +132,6 @@ export const AdaptableToolPanelFactory = new Map<
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolPanel],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolPanel],
-  [StrategyConstants.ChartStrategyId, ChartToolPanel],
   [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolPanel],
   [StrategyConstants.DashboardStrategyId, DashboardToolPanel],
   [StrategyConstants.ExportStrategyId, ExportToolPanel],
