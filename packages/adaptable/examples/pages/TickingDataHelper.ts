@@ -1,4 +1,4 @@
-﻿import { GridOptions, RowNode } from 'ag-grid-community';
+﻿import { GridOptions, RowNode } from '@ag-grid-community/all-modules';
 import { ITrade, ExamplesHelper } from './ExamplesHelper';
 import ArrayExtensions from '../../src/Utilities/Extensions/ArrayExtensions';
 import { AdaptableApi } from '../../src/types';

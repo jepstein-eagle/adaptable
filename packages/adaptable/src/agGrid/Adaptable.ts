@@ -4,23 +4,19 @@ import {
   CellRangeParams,
   PopupEditorWrapper,
   RefreshCellsParams,
-  ITooltipParams,
   GridOptions,
   Column,
   RowNode,
   ICellEditor,
   ICellRendererFunc,
   SideBarDef,
-  ToolPanelDef,
-} from 'ag-grid-community';
-import 'ag-grid-enterprise';
+  Events,
+} from '@ag-grid-community/all-modules';
 
-import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import * as _ from 'lodash';
 
-import { Events } from 'ag-grid-community/dist/lib/eventKeys';
 import {
   NewValueParams,
   ValueGetterParams,
@@ -28,13 +24,12 @@ import {
   ValueFormatterParams,
   ColGroupDef,
   ValueSetterParams,
-} from 'ag-grid-community/dist/lib/entities/colDef';
+} from '@ag-grid-community/all-modules';
 import {
   GetMainMenuItemsParams,
   MenuItemDef,
   GetContextMenuItemsParams,
-} from 'ag-grid-community/dist/lib/entities/gridOptions';
-import { Action } from 'redux';
+} from '@ag-grid-community/all-modules';
 import Emitter, { EmitterCallback } from '../Utilities/Emitter';
 import { AdaptableApp } from '../View/AdaptableView';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
@@ -43,9 +38,8 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 // redux / store
 import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableStore, INIT_STATE } from '../Redux/Store/AdaptableStore';
-import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
-import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
+
 // services
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
@@ -63,7 +57,6 @@ import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnServi
 import { CalculatedColumnExpressionService } from '../Utilities/Services/CalculatedColumnExpressionService';
 // strategies
 import { IStrategyCollection, IStrategy } from '../Strategy/Interface/IStrategy';
-import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
 // components
 import { FilterWrapperFactory } from './FilterWrapper';
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
@@ -75,7 +68,6 @@ import {
   DistinctCriteriaPairValue,
   FilterOnDataChangeOptions,
   LeafExpressionOperator,
-  MessageType,
 } from '../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
@@ -85,7 +77,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
 import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
-import { ColumnHelper, getColumnsFromFriendlyNames } from '../Utilities/Helpers/ColumnHelper';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
@@ -121,11 +113,10 @@ import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
-import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
+import { TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
-import { GeneralOptions } from '../AdaptableOptions/GeneralOptions';
 import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
@@ -159,7 +150,10 @@ import {
 } from '../AdaptableInterfaces/IAdaptableNoCodeWizard';
 import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
-import { IQuickSearchStrategy } from '../Strategy/Interface/IQuickSearchStrategy';
+
+import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
+
+ModuleRegistry.registerModules(AllCommunityModules);
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -528,10 +522,14 @@ export class Adaptable implements IAdaptable {
     }
     // now create the grid itself - we have to do it this way as previously when we instantiated the Grid 'properly' it got created as J.Grid
     let grid: any;
+    const modules = (this.adaptableOptions.vendorGrid || {}).modules || [];
+
+    delete (this.gridOptions as any).modules;
+
     if (this.runtimeConfig && this.runtimeConfig.instantiateGrid) {
-      grid = this.runtimeConfig.instantiateGrid(vendorContainer, this.gridOptions);
+      grid = this.runtimeConfig.instantiateGrid(vendorContainer, this.gridOptions, { modules });
     } else {
-      grid = new Grid(vendorContainer, this.gridOptions);
+      grid = new Grid(vendorContainer, this.gridOptions, { modules });
     }
     return grid != null;
   }

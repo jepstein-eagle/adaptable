@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-import './node_modules/ag-grid-community/dist/styles/ag-grid.css';
-import './node_modules/ag-grid-community/dist/styles/ag-theme-balham.css';
-import './node_modules/ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';

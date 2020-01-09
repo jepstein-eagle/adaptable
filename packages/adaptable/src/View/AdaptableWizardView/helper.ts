@@ -1,4 +1,4 @@
-import { GridOptions, GridOptionsWrapper } from 'ag-grid-community';
+import { GridOptions } from '@ag-grid-community/all-modules';
 
 export interface WizardDataSourceInfo {
   columns: string[];

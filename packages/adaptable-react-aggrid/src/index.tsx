@@ -99,8 +99,9 @@ const createAdaptable = ({
     },
     false,
     {
-      instantiateGrid: (vendorContainer: HTMLElement, gridOptions) => {
+      instantiateGrid: (vendorContainer: HTMLElement, gridOptions, { modules }) => {
         const gridParams = {
+          modules,
           seedBeanInstances: {
             agGridReact: agGridReactWrapperInstance,
           },

@@ -4,7 +4,7 @@ import { AdaptableOptions } from '../../../types';
 import CheckBox from '../../../components/CheckBox';
 import { FilterOptions } from '../../../AdaptableOptions/FilterOptions';
 import { LayoutOptions } from '../../../AdaptableOptions/LayoutOptions';
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import HelpBlock from '../../../components/HelpBlock';
 import { ConfigServerOptions } from '../../../AdaptableOptions/ConfigServerOptions';
 import Input from '../../../components/Input';

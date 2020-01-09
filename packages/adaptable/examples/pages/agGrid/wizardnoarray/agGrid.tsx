@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
@@ -41,17 +41,14 @@ function InitAdaptableDemo() {
     prepareData: data => {
       const result = {
         columns: ['name', 'value'],
-        data: Object.keys(data).reduce(
-          (acc, key) => {
-            acc.push({
-              id: key,
-              name: key,
-              value: data[key],
-            });
-            return acc;
-          },
-          [] as any[]
-        ),
+        data: Object.keys(data).reduce((acc, key) => {
+          acc.push({
+            id: key,
+            name: key,
+            value: data[key],
+          });
+          return acc;
+        }, [] as any[]),
       };
       return result;
     },
