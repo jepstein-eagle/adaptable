@@ -44,8 +44,9 @@ import { ThemeApiImpl } from './ThemeApiImpl';
 import { UserInterfaceApiImpl } from './UserInterfaceApiImpl';
 import { UserFilterApiImpl } from './UserFilterApiImpl';
 import { NamedFilterApiImpl } from './NamedFilterApiImpl';
+import { IPushPullApiImpl } from './IPushPullApiImpl';
 import { InternalApiImpl } from './InternalApiImpl';
-import { PartnerApiImpl } from './PartnerApiImpl';
+import { Glue42ApiImpl } from './Glue42ApiImpl';
 import { ColumnChooserApiImpl } from './ColumnChooserApiImpl';
 import { AdaptableApi } from '../../types';
 import { ActionColumnApi } from '../ActionColumnApi';
@@ -89,9 +90,9 @@ import { SystemStatusApi } from '../SystemStatusApi';
 import { UserInterfaceApi } from '../UserInterfaceApi';
 import { UserFilterApi } from '../UserFilterApi';
 import { NamedFilterApi } from '../NamedFilterApi';
-import { PartnerAPI } from '../PartnerAPI';
 import { ThemeApi } from '../ThemeApi';
 import { GridApi } from '../GridApi';
+import { IPushPullApi } from '../IPushPullApi';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;
@@ -137,7 +138,8 @@ export class AdaptableApiImpl implements AdaptableApi {
   public userInterfaceApi: UserInterfaceApi;
   public userFilterApi: UserFilterApi;
   public namedFilterApi: NamedFilterApi;
-  public partnerApi: PartnerAPI;
+  public iPushPullApi: IPushPullApi;
+  public glue42Api: Glue42ApiImpl;
   public toolPanelApi: ToolPanelApi;
 
   constructor(protected adaptable: IAdaptable) {
@@ -184,7 +186,8 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.userInterfaceApi = new UserInterfaceApiImpl(adaptable);
     this.userFilterApi = new UserFilterApiImpl(adaptable);
     this.namedFilterApi = new NamedFilterApiImpl(adaptable);
-    this.partnerApi = new PartnerApiImpl(adaptable);
+    this.iPushPullApi = new IPushPullApiImpl(adaptable);
+    this.glue42Api = new Glue42ApiImpl(adaptable);
     this.toolPanelApi = new ToolPanelApiImpl(adaptable);
 
     this.internalApi = new InternalApiImpl(adaptable);

@@ -20,6 +20,8 @@ import { FlashingCellState } from './FlashingCellState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { FormatColumnState } from './FormatColumnState';
 import { FreeTextColumnState } from './FreeTextColumnState';
+import { IPushPullState } from './IPushPullState';
+import { Glue42State } from './Glue42State';
 import { LayoutState } from './LayoutState';
 import { PercentBarState } from './PercentBarState';
 import { PlusMinusState } from './PlusMinusState';
@@ -33,7 +35,6 @@ import { ChartState } from './ChartState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
-import { PartnerState } from './PartnerState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 
@@ -314,14 +315,9 @@ export interface PredefinedConfig {
    * (Note: Named Filter State can be updated via Adaptable API but these updates **will not be persisted**).
    */
   NamedFilter?: NamedFilterState;
-  /**
-   * Config required to run features provided by partners of Adaptable such as iPushPull and Glue42.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: Partner Config State can be updated via Adaptable API but these updates **will not be persisted**).
-   */
-  Partner?: PartnerState;
+
+  Glue42?: Glue42State;
+  IPushPull?: IPushPullState;
   /**
    * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
    *

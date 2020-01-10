@@ -73,6 +73,7 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
+import { PushPullStrategy } from '../Strategy/PushPullStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -161,6 +162,9 @@ export class agGridHelper {
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(adaptable));
 
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
+
+    // should probably also be a plugin
+    strategies.set(StrategyConstants.IPushPullStrategyId, new PushPullStrategy(adaptable));
     return strategies;
   }
 

@@ -126,32 +126,6 @@ class ExportToolbarControlComponent extends React.Component<
       };
     }
 
-    let iPushPullExcelMenuItem;
-    if (
-      this.props.LiveReports.find(
-        x => x.Report == currentReport && x.ExportDestination == ExportDestination.iPushPull
-      )
-    ) {
-      iPushPullExcelMenuItem = {
-        onClick: () => this.props.onReportStopLive(currentReport, ExportDestination.iPushPull),
-        label: 'iPushPull (Stop Sync)',
-      };
-    } else {
-      let isIPushPullLiveReport = this.props.Adaptable.ReportService.IsReportLiveReport(
-        currentReport,
-        ExportDestination.iPushPull
-      );
-      iPushPullExcelMenuItem = {
-        onClick: () =>
-          this.props.onApplyExport(
-            currentReport,
-            ExportDestination.iPushPull,
-            isIPushPullLiveReport
-          ),
-        label: 'iPushPull (Start Sync)',
-      };
-    }
-
     let isGlueLiveReport: boolean = this.props.Adaptable.ReportService.IsReportLiveReport(
       currentReport,
       ExportDestination.Glue42
@@ -164,7 +138,7 @@ class ExportToolbarControlComponent extends React.Component<
 
     let deleteMessage: string = "Are you sure you want to delete '";
     if (savedReport != null) {
-      deleteMessage = deleteMessage + savedReport.Name + '?';
+      deleteMessage = deleteMessage + savedReport.Name + "'?";
     }
 
     const exportItems = [
@@ -174,8 +148,7 @@ class ExportToolbarControlComponent extends React.Component<
       this.props.Adaptable.ReportService.IsReportDestinationActive(
         ExportDestination.OpenfinExcel
       ) && openfinExcelMenuItem,
-      this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.iPushPull) &&
-        iPushPullExcelMenuItem,
+
       this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
         glue42MenuItem,
     ].filter(x => !!x);

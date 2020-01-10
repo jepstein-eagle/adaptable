@@ -66,6 +66,7 @@ import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesCh
 import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
+import { IPushPullReport } from '../PredefinedConfig/IPushPullState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -283,6 +284,15 @@ export function CreateEmptyReport(): Report {
     ReportRowScope: ReportRowScope.AllRows,
     AutoExport: null,
   };
+}
+
+export function CreateEmptyIPushPullReport(): IPushPullReport {
+  let report: IPushPullReport = {
+    Report: CreateEmptyReport(),
+    Page: EMPTY_STRING,
+    Folder: EMPTY_STRING,
+  };
+  return report;
 }
 
 export function CreateDefaultFlashingCell(
@@ -524,8 +534,8 @@ export function CreateSystemReports(): Array<Report> {
   _systemReports.push({
     Uuid: createUuid(),
     Name: SELECTED_CELLS_REPORT,
-    ReportColumnScope: ReportColumnScope.SelectedColumns,
-    ReportRowScope: ReportRowScope.SelectedCells,
+    ReportColumnScope: ReportColumnScope.SelectedCellColumns,
+    ReportRowScope: ReportRowScope.SelectedCellRows,
     ColumnIds: [],
     Expression: ExpressionHelper.CreateEmptyExpression(),
   });
@@ -562,6 +572,7 @@ export const ObjectFactory = {
   CreateEmptySparklineColumn,
   CreateEmptyUserFilter,
   CreateEmptyReport,
+  CreateEmptyIPushPullReport,
   CreateDefaultFlashingCell,
   CreateEmptyReminder,
   CreateEmptyAutoExport,

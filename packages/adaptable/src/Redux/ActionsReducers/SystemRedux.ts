@@ -17,12 +17,12 @@ import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './ExportRedux';
-import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
+import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './IPushPullRedux';
 import { LiveReport } from '../../Api/Events/LiveReportUpdated';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 import { CellSummaryChangeOperationAction } from './CellSummaryRedux';
+import { IPushPullDomain } from '../../PredefinedConfig/IPushPullState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state

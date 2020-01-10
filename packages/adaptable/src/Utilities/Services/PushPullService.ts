@@ -1,12 +1,13 @@
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { IPPStyle } from '../Interface/IPPStyle';
 import { IPushPullService } from './Interface/IPushPullService';
-import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
 
 import env from '../../env';
 import folder from '../../components/icons/folder';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
+import { IPushPullDomain, IPushPullState } from '../../PredefinedConfig/IPushPullState';
+import StringExtensions from '../Extensions/StringExtensions';
 
 export enum ServiceStatus {
   Unknown = 'Unknown',
@@ -23,9 +24,9 @@ export class PushPullService implements IPushPullService {
   constructor(public adaptable: IAdaptable) {
     this.adaptable = adaptable;
 
-    this.adaptable.api.eventApi.on('AdaptableReady', () => {
+    this.adaptable.api.eventApi.on('AdaptableReady', async () => {
       if (!this.ppInstance) {
-        let instance = this.adaptable.api.partnerApi.getIPushPullInstance();
+        let instance = this.adaptable.api.iPushPullApi.getIPushPullInstance();
 
         if (instance) {
           let userPushPullConfig = instance.config;
@@ -42,15 +43,36 @@ export class PushPullService implements IPushPullService {
             hsts: false, // strict cors policy
           });
           this.ppInstance = instance;
-          this.adaptable.api.internalApi.setIPushPullAvailableOn();
-        } else {
-          this.adaptable.api.internalApi.setIPushPullAvailableOff();
+
+          let autoLogin: boolean = false;
+          autoLogin = true;
+          if (autoLogin) {
+            let userName:
+              | string
+              | undefined = this.adaptable.api.iPushPullApi.getIPushPullUsername();
+            let password:
+              | string
+              | undefined = this.adaptable.api.iPushPullApi.getIPushPullPassword();
+
+            if (
+              StringExtensions.IsNotNullOrEmpty(userName) &&
+              StringExtensions.IsNotNullOrEmpty(password)
+            ) {
+              try {
+                // slightly circular but it means tht we do the logic in one go..
+                this.adaptable.api.iPushPullApi.loginToIPushPull(userName, password);
+              } catch (err) {
+                // handle this
+                this.adaptable.api.internalApi.setIPushPullAvailableOff();
+              }
+            }
+          }
         }
       }
     });
   }
 
-  public getIPPStatus(): ServiceStatus {
+  public getIPushPullStatus(): ServiceStatus {
     if (!this.ppInstance) {
       return ServiceStatus.Error;
     }
@@ -58,7 +80,7 @@ export class PushPullService implements IPushPullService {
   }
 
   // Logs in to iPushpull
-  public Login(login: string, password: string): Promise<any> {
+  public login(login: string, password: string): Promise<any> {
     if (!this.ppInstance) {
       return Promise.reject('No iPushPull instance found!');
     }
@@ -66,6 +88,7 @@ export class PushPullService implements IPushPullService {
       .login(login, password)
       .then((result: any) => {
         this.ppInstance.__status = ServiceStatus.Connected;
+        LoggingHelper.LogAdaptableSuccess('Logged in to ipushpull');
         return result;
       })
       .catch((err: any) => {
@@ -76,13 +99,14 @@ export class PushPullService implements IPushPullService {
   }
 
   // Retrieves domain pages from iPushPull
-  public GetDomainPages(): Promise<IPushPullDomain[]> {
+  public getDomainPages(): Promise<IPushPullDomain[]> {
     if (!this.ppInstance) {
       return Promise.reject('No iPushPull instance found!');
     }
     return this.ppInstance.api
       .getDomainsAndPages(this.ppInstance.config.api_key)
       .then((response: any) => {
+        LoggingHelper.LogAdaptableSuccess('Retrieved iPushPull Folder/Page info');
         return response.data.domains.map((domain: any) => ({
           Name: domain.name,
           FolderId: domain.id,
@@ -91,13 +115,14 @@ export class PushPullService implements IPushPullService {
             .map((page: any) => page.name),
         })) as IPushPullDomain[];
       })
+
       .catch((error: any) => {
-        LoggingHelper.LogAdaptableError("couldn't get Domain/Pages from IPP : ", error);
+        LoggingHelper.LogAdaptableError("Couldn't get Domain/Pages from iPushPull : ", error);
         throw error.message;
       });
   }
 
-  public LoadPage(folderIPP: string, pageIPP: string): Promise<any> {
+  public loadPage(folderIPP: string, pageIPP: string): Promise<any> {
     if (!this.ppInstance) {
       return Promise.reject('No iPushPull instance found!');
     }
@@ -114,7 +139,7 @@ export class PushPullService implements IPushPullService {
     });
   }
 
-  public UnloadPage(page: string): void {
+  public unloadPage(page: string): void {
     const pageIPP = this.pages.get(page);
     if (pageIPP) {
       pageIPP.destroy();
@@ -123,7 +148,7 @@ export class PushPullService implements IPushPullService {
     }
   }
 
-  public AddNewPage(folderId: number, page: string): Promise<any> {
+  public addNewPage(folderId: number, page: string): Promise<any> {
     if (!this.ppInstance) {
       return Promise.reject('No iPushPull instance found!');
     }

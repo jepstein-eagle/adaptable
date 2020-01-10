@@ -9,7 +9,7 @@ import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
-import { Glue42State } from '../../PredefinedConfig/PartnerState';
+import { Glue42State } from '../../PredefinedConfig/Glue42State';
 import { IGlue42Service } from './Interface/IGlue42Service';
 
 export interface Glue42ExportError {
@@ -52,8 +52,8 @@ export class Glue42Service implements IGlue42Service {
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       if (!this.glueInstance) {
-        let glue42State: Glue42State | undefined = this.adaptable.api.partnerApi.getGlue42State();
-        if (glue42State) {
+        let glue42State: Glue42State | undefined = this.adaptable.api.glue42Api.getGlue42State();
+        if (glue42State && glue42State.Glue42Config) {
           this.init(glue42State);
         } else {
           this.adaptable.api.internalApi.setGlue42AvailableOff();
@@ -67,7 +67,7 @@ export class Glue42Service implements IGlue42Service {
       const glue42Config = glue42State.Glue42Config;
       const glue = glue42State.Glue;
       const glue4Office = glue42State.Glue4Office;
-      if (glue42Config.excelExport && glue42Config.excelExport.timeoutMs) {
+      if (glue42Config && glue42Config.excelExport && glue42Config.excelExport.timeoutMs) {
         this.excelSyncTimeout = glue42Config.excelExport.timeoutMs;
       }
 

@@ -70,14 +70,18 @@ import TeamShare from './team-share';
 import UpdatedRow from './updated-row';
 import UserFilter from './user-filter';
 import alignJustify from './align-justify';
+import login from './login';
 import Theme from './theme';
 import checkBox from './check-box';
 import checkBoxOutline from './check-box-outline';
 import tabUnselected from './tab-unselected';
 import CloudUpload from './cloud-upload';
+import iPushPull from './iPushPull';
 import FolderOpen from './folder-open';
 import Folder from './folder';
 import FolderShared from './folder-shared';
+import Play from './play';
+import Stop from './stop';
 
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
@@ -162,6 +166,8 @@ const allIcons = {
   'sort-asc': SortAsc,
   'sort-desc': SortDesc,
   'align-justify': alignJustify,
+  login: login,
+
   clear: Clear,
   'import-export': ImportExport,
   'attach-file': AttachFile,
@@ -169,8 +175,11 @@ const allIcons = {
   'info-sign': Info,
   add: Plus,
   'cloud-upload': CloudUpload,
+  ipushpull: iPushPull,
   'folder-open': FolderOpen,
   'folder-shared': FolderShared,
+  play: Play,
+  stop: Stop,
   folder: Folder,
 } as { [key: string]: ReactNode };
 

@@ -30,7 +30,6 @@ import { ActionColumnState } from '../../PredefinedConfig/ActionColumnState';
 import { ApplicationState } from '../../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../../PredefinedConfig/SparklineColumnState';
-import { PartnerState } from '../../PredefinedConfig/PartnerState';
 import { ColumnCategoryState } from '../../PredefinedConfig/ColumnCategoryState';
 import { EntitlementState } from '../../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../../PredefinedConfig/FreeTextColumnState';
@@ -43,6 +42,8 @@ import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
 import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';
 import { ConfigApi } from '../ConfigApi';
 import { AdaptableStateKey } from '../../PredefinedConfig/Common/Types';
+import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
+import { Glue42State } from '../../PredefinedConfig/Glue42State';
 
 export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configInit(): void {
@@ -201,10 +202,14 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Layout)
           : this.getAdaptableState().Layout;
-      case 'Partner':
+      case 'IPushPull':
         return returnJson
-          ? JSON.stringify(this.getAdaptableState().Partner)
-          : this.getAdaptableState().Partner;
+          ? JSON.stringify(this.getAdaptableState().IPushPull)
+          : this.getAdaptableState().IPushPull;
+      case 'Glue42':
+        return returnJson
+          ? JSON.stringify(this.getAdaptableState().Glue42)
+          : this.getAdaptableState().Glue42;
       case 'PlusMinus':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().PlusMinus)
@@ -320,8 +325,12 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetNamedFilterState(returnJson: boolean = false): NamedFilterState {
     return this.configGetUserStateByStateKey('NamedFilter', returnJson) as NamedFilterState;
   }
-  public configGetPartnerState(returnJson: boolean = false): PartnerState {
-    return this.configGetUserStateByStateKey('Partner', returnJson) as PartnerState;
+
+  public configGetIPushPullState(returnJson: boolean = false): IPushPullState {
+    return this.configGetUserStateByStateKey('PercentBar', returnJson) as IPushPullState;
+  }
+  public configGetGlue42State(returnJson: boolean = false): Glue42State {
+    return this.configGetUserStateByStateKey('PercentBar', returnJson) as Glue42State;
   }
   public configGetPercentBarState(returnJson: boolean = false): PercentBarState {
     return this.configGetUserStateByStateKey('PercentBar', returnJson) as PercentBarState;

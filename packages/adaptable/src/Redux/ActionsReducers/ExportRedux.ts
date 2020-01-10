@@ -9,8 +9,6 @@ export const REPORT_SELECT = 'REPORT_SELECT';
 export const REPORT_ADD = 'REPORT_ADD';
 export const REPORT_EDIT = 'REPORT_EDIT';
 export const REPORT_DELETE = 'REPORT_DELETE';
-export const IPP_LOGIN = 'IPP_LOGIN';
-export const IPP_LOGIN_FAILED = 'IPP_LOGIN_FAILED';
 
 export interface ExportApplyAction extends Redux.Action {
   Report: Report;
@@ -41,15 +39,6 @@ export interface AutoExportAddUpdateAction extends Redux.Action {
 
 export interface AutoExportDeleteAction extends Redux.Action {
   Index: number;
-}
-
-export interface IPPLoginAction extends Redux.Action {
-  Login: string;
-  Password: string;
-}
-
-export interface IPPLoginFailedAction extends Redux.Action {
-  Message: string;
 }
 
 export const ReportSelect = (SelectedReport: string): ReportSelectAction => ({
@@ -85,17 +74,6 @@ export const ExportApply = (
   IsLiveReport,
   Folder,
   Page,
-});
-
-export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({
-  type: IPP_LOGIN,
-  Login,
-  Password,
-});
-
-export const IPPLoginFailed = (Message: string): IPPLoginFailedAction => ({
-  type: IPP_LOGIN_FAILED,
-  Message,
 });
 
 const initialExportState: ExportState = {

@@ -52,19 +52,19 @@ export class ReportWizard extends React.Component<
               ),
             },
             {
-              StepName: 'Schedule',
+              StepName: 'Settings',
               Index: 4,
-              Element: <ReportScheduleWizard />,
+              Element: <ReportSettingsWizard Reports={this.props.ConfigEntities as Report[]} />,
             },
             {
-              StepName: 'Settings',
+              StepName: 'Schedule',
               Index: 5,
-              Element: <ReportSettingsWizard Reports={this.props.ConfigEntities as Report[]} />,
+              Element: <ReportScheduleWizard />,
             },
             {
               StepName: 'Summary',
               Index: 6,
-              Element: <ReportSummaryWizard UserFilters={this.props.UserFilters} />,
+              Element: <ReportSummaryWizard />,
             },
           ]}
           Data={this.props.EditedAdaptableObject as Report}

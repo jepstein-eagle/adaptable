@@ -12,7 +12,6 @@ import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ipushpull from 'ipushpull-js';
-import { IPageService } from 'ipushpull-js/dist/Page/Page';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
 import {
@@ -38,7 +37,7 @@ function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
-  const useTickingData: boolean = true;
+  const useTickingData: boolean = false;
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
@@ -74,14 +73,13 @@ function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Partner: {
-    iPushPull: {
-      iPushPullInstance: ipushpull,
-      Username: process.env.IPUSHPULL_USERNAME,
-      Password: process.env.IPUSHPULL_PASSWORD,
-      ThrottleTime: 5000,
-    },
+  IPushPull: {
+    iPushPullInstance: ipushpull,
+    Username: process.env.IPUSHPULL_USERNAME,
+    Password: process.env.IPUSHPULL_PASSWORD,
+    ThrottleTime: 5000,
   },
+
   FlashingCell: {
     FlashingCells: [
       {

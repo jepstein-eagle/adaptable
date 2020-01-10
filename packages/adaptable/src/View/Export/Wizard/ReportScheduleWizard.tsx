@@ -14,7 +14,6 @@ import {
   DayOfWeek,
   ReportRowScope,
 } from '../../../PredefinedConfig/Common/Enums';
-import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
@@ -30,7 +29,7 @@ export interface ReportScheduleWizardState {
   Minute: number;
   DaysOfWeek: DayOfWeek[];
   OneOffDate: any;
-  ExportDestination: 'CSV' | 'Clipboard' | 'JSON';
+  ExportDestination: 'CSV' | 'Clipboard' | 'JSON' | 'iPushPull';
 }
 
 export class ReportScheduleWizard
@@ -54,7 +53,7 @@ export class ReportScheduleWizard
     };
   }
   render(): any {
-    let destinations = EnumExtensions.getNames(ExportDestination)
+    let destinations = ['CSV', 'Clipboard', 'JSON']
       .filter(type =>
         this.props.Adaptable!.ReportService.IsReportDestinationActive(type as ExportDestination)
       )
@@ -363,7 +362,6 @@ export class ReportScheduleWizard
     return true;
   }
   public Next(): void {
-    // TODO:  need to build up the object ;(
     if (this.state.HasAutoExport) {
       let schedule: Schedule = {
         Hour: this.state.Hour,

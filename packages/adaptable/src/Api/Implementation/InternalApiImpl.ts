@@ -103,9 +103,16 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public showPopupScreen(
     functionName: AdaptableFunctionName,
     componentName: string,
-    popupParams?: StrategyParams
+    popupParams?: StrategyParams,
+    popupProps?: { [key: string]: any }
   ): void {
-    this.dispatchAction(PopupRedux.PopupShowScreen(functionName, componentName, popupParams));
+    this.dispatchAction(
+      PopupRedux.PopupShowScreen(functionName, componentName, popupParams, popupProps)
+    );
+  }
+
+  public hidePopupScreen(): void {
+    this.dispatchAction(PopupRedux.PopupHideScreen());
   }
 
   public setColumns(columns: AdaptableColumn[]): void {
@@ -199,6 +206,18 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       uri => uri.primaryKeyValue == primaryKeyValue && uri.changeDirection == changeDirection
     );
     return Helper.objectExists(foundUpdatedRowInfo);
+  }
+
+  public getCurrentLiveReports(): LiveReport[] {
+    return this.getAdaptableState().System.CurrentLiveReports;
+  }
+
+  public isLiveReportRunning(): boolean {
+    return this.getAdaptableState().Grid.IsLiveReportRunning;
+  }
+
+  public isOpenFinAvailable(): boolean {
+    return false; // TODO
   }
 
   // General way to get to store from inside Adaptable...

@@ -53,7 +53,7 @@ export class ReportService implements IReportService {
         return '[All Columns]';
       case ReportColumnScope.VisibleColumns:
         return '[Visible Columns]';
-      case ReportColumnScope.SelectedColumns:
+      case ReportColumnScope.SelectedCellColumns:
         return '[Selected Columns]';
       case ReportColumnScope.BespokeColumns:
         return ColumnHelper.getFriendlyNamesFromColumnIds(report.ColumnIds, cols).join(', ');
@@ -63,7 +63,7 @@ export class ReportService implements IReportService {
   public GetReportExpressionDescription(Report: Report, cols: AdaptableColumn[]): string {
     if (this.IsSystemReport(Report)) {
       if (Report.Name == ALL_DATA_REPORT) {
-        return '[All adaptable Data]';
+        return '[All Data]';
       } else if (Report.Name == VISIBLE_DATA_REPORT) {
         return '[All Visible Data]';
       } else if (Report.Name == SELECTED_CELLS_REPORT) {
@@ -94,9 +94,9 @@ export class ReportService implements IReportService {
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
       case ExportDestination.iPushPull:
-        return this.adaptable.api.partnerApi.isIPushPullAvailable();
+        return this.adaptable.api.iPushPullApi.isIPushPullAvailable();
       case ExportDestination.Glue42:
-        return this.adaptable.api.partnerApi.isGlue42Available();
+        return this.adaptable.api.glue42Api.isGlue42Available();
     }
 
     return false;
@@ -114,7 +114,7 @@ export class ReportService implements IReportService {
       case ReportColumnScope.VisibleColumns:
         reportColumns = gridColumns.filter(c => c.Visible);
         break;
-      case ReportColumnScope.SelectedColumns:
+      case ReportColumnScope.SelectedCellColumns:
         let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         // otherwise get columns
@@ -180,7 +180,7 @@ export class ReportService implements IReportService {
         });
         break;
 
-      case ReportRowScope.SelectedCells:
+      case ReportRowScope.SelectedCellRows:
         const selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         const { GridCells } = selectedCellInfo;
@@ -277,7 +277,7 @@ export class ReportService implements IReportService {
         });
         break;
 
-      case ReportRowScope.SelectedCells:
+      case ReportRowScope.SelectedCellRows:
         const selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         const { Columns, GridCells } = selectedCellInfo;
@@ -350,7 +350,7 @@ export class ReportService implements IReportService {
     let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
       ExportDestination: exportDestination,
       LiveReportTrigger: liveReportTrigger,
-      CurrentLiveReports: this.adaptable.api.partnerApi.getCurrentLiveReports(),
+      CurrentLiveReports: this.adaptable.api.internalApi.getCurrentLiveReports(),
     };
     const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = AdaptableHelper.createFDC3Message(
       'Live Report Updated Args',
@@ -364,7 +364,9 @@ export class ReportService implements IReportService {
       return false;
     }
     switch (exportDestination) {
-      case (ExportDestination.CSV, ExportDestination.Clipboard, ExportDestination.JSON):
+      case ExportDestination.CSV:
+      case ExportDestination.Clipboard:
+      case ExportDestination.JSON:
         return false;
       case ExportDestination.OpenfinExcel:
         return true;
@@ -373,7 +375,7 @@ export class ReportService implements IReportService {
         let currentLiveReport = liveReports.find(lr => lr.Report.Name == report.Name);
         return currentLiveReport != null;
       case ExportDestination.Glue42:
-        return this.adaptable.api.partnerApi.isGlue42RunLiveData();
+        return this.adaptable.api.glue42Api.isGlue42RunLiveData();
     }
   }
 }

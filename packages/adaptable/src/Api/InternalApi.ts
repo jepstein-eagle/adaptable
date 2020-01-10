@@ -53,8 +53,11 @@ export interface InternalApi {
   showPopupScreen(
     functionName: AdaptableFunctionName,
     componentName: string,
-    popupParams?: StrategyParams
+    popupParams?: StrategyParams,
+    popupProps?: { [key: string]: any }
   ): void;
+
+  hidePopupScreen(): void;
 
   getCellSummaryOperationDefinitions(): CellSummaryOperationDefinition[];
   addCellSummaryOperationDefinitions(
@@ -96,6 +99,12 @@ export interface InternalApi {
   getUpdatedRowInfos(): any[];
 
   isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean;
+
+  getCurrentLiveReports(): LiveReport[];
+
+  isLiveReportRunning(): boolean;
+
+  isOpenFinAvailable(): boolean;
 
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;

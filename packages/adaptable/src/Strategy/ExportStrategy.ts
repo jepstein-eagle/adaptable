@@ -281,7 +281,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
   }
 
-  public Export(
+  public export(
     report: Report,
     exportDestination: ExportDestination,
     isLiveReport: boolean,
@@ -311,28 +311,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }, 500);
           });
         break;
-      case ExportDestination.iPushPull: {
-        if (isLiveReport) {
-          this.adaptable.PushPullService.LoadPage(folder, page).then(() => {
-            this.adaptable.api.internalApi.startLiveReport(
-              report,
-              page,
-              ExportDestination.iPushPull
-            );
-            setTimeout(() => {
-              this.throttledRecomputeAndSendLiveDataEvent();
-            }, 500);
-          });
-        } else {
-          this.adaptable.PushPullService.LoadPage(folder, page).then(() => {
-            let reportAsArray: any[] = this.ConvertReportToArray(report);
-            if (reportAsArray) {
-              this.adaptable.PushPullService.pushData(page, reportAsArray);
-            }
-          });
-        }
-        break;
-      }
+
       case ExportDestination.Glue42:
         if (isLiveReport) {
           let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
@@ -429,13 +408,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   private getThrottleTimeFromState(): number {
-    if (this.adaptable.api.partnerApi.isIPushPullAvailable()) {
-      return this.getThrottleDurationForExportDestination(ExportDestination.iPushPull);
-    }
-    if (this.adaptable.api.partnerApi.isGlue42Available()) {
+    if (this.adaptable.api.glue42Api.isGlue42Available()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.Glue42);
     }
-    if (this.adaptable.api.partnerApi.isOpenFinAvailable()) {
+    if (this.adaptable.api.internalApi.isOpenFinAvailable()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.OpenfinExcel);
     }
     return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
@@ -448,12 +424,12 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       case ExportDestination.Glue42:
         let glue42ThrottleTime:
           | number
-          | undefined = this.adaptable.api.partnerApi.getGlue42ThrottleTime();
+          | undefined = this.adaptable.api.glue42Api.getGlue42ThrottleTime();
         return glue42ThrottleTime ? glue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
       case ExportDestination.iPushPull:
         let iPushPullThrottleTime:
           | number
-          | undefined = this.adaptable.api.partnerApi.getIPushPullThrottleTime();
+          | undefined = this.adaptable.api.iPushPullApi.getIPushPullThrottleTime();
         return iPushPullThrottleTime ? iPushPullThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
       default:
         return DEFAULT_LIVE_REPORT_THROTTLE_TIME;

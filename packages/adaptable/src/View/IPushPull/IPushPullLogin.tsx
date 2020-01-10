@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
+import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import FormLayout, { FormRow } from '../../components/FormLayout';
@@ -22,7 +22,7 @@ interface IPushPullLoginProps {
   pushpullPassword: string | undefined;
   pushpullLoginErrorMessage: string | undefined;
 
-  onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;
+  onLogin: (login: string, password: string) => IPushPullRedux.IPPLoginAction;
   onCancel: () => any;
 }
 
@@ -55,7 +55,7 @@ const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
   return (
     <PanelWithImage
       header="iPushPull Login Details"
-      glyphicon="export"
+      glyphicon="login"
       variant="primary"
       style={{ height: '100%' }}
     >
@@ -133,15 +133,16 @@ const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
 
 function mapStateToProps(state: AdaptableState) {
   return {
-    pushpullLogin: state.Partner.iPushPull ? state.Partner.iPushPull!.Username : undefined,
-    pushpullPassword: state.Partner.iPushPull ? state.Partner.iPushPull!.Password : undefined,
+    pushpullLogin: state.IPushPull ? state.IPushPull!.Username : undefined,
+    pushpullPassword: state.IPushPull ? state.IPushPull!.Password : undefined,
     pushpullLoginErrorMessage: state.System.IPPLoginMessage,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onLogin: (login: string, password: string) => dispatch(ExportRedux.IPPLogin(login, password)),
+    onLogin: (login: string, password: string) =>
+      dispatch(IPushPullRedux.IPPLogin(login, password)),
     onCancel: () => {
       dispatch(PopupRedux.PopupHideScreen());
       dispatch(SystemRedux.ReportSetErrorMessage(''));

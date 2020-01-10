@@ -15,6 +15,8 @@ export interface ExportApi {
    */
   getCurrentReport(): Report;
 
+  getReportByName(reportName: string): Report;
+
   /**
    * Retrieves the name of the currently selected Report
    */
@@ -37,7 +39,12 @@ export interface ExportApi {
    *
    * @param destination the destination to which the report should be sent
    */
-  sendReport(reportName: string, destination: ExportDestination): void;
+  sendReport(
+    reportName: string,
+    destination: ExportDestination,
+    folder?: string,
+    page?: string
+  ): void;
 
   /**
    * Opens the Export popup screen

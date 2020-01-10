@@ -83,7 +83,7 @@ export interface Report extends AdaptableObject {
    *
    * - BespokeColumns - a list of Columns to be provided by you; if the Report is built using the UI Wizard a separate page appears to facilitate this column selection
    */
-  ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedColumns' | 'BespokeColumns';
+  ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedCellColumns' | 'BespokeColumns';
 
   /**
    * Which Rows are exported when the Report runs.  The choices are:
@@ -98,7 +98,12 @@ export interface Report extends AdaptableObject {
    *
    * - ExpressionRows - the Expression (or Query) that should be run to see which rows to include in the exported data.  See [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) for more details.
    */
-  ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedCells' | 'SelectedRows' | 'ExpressionRows';
+  ReportRowScope:
+    | 'AllRows'
+    | 'VisibleRows'
+    | 'SelectedCellRows'
+    | 'SelectedRows'
+    | 'ExpressionRows';
 
   /**
    * Which columns to include in the report.
@@ -131,5 +136,5 @@ export interface Report extends AdaptableObject {
  */
 export interface AutoExport extends AdaptableObject {
   Schedule: Schedule;
-  ExportDestination: 'CSV' | 'Clipboard' | 'JSON';
+  ExportDestination: 'CSV' | 'Clipboard' | 'JSON' | 'iPushPull';
 }

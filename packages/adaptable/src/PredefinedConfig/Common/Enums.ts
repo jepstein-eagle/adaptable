@@ -85,14 +85,14 @@ export enum ConditionalStyleScope {
 export enum ReportColumnScope {
   AllColumns = 'AllColumns',
   VisibleColumns = 'VisibleColumns',
-  SelectedColumns = 'SelectedColumns',
+  SelectedCellColumns = 'SelectedCellColumns',
   BespokeColumns = 'BespokeColumns',
 }
 
 export enum ReportRowScope {
   AllRows = 'AllRows',
   VisibleRows = 'VisibleRows',
-  SelectedCells = 'SelectedCells',
+  SelectedCellRows = 'SelectedCellRows',
   SelectedRows = 'SelectedRows',
   ExpressionRows = 'ExpressionRows',
 }

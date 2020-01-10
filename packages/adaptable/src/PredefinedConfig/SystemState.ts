@@ -7,10 +7,10 @@ import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
-import { IPushPullDomain } from './PartnerState';
 import { LiveReport } from '../Api/Events/LiveReportUpdated';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
 import { CellSummaryOperationDefinition } from './CellSummaryState';
+import { IPushPullDomain } from './IPushPullState';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 

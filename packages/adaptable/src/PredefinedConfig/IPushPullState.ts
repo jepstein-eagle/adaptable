@@ -1,24 +1,6 @@
 import { DesignTimeState } from './DesignTimeState';
-
-/**
- * The Predefined Configuration to help manage Partner-related functionality
- *
- * This currently includes Glue42, iPushPull, OpenFin and Finsemble
- *
- */
-export interface PartnerState extends DesignTimeState {
-  /**
-   * State required to run iPushPull from Adaptable
-   *
-   * Primarily consists of an iPushPull object injected in to Adaptable
-   */
-  iPushPull?: IPushPullState;
-
-  /**
-   * Config required allow Adaptable to interract with Glue42.
-   */
-  Glue42?: Glue42State;
-}
+import { Report } from './ExportState';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The objects required to run the [iPushPull](https://ipushpull.com) integration from within Adaptable.
@@ -96,52 +78,40 @@ export interface PartnerState extends DesignTimeState {
  * ```
  *
  */
-export interface IPushPullState {
+export interface IPushPullState extends DesignTimeState {
   /**
    *  The iPushPull object - this is injected by the user from 'ipushpull-js' and set with standard configuration.
    */
-  iPushPullInstance: any;
-
+  iPushPullInstance?: any;
   /**
    * The user's iPushPull user name (usually an email address)
    *
    * If supplied then the iPushPull login screen's username textbox will be pre-populated
    */
   Username?: string;
-
   /**
    * The user's iPushPull password
    *
    * If supplied then the iPushPull login screen's password textbox will be pre-populated
    */
   Password?: string;
-
   /**
    * How long (in miliseconds) Adaptable should throttle when sending a data update to iPushPull.
    *
    * **Default Value: 2000**
    */
   ThrottleTime?: number;
+
+  IPushPullReports?: IPushPullReport[];
+
+  CurrentIPushPullReport?: string;
 }
 
-export interface Glue42State {
-  /**
-   *  A Glue42 object - pre-populated with the user's Glue42 credentials
-   */
-  Glue42Config?: any;
-
-  Glue?: any; // this is the glue object
-
-  Glue4Office?: any; // this is the Glue4Office object
-
-  RunLiveData?: boolean; // keep this?????
-
-  /**
-   * How long (in miliseconds) Adaptable should throttle when sending an update to Glue42.
-   *
-   * **Default Value: 2000**
-   */
-  ThrottleTime?: number;
+export interface IPushPullReport extends AdaptableObject {
+  Report: Report;
+  Folder: string;
+  Page: string;
+  ScheduleType?: 'Snapsot' | 'Live';
 }
 
 /**

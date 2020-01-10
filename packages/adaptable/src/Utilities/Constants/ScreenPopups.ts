@@ -21,6 +21,7 @@ export const FlashingCellsPopup: string = 'FlashingCellsPopup';
 export const UpdatedRowPopup: string = 'UpdatedRowPopup';
 export const FormatColumnPopup: string = 'FormatColumnPopup';
 export const FreeTextColumnPopup: string = 'FreeTextColumnPopup';
+export const IPushPullPopup: string = 'IPushPullPopup';
 export const LayoutPopup: string = 'LayoutPopup';
 export const PercentBarPopup: string = 'PercentBarPopup';
 export const SparklineColumnPopup: string = 'SparklineColumnPopup';

@@ -1,5 +1,5 @@
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { Glue42State } from '../../../PredefinedConfig/PartnerState';
+import { Glue42State } from '../../../PredefinedConfig/Glue42State';
 export interface IGlue42Service {
   init(glue42State: Glue42State): void;
 

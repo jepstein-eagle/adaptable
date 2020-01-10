@@ -3,7 +3,7 @@ import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { Report } from '../../PredefinedConfig/ExportState';
 
 export interface IExportStrategy extends IStrategy {
-  Export(
+  export(
     report: Report,
     exportDestination: ExportDestination,
     isLiveReport: boolean,

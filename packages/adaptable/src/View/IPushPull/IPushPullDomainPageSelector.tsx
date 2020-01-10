@@ -16,7 +16,6 @@ import SimpleButton from '../../components/SimpleButton';
 import { Icon } from '../../components/icons';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import FlexWithFooter from '../../components/FlexWithFooter';
-import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 import { LiveReport } from '../../Api/Events/LiveReportUpdated';
 import { Flex } from 'rebass';
 import Radio from '../../components/Radio';
@@ -24,6 +23,7 @@ import HelpBlock from '../../components/HelpBlock';
 import { minWidth } from 'styled-system';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
+import { IPushPullDomain } from '../../PredefinedConfig/IPushPullState';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
@@ -69,11 +69,12 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
               }}
               value={x.Name}
             >
-              <Icon name="folder-open" style={{ marginRight: '10px' }} /> {x.Name}
+              <Icon key={'icon_' + x.Name} name="folder-open" style={{ marginRight: '10px' }} />{' '}
+              {x.Name}
             </ListGroupItem>
             <SimpleButton
               tone="none"
-              key={'closedbutton_' + x.Name}
+              key={'newpage_' + x.Name}
               variant="text"
               style={{ marginLeft: '10px', padding: '1px', alignItems: 'bottom' }}
               onClick={() => {
@@ -225,7 +226,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
         // this should be a proper Alert - need to do properly
         alert('A page with that name already exists in the folder');
       } else {
-        this.props.Adaptable.PushPullService.AddNewPage(x.FolderId, page);
+        this.props.Adaptable.PushPullService.addNewPage(x.FolderId, page);
       }
     }
   }

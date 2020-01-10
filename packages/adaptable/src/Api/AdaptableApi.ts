@@ -1,7 +1,6 @@
 import { ApplicationApi } from './ApplicationAPI';
 import { ActionColumnApi } from './ActionColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
-import { PartnerAPI } from './PartnerAPI';
 import { AdvancedSearchApi } from './AdvancedSearchApi';
 import { AlertApi } from './AlertApi';
 import { PluginsApi } from './PluginsApi';
@@ -43,6 +42,8 @@ import { UserFilterApi } from './UserFilterApi';
 import { InternalApi } from './InternalApi';
 import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
+import { Glue42Api } from './Glue42Api';
+import { IPushPullApi } from './IPushPullApi';
 
 /**
  * Adaptable API provides developers with run-time access to Adaptable.
@@ -195,10 +196,14 @@ export interface AdaptableApi {
    */
   freeTextColumnApi: FreeTextColumnApi;
 
+  glue42Api: Glue42Api;
+
   /**
    * Provides methods for managing the Grid directly e.g. setGridData which will replace the current DataSource with the one provided.
    */
   gridApi: GridApi;
+
+  iPushPullApi: IPushPullApi;
 
   /**
    * Provides access to the *Layout* function, the *Layout* object and [Layout State](_predefinedconfig_runtimestate_layoutstate_.layoutstate.html).
@@ -209,11 +214,6 @@ export interface AdaptableApi {
    * Provides access to the *Named Filter* function, the `NamedFilter` object and [NamedFilter State](_predefinedconfig_runtimestate_namedfilterstate_.namedfilterstate.html).
    */
   namedFilterApi: NamedFilterApi;
-
-  /**
-   * Enables developers to set up configuration when using our Partner tools (like iPushPull and Glue42)
-   */
-  partnerApi: PartnerAPI;
 
   /**
    * Provides access to the *Percent Bar* function, the *Percent Bar* object and [Percent Bar State](_predefinedconfig_runtimestate_percentbarstate_.percentbarstate.html).

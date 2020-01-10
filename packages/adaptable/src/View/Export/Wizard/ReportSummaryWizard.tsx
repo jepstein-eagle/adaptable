@@ -8,11 +8,8 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UIHelper } from '../../UIHelper';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
-export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<Report> {
-  UserFilters: UserFilter[];
-}
+export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<Report> {}
 
 export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProps, {}>
   implements AdaptableWizardStep {

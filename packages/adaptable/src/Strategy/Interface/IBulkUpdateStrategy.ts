@@ -5,9 +5,9 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 
 export interface IBulkUpdateStrategy extends IStrategy {
-  CheckCorrectCellSelection(): BulkUpdateValidationResult;
-  BuildPreviewValues(BulkUpdateValue: any): IPreviewInfo;
-  ApplyBulkUpdate(newValues: GridCell[]): void;
+  checkCorrectCellSelection(): BulkUpdateValidationResult;
+  buildPreviewValues(BulkUpdateValue: any): IPreviewInfo;
+  applyBulkUpdate(newValues: GridCell[]): void;
 }
 
 export interface BulkUpdateValidationResult {

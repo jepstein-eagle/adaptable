@@ -17,6 +17,7 @@ import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl';
 import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
+import { IPushPullPopup } from './IPushPull/IPushPullPopup';
 import { UserFilterPopup } from './UserFilter/UserFilterPopup';
 import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup';
 import { ThemePopup } from './Theme/ThemePopup';
@@ -27,14 +28,14 @@ import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
-import { IPushPullLogin } from './Export/IPushPullLogin';
+import { IPushPullLogin } from './IPushPull/IPushPullLogin';
 import { HomeToolbarControl } from './Home/HomeToolbarControl';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { StateManagementPopup } from './StateManagement/StateManagementPopup';
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { CalculatedColumnPopup } from './CalculatedColumn/CalculatedColumnPopup';
-import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
+import { IPushPullDomainPageSelector } from './IPushPull/IPushPullDomainPageSelector';
 import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
 import { DataSourcePopup } from './DataSource/DataSourcePopup';
 import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
@@ -42,10 +43,8 @@ import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { SystemStatusToolbarControl } from './SystemStatus/SystemStatusToolbarControl';
 import { CustomToolbarControl } from './Dashboard/CustomToolbarControl';
-
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
-
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
 import { ReminderPopup } from './Reminder/ReminderPopup';
@@ -64,6 +63,7 @@ import { CellSummaryToolPanel } from './CellSummary/CellSummaryToolPanel';
 import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
 import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
+import { IPushPullToolbarControl } from './IPushPull/IPushPullToolbarControl';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -85,6 +85,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   UpdatedRowPopup,
   FormatColumnPopup,
   FreeTextColumnPopup,
+  IPushPullPopup,
   IPushPullLogin,
   IPushPullDomainPageSelector,
   LayoutPopup,
@@ -120,6 +121,7 @@ export const AdaptableDashboardFactory = new Map<
   [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl],
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolbarControl],
   [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
+  [StrategyConstants.IPushPullStrategyId, IPushPullToolbarControl],
   // this is special
   [StrategyConstants.DashboardStrategyId, CustomToolbarControl],
 ]);

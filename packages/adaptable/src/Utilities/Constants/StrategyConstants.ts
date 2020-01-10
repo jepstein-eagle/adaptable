@@ -22,6 +22,7 @@ export const FlashingCellsStrategyId: AdaptableFunctionName = 'FlashingCells';
 export const FormatColumnStrategyId: AdaptableFunctionName = 'FormatColumn';
 export const FreeTextColumnStrategyId: AdaptableFunctionName = 'FreeTextColumn';
 export const HomeStrategyId: AdaptableFunctionName = 'Home';
+export const IPushPullStrategyId: AdaptableFunctionName = 'IPushPull';
 export const LayoutStrategyId: AdaptableFunctionName = 'Layout';
 export const PercentBarStrategyId: AdaptableFunctionName = 'PercentBar';
 export const SparklineColumnStrategyId: AdaptableFunctionName = 'SparklineColumn';
@@ -62,6 +63,7 @@ export const FlashingCellsStrategyFriendlyName: string = 'Flashing Cells';
 export const UpdatedRowStrategyFriendlyName: string = 'Updated Row';
 export const FormatColumnStrategyFriendlyName: string = 'Format Column';
 export const FreeTextColumnStrategyFriendlyName: string = 'Free Text Column';
+export const IPushPullStrategyFriendlyName: string = 'iPushPull';
 export const LayoutStrategyFriendlyName: string = 'Layout';
 export const PercentBarStrategyFriendlyName: string = 'Percent Bar';
 export const SparklineColumnStrategyFriendlyName: string = 'Sparkline Column';
@@ -100,6 +102,7 @@ export const ExportGlyph: string = 'export';
 export const FlashingCellGlyph: string = 'flashing-cell';
 export const FormatColumnGlyph: string = 'format-column';
 export const FreeTextColumnGlyph: string = 'freetext-column';
+export const IPushPullGlyph: string = 'ipushpull';
 export const FunctionsGlyph: string = 'home';
 export const LayoutGlyph: string = 'layout';
 export const PercentBarGlyph: string = 'percent-bar';
@@ -159,6 +162,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return FormatColumnStrategyId;
     case FreeTextColumnStrategyFriendlyName:
       return FreeTextColumnStrategyId;
+    case IPushPullStrategyFriendlyName:
+      return IPushPullStrategyId;
     case LayoutStrategyFriendlyName:
       return LayoutStrategyId;
     case PercentBarStrategyFriendlyName:
@@ -236,6 +241,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return FormatColumnStrategyFriendlyName;
     case FreeTextColumnStrategyId:
       return FreeTextColumnStrategyFriendlyName;
+    case IPushPullStrategyId:
+      return IPushPullStrategyFriendlyName;
     case LayoutStrategyId:
       return LayoutStrategyFriendlyName;
     case PercentBarStrategyId:
@@ -311,6 +318,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return FormatColumnGlyph;
     case FreeTextColumnStrategyId:
       return FreeTextColumnGlyph;
+    case IPushPullStrategyId:
+      return IPushPullGlyph;
     case LayoutStrategyId:
       return LayoutGlyph;
     case PercentBarStrategyId:
