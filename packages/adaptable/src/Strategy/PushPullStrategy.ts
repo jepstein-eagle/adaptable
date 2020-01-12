@@ -45,15 +45,15 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
     this.adaptable._on('GridRefreshed', () => {
       this.refreshLiveData();
     });
-    // if cell selection has changed and we have selected cells as one of the live reports then send updated data
-    this.adaptable._on('CellsSelected', () => {
-      if (ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.internalApi.getLiveReports())) {
-        let liveReport = this.adaptable.api.internalApi
-          .getLiveReports()
-          .find(x => x.Report.Name == SELECTED_CELLS_REPORT);
-        if (liveReport) {
-          this.throttledRecomputeAndSendLiveDataEvent();
-        }
+    // if cell selection has changed and the iPushPull Live report is 'Selected Cells' or 'Selected Rows' then send updated data
+    this.adaptable.api.eventApi.on('SelectionChanged', () => {
+      let liveIPushPullReport: IPushPullReport = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+      if (
+        liveIPushPullReport &&
+        (liveIPushPullReport.ReportName === SELECTED_CELLS_REPORT ||
+          liveIPushPullReport.ReportName === SELECTED_CELLS_REPORT)
+      ) {
+        this.throttledRecomputeAndSendLiveDataEvent();
       }
     });
   }
@@ -166,22 +166,15 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
   }
 
   private getThrottleTimeFromState(): number {
+    let iPushPullThrottleTime: number | undefined;
     if (this.adaptable.api.iPushPullApi.isIPushPullRunning()) {
-      return this.getThrottleDurationForExportDestination();
+      iPushPullThrottleTime = this.adaptable.api.iPushPullApi.getIPushPullThrottleTime();
     }
-    return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
-  }
-
-  private getThrottleDurationForExportDestination(): number {
-    let iPushPullThrottleTime:
-      | number
-      | undefined = this.adaptable.api.iPushPullApi.getIPushPullThrottleTime();
     return iPushPullThrottleTime ? iPushPullThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
   }
 
   private refreshLiveData(): void {
-    let liveIPushPullReport: IPushPullReport = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
-    if (liveIPushPullReport) {
+    if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
       this.throttledRecomputeAndSendLiveDataEvent();
     }
   }

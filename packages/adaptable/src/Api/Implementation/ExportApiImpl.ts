@@ -38,7 +38,6 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
     folder?: string,
     page?: string
   ): void {
-    alert('sending report');
     let report: Report = this.getReportByName(reportName);
     let isLiveReport = this.adaptable.ReportService.IsReportLiveReport(report, destination);
     if (this.checkItemExists(report, reportName, 'Report')) {

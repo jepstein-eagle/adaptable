@@ -99,7 +99,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'FormatColumn',
       'Layout',
       'PlusMinus',
-      'Partner',
+      'IPushPull',
+      'Glue42',
       'QuickSearch',
       'SelectedCells',
       'Shortcut',
@@ -327,10 +328,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   }
 
   public configGetIPushPullState(returnJson: boolean = false): IPushPullState {
-    return this.configGetUserStateByStateKey('PercentBar', returnJson) as IPushPullState;
+    return this.configGetUserStateByStateKey('IPushPull', returnJson) as IPushPullState;
   }
   public configGetGlue42State(returnJson: boolean = false): Glue42State {
-    return this.configGetUserStateByStateKey('PercentBar', returnJson) as Glue42State;
+    return this.configGetUserStateByStateKey('Glue42', returnJson) as Glue42State;
   }
   public configGetPercentBarState(returnJson: boolean = false): PercentBarState {
     return this.configGetUserStateByStateKey('PercentBar', returnJson) as PercentBarState;
