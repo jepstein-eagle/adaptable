@@ -25,6 +25,10 @@ export class PushPullService implements IPushPullService {
     this.adaptable = adaptable;
 
     this.adaptable.api.eventApi.on('AdaptableReady', async () => {
+      // turn off and clear everything
+      this.adaptable.api.iPushPullApi.clearIPushPullInternalState();
+      this.adaptable.api.iPushPullApi.setIPushPullAvailableOff();
+
       if (!this.ppInstance) {
         let instance = this.adaptable.api.iPushPullApi.getIPushPullInstance();
 
@@ -44,8 +48,11 @@ export class PushPullService implements IPushPullService {
           });
           this.ppInstance = instance;
 
+          // set that it is available
+          this.adaptable.api.iPushPullApi.setIPushPullAvailableOn();
+
           let autoLogin: boolean = false;
-          autoLogin = true;
+          // autoLogin = true;
           if (autoLogin) {
             let userName:
               | string
@@ -62,10 +69,8 @@ export class PushPullService implements IPushPullService {
                 // slightly circular but it means tht we do the logic in one go..
                 this.adaptable.api.iPushPullApi.loginToIPushPull(userName, password);
               } catch (err) {
-                alert('in constructor');
-                alert(err);
-                // handle this
-                this.adaptable.api.iPushPullApi.setIPushPullAvailableOff();
+                // set that it is not running (but still available)
+                this.adaptable.api.iPushPullApi.setIPushPullRunningOff();
               }
             }
           }

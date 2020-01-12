@@ -133,7 +133,9 @@ const IPushPullAddPageComponent = (props: IPushPullAddPagePopupProps) => {
         }
       >
         <Flex flexDirection="column" padding={2} margin={2}>
-          <HelpBlock marginBottom={1}>Add a new iPushPull page for the Selected Folder</HelpBlock>
+          <HelpBlock marginBottom={1}>
+            Select a folder and then choose the name of the new iPushPull page it should contain.
+          </HelpBlock>
 
           <FormLayout margin={3}>
             <FormRow label="Folder:">

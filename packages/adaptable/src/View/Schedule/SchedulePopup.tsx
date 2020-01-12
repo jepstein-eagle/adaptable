@@ -100,7 +100,7 @@ class SchedulePopupComponent extends React.Component<
     let allSchedules: BaseSchedule[] = [];
     allSchedules.push(...this.props.ReminderSchedules);
     allSchedules.push(...this.props.ReportSchedules);
-    if (this.props.Adaptable.api.iPushPullApi.isIPushPullAvailable()) {
+    if (this.props.Adaptable.api.iPushPullApi.isIPushPullRunning()) {
       allSchedules.push(...this.props.IPushPullSchedules);
     }
 
@@ -152,7 +152,7 @@ class SchedulePopupComponent extends React.Component<
     };
 
     let scheduleMenuItems = [reminderMenuItem, reportMenuItem];
-    if (this.props.Adaptable.api.iPushPullApi.isIPushPullAvailable()) {
+    if (this.props.Adaptable.api.iPushPullApi.isIPushPullRunning()) {
       scheduleMenuItems.push(iPushPullMenuItem);
     }
 

@@ -22,7 +22,6 @@ export interface IPushPullApi {
   getIPushPullUsername(): string | undefined;
   getIPushPullPassword(): string | undefined;
 
-  getSelectedIPushPullReportName(): string | undefined;
   getCurrentLiveIPushPullReport(): IPushPullReport | undefined;
 
   sendSnapshot(iiPushPullReport: IPushPullReport): void;
@@ -70,9 +69,13 @@ export interface IPushPullApi {
 
   isIPushPullAvailable(): boolean;
 
-  setIPushPullLiveDataRunningOn(): void;
+  setIPushPullRunningOn(): void;
 
-  setIPushPullLiveDataRunningOff(): void;
+  setIPushPullRunningOff(): void;
+
+  isIPushPullRunning(): boolean;
 
   isIPushPullLiveDataRunning(): boolean;
+
+  clearIPushPullInternalState(): void;
 }

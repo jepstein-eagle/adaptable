@@ -103,15 +103,13 @@ export interface IPushPullState extends DesignTimeState {
    */
   ThrottleTime?: number;
 
-  SelectedIPushPullReportName?: string;
-
   IPushPullSchedules: IPushPullSchedule[];
 
   // internal - would like not to save if possible...
   IsIPushPullAvailable: boolean;
-  IsIPushPullLiveDataRunning: boolean;
+  IsIPushPullRunning: boolean;
   IPushPullDomainsPages: IPushPullDomain[];
-  IPushPullLoginErrorMessage?: string; // don't think we set this currently...
+  IPushPullLoginErrorMessage?: string;
   CurrentLiveIPushPullReport?: IPushPullReport;
 }
 

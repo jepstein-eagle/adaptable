@@ -26,9 +26,8 @@ export const IPUSHPULL_SET_LOGIN_ERROR_MESSAGE = 'IPUSHPULL_SET_LOGIN_ERROR_MESS
 
 export const SET_IPUSHPULL_AVAILABLE_ON = 'SET_IPUSHPULL_AVAILABLE_ON';
 export const SET_IPUSHPULL_AVAILABLE_OFF = 'SET_IPUSHPULL_AVAILABLE_OFF';
-
-export const SET_IPUSHPULL_LIVE_DATA_RUNNING_ON = 'SET_IPUSHPULL_LIVE_DATA_RUNNING_ON';
-export const SET_IPUSHPULL_LIVE_DATA_RUNNING_OFF = 'SET_IPUSHPULL_LIVE_DATA_RUNNING_OFF';
+export const SET_IPUSHPULL_RUNNING_ON = 'SET_IPUSHPULL_RUNNING_ON';
+export const SET_IPUSHPULL_RUNNING_OFF = 'SET_IPUSHPULL_RUNNING_OFF';
 
 export const IPUSHPULL_LIVE_REPORT_SET = 'IPUSHPULL_LIVE_REPORT_SET';
 export const IPUSHPULL_LIVE_REPORT_CLEAR = 'IPUSHPULL_LIVE_REPORT_CLEAR';
@@ -36,10 +35,6 @@ export const IPUSHPULL_SET_DOMAIN_PAGES = 'IPUSHPULL_SET_DOMAIN_PAGES';
 
 export interface IPushPullSetThrottleTimeAction extends Redux.Action {
   throttleTime: number;
-}
-
-export interface IPushPullReportSelectAction extends Redux.Action {
-  selectedIPushPullReportName: string;
 }
 
 export interface IPushPullScheduleAction extends Redux.Action {
@@ -76,9 +71,8 @@ export interface SetIPushPullAvailableOnAction extends Redux.Action {}
 
 export interface SetIPushPullAvailableOffAction extends Redux.Action {}
 
-export interface SetIPushPullLiveDataRunningOnAction extends Redux.Action {}
-
-export interface SetIPushPullLiveDataRunningOffAction extends Redux.Action {}
+export interface SetIPushPullRunningOnAction extends Redux.Action {}
+export interface SetIPushPullRunningOffAction extends Redux.Action {}
 
 export interface IPushPullSetDomainsPagesAction extends Redux.Action {
   IPushPullDomainsPages: IPushPullDomain[];
@@ -110,13 +104,6 @@ export const IPushPullStartLiveData = (
 
 export const IPushPullStopLiveData = (): IPushPullStopLiveDataAction => ({
   type: IPUSHPULL_STOP_LIVE_DATA,
-});
-
-export const IPushPullSelectReport = (
-  selectedIPushPullReportName: string
-): IPushPullReportSelectAction => ({
-  type: IPUSHPULL_REPORT_SELECT,
-  selectedIPushPullReportName,
 });
 
 export const IPushPullLogin = (username: string, password: string): IPushPullLoginAction => ({
@@ -166,12 +153,12 @@ export const SetIPushPullAvailableOff = (): SetIPushPullAvailableOffAction => ({
   type: SET_IPUSHPULL_AVAILABLE_OFF,
 });
 
-export const SetIPushPullLiveDataRunningOn = (): SetIPushPullLiveDataRunningOnAction => ({
-  type: SET_IPUSHPULL_LIVE_DATA_RUNNING_ON,
+export const SetIPushPullRunningOn = (): SetIPushPullRunningOnAction => ({
+  type: SET_IPUSHPULL_RUNNING_ON,
 });
 
-export const SetIPushPullLiveDataRunningOff = (): SetIPushPullLiveDataRunningOffAction => ({
-  type: SET_IPUSHPULL_LIVE_DATA_RUNNING_ON,
+export const SetIPushPullRunningOff = (): SetIPushPullRunningOffAction => ({
+  type: SET_IPUSHPULL_RUNNING_OFF,
 });
 
 export const IPushPullSetDomainsPages = (
@@ -195,10 +182,9 @@ export const IPushPullLiveReportClear = (): IPushPullLiveReportClearAction => ({
 });
 
 const initialFilterState: IPushPullState = {
-  SelectedIPushPullReportName: undefined,
   IPushPullSchedules: EMPTY_ARRAY,
   IsIPushPullAvailable: false,
-  IsIPushPullLiveDataRunning: false,
+  IsIPushPullRunning: false,
   IPushPullDomainsPages: EMPTY_ARRAY,
   CurrentLiveIPushPullReport: undefined,
   IPushPullLoginErrorMessage: undefined,
@@ -215,12 +201,6 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
       const atctionType = action as IPushPullSetThrottleTimeAction;
       return Object.assign({}, state, { ThrottleTime: atctionType.throttleTime });
     }
-
-    case IPUSHPULL_REPORT_SELECT:
-      return Object.assign({}, state, {
-        SelectedIPushPullReportName: (action as IPushPullReportSelectAction)
-          .selectedIPushPullReportName,
-      });
 
     case IPUSHPULL_SCHEDULE_ADD: {
       const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
@@ -258,10 +238,11 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
       return Object.assign({}, state, { IsIPushPullAvailable: true });
     case SET_IPUSHPULL_AVAILABLE_OFF:
       return Object.assign({}, state, { IsIPushPullAvailable: false });
-    case SET_IPUSHPULL_LIVE_DATA_RUNNING_ON:
-      return Object.assign({}, state, { IsIPushPullLiveDataRunning: true });
-    case SET_IPUSHPULL_LIVE_DATA_RUNNING_OFF:
-      return Object.assign({}, state, { IsIPushPullLiveDataRunning: false });
+
+    case SET_IPUSHPULL_RUNNING_ON:
+      return Object.assign({}, state, { IsIPushPullRunning: true });
+    case SET_IPUSHPULL_RUNNING_OFF:
+      return Object.assign({}, state, { IsIPushPullRunning: false });
 
     case IPUSHPULL_LOGIN: {
       return { ...state, IPushPullLoginErrorMessage: undefined };

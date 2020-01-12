@@ -6,7 +6,6 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
@@ -14,7 +13,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/ExportState';
-import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import icons from '../../components/icons';
@@ -23,7 +22,6 @@ import { ReactComponentLike } from 'prop-types';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import {
   LiveReportUpdatedEventArgs,
-  LiveReport,
   LiveReportUpdatedInfo,
 } from '../../Api/Events/LiveReportUpdated';
 import {
@@ -53,9 +51,7 @@ interface IPushPullToolbarControlComponentProps
   onIPushPullStartLiveData: (
     iPushPulleport: IPushPullReport
   ) => IPushPullRedux.IPushPullStartLiveDataAction;
-  onIPushPullSelectReport: (
-    selectedIPushPullReportName: string
-  ) => IPushPullRedux.IPushPullReportSelectAction;
+
   onIPushPullStopLiveData: () => IPushPullRedux.IPushPullStopLiveDataAction;
 
   onNewIPushPullSchedule: (
@@ -68,9 +64,9 @@ interface IPushPullToolbarControlComponentProps
   Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
-  SelectedIPushPullReportName: string | undefined;
   CurrentLiveIPushPullReport: IPushPullReport | undefined;
   IPushPullDomainsPages: IPushPullDomain[] | undefined;
+  IsIPushPullRunning: boolean;
 }
 
 interface IPushPullToolbarControlComponentState {
@@ -87,7 +83,7 @@ class IPushPullToolbarControlComponent extends React.Component<
   constructor(props: IPushPullToolbarControlComponentProps) {
     super(props);
     this.state = {
-      ReportName: this.props.SelectedIPushPullReportName,
+      ReportName: '',
       Page: '',
       Folder: '',
       AvailablePages: [],
@@ -112,7 +108,6 @@ class IPushPullToolbarControlComponent extends React.Component<
   }
 
   render(): any {
-    let isIpushPullAvailable = this.props.Adaptable.api.iPushPullApi.isIPushPullAvailable();
     let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
 
     let availableReports: any[] = allReports.map(report => {
@@ -145,7 +140,7 @@ class IPushPullToolbarControlComponent extends React.Component<
       this.state.Folder == this.props.CurrentLiveIPushPullReport.Folder &&
       this.state.Page == this.props.CurrentLiveIPushPullReport.Page;
 
-    let content = isIpushPullAvailable ? (
+    let content = this.props.IsIPushPullRunning ? (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__Export__wrap">
         <Dropdown
           disabled={allReports.length == 0 || isLiveIPushPullReport}
@@ -262,7 +257,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         headerText={StrategyConstants.IPushPullStrategyFriendlyName}
         glyphicon={StrategyConstants.IPushPullGlyph}
         onClose={() => this.props.onClose(StrategyConstants.IPushPullStrategyId)}
-        showConfigureButton={isIpushPullAvailable}
+        showConfigureButton={false} // later : isIPushPullRunning
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -332,11 +327,11 @@ class IPushPullToolbarControlComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState) {
   return {
-    SelectedIPushPullReportName: state.IPushPull.SelectedIPushPullReportName,
     CurrentLiveIPushPullReport: state.IPushPull.CurrentLiveIPushPullReport,
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
     IPushPullDomainsPages: state.IPushPull.IPushPullDomainsPages,
+    IsIPushPullRunning: state.IPushPull.IsIPushPullRunning,
   };
 }
 
@@ -347,9 +342,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onIPushPullStartLiveData: (iPushPullReport: IPushPullReport) =>
       dispatch(IPushPullRedux.IPushPullStartLiveData(iPushPullReport)),
     onIPushPullStopLiveData: () => dispatch(IPushPullRedux.IPushPullStopLiveData()),
-
-    onIPushPullSelectReport: (selectedIPushPullReportName: string) =>
-      dispatch(IPushPullRedux.IPushPullSelectReport(selectedIPushPullReportName)),
 
     onNewIPushPullSchedule: (iPushPullSchedule: IPushPullSchedule) =>
       dispatch(

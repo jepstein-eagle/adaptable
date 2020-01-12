@@ -59,11 +59,13 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.IPushPullStrategyFriendlyName,
-      ComponentName: ScreenPopups.ExportPopup,
-      Icon: StrategyConstants.IPushPullGlyph,
-    });
+    if (this.adaptable.api.iPushPullApi.isIPushPullAvailable()) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.IPushPullStrategyFriendlyName,
+        ComponentName: ScreenPopups.ExportPopup,
+        Icon: StrategyConstants.IPushPullGlyph,
+      });
+    }
   }
 
   private sendNewLiveData() {
@@ -164,7 +166,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
   }
 
   private getThrottleTimeFromState(): number {
-    if (this.adaptable.api.iPushPullApi.isIPushPullAvailable()) {
+    if (this.adaptable.api.iPushPullApi.isIPushPullRunning()) {
       return this.getThrottleDurationForExportDestination();
     }
     return DEFAULT_LIVE_REPORT_THROTTLE_TIME;

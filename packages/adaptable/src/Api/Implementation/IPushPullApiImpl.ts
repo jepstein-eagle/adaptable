@@ -11,6 +11,7 @@ import {
 import { IPushPullApi } from '../IPushPullApi';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
+import Helper from '../../Utilities/Helpers/Helper';
 
 export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   public getIPushPullState(): IPushPullState | undefined {
@@ -21,10 +22,6 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
   public getIPushPullPassword(): string | undefined {
     return this.getIPushPullState().Password;
-  }
-
-  public getSelectedIPushPullReportName(): string | undefined {
-    return this.getIPushPullState().SelectedIPushPullReportName;
   }
 
   public getCurrentLiveIPushPullReport(): IPushPullReport | undefined {
@@ -54,8 +51,6 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
         ExportDestination.iPushPull,
         LiveReportTrigger.ExportStarted
       );
-      // set livereport on
-      this.setIPushPullLiveDataRunningOn();
     }
   }
 
@@ -72,8 +67,6 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
       ExportDestination.iPushPull,
       LiveReportTrigger.ExportStopped
     );
-    // set live data running off
-    this.setIPushPullLiveDataRunningOff();
   }
 
   public isIPushPullReportLive(iPushPullReport: IPushPullReport): boolean {
@@ -88,6 +81,18 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public isIPushPullAvailable(): boolean {
     return this.getIPushPullState().IsIPushPullAvailable;
+  }
+
+  public setIPushPullRunningOn(): void {
+    this.dispatchAction(IPushPullRedux.SetIPushPullRunningOn());
+  }
+
+  public setIPushPullRunningOff(): void {
+    this.dispatchAction(IPushPullRedux.SetIPushPullRunningOff());
+  }
+
+  public isIPushPullRunning(): boolean {
+    return this.getIPushPullState().IsIPushPullRunning;
   }
 
   public getIPushPullDomains(): IPushPullDomain[] {
@@ -159,30 +164,28 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     );
   }
 
-  public setIPushPullLiveDataRunningOn(): void {
-    this.dispatchAction(IPushPullRedux.SetIPushPullLiveDataRunningOn());
-  }
-
-  public setIPushPullLiveDataRunningOff(): void {
-    this.dispatchAction(IPushPullRedux.SetIPushPullLiveDataRunningOff());
-  }
-
   public isIPushPullLiveDataRunning(): boolean {
-    return this.getIPushPullState().IsIPushPullLiveDataRunning;
+    return Helper.objectExists(this.getIPushPullState().CurrentLiveIPushPullReport);
   }
 
   public async loginToIPushPull(userName: string, password: string): Promise<void> {
     await this.adaptable.PushPullService.login(userName, password);
     const domainpages: IPushPullDomain[] = await this.adaptable.PushPullService.getDomainPages();
     this.setIPushPullDomains(domainpages);
-    this.setIPushPullAvailableOn();
+    this.setIPushPullRunningOn();
     this.adaptable.api.internalApi.hidePopupScreen();
     this.setIPushPullLoginErrorMessage('');
   }
 
   public logoutFromIPushPull(): void {
-    this.setIPushPullDomains([]);
-    this.setIPushPullAvailableOff();
+    this.clearIPushPullInternalState();
     this.adaptable.api.internalApi.hidePopupScreen();
+  }
+
+  public clearIPushPullInternalState(): void {
+    this.setIPushPullDomains([]);
+    this.setIPushPullRunningOff();
+    this.setIPushPullLoginErrorMessage('');
+    this.dispatchAction(IPushPullRedux.IPushPullLiveReportClear());
   }
 }

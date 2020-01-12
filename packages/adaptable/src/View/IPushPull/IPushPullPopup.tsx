@@ -13,7 +13,7 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IPushPullReport } from '../../PredefinedConfig/IPushPullState';
 
 interface IPushPullPopupProps extends StrategyViewPopupProps<IPushPullPopupComponent> {
-  SelectedIPushPullReportName: string | undefined;
+  //  SelectedIPushPullReportName: string | undefined;
   onIPushPullSendSnapshot: (
     iPushPulleport: IPushPullReport
   ) => IPushPullRedux.IPushPullSendSnapshotAction;
@@ -61,8 +61,8 @@ class IPushPullPopupComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState) {
   return {
-    SelectedIPushPullReportName: state.IPushPull.SelectedIPushPullReportName,
-    LiveReports: state.System.CurrentLiveReports,
+    //   SelectedIPushPullReportName: state.IPushPull.SelectedIPushPullReportName,
+    //   LiveReports: state.System.CurrentLiveReports,
   };
 }
 
