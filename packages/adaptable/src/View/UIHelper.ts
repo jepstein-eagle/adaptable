@@ -409,13 +409,32 @@ export function getScheduleDescription(schedule: Schedule): string {
         dateString = 'Weekdays';
       }
     } else {
-      const names: string[] = schedule.DaysOfWeek.sort().map(d => DayOfWeek[d]);
+      const names: string[] = schedule.DaysOfWeek.sort().map(d => getShortenedDayString(d));
       dateString = ArrayExtensions.createCommaSeparatedString(names);
     }
   } else {
     dateString = new Date(schedule.OneOffDate).toDateString();
   }
-  return `${dateString} at ${addLeadingZero(schedule.Hour)}:${addLeadingZero(schedule.Minute)}`;
+  return `${dateString} @ ${addLeadingZero(schedule.Hour)}:${addLeadingZero(schedule.Minute)}`;
+}
+
+function getShortenedDayString(dayOfWeek: DayOfWeek): string {
+  switch (dayOfWeek) {
+    case DayOfWeek.Sunday:
+      return 'Sun';
+    case DayOfWeek.Monday:
+      return 'Mon';
+    case DayOfWeek.Tuesday:
+      return 'Tues';
+    case DayOfWeek.Wednesday:
+      return 'Weds';
+    case DayOfWeek.Thursday:
+      return 'Thurs';
+    case DayOfWeek.Friday:
+      return 'Fri';
+    case DayOfWeek.Saturday:
+      return 'Sat';
+  }
 }
 
 function addLeadingZero(item: number): string {

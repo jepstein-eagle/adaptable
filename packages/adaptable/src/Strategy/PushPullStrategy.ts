@@ -16,6 +16,8 @@ import { LiveReport } from '../Api/Events/LiveReportUpdated';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { IPushPullStrategy } from './Interface/IPushPullStrategy';
 import { IPushPullReport } from '../PredefinedConfig/IPushPullState';
+import { string } from 'prop-types';
+import StringExtensions from '../Utilities/Extensions/StringExtensions';
 
 export class PushPullStrategy extends AdaptableStrategyBase implements IPushPullStrategy {
   private isSendingData: boolean = false;
@@ -34,18 +36,14 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       }, 1000);
     });
 
-    this.adaptable._on('GridReloaded', () => {
-      this.scheduleIPushPullReports();
-    });
-
     // if a piece of data has updated then update any live reports
     this.adaptable.DataService.on('DataChanged', () => {
       // we currently always refresh - is that right??
-      this.refreshLiveReports();
+      this.refreshLiveData();
     });
     // if the grid has refreshed then update any live reports
     this.adaptable._on('GridRefreshed', () => {
-      this.refreshLiveReports();
+      this.refreshLiveData();
     });
     // if cell selection has changed and we have selected cells as one of the live reports then send updated data
     this.adaptable._on('CellsSelected', () => {
@@ -74,80 +72,84 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       this.throttledRecomputeAndSendLiveDataEvent();
       return;
     }
-    if (ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.internalApi.getLiveReports())) {
+    let currentLiveIPushPullReport:
+      | IPushPullReport
+      | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+    if (currentLiveIPushPullReport) {
       this.isSendingData = true;
-      let promises: Promise<any>[] = [];
-      this.adaptable.api.internalApi.getLiveReports().forEach((liveReport: LiveReport) => {
-        promises.push(
-          Promise.resolve()
-            .then(() => {
-              return new Promise<any>((resolve, reject) => {
-                let reportAsArray: any[] = this.ConvertReportToArray(liveReport.Report);
-                if (reportAsArray) {
-                  resolve(reportAsArray);
-                } else {
-                  reject('no data in the report');
-                }
-              });
-            })
-            .then(reportAsArray => {
-              return this.adaptable.PushPullService.pushData(liveReport.PageName, reportAsArray);
-            })
-            .catch(reason => {
-              LoggingHelper.LogAdaptableWarning(
-                'Live Excel failed to send data for [' + liveReport.Report + ']',
-                reason
-              );
-              this.adaptable.api.internalApi.stopLiveReport(
-                liveReport.Report,
-                ExportDestination.iPushPull
-              );
+      //   let promises: Promise<any>[] = [];
+      let report: Report = this.adaptable.api.exportApi.getReportByName(
+        currentLiveIPushPullReport.ReportName
+      );
+      Promise.resolve()
+        .then(() => {
+          return new Promise<any>((resolve, reject) => {
+            let reportAsArray: any[] = this.ConvertReportToArray(report);
+            if (reportAsArray) {
+              resolve(reportAsArray);
+            } else {
+              reject('no data in the report');
+            }
+          });
+        })
+        .then(reportAsArray => {
+          return this.adaptable.PushPullService.pushData(
+            currentLiveIPushPullReport.Page,
+            reportAsArray
+          );
+        })
+        .catch(reason => {
+          LoggingHelper.LogAdaptableWarning(
+            'Failed to send data to iPushPull for [' + currentLiveIPushPullReport.ReportName + ']',
+            reason
+          );
+          this.adaptable.api.iPushPullApi.stopLiveData();
 
-              let errorMessage: string = 'Export Failed';
-              if (reason) {
-                errorMessage += ': ' + reason;
-              }
-              errorMessage += '.  This live export has been cancelled.';
-              this.adaptable.api.alertApi.showAlertError('iPushPull Export Error', errorMessage);
-            })
-        );
-      });
-      Promise.all(promises)
+          let errorMessage: string = 'Export Failed';
+          if (reason) {
+            errorMessage += ': ' + reason;
+          }
+          errorMessage += '.  This live export has been cancelled.';
+          this.adaptable.api.alertApi.showAlertError('iPushPull Export Error', errorMessage);
+        });
+      Promise.resolve()
         .then(() => {
           LoggingHelper.LogAdaptableSuccess('All live report data sent');
           this.isSendingData = false;
         })
         .catch(() => {
-          LoggingHelper.LogAdaptableWarning('One live Excel failed to send data');
+          LoggingHelper.LogAdaptableWarning('Failed to send data');
           this.isSendingData = false;
         });
     }
   }
 
-  public export(iPushPullReport: IPushPullReport, isLiveReport: boolean): void {
-    if (isLiveReport) {
-      this.adaptable.PushPullService.loadPage(iPushPullReport.Folder, iPushPullReport.Page).then(
-        () => {
-          this.adaptable.api.internalApi.startLiveReport(
-            iPushPullReport.Report,
-            iPushPullReport.Page,
-            ExportDestination.iPushPull
-          );
-          setTimeout(() => {
-            this.throttledRecomputeAndSendLiveDataEvent();
-          }, 500);
-        }
-      );
-    } else {
-      this.adaptable.PushPullService.loadPage(iPushPullReport.Folder, iPushPullReport.Page).then(
-        () => {
-          let reportAsArray: any[] = this.ConvertReportToArray(iPushPullReport.Report);
+  public sendSnapshot(iPushPullReport: IPushPullReport): void {
+    this.adaptable.PushPullService.loadPage(iPushPullReport.Folder, iPushPullReport.Page).then(
+      () => {
+        // need to get the report from somewhere
+        let report: Report = this.adaptable.api.exportApi.getReportByName(
+          iPushPullReport.ReportName
+        );
+        if (report) {
+          let reportAsArray: any[] = this.ConvertReportToArray(report);
           if (reportAsArray) {
             this.adaptable.PushPullService.pushData(iPushPullReport.Page, reportAsArray);
           }
         }
-      );
-    }
+      }
+    );
+  }
+
+  public startLiveData(iPushPullReport: IPushPullReport): void {
+    this.adaptable.PushPullService.loadPage(iPushPullReport.Folder, iPushPullReport.Page).then(
+      () => {
+        this.adaptable.api.iPushPullApi.startLiveData(iPushPullReport);
+        setTimeout(() => {
+          this.throttledRecomputeAndSendLiveDataEvent();
+        }, 500);
+      }
+    );
   }
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
@@ -159,16 +161,6 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       return null;
     }
     return actionReturnObj.ActionReturn;
-  }
-
-  public scheduleIPushPullReports(): void {
-    // just clear all jobs and recreate - simplest thing to do...
-    this.adaptable.ScheduleService.ClearAllIPushPullJobs();
-    this.adaptable.api.iPushPullApi
-      .getScheduledReports()
-      .forEach((iPushPullReport: IPushPullReport) => {
-        this.adaptable.ScheduleService.AddIPushPullReportSchedule(iPushPullReport);
-      });
   }
 
   private getThrottleTimeFromState(): number {
@@ -185,19 +177,10 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
     return iPushPullThrottleTime ? iPushPullThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
   }
 
-  // we assume that we are only ever sending to one destination so we just get the throttle time of the first live report
-  // if thats wrong then its not the end of the world tbh
-  private refreshLiveReports(): void {
-    let firstLiveReport = this.getFirstLiveReport();
-    if (firstLiveReport) {
+  private refreshLiveData(): void {
+    let liveIPushPullReport: IPushPullReport = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+    if (liveIPushPullReport) {
       this.throttledRecomputeAndSendLiveDataEvent();
     }
-  }
-
-  private getFirstLiveReport(): LiveReport | undefined {
-    if (ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.internalApi.getLiveReports())) {
-      return this.adaptable.api.internalApi.getLiveReports()[0];
-    }
-    return undefined;
   }
 }

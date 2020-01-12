@@ -216,17 +216,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     ) {
       return false;
     }
-    if (report.AutoExport != null) {
-      if (report.AutoExport.Schedule.Hour == null || report.AutoExport.Schedule.Minute == null) {
-        return false;
-      }
-      if (
-        report.AutoExport.Schedule.OneOffDate == null &&
-        ArrayExtensions.IsEmpty(report.AutoExport.Schedule.DaysOfWeek)
-      ) {
-        return false;
-      }
-    }
+
     return true;
   }
 
@@ -273,10 +263,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
     onReportStopLive: (
       report: Report,
-      exportDestination:
-        | ExportDestination.OpenfinExcel
-        | ExportDestination.iPushPull
-        | ExportDestination.Glue42
+      exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
     ) => dispatch(SystemRedux.ReportStopLive(report, exportDestination)),
     onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId)),

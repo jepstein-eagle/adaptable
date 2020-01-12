@@ -24,7 +24,6 @@ import AdaptableHelper from '../Helpers/AdaptableHelper';
 import {
   LiveReportUpdatedEventArgs,
   LiveReportUpdatedInfo,
-  LiveReport,
 } from '../../Api/Events/LiveReportUpdated';
 
 export const ALL_DATA_REPORT = 'All Data';
@@ -93,8 +92,6 @@ export class ReportService implements IReportService {
         return true;
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
-      case ExportDestination.iPushPull:
-        return this.adaptable.api.iPushPullApi.isIPushPullAvailable();
       case ExportDestination.Glue42:
         return this.adaptable.api.glue42Api.isGlue42Available();
     }
@@ -341,10 +338,7 @@ export class ReportService implements IReportService {
   }
 
   public PublishLiveReportUpdatedEvent(
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42,
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42,
     liveReportTrigger: LiveReportTrigger
   ): void {
     let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
@@ -370,10 +364,6 @@ export class ReportService implements IReportService {
         return false;
       case ExportDestination.OpenfinExcel:
         return true;
-      case ExportDestination.iPushPull:
-        let liveReports: LiveReport[] = this.adaptable.api.internalApi.getLiveReports();
-        let currentLiveReport = liveReports.find(lr => lr.Report.Name == report.Name);
-        return currentLiveReport != null;
       case ExportDestination.Glue42:
         return this.adaptable.api.glue42Api.isGlue42RunLiveData();
     }

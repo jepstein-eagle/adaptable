@@ -19,10 +19,7 @@ export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<Rep
   ReportService: IReportService;
   onExport: (exportDestination: ExportDestination) => void;
   onReportStopLive: (
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ) => void;
 }
 
@@ -31,15 +28,15 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     let report: Report = this.props.AdaptableObject as Report;
     let csvMenuItem: any = {
       onClick: () => this.props.onExport(ExportDestination.CSV),
-      label: 'Export to CSV',
+      label: 'CSV',
     };
     let jsonMenuItem: any = {
       onClick: () => this.props.onExport(ExportDestination.JSON),
-      label: 'Export to JSON',
+      label: 'JSON',
     };
     let clipboardMenuItem: any = {
       onClick: () => this.props.onExport(ExportDestination.Clipboard),
-      label: 'Export to Clipboard',
+      label: 'Clipboard',
     };
     let openfinExcelMenuItem = this.props.LiveReports.find(x => x.Report.Uuid == report.Uuid)
       ? {
@@ -49,18 +46,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       : {
           onClick: () => this.props.onExport(ExportDestination.OpenfinExcel),
           label: 'Start Live Openfin Excel',
-        };
-
-    let iPushPullExcelMenuItem = this.props.LiveReports.find(
-      x => x.Report.Uuid == report.Uuid && x.ExportDestination == ExportDestination.iPushPull
-    )
-      ? {
-          onClick: () => this.props.onReportStopLive(ExportDestination.iPushPull),
-          label: 'iPushPull (Stop Sync)',
-        }
-      : {
-          onClick: () => this.props.onExport(ExportDestination.iPushPull),
-          label: 'iPushPull (Start Sync)',
         };
 
     let glue42MenuItem = {
@@ -93,8 +78,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       jsonMenuItem,
       this.props.ReportService.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
         openfinExcelMenuItem,
-      this.props.ReportService.IsReportDestinationActive(ExportDestination.iPushPull) &&
-        iPushPullExcelMenuItem,
+
       this.props.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
         glue42MenuItem,
     ].filter(x => !!x);

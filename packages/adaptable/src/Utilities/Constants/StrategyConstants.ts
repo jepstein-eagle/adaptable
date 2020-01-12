@@ -31,6 +31,7 @@ export const PieChartStrategyId: AdaptableFunctionName = 'PieChart';
 export const PlusMinusStrategyId: AdaptableFunctionName = 'PlusMinus';
 export const QuickSearchStrategyId: AdaptableFunctionName = 'QuickSearch';
 export const ReminderStrategyId: AdaptableFunctionName = 'Reminder';
+export const ScheduleStrategyId: AdaptableFunctionName = 'Schedule';
 export const ShortcutStrategyId: AdaptableFunctionName = 'Shortcut';
 export const SmartEditStrategyId: AdaptableFunctionName = 'SmartEdit';
 export const StateManagementStrategyId: AdaptableFunctionName = 'StateManagement';
@@ -72,6 +73,7 @@ export const PieChartStrategyFriendlyName: string = 'Pie Chart';
 export const PlusMinusStrategyFriendlyName: string = 'Plus Minus';
 export const QuickSearchStrategyFriendlyName: string = 'Quick Search';
 export const ReminderStrategyFriendlyName: string = 'Reminder';
+export const ScheduleStrategyFriendlyName: string = 'Schedule';
 export const ShortcutStrategyFriendlyName: string = 'Shortcut';
 export const SmartEditStrategyFriendlyName: string = 'Smart Edit';
 export const StateManagementStrategyFriendlyName: string = 'Manage State';
@@ -112,6 +114,7 @@ export const PieChartGlyph: string = 'pie-chart';
 export const PlusMinusGlyph: string = 'plus-minus';
 export const QuickSearchGlyph: string = 'quick-search';
 export const ReminderGlyph: string = 'reminder';
+export const ScheduleGlyph: string = 'schedule';
 export const ShortcutGlyph: string = 'shortcut';
 export const SmartEditGlyph: string = 'smart-edit';
 export const StateManagementGlyph: string = 'state-management';
@@ -180,6 +183,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return QuickSearchStrategyId;
     case ReminderStrategyFriendlyName:
       return ReminderStrategyId;
+    case ScheduleStrategyFriendlyName:
+      return ScheduleStrategyId;
     case CellSummaryStrategyFriendlyName:
       return CellSummaryStrategyId;
     case ShortcutStrategyFriendlyName:
@@ -261,6 +266,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return ReminderStrategyFriendlyName;
     case ReminderStrategyId:
       return ReminderStrategyFriendlyName;
+    case ScheduleStrategyId:
+      return ScheduleStrategyFriendlyName;
     case CellSummaryStrategyId:
       return CellSummaryStrategyFriendlyName;
     case ShortcutStrategyId:
@@ -336,6 +343,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return QuickSearchGlyph;
     case ReminderStrategyId:
       return ReminderGlyph;
+    case ScheduleStrategyId:
+      return ScheduleGlyph;
     case ShortcutStrategyId:
       return ShortcutGlyph;
     case CellSummaryStrategyId:

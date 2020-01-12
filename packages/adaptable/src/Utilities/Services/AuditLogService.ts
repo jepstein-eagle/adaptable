@@ -175,7 +175,7 @@ export class AuditLogService implements IAuditLogService {
         auditlog_type: AuditLogType.UserStateChange,
         client_timestamp: new Date(),
         username: this.adaptable.adaptableOptions.userName!,
-        blotter_id: this.adaptable.adaptableOptions.adaptableId!,
+        adaptable_id: this.adaptable.adaptableOptions.adaptableId!,
         state_change_details: stateChangeDetails,
       };
       let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
@@ -202,7 +202,7 @@ export class AuditLogService implements IAuditLogService {
         auditlog_type: AuditLogType.InternalStateChange,
         client_timestamp: new Date(),
         username: this.adaptable.adaptableOptions.userName!,
-        blotter_id: this.adaptable.adaptableOptions.adaptableId!,
+        adaptable_id: this.adaptable.adaptableOptions.adaptableId!,
         state_change_details: stateChangeDetails,
       };
       let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
@@ -230,7 +230,7 @@ export class AuditLogService implements IAuditLogService {
         auditlog_type: AuditLogType.FunctionApplied,
         client_timestamp: new Date(),
         username: this.adaptable.adaptableOptions.userName!,
-        blotter_id: this.adaptable.adaptableOptions.adaptableId!,
+        adaptable_id: this.adaptable.adaptableOptions.adaptableId!,
         function_applied_details: functionAppliedDetails,
       };
       let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
@@ -297,7 +297,7 @@ export class AuditLogService implements IAuditLogService {
       auditlog_type: auditLogType,
       client_timestamp: new Date(),
       username: this.adaptable.adaptableOptions.userName!,
-      blotter_id: this.adaptable.adaptableOptions.adaptableId!,
+      adaptable_id: this.adaptable.adaptableOptions.adaptableId!,
       data_change_details: {
         primarykey_column_value: String(dataChangedInfo.PrimaryKeyValue),
         primarykey_column_id: this.adaptable.adaptableOptions.primaryKey,
@@ -314,7 +314,7 @@ export class AuditLogService implements IAuditLogService {
       auditlog_type: AuditLogType.Ping,
       client_timestamp: new Date(),
       username: this.adaptable.adaptableOptions.userName,
-      blotter_id: this.adaptable.adaptableOptions.adaptableId,
+      adaptable_id: this.adaptable.adaptableOptions.adaptableId,
       number_of_missed_ping: this.numberOfMissedPing,
     };
     let xhr = new XMLHttpRequest();

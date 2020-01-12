@@ -40,10 +40,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       }, 1000);
     });
 
-    this.adaptable._on('GridReloaded', () => {
-      this.scheduleReports();
-    });
-
     // ideally this OpenFin stuff should come out and be put in an OpenFin Service (like with glue and ipushpull)
     // and that will manage this and only call the strategy as required
     OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
@@ -213,7 +209,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 );
                 this.adaptable.api.internalApi.stopLiveReport(
                   liveReport.Report,
-                  ExportDestination.iPushPull
+                  ExportDestination.Glue42
                 );
 
                 let errorMessage: string = 'Export Failed';
@@ -256,7 +252,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 );
                 this.adaptable.api.internalApi.stopLiveReport(
                   liveReport.Report,
-                  ExportDestination.iPushPull
+                  ExportDestination.Glue42
                 );
 
                 let errorMessage: string = 'Export Failed';
@@ -396,15 +392,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       return null;
     }
     return actionReturnObj.ActionReturn;
-  }
-
-  public scheduleReports(): void {
-    // just clear all jobs and recreate - simplest thing to do...
-    this.adaptable.ScheduleService.ClearAllExportJobs();
-
-    this.adaptable.api.exportApi.getScheduledReports().forEach((report: Report) => {
-      this.adaptable.ScheduleService.AddReportSchedule(report);
-    });
   }
 
   private getThrottleTimeFromState(): number {

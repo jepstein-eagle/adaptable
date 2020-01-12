@@ -10,7 +10,7 @@ import { Report } from './ExportState';
 import { LiveReport } from '../Api/Events/LiveReportUpdated';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
 import { CellSummaryOperationDefinition } from './CellSummaryState';
-import { IPushPullDomain } from './IPushPullState';
+import { IPushPullDomain, IPushPullReport } from './IPushPullState';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 
@@ -31,8 +31,7 @@ export interface SystemState extends InternalState {
   ChartVisibility: ChartVisibility;
   CalculatedColumnErrorMessage: string;
   CurrentLiveReports: LiveReport[];
-  IPushPullDomainsPages: IPushPullDomain[];
-  IPPLoginMessage?: string;
+
   SystemReports: Report[];
   ReportErrorMessage: string;
   QuickSearchRange: QueryRange;

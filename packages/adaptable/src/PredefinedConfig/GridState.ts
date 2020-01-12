@@ -15,7 +15,6 @@ export interface GridState extends InternalState {
   IsQuickFilterActive: boolean;
   MainMenuItems: AdaptableMenuItem[];
   IsGlue42Available: boolean;
-  IsIPushPullAvailable: boolean;
   IsLiveReportRunning: boolean;
   IsGridInPivotMode: boolean;
 }

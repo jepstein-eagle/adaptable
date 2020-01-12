@@ -65,12 +65,14 @@ import PieChart from './pie-chart';
 import PlusMinus from './plus-minus';
 import QuickSearch from './quick-search';
 import Reminder from './reminder';
+import Schedule from './schedule';
 import Shortcut from './shortcut';
 import TeamShare from './team-share';
 import UpdatedRow from './updated-row';
 import UserFilter from './user-filter';
 import alignJustify from './align-justify';
 import login from './login';
+import logout from './logout';
 import Theme from './theme';
 import checkBox from './check-box';
 import checkBoxOutline from './check-box-outline';
@@ -82,6 +84,8 @@ import Folder from './folder';
 import FolderShared from './folder-shared';
 import Play from './play';
 import Stop from './stop';
+import Pause from './pause';
+import NewPage from './newpage';
 
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
@@ -118,7 +122,8 @@ const allIcons = {
   'spark-line': Sparkline, //    show-chart
   'pie-chart': PieChart,
   'plus-minus': PlusMinus, //add-circle
-  reminder: Reminder, // alarm
+  reminder: Reminder, // alarm_on
+  schedule: Schedule, // schedule
   shortcut: Shortcut, // link
   'state-management': StateManagement, //   assignment,
   'system-status': SystemStatus, // was traffic
@@ -167,6 +172,7 @@ const allIcons = {
   'sort-desc': SortDesc,
   'align-justify': alignJustify,
   login: login,
+  logout: logout,
 
   clear: Clear,
   'import-export': ImportExport,
@@ -180,7 +186,9 @@ const allIcons = {
   'folder-shared': FolderShared,
   play: Play,
   stop: Stop,
+  pause: Pause,
   folder: Folder,
+  newpage: NewPage, //note_add
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

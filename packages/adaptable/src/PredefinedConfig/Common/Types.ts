@@ -170,6 +170,7 @@ export type AdaptableFunctionName =
   | 'PlusMinus'
   | 'QuickSearch'
   | 'Reminder'
+  | 'Schedule'
   | 'Shortcut'
   | 'SmartEdit'
   | 'SparklineColumn'

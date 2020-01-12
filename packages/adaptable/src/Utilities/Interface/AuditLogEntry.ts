@@ -17,7 +17,7 @@ export interface AuditLogEntry {
   auditlog_type: AuditLogType;
   client_timestamp: Date;
   username: string;
-  blotter_id: string;
+  adaptable_id: string;
   function_applied_details?: FunctionAppliedDetails;
   state_change_details?: StateChangedDetails;
   data_change_details?: DataChangedDetails;

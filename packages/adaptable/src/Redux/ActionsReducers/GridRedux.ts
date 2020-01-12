@@ -28,8 +28,6 @@ export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
 export const SET_GLUE42_AVAILABLE_ON = 'SET_GLUE42_AVAILABLE_ON';
 export const SET_GLUE42_AVAILABLE_OFF = 'SET_GLUE42_AVAILABLE_OFF';
-export const SET_IPUSHPULL_AVAILABLE_ON = 'SET_IPUSHPULL_AVAILABLE_ON';
-export const SET_IPUSHPULL_AVAILABLE_OFF = 'SET_IPUSHPULL_AVAILABLE_OFF';
 export const SET_LIVE_REPORT_RUNNING_ON = 'SET_LIVE_REPORT_RUNNING_ON';
 export const SET_LIVE_REPORT_RUNNING_OFF = 'SET_LIVE_REPORT_RUNNING_OFF';
 export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
@@ -100,10 +98,6 @@ export interface SetMainMenuItemsAction extends Redux.Action {
 export interface SetGlue42AvailableOnAction extends Redux.Action {}
 
 export interface SetGlue42AvailableOffAction extends Redux.Action {}
-
-export interface SetIPushPullAvailableOnAction extends Redux.Action {}
-
-export interface SetIPushPullAvailableOffAction extends Redux.Action {}
 
 export interface SetLiveReportRunningOnAction extends Redux.Action {}
 
@@ -206,13 +200,6 @@ export const SetGlue42AvailableOff = (): SetGlue42AvailableOffAction => ({
   type: SET_GLUE42_AVAILABLE_OFF,
 });
 
-export const SetIPushPullAvailableOn = (): SetIPushPullAvailableOnAction => ({
-  type: SET_IPUSHPULL_AVAILABLE_ON,
-});
-
-export const SetIPushPullAvailableOff = (): SetIPushPullAvailableOffAction => ({
-  type: SET_IPUSHPULL_AVAILABLE_OFF,
-});
 export const SetLiveReportRunningOn = (): SetLiveReportRunningOnAction => ({
   type: SET_LIVE_REPORT_RUNNING_ON,
 });
@@ -243,7 +230,6 @@ const initialGridState: GridState = {
   IsQuickFilterActive: false,
   MainMenuItems: EMPTY_ARRAY,
   IsGlue42Available: false,
-  IsIPushPullAvailable: false,
   IsLiveReportRunning: false,
   IsGridInPivotMode: false,
 };
@@ -300,10 +286,6 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { IsGlue42Available: true });
     case SET_GLUE42_AVAILABLE_OFF:
       return Object.assign({}, state, { IsGlue42Available: false });
-    case SET_IPUSHPULL_AVAILABLE_ON:
-      return Object.assign({}, state, { IsIPushPullAvailable: true });
-    case SET_IPUSHPULL_AVAILABLE_OFF:
-      return Object.assign({}, state, { IsIPushPullAvailable: false });
     case SET_LIVE_REPORT_RUNNING_ON:
       return Object.assign({}, state, { IsLiveReportRunning: true });
     case SET_LIVE_REPORT_RUNNING_OFF:

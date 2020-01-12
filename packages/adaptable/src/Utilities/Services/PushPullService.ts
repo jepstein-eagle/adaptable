@@ -62,8 +62,10 @@ export class PushPullService implements IPushPullService {
                 // slightly circular but it means tht we do the logic in one go..
                 this.adaptable.api.iPushPullApi.loginToIPushPull(userName, password);
               } catch (err) {
+                alert('in constructor');
+                alert(err);
                 // handle this
-                this.adaptable.api.internalApi.setIPushPullAvailableOff();
+                this.adaptable.api.iPushPullApi.setIPushPullAvailableOff();
               }
             }
           }
@@ -93,6 +95,9 @@ export class PushPullService implements IPushPullService {
       })
       .catch((err: any) => {
         this.ppInstance.__status = ServiceStatus.Error;
+        this.adaptable.api.iPushPullApi.setIPushPullLoginErrorMessage(
+          err.data ? err.data.error_description || err.message : err.message
+        );
         // prefer a more descriptive error, which IPP generally provides
         throw err.data ? err.data.error_description || err.message : err.message;
       });
@@ -153,7 +158,7 @@ export class PushPullService implements IPushPullService {
       return Promise.reject('No iPushPull instance found!');
     }
     this.ppInstance.Page.create(folderId, page)
-      .then((page: any) => {
+      .then((createdPage: any) => {
         LoggingHelper.LogAdaptableSuccess("Page: '" + page + "' successfully created.");
       })
       .catch((err: any) => {

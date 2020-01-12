@@ -2,6 +2,7 @@ import {
   IPushPullState,
   IPushPullDomain,
   IPushPullReport,
+  IPushPullSchedule,
 } from '../PredefinedConfig/IPushPullState';
 
 /**
@@ -21,22 +22,27 @@ export interface IPushPullApi {
   getIPushPullUsername(): string | undefined;
   getIPushPullPassword(): string | undefined;
 
-  getCurrentIPushPullReportName(): string;
+  getSelectedIPushPullReportName(): string | undefined;
+  getCurrentLiveIPushPullReport(): IPushPullReport | undefined;
 
-  getCurrentIPushPullReport(): IPushPullReport;
+  sendSnapshot(iiPushPullReport: IPushPullReport): void;
 
-  getScheduledReports(): IPushPullReport[];
+  startLiveData(iPushPullReport: IPushPullReport): void;
 
-  exportToIPushPull(iPushPullReportName: string): void;
+  stopLiveData(): void;
 
   /**
    * Retrieves an iPushPull instance (if one has been provided by the User at design time)
    */
   getIPushPullInstance(): any;
 
-  isIPushPullAvailable(): boolean;
+  getIPushPullDomains(): IPushPullDomain[];
 
-  getIPushPullDomainsPages(): IPushPullDomain[];
+  getPagesForIPushPullDomain(folderName: string): string[];
+
+  getFolderIdForName(folderName: string): number;
+
+  addNewIPushPullPage(folderName: string, pageName: string): void;
 
   getIPushPullThrottleTime(): number | undefined;
 
@@ -48,7 +54,25 @@ export interface IPushPullApi {
 
   showIPushPullPopup(): void;
 
-  showIPushPullLogin(): void;
-
   loginToIPushPull(userName: string, password: string): void;
+
+  logoutFromIPushPull(): void;
+
+  setIPushPullLoginErrorMessage(loginErrorMessage: string): void;
+
+  getIPushPullSchedules(): IPushPullSchedule[];
+
+  // set internally
+
+  setIPushPullAvailableOn(): void;
+
+  setIPushPullAvailableOff(): void;
+
+  isIPushPullAvailable(): boolean;
+
+  setIPushPullLiveDataRunningOn(): void;
+
+  setIPushPullLiveDataRunningOff(): void;
+
+  isIPushPullLiveDataRunning(): boolean;
 }

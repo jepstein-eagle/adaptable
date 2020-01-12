@@ -10,6 +10,4 @@ export interface IExportStrategy extends IStrategy {
     folder?: string,
     page?: string
   ): void;
-
-  scheduleReports(): void;
 }

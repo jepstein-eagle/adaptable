@@ -1,110 +1,215 @@
 import * as Redux from 'redux';
-import { IPushPullState, IPushPullReport } from '../../PredefinedConfig/IPushPullState';
-import { Report } from '../../PredefinedConfig/ExportState';
-import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import {
+  IPushPullState,
+  IPushPullSchedule,
+  IPushPullReport,
+  IPushPullDomain,
+} from '../../PredefinedConfig/IPushPullState';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { ReportSelectAction } from './ExportRedux';
 
 export const IPUSHPULL_SET_THROTTLE_TIME = 'IPUSHPULL_SET_THROTTLE_TIME';
-export const IPUSHPULL_EXPORT = 'IPUSHPULL_EXPORT';
+export const IPUSHPULL_SEND_SNAPSHOT = 'IPUSHPULL_SEND_SNAPSHOT';
 export const IPUSHPULL_REPORT_SELECT = 'IPUSHPULL_REPORT_SELECT';
-export const IPUSHPULL_REPORT_ADD = 'IPUSHPULL_REPORT_ADD';
-export const IPUSHPULL_REPORT_EDIT = 'IPUSHPULL_REPORT_EDIT';
-export const IPUSHPULL_REPORT_DELETE = 'IPUSHPULL_REPORT_DELETE';
 
-export const IPP_LOGIN = 'IPP_LOGIN';
-export const IPP_LOGIN_FAILED = 'IPP_LOGIN_FAILED';
+export const IPUSHPULL_START_LIVE_DATA = 'IPUSHPULL_START_LIVE_DATA';
+export const IPUSHPULL_STOP_LIVE_DATA = 'IPUSHPULL_STOP_LIVE_DATA';
+
+export const IPUSHPULL_SCHEDULE_ADD = 'IPUSHPULL_SCHEDULE_ADD';
+export const IPUSHPULL_SCHEDULE_EDIT = 'IPUSHPULL_SCHEDULE_EDIT';
+export const IPUSHPULL_SCHEDULE_DELETE = 'IPUSHPULL_SCHEDULE_DELETE';
+
+export const IPUSHPULL_ADD_PAGE = 'IPUSHPULL_ADD_PAGE';
+
+export const IPUSHPULL_LOGIN = 'IPUSHPULL_LOGIN';
+export const IPUSHPULL_SET_LOGIN_ERROR_MESSAGE = 'IPUSHPULL_SET_LOGIN_ERROR_MESSAGE';
+
+export const SET_IPUSHPULL_AVAILABLE_ON = 'SET_IPUSHPULL_AVAILABLE_ON';
+export const SET_IPUSHPULL_AVAILABLE_OFF = 'SET_IPUSHPULL_AVAILABLE_OFF';
+
+export const SET_IPUSHPULL_LIVE_DATA_RUNNING_ON = 'SET_IPUSHPULL_LIVE_DATA_RUNNING_ON';
+export const SET_IPUSHPULL_LIVE_DATA_RUNNING_OFF = 'SET_IPUSHPULL_LIVE_DATA_RUNNING_OFF';
+
+export const IPUSHPULL_LIVE_REPORT_SET = 'IPUSHPULL_LIVE_REPORT_SET';
+export const IPUSHPULL_LIVE_REPORT_CLEAR = 'IPUSHPULL_LIVE_REPORT_CLEAR';
+export const IPUSHPULL_SET_DOMAIN_PAGES = 'IPUSHPULL_SET_DOMAIN_PAGES';
 
 export interface IPushPullSetThrottleTimeAction extends Redux.Action {
   throttleTime: number;
 }
 
-export interface IPushPullReportAction extends Redux.Action {
-  iPushPullReport: IPushPullReport;
-}
-
 export interface IPushPullReportSelectAction extends Redux.Action {
-  SelectedReport: string;
+  selectedIPushPullReportName: string;
 }
 
-export interface IPushPullReportAddAction extends IPushPullReportAction {}
+export interface IPushPullScheduleAction extends Redux.Action {
+  iPushPullSchedule: IPushPullSchedule;
+}
+export interface IPushPullScheduleAddAction extends IPushPullScheduleAction {}
+export interface IPushPullScheduleEditAction extends IPushPullScheduleAction {}
+export interface IPushPullScheduleDeleteAction extends IPushPullScheduleAction {}
 
-export interface IPushPullReportEditAction extends IPushPullReportAction {}
-
-export interface IPushPullReportDeleteAction extends IPushPullReportAction {}
-
-export interface IPushPullExportAction extends Redux.Action {
+export interface IPushPullSendSnapshotAction extends Redux.Action {
   iPushPullReport: IPushPullReport;
-  isLiveReport: boolean;
+}
+export interface IPushPullStartLiveDataAction extends Redux.Action {
+  iPushPullReport: IPushPullReport;
 }
 
-export interface IPPLoginAction extends Redux.Action {
+export interface IPushPullStopLiveDataAction extends Redux.Action {}
+
+export interface IPushPullLoginAction extends Redux.Action {
   username: string;
   password: string;
 }
 
-export interface IPPLoginFailedAction extends Redux.Action {
-  Message: string;
+export interface IPushPullSetLoginErrorMessageAction extends Redux.Action {
+  errorMessage: string;
 }
+
+export interface IPushPullAddPageAction extends Redux.Action {
+  folder: string;
+  page: string;
+}
+
+export interface SetIPushPullAvailableOnAction extends Redux.Action {}
+
+export interface SetIPushPullAvailableOffAction extends Redux.Action {}
+
+export interface SetIPushPullLiveDataRunningOnAction extends Redux.Action {}
+
+export interface SetIPushPullLiveDataRunningOffAction extends Redux.Action {}
+
+export interface IPushPullSetDomainsPagesAction extends Redux.Action {
+  IPushPullDomainsPages: IPushPullDomain[];
+}
+
+export interface IPushPullLiveReportSetAction extends Redux.Action {
+  iPushPullReport: IPushPullReport;
+}
+export interface IPushPullLiveReportClearAction extends Redux.Action {}
 
 export const IPushPullSetThrottleTime = (throttleTime: number): IPushPullSetThrottleTimeAction => ({
   type: IPUSHPULL_SET_THROTTLE_TIME,
   throttleTime,
 });
 
-export const IPushPullExport = (
-  iPushPullReport: IPushPullReport,
-  isLiveReport: boolean
-): IPushPullExportAction => ({
-  type: IPUSHPULL_EXPORT,
+export const IPushPullSendSnapshot = (
+  iPushPullReport: IPushPullReport
+): IPushPullSendSnapshotAction => ({
+  type: IPUSHPULL_SEND_SNAPSHOT,
   iPushPullReport,
-  isLiveReport,
 });
 
-export const IPushPullReportSelect = (SelectedReport: string): IPushPullReportSelectAction => ({
+export const IPushPullStartLiveData = (
+  iPushPullReport: IPushPullReport
+): IPushPullStartLiveDataAction => ({
+  type: IPUSHPULL_START_LIVE_DATA,
+  iPushPullReport,
+});
+
+export const IPushPullStopLiveData = (): IPushPullStopLiveDataAction => ({
+  type: IPUSHPULL_STOP_LIVE_DATA,
+});
+
+export const IPushPullSelectReport = (
+  selectedIPushPullReportName: string
+): IPushPullReportSelectAction => ({
   type: IPUSHPULL_REPORT_SELECT,
-  SelectedReport,
+  selectedIPushPullReportName,
 });
 
-export const IPushPullReportAdd = (iPushPullReport: IPushPullReport): IPushPullReportAddAction => ({
-  type: IPUSHPULL_REPORT_ADD,
-  iPushPullReport,
-});
-
-export const IPushPullReportEdit = (
-  iPushPullReport: IPushPullReport
-): IPushPullReportEditAction => ({
-  type: IPUSHPULL_REPORT_EDIT,
-  iPushPullReport,
-});
-
-export const IPushPullReportDelete = (
-  iPushPullReport: IPushPullReport
-): IPushPullReportDeleteAction => ({
-  type: IPUSHPULL_REPORT_DELETE,
-  iPushPullReport,
-});
-
-export const IPPLogin = (username: string, password: string): IPPLoginAction => ({
-  type: IPP_LOGIN,
+export const IPushPullLogin = (username: string, password: string): IPushPullLoginAction => ({
+  type: IPUSHPULL_LOGIN,
   username,
   password,
 });
 
-export const IPPLoginFailed = (Message: string): IPPLoginFailedAction => ({
-  type: IPP_LOGIN_FAILED,
-  Message,
+export const IPushPullSetLoginErrorMessage = (
+  errorMessage: string
+): IPushPullSetLoginErrorMessageAction => ({
+  type: IPUSHPULL_SET_LOGIN_ERROR_MESSAGE,
+  errorMessage,
+});
+
+export const IPushPullAddPage = (folder: string, page: string): IPushPullAddPageAction => ({
+  type: IPUSHPULL_ADD_PAGE,
+  folder,
+  page,
+});
+
+export const IPushPullScheduleAdd = (
+  iPushPullSchedule: IPushPullSchedule
+): IPushPullScheduleAddAction => ({
+  type: IPUSHPULL_SCHEDULE_ADD,
+  iPushPullSchedule,
+});
+
+export const IPushPullScheduleEdit = (
+  iPushPullSchedule: IPushPullSchedule
+): IPushPullScheduleEditAction => ({
+  type: IPUSHPULL_SCHEDULE_EDIT,
+  iPushPullSchedule,
+});
+export const IPushPullScheduleDelete = (
+  iPushPullSchedule: IPushPullSchedule
+): IPushPullScheduleDeleteAction => ({
+  type: IPUSHPULL_SCHEDULE_DELETE,
+  iPushPullSchedule,
+});
+
+export const SetIPushPullAvailableOn = (): SetIPushPullAvailableOnAction => ({
+  type: SET_IPUSHPULL_AVAILABLE_ON,
+});
+
+export const SetIPushPullAvailableOff = (): SetIPushPullAvailableOffAction => ({
+  type: SET_IPUSHPULL_AVAILABLE_OFF,
+});
+
+export const SetIPushPullLiveDataRunningOn = (): SetIPushPullLiveDataRunningOnAction => ({
+  type: SET_IPUSHPULL_LIVE_DATA_RUNNING_ON,
+});
+
+export const SetIPushPullLiveDataRunningOff = (): SetIPushPullLiveDataRunningOffAction => ({
+  type: SET_IPUSHPULL_LIVE_DATA_RUNNING_ON,
+});
+
+export const IPushPullSetDomainsPages = (
+  IPushPullDomainsPages: IPushPullDomain[]
+): IPushPullSetDomainsPagesAction => {
+  return {
+    type: IPUSHPULL_SET_DOMAIN_PAGES,
+    IPushPullDomainsPages,
+  };
+};
+
+export const IPushPullLiveReportSet = (
+  iPushPullReport: IPushPullReport
+): IPushPullLiveReportSetAction => ({
+  type: IPUSHPULL_LIVE_REPORT_SET,
+  iPushPullReport,
+});
+
+export const IPushPullLiveReportClear = (): IPushPullLiveReportClearAction => ({
+  type: IPUSHPULL_LIVE_REPORT_CLEAR,
 });
 
 const initialFilterState: IPushPullState = {
-  IPushPullReports: EMPTY_ARRAY,
-  CurrentIPushPullReport: EMPTY_STRING,
+  SelectedIPushPullReportName: undefined,
+  IPushPullSchedules: EMPTY_ARRAY,
+  IsIPushPullAvailable: false,
+  IsIPushPullLiveDataRunning: false,
+  IPushPullDomainsPages: EMPTY_ARRAY,
+  CurrentLiveIPushPullReport: undefined,
+  IPushPullLoginErrorMessage: undefined,
 };
 
 export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
   state: IPushPullState = initialFilterState,
   action: Redux.Action
 ): IPushPullState => {
+  let iPushPullSchedules: IPushPullSchedule[];
+
   switch (action.type) {
     case IPUSHPULL_SET_THROTTLE_TIME: {
       const atctionType = action as IPushPullSetThrottleTimeAction;
@@ -113,38 +218,74 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
 
     case IPUSHPULL_REPORT_SELECT:
       return Object.assign({}, state, {
-        CurrentIPushPullReport: (action as ReportSelectAction).SelectedReport,
+        SelectedIPushPullReportName: (action as IPushPullReportSelectAction)
+          .selectedIPushPullReportName,
       });
 
-    case IPUSHPULL_REPORT_ADD: {
-      let reports: IPushPullReport[];
-      const actionReport: IPushPullReport = (action as IPushPullReportAction).iPushPullReport;
+    case IPUSHPULL_SCHEDULE_ADD: {
+      const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
+        .iPushPullSchedule;
 
-      if (!actionReport.Uuid) {
-        actionReport.Uuid = createUuid();
+      if (!actionSchedule.Uuid) {
+        actionSchedule.Uuid = createUuid();
       }
-      reports = [].concat(state.IPushPullReports);
-      reports.push(actionReport);
-      return { ...state, IPushPullReports: reports };
+      iPushPullSchedules = [].concat(state.IPushPullSchedules);
+      iPushPullSchedules.push(actionSchedule);
+      return { ...state, IPushPullSchedules: iPushPullSchedules };
+    }
+    case IPUSHPULL_SCHEDULE_EDIT: {
+      const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
+        .iPushPullSchedule;
+      return {
+        ...state,
+        IPushPullSchedules: state.IPushPullSchedules.map(abObject =>
+          abObject.Uuid === actionSchedule.Uuid ? actionSchedule : abObject
+        ),
+      };
+    }
+    case IPUSHPULL_SCHEDULE_DELETE: {
+      const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
+        .iPushPullSchedule;
+      return {
+        ...state,
+        IPushPullSchedules: state.IPushPullSchedules.filter(
+          abObject => abObject.Uuid !== actionSchedule.Uuid
+        ),
+      };
     }
 
-    case IPUSHPULL_REPORT_EDIT:
-      const actionReport: IPushPullReport = (action as IPushPullReportAction).iPushPullReport;
-      return {
-        ...state,
-        IPushPullReports: state.IPushPullReports.map(abObject =>
-          abObject.Uuid === actionReport.Uuid ? actionReport : abObject
-        ),
-      };
+    case SET_IPUSHPULL_AVAILABLE_ON:
+      return Object.assign({}, state, { IsIPushPullAvailable: true });
+    case SET_IPUSHPULL_AVAILABLE_OFF:
+      return Object.assign({}, state, { IsIPushPullAvailable: false });
+    case SET_IPUSHPULL_LIVE_DATA_RUNNING_ON:
+      return Object.assign({}, state, { IsIPushPullLiveDataRunning: true });
+    case SET_IPUSHPULL_LIVE_DATA_RUNNING_OFF:
+      return Object.assign({}, state, { IsIPushPullLiveDataRunning: false });
 
-    case IPUSHPULL_REPORT_DELETE: {
-      const actionReport: IPushPullReport = (action as IPushPullReportAction).iPushPullReport;
+    case IPUSHPULL_LOGIN: {
+      return { ...state, IPushPullLoginErrorMessage: undefined };
+    }
+    case IPUSHPULL_SET_LOGIN_ERROR_MESSAGE: {
       return {
         ...state,
-        IPushPullReports: state.IPushPullReports.filter(
-          abObject => abObject.Uuid !== actionReport.Uuid
-        ),
+        IPushPullLoginErrorMessage: (action as IPushPullSetLoginErrorMessageAction).errorMessage,
       };
+    }
+    case IPUSHPULL_SET_DOMAIN_PAGES: {
+      return Object.assign({}, state, {
+        IPushPullDomainsPages: (action as IPushPullSetDomainsPagesAction).IPushPullDomainsPages,
+      });
+    }
+
+    case IPUSHPULL_LIVE_REPORT_SET: {
+      const atctionType = action as IPushPullLiveReportSetAction;
+      return Object.assign({}, state, { CurrentLiveIPushPullReport: atctionType.iPushPullReport });
+    }
+
+    case IPUSHPULL_LIVE_REPORT_CLEAR: {
+      // const atctionType = action as IPushPullLiveReportSetAction;
+      return Object.assign({}, state, { CurrentLiveIPushPullReport: undefined });
     }
 
     default:

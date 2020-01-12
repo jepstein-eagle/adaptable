@@ -28,14 +28,14 @@ import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
-import { IPushPullLogin } from './IPushPull/IPushPullLogin';
+import { IPushPullLoginPopup } from './IPushPull/IPushPullLoginPopup';
+import { IPushPullAddPagePopup } from './IPushPull/IPushPullAddPagePopup';
 import { HomeToolbarControl } from './Home/HomeToolbarControl';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { StateManagementPopup } from './StateManagement/StateManagementPopup';
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { CalculatedColumnPopup } from './CalculatedColumn/CalculatedColumnPopup';
-import { IPushPullDomainPageSelector } from './IPushPull/IPushPullDomainPageSelector';
 import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
 import { DataSourcePopup } from './DataSource/DataSourcePopup';
 import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
@@ -48,6 +48,7 @@ import { PercentBarPopup } from './PercentBar/PercentBarPopup';
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
 import { ReminderPopup } from './Reminder/ReminderPopup';
+import { SchedulePopup } from './Schedule/SchedulePopup';
 import { SystemStatusPopup } from './SystemStatus/SystemStatusPopup';
 import { ConnectedComponent } from 'react-redux';
 import { AdvancedSearchToolPanel } from './AdvancedSearch/AdvancedSearchToolPanel';
@@ -86,14 +87,15 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   FormatColumnPopup,
   FreeTextColumnPopup,
   IPushPullPopup,
-  IPushPullLogin,
-  IPushPullDomainPageSelector,
+  IPushPullLoginPopup,
+  IPushPullAddPagePopup,
   LayoutPopup,
   ColumnCategoryPopup,
   PercentBarPopup,
   PlusMinusPopup,
   QuickSearchPopup,
   ReminderPopup,
+  SchedulePopup,
   CellSummaryPopup,
   SmartEditPopup,
   ShortcutPopup,

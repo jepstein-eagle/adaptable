@@ -9,7 +9,6 @@ import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Inte
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { Report } from '../../../PredefinedConfig/ExportState';
 import { ReportRowTypeWizard } from './ReportRowTypeWizard';
-import { ReportScheduleWizard } from './ReportScheduleWizard';
 
 export class ReportWizard extends React.Component<
   AdaptableObjectExpressionAdaptableWizardProps<ReportWizard>,
@@ -57,13 +56,8 @@ export class ReportWizard extends React.Component<
               Element: <ReportSettingsWizard Reports={this.props.ConfigEntities as Report[]} />,
             },
             {
-              StepName: 'Schedule',
-              Index: 5,
-              Element: <ReportScheduleWizard />,
-            },
-            {
               StepName: 'Summary',
-              Index: 6,
+              Index: 5,
               Element: <ReportSummaryWizard />,
             },
           ]}

@@ -17,22 +17,22 @@ import ErrorBox from '../../components/ErrorBox';
 import HelpBlock from '../../components/HelpBlock';
 import { Flex } from 'rebass';
 
-interface IPushPullLoginProps {
+interface IPushPullLoginPopupProps {
   pushpullLogin: string | undefined;
   pushpullPassword: string | undefined;
   pushpullLoginErrorMessage: string | undefined;
 
-  onLogin: (login: string, password: string) => IPushPullRedux.IPPLoginAction;
+  onLogin: (login: string, password: string) => IPushPullRedux.IPushPullLoginAction;
   onCancel: () => any;
 }
 
-interface IPushPullLoginInternalState {
+interface IPushPullLoginPopupInternalState {
   Login: string | undefined;
   Password: string | undefined;
 }
 
-const IPushPullLoginComponent = (props: IPushPullLoginProps) => {
-  const [state, setState] = React.useState<IPushPullLoginInternalState>({
+const IPushPullLoginComponent = (props: IPushPullLoginPopupProps) => {
+  const [state, setState] = React.useState<IPushPullLoginPopupInternalState>({
     Login: props.pushpullLogin || '',
     Password: props.pushpullPassword || '',
   });
@@ -135,22 +135,22 @@ function mapStateToProps(state: AdaptableState) {
   return {
     pushpullLogin: state.IPushPull ? state.IPushPull!.Username : undefined,
     pushpullPassword: state.IPushPull ? state.IPushPull!.Password : undefined,
-    pushpullLoginErrorMessage: state.System.IPPLoginMessage,
+    pushpullLoginErrorMessage: state.IPushPull.IPushPullLoginErrorMessage,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onLogin: (login: string, password: string) =>
-      dispatch(IPushPullRedux.IPPLogin(login, password)),
+      dispatch(IPushPullRedux.IPushPullLogin(login, password)),
     onCancel: () => {
       dispatch(PopupRedux.PopupHideScreen());
-      dispatch(SystemRedux.ReportSetErrorMessage(''));
+      dispatch(IPushPullRedux.IPushPullSetLoginErrorMessage(''));
     },
   };
 }
 
-export let IPushPullLogin = connect(
+export let IPushPullLoginPopup = connect(
   mapStateToProps,
   mapDispatchToProps
 )(IPushPullLoginComponent);

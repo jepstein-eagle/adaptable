@@ -1,5 +1,5 @@
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
-import { ExportState, Report } from '../PredefinedConfig/ExportState';
+import { ExportState, Report, ReportSchedule } from '../PredefinedConfig/ExportState';
 
 /**
  * Provides full and comprehensive run-time access to the Export function and associated Report state (from Predefined Config).
@@ -27,10 +27,7 @@ export interface ExportApi {
    */
   getAllReports(): Report[];
 
-  /**
-   * Retrieves all Reports in the State which have a schedule
-   */
-  getScheduledReports(): Report[];
+  getReportSchedules(): ReportSchedule[];
 
   /**
    * Sends a report to a given destination.

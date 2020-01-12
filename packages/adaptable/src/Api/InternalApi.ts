@@ -27,17 +27,11 @@ export interface InternalApi {
   startLiveReport(
     report: Report,
     pageName: string,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ): void;
   stopLiveReport(
     report: Report,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ): void;
   getAvailableCalendars(): Calendar[];
   setChartData(chartData: ChartData): void;
@@ -77,14 +71,6 @@ export interface InternalApi {
   setGlue42AvailableOn(): void;
 
   setGlue42AvailableOff(): void;
-
-  setIPushPullAvailableOn(): void;
-
-  setIPushPullAvailableOff(): void;
-
-  setLiveReportRunningOn(): void;
-
-  setLiveReportRunningOff(): void;
 
   setPivotModeOn(): void;
 

@@ -8,7 +8,6 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
 import { ReminderEntityRow } from './ReminderEntityRow';
-import { ReminderWizard } from './Wizard/ReminderWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
@@ -21,16 +20,16 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { Reminder } from '../../PredefinedConfig/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
+import { ScheduleWizard } from '../Schedule/Wizard/ScheduleWizard';
 
 interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupComponent> {
-  Reminders: Reminder[];
-  onAddReminder: (reminder: Reminder) => ReminderRedux.ReminderAddAction;
-  onEditReminder: (reminder: Reminder) => ReminderRedux.ReminderEditAction;
+  Reminders: ReminderSchedule[];
+  onAddReminder: (reminder: ReminderSchedule) => ReminderRedux.ReminderScheduleAddAction;
+  onEditReminder: (reminder: ReminderSchedule) => ReminderRedux.ReminderScheduleEditAction;
   onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -56,7 +55,7 @@ class ReminderPopupComponent extends React.Component<
       { Content: 'Schedule', Size: 4 },
       { Content: '', Size: 2 },
     ];
-    let Reminders = this.props.Reminders.map((reminder: Reminder, index) => {
+    let Reminders = this.props.Reminders.map((reminder: ReminderSchedule, index) => {
       return (
         <ReminderEntityRow
           AdaptableObject={reminder}
@@ -67,7 +66,7 @@ class ReminderPopupComponent extends React.Component<
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
           onEdit={() => this.onEdit(reminder)}
-          onDeleteConfirm={ReminderRedux.ReminderDelete(reminder)}
+          onDeleteConfirm={ReminderRedux.ReminderScheduleDelete(reminder)}
           AccessLevel={this.props.AccessLevel}
         />
       );
@@ -99,8 +98,8 @@ class ReminderPopupComponent extends React.Component<
           )}
 
           {this.state.EditedAdaptableObject != null && (
-            <ReminderWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as Reminder}
+            <ScheduleWizard
+              EditedAdaptableObject={this.state.EditedAdaptableObject as ReminderSchedule}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
@@ -128,8 +127,8 @@ class ReminderPopupComponent extends React.Component<
     });
   }
 
-  onEdit(reminder: Reminder) {
-    let clonedObject: Reminder = Helper.cloneObject(reminder);
+  onEdit(reminder: ReminderSchedule) {
+    let clonedObject: ReminderSchedule = Helper.cloneObject(reminder);
     this.setState({
       EditedAdaptableObject: clonedObject,
       WizardStartIndex: 0,
@@ -147,7 +146,7 @@ class ReminderPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let reminder: Reminder = this.state.EditedAdaptableObject as Reminder;
+    let reminder: ReminderSchedule = this.state.EditedAdaptableObject as ReminderSchedule;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditReminder(reminder);
     } else {
@@ -161,7 +160,7 @@ class ReminderPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let reminder = this.state.EditedAdaptableObject as Reminder;
+    let reminder = this.state.EditedAdaptableObject as ReminderSchedule;
     if (reminder.Alert == null && reminder.Schedule == null) {
       return false;
     }
@@ -187,8 +186,10 @@ function mapStateToProps(state: AdaptableState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onAddReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderAdd(reminder)),
-    onEditReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderEdit(reminder)),
+    onAddReminder: (reminder: ReminderSchedule) =>
+      dispatch(ReminderRedux.ReminderScheduleAdd(reminder)),
+    onEditReminder: (reminder: ReminderSchedule) =>
+      dispatch(ReminderRedux.ReminderScheduleEdit(reminder)),
     onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ReminderStrategyId)),
   };

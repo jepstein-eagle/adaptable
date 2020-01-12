@@ -1,20 +1,11 @@
 import { RunTimeState } from './RunTimeState';
-import { AdaptableObject } from './Common/AdaptableObject';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
-import { Schedule } from './Common/Schedule';
+import { BaseSchedule } from './Common/Schedule';
 
 export interface ReminderState extends RunTimeState {
-  Reminders?: Reminder[];
+  Reminders?: ReminderSchedule[];
 }
 
-export interface Reminder extends AdaptableObject {
+export interface ReminderSchedule extends BaseSchedule {
   Alert: AdaptableAlert;
-  Schedule: Schedule;
 }
-
-/*
-	
-A collection of IReminder objects (see below for more details).
-
-Each Percent Bar object contains an Alert and a Schedule.
-*/

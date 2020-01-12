@@ -14,7 +14,7 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { Report } from '../../PredefinedConfig/ExportState';
+import { Report, ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
@@ -30,6 +30,8 @@ import {
   LiveReportUpdatedInfo,
   LiveReportUpdatedEventArgs,
 } from '../../Api/Events/LiveReportUpdated';
+import { ButtonSchedule } from '../Components/Buttons/ButtonSchedule';
+import ObjectFactory from '../../Utilities/ObjectFactory';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -45,11 +47,10 @@ interface ExportToolPanelComponentProps
   onEditReport: () => PopupRedux.PopupShowScreenAction;
   onReportStopLive: (
     Report: Report,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
+  onNewReportSchedule: (reportSchedule: ReportSchedule) => PopupRedux.PopupShowScreenAction;
+
   Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
@@ -138,32 +139,6 @@ class ExportToolPanelComponent extends React.Component<
       };
     }
 
-    let iPushPullExcelMenuItem;
-    if (
-      this.props.LiveReports.find(
-        x => x.Report == currentReport && x.ExportDestination == ExportDestination.iPushPull
-      )
-    ) {
-      iPushPullExcelMenuItem = {
-        onClick: () => this.props.onReportStopLive(currentReport, ExportDestination.iPushPull),
-        label: 'iPushPull (Stop Sync)',
-      };
-    } else {
-      let isIPushPullLiveReport = this.props.Adaptable.ReportService.IsReportLiveReport(
-        currentReport,
-        ExportDestination.iPushPull
-      );
-      iPushPullExcelMenuItem = {
-        onClick: () =>
-          this.props.onApplyExport(
-            currentReport,
-            ExportDestination.iPushPull,
-            isIPushPullLiveReport
-          ),
-        label: 'iPushPull (Start Sync)',
-      };
-    }
-
     let isGlueLiveReport: boolean = this.props.Adaptable.ReportService.IsReportLiveReport(
       currentReport,
       ExportDestination.Glue42
@@ -186,8 +161,6 @@ class ExportToolPanelComponent extends React.Component<
       this.props.Adaptable.ReportService.IsReportDestinationActive(
         ExportDestination.OpenfinExcel
       ) && openfinExcelMenuItem,
-      this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.iPushPull) &&
-        iPushPullExcelMenuItem,
       this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
         glue42MenuItem,
     ].filter(x => !!x);
@@ -259,6 +232,15 @@ class ExportToolPanelComponent extends React.Component<
               ConfirmationTitle={'Delete Report'}
               AccessLevel={this.props.AccessLevel}
             />
+
+            <ButtonSchedule
+              marginLeft={1}
+              className="ab-DashboardToolbar__Export__schedule"
+              onClick={() => this.onNewReportSchedule()}
+              tooltip="Schedule"
+              disabled={savedReport == null}
+              AccessLevel={this.props.AccessLevel}
+            />
           </Flex>
         </Flex>
       </Flex>
@@ -281,6 +263,13 @@ class ExportToolPanelComponent extends React.Component<
   onSelectedReportChanged(reportName: string) {
     this.props.onSelectReport(reportName);
   }
+
+  private onNewReportSchedule() {
+    let reportSchedule: ReportSchedule = ObjectFactory.CreateReportSchedule(
+      this.props.CurrentReport
+    );
+    this.props.onNewReportSchedule(reportSchedule);
+  }
 }
 
 function mapStateToProps(state: AdaptableState) {
@@ -299,10 +288,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
     onReportStopLive: (
       Report: Report,
-      exportDestination:
-        | ExportDestination.OpenfinExcel
-        | ExportDestination.iPushPull
-        | ExportDestination.Glue42
+      exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onNewReport: () =>
       dispatch(
@@ -317,6 +303,18 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           action: 'Edit',
           source: 'Toolbar',
         })
+      ),
+    onNewReportSchedule: (reportSchedule: ReportSchedule) =>
+      dispatch(
+        PopupRedux.PopupShowScreen(
+          StrategyConstants.ScheduleStrategyId,
+          ScreenPopups.SchedulePopup,
+          {
+            action: 'New',
+            source: 'Toolbar',
+            value: reportSchedule,
+          }
+        )
       ),
     onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),

@@ -93,6 +93,8 @@ import { NamedFilterApi } from '../NamedFilterApi';
 import { ThemeApi } from '../ThemeApi';
 import { GridApi } from '../GridApi';
 import { IPushPullApi } from '../IPushPullApi';
+import { ScheduleApi } from '../ScheduleApi';
+import { ScheduleApiImpl } from './ScheduleApiImpl';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;
@@ -128,6 +130,7 @@ export class AdaptableApiImpl implements AdaptableApi {
   public percentBarApi: PercentBarApi;
   public quickSearchApi: QuickSearchApi;
   public reminderApi: ReminderApi;
+  public scheduleApi: ScheduleApi;
   public shortcutApi: ShortcutApi;
   public smartEditApi: SmartEditApi;
   public sparklineColumnApi: SparklineColumnApi;
@@ -177,6 +180,7 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.plusMinusApi = new PlusMinusApiImpl(adaptable);
     this.quickSearchApi = new QuickSearchApiImpl(adaptable);
     this.reminderApi = new ReminderApiImpl(adaptable);
+    this.scheduleApi = new ScheduleApiImpl(adaptable);
     this.shortcutApi = new ShortcutApiImpl(adaptable);
     this.smartEditApi = new SmartEditApiImpl(adaptable);
     this.sparklineColumnApi = new SparklineColumnApiImpl(adaptable);

@@ -4,7 +4,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { Reminder } from '../../PredefinedConfig/ReminderState';
+import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { UIHelper } from '../UIHelper';
 
@@ -13,7 +13,7 @@ export class ReminderEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let reminder: Reminder = this.props.AdaptableObject as Reminder;
+    let reminder: ReminderSchedule = this.props.AdaptableObject as ReminderSchedule;
 
     //   let column = ColumnHelper.getColumnFromId(Reminder.ColumnId, this.props.Columns);
 

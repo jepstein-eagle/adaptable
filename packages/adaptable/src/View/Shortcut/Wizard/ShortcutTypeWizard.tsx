@@ -46,9 +46,7 @@ export class ShortcutTypeWizard
           </Radio>
 
           <HelpBlock marginBottom={2}>
-            <p>
-              Date shortcuts <b>replace the cell contents</b> with a new Date value.
-            </p>
+            Date shortcuts <b>replace the cell contents</b> with a new Date value.
           </HelpBlock>
 
           <Radio

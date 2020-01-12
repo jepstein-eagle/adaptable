@@ -1,34 +1,37 @@
-import { ReminderState, Reminder } from '../../PredefinedConfig/ReminderState';
+import { ReminderState, ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
-export const REMINDER_ADD = 'REMINDER_ADD';
-export const REMINDER_EDIT = 'REMINDER_EDIT';
-export const REMINDER_DELETE = 'REMINDER_DELETE';
+export const REMINDER_SCHEDULE_ADD = 'REMINDER_SCHEDULE_ADD';
+export const REMINDER_SCHEDULE_EDIT = 'REMINDER_SCHEDULE_EDIT';
+export const REMINDER_SCHEDULE_DELETE = 'REMINDER_SCHEDULE_DELETE';
 
-export interface ReminderAction extends Redux.Action {
-  reminder: Reminder;
+export interface ReminderScheduleAction extends Redux.Action {
+  reminderSchedule: ReminderSchedule;
 }
+export interface ReminderScheduleAddAction extends ReminderScheduleAction {}
+export interface ReminderScheduleEditAction extends ReminderScheduleAction {}
+export interface ReminderScheduleDeleteAction extends ReminderScheduleAction {}
 
-export interface ReminderAddAction extends ReminderAction {}
-
-export interface ReminderEditAction extends ReminderAction {}
-
-export interface ReminderDeleteAction extends ReminderAction {}
-
-export const ReminderAdd = (reminder: Reminder): ReminderAddAction => ({
-  type: REMINDER_ADD,
-  reminder,
+export const ReminderScheduleAdd = (
+  reminderSchedule: ReminderSchedule
+): ReminderScheduleAddAction => ({
+  type: REMINDER_SCHEDULE_ADD,
+  reminderSchedule,
 });
 
-export const ReminderEdit = (reminder: Reminder): ReminderEditAction => ({
-  type: REMINDER_EDIT,
-  reminder,
+export const ReminderScheduleEdit = (
+  reminderSchedule: ReminderSchedule
+): ReminderScheduleEditAction => ({
+  type: REMINDER_SCHEDULE_EDIT,
+  reminderSchedule,
 });
-export const ReminderDelete = (reminder: Reminder): ReminderDeleteAction => ({
-  type: REMINDER_DELETE,
-  reminder,
+export const ReminderScheduleDelete = (
+  reminderSchedule: ReminderSchedule
+): ReminderScheduleDeleteAction => ({
+  type: REMINDER_SCHEDULE_DELETE,
+  reminderSchedule,
 });
 
 const initialReminderState: ReminderState = {
@@ -39,34 +42,33 @@ export const ReminderReducer: Redux.Reducer<ReminderState> = (
   state: ReminderState = initialReminderState,
   action: Redux.Action
 ): ReminderState => {
-  let reminders: Reminder[];
+  let reminderSchedules: ReminderSchedule[];
 
   switch (action.type) {
-    case REMINDER_ADD: {
-      const actionReminder: Reminder = (action as ReminderAction).reminder;
+    case REMINDER_SCHEDULE_ADD: {
+      const actionSchedule: ReminderSchedule = (action as ReminderScheduleAction).reminderSchedule;
 
-      if (!actionReminder.Uuid) {
-        actionReminder.Uuid = createUuid();
+      if (!actionSchedule.Uuid) {
+        actionSchedule.Uuid = createUuid();
       }
-      reminders = [].concat(state.Reminders);
-      reminders.push(actionReminder);
-      return { ...state, Reminders: reminders };
+      reminderSchedules = [].concat(state.Reminders);
+      reminderSchedules.push(actionSchedule);
+      return { ...state, Reminders: reminderSchedules };
     }
-
-    case REMINDER_EDIT: {
-      const actionReminder: Reminder = (action as ReminderAction).reminder;
+    case REMINDER_SCHEDULE_EDIT: {
+      const actionSchedule: ReminderSchedule = (action as ReminderScheduleAction).reminderSchedule;
       return {
         ...state,
         Reminders: state.Reminders.map(abObject =>
-          abObject.Uuid === actionReminder.Uuid ? actionReminder : abObject
+          abObject.Uuid === actionSchedule.Uuid ? actionSchedule : abObject
         ),
       };
     }
-    case REMINDER_DELETE: {
-      const actionReminder: Reminder = (action as ReminderAction).reminder;
+    case REMINDER_SCHEDULE_DELETE: {
+      const actionSchedule: ReminderSchedule = (action as ReminderScheduleAction).reminderSchedule;
       return {
         ...state,
-        Reminders: state.Reminders.filter(abObject => abObject.Uuid !== actionReminder.Uuid),
+        Reminders: state.Reminders.filter(abObject => abObject.Uuid !== actionSchedule.Uuid),
       };
     }
 

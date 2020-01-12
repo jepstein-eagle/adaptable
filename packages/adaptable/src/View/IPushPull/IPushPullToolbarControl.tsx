@@ -9,9 +9,6 @@ import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -29,34 +26,74 @@ import {
   LiveReport,
   LiveReportUpdatedInfo,
 } from '../../Api/Events/LiveReportUpdated';
-import { IPushPullReport } from '../../PredefinedConfig/IPushPullState';
+import {
+  IPushPullReport,
+  IPushPullDomain,
+  IPushPullSchedule,
+} from '../../PredefinedConfig/IPushPullState';
 import { ButtonExport } from '../Components/Buttons/ButtonExport';
 import { ButtonLogin } from '../Components/Buttons/ButtonLogin';
 import { ButtonPlay } from '../Components/Buttons/ButtonPlay';
 import { ButtonStop } from '../Components/Buttons/ButtonStop';
-
+import { ButtonSchedule } from '../Components/Buttons/ButtonSchedule';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { ButtonPause } from '../Components/Buttons/ButtonPause';
+import ObjectFactory from '../../Utilities/ObjectFactory';
+import { ButtonNewPage } from '../Components/Buttons/ButtonNewPage';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import newpage from '../../components/icons/newpage';
+import { ButtonLogout } from '../Components/Buttons/ButtonLogout';
 const ExportIcon = icons.export as ReactComponentLike;
 
 interface IPushPullToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<IPushPullToolbarControlComponent> {
-  onIPushPullExport: (
-    iPushPulleport: IPushPullReport,
-    isLiveReport: boolean
-  ) => IPushPullRedux.IPushPullExportAction;
-  onSelectReport: (iPushPullReport: string) => IPushPullRedux.IPushPullReportSelectAction;
-  onNewReport: () => PopupRedux.PopupShowScreenAction;
-  onEditReport: () => PopupRedux.PopupShowScreenAction;
-  onReportStopLive: (Report: Report) => SystemRedux.ReportStopLiveAction;
+  onIPushPullSendSnapshot: (
+    iPushPulleport: IPushPullReport
+  ) => IPushPullRedux.IPushPullSendSnapshotAction;
+  onIPushPullStartLiveData: (
+    iPushPulleport: IPushPullReport
+  ) => IPushPullRedux.IPushPullStartLiveDataAction;
+  onIPushPullSelectReport: (
+    selectedIPushPullReportName: string
+  ) => IPushPullRedux.IPushPullReportSelectAction;
+  onIPushPullStopLiveData: () => IPushPullRedux.IPushPullStopLiveDataAction;
+
+  onNewIPushPullSchedule: (
+    iPushPullSchedule: IPushPullSchedule
+  ) => PopupRedux.PopupShowScreenAction;
+
+  onShowIPushPullLogin: () => PopupRedux.PopupShowScreenAction;
+  onShowAddIPushPullPage: () => PopupRedux.PopupShowScreenAction;
+
   Columns: AdaptableColumn[];
-  IPushPullReports: IPushPullReport[] | undefined;
-  CurrentIPushPullReport: string | undefined;
-  LiveReports: LiveReport[];
+  Reports: Report[] | undefined;
+  SystemReports: Report[] | undefined;
+  SelectedIPushPullReportName: string | undefined;
+  CurrentLiveIPushPullReport: IPushPullReport | undefined;
+  IPushPullDomainsPages: IPushPullDomain[] | undefined;
+}
+
+interface IPushPullToolbarControlComponentState {
+  ReportName: string;
+  Page: string;
+  Folder: string;
+  AvailablePages: string[];
 }
 
 class IPushPullToolbarControlComponent extends React.Component<
   IPushPullToolbarControlComponentProps,
-  {}
+  IPushPullToolbarControlComponentState
 > {
+  constructor(props: IPushPullToolbarControlComponentProps) {
+    super(props);
+    this.state = {
+      ReportName: this.props.SelectedIPushPullReportName,
+      Page: '',
+      Folder: '',
+      AvailablePages: [],
+    };
+  }
+
   public componentDidMount() {
     if (this.props.Adaptable) {
       this.props.Adaptable.api.eventApi.on(
@@ -76,132 +113,141 @@ class IPushPullToolbarControlComponent extends React.Component<
 
   render(): any {
     let isIpushPullAvailable = this.props.Adaptable.api.iPushPullApi.isIPushPullAvailable();
-    let allReports: IPushPullReport[] = this.props.IPushPullReports;
-    let currentIPushPullReport: IPushPullReport = this.props.Adaptable.api.iPushPullApi.getCurrentIPushPullReport();
+    let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
 
-    let savedIPushPullReport: IPushPullReport | undefined = allReports.find(
-      s => s.Report.Name == this.props.CurrentIPushPullReport
-    );
-
-    let availableReports: any[] = allReports.map((iPushPullReport: IPushPullReport) => {
+    let availableReports: any[] = allReports.map(report => {
       return {
-        label: iPushPullReport.Report.Name,
-        value: iPushPullReport.Report.Name,
+        label: report.Name,
+        value: report.Name,
       };
     });
 
-    let isLiveIPushPullReport: boolean = this.props.Adaptable.api.iPushPullApi.isIPushPullReportLive(
-      currentIPushPullReport
+    let availableFolders: any[] = this.props.IPushPullDomainsPages.map(
+      (iPushPullDomain: IPushPullDomain) => {
+        return {
+          label: iPushPullDomain.Name,
+          value: iPushPullDomain.Name,
+        };
+      }
     );
 
-    let deleteMessage: string = "Are you sure you want to delete '";
-    if (savedIPushPullReport != null) {
-      deleteMessage = deleteMessage + savedIPushPullReport.Report.Name + "'?";
-    }
+    // this is clearly ridiculous!
+    // im getting tired...
+    let isCompletedReport: boolean =
+      StringExtensions.IsNotNullOrEmpty(this.state.ReportName) &&
+      StringExtensions.IsNotNullOrEmpty(this.state.Folder) &&
+      StringExtensions.IsNotNullOrEmpty(this.state.Page);
+
+    let isLiveIPushPullReport: boolean =
+      isCompletedReport &&
+      this.props.CurrentLiveIPushPullReport &&
+      this.state.ReportName == this.props.CurrentLiveIPushPullReport.ReportName &&
+      this.state.Folder == this.props.CurrentLiveIPushPullReport.Folder &&
+      this.state.Page == this.props.CurrentLiveIPushPullReport.Page;
 
     let content = isIpushPullAvailable ? (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__Export__wrap">
         <Dropdown
           disabled={allReports.length == 0 || isLiveIPushPullReport}
-          style={{ minWidth: 160 }}
+          style={{ minWidth: 140 }}
           options={availableReports}
           className="ab-DashboardToolbar__Export__select"
           placeholder="Select Report"
           onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
-          value={currentIPushPullReport ? currentIPushPullReport.Report.Name : null}
+          value={this.state.ReportName} // do props and update after we change????
           showClearButton
           marginRight={2}
         ></Dropdown>
-
+        <Dropdown
+          disabled={allReports.length == 0}
+          style={{ minWidth: 140 }}
+          options={availableFolders}
+          className="ab-DashboardToolbar__Export__select"
+          onChange={(folder: string) => this.onFolderChanged(folder)}
+          value={this.state.Folder}
+          placeholder="Select Folder"
+          marginRight={2}
+        ></Dropdown>
+        <Dropdown
+          disabled={allReports.length == 0}
+          style={{ minWidth: 140 }}
+          options={this.state.AvailablePages}
+          className="ab-DashboardToolbar__Export__select"
+          placeholder="Select Page"
+          onChange={(page: string) => this.onPageChanged(page)}
+          value={this.state.Page ? this.state.Page : null}
+          showClearButton
+          marginRight={2}
+        ></Dropdown>
         <ButtonExport
           marginLeft={1}
           className="ab-DashboardToolbar__ColumnFilter__clear"
-          onClick={() => this.props.onIPushPullExport(currentIPushPullReport, false)}
+          onClick={() => this.onIPushPullSendSnapshot()}
           tooltip="Send Snapshot to iPushPull"
-          disabled={
-            isLiveIPushPullReport ||
-            savedIPushPullReport == null ||
-            StringExtensions.IsNullOrEmpty(this.props.CurrentIPushPullReport)
-          }
+          disabled={isLiveIPushPullReport || !isCompletedReport}
           AccessLevel={this.props.AccessLevel}
         />
         {isLiveIPushPullReport ? (
-          <ButtonStop
+          <ButtonPause
             marginLeft={1}
             className="ab-DashboardToolbar__ColumnFilter__clear"
-            onClick={() => this.props.onReportStopLive(currentIPushPullReport.Report)}
+            onClick={() => this.props.onIPushPullStopLiveData()}
             tooltip="Stop sync with iPushPull"
-            disabled={
-              savedIPushPullReport == null ||
-              StringExtensions.IsNullOrEmpty(this.props.CurrentIPushPullReport)
-            }
+            disabled={!isLiveIPushPullReport}
             AccessLevel={this.props.AccessLevel}
           />
         ) : (
           <ButtonPlay
             marginLeft={1}
             className="ab-DashboardToolbar__ColumnFilter__clear"
-            onClick={() => this.props.onIPushPullExport(currentIPushPullReport, true)}
+            onClick={() => this.onIPushPullStartLiveData()}
             tooltip="Start Sync with iPushPull"
-            disabled={
-              savedIPushPullReport == null ||
-              StringExtensions.IsNullOrEmpty(this.props.CurrentIPushPullReport)
-            }
+            disabled={isLiveIPushPullReport || !isCompletedReport}
             AccessLevel={this.props.AccessLevel}
           />
         )}
-        <Flex
-          className={join(
-            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : '',
-            'ab-DashboardToolbar__Export__controls'
-          )}
-          alignItems="stretch"
-        >
-          <ButtonEdit
-            onClick={() => this.props.onEditReport()}
-            tooltip="Edit Report"
-            className="ab-DashboardToolbar__Export__edit"
-            disabled={
-              isLiveIPushPullReport ||
-              savedIPushPullReport == null ||
-              this.props.Adaptable.ReportService.IsSystemReport(savedIPushPullReport.Report)
-            }
-            AccessLevel={this.props.AccessLevel}
-          />
-
-          <ButtonNew
-            variant="text"
-            className="ab-DashboardToolbar__Export__new"
-            tone="neutral"
-            disabled={isLiveIPushPullReport}
-            children={null}
-            onClick={() => this.props.onNewReport()}
-            tooltip="Create New Report"
-            AccessLevel={this.props.AccessLevel}
-          />
-
-          <ButtonDelete
-            tooltip="Delete Report"
-            className="ab-DashboardToolbar__Export__delete"
-            disabled={
-              isLiveIPushPullReport ||
-              savedIPushPullReport == null ||
-              this.props.Adaptable.ReportService.IsSystemReport(savedIPushPullReport.Report)
-            }
-            ConfirmAction={IPushPullRedux.IPushPullReportDelete(
-              savedIPushPullReport as IPushPullReport
+        {isCompletedReport && (
+          <Flex
+            className={join(
+              this.props.AccessLevel == AccessLevel.ReadOnly
+                ? GeneralConstants.READ_ONLY_STYLE
+                : '',
+              'ab-DashboardToolbar__Export__controls'
             )}
-            ConfirmationMsg={deleteMessage}
-            ConfirmationTitle={'Delete Report'}
-            AccessLevel={this.props.AccessLevel}
-          />
-        </Flex>
+            alignItems="stretch"
+          >
+            <ButtonSchedule
+              marginLeft={1}
+              className="ab-DashboardToolbar__ColumnFilter__clear"
+              onClick={() => this.onNewIPushPullSchedule()}
+              tooltip="Schedule"
+              disabled={isLiveIPushPullReport || !isCompletedReport}
+              AccessLevel={this.props.AccessLevel}
+            />
+          </Flex>
+        )}{' '}
+        <ButtonNewPage
+          marginLeft={1}
+          className="ab-DashboardToolbar__ColumnFilter__clear"
+          onClick={() => this.props.onShowAddIPushPullPage()}
+          tooltip="New Page"
+          disabled={isLiveIPushPullReport}
+          AccessLevel={this.props.AccessLevel}
+        />
+        <ButtonLogout
+          marginLeft={1}
+          className="ab-DashboardToolbar__ColumnFilter__clear"
+          onClick={() => this.props.Adaptable.api.iPushPullApi.logoutFromIPushPull()}
+          tooltip="Logout"
+          disabled={isLiveIPushPullReport}
+          AccessLevel={this.props.AccessLevel}
+        />
       </Flex>
     ) : (
       <ButtonLogin
         marginLeft={1}
         className="ab-DashboardToolbar__ColumnFilter__clear"
-        onClick={() => this.onLogin()}
+        onClick={() => this.props.onShowIPushPullLogin()}
         tooltip="Send to iPushPull"
         AccessLevel={this.props.AccessLevel}
       >
@@ -224,55 +270,127 @@ class IPushPullToolbarControlComponent extends React.Component<
     );
   }
 
-  onLogin(): void {
-    this.props.Adaptable.api.iPushPullApi.showIPushPullLogin();
+  onSelectedReportChanged(reportName: string) {
+    if (StringExtensions.IsNotNullOrEmpty(reportName) && reportName !== 'Select Report') {
+      this.setState({ ReportName: reportName });
+    } else {
+      this.setState({ ReportName: EMPTY_STRING });
+    }
   }
 
-  onSelectedReportChanged(reportName: string) {
-    this.props.onSelectReport(reportName);
+  private onFolderChanged(folder: string) {
+    if (StringExtensions.IsNotNullOrEmpty(folder) && folder !== 'Select Folder') {
+      let avaialablePages = this.props.Adaptable.api.iPushPullApi.getPagesForIPushPullDomain(
+        folder
+      );
+      this.setState({
+        Folder: folder,
+        AvailablePages: avaialablePages,
+        Page: EMPTY_STRING,
+      });
+    } else {
+      this.setState({
+        Folder: EMPTY_STRING,
+        AvailablePages: [],
+        Page: EMPTY_STRING,
+      });
+    }
+  }
+
+  private onPageChanged(page: string) {
+    if (StringExtensions.IsNotNullOrEmpty(page) && page !== 'Select Page') {
+      this.setState({ Page: page });
+    } else {
+      this.setState({ Page: EMPTY_STRING });
+    }
+  }
+
+  private onIPushPullSendSnapshot() {
+    this.props.onIPushPullSendSnapshot(this.createIPushPullReportFromState());
+  }
+
+  private onIPushPullStartLiveData() {
+    this.props.onIPushPullStartLiveData(this.createIPushPullReportFromState());
+  }
+
+  private onNewIPushPullSchedule() {
+    let iPushPullSchedule: IPushPullSchedule = ObjectFactory.CreateIPushPullSchedule(
+      this.createIPushPullReportFromState()
+    );
+    this.props.onNewIPushPullSchedule(iPushPullSchedule);
+  }
+
+  // perhaps this should be props and in real state?
+  private createIPushPullReportFromState(): IPushPullReport {
+    return {
+      ReportName: this.state.ReportName,
+      Folder: this.state.Folder,
+      Page: this.state.Page,
+    };
   }
 }
 
 function mapStateToProps(state: AdaptableState) {
   return {
-    CurrentIPushPullReport: state.IPushPull.CurrentIPushPullReport,
-    IPushPullReports: state.IPushPull.IPushPullReports,
-    LiveReports: state.System.CurrentLiveReports,
+    SelectedIPushPullReportName: state.IPushPull.SelectedIPushPullReportName,
+    CurrentLiveIPushPullReport: state.IPushPull.CurrentLiveIPushPullReport,
+    Reports: state.Export.Reports,
+    SystemReports: state.System.SystemReports,
+    IPushPullDomainsPages: state.IPushPull.IPushPullDomainsPages,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onIPushPullExport: (iPushPulleport: IPushPullReport, isLiveReport: boolean) =>
-      dispatch(IPushPullRedux.IPushPullExport(iPushPulleport, isLiveReport)),
-    onSelectReport: (iPushPullReport: string) =>
-      dispatch(IPushPullRedux.IPushPullReportSelect(iPushPullReport)),
-    onReportStopLive: (Report: Report) =>
-      dispatch(SystemRedux.ReportStopLive(Report, ExportDestination.iPushPull)),
-    onNewReport: () =>
+    onIPushPullSendSnapshot: (iPushPullReport: IPushPullReport) =>
+      dispatch(IPushPullRedux.IPushPullSendSnapshot(iPushPullReport)),
+    onIPushPullStartLiveData: (iPushPullReport: IPushPullReport) =>
+      dispatch(IPushPullRedux.IPushPullStartLiveData(iPushPullReport)),
+    onIPushPullStopLiveData: () => dispatch(IPushPullRedux.IPushPullStopLiveData()),
+
+    onIPushPullSelectReport: (selectedIPushPullReportName: string) =>
+      dispatch(IPushPullRedux.IPushPullSelectReport(selectedIPushPullReportName)),
+
+    onNewIPushPullSchedule: (iPushPullSchedule: IPushPullSchedule) =>
       dispatch(
         PopupRedux.PopupShowScreen(
-          StrategyConstants.IPushPullStrategyId,
-          ScreenPopups.IPushPullPopup,
+          StrategyConstants.ScheduleStrategyId,
+          ScreenPopups.SchedulePopup,
           {
             action: 'New',
             source: 'Toolbar',
+            value: iPushPullSchedule,
           }
         )
       ),
-    onEditReport: () =>
+
+    onShowIPushPullLogin: () =>
       dispatch(
         PopupRedux.PopupShowScreen(
           StrategyConstants.IPushPullStrategyId,
-          ScreenPopups.IPushPullPopup,
+          ScreenPopups.IPushPullLoginPopup,
+          null,
           {
-            action: 'Edit',
-            source: 'Toolbar',
+            footer: false,
           }
         )
       ),
+
+    onShowAddIPushPullPage: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(
+          StrategyConstants.IPushPullStrategyId,
+          ScreenPopups.IPushPullAddPagePopup,
+          null,
+          {
+            footer: false,
+          }
+        )
+      ),
+
     onClose: (toolbar: AdaptableDashboardToolbar) =>
       dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
+
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

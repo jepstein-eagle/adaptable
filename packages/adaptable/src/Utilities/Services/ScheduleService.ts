@@ -1,19 +1,15 @@
 import { IScheduleService } from './Interface/IScheduleService';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
-import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { DateExtensions } from '../Extensions/DateExtensions';
-import { ReminderState, Reminder } from '../../PredefinedConfig/ReminderState';
-import { ExportState, Report } from '../../PredefinedConfig/ExportState';
+import { Report, ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { Schedule } from '../../PredefinedConfig/Common/Schedule';
-import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
-import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { IPushPullReport, IPushPullState } from '../../PredefinedConfig/IPushPullState';
-import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
+import { IPushPullReport, IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
+import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
+import ArrayExtensions from '../Extensions/ArrayExtensions';
+import DateExtensions from '../Extensions/DateExtensions';
 
 interface ScheduleJob {
   cancel: () => any;
@@ -71,90 +67,107 @@ export class ScheduleService implements IScheduleService {
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       setTimeout(() => {
-        this.updateReminderStrategy();
-        this.updateExportStrategy();
-        this.updateIPushPullStrategy();
+        this.updateReminderJobs();
+        this.updateReportJobs();
+        this.updateIPushPullJobs();
       }, 1000);
+    });
+
+    this.adaptable._on('GridReloaded', () => {
+      // this.scheduleIPushPullReports();
     });
 
     this.adaptable.AdaptableStore.onAny((eventName: string) => {
       if (this.adaptable.isInitialised) {
         if (
-          eventName == ReminderRedux.REMINDER_ADD ||
-          eventName == ReminderRedux.REMINDER_EDIT ||
-          eventName == ReminderRedux.REMINDER_DELETE
+          eventName == ReminderRedux.REMINDER_SCHEDULE_ADD ||
+          eventName == ReminderRedux.REMINDER_SCHEDULE_EDIT ||
+          eventName == ReminderRedux.REMINDER_SCHEDULE_DELETE
         ) {
-          this.updateReminderStrategy();
+          this.updateReminderJobs();
         } else if (
-          eventName == ExportRedux.REPORT_ADD ||
-          eventName == ExportRedux.REPORT_EDIT ||
-          eventName == ExportRedux.REPORT_DELETE
+          eventName == ExportRedux.REPORT_SCHEDULE_ADD ||
+          eventName == ExportRedux.REPORT_SCHEDULE_EDIT ||
+          eventName == ExportRedux.REPORT_SCHEDULE_DELETE
         ) {
-          this.updateExportStrategy();
+          this.updateReportJobs();
         } else if (
-          eventName == IPushPullRedux.IPUSHPULL_REPORT_ADD ||
-          eventName == IPushPullRedux.IPUSHPULL_REPORT_EDIT ||
-          eventName == IPushPullRedux.IPUSHPULL_REPORT_DELETE
+          eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_ADD ||
+          eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_EDIT ||
+          eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_DELETE
         ) {
-          this.updateIPushPullStrategy();
+          this.updateIPushPullJobs();
         }
       }
     });
   }
 
-  private updateReminderStrategy() {
-    const reminderStrategy = this.adaptable.strategies.get(
-      StrategyConstants.ReminderStrategyId
-    ) as IReminderStrategy;
-    reminderStrategy.scheduleReminders();
+  private updateReminderJobs() {
+    this.ClearAllReminderJobs();
+    this.adaptable.api.scheduleApi
+      .getAllReminderSchedule()
+      .forEach((reminderSchedule: ReminderSchedule) => {
+        this.AddReminderSchedule(reminderSchedule);
+      });
   }
 
-  private updateExportStrategy() {
-    const exportStrategy = this.adaptable.strategies.get(
-      StrategyConstants.ExportStrategyId
-    ) as IExportStrategy;
-    exportStrategy.scheduleReports();
+  private updateReportJobs() {
+    this.ClearAllExportJobs();
+    this.adaptable.api.scheduleApi
+      .getAllReportSchedule()
+      .forEach((reportSchedule: ReportSchedule) => {
+        this.AddReportSchedule(reportSchedule);
+      });
   }
 
-  private updateIPushPullStrategy() {
-    const iPushPullStrategy = this.adaptable.strategies.get(
-      StrategyConstants.IPushPullStrategyId
-    ) as IPushPullStrategy;
-    iPushPullStrategy.scheduleIPushPullReports();
+  private updateIPushPullJobs() {
+    this.adaptable.ScheduleService.ClearAllIPushPullJobs();
+    this.adaptable.api.scheduleApi
+      .getAllIPushPullSchedule()
+      .forEach((iPushPullSchedule: IPushPullSchedule) => {
+        this.AddIPushPullSchedule(iPushPullSchedule);
+      });
   }
 
-  public AddReminderSchedule(reminder: Reminder): void {
-    const date: Date = this.getDateFromSchedule(reminder.Schedule);
+  public AddReminderSchedule(reminderSchedule: ReminderSchedule): void {
+    const date: Date = this.getDateFromSchedule(reminderSchedule.Schedule);
     if (date != null) {
       var alertJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-        this.adaptable.api.alertApi.displayAlert(reminder.Alert);
+        this.adaptable.api.alertApi.displayAlert(reminderSchedule.Alert);
       });
       this.reminderJobs.push(alertJob);
     }
   }
 
-  public AddReportSchedule(report: Report): void {
-    if (report.AutoExport) {
-      const date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
-      if (date != null) {
-        var exportJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-          this.adaptable.api.exportApi.sendReport(report.Name, report.AutoExport!
-            .ExportDestination as ExportDestination);
-        });
-        this.exportJobs.push(exportJob);
-      }
+  public AddReportSchedule(reportSchedule: ReportSchedule): void {
+    const date: Date = this.getDateFromSchedule(reportSchedule.Schedule);
+    if (date != null) {
+      var exportJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
+        this.adaptable.api.exportApi.sendReport(
+          reportSchedule.ReportName,
+          reportSchedule.ExportDestination as ExportDestination
+        );
+      });
+      this.exportJobs.push(exportJob);
     }
   }
 
-  public AddIPushPullReportSchedule(iPushPullReport: IPushPullReport): void {
-    if (iPushPullReport.Report.AutoExport) {
-      const date: Date = this.getDateFromSchedule(iPushPullReport.Report.AutoExport.Schedule);
-      if (date != null) {
-        var iPushPullJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-          this.adaptable.api.iPushPullApi.exportToIPushPull(iPushPullReport.Report.Name);
-        });
-        this.iPushPullJobs.push(iPushPullJob);
-      }
+  public AddIPushPullSchedule(iPushPullSchedule: IPushPullSchedule): void {
+    const date: Date = this.getDateFromSchedule(iPushPullSchedule.Schedule);
+    if (date != null) {
+      var exportJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
+        // we need to go through Redux as the flow is always Redux => Adaptable Store => api
+        if (iPushPullSchedule.DataTransmission == 'Snapshot') {
+          this.adaptable.api.internalApi.dispatchReduxAction(
+            IPushPullRedux.IPushPullSendSnapshot(iPushPullSchedule.IPushPullReport)
+          );
+        } else if (iPushPullSchedule.DataTransmission == 'Live Data') {
+          this.adaptable.api.internalApi.dispatchReduxAction(
+            IPushPullRedux.IPushPullStartLiveData(iPushPullSchedule.IPushPullReport)
+          );
+        }
+        this.exportJobs.push(exportJob);
+      });
     }
   }
 
@@ -167,9 +180,6 @@ export class ScheduleService implements IScheduleService {
 
     const date: Date = this.getDateFromSchedule(reloadSchedule);
     if (date != null) {
-      var refreshGridJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-        this.adaptable.reloadGrid();
-      });
     }
   }
 

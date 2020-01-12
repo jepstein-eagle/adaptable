@@ -44,6 +44,7 @@ import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
 import { Glue42Api } from './Glue42Api';
 import { IPushPullApi } from './IPushPullApi';
+import { ScheduleApi } from './ScheduleApi';
 
 /**
  * Adaptable API provides developers with run-time access to Adaptable.
@@ -239,6 +240,8 @@ export interface AdaptableApi {
    * Provides access to the *Reminder* function, the *Reminder* object and [Reminder State](_predefinedconfig_runtimestate_reminderstate_.reminderstate.html).
    */
   reminderApi: ReminderApi;
+
+  scheduleApi: ScheduleApi;
 
   /**
    * Provides access to the *Shortcut* function, the *Shortcut* object and [Shortcut State](_predefinedconfig_runtimestate_shortcutstate_.shortcutstate.html).

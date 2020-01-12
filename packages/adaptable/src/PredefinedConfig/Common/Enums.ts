@@ -114,6 +114,12 @@ export enum LiveReportTrigger {
   LiveDataUpdated = 'LiveDataUpdated',
 }
 
+export enum ScheduleType {
+  Report = 'Report',
+  iPushPull = 'iPushPull',
+  Reminder = 'Reminder',
+}
+
 export enum SortOrder {
   Ascending = 'Ascending',
   Descending = 'Descending',

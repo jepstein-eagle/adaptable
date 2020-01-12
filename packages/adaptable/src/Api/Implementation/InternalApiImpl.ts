@@ -41,20 +41,14 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(
     report: Report,
     pageName: string,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ): void {
     this.dispatchAction(SystemRedux.ReportStartLive(report, pageName, exportDestination));
   }
 
   public stopLiveReport(
     report: Report,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ): void {
     this.dispatchAction(SystemRedux.ReportStopLive(report, exportDestination));
   }
@@ -149,30 +143,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       ExportDestination.Glue42,
       LiveReportTrigger.Disconnected
     );
-  }
-
-  public setIPushPullAvailableOn(): void {
-    this.dispatchAction(GridRedux.SetIPushPullAvailableOn());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      ExportDestination.iPushPull,
-      LiveReportTrigger.Connected
-    );
-  }
-
-  public setIPushPullAvailableOff(): void {
-    this.dispatchAction(GridRedux.SetIPushPullAvailableOff());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      ExportDestination.iPushPull,
-      LiveReportTrigger.Disconnected
-    );
-  }
-
-  public setLiveReportRunningOn(): void {
-    this.dispatchAction(GridRedux.SetLiveReportRunningOn());
-  }
-
-  public setLiveReportRunningOff(): void {
-    this.dispatchAction(GridRedux.SetLiveReportRunningOff());
   }
 
   public setPivotModeOn(): void {

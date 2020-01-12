@@ -1,6 +1,7 @@
 import { DesignTimeState } from './DesignTimeState';
 import { Report } from './ExportState';
 import { AdaptableObject } from './Common/AdaptableObject';
+import { BaseSchedule } from './Common/Schedule';
 
 /**
  * The objects required to run the [iPushPull](https://ipushpull.com) integration from within Adaptable.
@@ -102,16 +103,27 @@ export interface IPushPullState extends DesignTimeState {
    */
   ThrottleTime?: number;
 
-  IPushPullReports?: IPushPullReport[];
+  SelectedIPushPullReportName?: string;
 
-  CurrentIPushPullReport?: string;
+  IPushPullSchedules: IPushPullSchedule[];
+
+  // internal - would like not to save if possible...
+  IsIPushPullAvailable: boolean;
+  IsIPushPullLiveDataRunning: boolean;
+  IPushPullDomainsPages: IPushPullDomain[];
+  IPushPullLoginErrorMessage?: string; // don't think we set this currently...
+  CurrentLiveIPushPullReport?: IPushPullReport;
+}
+
+export interface IPushPullSchedule extends BaseSchedule {
+  IPushPullReport: IPushPullReport;
+  DataTransmission: 'Snapshot' | 'Live Data';
 }
 
 export interface IPushPullReport extends AdaptableObject {
-  Report: Report;
+  ReportName: string;
   Folder: string;
   Page: string;
-  ScheduleType?: 'Snapsot' | 'Live';
 }
 
 /**

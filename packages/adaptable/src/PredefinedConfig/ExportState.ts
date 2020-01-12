@@ -1,7 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
-import { Schedule } from './Common/Schedule';
+import { Schedule, BaseSchedule } from './Common/Schedule';
 
 /**
  * The Predefined Configuration for the Export function
@@ -64,6 +64,8 @@ export interface ExportState extends RunTimeState {
    * **Default Value**:  Empty array
    */
   Reports?: Report[];
+
+  ReportSchedules: ReportSchedule[];
 }
 
 export interface Report extends AdaptableObject {
@@ -124,7 +126,7 @@ export interface Report extends AdaptableObject {
    *
    * Each `AutoExport` contains a Schedule and a Destination
    */
-  AutoExport?: AutoExport;
+  // AutoExport?: AutoExport;
 }
 
 /**
@@ -134,7 +136,12 @@ export interface Report extends AdaptableObject {
  *
  * - ExportDestination: **Where** the Report data will be exported.
  */
-export interface AutoExport extends AdaptableObject {
-  Schedule: Schedule;
-  ExportDestination: 'CSV' | 'Clipboard' | 'JSON' | 'iPushPull';
+//export interface AutoExport extends AdaptableObject {
+// Schedule: Schedule;
+// ExportDestination: 'CSV' | 'Clipboard' | 'JSON' | 'iPushPull';
+//}
+
+export interface ReportSchedule extends BaseSchedule {
+  ReportName: string;
+  ExportDestination: 'CSV' | 'Clipboard' | 'JSON';
 }

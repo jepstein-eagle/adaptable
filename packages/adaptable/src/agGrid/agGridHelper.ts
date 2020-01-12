@@ -53,6 +53,7 @@ import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
 import { SystemStatusStrategy } from '../Strategy/SystemStatusStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
+import { ScheduleStrategy } from '../Strategy/ScheduleStrategy';
 import { Adaptable } from './Adaptable';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
@@ -162,6 +163,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(adaptable));
 
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
+    strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
 
     // should probably also be a plugin
     strategies.set(StrategyConstants.IPushPullStrategyId, new PushPullStrategy(adaptable));

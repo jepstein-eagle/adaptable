@@ -12,6 +12,7 @@ import {
   ActionMode,
   FontWeight,
   FontStyle,
+  ScheduleType,
 } from '../PredefinedConfig/Common/Enums';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import {
@@ -47,11 +48,10 @@ import { VendorGridInfo, Layout, PivotDetails } from '../PredefinedConfig/Layout
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { UserFilter } from '../PredefinedConfig/UserFilterState';
-import { Report, AutoExport } from '../PredefinedConfig/ExportState';
+import { Report, ReportSchedule } from '../PredefinedConfig/ExportState';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { FlashingCell } from '../PredefinedConfig/FlashingCellState';
-import { Reminder } from '../PredefinedConfig/ReminderState';
-import { Schedule } from '../PredefinedConfig/Common/Schedule';
+import { Schedule, BaseSchedule } from '../PredefinedConfig/Common/Schedule';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
@@ -66,7 +66,8 @@ import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesCh
 import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
-import { IPushPullReport } from '../PredefinedConfig/IPushPullState';
+import { IPushPullReport, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
+import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -282,17 +283,7 @@ export function CreateEmptyReport(): Report {
     ColumnIds: null,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
-    AutoExport: null,
   };
-}
-
-export function CreateEmptyIPushPullReport(): IPushPullReport {
-  let report: IPushPullReport = {
-    Report: CreateEmptyReport(),
-    Page: EMPTY_STRING,
-    Folder: EMPTY_STRING,
-  };
-  return report;
 }
 
 export function CreateDefaultFlashingCell(
@@ -311,19 +302,75 @@ export function CreateDefaultFlashingCell(
   };
 }
 
-export function CreateEmptyReminder(): Reminder {
+export function CreateEmptyBaseSchedule(scheduleType: ScheduleType): BaseSchedule {
   return {
     Uuid: createUuid(),
+    ScheduleType: scheduleType,
+    Schedule: CreateEmptySchedule(),
+  };
+}
+
+export function CreateEmptyReminderSchedule(): ReminderSchedule {
+  return {
+    Uuid: createUuid(),
+    ScheduleType: ScheduleType.Reminder,
+    Schedule: CreateEmptySchedule(),
+    Alert: CreateEmptyAlert(),
+  };
+}
+export function CreateEmptyReportSchedule(): ReportSchedule {
+  return {
+    Uuid: createUuid(),
+    ScheduleType: ScheduleType.Report,
+    Schedule: CreateEmptySchedule(),
+    ReportName: EMPTY_STRING,
+    ExportDestination: ExportDestination.CSV,
+  };
+}
+export function CreateEmptyIPushPullReport(): IPushPullReport {
+  return {
+    Uuid: createUuid(),
+    ReportName: EMPTY_STRING,
+    Folder: EMPTY_STRING,
+    Page: EMPTY_STRING,
+  };
+}
+export function CreateEmptyIPushPullSchedule(): IPushPullSchedule {
+  return {
+    Uuid: createUuid(),
+    ScheduleType: ScheduleType.iPushPull,
+    Schedule: CreateEmptySchedule(),
+    IPushPullReport: CreateEmptyIPushPullReport(),
+    DataTransmission: 'Snapshot',
+  };
+}
+
+export function CreateEmptyReminder(): ReminderSchedule {
+  return {
+    Uuid: createUuid(),
+    ScheduleType: 'Reminder',
     Alert: CreateEmptyAlert(),
     Schedule: CreateEmptySchedule(),
   };
 }
 
-export function CreateEmptyAutoExport(): AutoExport {
+export function CreateIPushPullSchedule(iPushPullReport: IPushPullReport): IPushPullSchedule {
   return {
     Uuid: createUuid(),
-    ExportDestination: ExportDestination.CSV,
+    ScheduleType: ScheduleType.iPushPull,
     Schedule: CreateEmptySchedule(),
+    IPushPullReport: iPushPullReport,
+    DataTransmission: 'Snapshot',
+  };
+}
+
+export function CreateReportSchedule(reportName: string): ReportSchedule {
+  return {
+    Uuid: createUuid(),
+    ScheduleType: ScheduleType.Report,
+    Schedule: CreateEmptySchedule(),
+    ReportName: reportName,
+    ExportDestination: ExportDestination.CSV,
   };
 }
 
@@ -333,7 +380,7 @@ export function CreateEmptySchedule(): Schedule {
     Uuid: createUuid(),
     OneOffDate: undefined,
     DaysOfWeek: [],
-    Hour: 17,
+    Hour: 0,
     Minute: 0,
   };
 }
@@ -572,10 +619,15 @@ export const ObjectFactory = {
   CreateEmptySparklineColumn,
   CreateEmptyUserFilter,
   CreateEmptyReport,
-  CreateEmptyIPushPullReport,
   CreateDefaultFlashingCell,
   CreateEmptyReminder,
-  CreateEmptyAutoExport,
+  CreateEmptyBaseSchedule,
+  CreateEmptyReminderSchedule,
+  CreateEmptyReportSchedule,
+  CreateEmptyIPushPullSchedule,
+  CreateEmptyIPushPullReport,
+  CreateIPushPullSchedule,
+  CreateReportSchedule,
   CreateEmptySchedule,
   CreateEmptyShortcut,
   CreateEmptyConditionalStyle,
