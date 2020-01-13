@@ -30,8 +30,6 @@ const update = (currentModulePackagePath, config = defaults) => {
     };
   }
 
-  delete currentModuleJSON.scripts;
-
   const content = JSON.stringify(currentModuleJSON, null, 2);
 
   const currentModuleDistPackagePath = config.distFolder
