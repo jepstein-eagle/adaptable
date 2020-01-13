@@ -44,7 +44,7 @@ jobs:
         git config --local user.name "SHIP IT"
 
     - name: Bump version
-      run: npm run bump:${WILL_RELEASE_TYPE}
+      run: npm run bump:${WILL_RELEASE_VERSION}
 
     - name: Executing npm install in root
       run: npm i
