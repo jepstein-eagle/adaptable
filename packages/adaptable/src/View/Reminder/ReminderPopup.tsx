@@ -195,7 +195,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ReminderPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ReminderPopupComponent);
+export let ReminderPopup = connect(mapStateToProps, mapDispatchToProps)(ReminderPopupComponent);

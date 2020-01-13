@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/core/dist/styles/ag-grid.css';
+import '@ag-grid-community/core/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/core/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../src/index.scss'; // from '@adaptabletools/adaptable-nocode/index.css'
 import '../../../src/themes/dark.scss'; // from '@adaptabletools/adaptable-nocode/themes/dark.css'

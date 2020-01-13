@@ -193,7 +193,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let Dashboard = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DashboardComponent);
+export let Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardComponent);

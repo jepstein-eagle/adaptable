@@ -83,6 +83,23 @@ jobs:
     - name: Building nocode
       run: cd packages/adaptable-nocode && npm run build-prod-no-cleanup
 
+
+    - name: Executing npm install in plugins/charts
+      run: npm run install-plugins-charts
+      env:
+        CI: true
+
+    - name: Building plugins-charts
+      run: cd packages/plugins/charts && npm run build-prod-no-cleanup
+
+    - name: Executing npm install in plugins/finance
+      run: npm run install-plugins-finance
+      env:
+        CI: true
+
+    - name: Building plugins-finance
+      run: cd packages/plugins/finance && npm run build-prod-no-cleanup
+
     - name: Ship it
       uses: "./.github/actions/execute-cmd"
       with:

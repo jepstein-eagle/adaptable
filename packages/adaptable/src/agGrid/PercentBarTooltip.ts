@@ -1,4 +1,4 @@
-import { ITooltipComp, ITooltipParams } from 'ag-grid-community';
+import { ITooltipComp, ITooltipParams } from '@ag-grid-community/all-modules';
 
 export class PercentBarTooltip implements ITooltipComp {
   private eGui: any;

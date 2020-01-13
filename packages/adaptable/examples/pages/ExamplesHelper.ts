@@ -1,4 +1,4 @@
-﻿import { ColDef, GridOptions } from 'ag-grid-community';
+﻿import { ColDef, GridOptions } from '@ag-grid-community/all-modules';
 import { StarsCellRenderer } from './StarsCellRenderer';
 import LoggingHelper from '../../src/Utilities/Helpers/LoggingHelper';
 

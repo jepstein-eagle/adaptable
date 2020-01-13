@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { ICellRendererParams, ICellRendererFunc } from 'ag-grid-community';
+import { ICellRendererParams, ICellRendererFunc } from '@ag-grid-community/core';
 import SparklineChart from '../../components/SparklineChart';
 import { SparklineColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/SparklineColumnState';
 import { SparklineTypeEnum } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/ChartEnums';

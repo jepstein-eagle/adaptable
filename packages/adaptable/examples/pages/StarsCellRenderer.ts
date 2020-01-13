@@ -1,4 +1,4 @@
-import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
+import { ICellRendererComp, ICellRendererParams } from '@ag-grid-community/all-modules';
 
 export class StarsCellRenderer implements ICellRendererComp {
   private eGui: any;

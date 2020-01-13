@@ -36,6 +36,17 @@ import { SparklineColumnPopup } from './View/Sparkline/SparklineColumnPopup';
 import { ViewAsSparklinesPopup } from './View/Sparkline/ViewAsSparklinePopup';
 import { getSparklineRendererForColumn } from './View/Sparkline/SparklineColumnRenderer';
 
+import { version } from '../package.json';
+import coreVersion from '@adaptabletools/adaptable/version';
+
+if (version !== coreVersion) {
+  console.warn(`
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!! "@adaptabletools/adaptable-plugin-charts" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+`);
+}
+
 const defaultOptions = {};
 interface ChartsPluginOptions {}
 class ChartsPlugin extends AdaptablePlugin {

@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import {
   AdaptableOptions,
   PredefinedConfig,
@@ -15,6 +15,10 @@ import {
   SearchChangedEventArgs,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { SideBarModule } from '@ag-grid-enterprise/side-bar';
+
 import Adaptable from '../../../../agGrid';
 
 var api: AdaptableApi;
@@ -30,12 +34,15 @@ function InitAdaptableDemo() {
     userName: 'Demo User',
     adaptableId: 'Basic Demo',
 
-    vendorGrid: gridOptions,
+    vendorGrid: { ...gridOptions, modules: [RangeSelectionModule, MenuModule, SideBarModule] },
     predefinedConfig: demoConfig,
   };
 
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
+  };
+  adaptableOptions.userInterfaceOptions = {
+    showAdaptableToolPanel: true,
   };
 
   api = Adaptable.init(adaptableOptions);

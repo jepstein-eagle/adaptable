@@ -3,6 +3,17 @@ import { AdaptablePlugin, IAdaptable, IAdaptableStore } from '@adaptabletools/ad
 import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
 import { CellSummaryOperationDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/CellSummaryState';
 
+import { version } from '../package.json';
+import coreVersion from '@adaptabletools/adaptable/version';
+
+if (version !== coreVersion) {
+  console.warn(`
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!! "@adaptabletools/adaptable-plugin-finance" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+`);
+}
+
 const sumNumberArray = (numericValues: number[]): number => {
   if (numericValues.length) {
     let sum = numericValues.reduce(function(a, b) {
