@@ -17,10 +17,6 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     super(props);
   }
   render(): any {
-    //  let scheduleDescription = this.props.Data.AutoExport
-    //    ? ' (' + UIHelper.getScheduleDescription(this.props.Data.AutoExport.Schedule) + ')'
-    //    : 'None';
-
     // maybe add schedules later from getting them?
 
     let keyValuePairs: KeyValuePair[] = [

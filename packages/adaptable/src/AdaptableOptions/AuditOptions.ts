@@ -1,9 +1,9 @@
 /**
  * Options for managing Audit Log.
  *
- * ​​**Note: Adaptable has no knowledge of which messages Audit Log is given and where they are sent.**
+ * ​​**Note: AdapTable has no knowledge of the messages Audit Log sends, nor where they are sent.**
  *
- * And it has no ability to access this data: any data sent to the Audit Log is known only to our users, and is accessible only by them.​​
+ * And, likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
  *
  * Each Audit event can be:
  *
@@ -19,7 +19,7 @@
  *
  * **The default for each option for each Audit Type is false** - meaning that audit is only triggered if you set some values to true.
  *
- * **Advanced Search Predefined Config Example**
+ * **Audit Options Example**
  *
  * ```ts
  * auditOptions = {

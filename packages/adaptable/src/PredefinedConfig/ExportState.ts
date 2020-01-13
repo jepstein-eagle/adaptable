@@ -12,7 +12,7 @@ import { Schedule, BaseSchedule } from './Common/Schedule';
  *
  * Each Report has both Row and Column Scope to allow you define which Rows and Columns are contained in the Export
  *
- *  * **Advanced Search Predefined Config Example**
+ *  * **Export Predefined Config Example**
  *
  * ```ts
  * Export: {
@@ -32,13 +32,7 @@ import { Schedule, BaseSchedule } from './Common/Schedule';
  *       ],
  *        ReportColumnScope: 'BespokeColumns',
  *        ReportRowScope: 'VisibleRows',
- *        AutoExport: {
- *          Schedule: {
- *            Hour: 17,
- *            Minute: 30,
- *            DaysOfWeek: [1, 2, 3, 4, 5],
- *          },
- *          ExportDestination: 'JSON',
+ *        ExportDestination: 'JSON',
  *       },
  *      },
  *    ],
