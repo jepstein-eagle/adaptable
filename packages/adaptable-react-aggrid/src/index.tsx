@@ -15,7 +15,6 @@ import {
   ActionColumnClickedEventArgs,
   SelectionChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,
-  LiveReportUpdatedEventArgs,
 } from '@adaptabletools/adaptable/types';
 import { AuditLogEventArgs } from '@adaptabletools/adaptable/src/Api/Events/AuditEvents';
 import { ToolbarButtonClickedEventArgs } from '@adaptabletools/adaptable/src/Api/Events/ToolbarButtonClicked';
