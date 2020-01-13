@@ -1,6 +1,6 @@
 {
   "name": "@adaptabletools/adaptable-monorepo",
-  "version": "5.2.2-canary.13",
+  "version": "6.0.0-canary.0",
   "private": true,
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
@@ -35,7 +35,6 @@
     "bump:patch": "npm version patch",
     "bump:minor": "npm version minor",
     "bump:major": "npm version major",
-
     "release:canary-nobump": "npm run copy-npmrc && npm run registry-publish-canary",
     "release:nobump": "npm run copy-npmrc && npm run registry-publish",
     "release:canary": "npm run bump:canary && npm run copy-npmrc && npm run registry-publish-canary",
