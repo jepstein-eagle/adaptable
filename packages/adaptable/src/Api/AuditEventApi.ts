@@ -1,17 +1,19 @@
 import { AuditLogEventArgs } from './Events/AuditEvents';
 
 /**
- * Adaptable publishes 3 Audit Events that users can subscribe to as needed.
+ * AdapTable publishes 4 Audit Events that users can subscribe to as needed.
  *
  * - **AuditStateChanged**: fired when the Internal or User state of the Application has changed
  *
  * - **AuditCellEdited**: fired when a cell has been edited by the user
  *
- * - **AuditFunctionApplied**: fired when a Function has been run
+ * - **AuditFunctionApplied**: fired when an AdapTable Function has been run
+ *
+ * - **AuditTickingDataUpdated**: fired when data in the grid changes as result of external action
  *
  * These events are **only fired if the Audit Log** has been configured with the property *auditAsEvent* set to **true** in [Audit Options](_adaptableOptions_auditoptions_.auditoptions.html).
  *
- *  Adaptable uses **FDC3 Standard for messaging** so to get the full audit data, you will need to access the auditLogEventArgs.data[0].id property e.g.:
+ *  AdapTable uses **FDC3 Standard for messaging** so to get the full audit data, you will need to access the auditLogEventArgs.data[0].id property e.g.:
  *
  *  ```ts
  *  const auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id
@@ -40,7 +42,7 @@ export interface AuditEventApi {
   ): () => void;
 
   /**
-   * Fired whenever a cell is edited in Adaptable.
+   * Fired whenever a cell is edited in AdapTable.
    *
    * It does **not** fire if the data changes outside of direct user action in the Grid (e.g. for ticking data)
    *
@@ -48,12 +50,15 @@ export interface AuditEventApi {
    */
   on(
     eventName: 'AuditCellEdited',
-    callback: (auditCellEditedArgs: AuditLogEventArgs) => void
+    callback: (auditLogEventArgs: AuditLogEventArgs) => void
   ): () => void;
 
+  /**
+   * Fired whenever the data in AdapTable updates as the result of a ticking / external change.
+   */
   on(
     eventName: 'AuditTickingDataUpdated',
-    callback: (auditCellEditedArgs: AuditLogEventArgs) => void
+    callback: (auditLogEventArgs: AuditLogEventArgs) => void
   ): () => void;
 
   /**
@@ -63,7 +68,7 @@ export interface AuditEventApi {
    */
   on(
     eventName: 'AuditFunctionApplied',
-    callback: (auditFunctionAppliedArgs: AuditLogEventArgs) => void
+    callback: (auditLogEventArgs: AuditLogEventArgs) => void
   ): () => void;
 
   /**

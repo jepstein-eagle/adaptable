@@ -36,7 +36,7 @@ import { ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
 import { BaseSchedule } from '../../PredefinedConfig/Common/Schedule';
 interface SchedulePopupProps extends StrategyViewPopupProps<SchedulePopupComponent> {
-  ReminderSchedules: ReminderSchedule[];
+  Reminders: ReminderSchedule[];
   ReportSchedules: ReportSchedule[];
   IPushPullSchedules: IPushPullSchedule[];
 
@@ -84,9 +84,9 @@ class SchedulePopupComponent extends React.Component<
 
   render() {
     let infoBody: any[] = [
-      'Schedule are alerts that you set by schdedule.',
+      'Use schedules to ensure that actions happen at set times.',
       <br />,
-      'You can choose to show the alert on a given date or on a recurring basis.',
+      'You can create schedules for Reminders, Exports (reports) or to send data to iPushPull.',
     ];
 
     let colItems: IColItem[] = [
@@ -98,7 +98,7 @@ class SchedulePopupComponent extends React.Component<
 
     // we need to do this for all 3 schedule types and then concact them into one array
     let allSchedules: BaseSchedule[] = [];
-    allSchedules.push(...this.props.ReminderSchedules);
+    allSchedules.push(...this.props.Reminders);
     allSchedules.push(...this.props.ReportSchedules);
     if (this.props.Adaptable.api.iPushPullApi.isIPushPullRunning()) {
       allSchedules.push(...this.props.IPushPullSchedules);
@@ -179,7 +179,7 @@ class SchedulePopupComponent extends React.Component<
           glyphicon={StrategyConstants.ScheduleGlyph}
           infoBody={infoBody}
         >
-          {this.props.ReportSchedules.length == 0 ? (
+          {allSchedules.length == 0 ? (
             <EmptyContent>Click 'New' to create a new Schedule.</EmptyContent>
           ) : (
             <AdaptableObjectCollection colItems={colItems} items={allScheduleRows} />
@@ -314,7 +314,7 @@ class SchedulePopupComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState) {
   return {
-    ReminderSchedules: state.Reminder.Reminders,
+    Reminders: state.Reminder.Reminders,
     ReportSchedules: state.Export.ReportSchedules,
     IPushPullSchedules: state.IPushPull.IPushPullSchedules,
   };
