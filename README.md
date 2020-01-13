@@ -28,7 +28,7 @@ However Plug-Ins offer additional sector-specific, or advanced functionality.  T
 
 AdapTable can be instantiated in various ways.
 
-The standard method is through Vanilla JavaScript / TypeScript.
+The standard method is through Vanilla JavaScript / TypeScript
 
 However for those developers who use a particular framework, we provide Framework Wrappers to allow access to AdapTable in a Franework-friendly maner.  These are currently:
 
