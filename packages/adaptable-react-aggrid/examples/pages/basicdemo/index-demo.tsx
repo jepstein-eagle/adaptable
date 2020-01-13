@@ -12,6 +12,8 @@ import LoggingHelper from '../../../../adaptable/src/Utilities/Helpers/LoggingHe
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { SideBarModule } from '@ag-grid-enterprise/side-bar';
+
+import charts from '../../../../plugins/charts/src';
 import './index.css';
 global.React = React;
 
@@ -62,6 +64,7 @@ export default () => (
     adaptableOptions={{
       primaryKey: 'tradeId',
       adaptableId: 'BYOP demos',
+      plugins: [charts()],
     }}
   />
 );

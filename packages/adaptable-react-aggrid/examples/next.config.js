@@ -30,6 +30,13 @@ const withTypescript = (nextConfig = {}) => {
       config.resolve.alias = config.resolve.alias || {};
       config.resolve.alias.react = path.resolve('../node_modules/react');
       config.resolve.alias['react-dom'] = path.resolve('../node_modules/react-dom');
+      config.resolve.alias['styled-components'] = path.resolve(
+        '../../adaptable/node_modules/styled-components'
+      );
+      config.resolve.alias.redux = path.resolve('../../adaptable/node_modules/redux');
+      config.resolve.alias['react-redux'] = path.resolve(
+        '../../adaptable/node_modules/react-redux'
+      );
 
       config.module.rules.push({
         test: /\.(ts|tsx)$/,
