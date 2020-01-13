@@ -168,7 +168,6 @@ const initialToolPanelState: ToolPanelState = {
     'Alert',
     'BulkUpdate',
     'CellSummary',
-    'Chart',
     'ColumnFilter',
     'Dashboard',
     'Export',

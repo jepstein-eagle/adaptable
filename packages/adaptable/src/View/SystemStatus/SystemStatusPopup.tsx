@@ -66,7 +66,7 @@ class SystemStatusPopupComponent extends React.Component<
       </SimpleButton>
     );
 
-    let content = (
+    let content = StringExtensions.IsNotNullOrEmpty(this.props.StatusMessage) ? (
       <div>
         {' '}
         <Flex
@@ -94,6 +94,8 @@ class SystemStatusPopupComponent extends React.Component<
         </Flex>
         {clearButton}
       </div>
+    ) : (
+      <Text fontSize={2}>No Status Message</Text>
     );
 
     return (
@@ -104,11 +106,7 @@ class SystemStatusPopupComponent extends React.Component<
         infoBody={infoBody}
         bodyProps={{ padding: 2 }}
       >
-        {StringExtensions.IsNotNullOrEmpty(this.props.StatusMessage) ? (
-          { content }
-        ) : (
-          <Text fontSize={2}>No Status Message</Text>
-        )}
+        {content}
       </PanelWithImage>
     );
   }
