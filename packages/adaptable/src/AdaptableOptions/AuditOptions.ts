@@ -1,23 +1,37 @@
 /**
- * Options for managing Audit Log.
+ * Options for managing the AdapTable Audit Log.
  *
  * ​​**Note: AdapTable has no knowledge of the messages Audit Log sends, nor where they are sent.**
  *
- * And, likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
+ * Likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
  *
- * Each Audit event can be:
+ * Each Audit message is essentiall a combination of an `AuditTrigger` and an `AuditDestination`, and packaged as a simple JSON object.
  *
- * - published to an HTTP stream
+ * You can set as many AuditTriggers as you want, and for each `AuditTrigger`, select as many AuditDestinations as you require.
  *
- * - logged to the Console
+ * The 5 Audit Triggers are:
  *
- * - fired as an Audit Event
+ * - **CellEdit** : whenever a cell in AdapTable is changed as a result of user action
  *
- * - shown as an Alert
+ * - **TickingDataChange**: whenever the data in AdapTable is updated as a result of external action
  *
- * (or any combination thereof).
+ * - **FunctionEvent** : whenever a function in AdapTable is run (e.g. Quick Search run, or an Export applied).
  *
- * **The default for each option for each Audit Type is false** - meaning that audit is only triggered if you set some values to true.
+ * - **UserStateChange** : whenever a change is made to the User's state (e.g. selected a new layout)
+ *
+ * - **InternalStateChange** : whenever a change is made to AdapTable's internal state (e.g. new cells selected)
+ *
+ * The 4 available Audit Destinations are:
+ *
+ * - **Http Channel** : If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. he Elastic Stack).
+ *
+ * - **Console** : Audits messages to the console - useful for testing, support and debug purposes
+ *
+ * - **Alert** : If you set this option for any Trigger, then you can should also choose the Type (e.g. 'Success', 'Info' etc) and whether to show it as a Popup.
+ *
+ * - **Event** : If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](_api_auditeventapi_.auditeventapi.html)
+ *
+ * **The default for each option for each Audit Type is false** - meaning that audit is **only triggered** if you set at least one destination for one trigger to true.
  *
  * **Audit Options Example**
  *
@@ -31,10 +45,12 @@
  *  },
  *  auditInternalStateChanges: {
  *    auditAsEvent: true,
+ *    auditAsAlert: true,
  *  },
  *  auditUserStateChanges: {
  *    auditAsEvent: true,
  *    auditToHttpChannel: true,
+ *    auditAsAlert: true,
  *  },
  * auditTickingDataChanges:{
  *    auditToConsole: true,
@@ -43,6 +59,10 @@
  *  auditLogsSendInterval: 3,
  *};
  * ```
+ *
+ * In this example we have chosen to listen to all 5 of the Audit types (corresponding to each of the Audit Triggers).
+ *
+ * We have selected different Audit Destinations for each type (sometimes choosing more than one destination).
  */
 export interface AuditOptions {
   /**

@@ -1,12 +1,11 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
-import { AuditLogEntry, AuditLogType } from '../Interface/AuditLogEntry';
+import { AuditLogEntry, AuditTrigger } from '../Interface/AuditLogEntry';
 import { IAuditLogService } from './Interface/IAuditLogService';
 import { IAdaptable } from '../../types';
 import {
   StateChangedDetails,
   FunctionAppliedDetails,
-  AuditLogEventData,
   AuditLogEventArgs,
 } from '../../Api/Events/AuditEvents';
 import { AuditDestinationOptions, AuditOptions } from '../../AdaptableOptions/AuditOptions';
@@ -138,7 +137,7 @@ export class AuditLogService implements IAuditLogService {
     if (this.isAuditCellEditsEnabled) {
       let auditLogEntry = this.createAuditLogEntryFromDataChangedInfo(
         dataChangedInfo,
-        AuditLogType.CellEdit
+        AuditTrigger.CellEdit
       );
       let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!.auditCellEdits!;
 
@@ -146,7 +145,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogType.CellEdit);
+        this.publishStateChanged(auditLogEntry, AuditTrigger.CellEdit);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -172,7 +171,7 @@ export class AuditLogService implements IAuditLogService {
   public addUserStateChangeAuditLog(stateChangeDetails: StateChangedDetails) {
     if (this.isAuditUserStateChangesEnabled) {
       let auditLogEntry: AuditLogEntry = {
-        auditlog_type: AuditLogType.UserStateChange,
+        audit_trigger: AuditTrigger.UserStateChange,
         client_timestamp: new Date(),
         username: this.adaptable.adaptableOptions.userName!,
         adaptable_id: this.adaptable.adaptableOptions.adaptableId!,
@@ -185,7 +184,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogType.UserStateChange);
+        this.publishStateChanged(auditLogEntry, AuditTrigger.UserStateChange);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -199,7 +198,7 @@ export class AuditLogService implements IAuditLogService {
   public addInternalStateChangeAuditLog(stateChangeDetails: StateChangedDetails) {
     if (this.isAuditInternalStateChangesEnabled) {
       let auditLogEntry: AuditLogEntry = {
-        auditlog_type: AuditLogType.InternalStateChange,
+        audit_trigger: AuditTrigger.InternalStateChange,
         client_timestamp: new Date(),
         username: this.adaptable.adaptableOptions.userName!,
         adaptable_id: this.adaptable.adaptableOptions.adaptableId!,
@@ -212,7 +211,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogType.InternalStateChange);
+        this.publishStateChanged(auditLogEntry, AuditTrigger.InternalStateChange);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -227,7 +226,7 @@ export class AuditLogService implements IAuditLogService {
   public addFunctionAppliedAuditLog(functionAppliedDetails: FunctionAppliedDetails) {
     if (this.isAuditFunctionEventsEnabled) {
       let auditLogEntry: AuditLogEntry = {
-        auditlog_type: AuditLogType.FunctionApplied,
+        audit_trigger: AuditTrigger.FunctionApplied,
         client_timestamp: new Date(),
         username: this.adaptable.adaptableOptions.userName!,
         adaptable_id: this.adaptable.adaptableOptions.adaptableId!,
@@ -240,7 +239,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogType.FunctionApplied);
+        this.publishStateChanged(auditLogEntry, AuditTrigger.FunctionApplied);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -257,7 +256,7 @@ export class AuditLogService implements IAuditLogService {
     if (this.isAuditTickingDataChangesEnabled) {
       let auditLogEntry = this.createAuditLogEntryFromDataChangedInfo(
         dataChangedInfo,
-        AuditLogType.TickingDataChange
+        AuditTrigger.TickingDataChange
       );
 
       let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
@@ -266,7 +265,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogType.FunctionApplied);
+        this.publishStateChanged(auditLogEntry, AuditTrigger.FunctionApplied);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -291,10 +290,10 @@ export class AuditLogService implements IAuditLogService {
 
   private createAuditLogEntryFromDataChangedInfo(
     dataChangedInfo: DataChangedInfo,
-    auditLogType: AuditLogType
+    auditTrigger: AuditTrigger
   ): AuditLogEntry {
     return {
-      auditlog_type: auditLogType,
+      audit_trigger: auditTrigger,
       client_timestamp: new Date(),
       username: this.adaptable.adaptableOptions.userName!,
       adaptable_id: this.adaptable.adaptableOptions.adaptableId!,
@@ -311,7 +310,7 @@ export class AuditLogService implements IAuditLogService {
 
   private ping() {
     let pingMessage: AuditLogEntry = {
-      auditlog_type: AuditLogType.Ping,
+      audit_trigger: AuditTrigger.Ping,
       client_timestamp: new Date(),
       username: this.adaptable.adaptableOptions.userName,
       adaptable_id: this.adaptable.adaptableOptions.adaptableId,
@@ -458,21 +457,21 @@ export class AuditLogService implements IAuditLogService {
     this.adaptable.api.alertApi.displayAlert(alert);
   }
 
-  publishStateChanged(auditLogEntry: AuditLogEntry, auditLogType: AuditLogType): void {
+  publishStateChanged(auditLogEntry: AuditLogEntry, auditTrigger: AuditTrigger): void {
     const stateChangedArgs: AuditLogEventArgs = AdaptableHelper.createFDC3Message(
       'Audit Log Event',
-      auditLogEntry
+      auditTrigger
     );
 
-    switch (auditLogType) {
-      case AuditLogType.CellEdit:
+    switch (auditTrigger) {
+      case AuditTrigger.CellEdit:
         this.adaptable.api.auditEventApi.emit('AuditCellEdited', stateChangedArgs);
         break;
-      case AuditLogType.FunctionApplied:
+      case AuditTrigger.FunctionApplied:
         this.adaptable.api.auditEventApi.emit('AuditFunctionApplied', stateChangedArgs);
         break;
-      case AuditLogType.InternalStateChange:
-      case AuditLogType.UserStateChange:
+      case AuditTrigger.InternalStateChange:
+      case AuditTrigger.UserStateChange:
         this.adaptable.api.auditEventApi.emit('AuditStateChanged', stateChangedArgs);
         break;
     }

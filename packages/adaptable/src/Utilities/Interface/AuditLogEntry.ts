@@ -4,7 +4,7 @@ import {
   StateChangedDetails,
 } from '../../Api/Events/AuditEvents';
 
-export enum AuditLogType {
+export enum AuditTrigger {
   CellEdit = 'Cell Edit',
   UserStateChange = 'User State Change',
   InternalStateChange = 'Internal State Change',
@@ -14,7 +14,7 @@ export enum AuditLogType {
 }
 
 export interface AuditLogEntry {
-  auditlog_type: AuditLogType;
+  audit_trigger: AuditTrigger;
   client_timestamp: Date;
   username: string;
   adaptable_id: string;

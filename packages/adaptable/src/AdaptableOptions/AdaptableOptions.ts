@@ -124,31 +124,34 @@ export interface AdaptableOptions {
   /**
    * Options for mananging the **Audit Log**.
    *
-   * Depending on the options you set audit messages will send details of actions in AdapTable to an Audit destination.
+   * Depending on the options you set, audit messages will send details of actions in AdapTable to an Audit destination.
    *
-   * You can choose to listen to any mixture of Audits for:
+   * Each Audit message is a combination of an `AuditTrigger` and an `AuditDestination`, and packaged as a simple JSON object.
    *
-   * - `CellEdit`
+   * You can set as many AuditTriggers as you want, and for each `AuditTrigger`, select as many AuditDestinations as you require.
    *
-   * - `TickingDataChange`
+   * The 5 Audit Triggers are:
    *
-   * - `FunctionEvent`
+   * - **CellEdit** : whenever a cell in AdapTable is changed as a result of user action
    *
-   * - `UserStateChange`
+   * - **TickingDataChange**: whenever the data in AdapTable is updated as a result of external action
    *
-   * - `InternalStateChange`
+   * - **FunctionEvent** : whenever a function in AdapTable is run (e.g. Quick Search run, or an Export applied).
    *
-   * For each Audit type, you can choose to send each audit message (which is packaged as a simple JSON object) to any mixture of:
+   * - **UserStateChange** : whenever a change is made to the User's state (e.g. selected a new layout)
    *
-   * - Http Channel
+   * - **InternalStateChange** : whenever a change is made to AdapTable's internal state (e.g. new cells selected)
    *
-   * - Console
+   * The 4 available Audit Destinations are:
    *
-   * - Alert
+   * - **Http Channel** : If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. he Elastic Stack).
    *
-   * - Event
+   * - **Console** : Audits messages to the console - useful for testing, support and debug purposes
    *
-   * If you select HttpChannel, you can subsequently see these message using your internal reporting software (e.g. he Elastic Stack).
+   * - **Alert** : If you set this option for any Trigger, then you can should also choose the Type (e.g. 'Success', 'Info' etc) and whether to show it as a Popup.
+   *
+   * - **Event** : If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](_api_auditeventapi_.auditeventapi.html)
+   *
    */
   auditOptions?: AuditOptions;
 
