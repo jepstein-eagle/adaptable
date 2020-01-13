@@ -1,7 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
-import { Schedule } from './Common/Schedule';
+import { Schedule, BaseSchedule } from './Common/Schedule';
 
 /**
  * The Predefined Configuration for the Export function
@@ -12,7 +12,7 @@ import { Schedule } from './Common/Schedule';
  *
  * Each Report has both Row and Column Scope to allow you define which Rows and Columns are contained in the Export
  *
- *  * **Advanced Search Predefined Config Example**
+ *  * **Export Predefined Config Example**
  *
  * ```ts
  * Export: {
@@ -32,13 +32,7 @@ import { Schedule } from './Common/Schedule';
  *       ],
  *        ReportColumnScope: 'BespokeColumns',
  *        ReportRowScope: 'VisibleRows',
- *        AutoExport: {
- *          Schedule: {
- *            Hour: 17,
- *            Minute: 30,
- *            DaysOfWeek: [1, 2, 3, 4, 5],
- *          },
- *          ExportDestination: 'JSON',
+ *        ExportDestination: 'JSON',
  *       },
  *      },
  *    ],
@@ -64,6 +58,8 @@ export interface ExportState extends RunTimeState {
    * **Default Value**:  Empty array
    */
   Reports?: Report[];
+
+  ReportSchedules?: ReportSchedule[];
 }
 
 export interface Report extends AdaptableObject {
@@ -83,7 +79,7 @@ export interface Report extends AdaptableObject {
    *
    * - BespokeColumns - a list of Columns to be provided by you; if the Report is built using the UI Wizard a separate page appears to facilitate this column selection
    */
-  ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedColumns' | 'BespokeColumns';
+  ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedCellColumns' | 'BespokeColumns';
 
   /**
    * Which Rows are exported when the Report runs.  The choices are:
@@ -98,7 +94,12 @@ export interface Report extends AdaptableObject {
    *
    * - ExpressionRows - the Expression (or Query) that should be run to see which rows to include in the exported data.  See [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) for more details.
    */
-  ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedCells' | 'SelectedRows' | 'ExpressionRows';
+  ReportRowScope:
+    | 'AllRows'
+    | 'VisibleRows'
+    | 'SelectedCellRows'
+    | 'SelectedRows'
+    | 'ExpressionRows';
 
   /**
    * Which columns to include in the report.
@@ -113,13 +114,6 @@ export interface Report extends AdaptableObject {
    * This is only required if the `ReportRowScope` is 'ExpressionRows'
    */
   Expression?: Expression;
-
-  /**
-   * Whether the Report will run on 'schedule'.
-   *
-   * Each `AutoExport` contains a Schedule and a Destination
-   */
-  AutoExport?: AutoExport;
 }
 
 /**
@@ -129,7 +123,7 @@ export interface Report extends AdaptableObject {
  *
  * - ExportDestination: **Where** the Report data will be exported.
  */
-export interface AutoExport extends AdaptableObject {
-  Schedule: Schedule;
+export interface ReportSchedule extends BaseSchedule {
+  ReportName: string;
   ExportDestination: 'CSV' | 'Clipboard' | 'JSON';
 }

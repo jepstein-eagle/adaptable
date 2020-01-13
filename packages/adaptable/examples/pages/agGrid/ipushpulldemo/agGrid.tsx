@@ -12,13 +12,12 @@ import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ipushpull from 'ipushpull-js';
-import { IPageService } from 'ipushpull-js/dist/Page/Page';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
 import {
-  LiveReportUpdatedEventArgs,
-  LiveReportUpdatedInfo,
-} from '../../../../src/Api/Events/LiveReportUpdated';
+  LiveDataChangedEventArgs,
+  LiveDataChangedInfo,
+} from '../../../../src/Api/Events/LiveDataChanged';
 
 ipushpull.config.set({
   api_secret: '',
@@ -38,7 +37,7 @@ function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
-  const useTickingData: boolean = true;
+  const useTickingData: boolean = false;
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
@@ -58,30 +57,30 @@ function InitAdaptableDemo() {
 
   const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 
+  console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');
+
   if (useTickingData) {
     tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, tradeCount);
   }
 
-  adaptableApi.eventApi.on(
-    'LiveReportUpdated',
-    (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
-      let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
-      if (eventData.ExportDestination == 'iPushPull') {
-        // do something...
-      }
+  adaptableApi.eventApi.on('LiveDataChanged', (eventArgs: LiveDataChangedEventArgs) => {
+    let eventData: LiveDataChangedInfo = eventArgs.data[0].id;
+    if (eventData.ReportDestination == 'iPushPull') {
+      console.log('got an event');
+      console.log(eventData);
     }
-  );
+  });
 }
 
 let demoConfig: PredefinedConfig = {
-  Partner: {
-    iPushPull: {
-      iPushPullInstance: ipushpull,
-      Username: process.env.IPUSHPULL_USERNAME,
-      Password: process.env.IPUSHPULL_PASSWORD,
-      ThrottleTime: 5000,
-    },
+  IPushPull: {
+    iPushPullInstance: ipushpull,
+    Username: process.env.IPUSHPULL_USERNAME,
+    Password: process.env.IPUSHPULL_PASSWORD,
+    ThrottleTime: 5000,
+    //   AutoLogin: true,
   },
+
   FlashingCell: {
     FlashingCells: [
       {
@@ -116,7 +115,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'Alert'],
+    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'Alert', 'IPushPull'],
   },
 };
 

@@ -34,15 +34,15 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
   render() {
     // this logic is repeated from Home Toolbar where we get the Title  - perhaps put it one place?
-    let blotterName = this.props.DashboardState.HomeToolbarTitle;
-    if (StringExtensions.IsNullOrEmpty(blotterName)) {
-      blotterName = this.props.Adaptable.adaptableOptions.adaptableId;
-      if (blotterName == GeneralConstants.USER_NAME) {
-        blotterName = 'Blotter ';
+    let instanceName = this.props.DashboardState.HomeToolbarTitle;
+    if (StringExtensions.IsNullOrEmpty(instanceName)) {
+      instanceName = this.props.Adaptable.adaptableOptions.adaptableId;
+      if (instanceName == GeneralConstants.USER_NAME) {
+        instanceName = 'Adaptable ';
       }
     }
 
-    let showBlotterName: string = 'Show ' + blotterName + ' Dashboard';
+    let showInstanceName: string = 'Show ' + instanceName + ' Dashboard';
     let hiddenEntitlements: Entitlement[] = this.props.EntitlementState.FunctionEntitlements.filter(
       e => e.AccessLevel == 'Hidden'
     );
@@ -152,11 +152,11 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 px={1}
                 py={1}
                 icon="arrow-down"
-                tooltip={showBlotterName}
+                tooltip={showInstanceName}
                 className="ab-Dashboard__expand"
                 onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}
               >
-                {blotterName}
+                {instanceName}
               </SimpleButton>
             ) : (
               <Flex className="ab-Dashboard__inner" alignItems="stretch" style={{ zoom: 1 }}>
@@ -193,7 +193,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let Dashboard = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DashboardComponent);
+export let Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardComponent);

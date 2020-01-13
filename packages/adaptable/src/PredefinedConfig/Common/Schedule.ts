@@ -9,3 +9,8 @@ export interface Schedule extends AdaptableObject {
   OneOffDate?: string;
   DaysOfWeek?: DayOfWeek[];
 }
+
+export interface BaseSchedule extends AdaptableObject {
+  Schedule: Schedule;
+  ScheduleType: 'Report' | 'iPushPull' | 'Reminder';
+}

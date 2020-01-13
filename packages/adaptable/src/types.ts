@@ -5,7 +5,7 @@ import { ColumnStateChangedEventArgs } from './Api/Events/ColumnStateChanged';
 import { ThemeChangedEventArgs } from './Api/Events/ThemeChanged';
 import { ActionColumnClickedEventArgs } from './Api/Events/ActionColumnClicked';
 import { ToolbarVisibilityChangedEventArgs } from './Api/Events/ToolbarVisibilityChanged';
-import { LiveReportUpdatedEventArgs } from './Api/Events/LiveReportUpdated';
+import { LiveDataChangedEventArgs } from './Api/Events/LiveDataChanged';
 import { SelectionChangedEventArgs } from './Api/Events/SelectionChanged';
 import { ToolbarButtonClickedEventArgs } from './Api/Events/ToolbarButtonClicked';
 export {
@@ -26,7 +26,7 @@ export {
   AlertFiredEventArgs,
   ToolbarButtonClickedEventArgs,
   ColumnStateChangedEventArgs,
-  LiveReportUpdatedEventArgs,
+  LiveDataChangedEventArgs,
   SelectionChangedEventArgs,
   ThemeChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,

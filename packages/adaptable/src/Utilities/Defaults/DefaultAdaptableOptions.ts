@@ -32,7 +32,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
       auditAsEvent: false,
       auditAsAlert: false,
     },
-    auditTickingDataChanges: {
+    auditTickingDataUpdates: {
       auditToHttpChannel: false,
       auditToConsole: false,
       auditAsEvent: false,

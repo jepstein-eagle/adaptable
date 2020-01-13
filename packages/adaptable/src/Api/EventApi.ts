@@ -1,6 +1,6 @@
 import { SelectionChangedEventArgs } from './Events/SelectionChanged';
 import { ActionColumnClickedEventArgs } from './Events/ActionColumnClicked';
-import { LiveReportUpdatedEventArgs } from './Events/LiveReportUpdated';
+import { LiveDataChangedEventArgs } from './Events/LiveDataChanged';
 import { ToolbarVisibilityChangedEventArgs } from './Events/ToolbarVisibilityChanged';
 import { ToolbarButtonClickedEventArgs } from './Events/ToolbarButtonClicked';
 import { ThemeChangedEventArgs } from './Events/ThemeChanged';
@@ -28,6 +28,8 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  * - **ToolbarButtonClicked** - when a button is clicked in a Custom Toolbar
  *
  * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering Custom toolbars)
+ *
+ * - **LiveDataChanged** - when something happens related to the various 'live reports' that AdapTable offers
  *
  * - **AdaptableReady** - fired whenever Adaptable is initialised and ready for use (has no Args class)
  *
@@ -153,9 +155,18 @@ export interface EventApi {
     callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
   ): () => void;
 
+  /**
+   * Event fired whenever **a change occurs relating to live reports / data**
+   *
+   * Used in conjunction with AdapTable's partners OpenFin, iPushPull or Glue42
+   *
+   * @param eventName LiveDataChanged - use as: adaptableApi.eventApi.on('LiveDataChanged', (args: LiveDataChangedEventArgs) => { .....[do stuff]...})
+   *
+   * @param callback LiveDataChangedEventArgs which includes details of what triggered the event and the live report which is affected.
+   */
   on(
-    eventName: 'LiveReportUpdated',
-    callback: (liveReportpdatedEventArgs: LiveReportUpdatedEventArgs) => void
+    eventName: 'LiveDataChanged',
+    callback: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void
   ): () => void;
 
   /**
@@ -177,7 +188,7 @@ export interface EventApi {
       | 'ColumnStateChanged'
       | 'ToolbarButtonClicked'
       | 'ToolbarVisibilityChanged'
-      | 'LiveReportUpdated'
+      | 'LiveDataChanged'
       | 'AdaptableReady',
     data?: any
   ): Promise<any>;

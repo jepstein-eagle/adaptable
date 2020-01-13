@@ -200,6 +200,7 @@ const initialDashboardState: DashboardState = {
     'Chart',
     'ColumnFilter',
     'Export',
+    'IPushPull',
     'Layout',
     'SmartEdit',
     'QuickSearch',

@@ -31,7 +31,7 @@ import {
   ReportColumnScope,
 } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
-import { LiveReport } from '../../Api/Events/LiveReportUpdated';
+import { LiveReport } from '../../Api/Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
@@ -48,10 +48,7 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
   onReportStopLive: (
     report: Report,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
   onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
@@ -216,17 +213,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     ) {
       return false;
     }
-    if (report.AutoExport != null) {
-      if (report.AutoExport.Schedule.Hour == null || report.AutoExport.Schedule.Minute == null) {
-        return false;
-      }
-      if (
-        report.AutoExport.Schedule.OneOffDate == null &&
-        ArrayExtensions.IsEmpty(report.AutoExport.Schedule.DaysOfWeek)
-      ) {
-        return false;
-      }
-    }
+
     return true;
   }
 
@@ -273,17 +260,11 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
     onReportStopLive: (
       report: Report,
-      exportDestination:
-        | ExportDestination.OpenfinExcel
-        | ExportDestination.iPushPull
-        | ExportDestination.Glue42
+      exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
     ) => dispatch(SystemRedux.ReportStopLive(report, exportDestination)),
     onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId)),
   };
 }
 
-export let ExportPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExportPopupComponent);
+export let ExportPopup = connect(mapStateToProps, mapDispatchToProps)(ExportPopupComponent);

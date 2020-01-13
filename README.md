@@ -10,13 +10,13 @@ AdapTable supports a number of underlying vendor grid components, and new vendor
 
 AdapTable is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
 
-[Try it out for yourself](https://demo.adaptableblotter.com).
+[Try out AdapTable for yourself](https://demo.adaptableblotter.com).
 
 ## Plug-Ins
 
-In order to reduce download size and ensure that you only use the components and functionality you require, AdapTable now offers Plug-Ings.
+In order to reduce download size and ensure that you only use the components and functionality you require, AdapTable now offers Plug-Ins.
 
-The 'Core' package contains everything you need to get started.  
+There is a standard 'Core' package that contains everything that most users will ever need.  
 
 However Plug-Ins offer additional sector-specific, or advanced functionality.  These include:
 
@@ -26,12 +26,16 @@ However Plug-Ins offer additional sector-specific, or advanced functionality.  T
 
 ## Framework Wrappers
 
-AdapTable works out of the box.
+AdapTable can be instantiated in various ways.
 
-However for those users who use a particular framework, AdapTable offers Framework Wrappers.  These are currently:
+The standard method is through Vanilla JavaScript / TypeScript.
+
+However for those developers who use a particular framework, we provide Framework Wrappers to allow access to AdapTable in a Franework-friendly maner.  These are currently:
 
 - React wrapper (adaptable-react-aggrid)
 - Angular wrapper (adaptable-ng-aggrid)
+
+We plan to add more Framework Wrappers in the future.
 
 ## Licences
 
@@ -45,13 +49,13 @@ Licences are sold to end-users typically in 'bands' so the price per user falls 
 
 Note: AdapTable licences do not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
-Please contact [Adaptable Tools Sales Team](mailto:sales@adaptabletools.com) for more information.
+Please contact the [Adaptable Tools Sales Team](mailto:sales@adaptabletools.com) for more information.
 
 ## Help
 
 The [Adaptable Help Site](https://adaptabletools.zendesk.com/hc/en-us) contains lots of useful material including User, Admin and Getting Started Guides, FAQs, Videos and Code Examples.
 
-Full, comprehensive, developer documentation is available at [Adaptable Developer Documentation](https://api.adaptableblotter.com/index.html)
+Full, comprehensive, developer documentation is available at [AdapTable Developer Documentation](https://api.adaptableblotter.com/index.html)
 
 ## Further Information
 

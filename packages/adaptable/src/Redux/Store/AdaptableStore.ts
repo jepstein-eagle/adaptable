@@ -1,9 +1,4 @@
-import {
-  ExportDestination,
-  MathOperation,
-  MessageType,
-  LiveReportTrigger,
-} from '../../PredefinedConfig/Common/Enums';
+import { MathOperation, MessageType } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -53,7 +48,8 @@ import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
-import * as PartnerRedux from '../ActionsReducers/PartnerRedux';
+import * as IPushPullRedux from '../ActionsReducers/IPushPullRedux';
+import * as Glue42Redux from '../ActionsReducers/Glue42Redux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -98,6 +94,7 @@ import {
   FLASHING_CELL_DEFAULT_DURATION_STATE_PROPERTY,
   CURRENT_CHART_NAME_STATE_PROPERTY,
   CURRENT_REPORT_STATE_PROPERTY,
+  EMPTY_STRING,
 } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
@@ -133,8 +130,9 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ServiceStatus } from '../../Utilities/Services/PushPullService';
-import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
+import { IPushPullDomain, IPushPullReport } from '../../PredefinedConfig/IPushPullState';
+import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -154,7 +152,8 @@ const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<Adaptab
   ActionColumn: ActionColumnRedux.ActionColumnReducer,
   Entitlements: EntitlementsRedux.EntitlementsReducer,
   NamedFilter: NamedFilterRedux.NamedFilterReducer,
-  Partner: PartnerRedux.PartnerReducer,
+  Glue42: Glue42Redux.Glue42Reducer,
+  IPushPull: IPushPullRedux.IPushPullReducer,
   SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
   UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
@@ -1484,40 +1483,40 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           REMINDER
           **********************
            */
-          case ReminderRedux.REMINDER_ADD: {
-            const actionTyped = action as ReminderRedux.ReminderAddAction;
+          case ReminderRedux.REMINDER_SCHEDULE_ADD: {
+            const actionTyped = action as ReminderRedux.ReminderScheduleAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
               state: newState.Reminder,
               diffInfo: diff,
-              objectChanged: actionTyped.reminder,
+              objectChanged: actionTyped.reminderSchedule,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ReminderRedux.REMINDER_EDIT: {
-            const actionTyped = action as ReminderRedux.ReminderEditAction;
+          case ReminderRedux.REMINDER_SCHEDULE_EDIT: {
+            const actionTyped = action as ReminderRedux.ReminderScheduleEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
               state: newState.Reminder,
               diffInfo: diff,
-              objectChanged: actionTyped.reminder,
+              objectChanged: actionTyped.reminderSchedule,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ReminderRedux.REMINDER_DELETE: {
-            const actionTyped = action as ReminderRedux.ReminderDeleteAction;
+          case ReminderRedux.REMINDER_SCHEDULE_DELETE: {
+            const actionTyped = action as ReminderRedux.ReminderScheduleDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
               state: newState.Reminder,
               diffInfo: diff,
-              objectChanged: actionTyped.reminder,
+              objectChanged: actionTyped.reminderSchedule,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -2356,9 +2355,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -2434,7 +2431,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: BulkUpdateValidationResult = BulkUpdateStrategy.CheckCorrectCellSelection();
+            let apiReturn: BulkUpdateValidationResult = BulkUpdateStrategy.checkCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if BulkUpdate is showing as popup
@@ -2460,7 +2457,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
               adaptable.strategies.get(StrategyConstants.BulkUpdateStrategyId)
             );
             let state = middlewareAPI.getState();
-            let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
+            let apiReturn = BulkUpdateStrategy.buildPreviewValues(state.BulkUpdate.BulkUpdateValue);
             middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiReturn));
             return returnAction;
           }
@@ -2475,7 +2472,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
               thePreview,
               actionTyped.bypassCellValidationWarnings
             );
-            BulkUpdateStrategy.ApplyBulkUpdate(newValues);
+            BulkUpdateStrategy.applyBulkUpdate(newValues);
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             return next(action);
           }
@@ -2514,136 +2511,99 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
               adaptable.strategies.get(StrategyConstants.ExportStrategyId)
             );
             const actionTyped = action as ExportRedux.ExportApplyAction;
-            if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
-              // for ipushpull we neeed to show a series of pages (login, domain pages etc.) before we actually get to export
-              // so we have a series of actions depending on where we are in the process
-              if (adaptable.PushPullService.getIPPStatus() != ServiceStatus.Connected) {
-                let params: StrategyParams = {
-                  value: actionTyped.Report.Name,
-                  source: 'Other',
-                };
 
-                middlewareAPI.dispatch(
-                  PopupRedux.PopupShowScreen(
-                    StrategyConstants.ExportStrategyId,
-                    'IPushPullLogin',
-                    params,
-                    { footer: false }
-                  )
-                );
-              } else if (!actionTyped.Folder) {
-                adaptable.PushPullService.GetDomainPages()
-                  .then((domainpages: IPushPullDomain[]) => {
-                    middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
-                    middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
-                  })
-                  .catch((err: any) => {
-                    middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(err));
-                  });
-                let params: StrategyParams = {
-                  value: actionTyped.Report.Name,
-                  source: 'Other',
-                };
-                middlewareAPI.dispatch(
-                  PopupRedux.PopupShowScreen(
-                    StrategyConstants.ExportStrategyId,
-                    'IPushPullDomainPageSelector',
-                    params,
-                    { footer: false }
-                  )
-                );
-              } else {
-                exportStrategy.Export(
-                  actionTyped.Report,
-                  actionTyped.ExportDestination,
-                  actionTyped.IsLiveReport,
-                  actionTyped.Folder,
-                  actionTyped.Page
-                );
-                middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-              }
-            } else {
-              // for all other destinations we can go straight to export
-              // if its Openfin then we will get the page from the OpenFin Helper
-              // if its Glue then we dont currently get a page but we probably should
-              exportStrategy.Export(
-                actionTyped.Report,
-                actionTyped.ExportDestination,
-                actionTyped.IsLiveReport
-              );
-              middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+            exportStrategy.export(
+              actionTyped.Report,
+              actionTyped.ExportDestination,
+              actionTyped.IsLiveReport
+            );
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+
+            return next(action);
+          }
+
+          // When deleting a report check if its the currently selected one
+          // if it is then clear
+          case ExportRedux.REPORT_DELETE: {
+            const actionTyped = action as ExportRedux.ReportDeleteAction;
+            let report: Report = actionTyped.report;
+            let currentReport: string = middlewareAPI.getState().Export.CurrentReport;
+            if (report && report.Name == currentReport) {
+              middlewareAPI.dispatch(ExportRedux.ReportSelect(EMPTY_STRING));
             }
             return next(action);
           }
 
-          case ExportRedux.IPP_LOGIN: {
-            const actionTyped = action as ExportRedux.IPPLoginAction;
-            adaptable.PushPullService.Login(actionTyped.Login, actionTyped.Password)
-              .then(() => {
-                let report = middlewareAPI.getState().Popup.ScreenPopup.Params;
-                middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-                middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
+          /*******************
+           * IPUSHPULL ACTIONS
+           *******************/
 
-                const result = adaptable.PushPullService.GetDomainPages()
-                  .then((domainpages: IPushPullDomain[]) => {
-                    middlewareAPI.dispatch(SystemRedux.SetIPushPullDomainsPages(domainpages));
-                    middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(''));
-                  })
-                  .catch((error: any) => {
-                    middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
-                  });
-                let params: StrategyParams = {
-                  value: report,
-                  source: 'Other',
-                };
-                middlewareAPI.dispatch(
-                  PopupRedux.PopupShowScreen(
-                    StrategyConstants.ExportStrategyId,
-                    'IPushPullDomainPageSelector',
-                    params,
-                    { footer: false }
-                  )
-                );
-                return result;
-              })
-              .catch((error: string) => {
-                middlewareAPI.dispatch(ExportRedux.IPPLoginFailed(error));
-                LoggingHelper.LogAdaptableError('Login failed', error);
-                middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
-              });
+          case IPushPullRedux.IPUSHPULL_LOGIN: {
+            const actionTyped = action as IPushPullRedux.IPushPullLoginAction;
+            adaptable.api.iPushPullApi.loginToIPushPull(actionTyped.username, actionTyped.password);
             return next(action);
           }
+
+          case IPushPullRedux.IPUSHPULL_SEND_SNAPSHOT: {
+            let iPushPullStrategy = <IPushPullStrategy>(
+              adaptable.strategies.get(StrategyConstants.IPushPullStrategyId)
+            );
+            const actionTyped = action as IPushPullRedux.IPushPullSendSnapshotAction;
+            iPushPullStrategy.sendSnapshot(actionTyped.iPushPullReport);
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+            return next(action);
+          }
+
+          case IPushPullRedux.IPUSHPULL_START_LIVE_DATA: {
+            let iPushPullStrategy = <IPushPullStrategy>(
+              adaptable.strategies.get(StrategyConstants.IPushPullStrategyId)
+            );
+            const actionTyped = action as IPushPullRedux.IPushPullStartLiveDataAction;
+            iPushPullStrategy.startLiveData(actionTyped.iPushPullReport);
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+            return next(action);
+          }
+
+          case IPushPullRedux.IPUSHPULL_ADD_PAGE: {
+            const actionTyped = action as IPushPullRedux.IPushPullAddPageAction;
+            adaptable.api.iPushPullApi.addNewIPushPullPage(actionTyped.folder, actionTyped.page);
+            return next(action);
+          }
+
+          case IPushPullRedux.IPUSHPULL_STOP_LIVE_DATA: {
+            adaptable.api.iPushPullApi.stopLiveData();
+            return next(action);
+          }
+
+          // Not doing this for iPushPull and think we should not do the same for the others
+          // when we come to update them
+          // better to do it in the api for each
           case SystemRedux.REPORT_START_LIVE: {
             let ret = next(action);
             const actionTyped = action as SystemRedux.ReportStartLiveAction;
+            console.log('do we send');
             // fire the Live Report event for Export Started
-            adaptable.ReportService.PublishLiveReportUpdatedEvent(
-              actionTyped.ExportDestination,
-              LiveReportTrigger.ExportStarted
+            adaptable.ReportService.PublishLiveLiveDataChangedEvent(
+              actionTyped.ReportDestination,
+              'LiveDataStarted'
             );
             // set livereport on
-            adaptable.api.internalApi.setLiveReportRunningOn();
+            //  adaptable.api.internalApi.setLiveReportRunningOn();
             return ret;
           }
+
+          // Not doing this for iPushPull any more either
           case SystemRedux.REPORT_STOP_LIVE: {
             const actionTyped = action as SystemRedux.ReportStopLiveAction;
-            if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
-              let currentLiveReports = middlewareAPI.getState().System.CurrentLiveReports;
-              let lre = currentLiveReports.find(
-                x =>
-                  x.Report == actionTyped.Report &&
-                  x.ExportDestination == actionTyped.ExportDestination
-              );
-              adaptable.PushPullService.UnloadPage(lre.PageName);
-            }
+
             let ret = next(action);
             // fire the Live Report event for Export Stopped
-            adaptable.ReportService.PublishLiveReportUpdatedEvent(
-              actionTyped.ExportDestination,
-              LiveReportTrigger.ExportStopped
+            adaptable.ReportService.PublishLiveLiveDataChangedEvent(
+              actionTyped.ReportDestination,
+              'LiveDataStopped'
             );
             // set livereport off
-            adaptable.api.internalApi.setLiveReportRunningOff();
+            //   adaptable.api.internalApi.setLiveReportRunningOff();
             return ret;
           }
 
@@ -3112,11 +3072,16 @@ export function getNonPersistedReduxActions(): string[] {
 
     SystemRedux.REPORT_START_LIVE,
     SystemRedux.REPORT_STOP_LIVE,
-    SystemRedux.SET_IPP_DOMAIN_PAGES,
+
     SystemRedux.REPORT_SET_ERROR_MESSAGE,
 
-    ExportRedux.IPP_LOGIN,
-    ExportRedux.IPP_LOGIN_FAILED,
+    IPushPullRedux.IPUSHPULL_LOGIN,
+    IPushPullRedux.IPUSHPULL_SET_LOGIN_ERROR_MESSAGE,
+    IPushPullRedux.SET_IPUSHPULL_AVAILABLE_ON,
+    IPushPullRedux.SET_IPUSHPULL_AVAILABLE_OFF,
+    IPushPullRedux.IPUSHPULL_SET_DOMAIN_PAGES,
+    IPushPullRedux.IPUSHPULL_LIVE_REPORT_SET,
+    IPushPullRedux.IPUSHPULL_LIVE_REPORT_CLEAR,
 
     SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION,
     SystemRedux.SMARTEDIT_FETCH_PREVIEW,
@@ -3158,8 +3123,7 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.SET_MAIN_MENUITEMS,
     GridRedux.SET_GLUE42_AVAILABLE_ON,
     GridRedux.SET_GLUE42_AVAILABLE_OFF,
-    GridRedux.SET_IPUSHPULL_AVAILABLE_ON,
-    GridRedux.SET_IPUSHPULL_AVAILABLE_OFF,
+
     GridRedux.SET_LIVE_REPORT_RUNNING_ON,
     GridRedux.SET_LIVE_REPORT_RUNNING_OFF,
     GridRedux.SET_PIVOT_MODE_ON,

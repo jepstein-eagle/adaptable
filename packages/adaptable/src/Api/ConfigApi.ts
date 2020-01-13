@@ -27,7 +27,6 @@ import { ApplicationState } from '../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
-import { PartnerState } from '../PredefinedConfig/PartnerState';
 import { ColumnCategoryState } from '../PredefinedConfig/ColumnCategoryState';
 import { EntitlementState } from '../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../PredefinedConfig/FreeTextColumnState';
@@ -40,6 +39,8 @@ import { TeamSharingState } from '../PredefinedConfig/TeamSharingState';
 import { ToolPanelState } from '../PredefinedConfig/ToolPanelState';
 import { UserInterfaceState } from '../PredefinedConfig/UserInterfaceState';
 import { AdaptableStateKey } from '../PredefinedConfig/Common/Types';
+import { IPushPullState } from '../PredefinedConfig/IPushPullState';
+import { Glue42State } from '../PredefinedConfig/Glue42State';
 
 export interface ConfigApi {
   configInit(): void;
@@ -97,7 +98,8 @@ export interface ConfigApi {
   configGetFreeTextColumnState(returnJson: boolean): FreeTextColumnState;
   configGetLayoutState(returnJson: boolean): LayoutState;
   configGetNamedFilterState(returnJson: boolean): NamedFilterState;
-  configGetPartnerState(returnJson: boolean): PartnerState;
+  configGetIPushPullState(returnJson: boolean): IPushPullState;
+  configGetGlue42State(returnJson: boolean): Glue42State;
   configGetPercentBarState(returnJson: boolean): PercentBarState;
   configGetPlusMinusState(returnJson: boolean): PlusMinusState;
   configGetReminderState(returnJson: boolean): ReminderState;

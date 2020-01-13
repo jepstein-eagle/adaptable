@@ -16,12 +16,9 @@ import {
   DEFAULT_LIVE_REPORT_THROTTLE_TIME,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import { LiveReport } from '../Api/Events/LiveReportUpdated';
+import { LiveReport } from '../Api/Events/LiveDataChanged';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 
-// this page needs some thought as currently we only send live data to iPushpull and Excel but soon we will send it to Glue42
-// we need something that will work for all 3 (e.g. all 3 will want to listen to Selected Cells) but allows you to manage throttling time differently for each
-// its very unlikley that the same user will be using iPushPull and Glue42 at the same time but its theoretically possible so we need to handle that.
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private isSendingData: boolean = false;
   private workAroundOpenfinExcelDataDimension: Map<string, { x: number; y: number }> = new Map();
@@ -40,11 +37,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       }, 1000);
     });
 
-    this.adaptable._on('GridReloaded', () => {
-      this.scheduleReports();
-    });
-
-    // ideally this OpenFin stuff should come out and be put in an OpenFin Service (like with glue and ipushpull)
+    // ideally this OpenFin stuff should come out and be put in an OpenFin Service
     // and that will manage this and only call the strategy as required
     OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
       LoggingHelper.LogAdaptableInfo('Excel closed stopping all Live Excel');
@@ -123,7 +116,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       this.isSendingData = true;
       let promises: Promise<any>[] = [];
       this.adaptable.api.internalApi.getLiveReports().forEach((liveReport: LiveReport) => {
-        if (liveReport.ExportDestination == ExportDestination.OpenfinExcel) {
+        if (liveReport.ReportDestination == ExportDestination.OpenfinExcel) {
           promises.push(
             Promise.resolve()
               .then(() => {
@@ -190,41 +183,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 );
               })
           );
-        } else if (liveReport.ExportDestination == ExportDestination.iPushPull) {
-          promises.push(
-            Promise.resolve()
-              .then(() => {
-                return new Promise<any>((resolve, reject) => {
-                  let reportAsArray: any[] = this.ConvertReportToArray(liveReport.Report);
-                  if (reportAsArray) {
-                    resolve(reportAsArray);
-                  } else {
-                    reject('no data in the report');
-                  }
-                });
-              })
-              .then(reportAsArray => {
-                return this.adaptable.PushPullService.pushData(liveReport.PageName, reportAsArray);
-              })
-              .catch(reason => {
-                LoggingHelper.LogAdaptableWarning(
-                  'Live Excel failed to send data for [' + liveReport.Report + ']',
-                  reason
-                );
-                this.adaptable.api.internalApi.stopLiveReport(
-                  liveReport.Report,
-                  ExportDestination.iPushPull
-                );
-
-                let errorMessage: string = 'Export Failed';
-                if (reason) {
-                  errorMessage += ': ' + reason;
-                }
-                errorMessage += '.  This live export has been cancelled.';
-                this.adaptable.api.alertApi.showAlertError('iPushPull Export Error', errorMessage);
-              })
-          );
-        } else if (liveReport.ExportDestination == ExportDestination.Glue42) {
+        } else if (liveReport.ReportDestination == ExportDestination.Glue42) {
           promises.push(
             Promise.resolve()
               .then(() => {
@@ -256,7 +215,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 );
                 this.adaptable.api.internalApi.stopLiveReport(
                   liveReport.Report,
-                  ExportDestination.iPushPull
+                  ExportDestination.Glue42
                 );
 
                 let errorMessage: string = 'Export Failed';
@@ -264,7 +223,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                   errorMessage += ': ' + reason;
                 }
                 errorMessage += '.  This live export has been cancelled.';
-                this.adaptable.api.alertApi.showAlertError('iPushPull Export Error', errorMessage);
+                this.adaptable.api.alertApi.showAlertError('Export Error', errorMessage);
               })
           );
         }
@@ -281,7 +240,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
   }
 
-  public Export(
+  public export(
     report: Report,
     exportDestination: ExportDestination,
     isLiveReport: boolean,
@@ -311,28 +270,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }, 500);
           });
         break;
-      case ExportDestination.iPushPull: {
-        if (isLiveReport) {
-          this.adaptable.PushPullService.LoadPage(folder, page).then(() => {
-            this.adaptable.api.internalApi.startLiveReport(
-              report,
-              page,
-              ExportDestination.iPushPull
-            );
-            setTimeout(() => {
-              this.throttledRecomputeAndSendLiveDataEvent();
-            }, 500);
-          });
-        } else {
-          this.adaptable.PushPullService.LoadPage(folder, page).then(() => {
-            let reportAsArray: any[] = this.ConvertReportToArray(report);
-            if (reportAsArray) {
-              this.adaptable.PushPullService.pushData(page, reportAsArray);
-            }
-          });
-        }
-        break;
-      }
+
       case ExportDestination.Glue42:
         if (isLiveReport) {
           let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
@@ -419,23 +357,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     return actionReturnObj.ActionReturn;
   }
 
-  public scheduleReports(): void {
-    // just clear all jobs and recreate - simplest thing to do...
-    this.adaptable.ScheduleService.ClearAllExportJobs();
-
-    this.adaptable.api.exportApi.getScheduledReports().forEach((report: Report) => {
-      this.adaptable.ScheduleService.AddReportSchedule(report);
-    });
-  }
-
   private getThrottleTimeFromState(): number {
-    if (this.adaptable.api.partnerApi.isIPushPullAvailable()) {
-      return this.getThrottleDurationForExportDestination(ExportDestination.iPushPull);
-    }
-    if (this.adaptable.api.partnerApi.isGlue42Available()) {
+    if (this.adaptable.api.glue42Api.isGlue42Available()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.Glue42);
     }
-    if (this.adaptable.api.partnerApi.isOpenFinAvailable()) {
+    if (this.adaptable.api.internalApi.isOpenFinAvailable()) {
       return this.getThrottleDurationForExportDestination(ExportDestination.OpenfinExcel);
     }
     return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
@@ -448,13 +374,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       case ExportDestination.Glue42:
         let glue42ThrottleTime:
           | number
-          | undefined = this.adaptable.api.partnerApi.getGlue42ThrottleTime();
+          | undefined = this.adaptable.api.glue42Api.getGlue42ThrottleTime();
         return glue42ThrottleTime ? glue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
-      case ExportDestination.iPushPull:
-        let iPushPullThrottleTime:
-          | number
-          | undefined = this.adaptable.api.partnerApi.getIPushPullThrottleTime();
-        return iPushPullThrottleTime ? iPushPullThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
       default:
         return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
     }

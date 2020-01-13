@@ -1,11 +1,11 @@
 import { ServiceStatus } from '../PushPullService';
-import { IPushPullDomain } from '../../../PredefinedConfig/PartnerState';
+import { IPushPullDomain } from '../../../PredefinedConfig/IPushPullState';
 export interface IPushPullService {
-  Login(login: string, password: string): Promise<any>;
-  GetDomainPages(): Promise<IPushPullDomain[]>;
-  LoadPage(folderIPP: string, pageIPP: string): Promise<any>;
-  UnloadPage(page: string): void;
+  login(login: string, password: string): Promise<any>;
+  getDomainPages(): Promise<IPushPullDomain[]>;
+  loadPage(folderIPP: string, pageIPP: string): Promise<any>;
+  unloadPage(page: string): void;
   pushData(page: string, data: any[]): Promise<any>;
-  getIPPStatus(): ServiceStatus;
-  AddNewPage(folderId: number, page: string): Promise<any>;
+  getIPushPullStatus(): ServiceStatus;
+  addNewPage(folderId: number, page: string): Promise<any>;
 }

@@ -61,7 +61,6 @@ let demoConfig: PredefinedConfig = {
   Export: {
     Reports: [
       {
-        AutoExport: undefined,
         ColumnIds: [],
         Expression: {
           ColumnValueExpressions: [],

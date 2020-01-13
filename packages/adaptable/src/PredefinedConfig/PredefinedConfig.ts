@@ -20,6 +20,8 @@ import { FlashingCellState } from './FlashingCellState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { FormatColumnState } from './FormatColumnState';
 import { FreeTextColumnState } from './FreeTextColumnState';
+import { IPushPullState } from './IPushPullState';
+import { Glue42State } from './Glue42State';
 import { LayoutState } from './LayoutState';
 import { PercentBarState } from './PercentBarState';
 import { PlusMinusState } from './PlusMinusState';
@@ -33,12 +35,11 @@ import { ChartState } from './ChartState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
-import { PartnerState } from './PartnerState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 
 /**
- * This is the main Predefined Config interface which users will populate if they wish to ship their Adaptable Botter instance with initial state.
+ * This is the main Predefined Config interface which users will populate if they wish to ship their AdapTable instance with initial state.
  *
  * The interface consists of a series of (nullable) properties that themselves each implement *ConfigState*.
  *
@@ -78,13 +79,14 @@ import { ToolPanelState } from './ToolPanelState';
  *  | [Partner](_predefinedconfig_partnerstate_.partnerstate.html)                            | No                  | State required for partners (e.g. iPushPull, OpenFin, Glue42) |
  *  | [QuickSearch](_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Reminder](_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
+ *  | [Schedule](_predefinedconfig_schedulestate_.schedule.html)                              | Yes 	              | To do   |
  *  | [Shortcut](_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
  *  | [SmartEdit](_predefinedconfig_smarteditstate_.smarteditstate.html)                      | Yes 	              | Update multiple numeric cells with a single maths operation   |
  *  | [SparklineColumn](_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html)    | No                  | See columns containing ranges of data as a sparkline          |
  *  | [SystemFilter](_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | No                  | Select availability of System Filters (e.g. Today, Blanks)    |
  *  | [SystemStatus](_predefinedconfig_systemstatusstate_.systemstatusstate.html)             | No                  | Show Messages and Alerts describing curent Status of the App  |
  *  | [Theme](_predefinedconfig_themestate_.themestate.html)                                  | Yes                 | Select with shipped Theme is used or provide a custom one     |
- *  | [ToolPanel](_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Yes                 | Manage Adaptable ToolPanel (the area to the right of grid)  |
+ *  | [ToolPanel](_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Yes                 | Manage AdapTable ToolPanel (the area to the right of grid)  |
  *  | [UpdatedRow](_predefinedconfig_updatedrowstate_.updatedrowstate.html)                   | Yes                 | Colour (and jump to) rows whose contents have changed         |
  *  | [UserFilter](_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Yes                 | Create your own filters baseed on your data and requirements  |
  *  | [UserInterface](_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
@@ -280,15 +282,15 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Action Column State can be updated via Adaptable API but these updates **will not be persisted**).
+   * (Note: Action Column State can be updated via `AdaptableApi` but these updates **will not be persisted**).
    */
   ActionColumn?: ActionColumnState;
   /**
-   * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of Adaptable state.
+   * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of AdapTable state.
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Application State can be updated via Adaptable API but these updates **will not be persisted**).
+   * (Note: Application State can be updated via `AdaptableApi` but these updates **will not be persisted**).
    */
   Application?: ApplicationState;
   /**
@@ -298,7 +300,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Entitlement State can be updated via Adaptable API but these updates **will not be persisted**).
+   * (Note: Entitlement State can be updated via `AdaptableApi` but these updates **will not be persisted**).
    */
   Entitlements?: EntitlementState;
 
@@ -307,31 +309,26 @@ export interface PredefinedConfig {
    */
   SystemStatus?: SystemStatusState;
   /**
-   *  Filters defined by Developers at Nowhich include a predicate function that is called by Adaptable each time the filter is evaluated.
+   *  Filters defined by Developers at Nowhich include a predicate function that is called by AdapTable each time the filter is evaluated.
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Named Filter State can be updated via Adaptable API but these updates **will not be persisted**).
+   * (Note: Named Filter State can be updated via A`daptableApi` but these updates **will not be persisted**).
    */
   NamedFilter?: NamedFilterState;
-  /**
-   * Config required to run features provided by partners of Adaptable such as iPushPull and Glue42.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: Partner Config State can be updated via Adaptable API but these updates **will not be persisted**).
-   */
-  Partner?: PartnerState;
+
+  Glue42?: Glue42State;
+  IPushPull?: IPushPullState;
   /**
    * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: Sparkline Column State can be updated via Adaptable API but these updates **will not be persisted**).
+   * (Note: Sparkline Column State can be updated via `AdaptableApi`` but these updates **will not be persisted**).
    */
   SparklineColumn?: SparklineColumnState;
   /**
-   * List of which System Filters should be available to users - see the list at [Adaptable Help](http://www.bbc.co.uk)
+   * List of which System Filters should be available to users.
    *
    * If no values are listed, then **all System Filters** are available.
    *
@@ -339,13 +336,13 @@ export interface PredefinedConfig {
    */
   SystemFilter?: SystemFilterState;
   /**
-   * State that manages UI elements in Adaptable e.g. which colours to put in the default palette.
+   * State that manages UI elements in AdapTable e.g. which colours to put in the default palette.
    *
    * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    *
-   * (Note: User Interface State can be updated via Adaptable API but these updates **will not be persisted**).
+   * (Note: User Interface State can be updated via `AdaptableApi` but these updates **will not be persisted**).
    */
   UserInterface?: UserInterfaceState;
 
@@ -395,7 +392,7 @@ export interface PredefinedConfig {
   ColumnCategory?: ColumnCategoryState;
 
   /**
-   * Supplies a collection of *ColumnFilter* objects to provide Adaptable with initial filtering.
+   * Supplies a collection of *ColumnFilter* objects to provide AdapTable with initial filtering.
    */
   ColumnFilter?: ColumnFilterState;
 
@@ -422,7 +419,7 @@ export interface PredefinedConfig {
   DataSource?: DataSourceState;
 
   /**
-   * Supplies a collection of *Report* objects, together with name of the Current Report, as part of Adaptable export Function.
+   * Supplies a collection of *Report* objects, together with name of the Current Report, as part of AdapTable export Function.
    */
   Export?: ExportState;
 

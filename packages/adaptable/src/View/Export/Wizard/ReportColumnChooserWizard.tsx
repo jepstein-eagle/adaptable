@@ -21,6 +21,7 @@ export class ReportColumnChooserWizard
   implements AdaptableWizardStep {
   constructor(props: ReportColumnChooserWizardProps) {
     super(props);
+
     this.state = {
       AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
       SelectedColumnValues: ColumnHelper.getFriendlyNamesFromColumnIds(

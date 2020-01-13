@@ -6,6 +6,7 @@ import Adaptable from '@adaptabletools/adaptable/src/agGrid';
 import { AdaptableApi } from '@adaptabletools/adaptable/types';
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 import {
+  LiveDataChangedEventArgs,
   AdaptableOptions,
   SearchChangedEventArgs,
   ThemeChangedEventArgs,
@@ -162,13 +163,14 @@ const AdaptableReact = ({
   onAlertFired,
   onToolbarButtonClicked,
   onColumnStateChanged,
-  onLiveReportUpdated,
+  onLiveDataChanged,
   onSearchChanged,
   onSelectionChanged,
   onThemeChanged,
   onToolbarVisibilityChanged,
   onAuditStateChanged,
   onAuditCellEdited,
+  onAuditTickingDataUpdated,
   onAuditFunctionApplied,
 
   onAdaptableReady,
@@ -191,11 +193,12 @@ const AdaptableReact = ({
   onAlertFired?: (alertFiredEventArgs: AlertFiredEventArgs) => void;
   onActionColumnClicked?: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void;
   onSelectionChanged?: (selectionChangedEventArgs: SelectionChangedEventArgs) => void;
-  onLiveReportUpdated?: (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => void;
+  onLiveDataChanged?: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void;
 
   onAuditStateChanged?: (auditStateChangedArgs: AuditLogEventArgs) => void;
   onAuditCellEdited?: (auditCellEditedArgs: AuditLogEventArgs) => void;
   onAuditFunctionApplied?: (auditFunctionAppliedArgs: AuditLogEventArgs) => void;
+  onAuditTickingDataUpdated?: (auditTickingDataUpdatedArgs: AuditLogEventArgs) => void;
 
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
@@ -250,6 +253,9 @@ const AdaptableReact = ({
       }
       if (onAuditCellEdited) {
         adaptable.api.auditEventApi.on('AuditCellEdited', onAuditCellEdited);
+      }
+      if (onAuditTickingDataUpdated) {
+        adaptable.api.auditEventApi.on('AuditTickingDataUpdated', onAuditTickingDataUpdated);
       }
       if (onAuditFunctionApplied) {
         adaptable.api.auditEventApi.on('AuditFunctionApplied', onAuditFunctionApplied);

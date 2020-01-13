@@ -58,7 +58,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     return menuItemShowPopup;
   }
 
-  public ApplyBulkUpdate(newValues: GridCell[]): void {
+  public applyBulkUpdate(newValues: GridCell[]): void {
     if (this.adaptable.AuditLogService.isAuditFunctionEventsEnabled) {
       // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
       let functionAppliedDetails: FunctionAppliedDetails = {
@@ -72,7 +72,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     this.adaptable.api.gridApi.setGridCells(newValues, true, false);
   }
 
-  public CheckCorrectCellSelection(): BulkUpdateValidationResult {
+  public checkCorrectCellSelection(): BulkUpdateValidationResult {
     let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
     if (this.adaptable.api.internalApi.isGridInPivotMode()) {
@@ -131,7 +131,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     return { IsValid: true, Column: selectedColumn };
   }
 
-  public BuildPreviewValues(bulkUpdateValue: any): IPreviewInfo {
+  public buildPreviewValues(bulkUpdateValue: any): IPreviewInfo {
     let previewResults: IPreviewResult[] = [];
     if (StringExtensions.IsNullOrEmpty(String(bulkUpdateValue))) {
       return null;

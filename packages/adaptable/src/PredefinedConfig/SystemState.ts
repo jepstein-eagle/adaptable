@@ -7,8 +7,7 @@ import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
 import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
-import { IPushPullDomain } from './PartnerState';
-import { LiveReport } from '../Api/Events/LiveReportUpdated';
+import { LiveReport } from '../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
 import { CellSummaryOperationDefinition } from './CellSummaryState';
 
@@ -31,8 +30,7 @@ export interface SystemState extends InternalState {
   ChartVisibility: ChartVisibility;
   CalculatedColumnErrorMessage: string;
   CurrentLiveReports: LiveReport[];
-  IPushPullDomainsPages: IPushPullDomain[];
-  IPPLoginMessage?: string;
+
   SystemReports: Report[];
   ReportErrorMessage: string;
   QuickSearchRange: QueryRange;

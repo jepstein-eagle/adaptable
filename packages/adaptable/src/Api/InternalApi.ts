@@ -12,7 +12,7 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import { LiveReport } from './Events/LiveReportUpdated';
+import { LiveReport } from './Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { CellSummaryOperationDefinition } from '../PredefinedConfig/CellSummaryState';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
@@ -27,17 +27,11 @@ export interface InternalApi {
   startLiveReport(
     report: Report,
     pageName: string,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ): void;
   stopLiveReport(
     report: Report,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ): void;
   getAvailableCalendars(): Calendar[];
   setChartData(chartData: ChartData): void;
@@ -53,8 +47,11 @@ export interface InternalApi {
   showPopupScreen(
     functionName: AdaptableFunctionName,
     componentName: string,
-    popupParams?: StrategyParams
+    popupParams?: StrategyParams,
+    popupProps?: { [key: string]: any }
   ): void;
+
+  hidePopupScreen(): void;
 
   getCellSummaryOperationDefinitions(): CellSummaryOperationDefinition[];
   addCellSummaryOperationDefinitions(
@@ -75,14 +72,6 @@ export interface InternalApi {
 
   setGlue42AvailableOff(): void;
 
-  setIPushPullAvailableOn(): void;
-
-  setIPushPullAvailableOff(): void;
-
-  setLiveReportRunningOn(): void;
-
-  setLiveReportRunningOff(): void;
-
   setPivotModeOn(): void;
 
   setPivotModeOff(): void;
@@ -96,6 +85,12 @@ export interface InternalApi {
   getUpdatedRowInfos(): any[];
 
   isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean;
+
+  getCurrentLiveReports(): LiveReport[];
+
+  isLiveReportRunning(): boolean;
+
+  isOpenFinAvailable(): boolean;
 
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;

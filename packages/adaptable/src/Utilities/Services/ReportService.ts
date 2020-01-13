@@ -7,7 +7,6 @@ import {
   MessageType,
   ReportRowScope,
   ExportDestination,
-  LiveReportTrigger,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Report } from '../../PredefinedConfig/ExportState';
@@ -21,11 +20,8 @@ import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
-import {
-  LiveReportUpdatedEventArgs,
-  LiveReportUpdatedInfo,
-  LiveReport,
-} from '../../Api/Events/LiveReportUpdated';
+import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
+import { LiveDataChangedEventArgs } from '../../types';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -53,7 +49,7 @@ export class ReportService implements IReportService {
         return '[All Columns]';
       case ReportColumnScope.VisibleColumns:
         return '[Visible Columns]';
-      case ReportColumnScope.SelectedColumns:
+      case ReportColumnScope.SelectedCellColumns:
         return '[Selected Columns]';
       case ReportColumnScope.BespokeColumns:
         return ColumnHelper.getFriendlyNamesFromColumnIds(report.ColumnIds, cols).join(', ');
@@ -63,7 +59,7 @@ export class ReportService implements IReportService {
   public GetReportExpressionDescription(Report: Report, cols: AdaptableColumn[]): string {
     if (this.IsSystemReport(Report)) {
       if (Report.Name == ALL_DATA_REPORT) {
-        return '[All adaptable Data]';
+        return '[All Data]';
       } else if (Report.Name == VISIBLE_DATA_REPORT) {
         return '[All Visible Data]';
       } else if (Report.Name == SELECTED_CELLS_REPORT) {
@@ -93,10 +89,8 @@ export class ReportService implements IReportService {
         return true;
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
-      case ExportDestination.iPushPull:
-        return this.adaptable.api.partnerApi.isIPushPullAvailable();
       case ExportDestination.Glue42:
-        return this.adaptable.api.partnerApi.isGlue42Available();
+        return this.adaptable.api.glue42Api.isGlue42Available();
     }
 
     return false;
@@ -114,7 +108,7 @@ export class ReportService implements IReportService {
       case ReportColumnScope.VisibleColumns:
         reportColumns = gridColumns.filter(c => c.Visible);
         break;
-      case ReportColumnScope.SelectedColumns:
+      case ReportColumnScope.SelectedCellColumns:
         let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         // otherwise get columns
@@ -180,7 +174,7 @@ export class ReportService implements IReportService {
         });
         break;
 
-      case ReportRowScope.SelectedCells:
+      case ReportRowScope.SelectedCellRows:
         const selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         const { GridCells } = selectedCellInfo;
@@ -277,7 +271,7 @@ export class ReportService implements IReportService {
         });
         break;
 
-      case ReportRowScope.SelectedCells:
+      case ReportRowScope.SelectedCellRows:
         const selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         const { Columns, GridCells } = selectedCellInfo;
@@ -340,23 +334,26 @@ export class ReportService implements IReportService {
     return useRawValue ? gridCell.rawValue : gridCell.displayValue;
   }
 
-  public PublishLiveReportUpdatedEvent(
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42,
-    liveReportTrigger: LiveReportTrigger
+  public PublishLiveLiveDataChangedEvent(
+    reportDestination: 'iPushPull' | 'Glue42',
+    liveDataTrigger:
+      | 'Connected'
+      | 'Disconnected'
+      | 'LiveDataStarted'
+      | 'LiveDataStopped'
+      | 'LiveDataUpdated',
+    liveReport?: any
   ): void {
-    let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
-      ExportDestination: exportDestination,
-      LiveReportTrigger: liveReportTrigger,
-      CurrentLiveReports: this.adaptable.api.partnerApi.getCurrentLiveReports(),
+    let liveDataChangedInfo: LiveDataChangedInfo = {
+      ReportDestination: reportDestination,
+      LiveDataTrigger: liveDataTrigger,
+      LiveReport: liveReport,
     };
-    const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = AdaptableHelper.createFDC3Message(
-      'Live Report Updated Args',
-      liveReportUpdatedInfo
+    const liveDataChangedEventArgs: LiveDataChangedEventArgs = AdaptableHelper.createFDC3Message(
+      'Live Data Changed Args',
+      liveDataChangedInfo
     );
-    this.adaptable.api.eventApi.emit('LiveReportUpdated', liveReportUpdatedEventArgs);
+    this.adaptable.api.eventApi.emit('LiveDataChanged', liveDataChangedEventArgs);
   }
 
   public IsReportLiveReport(report: Report, exportDestination: ExportDestination): boolean {
@@ -364,16 +361,14 @@ export class ReportService implements IReportService {
       return false;
     }
     switch (exportDestination) {
-      case (ExportDestination.CSV, ExportDestination.Clipboard, ExportDestination.JSON):
+      case ExportDestination.CSV:
+      case ExportDestination.Clipboard:
+      case ExportDestination.JSON:
         return false;
       case ExportDestination.OpenfinExcel:
         return true;
-      case ExportDestination.iPushPull:
-        let liveReports: LiveReport[] = this.adaptable.api.internalApi.getLiveReports();
-        let currentLiveReport = liveReports.find(lr => lr.Report.Name == report.Name);
-        return currentLiveReport != null;
       case ExportDestination.Glue42:
-        return this.adaptable.api.partnerApi.isGlue42RunLiveData();
+        return this.adaptable.api.glue42Api.isGlue42RunLiveData();
     }
   }
 }

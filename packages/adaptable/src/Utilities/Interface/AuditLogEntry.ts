@@ -4,20 +4,20 @@ import {
   StateChangedDetails,
 } from '../../Api/Events/AuditEvents';
 
-export enum AuditLogType {
+export enum AuditTrigger {
   CellEdit = 'Cell Edit',
   UserStateChange = 'User State Change',
   InternalStateChange = 'Internal State Change',
   FunctionApplied = 'Function Applied',
-  TickingDataChange = 'Ticking Data Change',
+  TickingDataUpdate = 'Ticking Data Update',
   Ping = 'Ping',
 }
 
 export interface AuditLogEntry {
-  auditlog_type: AuditLogType;
+  audit_trigger: AuditTrigger;
   client_timestamp: Date;
   username: string;
-  blotter_id: string;
+  adaptable_id: string;
   function_applied_details?: FunctionAppliedDetails;
   state_change_details?: StateChangedDetails;
   data_change_details?: DataChangedDetails;

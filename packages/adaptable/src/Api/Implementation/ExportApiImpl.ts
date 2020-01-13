@@ -1,12 +1,10 @@
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ExportApi } from '../ExportApi';
-import { ExportState, Report } from '../../PredefinedConfig/ExportState';
+import { ExportState, Report, ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { ApiBase } from './ApiBase';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { LiveReport } from '../Events/LiveReportUpdated';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export class ExportApiImpl extends ApiBase implements ExportApi {
   public getExportState(): ExportState {
@@ -27,20 +25,23 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
   }
 
   public getAllReports(): Report[] {
-    return this.adaptable.api.internalApi
-      .getSystemReports()
-      .concat(this.getAdaptableState().Export.Reports);
+    return this.adaptable.api.internalApi.getSystemReports().concat(this.getExportState().Reports);
   }
 
-  public getScheduledReports(): Report[] {
-    return this.getAdaptableState().Export.Reports.filter(r => r.AutoExport);
+  public getReportSchedules(): ReportSchedule[] {
+    return this.getExportState().ReportSchedules;
   }
 
-  public sendReport(reportName: string, destination: ExportDestination): void {
+  public sendReport(
+    reportName: string,
+    destination: ExportDestination,
+    folder?: string,
+    page?: string
+  ): void {
     let report: Report = this.getReportByName(reportName);
     let isLiveReport = this.adaptable.ReportService.IsReportLiveReport(report, destination);
     if (this.checkItemExists(report, reportName, 'Report')) {
-      this.dispatchAction(ExportRedux.ExportApply(report, destination, isLiveReport));
+      this.dispatchAction(ExportRedux.ExportApply(report, destination, isLiveReport, folder, page));
     }
   }
 

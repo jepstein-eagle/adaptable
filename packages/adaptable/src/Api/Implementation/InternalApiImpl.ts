@@ -4,7 +4,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ApiBase } from './ApiBase';
 import { InternalApi } from '../InternalApi';
 import { IUIConfirmation, AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { Calendar } from '../../PredefinedConfig/CalendarState';
@@ -18,7 +18,7 @@ import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCe
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import { LiveReport } from '../Events/LiveReportUpdated';
+import { LiveReport } from '../Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
@@ -41,20 +41,14 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(
     report: Report,
     pageName: string,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ): void {
     this.dispatchAction(SystemRedux.ReportStartLive(report, pageName, exportDestination));
   }
 
   public stopLiveReport(
     report: Report,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ): void {
     this.dispatchAction(SystemRedux.ReportStopLive(report, exportDestination));
   }
@@ -103,9 +97,16 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public showPopupScreen(
     functionName: AdaptableFunctionName,
     componentName: string,
-    popupParams?: StrategyParams
+    popupParams?: StrategyParams,
+    popupProps?: { [key: string]: any }
   ): void {
-    this.dispatchAction(PopupRedux.PopupShowScreen(functionName, componentName, popupParams));
+    this.dispatchAction(
+      PopupRedux.PopupShowScreen(functionName, componentName, popupParams, popupProps)
+    );
+  }
+
+  public hidePopupScreen(): void {
+    this.dispatchAction(PopupRedux.PopupHideScreen());
   }
 
   public setColumns(columns: AdaptableColumn[]): void {
@@ -130,42 +131,18 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public setGlue42AvailableOn(): void {
     this.dispatchAction(GridRedux.SetGlue42AvailableOn());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
       ExportDestination.Glue42,
-      LiveReportTrigger.Connected
+      'Connected'
     );
   }
 
   public setGlue42AvailableOff(): void {
     this.dispatchAction(GridRedux.SetGlue42AvailableOff());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
       ExportDestination.Glue42,
-      LiveReportTrigger.Disconnected
+      'Disconnected'
     );
-  }
-
-  public setIPushPullAvailableOn(): void {
-    this.dispatchAction(GridRedux.SetIPushPullAvailableOn());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      ExportDestination.iPushPull,
-      LiveReportTrigger.Connected
-    );
-  }
-
-  public setIPushPullAvailableOff(): void {
-    this.dispatchAction(GridRedux.SetIPushPullAvailableOff());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      ExportDestination.iPushPull,
-      LiveReportTrigger.Disconnected
-    );
-  }
-
-  public setLiveReportRunningOn(): void {
-    this.dispatchAction(GridRedux.SetLiveReportRunningOn());
-  }
-
-  public setLiveReportRunningOff(): void {
-    this.dispatchAction(GridRedux.SetLiveReportRunningOff());
   }
 
   public setPivotModeOn(): void {
@@ -199,6 +176,18 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       uri => uri.primaryKeyValue == primaryKeyValue && uri.changeDirection == changeDirection
     );
     return Helper.objectExists(foundUpdatedRowInfo);
+  }
+
+  public getCurrentLiveReports(): LiveReport[] {
+    return this.getAdaptableState().System.CurrentLiveReports;
+  }
+
+  public isLiveReportRunning(): boolean {
+    return this.getAdaptableState().Grid.IsLiveReportRunning;
+  }
+
+  public isOpenFinAvailable(): boolean {
+    return false; // TODO
   }
 
   // General way to get to store from inside Adaptable...

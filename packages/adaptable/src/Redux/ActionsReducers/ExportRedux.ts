@@ -1,4 +1,4 @@
-import { ExportState, Report, AutoExport } from '../../PredefinedConfig/ExportState';
+import { ExportState, Report, ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -9,8 +9,10 @@ export const REPORT_SELECT = 'REPORT_SELECT';
 export const REPORT_ADD = 'REPORT_ADD';
 export const REPORT_EDIT = 'REPORT_EDIT';
 export const REPORT_DELETE = 'REPORT_DELETE';
-export const IPP_LOGIN = 'IPP_LOGIN';
-export const IPP_LOGIN_FAILED = 'IPP_LOGIN_FAILED';
+
+export const REPORT_SCHEDULE_ADD = 'REPORT_SCHEDULE_ADD';
+export const REPORT_SCHEDULE_EDIT = 'REPORT_SCHEDULE_EDIT';
+export const REPORT_SCHEDULE_DELETE = 'REPORT_SCHEDULE_DELETE';
 
 export interface ExportApplyAction extends Redux.Action {
   Report: Report;
@@ -34,23 +36,12 @@ export interface ReportEditAction extends ReportAction {}
 
 export interface ReportDeleteAction extends ReportAction {}
 
-export interface AutoExportAddUpdateAction extends Redux.Action {
-  Index: number;
-  AutoExport: AutoExport;
+export interface ReportScheduleAction extends Redux.Action {
+  reportSchedule: ReportSchedule;
 }
-
-export interface AutoExportDeleteAction extends Redux.Action {
-  Index: number;
-}
-
-export interface IPPLoginAction extends Redux.Action {
-  Login: string;
-  Password: string;
-}
-
-export interface IPPLoginFailedAction extends Redux.Action {
-  Message: string;
-}
+export interface ReportScheduleAddAction extends ReportScheduleAction {}
+export interface ReportScheduleEditAction extends ReportScheduleAction {}
+export interface ReportScheduleDeleteAction extends ReportScheduleAction {}
 
 export const ReportSelect = (SelectedReport: string): ReportSelectAction => ({
   type: REPORT_SELECT,
@@ -72,6 +63,23 @@ export const ReportDelete = (report: Report): ReportDeleteAction => ({
   report,
 });
 
+// Report
+export const ReportScheduleAdd = (reportSchedule: ReportSchedule): ReportScheduleAddAction => ({
+  type: REPORT_SCHEDULE_ADD,
+  reportSchedule,
+});
+
+export const ReportScheduleEdit = (reportSchedule: ReportSchedule): ReportScheduleEditAction => ({
+  type: REPORT_SCHEDULE_EDIT,
+  reportSchedule,
+});
+export const ReportScheduleDelete = (
+  reportSchedule: ReportSchedule
+): ReportScheduleDeleteAction => ({
+  type: REPORT_SCHEDULE_DELETE,
+  reportSchedule,
+});
+
 export const ExportApply = (
   Report: Report,
   ExportDestination: ExportDestination,
@@ -87,20 +95,10 @@ export const ExportApply = (
   Page,
 });
 
-export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({
-  type: IPP_LOGIN,
-  Login,
-  Password,
-});
-
-export const IPPLoginFailed = (Message: string): IPPLoginFailedAction => ({
-  type: IPP_LOGIN_FAILED,
-  Message,
-});
-
 const initialExportState: ExportState = {
   Reports: EMPTY_ARRAY,
   CurrentReport: EMPTY_STRING,
+  ReportSchedules: EMPTY_ARRAY,
 };
 
 export const ExportReducer: Redux.Reducer<ExportState> = (
@@ -108,6 +106,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
   action: Redux.Action
 ): ExportState => {
   let reports: Report[];
+  let reportSchedules: ReportSchedule[];
 
   switch (action.type) {
     case REPORT_SELECT:
@@ -140,6 +139,35 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
       return {
         ...state,
         Reports: state.Reports.filter(abObject => abObject.Uuid !== actionReport.Uuid),
+      };
+    }
+
+    case REPORT_SCHEDULE_ADD: {
+      const actionSchedule: ReportSchedule = (action as ReportScheduleAction).reportSchedule;
+
+      if (!actionSchedule.Uuid) {
+        actionSchedule.Uuid = createUuid();
+      }
+      reportSchedules = [].concat(state.ReportSchedules);
+      reportSchedules.push(actionSchedule);
+      return { ...state, ReportSchedules: reportSchedules };
+    }
+    case REPORT_SCHEDULE_EDIT: {
+      const actionSchedule: ReportSchedule = (action as ReportScheduleAction).reportSchedule;
+      return {
+        ...state,
+        ReportSchedules: state.ReportSchedules.map(abObject =>
+          abObject.Uuid === actionSchedule.Uuid ? actionSchedule : abObject
+        ),
+      };
+    }
+    case REPORT_SCHEDULE_DELETE: {
+      const actionSchedule: ReportSchedule = (action as ReportScheduleAction).reportSchedule;
+      return {
+        ...state,
+        ReportSchedules: state.ReportSchedules.filter(
+          abObject => abObject.Uuid !== actionSchedule.Uuid
+        ),
       };
     }
     default:

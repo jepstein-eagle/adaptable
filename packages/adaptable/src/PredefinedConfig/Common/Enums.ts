@@ -85,14 +85,14 @@ export enum ConditionalStyleScope {
 export enum ReportColumnScope {
   AllColumns = 'AllColumns',
   VisibleColumns = 'VisibleColumns',
-  SelectedColumns = 'SelectedColumns',
+  SelectedCellColumns = 'SelectedCellColumns',
   BespokeColumns = 'BespokeColumns',
 }
 
 export enum ReportRowScope {
   AllRows = 'AllRows',
   VisibleRows = 'VisibleRows',
-  SelectedCells = 'SelectedCells',
+  SelectedCellRows = 'SelectedCellRows',
   SelectedRows = 'SelectedRows',
   ExpressionRows = 'ExpressionRows',
 }
@@ -102,16 +102,13 @@ export enum ExportDestination {
   Clipboard = 'Clipboard',
   JSON = 'JSON',
   OpenfinExcel = 'OpenfinExcel',
-  iPushPull = 'iPushPull',
   Glue42 = 'Glue42',
 }
 
-export enum LiveReportTrigger {
-  Connected = 'Connected',
-  Disconnected = 'Disconnected',
-  ExportStarted = 'ExportStarted',
-  ExportStopped = 'ExportStopped',
-  LiveDataUpdated = 'LiveDataUpdated',
+export enum ScheduleType {
+  Report = 'Report',
+  iPushPull = 'iPushPull',
+  Reminder = 'Reminder',
 }
 
 export enum SortOrder {

@@ -43,18 +43,12 @@ function InitAdaptableDemo() {
     auditCellEdits: {
       auditAsAlert: true,
     },
-    auditTickingDataChanges: {
+    auditTickingDataUpdates: {
       auditToConsole: true,
     },
   };
   adaptableOptions.predefinedConfig = demoConfig;
   const adaptableApi = Adaptable.init(adaptableOptions);
-
-  adaptableApi.eventApi
-    .onSearchChanged()
-    .Subscribe((sender, searchChangedArgs) =>
-      listenToSearchChange(adaptableApi, examplesHelper, searchChangedArgs)
-    );
 }
 
 function listenToSearchChange(

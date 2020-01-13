@@ -1,7 +1,6 @@
 import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
-import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -17,12 +16,10 @@ import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { IPP_LOGIN_FAILED, IPPLoginFailedAction, IPP_LOGIN } from './ExportRedux';
-import { IPushPullDomain } from '../../PredefinedConfig/PartnerState';
-import { LiveReport } from '../../Api/Events/LiveReportUpdated';
+
+import { LiveReport } from '../../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
-import { CellSummaryChangeOperationAction } from './CellSummaryRedux';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -43,8 +40,9 @@ export const SYSTEM_UPDATED_ROW_DELETE_ALL = 'SYSTEM_UPDATED_ROW_DELETE_ALL';
 // Live Reports
 export const REPORT_START_LIVE = 'REPORT_START_LIVE';
 export const REPORT_STOP_LIVE = 'REPORT_STOP_LIVE';
-export const SET_IPP_DOMAIN_PAGES = 'SET_IPP_DOMAIN_PAGES';
 export const REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
+
+// iPushPull
 
 // Smart Edit
 export const SMARTEDIT_CHECK_CELL_SELECTION = 'SMARTEDIT_CHECK_CELL_SELECTION';
@@ -106,19 +104,13 @@ export interface SystemUpdatedRowDeleteAllAction extends Redux.Action {
 
 export interface ReportStartLiveAction extends Redux.Action {
   Report: Report;
-  ExportDestination:
-    | ExportDestination.OpenfinExcel
-    | ExportDestination.iPushPull
-    | ExportDestination.Glue42;
+  ReportDestination: 'OpenfinExcel' | 'Glue42';
   PageName: string;
 }
 
 export interface ReportStopLiveAction extends Redux.Action {
   Report: Report;
-  ExportDestination:
-    | ExportDestination.OpenfinExcel
-    | ExportDestination.iPushPull
-    | ExportDestination.Glue42;
+  ReportDestination: 'OpenfinExcel' | 'Glue42';
 }
 
 export interface SmartEditCheckCellSelectionAction extends Redux.Action {}
@@ -157,10 +149,6 @@ export interface CalculatedColumnSetErrorMessageAction extends Redux.Action {
 
 export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
   expression: string;
-}
-
-export interface SetIPushPullDomainsPagesAction extends Redux.Action {
-  IPushPullDomainsPages: IPushPullDomain[];
 }
 
 export interface ReportSetErrorMessageAction extends Redux.Action {
@@ -221,27 +209,21 @@ export const SystemUpdatedRowDeleteAll = (
 export const ReportStartLive = (
   Report: Report,
   PageName: string,
-  ExportDestination:
-    | ExportDestination.OpenfinExcel
-    | ExportDestination.iPushPull
-    | ExportDestination.Glue42
+  ReportDestination: 'OpenfinExcel' | 'Glue42'
 ): ReportStartLiveAction => ({
   type: REPORT_START_LIVE,
   Report,
-  ExportDestination,
+  ReportDestination,
   PageName,
 });
 
 export const ReportStopLive = (
   Report: Report,
-  ExportDestination:
-    | ExportDestination.OpenfinExcel
-    | ExportDestination.iPushPull
-    | ExportDestination.Glue42
+  ReportDestination: 'OpenfinExcel' | 'Glue42'
 ): ReportStopLiveAction => ({
   type: REPORT_STOP_LIVE,
   Report,
-  ExportDestination,
+  ReportDestination,
 });
 
 export const SmartEditCheckCellSelection = (): SmartEditCheckCellSelectionAction => ({
@@ -306,15 +288,6 @@ export const CalculatedColumnIsExpressionValid = (
   expression,
 });
 
-export const SetIPushPullDomainsPages = (
-  IPushPullDomainsPages: IPushPullDomain[]
-): SetIPushPullDomainsPagesAction => {
-  return {
-    type: SET_IPP_DOMAIN_PAGES,
-    IPushPullDomainsPages,
-  };
-};
-
 export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessageAction => ({
   type: REPORT_SET_ERROR_MESSAGE,
   ErrorMessage,
@@ -364,7 +337,6 @@ const initialSystemState: SystemState = {
   ChartData: null,
   ChartVisibility: SYSTEM_DEFAULT_CHART_VISIBILITY,
   CalculatedColumnErrorMessage: EMPTY_STRING,
-  IPushPullDomainsPages: EMPTY_ARRAY,
   SystemReports: ObjectFactory.CreateSystemReports(),
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
@@ -378,12 +350,6 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
 ): SystemState => {
   let alerts: AdaptableAlert[];
   switch (action.type) {
-    case IPP_LOGIN: {
-      return { ...state, IPPLoginMessage: undefined };
-    }
-    case IPP_LOGIN_FAILED: {
-      return { ...state, IPPLoginMessage: (action as IPPLoginFailedAction).Message };
-    }
     case CELL_SUMMARY_OPERATION_DEFINITIONS_SET: {
       return {
         ...state,
@@ -447,7 +413,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       const actionTyped = action as ReportStartLiveAction;
       const currentLiveReports: LiveReport[] = [].concat(state.CurrentLiveReports);
       currentLiveReports.push({
-        ExportDestination: actionTyped.ExportDestination,
+        ReportDestination: actionTyped.ReportDestination,
         Report: actionTyped.Report,
         PageName: actionTyped.PageName,
       });
@@ -457,7 +423,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       const actionTyped = action as ReportStopLiveAction;
       const currentLiveReports: LiveReport[] = [].concat(state.CurrentLiveReports);
       const index = currentLiveReports.findIndex(
-        x => x.Report == actionTyped.Report && x.ExportDestination == actionTyped.ExportDestination
+        x => x.Report == actionTyped.Report && x.ReportDestination == actionTyped.ReportDestination
       );
       currentLiveReports.splice(index, 1);
       return Object.assign({}, state, { CurrentLiveReports: currentLiveReports });
@@ -495,11 +461,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
         CalculatedColumnErrorMessage: (action as CalculatedColumnSetErrorMessageAction).ErrorMsg,
       });
     }
-    case SET_IPP_DOMAIN_PAGES: {
-      return Object.assign({}, state, {
-        IPushPullDomainsPages: (action as SetIPushPullDomainsPagesAction).IPushPullDomainsPages,
-      });
-    }
+
     case REPORT_SET_ERROR_MESSAGE: {
       return Object.assign({}, state, {
         ReportErrorMessage: (action as ReportSetErrorMessageAction).ErrorMessage,

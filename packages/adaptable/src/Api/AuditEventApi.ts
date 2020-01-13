@@ -51,6 +51,11 @@ export interface AuditEventApi {
     callback: (auditCellEditedArgs: AuditLogEventArgs) => void
   ): () => void;
 
+  on(
+    eventName: 'AuditTickingDataUpdated',
+    callback: (auditCellEditedArgs: AuditLogEventArgs) => void
+  ): () => void;
+
   /**
    * Fired whenever a function is directly applied by a User.
    *
@@ -67,7 +72,11 @@ export interface AuditEventApi {
    * @param data
    */
   emit(
-    eventName: 'AuditStateChanged' | 'AuditCellEdited' | 'AuditFunctionApplied',
+    eventName:
+      | 'AuditStateChanged'
+      | 'AuditCellEdited'
+      | 'AuditFunctionApplied'
+      | 'AuditTickingDataUpdated',
     data?: any
   ): Promise<any>;
 }

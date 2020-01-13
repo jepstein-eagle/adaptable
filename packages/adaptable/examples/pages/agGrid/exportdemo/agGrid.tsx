@@ -71,6 +71,7 @@ let demoConfig: PredefinedConfig = {
         ],
         ReportColumnScope: 'BespokeColumns',
         ReportRowScope: 'VisibleRows',
+        /*
         AutoExport: {
           Schedule: {
             Hour: 17,
@@ -78,7 +79,7 @@ let demoConfig: PredefinedConfig = {
             DaysOfWeek: [5, 4, 3, 2, 1],
           },
           ExportDestination: 'JSON',
-        },
+        }, */
       },
     ],
     CurrentReport: 'End of Day',

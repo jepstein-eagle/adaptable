@@ -2,37 +2,37 @@ import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ReminderSummaryWizard } from './ReminderSummaryWizard';
-import { ReminderMessageWizard } from './ReminderMessageWizard';
-import { ReminderScheduleWizard } from './ReminderScheduleWizard';
+import { ScheduleSummaryWizard } from './ScheduleSummaryWizard';
+import { ScheduleSettingsWizard } from './ScheduleSettingsWizard';
+import { ScheduleScheduleWizard } from './ScheduleScheduleWizard';
 
-export interface ReminderWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<ReminderWizard> {}
+export interface ScheduleWizardProps
+  extends AdaptableObjectExpressionAdaptableWizardProps<ScheduleWizard> {}
 
-export class ReminderWizard extends React.Component<ReminderWizardProps, {}> {
+export class ScheduleWizard extends React.Component<ScheduleWizardProps, {}> {
   render() {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ReminderStrategyFriendlyName}
+          FriendlyName={StrategyConstants.ScheduleStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Message',
+              StepName: 'Settings',
               Index: 0,
-              Element: <ReminderMessageWizard />,
+              Element: <ScheduleSettingsWizard />,
             },
             {
               StepName: 'Schedule',
               Index: 1,
-              Element: <ReminderScheduleWizard />,
+              Element: <ScheduleScheduleWizard />,
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <ReminderSummaryWizard />,
+              Element: <ScheduleSummaryWizard />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

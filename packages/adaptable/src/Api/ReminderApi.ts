@@ -1,7 +1,7 @@
-import { ReminderState, Reminder } from '../PredefinedConfig/ReminderState';
+import { ReminderState, ReminderSchedule } from '../PredefinedConfig/ReminderState';
 export interface ReminderApi {
   getReminderState(): ReminderState;
-  getAllReminder(): Reminder[];
+  getAllReminder(): ReminderSchedule[];
 
   /**
    * Opens the Reminder popup screen

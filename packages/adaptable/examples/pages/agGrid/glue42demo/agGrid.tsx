@@ -32,7 +32,7 @@ function InitAdaptableDemo() {
 
   adaptableOptions.predefinedConfig = demoConfig;
   adaptableOptions.auditOptions = {
-    auditTickingDataChanges: {
+    auditTickingDataUpdates: {
       auditToConsole: true,
     },
   };

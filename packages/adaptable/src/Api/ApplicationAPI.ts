@@ -4,7 +4,7 @@ import { ApplicationState, ApplicationDataEntry } from '../PredefinedConfig/Appl
  *
  *  **Further Adaptable Help Resources**
  *
- * [State](_predefinedconfig_applicationstate_.applicationstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-Blotter-State-FAQ)
+ * [State](_predefinedconfig_applicationstate_.applicationstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-State-FAQ)
  *
  */
 export interface ApplicationApi {

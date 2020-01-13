@@ -22,6 +22,7 @@ export const FlashingCellsStrategyId: AdaptableFunctionName = 'FlashingCells';
 export const FormatColumnStrategyId: AdaptableFunctionName = 'FormatColumn';
 export const FreeTextColumnStrategyId: AdaptableFunctionName = 'FreeTextColumn';
 export const HomeStrategyId: AdaptableFunctionName = 'Home';
+export const IPushPullStrategyId: AdaptableFunctionName = 'IPushPull';
 export const LayoutStrategyId: AdaptableFunctionName = 'Layout';
 export const PercentBarStrategyId: AdaptableFunctionName = 'PercentBar';
 export const SparklineColumnStrategyId: AdaptableFunctionName = 'SparklineColumn';
@@ -30,6 +31,7 @@ export const PieChartStrategyId: AdaptableFunctionName = 'PieChart';
 export const PlusMinusStrategyId: AdaptableFunctionName = 'PlusMinus';
 export const QuickSearchStrategyId: AdaptableFunctionName = 'QuickSearch';
 export const ReminderStrategyId: AdaptableFunctionName = 'Reminder';
+export const ScheduleStrategyId: AdaptableFunctionName = 'Schedule';
 export const ShortcutStrategyId: AdaptableFunctionName = 'Shortcut';
 export const SmartEditStrategyId: AdaptableFunctionName = 'SmartEdit';
 export const StateManagementStrategyId: AdaptableFunctionName = 'StateManagement';
@@ -62,6 +64,7 @@ export const FlashingCellsStrategyFriendlyName: string = 'Flashing Cells';
 export const UpdatedRowStrategyFriendlyName: string = 'Updated Row';
 export const FormatColumnStrategyFriendlyName: string = 'Format Column';
 export const FreeTextColumnStrategyFriendlyName: string = 'Free Text Column';
+export const IPushPullStrategyFriendlyName: string = 'iPushPull';
 export const LayoutStrategyFriendlyName: string = 'Layout';
 export const PercentBarStrategyFriendlyName: string = 'Percent Bar';
 export const SparklineColumnStrategyFriendlyName: string = 'Sparkline Column';
@@ -70,6 +73,7 @@ export const PieChartStrategyFriendlyName: string = 'Pie Chart';
 export const PlusMinusStrategyFriendlyName: string = 'Plus Minus';
 export const QuickSearchStrategyFriendlyName: string = 'Quick Search';
 export const ReminderStrategyFriendlyName: string = 'Reminder';
+export const ScheduleStrategyFriendlyName: string = 'Schedule';
 export const ShortcutStrategyFriendlyName: string = 'Shortcut';
 export const SmartEditStrategyFriendlyName: string = 'Smart Edit';
 export const StateManagementStrategyFriendlyName: string = 'Manage State';
@@ -100,6 +104,7 @@ export const ExportGlyph: string = 'export';
 export const FlashingCellGlyph: string = 'flashing-cell';
 export const FormatColumnGlyph: string = 'format-column';
 export const FreeTextColumnGlyph: string = 'freetext-column';
+export const IPushPullGlyph: string = 'ipushpull';
 export const FunctionsGlyph: string = 'home';
 export const LayoutGlyph: string = 'layout';
 export const PercentBarGlyph: string = 'percent-bar';
@@ -109,6 +114,7 @@ export const PieChartGlyph: string = 'pie-chart';
 export const PlusMinusGlyph: string = 'plus-minus';
 export const QuickSearchGlyph: string = 'quick-search';
 export const ReminderGlyph: string = 'reminder';
+export const ScheduleGlyph: string = 'schedule';
 export const ShortcutGlyph: string = 'shortcut';
 export const SmartEditGlyph: string = 'smart-edit';
 export const StateManagementGlyph: string = 'state-management';
@@ -159,6 +165,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return FormatColumnStrategyId;
     case FreeTextColumnStrategyFriendlyName:
       return FreeTextColumnStrategyId;
+    case IPushPullStrategyFriendlyName:
+      return IPushPullStrategyId;
     case LayoutStrategyFriendlyName:
       return LayoutStrategyId;
     case PercentBarStrategyFriendlyName:
@@ -175,6 +183,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return QuickSearchStrategyId;
     case ReminderStrategyFriendlyName:
       return ReminderStrategyId;
+    case ScheduleStrategyFriendlyName:
+      return ScheduleStrategyId;
     case CellSummaryStrategyFriendlyName:
       return CellSummaryStrategyId;
     case ShortcutStrategyFriendlyName:
@@ -236,6 +246,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return FormatColumnStrategyFriendlyName;
     case FreeTextColumnStrategyId:
       return FreeTextColumnStrategyFriendlyName;
+    case IPushPullStrategyId:
+      return IPushPullStrategyFriendlyName;
     case LayoutStrategyId:
       return LayoutStrategyFriendlyName;
     case PercentBarStrategyId:
@@ -254,6 +266,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return ReminderStrategyFriendlyName;
     case ReminderStrategyId:
       return ReminderStrategyFriendlyName;
+    case ScheduleStrategyId:
+      return ScheduleStrategyFriendlyName;
     case CellSummaryStrategyId:
       return CellSummaryStrategyFriendlyName;
     case ShortcutStrategyId:
@@ -311,6 +325,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return FormatColumnGlyph;
     case FreeTextColumnStrategyId:
       return FreeTextColumnGlyph;
+    case IPushPullStrategyId:
+      return IPushPullGlyph;
     case LayoutStrategyId:
       return LayoutGlyph;
     case PercentBarStrategyId:
@@ -327,6 +343,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return QuickSearchGlyph;
     case ReminderStrategyId:
       return ReminderGlyph;
+    case ScheduleStrategyId:
+      return ScheduleGlyph;
     case ShortcutStrategyId:
       return ShortcutGlyph;
     case CellSummaryStrategyId:

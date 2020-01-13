@@ -12,11 +12,12 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { ButtonSchedule } from '../Components/Buttons/ButtonSchedule';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { Report } from '../../PredefinedConfig/ExportState';
+import { Report, ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
@@ -25,12 +26,10 @@ import icons from '../../components/icons';
 import join from '../../components/utils/join';
 import { ReactComponentLike } from 'prop-types';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
-import {
-  LiveReportUpdatedEventArgs,
-  LiveReport,
-  LiveReportUpdatedInfo,
-} from '../../Api/Events/LiveReportUpdated';
-import { isIP } from 'net';
+
+import ObjectFactory from '../../Utilities/ObjectFactory';
+import { LiveDataChangedEventArgs } from '../../types';
+import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -46,16 +45,16 @@ interface ExportToolbarControlComponentProps
   onEditReport: () => PopupRedux.PopupShowScreenAction;
   onReportStopLive: (
     Report: Report,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
+
+  onNewReportSchedule: (reportSchedule: ReportSchedule) => PopupRedux.PopupShowScreenAction;
+
   Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
   CurrentReport: string | undefined;
-  LiveReports: LiveReport[];
+  // LiveReports: LiveReport[];
 }
 
 class ExportToolbarControlComponent extends React.Component<
@@ -65,12 +64,12 @@ class ExportToolbarControlComponent extends React.Component<
   public componentDidMount() {
     if (this.props.Adaptable) {
       this.props.Adaptable.api.eventApi.on(
-        'LiveReportUpdated',
-        (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
-          let liveReportUpdatedInfo: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
+        'LiveDataChanged',
+        (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
+          let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
           if (
-            liveReportUpdatedInfo.LiveReportTrigger == 'Connected' ||
-            liveReportUpdatedInfo.LiveReportTrigger == 'Disconnected'
+            liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
+            liveDataChangedInfo.LiveDataTrigger == 'Disconnected'
           ) {
             this.forceUpdate();
           }
@@ -82,7 +81,9 @@ class ExportToolbarControlComponent extends React.Component<
   render(): any {
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
-    let currentReport: Report = this.props.Adaptable.api.exportApi.getCurrentReport();
+    let currentReport: Report = this.props.Adaptable.api.exportApi.getReportByName(
+      this.props.CurrentReport
+    );
     let savedReport: Report | undefined = allReports.find(s => s.Name == this.props.CurrentReport);
     let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport)
       ? selectReportString
@@ -109,9 +110,10 @@ class ExportToolbarControlComponent extends React.Component<
     };
 
     let openfinExcelMenuItem;
+    /*
     if (
       this.props.LiveReports.find(
-        x => x.Report == currentReport && x.ExportDestination == ExportDestination.OpenfinExcel
+        x => x.Report == currentReport && x.ReportDestination == ExportDestination.OpenfinExcel
       )
     ) {
       openfinExcelMenuItem = {
@@ -124,33 +126,7 @@ class ExportToolbarControlComponent extends React.Component<
           this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel, true),
         label: 'Start Live Openfin Excel',
       };
-    }
-
-    let iPushPullExcelMenuItem;
-    if (
-      this.props.LiveReports.find(
-        x => x.Report == currentReport && x.ExportDestination == ExportDestination.iPushPull
-      )
-    ) {
-      iPushPullExcelMenuItem = {
-        onClick: () => this.props.onReportStopLive(currentReport, ExportDestination.iPushPull),
-        label: 'iPushPull (Stop Sync)',
-      };
-    } else {
-      let isIPushPullLiveReport = this.props.Adaptable.ReportService.IsReportLiveReport(
-        currentReport,
-        ExportDestination.iPushPull
-      );
-      iPushPullExcelMenuItem = {
-        onClick: () =>
-          this.props.onApplyExport(
-            currentReport,
-            ExportDestination.iPushPull,
-            isIPushPullLiveReport
-          ),
-        label: 'iPushPull (Start Sync)',
-      };
-    }
+    }*/
 
     let isGlueLiveReport: boolean = this.props.Adaptable.ReportService.IsReportLiveReport(
       currentReport,
@@ -164,7 +140,7 @@ class ExportToolbarControlComponent extends React.Component<
 
     let deleteMessage: string = "Are you sure you want to delete '";
     if (savedReport != null) {
-      deleteMessage = deleteMessage + savedReport.Name + '?';
+      deleteMessage = deleteMessage + savedReport.Name + "'?";
     }
 
     const exportItems = [
@@ -174,8 +150,7 @@ class ExportToolbarControlComponent extends React.Component<
       this.props.Adaptable.ReportService.IsReportDestinationActive(
         ExportDestination.OpenfinExcel
       ) && openfinExcelMenuItem,
-      this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.iPushPull) &&
-        iPushPullExcelMenuItem,
+
       this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
         glue42MenuItem,
     ].filter(x => !!x);
@@ -241,6 +216,14 @@ class ExportToolbarControlComponent extends React.Component<
             ConfirmationTitle={'Delete Report'}
             AccessLevel={this.props.AccessLevel}
           />
+          <ButtonSchedule
+            marginLeft={1}
+            className="ab-DashboardToolbar__Export__schedule"
+            onClick={() => this.onNewReportSchedule()}
+            tooltip="Schedule"
+            disabled={savedReport == null}
+            AccessLevel={this.props.AccessLevel}
+          />
         </Flex>
       </Flex>
     );
@@ -261,6 +244,13 @@ class ExportToolbarControlComponent extends React.Component<
   onSelectedReportChanged(reportName: string) {
     this.props.onSelectReport(reportName);
   }
+
+  private onNewReportSchedule() {
+    let reportSchedule: ReportSchedule = ObjectFactory.CreateReportSchedule(
+      this.props.CurrentReport
+    );
+    this.props.onNewReportSchedule(reportSchedule);
+  }
 }
 
 function mapStateToProps(state: AdaptableState) {
@@ -279,10 +269,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
     onReportStopLive: (
       Report: Report,
-      exportDestination:
-        | ExportDestination.OpenfinExcel
-        | ExportDestination.iPushPull
-        | ExportDestination.Glue42
+      exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onNewReport: () =>
       dispatch(
@@ -298,6 +285,20 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           source: 'Toolbar',
         })
       ),
+
+    onNewReportSchedule: (reportSchedule: ReportSchedule) =>
+      dispatch(
+        PopupRedux.PopupShowScreen(
+          StrategyConstants.ScheduleStrategyId,
+          ScreenPopups.SchedulePopup,
+          {
+            action: 'New',
+            source: 'Toolbar',
+            value: reportSchedule,
+          }
+        )
+      ),
+
     onClose: (toolbar: AdaptableDashboardToolbar) =>
       dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>

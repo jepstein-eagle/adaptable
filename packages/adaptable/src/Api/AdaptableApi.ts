@@ -1,7 +1,6 @@
 import { ApplicationApi } from './ApplicationAPI';
 import { ActionColumnApi } from './ActionColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
-import { PartnerAPI } from './PartnerAPI';
 import { AdvancedSearchApi } from './AdvancedSearchApi';
 import { AlertApi } from './AlertApi';
 import { PluginsApi } from './PluginsApi';
@@ -43,21 +42,24 @@ import { UserFilterApi } from './UserFilterApi';
 import { InternalApi } from './InternalApi';
 import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
+import { Glue42Api } from './Glue42Api';
+import { IPushPullApi } from './IPushPullApi';
+import { ScheduleApi } from './ScheduleApi';
 
 /**
- * Adaptable API provides developers with run-time access to Adaptable.
+ * `AdaptableApi` provides developers with run-time access to AdapTable.
  *
- * It attempts to offer ALL the functionality provided by Adaptable UI in code form.
+ * It attempts to offer ALL the functionality provided by AdapTable UI in code form.
  *
- * This enables developers to access Adaptable Store at a run-time in a 'safe' way.
+ * This enables developers to access AdapTable Store at a run-time in a 'safe' way.
  *
- * It also allows them to access all the functionality in Adaptable while bypassing the UI screens altogether if they so wish.
+ * It also allows them to access all the functionality in AdapTable while bypassing the UI screens altogether if they so wish.
  *
- * *Note to Adaptable users: If there is a method missing from the Adaptable API that you would like implemented please contact support@adaptabletools.com and we will add it*
+ * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented please contact support@adaptabletools.com and we will add it*
  *
- * Adaptable API consists of over 40 sets of properties grouped against a particular function.
+ * `AdaptableApi` consists of over 40 sets of properties grouped against a particular function.
  *
- * Each of these properties is a class that contains a set of API method grouped either by Adaptable Function (e.g. `AdvancedSearchAPI`) or type (e.g. *`uditEventApi`)
+ * Each of these properties is a class that contains a set of API method grouped either by AdapTable Function (e.g. `AdvancedSearchAPI`) or type (e.g. *`uditEventApi`)
  *
  * The full list is:
  *
@@ -171,7 +173,7 @@ export interface AdaptableApi {
   entitlementsApi: EntitlementsApi;
 
   /**
-   * The Api used for listenning / subscribing to the various Events fired / published by Adaptable e.g. the SearchChanged event.
+   * The Api used for listenning / subscribing to the various Events fired / published by AdapTable e.g. the SearchChanged event.
    */
   eventApi: EventApi;
 
@@ -195,10 +197,17 @@ export interface AdaptableApi {
    */
   freeTextColumnApi: FreeTextColumnApi;
 
+  glue42Api: Glue42Api;
+
   /**
    * Provides methods for managing the Grid directly e.g. setGridData which will replace the current DataSource with the one provided.
    */
   gridApi: GridApi;
+
+  /**
+   * Provides access to the *iPushPull* function, the *iPushPull* object and [iPushPull State](_predefinedconfig_ipushpullstate_.ipushpullstate.html).
+   */
+  iPushPullApi: IPushPullApi;
 
   /**
    * Provides access to the *Layout* function, the *Layout* object and [Layout State](_predefinedconfig_runtimestate_layoutstate_.layoutstate.html).
@@ -211,11 +220,6 @@ export interface AdaptableApi {
   namedFilterApi: NamedFilterApi;
 
   /**
-   * Enables developers to set up configuration when using our Partner tools (like iPushPull and Glue42)
-   */
-  partnerApi: PartnerAPI;
-
-  /**
    * Provides access to the *Percent Bar* function, the *Percent Bar* object and [Percent Bar State](_predefinedconfig_runtimestate_percentbarstate_.percentbarstate.html).
    */
   percentBarApi: PercentBarApi;
@@ -226,7 +230,7 @@ export interface AdaptableApi {
   plusMinusApi: PlusMinusApi;
 
   /**
-   * Provides access to the **Plugins** functionality of Adaptable - currently *Charting* and *Finance*, but with more to come in due course.
+   * Provides access to the **Plugins** functionality of AdapTable - currently *Charting* and *Finance*, but with more to come in due course.
    */
   pluginsApi: PluginsApi;
 
@@ -239,6 +243,11 @@ export interface AdaptableApi {
    * Provides access to the *Reminder* function, the *Reminder* object and [Reminder State](_predefinedconfig_runtimestate_reminderstate_.reminderstate.html).
    */
   reminderApi: ReminderApi;
+
+  /**
+   * Provides access to the *Schedule* function which allows you to create schedules for Reminders, Reports and iPushPull.
+   */
+  scheduleApi: ScheduleApi;
 
   /**
    * Provides access to the *Shortcut* function, the *Shortcut* object and [Shortcut State](_predefinedconfig_runtimestate_shortcutstate_.shortcutstate.html).
@@ -258,7 +267,7 @@ export interface AdaptableApi {
   sparklineColumnApi: SparklineColumnApi;
 
   /**
-   * Provides access to [System Filter State](_predefinedconfig_runtimestate_systemfilterstate_.systemfilterstate.html) that manages the Filters that Adaptable ships with.
+   * Provides access to [System Filter State](_predefinedconfig_runtimestate_systemfilterstate_.systemfilterstate.html) that manages the Filters that AdapTable ships with.
    */
   systemFilterApi: SystemFilterApi;
 
@@ -293,9 +302,9 @@ export interface AdaptableApi {
   userFilterApi: UserFilterApi;
 
   /**
-   * API methods used internally within Adaptable.
+   * API methods used internally within AdapTable.
    *
-   * **This api class is not intended for developers to use and it is not recommended to use this section if accessing Adaptable through code**
+   * **This api class is not intended for developers to use and it is not recommended to use this section if accessing AdapTable through code**
    *
    */
   internalApi: InternalApi;

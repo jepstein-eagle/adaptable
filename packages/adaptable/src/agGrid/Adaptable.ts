@@ -2619,6 +2619,7 @@ export class Adaptable implements IAdaptable {
     if (this.AuditLogService.isAuditCellEditsEnabled) {
       this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
     }
+
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
     this.DataService.CreateDataChangedEvent(dataChangedInfo);
 
