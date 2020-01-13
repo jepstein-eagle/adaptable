@@ -524,7 +524,7 @@ async function run() {
         const PRIVATE_REGISTRY_TOKEN = process.env.PRIVATE_REGISTRY_TOKEN;
 
         const versionbump = type && isCanary ? `${type}:canary` : type ? type : 'canary';
-        const releasecmd = canary ? 'canary-nobump' : 'nobump';
+        const releasecmd = isCanary ? 'canary-nobump' : 'nobump';
 
         const contents = `@adaptabletools:registry=https://registry.adaptabletools.com
 //registry.adaptabletools.com/:_authToken=${PRIVATE_REGISTRY_TOKEN}
