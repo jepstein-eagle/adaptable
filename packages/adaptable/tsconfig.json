@@ -1,0 +1,26 @@
+﻿{
+  "compilerOptions": {
+    "sourceMap": false,
+    "declaration": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es5",
+    "jsx": "react",
+    "lib": ["ES2015","DOM"],
+    "noUnusedLocals": false,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "emitDecoratorMetadata": false,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/*",
+     "agGrid/**/*",
+    "agGrid.ts",
+    "types.ts",
+    "version.ts"
+  ],
+  "exclude": ["node_modules", ".next"]
+}

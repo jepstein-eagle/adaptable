@@ -7,7 +7,7 @@ const topLevelPackageJSON = require(topLevelPackageJSONPath);
 
 const version = topLevelPackageJSON.version;
 
-const versionFilePath = resolve(__dirname, '../packages/adaptableblotter/version.ts');
+const versionFilePath = resolve(__dirname, '../packages/adaptable/version.ts');
 let versionContent = fs.readFileSync(versionFilePath, { encoding: 'utf8' });
 
 if (versionContent.indexOf('xxx.yyy.zzz') === -1) {

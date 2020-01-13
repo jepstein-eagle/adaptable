@@ -8,7 +8,7 @@ async function run() {
       core.getInput('version') ||
       JSON.parse(
         fs.readFileSync(
-          path.resolve(__dirname, '../../../../packages/adaptableblotter/dist/package.json'),
+          path.resolve(__dirname, '../../../../packages/adaptable/dist/package.json'),
           'utf-8'
         )
       ).version;

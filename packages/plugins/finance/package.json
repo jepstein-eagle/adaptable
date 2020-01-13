@@ -1,0 +1,31 @@
+{
+  "name": "@adaptabletools/adaptable-plugin-finance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "link-core": "rimraf node_modules/@types/react-native && rimraf node_modules/@adaptabletools && symlink-dir ../../adaptable ./node_modules/@adaptabletools/adaptable",
+    "tsc": "rimraf dist && npm run link-core && npm run tsc-only",
+    "tsc-only": "tsc --outDir dist",
+    "registry-publish": "npm run build-package-json && npm publish dist",
+    "registry-publish-canary": "npm run build-package-json && npm publish --tag canary dist",
+    "build-package-json": "node ../../../scripts/cli/update-package --module=packages/plugins/finance",
+    "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i",
+    "build": "npm run clean-deps && rimraf dist && npm run build-prod-no-cleanup",
+    "build-prod-no-cleanup": "npm run before-build && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
+    "before-build": "npm run ensure-clean-on-local",
+    "after-build": "",
+    "ensure-clean-on-local": "node ../../../scripts/ensure-clean-on-local"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.3",
+    "typescript": "3.6.2",
+    "symlink-dir": "^3.1.1",
+    "prettier": "^1.17.0"
+  },
+  "author": {
+    "name": "Jonny Wolfson",
+    "email": "jonny.wolfson@adaptabletools.com"
+  },
+  "homepage": "http://www.adaptabletools.com/"
+}

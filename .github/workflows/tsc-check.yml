@@ -17,29 +17,44 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Executing npm install in core
-      run: npm install --prefix packages/adaptableblotter && npm run --prefix packages/adaptableblotter rm-native-types
+      run: npm install --prefix packages/adaptable && npm run --prefix packages/adaptable rm-native-types
       env:
         CI: true
     - name: tsc-core
-      run: npm run --prefix packages/adaptableblotter tsc
+      run: npm run --prefix packages/adaptable tsc
 
     - name: Executing npm install in react
-      run: npm install --prefix packages/adaptableblotter-react-aggrid
+      run: npm install --prefix packages/adaptable-react-aggrid
       env:
         CI: true
     - name: tsc-react
-      run: npm run --prefix packages/adaptableblotter-react-aggrid tsc
+      run: npm run --prefix packages/adaptable-react-aggrid tsc
 
     - name: Executing npm install in angular
-      run: npm install --prefix packages/adaptableblotter-ng-aggrid
+      run: npm install --prefix packages/adaptable-ng-aggrid
       env:
         CI: true
     - name: tsc-angular
-      run: npm run --prefix packages/adaptableblotter-ng-aggrid link-core && npm run --prefix packages/adaptableblotter-ng-aggrid tsc
+      run: npm run --prefix packages/adaptable-ng-aggrid link-core && npm run --prefix packages/adaptable-ng-aggrid tsc
 
     - name: Executing npm install in nocode
-      run: npm install --prefix packages/adaptableblotter-nocode
+      run: npm install --prefix packages/adaptable-nocode
       env:
         CI: true
     - name: tsc-nocode
-      run: npm run --prefix packages/adaptableblotter-nocode tsc
+      run: npm run --prefix packages/adaptable-nocode link-core && npm run --prefix packages/adaptable-nocode tsc
+
+    - name: Executing npm install in plugins:finance
+      run: npm install --prefix packages/plugins/finance
+      env:
+        CI: true
+
+    - name: tsc-plugins-finance
+      run: npm run --prefix packages/plugins/finance tsc
+
+    - name: Executing npm install in plugins:charts
+      run: npm install --prefix packages/plugins/charts
+      env:
+        CI: true
+    - name: tsc-plugins-charts
+      run: npm run --prefix packages/plugins/charts tsc

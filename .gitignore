@@ -1,20 +1,20 @@
 node_modules/
 .next
 .awcache
-/packages/adaptableblotter/dist
-/packages/adaptableblotter/examples/package-lock.json
-/packages/adaptableblotter-react-aggrid/package-lock.json
+/packages/adaptable/dist
+/packages/adaptable/examples/package-lock.json
+/packages/adaptable-react-aggrid/package-lock.json
 .DS_Store
 .env
 
 # ignore symlink in angular project
 
-/packages/adaptableblotter-ng-aggrid/projects/adaptableblotter-angular-aggrid/src/adaptableblotter
-/packages/adaptableblotter-ng-aggrid/dist
+/packages/adaptable-ng-aggrid/projects/adaptable-angular-aggrid/src/adaptable
+/packages/adaptable-ng-aggrid/dist
 **/package-lock.json
 package-lock.json
 
-/packages/adaptableblotter/apidoc
+/packages/adaptable/apidoc
 /apidoc
 yarn.lock
 dist

@@ -1,0 +1,188 @@
+﻿/**********************************
+ ** ADAPTABLE BASE STYLES **
+ **********************************/
+
+:root {
+  --ab-space-0: 0px;
+  --ab-space-1: 4px;
+  --ab-space-2: 8px;
+  --ab-space-3: 16px;
+  --ab-space-4: 32px;
+  --ab-space-5: 64px;
+  --ab-space-6: 128px;
+  --ab-space-7: 256px;
+
+  --ab-font-size-0: 0.5rem; //8px for 1rem=16px
+  --ab-font-size-1: 0.625rem; //10px for 1rem=16px
+  --ab-font-size-2: 0.75rem; //12px for 1rem=16px
+  --ab-font-size-3: 0.875rem; //14px for 1rem=16px
+  --ab-font-size-4: 1rem;
+  --ab-font-size-5: 1.25rem; //20px for 1rem=16px
+  --ab-font-size-6: 1.5rem; //24px for 1rem=16px
+  --ab-font-size-7: 2.25rem; //36px for 1rem=16px
+
+
+  --ab__font-family: inherit;
+
+  --ab__border-radius: var(--ab-space-1);
+
+  --ab-color-inputborder: var(--ab-color-primarydark);
+  --ab-color-inputcolor: var(--ab-color-text-on-primary);
+
+  --ab-color-error: #dc3545;
+  --ab-color-errorlight: #ffd3d2;
+  --ab-color-warn: #eb9316;
+  --ab-color-info: #17a2b8;
+  --ab-color-success: #419641;// var(--ab-color-green);
+  --ab-color-accent: #07c;
+  --ab-color-accentlight: #dbf0ff;  // is this used?
+
+
+  --ab-color-text-on-success: white;
+  --ab-color-text-on-error: white;
+  --ab-color-text-on-info: white;
+  --ab-color-text-on-warn: white;
+
+  --ab-color-defaultbackground: white;
+  --ab-color-text-on-defaultbackground: var(--ab-color-text-on-primary);
+
+  --ab-color-primary: #e9e9e9;
+  --ab-color-primarydark: #b7b7b7;
+  --ab-color-primarylight: #f5f5f5;
+  --ab-color-text-on-primary: #656565;
+  --ab-color-text-on-primarydark: var(--ab-color-text-on-primary);
+  /*--ab-color-text-on-primarylight: var(--ab-color-text-on-primary);*/
+
+  --ab-color-secondary: #07c;
+  --ab-color-secondarydark: #015a9a;
+  --ab-color-secondarylight: #a9ddff;
+  --ab-color-text-on-secondary: white;
+  --ab-color-text-on-secondarylight: #000000;
+
+  --ab-icon-fill: currentColor;
+  --ab-color-focus: var(--ab-color-accent);
+  --ab-focus__box-shadow: 0 0 5px 1px var(--ab-color-accent);
+  --ab-focus__outline: none;
+  --ab-dashboard__background:  var(--ab-color-defaultbackground);
+
+  --ab-loaded: 777; // dont remove - required for checking styles have been loaded
+
+  --ab-color-blue: #07c; // not sure we need or use this?
+}
+
+.ab-style__list-group-item:nth-child(2n+1) {
+  background: var(--ab-color-primarylight);
+}
+
+.ab-Grid.ab-Grid--indicate-filtered-columns .ag-header-cell-filtered {
+  font-style: italic;
+  font-weight: bolder;
+}
+
+@import './components/CheckBox/style.scss';
+@import './components/Radio/style.scss';
+@import './components/Table/style.scss';
+@import './components/Dialog/style.scss';
+@import './components/Dropdown/style.scss';
+@import './components/DropdownButton/style.scss';
+@import './components/EmptyContent/style.scss';
+@import './components/ErrorBox/style.scss';
+@import './components/FieldWrap/style.scss';
+@import './components/FormLayout/style.scss';
+@import './components/HelpBlock/style.scss';
+@import './components/Input/style.scss';
+@import './components/List/ListGroup/style.scss';
+@import './components/List/ListGroupItem/style.scss';
+@import './components/Modal/style.scss';
+@import './components/Panel/style.scss';
+@import './components/SimpleButton/style.scss';
+@import './components/Textarea/style.scss';
+@import './components/Tooltip/style.scss';
+@import './components/FileDroppable/style.scss';
+@import './View/Components/AdaptableObjectCollection/style.scss';
+@import './View/Components/AdaptableObjectRow/style.scss';
+@import './View/AdaptableWizardView/style.scss';
+@import './View/Components/Buttons/ButtonBase/style.scss';
+@import './View/Components/Panels/PanelDashboard/style.scss';
+@import './View/Components/ListBox/SingleListBox/style.scss';
+@import './View/AdaptablePopover/style.scss';
+@import './View/Dashboard/style.scss';
+
+@import './components/Radio/base.scss';
+@import './components/Table/base.scss';
+@import './components/CheckBox/base.scss';
+@import './components/Dialog/base.scss';
+@import './components/Dropdown/base.scss';
+@import './components/DropdownButton/base.scss';
+@import './components/EmptyContent/base.scss';
+@import './components/ErrorBox/base.scss';
+@import './components/FieldWrap/base.scss';
+@import './components/FormLayout/base.scss';
+@import './components/HelpBlock/base.scss';
+@import './components/Input/base.scss';
+@import './components/List/ListGroup/base.scss';
+@import './components/List/ListGroupItem/base.scss';
+@import './components/Modal/base.scss';
+@import './components/Panel/base.scss';
+@import './components/SimpleButton/base.scss';
+@import './components/Textarea/base.scss';
+@import './components/Tooltip/base.scss';
+@import './components/FileDroppable/base.scss';
+@import './components/ChartContainer/base.scss';
+@import './components/WizardPanel/base.scss';
+@import './View/Components/AdaptableObjectCollection/base.scss';
+@import './View/Components/AdaptableObjectRow/base.scss';
+@import './View/Components/FilterForm/ListBoxFilterForm/base.scss';
+@import './View/AdaptablePopover/base.scss';
+@import './View/AdaptableWizardView/base.scss';
+@import './View/Components/ListBox/SingleListBox/base.scss';
+@import './View/Components/ListBox/base.scss';
+@import './View/Components/Buttons/ButtonBase/base.scss';
+@import './View/Components/Panels/PanelDashboard/base.scss';
+@import './View/Components/Panels/FilterFormPanel/base.scss';
+@import './View/Dashboard/base.scss';
+
+
+.ab-alert--error {
+  background: var(--ab-color-error);
+}
+.ab-alert--success {
+  background: var(--ab-color-success);
+}
+.ab-alert--warn,
+.ab-alert--warning {
+  background: var(--ab-color-warn);
+}
+.ab-alert--info {
+  background: var(--ab-color-info);
+}
+
+
+// TODO do we need this?
+.popover-content {
+  padding: 1px;
+}
+
+/* Styles for the coloured cell render
+
+Can I put them somewhere else?
+*/
+.ab_div-colour-render-bar {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+.ab_div-colour-render-text {
+  position: absolute;
+  font-weight: normal;
+  font-size: 12p;
+  z-index: 100;
+}
+
+.ab_div-colour-render-div {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}

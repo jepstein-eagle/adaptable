@@ -1,2 +1,0 @@
-# AdaptableBlotter no-code wizard
-
