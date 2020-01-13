@@ -51,3 +51,5 @@ You can find further information about AdapTable at these sites:
 - [Demo Site](https://demo.adaptableblotter.com)
 - [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 - [Web Site](http://www.adaptabletools.com)
+
+The information on this site is for AdapTable version 6 (released in January 2020).

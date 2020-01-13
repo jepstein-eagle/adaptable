@@ -30,7 +30,7 @@ AdapTable can be instantiated in various ways.
 
 The standard method is through Vanilla JavaScript / TypeScript.
 
-However for those developers who use a particular framework, we provide Framework Wrappers to allow access to AdapTable in a Franework-friendly maner.  These are currently:
+However for those developers who use a particular framework, we provide Framework Wrappers to allow access to AdapTable in a Framework-friendly manner.  These are currently:
 
 - React wrapper (adaptable-react-aggrid)
 - Angular wrapper (adaptable-ng-aggrid)

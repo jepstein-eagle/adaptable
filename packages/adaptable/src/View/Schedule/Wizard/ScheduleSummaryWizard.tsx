@@ -44,9 +44,9 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
         break;
       case ScheduleType.Report:
         let reportKVP: KeyValuePair[] = [
-          { Key: 'ReportName', Value: (this.props.Data as ReportSchedule)!.ReportName },
+          { Key: 'Report Name', Value: (this.props.Data as ReportSchedule)!.ReportName },
           {
-            Key: 'ExportDestination',
+            Key: 'Export Destination',
             Value: (this.props.Data as ReportSchedule)!.ExportDestination,
           },
         ];
