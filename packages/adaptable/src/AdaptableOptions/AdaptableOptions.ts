@@ -15,7 +15,7 @@ import { SearchOptions } from './SearchOptions';
 import { ExportOptions } from './ExportOptions';
 
 /**
- * `AdaptableOptions` is the object created by you at design-time injected into the Adaptable constructor at startup.
+ * `AdaptableOptions` is the object created by you at design-time injected into the AdapTable constructor at startup.
  *
  * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
  *
@@ -25,35 +25,35 @@ import { ExportOptions } from './ExportOptions';
  *
  * Any property that is not supplied by the user when populating the object, will use the default value (which is listed here for each property).
  *
- * **AdaptableOptions is the only argument used in Adaptable's static constructor.**
+ * **AdaptableOptions is the only argument used in AdapTable's static constructor.**
  *
  * The contents of `AdaptableOptions` are:
  *
  *  | Option  	                                                                                          | Mandatory   | Details                                     	                |
  *  |----------------	                                                                                    |-----------  |---------------------------------------------	                |
- *  | [adaptableId](_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableId)                | No	        | A unique ID for this instance of Adaptable	                  |
- *  | [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)      | No	        | User State shipped with Adaptable iinstance for first use.	  |
+ *  | [adaptableId](_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableId)                | No	        | A unique ID for this instance of AdapTable	                  |
+ *  | [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)      | No	        | User State shipped with AdapTable iinstance for first use.	  |
  *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of column which guarantees to contain unique contents    |
- *  | [userName](_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                      | No	        | The current Adaptable user (useful for Audit purposes)      	|
+ *  | [userName](_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                      | No	        | The current AdapTable user (useful for Audit purposes)      	|
  *  | [vendorGrid](_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Yes	        | Underlying vendor grid object (e.g. GridOptions for ag-Grid)	|
  *  | [auditOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)              | No	        | Audit Log related options                                   	|
  *  | [chartOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartptions)               | No	        | Chart-based options (used when using chart plugin)           	|
  *  | [configServerOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions)| No	        | Options related to Config Server (external state management)  |
  *  | [editOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                | No	        | Editing (and server-editing) related options                  |
  *  | [exportOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#exportoptions)            | No	        | Export and Reporting options                                  |
- *  | [filterOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in Adaptable      |
+ *  | [filterOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in AdapTable      |
  *  | [generalOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)          | No	        | General set of Options (e.g. for managing Primary Keys        |
  *  | [layoutOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)            | No	        | Layout (Views) related Options                                |
- *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query / [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) in Adaptable |
+ *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query / [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) in AdapTable |
  *  | [searchOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)            | No	        | Search-related options (e.g. for managing Server searching)    |
- *  | [stateOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage Adaptable State    |
+ *  | [stateOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage AdapTable State    |
  *  | [userInterfaceOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| No	      | User Interface related functions                              |
- *  | [plugins](_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                        | No	        | Options used by the Adaptable plugins (e.g. charting, finance)|
+ *  | [plugins](_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                        | No	        | Options used by the AdapTable plugins (e.g. charting, finance)|
  *
  */
 export interface AdaptableOptions {
   /**
-   * Identifier for this instance of Adaptable
+   * Identifier for this instance of AdapTable
    *
    * Useful if Audit Log is turned on or you are using multiple grids
    *
@@ -66,7 +66,7 @@ export interface AdaptableOptions {
   adaptableId?: string;
 
   /**
-   * User State (a.ka. `predefinedConfig`) set at design-time and shipped with Adaptable for first use.
+   * User State (a.ka. `predefinedConfig`) set at design-time and shipped with AdapTable for first use.
    *
    * Contains a mixture of objects and properties.
    *
@@ -94,7 +94,7 @@ export interface AdaptableOptions {
   primaryKey: string;
 
   /**
-   * The name of the current Adaptable user
+   * The name of the current AdapTable user
    *
    * Strongly recommended to be set if using Config Server
    *
@@ -107,7 +107,7 @@ export interface AdaptableOptions {
   /**
    * **MANDATORY property**
    *
-   * This is the underlying vendor grid or grid object which Adaptable will interact with.
+   * This is the underlying vendor grid or grid object which AdapTable will interact with.
    *
    * Depending on the vendor it is either a Grid or an Options object.
    *
@@ -122,7 +122,7 @@ export interface AdaptableOptions {
   /**
    * Options for mananging the **Audit Log**.
    *
-   * Depending on the options you set audit messages will send details of actions in Adaptable to an Audit destination.
+   * Depending on the options you set audit messages will send details of actions in AdapTable to an Audit destination.
    *
    * You can choose to listen to any mixture of Audits for: **CellEdit**, **TickingDataChange**, **FunctionEvent**, **UserStateChange** and **InternalStateChange**.
    *
@@ -133,7 +133,7 @@ export interface AdaptableOptions {
   auditOptions?: AuditOptions;
 
   /**
-   * Options to manage Adaptable charting.
+   * Options to manage AdapTable charting.
    *
    * Primarily concerned with how and where charts appear.
    */
@@ -147,30 +147,30 @@ export interface AdaptableOptions {
   configServerOptions?: ConfigServerOptions;
 
   /**
-   * Options for setting the *Div elements* in which Adaptable and the underlying grid are placed.
+   * Options for setting the *Div elements* in which AdapTable and the underlying grid are placed.
    *
    * Also allows you to set where popups appear relative to the page and where charts are displayed.
    */
   containerOptions?: ContainerOptions;
 
   /**
-   * Options related to Editing in Adaptable.
+   * Options related to Editing in AdapTable.
    *
    * Includes a function enabling you to perform custom validation when a cell changes values.
    */
   editOptions?: EditOptions;
 
   /**
-   * Related to creating and managing filters in Adaptable.
+   * Related to creating and managing filters in AdapTable.
    *
-   * Includes options concerning whether to use Adaptable's filters (or those provided by the vendor grid).
+   * Includes options concerning whether to use AdapTable's filters (or those provided by the vendor grid).
    *
    * Also contains options to set if, how and when the Grid should repaint and refilter after user data edits and ticking data edits.
    */
   filterOptions?: FilterOptions;
 
   /**
-   * General options to manage  Adaptable.
+   * General options to manage  AdapTable.
    *
    * Essentially those options that didn't fit into of the specific categories.
    *
@@ -186,7 +186,7 @@ export interface AdaptableOptions {
   layoutOptions?: LayoutOptions;
 
   /**
-   * Options for running queries (or Expressions) in Adaptable.
+   * Options for running queries (or Expressions) in AdapTable.
    *
    * Lets you specify how (and how many) values are returned when doing a column lookup, how to deal with case and what is in the Query.
    *
@@ -195,19 +195,19 @@ export interface AdaptableOptions {
   queryOptions?: QueryOptions;
 
   /**
-   * Options for managing Search in Adaptable.
+   * Options for managing Search in AdapTable.
    */
   searchOptions?: SearchOptions;
 
   /**
-   * Options for managing Exporting and Reports in Adaptable.
+   * Options for managing Exporting and Reports in AdapTable.
    */
   exportOptions?: ExportOptions;
 
   /**
    * Options related to state hydration/dehydration - allows users to intercept state persistence and state loading.
    *
-   * By default, Adaptable state is persisted in the local storage of the user browser, under the `adaptableId` key.
+   * By default, AdapTable state is persisted in the local storage of the user browser, under the `adaptableId` key.
    *
    * Using various state options allows you to change this default behavior and also add custom properties in the persisted state.
    *
@@ -215,14 +215,14 @@ export interface AdaptableOptions {
   stateOptions?: StateOptions;
 
   /**
-   * Options for managing the User Interface Adaptable.
+   * Options for managing the User Interface AdapTable.
    *
    * Includes options for themes, menus, tool panels etc.
    */
   userInterfaceOptions?: UserInterfaceOptions;
 
   /**
-   * Used by the Adaptable Plug-ins (e.g. Charting, Finance etc)
+   * Used by the AdapTable Plug-ins (e.g. Charting, Finance etc)
    *
    * **These should not be provided by users at design-time**
    */

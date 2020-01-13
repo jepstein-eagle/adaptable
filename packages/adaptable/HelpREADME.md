@@ -10,7 +10,7 @@ There are 3 primary ways that developers / users 'interact' with the code in Ada
 
 These 3 objects are linked as follows: 
 
-**Predefined Configuration** is a property of **AdaptableOptions** which is passed into the AdapTable constructor that returns the **AdapTable Api**
+**Predefined Configuration** is a property of **AdaptableOptions** which is passed into the AdapTable constructor that returns the **AdaptableApi**
 
 ```tsx
 // Create an AdaptableOptions object to pass in to the constructor
@@ -20,8 +20,8 @@ These 3 objects are linked as follows:
     predefinedConfig: applicationJSON, // the predefined config we created
   };
 
-// AdapTable constructor returns an API object that we can use
- const adaptableApi: AdaptableApi = AdapTable.init(adaptableOptions);
+// The AdapTable constructor returns an API object that we can use
+ const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 ```
 
 ## AdapTable Options
