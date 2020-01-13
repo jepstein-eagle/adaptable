@@ -12,7 +12,7 @@
     "build-package-json": "node ../../../scripts/cli/update-package --module=packages/plugins/charts",
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i",
     "build": "npm run clean-deps && rimraf dist && npm run build-prod-no-cleanup",
-    "build-prod-no-cleanup": "npm run before-build && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
+    "build-prod-no-cleanup": "npm run before-build && npm run tsc && npm run build-package-json && npm run after-build",
     "before-build": "npm run ensure-clean-on-local",
     "after-build": "",
     "ensure-clean-on-local": "node ../../../scripts/ensure-clean-on-local"
