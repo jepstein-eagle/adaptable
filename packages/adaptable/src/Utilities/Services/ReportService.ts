@@ -7,7 +7,6 @@ import {
   MessageType,
   ReportRowScope,
   ExportDestination,
-  LiveReportTrigger,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Report } from '../../PredefinedConfig/ExportState';
@@ -21,10 +20,8 @@ import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
 import { GridCell } from '../Interface/Selection/GridCell';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
-import {
-  LiveReportUpdatedEventArgs,
-  LiveReportUpdatedInfo,
-} from '../../Api/Events/LiveReportUpdated';
+import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
+import { LiveDataChangedEventArgs } from '../../types';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -337,20 +334,26 @@ export class ReportService implements IReportService {
     return useRawValue ? gridCell.rawValue : gridCell.displayValue;
   }
 
-  public PublishLiveReportUpdatedEvent(
+  public PublishLiveLiveDataChangedEvent(
     reportDestination: 'iPushPull' | 'Glue42',
-    liveReportTrigger: LiveReportTrigger
+    liveDataTrigger:
+      | 'Connected'
+      | 'Disconnected'
+      | 'LiveDataStarted'
+      | 'LiveDataStopped'
+      | 'LiveDataUpdated',
+    liveReport?: any
   ): void {
-    let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
+    let liveDataChangedInfo: LiveDataChangedInfo = {
       ReportDestination: reportDestination,
-      LiveReportTrigger: liveReportTrigger,
-      CurrentLiveReports: this.adaptable.api.internalApi.getCurrentLiveReports(),
+      LiveDataTrigger: liveDataTrigger,
+      LiveReport: liveReport,
     };
-    const liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs = AdaptableHelper.createFDC3Message(
-      'Live Report Updated Args',
-      liveReportUpdatedInfo
+    const liveDataChangedEventArgs: LiveDataChangedEventArgs = AdaptableHelper.createFDC3Message(
+      'Live Data Changed Args',
+      liveDataChangedInfo
     );
-    this.adaptable.api.eventApi.emit('LiveReportUpdated', liveReportUpdatedEventArgs);
+    this.adaptable.api.eventApi.emit('LiveDataChanged', liveDataChangedEventArgs);
   }
 
   public IsReportLiveReport(report: Report, exportDestination: ExportDestination): boolean {

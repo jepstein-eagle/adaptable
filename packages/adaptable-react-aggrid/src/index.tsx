@@ -4,9 +4,10 @@ import * as AgGrid from 'ag-grid-community';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import { AdaptableApp } from '../../adaptable/src/View/AdaptableView';
 import Adaptable from '../../adaptable/src/agGrid';
-import { AdaptableApi } from '../../adaptable/types';
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 import {
+  AdaptableApi,
+  LiveDataChangedEventArgs,
   AdaptableOptions,
   SearchChangedEventArgs,
   ThemeChangedEventArgs,
@@ -15,7 +16,6 @@ import {
   ActionColumnClickedEventArgs,
   SelectionChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,
-  LiveReportUpdatedEventArgs,
 } from '../../adaptable/types';
 import { AuditLogEventArgs } from '../../adaptable/src/Api/Events/AuditEvents';
 import { ToolbarButtonClickedEventArgs } from '../../adaptable/src/Api/Events/ToolbarButtonClicked';
@@ -121,7 +121,7 @@ const AdaptableReact = ({
   onAlertFired,
   onToolbarButtonClicked,
   onColumnStateChanged,
-  onLiveReportUpdated,
+  onLiveDataChanged,
   onSearchChanged,
   onSelectionChanged,
   onThemeChanged,
@@ -148,7 +148,7 @@ const AdaptableReact = ({
   onAlertFired?: (alertFiredEventArgs: AlertFiredEventArgs) => void;
   onActionColumnClicked?: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void;
   onSelectionChanged?: (selectionChangedEventArgs: SelectionChangedEventArgs) => void;
-  onLiveReportUpdated?: (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => void;
+  onLiveDataChanged?: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void;
 
   onAuditStateChanged?: (auditStateChangedArgs: AuditLogEventArgs) => void;
   onAuditCellEdited?: (auditCellEditedArgs: AuditLogEventArgs) => void;

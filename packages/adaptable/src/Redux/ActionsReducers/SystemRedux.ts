@@ -17,7 +17,7 @@ import { ChartData } from '../../PredefinedConfig/ChartState';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 
-import { LiveReport } from '../../Api/Events/LiveReportUpdated';
+import { LiveReport } from '../../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 

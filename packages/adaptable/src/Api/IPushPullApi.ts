@@ -69,15 +69,15 @@ export interface IPushPullApi {
 
   setIPushPullAvailableOff(): void;
 
-  isIPushPullAvailable(): boolean;
+  isIPushPullAvailable(): boolean | undefined;
 
   setIPushPullRunningOn(): void;
 
   setIPushPullRunningOff(): void;
 
-  isIPushPullRunning(): boolean;
+  isIPushPullRunning(): boolean | undefined;
 
-  isIPushPullLiveDataRunning(): boolean;
+  isIPushPullLiveDataRunning(): boolean | undefined;
 
   clearIPushPullInternalState(): void;
 }

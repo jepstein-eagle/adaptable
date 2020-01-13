@@ -1,6 +1,6 @@
 import { Report } from '../../../PredefinedConfig/ExportState';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { ExportDestination, LiveReportTrigger } from '../../../PredefinedConfig/Common/Enums';
+import { ExportDestination } from '../../../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from '../../../Strategy/Interface/IStrategyActionReturn';
 
 export interface IReportService {
@@ -16,9 +16,15 @@ export interface IReportService {
 
   GetPrimaryKeysForReport(report: Report): any[];
 
-  PublishLiveReportUpdatedEvent(
+  PublishLiveLiveDataChangedEvent(
     reportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42',
-    liveReportTrigger: LiveReportTrigger
+    liveDataChangedTrigger:
+      | 'Connected'
+      | 'Disconnected'
+      | 'LiveDataStarted'
+      | 'LiveDataStopped'
+      | 'LiveDataUpdated',
+    liveReport?: any
   ): void;
 
   IsReportLiveReport(report: Report, exportDestination: ExportDestination): boolean;

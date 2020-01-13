@@ -1,23 +1,17 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { ExportDestination, LiveReportTrigger } from '../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import * as _ from 'lodash';
 import { Report } from '../PredefinedConfig/ExportState';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import {
   SELECTED_CELLS_REPORT,
   DEFAULT_LIVE_REPORT_THROTTLE_TIME,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import { LiveReport } from '../Api/Events/LiveReportUpdated';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { IPushPullStrategy } from './Interface/IPushPullStrategy';
 import { IPushPullReport } from '../PredefinedConfig/IPushPullState';
-import { string } from 'prop-types';
-import StringExtensions from '../Utilities/Extensions/StringExtensions';
 
 export class PushPullStrategy extends AdaptableStrategyBase implements IPushPullStrategy {
   private isSendingData: boolean = false;
@@ -101,9 +95,10 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
           );
         })
         .then(() => {
-          return this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+          return this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
             'iPushPull',
-            LiveReportTrigger.LiveDataUpdated
+            'LiveDataUpdated',
+            currentLiveIPushPullReport
           );
         })
         .catch(reason => {

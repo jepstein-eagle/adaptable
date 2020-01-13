@@ -10,7 +10,6 @@ import {
 } from '../../PredefinedConfig/IPushPullState';
 import { IPushPullApi } from '../IPushPullApi';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
 import Helper from '../../Utilities/Helpers/Helper';
 
 export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
@@ -18,22 +17,22 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     return this.getAdaptableState().IPushPull;
   }
   public getIPushPullUsername(): string | undefined {
-    return this.getIPushPullState().Username;
+    return this.getIPushPullState()!.Username;
   }
   public getIPushPullPassword(): string | undefined {
-    return this.getIPushPullState().Password;
+    return this.getIPushPullState()!.Password;
   }
 
   public getAutoLogin(): boolean | undefined {
-    return this.getIPushPullState().AutoLogin;
+    return this.getIPushPullState()!.AutoLogin;
   }
 
   public getCurrentLiveIPushPullReport(): IPushPullReport | undefined {
-    return this.getIPushPullState().CurrentLiveIPushPullReport;
+    return this.getIPushPullState()!.CurrentLiveIPushPullReport;
   }
 
   public getIPushPullInstance(): any {
-    let pushpullState = this.getIPushPullState();
+    let pushpullState = this.getIPushPullState()!;
     if (pushpullState != undefined) {
       return pushpullState.iPushPullInstance;
     } else {
@@ -51,9 +50,10 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     if (this.checkItemExists(iPushPullReport, iPushPullReport.ReportName, 'IPushPull Report')) {
       this.dispatchAction(IPushPullRedux.IPushPullLiveReportSet(iPushPullReport));
 
-      this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+      this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
         'iPushPull',
-        LiveReportTrigger.ExportStarted
+        'LiveDataStarted',
+        iPushPullReport
       );
     }
   }
@@ -67,9 +67,10 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     this.dispatchAction(IPushPullRedux.IPushPullLiveReportClear());
 
     // fire the Live Report event for Export Stopped
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
       'iPushPull',
-      LiveReportTrigger.ExportStopped
+      'LiveDataStopped',
+      currentLiveReport
     );
   }
 
@@ -78,21 +79,21 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
       return false;
     }
     return (
-      this.getIPushPullState().CurrentLiveIPushPullReport != null &&
-      this.getIPushPullState().CurrentLiveIPushPullReport == iPushPullReport
+      this.getIPushPullState()!.CurrentLiveIPushPullReport != null &&
+      this.getIPushPullState()!.CurrentLiveIPushPullReport == iPushPullReport
     );
   }
 
-  public isIPushPullAvailable(): boolean {
-    return this.getIPushPullState().IsIPushPullAvailable;
+  public isIPushPullAvailable(): boolean | undefined {
+    return this.getIPushPullState()!.IsIPushPullAvailable;
   }
 
-  public isIPushPullRunning(): boolean {
-    return this.getIPushPullState().IsIPushPullRunning;
+  public isIPushPullRunning(): boolean | undefined {
+    return this.getIPushPullState()!.IsIPushPullRunning;
   }
 
   public getIPushPullDomains(): IPushPullDomain[] {
-    return this.getIPushPullState().IPushPullDomainsPages;
+    return this.getIPushPullState()!.IPushPullDomainsPages;
   }
 
   public getPagesForIPushPullDomain(folderName: string): string[] {
@@ -122,7 +123,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public getIPushPullThrottleTime(): number | undefined {
-    return this.getIPushPullState().ThrottleTime;
+    return this.getIPushPullState()!.ThrottleTime;
   }
 
   public setIPushPullThrottleTime(throttleTime: number): void {
@@ -134,7 +135,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public getIPushPullSchedules(): IPushPullSchedule[] {
-    return this.getIPushPullState().IPushPullSchedules;
+    return this.getIPushPullState()!.IPushPullSchedules;
   }
 
   public showIPushPullPopup(): void {
@@ -154,22 +155,16 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public setIPushPullRunningOn(): void {
     this.dispatchAction(IPushPullRedux.SetIPushPullRunningOn());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      'iPushPull',
-      LiveReportTrigger.Connected
-    );
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent('iPushPull', 'Connected');
   }
 
   public setIPushPullRunningOff(): void {
     this.dispatchAction(IPushPullRedux.SetIPushPullRunningOff());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      'iPushPull',
-      LiveReportTrigger.Disconnected
-    );
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent('iPushPull', 'Disconnected');
   }
 
   public isIPushPullLiveDataRunning(): boolean {
-    return Helper.objectExists(this.getIPushPullState().CurrentLiveIPushPullReport);
+    return Helper.objectExists(this.getIPushPullState()!.CurrentLiveIPushPullReport);
   }
 
   public async loginToIPushPull(userName: string, password: string): Promise<void> {

@@ -16,7 +16,7 @@ import {
   DEFAULT_LIVE_REPORT_THROTTLE_TIME,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import { LiveReport } from '../Api/Events/LiveReportUpdated';
+import { LiveReport } from '../Api/Events/LiveDataChanged';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {

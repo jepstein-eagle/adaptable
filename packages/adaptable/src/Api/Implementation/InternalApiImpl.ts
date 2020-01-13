@@ -4,7 +4,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ApiBase } from './ApiBase';
 import { InternalApi } from '../InternalApi';
 import { IUIConfirmation, AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { Calendar } from '../../PredefinedConfig/CalendarState';
@@ -18,7 +18,7 @@ import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCe
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import { LiveReport } from '../Events/LiveReportUpdated';
+import { LiveReport } from '../Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
@@ -131,17 +131,17 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public setGlue42AvailableOn(): void {
     this.dispatchAction(GridRedux.SetGlue42AvailableOn());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
       ExportDestination.Glue42,
-      LiveReportTrigger.Connected
+      'Connected'
     );
   }
 
   public setGlue42AvailableOff(): void {
     this.dispatchAction(GridRedux.SetGlue42AvailableOff());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
       ExportDestination.Glue42,
-      LiveReportTrigger.Disconnected
+      'Disconnected'
     );
   }
 

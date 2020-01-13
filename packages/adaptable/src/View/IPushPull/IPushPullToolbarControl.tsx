@@ -16,14 +16,9 @@ import { Report } from '../../PredefinedConfig/ExportState';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
-import icons from '../../components/icons';
 import join from '../../components/utils/join';
-import { ReactComponentLike } from 'prop-types';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
-import {
-  LiveReportUpdatedEventArgs,
-  LiveReportUpdatedInfo,
-} from '../../Api/Events/LiveReportUpdated';
+import { LiveDataChangedEventArgs, LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
 import {
   IPushPullReport,
   IPushPullDomain,
@@ -32,16 +27,12 @@ import {
 import { ButtonExport } from '../Components/Buttons/ButtonExport';
 import { ButtonLogin } from '../Components/Buttons/ButtonLogin';
 import { ButtonPlay } from '../Components/Buttons/ButtonPlay';
-import { ButtonStop } from '../Components/Buttons/ButtonStop';
 import { ButtonSchedule } from '../Components/Buttons/ButtonSchedule';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { ButtonPause } from '../Components/Buttons/ButtonPause';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import { ButtonNewPage } from '../Components/Buttons/ButtonNewPage';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import newpage from '../../components/icons/newpage';
 import { ButtonLogout } from '../Components/Buttons/ButtonLogout';
-const ExportIcon = icons.export as ReactComponentLike;
 
 interface IPushPullToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<IPushPullToolbarControlComponent> {
@@ -93,12 +84,12 @@ class IPushPullToolbarControlComponent extends React.Component<
   public componentDidMount() {
     if (this.props.Adaptable) {
       this.props.Adaptable.api.eventApi.on(
-        'LiveReportUpdated',
-        (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
-          let liveReportUpdatedInfo: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
+        'LiveDataChanged',
+        (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
+          let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
           if (
-            liveReportUpdatedInfo.LiveReportTrigger == 'Connected' ||
-            liveReportUpdatedInfo.LiveReportTrigger == 'Disconnected'
+            liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
+            liveDataChangedInfo.LiveDataTrigger == 'Disconnected'
           ) {
             this.forceUpdate();
           }

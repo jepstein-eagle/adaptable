@@ -1,6 +1,6 @@
 import { SelectionChangedEventArgs } from './Events/SelectionChanged';
 import { ActionColumnClickedEventArgs } from './Events/ActionColumnClicked';
-import { LiveReportUpdatedEventArgs } from './Events/LiveReportUpdated';
+import { LiveDataChangedEventArgs } from './Events/LiveDataChanged';
 import { ToolbarVisibilityChangedEventArgs } from './Events/ToolbarVisibilityChanged';
 import { ToolbarButtonClickedEventArgs } from './Events/ToolbarButtonClicked';
 import { ThemeChangedEventArgs } from './Events/ThemeChanged';
@@ -154,8 +154,8 @@ export interface EventApi {
   ): () => void;
 
   on(
-    eventName: 'LiveReportUpdated',
-    callback: (liveReportpdatedEventArgs: LiveReportUpdatedEventArgs) => void
+    eventName: 'LiveDataChanged',
+    callback: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void
   ): () => void;
 
   /**
@@ -177,7 +177,7 @@ export interface EventApi {
       | 'ColumnStateChanged'
       | 'ToolbarButtonClicked'
       | 'ToolbarVisibilityChanged'
-      | 'LiveReportUpdated'
+      | 'LiveDataChanged'
       | 'AdaptableReady',
     data?: any
   ): Promise<any>;

@@ -12,7 +12,7 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import { LiveReport } from './Events/LiveReportUpdated';
+import { LiveReport } from './Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { CellSummaryOperationDefinition } from '../PredefinedConfig/CellSummaryState';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';

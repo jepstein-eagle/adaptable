@@ -1,9 +1,4 @@
-import {
-  ExportDestination,
-  MathOperation,
-  MessageType,
-  LiveReportTrigger,
-} from '../../PredefinedConfig/Common/Enums';
+import { MathOperation, MessageType } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -2590,9 +2585,9 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             const actionTyped = action as SystemRedux.ReportStartLiveAction;
             console.log('do we send');
             // fire the Live Report event for Export Started
-            adaptable.ReportService.PublishLiveReportUpdatedEvent(
+            adaptable.ReportService.PublishLiveLiveDataChangedEvent(
               actionTyped.ReportDestination,
-              LiveReportTrigger.ExportStarted
+              'LiveDataStarted'
             );
             // set livereport on
             //  adaptable.api.internalApi.setLiveReportRunningOn();
@@ -2605,9 +2600,9 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
 
             let ret = next(action);
             // fire the Live Report event for Export Stopped
-            adaptable.ReportService.PublishLiveReportUpdatedEvent(
+            adaptable.ReportService.PublishLiveLiveDataChangedEvent(
               actionTyped.ReportDestination,
-              LiveReportTrigger.ExportStopped
+              'LiveDataStopped'
             );
             // set livereport off
             //   adaptable.api.internalApi.setLiveReportRunningOff();

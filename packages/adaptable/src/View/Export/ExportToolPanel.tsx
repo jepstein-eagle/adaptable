@@ -25,13 +25,11 @@ import { ReactComponentLike } from 'prop-types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
-import {
-  LiveReport,
-  LiveReportUpdatedInfo,
-  LiveReportUpdatedEventArgs,
-} from '../../Api/Events/LiveReportUpdated';
+
 import { ButtonSchedule } from '../Components/Buttons/ButtonSchedule';
 import ObjectFactory from '../../Utilities/ObjectFactory';
+import { LiveDataChangedEventArgs } from '../../types';
+import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
 
 const ExportIcon = icons.export as ReactComponentLike;
 
@@ -55,7 +53,7 @@ interface ExportToolPanelComponentProps
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
   CurrentReport: string | undefined;
-  LiveReports: LiveReport[];
+  //LiveReports: LiveReport[];
 }
 
 interface ExportToolPanelComponentState {
@@ -74,12 +72,12 @@ class ExportToolPanelComponent extends React.Component<
   public componentDidMount() {
     if (this.props.Adaptable) {
       this.props.Adaptable.api.eventApi.on(
-        'LiveReportUpdated',
-        (liveReportUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
-          let liveReportUpdatedInfo: LiveReportUpdatedInfo = liveReportUpdatedEventArgs.data[0].id;
+        'LiveDataChanged',
+        (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
+          let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
           if (
-            liveReportUpdatedInfo.LiveReportTrigger == 'Connected' ||
-            liveReportUpdatedInfo.LiveReportTrigger == 'Disconnected'
+            liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
+            liveDataChangedInfo.LiveDataTrigger == 'Disconnected'
           ) {
             this.forceUpdate();
           }
@@ -122,6 +120,7 @@ class ExportToolPanelComponent extends React.Component<
     };
 
     let openfinExcelMenuItem;
+    /*
     if (
       this.props.LiveReports.find(
         x => x.Report == currentReport && x.ReportDestination == ExportDestination.OpenfinExcel
@@ -138,6 +137,7 @@ class ExportToolPanelComponent extends React.Component<
         label: 'Start Live Openfin Excel',
       };
     }
+*/
 
     let isGlueLiveReport: boolean = this.props.Adaptable.ReportService.IsReportLiveReport(
       currentReport,

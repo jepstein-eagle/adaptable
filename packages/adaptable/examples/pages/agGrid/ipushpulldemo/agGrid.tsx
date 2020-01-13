@@ -15,9 +15,9 @@ import ipushpull from 'ipushpull-js';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
 import {
-  LiveReportUpdatedEventArgs,
-  LiveReportUpdatedInfo,
-} from '../../../../src/Api/Events/LiveReportUpdated';
+  LiveDataChangedEventArgs,
+  LiveDataChangedInfo,
+} from '../../../../src/Api/Events/LiveDataChanged';
 
 ipushpull.config.set({
   api_secret: '',
@@ -63,14 +63,13 @@ function InitAdaptableDemo() {
     tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, tradeCount);
   }
 
-  adaptableApi.eventApi.on(
-    'LiveReportUpdated',
-    (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
-      let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
+  adaptableApi.eventApi.on('LiveDataChanged', (eventArgs: LiveDataChangedEventArgs) => {
+    let eventData: LiveDataChangedInfo = eventArgs.data[0].id;
+    if (eventData.ReportDestination == 'iPushPull') {
       console.log('got an event');
       console.log(eventData);
     }
-  );
+  });
 }
 
 let demoConfig: PredefinedConfig = {

@@ -68,20 +68,20 @@ import { BaseSchedule } from './Common/Schedule';
  * }
  *
  *  ```
- * You are also able to listen to iPushPull-related changes by subscribing to the `LiveReportUpdated` event (learn more [here](_api_events_livereportupdated_.livereportupdatedeventargs.html)  )
+ * You are also able to listen to iPushPull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](_api_events_livereportupdated_.livereportupdatedeventargs.html)  )
  *
- * This event contains a `ExportDestination` property which you can check whether it equals 'iPushPull'.
+ * This event contains a `ReportDestination` property which you can check whether it equals 'iPushPull'.
  *
- * The event also includes a `trigger` property which will tell you what caused the event to fire (e.g. connected, dataupdated etc.) as well as providing details of the current live reports.
+ * The event also includes a `trigger` property which will tell you what caused the event to fire (e.g. connected, dataupdated etc.) as well as providing details of the relevant report that has been stopped / started / updated.
  *
- *  **Example: Subscribing to the 'LiveReportUpdated' event**
+ *  **Example: Subscribing to the 'LiveDataChanged' event**
  *
  * ```ts
  * adaptableApi.eventApi.on(
- *    'LiveReportUpdated',
- *      (eventArgs: LiveReportUpdatedEventArgs) => {
- *        let reportUpdatedInfo: LiveReportUpdatedInfo = eventArgs.data[0].id;
- *        if (eventData.ExportDestination === 'iPushPull') {
+ *    'LiveDataChanged',
+ *      (eventArgs: LiveDataChangedEventArgs) => {
+ *        let reportUpdatedInfo: LiveDataChangedInfo = eventArgs.data[0].id;
+ *         if (eventData.ReportDestination == 'iPushPull') {
  *            // do something...
  *        }
  *    }
