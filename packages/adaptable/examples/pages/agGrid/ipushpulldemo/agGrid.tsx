@@ -78,6 +78,7 @@ let demoConfig: PredefinedConfig = {
     Username: process.env.IPUSHPULL_USERNAME,
     Password: process.env.IPUSHPULL_PASSWORD,
     ThrottleTime: 5000,
+    AutoLogin: true,
   },
 
   FlashingCell: {
@@ -114,7 +115,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'Alert'],
+    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'Alert', 'IPushPull'],
   },
 };
 

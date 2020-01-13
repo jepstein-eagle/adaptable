@@ -8,13 +8,23 @@ import { BaseSchedule } from './Common/Schedule';
  *
  * This state is created by the user / developer at design time and injected into Adaptable as Predefined Config
  *
- * If iPushPull state is provided, then Adaptable will include an 'Export to iPushPull' option in the Export Toolbar.
+ * If iPushPull state is provided, then an iPushPull Toolbar will be available.
  *
- * If this option is selected, Adaptable will show iPushPull login and domain-page retrieval screens.
+ * If you have `AutoLogin` set to true then AdapTable will try to log you in automatically; otherwise the toolbar will display a login button that when clicked will open the Login popup.
+ *
+ * Within the iPushPull Toolbar there are options to:
+ *
+ * - Send a Snapshot (one-off) report to iPushPull
+ *
+ * - Send 'Live Data' to iPushPull so that it updates in line with changes in AdapTable
+ *
+ * - Create a schedule so that data will get exported to iPushPull at a particular time / date
+ *
+ * - Add a new iPushPull page
  *
  * To use iPushPull you will need to have your own iPushPull username and login credentials.
  *
- * However you will automatically use Adaptable credentials (i.e. the `api_secret` and `api_key` properties), so please **always use the config as set in the example below**.
+ * However you will automatically use AdapTable's credentials (i.e. the `api_secret` and `api_key` properties), so please **always use the config as set in the example below**.
  *
  * **iPushPull Predefined Config Example**
  *
@@ -46,14 +56,14 @@ import { BaseSchedule } from './Common/Schedule';
  * const adaptableOptions: AdaptableOptions = {
  *   .........
  *   predefinedConfig: {
- *      Partner: {
- *        iPushPull: {
- *          iPushPullInstance: ipushpull,  // object created above
- *          Username: [YOUR IPUSHPULL USERNAME], // optional, saves being keyed each time
- *          Password: [YOUR IPUSHPULL PASSWORD], // optional, save sbeing keyed each time
- *        },
+ *      IPushPull: {
+ *        iPushPullInstance: ipushpull,  // object created above
+ *        Username: [YOUR IPUSHPULL USERNAME], // optional, saves being keyed each time
+ *        Password: [YOUR IPUSHPULL PASSWORD], // optional, save sbeing keyed each time
+ *        ThrottleTime: 5000,
+ *        AutoLogin: true,
  *      },
- *    }
+ *    },
  *  };
  * }
  *
@@ -103,19 +113,29 @@ export interface IPushPullState extends DesignTimeState {
    */
   ThrottleTime?: number;
 
-  IPushPullSchedules: IPushPullSchedule[];
+  /**
+   * Whether AdapTavle will try log you in to iPushPull automatically at start-up
+   *
+   * **Default Value: false**
+   */
+  AutoLogin?: boolean;
+
+  /**
+   * Any iPushPull Reports that should be sent according to Schedules sent by you.
+   */
+  IPushPullSchedules?: IPushPullSchedule[];
 
   // internal - would like not to save if possible...
-  IsIPushPullAvailable: boolean;
-  IsIPushPullRunning: boolean;
-  IPushPullDomainsPages: IPushPullDomain[];
+  IsIPushPullAvailable?: boolean;
+  IsIPushPullRunning?: boolean;
+  IPushPullDomainsPages?: IPushPullDomain[];
   IPushPullLoginErrorMessage?: string;
   CurrentLiveIPushPullReport?: IPushPullReport;
 }
 
 export interface IPushPullSchedule extends BaseSchedule {
   IPushPullReport: IPushPullReport;
-  DataTransmission: 'Snapshot' | 'Live Data';
+  Transmission: 'Snapshot' | 'Live Data';
 }
 
 export interface IPushPullReport extends AdaptableObject {
@@ -125,18 +145,21 @@ export interface IPushPullReport extends AdaptableObject {
 }
 
 /**
- * Describes an IPushPull folder / page
+ * Internal object that maps an IPushPull Domain object
  */
 export interface IPushPullDomain {
   /**
-   * the Name of the Domain (or Folder)
+   * the Name of the Domain / Folder
    */
   Name: string;
 
+  /**
+   * the Id of the Folder
+   */
   FolderId: number;
 
   /**
-   * The names of the pages within the Domain (Folder)
+   * The names of the pages within the (Folder)
    */
   Pages: string[];
 }

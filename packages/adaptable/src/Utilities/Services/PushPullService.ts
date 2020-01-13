@@ -51,8 +51,10 @@ export class PushPullService implements IPushPullService {
           // set that it is available
           this.adaptable.api.iPushPullApi.setIPushPullAvailableOn();
 
-          let autoLogin: boolean = false;
-          // autoLogin = true;
+          let autoLogin: boolean = this.adaptable.api.iPushPullApi.getAutoLogin();
+          console.log('auto login');
+          console.log(autoLogin);
+
           if (autoLogin) {
             let userName:
               | string

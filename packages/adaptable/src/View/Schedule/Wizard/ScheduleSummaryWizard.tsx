@@ -62,7 +62,7 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
           { Key: 'Page', Value: (this.props.Data as IPushPullSchedule)!.IPushPullReport.Page },
           {
             Key: 'Export As',
-            Value: (this.props.Data as IPushPullSchedule)!.DataTransmission,
+            Value: (this.props.Data as IPushPullSchedule)!.Transmission,
           },
         ];
         keyValuePairs.push(...iPushPullKVP);

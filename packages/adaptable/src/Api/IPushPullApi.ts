@@ -22,6 +22,8 @@ export interface IPushPullApi {
   getIPushPullUsername(): string | undefined;
   getIPushPullPassword(): string | undefined;
 
+  getAutoLogin(): boolean | undefined;
+
   getCurrentLiveIPushPullReport(): IPushPullReport | undefined;
 
   sendSnapshot(iiPushPullReport: IPushPullReport): void;

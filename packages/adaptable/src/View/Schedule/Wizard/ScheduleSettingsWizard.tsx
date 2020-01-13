@@ -44,7 +44,7 @@ export interface ScheduleSettingsWizardState {
   Page: string;
   Folder: string;
   AvailablePages: string[];
-  DataTransmission?: 'Snapshot' | 'Live Data';
+  Transmission?: 'Snapshot' | 'Live Data';
 }
 
 export class ScheduleSettingsWizard
@@ -96,9 +96,9 @@ export class ScheduleSettingsWizard
         this.props.Data!.ScheduleType === ScheduleType.iPushPull
           ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
           : undefined,
-      DataTransmission:
+      Transmission:
         this.props.Data!.ScheduleType === ScheduleType.iPushPull
-          ? (this.props.Data as IPushPullSchedule)!.DataTransmission
+          ? (this.props.Data as IPushPullSchedule)!.Transmission
           : undefined,
       AvailablePages:
         this.props.Data!.ScheduleType === ScheduleType.iPushPull
@@ -217,7 +217,7 @@ export class ScheduleSettingsWizard
 
                 <Dropdown
                   disabled={allReports.length == 0}
-                  style={{ minWidth: 160 }}
+                  style={{ minWidth: 300 }}
                   options={availableReports}
                   className="ab-DashboardToolbar__Export__select"
                   placeholder="Select Report"
@@ -249,7 +249,7 @@ export class ScheduleSettingsWizard
                 <HelpBlock marginBottom={1}>Select a Report to Export</HelpBlock>
                 <Dropdown
                   disabled={allReports.length == 0}
-                  style={{ minWidth: 160 }}
+                  style={{ minWidth: 300 }}
                   options={availableReports}
                   className="ab-DashboardToolbar__Export__select"
                   placeholder="Select Report"
@@ -267,7 +267,7 @@ export class ScheduleSettingsWizard
 
                 <Dropdown
                   disabled={availableFolders.length == 0}
-                  style={{ minWidth: 160 }}
+                  style={{ minWidth: 300 }}
                   options={availableFolders}
                   className="ab-DashboardToolbar__Export__select"
                   onChange={(folder: string) => this.onFolderChanged(folder)}
@@ -281,7 +281,7 @@ export class ScheduleSettingsWizard
 
                 <Dropdown
                   disabled={allReports.length == 0}
-                  style={{ minWidth: 160 }}
+                  style={{ minWidth: 300 }}
                   options={this.state.AvailablePages}
                   className="ab-DashboardToolbar__Export__select"
                   placeholder="Select Page"
@@ -301,14 +301,14 @@ export class ScheduleSettingsWizard
                     marginRight={3}
                     marginLeft={2}
                     value="Snapshot"
-                    checked={this.state.DataTransmission === 'Snapshot'}
+                    checked={this.state.Transmission === 'Snapshot'}
                     onChange={(_, e: any) => this.onScheduleTypeChanged(e)}
                   >
                     Snapshot (one off report)
                   </Radio>
                   <Radio
                     value="Live Data"
-                    checked={this.state.DataTransmission === 'Live Data'}
+                    checked={this.state.Transmission === 'Live Data'}
                     onChange={(_, e: any) => this.onScheduleTypeChanged(e)}
                   >
                     Live Data (real-time updates)
@@ -417,7 +417,7 @@ export class ScheduleSettingsWizard
   private onScheduleTypeChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
 
-    this.setState({ DataTransmission: e.value } as ScheduleSettingsWizardState, () =>
+    this.setState({ Transmission: e.value } as ScheduleSettingsWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
@@ -464,7 +464,7 @@ export class ScheduleSettingsWizard
           .Data as IPushPullSchedule)!.IPushPullReport.ReportName = this.state.IPushPullReportName;
         (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder = this.state.Folder;
         (this.props.Data as IPushPullSchedule)!.IPushPullReport.Page = this.state.Page;
-        (this.props.Data as IPushPullSchedule)!.DataTransmission = this.state.DataTransmission;
+        (this.props.Data as IPushPullSchedule)!.Transmission = this.state.Transmission;
 
         break;
     }

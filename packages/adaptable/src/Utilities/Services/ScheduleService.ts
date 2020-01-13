@@ -157,11 +157,11 @@ export class ScheduleService implements IScheduleService {
     if (date != null) {
       var exportJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
         // we need to go through Redux as the flow is always Redux => Adaptable Store => api
-        if (iPushPullSchedule.DataTransmission == 'Snapshot') {
+        if (iPushPullSchedule.Transmission == 'Snapshot') {
           this.adaptable.api.internalApi.dispatchReduxAction(
             IPushPullRedux.IPushPullSendSnapshot(iPushPullSchedule.IPushPullReport)
           );
-        } else if (iPushPullSchedule.DataTransmission == 'Live Data') {
+        } else if (iPushPullSchedule.Transmission == 'Live Data') {
           this.adaptable.api.internalApi.dispatchReduxAction(
             IPushPullRedux.IPushPullStartLiveData(iPushPullSchedule.IPushPullReport)
           );

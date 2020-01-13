@@ -24,6 +24,10 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     return this.getIPushPullState().Password;
   }
 
+  public getAutoLogin(): boolean | undefined {
+    return this.getIPushPullState().AutoLogin;
+  }
+
   public getCurrentLiveIPushPullReport(): IPushPullReport | undefined {
     return this.getIPushPullState().CurrentLiveIPushPullReport;
   }

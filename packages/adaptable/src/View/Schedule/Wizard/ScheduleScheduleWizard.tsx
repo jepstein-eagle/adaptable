@@ -66,7 +66,7 @@ export class ScheduleScheduleWizard
           <>
             <Flex flexDirection="column" padding={1}>
               <HelpBlock marginBottom={1} marginTop={1}>
-                Choose either a One Off Date or a series of recurring days
+                Choose to run the Schedule on a One Off Date or on a series of Recurring Days
               </HelpBlock>
               <Flex flex={7} flexDirection="row" alignItems="center">
                 <Radio
@@ -87,7 +87,7 @@ export class ScheduleScheduleWizard
                 </Radio>
               </Flex>
               {this.state.IsRecurringDate ? (
-                <Flex flex={7} flexDirection="row" alignItems="center">
+                <Flex flex={7} marginTop={2} flexDirection="row" alignItems="center">
                   <Checkbox
                     marginLeft={2}
                     value={DayOfWeek.Monday}
@@ -167,7 +167,7 @@ export class ScheduleScheduleWizard
                   </HelpBlock>
 
                   <Input
-                    style={{ maxWidth: 400 }}
+                    style={{ maxWidth: 300 }}
                     type="date"
                     placeholder="Date"
                     onChange={(x: SyntheticEvent) => this.onOneOffDateChanged(x)}
@@ -180,6 +180,7 @@ export class ScheduleScheduleWizard
               </HelpBlock>
               <Dropdown
                 placeholder="select"
+                style={{ minWidth: 300 }}
                 value={this.state.Hour}
                 onChange={(value: any) => this.onHourChanged(value)}
                 options={hours}
@@ -189,6 +190,7 @@ export class ScheduleScheduleWizard
               </HelpBlock>
               <Dropdown
                 placeholder="select"
+                style={{ minWidth: 300 }}
                 value={this.state.Minute}
                 onChange={(value: any) => this.onMinuteChanged(value)}
                 options={minutes}

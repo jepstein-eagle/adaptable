@@ -183,6 +183,7 @@ export const IPushPullLiveReportClear = (): IPushPullLiveReportClearAction => ({
 
 const initialFilterState: IPushPullState = {
   IPushPullSchedules: EMPTY_ARRAY,
+  AutoLogin: false,
   IsIPushPullAvailable: false,
   IsIPushPullRunning: false,
   IPushPullDomainsPages: EMPTY_ARRAY,

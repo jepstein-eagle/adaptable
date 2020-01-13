@@ -45,7 +45,7 @@ export class ScheduleEntityRow extends React.Component<
           '/' +
           iPushPullSchedule.IPushPullReport.Page +
           ' - ' +
-          iPushPullSchedule.DataTransmission +
+          iPushPullSchedule.Transmission +
           ')';
         break;
     }

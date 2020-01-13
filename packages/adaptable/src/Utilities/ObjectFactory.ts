@@ -341,7 +341,7 @@ export function CreateEmptyIPushPullSchedule(): IPushPullSchedule {
     ScheduleType: ScheduleType.iPushPull,
     Schedule: CreateEmptySchedule(),
     IPushPullReport: CreateEmptyIPushPullReport(),
-    DataTransmission: 'Snapshot',
+    Transmission: 'Snapshot',
   };
 }
 
@@ -360,7 +360,7 @@ export function CreateIPushPullSchedule(iPushPullReport: IPushPullReport): IPush
     ScheduleType: ScheduleType.iPushPull,
     Schedule: CreateEmptySchedule(),
     IPushPullReport: iPushPullReport,
-    DataTransmission: 'Snapshot',
+    Transmission: 'Snapshot',
   };
 }
 
