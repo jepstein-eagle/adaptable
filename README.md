@@ -55,7 +55,7 @@ Please contact the [Adaptable Tools Sales Team](mailto:sales@adaptabletools.com)
 
 The [Adaptable Help Site](https://adaptabletools.zendesk.com/hc/en-us) contains lots of useful material including User, Admin and Getting Started Guides, FAQs, Videos and Code Examples.
 
-Full, comprehensive, developer documentation is available at [Adaptable Developer Documentation](https://api.adaptableblotter.com/index.html)
+Full, comprehensive, developer documentation is available at [AdapTable Developer Documentation](https://api.adaptableblotter.com/index.html)
 
 ## Further Information
 

@@ -18,7 +18,7 @@ import { Report } from '../../PredefinedConfig/ExportState';
  * adaptableApi.eventApi.on(
  *    'LiveDataChanged',
  *      (eventArgs: LiveDataChangedEventArgs) => {
- *        let reportUpdatedInfo: LiveDataChangedInfo = eventArgs.data[0].id;
+ *        let liveDataChangedInfo: LiveDataChangedInfo = eventArgs.data[0].id;
  *        // do something...
  *   }
  *  );

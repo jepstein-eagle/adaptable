@@ -29,6 +29,8 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  *
  * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering Custom toolbars)
  *
+ * - **LiveDataChanged** - when something happens related to the various 'live reports' that AdapTable offers
+ *
  * - **AdaptableReady** - fired whenever Adaptable is initialised and ready for use (has no Args class)
  *
  * Note: Adaptable uses the [FDC3 Standard for messaging](https://fdc3.finos.org/docs/1.0/context-intro) so to get hold of the data packaged in the event, you will need to access the xxxArgs.data[0].id property.
@@ -153,6 +155,15 @@ export interface EventApi {
     callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
   ): () => void;
 
+  /**
+   * Event fired whenever **a change occurs relating to live reports / data**
+   *
+   * Used in conjunction with AdapTable's partners OpenFin, iPushPull or Glue42
+   *
+   * @param eventName LiveDataChanged - use as: adaptableApi.eventApi.on('LiveDataChanged', (args: LiveDataChangedEventArgs) => { .....[do stuff]...})
+   *
+   * @param callback LiveDataChangedEventArgs which includes details of what triggered the event and the live report which is affected.
+   */
   on(
     eventName: 'LiveDataChanged',
     callback: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void

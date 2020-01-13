@@ -68,11 +68,11 @@ import { BaseSchedule } from './Common/Schedule';
  * }
  *
  *  ```
- * You are also able to listen to iPushPull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](_api_events_livereportupdated_.livereportupdatedeventargs.html)  )
+ * You are also able to listen to iPushPull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](/_api_events_livedatachanged_.livedatachangedeventargs.html) ).
  *
  * This event contains a `ReportDestination` property which you can check whether it equals 'iPushPull'.
  *
- * The event also includes a `trigger` property which will tell you what caused the event to fire (e.g. connected, dataupdated etc.) as well as providing details of the relevant report that has been stopped / started / updated.
+ * The event also includes a `LiveDataTrigger` property which will tell you what caused the event to fire (e.g. connected, dataupdated etc.), and a `LiveReport` property which provides the report affected.
  *
  *  **Example: Subscribing to the 'LiveDataChanged' event**
  *
@@ -80,8 +80,8 @@ import { BaseSchedule } from './Common/Schedule';
  * adaptableApi.eventApi.on(
  *    'LiveDataChanged',
  *      (eventArgs: LiveDataChangedEventArgs) => {
- *        let reportUpdatedInfo: LiveDataChangedInfo = eventArgs.data[0].id;
- *         if (eventData.ReportDestination == 'iPushPull') {
+ *        let liveDataChangedInfo: LiveDataChangedInfo = eventArgs.data[0].id;
+ *         if (liveDataChangedInfo.ReportDestination == 'iPushPull') {
  *            // do something...
  *        }
  *    }
@@ -114,7 +114,7 @@ export interface IPushPullState extends DesignTimeState {
   ThrottleTime?: number;
 
   /**
-   * Whether AdapTavle will try log you in to iPushPull automatically at start-up
+   * Whether AdapTable will try log you in to iPushPull automatically at start-up
    *
    * **Default Value: false**
    */

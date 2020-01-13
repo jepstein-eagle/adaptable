@@ -25,7 +25,7 @@ module.exports = {
   excludeExternals: true,
   excludeNotExported: true,
   readme: 'HelpREADME.md',
-  name: 'Adaptable Developer Documentation',
+  name: 'AdapTable Developer Documentation',
   ignoreCompilerErrors: true,
   plugin: 'none',
   listInvalidSymbolLinks: true,
