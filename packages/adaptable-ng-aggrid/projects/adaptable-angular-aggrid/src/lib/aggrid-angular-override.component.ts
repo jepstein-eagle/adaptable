@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 
-import { ComponentUtil, Grid } from 'ag-grid-community';
+import { ComponentUtil, Grid } from '@ag-grid-community/all-modules';
 
 import {
   AgGridAngular,
   AngularFrameworkOverrides,
   AngularFrameworkComponentWrapper,
   AgGridColumn,
-} from 'ag-grid-angular';
-import Adaptable from '../adaptable/src/agGrid';
-import { AdaptableApi } from '../adaptable/types';
+} from '@ag-grid-community/angular';
+import Adaptable from '@adaptabletools/adaptable/src/agGrid';
+import { AdaptableApi } from '@adaptabletools/adaptable/types';
 
 @Component({
   selector: 'ag-grid-override',
@@ -35,9 +35,10 @@ export class AgGridOverrideComponent extends AgGridAngular {
     (this as any).gridParams = {
       globalEventListener: (this as any).globalEventListener.bind(this),
       frameworkOverrides: (this as any).angularFrameworkOverrides,
-      seedBeanInstances: {
+      providedBeanInstances: {
         frameworkComponentWrapper: (this as any).frameworkComponentWrapper,
       },
+      modules: (this.modules || []) as any,
     };
 
     if (this.columns && this.columns.length > 0) {

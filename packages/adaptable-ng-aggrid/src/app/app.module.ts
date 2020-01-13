@@ -1,7 +1,7 @@
 // src/app/app.module.ts
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AgGridModule } from 'ag-grid-angular';
+import { AgGridModule } from '@ag-grid-community/angular';
 import { AppComponent } from './app.component';
 
 import { RedComponentComponent } from './red-component/red-component.component';

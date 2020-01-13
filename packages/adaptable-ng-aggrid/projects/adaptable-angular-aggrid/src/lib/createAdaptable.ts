@@ -1,16 +1,25 @@
-import { AdaptableOptions } from '../adaptable/types';
+import { AdaptableOptions } from '@adaptabletools/adaptable/types';
 
-import Adaptable from '../adaptable/src/agGrid';
-import { Grid, GridOptions } from 'ag-grid-community';
+import Adaptable from '@adaptabletools/adaptable/src/agGrid';
+import { Grid, GridOptions, Module } from '@ag-grid-community/all-modules';
+
+import {
+  AllCommunityModules,
+  ModuleRegistry,
+} from '@ag-grid-community/all-modules';
+
+ModuleRegistry.registerModules(AllCommunityModules);
 
 export function createAdaptable({
   adaptableOptions,
   adaptableContainerId,
   gridContainerId,
+  modules,
 }: {
   adaptableOptions: AdaptableOptions;
   adaptableContainerId: string;
   gridContainerId: string;
+  modules?: Module[];
 }) {
   return (gridOptions: GridOptions, gridParams: any) => {
     return new Adaptable(
@@ -25,10 +34,12 @@ export function createAdaptable({
       },
       true,
       {
-        instantiateGrid: (vendorContainer: HTMLElement, gridOptions) => {
-          return new Grid(vendorContainer, gridOptions, gridParams);
+        instantiateGrid: (vendorContainer: HTMLElement, theGridOptions) => {
+          gridParams.modules = modules;
+          return new Grid(vendorContainer, theGridOptions, gridParams);
         },
-      }
+      },
+      true
     );
   };
 }

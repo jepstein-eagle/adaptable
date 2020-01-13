@@ -1,5 +1,15 @@
 #!/usr/bin/env node
-const argv = require('yargs').argv;
+const argv = require('yargs')
+  .option('ignoreDep', {
+    type: 'boolean',
+    description: 'Ignore deps',
+  })
+  .options('distFolder', {
+    type: 'string',
+  })
+  .options('module', {
+    type: 'string',
+  }).argv;
 
 const update = require('../updatePackageJson').update;
 
@@ -9,4 +19,7 @@ if (!abmodule) {
   throw 'Need to specify a module';
 }
 
-update(abmodule);
+update(abmodule, {
+  distFolder: argv.distFolder,
+  ignoreDep: argv.ignoreDep,
+});

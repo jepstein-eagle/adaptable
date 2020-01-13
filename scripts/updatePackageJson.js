@@ -1,16 +1,17 @@
 const resolve = require('path').resolve;
 const writeFile = require('fs').writeFile;
+const chalk = require('chalk');
 
-const update = currentModulePackagePath => {
+const defaults = {
+  ignoreDep: false,
+};
+const update = (currentModulePackagePath, config = defaults) => {
+  const ignoreDep = config.ignoreDep || defaults.ignoreDep;
+
   const topLevelPackagePath = resolve(__dirname, '../package.json');
-  const corePackagePath = resolve(__dirname, '../packages/adaptable/package.json');
-
   const topLevelJSON = require(topLevelPackagePath);
 
-  const coreJSON = require(corePackagePath);
-
   const currentModuleFolder = resolve(__dirname, '../', currentModulePackagePath);
-
   const currentModuleJSON = require(resolve(currentModuleFolder, './package.json'));
 
   const toDelete = ['devDependencies', 'scripts', 'private'];
@@ -22,14 +23,22 @@ const update = currentModulePackagePath => {
   currentModuleJSON.version = topLevelJSON.version;
 
   // UPDATE DEP to refer to adaptable core with the same version
-  currentModuleJSON.dependencies = {
-    ...currentModuleJSON.dependencies,
-    '@adaptabletools/adaptable': `${topLevelJSON.version}`,
-  };
+  if (!ignoreDep) {
+    currentModuleJSON.dependencies = {
+      ...currentModuleJSON.dependencies,
+      '@adaptabletools/adaptable': `${topLevelJSON.version}`,
+    };
+  }
+
+  delete currentModuleJSON.scripts;
 
   const content = JSON.stringify(currentModuleJSON, null, 2);
 
-  const currentModuleDistPackagePath = resolve(currentModuleFolder, './dist', 'package.json');
+  const currentModuleDistPackagePath = config.distFolder
+    ? resolve(__dirname, '../', config.distFolder, 'package.json')
+    : resolve(currentModuleFolder, './dist', 'package.json');
+
+  console.log(currentModuleDistPackagePath);
 
   writeFile(currentModuleDistPackagePath, content, 'utf8', err => {
     if (err) {
