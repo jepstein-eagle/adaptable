@@ -78,7 +78,7 @@ import checkBox from './check-box';
 import checkBoxOutline from './check-box-outline';
 import tabUnselected from './tab-unselected';
 import CloudUpload from './cloud-upload';
-import iPushPull from './iPushPull';
+import iPushPull from './ipushpull';
 import FolderOpen from './folder-open';
 import Folder from './folder';
 import FolderShared from './folder-shared';

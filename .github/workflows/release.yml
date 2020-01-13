@@ -80,8 +80,8 @@ jobs:
       env:
         CI: true
 
-    - name: Building nocode
-      run: cd packages/adaptable-nocode && npm run build-prod-no-cleanup
+    # - name: Building nocode
+    #   run: cd packages/adaptable-nocode && npm run build-prod-no-cleanup
 
 
     - name: Executing npm install in plugins/charts
