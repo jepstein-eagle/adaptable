@@ -168,7 +168,7 @@ export function getEntitlementAccessLevelForStrategy(
 
 export function createFDC3Message(type: string, id: any): AdaptableEventArgs {
   let eventData: AdaptableEventData = {
-    name: 'Adaptable adaptable',
+    name: 'Adaptable Audit Event',
     type: type,
     id: id,
   };

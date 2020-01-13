@@ -12,12 +12,16 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AuditLogEventArgs } from '../../../../src/Api/Events/AuditEvents';
 import { AuditLogEntry } from '../../../../src/Utilities/Interface/AuditLogEntry';
 
+import { TickingDataHelper } from '../../TickingDataHelper';
 var adaptableApi: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(500);
+  const tradeCount: number = 25;
+  const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  const tickingDataHelper = new TickingDataHelper();
+  const useTickingData: boolean = true;
 
   const adaptableOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
@@ -27,41 +31,53 @@ function InitAdaptableDemo() {
 
     auditOptions: {
       auditInternalStateChanges: {
-        auditAsEvent: true,
-        auditToConsole: true,
+        //  auditAsEvent: true,
+        //  auditToConsole: true,
       },
       auditFunctionEvents: {
+        //  auditAsEvent: true,
+        //    auditToConsole: true,
+      },
+      auditTickingDataUpdates: {
         auditAsEvent: true,
         //    auditToConsole: true,
       },
       auditUserStateChanges: {
-        auditAsEvent: true,
-        auditToConsole: true,
+        //  auditAsEvent: true,
+        //  auditToConsole: true,
       },
       auditCellEdits: {
-        auditAsEvent: true,
-        auditToConsole: true,
+        // auditAsEvent: true,
+        //  auditToConsole: true,
       },
     },
   };
 
   adaptableApi = Adaptable.init(adaptableOptions);
 
+  if (useTickingData) {
+    tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 5000, tradeCount);
+  }
+
   adaptableApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {
-    listenToAuditLogEvent('cell edit', auditLogEventArgs);
+    //  listenToAuditLogEvent('cell edit', auditLogEventArgs);
+  });
+  adaptableApi.auditEventApi.on('AuditTickingDataUpdated', auditLogEventArgs => {
+    listenToAuditLogEvent('ticking data', auditLogEventArgs);
   });
   adaptableApi.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
-    listenToAuditLogEvent('function applied', auditLogEventArgs);
+    //   listenToAuditLogEvent('function applied', auditLogEventArgs);
   });
   adaptableApi.auditEventApi.on('AuditStateChanged', auditLogEventArgs => {
-    listenToAuditLogEvent('state changed', auditLogEventArgs);
+    ///   listenToAuditLogEvent('state changed', auditLogEventArgs);
   });
 }
 
 function listenToAuditLogEvent(auditType: string, auditLogEventArgs: AuditLogEventArgs) {
   console.log('audit event received: ' + auditType);
   let auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id;
-  console.log(auditLogEntry);
+  console.log(auditType);
+  console.log(auditLogEventArgs);
 }
 
 export default () => {

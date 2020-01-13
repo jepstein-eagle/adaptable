@@ -58,13 +58,13 @@ export class TickingDataHelper {
         }
 
         if (gridOptionsUpdateRowData) {
-          trade.price = price;
-          trade.bid = bid;
-          trade.ask = ask;
-          trade.bloombergAsk = bloombergAsk;
-          trade.bloombergBid = bloombergBid;
+          //    trade.price = price;
+          //     trade.bid = bid;
+          //     trade.ask = ask;
+          //     trade.bloombergAsk = bloombergAsk;
+          //     trade.bloombergBid = bloombergBid;
           trade.notional = notional;
-          trade.changeOnYear = changeOnYear;
+          //      trade.changeOnYear = changeOnYear;
           gridOptions.api!.updateRowData({ update: [trade] });
         }
 

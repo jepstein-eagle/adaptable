@@ -5,31 +5,31 @@
  *
  * Likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
  *
- * Each Audit message is essentiall a combination of an `AuditTrigger` and an `AuditDestination`, and packaged as a simple JSON object.
+ * Each Audit message is essentially a combination of an `AuditTrigger` and an `AuditDestination`, and packaged as a simple JSON object.
  *
  * You can set as many AuditTriggers as you want, and for each `AuditTrigger`, select as many AuditDestinations as you require.
  *
  * The 5 Audit Triggers are:
  *
- * - **CellEdit** : whenever a cell in AdapTable is changed as a result of user action
+ * - **CellEdit**: whenever a cell in AdapTable is changed as a result of user action
  *
- * - **TickingDataChange**: whenever the data in AdapTable is updated as a result of external action
+ * - **TickingDataUpdate**: whenever the data in AdapTable is updated as a result of external action
  *
- * - **FunctionEvent** : whenever a function in AdapTable is run (e.g. Quick Search run, or an Export applied).
+ * - **FunctionEvent**: whenever an AdapTable function is run (e.g. Quick Search, Smart Edit, Export)
  *
- * - **UserStateChange** : whenever a change is made to the User's state (e.g. selected a new layout)
+ * - **UserStateChange**: whenever a change is made to the User's state (e.g. selected a new layout)
  *
- * - **InternalStateChange** : whenever a change is made to AdapTable's internal state (e.g. new cells selected)
+ * - **InternalStateChange**: whenever a change is made to AdapTable's internal state (e.g. new cells selected)
  *
  * The 4 available Audit Destinations are:
  *
- * - **Http Channel** : If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. he Elastic Stack).
+ * - **Http Channel**: If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. he Elastic Stack).
  *
- * - **Console** : Audits messages to the console - useful for testing, support and debug purposes
+ * - **Console**: Audits messages to the console - useful for testing, support and debug purposes
  *
- * - **Alert** : If you set this option for any Trigger, then you can should also choose the Type (e.g. 'Success', 'Info' etc) and whether to show it as a Popup.
+ * - **Alert**: If you set this option for any Trigger, then you can should also choose the Type (e.g. 'Success', 'Info' etc) and whether to show it as a Popup.
  *
- * - **Event** : If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](_api_auditeventapi_.auditeventapi.html)
+ * - **Event**: If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](_api_auditeventapi_.auditeventapi.html)
  *
  * **The default for each option for each Audit Type is false** - meaning that audit is **only triggered** if you set at least one destination for one trigger to true.
  *
@@ -52,7 +52,7 @@
  *    auditToHttpChannel: true,
  *    auditAsAlert: true,
  *  },
- * auditTickingDataChanges:{
+ * auditTickingDataUpdates:{
  *    auditToConsole: true,
  * }
  *  pingInterval: 50,
@@ -112,7 +112,7 @@ export interface AuditOptions {
    *
    * **Default Value: all destinations are false**
    */
-  auditTickingDataChanges?: AuditDestinationOptions;
+  auditTickingDataUpdates?: AuditDestinationOptions;
 
   /**
    * How often (in seconds) the Audit Log should ping to check that the listening service is up and running (if its been set).

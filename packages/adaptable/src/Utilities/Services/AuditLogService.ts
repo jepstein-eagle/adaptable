@@ -27,7 +27,7 @@ export class AuditLogService implements IAuditLogService {
   public isAuditFunctionEventsEnabled: boolean;
   public isAuditUserStateChangesEnabled: boolean;
   public isAuditInternalStateChangesEnabled: boolean;
-  public isAuditTickingDataChangesEnabled: boolean;
+  public isAuditTickingDataUpdatesEnabled: boolean;
 
   constructor(adaptable: IAdaptable) {
     this.auditLogQueue = [];
@@ -84,13 +84,13 @@ export class AuditLogService implements IAuditLogService {
     // Ticking Data Changes
     if (
       adaptable.adaptableOptions.auditOptions != null &&
-      adaptable.adaptableOptions.auditOptions.auditTickingDataChanges != null
+      adaptable.adaptableOptions.auditOptions.auditTickingDataUpdates != null
     ) {
-      this.isAuditTickingDataChangesEnabled = this.isAuditOptionEnabled(
-        adaptable.adaptableOptions.auditOptions.auditTickingDataChanges
+      this.isAuditTickingDataUpdatesEnabled = this.isAuditOptionEnabled(
+        adaptable.adaptableOptions.auditOptions.auditTickingDataUpdates
       );
     } else {
-      this.isAuditTickingDataChangesEnabled = false;
+      this.isAuditTickingDataUpdatesEnabled = false;
     }
 
     // Log State
@@ -101,10 +101,11 @@ export class AuditLogService implements IAuditLogService {
     this.isAuditEnabled =
       this.isAuditStateChangesEnabled ||
       this.isAuditFunctionEventsEnabled ||
+      this.isAuditTickingDataUpdatesEnabled ||
       this.isAuditCellEditsEnabled;
 
-    // set up the listener if we are auditing Data Changes
-    if (this.isAuditTickingDataChangesEnabled) {
+    // set up the listener if we are auditing Ticking Data Changes
+    if (this.isAuditTickingDataUpdatesEnabled) {
       this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
         this.handleDataSourceChanged(dataChangedInfo);
       });
@@ -145,7 +146,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditTrigger.CellEdit);
+        this.fireAuditLogEvent(auditLogEntry, AuditTrigger.CellEdit);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -184,7 +185,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditTrigger.UserStateChange);
+        this.fireAuditLogEvent(auditLogEntry, AuditTrigger.UserStateChange);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -211,7 +212,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditTrigger.InternalStateChange);
+        this.fireAuditLogEvent(auditLogEntry, AuditTrigger.InternalStateChange);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -239,7 +240,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditTrigger.FunctionApplied);
+        this.fireAuditLogEvent(auditLogEntry, AuditTrigger.FunctionApplied);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -253,19 +254,19 @@ export class AuditLogService implements IAuditLogService {
   }
 
   private handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
-    if (this.isAuditTickingDataChangesEnabled) {
+    if (this.isAuditTickingDataUpdatesEnabled) {
       let auditLogEntry = this.createAuditLogEntryFromDataChangedInfo(
         dataChangedInfo,
-        AuditTrigger.TickingDataChange
+        AuditTrigger.TickingDataUpdate
       );
 
       let auditDestinationOptions = this.adaptable.adaptableOptions.auditOptions!
-        .auditTickingDataChanges!;
+        .auditTickingDataUpdates!;
       if (auditDestinationOptions.auditToConsole) {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditTrigger.FunctionApplied);
+        this.fireAuditLogEvent(auditLogEntry, AuditTrigger.TickingDataUpdate);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -457,22 +458,25 @@ export class AuditLogService implements IAuditLogService {
     this.adaptable.api.alertApi.displayAlert(alert);
   }
 
-  publishStateChanged(auditLogEntry: AuditLogEntry, auditTrigger: AuditTrigger): void {
-    const stateChangedArgs: AuditLogEventArgs = AdaptableHelper.createFDC3Message(
-      'Audit Log Event',
-      auditTrigger
+  fireAuditLogEvent(auditLogEntry: AuditLogEntry, auditTrigger: AuditTrigger): void {
+    const auditLogEventArgs: AuditLogEventArgs = AdaptableHelper.createFDC3Message(
+      auditTrigger,
+      auditLogEntry
     );
 
     switch (auditTrigger) {
       case AuditTrigger.CellEdit:
-        this.adaptable.api.auditEventApi.emit('AuditCellEdited', stateChangedArgs);
+        this.adaptable.api.auditEventApi.emit('AuditCellEdited', auditLogEventArgs);
+        break;
+      case AuditTrigger.TickingDataUpdate:
+        this.adaptable.api.auditEventApi.emit('AuditTickingDataUpdated', auditLogEventArgs);
         break;
       case AuditTrigger.FunctionApplied:
-        this.adaptable.api.auditEventApi.emit('AuditFunctionApplied', stateChangedArgs);
+        this.adaptable.api.auditEventApi.emit('AuditFunctionApplied', auditLogEventArgs);
         break;
       case AuditTrigger.InternalStateChange:
       case AuditTrigger.UserStateChange:
-        this.adaptable.api.auditEventApi.emit('AuditStateChanged', stateChangedArgs);
+        this.adaptable.api.auditEventApi.emit('AuditStateChanged', auditLogEventArgs);
         break;
     }
   }

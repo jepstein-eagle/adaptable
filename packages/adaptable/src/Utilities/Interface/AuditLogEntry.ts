@@ -9,7 +9,7 @@ export enum AuditTrigger {
   UserStateChange = 'User State Change',
   InternalStateChange = 'Internal State Change',
   FunctionApplied = 'Function Applied',
-  TickingDataChange = 'Ticking Data Change',
+  TickingDataUpdate = 'Ticking Data Update',
   Ping = 'Ping',
 }
 

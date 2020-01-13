@@ -11,6 +11,7 @@ export interface IAuditLogService {
   isAuditEnabled: boolean;
   isAuditStateChangesEnabled: boolean;
   isAuditCellEditsEnabled: boolean;
+  isAuditTickingDataUpdatesEnabled: boolean;
   isAuditFunctionEventsEnabled: boolean;
   isAuditUserStateChangesEnabled: boolean;
   isAuditInternalStateChangesEnabled: boolean;

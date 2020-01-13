@@ -48,7 +48,7 @@ function InitAdaptableDemo() {
       // auditAsAlert: true,
       //  auditToConsole: true,
     },
-    auditTickingDataChanges: {
+    auditTickingDataUpdates: {
       //   auditAsAlert: true,
       //   auditToConsole: true,
     },

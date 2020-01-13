@@ -1187,10 +1187,7 @@ export class Adaptable implements IAdaptable {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2621,6 +2618,7 @@ export class Adaptable implements IAdaptable {
     if (this.AuditLogService.isAuditCellEditsEnabled) {
       this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
     }
+
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
     this.DataService.CreateDataChangedEvent(dataChangedInfo);
 

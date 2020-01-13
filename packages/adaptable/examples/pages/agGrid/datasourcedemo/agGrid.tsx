@@ -9,7 +9,6 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
 import Adaptable from '../../../../src/agGrid';
 import {
   AdaptableOptions,
@@ -43,18 +42,12 @@ function InitAdaptableDemo() {
     auditCellEdits: {
       auditAsAlert: true,
     },
-    auditTickingDataChanges: {
+    auditTickingDataUpdates: {
       auditToConsole: true,
     },
   };
   adaptableOptions.predefinedConfig = demoConfig;
   const adaptableApi = Adaptable.init(adaptableOptions);
-
-  adaptableApi.eventApi
-    .onSearchChanged()
-    .Subscribe((sender, searchChangedArgs) =>
-      listenToSearchChange(adaptableApi, examplesHelper, searchChangedArgs)
-    );
 }
 
 function listenToSearchChange(

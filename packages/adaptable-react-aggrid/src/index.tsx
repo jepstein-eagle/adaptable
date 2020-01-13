@@ -128,6 +128,7 @@ const AdaptableReact = ({
   onToolbarVisibilityChanged,
   onAuditStateChanged,
   onAuditCellEdited,
+  onAuditTickingDataUpdated,
   onAuditFunctionApplied,
 
   onAdaptableReady,
@@ -153,6 +154,7 @@ const AdaptableReact = ({
   onAuditStateChanged?: (auditStateChangedArgs: AuditLogEventArgs) => void;
   onAuditCellEdited?: (auditCellEditedArgs: AuditLogEventArgs) => void;
   onAuditFunctionApplied?: (auditFunctionAppliedArgs: AuditLogEventArgs) => void;
+  onAuditTickingDataUpdated?: (auditTickingDataUpdatedArgs: AuditLogEventArgs) => void;
 
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
@@ -206,6 +208,9 @@ const AdaptableReact = ({
       }
       if (onAuditCellEdited) {
         adaptable.api.auditEventApi.on('AuditCellEdited', onAuditCellEdited);
+      }
+      if (onAuditTickingDataUpdated) {
+        adaptable.api.auditEventApi.on('AuditTickingDataUpdated', onAuditTickingDataUpdated);
       }
       if (onAuditFunctionApplied) {
         adaptable.api.auditEventApi.on('AuditFunctionApplied', onAuditFunctionApplied);
