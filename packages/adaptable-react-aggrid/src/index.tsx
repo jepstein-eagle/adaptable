@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { useState, useEffect, ReactNode, useMemo } from 'react';
-import * as AgGrid from 'ag-grid-community';
-import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import { AdaptableApp } from '../../adaptable/src/View/AdaptableView';
-import Adaptable from '../../adaptable/src/agGrid';
-import { AdaptableApi } from '../../adaptable/types';
+
+import { AdaptableApp } from '@adaptabletools/adaptable/src/View/AdaptableView';
+import Adaptable from '@adaptabletools/adaptable/src/agGrid';
+import { AdaptableApi } from '@adaptabletools/adaptable/types';
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 import {
   AdaptableOptions,
@@ -16,10 +15,36 @@ import {
   SelectionChangedEventArgs,
   ToolbarVisibilityChangedEventArgs,
   LiveReportUpdatedEventArgs,
-} from '../../adaptable/types';
-import { AuditLogEventArgs } from '../../adaptable/src/Api/Events/AuditEvents';
-import { ToolbarButtonClickedEventArgs } from '../../adaptable/src/Api/Events/ToolbarButtonClicked';
-export * from '../../adaptable/types';
+} from '@adaptabletools/adaptable/types';
+import { AuditLogEventArgs } from '@adaptabletools/adaptable/src/Api/Events/AuditEvents';
+import { ToolbarButtonClickedEventArgs } from '@adaptabletools/adaptable/src/Api/Events/ToolbarButtonClicked';
+
+import * as AgGrid from '@ag-grid-community/all-modules';
+import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
+import { ReactComponent } from '@ag-grid-community/react/lib/reactComponent';
+import {
+  Module,
+  FrameworkComponentWrapper,
+  BaseComponentWrapper,
+  WrapableInterface,
+  AllCommunityModules,
+  ModuleRegistry,
+} from '@ag-grid-community/all-modules';
+
+export * from '@adaptabletools/adaptable/types';
+
+import { version } from '../package.json';
+import coreVersion from '@adaptabletools/adaptable/version';
+
+if (version !== coreVersion) {
+  console.warn(`
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!! "@adaptabletools/adaptable-react-aggrid" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+`);
+}
+
+ModuleRegistry.registerModules(AllCommunityModules);
 
 type TypeFactory =
   | string
@@ -46,12 +71,6 @@ class AgGridReactOverride extends AgGridReact {
   public eGridDiv!: HTMLElement;
 
   componentDidMount() {
-    const gridParams = {
-      seedBeanInstances: {
-        agGridReact: this,
-      },
-    };
-
     let gridOptions = this.props.gridOptions || {};
     if (AgGridColumn && (AgGridColumn as any).hasChildColumns(this.props)) {
       gridOptions.columnDefs = (AgGridColumn as any).mapChildColumnDefs(this.props);
@@ -74,18 +93,34 @@ class AgGridReactOverride extends AgGridReact {
   }
 }
 
+class ReactFrameworkComponentWrapper extends BaseComponentWrapper<AgGrid.WrapableInterface>
+  implements FrameworkComponentWrapper {
+  private readonly agGridReact!: AgGridReact;
+
+  constructor(agGridReact: AgGridReact) {
+    super();
+    this.agGridReact = agGridReact;
+  }
+
+  createWrapper(UserReactComponent: { new (): any }): WrapableInterface {
+    return new ReactComponent(UserReactComponent, this.agGridReact as any);
+  }
+}
+
 const createAdaptable = ({
   adaptableOptions,
   gridOptions,
   adaptableContainerId,
   gridContainerId,
   agGridReactWrapperInstance,
+  modules,
 }: {
   adaptableOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
   adaptableContainerId: string;
   gridContainerId: string;
   agGridReactWrapperInstance: AgGridReactOverride;
+  modules?: Module[];
 }): Adaptable => {
   return new Adaptable(
     {
@@ -99,22 +134,27 @@ const createAdaptable = ({
     },
     false,
     {
-      instantiateGrid: (vendorContainer: HTMLElement, gridOptions, { modules }) => {
+      instantiateGrid: (vendorContainer: HTMLElement, gridOptions) => {
         const gridParams = {
-          modules,
-          seedBeanInstances: {
+          providedBeanInstances: {
             agGridReact: agGridReactWrapperInstance,
+            frameworkComponentWrapper: new ReactFrameworkComponentWrapper(
+              agGridReactWrapperInstance
+            ),
           },
+          modules,
         };
         return new AgGrid.Grid(vendorContainer, gridOptions, gridParams);
       },
-    }
+    },
+    true
   );
 };
 
 const AdaptableReact = ({
   adaptableOptions,
   gridOptions,
+  modules,
   tagName,
   agGridTheme,
   render,
@@ -137,6 +177,8 @@ const AdaptableReact = ({
   agGridTheme?: string;
   adaptableOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
+
+  modules?: Module[];
 
   onAdaptableReady?: (api: AdaptableApi) => void;
   onToolbarVisibilityChanged?: (
@@ -171,6 +213,7 @@ const AdaptableReact = ({
         gridContainerId,
         adaptableContainerId,
         agGridReactWrapperInstance,
+        modules,
       });
       if (onAdaptableReady) {
         adaptable.api.eventApi.on('AdaptableReady', () => {

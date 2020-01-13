@@ -6,7 +6,7 @@
   "version": "4.0.1",
   "description": "React version of the powerful data-agnostic HTML5 datagrid add-on that sits on top of the agGrid component and provides all the rich functionality that advanced users expect from their DataGrids and Data Tables",
   "keywords": [],
-  "main": "./adaptable-react-aggrid/src/index.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AdaptableTools/adaptableblotter.git",
@@ -56,6 +56,7 @@
     "collectCoverage": true
   },
   "devDependencies": {
+    "symlink-dir": "^3.1.1",
     "@babel/runtime-corejs2": "^7.4.4",
     "@commitlint/cli": "^7.0.0",
     "@commitlint/config-conventional": "^7.0.1",
@@ -64,9 +65,8 @@
     "@types/react": "^16.8.10",
     "@zeit/next-sass": "^1.0.1",
     "chalk": "^3.0.0",
-    "ag-grid-community": "^21.0.0",
-    "ag-grid-enterprise": "^21.0.0",
-    "ag-grid-react": "^21.0.0",
+    "@ag-grid-community/all-modules": "^22.1.1",
+    "@ag-grid-community/react": "^22.1.1",
     "babel-eslint": "^10.0.1",
     "colors": "^1.1.2",
     "commitizen": "^2.9.6",
@@ -104,9 +104,8 @@
     "mathjs": "^5.1.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "ag-grid-community": "^21.0.0",
-    "ag-grid-enterprise": "^21.0.0",
-    "ag-grid-react": "^21.0.0"
+    "@ag-grid-community/all-modules": "^22.1.1",
+    "@ag-grid-community/react": "^22.1.1"
   },
   "scripts": {
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
@@ -115,13 +114,13 @@
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i",
     "build": "npm run clean-deps && rimraf dist && npm run build-prod-no-cleanup",
     "build-prod-no-cleanup": "npm run before-build && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
-    "build-package-json": "node ./scripts/buildPackageJson",
+    "build-package-json": "node ../../scripts/cli/update-package --module=packages/adaptable-react-aggrid",
     "before-build": "npm run ensure-clean-on-local",
     "after-build": "",
     "ensure-clean-on-local": "node ../../scripts/ensure-clean-on-local",
-    "update-version-file": "node ../../scripts/updateVersionFile",
-    "update-env-file": "node ../../scripts/updateEnvFile",
-    "tsc": "tsc --outDir dist",
+    "link-core": "rimraf node_modules/@types/react-native && rimraf node_modules/@adaptabletools && symlink-dir ../adaptable ./node_modules/@adaptabletools/adaptable",
+    "tsc": "npm run link-core && npm run tsc-only",
+    "tsc-only": "tsc --outDir dist",
     "sass": "node-sass ./src/index.scss ./dist/index.css && ../../node_modules/.bin/postcss ./dist/index.css --config ../../ --output ./dist/index.css && node-sass ./src/base.scss ./dist/base.css && ../../node_modules/.bin/postcss ./dist/base.css --config ../../ --output ./dist/base.css && node-sass ./src/themes/light.scss ./dist/themes/light.css && ../../node_modules/.bin/postcss ./dist/themes/light.css --config ../../ --output ./dist/themes/light.css && node-sass ./src/themes/dark.scss ./dist/themes/dark.css && ../../node_modules/.bin/postcss ./dist/themes/dark.css --config ../../ --output ./dist/themes/dark.css",
     "copy-assets": "cp -R ./src/fonts ./dist/fonts/ && cp README.md ./dist"
   }
