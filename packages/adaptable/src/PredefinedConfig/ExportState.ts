@@ -65,7 +65,7 @@ export interface ExportState extends RunTimeState {
    */
   Reports?: Report[];
 
-  ReportSchedules: ReportSchedule[];
+  ReportSchedules?: ReportSchedule[];
 }
 
 export interface Report extends AdaptableObject {
@@ -120,13 +120,6 @@ export interface Report extends AdaptableObject {
    * This is only required if the `ReportRowScope` is 'ExpressionRows'
    */
   Expression?: Expression;
-
-  /**
-   * Whether the Report will run on 'schedule'.
-   *
-   * Each `AutoExport` contains a Schedule and a Destination
-   */
-  // AutoExport?: AutoExport;
 }
 
 /**
@@ -136,11 +129,6 @@ export interface Report extends AdaptableObject {
  *
  * - ExportDestination: **Where** the Report data will be exported.
  */
-//export interface AutoExport extends AdaptableObject {
-// Schedule: Schedule;
-// ExportDestination: 'CSV' | 'Clipboard' | 'JSON' | 'iPushPull';
-//}
-
 export interface ReportSchedule extends BaseSchedule {
   ReportName: string;
   ExportDestination: 'CSV' | 'Clipboard' | 'JSON';

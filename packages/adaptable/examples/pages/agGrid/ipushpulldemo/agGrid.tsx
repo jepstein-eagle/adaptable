@@ -57,6 +57,8 @@ function InitAdaptableDemo() {
 
   const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 
+  console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');
+
   if (useTickingData) {
     tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, tradeCount);
   }
@@ -65,9 +67,8 @@ function InitAdaptableDemo() {
     'LiveReportUpdated',
     (pushPullUpdatedEventArgs: LiveReportUpdatedEventArgs) => {
       let eventData: LiveReportUpdatedInfo = pushPullUpdatedEventArgs.data[0].id;
-      if (eventData.ExportDestination == 'iPushPull') {
-        // do something...
-      }
+      console.log('got an event');
+      console.log(eventData);
     }
   );
 }
@@ -78,7 +79,7 @@ let demoConfig: PredefinedConfig = {
     Username: process.env.IPUSHPULL_USERNAME,
     Password: process.env.IPUSHPULL_PASSWORD,
     ThrottleTime: 5000,
-    AutoLogin: true,
+    //   AutoLogin: true,
   },
 
   FlashingCell: {

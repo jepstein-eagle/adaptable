@@ -102,7 +102,6 @@ export enum ExportDestination {
   Clipboard = 'Clipboard',
   JSON = 'JSON',
   OpenfinExcel = 'OpenfinExcel',
-  iPushPull = 'iPushPull',
   Glue42 = 'Glue42',
 }
 

@@ -1,7 +1,6 @@
 import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
-import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -21,8 +20,6 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { LiveReport } from '../../Api/Events/LiveReportUpdated';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
-import { CellSummaryChangeOperationAction } from './CellSummaryRedux';
-import { IPushPullDomain, IPushPullReport } from '../../PredefinedConfig/IPushPullState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -107,13 +104,13 @@ export interface SystemUpdatedRowDeleteAllAction extends Redux.Action {
 
 export interface ReportStartLiveAction extends Redux.Action {
   Report: Report;
-  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42;
+  ReportDestination: 'OpenfinExcel' | 'Glue42';
   PageName: string;
 }
 
 export interface ReportStopLiveAction extends Redux.Action {
   Report: Report;
-  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42;
+  ReportDestination: 'OpenfinExcel' | 'Glue42';
 }
 
 export interface SmartEditCheckCellSelectionAction extends Redux.Action {}
@@ -212,21 +209,21 @@ export const SystemUpdatedRowDeleteAll = (
 export const ReportStartLive = (
   Report: Report,
   PageName: string,
-  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
+  ReportDestination: 'OpenfinExcel' | 'Glue42'
 ): ReportStartLiveAction => ({
   type: REPORT_START_LIVE,
   Report,
-  ExportDestination,
+  ReportDestination,
   PageName,
 });
 
 export const ReportStopLive = (
   Report: Report,
-  ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
+  ReportDestination: 'OpenfinExcel' | 'Glue42'
 ): ReportStopLiveAction => ({
   type: REPORT_STOP_LIVE,
   Report,
-  ExportDestination,
+  ReportDestination,
 });
 
 export const SmartEditCheckCellSelection = (): SmartEditCheckCellSelectionAction => ({
@@ -416,7 +413,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       const actionTyped = action as ReportStartLiveAction;
       const currentLiveReports: LiveReport[] = [].concat(state.CurrentLiveReports);
       currentLiveReports.push({
-        ExportDestination: actionTyped.ExportDestination,
+        ReportDestination: actionTyped.ReportDestination,
         Report: actionTyped.Report,
         PageName: actionTyped.PageName,
       });
@@ -426,7 +423,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       const actionTyped = action as ReportStopLiveAction;
       const currentLiveReports: LiveReport[] = [].concat(state.CurrentLiveReports);
       const index = currentLiveReports.findIndex(
-        x => x.Report == actionTyped.Report && x.ExportDestination == actionTyped.ExportDestination
+        x => x.Report == actionTyped.Report && x.ReportDestination == actionTyped.ReportDestination
       );
       currentLiveReports.splice(index, 1);
       return Object.assign({}, state, { CurrentLiveReports: currentLiveReports });

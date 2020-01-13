@@ -103,7 +103,7 @@ export class ScheduleService implements IScheduleService {
   }
 
   private updateReminderJobs() {
-    this.ClearAllReminderJobs();
+    this.clearAllReminderJobs();
     this.adaptable.api.scheduleApi
       .getAllReminderSchedule()
       .forEach((reminderSchedule: ReminderSchedule) => {
@@ -112,7 +112,7 @@ export class ScheduleService implements IScheduleService {
   }
 
   private updateReportJobs() {
-    this.ClearAllExportJobs();
+    this.clearAllExportJobs();
     this.adaptable.api.scheduleApi
       .getAllReportSchedule()
       .forEach((reportSchedule: ReportSchedule) => {
@@ -121,7 +121,7 @@ export class ScheduleService implements IScheduleService {
   }
 
   private updateIPushPullJobs() {
-    this.adaptable.ScheduleService.ClearAllIPushPullJobs();
+    this.clearAllIPushPullJobs();
     this.adaptable.api.scheduleApi
       .getAllIPushPullSchedule()
       .forEach((iPushPullSchedule: IPushPullSchedule) => {
@@ -208,7 +208,7 @@ export class ScheduleService implements IScheduleService {
     return null;
   }
 
-  public ClearAllReminderJobs(): void {
+  private clearAllReminderJobs(): void {
     this.reminderJobs.forEach(j => {
       if (j != null) {
         j.cancel();
@@ -217,7 +217,7 @@ export class ScheduleService implements IScheduleService {
     this.reminderJobs = [];
   }
 
-  public ClearAllExportJobs(): void {
+  private clearAllExportJobs(): void {
     this.exportJobs.forEach(j => {
       if (j != null) {
         j.cancel();
@@ -226,7 +226,7 @@ export class ScheduleService implements IScheduleService {
     this.exportJobs = [];
   }
 
-  public ClearAllIPushPullJobs(): void {
+  private clearAllIPushPullJobs(): void {
     this.iPushPullJobs.forEach(j => {
       if (j != null) {
         j.cancel();

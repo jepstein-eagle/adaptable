@@ -2588,9 +2588,10 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
           case SystemRedux.REPORT_START_LIVE: {
             let ret = next(action);
             const actionTyped = action as SystemRedux.ReportStartLiveAction;
+            console.log('do we send');
             // fire the Live Report event for Export Started
             adaptable.ReportService.PublishLiveReportUpdatedEvent(
-              actionTyped.ExportDestination,
+              actionTyped.ReportDestination,
               LiveReportTrigger.ExportStarted
             );
             // set livereport on
@@ -2605,7 +2606,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             let ret = next(action);
             // fire the Live Report event for Export Stopped
             adaptable.ReportService.PublishLiveReportUpdatedEvent(
-              actionTyped.ExportDestination,
+              actionTyped.ReportDestination,
               LiveReportTrigger.ExportStopped
             );
             // set livereport off

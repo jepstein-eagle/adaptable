@@ -52,7 +52,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
       this.dispatchAction(IPushPullRedux.IPushPullLiveReportSet(iPushPullReport));
 
       this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-        ExportDestination.iPushPull,
+        'iPushPull',
         LiveReportTrigger.ExportStarted
       );
     }
@@ -68,7 +68,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
     // fire the Live Report event for Export Stopped
     this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      ExportDestination.iPushPull,
+      'iPushPull',
       LiveReportTrigger.ExportStopped
     );
   }
@@ -85,14 +85,6 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public isIPushPullAvailable(): boolean {
     return this.getIPushPullState().IsIPushPullAvailable;
-  }
-
-  public setIPushPullRunningOn(): void {
-    this.dispatchAction(IPushPullRedux.SetIPushPullRunningOn());
-  }
-
-  public setIPushPullRunningOff(): void {
-    this.dispatchAction(IPushPullRedux.SetIPushPullRunningOff());
   }
 
   public isIPushPullRunning(): boolean {
@@ -154,16 +146,24 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public setIPushPullAvailableOn(): void {
     this.dispatchAction(IPushPullRedux.SetIPushPullAvailableOn());
-    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      ExportDestination.iPushPull,
-      LiveReportTrigger.Connected
-    );
   }
 
   public setIPushPullAvailableOff(): void {
     this.dispatchAction(IPushPullRedux.SetIPushPullAvailableOff());
+  }
+
+  public setIPushPullRunningOn(): void {
+    this.dispatchAction(IPushPullRedux.SetIPushPullRunningOn());
     this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-      ExportDestination.iPushPull,
+      'iPushPull',
+      LiveReportTrigger.Connected
+    );
+  }
+
+  public setIPushPullRunningOff(): void {
+    this.dispatchAction(IPushPullRedux.SetIPushPullRunningOff());
+    this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+      'iPushPull',
       LiveReportTrigger.Disconnected
     );
   }

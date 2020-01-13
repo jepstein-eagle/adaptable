@@ -51,7 +51,7 @@ interface ExportToolbarControlComponentProps
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
 
-  onNewReportSchedule: (iPushPullSchedule: ReportSchedule) => PopupRedux.PopupShowScreenAction;
+  onNewReportSchedule: (reportSchedule: ReportSchedule) => PopupRedux.PopupShowScreenAction;
 
   Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
@@ -115,7 +115,7 @@ class ExportToolbarControlComponent extends React.Component<
     let openfinExcelMenuItem;
     if (
       this.props.LiveReports.find(
-        x => x.Report == currentReport && x.ExportDestination == ExportDestination.OpenfinExcel
+        x => x.Report == currentReport && x.ReportDestination == ExportDestination.OpenfinExcel
       )
     ) {
       openfinExcelMenuItem = {

@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { ExportDestination } from '../PredefinedConfig/Common/Enums';
+import { ExportDestination, LiveReportTrigger } from '../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import * as _ from 'lodash';
 import { Report } from '../PredefinedConfig/ExportState';
@@ -98,6 +98,12 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
           return this.adaptable.PushPullService.pushData(
             currentLiveIPushPullReport.Page,
             reportAsArray
+          );
+        })
+        .then(() => {
+          return this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
+            'iPushPull',
+            LiveReportTrigger.LiveDataUpdated
           );
         })
         .catch(reason => {

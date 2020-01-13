@@ -17,10 +17,7 @@ export interface IReportService {
   GetPrimaryKeysForReport(report: Report): any[];
 
   PublishLiveReportUpdatedEvent(
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42,
+    reportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42',
     liveReportTrigger: LiveReportTrigger
   ): void;
 

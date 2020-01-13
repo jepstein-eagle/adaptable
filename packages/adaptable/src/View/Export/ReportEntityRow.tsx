@@ -53,7 +53,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       label: 'Export to Excel (via Glue42)',
     };
 
-    // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
     let isSystemReport: boolean = this.props.ReportService.IsSystemReport(report);
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

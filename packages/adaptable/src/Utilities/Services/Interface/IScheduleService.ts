@@ -1,5 +1,1 @@
-export interface IScheduleService {
-  ClearAllReminderJobs(): void;
-  ClearAllExportJobs(): void;
-  ClearAllIPushPullJobs(): void;
-}
+export interface IScheduleService {}

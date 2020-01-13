@@ -51,8 +51,6 @@ function InitAdaptableDemo() {
   });
 }
 
-console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');
-
 let demoConfig: PredefinedConfig = {
   SparklineColumn: {
     SparklineColumns: [

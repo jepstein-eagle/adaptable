@@ -124,7 +124,7 @@ class ExportToolPanelComponent extends React.Component<
     let openfinExcelMenuItem;
     if (
       this.props.LiveReports.find(
-        x => x.Report == currentReport && x.ExportDestination == ExportDestination.OpenfinExcel
+        x => x.Report == currentReport && x.ReportDestination == ExportDestination.OpenfinExcel
       )
     ) {
       openfinExcelMenuItem = {

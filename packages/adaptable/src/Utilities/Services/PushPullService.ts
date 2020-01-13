@@ -1,12 +1,10 @@
 import LoggingHelper from '../Helpers/LoggingHelper';
 import { IPPStyle } from '../Interface/IPPStyle';
 import { IPushPullService } from './Interface/IPushPullService';
-import { ExportDestination, LiveReportTrigger } from '../../PredefinedConfig/Common/Enums';
 
 import env from '../../env';
-import folder from '../../components/icons/folder';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { IPushPullDomain, IPushPullState } from '../../PredefinedConfig/IPushPullState';
+import { IPushPullDomain } from '../../PredefinedConfig/IPushPullState';
 import StringExtensions from '../Extensions/StringExtensions';
 
 export enum ServiceStatus {
@@ -52,8 +50,6 @@ export class PushPullService implements IPushPullService {
           this.adaptable.api.iPushPullApi.setIPushPullAvailableOn();
 
           let autoLogin: boolean = this.adaptable.api.iPushPullApi.getAutoLogin();
-          console.log('auto login');
-          console.log(autoLogin);
 
           if (autoLogin) {
             let userName:
@@ -237,10 +233,7 @@ export class PushPullService implements IPushPullService {
       const pageIPP = this.pages.get(page);
       pageIPP.Content.canDoDelta = false;
       pageIPP.Content.update(newData, true);
-      this.adaptable.ReportService.PublishLiveReportUpdatedEvent(
-        ExportDestination.iPushPull,
-        LiveReportTrigger.LiveDataUpdated
-      );
+
       pageIPP.push().then(
         () => {
           LoggingHelper.LogAdaptableSuccess(`Data pushed for iPushPull page : ${page}`);

@@ -10,7 +10,6 @@ import { Report } from './ExportState';
 import { LiveReport } from '../Api/Events/LiveReportUpdated';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
 import { CellSummaryOperationDefinition } from './CellSummaryState';
-import { IPushPullDomain, IPushPullReport } from './IPushPullState';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 

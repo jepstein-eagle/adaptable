@@ -48,10 +48,7 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
   onReportStopLive: (
     report: Report,
-    exportDestination:
-      | ExportDestination.OpenfinExcel
-      | ExportDestination.iPushPull
-      | ExportDestination.Glue42
+    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
   onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }

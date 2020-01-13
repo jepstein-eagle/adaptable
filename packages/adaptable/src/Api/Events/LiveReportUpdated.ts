@@ -54,7 +54,7 @@ export interface LiveReportUpdatedInfo {
   /**
    * Which of Adaptable partners is being used as the export destination to which to send live data.
    */
-  ExportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42';
+  ReportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42';
 
   /**
    * What triggered the event to be fired.
@@ -99,8 +99,5 @@ export interface LiveReportUpdatedInfo {
 export interface LiveReport {
   PageName: string; // for Excel this will be the workbook name, for iPushpull the page name.  for Glue42 the Spreadsheet name.
   Report: Report;
-  ExportDestination:
-    | ExportDestination.OpenfinExcel
-    | ExportDestination.iPushPull
-    | ExportDestination.Glue42;
+  ReportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42';
 }

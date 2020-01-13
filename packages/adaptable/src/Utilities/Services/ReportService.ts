@@ -338,11 +338,11 @@ export class ReportService implements IReportService {
   }
 
   public PublishLiveReportUpdatedEvent(
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42,
+    reportDestination: 'iPushPull' | 'Glue42',
     liveReportTrigger: LiveReportTrigger
   ): void {
     let liveReportUpdatedInfo: LiveReportUpdatedInfo = {
-      ExportDestination: exportDestination,
+      ReportDestination: reportDestination,
       LiveReportTrigger: liveReportTrigger,
       CurrentLiveReports: this.adaptable.api.internalApi.getCurrentLiveReports(),
     };
