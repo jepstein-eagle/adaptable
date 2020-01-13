@@ -1,5 +1,5 @@
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy';
-import { RowNode } from 'ag-grid-community';
+import { RowNode } from '@ag-grid-community/all-modules';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 

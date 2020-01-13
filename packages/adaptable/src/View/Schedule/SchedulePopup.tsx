@@ -340,7 +340,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let SchedulePopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SchedulePopupComponent);
+export let SchedulePopup = connect(mapStateToProps, mapDispatchToProps)(SchedulePopupComponent);

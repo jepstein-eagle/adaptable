@@ -16,8 +16,6 @@ import { UIHelper } from '../UIHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
-import { Column } from 'ag-grid-community';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface ColumnFilterSummaryProps
   extends StrategySummaryProps<ColumnFilterSummaryComponent> {

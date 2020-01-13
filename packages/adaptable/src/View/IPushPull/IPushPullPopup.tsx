@@ -78,7 +78,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let IPushPullPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IPushPullPopupComponent);
+export let IPushPullPopup = connect(mapStateToProps, mapDispatchToProps)(IPushPullPopupComponent);

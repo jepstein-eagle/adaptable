@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import { startCase } from 'lodash';
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
@@ -13,7 +13,7 @@ import './index.css';
 import { AdaptableNoCodeWizard } from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { IAdaptableNoCodeWizard } from '../../../../src/AdaptableInterfaces/IAdaptableNoCodeWizard';
-import { ColDef } from 'ag-grid-community';
+import { ColDef } from '@ag-grid-community/all-modules';
 
 /*
 Basic demo of wizard that allow d&d of a json with an array contents

@@ -1,5 +1,8 @@
 {
   "extends": "../adaptable/tsconfig.json",
-  "include": ["src/**/*","../adaptable/src/@types/**/*"],
-  "exclude": ["node_modules", ".next", "typings"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", ".next", "typings"],
+  "compilerOptions": {
+    "resolveJsonModule": true
+  }
 }

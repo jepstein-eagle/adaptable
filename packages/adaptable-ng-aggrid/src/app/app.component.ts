@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions, Module } from '@ag-grid-community/all-modules';
 
 import rowData from './rowData';
 import columns from './columns';
-import { AdaptableOptions } from '../../../adaptable/types';
-import { AdaptableApi } from '../../../adaptable/types';
+import {
+  AdaptableOptions,
+  AdaptableApi,
+} from '@adaptabletools/adaptable/types';
+
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { SideBarModule } from '@ag-grid-enterprise/side-bar';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +23,7 @@ export class AppComponent {
   };
 
   public gridOptions: GridOptions;
+  public modules: Module[] = [RangeSelectionModule, MenuModule, SideBarModule];
 
   theOptions: AdaptableOptions = {
     primaryKey: 'OrderId',

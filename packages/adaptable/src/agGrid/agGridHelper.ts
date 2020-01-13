@@ -9,18 +9,13 @@ import {
   CellRangeParams,
   MenuItemDef,
   GetContextMenuItemsParams,
-  ColGroupDef,
   Column,
   RowNode,
-  GetMainMenuItemsParams,
-} from 'ag-grid-community';
-import * as Redux from 'redux';
-import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
+} from '@ag-grid-community/all-modules';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { IStrategy } from '../Strategy/Interface/IStrategy';
-import { AlertStrategy } from '../Strategy/AlertStrategy';
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';

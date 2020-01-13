@@ -6,7 +6,7 @@ import {
   IFloatingFilterParams,
   FilterChangedEvent,
   IAfterGuiAttachedParams,
-} from 'ag-grid-community';
+} from '@ag-grid-community/all-modules';
 import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContext';
 import { Adaptable } from './Adaptable';
 

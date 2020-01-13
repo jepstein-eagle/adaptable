@@ -325,7 +325,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ExportToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExportToolPanelComponent);
+export let ExportToolPanel = connect(mapStateToProps, mapDispatchToProps)(ExportToolPanelComponent);

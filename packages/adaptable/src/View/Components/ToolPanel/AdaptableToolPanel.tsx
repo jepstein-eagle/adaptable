@@ -7,7 +7,7 @@ import * as SystemRedux from '../../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
-import { IToolPanelComp, IToolPanelParams } from 'ag-grid-community';
+import { IToolPanelComp, IToolPanelParams } from '@ag-grid-community/all-modules';
 import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';

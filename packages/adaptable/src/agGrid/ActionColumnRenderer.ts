@@ -1,4 +1,4 @@
-import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
+import { ICellRendererComp, ICellRendererParams } from '@ag-grid-community/all-modules';
 import { ActionColumn, ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
 import Adaptable from '../../agGrid';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';

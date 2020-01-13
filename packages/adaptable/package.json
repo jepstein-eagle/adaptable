@@ -30,8 +30,7 @@
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
-    "ag-grid-community": "^21.0.0",
-    "ag-grid-enterprise": "^21.0.0"
+    "@ag-grid-community/all-modules": "^22.1.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
@@ -47,8 +46,7 @@
     "@types/react-redux": "^7.1.2",
     "@types/rebass": "^3.0.4",
     "@types/uuid": "^3.4.6",
-    "ag-grid-community": "^21.0.0",
-    "ag-grid-enterprise": "^21.0.0",
+    "@ag-grid-community/all-modules": "^22.1.1",
     "amdefine": "^1.0.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
@@ -105,7 +103,7 @@
     "before-build": "npm run ensure-clean-on-local",
     "after-build": "",
     "ensure-clean-on-local": "node ../../scripts/ensure-clean-on-local",
-    "build-package-json": "echo `pwd` && node ../../scripts/buildPackageJson",
+    "build-package-json": "node ../../scripts/cli/update-package --module=packages/adaptable --ignore-dep=true",
     "update-version-file": "node ../../scripts/updateVersionFile",
     "update-env-file": "node ../../scripts/updateEnvFile",
     "sass": "node-sass ./src/index.scss ./dist/index.css && ../../node_modules/.bin/postcss ./dist/index.css --config ../../ --output ./dist/index.css && node-sass ./src/base.scss ./dist/base.css && ../../node_modules/.bin/postcss ./dist/base.css --config ../../ --output ./dist/base.css && node-sass ./src/themes/light.scss ./dist/themes/light.css && ../../node_modules/.bin/postcss ./dist/themes/light.css --config ../../ --output ./dist/themes/light.css && node-sass ./src/themes/dark.scss ./dist/themes/dark.css && ../../node_modules/.bin/postcss ./dist/themes/dark.css --config ../../ --output ./dist/themes/dark.css ",

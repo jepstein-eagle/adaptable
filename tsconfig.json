@@ -8,6 +8,7 @@
     "target": "es6",
     "jsx": "react",
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

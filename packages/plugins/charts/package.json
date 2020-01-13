@@ -2,11 +2,20 @@
   "name": "@adaptabletools/adaptable-plugin-charts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "link-core": "rimraf node_modules/@types/react-native && rimraf node_modules/@adaptabletools && symlink-dir ../../adaptable ./node_modules/@adaptabletools/adaptable",
-    "tsc": "npm run link-core && npm run tsc-only",
-    "tsc-only": "tsc --outDir dist"
+    "tsc": "rimraf dist && npm run link-core && npm run tsc-only",
+    "tsc-only": "tsc --outDir dist",
+    "registry-publish": "npm run build-package-json && npm publish dist",
+    "registry-publish-canary": "npm run build-package-json && npm publish --tag canary dist",
+    "build-package-json": "node ../../../scripts/cli/update-package --module=packages/plugins/charts",
+    "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i",
+    "build": "npm run clean-deps && rimraf dist && npm run build-prod-no-cleanup",
+    "build-prod-no-cleanup": "npm run before-build && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets && npm run after-build",
+    "before-build": "npm run ensure-clean-on-local",
+    "after-build": "",
+    "ensure-clean-on-local": "node ../../../scripts/ensure-clean-on-local"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.149",
@@ -18,7 +27,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "7.1.2",
     "@types/rebass": "^3.0.4",
-    "ag-grid-community": "^21.0.0"
+    "@ag-grid-community/all-modules": "^22.1.1"
   },
   "dependencies": {
     "lodash": "^4.17.10",
@@ -32,8 +41,7 @@
     "igniteui-react-core": "16.6.10"
   },
   "peerDependencies": {
-    "@adaptabletools/adaptable": ">=5.1.1",
-    "ag-grid-community": "^21.0.0"
+    "@ag-grid-community/all-modules": "^22.1.1"
   },
   "author": {
     "name": "Jonny Wolfson",

@@ -267,7 +267,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ExportPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExportPopupComponent);
+export let ExportPopup = connect(mapStateToProps, mapDispatchToProps)(ExportPopupComponent);

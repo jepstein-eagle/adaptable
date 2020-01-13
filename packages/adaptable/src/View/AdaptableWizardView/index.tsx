@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { useReducer, Reducer, useState, useEffect, ReactNode } from 'react';
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import theme from '../../theme';
 
 import join from '../../components/utils/join';

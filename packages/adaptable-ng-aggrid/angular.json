@@ -28,9 +28,9 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.scss",
-              "src/../node_modules/ag-grid-community/dist/styles/ag-grid.css",
-              "src/../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css",
-              "src/../node_modules/ag-grid-community/dist/styles/ag-theme-balham-dark.css",
+              "src/../node_modules/@ag-grid-community/all-modules/dist/styles/ag-grid.css",
+              "src/../node_modules/@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css",
+              "src/../node_modules/@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css",
               "src/../../adaptable/src/base.scss",
               "src/../../adaptable/src/themes/light.scss",
               "src/../../adaptable/src/themes/dark.scss"

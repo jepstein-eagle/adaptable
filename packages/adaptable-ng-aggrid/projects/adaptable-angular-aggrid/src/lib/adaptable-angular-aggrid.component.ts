@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { AdaptableOptions } from '../adaptable/types';
+import {
+  AdaptableOptions,
+  AdaptableApi,
+} from '@adaptabletools/adaptable/types';
 
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions, Module } from '@ag-grid-community/all-modules';
 import { createAdaptable as adaptableFactory } from './createAdaptable';
-import { AdaptableApi } from '../adaptable/types';
 
 function getRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max));
@@ -48,6 +50,7 @@ function getRandomInt(max: number): number {
 export class AdaptableAngularAgGridComponent implements OnInit {
   @Input() adaptableOptions: AdaptableOptions;
   @Input() gridOptions: GridOptions;
+  @Input() modules?: Module[];
   @Input() agGridContainerClassName: string;
   @Input() onAdaptableReady?: (api: AdaptableApi) => void;
 
@@ -70,6 +73,7 @@ export class AdaptableAngularAgGridComponent implements OnInit {
       adaptableOptions: this.adaptableOptions,
       adaptableContainerId: this.adaptableContainerId,
       gridContainerId: this.gridContainerId,
+      modules: this.modules,
     });
   }
 }

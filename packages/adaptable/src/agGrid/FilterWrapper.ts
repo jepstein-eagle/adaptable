@@ -1,4 +1,9 @@
-import { IFilterComp, IDoesFilterPassParams, IFilterParams, Column } from 'ag-grid-community';
+import {
+  IFilterComp,
+  IDoesFilterPassParams,
+  IFilterParams,
+  Column,
+} from '@ag-grid-community/all-modules';
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import { ThemeProvider } from 'styled-components';
