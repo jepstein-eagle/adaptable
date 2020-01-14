@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { GridOptions } from '@ag-grid-community/all-modules';
 
 import { AdaptableOptions, IAdaptable } from '../types';
