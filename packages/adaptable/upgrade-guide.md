@@ -118,9 +118,16 @@ The effect is to give you more complete control over how your instance of AdapTa
 There are too many to list here but some of the headline additions are:
 
 * State Management
+* Application Data
+* Tool Panel
+* Server Validation
+* Updated Rows
+* Pivot Layouts
 * Custom Toolbars
 * Column Menu
 * Context Menu
+* Quick Search
+* iPushPull
 
 ## Events
 
@@ -143,7 +150,7 @@ For example to subscribe to the `ActionColumnClicked` event you will do:
 Find out more - and see the full list of AdapTable events at [Event API Documentation](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html)
 
 
-## Basic example
+## Basic Installation Example
 
 ```tsx
 // if you need an additional AgGrid module, import it
@@ -174,7 +181,7 @@ const adaptableOptions: AdaptableOptions = {
   userName: "Demo User",
   adaptableId: "Simple Demo",
 
-  // call the plugins functions and pass them to the plugins array in the AdaptableOptions object
+  // call the plugins functions and pass them to plugins array in AdaptableOptions
   plugins: [charts(), finance()],
 
   vendorGrid: {
