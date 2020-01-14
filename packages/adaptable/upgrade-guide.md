@@ -96,7 +96,7 @@ Not only do you get back the public api but you no longer have access to a very 
 
 ## Styling changes
 
-We've made **no changes to our styling/css classes/selectors**.
+We've made **no changes** to our styling/css classes/selectors.
 
 Just note that if you used to install ag-Grid styles like this:
 ```ts
@@ -106,6 +106,14 @@ you will now have to do:
 ```ts
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 ```
+
+Similarly you will import the AdapTable styles as:
+
+```ts
+import "@adaptabletools/adaptable/index.css";
+import "@adaptabletools/adaptable/themes/dark.css";
+```
+
 
 ## HTML rendering changes
 
@@ -120,7 +128,7 @@ your html should now look like:
 <div id="adaptable"></div>
 ```
 
-The old structure is still working, but we show warning in the console.
+Note: the old structure is still working, but we will show a warning in the console.
 
 ## Adaptable Options
 
@@ -128,10 +136,10 @@ We have added many more options (and option groups) to [Adaptable Options](https
 
 The effect is to give you more complete control over how your instance of AdapTable looks and works. 
 
-There are too many to list here but some of the headline improvements / new features are:
+There are far too many to list here but some of the headline improvements / new features are:
 
 * [Options to manage state hydration/dehydration](https://api.adaptableblotter.com/interfaces/_adaptableoptions_stateoptions_.stateoptions.html)
-* [Store custom state through Application Data Entries](https://api.adaptableblotter.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
+* [Application Data Entries to store custom state](https://api.adaptableblotter.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
 * [Adaptable Tool Panel](https://api.adaptableblotter.com/interfaces/_predefinedconfig_toolpanelstate_.toolpanelstate.html)
 * [Server Validation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_editoptions_.editoptions.html)  
 * [Updated Rows](https://api.adaptableblotter.com/interfaces/_predefinedconfig_updatedrowstate_.updatedrowstate.html)
