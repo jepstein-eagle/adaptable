@@ -96,7 +96,7 @@ import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 
 ## HTML rendering changes
 
-The name of the <div> that hosts AdapTable has changed.  
+The name of the `div` that hosts AdapTable has changed.  
   
 Instead of providing:
 ```html
@@ -111,10 +111,25 @@ The old structure is still working, but we show warning in the console.
 
 ## Adaptable Options
 
-The nam
+We have added many more options (and option groups) to [Adaptable Options](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) Adaptable Options (the object you create at design time and provide to the AdapTable constructor).  
+
+The effect is to give you more complete control over how your instance of AdapTable looks and works. 
+
+There are too many to list here but some of the headline additions are:
 
 We have also added lots more options to xx in order to give you complete contro
 
+## Events
+
+We have added many mo
+
+## Further Information
+
+Read more at:
+
+ * [Developer Documentation](https://api.adaptableblotter.com/index.html)
+ * [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
+ * [Demo Site](https://demo.adaptableblotter.com/)
 
 ## Basic example
 
