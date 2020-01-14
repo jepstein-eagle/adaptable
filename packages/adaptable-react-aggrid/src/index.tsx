@@ -5,19 +5,7 @@ import { AdaptableApp } from '@adaptabletools/adaptable/src/View/AdaptableView';
 import Adaptable from '@adaptabletools/adaptable/src/agGrid';
 import { AdaptableApi } from '@adaptabletools/adaptable/types';
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
-import {
-  LiveDataChangedEventArgs,
-  AdaptableOptions,
-  SearchChangedEventArgs,
-  ThemeChangedEventArgs,
-  ColumnStateChangedEventArgs,
-  AlertFiredEventArgs,
-  ActionColumnClickedEventArgs,
-  SelectionChangedEventArgs,
-  ToolbarVisibilityChangedEventArgs,
-} from '@adaptabletools/adaptable/types';
-import { AuditLogEventArgs } from '@adaptabletools/adaptable/src/Api/Events/AuditEvents';
-import { ToolbarButtonClickedEventArgs } from '@adaptabletools/adaptable/src/Api/Events/ToolbarButtonClicked';
+import { AdaptableOptions } from '@adaptabletools/adaptable/types';
 
 import * as AgGrid from '@ag-grid-community/all-modules';
 import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
@@ -158,19 +146,6 @@ const AdaptableReact = ({
   tagName,
   agGridTheme,
   render,
-  onActionColumnClicked,
-  onAlertFired,
-  onToolbarButtonClicked,
-  onColumnStateChanged,
-  onLiveDataChanged,
-  onSearchChanged,
-  onSelectionChanged,
-  onThemeChanged,
-  onToolbarVisibilityChanged,
-  onAuditStateChanged,
-  onAuditCellEdited,
-  onAuditTickingDataUpdated,
-  onAuditFunctionApplied,
 
   onAdaptableReady,
   ...props
@@ -178,26 +153,9 @@ const AdaptableReact = ({
   agGridTheme?: string;
   adaptableOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
-
   modules?: Module[];
 
   onAdaptableReady?: (api: AdaptableApi) => void;
-  onToolbarVisibilityChanged?: (
-    toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs
-  ) => void;
-  onSearchChanged?: (searchChangedEventArgs: SearchChangedEventArgs) => void;
-  onToolbarButtonClicked?: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void;
-  onThemeChanged?: (themeChangedEventArgs: ThemeChangedEventArgs) => void;
-  onColumnStateChanged?: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void;
-  onAlertFired?: (alertFiredEventArgs: AlertFiredEventArgs) => void;
-  onActionColumnClicked?: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void;
-  onSelectionChanged?: (selectionChangedEventArgs: SelectionChangedEventArgs) => void;
-  onLiveDataChanged?: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void;
-
-  onAuditStateChanged?: (auditStateChangedArgs: AuditLogEventArgs) => void;
-  onAuditCellEdited?: (auditCellEditedArgs: AuditLogEventArgs) => void;
-  onAuditFunctionApplied?: (auditFunctionAppliedArgs: AuditLogEventArgs) => void;
-  onAuditTickingDataUpdated?: (auditTickingDataUpdatedArgs: AuditLogEventArgs) => void;
 
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
@@ -223,42 +181,6 @@ const AdaptableReact = ({
         });
       }
 
-      if (onToolbarVisibilityChanged) {
-        adaptable.api.eventApi.on('ToolbarVisibilityChanged', onToolbarVisibilityChanged);
-      }
-      if (onSearchChanged) {
-        adaptable.api.eventApi.on('SearchChanged', onSearchChanged);
-      }
-      if (onToolbarButtonClicked) {
-        adaptable.api.eventApi.on('ToolbarButtonClicked', onToolbarButtonClicked);
-      }
-      if (onThemeChanged) {
-        adaptable.api.eventApi.on('ThemeChanged', onThemeChanged);
-      }
-      if (onColumnStateChanged) {
-        adaptable.api.eventApi.on('ColumnStateChanged', onColumnStateChanged);
-      }
-      if (onAlertFired) {
-        adaptable.api.eventApi.on('AlertFired', onAlertFired);
-      }
-      if (onActionColumnClicked) {
-        adaptable.api.eventApi.on('ActionColumnClicked', onActionColumnClicked);
-      }
-      if (onSelectionChanged) {
-        adaptable.api.eventApi.on('SelectionChanged', onSelectionChanged);
-      }
-      if (onAuditStateChanged) {
-        adaptable.api.auditEventApi.on('AuditStateChanged', onAuditStateChanged);
-      }
-      if (onAuditCellEdited) {
-        adaptable.api.auditEventApi.on('AuditCellEdited', onAuditCellEdited);
-      }
-      if (onAuditTickingDataUpdated) {
-        adaptable.api.auditEventApi.on('AuditTickingDataUpdated', onAuditTickingDataUpdated);
-      }
-      if (onAuditFunctionApplied) {
-        adaptable.api.auditEventApi.on('AuditFunctionApplied', onAuditFunctionApplied);
-      }
       setAdaptable(adaptable);
       return adaptable;
     };

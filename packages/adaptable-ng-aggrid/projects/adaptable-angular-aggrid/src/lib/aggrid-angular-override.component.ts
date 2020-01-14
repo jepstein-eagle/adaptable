@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { ComponentUtil, Grid } from '@ag-grid-community/all-modules';
+import { ComponentUtil } from '@ag-grid-community/all-modules';
 
 import {
   AgGridAngular,

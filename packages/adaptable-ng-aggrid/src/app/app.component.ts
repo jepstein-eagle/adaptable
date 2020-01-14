@@ -71,5 +71,9 @@ export class AppComponent {
     api.auditEventApi.on('AuditCellEdited', function(args) {
       console.warn(args, '!!!!!');
     });
+
+    api.eventApi.on('SelectionChanged', selection => {
+      console.warn('selection changed', selection);
+    });
   }
 }

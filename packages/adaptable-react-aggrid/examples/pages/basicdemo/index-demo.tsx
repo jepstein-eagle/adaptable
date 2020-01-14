@@ -29,14 +29,16 @@ export default () => (
   <AdaptableReact
     style={{ height: '100vh' }}
     modules={[SideBarModule, MenuModule, RangeSelectionModule]}
-    onSearchChanged={(...args: any[]) => {
-      LoggingHelper.LogAdaptableWarning('search changed', args);
-    }}
     onAdaptableReady={api => {
       console.log('Adaptable ready', api);
-    }}
-    onSelectionChanged={selargs => {
-      console.log(selargs);
+
+      api.eventApi.on('SearchChanged', (...args: any[]) => {
+        LoggingHelper.LogAdaptableWarning('search changed', args);
+      });
+
+      api.eventApi.on('SelectionChanged', selargs => {
+        console.log(selargs);
+      });
     }}
     gridOptions={{
       columnTypes: {
