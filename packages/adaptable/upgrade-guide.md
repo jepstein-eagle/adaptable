@@ -124,11 +124,11 @@ There are too many to list here but some of the headline improvements / new feat
 * [Server Validation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_editoptions_.editoptions.html)  
 * [Updated Rows](https://api.adaptableblotter.com/interfaces/_predefinedconfig_updatedrowstate_.updatedrowstate.html)
 * [Saveable Pivot and Grouped Layouts](https://api.adaptableblotter.com/interfaces/_predefinedconfig_layoutstate_.pivotdetails.html)   
-* Custom Toolbars[xxx](yyy)
-* Column Menu [xxx](yyy)
-* Context Menu [xxx](yyy)
-* Quick Search [xxx](yyy)
-* iPushPull [xxx](yyy)
+* [Custom Dashboard Toolbars](https://api.adaptableblotter.com/interfaces/_predefinedconfig_dashboardstate_.customtoolbar.html)
+* [Column Menu bespoke items](https://api.adaptableblotter.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#columnmenuitems)
+* [Context Menu bespoke items](https://api.adaptableblotter.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#contextmenuitems)
+* [Quick Search exclude columns](https://api.adaptableblotter.com/interfaces/_adaptableoptions_searchoptions_.searchoptions.html#excludecolumnfromquicksearch)
+* [iPushPull improvements](https://api.adaptableblotter.com/interfaces/_predefinedconfig_ipushpullstate_.ipushpullstate.html)
 
 ## Events
 
