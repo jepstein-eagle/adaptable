@@ -19,7 +19,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-redux": "^7.1.0",
+    "react-redux": "7.1.2",
     "react-remove-scroll": "^1.0.8",
     "rebass": "^3.2.2",
     "redux": "^4.0.4",

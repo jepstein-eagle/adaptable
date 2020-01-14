@@ -14,10 +14,11 @@
   "dependencies": {
     "@ag-grid-community/all-modules": "^22.1.1",
     "@ag-grid-community/react": "^22.1.1",
+    "@ag-grid-enterprise/all-modules": "^22.1.2",
     "@ag-grid-enterprise/menu": "^22.1.1",
     "@ag-grid-enterprise/range-selection": "^22.1.1",
-    "@ag-grid-enterprise/side-bar": "^22.1.1",
     "@ag-grid-enterprise/row-grouping": "^22.1.1",
+    "@ag-grid-enterprise/side-bar": "^22.1.1",
     "@babel/runtime-corejs2": "^7.7.7",
     "@glue42/desktop": "^4.6.3",
     "@glue42/office": "^1.5.1",
