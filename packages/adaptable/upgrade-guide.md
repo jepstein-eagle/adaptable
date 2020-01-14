@@ -101,7 +101,7 @@ you now do
 import { AdaptableOptions } from "@adaptabletools/adaptable/types";
 ```
 
-Also, `AdaptableOptions` `blotterId` has been renamed to `adaptableId`.
+Also the `blotterId` of `AdaptableOptions`  has been renamed to `adaptableId`.
 
 In the Angular version, instead of
 
@@ -116,20 +116,23 @@ import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-
 
 ## Instantiation changes
 
-Instead of
+We have made it easier to create an instance of AdapTable by providing a static constructor. 
+
+This comes with the advantage of being able to return an `adaptableApi` object that you can use to access all features of AdapTable at runtime.  So, instead of:
 
 ```ts
 const blotter = new AdaptableBlotter(adaptableOptions)
 ```
-you have to do
+you will now do
+
 ```ts
 const api = Adaptable.init(adaptableOptions)
 ```
-Now you only get back the public api, no longer the whole blotter instance, which used to contain a lot private fields, not meant for public use.
+Not only do you get back the public api but you no longer have access to a very large blotter instance, which used to contain a lot private fields, not meant for public use and which caused issues for our users.
 
 ## Styling changes
 
-We've made no changes to our styling/css classes/selectors.
+We've made **no changes to our styling/css classes/selectors**.
 
 Just note that if you used to do
 ```ts
