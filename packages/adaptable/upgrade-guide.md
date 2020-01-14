@@ -18,9 +18,9 @@ The package `@adaptabletools/adaptableblotter-angular-aggrid` has been renamed t
 
 ## ag-Grid modularisation
 
-Version 6 depends on ag-Grid >=22, which included a big shift in modularization when transitioning from ag-Grid 21.
+Version 6 depends on ag-Grid v.22.  This included a big change to using [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  The distinction between Community (free) and Enterprise (commercial) was maintained.
 
-AdapTable (both 'core' and wrappers) now depend on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
+AdapTable (both 'core' and frameworks wrappers) now depends on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
 
 You can, additionally, install as many ag-Grid Enterprise modules as you want; AdapTable will only provide functionality that matches the ag-Grid modules that you provide.
 
@@ -28,20 +28,20 @@ You can, additionally, install as many ag-Grid Enterprise modules as you want; A
 
 AdapTable now includes a plugins architecture, which makes the core package much lighter. 
 
-The core package (and react and angular wrappers) no longer includes charting and financial-specific functionality. This means ligher javascript bundles for most users.
+The core package (and react and angular wrappers) no longer includes charting or financial-specific functionality. This means ligher javascript bundles for most users.
 
-We currently offer 2 plugins (though more will be added in the future):
+Instead, these are available through 2 plugins (though more will be added in the future):
 
  * `@adaptabletools/adaptable-plugin-charts`
  * `@adaptabletools/adaptable-plugin-finance`
 
-In order to use a plugin, you have to install it via npm or yarn, and you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
+In order to use a plugin, you have to install it via npm or yarn; you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
 
-See the code example below for more details.
+See the code example at the bottom of the page for more details.
 
 ## Type changes
 
-We have renamed some of the core types we use to reflect the product name change.
+We have renamed some of the core 'types' to reflect the product name change.
 
 Instead of 
 ```ts
@@ -54,7 +54,7 @@ import { AdaptableOptions } from "@adaptabletools/adaptable/types";
 
 Also the `blotterId` of `AdaptableOptions`  has been renamed to `adaptableId`.
 
-In the Angular version, instead of
+In the Angular Wrapper, instead of
 
 ```ts
 import { AdaptableBlotterAngularAgGridModule } from '@adaptabletools/adaptableblotter-angular-aggrid';
@@ -64,6 +64,19 @@ you now do
 ```ts
 import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-aggrid';
 ```
+
+In the React Wrapper, instead of
+
+```ts
+import AdaptableBlotterReact from '@adaptabletools/adaptableblotter-react-aggrid';
+```
+
+you now do
+```ts
+import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
+```
+
+
 
 ## Instantiation changes
 
@@ -83,7 +96,7 @@ Not only do you get back the public api but you no longer have access to a very 
 
 ## Styling changes
 
-We've made **no changes to our styling/css classes/selectors**.
+We've made **no changes** to our styling/css classes/selectors.
 
 Just note that if you used to install ag-Grid styles like this:
 ```ts
@@ -93,6 +106,14 @@ you will now have to do:
 ```ts
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 ```
+
+Similarly you will import the AdapTable styles as:
+
+```ts
+import "@adaptabletools/adaptable/index.css";
+import "@adaptabletools/adaptable/themes/dark.css";
+```
+
 
 ## HTML rendering changes
 
@@ -107,7 +128,7 @@ your html should now look like:
 <div id="adaptable"></div>
 ```
 
-The old structure is still working, but we show warning in the console.
+Note: the old structure is still working, but we will show a warning in the console.
 
 ## Adaptable Options
 
@@ -115,11 +136,10 @@ We have added many more options (and option groups) to [Adaptable Options](https
 
 The effect is to give you more complete control over how your instance of AdapTable looks and works. 
 
-There are too many to list here but some of the headline improvements / new features are:
-[xxx](yyy)
+There are far too many to list here but some of the headline improvements / new features are:
 
 * [Options to manage state hydration/dehydration](https://api.adaptableblotter.com/interfaces/_adaptableoptions_stateoptions_.stateoptions.html)
-* [Store custom state through Application Data Entries](https://api.adaptableblotter.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
+* [Application Data Entries to store custom state](https://api.adaptableblotter.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
 * [Adaptable Tool Panel](https://api.adaptableblotter.com/interfaces/_predefinedconfig_toolpanelstate_.toolpanelstate.html)
 * [Server Validation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_editoptions_.editoptions.html)  
 * [Updated Rows](https://api.adaptableblotter.com/interfaces/_predefinedconfig_updatedrowstate_.updatedrowstate.html)
