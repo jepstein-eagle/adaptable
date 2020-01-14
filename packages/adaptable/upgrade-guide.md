@@ -120,15 +120,15 @@ There are too many to list here but some of the headline improvements / new feat
 
 * [Options to manage state hydration/dehydration](https://api.adaptableblotter.com/interfaces/_adaptableoptions_stateoptions_.stateoptions.html)
 * [Store custom state through Application Data Entries](https://api.adaptableblotter.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
-* Tool Panel
-* Server Validation
-* Updated Rows
-* Pivot Layouts
-* Custom Toolbars
-* Column Menu
-* Context Menu
-* Quick Search
-* iPushPull
+* [Adaptable Tool Panel](https://api.adaptableblotter.com/interfaces/_predefinedconfig_toolpanelstate_.toolpanelstate.html)
+* [Server Validation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_editoptions_.editoptions.html)  
+* [Updated Rows](https://api.adaptableblotter.com/interfaces/_predefinedconfig_updatedrowstate_.updatedrowstate.html)
+* [Saveable Pivot and Grouped Layouts](https://api.adaptableblotter.com/interfaces/_predefinedconfig_layoutstate_.pivotdetails.html)   
+* Custom Toolbars[xxx](yyy)
+* Column Menu [xxx](yyy)
+* Context Menu [xxx](yyy)
+* Quick Search [xxx](yyy)
+* iPushPull [xxx](yyy)
 
 ## Events
 
