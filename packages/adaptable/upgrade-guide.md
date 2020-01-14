@@ -115,10 +115,11 @@ We have added many more options (and option groups) to [Adaptable Options](https
 
 The effect is to give you more complete control over how your instance of AdapTable looks and works. 
 
-There are too many to list here but some of the headline additions are:
+There are too many to list here but some of the headline improvements / new features are:
+[xxx](yyy)
 
-* State Management
-* Application Data
+* [Options to manage state hydration/dehydration](https://api.adaptableblotter.com/interfaces/_adaptableoptions_stateoptions_.stateoptions.html)
+* [Store custom state through Application Data Entries](https://api.adaptableblotter.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
 * Tool Panel
 * Server Validation
 * Updated Rows
