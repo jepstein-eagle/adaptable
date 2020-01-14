@@ -2,9 +2,14 @@
 
 This document will help you migrate from v5 to v6 of the blotter
 
-## Package name change
+## Package name changes
 
 The package `@adaptabletools/adaptableblotter` has been renamed to `@adaptabletools/adaptable`
+
+
+The package `@adaptabletools/adaptableblotter-react-aggrid` has been renamed to `@adaptabletools/adaptable-react-aggrid`
+
+The package `@adaptabletools/adaptableblotter-angular-aggrid` has been renamed to `@adaptabletools/adaptable-angular-aggrid`
 
 ## AgGrid update
 
