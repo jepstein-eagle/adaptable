@@ -226,6 +226,9 @@ However, you might want to style icons differently - in this case, you can custo
 }
 ```
 
+## Upgrade guide
+
+For upgrading from v5 to v6 see the [upgrade-guide.md](./upgrade-guide.md)
 ## Licences
 
 Adaptable is a commercial product and requires a purchased licence for use.
