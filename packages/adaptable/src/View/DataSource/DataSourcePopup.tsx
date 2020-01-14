@@ -210,7 +210,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let DataSourcePopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DataSourcePopupComponent);
+export let DataSourcePopup = connect(mapStateToProps, mapDispatchToProps)(DataSourcePopupComponent);

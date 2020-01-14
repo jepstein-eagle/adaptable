@@ -12,7 +12,10 @@ interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetai
 
 export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps, {}> {
   render() {
-    let colItems: IColItem[] = [{ Content: 'Operation', Size: 5 }, { Content: 'Value', Size: 7 }];
+    let colItems: IColItem[] = [
+      { Content: 'Operation', Size: 5 },
+      { Content: 'Value', Size: 7 },
+    ];
 
     let rowElements: any[] = [];
     if (this.props.CellSummary != null) {

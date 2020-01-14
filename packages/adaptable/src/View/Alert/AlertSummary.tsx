@@ -169,7 +169,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let AlertSummary = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AlertSummaryComponent);
+export let AlertSummary = connect(mapStateToProps, mapDispatchToProps)(AlertSummaryComponent);

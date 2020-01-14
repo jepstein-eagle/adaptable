@@ -1,7 +1,5 @@
 import XLSX from 'xlsx';
-import Adaptable, {
-  AdaptableNoCodeWizard as ABWizard,
-} from '@adaptabletools/adaptable/agGrid';
+import Adaptable, { AdaptableNoCodeWizard as ABWizard } from '@adaptabletools/adaptable/agGrid';
 
 import {
   AdaptableOptions,

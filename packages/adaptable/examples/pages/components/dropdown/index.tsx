@@ -13,7 +13,10 @@ export default () => {
   const [value, setValue] = useState('');
   return (
     <Dropdown
-      options={[{ label: 'x', value: 'x' }, { label: 'y', value: 'y' }]}
+      options={[
+        { label: 'x', value: 'x' },
+        { label: 'y', value: 'y' },
+      ]}
       onChange={v => setValue(v)}
       value={value}
     />

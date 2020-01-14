@@ -56,6 +56,10 @@ After that, you can use Adaptablecomponent in your app
 </adaptable-angular-aggrid>
 ```
 
+## Example
+
+For a standalone working example app, see [our angular demo](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+
 ## Styling
 
 In order for Adaptable to look right, you have to import the index.css file

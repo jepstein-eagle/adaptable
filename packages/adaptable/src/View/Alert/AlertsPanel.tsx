@@ -31,14 +31,16 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
     let alerts = this.props.Alerts.map((alert: AdaptableAlert, index: number) => {
       let alertHasheader: boolean = StringExtensions.IsNotNullOrEmpty(alert.Header);
 
-      const textColor = UIHelper.getColorByMessageType(alert.AlertDefinition
-        .MessageType as MessageType);
+      const textColor = UIHelper.getColorByMessageType(
+        alert.AlertDefinition.MessageType as MessageType
+      );
       const textStyle = {
         color: textColor,
         fill: textColor,
       };
-      const iconName = UIHelper.getGlyphByMessageType(alert.AlertDefinition
-        .MessageType as MessageType);
+      const iconName = UIHelper.getGlyphByMessageType(
+        alert.AlertDefinition.MessageType as MessageType
+      );
       const IconCmp = icons[iconName] as ReactComponentLike;
       const icon = IconCmp ? <IconCmp /> : null;
 

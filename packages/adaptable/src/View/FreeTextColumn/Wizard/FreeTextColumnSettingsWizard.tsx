@@ -75,7 +75,10 @@ export class FreeTextColumnSettingsWizard
     this.setState(
       {
         ColumnId: e.value,
-        ErrorMessage: ArrayExtensions.ContainsItem(this.props.Columns.map(c => c.ColumnId), e.value)
+        ErrorMessage: ArrayExtensions.ContainsItem(
+          this.props.Columns.map(c => c.ColumnId),
+          e.value
+        )
           ? 'A Column already exists with that name'
           : null,
       },

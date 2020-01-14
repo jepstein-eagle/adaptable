@@ -150,7 +150,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let AlertToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AlertToolPanelComponent);
+export let AlertToolPanel = connect(mapStateToProps, mapDispatchToProps)(AlertToolPanelComponent);

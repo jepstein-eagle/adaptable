@@ -231,7 +231,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let SmartEditPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SmartEditPopupComponent);
+export let SmartEditPopup = connect(mapStateToProps, mapDispatchToProps)(SmartEditPopupComponent);

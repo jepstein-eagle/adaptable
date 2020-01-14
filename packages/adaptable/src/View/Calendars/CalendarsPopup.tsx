@@ -172,7 +172,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let CalendarsPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CalendarsPopupComponent);
+export let CalendarsPopup = connect(mapStateToProps, mapDispatchToProps)(CalendarsPopupComponent);

@@ -196,10 +196,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let UpdatedRowPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UpdatedRowPopupComponent);
+export let UpdatedRowPopup = connect(mapStateToProps, mapDispatchToProps)(UpdatedRowPopupComponent);
 
 /*
 took out as not working properly

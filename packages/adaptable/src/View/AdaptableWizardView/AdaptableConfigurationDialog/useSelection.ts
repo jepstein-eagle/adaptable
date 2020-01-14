@@ -14,13 +14,10 @@ const useSelection = (
   const onBatchChange = changeListeners.onBatchChange || ((flag: boolean) => {});
 
   const [selected, setSelected] = useState<{ [key: string]: boolean }>(
-    columns.reduce(
-      (acc, col) => {
-        acc[col.field] = fieldName ? col[fieldName] : defaultValue;
-        return acc;
-      },
-      {} as { [key: string]: boolean }
-    )
+    columns.reduce((acc, col) => {
+      acc[col.field] = fieldName ? col[fieldName] : defaultValue;
+      return acc;
+    }, {} as { [key: string]: boolean })
   );
 
   const getColumn = (field: string) => columns.filter(c => c.field === field)[0];
@@ -63,14 +60,11 @@ const useSelection = (
     },
     selectAll: () => {
       setSelected(
-        columns.reduce(
-          (acc, col) => {
-            acc[col.field] = true;
+        columns.reduce((acc, col) => {
+          acc[col.field] = true;
 
-            return acc;
-          },
-          {} as { [key: string]: boolean }
-        )
+          return acc;
+        }, {} as { [key: string]: boolean })
       );
       onBatchChange(true);
     },

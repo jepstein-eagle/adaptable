@@ -234,7 +234,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let LayoutToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LayoutToolPanelComponent);
+export let LayoutToolPanel = connect(mapStateToProps, mapDispatchToProps)(LayoutToolPanelComponent);

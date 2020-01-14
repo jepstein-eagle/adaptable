@@ -50,8 +50,9 @@ class SystemStatusPopupComponent extends React.Component<
       'Clear them if you have read them.',
     ];
 
-    let messageTypeColor: string = UIHelper.getColorByMessageType(this.props
-      .StatusType as MessageType);
+    let messageTypeColor: string = UIHelper.getColorByMessageType(
+      this.props.StatusType as MessageType
+    );
 
     let clearButton = (
       <SimpleButton

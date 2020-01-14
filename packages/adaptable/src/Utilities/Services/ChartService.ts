@@ -115,13 +115,10 @@ export class ChartService implements IChartService {
       let onlyIncludeIds;
 
       if (chartDefinition.PrimaryKeyValues) {
-        onlyIncludeIds = chartDefinition.PrimaryKeyValues.reduce(
-          (allowedIds, primaryKey) => {
-            allowedIds[primaryKey] = true;
-            return allowedIds;
-          },
-          {} as { [key: string]: boolean }
-        );
+        onlyIncludeIds = chartDefinition.PrimaryKeyValues.reduce((allowedIds, primaryKey) => {
+          allowedIds[primaryKey] = true;
+          return allowedIds;
+        }, {} as { [key: string]: boolean });
       }
       values = this.adaptable
         .getColumnValueDisplayValuePairList(

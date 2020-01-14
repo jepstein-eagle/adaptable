@@ -211,7 +211,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let AlertPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AlertPopupComponent);
+export let AlertPopup = connect(mapStateToProps, mapDispatchToProps)(AlertPopupComponent);

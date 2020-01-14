@@ -233,7 +233,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let LayoutPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LayoutPopupComponent);
+export let LayoutPopup = connect(mapStateToProps, mapDispatchToProps)(LayoutPopupComponent);

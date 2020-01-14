@@ -231,7 +231,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let CustomSortPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CustomSortPopupComponent);
+export let CustomSortPopup = connect(mapStateToProps, mapDispatchToProps)(CustomSortPopupComponent);

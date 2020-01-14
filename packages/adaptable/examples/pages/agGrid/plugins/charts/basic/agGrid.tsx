@@ -8,6 +8,7 @@ import '../../../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import {
   AdaptableOptions,
   PredefinedConfig,
@@ -26,6 +27,7 @@ function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeWithSparkline(tradeData);
 
+  gridOptions.modules = AllEnterpriseModules;
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',

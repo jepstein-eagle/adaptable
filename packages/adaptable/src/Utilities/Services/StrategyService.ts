@@ -51,8 +51,9 @@ export class StrategyService implements IStrategyService {
     );
 
     if (
-      !ExpressionHelper.OperatorRequiresValue(alertDefinition.Range
-        .Operator as LeafExpressionOperator)
+      !ExpressionHelper.OperatorRequiresValue(
+        alertDefinition.Range.Operator as LeafExpressionOperator
+      )
     ) {
       return valueDescription;
     }

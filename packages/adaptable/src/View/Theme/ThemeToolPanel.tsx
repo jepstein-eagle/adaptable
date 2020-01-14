@@ -115,7 +115,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ThemeToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ThemeToolPanelComponent);
+export let ThemeToolPanel = connect(mapStateToProps, mapDispatchToProps)(ThemeToolPanelComponent);

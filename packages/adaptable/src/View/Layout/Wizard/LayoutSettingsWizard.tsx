@@ -63,7 +63,10 @@ export class LayoutSettingsWizard
     this.setState(
       {
         LayoutName: e.value,
-        ErrorMessage: ArrayExtensions.ContainsItem(this.props.Layouts.map(l => l.Name), e.value)
+        ErrorMessage: ArrayExtensions.ContainsItem(
+          this.props.Layouts.map(l => l.Name),
+          e.value
+        )
           ? 'A Layout already exists with that name'
           : null,
       } as LayoutSettingsWizardState,

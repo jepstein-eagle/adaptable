@@ -435,7 +435,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {};
 }
 
-export let ColumnInfoPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ColumnInfoPopupComponent);
+export let ColumnInfoPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnInfoPopupComponent);

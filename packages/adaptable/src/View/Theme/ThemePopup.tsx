@@ -101,7 +101,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ThemePopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ThemePopupComponent);
+export let ThemePopup = connect(mapStateToProps, mapDispatchToProps)(ThemePopupComponent);

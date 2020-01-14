@@ -278,7 +278,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let PercentBarPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PercentBarPopupComponent);
+export let PercentBarPopup = connect(mapStateToProps, mapDispatchToProps)(PercentBarPopupComponent);

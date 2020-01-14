@@ -234,7 +234,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let UserFilterPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserFilterPopupComponent);
+export let UserFilterPopup = connect(mapStateToProps, mapDispatchToProps)(UserFilterPopupComponent);

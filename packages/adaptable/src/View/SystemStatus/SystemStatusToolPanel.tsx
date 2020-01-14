@@ -39,11 +39,13 @@ class SystemStatusToolPanelComponent extends React.Component<
   }
 
   render() {
-    let messageTypeColor: string = UIHelper.getColorByMessageType(this.props
-      .StatusType as MessageType);
+    let messageTypeColor: string = UIHelper.getColorByMessageType(
+      this.props.StatusType as MessageType
+    );
 
-    let buttonTextColor: string = UIHelper.getButtonTextColourForMessageType(this.props
-      .StatusType as MessageType);
+    let buttonTextColor: string = UIHelper.getButtonTextColourForMessageType(
+      this.props.StatusType as MessageType
+    );
 
     let isDefaultMessage: boolean =
       this.props.DefaultStatusMessage === this.props.StatusMessage &&

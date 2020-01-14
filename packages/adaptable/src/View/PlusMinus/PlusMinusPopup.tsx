@@ -283,7 +283,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let PlusMinusPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlusMinusPopupComponent);
+export let PlusMinusPopup = connect(mapStateToProps, mapDispatchToProps)(PlusMinusPopupComponent);

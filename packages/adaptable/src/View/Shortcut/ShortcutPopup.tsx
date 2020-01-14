@@ -267,10 +267,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ShortcutPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShortcutPopupComponent);
+export let ShortcutPopup = connect(mapStateToProps, mapDispatchToProps)(ShortcutPopupComponent);
 
 const keys = [
   'A',

@@ -538,10 +538,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let FilterForm = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FilterFormComponent);
+export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>

@@ -21,7 +21,7 @@ const withTypescript = (nextConfig = {}) => {
 
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
-      const { dir, defaultLoaders, dev, isServer } = options;
+      const { dir, defaultLoaders } = options;
 
       config.resolve.extensions.push('.ts', '.tsx');
 

@@ -289,7 +289,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let BulkUpdatePopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BulkUpdatePopupComponent);
+export let BulkUpdatePopup = connect(mapStateToProps, mapDispatchToProps)(BulkUpdatePopupComponent);

@@ -42,8 +42,9 @@ class SystemStatusToolbarControlComponent extends React.Component<
       ? UIHelper.getColorByMessageType(this.props.StatusType as MessageType)
       : undefined;
 
-    let buttonTextColor: string = UIHelper.getButtonTextColourForMessageType(this.props
-      .StatusType as MessageType);
+    let buttonTextColor: string = UIHelper.getButtonTextColourForMessageType(
+      this.props.StatusType as MessageType
+    );
 
     let isDefaultMessage: boolean =
       this.props.DefaultStatusMessage === this.props.StatusMessage &&

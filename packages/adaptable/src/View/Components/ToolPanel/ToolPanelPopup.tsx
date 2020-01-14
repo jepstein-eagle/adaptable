@@ -280,7 +280,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ToolPanelPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ToolPanelPopupComponent);
+export let ToolPanelPopup = connect(mapStateToProps, mapDispatchToProps)(ToolPanelPopupComponent);
