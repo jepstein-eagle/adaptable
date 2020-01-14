@@ -46,7 +46,7 @@ const columnDefs = [
   { field: "CompanyName", type: "abColDefString" },
   { field: "ContactName", type: "abColDefString" },
   { field: "Employee", type: "abColDefString" },
-  { field: "InvoicedCost", type: "abColDefNumber", valueFormatter: "x.toLocaleString()" }
+  { field: "InvoicedCost", type: "abColDefNumber" }
 ];
 
 const adaptableOptions: AdaptableOptions = {
