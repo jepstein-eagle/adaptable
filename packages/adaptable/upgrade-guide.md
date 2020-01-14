@@ -96,6 +96,17 @@ import { AdaptableOptions } from "@adaptabletools/adaptable/types";
 
 Also, `AdaptableOptions` `blotterId` has been renamed to `adaptableId`.
 
+In the Angular version, instead of
+
+```ts
+import { AdaptableBlotterAngularAgGridModule } from '@adaptabletools/adaptableblotter-angular-aggrid';
+```
+
+you now do
+```ts
+import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-aggrid';
+```
+
 ## Instantiation changes
 
 Instead of
