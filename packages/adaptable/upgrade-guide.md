@@ -1,11 +1,14 @@
 # Upgrade guide
 
-This document will help you migrate from v5 to v6 of the blotter
+This document will help you migrate from v5 to v6 of AdapTable. 
 
 ## Package name changes
 
-The package `@adaptabletools/adaptableblotter` has been renamed to `@adaptabletools/adaptable`
+v6 of AdapTable reflects the new name of the product; formally known as the 'Adaptable Blotter', it has been renamed 'AdapTable' to reflect the tabular nature of the tool and that it can be, and is, widely used outside of finance.
 
+As a consequence:
+
+The package `@adaptabletools/adaptableblotter` has been renamed to `@adaptabletools/adaptable`
 
 The package `@adaptabletools/adaptableblotter-react-aggrid` has been renamed to `@adaptabletools/adaptable-react-aggrid`
 
@@ -21,14 +24,16 @@ You can, additionally, install as many ag-Grid Enterprise modules as you want; A
 
 ## Plugins:  Charts & Financial
 
-AdapTable how has a plugins architecture, which makes the package ligher. The core package (and react and angular wrappers) no longer includes charting and financial specific cell operations. This means ligher javascript bundles for most users.
+AdapTable how includes a plugins architecture, which makes the core package much lighter. 
 
-For now, we offer 2 plugins:
+The core package (and react and angular wrappers) no longer includes charting and financial-specific functionality. This means ligher javascript bundles for most users.
+
+We currently offer 2 plugins (though more will be added in the future):
 
  * `@adaptabletools/adaptable-plugin-charts`
  * `@adaptabletools/adaptable-plugin-finance`
 
-In order to use a plugin, you have to install it via npm or yarn, and you need to install the EXACT SAME version as the `@adaptabletools/adaptable` you are already using in your app.
+In order to use a plugin, you have to install it via npm or yarn, and you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
 
 ## Basic example
 
