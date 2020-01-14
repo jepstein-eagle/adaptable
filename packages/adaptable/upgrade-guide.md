@@ -35,60 +35,7 @@ We currently offer 2 plugins (though more will be added in the future):
 
 In order to use a plugin, you have to install it via npm or yarn, and you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
 
-## Basic example
-
-```tsx
-// if you need an additional AgGrid module, import it
-// and pass it in the adaptableOptions.vendorGrid.modules array
-import { MenuModule } from '@ag-grid-enterprise/menu';
-
-import Adaptable from "@adaptabletools/adaptable/agGrid";
-import "@adaptabletools/adaptable/index.css";
-
-import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
-import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
-
-import charts from "@adaptabletools/adaptable-plugin-charts";
-import finance from "@adaptabletools/adaptable-plugin-finance";
-
-import { AdaptableOptions } from "@adaptabletools/adaptable/types";
-
-const columnDefs = [
-  { field: "OrderId", type: "abColDefNumber" },
-  { field: "CompanyName", type: "abColDefString" },
-  { field: "ContactName", type: "abColDefString" },
-  { field: "Employee", type: "abColDefString" },
-  { field: "InvoicedCost", type: "abColDefNumber" }
-];
-
-const adaptableOptions: AdaptableOptions = {
-  primaryKey: "OrderId",
-  userName: "Demo User",
-  adaptableId: "Simple Demo",
-
-  // call the plugins functions and pass them to the plugins array in the AdaptableOptions object
-  plugins: [charts(), finance()],
-
-  vendorGrid: {
-    modules: [MenuModule],
-    enableRangeSelection: true,
-    columnDefs,
-    columnTypes: {
-      abColDefNumber: {},
-      abColDefString: {},
-      abColDefBoolean: {},
-      abColDefDate: {},
-      abColDefNumberArray: {},
-      abColDefObject: {}
-    },
-    rowData: []
-  },
-  predefinedConfig: {}
-};
-
-const api = Adaptable.init(adaptableOptions);
-```
-
+See the example below.
 
 ## Type changes
 
@@ -155,3 +102,58 @@ Your html should now look like
 ```
 
 The old structure is still working, but showing a warning in the console
+
+## Basic example
+
+```tsx
+// if you need an additional AgGrid module, import it
+// and pass it in the adaptableOptions.vendorGrid.modules array
+import { MenuModule } from '@ag-grid-enterprise/menu';
+
+import Adaptable from "@adaptabletools/adaptable/agGrid";
+import "@adaptabletools/adaptable/index.css";
+
+import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+
+import charts from "@adaptabletools/adaptable-plugin-charts";
+import finance from "@adaptabletools/adaptable-plugin-finance";
+
+import { AdaptableOptions } from "@adaptabletools/adaptable/types";
+
+const columnDefs = [
+  { field: "OrderId", type: "abColDefNumber" },
+  { field: "CompanyName", type: "abColDefString" },
+  { field: "ContactName", type: "abColDefString" },
+  { field: "Employee", type: "abColDefString" },
+  { field: "InvoicedCost", type: "abColDefNumber" }
+];
+
+const adaptableOptions: AdaptableOptions = {
+  primaryKey: "OrderId",
+  userName: "Demo User",
+  adaptableId: "Simple Demo",
+
+  // call the plugins functions and pass them to the plugins array in the AdaptableOptions object
+  plugins: [charts(), finance()],
+
+  vendorGrid: {
+    modules: [MenuModule],
+    enableRangeSelection: true,
+    columnDefs,
+    columnTypes: {
+      abColDefNumber: {},
+      abColDefString: {},
+      abColDefBoolean: {},
+      abColDefDate: {},
+      abColDefNumberArray: {},
+      abColDefObject: {}
+    },
+    rowData: []
+  },
+  predefinedConfig: {}
+};
+
+const api = Adaptable.init(adaptableOptions);
+```
+
