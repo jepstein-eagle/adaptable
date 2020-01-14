@@ -117,19 +117,30 @@ The effect is to give you more complete control over how your instance of AdapTa
 
 There are too many to list here but some of the headline additions are:
 
-We have also added lots more options to xx in order to give you complete contro
+* State Management
+* Custom Toolbars
+* Column Menu
+* Context Menu
 
 ## Events
 
-We have added many mo
+In Version 5 of AdapTable there were 2 ways of subscribing to events, one of which was deprecated.  
 
-## Further Information
+That method has now been removed and the only way to listen to events is by using the On('eventName').
 
-Read more at:
+Note: AdapTable events use FDC3 syntax.
 
- * [Developer Documentation](https://api.adaptableblotter.com/index.html)
- * [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
- * [Demo Site](https://demo.adaptableblotter.com/)
+For example to subscribe to the `ActionColumnClicked` event you will:
+
+```ts
+api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
+       onActionColumnClickedListener(actionColumnEventArgs.data[0].id)
+   }
+ );
+```
+
+Find out more - and see the full list of AdapTable events at [Event API Documentation](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html)
+
 
 ## Basic example
 
@@ -184,4 +195,13 @@ const adaptableOptions: AdaptableOptions = {
 
 const api = Adaptable.init(adaptableOptions);
 ```
+
+
+## Further Information and Help
+
+Read more at:
+
+ * [Developer Documentation](https://api.adaptableblotter.com/index.html)
+ * [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
+ * [Demo Site](https://demo.adaptableblotter.com/)
 
