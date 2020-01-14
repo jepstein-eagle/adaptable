@@ -7,11 +7,11 @@
   "description": "Angular version of the powerful data-agnostic HTML5 datagrid add-on that sits on top of the agGrid component and provides all the rich functionality that advanced users expect from their DataGrids and Data Tables",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AdaptableTools/adaptableblotter.git",
+    "url": "git+https://github.com/AdaptableTools/adaptable.git",
     "directory": "packages/adaptable-ng-aggrid"
   },
   "bugs": {
-    "url": "https://github.com/AdaptableTools/adaptableblotter/issues"
+    "url": "https://github.com/AdaptableTools/adaptable/issues"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "dependencies": {

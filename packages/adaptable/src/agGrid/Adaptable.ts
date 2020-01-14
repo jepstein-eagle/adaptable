@@ -1819,7 +1819,7 @@ export class Adaptable implements IAdaptable {
         if (oldContainer) {
           console.warn(`
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!! The old default container element for Adaptable was "#adaptableContainer", configured via 'containerOptions.adaptableContainer="adaptableBlotter"'.
+!!!!! The old default container element for Adaptable was "#adaptableBlotter", configured via 'containerOptions.adaptableContainer="adaptableBlotter"'.
 !!!!! Seems like you haven't updated your html container selector, so we're falling back to using that one.
 !!!!!
 !!!!! To make this warning go away, update your html structure and make sure you have an element with id="adaptable" in your app!
