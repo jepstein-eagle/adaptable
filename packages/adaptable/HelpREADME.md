@@ -1,5 +1,7 @@
 # Accessing AdapTable through code
 
+**[This documentation targets AdapTable Version 6 - released in January 2020]**
+
 There are 3 primary ways that developers / users 'interact' with the code in AdapTable:
 
 - [AdapTable Options](./interfaces/_adaptableOptions_adaptableOptions_.adaptableOptions.html): **Set up and configure** AdapTable to your requirements
@@ -52,4 +54,3 @@ You can find further information about AdapTable at these sites:
 - [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 - [Web Site](http://www.adaptabletools.com)
 
-The information on this site is for AdapTable version 6 (released in January 2020).
