@@ -56,7 +56,7 @@ import { ColumnSort } from './Common/ColumnSort';
  *  }
  * } as PredefinedConfig;
  * ```
- * I n this example we have created 4 Layouts:
+ * In this example we have created 4 Layouts:
  *
  * - *Simple Layout* - a basic Layout setting column visibility and order
  *
@@ -68,9 +68,9 @@ import { ColumnSort } from './Common/ColumnSort';
  */
 export interface LayoutState extends RunTimeState {
   /**
-   * The name of the Layout which will be in use when Adaptable starts / loads.
+   * The name of the Layout which will be loaded AdapTable starts.
    *
-   * This will be the selected value in the Layout Toolbar and Adaptable will apply it automatically.
+   * This will be the selected value in the Layout Toolbar and AdapTable will apply it automatically.
    *
    * **Make sure that the value appears in the name property of one of the Layouts that you provide**
    *
@@ -130,7 +130,7 @@ export interface Layout extends AdaptableObject {
    */
   PivotDetails?: PivotDetails;
   /**
-   * **Do not set this when creating a layout**
+   * **Do not set this property when creating a layout**
    *
    *  This is state saved automatically by Adaptable for internal use to manage layouts
    *
@@ -138,7 +138,7 @@ export interface Layout extends AdaptableObject {
    */
   VendorGridInfo?: VendorGridInfo;
   /**
-   * **Do not set this when creating a layout**
+   * **Do not set this property when creating a layout**
    *
    *  This is state saved automatically by Adaptable for internal use to manage layouts
    */
@@ -148,7 +148,8 @@ export interface Layout extends AdaptableObject {
 /**
  * **Do not set use this property**
  *
- *  This is state saved automatically by Adaptable for internal use to manage layouts
+ *  This is state saved automatically by AdapTable for internal use to manage layouts.
+ *
  */
 export interface VendorGridInfo {
   GroupState?: any;
@@ -160,7 +161,7 @@ export interface VendorGridInfo {
 /**
  * **Do not set use this property**
  *
- *  This is state saved automatically by Adaptable for internal use to manage layouts
+ *  This is state saved automatically by AdapTable for internal use to manage layouts
  */
 export interface AdaptableGridInfo {
   CurrentColumns?: string[];

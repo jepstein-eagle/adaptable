@@ -46,9 +46,9 @@ import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/T
  *
  * - set how the Home Toolbar minimised button will render
  *
- *  **Custom Toolbars**
+ * **Custom Toolbars**
  *
- * The Dashboard State can be supplied with custom toolbars that users can leverage in order populate with their own content.
+ * Dashboard State can be supplied with custom toolbars that users can leverage in order populate with their own content.
  *
  * Each Custom Toolbar contains 2 divs (to cater for 2 different scenarios):
  *
