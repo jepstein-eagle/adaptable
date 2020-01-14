@@ -1,4 +1,4 @@
-# Upgrade guide
+# AdapTable Upgrade Guide
 
 This document will help you migrate from v5 to v6 of AdapTable. 
 
@@ -118,7 +118,7 @@ import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-
 
 We have made it easier to create an instance of AdapTable by providing a static constructor. 
 
-This comes with the advantage of being able to return an `adaptableApi` object that you can use to access all features of AdapTable at runtime.  So, instead of:
+This comes with the advantage of being able to return an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime.  So, instead of:
 
 ```ts
 const blotter = new AdaptableBlotter(adaptableOptions)
