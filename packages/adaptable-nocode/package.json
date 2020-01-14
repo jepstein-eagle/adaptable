@@ -9,11 +9,11 @@
   "main": "./adaptable-nocode/src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AdaptableTools/adaptableblotter.git",
+    "url": "git+https://github.com/AdaptableTools/adaptable.git",
     "directory": "packages/adaptable-nocode"
   },
   "bugs": {
-    "url": "https://github.com/AdaptableTools/adaptableblotter/issues"
+    "url": "https://github.com/AdaptableTools/adaptable/issues"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "engines": {

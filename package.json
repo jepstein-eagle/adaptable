@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AdaptableTools/adaptableblotter.git"
+    "url": "git+https://github.com/AdaptableTools/adaptable.git"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",

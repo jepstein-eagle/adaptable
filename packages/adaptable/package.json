@@ -139,7 +139,7 @@
   "homepage": "http://www.adaptabletools.com/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AdaptableTools/adaptableblotter.git"
+    "url": "git+https://github.com/AdaptableTools/adaptable.git"
   },
   "license": "SEE LICENSE IN LICENSE.md"
 }

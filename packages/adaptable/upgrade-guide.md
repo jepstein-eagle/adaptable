@@ -100,7 +100,7 @@ const blotter = new AdaptableBlotter(adaptableOptions)
 ```
 you have to do
 ```ts
-const api = AdaptableBlotter.init(adaptableOptions)
+const api = Adaptable.init(adaptableOptions)
 ```
 Now you only get back the public api, no longer the whole blotter instance, which used to contain a lot private fields, not meant for public use.
 
