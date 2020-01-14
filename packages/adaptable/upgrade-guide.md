@@ -11,13 +11,15 @@ The package `@adaptabletools/adaptableblotter-react-aggrid` has been renamed to 
 
 The package `@adaptabletools/adaptableblotter-angular-aggrid` has been renamed to `@adaptabletools/adaptable-angular-aggrid`
 
-## AgGrid update
+## ag-Grid modularisation
 
-v6 now depends on AgGrid >=22, which included a big shift in modularization when transitioning from AgGrid 21.
+v6 now depends on ag-Grid >=22, which included a big shift in modularization when transitioning from ag-Grid 21.
 
-AdapTable (all versions) now depend on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
+AdapTable (both 'core' and wrappers) now depend on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
 
-## Charts and financial
+You can, additionally, install as many ag-Grid Enterprise modules as you want; AdapTable will only provide functionality that matches the ag-Grid modules that you provide.
+
+## Plugins:  Charts & Financial
 
 AdapTable how has a plugins architecture, which makes the package ligher. The core package (and react and angular wrappers) no longer includes charting and financial specific cell operations. This means ligher javascript bundles for most users.
 
