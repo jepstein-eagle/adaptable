@@ -26,7 +26,7 @@ var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 100;
+  const tradeCount: number = 10;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -76,11 +76,27 @@ let demoConfig: PredefinedConfig = {
     StatusType: 'Error',
   },
 
+  ConditionalStyle: {
+    ConditionalStyles: [
+      {
+        ConditionalStyleScope: 'Column', // 'DataType',
+        ColumnId: 'moodysRating',
+        DataType: 'Number',
+        Style: {
+          BackColor: '#32cd32',
+        },
+        Expression: {
+          FilterExpressions: [{ ColumnId: 'notional', Filters: ['Positive', 'Negative'] }],
+        },
+      },
+    ],
+  },
+
   Layout: {
     Layouts: [
       {
         ColumnSorts: [],
-        Columns: ['tradeId', 'notional', 'counterparty', 'country'],
+        Columns: ['moodysRating', 'tradeId', 'notional', 'counterparty', 'country'],
         Name: 'fixing a bug',
         // GroupedColumns: ['currency'],
         GroupedColumns: [],

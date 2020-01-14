@@ -3,7 +3,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IFormatColumnStrategy } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
@@ -150,7 +149,7 @@ export class StyleService implements IStyleService {
     // we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
     const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
     conditionalStyles
-      .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row)
+      .filter(x => x.ConditionalStyleScope == 'Row')
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
@@ -172,7 +171,7 @@ export class StyleService implements IStyleService {
         );
       });
     conditionalStyles
-      .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory)
+      .filter(x => x.ConditionalStyleScope == 'ColumnCategory')
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
@@ -194,7 +193,7 @@ export class StyleService implements IStyleService {
         );
       });
     conditionalStyles
-      .filter(cs => cs.ConditionalStyleScope == ConditionalStyleScope.Column)
+      .filter(cs => cs.ConditionalStyleScope == 'Column')
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
@@ -215,6 +214,30 @@ export class StyleService implements IStyleService {
           }`
         );
       });
+    /*
+    conditionalStyles
+      .filter(cs => cs.ConditionalStyleScope == 'DataType')
+      .forEach(element => {
+        const styleName = this.CreateUniqueStyleName(
+          StrategyConstants.ConditionalStyleStrategyId,
+          element
+        );
+        this.addCSSRule(
+          `.${styleName}`,
+          `background-color: ${element.Style.BackColor} !important;color: ${
+            element.Style.ForeColor
+          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
+            element.Style.FontStyle
+          } !important;${
+            element.Style.FontSize
+              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
+                  element.Style.FontSize
+                )} !important`
+              : ''
+          }`
+        );
+      });
+      */
 
     // next we do Updated Rows - still not quite sure how this will work...
     const updatedRowState: UpdatedRowState = this.adaptable.api.updatedRowApi.getUpdatedRowState();

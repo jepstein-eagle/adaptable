@@ -76,12 +76,6 @@ export enum LayoutSource {
   New = 'New',
 }
 
-export enum ConditionalStyleScope {
-  Column = 'Column',
-  Row = 'Row',
-  ColumnCategory = 'ColumnCategory',
-}
-
 export enum ReportColumnScope {
   AllColumns = 'AllColumns',
   VisibleColumns = 'VisibleColumns',

@@ -9,7 +9,7 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * By default every function has the Entitlement of <i>Full</i>, so only set those which you want to be different to that default.
  *
- *  *  **Further Adaptable Help Resources**
+ *  *  **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/admin/aggridentitlementsdemo/) | [Entitlements API](_api_entitlementsapi_.entitlementsapi.html)
  *

@@ -43,6 +43,8 @@ export class ExpressionBuilderPage
   extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState>
   implements AdaptableWizardStep {
   render() {
+    console.log(this.props.ExpressionMode);
+
     let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
     let newButton = (

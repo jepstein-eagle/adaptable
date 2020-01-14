@@ -9,7 +9,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
  *
  * Note: if you are using the Finance plug-in, extra finance-related operations are available.
  *
- *  **Further Adaptable Help Resources**
+ *  **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_api_cellsummaryapi_.cellsummaryapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004550458-Cell-Summary-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *

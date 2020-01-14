@@ -8,7 +8,7 @@ import {
   ExportDestination,
   DataType,
   MathOperation,
-  ConditionalStyleScope,
+  // ConditionalStyleScope,
   ActionMode,
   FontWeight,
   FontStyle,
@@ -402,7 +402,7 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
     ColumnId: undefined,
     ColumnCategoryId: undefined,
     Style: CreateEmptyStyle(),
-    ConditionalStyleScope: ConditionalStyleScope.Row,
+    ConditionalStyleScope: 'Row',
     Expression: ExpressionHelper.CreateEmptyExpression(),
   };
 }

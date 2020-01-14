@@ -145,7 +145,7 @@ class IPushPullToolbarControlComponent extends React.Component<
           marginRight={2}
         ></Dropdown>
         <Dropdown
-          disabled={allReports.length == 0}
+          disabled={allReports.length == 0 || isLiveIPushPullReport}
           style={{ minWidth: 140 }}
           options={availableFolders}
           className="ab-DashboardToolbar__Export__select"
@@ -155,7 +155,7 @@ class IPushPullToolbarControlComponent extends React.Component<
           marginRight={2}
         ></Dropdown>
         <Dropdown
-          disabled={allReports.length == 0}
+          disabled={allReports.length == 0 || isLiveIPushPullReport}
           style={{ minWidth: 140 }}
           options={this.state.AvailablePages}
           className="ab-DashboardToolbar__Export__select"

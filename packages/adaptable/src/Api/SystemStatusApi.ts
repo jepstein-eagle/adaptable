@@ -19,7 +19,7 @@ import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
  *
  * You are also able to provide Adaptable state (through the System Status section of Predefined Config) with a `DefaultStatusMessage` and `DefaultStatusType` to display when there is nothing specific to show.
  *
- *  **Further Adaptable Help Resources**
+ *  **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridsystemstatusdemo/) | [System Status State](_predefinedconfig_systemstatusstate_.systemstatusstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754957-Run-Time-Access)
  *

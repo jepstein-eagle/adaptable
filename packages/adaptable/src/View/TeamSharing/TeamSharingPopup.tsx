@@ -11,7 +11,6 @@ import { SharedEntity } from '../../Utilities/Interface/SharedEntity';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IColItem } from '../UIInterfaces';
@@ -153,7 +152,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>
-              {cs.ConditionalStyleScope == ConditionalStyleScope.Column
+              {cs.ConditionalStyleScope == 'Column'
                 ? ColumnHelper.getFriendlyNameFromColumnId(cs.ColumnId, this.props.Columns)
                 : 'Whole Row'}
             </Flex>

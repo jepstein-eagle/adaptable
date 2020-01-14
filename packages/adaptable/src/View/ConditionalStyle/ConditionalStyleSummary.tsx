@@ -9,10 +9,8 @@ import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ConditionalStyleScope, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
@@ -24,7 +22,6 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface ConditionalStyleSummaryProps
   extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
@@ -60,7 +57,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
           this.props.ConditionalStyles.filter(
             item =>
               item.ColumnId == this.props.SummarisedColumn.ColumnId &&
-              item.ConditionalStyleScope == ConditionalStyleScope.Column
+              item.ConditionalStyleScope == 'Column'
           ),
           StrategyConstants.ConditionalStyleStrategyFriendlyName
         )}
@@ -75,7 +72,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     this.props.ConditionalStyles.map((item, index) => {
       if (
         item.ColumnId == this.props.SummarisedColumn.ColumnId &&
-        item.ConditionalStyleScope == ConditionalStyleScope.Column
+        item.ConditionalStyleScope == 'Column'
       ) {
         let detailRow = (
           <StrategyDetail
@@ -124,7 +121,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   onNew() {
     let configEntity: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-    configEntity.ConditionalStyleScope = ConditionalStyleScope.Column;
+    configEntity.ConditionalStyleScope = 'Column';
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
@@ -165,7 +162,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   canFinishWizard() {
     let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
     return (
-      (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Row ||
+      (conditionalStyle.ConditionalStyleScope == 'Row' ||
         StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
       ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
       UIHelper.IsNotEmptyStyle(conditionalStyle.Style)

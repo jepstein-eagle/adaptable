@@ -31,7 +31,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * - In the System Status ToolPanel
  *
- * **Further Adaptable Help Resources**
+ * **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridsystemstatusdemo/) | [System Status API](_api_systemstatusapi_.systemstatusapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754957-Run-Time-Access)
  *

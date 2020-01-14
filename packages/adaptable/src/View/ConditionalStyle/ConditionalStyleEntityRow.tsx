@@ -1,6 +1,5 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -21,7 +20,7 @@ export class ConditionalStyleEntityRow extends React.Component<
     let conditionalStyle: ConditionalStyle = this.props.AdaptableObject as ConditionalStyle;
 
     let column: AdaptableColumn | undefined =
-      conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column
+      conditionalStyle.ConditionalStyleScope == 'Column'
         ? ColumnHelper.getColumnFromId(conditionalStyle.ColumnId!, this.props.Columns)
         : undefined;
 
@@ -44,9 +43,7 @@ export class ConditionalStyleEntityRow extends React.Component<
         editClick={() => this.props.onEdit(conditionalStyle)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
-        overrideDisableEdit={
-          !column && conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column
-        }
+        overrideDisableEdit={!column && conditionalStyle.ConditionalStyleScope == 'Column'}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
@@ -59,14 +56,16 @@ export class ConditionalStyleEntityRow extends React.Component<
 
   private getScope(conditionalStyle: ConditionalStyle): string {
     switch (conditionalStyle.ConditionalStyleScope) {
-      case ConditionalStyleScope.Row:
+      case 'Row':
         return 'Row';
-      case ConditionalStyleScope.Column:
+      case 'Column':
         return ColumnHelper.getFriendlyNameFromColumnId(
           conditionalStyle.ColumnId,
           this.props.Columns
         );
-      case ConditionalStyleScope.ColumnCategory:
+      //   case 'DataType':
+      //     return conditionalStyle.DataType + ' Columns';
+      case 'ColumnCategory':
         return 'Category: ' + conditionalStyle.ColumnCategoryId;
     }
   }

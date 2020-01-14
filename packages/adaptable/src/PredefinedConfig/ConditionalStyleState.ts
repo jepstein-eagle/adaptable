@@ -10,7 +10,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  *
  * Conditional Styles uses an [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
  *
- * **Further Adaptable Help Resources**
+ * **Further AdapTable Help Resources**
  *
  * [Conditional Style Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030602892-Conditional-Style-Videos)
  *
@@ -108,7 +108,7 @@ export interface ConditionalStyle extends AdaptableObject {
   /**
    * Where the Conditional Style is applied:  Either at Column, Row or (if there are any) Column Category level.
    */
-  ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory';
+  ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory'; //| 'DataType'
 
   /**
    * When the Style should be applied.  Only rows that match the Expression will be styled.  See [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) for more details.
@@ -121,6 +121,8 @@ export interface ConditionalStyle extends AdaptableObject {
    * The Style object defines fore and back colours, font size and other basic style properties.  See [Style](_predefinedconfig_common_istyle_.istyle.html) for more details.
    */
   Style?: AdaptableStyle;
+
+  //  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
 
 /*

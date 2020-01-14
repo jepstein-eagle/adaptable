@@ -68,6 +68,9 @@ export interface FilterExpression {
    * The **names** of the Filters which will be applied
    */
   Filters: string[];
+
+  // we should do this soon - would be really good...
+  // DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
 
 /**

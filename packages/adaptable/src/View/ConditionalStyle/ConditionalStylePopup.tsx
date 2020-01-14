@@ -6,8 +6,6 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -61,7 +59,7 @@ class ConditionalStylePopupComponent extends React.Component<
         if (this.props.PopupParams.action == 'New') {
           let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
           _editedConditionalStyle.ColumnId = columnId;
-          _editedConditionalStyle.ConditionalStyleScope = ConditionalStyleScope.Column;
+          _editedConditionalStyle.ConditionalStyleScope = 'Column';
           this.setState({
             EditedAdaptableObject: _editedConditionalStyle,
             WizardStartIndex: 1,
@@ -205,13 +203,13 @@ class ConditionalStylePopupComponent extends React.Component<
   canFinishWizard() {
     let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
     if (
-      conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column &&
+      conditionalStyle.ConditionalStyleScope == 'Column' &&
       StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)
     ) {
       return false;
     }
     if (
-      conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory &&
+      conditionalStyle.ConditionalStyleScope == 'ColumnCategory' &&
       StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnCategoryId)
     ) {
       return false;

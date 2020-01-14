@@ -2,7 +2,7 @@ import { ApplicationState, ApplicationDataEntry } from '../PredefinedConfig/Appl
 /**
  * Provides an `ApplicationDataEntry` array allowing developers to store their own data in Adaptable State (as Key / Value Pairs).
  *
- *  **Further Adaptable Help Resources**
+ *  **Further AdapTable Help Resources**
  *
  * [State](_predefinedconfig_applicationstate_.applicationstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-State-FAQ)
  *

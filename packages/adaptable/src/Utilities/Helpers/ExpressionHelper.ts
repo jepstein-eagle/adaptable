@@ -10,6 +10,7 @@ import {
   QueryRange,
   ColumnValueExpression,
   RangeExpression,
+  FilterExpression,
 } from '../../PredefinedConfig/Common/Expression';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnHelper } from './ColumnHelper';
@@ -232,7 +233,9 @@ export function IsSatisfied(
 
     // Check for filter expressions if column fails
     if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.FilterExpressions)) {
-      let filtersForColumn = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
+      let filtersForColumn: FilterExpression = Expression.FilterExpressions.find(
+        x => x.ColumnId == columnId
+      );
       if (filtersForColumn) {
         // first evaluate any user filters
         let filteredUserFilters: UserFilter[] = adaptable.FilterService.GetUserFilters(

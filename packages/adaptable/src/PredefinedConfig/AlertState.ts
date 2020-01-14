@@ -11,7 +11,7 @@ import { Expression, QueryRange } from './Common/Expression';
  *
  * You can select the type of the Alert (e.g. Success, Warning, Error etc.) and where it appears.
  *
- * **Further Adaptable Help Resources**
+ * **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridalertdemo/) | [API](_api_alertapi_.alertapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895731-Alerts-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *

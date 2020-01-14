@@ -26,7 +26,7 @@ import { AdaptableColumn } from './Common/AdaptableColumn';
  *
  * See each section below for further details and a code example.
  *
- * **Further Adaptable Help Resources**
+ * **Further AdapTable Help Resources**
  *
  * - [Column Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcolumnmenudemo/)
  *

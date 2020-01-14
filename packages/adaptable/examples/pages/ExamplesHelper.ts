@@ -1026,6 +1026,11 @@ export class ExamplesHelper {
       editable: true,
       enableRowGroup: true,
       enableValue: true,
+      //  valueFormatter: this.raduFormatter,
+      valueFormatter: (params: any) => {
+        return params.value ? params.value.toLocaleString() : undefined;
+      },
+
       //  rowGroup: true,
       filter: 'agSetColumnFilter',
       sortable: true,
@@ -1837,5 +1842,9 @@ export class ExamplesHelper {
   };
   private twoDecimalPlaceFormatter = (params: any) => {
     return params.value ? this.roundTo2Dp(params.value) : null;
+  };
+
+  private raduFormatter = (params: any) => {
+    return params.value ? params.value.toLocaleString() : null;
   };
 }

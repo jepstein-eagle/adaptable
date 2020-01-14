@@ -5,9 +5,8 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ConditionalStyleScope, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
@@ -28,7 +27,8 @@ export interface ConditionalStyleScopeWizardProps
 export interface ConditionalStyleScopeWizardState {
   ColumnId: string;
   ColumnCategoryId: string;
-  ConditionalStyleScope: ConditionalStyleScope;
+  ConditionalStyleScope: 'Column' | 'Row' | 'ColumnCategory'; //| 'DataType';
+  // DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
 
 export class ConditionalStyleScopeWizard
@@ -41,11 +41,19 @@ export class ConditionalStyleScopeWizard
       ColumnCategoryId: StringExtensions.IsNull(this.props.Data.ColumnCategoryId)
         ? ''
         : this.props.Data.ColumnCategoryId,
-      ConditionalStyleScope: this.props.Data.ConditionalStyleScope as ConditionalStyleScope,
+      ConditionalStyleScope: this.props.Data.ConditionalStyleScope,
+      //  DataType: this.props.Data.DataType,
     };
   }
 
   render(): any {
+    let optionDataTypes = ['String', 'Number', 'Boolean', 'Date'].map(cc => {
+      return {
+        value: cc,
+        label: cc,
+      };
+    });
+
     let optionColumnCategorys = this.props.ColumnCategories.map(cc => {
       return {
         value: cc.ColumnCategoryId,
@@ -63,7 +71,7 @@ export class ConditionalStyleScopeWizard
           <Radio
             marginLeft={3}
             value="Row"
-            checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row}
+            checked={this.state.ConditionalStyleScope == 'Row'}
             onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
           >
             Whole Row
@@ -74,14 +82,14 @@ export class ConditionalStyleScopeWizard
           <Radio
             marginLeft={3}
             value="Column"
-            checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column}
+            checked={this.state.ConditionalStyleScope == 'Column'}
             onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
           >
             Column
           </Radio>
 
-          {this.state.ConditionalStyleScope == ConditionalStyleScope.Column && (
-            <Box>
+          {this.state.ConditionalStyleScope == 'Column' && (
+            <Box marginBottom={2}>
               <ColumnSelector
                 SelectedColumnIds={[this.state.ColumnId]}
                 ColumnList={this.props.Columns}
@@ -91,6 +99,40 @@ export class ConditionalStyleScopeWizard
             </Box>
           )}
 
+          {/*
+
+
+          <HelpBlock marginBottom={1}>
+            Apply the Conditional Style to Columns of a Datatype
+          </HelpBlock>
+
+          <Radio
+            marginLeft={3}
+            value="DataType"
+            checked={this.state.ConditionalStyleScope == 'DataType'}
+            onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
+          >
+            Data Type
+          </Radio>
+
+          {this.state.ConditionalStyleScope == 'DataType' && (
+            <Box>
+              <Dropdown
+                placeholder="Select a Data Type"
+                value={this.state.DataType}
+                showEmptyItem={false}
+                onChange={(value: any) => this.onDataTypeSelectedChanged(value)}
+                options={[
+                  {
+                    label: 'Select',
+                    value: 'select',
+                  },
+                  ...optionDataTypes,
+                ]}
+              />
+            </Box>
+          )}
+*/}
           {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && (
             <Box>
               <HelpBlock marginBottom={2}>
@@ -100,7 +142,7 @@ export class ConditionalStyleScopeWizard
               <Radio
                 marginLeft={3}
                 value="ColumnCategory"
-                checked={this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory}
+                checked={this.state.ConditionalStyleScope == 'ColumnCategory'}
                 onChange={(checked: boolean, e: React.SyntheticEvent) =>
                   this.onScopeSelectChanged(e)
                 }
@@ -111,11 +153,12 @@ export class ConditionalStyleScopeWizard
           )}
 
           {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) &&
-            this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && (
+            this.state.ConditionalStyleScope == 'ColumnCategory' && (
               <Box>
                 <Dropdown
                   placeholder="Select a Column Category"
                   value={this.state.ColumnCategoryId}
+                  showEmptyItem={false}
                   onChange={(value: any) => this.onColumnCategorySelectedChanged(value)}
                   options={[
                     {
@@ -140,7 +183,7 @@ export class ConditionalStyleScopeWizard
             <Radio
              
               value="Column"
-              checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column}
+              checked={this.state.ConditionalStyleScope == 'Column'}
               onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
             >
               Column
@@ -165,7 +208,7 @@ export class ConditionalStyleScopeWizard
             </Box>
           )}
           {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) &&
-            this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && (
+            this.state.ConditionalStyleScope == 'ColumnCategory' && (
               
             )}
         </WizardPanel>
@@ -189,24 +232,40 @@ export class ConditionalStyleScopeWizard
     );
   }
 
+  /*
+  private onDataTypeSelectedChanged(value: any) {
+    this.setState({ DataType: value } as ConditionalStyleScopeWizardState, () =>
+      this.props.UpdateGoBackState()
+    );
+  }
+  */
+
   private onScopeSelectChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     if (e.value == 'Column') {
-      this.setState(
-        { ConditionalStyleScope: ConditionalStyleScope.Column } as ConditionalStyleScopeWizardState,
-        () => this.props.UpdateGoBackState()
+      this.setState({ ConditionalStyleScope: 'Column' } as ConditionalStyleScopeWizardState, () =>
+        this.props.UpdateGoBackState()
       );
     } else if (e.value == 'ColumnCategory') {
       this.setState(
         {
-          ConditionalStyleScope: ConditionalStyleScope.ColumnCategory,
+          ConditionalStyleScope: 'ColumnCategory',
         } as ConditionalStyleScopeWizardState,
         () => this.props.UpdateGoBackState()
       );
+      /*
+    } else if (e.value == 'DataType') {
+      this.setState(
+        {
+          ConditionalStyleScope: 'DataType',
+        } as ConditionalStyleScopeWizardState,
+        () => this.props.UpdateGoBackState()
+      );
+      */
     } else {
       this.setState(
         {
-          ConditionalStyleScope: ConditionalStyleScope.Row,
+          ConditionalStyleScope: 'Row',
           ColumnId: '',
         } as ConditionalStyleScopeWizardState,
         () => this.props.UpdateGoBackState()
@@ -219,13 +278,19 @@ export class ConditionalStyleScopeWizard
       return false;
     }
     if (
-      this.state.ConditionalStyleScope == ConditionalStyleScope.Column &&
+      this.state.ConditionalStyleScope == 'Column' &&
       StringExtensions.IsEmpty(this.state.ColumnId)
     ) {
       return false;
     }
+    //   if (
+    //     this.state.ConditionalStyleScope == 'DataType' &&
+    //     StringExtensions.IsNullOrEmpty(this.state.DataType)
+    //   ) {
+    //     return false;
+    //   }
     if (
-      this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory &&
+      this.state.ConditionalStyleScope == 'ColumnCategory' &&
       StringExtensions.IsEmpty(this.state.ColumnCategoryId)
     ) {
       return false;
@@ -240,6 +305,8 @@ export class ConditionalStyleScopeWizard
     this.props.Data.ColumnId = this.state.ColumnId;
     this.props.Data.ColumnCategoryId = this.state.ColumnCategoryId;
     this.props.Data.ConditionalStyleScope = this.state.ConditionalStyleScope;
+    //  this.props.Data.DataType =
+    //    this.state.ConditionalStyleScope == 'DataType' ? this.state.DataType : undefined;
   }
 
   public Back(): void {

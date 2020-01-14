@@ -4,7 +4,7 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 /**
  * Provides access to the **Entitlements** section of Adaptable State.
  *
- *  **Further Adaptable Help Resources**
+ *  **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptableblotter.com/admin/aggridentitlementsdemo/) | [Entitlements State](_predefinedconfig_entitlementstate_.entitlementstate.html)
  *

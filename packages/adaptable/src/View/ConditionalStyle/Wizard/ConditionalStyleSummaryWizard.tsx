@@ -8,7 +8,6 @@ import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { ConditionalStyleScope } from '../../../PredefinedConfig/Common/Enums';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
@@ -50,14 +49,17 @@ export class ConditionalStyleSummaryWizard
 
   private getScope(): string {
     switch (this.props.Data.ConditionalStyleScope) {
-      case ConditionalStyleScope.Row:
+      case 'Row':
         return 'Row';
-      case ConditionalStyleScope.Column:
+      case 'Column':
         return ColumnHelper.getFriendlyNameFromColumnId(
           this.props.Data.ColumnId,
           this.props.Columns
         );
-      case ConditionalStyleScope.ColumnCategory:
+      //  case 'DataType':
+      //     return this.props.Data.DataType + ' Columns';
+
+      case 'ColumnCategory':
         return 'Category: ' + this.props.Data.ColumnCategoryId;
     }
   }

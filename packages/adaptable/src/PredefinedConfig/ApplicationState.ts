@@ -7,7 +7,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * In previous version, Application State included an ApplicationToolbar for users to render application-specific content, but this has now been removed and you should use [Custom Toolbars](_predefinedconfig_dashboardstate_.dashboardstate.html#customtoolbars) in Dashboard State instead.
  *
- *  **Further Adaptable Help Resources**
+ *  **Further AdapTable Help Resources**
  *
  * [API](_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-Blotter-State-FAQ)
  *
