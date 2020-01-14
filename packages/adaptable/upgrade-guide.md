@@ -111,7 +111,7 @@ The old structure is still working, but we show warning in the console.
 
 ## Adaptable Options
 
-We have added many more options (and option groups) to [Adaptable Options](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) Adaptable Options (the object you create at design time and provide to the AdapTable constructor).  
+We have added many more options (and option groups) to [Adaptable Options](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) (the object you create at design time and provide to the AdapTable constructor).  
 
 The effect is to give you more complete control over how your instance of AdapTable looks and works. 
 
@@ -128,15 +128,16 @@ In Version 5 of AdapTable there were 2 ways of subscribing to events, one of whi
 
 That method has now been removed and the only way to listen to events is by using the On('eventName').
 
-Note: AdapTable events use FDC3 syntax.
+Note: AdapTable events use FDC3 syntax so you need to drill down to the actual event args.
 
-For example to subscribe to the `ActionColumnClicked` event you will:
+For example to subscribe to the `ActionColumnClicked` event you will do:
 
 ```ts
-api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
-       onActionColumnClickedListener(actionColumnEventArgs.data[0].id)
-   }
- );
+  api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
+    const actionColumnClickedInfo: ActionColumnClickedInfo = args.data[0].id;
+    const rowData: any = actionColumnClickedInfo.rowData;
+    api.gridApi.deleteGridData([rowData]);
+ });
 ```
 
 Find out more - and see the full list of AdapTable events at [Event API Documentation](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html)
