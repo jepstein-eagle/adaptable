@@ -1,10 +1,12 @@
 # AdapTable Upgrade Guide
 
-This document will help you migrate from v5 to v6 of AdapTable. 
+Version 6 of AdapTable includess many new features, improvements and ways of working that will allow you to do more with the tool than ever before. 
+
+This document will help you migrate to Version 6 of AdapTable and point out some of the more important changes and improvements.
 
 ## Package name changes
 
-v6 of AdapTable reflects the new name of the product; formally known as the 'Adaptable Blotter', it has been renamed 'AdapTable' to reflect the tabular nature of the tool and that it can be, and is, widely used outside of finance.
+Version 6 of AdapTable reflects the new name of the product; formally known as the 'Adaptable Blotter', it has been renamed 'AdapTable' to reflect the tabular nature of the tool and that it can be, and is, widely used outside of finance.
 
 As a consequence:
 
@@ -16,7 +18,7 @@ The package `@adaptabletools/adaptableblotter-angular-aggrid` has been renamed t
 
 ## ag-Grid modularisation
 
-v6 now depends on ag-Grid >=22, which included a big shift in modularization when transitioning from ag-Grid 21.
+Version 6 depends on ag-Grid >=22, which included a big shift in modularization when transitioning from ag-Grid 21.
 
 AdapTable (both 'core' and wrappers) now depend on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
 
@@ -24,7 +26,7 @@ You can, additionally, install as many ag-Grid Enterprise modules as you want; A
 
 ## Plugins:  Charts & Financial
 
-AdapTable how includes a plugins architecture, which makes the core package much lighter. 
+AdapTable now includes a plugins architecture, which makes the core package much lighter. 
 
 The core package (and react and angular wrappers) no longer includes charting and financial-specific functionality. This means ligher javascript bundles for most users.
 
@@ -35,9 +37,11 @@ We currently offer 2 plugins (though more will be added in the future):
 
 In order to use a plugin, you have to install it via npm or yarn, and you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
 
-See the example below.
+See the code example below for more details.
 
 ## Type changes
+
+We have renamed some of the core types we use to reflect the product name change.
 
 Instead of 
 ```ts
@@ -81,27 +85,36 @@ Not only do you get back the public api but you no longer have access to a very 
 
 We've made **no changes to our styling/css classes/selectors**.
 
-Just note that if you used to do
+Just note that if you used to install ag-Grid styles like this:
 ```ts
 import "ag-grid-community/dist/styles/ag-grid.css";
 ```
-You now have to do
+you will now have to do:
 ```ts
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 ```
 
 ## HTML rendering changes
 
-Instead of having
+The name of the <div> that hosts AdapTable has changed.  
+  
+Instead of providing:
 ```html
 <div id="adaptableBlotter"></div>
 ```
-Your html should now look like
+your html should now look like:
 ```html
 <div id="adaptable"></div>
 ```
 
-The old structure is still working, but showing a warning in the console
+The old structure is still working, but we show warning in the console.
+
+## Adaptable Options
+
+The nam
+
+We have also added lots more options to xx in order to give you complete contro
+
 
 ## Basic example
 
