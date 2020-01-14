@@ -18,6 +18,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { SideBarModule } from '@ag-grid-enterprise/side-bar';
+import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
 
 import Adaptable from '../../../../agGrid';
 
@@ -34,7 +35,10 @@ function InitAdaptableDemo() {
     userName: 'Demo User',
     adaptableId: 'Basic Demo',
 
-    vendorGrid: { ...gridOptions, modules: [RangeSelectionModule, MenuModule, SideBarModule] },
+    vendorGrid: {
+      ...gridOptions,
+      modules: [RangeSelectionModule, MenuModule, SideBarModule, RowGroupingModule],
+    },
     predefinedConfig: demoConfig,
   };
 
