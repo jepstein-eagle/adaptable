@@ -66,9 +66,9 @@ npm install @adaptabletools/adaptable
 
 AdapTable comes in 3 variants:
  
-  * 'core' - vanilla javascript version - for using this, install `@adaptabletools/adaptable` - for more info, see the [core readme docs](./packages/adaptable/README.md)
-  * React version - for using this, install `@adaptabletools/adaptable-react-aggrid` - for more info, see the [react version readme docs](./packages/adaptable-react-aggrid/README.md)
-  * Angular version - for using this, install `@adaptabletools/adaptable-angular-aggrid` - for more info, see the [Angular readme docs](./packages/adaptable-ng-aggrid/README.md)
+  * 'core' - vanilla javascript version - for using this, install **`@adaptabletools/adaptable`** - for more info, see the [core readme docs](./packages/adaptable/README.md)
+  * React version - for using this, install **`@adaptabletools/adaptable-react-aggrid`** - for more info, see the [react version readme docs](./packages/adaptable-react-aggrid/README.md)
+  * Angular version - for using this, install **`@adaptabletools/adaptable-angular-aggrid`** - for more info, see the [Angular readme docs](./packages/adaptable-ng-aggrid/README.md)
 
 AdapTable (all versions) also depends on AgGrid - more exactly on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
 
@@ -76,14 +76,14 @@ AdapTable (all versions) also depends on AgGrid - more exactly on `@ag-grid-comm
 
 In order to reduce download size and ensure that you only use the components and functionality you require, AdapTable now offers Plug-Ins.
 
-Thee standard 'core' package that contains everything that most users will ever need.  
+The standard 'core' package that contains everything that most users will ever need.  
 
 However Plug-Ins offer additional sector-specific, or advanced functionality.
 
 These include:
 
-- Finance Plug-In (for Financial Services users) - `@adaptabletools/adaptable-plugin-finance`
-- Charting Plug-In (a wide range of chart types that leverage Infragistics React charts)  - `@adaptabletools/adaptable-charts-finance`
+- Finance Plug-In (for Financial Services users) - **`@adaptabletools/adaptable-plugin-finance`**
+- Charting Plug-In (a wide range of chart types that leverage Infragistics React charts)  - **`@adaptabletools/adaptable-charts-finance`**
 
 
 ## Upgrade guide
