@@ -85,6 +85,11 @@ These include:
 - Finance Plug-In (for Financial Services users) - `@adaptabletools/adaptable-plugin-finance`
 - Charting Plug-In (a wide range of chart types that leverage Infragistics React charts)  - `@adaptabletools/adaptable-charts-finance`
 
+
+## Upgrade guide
+
+For upgrading from v5 to v6 see the [upgrade-guide.md](./packages/adaptable/upgrade-guide.md)
+
 ## Licences
 
 AdapTable is a commercial product and requires a purchased licence for use.

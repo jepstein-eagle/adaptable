@@ -210,18 +210,32 @@ import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
 import '@adaptabletools/adaptable-react-aggrid/index.css'; // this also includes the light theme
 import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+
+// also import adaptable charts if you want to have access to charting functionality
+import charts from '@adaptable/adaptable-plugins-charts'
+
+// also add those if you want custom ag-grid enterprise modules
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { SideBarModule } from '@ag-grid-enterprise/side-bar';
 
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
   adaptableId: 'react demo',
+
+  // adaptable plugins come here
+  plugins: [charts()]
 };
 
 export default () => <AdaptableReact
   style={{ height: '100vh' }}
+  // ag-grid modules come here
+  modules={[SideBarModule, MenuModule, RangeSelectionModule]}
   gridOptions={ ... }
+  plugins={plugins}
   adaptableOptions={adaptableOptions}
   onAdaptableReady={(adaptableApi) => { ... }}
 />
