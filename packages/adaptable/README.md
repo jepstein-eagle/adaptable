@@ -248,8 +248,8 @@ Please contact Adaptable Tools Sales Team at sales@adaptabletools.com for more i
 ```js
 import Adaptable from '@adaptabletools/adaptable/agGrid';
 
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 
 import '@adaptabletools/adaptable/index.css'; // includes the light theme, which is the default
 import '@adaptabletools/adaptable/themes/dark.css'; // if you want to use the dark theme
