@@ -60,6 +60,8 @@ After that, you can use Adaptablecomponent in your app
 
 For a standalone working example app, see [our angular demo](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
 
+You can also find a [PR for migrating from v5 to v6](https://github.com/AdaptableTools/example-adaptable-angular-aggrid/pull/1/files) so it's easy to follow along wehn you migrate.
+
 ## Styling
 
 In order for Adaptable to look right, you have to import the index.css file
