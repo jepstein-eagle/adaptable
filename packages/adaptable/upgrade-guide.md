@@ -24,6 +24,40 @@ AdapTable (both 'core' and frameworks wrappers) now depends on `@ag-grid-communi
 
 You can, additionally, install as many ag-Grid Enterprise modules as you want; AdapTable will only provide functionality that matches the ag-Grid modules that you provide.
 
+In the vanilla JavaScript version you add the modules as an extra property of vendorGrid:
+
+```ts
+ vendorGrid: {
+      ...gridOptions,
+      modules: [RangeSelectionModule, MenuModule, SideBarModule, RowGroupingModule],
+    },
+```
+
+In the React Wrapper there is a Modules propery you can use:
+
+```ts
+export default () => <AdaptableReactAgGrid
+  modules={[SideBarModule, MenuModule, RangeSelectionModule]}
+  gridOptions={ ... }
+  plugins={plugins}
+  adaptableOptions={adaptableOptions}
+  onAdaptableReady={(adaptableApi) => { ... }}
+/>
+```
+Similarly in the Angular Wrappers you will do:
+
+```ts
+ public agGridModules: Module[] = AllEnterpriseModules;
+ ........
+ <adaptable-angular-aggrid
+      style="width: 100vw; height: 100vh;"
+      [adaptableOptions]="adaptableOptions"
+      [gridOptions]="gridOptions"
+      [modules]="agGridModules"
+    >
+    </adaptable-angular-aggrid>
+```
+
 ## Plugins:  Charts & Financial
 
 AdapTable now includes a plugins architecture, which makes the core package much lighter. 
@@ -73,7 +107,7 @@ import AdaptableBlotterReact from '@adaptabletools/adaptableblotter-react-aggrid
 
 you now do
 ```ts
-import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
+import AdaptableReactAgGrid from '@adaptabletools/adaptable-react-aggrid';
 ```
 
 
