@@ -179,31 +179,35 @@ Find out more - and see the full list of AdapTable events at [Event API Document
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
+// import Adaptable
 import Adaptable from "@adaptabletools/adaptable/agGrid";
-import "@adaptabletools/adaptable/index.css";
 
-import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
-import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+// import the Adaptable types that you need
+import { AdaptableOptions, AdaptableApi } from "@adaptabletools/adaptable/types";
 
+// import plugins
 import charts from "@adaptabletools/adaptable-plugin-charts";
 import finance from "@adaptabletools/adaptable-plugin-finance";
 
-import { AdaptableOptions } from "@adaptabletools/adaptable/types";
+// import AdapTable and vendor grid styles
+import "@adaptabletools/adaptable/index.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
 
 const columnDefs = [
-  { field: "OrderId", type: "abColDefNumber" },
-  { field: "CompanyName", type: "abColDefString" },
-  { field: "ContactName", type: "abColDefString" },
-  { field: "Employee", type: "abColDefString" },
-  { field: "InvoicedCost", type: "abColDefNumber" }
+  { field: "orderId", headerName: 'Order Id', type: "abColDefNumber" },
+  { field: "companyName", headerName: 'Company', type: "abColDefString" },
+  { field: "contactName", headerName: 'Contact', type: "abColDefString" },
+  { field: "employeeName", headerName: 'Employee', type: "abColDefString" },
+  { field: "invoicedCost", headerName: 'Invoiced Amount', type: "abColDefNumber" }
 ];
 
 const adaptableOptions: AdaptableOptions = {
-  primaryKey: "OrderId",
+  primaryKey: "orderId",
   userName: "Demo User",
-  adaptableId: "Simple Demo",
+  adaptableId: "Version 6 Demo",
 
-  // call the plugins functions and pass them to plugins array in AdaptableOptions
+  // call the plugins functions and pass them to plugins array
   plugins: [charts(), finance()],
 
   vendorGrid: {
@@ -220,12 +224,11 @@ const adaptableOptions: AdaptableOptions = {
     },
     rowData: []
   },
-  predefinedConfig: {}
+  predefinedConfig: {} // supply any config that you need
 };
 
-const api = Adaptable.init(adaptableOptions);
+const api: AdaptableApi = Adaptable.init(adaptableOptions);
 ```
-
 
 ## Further Information and Help
 
