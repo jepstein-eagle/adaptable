@@ -247,9 +247,8 @@ const adaptableOptions: AdaptableOptions = {
   plugins: [charts(), finance()],
 
   vendorGrid: {
-    modules: [MenuModule, RangeSelectionModule],
-    enableRangeSelection: true,
     columnDefs,
+    enableRangeSelection: true,
     columnTypes: {
       abColDefNumber: {},
       abColDefString: {},
@@ -258,7 +257,9 @@ const adaptableOptions: AdaptableOptions = {
       abColDefNumberArray: {},
       abColDefObject: {}
     },
-    rowData: []
+    rowData: [],
+    // attach the ag-Grid modules to the new 'modules' property
+    modules: [MenuModule, RangeSelectionModule],
   },
   predefinedConfig: {} // supply any config that you need
 };
