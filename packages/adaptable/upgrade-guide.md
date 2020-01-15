@@ -177,6 +177,7 @@ Find out more - and see the full list of AdapTable events at [Event API Document
 // if you need an additional AgGrid module, import it
 // and pass it in the adaptableOptions.vendorGrid.modules array
 import { MenuModule } from '@ag-grid-enterprise/menu';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
 import Adaptable from "@adaptabletools/adaptable/agGrid";
 import "@adaptabletools/adaptable/index.css";
@@ -206,7 +207,7 @@ const adaptableOptions: AdaptableOptions = {
   plugins: [charts(), finance()],
 
   vendorGrid: {
-    modules: [MenuModule],
+    modules: [MenuModule, RangeSelectionModule],
     enableRangeSelection: true,
     columnDefs,
     columnTypes: {
