@@ -174,8 +174,7 @@ Find out more - and see the full list of AdapTable events at [Event API Document
 ## Basic Installation Example
 
 ```tsx
-// if you need an additional AgGrid module, import it
-// and pass it in the adaptableOptions.vendorGrid.modules array
+// impport additional AgGrid modules you need & pass to adaptableOptions.vendorGrid.modules
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
