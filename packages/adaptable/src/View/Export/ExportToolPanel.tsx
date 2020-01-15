@@ -88,7 +88,9 @@ class ExportToolPanelComponent extends React.Component<
 
   render(): any {
     const selectReportString: string = 'Select a Report';
-    let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
+    let allReports: Report[] = this.props
+      .SystemReports!.filter(s => this.props.Adaptable.ReportService.IsSystemReportActive(s))
+      .concat(this.props.Reports);
 
     let currentReport: Report = this.props.AdaptableApi.exportApi.getCurrentReport();
 
@@ -325,4 +327,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ExportToolPanel = connect(mapStateToProps, mapDispatchToProps)(ExportToolPanelComponent);
+export let ExportToolPanel = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ExportToolPanelComponent);

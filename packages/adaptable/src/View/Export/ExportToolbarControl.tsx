@@ -80,7 +80,9 @@ class ExportToolbarControlComponent extends React.Component<
 
   render(): any {
     const selectReportString: string = 'Select a Report';
-    let allReports: Report[] = this.props.SystemReports!.concat(this.props.Reports);
+    let allReports: Report[] = this.props
+      .SystemReports!.filter(s => this.props.Adaptable.ReportService.IsSystemReportActive(s))
+      .concat(this.props.Reports);
     let currentReport: Report = this.props.Adaptable.api.exportApi.getReportByName(
       this.props.CurrentReport
     );

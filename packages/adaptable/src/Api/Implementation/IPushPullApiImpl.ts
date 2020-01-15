@@ -134,6 +134,10 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     this.dispatchAction(IPushPullRedux.IPushPullSetDomainsPages(iPushPullDomains));
   }
 
+  public clearIPushPullDomains(): void {
+    this.dispatchAction(IPushPullRedux.IPushPullClearDomainsPages());
+  }
+
   public getIPushPullSchedules(): IPushPullSchedule[] {
     return this.getIPushPullState()!.IPushPullSchedules;
   }
@@ -174,6 +178,12 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     this.setIPushPullRunningOn();
     this.adaptable.api.internalApi.hidePopupScreen();
     this.setIPushPullLoginErrorMessage('');
+  }
+
+  public async retrieveIPushPullDomainsFromIPushPull(): Promise<void> {
+    this.clearIPushPullDomains();
+    const domainpages: IPushPullDomain[] = await this.adaptable.PushPullService.getDomainPages();
+    this.setIPushPullDomains(domainpages);
   }
 
   public logoutFromIPushPull(): void {

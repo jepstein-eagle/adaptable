@@ -12,6 +12,7 @@ import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ipushpull from 'ipushpull-js';
+import { MenuModule } from '@ag-grid-enterprise/menu';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
 import {
@@ -43,7 +44,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'iPushPull Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: [MenuModule],
+    },
     predefinedConfig: demoConfig,
   };
 

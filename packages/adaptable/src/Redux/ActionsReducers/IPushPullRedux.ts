@@ -31,7 +31,9 @@ export const SET_IPUSHPULL_RUNNING_OFF = 'SET_IPUSHPULL_RUNNING_OFF';
 
 export const IPUSHPULL_LIVE_REPORT_SET = 'IPUSHPULL_LIVE_REPORT_SET';
 export const IPUSHPULL_LIVE_REPORT_CLEAR = 'IPUSHPULL_LIVE_REPORT_CLEAR';
-export const IPUSHPULL_SET_DOMAIN_PAGES = 'IPUSHPULL_SET_DOMAIN_PAGES';
+
+export const IPUSHPULL_DOMAIN_PAGES_SET = 'IPUSHPULL_DOMAIN_PAGES_SET';
+export const IPUSHPULL_DOMAIN_PAGES_CLEAR = 'IPUSHPULL_DOMAIN_PAGES_CLEAR';
 
 export interface IPushPullSetThrottleTimeAction extends Redux.Action {
   throttleTime: number;
@@ -74,9 +76,11 @@ export interface SetIPushPullAvailableOffAction extends Redux.Action {}
 export interface SetIPushPullRunningOnAction extends Redux.Action {}
 export interface SetIPushPullRunningOffAction extends Redux.Action {}
 
-export interface IPushPullSetDomainsPagesAction extends Redux.Action {
+export interface IPushPullDomainsPagesSetAction extends Redux.Action {
   IPushPullDomainsPages: IPushPullDomain[];
 }
+
+export interface IPushPullDomainsPagesClearAction extends Redux.Action {}
 
 export interface IPushPullLiveReportSetAction extends Redux.Action {
   iPushPullReport: IPushPullReport;
@@ -163,10 +167,15 @@ export const SetIPushPullRunningOff = (): SetIPushPullRunningOffAction => ({
 
 export const IPushPullSetDomainsPages = (
   IPushPullDomainsPages: IPushPullDomain[]
-): IPushPullSetDomainsPagesAction => {
+): IPushPullDomainsPagesSetAction => {
   return {
-    type: IPUSHPULL_SET_DOMAIN_PAGES,
+    type: IPUSHPULL_DOMAIN_PAGES_SET,
     IPushPullDomainsPages,
+  };
+};
+export const IPushPullClearDomainsPages = (): IPushPullDomainsPagesClearAction => {
+  return {
+    type: IPUSHPULL_DOMAIN_PAGES_CLEAR,
   };
 };
 
@@ -254,9 +263,15 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
         IPushPullLoginErrorMessage: (action as IPushPullSetLoginErrorMessageAction).errorMessage,
       };
     }
-    case IPUSHPULL_SET_DOMAIN_PAGES: {
+    case IPUSHPULL_DOMAIN_PAGES_SET: {
       return Object.assign({}, state, {
-        IPushPullDomainsPages: (action as IPushPullSetDomainsPagesAction).IPushPullDomainsPages,
+        IPushPullDomainsPages: (action as IPushPullDomainsPagesSetAction).IPushPullDomainsPages,
+      });
+    }
+
+    case IPUSHPULL_DOMAIN_PAGES_CLEAR: {
+      return Object.assign({}, state, {
+        IPushPullDomainsPages: [],
       });
     }
 

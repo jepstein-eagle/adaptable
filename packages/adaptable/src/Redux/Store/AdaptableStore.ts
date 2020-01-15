@@ -2355,7 +2355,9 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<
+              boolean
+            > = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -3079,7 +3081,8 @@ export function getNonPersistedReduxActions(): string[] {
     IPushPullRedux.IPUSHPULL_SET_LOGIN_ERROR_MESSAGE,
     IPushPullRedux.SET_IPUSHPULL_AVAILABLE_ON,
     IPushPullRedux.SET_IPUSHPULL_AVAILABLE_OFF,
-    IPushPullRedux.IPUSHPULL_SET_DOMAIN_PAGES,
+    IPushPullRedux.IPUSHPULL_DOMAIN_PAGES_SET,
+    IPushPullRedux.IPUSHPULL_DOMAIN_PAGES_CLEAR,
     IPushPullRedux.IPUSHPULL_LIVE_REPORT_SET,
     IPushPullRedux.IPUSHPULL_LIVE_REPORT_CLEAR,
 

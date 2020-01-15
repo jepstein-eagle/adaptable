@@ -25,6 +25,21 @@ export function ContainsItem(array: any[], itemToCheck: any): boolean {
   return array.indexOf(itemToCheck) > -1;
 }
 
+export function ContainsAnyItem(array: any[], itemsToCheck: any[]): boolean {
+  if (array == null) {
+    return false;
+  }
+  let foundItem: boolean = false;
+  itemsToCheck.forEach(item => {
+    if (!foundItem) {
+      if (ContainsItem(array, item)) {
+        foundItem = true;
+      }
+    }
+  });
+  return foundItem;
+}
+
 export function NotContainsItem(array: any[], itemToCheck: any): boolean {
   return !ContainsItem(array, itemToCheck);
 }
@@ -223,6 +238,7 @@ export const ArrayExtensions = {
   AddItem,
   ContainsItem,
   NotContainsItem,
+  ContainsAnyItem,
   RetrieveDistinct,
   IsNull,
   IsNotNull,

@@ -51,6 +51,10 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
+  api.eventApi.on('AdaptableReady', () => {
+    //  alert ('the blotter is ready')
+  });
+
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
     //  console.log('search changed');
     //  console.log(searchChangedArgs.data[0].id);
@@ -81,7 +85,7 @@ let demoConfig: PredefinedConfig = {
       {
         ConditionalStyleScope: 'Column', // 'DataType',
         ColumnId: 'moodysRating',
-        DataType: 'Number',
+        // DataType: 'Number',
         Style: {
           BackColor: '#32cd32',
         },

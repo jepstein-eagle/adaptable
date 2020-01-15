@@ -243,9 +243,16 @@ export interface AdaptableOptions {
   userInterfaceOptions?: UserInterfaceOptions;
 
   /**
-   * Used internally by AdapTable to manage Plug-ins (e.g. Charting, Finance etc.)
+   * Used for managing the AdapTable Plugins.
    *
-   * **These should not be provided by users at design-time**
+   * These allow us to keep the download size of AdapTable manageable while allowing you to access only the functionality you need.
+   *
+   * There are currently 2 plugins:
+   *
+   * - Charting
+   *
+   * - Financial
+   *
    */
   plugins?: AdaptablePlugin[];
 }

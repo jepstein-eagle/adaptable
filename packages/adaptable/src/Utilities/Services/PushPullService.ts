@@ -160,9 +160,13 @@ export class PushPullService implements IPushPullService {
     if (!this.ppInstance) {
       return Promise.reject('No iPushPull instance found!');
     }
+
     this.ppInstance.Page.create(folderId, page)
       .then((createdPage: any) => {
-        LoggingHelper.LogAdaptableSuccess("Page: '" + page + "' successfully created.");
+        let message: string = page + "' successfully created.";
+        this.adaptable.api.alertApi.showAlertSuccess('iPushPull Page', message);
+        this.adaptable.api.internalApi.hidePopupScreen();
+        this.adaptable.api.iPushPullApi.retrieveIPushPullDomainsFromIPushPull();
       })
       .catch((err: any) => {
         LoggingHelper.LogAdaptableError("Couldn't create Page: '" + page + "'. Reason: " + err);

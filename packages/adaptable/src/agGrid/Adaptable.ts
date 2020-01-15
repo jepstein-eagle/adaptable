@@ -11,6 +11,7 @@ import {
   ICellRendererFunc,
   SideBarDef,
   Events,
+  Module,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -152,6 +153,7 @@ import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
+import check from '../components/icons/check';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2965,8 +2967,15 @@ export class Adaptable implements IAdaptable {
   }
 
   public isSelectable(): boolean {
-    if (this.gridOptions.enableRangeSelection != null) {
-      return this.gridOptions.enableRangeSelection;
+    let isRangeSelectionModuleRegistered: boolean = this.agGridHelper.isModulePresent(
+      'range-selection'
+    );
+    if (
+      isRangeSelectionModuleRegistered &&
+      this.gridOptions.enableRangeSelection != null &&
+      this.gridOptions.enableRangeSelection
+    ) {
+      return true;
     }
     return false;
   }

@@ -33,14 +33,21 @@ export class ReportService implements IReportService {
     this.adaptable = adaptable;
   }
 
-  public IsSystemReport(Report: Report): boolean {
+  public IsSystemReport(report: Report): boolean {
     return (
-      Report == null ||
-      Report.Name == ALL_DATA_REPORT ||
-      Report.Name == VISIBLE_DATA_REPORT ||
-      Report.Name == SELECTED_CELLS_REPORT ||
-      Report.Name == SELECTED_ROWS_REPORT
+      report == null ||
+      report.Name == ALL_DATA_REPORT ||
+      report.Name == VISIBLE_DATA_REPORT ||
+      report.Name == SELECTED_CELLS_REPORT ||
+      report.Name == SELECTED_ROWS_REPORT
     );
+  }
+
+  public IsSystemReportActive(report: Report): boolean {
+    if (report.Name == SELECTED_CELLS_REPORT || report.Name == SELECTED_ROWS_REPORT) {
+      return this.adaptable.isSelectable();
+    }
+    return true;
   }
 
   public GetReportColumnsDescription(report: Report, cols: AdaptableColumn[]): string {

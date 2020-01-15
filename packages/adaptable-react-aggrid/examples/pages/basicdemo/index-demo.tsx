@@ -1,5 +1,5 @@
 import React from 'react';
-import AdaptableReact from '../../../src';
+import AdaptableReactAggrid from '../../../src';
 import '../../../src/base.scss';
 import '../../../src/themes/light.scss';
 import '../../../src/themes/dark.scss';
@@ -26,7 +26,7 @@ const StatusCmp = props => (
 );
 
 export default () => (
-  <AdaptableReact
+  <AdaptableReactAggrid
     style={{ height: '100vh' }}
     modules={[SideBarModule, MenuModule, RangeSelectionModule]}
     onAdaptableReady={api => {
