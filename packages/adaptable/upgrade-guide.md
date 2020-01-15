@@ -128,6 +128,11 @@ const api = Adaptable.init(adaptableOptions)
 ```
 Not only do you get back the public api but you no longer have access to a very large blotter instance, which used to contain a lot private fields, not meant for public use and which caused issues for our users.
 
+
+### React wrapper prop changes
+
+The `blotterOptions` prop has been renamed to `adaptableOptions`
+
 ## Styling
 
 We've made **no changes** to our styling/css classes/selectors.
