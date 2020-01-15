@@ -4,7 +4,7 @@ Version 6 of AdapTable includes many new features, improvements and ways of work
 
 This document will help you migrate to Version 6 of AdapTable and point out some of the more important changes and improvements.
 
-## Package name changes
+## Package Name Changes
 
 Version 6 of AdapTable reflects the new name of the product; formally known as the 'Adaptable Blotter', it has been renamed 'AdapTable' to reflect the tabular nature of the tool and that it can be, and is, widely used outside of finance.
 
@@ -16,7 +16,7 @@ The package `@adaptabletools/adaptableblotter-react-aggrid` has been renamed to 
 
 The package `@adaptabletools/adaptableblotter-angular-aggrid` has been renamed to `@adaptabletools/adaptable-angular-aggrid`
 
-## ag-Grid modularisation
+## ag-Grid Modularisation
 
 Version 6 depends on ag-Grid v.22.  This included a big change to using [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  The distinction between Community (free) and Enterprise (commercial) was maintained.
 
@@ -73,7 +73,7 @@ In order to use a plugin, you have to install it via npm or yarn; you need to in
 
 See the code example at the bottom of the page for more details.
 
-## Type changes
+## Types
 
 We have renamed some of the core 'types' to reflect the product name change.
 
@@ -112,7 +112,7 @@ import AdaptableReactAgGrid from '@adaptabletools/adaptable-react-aggrid';
 
 
 
-## Instantiation changes
+## Instantiation
 
 We have made it easier to create an instance of AdapTable by providing a static constructor. 
 
@@ -128,7 +128,7 @@ const api = Adaptable.init(adaptableOptions)
 ```
 Not only do you get back the public api but you no longer have access to a very large blotter instance, which used to contain a lot private fields, not meant for public use and which caused issues for our users.
 
-## Styling changes
+## Styling
 
 We've made **no changes** to our styling/css classes/selectors.
 
@@ -149,7 +149,7 @@ import "@adaptabletools/adaptable/themes/dark.css";
 ```
 
 
-## HTML rendering changes
+## HTML Rendering
 
 The name of the `div` that hosts AdapTable has changed.  
   
@@ -281,4 +281,17 @@ Read more at:
  * [Developer Documentation](https://api.adaptableblotter.com/index.html)
  * [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
  * [Demo Site](https://demo.adaptableblotter.com/)
+ 
+ ## Example Projects
+
+We have added a few example projects to Github to help you to understand how to use AdapTable.
+
+These include:
+ * [Angular Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+  * [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+   * [Parcel JS (quick build) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
+    * [iPushpPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
+ 
+ 
+ 
 
