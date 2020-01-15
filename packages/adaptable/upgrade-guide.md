@@ -1,6 +1,6 @@
 # AdapTable Upgrade Guide
 
-Version 6 of AdapTable includess many new features, improvements and ways of working that will allow you to do more with the tool than ever before. 
+Version 6 of AdapTable includes many new features, improvements and ways of working that will allow you to do more with the tool than ever before. 
 
 This document will help you migrate to Version 6 of AdapTable and point out some of the more important changes and improvements.
 
