@@ -130,26 +130,6 @@ your html should now look like:
 
 Note: the old structure is still working, but we will show a warning in the console.
 
-## Adaptable Options
-
-We have added many more options (and option groups) to [Adaptable Options](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) (the object you create at design time and provide to the AdapTable constructor).  
-
-The effect is to give you more complete control over how your instance of AdapTable looks and works. 
-
-There are far too many to list here but some of the headline improvements / new features are:
-
-* [Options to manage state hydration/dehydration](https://api.adaptableblotter.com/interfaces/_adaptableoptions_stateoptions_.stateoptions.html)
-* [Application Data Entries to store custom state](https://api.adaptableblotter.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
-* [Adaptable Tool Panel](https://api.adaptableblotter.com/interfaces/_predefinedconfig_toolpanelstate_.toolpanelstate.html)
-* [Server Validation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_editoptions_.editoptions.html)  
-* [Updated Rows](https://api.adaptableblotter.com/interfaces/_predefinedconfig_updatedrowstate_.updatedrowstate.html)
-* [Saveable Pivot and Grouped Layouts](https://api.adaptableblotter.com/interfaces/_predefinedconfig_layoutstate_.pivotdetails.html)   
-* [Custom Dashboard Toolbars](https://api.adaptableblotter.com/interfaces/_predefinedconfig_dashboardstate_.customtoolbar.html)
-* [Column Menu bespoke items](https://api.adaptableblotter.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#columnmenuitems)
-* [Context Menu bespoke items](https://api.adaptableblotter.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#contextmenuitems)
-* [Quick Search exclude columns](https://api.adaptableblotter.com/interfaces/_adaptableoptions_searchoptions_.searchoptions.html#excludecolumnfromquicksearch)
-* [iPushPull improvements](https://api.adaptableblotter.com/interfaces/_predefinedconfig_ipushpullstate_.ipushpullstate.html)
-
 ## Events
 
 In Version 5 of AdapTable there were 2 ways of subscribing to events, one of which was deprecated.  
@@ -171,20 +151,41 @@ For example to subscribe to the `ActionColumnClicked` event you will do:
 Find out more - and see the full list of AdapTable events at [Event API Documentation](https://api.adaptableblotter.com/interfaces/_api_eventapi_.eventapi.html)
 
 
+## New Features
+
+We have added a lot of new functionality to AdapTable in version 6.  This includes many more options (and option groups) to [Adaptable Options](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) (the object you create at design time and provide to the AdapTable constructor), more [API methods](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi)  and more [Predefined Config](https://api.adaptableblotter.com/interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html) properties. 
+
+The result is to give you more complete control over how your instance of AdapTable looks and works. 
+
+There are far too many new features to list here but some of the headlines are:
+
+* [Options to manage state hydration/dehydration](https://api.adaptableblotter.com/interfaces/_adaptableoptions_stateoptions_.stateoptions.html)
+* [Application Data Entries to store custom state](https://api.adaptableblotter.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
+* [Adaptable Tool Panel](https://api.adaptableblotter.com/interfaces/_predefinedconfig_toolpanelstate_.toolpanelstate.html)
+* [Server Validation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_editoptions_.editoptions.html)  
+* [Updated Rows](https://api.adaptableblotter.com/interfaces/_predefinedconfig_updatedrowstate_.updatedrowstate.html)
+* [Saveable Pivot and Grouped Layouts](https://api.adaptableblotter.com/interfaces/_predefinedconfig_layoutstate_.pivotdetails.html)   
+* [Custom Dashboard Toolbars](https://api.adaptableblotter.com/interfaces/_predefinedconfig_dashboardstate_.customtoolbar.html)
+* [Column Menu bespoke items](https://api.adaptableblotter.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#columnmenuitems)
+* [Context Menu bespoke items](https://api.adaptableblotter.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#contextmenuitems)
+* [Quick Search exclude columns](https://api.adaptableblotter.com/interfaces/_adaptableoptions_searchoptions_.searchoptions.html#excludecolumnfromquicksearch)
+* [iPushPull improvements](https://api.adaptableblotter.com/interfaces/_predefinedconfig_ipushpullstate_.ipushpullstate.html)
+
+
 ## Basic Installation Example
 
 ```tsx
-// impport additional AgGrid modules you need & pass to adaptableOptions.vendorGrid.modules
+// impport any additional AgGrid module needed and pass to adaptableOptions.vendorGrid.modules
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
 // import Adaptable
 import Adaptable from "@adaptabletools/adaptable/agGrid";
 
-// import the Adaptable types that you need
+// import the Adaptable types
 import { AdaptableOptions, AdaptableApi } from "@adaptabletools/adaptable/types";
 
-// import plugins
+// import Plugins
 import charts from "@adaptabletools/adaptable-plugin-charts";
 import finance from "@adaptabletools/adaptable-plugin-finance";
 
@@ -193,6 +194,7 @@ import "@adaptabletools/adaptable/index.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
 
+// create column definitions
 const columnDefs = [
   { field: "orderId", headerName: 'Order Id', type: "abColDefNumber" },
   { field: "companyName", headerName: 'Company', type: "abColDefString" },
@@ -201,6 +203,7 @@ const columnDefs = [
   { field: "invoicedCost", headerName: 'Invoiced Amount', type: "abColDefNumber" }
 ];
 
+// create AdaptableOptions
 const adaptableOptions: AdaptableOptions = {
   primaryKey: "orderId",
   userName: "Demo User",
@@ -226,7 +229,14 @@ const adaptableOptions: AdaptableOptions = {
   predefinedConfig: {} // supply any config that you need
 };
 
+// call Constructor with AdaptableOptions and receive the AdaptableAPI for future use
 const api: AdaptableApi = Adaptable.init(adaptableOptions);
+
+// You can now use the API to manage AdapTable and listen to Adaptable events, e.g.
+ api.eventApi.on('AdaptableReady', () => {
+    // perform anything you need to do when AdapTable is ready
+  });
+  
 ```
 
 ## Further Information and Help
