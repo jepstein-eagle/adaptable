@@ -93,7 +93,7 @@ AdapTable uses ag-Grid v.22.  This included a big change by introducing [modular
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
 #### Enterprise Modules Example
-To add an ag-Grid Enterprise you need to do the following 3 steps (using Menus and RangeSelection as an example):
+To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelection as an example):
 
 1. Install the modules in npm:
 
