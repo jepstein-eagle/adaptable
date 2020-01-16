@@ -12,6 +12,30 @@ AdapTable is fully data agnostic and can work with any data set you provide it w
 
 [Try out AdapTable for yourself](https://demo.adaptableblotter.com).
 
+## Upgrade Guide
+
+Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
+
+For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
+
+## Using AdapTable
+
+AdapTable comes in 3 variants:
+ 
+  * 'core' (vanilla) javascript version
+  
+  To use this install **`@adaptabletools/adaptable`** - for more info, see the [core readme docs](./packages/adaptable/README.md)
+  
+  * React Wrapper
+  
+  To use this install **`@adaptabletools/adaptable-react-aggrid`** - for more info, see the [react version readme docs](./packages/adaptable-react-aggrid/README.md)
+  
+  * Angular Wrapper
+  
+  To use this, install **`@adaptabletools/adaptable-angular-aggrid`** - for more info, see the [Angular readme docs](./packages/adaptable-ng-aggrid/README.md)
+
+AdapTable (all versions) also depends on AgGrid - more exactly on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
+
 ## Installing AdapTable
 
 AdapTable is distributed via a [private npm registry - https://registry.adaptabletools.com](https://registry.adaptabletools.com).
@@ -60,59 +84,38 @@ This should display the username you received from use as the current login on t
 npm install @adaptabletools/adaptable
 ```
 
-## Using AdapTable
+## Plugins
+AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
-AdapTable comes in 3 variants:
- 
-  * 'core' - vanilla javascript version - for using this, install **`@adaptabletools/adaptable`** - for more info, see the [core readme docs](./packages/adaptable/README.md)
-  * React version - for using this, install **`@adaptabletools/adaptable-react-aggrid`** - for more info, see the [react version readme docs](./packages/adaptable-react-aggrid/README.md)
-  * Angular version - for using this, install **`@adaptabletools/adaptable-angular-aggrid`** - for more info, see the [Angular readme docs](./packages/adaptable-ng-aggrid/README.md)
+There are currently two plugins:
 
-AdapTable (all versions) also depends on AgGrid - more exactly on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
+- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
-## Plug-Ins
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
 
-In order to reduce download size and ensure that you only use the components and functionality you require, AdapTable now offers Plug-Ins.
-
-The standard 'core' package that contains everything that most users will ever need.  
-
-However Plug-Ins offer additional sector-specific, or advanced functionality.
-
-These include:
-
-- Finance Plug-In (for Financial Services users) - **`@adaptabletools/adaptable-plugin-finance`**
-- Charting Plug-In (a wide range of chart types that leverage Infragistics React charts)  - **`@adaptabletools/adaptable-charts-finance`**
-
-
-## Upgrade guide
-
-For upgrading from v5 to v6 of AdapTable see the [Version 6 Upgrade Guide](./packages/adaptable/upgrade-guide.md)
 
 ## Licences
-
 AdapTable is a commercial product and requires a purchased licence for use.
 
-The AdapTable licence covers both Adaptable.NET (WinForms / WPF) and Adaptable (JavaScript) versions, and offers regular updates and full support.
+An AdapTable licence includes regular updates and full support.
 
 If you wish to evaluate AdapTable before purchase, please contact us requesting a Trial Licence.
 
 Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
-Note: AdapTable licences do not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
+Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
 
-Please contact the [Adaptable Tools Sales Team](mailto:sales@adaptabletools.com) for more information.
+## Demo
+
+To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
-The [Adaptable Help Site](https://adaptabletools.zendesk.com/hc/en-us) contains lots of useful material including User, Admin and Getting Started Guides, FAQs, Videos and Code Examples.
+Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 
-Full, comprehensive, developer documentation is available at [AdapTable Developer Documentation](https://api.adaptableblotter.com/index.html)
+Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
 
-## Further Information
-
-Find out more about AdapTable and the FinTech Adaptable Tools at the [Adaptable Tools Website](http://www.adaptabletools.com).
-
-And you can try out AdapTable for yourself at [Adaptable Demos](https://demo.adaptableblotter.com).
+For all enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
 
 ## Support
 
