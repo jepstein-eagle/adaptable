@@ -137,12 +137,19 @@ note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has bee
 
 ### Optional:
 
-- **onAdaptableReady: (adaptableApi: AdaptableApi)** An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+- **onAdaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)** 
+
+An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+Also gives access to the underlying ag-Grid instance object.
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
 
-- **render|children: ({ grid, adaptable}) => ReactNode**  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
+- **render|children: ({ grid, adaptable}) => ReactNode**  
 
-- **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
+Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
+
+- **modules** 
+
+Any ag-Grid Enterprise modules that you wish to include (see above)
 
 ## Styling and Theming
 
