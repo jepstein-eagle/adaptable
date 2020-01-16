@@ -239,7 +239,7 @@ However, you might want to style icons differently - in this case, you can custo
 
 ## Upgrade guide
 
-For upgrading from v5 to v6 of AdapTable see the [Version 6 Upgrade Guide](./adaptable/upgrade-guide.md)
+For upgrading from v5 to v6 of AdapTable see the [Version 6 Upgrade Guide](../../adaptable/upgrade-guide.md)
 
 ## Licences
 
