@@ -56,16 +56,16 @@ it should display the username you received from use as the current login on the
 
 
 ## Plugins
-AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to choose only the functionality you want.  
+AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
 There are currently two plugins:
 
-- Charting
+- Charting: Courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
 
-- Financial
+- Financial: Adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
-To add a plugin you need to do the following 3 steps (using charting as an example):
+To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
 
 1. Install the plugin as a separate package:
 
