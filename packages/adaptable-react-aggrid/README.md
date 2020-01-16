@@ -163,10 +163,11 @@ import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
 
 To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
 
-## Github Example Project
+## Demo
 
-For a standalone working example app, see [React Demo](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
+For a standalone working example app of the React Wrapper, see the [React Demo](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
 
+To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Basic Example
 
@@ -217,9 +218,6 @@ Note: AdapTable licence does not include the licence for the underlying grid - i
 
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
  
-## Demo
-
-To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
