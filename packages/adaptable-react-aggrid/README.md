@@ -144,6 +144,32 @@ See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_a
 
 - **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
 
+## Styling and Theming
+
+AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes.
+
+AdapTable uses css variables - blah.
+
+In order for AdapTable to look right, you **always** have to import the index.css file:
+
+```tsx
+import "@adaptabletools/adaptable-react-aggrid/index.css"
+```
+
+This contains the structural styles and, also, the (default) Light theme.
+
+If you want to use the Dark theme, you will need, also, to import:
+
+```tsx
+import "@adaptabletools/adaptable-react-aggrid/index.css" // always needed
+import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
+```
+
+You can also write your own custom theme for AdapTable.  
+
+To find out more about this - and styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
+
+
 ## Basic Example
 
 ```jsx
@@ -180,34 +206,6 @@ export default () => <AdaptableReactAgGrid
 
 ```
 
-## Styling and Theming
-
-Styling - need just 2 paragraphs
-
-Then we will link to [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
-
-In order for AdapTable to look right, you have to import the index.css file
-
-```tsx
-import "@adaptabletools/adaptable-react-aggrid/index.css"
-```
-
-This contains the structural styles and the (default) light theme.
-
-For the dark theme, you also have to import
-
-```tsx
-import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
-```
-
-So if you want the dark theme in your app, you have to do
-
-```tsx
-import "@adaptabletools/adaptable-react-aggrid/index.css"
-import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
-```
-
-This makes both the `light` and the `dark` themes available. You can also write your own custom theme for AdapTable - see the section below for this.
 
 
 ## Licences
