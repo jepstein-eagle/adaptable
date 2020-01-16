@@ -1,6 +1,6 @@
 # Adaptable React ag-Grid
 
-Repository for AdapTable React ag-Grid Wrapper (adaptable-react-aggrid)
+Repository for the AdapTable React ag-Grid Wrapper (adaptable-react-aggrid)
 
 The React Wrapper allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
 
@@ -55,17 +55,17 @@ it should display the username you received from use as the current login on the
 **note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/react* packages**
 
 
-### Plugins
-AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to choose only the functionality you want.  
+## Plugins
+AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
 There are currently two plugins:
 
-- Charting
+- Charting: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
 
-- Financial
+- Financial: adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
-To add a plugin you need to do the following 3 steps (using charting as an example):
+To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
 
 1. Install the plugin as a separate package:
 
@@ -87,7 +87,7 @@ const adaptableOptions: AdaptableOptions = {
 
 ```
 
-### agGrid Enterprise Modules
+## agGrid Enterprise Modules
 AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
 
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
@@ -121,9 +121,9 @@ export default () => <AdaptableReactAgGrid
 ```
 
 
-### Props
+## React Props
 
-#### Mandatory:
+### Mandatory:
 
 - **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
@@ -135,7 +135,7 @@ See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adapt
 note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
 
 
-#### Optional:
+### Optional:
 
 - **onAdaptableReady: (adaptableApi: AdaptableApi)** An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
@@ -143,6 +143,31 @@ See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_a
 - **render|children: ({ grid, adaptable}) => ReactNode**  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
 
 - **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
+
+## Styling and Theming
+
+AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
+
+In order for AdapTable to look right, you **always** have to import the `index.css` file which contains the structural styles and, also, the (default) Light theme:
+
+```tsx
+import "@adaptabletools/adaptable-react-aggrid/index.css"
+```
+
+If you want to use the Dark theme, you will need, also, to import:
+
+```tsx
+import "@adaptabletools/adaptable-react-aggrid/index.css" // always needed
+import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
+```
+
+To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
+
+## Demo
+
+For a standalone working example app of the React Wrapper, see the [React Demo](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
+
+To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Basic Example
 
@@ -180,172 +205,6 @@ export default () => <AdaptableReactAgGrid
 
 ```
 
-## Styling
-
-In order for AdapTable to look right, you have to import the index.css file
-
-```tsx
-import "@adaptabletools/adaptable-react-aggrid/index.css"
-```
-
-This contains the structural styles and the (default) light theme.
-
-For the dark theme, you also have to import
-
-```tsx
-import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
-```
-
-So if you want the dark theme in your app, you have to do
-
-```tsx
-import "@adaptabletools/adaptable-react-aggrid/index.css"
-import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
-```
-
-This makes both the `light` and the `dark` themes available. You can also write your own custom theme for AdapTable - see the section below for this.
-
-A theme is basically a collection of css variables that AdapTable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
-
-When AdapTable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
-**The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
-
-### Writing a theme
-
-In order to write a theme, let's call it `blue`, you have to define it with the following css:
-
-```css
-html.ab--theme-blue {
-  --ab-theme-loaded: blue;
-}
-```
-
-so basically 
-
-```css
-html.ab--theme-<THEME_NAME> {
-  --ab-theme-loaded: <THEME_NAME>;
-}
-```
-
-and you also need to make sure that the theme name is included in the UserThemes property in the Theme section of Predefined Config (together with a description and - optionally - the name of the vendor grid theme that you want to load simultaneously with the Theme.):
-
- ```ts
-  export default {
-    Theme: {
-      UserThemes:[
-        {
-          Name:"blue",
-          Description:"Blue Theme",
-          VendorGridClassName: 'ag-theme-blue'
-        }
-      ],
-      CurrentTheme: 'blue'
-    }  
-  } as PredefinedConfig;
-  ```
-
-> **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
-  
-There are a number of css variables that are available for customizing a theme - see below (it's the contents of the dark theme)
-
-```css
-/** 
- * This is the whole source for the dark theme - it's all there is to it!
- */ 
-html.ab--theme-dark {
-  /* this is here so we detect when the dark theme has been correctly loaded */
-  --ab-theme-loaded: dark;
-
-  /* the background for the whole Adaptable Dashboard - only used once */
-  --ab-dashboard__background: #232323;   
-  --ab-cmp-input--disabled__background:#b6b7b8;
-  
-  /* default background color to be used in dialogs, panels, inputs, etc */
-  --ab-color-defaultbackground: #3e444c;
-  /* color for text displayed on the default background */
-  --ab-color-text-on-defaultbackground: #f7f7f7;
-
-  /* the most used color - used for example, in dashboard toolbars + a light and dark variation */
-  --ab-color-primary: #262d2f;
-  --ab-color-primarylight: #2d3537;
-  --ab-color-primarydark: #1c2021;
-  /* color for text displayed over the primary color */
-  --ab-color-text-on-primary: #f7f7f7;
-
-  /* a color not so often used - mostly used for making things stand out - used for example, in wizard dialog headers + a light and dark variation */
-  --ab-color-secondary: #f7f7f7;
-  --ab-color-secondarylight: #07456d;
-  --ab-color-secondarydark: #f7f7f7;
-  /* color for text displayed over the secondary color */
-  --ab-color-text-on-secondary: #262d2f;
-  --ab-color-text-on-secondarylight: #f7f7f7;
-}
-```
-
-In addition to the above variables, the following are also available
-
-```css
-html.ab--theme-my-theme {
-  --ab-theme-loaded: my-theme;
-
-  /* we define a set of spacings, which you can customise to suit your needs */
-  --ab-space-0: 0px;
-  --ab-space-1: 4px;
-  --ab-space-2: 8px;
-  --ab-space-3: 16px;
-  --ab-space-4: 32px;
-  --ab-space-5: 64px;
-  --ab-space-6: 128px;
-  --ab-space-7: 256px;
-
-  /* also a set of font sizes */
-  --ab-font-size-0: 0.5rem; /* 8px for 1rem=16px */
-  --ab-font-size-1: 0.625rem; /* 10px for 1rem=16px */
-  --ab-font-size-2: 0.75rem; /* 12px for 1rem=16px */
-  --ab-font-size-3: 0.875rem; /* 14px for 1rem=16px */
-  --ab-font-size-4: 1rem; 
-
-  /* use this to specify the font family you want for Adaptable*/
-  --ab__font-family: inherit;
-  
-  /* customise the border radius for some of Adaptable elements */
-  --ab__border-radius: var(--ab-space-1);
-}
-```
-
-That's all the css you have to write for defining a theme - in fact, you can choose which of the above colors/variables to define - you don't have to define them all. Start incrementally, and work your way up as you need - use the dark theme as an example.
-
-
-### Using with SASS
-
-#### When using sass, in order to use sass variables as values for css properties, you have to use interpolation!!!
-
-```scss
-$theme-color: #fea7ff;
-
-html.ab--theme-light {
-  --ab-cmp-dashboardpanel_header__background: #{$theme-color}; /* use interpolation ! */
-}
-```
-
-### Styling icons
-
-Adaptable uses inline SVG for icons, since that's very performant and doesn't require any additional download.
-
-However, you might want to style icons differently - in this case, you can customize that through css. Every icon has the `ab-Icon` css class, and also `ab-Icon--NAME` where `NAME` is the name of the icon. So for example, if you want to use a background image, you can do the following:
-
-
-```css
-.ab-Icon--build path {
-  visibility: hidden; /* to hide the contents of the actual SVG */
-}
-.ab-Icon--build {
-  background-image: url(...);
-  background-size: cover;
-}
-```
-
 ## Licences
 AdapTable is a commercial product and requires a purchased licence for use.
 
@@ -355,13 +214,8 @@ If you wish to evaluate AdapTable before purchase, please contact us requesting 
 
 Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
-Note: AdapTable licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
-
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
  
-## Demo
-
-To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
