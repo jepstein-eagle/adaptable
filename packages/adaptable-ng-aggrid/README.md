@@ -31,17 +31,21 @@ if you're using yarn
 npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
 ```
 
-4. Enter your credentions:
+3. Enter your credentials that was provided to you by the AdapTable support team:
 
-  * your login name - use the login that was provided to you by the support team.
-  * your email - use the address that you were given by the support team.
-  * your password - use the unique alpanumeric password that you were given by the support team.
+  * login name
+  * email
+  * password
   
-5. Check you are logged-in correctly via
+5. Check you are logged-in correctly by using whoami:
 
-```npm whoami --registry=https://registry.adaptabletools.com```
+```
+npm whoami --registry=https://registry.adaptabletools.com
+```
 
-it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
+This should display the username you received from use as the current login on the private registry
+
+**note: this does not affect your username/login session on the public npm registry**
 
 5. Install the Angular wrapper of Adaptable
 
