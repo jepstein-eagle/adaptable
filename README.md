@@ -16,7 +16,7 @@ AdapTable is fully data agnostic and can work with any data set you provide it w
 
 Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
+For more information please see the [Version 6 Upgrade Guide](./packages/adaptable/upgrade-guide.md)
 
 ## Using AdapTable
 
