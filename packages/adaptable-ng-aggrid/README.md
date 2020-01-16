@@ -133,7 +133,7 @@ export class AppComponent {
 
 ```
 
-## Inputs
+## Angular Attributes
 
 ### Mandatory:
 
@@ -179,9 +179,9 @@ After that, you can use the ecomponent in your app
 
 ## Styling and Theming
 
-AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
+AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (by using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
 
-In order for AdapTable to look right, you **always** have to import the `index.css` file which contains the structural styles and, also, the (default) Light theme:
+You **always** have to import the `index.css` file.  This contains the structural styles AdapTable requires and, also, the (default) Light theme:
 
 ```tsx
 import "@adaptabletools/adaptable-angular-aggrid/index.css"
