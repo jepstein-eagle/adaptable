@@ -56,11 +56,6 @@ it should display the username you received from use as the current login on the
 ```
 **note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/react* packages**
 
-7. Optionally install any AdapTable plugins relevant to any additional functionality you require   
-
-So, for example, if you want to use charting you would add:
-
-```npm i @adaptabletools/adaptable-plugin-charts```
 
 8. Optionally install any ag-Grid Enterprise modules that you want
 
@@ -71,7 +66,34 @@ So, for example, if you wanted to include the 'all-modules' module (which, as th
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
 ### Plugins
-to do...
+AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to choose only the functionality you want.  
+
+There are currently two plugins:
+
+- Charting
+
+- Financial
+
+#### Plugins Example
+To add a plugin you need to do the following 3 steps (using charting as an example):
+
+1. Install the plug as a separate package:
+
+```npm i @adaptabletools/adaptable-plugin-charts```
+
+2. Import it into your code:
+```import charts from '@adaptable/adaptable-plugins-charts'```
+
+3. Add it to the `plugins` property of *AdaptableOptions*:
+```
+const adaptableOptions: AdaptableOptions = {
+  primaryKey: 'tradeId',
+  adaptableId: 'react demo',
+  ....
+  plugins: [charts()]
+};
+
+```
 
 ### Plugins
 to do...
