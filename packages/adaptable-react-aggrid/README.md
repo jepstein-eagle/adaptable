@@ -54,15 +54,14 @@ it should display the username you received from use as the current login on the
 ```
 **note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/react* packages**
 
-
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
 There are currently two plugins:
 
-- Charting: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
+- **Charting**: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
 
-- Financial: adds additional functionality of benefit only to advanced financial users.
+- **Financial**: adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
@@ -125,11 +124,15 @@ export default () => <AdaptableReactAgGrid
 
 ### Mandatory:
 
-- **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+- **gridOptions**: 
+
+The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
 note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop
 
-- **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
+- **adaptableOptions**: 
+
+The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
 
 note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
@@ -153,9 +156,9 @@ Any ag-Grid Enterprise modules that you wish to include (see above)
 
 ## Styling and Theming
 
-AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
+AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (by using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
 
-In order for AdapTable to look right, you **always** have to import the `index.css` file which contains the structural styles and, also, the (default) Light theme:
+You **always** have to import the `index.css` file.  This contains the structural styles AdapTable requires and, also, the (default) Light theme:
 
 ```tsx
 import "@adaptabletools/adaptable-react-aggrid/index.css"
