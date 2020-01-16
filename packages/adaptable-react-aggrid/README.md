@@ -1,16 +1,22 @@
 # Adaptable React ag-Grid
 
-Repository for AdapTable React ag-Grid Wrapper.
+Repository for AdapTable React ag-Grid Wrapper (adaptable-react-aggrid)
 
-This allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
+The React Wrapper allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
+
+## Upgrade Guide
+
+Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
+
+For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
 
 ## Installation
 
 The React wrapper of AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
 
-1. get a commercial license - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), so we'll provide you with a username.
+1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), who will provide you with your unique credentials.
 
-2. point your npm client to the correct registry for packages under the `@adaptabletools` scope
+2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
 
 ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
 
@@ -19,24 +25,164 @@ if you're using yarn
 ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 
-3. login with your username for the `@adaptabletools` scope, on the private registry
+3. Login with your username for the `@adaptabletools` scope, on the private registry
 
 ```npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools```
 
-4. check you are logged-in correctly via
+4. Check you are logged-in correctly via
 
 ```npm whoami --registry=https://registry.adaptabletools.com```
 
 it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
 
-5. install the React wrapper of Adaptable
+5. Install the React wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptable-react-aggrid```
 
+**note: you do not need to install the core AdapTable package also**
+
+6. Make sure that all the Peer Dependencies are installed. These are currently:
+
+```
+"peerDependencies": {
+    "@ag-grid-community/all-modules": "^22.1.1",
+    "@ag-grid-community/react": "^22.1.1",
+    "mathjs": "^5.1.1",
+    "react": "=>16.8.6",
+    "react-dom": ">=16.8.6",
+}
+```
+**note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/react* packages**
+
+
+### Plugins
+AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to choose only the functionality you want.  
+
+There are currently two plugins:
+
+- Charting
+
+- Financial
+
+#### Plugins Example
+To add a plugin you need to do the following 3 steps (using charting as an example):
+
+1. Install the plugin as a separate package:
+
+```npm i @adaptabletools/adaptable-plugin-charts```
+
+2. Import it into your code:
+
+```import charts from '@adaptable/adaptable-plugins-charts'```
+
+3. Add it to the `plugins` property of *AdaptableOptions*:
+
+```
+const adaptableOptions: AdaptableOptions = {
+  primaryKey: 'tradeId',
+  adaptableId: 'react demo',
+  ....
+  plugins: [charts()]
+};
+
+```
+
+### agGrid Enterprise Modules
+AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
+
+**If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
+
+#### Enterprise Modules Example
+To add an ag-Grid Enterprise you need to do the following 3 steps (using Menus and RangeSelection as an example):
+
+1. Install the modules in npm:
+
+```
+npm i @ag-grid-enterprise/menu
+npm i @ag-grid-enterprise/range-selection
+```
+
+2. Import them into your code:
+
+```
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+```
+
+3. Add them to the **modules** prop of the AdaptableReact Component:
+
+```
+export default () => <AdaptableReactAgGrid
+  ....
+  modules={[SideBarModule, MenuModule, RangeSelectionModule]}
+ ....
+/>
+
+```
+
+
+### Props
+
+#### Mandatory:
+
+- **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+
+note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop
+
+- **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
+See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
+
+note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
+
+
+#### Optional:
+
+- **onAdaptableReady: (adaptableApi: AdaptableApi)** An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
+
+- **render|children: ({ grid, adaptable}) => ReactNode**  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
+
+- **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
+
+## Basic Example
+
+```jsx
+
+import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
+
+import '@adaptabletools/adaptable-react-aggrid/index.css'; // this also includes the light theme
+import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
+
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+
+// import any AdapTable plugins you require
+import charts from '@adaptable/adaptable-plugins-charts'
+
+// import any ag-grid enterprise modules you want to use
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+import { MenuModule } from '@ag-grid-enterprise/menu';
+
+const adaptableOptions: AdaptableOptions = {
+  primaryKey: 'tradeId',
+  userName: 'demo user',
+  adaptableId: 'react demo',
+  plugins: [charts()] // adaptable plugins
+};
+
+export default () => <AdaptableReactAgGrid
+  style={{ height: '100vh' }}
+  modules={[MenuModule, RangeSelectionModule]} // ag-grid modules 
+  gridOptions={ ... }
+  adaptableOptions={adaptableOptions}
+  onAdaptableReady={(adaptableApi) => { ... }}
+/>
+
+```
 
 ## Styling
 
-In order for Adaptable to look right, you have to import the index.css file
+In order for AdapTable to look right, you have to import the index.css file
 
 ```tsx
 import "@adaptabletools/adaptable-react-aggrid/index.css"
@@ -57,11 +203,11 @@ import "@adaptabletools/adaptable-react-aggrid/index.css"
 import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
 ```
 
-This makes both the `light` and the `dark` themes available. You can also write your own custom theme for Adaptable - see the section below for this.
+This makes both the `light` and the `dark` themes available. You can also write your own custom theme for AdapTable - see the section below for this.
 
-A theme is basically a collection of css variables that Adaptable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
+A theme is basically a collection of css variables that AdapTable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
-When Adaptable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
+When AdapTable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
 **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
 
 ### Writing a theme
@@ -200,62 +346,6 @@ However, you might want to style icons differently - in this case, you can custo
 }
 ```
 
-
-## Usage
-
-```jsx
-
-import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
-
-import '@adaptabletools/adaptable-react-aggrid/index.css'; // this also includes the light theme
-import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
-
-import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
-
-// also import adaptable charts if you want to have access to charting functionality
-import charts from '@adaptable/adaptable-plugins-charts'
-
-// also add any ag-grid enterprise modules you neeed for additional ag-Grid functionality
-import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-import { MenuModule } from '@ag-grid-enterprise/menu';
-import { SideBarModule } from '@ag-grid-enterprise/side-bar';
-
-const adaptableOptions: AdaptableOptions = {
-  primaryKey: 'tradeId',
-  userName: 'demo user',
-  adaptableId: 'react demo',
-
-  // adaptable plugins come here
-  plugins: [charts()]
-};
-
-export default () => <AdaptableReactAgGrid
-  style={{ height: '100vh' }}
-  // ag-grid modules come here
-  modules={[SideBarModule, MenuModule, RangeSelectionModule]}
-  gridOptions={ ... }
-  plugins={plugins}
-  adaptableOptions={adaptableOptions}
-  onAdaptableReady={(adaptableApi) => { ... }}
-/>
-
-
-```
-
-### Props
-
-#### Mandatory:
-
-- gridOptions: ag-Grid GridOptions object
-- adaptableOptions: AdaptableOptions object
-
-#### Optional
-
-- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptableapi object
-- render|children: ({ grid, adaptable}) => ReactNode - can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
-
-
 ## Licences
 AdapTable is a commercial product and requires a purchased licence for use.
 
@@ -271,14 +361,14 @@ Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for
  
 ## Demo
 
-To see AdapTable in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
+To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
-Further information about Adaptable is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 
-Developers can see how to access Adaptable programmatically at https://api.adaptableblotter.com
+Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
 
-For all enquiries please email[`support@adaptabletools.com`](mailto:support@adaptabletools.com).
+For all enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
 
 [![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)

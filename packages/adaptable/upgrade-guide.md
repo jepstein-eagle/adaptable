@@ -287,10 +287,13 @@ Read more at:
 We have added a few example projects to Github to help you to understand how to use AdapTable.
 
 These include:
- * [Angular Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
-  * [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
-   * [Parcel JS (quick build) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
-    * [iPushpPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
+* [Angular Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+ 
+* [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+  
+* [Parcel JS (quick build) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
+   
+* [iPushpPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
  
  
  
