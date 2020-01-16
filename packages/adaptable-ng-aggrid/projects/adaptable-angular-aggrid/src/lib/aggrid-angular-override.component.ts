@@ -8,6 +8,7 @@ import {
   AngularFrameworkComponentWrapper,
   AgGridColumn,
 } from '@ag-grid-community/angular';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '@adaptabletools/adaptable/src/agGrid';
 import { AdaptableApi } from '@adaptabletools/adaptable/types';
 
@@ -21,7 +22,10 @@ import { AdaptableApi } from '@adaptabletools/adaptable/types';
 export class AgGridOverrideComponent extends AgGridAngular {
   @Input() adaptableFactory: (...args: any) => Adaptable;
   @Input() gridContainerId: string;
-  @Input() onAdaptableReady?: (api: AdaptableApi) => void;
+  @Input() onAdaptableReady?: (adaptableReadyInfo: {
+    adaptableApi: AdaptableApi;
+    vendorGrid: GridOptions;
+  }) => void;
 
   ngAfterViewInit(): void {
     (this as any).checkForDeprecatedEvents();
@@ -74,9 +78,7 @@ export class AgGridOverrideComponent extends AgGridAngular {
     (this as any)._fullyReady.resolveNow(null, (resolve: any) => resolve);
 
     if (this.onAdaptableReady) {
-      adaptable.api.eventApi.on('AdaptableReady', () => {
-        this.onAdaptableReady(adaptable.api);
-      });
+      adaptable.api.eventApi.on('AdaptableReady', this.onAdaptableReady);
     }
   }
 }

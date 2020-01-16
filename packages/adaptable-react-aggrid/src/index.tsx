@@ -155,7 +155,10 @@ const AdaptableReact = ({
   gridOptions: AgGrid.GridOptions;
   modules?: Module[];
 
-  onAdaptableReady?: (api: AdaptableApi) => void;
+  onAdaptableReady?: (adaptableReadyInfo: {
+    adaptableApi: AdaptableApi;
+    vendorGrid: AgGrid.GridOptions;
+  }) => void;
 
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
@@ -176,9 +179,7 @@ const AdaptableReact = ({
         modules,
       });
       if (onAdaptableReady) {
-        adaptable.api.eventApi.on('AdaptableReady', () => {
-          onAdaptableReady(adaptable.api);
-        });
+        adaptable.api.eventApi.on('AdaptableReady', onAdaptableReady);
       }
 
       setAdaptable(adaptable);

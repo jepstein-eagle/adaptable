@@ -8,6 +8,8 @@ import { AlertFiredEventArgs } from './Events/AlertFired';
 import { ColumnStateChangedEventArgs } from './Events/ColumnStateChanged';
 import { SearchChangedEventArgs } from './Events/SearchChanged';
 
+import { AdaptableReadyInfo } from './Events/AdaptableReady';
+
 /**
  * Adaptable publishes a large number of events to which users can subscribe as required.
  *
@@ -171,12 +173,13 @@ export interface EventApi {
 
   /**
    * Fired when Adaptable is up and running - has no arguments.
-   *
-   * @param eventName AdaptableReady
-   *
-   * @param callback (none)
+   * @param eventName AdaptableReady - use as: adaptableApi.eventApi.on('AdaptableReady', (adaptableReadyInfo: AdaptableReadyInfo) => { .....[do stuff]...})
+   * @param callback An `AdaptableReadyInfo` object which contains the adaptableApi and the vendorGrid
    */
-  on(eventName: 'AdaptableReady', callback: () => void): () => void;
+  on(
+    eventName: 'AdaptableReady',
+    callback: (adaptableReadyInfo: AdaptableReadyInfo) => void
+  ): () => void;
 
   emit(
     eventName:

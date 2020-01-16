@@ -31,8 +31,17 @@ export interface GridApi {
    * Note: this method simply updates the data set; **it does not take edit validation into account** - for that you should use *setCellVallue* or *setGriddCell*
    *
    * @param dataRows the rows which have been updated.  Send the whole row and Adaptable and underlying grid will take care of the rest.
+   *
+   * @param config use if running a batch update (so that updates are grouped).  The 2 props are:
+   *
+   * - batchUpdate: set to true if running batch updates
+   *
+   * - callback: a function to run when the batch successfully updates
    */
-  updateGridData(dataRows: any[]): void;
+  updateGridData(
+    dataRows: any[],
+    config?: { batchUpdate?: boolean; callback?: (res: any) => void }
+  ): void;
 
   /**
    * Adds the given rows to Adaptable (and underlying grid).

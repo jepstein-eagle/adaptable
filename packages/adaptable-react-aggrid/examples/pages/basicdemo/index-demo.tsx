@@ -15,11 +15,10 @@ import { SideBarModule } from '@ag-grid-enterprise/side-bar';
 
 import charts from '../../../../plugins/charts/src';
 import './index.css';
-global.React = React;
 
 const examplesHelper = new ExamplesHelper();
 
-const StatusCmp = props => (
+const StatusCmp = (props: any) => (
   <div>
     <b>{props.value}!!!</b>
   </div>
@@ -29,8 +28,8 @@ export default () => (
   <AdaptableReactAggrid
     style={{ height: '100vh' }}
     modules={[SideBarModule, MenuModule, RangeSelectionModule]}
-    onAdaptableReady={api => {
-      console.log('Adaptable ready', api);
+    onAdaptableReady={(api, gridOptions) => {
+      console.log('Adaptable ready', api, gridOptions);
 
       api.eventApi.on('SearchChanged', (...args: any[]) => {
         LoggingHelper.LogAdaptableWarning('search changed', args);

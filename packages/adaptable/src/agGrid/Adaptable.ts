@@ -12,6 +12,7 @@ import {
   SideBarDef,
   Events,
   Module,
+  RowNodeTransaction,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -472,7 +473,10 @@ export class Adaptable implements IAdaptable {
       if (eventName == INIT_STATE) {
         // and reset state also?
         this.forPlugins(plugin => plugin.onAdaptableReady(this, this.adaptableOptions));
-        this.api.eventApi.emit('AdaptableReady', this.adaptableOptions.adaptableId);
+        this.api.eventApi.emit('AdaptableReady', {
+          adaptableApi: this.api,
+          vendorGrid: this.adaptableOptions.vendorGrid,
+        });
       }
     });
   }
@@ -2748,8 +2752,16 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.api!.setRowData(dataSource);
   }
 
-  public updateRows(dataRows: any[]): void {
-    this.gridOptions.api!.updateRowData({ update: dataRows });
+  public updateRows(
+    dataRows: any[],
+    config?: { batchUpdate?: boolean; callback?: (res: RowNodeTransaction) => void }
+  ): void {
+    config = config || {};
+    if (config.batchUpdate) {
+      this.gridOptions.api!.batchUpdateRowData({ update: dataRows }, config.callback);
+    } else {
+      this.gridOptions.api!.updateRowData({ update: dataRows });
+    }
   }
 
   public addRows(dataRows: any[]): void {

@@ -38,7 +38,7 @@ function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
-  const useTickingData: boolean = false;
+  const useTickingData: boolean = true;
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
@@ -51,21 +51,15 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
-
-  adaptableOptions.layoutOptions = {
-    autoSizeColumnsInLayout: true,
-  };
-
   const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 
   console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');
 
-  if (useTickingData) {
-    tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, tradeCount);
-  }
+  adaptableApi.eventApi.on('AdaptableReady', ({ vendorGrid: gridOptions }) => {
+    if (useTickingData) {
+      tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, tradeCount);
+    }
+  });
 
   adaptableApi.eventApi.on('LiveDataChanged', (eventArgs: LiveDataChangedEventArgs) => {
     let eventData: LiveDataChangedInfo = eventArgs.data[0].id;

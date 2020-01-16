@@ -2583,7 +2583,6 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
           case SystemRedux.REPORT_START_LIVE: {
             let ret = next(action);
             const actionTyped = action as SystemRedux.ReportStartLiveAction;
-            console.log('do we send');
             // fire the Live Report event for Export Started
             adaptable.ReportService.PublishLiveLiveDataChangedEvent(
               actionTyped.ReportDestination,

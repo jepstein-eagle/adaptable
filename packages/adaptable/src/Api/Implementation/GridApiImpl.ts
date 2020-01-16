@@ -1,9 +1,8 @@
 import { ApiBase } from './ApiBase';
 import { GridApi } from '../GridApi';
-import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../../PredefinedConfig/GridState';
-import { DataType, SortOrder } from '../../PredefinedConfig/Common/Enums';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
@@ -20,8 +19,11 @@ export class GridApiImpl extends ApiBase implements GridApi {
     this.adaptable.setDataSource(dataSource);
   }
 
-  public updateGridData(dataRows: any[]): void {
-    this.adaptable.updateRows(dataRows);
+  public updateGridData(
+    dataRows: any[],
+    config?: { batchUpdate?: boolean; callback?: (res: any) => void }
+  ): void {
+    this.adaptable.updateRows(dataRows, config);
   }
 
   public addGridData(dataRows: any[]): void {

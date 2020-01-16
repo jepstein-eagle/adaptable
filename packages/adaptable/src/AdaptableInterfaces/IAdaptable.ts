@@ -145,7 +145,10 @@ export interface IAdaptable {
 
   // DataSource Management
   setDataSource(dataSource: any): void;
-  updateRows(dataRows: any[]): void;
+  updateRows(
+    dataRows: any[],
+    config?: { batchUpdate?: boolean; callback?: (res: any) => void }
+  ): void;
   addRows(dataRows: any[]): void;
   deleteRows(dataRows: any[]): void;
 

@@ -6,6 +6,12 @@ This allows you to install, instantiate and reference Adaptable using ag-Grid in
 
 Adaptable angular package wraps the ag-Grid angular wrapper - so you can use all the goodies of angular custom rendering wherever the ag-Grid angular wrapper supports them.
 
+## Upgrade guide
+
+Version 6 of AdapTable has introduced many new functionality and upgrades and also some new ways of interacting with the product.  
+
+For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
+
 ## Installation
 
 The Angular wrapper for Adaptable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
@@ -237,9 +243,6 @@ However, you might want to style icons differently - in this case, you can custo
 
 - onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptable Api object
 
-## Upgrade guide
-
-For upgrading from v5 to v6 of AdapTable see the [Version 6 Upgrade Guide](./adaptable/upgrade-guide.md)
 
 ## Licences
 
