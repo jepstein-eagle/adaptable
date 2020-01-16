@@ -1,12 +1,12 @@
 # Adaptable React ag-Grid
 
-Repository for Adaptable React ag-Grid Wrapper.
+Repository for AdapTable React ag-Grid Wrapper.
 
-This allows you to install, instantiate and reference Adaptable using ag-Grid in a "React-friendly" manner.
+This allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
 
 ## Installation
 
-The React wrapper of Adaptable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
+The React wrapper of AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
 
 1. get a commercial license - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), so we'll provide you with a username.
 
@@ -216,7 +216,7 @@ import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 // also import adaptable charts if you want to have access to charting functionality
 import charts from '@adaptable/adaptable-plugins-charts'
 
-// also add those if you want custom ag-grid enterprise modules
+// also add any ag-grid enterprise modules you neeed for additional ag-Grid functionality
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { SideBarModule } from '@ag-grid-enterprise/side-bar';
@@ -230,7 +230,7 @@ const adaptableOptions: AdaptableOptions = {
   plugins: [charts()]
 };
 
-export default () => <AdaptableReact
+export default () => <AdaptableReactAgGrid
   style={{ height: '100vh' }}
   // ag-grid modules come here
   modules={[SideBarModule, MenuModule, RangeSelectionModule]}
@@ -254,29 +254,24 @@ export default () => <AdaptableReact
 
 - onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptableapi object
 - render|children: ({ grid, adaptable}) => ReactNode - can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
-- onThemeChanged: (adaptable, arg: ThemeChangedEventArgs)
-- onSearchChanged: (adaptable, arg: SearchChangedEventArgs)
-- onColumnStateChanged: (adaptable, arg: ColumnStateChangedEventArgs)
-- onAlertFired: (adaptable, arg: AlertFiredEventArgs)
-- onActionColumnClicked: (adaptable, arg: ActionColumnClickedEventArgs)
-- onSelectionChanged: (adaptable, arg: SelectionChangedEventArgs)
+
 
 ## Licences
- Adaptable is a commercial product and requires a purchased licence for use.
+AdapTable is a commercial product and requires a purchased licence for use.
 
-Adaptable licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
+An AdapTable licence includes regular updates and full support.
 
-If you wish to evaluate Adaptable before purchase, please contact us requesting a Trial Licence.
+If you wish to evaluate AdapTable before purchase, please contact us requesting a Trial Licence.
 
 Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
-Note: Adaptable licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
+Note: AdapTable licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
-Please contact Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
-
+Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
+ 
 ## Demo
 
-To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
+To see AdapTable in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
@@ -284,6 +279,6 @@ Further information about Adaptable is available at www.adaptabletools.com. And 
 
 Developers can see how to access Adaptable programmatically at https://api.adaptableblotter.com
 
-For all enquiries please email Adaptable Tools Support Team at support@adaptabletools.com.
+For all enquiries please email[`support@adaptabletools.com`](mailto:support@adaptabletools.com).
 
 [![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)

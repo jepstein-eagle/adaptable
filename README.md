@@ -88,7 +88,7 @@ These include:
 
 ## Upgrade guide
 
-For upgrading from v5 to v6 see the [upgrade-guide.md](./packages/adaptable/upgrade-guide.md)
+For upgrading from v5 to v6 of AdapTable see the [Version 6 Upgrade Guide](./packages/adaptable/upgrade-guide.md)
 
 ## Licences
 

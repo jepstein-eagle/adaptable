@@ -1,8 +1,8 @@
 # adaptable
 
-Repository for the Core Adaptable HTML5 version - Adaptable.JS - developed by Adaptable Tools.
+Repository for the 'Core' AdapTable package - developed by Adaptable Tools.
 
-Adaptable.JS is a powerful DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
+AdapTable is a powerful DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
 
 It offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment. Try it out for yourself at https://demo.adaptableblotter.com.
 
@@ -15,13 +15,13 @@ Grid components supported include:
 
 More grid components are being added all the time so contact us if you would like us to implement your favourite HTML5 grid control.
 
-Adaptable.JS is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
+AdapTable is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
 
 There are additional React and Angular wrappers - please see the relevant packages.
 
 ## Installation
 
-Adaptable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
+AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
 
 1. get a commercial license - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), so we'll provide you with a username.
 
@@ -44,7 +44,7 @@ if you're using yarn
 
 it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
 
-5. install Adaptable
+5. install AdapTable
 
 ```npm i @adaptabletools/adaptable```
 
@@ -58,7 +58,7 @@ for the Angular wrapper, use
 
 ## Styling
 
-In order for Adaptable to look right, you have to import the index.css file
+In order for AdapTable to look right, you have to import the index.css file
 
 ```tsx
 import "@adaptabletools/adaptable/index.css"
@@ -83,7 +83,7 @@ This makes both the `light` and the `dark` themes available. You can also write 
 
 A theme is basically a collection of css variables that Adaptable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
-When Adaptable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
+When AdapTable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
 **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**.
 
 ### Writing a theme
@@ -229,19 +229,21 @@ However, you might want to style icons differently - in this case, you can custo
 ## Upgrade guide
 
 For upgrading from v5 to v6 see the [upgrade-guide.md](./upgrade-guide.md)
+
+
 ## Licences
 
-Adaptable is a commercial product and requires a purchased licence for use.
+AdapTable is a commercial product and requires a purchased licence for use.
 
-Adaptable licence covers both Adaptable.NET and Adaptable.JS versions, and offers regular updates and full support.
+An AdapTable licence includes regular updates and full support.
 
-If you wish to evaluate Adaptable before purchase, please contact us requesting a Trial Licence.
+If you wish to evaluate AdapTable before purchase, please contact us requesting a Trial Licence.
 
 Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
-Note: Adaptable licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
+Note: AdapTable licences do not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
-Please contact Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
+Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
 
 ## Usage
 
@@ -257,7 +259,7 @@ import '@adaptabletools/adaptable/themes/dark.css'; // if you want to use the da
 
 ## Demo
 
-To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
+To see AdapTable in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 

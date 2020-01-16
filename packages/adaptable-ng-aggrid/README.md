@@ -237,6 +237,10 @@ However, you might want to style icons differently - in this case, you can custo
 
 - onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptable Api object
 
+## Upgrade guide
+
+For upgrading from v5 to v6 of AdapTable see the [Version 6 Upgrade Guide](./adaptable/upgrade-guide.md)
+
 ## Licences
 
 Adaptable is a commercial product and requires a purchased licence for use.
@@ -253,7 +257,7 @@ Please contact Adaptable Tools Sales Team at sales@adaptabletools.com for more i
 
 ## Demo
 
-To see Adaptable.JS in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
+To see AdapTable in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
