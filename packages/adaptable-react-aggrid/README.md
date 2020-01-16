@@ -1,6 +1,6 @@
 # Adaptable React ag-Grid
 
-Repository for AdapTable React ag-Grid Wrapper (adaptable-react-aggrid)
+Repository for the AdapTable React ag-Grid Wrapper (adaptable-react-aggrid)
 
 The React Wrapper allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
 
@@ -60,9 +60,9 @@ AdapTable now includes plugins to reduce the download size of the 'core' project
 
 There are currently two plugins:
 
-- Charting: Courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
+- Charting: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
 
-- Financial: Adds additional functionality of benefit only to advanced financial users.
+- Financial: adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
@@ -213,8 +213,6 @@ An AdapTable licence includes regular updates and full support.
 If you wish to evaluate AdapTable before purchase, please contact us requesting a Trial Licence.
 
 Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
-
-Note: AdapTable licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
  
