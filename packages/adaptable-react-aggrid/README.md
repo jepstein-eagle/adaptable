@@ -121,9 +121,9 @@ export default () => <AdaptableReactAgGrid
 ```
 
 
-### Props
+## React Props
 
-#### Mandatory:
+### Mandatory:
 
 - **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
@@ -135,7 +135,7 @@ See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adapt
 note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
 
 
-#### Optional:
+### Optional:
 
 - **onAdaptableReady: (adaptableApi: AdaptableApi)** An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
@@ -148,7 +148,7 @@ See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_a
 
 AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
 
-In order for AdapTable to look right, you **always** have to import the index.css file which contains the structural styles and, also, the (default) Light theme:
+In order for AdapTable to look right, you **always** have to import the `index.css` file which contains the structural styles and, also, the (default) Light theme:
 
 ```tsx
 import "@adaptabletools/adaptable-react-aggrid/index.css"
@@ -160,8 +160,6 @@ If you want to use the Dark theme, you will need, also, to import:
 import "@adaptabletools/adaptable-react-aggrid/index.css" // always needed
 import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
 ```
-
-You can also write your own custom theme for AdapTable.  
 
 To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
 
