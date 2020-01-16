@@ -180,7 +180,11 @@ export default () => <AdaptableReactAgGrid
 
 ```
 
-## Styling
+## Styling and Theming
+
+Styling - need just 2 paragraphs
+
+Then we will link to [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
 
 In order for AdapTable to look right, you have to import the index.css file
 
