@@ -163,6 +163,10 @@ import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
 
 To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
 
+## Github Example Project
+
+For a standalone working example app, see [React Demo](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
+
 
 ## Basic Example
 
@@ -199,8 +203,6 @@ export default () => <AdaptableReactAgGrid
 />
 
 ```
-
-
 
 ## Licences
 AdapTable is a commercial product and requires a purchased licence for use.
