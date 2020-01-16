@@ -60,6 +60,8 @@ for the Angular wrapper, use
 
 ```npm i @adaptabletools/adaptable-angular-aggrid```
 
+## Styling and Theming
+
 AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
 
 In order for AdapTable to look right, you **always** have to import the `index.css` file which contains the structural styles and, also, the (default) Light theme:
