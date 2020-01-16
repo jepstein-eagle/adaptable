@@ -4,8 +4,32 @@
 
 A theme is basically a collection of css variables that AdapTable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
+System Themes
+to go here - light and dark
+Note
+The default Theme for AdapTable is Light Theme.
+
+If you wish to use the Dark Theme, specify 'dark' as the Current Theme in the Theme section of Predefined Config. Make sure, if using ag-Grid, that you also import the associated vendor theme.
+AdapTable allows you to choose from one of two shipped themes (Light Theme and Dark Theme), or to create your own themes.
+
+You do not need to provide a VendorGridClassName when using either of the System Themes as this is done for you, using the following defaults:
+
+ag-Grid -  Light Theme: balham,   Dark Theme: balham-dark
+
+Hypergrid - a Light Theme (blue and white alternating rows) and a Dark Theme (black and grey alternating rows) provided by us.
+
+In order to ensure that the vendor grid will update in line with the System Theme, make sure that the useDefaultVendorGridThemes property is set to true in Adaptable Options.
+
+
+The default system theme is Light Theme so, at startup, your underlying vendor grid will automatically pick up the light theme associated with it (if useDefaultVendorGridThemes is set to true).  
+
+This means that you only need provide themes for AdapTable and / or the Vendor Grid if you are unhappy with the defaults that we provide.
+
+Link to Theme State
+
+
+
 When AdapTable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
-**The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
 
 ### Writing a theme
 
@@ -44,6 +68,9 @@ and you also need to make sure that the theme name is included in the UserThemes
 
 > **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
   
+  Note
+As well as providing a theme name, you provide a Description (the text that appears in the Theme dropdown) and, optionally, which Vendor Grid theme should be applied when the Theme is selected.
+
 There are a number of css variables that are available for customizing a theme - see below (it's the contents of the dark theme)
 
 ```css
