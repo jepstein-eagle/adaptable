@@ -1,6 +1,4 @@
-# AdapTable Theming Guide
-
-blah blah
+# AdapTable Theming and Styling Guide
 
 
 
