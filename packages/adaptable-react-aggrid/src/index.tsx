@@ -146,7 +146,6 @@ const AdaptableReact = ({
   tagName,
   agGridTheme,
   render,
-
   onAdaptableReady,
   ...props
 }: {

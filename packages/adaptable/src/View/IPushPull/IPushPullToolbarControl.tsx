@@ -134,12 +134,12 @@ class IPushPullToolbarControlComponent extends React.Component<
       this.state.Page == this.props.CurrentLiveIPushPullReport.Page;
 
     let content = this.props.IsIPushPullRunning ? (
-      <Flex alignItems="stretch" className="ab-DashboardToolbar__Export__wrap">
+      <Flex alignItems="stretch" className="ab-DashboardToolbar__IPushPull__wrap">
         <Dropdown
           disabled={allReports.length == 0 || isLiveIPushPullReport}
           style={{ minWidth: 140 }}
           options={availableReports}
-          className="ab-DashboardToolbar__Export__select"
+          className="ab-DashboardToolbar__IPushPull__select"
           placeholder="Select Report"
           onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
           value={this.state.ReportName} // do props and update after we change????
@@ -150,7 +150,7 @@ class IPushPullToolbarControlComponent extends React.Component<
           disabled={allReports.length == 0 || isLiveIPushPullReport}
           style={{ minWidth: 140 }}
           options={availableFolders}
-          className="ab-DashboardToolbar__Export__select"
+          className="ab-DashboardToolbar__IPushPull__select"
           onChange={(folder: string) => this.onFolderChanged(folder)}
           value={this.state.Folder}
           placeholder="Select Folder"
@@ -160,7 +160,7 @@ class IPushPullToolbarControlComponent extends React.Component<
           disabled={allReports.length == 0 || isLiveIPushPullReport}
           style={{ minWidth: 140 }}
           options={this.state.AvailablePages}
-          className="ab-DashboardToolbar__Export__select"
+          className="ab-DashboardToolbar__IPushPull__select"
           placeholder="Select Page"
           onChange={(page: string) => this.onPageChanged(page)}
           value={this.state.Page ? this.state.Page : null}
@@ -169,7 +169,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         ></Dropdown>
         <ButtonExport
           marginLeft={1}
-          className="ab-DashboardToolbar__ColumnFilter__clear"
+          className="ab-DashboardToolbar__IPushPull__export"
           onClick={() => this.onIPushPullSendSnapshot()}
           tooltip="Send Snapshot to iPushPull"
           disabled={isLiveIPushPullReport || !isCompletedReport}
@@ -178,7 +178,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         {isLiveIPushPullReport ? (
           <ButtonPause
             marginLeft={1}
-            className="ab-DashboardToolbar__ColumnFilter__clear"
+            className="ab-DashboardToolbar__IPushPull__pause"
             onClick={() => this.props.onIPushPullStopLiveData()}
             tooltip="Stop sync with iPushPull"
             disabled={!isLiveIPushPullReport}
@@ -187,7 +187,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         ) : (
           <ButtonPlay
             marginLeft={1}
-            className="ab-DashboardToolbar__ColumnFilter__clear"
+            className="ab-DashboardToolbar__IPushPull__play"
             onClick={() => this.onIPushPullStartLiveData()}
             tooltip="Start Sync with iPushPull"
             disabled={isLiveIPushPullReport || !isCompletedReport}
@@ -200,13 +200,13 @@ class IPushPullToolbarControlComponent extends React.Component<
               this.props.AccessLevel == AccessLevel.ReadOnly
                 ? GeneralConstants.READ_ONLY_STYLE
                 : '',
-              'ab-DashboardToolbar__Export__controls'
+              'ab-DashboardToolbar__IPushPull__controls'
             )}
             alignItems="stretch"
           >
             <ButtonSchedule
               marginLeft={1}
-              className="ab-DashboardToolbar__ColumnFilter__clear"
+              className="ab-DashboardToolbar__IPushPull__schedule"
               onClick={() => this.onNewIPushPullSchedule()}
               tooltip="Schedule"
               disabled={isLiveIPushPullReport || !isCompletedReport}
@@ -216,7 +216,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         )}{' '}
         <ButtonNewPage
           marginLeft={1}
-          className="ab-DashboardToolbar__ColumnFilter__clear"
+          className="ab-DashboardToolbar__IPushPull__newpage"
           onClick={() => this.props.onShowAddIPushPullPage()}
           tooltip="New Page"
           disabled={isLiveIPushPullReport}
@@ -224,7 +224,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         />
         <ButtonLogout
           marginLeft={1}
-          className="ab-DashboardToolbar__ColumnFilter__clear"
+          className="ab-DashboardToolbar__IPushPull__logout"
           onClick={() => this.props.Adaptable.api.iPushPullApi.logoutFromIPushPull()}
           tooltip="Logout"
           disabled={isLiveIPushPullReport}
@@ -234,7 +234,7 @@ class IPushPullToolbarControlComponent extends React.Component<
     ) : (
       <ButtonLogin
         marginLeft={1}
-        className="ab-DashboardToolbar__ColumnFilter__clear"
+        className="ab-DashboardToolbar__IPushPull__login"
         onClick={() => this.props.onShowIPushPullLogin()}
         tooltip="Send to iPushPull"
         AccessLevel={this.props.AccessLevel}
@@ -246,7 +246,7 @@ class IPushPullToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        className="ab-DashboardToolbar__Export"
+        className="ab-DashboardToolbar__IPushPull"
         headerText={StrategyConstants.IPushPullStrategyFriendlyName}
         glyphicon={StrategyConstants.IPushPullGlyph}
         onClose={() => this.props.onClose(StrategyConstants.IPushPullStrategyId)}
