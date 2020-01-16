@@ -55,7 +55,7 @@ it should display the username you received from use as the current login on the
 **note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/react* packages**
 
 
-### Plugins
+## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to choose only the functionality you want.  
 
 There are currently two plugins:
@@ -87,7 +87,7 @@ const adaptableOptions: AdaptableOptions = {
 
 ```
 
-### agGrid Enterprise Modules
+## agGrid Enterprise Modules
 AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
 
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
