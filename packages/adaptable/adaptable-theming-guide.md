@@ -73,6 +73,10 @@ As well as providing a theme name, you provide a Description (the text that appe
 
 There are a number of css variables that are available for customizing a theme - see below (it's the contents of the dark theme)
 
+AdapTable uses CSS Variables in order to allow you to build your own custom themes.
+
+For easy identification purposes every CSS Variable starts with either '--ab-' or '--ab__'
+
 ```css
 /** 
  * This is the whole source for the dark theme - it's all there is to it!
@@ -128,7 +132,10 @@ html.ab--theme-my-theme {
   --ab-font-size-1: 0.625rem; /* 10px for 1rem=16px */
   --ab-font-size-2: 0.75rem; /* 12px for 1rem=16px */
   --ab-font-size-3: 0.875rem; /* 14px for 1rem=16px */
-  --ab-font-size-4: 1rem; 
+  --ab-font-size-4: 1rem;  /* 16px for 1rem=16px */
+  --ab-font-size-5: 1.25rem;  /* 20px for 1rem=16px */
+  --ab-font-size-6: 1.5rem;  /* 24px for 1rem=16px */
+  --ab-font-size-7: 2.25rem;  /* 36px for 1rem=16px */
 
   /* use this to specify the font family you want for Adaptable*/
   --ab__font-family: inherit;
