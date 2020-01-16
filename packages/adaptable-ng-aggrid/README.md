@@ -50,7 +50,6 @@ it should display the username you received from use as the current login on the
     "mathjs": "^5.1.1",
     "@angular/common": ">=7.0.0",
     "@angular/core": ">=7.0.0",
-   
 }
 ```
 **note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages**
@@ -61,12 +60,12 @@ AdapTable now includes plugins to reduce the download size of the 'core' project
 
 There are currently two plugins:
 
-- Charting: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
+- **Charting**: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
 
-- Financial: adds additional functionality of benefit only to advanced financial users.
+- **Financial**: adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
-To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
+To add a plugin you need to follow these 3 steps (using the `charts` plugin as an example):
 
 1. Install the plugin as a separate package:
 
@@ -113,7 +112,6 @@ import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 3. Add them to the **modules** prop of the Adaptable Angular Component:
 
 ```
-
 @Component({
   selector: 'adaptable-root',
   template: `
@@ -135,44 +133,7 @@ export class AppComponent {
 
 ```
 
-
-## Usage
-
-In your app module, import AdaptableAngularAgGridModule module
-
-```
-import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-aggrid';
-```
-
-After that, you can use Adaptablecomponent in your app
-
-```html
-<adaptable-angular-aggrid
-  style="height: 100vh"
-  [adaptableOptions]="..."
-  [gridOptions]="..."
-  [onAdaptableReady]="..."
->
-</adaptable-angular-aggrid>
-```
-
-
-
 ## Inputs
-
-#### Mandatory:
-
-- gridOptions: ag-Grid GridOptions object
-- adaptableOptions: AdaptableOptions object
-
-#### Optional
-
-- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptable Api object
-
-
-
-
-## Angular Props
 
 ### Mandatory:
 
@@ -191,9 +152,30 @@ note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has bee
 - **onAdaptableReady: (adaptableApi: AdaptableApi)** An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
 
-- **render|children: ({ grid, adaptable}) => ReactNode**  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
-
 - **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
+
+
+## Usage
+
+In your app module, import AdaptableAngularAgGridModule module
+
+```
+import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-aggrid';
+```
+
+After that, you can use the ecomponent in your app
+
+```html
+<adaptable-angular-aggrid
+  style="height: 100vh"
+  [adaptableOptions]="..."
+  [gridOptions]="..."
+  [onAdaptableReady]="..."
+  [modules]="..."
+>
+</adaptable-angular-aggrid>
+```
+
 
 ## Styling and Theming
 
@@ -220,41 +202,6 @@ For a standalone working example app of the Angular Wrapper, see the [Angular De
 
 To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
-## Basic Example
-
-```jsx
-
-import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
-
-import '@adaptabletools/adaptable-react-aggrid/index.css'; // this also includes the light theme
-import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
-
-import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
-
-// import any AdapTable plugins you require
-import charts from '@adaptable/adaptable-plugins-charts'
-
-// import any ag-grid enterprise modules you want to use
-import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-import { MenuModule } from '@ag-grid-enterprise/menu';
-
-const adaptableOptions: AdaptableOptions = {
-  primaryKey: 'tradeId',
-  userName: 'demo user',
-  adaptableId: 'react demo',
-  plugins: [charts()] // adaptable plugins
-};
-
-export default () => <AdaptableReactAgGrid
-  style={{ height: '100vh' }}
-  modules={[MenuModule, RangeSelectionModule]} // ag-grid modules 
-  gridOptions={ ... }
-  adaptableOptions={adaptableOptions}
-  onAdaptableReady={(adaptableApi) => { ... }}
-/>
-
-```
 
 ## Licences
 AdapTable is a commercial product and requires a purchased licence for use.
