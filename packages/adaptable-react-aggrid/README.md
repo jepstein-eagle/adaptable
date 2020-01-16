@@ -58,7 +58,7 @@ it should display the username you received from use as the current login on the
 
 7. Optionally install any AdapTable plugins relevant to any additional functionality you require   
 
-So if you want to use charting you would add:
+So, for example, if you want to use charting you would add:
 
 ```npm i @adaptabletools/adaptable-plugin-charts```
 
@@ -70,17 +70,24 @@ So, for example, if you wanted to include the 'all-modules' module (which, as th
 
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
+### Plugins
+to do...
+
+### Plugins
+to do...
+
+
 ### Props
 
 #### Mandatory:
 
 - **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
-**note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide through the Modules prop**
+note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide through the Modules prop
 
 - **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
 
-**note: Do not need set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *AdaptableOptions* prop.
+note: Do not need set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *AdaptableOptions* prop.
 
 
 #### Optional
@@ -89,9 +96,7 @@ So, for example, if you wanted to include the 'all-modules' module (which, as th
 
 - **render|children: ({ grid, adaptable}) => ReactNode**  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
 
-- **modules** G
-
-- **plugins** G
+- **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
 
 ## Basic Example
 
