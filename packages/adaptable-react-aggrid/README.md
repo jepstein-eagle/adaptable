@@ -14,9 +14,9 @@ For more information please see the [Version 6 Upgrade Guide](../../packages/ada
 
 The React wrapper of AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
 
-1. get a commercial license - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), so we'll provide you with a username.
+1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), who will provide you with your unique credentials.
 
-2. point your npm client to the correct registry for packages under the `@adaptabletools` scope
+2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
 
 ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
 
@@ -25,24 +25,33 @@ if you're using yarn
 ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 
-3. login with your username for the `@adaptabletools` scope, on the private registry
+3. Login with your username for the `@adaptabletools` scope, on the private registry
 
 ```npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools```
 
-4. check you are logged-in correctly via
+4. Check you are logged-in correctly via
 
 ```npm whoami --registry=https://registry.adaptabletools.com```
 
 it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
 
-5. install the React wrapper of Adaptable
+5. Install the React wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptable-react-aggrid```
 
 **note: you do not need to install the core AdapTable package also**
 
-6. install the Peer Dependencies (if not already present)
+6. Make sure that all the Peer Dependencies are installed. These are currently:
 
+```
+"peerDependencies": {
+    "@ag-grid-community/all-modules": "^22.1.1",
+    "@ag-grid-community/react": "^22.1.1",
+    "mathjs": "^5.1.1",
+    "react": "=>16.8.6",
+    "react-dom": ">=16.8.6",
+}
+```
 
 ## Usage
 
