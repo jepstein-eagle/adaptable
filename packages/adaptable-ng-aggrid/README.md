@@ -43,13 +43,13 @@ npm whoami --registry=https://registry.adaptabletools.com
 
 This should display the username you received from use as the current login on the private registry
 
-> this does not affect your username/login session on the public npm registry**
+> this does not affect your username/login session on the public npm registry
 
 6. Install the Angular wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptable-angular-aggrid```
 
-> you do not need to install the core AdapTable package also**
+> you do not need to install the core AdapTable package also
 
 7. Make sure that all the Peer Dependencies are installed. These are currently:
 
@@ -62,7 +62,7 @@ This should display the username you received from use as the current login on t
     "@angular/core": ">=7.0.0",
 }
 ```
-> you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages**
+> you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages
 
 
 ## Plugins
