@@ -31,7 +31,7 @@ if you're using yarn
 npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
 ```
 
-3. Enter your credentials that was provided to you by the AdapTable support team:
+4. Enter your credentials that was provided to you by the AdapTable support team:
 
   * login name
   * email
@@ -47,13 +47,13 @@ This should display the username you received from use as the current login on t
 
 **note: this does not affect your username/login session on the public npm registry**
 
-5. Install the Angular wrapper of Adaptable
+6. Install the Angular wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptable-angular-aggrid```
 
 **note: you do not need to install the core AdapTable package also**
 
-6. Make sure that all the Peer Dependencies are installed. These are currently:
+7. Make sure that all the Peer Dependencies are installed. These are currently:
 
 ```
 "peerDependencies": {
@@ -72,9 +72,9 @@ AdapTable now includes plugins to reduce the download size of the 'core' project
 
 There are currently two plugins:
 
-- **Charting**: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
+- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
-- **Financial**: adds additional functionality of benefit only to advanced financial users.
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
 To add a plugin you need to follow these 3 steps (using the `charts` plugin as an example):
