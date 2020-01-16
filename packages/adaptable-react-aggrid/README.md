@@ -146,17 +146,13 @@ See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_a
 
 ## Styling and Theming
 
-AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes.
+AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
 
-AdapTable uses css variables - blah.
-
-In order for AdapTable to look right, you **always** have to import the index.css file:
+In order for AdapTable to look right, you **always** have to import the index.css file which contains the structural styles and, also, the (default) Light theme:
 
 ```tsx
 import "@adaptabletools/adaptable-react-aggrid/index.css"
 ```
-
-This contains the structural styles and, also, the (default) Light theme.
 
 If you want to use the Dark theme, you will need, also, to import:
 
@@ -167,7 +163,7 @@ import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
 
 You can also write your own custom theme for AdapTable.  
 
-To find out more about this - and styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
+To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
 
 
 ## Basic Example
