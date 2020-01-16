@@ -88,7 +88,7 @@ const adaptableOptions: AdaptableOptions = {
 ```
 
 ### agGrid Enterprise Modules
-AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  AdapTable fully supports this new way of working.
+AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
 
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
@@ -156,33 +156,27 @@ import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 
-// also import adaptable charts if you want to have access to charting functionality
+// import any AdapTable plugins you require
 import charts from '@adaptable/adaptable-plugins-charts'
 
-// also add any ag-grid enterprise modules you neeed for additional ag-Grid functionality
+// import any ag-grid enterprise modules you want to use
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { MenuModule } from '@ag-grid-enterprise/menu';
-import { SideBarModule } from '@ag-grid-enterprise/side-bar';
 
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
   adaptableId: 'react demo',
-
-  // adaptable plugins come here
-  plugins: [charts()]
+  plugins: [charts()] // adaptable plugins
 };
 
 export default () => <AdaptableReactAgGrid
   style={{ height: '100vh' }}
-  // ag-grid modules come here
-  modules={[SideBarModule, MenuModule, RangeSelectionModule]}
+  modules={[MenuModule, RangeSelectionModule]} // ag-grid modules 
   gridOptions={ ... }
-  plugins={plugins}
   adaptableOptions={adaptableOptions}
   onAdaptableReady={(adaptableApi) => { ... }}
 />
-
 
 ```
 
@@ -351,8 +345,6 @@ However, you might want to style icons differently - in this case, you can custo
   background-size: cover;
 }
 ```
-
-
 
 ## Licences
 AdapTable is a commercial product and requires a purchased licence for use.
