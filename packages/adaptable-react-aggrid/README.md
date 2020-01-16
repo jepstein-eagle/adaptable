@@ -67,11 +67,12 @@ There are currently two plugins:
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using charting as an example):
 
-1. Install the plug as a separate package:
+1. Install the plugin as a separate package:
 
 ```npm i @adaptabletools/adaptable-plugin-charts```
 
 2. Import it into your code:
+
 ```import charts from '@adaptable/adaptable-plugins-charts'```
 
 3. Add it to the `plugins` property of *AdaptableOptions*:
@@ -126,16 +127,18 @@ export default () => <AdaptableReactAgGrid
 
 - **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
-note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide through the Modules prop
+note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop
 
-- **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
+- **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
+See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
 
-note: Do not need set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *AdaptableOptions* prop.
+note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
 
 
-#### Optional
+#### Optional:
 
-- **onAdaptableReady: (adaptableApi: AdaptableApi)** Gives you access to the *AdaptableApi* object which contains hundreds of methods giving you full, safe, runtime access to all the functionality in AdapTable.  See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
+- **onAdaptableReady: (adaptableApi: AdaptableApi)** An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
 
 - **render|children: ({ grid, adaptable}) => ReactNode**  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
 
