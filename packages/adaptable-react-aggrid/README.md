@@ -8,8 +8,6 @@ The React Wrapper allows you to install, instantiate and reference AdapTable usi
 
 Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-It uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  AdapTable fully supports this new way of working. 
-
 For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
 
 ## Installation
@@ -57,14 +55,6 @@ it should display the username you received from use as the current login on the
 **note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/react* packages**
 
 
-8. Optionally install any ag-Grid Enterprise modules that you want
-
-So, for example, if you wanted to include the 'all-modules' module (which, as the name implies, includes everything they offer), then you would add:
-
-```@ag-grid-enterprise/all-modules": "^22.1.1```
-
-**If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
-
 ### Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to choose only the functionality you want.  
 
@@ -85,6 +75,7 @@ To add a plugin you need to do the following 3 steps (using charting as an examp
 ```import charts from '@adaptable/adaptable-plugins-charts'```
 
 3. Add it to the `plugins` property of *AdaptableOptions*:
+
 ```
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
@@ -95,8 +86,38 @@ const adaptableOptions: AdaptableOptions = {
 
 ```
 
-### Plugins
-to do...
+### agGrid Enterprise Modules
+AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  AdapTable fully supports this new way of working.
+
+**If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
+
+#### Enterprise Modules Example
+To add an ag-Grid Enterprise you need to do the following 3 steps (using Menus and RangeSelection as an example):
+
+1. Install the modules in npm:
+
+```
+npm i @ag-grid-enterprise/menu
+npm i @ag-grid-enterprise/range-selection
+```
+
+2. Import them into your code:
+
+```
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+```
+
+3. Add them to the **modules** prop of the AdaptableReact Component:
+
+```
+export default () => <AdaptableReactAgGrid
+  ....
+  modules={[SideBarModule, MenuModule, RangeSelectionModule]}
+ ....
+/>
+
+```
 
 
 ### Props
