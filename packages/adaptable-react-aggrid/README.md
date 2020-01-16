@@ -1,10 +1,10 @@
 # Adaptable React ag-Grid
 
-Repository for AdapTable React ag-Grid Wrapper ((adaptable-react-aggrid)
+Repository for AdapTable React ag-Grid Wrapper (adaptable-react-aggrid)
 
 The React Wrapper allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
 
-## Upgrade guide
+## Upgrade Guide
 
 Version 6 of AdapTable has introduced many new functionality and upgrades and also some new ways of interacting with the product.  
 
@@ -39,7 +39,9 @@ it should display the username you received from use as the current login on the
 
 ```npm i @adaptabletools/adaptable-react-aggrid```
 
+**note: you do not need to install the core AdapTable package also**
 
+6. install the Peer Dependencies (if not already present)
 
 
 ## Usage
@@ -284,10 +286,12 @@ To see AdapTable in action visit https://demo.adaptableblotter.com where you can
 
 ## Help
 
-Further information about Adaptable is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+Further information about AdapTable is available at www.adaptabletools.com. 
 
-Developers can see how to access Adaptable programmatically at https://api.adaptableblotter.com
+And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
-For all enquiries please email[`support@adaptabletools.com`](mailto:support@adaptabletools.com).
+Developers can learn how to access AdapTable programmatically at https://api.adaptableblotter.com
+
+For all enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
 
 [![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)
