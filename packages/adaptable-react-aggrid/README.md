@@ -182,7 +182,7 @@ export default () => <AdaptableReactAgGrid
 
 ## Styling
 
-In order for Adaptable to look right, you have to import the index.css file
+In order for AdapTable to look right, you have to import the index.css file
 
 ```tsx
 import "@adaptabletools/adaptable-react-aggrid/index.css"
@@ -203,11 +203,11 @@ import "@adaptabletools/adaptable-react-aggrid/index.css"
 import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
 ```
 
-This makes both the `light` and the `dark` themes available. You can also write your own custom theme for Adaptable - see the section below for this.
+This makes both the `light` and the `dark` themes available. You can also write your own custom theme for AdapTable - see the section below for this.
 
-A theme is basically a collection of css variables that Adaptable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
+A theme is basically a collection of css variables that AdapTable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
 
-When Adaptable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
+When AdapTable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
 **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
 
 ### Writing a theme
@@ -365,11 +365,9 @@ To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.c
 
 ## Help
 
-Further information about AdapTable is available at www.adaptabletools.com. 
+Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 
-And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
-
-Developers can learn how to access AdapTable programmatically at https://api.adaptableblotter.com
+Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
 
 For all enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
 
