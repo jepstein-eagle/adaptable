@@ -62,8 +62,26 @@ So, for example, if you wanted to include the 'all-modules' module (which, as th
 
 ```@ag-grid-enterprise/all-modules": "^22.1.1```
 
+**If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
-## Usage
+### Props
+
+#### Mandatory:
+
+- **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+
+**note: Unlike in the 'vanilla' version, you do not need to set the Modules property of GridOptions as you will provide through the Modules prop**
+
+- **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
+
+
+
+#### Optional
+
+- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptableapi object
+- render|children: ({ grid, adaptable}) => ReactNode - can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
+
+## Basic Example
 
 ```jsx
 
@@ -104,19 +122,6 @@ export default () => <AdaptableReactAgGrid
 
 
 ```
-
-### Props
-
-#### Mandatory:
-
-- gridOptions: ag-Grid GridOptions object
-- adaptableOptions: AdaptableOptions object
-
-#### Optional
-
-- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptableapi object
-- render|children: ({ grid, adaptable}) => ReactNode - can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
-
 
 ## Styling
 
@@ -301,7 +306,7 @@ Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for
  
 ## Demo
 
-To see AdapTable in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
+To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
