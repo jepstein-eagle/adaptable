@@ -145,21 +145,29 @@ export class AppComponent {
 
 ## Angular Attributes
 
-### Mandatory:
+### Mandatory
 
-- **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+- **gridOptions**
 
-note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop
+The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
-- **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
+> Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop
+
+- **adaptableOptions**
+
+The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
 
 > Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
 
 
-### Optional:
+### Optional
 
-- **onAdaptableReady: (adaptableApi: AdaptableApi)** An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+- **onAdaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)** 
+
+An Adaptable event giving you access to the *AdaptableApi* object.  
+The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+Also gives access to the underlying ag-Grid instance object. 
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
 
 - **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
