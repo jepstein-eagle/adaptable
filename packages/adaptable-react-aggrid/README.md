@@ -8,6 +8,8 @@ The React Wrapper allows you to install, instantiate and reference AdapTable usi
 
 Version 6 of AdapTable has introduced many new functionality and upgrades and also some new ways of interacting with the product.  
 
+Version 6 of AdapTable depends on ag-Grid v.22.  This included a big change to using [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  AdapTable fully supports this new way of working. 
+
 For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
 
 ## Installation
@@ -52,6 +54,9 @@ it should display the username you received from use as the current login on the
     "react-dom": ">=16.8.6",
 }
 ```
+**note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/react* **
+
+7. Optionally add any ag-Grid Enterprise modules 
 
 ## Usage
 
