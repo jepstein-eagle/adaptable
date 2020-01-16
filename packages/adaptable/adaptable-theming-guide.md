@@ -63,14 +63,11 @@ There are a huge number of css variables that are available.
 
 For easy identification purposes every CSS Variable starts with either '--ab-' or '--ab__'
 
-This example shows the contents of the dark theme)
+This example shows the contents of the dark theme.
 
 ## Example Theme
 
 ```css
-/** 
- * This is the whole source for the dark theme - it's all there is to it!
- */ 
 html.ab--theme-dark {
   /* this is here so we detect when the dark theme has been correctly loaded */
   --ab-theme-loaded: dark;
@@ -135,7 +132,9 @@ html.ab--theme-my-theme {
 }
 ```
 
-That's all the css you have to write for defining a theme - in fact, you can choose which of the above colors/variables to define - you don't have to define them all. Start incrementally, and work your way up as you need - use the dark theme as an example.
+That's all the css you have to write for defining a theme - in fact, you can choose which of the above colors/variables to define - you don't have to define them all. 
+
+Start incrementally, and work your way up as you need - use the dark theme as an example.
 
 
 ### Using with SASS
