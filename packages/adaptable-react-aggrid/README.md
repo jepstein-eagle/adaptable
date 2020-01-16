@@ -4,6 +4,12 @@ Repository for AdapTable React ag-Grid Wrapper.
 
 This allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
 
+## Upgrade guide
+
+Version 6 of AdapTable has introduced many new functionality and upgrades and also some new ways of interacting with the product.  
+
+For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
+
 ## Installation
 
 The React wrapper of AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
