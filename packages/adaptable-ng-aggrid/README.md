@@ -43,13 +43,13 @@ npm whoami --registry=https://registry.adaptabletools.com
 
 This should display the username you received from use as the current login on the private registry
 
-> ** this does not affect your username/login session on the public npm registry**
+> this does not affect your username/login session on the public npm registry**
 
 6. Install the Angular wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptable-angular-aggrid```
 
-> ** you do not need to install the core AdapTable package also**
+> you do not need to install the core AdapTable package also**
 
 7. Make sure that all the Peer Dependencies are installed. These are currently:
 
@@ -62,7 +62,7 @@ This should display the username you received from use as the current login on t
     "@angular/core": ">=7.0.0",
 }
 ```
-> ** you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages**
+> you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages**
 
 
 ## Plugins
@@ -154,7 +154,7 @@ note: Unlike in the 'vanilla' version, you do not need to set the `modules` prop
 - **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
 
-> ** Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
+> Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
 
 
 ### Optional:
@@ -186,12 +186,11 @@ After that, you can use the ecomponent in your app
 </adaptable-angular-aggrid>
 ```
 
-
 ## Styling and Theming
 
 AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (by using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
 
-> ** You **always** have to import the `index.css` file.  This contains the structural styles AdapTable requires and, also, the (default) Light theme:
+> You **always** have to import the `index.css` file.  This contains the structural styles AdapTable requires and, also, the (default) Light theme:
 
 ```tsx
 import "@adaptabletools/adaptable-angular-aggrid/index.css"
@@ -214,6 +213,7 @@ To see AdapTable, more generally, in action visit our [Demo Site](https://demo.a
 
 
 ## Licences
+
 AdapTable is a commercial product and requires a purchased licence for use.
 
 An AdapTable licence includes regular updates and full support.
