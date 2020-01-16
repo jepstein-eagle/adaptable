@@ -25,23 +25,35 @@ if you're using yarn
 ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 
-3. Login with your username for the `@adaptabletools` scope, on the private registry
+3. Login to the Adaptable private registry:
 
-```npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools```
+```sh
+npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+```
 
-4. Check you are logged-in correctly via
+4. Enter your credentials that was provided to you by the AdapTable support team:
 
-```npm whoami --registry=https://registry.adaptabletools.com```
+  * login name
+  * email
+  * password
+  
+5. Check you are logged-in correctly by using whoami:
 
-it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
+```
+npm whoami --registry=https://registry.adaptabletools.com
+```
 
-5. Install the React wrapper of Adaptable
+This should display the username you received from use as the current login on the private registry
+
+**note: this does not affect your username/login session on the public npm registry**
+
+6. Install the React wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptable-react-aggrid```
 
 **note: you do not need to install the core AdapTable package also**
 
-6. Make sure that all the Peer Dependencies are installed. These are currently:
+7. Make sure that all the Peer Dependencies are installed. These are currently:
 
 ```
 "peerDependencies": {
@@ -59,9 +71,9 @@ AdapTable now includes plugins to reduce the download size of the 'core' project
 
 There are currently two plugins:
 
-- **Charting**: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
+- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
-- **Financial**: adds additional functionality of benefit only to advanced financial users.
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
