@@ -1,6 +1,6 @@
-# Adaptable React ag-Grid
+# adaptable-react-aggrid
 
-Repository for the AdapTable React ag-Grid Wrapper (adaptable-react-aggrid)
+Repository for the **AdapTable React ag-Grid Wrapper** (adaptable-react-aggrid)
 
 The React Wrapper allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
 
