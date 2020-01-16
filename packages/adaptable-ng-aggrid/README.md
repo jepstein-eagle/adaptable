@@ -25,11 +25,19 @@ if you're using yarn
 ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 
-3. Login with your username for the `@adaptabletools` scope, on the private registry
+3. Login to the Adaptable private registry:
 
-```npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools```
+```sh
+npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+```
 
-4. Check you are logged-in correctly via
+4. Enter your credentions:
+
+  * your login name - use the login that was provided to you by the support team.
+  * your email - use the address that you were given by the support team.
+  * your password - use the unique alpanumeric password that you were given by the support team.
+  
+5. Check you are logged-in correctly via
 
 ```npm whoami --registry=https://registry.adaptabletools.com```
 
