@@ -1,8 +1,8 @@
 # Adaptable React ag-Grid
 
-Repository for AdapTable React ag-Grid Wrapper.
+Repository for AdapTable React ag-Grid Wrapper ((adaptable-react-aggrid)
 
-This allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
+The React Wrapper allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
 
 ## Upgrade guide
 
@@ -38,6 +38,63 @@ it should display the username you received from use as the current login on the
 5. install the React wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptable-react-aggrid```
+
+
+
+
+## Usage
+
+```jsx
+
+import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
+
+import '@adaptabletools/adaptable-react-aggrid/index.css'; // this also includes the light theme
+import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
+
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+
+// also import adaptable charts if you want to have access to charting functionality
+import charts from '@adaptable/adaptable-plugins-charts'
+
+// also add any ag-grid enterprise modules you neeed for additional ag-Grid functionality
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { SideBarModule } from '@ag-grid-enterprise/side-bar';
+
+const adaptableOptions: AdaptableOptions = {
+  primaryKey: 'tradeId',
+  userName: 'demo user',
+  adaptableId: 'react demo',
+
+  // adaptable plugins come here
+  plugins: [charts()]
+};
+
+export default () => <AdaptableReactAgGrid
+  style={{ height: '100vh' }}
+  // ag-grid modules come here
+  modules={[SideBarModule, MenuModule, RangeSelectionModule]}
+  gridOptions={ ... }
+  plugins={plugins}
+  adaptableOptions={adaptableOptions}
+  onAdaptableReady={(adaptableApi) => { ... }}
+/>
+
+
+```
+
+### Props
+
+#### Mandatory:
+
+- gridOptions: ag-Grid GridOptions object
+- adaptableOptions: AdaptableOptions object
+
+#### Optional
+
+- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptableapi object
+- render|children: ({ grid, adaptable}) => ReactNode - can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
 
 
 ## Styling
@@ -206,60 +263,6 @@ However, you might want to style icons differently - in this case, you can custo
 }
 ```
 
-
-## Usage
-
-```jsx
-
-import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
-
-import '@adaptabletools/adaptable-react-aggrid/index.css'; // this also includes the light theme
-import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
-
-import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
-
-// also import adaptable charts if you want to have access to charting functionality
-import charts from '@adaptable/adaptable-plugins-charts'
-
-// also add any ag-grid enterprise modules you neeed for additional ag-Grid functionality
-import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-import { MenuModule } from '@ag-grid-enterprise/menu';
-import { SideBarModule } from '@ag-grid-enterprise/side-bar';
-
-const adaptableOptions: AdaptableOptions = {
-  primaryKey: 'tradeId',
-  userName: 'demo user',
-  adaptableId: 'react demo',
-
-  // adaptable plugins come here
-  plugins: [charts()]
-};
-
-export default () => <AdaptableReactAgGrid
-  style={{ height: '100vh' }}
-  // ag-grid modules come here
-  modules={[SideBarModule, MenuModule, RangeSelectionModule]}
-  gridOptions={ ... }
-  plugins={plugins}
-  adaptableOptions={adaptableOptions}
-  onAdaptableReady={(adaptableApi) => { ... }}
-/>
-
-
-```
-
-### Props
-
-#### Mandatory:
-
-- gridOptions: ag-Grid GridOptions object
-- adaptableOptions: AdaptableOptions object
-
-#### Optional
-
-- onAdaptableReady: (adaptableApi: AdaptableApi) - gives you access to Adaptableapi object
-- render|children: ({ grid, adaptable}) => ReactNode - can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
 
 
 ## Licences
