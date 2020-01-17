@@ -1,8 +1,6 @@
-# Adaptable React ag-Grid
+# adaptable-react-aggrid
 
-Repository for the AdapTable React ag-Grid Wrapper (adaptable-react-aggrid)
-
-The React Wrapper allows you to install, instantiate and reference AdapTable using ag-Grid in a "React-friendly" manner.
+Repository for the **AdapTable React ag-Grid Wrapper** which allows you to install, instantiate and reference AdapTable (using ag-Grid) in a "React-friendly" manner.
 
 ## Upgrade Guide
 
@@ -25,23 +23,35 @@ if you're using yarn
 ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 
-3. Login with your username for the `@adaptabletools` scope, on the private registry
+3. Login to the Adaptable private registry:
 
-```npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools```
+```sh
+npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+```
 
-4. Check you are logged-in correctly via
+4. Enter your credentials that was provided to you by the AdapTable support team:
 
-```npm whoami --registry=https://registry.adaptabletools.com```
+  * login name
+  * email
+  * password
+  
+5. Check you are logged-in correctly by using whoami:
 
-it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
+```
+npm whoami --registry=https://registry.adaptabletools.com
+```
 
-5. Install the React wrapper of Adaptable
+This should display the username you received from use as the current login on the private registry
+
+**note: this does not affect your username/login session on the public npm registry**
+
+6. Install the React wrapper of Adaptable
 
 ```npm i @adaptabletools/adaptable-react-aggrid```
 
 **note: you do not need to install the core AdapTable package also**
 
-6. Make sure that all the Peer Dependencies are installed. These are currently:
+7. Make sure that all the Peer Dependencies are installed. These are currently:
 
 ```
 "peerDependencies": {
@@ -54,15 +64,14 @@ it should display the username you received from use as the current login on the
 ```
 **note: you must install *@ag-grid-community/all-modules* and *@ag-grid-community/react* packages**
 
-
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
 There are currently two plugins:
 
-- Charting: courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.
+- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
-- Financial: adds additional functionality of benefit only to advanced financial users.
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
@@ -93,7 +102,7 @@ AdapTable uses ag-Grid v.22.  This included a big change by introducing [modular
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
 #### Enterprise Modules Example
-To add an ag-Grid Enterprise you need to do the following 3 steps (using Menus and RangeSelection as an example):
+To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelection as an example):
 
 1. Install the modules in npm:
 
@@ -125,11 +134,15 @@ export default () => <AdaptableReactAgGrid
 
 ### Mandatory:
 
-- **gridOptions**: The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+- **gridOptions**: 
 
-note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop
+The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
-- **adaptableOptions**: The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
+note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop of the component.
+
+- **adaptableOptions**: 
+
+The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
 
 note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
@@ -137,18 +150,25 @@ note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has bee
 
 ### Optional:
 
-- **onAdaptableReady: (adaptableApi: AdaptableApi)** An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+- **onAdaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)** 
+
+An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+Also gives access to the underlying ag-Grid instance object.
 See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
 
-- **render|children: ({ grid, adaptable}) => ReactNode**  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
+- **render|children: ({ grid, adaptable}) => ReactNode**  
 
-- **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
+Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
+
+- **modules** 
+
+Any ag-Grid Enterprise modules that you wish to include (see above)
 
 ## Styling and Theming
 
-AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
+AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (by using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
 
-In order for AdapTable to look right, you **always** have to import the `index.css` file which contains the structural styles and, also, the (default) Light theme:
+You **always** have to import the `index.css` file.  This contains the structural styles AdapTable requires and, also, the (default) Light theme:
 
 ```tsx
 import "@adaptabletools/adaptable-react-aggrid/index.css"

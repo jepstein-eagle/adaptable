@@ -1,15 +1,26 @@
 # AdapTable Theming and Styling Guide
 
+A theme is essentially a collection of css variables that AdapTable exposes, and you can customise. 
 
+You can have more css theme files imported in the app without them overriding each-other.
 
-A theme is basically a collection of css variables that AdapTable exposes, and you can customise. You can have more css theme files imported in the app without them overriding each-other.
+### System Themes
+
+AdapTable ships with 2 themes: *light* (the default) and *dark*
+
+If you wish to use the Dark Theme, specify *dark* as the Current Theme in the Theme section of Predefined Config. Make sure, if using ag-Grid, that you also import the associated vendor theme.
+
+You do not need to provide a VendorGridClassName when using either of the System Themes as this is done for you.
+
+This means that you only need provide themes for AdapTable and / or the Vendor Grid if you are unhappy with the defaults that we provide.
+
+### Applying a Theme
 
 When AdapTable applies a theme, it sets the `ab--theme-<THEME_NAME>` css className on the document HTML element - so only one theme will be applied at any given time. 
-**The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
 
-### Writing a theme
+### Writing a Theme
 
-In order to write a theme, let's call it `blue`, you have to define it with the following css:
+In order to write a theme - let's call it `blue` - you have to define it with the following css:
 
 ```css
 html.ab--theme-blue {
@@ -25,7 +36,7 @@ html.ab--theme-<THEME_NAME> {
 }
 ```
 
-and you also need to make sure that the theme name is included in the UserThemes property in the Theme section of Predefined Config (together with a description and - optionally - the name of the vendor grid theme that you want to load simultaneously with the Theme.):
+You also need to make sure that the theme name is included in the UserThemes property in the Theme section of Predefined Config, together with a description (the text that appears in the Theme dropdown) and - optionally - the name of the vendor grid theme that you want to load simultaneously with the Theme.
 
  ```ts
   export default {
@@ -44,12 +55,19 @@ and you also need to make sure that the theme name is included in the UserThemes
 
 > **The theme name cannot contain whitespace characters - it needs to be a string which can be used as a css className**
   
-There are a number of css variables that are available for customizing a theme - see below (it's the contents of the dark theme)
+### CSS Variables
+
+AdapTable uses CSS Variables in order to allow you to build your own custom themes.
+
+There are a huge number of css variables that are available. 
+
+For easy identification purposes every CSS Variable starts with either '--ab-' or '--ab__'
+
+This example shows the contents of the dark theme.
+
+## Example Theme
 
 ```css
-/** 
- * This is the whole source for the dark theme - it's all there is to it!
- */ 
 html.ab--theme-dark {
   /* this is here so we detect when the dark theme has been correctly loaded */
   --ab-theme-loaded: dark;
@@ -101,7 +119,10 @@ html.ab--theme-my-theme {
   --ab-font-size-1: 0.625rem; /* 10px for 1rem=16px */
   --ab-font-size-2: 0.75rem; /* 12px for 1rem=16px */
   --ab-font-size-3: 0.875rem; /* 14px for 1rem=16px */
-  --ab-font-size-4: 1rem; 
+  --ab-font-size-4: 1rem;  /* 16px for 1rem=16px */
+  --ab-font-size-5: 1.25rem;  /* 20px for 1rem=16px */
+  --ab-font-size-6: 1.5rem;  /* 24px for 1rem=16px */
+  --ab-font-size-7: 2.25rem;  /* 36px for 1rem=16px */
 
   /* use this to specify the font family you want for Adaptable*/
   --ab__font-family: inherit;
@@ -111,12 +132,14 @@ html.ab--theme-my-theme {
 }
 ```
 
-That's all the css you have to write for defining a theme - in fact, you can choose which of the above colors/variables to define - you don't have to define them all. Start incrementally, and work your way up as you need - use the dark theme as an example.
+That's all the css you have to write for defining a theme - in fact, you can choose which of the above colors/variables to define - you don't have to define them all. 
+
+Start incrementally, and work your way up as you need - use the dark theme as an example.
 
 
 ### Using with SASS
 
-#### When using sass, in order to use sass variables as values for css properties, you have to use interpolation!!!
+#### When using sass, in order to use sass variables as values for css properties, you have to use interpolation:
 
 ```scss
 $theme-color: #fea7ff;
