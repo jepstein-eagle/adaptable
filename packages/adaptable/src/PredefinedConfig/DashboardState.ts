@@ -1,6 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { ButtonStyle, ToolbarButton } from './Common/ToolbarButton';
 import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/Types';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for the Dashboard function
@@ -323,7 +324,7 @@ export interface DashboardState extends RunTimeState {
  *  });
  * ```
  */
-export interface CustomToolbar {
+export interface CustomToolbar extends AdaptableObject {
   Name: string;
   Title: string;
   Glyph?: string;

@@ -279,7 +279,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *     {
    *        Label: 'Mimise Dashboard',
    *        UserMenuItemClickedFunction: () => {
-   *            adaptableApi.dashboardApi.Minimise();
+   *            adaptableApi.dashboardApi.minimise();
    *        },
    *     },
    *     {
@@ -374,7 +374,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *     {
    *        Label: 'Mimise Dashboard',
    *        UserMenuItemClickedFunction: () => {
-   *            adaptableApi.dashboardApi.Minimise();
+   *            adaptableApi.dashboardApi.minimise();
    *        },
    *     },
    *     {

@@ -4,6 +4,7 @@ import {
   AdaptableDashboardToolbar,
   AdaptableFunctionButtons,
 } from '../PredefinedConfig/Common/Types';
+import { ToolbarButton } from '../PredefinedConfig/Common/ToolbarButton';
 
 /**
  * Provides access to the Dashboard state
@@ -17,140 +18,173 @@ export interface DashboardApi {
   /**
    * Retrieves the Dashboard section from Adaptable State
    */
-  GetDashboardState(): DashboardState;
+  getDashboardState(): DashboardState;
+
+  /**
+   * Retrieves all the Custom toolbars in the Dashboard section of Adaptable State
+   */
+  getCustomToolbars(): CustomToolbar[] | undefined;
 
   /**
    * Sets which toolbars should be available in Adaptable
    *
    * @param availableToolbars toolbars to make available
    */
-  SetAvailableToolbars(availableToolbars: AdaptableDashboardToolbars): void;
+  setAvailableToolbars(availableToolbars: AdaptableDashboardToolbars): void;
   /**
    * Sets which toolbars should be visibile in Adaptable
    *
    * @param visibleToolbars toolbars to show
    */
-  SetVisibleToolbars(visibleToolbars: AdaptableDashboardToolbars): void;
+  setVisibleToolbars(visibleToolbars: AdaptableDashboardToolbars): void;
 
   /**
    * Makes the given toolbar visible
    *
    * @param visibleToolbar toolbar to show
    */
-  ShowToolbar(visibleToolbar: AdaptableDashboardToolbar): void;
+  showToolbar(visibleToolbar: AdaptableDashboardToolbar): void;
 
   /**
    * Hides the given toolbar
    *
    * @param visibleToolbar toolbar to hide
    */
-  HideToolbar(visibleToolbar: AdaptableDashboardToolbar): void;
+  hideToolbar(visibleToolbar: AdaptableDashboardToolbar): void;
 
   /**
    * Sets which Function Buttons are visible
    *
    * @param functionButtons buttons to show
    */
-  SetVisibleButtons(functionButtons: AdaptableFunctionButtons): void;
+  setVisibleButtons(functionButtons: AdaptableFunctionButtons): void;
 
   /**
    * Sets whether the Dashboard is Visible, Hiden or Minimised
    *
    * @param dashboardVisibility visibility option to set
    */
-  SetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void;
+  setVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void;
 
   /**
    * Shows the Dashboard (ie. sets Visibility to 'Visible')
    */
-  Show(): void;
+  show(): void;
 
   /**
    * Hides the Dashboard (ie. sets Visibility to 'Hidden')
    */
-  Hide(): void;
+  hide(): void;
 
   /**
    * Minimises the Dashboard (ie. sets Visibility to 'Minimised' so that only a button is visibile)
    */
-  Minimise(): void;
+  minimise(): void;
 
   /**
    * Makes the System Status button visible.
    */
-  ShowSystemStatusButton(): void;
+  showSystemStatusButton(): void;
 
   /**
    * Hides the System Status button
    */
-  HideSystemStatusButton(): void;
+  hideSystemStatusButton(): void;
 
   /**
    * Shows the Grid Info button - which opens the GridInfo screen.
    *
    * The GridInfo Screen shows information about the current Blotter (e.g. visible rows and columns, any calculated columns etc.)
    */
-  ShowGridInfoButton(): void;
+  showGridInfoButton(): void;
 
   /**
    * Hides the Grid Info button - which opens the GridInfo screen.
    *
    * The GridInfo Screen shows information about the current Blotter (e.g. visible rows and columns, any calculated columns etc.)
    */
-  HideGridInfoButton(): void;
+  hideGridInfoButton(): void;
 
   /**
    * Shows the Functions Dropdown.
    *
    * The Functions dropdown appears on the left of the Home Toolbar and lists all the functions available to the user.
    */
-  ShowFunctionsDropdown(): void;
+  showFunctionsDropdown(): void;
 
   /**
    * Hides the Functions Dropdown.
    *
    * The Functions dropdown appears on the left of the Home Toolbar and lists all the functions available to the user.
    */
-  HideFunctionsDropdown(): void;
+  hideFunctionsDropdown(): void;
 
   /**
    * Shows the Columns Dropdown.
    *
    * The Columns dropdown appears on the right of the Home Toolbar and lists all the columns in the grid.
    */
-  ShowColumnsDropdown(): void;
+  showColumnsDropdown(): void;
 
   /**
    * Hides the Columns Dropdown.
    *
    * The Columns dropdown appears on the right of the Home Toolbar and lists all the columns in the grid.
    */
-  HideColumnsDropdown(): void;
+  hideColumnsDropdown(): void;
 
   /**
    * Shows the Toolbars Dropdown.
    *
    * The Toolbars dropdown appears on the right of the Home Toolbar and lists all the available Toolbars.
    */
-  ShowToolbarsDropdown(): void;
+  showToolbarsDropdown(): void;
 
   /**
    * Hides the Toolbars Dropdown.
    *
    * The Toolbars dropdown appears on the right of the Home Toolbar and lists all the available Toolbars.
    */
-  HideToolbarsDropdown(): void;
+  hideToolbarsDropdown(): void;
 
   /**
    * Sets the title of the Home Toolbar - the one on the left of the Dashboard
    *
    * If no value is set, the title of the Home Toolbar will be AdaptableId property in AdaptableOptions
    */
-  SetHomeToolbarTitle(title: string): void;
+  setHomeToolbarTitle(title: string): void;
 
-  getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | null;
+  /**
+   * Returns the `div` element for the given Custom Toolbar
+   * @param customToolbarName the name of the Custom Toolbar
+   */
+  getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | undefined;
 
+  /**
+   * Returns the Custom Toolbar which has the given name
+   * @param customToolbarName the name of the Custom Toolbar
+   */
   getCustomToolbarByName(customToolbarName: string): CustomToolbar;
+
+  /**
+   * Replaces the Toolbar Buttons in the Custom toolbar with the new set
+   * @param customToolbarName the name of the Custom Toolbar
+   * @param buttons the `ToolbarButtons` to add
+   */
+  setCustomToolbarButtons(customToolbarName: string, buttons: ToolbarButton[]): void;
+
+  /**
+   * Adds the Toolbar Buttons to the current collection in the Custom Toolbar
+   * @param customToolbarName the name of the Custom Toolbar
+   * @param buttons the `ToolbarButtons` to add
+   */
+  addCustomToolbarButtons(customToolbarName: string, buttons: ToolbarButton[]): void;
+
+  /**
+   * Clears all the Toolbar Buttons from the Custom Toolbar
+   * @param customToolbarName the name of the Custom Toolbar
+   */
+  clearCustomToolbarButtons(customToolbarName: string): void;
 
   /**
    * Opens the Dashboard popup screen
