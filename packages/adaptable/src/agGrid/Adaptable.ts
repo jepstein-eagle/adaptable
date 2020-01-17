@@ -3123,7 +3123,7 @@ export class Adaptable implements IAdaptable {
 
 If it's a default theme, try
 
-import "adaptableadaptable/themes/${themeName}.css"`);
+import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     }
   }
 

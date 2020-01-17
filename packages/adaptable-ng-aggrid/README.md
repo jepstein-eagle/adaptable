@@ -72,7 +72,9 @@ There are currently two plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
-- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
+You can also find a [PR for migrating from v5 to v6](https://github.com/AdaptableTools/example-adaptable-angular-aggrid/pull/1/files) so it's easy to follow along wehn you migrate.
+
+## Styling
 
 #### Plugins Example
 To add a plugin you need to follow these 3 steps (using the `charts` plugin as an example):
