@@ -1,4 +1,4 @@
-# adaptable-ng-aggrid
+# adaptable-angular-aggrid
 
 Repository for the **AdapTable Angular ag-Grid Wrapper** which allows you to install, instantiate and reference AdapTable (using ag-Grid) in an "Angular-friendly" manner.
 
