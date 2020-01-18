@@ -149,9 +149,9 @@ To find out how to your write your custom themes, provide custom icons - and abo
 
 ## Instantiation
 
-You create an instance of AdapTable by providing a static constructor with an AdaptableOptions object.
+You create an instance of AdapTable by providing a static constructor with an [AdaptableOptions](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) object.
 
-The constructor will return an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime.  So, instead of:
+The constructor will return an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
 
 ```ts
 const api: AdaptableApi = Adaptable.init(adaptableOptions)
