@@ -24,7 +24,7 @@ AdapTable (both 'core' and frameworks wrappers) now depends on `@ag-grid-communi
 
 You can, additionally, install as many ag-Grid Enterprise modules as you want; AdapTable will only provide functionality that matches the ag-Grid modules that you provide.
 
-In the vanilla JavaScript version you add the modules as an extra property of vendorGrid:
+In the vanilla JavaScript version you add the modules as an extra property of *vendorGrid* (in AdaptableOptions):
 
 ```ts
  vendorGrid: {
@@ -33,7 +33,7 @@ In the vanilla JavaScript version you add the modules as an extra property of ve
     },
 ```
 
-In the React Wrapper there is a Modules propery you can use:
+In the React Wrapper there is a Modules property you can use:
 
 ```ts
 export default () => <AdaptableReactAgGrid
@@ -41,7 +41,7 @@ export default () => <AdaptableReactAgGrid
   gridOptions={ ... }
   plugins={plugins}
   adaptableOptions={adaptableOptions}
-  onAdaptableReady={(adaptableApi) => { ... }}
+  onAdaptableReady={(adaptableApi, gridOptions) => { ... }}
 />
 ```
 Similarly in the Angular Wrappers you will do:
@@ -66,8 +66,9 @@ The core package (and react and angular wrappers) no longer includes charting or
 
 Instead, these are available through 2 plugins (though more will be added in the future):
 
- * `@adaptabletools/adaptable-plugin-charts`
- * `@adaptabletools/adaptable-plugin-finance`
+- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
 
 In order to use a plugin, you have to install it via npm or yarn; you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
 
@@ -209,10 +210,6 @@ There are far too many new features to list here but some of the headlines are:
 ## Basic Installation Example
 
 ```tsx
-// impport any additional AgGrid module needed and pass to adaptableOptions.vendorGrid.modules
-import { MenuModule } from '@ag-grid-enterprise/menu';
-import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-
 // import Adaptable
 import Adaptable from "@adaptabletools/adaptable/agGrid";
 
@@ -222,6 +219,10 @@ import { AdaptableOptions, AdaptableApi } from "@adaptabletools/adaptable/types"
 // import Plugins
 import charts from "@adaptabletools/adaptable-plugin-charts";
 import finance from "@adaptabletools/adaptable-plugin-finance";
+
+// impport any additional AgGrid module needed and pass to adaptableOptions.vendorGrid.modules
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
 // import AdapTable and vendor grid styles
 import "@adaptabletools/adaptable/index.css";
@@ -281,20 +282,5 @@ Read more at:
  * [Developer Documentation](https://api.adaptableblotter.com/index.html)
  * [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
  * [Demo Site](https://demo.adaptableblotter.com/)
- 
- ## Example Projects
-
-We have added a few example projects to Github to help you to understand how to use AdapTable.
-
-These include:
-* [Angular Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
- 
-* [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
-  
-* [Parcel JS (quick build) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
-   
-* [iPushpPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
- 
- 
  
 
