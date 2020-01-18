@@ -2,8 +2,8 @@
 
 Repository for the 'Core' AdapTable package - developed by Adaptable Tools.
 
-There are also [React](../../packages/adaptable-react-aggrid/readme.md)
-and [Angular](../../packages/adaptable-ng-aggrid/readme.md) Wrappers available for those who wish to access AdapTable (when running with ag-Grid) using their preferred Framework.
+There are also [React](../../packages/adaptable-react-aggrid)
+and [Angular](../../packages/adaptable-ng-aggrid) Wrappers available for those who wish to access AdapTable (when running with ag-Grid) using their preferred Framework.
 
 ## Upgrade Guide
 
