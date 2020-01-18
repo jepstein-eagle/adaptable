@@ -120,5 +120,3 @@ For all enquiries please email [`support@adaptabletools.com`](mailto:support@ada
 ## Support
 
 For all support enquiries please email the [Adaptable Tools Support Team](mailto:support@adaptabletools.com).
-
-[![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)
