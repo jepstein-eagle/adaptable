@@ -124,7 +124,7 @@ const blotter = new AdaptableBlotter(adaptableOptions)
 you will now do
 
 ```ts
-const api = Adaptable.init(adaptableOptions)
+const api: AdaptableApi = Adaptable.init(adaptableOptions)
 ```
 Not only do you get back the public api but you no longer have access to a very large blotter instance, which used to contain a lot private fields, not meant for public use and which caused issues for our users.
 
