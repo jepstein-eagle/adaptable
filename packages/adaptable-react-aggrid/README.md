@@ -226,16 +226,13 @@ export default () => <AdaptableReactAgGrid
 ```
 
 ## Licences
-AdapTable is a commercial product and requires a purchased licence for use.
+A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
 
-An AdapTable licence includes regular updates and full support.
+Licences can be purchased individually, for a team (minimum 30 end-users), for an organisation or for integration into software for onward sale.
 
-If you wish to evaluate AdapTable before purchase, please contact us requesting a Trial Licence.
-
-Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
+We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.
 
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
- 
 
 ## Help
 
@@ -244,5 +241,3 @@ Further information about AdapTable is available at our [Website](www.adaptablet
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
 
 For all enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
-
-[![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)

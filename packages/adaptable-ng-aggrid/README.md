@@ -1,4 +1,4 @@
-# adaptable-ng-aggrid
+# adaptable-angular-aggrid
 
 Repository for the **AdapTable Angular ag-Grid Wrapper** which allows you to install, instantiate and reference AdapTable (using ag-Grid) in an "Angular-friendly" manner.
 
@@ -64,7 +64,6 @@ This should display the username you received from use as the current login on t
 ```
 > you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages
 
-
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
@@ -72,12 +71,10 @@ There are currently two plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
-You can also find a [PR for migrating from v5 to v6](https://github.com/AdaptableTools/example-adaptable-angular-aggrid/pull/1/files) so it's easy to follow along wehn you migrate.
-
-## Styling
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
-To add a plugin you need to follow these 3 steps (using the `charts` plugin as an example):
+To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
 
 1. Install the plugin as a separate package:
 
@@ -92,12 +89,13 @@ To add a plugin you need to follow these 3 steps (using the `charts` plugin as a
 ```
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
-  adaptableId: 'angular demo',
+  adaptableId: 'Adaptable demo',
   ....
   plugins: [charts()]
 };
 
 ```
+
 
 ## agGrid Enterprise Modules
 AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
@@ -222,15 +220,13 @@ For a standalone working example app of the Angular Wrapper, see the [Angular De
 To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 
+
 ## Licences
+A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
 
-AdapTable is a commercial product and requires a purchased licence for use.
+Licences can be purchased individually, for a team (minimum 30 end-users), for an organisation or for integration into software for onward sale.
 
-An AdapTable licence includes regular updates and full support.
-
-If you wish to evaluate AdapTable before purchase, please contact us requesting a Trial Licence.
-
-Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
+We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.
 
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
  
@@ -242,6 +238,4 @@ Further information about AdapTable is available at our [Website](www.adaptablet
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
 
 For all enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
-
-[![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)
 

@@ -2,15 +2,13 @@
 
 Repository for AdapTable - the market-leading Data Management toolkit developed by Adaptable Tools.
 
-AdapTable (previously known as the Adaptable Blotter) is a powerful HTML5 DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
+AdapTable (previously known as the Adaptable Blotter) is a powerful HTML5 DataGrid add-on that integrates with the leading  components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
 
-It offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment. 
+AdapTable offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment. 
 
 AdapTable supports a number of underlying vendor grid components, and new vendor grids are being added all the time.  Please contact us if you would like us to implement your favourite HTML5 grid control.
 
 AdapTable is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
-
-[Try out AdapTable for yourself](https://demo.adaptableblotter.com).
 
 ## Upgrade Guide
 
@@ -24,17 +22,23 @@ AdapTable comes in 3 variants:
  
   * 'core' (vanilla) javascript version
   
-  To use this install **`@adaptabletools/adaptable`** - for more info, see the [core readme docs](./packages/adaptable/README.md)
+  To use this install **`@adaptabletools/adaptable`** 
+  
+  > for more info, see the [Adaptable Core 'readme;](./packages/adaptable/README.md)
   
   * React Wrapper
   
-  To use this install **`@adaptabletools/adaptable-react-aggrid`** - for more info, see the [react version readme docs](./packages/adaptable-react-aggrid/README.md)
+  To use this install **`@adaptabletools/adaptable-react-aggrid`**
+  
+  > for more info, see the [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
   
   * Angular Wrapper
   
-  To use this, install **`@adaptabletools/adaptable-angular-aggrid`** - for more info, see the [Angular readme docs](./packages/adaptable-ng-aggrid/README.md)
-
-AdapTable (all versions) also depends on AgGrid - more exactly on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
+  To use this, install **`@adaptabletools/adaptable-angular-aggrid`**
+  
+  > for more info, see the [Angular Wrapper Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
+  
+  Each of these packages has its own initialisation requirements so please read the appropriate documentation
 
 ## Installing AdapTable
 
@@ -78,10 +82,16 @@ This should display the username you received from use as the current login on t
 
 **note: this does not affect your username/login session on the public npm registry**
 
-5.  Install the relevant AdapTable package you need, e.g.
+5.  Install the relevant AdapTable package you need, e.g. for core it will be:
 
 ```
 npm install @adaptabletools/adaptable
+```
+
+and for the ag-Grid React Wrapper it will be:
+
+```
+npm i @adaptabletools/adaptable-react-aggrid
 ```
 
 ## Plugins
@@ -89,19 +99,21 @@ AdapTable now includes plugins to reduce the download size of the 'core' project
 
 There are currently two plugins:
 
-- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+- **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
-- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
+> courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`)
+
+> adds additional functionality of benefit only to advanced financial users.
 
 
 ## Licences
-AdapTable is a commercial product and requires a purchased licence for use.
+A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
 
-An AdapTable licence includes regular updates and full support.
+Licences can be purchased individually, for a team (minimum 30 end-users), for an organisation or for integration into software for onward sale.
 
-If you wish to evaluate AdapTable before purchase, please contact us requesting a Trial Licence.
-
-Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
+We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.
 
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
 
@@ -109,6 +121,20 @@ Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for
 
 To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
+ ## Example Projects
+
+We have added a few example projects to Github to help you to understand how to use AdapTable.
+
+These include:
+* [Angular Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+ 
+* [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+  
+* [Parcel JS (quick build) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
+   
+* [iPushpPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
+ 
+ 
 ## Help
 
 Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
@@ -120,5 +146,3 @@ For all enquiries please email [`support@adaptabletools.com`](mailto:support@ada
 ## Support
 
 For all support enquiries please email the [Adaptable Tools Support Team](mailto:support@adaptabletools.com).
-
-[![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)

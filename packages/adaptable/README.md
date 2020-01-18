@@ -1,35 +1,23 @@
-# adaptable
+# adaptable (core)
 
 Repository for the 'Core' AdapTable package - developed by Adaptable Tools.
 
-AdapTable is a powerful DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
+There are also [React](../../packages/adaptable-react-aggrid)
+and [Angular](../../packages/adaptable-ng-aggrid) Wrappers available for those who wish to access AdapTable (when running with ag-Grid) using their preferred Framework.
 
-It offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment. Try it out for yourself at https://demo.adaptableblotter.com.
+## Upgrade Guide
 
-Grid components supported include:
+Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-- ag-Grid by ag-Grid
-- Hypergrid by OpenFin
-- Kendo Grid by Telerik
-- Adaptable Grid by Adaptable Tools.
-
-More grid components are being added all the time so contact us if you would like us to implement your favourite HTML5 grid control.
-
-AdapTable is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
-
-There are additional React and Angular wrappers - please see the relevant packages.
-
-## Upgrade guide
-
-For upgrading from v5 to v6 see the [upgrade-guide.md](./upgrade-guide.md)
+For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
 
 ## Installation
 
 AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
 
-1. get a commercial license - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), so we'll provide you with a username.
+1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), who will provide you with your unique credentials.
 
-2. point your npm client to the correct registry for packages under the `@adaptabletools` scope
+2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
 
 ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
 
@@ -38,33 +26,113 @@ if you're using yarn
 ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 
-3. login with your username for the `@adaptabletools` scope, on the private registry
+3. Login to the Adaptable private registry:
 
-```npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools```
+```sh
+npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+```
 
-4. check you are logged-in correctly via
+4. Enter your credentials that was provided to you by the AdapTable support team:
 
-```npm whoami --registry=https://registry.adaptabletools.com```
+  * login name
+  * email
+  * password
+  
+5. Check you are logged-in correctly by using whoami:
 
-it should display the username you received from use as the current login on the private registry. NOTE: this does not affect your username/login session on the public npm registry.
+```
+npm whoami --registry=https://registry.adaptabletools.com
+```
 
-5. install AdapTable
+This should display the username you received from use as the current login on the private registry
+
+**note: this does not affect your username/login session on the public npm registry**
+
+6. Install daptable
 
 ```npm i @adaptabletools/adaptable```
 
-for the React wrapper, use
+7. Make sure that all the Peer Dependencies are installed. These is currently just **@ag-grid-community/all-modules**:
 
-```npm i @adaptabletools/adaptable-react-aggrid```
+```
+"peerDependencies": {
+    "@ag-grid-community/all-modules": "^22.1.1",
+}
+```
+## Plugins
+AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
-for the Angular wrapper, use
+There are currently two plugins:
 
-```npm i @adaptabletools/adaptable-angular-aggrid```
+- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
+
+#### Plugins Example
+To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
+
+1. Install the plugin as a separate package:
+
+```npm i @adaptabletools/adaptable-plugin-charts```
+
+2. Import it into your code:
+
+```import charts from '@adaptable/adaptable-plugins-charts'```
+
+3. Add it to the `plugins` property of *AdaptableOptions*:
+
+```
+const adaptableOptions: AdaptableOptions = {
+  primaryKey: 'tradeId',
+  adaptableId: 'Adaptable demo',
+  ....
+  plugins: [charts()]
+};
+
+```
+
+## agGrid Enterprise Modules
+AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
+
+**If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
+
+#### Enterprise Modules Example
+To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelection as an example):
+
+1. Install the modules in npm:
+
+```
+npm i @ag-grid-enterprise/menu
+npm i @ag-grid-enterprise/range-selection
+```
+
+2. Import them into your code:
+
+```
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+```
+
+3. Add them to the **vendorGrid** propety in *AdaptableOptions* using the **modules** property
+
+```
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    adaptableId: 'Modules Demo',
+    vendorGrid: {
+      ...gridOptions,
+      modules: [MenuModule, RangeSelectionModule],
+    },
+    ....
+  };
+
+```
 
 ## Styling and Theming
 
-AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
+AdapTable provides 2 default themes ('Light' and 'Dark') but you can easily create your own custom themes (by using [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)).
 
-In order for AdapTable to look right, you **always** have to import the `index.css` file which contains the structural styles and, also, the (default) Light theme:
+You **always** have to import the `index.css` file.  This contains the structural styles AdapTable requires and, also, the (default) Light theme:
 
 ```tsx
 import "@adaptabletools/adaptable/index.css"
@@ -80,43 +148,115 @@ import "@adaptabletools/adaptable/themes/dark.css"
 To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
 
 
+## Instantiation
+
+You create an instance of AdapTable by providing a static constructor with an [AdaptableOptions](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) object.
+
+The constructor will return an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
+
+```ts
+const api: AdaptableApi = Adaptable.init(adaptableOptions)
+```
+
+
+## Basic Example
+
+```jsx
+
+// import Adaptable
+import Adaptable from "@adaptabletools/adaptable/agGrid";
+
+// import the Adaptable types
+import { AdaptableOptions, AdaptableApi } from "@adaptabletools/adaptable/types";
+
+// import Plugins
+import charts from "@adaptabletools/adaptable-plugin-charts";
+import finance from "@adaptabletools/adaptable-plugin-finance";
+
+// import any additional AgGrid module needed
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+
+// import AdapTable and vendor grid styles
+import '@adaptabletools/adaptable/index.css'; // includes the light theme, which is the default
+import '@adaptabletools/adaptable/themes/dark.css'; // if you want to use the dark theme
+import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+
+// create column definitions
+const columnDefs = [
+  { field: "orderId", headerName: 'Order Id', type: "abColDefNumber" },
+  { field: "companyName", headerName: 'Company', type: "abColDefString" },
+  { field: "contactName", headerName: 'Contact', type: "abColDefString" },
+  { field: "employeeName", headerName: 'Employee', type: "abColDefString" },
+  { field: "invoicedCost", headerName: 'Invoiced Amount', type: "abColDefNumber" }
+];
+
+// Create an underlying vendor Grid instance 
+// in this example lets use ag-Grid which has a GridOptions object
+const gridOptions: GridOptions=  {
+      columnDefs: columnDefs,
+      rowData : [],
+      enableRangeSelection: true,
+      floatingFilter: true,
+      sideBar: 'columns',
+      columnTypes: {
+        abColDefNumber: {},
+        abColDefString: {},
+        abColDefBoolean: {},
+        abColDefDate: {},
+        abColDefNumberArray: {},
+        abColDefObject: {},
+        abColDefCustom: {},
+      },
+    };
+  }
+  
+ // Create an AdaptableOptions object which will include some basic properties
+ // And also the underlying Vendor Grid object and any Predefined Config we need
+ const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'iPushPull Demo',
+    vendorGrid: {
+      ...gridOptions,
+    // attach the ag-Grid modules to the new 'modules' property
+    modules: [MenuModule, RangeSelectionModule],
+     },
+    // ship AdapTable with predefined Config
+    predefinedConfig: demoConfig,
+  };
+
+  // Instantiate AdapTable with AdaptableOptions and recieve an AdaptableApi object for later use
+  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+  
+  // You can now use the API to manage AdapTable and listen to Adaptable events, e.g.
+ api.eventApi.on('AdaptableReady', () => {
+    // perform anything you need to do when AdapTable is ready
+  });
+  
+```
+
 
 ## Licences
+A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
 
-AdapTable is a commercial product and requires a purchased licence for use.
+Licences can be purchased individually, for a team (minimum 30 end-users), for an organisation or for integration into software for onward sale.
 
-An AdapTable licence includes regular updates and full support.
-
-If you wish to evaluate AdapTable before purchase, please contact us requesting a Trial Licence.
-
-Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
-
-Note: AdapTable licences do not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
+We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.
 
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
 
-## Usage
-
-```js
-import Adaptable from '@adaptabletools/adaptable/agGrid';
-
-import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
-
-import '@adaptabletools/adaptable/index.css'; // includes the light theme, which is the default
-import '@adaptabletools/adaptable/themes/dark.css'; // if you want to use the dark theme
-```
-
+ 
 ## Demo
 
-To see AdapTable in action visit https://demo.adaptableblotter.com where you can see Adaptable running againt a number of different dummy data sets using various underlying DataGrids.
+To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
 
 ## Help
 
-Further information about Adaptable is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 
-Developers can see how to access Adaptable programmatically at https://api.adaptableblotter.com
+Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
 
-For all enquiries please email Adaptable Tools Support Team at support@adaptabletools.com.
+For all enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
 
-[![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)
