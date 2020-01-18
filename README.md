@@ -24,15 +24,21 @@ AdapTable comes in 3 variants:
  
   * 'core' (vanilla) javascript version
   
-  To use this install **`@adaptabletools/adaptable`** - for more info, see the [Adaptable Core 'readme;](./packages/adaptable/README.md)
+  To use this install **`@adaptabletools/adaptable`** 
+  
+  > for more info, see the [Adaptable Core 'readme;](./packages/adaptable/README.md)
   
   * React Wrapper
   
-  To use this install **`@adaptabletools/adaptable-react-aggrid`** - for more info, see the [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
+  To use this install **`@adaptabletools/adaptable-react-aggrid`**
+  
+  > for more info, see the [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
   
   * Angular Wrapper
   
-  To use this, install **`@adaptabletools/adaptable-angular-aggrid`** - for more info, see the [Angular Wrapper Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
+  To use this, install **`@adaptabletools/adaptable-angular-aggrid`**
+  
+  > for more info, see the [Angular Wrapper Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
 
 AdapTable (all versions) also depends on AgGrid - more exactly on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
 
