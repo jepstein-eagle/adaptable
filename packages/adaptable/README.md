@@ -2,7 +2,8 @@
 
 Repository for the 'Core' AdapTable package - developed by Adaptable Tools.
 
-There are also React and Angular Wrappers available for those who wish to access AdapTable (when running with ag-Grid) using their preferred Framework.
+There are also [React](../../packages/adaptable-react-aggrid/readme.md)
+and [Angular](../../packages/adaptable-ng-aggrid/readme.md) Wrappers available for those who wish to access AdapTable (when running with ag-Grid) using their preferred Framework.
 
 ## Upgrade Guide
 
@@ -172,7 +173,7 @@ import { AdaptableOptions, AdaptableApi } from "@adaptabletools/adaptable/types"
 import charts from "@adaptabletools/adaptable-plugin-charts";
 import finance from "@adaptabletools/adaptable-plugin-finance";
 
-// impport any additional AgGrid module needed and pass to adaptableOptions.vendorGrid.modules
+// import any additional AgGrid module needed
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
@@ -195,7 +196,7 @@ const columnDefs = [
 // in this example lets use ag-Grid which has a GridOptions object
 const gridOptions: GridOptions=  {
       columnDefs: columnDefs,
-      rowData :  this.getData(),
+      rowData : [],
       enableRangeSelection: true,
       floatingFilter: true,
       sideBar: 'columns',
@@ -211,7 +212,7 @@ const gridOptions: GridOptions=  {
     };
   }
   
- // Create an Adaptable Options object which will include some basic properties
+ // Create an AdaptableOptions object which will include some basic properties
  // And also the underlying Vendor Grid object and any Predefined Config we need
  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
