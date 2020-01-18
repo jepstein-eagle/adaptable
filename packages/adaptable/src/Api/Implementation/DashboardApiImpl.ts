@@ -105,7 +105,7 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title));
   }
 
-  public getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | undefined {
+  public getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | null {
     let customToolbar: CustomToolbar = this.getCustomToolbarByName(customToolbarName);
     if (customToolbar) {
       let divId: string = 'ab-CustomToolbar__' + customToolbar.Name + '__contents';

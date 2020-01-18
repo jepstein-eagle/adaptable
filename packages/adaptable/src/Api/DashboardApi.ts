@@ -158,7 +158,7 @@ export interface DashboardApi {
    * Returns the `div` element for the given Custom Toolbar
    * @param customToolbarName the name of the Custom Toolbar
    */
-  getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | undefined;
+  getCustomToolbarContentsDiv(customToolbarName: string): HTMLElement | null;
 
   /**
    * Returns the Custom Toolbar which has the given name
