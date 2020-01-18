@@ -161,18 +161,40 @@ const api: AdaptableApi = Adaptable.init(adaptableOptions)
 ## Basic Example
 
 ```jsx
-import Adaptable from '@adaptabletools/adaptable/agGrid';
 
-import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+// import Adaptable
+import Adaptable from "@adaptabletools/adaptable/agGrid";
 
+// import the Adaptable types
+import { AdaptableOptions, AdaptableApi } from "@adaptabletools/adaptable/types";
+
+// import Plugins
+import charts from "@adaptabletools/adaptable-plugin-charts";
+import finance from "@adaptabletools/adaptable-plugin-finance";
+
+// impport any additional AgGrid module needed and pass to adaptableOptions.vendorGrid.modules
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+
+// import AdapTable and vendor grid styles
 import '@adaptabletools/adaptable/index.css'; // includes the light theme, which is the default
 import '@adaptabletools/adaptable/themes/dark.css'; // if you want to use the dark theme
+import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+
+// create column definitions
+const columnDefs = [
+  { field: "orderId", headerName: 'Order Id', type: "abColDefNumber" },
+  { field: "companyName", headerName: 'Company', type: "abColDefString" },
+  { field: "contactName", headerName: 'Contact', type: "abColDefString" },
+  { field: "employeeName", headerName: 'Employee', type: "abColDefString" },
+  { field: "invoicedCost", headerName: 'Invoiced Amount', type: "abColDefNumber" }
+];
 
 // Create an underlying vendor Grid instance 
 // in this example lets use ag-Grid which has a GridOptions object
 const gridOptions: GridOptions=  {
-      columnDefs: this.getColumnSchema(),
+      columnDefs: columnDefs,
       rowData :  this.getData(),
       enableRangeSelection: true,
       floatingFilter: true,
@@ -197,14 +219,20 @@ const gridOptions: GridOptions=  {
     adaptableId: 'iPushPull Demo',
     vendorGrid: {
       ...gridOptions,
-      modules: [MenuModule],
-    },
+    // attach the ag-Grid modules to the new 'modules' property
+    modules: [MenuModule, RangeSelectionModule],
+     },
     // ship AdapTable with predefined Config
     predefinedConfig: demoConfig,
   };
 
   // Instantiate AdapTable with AdaptableOptions and recieve an AdaptableApi object for later use
   const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+  
+  // You can now use the API to manage AdapTable and listen to Adaptable events, e.g.
+ api.eventApi.on('AdaptableReady', () => {
+    // perform anything you need to do when AdapTable is ready
+  });
   
 ```
 
