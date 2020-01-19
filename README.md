@@ -45,9 +45,8 @@ AdapTable comes in 3 variants:
 
 ## Installing AdapTable
 
-AdapTable is distributed via a [private npm registry - https://registry.adaptabletools.com](https://registry.adaptabletools.com).
+AdapTable is distributed via a private npm registry [https://registry.adaptabletools.com](https://registry.adaptabletools.com).
 
-#### Note
 To gain access to this private registry please email the [Adaptable Tools Support Team](mailto:support@adaptabletools.com) who can advise you on how to get a commercial license.
 
 If you have previously received credentials from the Adaptable Tools Support Team, then to install AdapTable, please follow these steps:
