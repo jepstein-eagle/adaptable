@@ -13,9 +13,11 @@ For more information please see the [Version 6 Upgrade Guide](../../packages/ada
 
 ## Installation
 
-AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
+AdapTable is distributed via the private npm registry [https://registry.adaptabletools.com](https://registry.adaptabletools.com).
 
-1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), who will provide you with your unique credentials.
+To gain access to this registry please follow these steps:
+
+1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) who will provide you with your unique credentials.
 
 2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
 
@@ -25,14 +27,13 @@ if you're using yarn
 
 ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
-
-3. Login to the Adaptable private registry:
+3. Login to the AdapTable private registry:
 
 ```sh
 npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
 ```
 
-4. Enter your credentials that was provided to you by the AdapTable support team:
+4. Enter the credentials that were provided to you by the AdapTable support team:
 
   * login name
   * email
@@ -44,11 +45,11 @@ npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
 npm whoami --registry=https://registry.adaptabletools.com
 ```
 
-This should display the username you received from use as the current login on the private registry
+This should display the username you received as the current login on the private registry
 
 **note: this does not affect your username/login session on the public npm registry**
 
-6. Install daptable
+6. Install AdapTable
 
 ```npm i @adaptabletools/adaptable```
 
