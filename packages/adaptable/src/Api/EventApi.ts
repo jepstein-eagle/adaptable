@@ -7,7 +7,6 @@ import { ThemeChangedEventArgs } from './Events/ThemeChanged';
 import { AlertFiredEventArgs } from './Events/AlertFired';
 import { ColumnStateChangedEventArgs } from './Events/ColumnStateChanged';
 import { SearchChangedEventArgs } from './Events/SearchChanged';
-
 import { AdaptableReadyInfo } from './Events/AdaptableReady';
 
 /**
