@@ -1,6 +1,6 @@
 {
   "name": "@adaptabletools/adaptable-monorepo",
-  "version": "6.0.0-canary.9",
+  "version": "6.0.0-canary.10",
   "private": true,
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
