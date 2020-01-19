@@ -244,4 +244,6 @@ Further information about AdapTable is available at our [Website](www.adaptablet
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
 
-For all enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
+## Support
+
+For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
