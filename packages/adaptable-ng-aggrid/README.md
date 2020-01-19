@@ -221,8 +221,7 @@ To find out how to your write your custom themes, provide custom icons - and abo
 
 For a standalone working example app of the Angular Wrapper, see the [Angular Demo](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
 
-To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
-
+To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptableblotter.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 
 
 ## Licences
