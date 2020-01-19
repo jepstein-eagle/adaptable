@@ -254,7 +254,7 @@ Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for
  
 ## Demo
 
-To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com) where you can see AdapTable running againt a number of different dummy data sets using various underlying DataGrids.
+To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 
 ## Help
 
