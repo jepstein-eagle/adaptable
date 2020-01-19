@@ -68,13 +68,13 @@ yarn config set @adaptabletools:registry https://registry.adaptabletools.com
 npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
 ```
 
-4. Enter your credentials that was provided to you by the AdapTable support team:
+4. Enter the credentials that were provided to you by the AdapTable support team:
 
   * login name
   * email
   * password
 
-5. Confirm that you were logged in correctly by using whoami:
+5. Confirm that you are logged in correctly by using whoami:
 
 ```
 npm whoami --registry=https://registry.adaptabletools.com
@@ -82,7 +82,7 @@ npm whoami --registry=https://registry.adaptabletools.com
 
 This should display the username you received from use as the current login on the private registry
 
-**note: this does not affect your username/login session on the public npm registry**
+> note: this does not affect your username/login session on the public npm registry**
 
 6.  Install the relevant AdapTable package you need.
 
