@@ -154,4 +154,4 @@ Developers can learn how to access AdapTable programmatically at [AdapTable Deve
 
 ## Support
 
-For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com).
+For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
