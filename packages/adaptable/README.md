@@ -154,19 +154,24 @@ To find out how to your write your custom themes, provide custom icons - and abo
 
 ## HTML Rendering
 
-The core version of AdapTable expects you to create in your HTML 2 `Div`s - one for AdapTable (with the id of 'adaptable') and one for the underlying grid (with the id of 'grid').
+The core version of AdapTable expects you to create in your HTML 2 `Div`s:
 
-So your html should look (assuming you are using ag-Grid and want to use the 'Balham' theme) like this: 
+- one for AdapTable (with the id of 'adaptable') 
+
+- one for the underlying grid (with the id of 'grid').
+
+So your HTML should look (assuming you are using ag-Grid and want to use the 'Balham' theme) like this: 
   
-Instead of providing:
 ```html
+
 <body>
-    ......
-    <div id="adaptable"></div>
-    <div id="grid" className="ag-theme-balham"></div>
-    .....
-    </body>
-```html
+  ......
+  <div id="adaptable"></div>
+  <div id="grid" className="ag-theme-balham"></div>
+  .....
+</body>
+
+```
 
 ## Instantiation
 
@@ -183,12 +188,12 @@ const api: AdaptableApi = Adaptable.init(adaptableOptions)
 
 ```html
 <body>
-    ......
-    <div id="adaptable"></div>
-    <div id="grid" className="ag-theme-balham"></div>
-    .....
-    </body>
-```html
+  ......
+  <div id="adaptable"></div>
+  <div id="grid" className="ag-theme-balham"></div>
+  .....
+</body>
+```
 
 ```jsx
 
