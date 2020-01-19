@@ -39,7 +39,7 @@ AdapTable comes in 3 variants:
   
   To use this, install **`@adaptabletools/adaptable-angular-aggrid`**
   
-  > For more info, see the [Angular Wrapper Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
+  > For more info, see the [Angular Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
   
   Each of these packages has its own initialisation requirements so please read the appropriate documentation
 
