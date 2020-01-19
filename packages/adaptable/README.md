@@ -160,14 +160,14 @@ The core version of AdapTable expects you to create in your HTML 2 `Div`s:
 
 - one for the underlying grid (with the id of 'grid').
 
-So your HTML should look (assuming you are using ag-Grid and want to use the 'Balham' theme) like this: 
+So your HTML should look like this: 
   
 ```html
 
 <body>
   ......
   <div id="adaptable"></div>
-  <div id="grid" className="ag-theme-balham"></div>
+  <div id="grid"></div>
   .....
 </body>
 
