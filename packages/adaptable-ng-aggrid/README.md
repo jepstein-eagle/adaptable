@@ -69,9 +69,13 @@ AdapTable now includes plugins to reduce the download size of the 'core' project
 
 There are currently two plugins:
 
-- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+- **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
-- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
+> courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`)
+
+> adds additional functionality of benefit only to advanced financial users.
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
