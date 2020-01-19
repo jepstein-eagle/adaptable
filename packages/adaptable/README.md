@@ -13,7 +13,9 @@ For more information please see the [Version 6 Upgrade Guide](../../packages/ada
 
 ## Installation
 
-AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
+AdapTable is distributed via a private npm registry [https://registry.adaptabletools.com](https://registry.adaptabletools.com).
+
+To gain access to this registry please follow these steps:
 
 1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), who will provide you with your unique credentials.
 
@@ -24,7 +26,6 @@ AdapTable is distributed via a private NPM registry - `https://registry.adaptabl
 if you're using yarn
 
 ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
-
 
 3. Login to the Adaptable private registry:
 
