@@ -152,6 +152,21 @@ import "@adaptabletools/adaptable/themes/dark.css"
 
 To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
 
+## HTML Rendering
+
+The core version of AdapTable expects you to create in your HTML 2 `Div`s - one for AdapTable (with the id of 'adaptable') and one for the underlying grid (with the id of 'grid').
+
+So your html should look (assuming you are using ag-Grid and want to use the 'Balham' theme) like this: 
+  
+Instead of providing:
+```html
+<body>
+    ......
+    <div id="adaptable"></div>
+    <div id="grid" className="ag-theme-balham"></div>
+    .....
+    </body>
+```html
 
 ## Instantiation
 
@@ -165,6 +180,15 @@ const api: AdaptableApi = Adaptable.init(adaptableOptions)
 
 
 ## Basic Example
+
+```html
+<body>
+    ......
+    <div id="adaptable"></div>
+    <div id="grid" className="ag-theme-balham"></div>
+    .....
+    </body>
+```html
 
 ```jsx
 
