@@ -10,6 +10,9 @@ AdapTable supports a number of underlying vendor grid components, and new vendor
 
 AdapTable is fully data agnostic and can work with any data set you provide it with. It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
 
+
+![AdapTable image](./images/adaptable.png)
+
 ## Upgrade Guide
 
 Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
