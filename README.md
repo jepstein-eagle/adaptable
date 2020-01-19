@@ -1,6 +1,6 @@
 # adaptable
 
-Repository for AdapTable - the market-leading Data Management toolkit developed by Adaptable Tools.
+Repository for AdapTable - the market-leading Data Management toolkit developed by [Adaptable Tools](www.adaptabletools.com).
 
 AdapTable (previously known as the Adaptable Blotter) is a powerful HTML5 DataGrid add-on that integrates with the leading  components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
 
@@ -15,7 +15,7 @@ AdapTable is fully data agnostic and can work with any data set you provide it w
 
 ## Upgrade Guide
 
-Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
+Version 6 of AdapTable has introduced many new functionality changes and upgrades and also some new, exciting, ways of interacting with the product.  
 
 For more information please see the [Version 6 Upgrade Guide](./packages/adaptable/upgrade-guide.md)
 
@@ -27,19 +27,19 @@ AdapTable comes in 3 variants:
   
   To use this install **`@adaptabletools/adaptable`** 
   
-  > for more info, see the [Adaptable Core 'readme;](./packages/adaptable/README.md)
+  > For more info, see the [Adaptable Core 'readme;](./packages/adaptable/README.md)
   
   * React Wrapper
   
   To use this install **`@adaptabletools/adaptable-react-aggrid`**
   
-  > for more info, see the [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
+  > For more info, see the [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
   
   * Angular Wrapper
   
   To use this, install **`@adaptabletools/adaptable-angular-aggrid`**
   
-  > for more info, see the [Angular Wrapper Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
+  > For more info, see the [Angular Wrapper Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
   
   Each of these packages has its own initialisation requirements so please read the appropriate documentation
 
@@ -85,16 +85,24 @@ This should display the username you received from use as the current login on t
 
 **note: this does not affect your username/login session on the public npm registry**
 
-5.  Install the relevant AdapTable package you need, e.g. for core it will be:
+5.  Install the relevant AdapTable package you need.
+
+For core it will be:
 
 ```
-npm install @adaptabletools/adaptable
+npm i @adaptabletools/adaptable
 ```
 
 and for the ag-Grid React Wrapper it will be:
 
 ```
 npm i @adaptabletools/adaptable-react-aggrid
+```
+
+and for the ag-Grid Angular Wrapper it will be:
+
+```
+npm i @adaptabletools/adaptable-angular-aggrid
 ```
 
 ## Plugins
@@ -104,11 +112,11 @@ There are currently two plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
-> courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+> Courtesy of [Infragistics](https://www.infragistics.com/products/ignite-ui-react) - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
 - **Finance** (`@adaptabletools/adaptable-plugin-finance`)
 
-> adds additional functionality of benefit only to advanced financial users.
+> Adds additional functionality of benefit only to advanced financial users.
 
 
 ## Licences
