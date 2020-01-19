@@ -49,7 +49,7 @@ AdapTable is distributed via a private npm registry [https://registry.adaptablet
 
 To gain access to this registry please follow these steps:
 
-1. Acquire a commercial AdapTable License from the Adaptable Tools team, who will provide you with your unique credentials.
+1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), who will provide you with your unique credentials.
 
 2. Point your npm client to the correct registry for packages under the '@adaptabletools' scope.
 
