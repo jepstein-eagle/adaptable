@@ -10,7 +10,11 @@ For more information please see the [Version 6 Upgrade Guide](../../packages/ada
 
 ## Installation
 
-The Angular wrapper of AdapTable is distributed via a private NPM registry - `https://registry.adaptabletools.com`, so getting it installed requires the following steps:
+The Angular wrapper of AdapTable is distributed via the private npm registry [https://registry.adaptabletools.com](https://registry.adaptabletools.com).
+
+To gain access to this registry please follow these steps:
+
+1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) who will provide you with your unique credentials.
 
 1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), who will provide you with your unique credentials.
 
@@ -41,11 +45,11 @@ npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
 npm whoami --registry=https://registry.adaptabletools.com
 ```
 
-This should display the username you received from use as the current login on the private registry
+This should display the username you received as the current login on the private registry
 
 > this does not affect your username/login session on the public npm registry
 
-6. Install the Angular wrapper of Adaptable
+6. Install the AdapTable Angular Wrapper
 
 ```npm i @adaptabletools/adaptable-angular-aggrid```
 

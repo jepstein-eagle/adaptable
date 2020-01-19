@@ -45,14 +45,13 @@ AdapTable comes in 3 variants:
 
 ## Installing AdapTable
 
-AdapTable is distributed via a [private npm registry - https://registry.adaptabletools.com](https://registry.adaptabletools.com).
+AdapTable is distributed via a private npm registry [https://registry.adaptabletools.com](https://registry.adaptabletools.com).
 
-#### Note
-To gain access to this private registry please email the [Adaptable Tools Support Team](mailto:support@adaptabletools.com) who can advise you on how to get a commercial license.
+To gain access to this registry please follow these steps:
 
-If you have previously received credentials from the Adaptable Tools Support Team, then to install AdapTable, please follow these steps:
+1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com), who will provide you with your unique credentials.
 
-1. Point your npm client to the correct registry for packages under the '@adaptabletools' scope.
+2. Point your npm client to the correct registry for packages under the '@adaptabletools' scope.
 
 ```sh
 npm config set @adaptabletools:registry https://registry.adaptabletools.com
@@ -63,19 +62,19 @@ If you are using yarn then it will be:
 yarn config set @adaptabletools:registry https://registry.adaptabletools.com
 ```
 
-2. Login to the Adaptable private registry:
+3. Login to the Adaptable private registry:
 
 ```sh
 npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
 ```
 
-3. Enter your credentials that was provided to you by the AdapTable support team:
+4. Enter your credentials that was provided to you by the AdapTable support team:
 
   * login name
   * email
   * password
 
-4. Confirm that you were logged in correctly by using whoami:
+5. Confirm that you were logged in correctly by using whoami:
 
 ```
 npm whoami --registry=https://registry.adaptabletools.com
@@ -85,7 +84,7 @@ This should display the username you received from use as the current login on t
 
 **note: this does not affect your username/login session on the public npm registry**
 
-5.  Install the relevant AdapTable package you need.
+6.  Install the relevant AdapTable package you need.
 
 For core it will be:
 
