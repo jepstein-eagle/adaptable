@@ -207,15 +207,18 @@ import { AdaptableOptions, AdaptableApi } from "@adaptabletools/adaptable/types"
 import charts from "@adaptabletools/adaptable-plugin-charts";
 import finance from "@adaptabletools/adaptable-plugin-finance";
 
-// import any additional AgGrid module needed
+// import any Enterprise ag-Grid modules needed
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
-// import AdapTable and vendor grid styles
+// import AdapTable styles
 import '@adaptabletools/adaptable/index.css'; // includes the light theme, which is the default
 import '@adaptabletools/adaptable/themes/dark.css'; // if you want to use the dark theme
+
+// import ag-Grid styles
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css";
 
 // create column definitions
 const columnDefs = [
@@ -227,7 +230,7 @@ const columnDefs = [
 ];
 
 // Create an underlying vendor Grid instance 
-// in this example lets use ag-Grid which has a GridOptions object
+// in this example we are using ag-Grid which has a GridOptions object
 const gridOptions: GridOptions=  {
       columnDefs: columnDefs,
       rowData : [],
@@ -247,11 +250,12 @@ const gridOptions: GridOptions=  {
   }
   
  // Create an AdaptableOptions object which will include some basic properties
- // And also the underlying Vendor Grid object and any Predefined Config we need
+ // Add the underlying Vendor Grid object and any Enterprise modules we want to use
+ // Also attach any Predefined Config we need for when AdapTable first starts up
  const adaptableOptions: AdaptableOptions = {
-    primaryKey: 'tradeId',
+    primaryKey: 'orderId',
     userName: 'Demo User',
-    adaptableId: 'iPushPull Demo',
+    adaptableId: 'readmeDemo',
     vendorGrid: {
       ...gridOptions,
     // attach the ag-Grid modules to the new 'modules' property
@@ -264,7 +268,7 @@ const gridOptions: GridOptions=  {
   // Instantiate AdapTable with AdaptableOptions and recieve an AdaptableApi object for later use
   const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
   
-  // You can now use the API to manage AdapTable and listen to Adaptable events, e.g.
+  // We can now use the API to manage AdapTable and listen to Adaptable events, e.g.
  api.eventApi.on('AdaptableReady', () => {
     // perform anything you need to do when AdapTable is ready
   });
