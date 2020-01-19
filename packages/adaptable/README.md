@@ -250,7 +250,7 @@ const gridOptions: GridOptions=  {
   }
   
  // Create an AdaptableOptions object which will include some basic properties
- // Add the underlying Vendor Grid object and any Enterprise modules we want to use
+ // Set the vendorGrid property to our gridOptions object and attach any Enterprise modules to modules property
  // Also attach any Predefined Config we need for when AdapTable first starts up
  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'orderId',
@@ -258,10 +258,8 @@ const gridOptions: GridOptions=  {
     adaptableId: 'readmeDemo',
     vendorGrid: {
       ...gridOptions,
-    // attach the ag-Grid modules to the new 'modules' property
-    modules: [MenuModule, RangeSelectionModule],
+      modules: [MenuModule, RangeSelectionModule],
      },
-    // ship AdapTable with predefined Config
     predefinedConfig: demoConfig,
   };
 
