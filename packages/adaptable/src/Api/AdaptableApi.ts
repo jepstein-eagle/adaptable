@@ -65,10 +65,10 @@ import { ScheduleApi } from './ScheduleApi';
  *
  *  | API Class  	                                        | Details                                     	                                                                            |
  *  |----------------	                                    |---------------------------------------------	                                                                            |
- *  | [actionColumnApi](#actioncolumnapi)                 | Provides access to Action Column Function and [State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)  	    |
- *  | [advancedsearchapi](#advancedsearchapi)             | Provides access to Advanced Search Function and [State](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
- *  | [alertapi](#alertapi)                               | Functions managing [Adaptable Alerts](_predefinedconfig_alertstate_.alertstate.html)  	                                  |
- *  | [applicationapi](#applicationapi)                   | Helper methods for [Application Data Entries](_predefinedconfig_applicationstate_.applicationstate.html)  	              |
+ *  | [actionColumnApi](#actioncolumnapi)                 | Manages [Action Columns](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) which contain bespoke buttons 	    |
+ *  | [advancedSearchApi](#advancedsearchapi)             | Functions relating to the saveable, cross-column [Advanced Searches](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
+ *  | [alertApi](#alertapi)                               | [Adaptable Alerts](_predefinedconfig_alertstate_.alertstate.html) provide bespoke notifications                                  |
+ *  | [applicationApi](#applicationapi)                   | Use [Application Data Entries](_predefinedconfig_applicationstate_.applicationstate.html) to manage custom state	              |
  *  |
  */
 
