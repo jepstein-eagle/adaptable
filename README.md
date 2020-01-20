@@ -1,6 +1,6 @@
 # adaptable
 
-![AdapTable image]<img src="./images/adaptablelogo.png"  width="350" height="97">
+<img src="./images/adaptablelogo.png"  width="350" height="97">
 
 Repository for AdapTable - the market-leading Data Management toolkit developed by [Adaptable Tools](www.adaptabletools.com).
 
