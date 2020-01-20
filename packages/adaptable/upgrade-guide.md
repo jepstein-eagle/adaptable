@@ -94,11 +94,11 @@ you will now do:
 ```ts
 import { AdaptableOptions } from "@adaptabletools/adaptable/types";
 ```
-### adaptableId
+#### adaptableId
 
 The `blotterId` property of `AdaptableOptions` has been renamed to `adaptableId`.
 
-### AdaptableApi
+#### AdaptableApi
 
 Instead of: 
 ```ts
@@ -109,7 +109,7 @@ you will now do:
 import { AdaptableApi } from "@adaptabletools/adaptable/types";
 ```
 
-### Wrapper Types
+#### Wrapper Types
 
 In the Angular Wrapper, instead of:
 
@@ -191,15 +191,15 @@ your html should now look like:
 <div id="adaptable"></div>
 ```
 
-Note: the old structure is still working, but we will show a warning in the console.
+> Note: the old structure is still working, but we will show a warning in the console.
 
 ## Events
 
-In Version 5 of AdapTable there were 2 ways of subscribing to events, one of which was deprecated.  
+There were previously 2 ways of subscribing to events, one of which was deprecated.  
 
-That method has now been removed and the only way to listen to events is by using the On('eventName').
+That has now been removed and the only way to listen to events is by using the On('eventName') syntax.
 
-Note: AdapTable events use FDC3 syntax so you need to drill down to the actual event args.
+Note: AdapTable events use FDC3 so you need to drill down to the actual event args.
 
 For example to subscribe to the `ActionColumnClicked` event you will do:
 
@@ -237,6 +237,8 @@ There are far too many new features to list here but some of the headlines are:
 
 ## Basic Installation Example
 
+This example shows how to set up a basic instance of AdapTable ('core' package) using ag-Grid:
+
 ```tsx
 // import Adaptable
 import Adaptable from "@adaptabletools/adaptable/agGrid";
@@ -252,10 +254,15 @@ import finance from "@adaptabletools/adaptable-plugin-finance";
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
-// import AdapTable and vendor grid styles
-import "@adaptabletools/adaptable/index.css";
+// import Adaptable css and themes
+import '@adaptabletools/adaptable/index.css';
+import '@adaptabletools/adaptable/themes/dark.css';
+
+// import ag-grid css and themes
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css";
+
 
 // create column definitions
 const columnDefs = [
