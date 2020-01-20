@@ -58,9 +58,9 @@ import { AdaptableReadyInfo } from './Events/AdaptableReady';
  *  ```ts
  * adaptableApi.eventApi.on(
  *    'ActionColumnClicked',
- *    (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
- *      const actionColumnClickedInfo: ActionColumnClickedInfo = actionColumnEventArgs.data[0].id;
- *      const actionColumn: ActionColumn = actionColumnClickedInfo.actionColumn;
+ *    (eventArgs: ActionColumnClickedEventArgs) => {
+ *      const eventInfo: ActionColumnClickedInfo = eventArgs.data[0].id;
+ *      const actionColumn: ActionColumn = eventInfo.actionColumn;
  *      // do stuff with the column ...
  *    }
  *  );
