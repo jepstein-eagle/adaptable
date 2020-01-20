@@ -92,8 +92,8 @@ import { BaseSchedule } from './Common/Schedule';
  *      (eventArgs: LiveDataChangedEventArgs) => {
  *        let liveDataChangedInfo: LiveDataChangedInfo = eventArgs.data[0].id;
  *         if (liveDataChangedInfo.ReportDestination == 'iPushPull') {
- *            if(eventData.LiveDataTrigger==='LiveDataStarted'){
- *              const iPushPullReport: IPushPullReport = eventData.LiveReport;
+ *            if(liveDataChangedInfo.LiveDataTrigger==='LiveDataStarted'){
+ *              const iPushPullReport: IPushPullReport = liveDataChangedInfo.LiveReport;
  *              // do somthing wih the report...
  *            }
  *        }
