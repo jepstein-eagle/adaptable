@@ -84,7 +84,7 @@ See the code example at the bottom of the page for more details.
 
 We have renamed some of the core 'types' to reflect the product name change.
 
-### AdaptableOptions
+#### AdaptableOptions
 
 Instead of: 
 ```ts
@@ -94,11 +94,11 @@ you will now do:
 ```ts
 import { AdaptableOptions } from "@adaptabletools/adaptable/types";
 ```
-- **adaptableId**
+### adaptableId
 
 The `blotterId` property of `AdaptableOptions` has been renamed to `adaptableId`.
 
-- **AdaptableApi**
+### AdaptableApi
 
 Instead of: 
 ```ts
@@ -109,7 +109,7 @@ you will now do:
 import { AdaptableApi } from "@adaptabletools/adaptable/types";
 ```
 
-- **Wrapper Types**
+### Wrapper Types
 
 In the Angular Wrapper, instead of:
 
