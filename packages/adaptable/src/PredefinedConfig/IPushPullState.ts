@@ -12,15 +12,15 @@ import { BaseSchedule } from './Common/Schedule';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/partners/ipushpulldemo/) | [iPushPull API](interfaces/_api_ipushpullapi_.ipushpullapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
+ * [Demo Site](https://demo.adaptableblotter.com/partners/ipushpulldemo/) | [iPushPull API](_api_ipushpullapi_.ipushpullapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
  *
- * If iPushPull state is provided, then AdapTable will set the `IsIPushPullAvailable` property to true (you can get the value of this property through the iPushPullApi [isIPushPullAvailable](interfaces/_api_ipushpullapi_.ipushpullapi.html#isipushpullavailable) function)
+ * If iPushPull state is provided, then AdapTable will set the `IsIPushPullAvailable` property to true (you can get the value of this property through the iPushPullApi [isIPushPullAvailable](_api_ipushpullapi_.ipushpullapi.html#isipushpullavailable) function)
  *
  * When this property is set to true, an iPushPull Toolbar will be for you to use.
  *
  * If you have `AutoLogin` set to true then AdapTable will try to log you in automatically; otherwise the toolbar will display a login button that when clicked will open the Login popup.
  *
- * Once you are logged in another boolean property (`IsIPushPullRunning`) is set to true (you can get the value of this property through the iPushPullApi [isIPushPullRunning](interfaces/_api_ipushpullapi_.ipushpullapi.html#isipushpullrunning) function)
+ * Once you are logged in another boolean property (`IsIPushPullRunning`) is set to true (you can get the value of this property through the iPushPullApi [isIPushPullRunning](_api_ipushpullapi_.ipushpullapi.html#isipushpullrunning) function)
  *
  * Within the iPushPull Toolbar there are options to:
  *
@@ -28,7 +28,7 @@ import { BaseSchedule } from './Common/Schedule';
  *
  * - Send 'Live Data' to iPushPull so that it updates in line with changes in AdapTable
  *
- * - Create a schedule so that data will get exported to iPushPull at a particular time / date
+ * - Create a schedule so that data will get exported to iPushPull at a particular (and repeated) time / date
  *
  * - Add a new iPushPull page
  *
@@ -61,7 +61,7 @@ import { BaseSchedule } from './Common/Schedule';
  *
  *  ------
  *
- * // 3. pass in this config as 'iPushPullInstance' property in iPushPull / Partner state
+ * // 3. pass in this config as 'iPushPullInstance' property in iPushPull state
  * // You can add your iPushPull username & password to help pre-fill the login page
  * const adaptableOptions: AdaptableOptions = {
  *   .........
@@ -78,7 +78,7 @@ import { BaseSchedule } from './Common/Schedule';
  * }
  *
  *  ```
- * You are also able to listen to iPushPull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](interfaces/_api_events_livedatachanged_.livedatachangedinfo.html) ).
+ * You are also able to listen to iPushPull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](_api_events_livedatachanged_.livedatachangedinfo.html) ).
  *
  * This event contains a `ReportDestination` property which you can check to see whether it equals 'iPushPull'.
  *
@@ -92,7 +92,10 @@ import { BaseSchedule } from './Common/Schedule';
  *      (eventArgs: LiveDataChangedEventArgs) => {
  *        let liveDataChangedInfo: LiveDataChangedInfo = eventArgs.data[0].id;
  *         if (liveDataChangedInfo.ReportDestination == 'iPushPull') {
- *            // do something...
+ *            if(eventData.LiveDataTrigger==='LiveDataStarted'){
+ *              const iPushPullReport: IPushPullReport = eventData.LiveReport;
+ *              // do somthing wih the report...
+ *            }
  *        }
  *    }
  *  );

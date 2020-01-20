@@ -19,6 +19,7 @@ import {
   LiveDataChangedEventArgs,
   LiveDataChangedInfo,
 } from '../../../../src/Api/Events/LiveDataChanged';
+import { IPushPullReport } from '../../../../src/PredefinedConfig/IPushPullState';
 
 ipushpull.config.set({
   api_secret: '',
@@ -64,8 +65,10 @@ function InitAdaptableDemo() {
   adaptableApi.eventApi.on('LiveDataChanged', (eventArgs: LiveDataChangedEventArgs) => {
     let eventData: LiveDataChangedInfo = eventArgs.data[0].id;
     if (eventData.ReportDestination == 'iPushPull') {
-      console.log('got an event');
-      console.log(eventData);
+      if (eventData.LiveDataTrigger === 'LiveDataStarted') {
+        const iPushPullReport: IPushPullReport = eventData.LiveReport;
+        // do somthing wih the report...
+      }
     }
   });
 }
