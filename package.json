@@ -43,7 +43,7 @@
     "release:major": "npm run bump:major && npm run copy-npmrc && npm run registry-publish",
     "copy-npmrc": "cp .npmrc ./packages/adaptable && cp .npmrc ./packages/adaptable-react-aggrid && cp .npmrc ./packages/adaptable-ng-aggrid && cp .npmrc ./packages/adaptable-nocode && cp .npmrc ./packages/plugins/charts && cp .npmrc ./packages/plugins/finance",
     "registry-publish-canary": "cd packages/adaptable && npm run registry-publish-canary && cd ../../packages/adaptable-react-aggrid && npm run registry-publish-canary && cd ../../packages/adaptable-ng-aggrid && npm run registry-publish-canary && cd ../../packages/plugins/charts && npm run registry-publish-canary && cd ../finance && npm run registry-publish-canary",
-    "registry-publish": "cd packages/adaptable && npm run registry-publish && cd ../../packages/adaptable-react-aggrid && npm run registry-publish && cd ../../packages/adaptable-ng-aggrid && npm run registry-publish && cd ../../packages/plugins/charts && npm run registry-publish && cd ../../packages/plugins/finance && npm run registry-publish",
+    "registry-publish": "cd packages/adaptable && npm run registry-publish && cd ../../packages/adaptable-react-aggrid && npm run registry-publish && cd ../../packages/adaptable-ng-aggrid && npm run registry-publish && cd ../../packages/plugins/charts && npm run registry-publish && cd ../finance && npm run registry-publish",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "install-core": "npm install --prefix packages/adaptable && npm run --prefix packages/adaptable rm-native-types",
     "install-nocode": "npm install --prefix packages/adaptable-nocode",
