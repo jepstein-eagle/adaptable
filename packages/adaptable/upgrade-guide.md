@@ -84,7 +84,7 @@ See the code example at the bottom of the page for more details.
 
 We have renamed some of the core 'types' to reflect the product name change.
 
-- **AdaptableOptions**
+### AdaptableOptions
 
 Instead of: 
 ```ts
@@ -138,7 +138,9 @@ import AdaptableReactAgGrid from '@adaptabletools/adaptable-react-aggrid';
 
 We have made it easier to create an instance of AdapTable by providing a static constructor. 
 
-This comes with the added bonus that the constructor returns an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime.  So, instead of:
+This comes with the added bonus that the constructor returns an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features and state of AdapTable at runtime.  
+
+So, instead of:
 
 ```ts
 const blotter = new AdaptableBlotter(adaptableOptions)
@@ -148,10 +150,10 @@ you will now do
 ```ts
 const api: AdaptableApi = Adaptable.init(adaptableOptions)
 ```
-Not only do you get back the public api but you no longer have access to a very large blotter instance, which used to contain a lot private fields, not meant for public use and which caused issues for our users.
+Not only do you get back the public api but you no longer have access to a very large blotter instance, which contains a lot of private fields, not meant for public use and which caused issues for our users.
 
 
-### React wrapper prop changes
+## React wrapper prop changes
 
 The `blotterOptions` prop has been renamed to `adaptableOptions`
 
