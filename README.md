@@ -159,11 +159,13 @@ Other Read Me docs that will be of interest are:
 
  - [Version 6 Upgrade Guide](./packages/adaptable/upgrade-guide.md)
 
- - [Adaptable Core 'readme'](./packages/adaptable/README.md)
+ - [Adaptable Core](./packages/adaptable/README.md)
 
- - [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
+ - [React Wrapper](./packages/adaptable-react-aggrid/README.md)
   
- - [Angular Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
+ - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md)
+ 
+ - [Adaptable Theming and Styling Guide](./packages/adaptable/adaptable-theming-guide.md)
 
 ## Support
 
