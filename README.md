@@ -1,5 +1,7 @@
 # adaptable
 
+![AdapTable image](./images/adaptablelogo.png)
+
 Repository for AdapTable - the market-leading Data Management toolkit developed by [Adaptable Tools](www.adaptabletools.com).
 
 AdapTable (previously known as the Adaptable Blotter) is a powerful HTML5 DataGrid add-on that integrates with the leading  components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
