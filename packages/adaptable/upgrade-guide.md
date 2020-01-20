@@ -10,21 +10,21 @@ Version 6 of AdapTable reflects the new name of the product; formally known as t
 
 As a consequence:
 
-The package `@adaptabletools/adaptableblotter` has been renamed to `@adaptabletools/adaptable`
+- The package `@adaptabletools/adaptableblotter` has been renamed to `@adaptabletools/adaptable`
 
-The package `@adaptabletools/adaptableblotter-react-aggrid` has been renamed to `@adaptabletools/adaptable-react-aggrid`
+- The package `@adaptabletools/adaptableblotter-react-aggrid` has been renamed to `@adaptabletools/adaptable-react-aggrid`
 
-The package `@adaptabletools/adaptableblotter-angular-aggrid` has been renamed to `@adaptabletools/adaptable-angular-aggrid`
+- The package `@adaptabletools/adaptableblotter-angular-aggrid` has been renamed to `@adaptabletools/adaptable-angular-aggrid`
 
 ## ag-Grid Modularisation
 
-Version 6 depends on ag-Grid v.22.  This included a big change to using [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  The distinction between Community (free) and Enterprise (commercial) was maintained.
+Version 6 depends on ag-Grid v.22 which introduced [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  The distinction between Community (free) and Enterprise (commercial) was maintained.
 
-AdapTable (both 'core' and frameworks wrappers) now depends on `@ag-grid-community/all-modules` (as a peer dependency), so please make sure you install it.
+AdapTable (both 'core' and framework wrappers) now depends on `@ag-grid-community/all-modules` as a **peer dependency**, so please make sure you install it.
 
 You can, additionally, install as many ag-Grid Enterprise modules as you want; AdapTable will only provide functionality that matches the ag-Grid modules that you provide.
 
-In the vanilla JavaScript version you add the modules as an extra property of *vendorGrid* (in AdaptableOptions):
+In the vanilla JavaScript version you add the modules as an extra property of **vendorGrid** (in *AdaptableOptions*):
 
 ```ts
  vendorGrid: {
@@ -33,7 +33,7 @@ In the vanilla JavaScript version you add the modules as an extra property of *v
     },
 ```
 
-In the React Wrapper there is a Modules property you can use:
+In the React Wrapper there is a **Modules** prop:
 
 ```ts
 export default () => <AdaptableReactAgGrid
@@ -44,7 +44,7 @@ export default () => <AdaptableReactAgGrid
   onAdaptableReady={(adaptableApi, gridOptions) => { ... }}
 />
 ```
-Similarly in the Angular Wrappers you will do:
+Similarly in the Angular Wrappers there is a **Modules** attribute:
 
 ```ts
  public agGridModules: Module[] = AllEnterpriseModules;
@@ -66,9 +66,13 @@ The core package (and react and angular wrappers) no longer includes charting or
 
 Instead, these are available through 2 plugins (though more will be added in the future):
 
-- **Charts** (`@adaptabletools/adaptable-charts-finance`): courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+- **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
-- **Finance** (`@adaptabletools/adaptable-plugin-finance`): adds additional functionality of benefit only to advanced financial users.
+> courtesy of [Infragistics](https://www.infragistics.com/products/ignite-ui-react) - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+
+- **Finance** (`@adaptabletools/adaptable-plugin-finance`)
+
+> adds additional functionality of benefit only to advanced financial users.
 
 In order to use a plugin, you have to install it via npm or yarn; you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
 
@@ -110,7 +114,6 @@ you now do
 ```ts
 import AdaptableReactAgGrid from '@adaptabletools/adaptable-react-aggrid';
 ```
-
 
 
 ## Instantiation
