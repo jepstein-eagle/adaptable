@@ -42,11 +42,11 @@ export interface LiveDataChangedEventData extends AdaptableEventData {
  *
  * The object contains 3 properties:
  *
- * -The `LiveDataTrigger` property defines **why** the event fired.
+ * - The `LiveDataTrigger` property defines **why** the event fired.
  *
- * -The `ReportDestination` property reflects which of Adaptable Partners is being used (i.e. OpenFin, iPushPull or Glue42).
+ * - The `ReportDestination` property reflects which of Adaptable Partners is being used (i.e. OpenFin, iPushPull or Glue42).
  *
- * -The `LiveReport` property provides details of the Report that has just been stopped / started / updated.
+ * - The `LiveReport` property provides details of the Report that has just been stopped / started / updated.
  *
  */
 export interface LiveDataChangedInfo {

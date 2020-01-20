@@ -6,11 +6,21 @@ import { BaseSchedule } from './Common/Schedule';
 /**
  * The objects required to run the [iPushPull](https://ipushpull.com) integration from within Adaptable.
  *
- * This state is created by the user / developer at design time and injected into Adaptable as Predefined Config
+ * This state is created by the user / developer at design time and injected into Adaptable as Predefined Config.
  *
- * If iPushPull state is provided, then an iPushPull Toolbar will be available.
+ * Our partnership with iPushPull enables you to send live data from AdapTable to a number of locations, including Symphony.
+ *
+ *  **Further AdapTable Help Resources**
+ *
+ * [Demo Site](https://demo.adaptableblotter.com/partners/ipushpulldemo/) | [iPushPull API](interfaces/_api_ipushpullapi_.ipushpullapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
+ *
+ * If iPushPull state is provided, then AdapTable will set the `IsIPushPullAvailable` property to true (you can get the value of this property through the iPushPullApi [isIPushPullAvailable](interfaces/_api_ipushpullapi_.ipushpullapi.html#isipushpullavailable) function)
+ *
+ * When this property is set to true, an iPushPull Toolbar will be for you to use.
  *
  * If you have `AutoLogin` set to true then AdapTable will try to log you in automatically; otherwise the toolbar will display a login button that when clicked will open the Login popup.
+ *
+ * Once you are logged in another boolean property (`IsIPushPullRunning`) is set to true (you can get the value of this property through the iPushPullApi [isIPushPullRunning](interfaces/_api_ipushpullapi_.ipushpullapi.html#isipushpullrunning) function)
  *
  * Within the iPushPull Toolbar there are options to:
  *
@@ -68,9 +78,9 @@ import { BaseSchedule } from './Common/Schedule';
  * }
  *
  *  ```
- * You are also able to listen to iPushPull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](/_api_events_livedatachanged_.livedatachangedeventargs.html) ).
+ * You are also able to listen to iPushPull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](interfaces/_api_events_livedatachanged_.livedatachangedinfo.html) ).
  *
- * This event contains a `ReportDestination` property which you can check whether it equals 'iPushPull'.
+ * This event contains a `ReportDestination` property which you can check to see whether it equals 'iPushPull'.
  *
  * The event also includes a `LiveDataTrigger` property which will tell you what caused the event to fire (e.g. connected, dataupdated etc.), and a `LiveReport` property which provides the report affected.
  *
