@@ -115,7 +115,7 @@ There are currently two plugins:
 
 - **Finance** (`@adaptabletools/adaptable-plugin-finance`)
 
-> Adds additional functionality of benefit only to advanced financial users.
+> Adds additional functionality of benefit to advanced financial users (currently very empty but will be added to over time)
 
 
 ## Licences
