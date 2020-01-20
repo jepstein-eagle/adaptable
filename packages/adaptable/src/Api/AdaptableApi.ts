@@ -59,13 +59,16 @@ import { ScheduleApi } from './ScheduleApi';
  *
  * `AdaptableApi` consists of over 40 sets of properties grouped against a particular function.
  *
- * Each of these properties is a class that contains a set of API method grouped either by AdapTable Function (e.g. `AdvancedSearchAPI`) or type (e.g. *`uditEventApi`)
+ * Each of these properties is a class that contains a set of API method grouped either by AdapTable Function (e.g. `AdvancedSearchAPI`) or type (e.g. `AuditEventApi`)
  *
  * The full list is:
  *
- *  | API Class  	                                        | Details                                     	                                                                                                                                 |
- *  |----------------	                                    |---------------------------------------------	                                                                                                                                 |
- *  | [actionColumnApi](#actioncolumnapi)                 | Provides access to Action Column Function and [State](https://api.adaptableblotter.com/interfaces/_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)  	             |
+ *  | API Class  	                                        | Details                                     	                                                                            |
+ *  |----------------	                                    |---------------------------------------------	                                                                            |
+ *  | [actionColumnApi](#actioncolumnapi)                 | Provides access to Action Column Function and [State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)  	    |
+ *  | [advancedsearchapi](#advancedsearchapi)             | Provides access to Advanced Search Function and [State](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
+ *  | [alertapi](#alertapi)                               | Functions managing [Adaptable Alerts](_predefinedconfig_alertstate_.alertstate.html)  	                                  |
+ *  | [applicationapi](#applicationapi)                   | Helper methods for [Application Data Entries](_predefinedconfig_applicationstate_.applicationstate.html)  	              |
  *  |
  */
 
