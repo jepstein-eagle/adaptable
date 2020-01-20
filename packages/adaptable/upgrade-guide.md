@@ -2,11 +2,11 @@
 
 Version 6 of AdapTable includes many new features, improvements and ways of working that will allow you to do more with the tool than ever before. 
 
-This document will help you migrate to Version 6 of AdapTable and point out some of the more important changes and improvements.
+This document will help you migrate to the new version and points out some of the more important changes and improvements.
 
 ## Package Name Changes
 
-Version 6 of AdapTable reflects the new name of the product; formally known as the 'Adaptable Blotter', it has been renamed 'AdapTable' to reflect the tabular nature of the tool and that it can be, and is, widely used outside of finance.
+Version 6 of AdapTable reflects the new name of the product; formally known as the *Adaptable Blotter*, it has been renamed **AdapTable** to illustrate the tabular nature of the tool and that it can be, and is, widely used outside of finance.
 
 As a consequence:
 
@@ -18,9 +18,9 @@ As a consequence:
 
 ## ag-Grid Modularisation
 
-Version 6 depends on ag-Grid v.22 which introduced [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they wanted.  The distinction between Community (free) and Enterprise (commercial) was maintained.
+Version 6 depends on ag-Grid v.22 which introduced [modularization](https://www.ag-grid.com/javascript-grid-modules/), allowing users to select which functionality they want.  The distinction between Community (free) and Enterprise (commercial) was maintained.
 
-AdapTable (both 'core' and framework wrappers) now depends on `@ag-grid-community/all-modules` as a **peer dependency**, so please make sure you install it.
+AdapTable (all packages) now depends on `@ag-grid-community/all-modules` as a **peer dependency**, so please make sure you install it.
 
 You can, additionally, install as many ag-Grid Enterprise modules as you want; AdapTable will only provide functionality that matches the ag-Grid modules that you provide.
 
@@ -60,9 +60,9 @@ Similarly in the Angular Wrappers there is a **Modules** attribute:
 
 ## Plugins:  Charts & Financial
 
-AdapTable now includes a plugins architecture, which makes the core package much lighter. 
+AdapTable now includes a plugins architecture to reduce download size. 
 
-The core package (and react and angular wrappers) no longer includes charting or financial-specific functionality. This means ligher javascript bundles for most users.
+The core package (and react and angular wrappers) no longer includes charting or financial-specific functionality as standard. This means much lighter JavaScript bundles for most users.
 
 Instead, these are available through 2 plugins (though more will be added in the future):
 
@@ -74,43 +74,61 @@ Instead, these are available through 2 plugins (though more will be added in the
 
 > adds additional functionality of benefit only to advanced financial users.
 
-In order to use a plugin, you have to install it via npm or yarn; you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
+In order to use a plugin, you have to install it via npm or yarn.
+
+> Note: you need to install the **exact same version** as the `@adaptabletools/adaptable` package you are already using in your app.
 
 See the code example at the bottom of the page for more details.
 
-## Types
+## Type Changes
 
 We have renamed some of the core 'types' to reflect the product name change.
 
-Instead of 
+#### AdaptableOptions
+
+Instead of: 
 ```ts
 import { AdaptableBlotterOptions } from "@adaptabletools/adaptableblotter/types";
 ```
-you now do
+you will now do:
 ```ts
 import { AdaptableOptions } from "@adaptabletools/adaptable/types";
 ```
+#### adaptableId
 
-Also the `blotterId` of `AdaptableOptions`  has been renamed to `adaptableId`.
+The `blotterId` property of `AdaptableOptions` has been renamed to `adaptableId`.
 
-In the Angular Wrapper, instead of
+#### AdaptableApi
+
+Instead of: 
+```ts
+import { BlotterApi } from "@adaptabletools/adaptableblotter/types";
+```
+you will now do:
+```ts
+import { AdaptableApi } from "@adaptabletools/adaptable/types";
+```
+
+#### Wrapper Types
+
+In the Angular Wrapper, instead of:
 
 ```ts
 import { AdaptableBlotterAngularAgGridModule } from '@adaptabletools/adaptableblotter-angular-aggrid';
 ```
 
-you now do
+you will now do:
 ```ts
 import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-aggrid';
 ```
 
-In the React Wrapper, instead of
+In the React Wrapper, instead of:
 
 ```ts
 import AdaptableBlotterReact from '@adaptabletools/adaptableblotter-react-aggrid';
 ```
 
-you now do
+you will now do:
 ```ts
 import AdaptableReactAgGrid from '@adaptabletools/adaptable-react-aggrid';
 ```
@@ -120,7 +138,9 @@ import AdaptableReactAgGrid from '@adaptabletools/adaptable-react-aggrid';
 
 We have made it easier to create an instance of AdapTable by providing a static constructor. 
 
-This comes with the advantage of being able to return an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime.  So, instead of:
+This comes with the added bonus that the constructor returns an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features and state of AdapTable at runtime.  
+
+So, instead of:
 
 ```ts
 const blotter = new AdaptableBlotter(adaptableOptions)
@@ -130,10 +150,10 @@ you will now do
 ```ts
 const api: AdaptableApi = Adaptable.init(adaptableOptions)
 ```
-Not only do you get back the public api but you no longer have access to a very large blotter instance, which used to contain a lot private fields, not meant for public use and which caused issues for our users.
+Not only do you get back the public api but you no longer have access to a very large blotter instance, which contains a lot of private fields, not meant for public use and which caused issues for our users.
 
 
-### React wrapper prop changes
+## React wrapper prop changes
 
 The `blotterOptions` prop has been renamed to `adaptableOptions`
 
@@ -171,15 +191,15 @@ your html should now look like:
 <div id="adaptable"></div>
 ```
 
-Note: the old structure is still working, but we will show a warning in the console.
+> Note: the old structure is still working, but we will show a warning in the console.
 
 ## Events
 
-In Version 5 of AdapTable there were 2 ways of subscribing to events, one of which was deprecated.  
+There were previously 2 ways of subscribing to events, one of which was deprecated.  
 
-That method has now been removed and the only way to listen to events is by using the On('eventName').
+That has now been removed and the only way to listen to events is by using the On('eventName') syntax.
 
-Note: AdapTable events use FDC3 syntax so you need to drill down to the actual event args.
+Note: AdapTable events use FDC3 so you need to drill down to the actual event args.
 
 For example to subscribe to the `ActionColumnClicked` event you will do:
 
@@ -217,6 +237,8 @@ There are far too many new features to list here but some of the headlines are:
 
 ## Basic Installation Example
 
+This example shows how to set up a basic instance of AdapTable ('core' package) using ag-Grid:
+
 ```tsx
 // import Adaptable
 import Adaptable from "@adaptabletools/adaptable/agGrid";
@@ -232,10 +254,15 @@ import finance from "@adaptabletools/adaptable-plugin-finance";
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 
-// import AdapTable and vendor grid styles
-import "@adaptabletools/adaptable/index.css";
+// import Adaptable css and themes
+import '@adaptabletools/adaptable/index.css';
+import '@adaptabletools/adaptable/themes/dark.css';
+
+// import ag-grid css and themes
 import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css";
+
 
 // create column definitions
 const columnDefs = [
@@ -283,12 +310,16 @@ const api: AdaptableApi = Adaptable.init(adaptableOptions);
   
 ```
 
-## Further Information and Help
+## Demo
 
-Read more at:
+To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 
- * [Developer Documentation](https://api.adaptableblotter.com/index.html)
- * [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
- * [Demo Site](https://demo.adaptableblotter.com/)
- 
+## Help
 
+Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
+
+Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
+
+## Support
+
+For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
