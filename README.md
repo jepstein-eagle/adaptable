@@ -1,4 +1,4 @@
-# adaptable
+ # adaptable
 
 <img src="./images/adaptablelogo.png"  width="250" height="69">
 
@@ -144,7 +144,7 @@ These include:
   
 * [Parcel JS (quick build) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
    
-* [iPushpPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
+* [iPushPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
  
  
 ## Help
