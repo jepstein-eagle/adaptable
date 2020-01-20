@@ -39,7 +39,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
               Element: <AlertTypeWizard />,
             },
             {
-              StepName: 'Scope',
+              StepName: 'Behaviour',
               Index: 3,
               Element: <AlertScopeWizard />,
             },

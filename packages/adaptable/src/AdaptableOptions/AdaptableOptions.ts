@@ -117,6 +117,8 @@ export interface AdaptableOptions {
    *
    * Note: if you are using the *React Wrapper* or the *Angular Wrapper* then **you do not need to populate this property** (as `gridOptions` is a separate parameter and AdapTable will wire up everything for you).
    *
+   * > If you are using ag-Grid and want to include Enterprise modules then you should add them to the `modules` property of ag-Grid.
+   *
    * **Default Value: N/A**
    */
   vendorGrid?: any;
