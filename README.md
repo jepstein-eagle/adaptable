@@ -153,6 +153,18 @@ Further information about AdapTable is available at our [Website](www.adaptablet
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
 
+## Other Read Mes
+
+Other Read Me docs that will be of interest are:
+
+ - [Version 6 Upgrade Guide](./packages/adaptable/upgrade-guide.md)
+
+ - [Adaptable Core 'readme'](./packages/adaptable/README.md)
+
+ - [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
+  
+ - [Angular Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
+
 ## Support
 
 For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
