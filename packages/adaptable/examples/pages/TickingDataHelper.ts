@@ -22,12 +22,14 @@ export class TickingDataHelper {
     tradeCount: number
   ) {
     if (gridOptions != null && gridOptions.api != null) {
+      console.log(1);
       const examplesHelper = new ExamplesHelper();
       let useadaptableApiUpdateGridData: boolean = false;
+      let useadaptableApiUpdateGridDataBatch: boolean = true;
       let useadaptableApiSetCellValue: boolean = false;
       let useRowNodeSetDataValue: boolean = false;
       let useRowNodeSetData: boolean = false;
-      let gridOptionsUpdateRowData: boolean = true;
+      let gridOptionsUpdateRowData: boolean = false;
 
       setInterval(() => {
         let tradeId = this.generateRandomInt(1, tradeCount);
@@ -55,6 +57,25 @@ export class TickingDataHelper {
           trade.notional = notional;
           trade.changeOnYear = changeOnYear;
           adaptableApi.gridApi.updateGridData([trade]);
+        }
+
+        if (useadaptableApiUpdateGridDataBatch) {
+          let test = function resultCallback() {
+            console.log('batch occurred');
+          };
+
+          trade.price = price;
+          trade.bid = bid;
+          trade.ask = ask;
+          trade.bloombergAsk = bloombergAsk;
+          trade.bloombergBid = bloombergBid;
+          trade.notional = notional;
+          trade.changeOnYear = changeOnYear;
+          let config = {
+            batchUpdate: true,
+            callback: test,
+          };
+          adaptableApi.gridApi.updateGridData([trade], config);
         }
 
         if (gridOptionsUpdateRowData) {

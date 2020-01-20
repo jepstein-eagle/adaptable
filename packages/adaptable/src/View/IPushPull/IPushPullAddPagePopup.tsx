@@ -143,7 +143,7 @@ const IPushPullAddPageComponent = (props: IPushPullAddPagePopupProps) => {
                 disabled={availableFolders.length == 0}
                 style={{ minWidth: '50%' }}
                 options={availableFolders}
-                className="ab-DashboardToolbar__Export__select"
+                className="ab-Popup__IPushPull__select"
                 onChange={(folder: string) => onFolderChanged(folder)}
                 value={state.Folder ? state.Folder : null}
                 placeholder="Select Folder"

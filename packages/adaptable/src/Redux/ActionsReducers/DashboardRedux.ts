@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
-import { ButtonStyle } from '../../PredefinedConfig/Common/ToolbarButton';
+import { ButtonStyle, ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 import {
   AdaptableDashboardToolbars,
   AdaptableDashboardToolbar,
@@ -30,6 +30,7 @@ const DASHBOARD_HIDE_TOOLBARS_DROPDOWN = 'DASHBOARD_HIDE_TOOLBARS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
 const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE =
   'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE';
+const DASHBOARD_CUSTOM_TOOLBAR_EDIT = 'DASHBOARD_CUSTOM_TOOLBAR_EDIT';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
   toolbars: AdaptableDashboardToolbars;
@@ -85,6 +86,10 @@ export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
 
 export interface DashboardSetMinimisedHomeToolbarButtonStyleAction extends Redux.Action {
   ButtonStyle: ButtonStyle;
+}
+
+export interface DashboardCustomToolbarEditAction extends Redux.Action {
+  customToolbar: CustomToolbar;
 }
 
 export const DashboardSetAvailableToolbars = (
@@ -189,6 +194,13 @@ export const DashboardSetMinimisedHomeToolbarButtonStyle = (
 ): DashboardSetMinimisedHomeToolbarButtonStyleAction => ({
   type: DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE,
   ButtonStyle,
+});
+
+export const DashboardCustomToolbarEdit = (
+  customToolbar: CustomToolbar
+): DashboardCustomToolbarEditAction => ({
+  type: DASHBOARD_CUSTOM_TOOLBAR_EDIT,
+  customToolbar,
 });
 
 const initialDashboardState: DashboardState = {
@@ -323,6 +335,17 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
       const actionTyped = action as DashboardSetMinimisedHomeToolbarButtonStyleAction;
       return Object.assign({}, state, {
         MinimisedHomeToolbarButtonStyle: actionTyped.ButtonStyle,
+      });
+    }
+
+    case DASHBOARD_CUSTOM_TOOLBAR_EDIT: {
+      const actionTyped = action as DashboardCustomToolbarEditAction;
+      const actionCustomSort: CustomToolbar = actionTyped.customToolbar;
+      let customToolbars: CustomToolbar[] = state.CustomToolbars.map(abObject =>
+        abObject.Uuid === actionCustomSort.Uuid ? actionCustomSort : abObject
+      );
+      return Object.assign({}, state, {
+        CustomToolbars: customToolbars,
       });
     }
 

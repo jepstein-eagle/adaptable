@@ -52,7 +52,10 @@ export class AdaptableAngularAgGridComponent implements OnInit {
   @Input() gridOptions: GridOptions;
   @Input() modules?: Module[];
   @Input() agGridContainerClassName: string;
-  @Input() onAdaptableReady?: (api: AdaptableApi) => void;
+  @Input() onAdaptableReady?: (adaptableReadyInfo: {
+    adaptableApi: AdaptableApi;
+    vendorGrid: GridOptions;
+  }) => void;
 
   public adaptableContainerId: string;
   public gridContainerId: string;

@@ -4,7 +4,9 @@ import { ExportDestination } from '../../../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from '../../../Strategy/Interface/IStrategyActionReturn';
 
 export interface IReportService {
-  IsSystemReport(Report: Report): boolean;
+  IsSystemReport(report: Report): boolean;
+
+  IsSystemReportActive(report: Report): boolean;
 
   GetReportColumnsDescription(report: Report, cols: AdaptableColumn[]): string;
 

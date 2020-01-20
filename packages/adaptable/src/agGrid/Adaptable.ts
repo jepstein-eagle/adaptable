@@ -11,6 +11,8 @@ import {
   ICellRendererFunc,
   SideBarDef,
   Events,
+  Module,
+  RowNodeTransaction,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -152,6 +154,7 @@ import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
+import check from '../components/icons/check';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -470,7 +473,10 @@ export class Adaptable implements IAdaptable {
       if (eventName == INIT_STATE) {
         // and reset state also?
         this.forPlugins(plugin => plugin.onAdaptableReady(this, this.adaptableOptions));
-        this.api.eventApi.emit('AdaptableReady', this.adaptableOptions.adaptableId);
+        this.api.eventApi.emit('AdaptableReady', {
+          adaptableApi: this.api,
+          vendorGrid: this.adaptableOptions.vendorGrid,
+        });
       }
     });
   }
@@ -2746,8 +2752,16 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.api!.setRowData(dataSource);
   }
 
-  public updateRows(dataRows: any[]): void {
-    this.gridOptions.api!.updateRowData({ update: dataRows });
+  public updateRows(
+    dataRows: any[],
+    config?: { batchUpdate?: boolean; callback?: (res: RowNodeTransaction) => void }
+  ): void {
+    config = config || {};
+    if (config.batchUpdate) {
+      this.gridOptions.api!.batchUpdateRowData({ update: dataRows }, config.callback);
+    } else {
+      this.gridOptions.api!.updateRowData({ update: dataRows });
+    }
   }
 
   public addRows(dataRows: any[]): void {
@@ -2965,8 +2979,15 @@ export class Adaptable implements IAdaptable {
   }
 
   public isSelectable(): boolean {
-    if (this.gridOptions.enableRangeSelection != null) {
-      return this.gridOptions.enableRangeSelection;
+    let isRangeSelectionModuleRegistered: boolean = this.agGridHelper.isModulePresent(
+      'range-selection'
+    );
+    if (
+      isRangeSelectionModuleRegistered &&
+      this.gridOptions.enableRangeSelection != null &&
+      this.gridOptions.enableRangeSelection
+    ) {
+      return true;
     }
     return false;
   }
@@ -3102,7 +3123,7 @@ export class Adaptable implements IAdaptable {
 
 If it's a default theme, try
 
-import "adaptableadaptable/themes/${themeName}.css"`);
+import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     }
   }
 

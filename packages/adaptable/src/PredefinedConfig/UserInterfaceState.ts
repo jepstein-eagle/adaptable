@@ -10,7 +10,7 @@ import { AdaptableColumn } from './Common/AdaptableColumn';
  *
  * These include:
  *
- * - [PermittedColumnValues](#permittedcolumnvalues): List of allowed values to show in a given column's filter (or Query Builder).
+ * - [PermittedValuesColumns](#permittedvaluescolumns): List of allowed values to show in a given column's filter (or Query Builder).
  *
  * - [RowStyles](#rowstyles): Defines how alternating (or all) rows in Adaptable should look.
  *
@@ -279,7 +279,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *     {
    *        Label: 'Mimise Dashboard',
    *        UserMenuItemClickedFunction: () => {
-   *            adaptableApi.dashboardApi.Minimise();
+   *            adaptableApi.dashboardApi.minimise();
    *        },
    *     },
    *     {
@@ -374,7 +374,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *     {
    *        Label: 'Mimise Dashboard',
    *        UserMenuItemClickedFunction: () => {
-   *            adaptableApi.dashboardApi.Minimise();
+   *            adaptableApi.dashboardApi.minimise();
    *        },
    *     },
    *     {

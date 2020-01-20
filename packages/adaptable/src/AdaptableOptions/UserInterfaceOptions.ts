@@ -32,6 +32,13 @@ export interface UserInterfaceOptions {
    */
   showAdaptableToolPanel?: boolean;
 
+  /**
+   * The name to tive the AdapTable Tool Panel
+   *
+   * This will vertically in the Tool Panel name section.
+   *
+   * **Default Value: 'AdapTable'**
+   */
   adaptableToolPanelTitle?: string;
 
   /**

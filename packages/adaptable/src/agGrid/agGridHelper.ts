@@ -11,6 +11,8 @@ import {
   GetContextMenuItemsParams,
   Column,
   RowNode,
+  Module,
+  ModuleRegistry,
 } from '@ag-grid-community/all-modules';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -702,5 +704,14 @@ export class agGridHelper {
       }
     }
     return DataType.Unknown;
+  }
+
+  public isModulePresent(moduleName: string): boolean {
+    let modules: Module[] = ModuleRegistry.getRegisteredModules();
+    let moduleNames: string[] = modules.map(m => m.moduleName);
+    return ArrayExtensions.ContainsAnyItem(moduleNames, [
+      `@ag-grid-enterprise/${moduleName}`,
+      '@ag-grid-enterprise/all-modules',
+    ]);
   }
 }

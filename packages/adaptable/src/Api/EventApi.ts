@@ -7,11 +7,14 @@ import { ThemeChangedEventArgs } from './Events/ThemeChanged';
 import { AlertFiredEventArgs } from './Events/AlertFired';
 import { ColumnStateChangedEventArgs } from './Events/ColumnStateChanged';
 import { SearchChangedEventArgs } from './Events/SearchChanged';
+import { AdaptableReadyInfo } from './Events/AdaptableReady';
 
 /**
- * Adaptable publishes a large number of events to which users can subscribe as required.
+ * AdapTable publishes a large number of events to which users can subscribe as required.
  *
- * These are:
+ * Note: these are in addition to the [Audit Events](_api_auditeventapi_.auditeventapi.html) which are only published if Audit Log has been enabled.
+ *
+ * **AdapTable Events**
  *
  * - **SearchChanged** - fired when the state changes in any of the Search-related functions (e.g. Advanced Search, Quick Search, Filters, Data Source etc.)
  *
@@ -33,24 +36,32 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  *
  * - **AdaptableReady** - fired whenever Adaptable is initialised and ready for use (has no Args class)
  *
- * Note: Adaptable uses the [FDC3 Standard for messaging](https://fdc3.finos.org/docs/1.0/context-intro) so to get hold of the data packaged in the event, you will need to access the xxxArgs.data[0].id property.
+ * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_auditeventapi_.auditeventapi.html#onauditstatechanged).
  *
- * This means that each event contains an *xxxEventArgs* object that wraps relevant information for the event as *xxxInfo* and that object packages the actual data relevant to the event.
+ * **Subscribing to an AdapTable Event**
  *
- * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredinfo.html) object.  And that `AlertFiredInfo` object will contain the actual `AdaptableAlert` that was triggered.
+ * AdapTable uses the [FDC3 Standard for messaging](https://fdc3.finos.org/docs/1.0/context-intro) so to get hold of the data packaged in the event, you need to access the [event]args.data[0].id property.
+ *
+ * Each event contains an *[EventName]EventArgs* object that wraps relevant information for the event as *[EventName]Info* and that object packages the actual data relevant to the event.
+ *
+ * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredinfo.html) object.
+ *
+ * And that `AlertFiredInfo` object will contain the actual `AdaptableAlert` that was triggered.
  *
  *  ```ts
- *  const alertFiredInfo: AlertFiredInfo = alertFiredArgs.data[0].id;
+ *  const alertFiredInfo: AlertFiredInfo = alertFiredEventArgs.data[0].id;
  *  const triggeredAlert: AdaptableAlert = alertFiredInfo.alert;
  *  ```
  *
- * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_auditeventapi_.auditeventapi.html#onauditstatechanged).
- *
- * There way to subscribe to these events is as follows:
+ * So the way to subscribe to these events is as follows:
  *
  *  ```ts
- * api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
- *        onActionColumnClickedListener(actionColumnEventArgs.data[0].id)
+ * adaptableApi.eventApi.on(
+ *    'ActionColumnClicked',
+ *    (eventArgs: ActionColumnClickedEventArgs) => {
+ *      const eventInfo: ActionColumnClickedInfo = eventArgs.data[0].id;
+ *      const actionColumn: ActionColumn = eventInfo.actionColumn;
+ *      // do stuff with the column ...
  *    }
  *  );
  * ```
@@ -58,7 +69,7 @@ import { SearchChangedEventArgs } from './Events/SearchChanged';
  */
 export interface EventApi {
   /**
-   * Event fired whenever **search criteria in Adaptable changes**
+   * Event fired whenever **search criteria in AdapTable changes**
    *
    * @param eventName SearchChanged - use as: api.eventApi.on('SearchChanged', (args: SearchChangedEventArgs) => { .....[do stuff]...})
    *
@@ -70,7 +81,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever the **Selection in Adaptable changes**.
+   * Event fired whenever the Cell or Row **Selection in AdapTable changes**.
    *
    * @param eventName SelectionChanged - use as: adaptableApi.eventApi.on('SelectionChanged', (args: SelectionChangedEventArgs) => { .....[do stuff]...})
    *
@@ -82,7 +93,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever the **selected theme of Adaptable is changed**.
+   * Event fired whenever the **selected theme of AdapTable is changed**.
    *
    * @param eventName ThemeChanged- use as: adaptableApi.eventApi.on('ThemeChanged', (args: ThemeChangedEventArgs) => { .....[do stuff]...})
    *
@@ -94,7 +105,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever an **Alert is triggered**.
+   * Event fired whenever an **Alert is triggered** in AdapTable.
    *
    * @param eventName AlertFired - use as: adaptableApi.eventApi.on('AlertFired', (args: AlertFiredEventArgs) => { .....[do stuff]...})
    *
@@ -118,7 +129,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever **column order, visibility and sorts are changed in Adaptable**.
+   * Event fired whenever **column order, visibility and sorts are changed in AdapTable**.
    *
    * @param eventName ColumnStateChanged - use as: adaptableApi.eventApi.on('ColumnStateChanged', (args: ColumnStateChangedEventArgs) => { .....[do stuff]...})
    *
@@ -142,7 +153,7 @@ export interface EventApi {
   ): () => void;
 
   /**
-   * Event fired whenever **a toolbar in Adaptable becomes visible**
+   * Event fired whenever **a toolbar in AdapTable becomes visible**
    *
    * Primarily used for rendering Custom toolbars.
    *
@@ -171,12 +182,14 @@ export interface EventApi {
 
   /**
    * Fired when Adaptable is up and running - has no arguments.
+   * @param eventName AdaptableReady - use as: adaptableApi.eventApi.on('AdaptableReady', (adaptableReadyInfo: AdaptableReadyInfo) => { .....[do stuff]...})
    *
-   * @param eventName AdaptableReady
-   *
-   * @param callback (none)
+   * @param callback An `AdaptableReadyInfo` object which contains the adaptableApi and the vendorGrid
    */
-  on(eventName: 'AdaptableReady', callback: () => void): () => void;
+  on(
+    eventName: 'AdaptableReady',
+    callback: (adaptableReadyInfo: AdaptableReadyInfo) => void
+  ): () => void;
 
   emit(
     eventName:

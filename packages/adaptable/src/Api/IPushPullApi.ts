@@ -57,6 +57,8 @@ export interface IPushPullApi {
 
   loginToIPushPull(userName: string, password: string): void;
 
+  retrieveIPushPullDomainsFromIPushPull(): void;
+
   logoutFromIPushPull(): void;
 
   setIPushPullLoginErrorMessage(loginErrorMessage: string): void;
