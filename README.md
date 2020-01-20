@@ -25,21 +25,21 @@ For more information please see the [Version 6 Upgrade Guide](./packages/adaptab
 
 AdapTable comes in 3 variants:
  
-  * 'core' (vanilla) javascript version
+  * **'core'** (vanilla) javascript version
   
-  To use this install **`@adaptabletools/adaptable`** 
+  To use this install `@adaptabletools/adaptable` 
   
-  > For more info, see the [Adaptable Core 'readme;](./packages/adaptable/README.md)
+  > For more info, see the [Adaptable Core 'readme'](./packages/adaptable/README.md)
   
-  * React Wrapper
+  * **React Wrapper**
   
-  To use this install **`@adaptabletools/adaptable-react-aggrid`**
+  To use this install `@adaptabletools/adaptable-react-aggrid`
   
   > For more info, see the [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
   
-  * Angular Wrapper
+  * **Angular Wrapper**
   
-  To use this, install **`@adaptabletools/adaptable-angular-aggrid`**
+  To use this, install `@adaptabletools/adaptable-angular-aggrid`
   
   > For more info, see the [Angular Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
   
@@ -84,7 +84,7 @@ npm whoami --registry=https://registry.adaptabletools.com
 
 This should display the username you received from use as the current login on the private registry
 
-> note: this does not affect your username/login session on the public npm registry**
+> note: this does not affect your username/login session on the public npm registry
 
 6.  Install the relevant AdapTable package you need.
 
@@ -94,20 +94,20 @@ For core it will be:
 npm i @adaptabletools/adaptable
 ```
 
-and for the ag-Grid React Wrapper it will be:
+For the ag-Grid React Wrapper it will be:
 
 ```
 npm i @adaptabletools/adaptable-react-aggrid
 ```
 
-and for the ag-Grid Angular Wrapper it will be:
+For the ag-Grid Angular Wrapper it will be:
 
 ```
 npm i @adaptabletools/adaptable-angular-aggrid
 ```
 
 ## Plugins
-AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
+AdapTable since version 6 includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
 There are currently two plugins:
 
