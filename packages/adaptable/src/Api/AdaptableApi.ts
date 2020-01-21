@@ -57,7 +57,7 @@ import { ScheduleApi } from './ScheduleApi';
  *
  * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented please contact [`support@adaptabletools.com`](mailto:support@adaptabletools.com) and we will add it*
  *
- * ## API functions
+ * ##£ API functions
  *
  * `AdaptableApi` consists of over 40 sets of properties.
  *
@@ -70,8 +70,10 @@ import { ScheduleApi } from './ScheduleApi';
  *  | [actionColumnApi](#actioncolumnapi)                 | Manages [Action Columns](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) which contain buttons with bespoke click logic	    |
  *  | [advancedSearchApi](#advancedsearchapi)             | Functions relating to the saveable, cross-column [Advanced Searches](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
  *  | [alertApi](#alertapi)                               | [Adaptable Alerts](_predefinedconfig_alertstate_.alertstate.html) provide bespoke notifications and messages                                 |
- *  | [applicationApi](#applicationapi)                   | Use [Application Data Entries](_predefinedconfig_applicationstate_.applicationstate.html) to manage custom state	              |
+ *  | [applicationApi](#applicationapi)                   | Use [Application Data Entries](_predefinedconfig_applicationstate_.applicationstate.html) to manage custom state and data |
  *  | [auditEventApi](#auditeventapi)                     | Listen to the [Audit Events](_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
+ *  | [bulkUpdateApi](#bulkupdateapi)                     | Run Bulk Update so mutliple selected cells are given same value  |
+ *  | [calculatedcolumnapi](#calculatedcolumnapi)         | Manages [Calculated Columns](_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
  *  |
  */
 
