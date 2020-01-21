@@ -22,7 +22,6 @@ export class TickingDataHelper {
     tradeCount: number
   ) {
     if (gridOptions != null && gridOptions.api != null) {
-      console.log(1);
       const examplesHelper = new ExamplesHelper();
       let useadaptableApiUpdateGridData: boolean = false;
       let useadaptableApiUpdateGridDataBatch: boolean = true;
@@ -61,7 +60,7 @@ export class TickingDataHelper {
 
         if (useadaptableApiUpdateGridDataBatch) {
           let test = function resultCallback() {
-            console.log('batch occurred');
+            //  console.log('batch occurred');
           };
 
           trade.price = price;

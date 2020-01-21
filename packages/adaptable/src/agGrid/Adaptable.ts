@@ -602,7 +602,7 @@ export class Adaptable implements IAdaptable {
   public applyGridFiltering() {
     this.gridOptions.api!.onFilterChanged();
     this._emit('SearchApplied');
-    this._emit('GridRefreshed');
+    this._emit('GridFiltered');
   }
 
   private applyDataChange(rowNodes: RowNode[]) {
@@ -611,7 +611,6 @@ export class Adaptable implements IAdaptable {
     });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
       this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
-      this._emit('GridRefreshed');
     }
   }
 
@@ -883,7 +882,7 @@ export class Adaptable implements IAdaptable {
 
   // This method returns selected cells ONLY (if selection mode is cells or multiple cells).
   // If the selection mode is row it will returns nothing - use the setSelectedRows() method
-  public setSelectedCells(): void {
+  public setSelectedCells(fireSelectionChangedEvent: boolean = true): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
     const columns: AdaptableColumn[] = [];
     const selectedCells: GridCell[] = [];
@@ -935,12 +934,13 @@ export class Adaptable implements IAdaptable {
     const selectedCellInfo: SelectedCellInfo = { Columns: columns, GridCells: selectedCells };
     this.api.internalApi.setSelectedCells(selectedCellInfo);
 
-    this._emit('CellsSelected');
-
-    this.agGridHelper.fireSelectionChangedEvent();
+    if (fireSelectionChangedEvent) {
+      this._emit('CellsSelected');
+      this.agGridHelper.fireSelectionChangedEvent();
+    }
   }
 
-  public setSelectedRows(): void {
+  public setSelectedRows(fireSelectionChangedEvent: boolean = true): void {
     const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
     const selectedRows: GridRow[] = [];
 
@@ -968,9 +968,10 @@ export class Adaptable implements IAdaptable {
     }
     const selectedRowInfo: SelectedRowInfo = { GridRows: selectedRows };
     this.api.internalApi.setSelectedRows(selectedRowInfo);
-
-    this._emit('RowsSelected');
-    this.agGridHelper.fireSelectionChangedEvent();
+    if (fireSelectionChangedEvent) {
+      this._emit('RowsSelected');
+      this.agGridHelper.fireSelectionChangedEvent();
+    }
   }
 
   public setValue(dataChangedInfo: DataChangedInfo, reselectSelectedCells: boolean): void {
