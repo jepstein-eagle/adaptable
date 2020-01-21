@@ -205,10 +205,6 @@ export interface IAdaptable {
   forAllVisibleRowNodesDo(func: (rowNode: any) => any): void;
   isGroupRowNode(rowNode: any): boolean;
 
-  // Cell Selection
-  setSelectedCells(fireSelectionChangedEvent: boolean): void;
-  setSelectedRows(fireSelectionChangedEvent: boolean): void;
-
   //  Sort
   setCustomSort(columnId: string, comparer: Function): void;
   removeCustomSort(columnId: string): void;
@@ -244,7 +240,8 @@ export interface IAdaptable {
   clearColumnFiltering(columnIds: string[]): void;
 
   // TEMPORARY : JO
-  getIPPStyle(): IPPStyle;
+  getCurrentIPPStyle(): IPPStyle;
+  getDefaultIPPStyle(): IPPStyle;
 
   // info
   getRowCount(): number;

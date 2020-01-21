@@ -36,7 +36,7 @@ ipushpull.config.set({
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 10;
+  const tradeCount: number = 30;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();

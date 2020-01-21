@@ -31,7 +31,7 @@ export class TickingDataHelper {
       let gridOptionsUpdateRowData: boolean = false;
 
       setInterval(() => {
-        let tradeId = this.generateRandomInt(1, tradeCount);
+        let tradeId = 6; //this.generateRandomInt(1, tradeCount);
         let rowNode: RowNode = gridOptions.api!.getRowNode(tradeId);
 
         const trade: ITrade = { ...gridOptions.rowData[tradeId] };
@@ -41,7 +41,7 @@ export class TickingDataHelper {
         const price = this.roundTo4Dp(trade.price + numberToAdd);
         const bidOfferSpread = trade.bidOfferSpread;
         const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
-        const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
+        const bid = this.generateRandomInt(1, 20000); //this.roundTo4Dp(price - bidOfferSpread / 2);
         const bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
         const bloombergBid = this.roundTo4Dp(bid - directionToAdd);
         const notional = this.getRandomItem(examplesHelper.getNotionals());

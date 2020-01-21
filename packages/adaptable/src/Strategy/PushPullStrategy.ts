@@ -9,17 +9,11 @@ import {
   SELECTED_CELLS_REPORT,
   DEFAULT_LIVE_REPORT_THROTTLE_TIME,
   SELECTED_ROWS_REPORT,
-  VISIBLE_DATA_REPORT,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IPushPullStrategy } from './Interface/IPushPullStrategy';
 import { IPushPullReport } from '../PredefinedConfig/IPushPullState';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
-import { GridRow } from '../Utilities/Interface/Selection/GridRow';
 
 export class PushPullStrategy extends AdaptableStrategyBase implements IPushPullStrategy {
   private isSendingData: boolean = false;
@@ -38,76 +32,53 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       }, 1000);
     });
 
-    // if a piece of data has updated then update any live reports
+    // if a piece of data has updated then update any live reports except cell or row selected
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
         let currentLiveIPushPullReport:
           | IPushPullReport
           | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
-        if (currentLiveIPushPullReport) {
-          // reset cell or row selection
-          if (currentLiveIPushPullReport.ReportName === SELECTED_CELLS_REPORT) {
-            let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
-            let matchingCell: GridCell = selectedCellInfo.GridCells.find(
-              (gc: GridCell) =>
-                gc.primaryKeyValue == dataChangedInfo.PrimaryKeyValue &&
-                gc.columnId == dataChangedInfo.ColumnId
-            );
-            if (matchingCell) {
-              this.adaptable.setSelectedCells(false);
-              this.throttledRecomputeAndSendLiveDataEvent();
-            }
-          } else if (currentLiveIPushPullReport.ReportName === SELECTED_ROWS_REPORT) {
-            let selectedRowInfo: SelectedRowInfo = this.adaptable.api.gridApi.getSelectedRowInfo();
-            let matchingRow: GridRow = selectedRowInfo.GridRows.find(
-              (gr: GridRow) => gr.primaryKeyValue == dataChangedInfo.PrimaryKeyValue
-            );
-            if (matchingRow) {
-              this.adaptable.setSelectedRows(false);
-              this.throttledRecomputeAndSendLiveDataEvent();
-            }
-          } else if (currentLiveIPushPullReport.ReportName === VISIBLE_DATA_REPORT) {
-            // would be nice if we could do something here but not sure we can...
-            this.throttledRecomputeAndSendLiveDataEvent();
-          } else {
-            // again would be preferable only to send deltas or to check but for now not sure what we can do
-            this.throttledRecomputeAndSendLiveDataEvent();
-          }
+        if (
+          currentLiveIPushPullReport &&
+          currentLiveIPushPullReport.ReportName !== SELECTED_CELLS_REPORT &&
+          currentLiveIPushPullReport.ReportName !== SELECTED_ROWS_REPORT
+        ) {
+          this.throttledRecomputeAndSendLiveDataEvent();
         }
       }
     });
-    // if the grid has refreshed - usually after a filter - then update any live reports
+    // if the grid has refreshed then update all live reports
     this.adaptable._on('GridRefreshed', () => {
       if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
         this.throttledRecomputeAndSendLiveDataEvent();
       }
     });
+    // if the grid filters have changed then update any live reports except cell or row selected
     this.adaptable._on('GridFiltered', () => {
+      // Rerun all reports except selected cells / rows when filter changes
       if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
         let currentLiveIPushPullReport:
           | IPushPullReport
           | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
-        if (currentLiveIPushPullReport) {
-          // reset cell or row selection if grid has been filtered but dont send as the event will fire
-          if (currentLiveIPushPullReport.ReportName === SELECTED_CELLS_REPORT) {
-            this.adaptable.setSelectedCells(true);
-          } else if (currentLiveIPushPullReport.ReportName === SELECTED_ROWS_REPORT) {
-            this.adaptable.setSelectedRows(true);
-          } else {
-            // on any other filters lets just resend report
-            this.throttledRecomputeAndSendLiveDataEvent();
-          }
+        if (
+          currentLiveIPushPullReport &&
+          currentLiveIPushPullReport.ReportName !== SELECTED_CELLS_REPORT &&
+          currentLiveIPushPullReport.ReportName !== SELECTED_ROWS_REPORT
+        ) {
+          this.throttledRecomputeAndSendLiveDataEvent();
         }
       }
     });
-    // if cell selection has changed and the iPushPull Live report is 'Selected Cells' or 'Selected Rows' then send updated data
+    // if grid selection has changed and the iPushPull Live report is 'Selected Cells' or 'Selected Rows' then send updated data
     this.adaptable.api.eventApi.on('SelectionChanged', () => {
       if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
-        let liveIPushPullReport: IPushPullReport = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+        let currentLiveIPushPullReport:
+          | IPushPullReport
+          | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
         if (
-          liveIPushPullReport &&
-          (liveIPushPullReport.ReportName === SELECTED_CELLS_REPORT ||
-            liveIPushPullReport.ReportName === SELECTED_ROWS_REPORT)
+          currentLiveIPushPullReport &&
+          (currentLiveIPushPullReport.ReportName === SELECTED_CELLS_REPORT ||
+            currentLiveIPushPullReport.ReportName === SELECTED_ROWS_REPORT)
         ) {
           this.throttledRecomputeAndSendLiveDataEvent();
         }

@@ -177,66 +177,69 @@ export class PushPullService implements IPushPullService {
   public pushData(page: string, data: any[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       let newData: any = [];
-      if (data && data.length > 1) {
-        const style: IPPStyle = this.adaptable.getIPPStyle();
-        newData = data.map((row: any, i: number) =>
-          row.map((cell: any, y: number) => {
-            const col =
-              i == 0
-                ? style.Header.Columns.find(x => x.columnFriendlyName == data[0][y])
-                : style.Row.Columns.find(x => x.columnFriendlyName == data[0][y]);
-            let styleIPP: any;
-            if (i == 0) {
-              styleIPP = {
-                'background-color': style.Header.headerBackColor,
-                bbc: '000000',
-                bbs: 'none',
-                bbw: 'none',
-                lbc: '000000',
-                lbs: 'none',
-                lbw: 'none',
-                rbc: '000000',
-                rbs: 'none',
-                rbw: 'none',
-                tbc: '000000',
-                tbs: 'none',
-                tbw: 'none',
-                color: style.Header.headerColor,
-                'font-family': style.Header.headerFontFamily,
-                'font-size': style.Header.headerFontSize,
-                'font-style': style.Header.headerFontStyle,
-                'font-weight': style.Header.headerFontWeight,
-                height: `${String(style.Header.height / 3)}px`,
-                'text-align': col.textAlign,
-                'vertical-align': 'middle',
-                'white-space': 'nowrap',
-                width: `${String(col.width)}px`,
-                'text-wrap': 'normal',
-                'word-wrap': 'normal',
-              };
-            } else if (i == 1) {
-              styleIPP = {
-                'background-color': i % 2 ? style.Row.backColor : style.Row.altBackColor,
-                color: style.Row.color,
-                'font-family': style.Row.fontFamily,
-                'font-size': style.Row.fontSize,
-                'font-style': style.Row.fontStyle,
-                'font-weight': style.Row.fontWeight,
-                'text-align': col.textAlign,
-              };
-            } else {
-              styleIPP = {
-                'background-color': i % 2 ? style.Row.backColor : style.Row.altBackColor,
-              };
-            }
-            return {
-              value: cell,
-              formatted_value: cell,
-              style: styleIPP,
+
+      const style: IPPStyle =
+        data && data.length > 1
+          ? this.adaptable.getCurrentIPPStyle()
+          : this.adaptable.getDefaultIPPStyle();
+      newData = data.map((row: any, i: number) =>
+        row.map((cell: any, y: number) => {
+          const col =
+            i == 0
+              ? style.Header.Columns.find(x => x.columnFriendlyName == data[0][y])
+              : style.Row.Columns.find(x => x.columnFriendlyName == data[0][y]);
+          let styleIPP: any;
+          if (i == 0) {
+            styleIPP = {
+              'background-color': style.Header.headerBackColor,
+              bbc: '000000',
+              bbs: 'none',
+              bbw: 'none',
+              lbc: '000000',
+              lbs: 'none',
+              lbw: 'none',
+              rbc: '000000',
+              rbs: 'none',
+              rbw: 'none',
+              tbc: '000000',
+              tbs: 'none',
+              tbw: 'none',
+              color: style.Header.headerColor,
+              'font-family': style.Header.headerFontFamily,
+              'font-size': style.Header.headerFontSize,
+              'font-style': style.Header.headerFontStyle,
+              'font-weight': style.Header.headerFontWeight,
+              height: `${String(style.Header.height / 3)}px`,
+              'text-align': col.textAlign,
+              'vertical-align': 'middle',
+              'white-space': 'nowrap',
+              width: `${String(col.width)}px`,
+              'text-wrap': 'normal',
+              'word-wrap': 'normal',
             };
-          })
-        );
-      }
+          } else if (i == 1) {
+            styleIPP = {
+              'background-color': i % 2 ? style.Row.backColor : style.Row.altBackColor,
+              color: style.Row.color,
+              'font-family': style.Row.fontFamily,
+              'font-size': style.Row.fontSize,
+              'font-style': style.Row.fontStyle,
+              'font-weight': style.Row.fontWeight,
+              'text-align': col.textAlign,
+            };
+          } else {
+            styleIPP = {
+              'background-color': i % 2 ? style.Row.backColor : style.Row.altBackColor,
+            };
+          }
+          return {
+            value: cell,
+            formatted_value: cell,
+            style: styleIPP,
+          };
+        })
+      );
+
       const pageIPP = this.pages.get(page);
       pageIPP.Content.canDoDelta = false;
       pageIPP.Content.update(newData, true);
