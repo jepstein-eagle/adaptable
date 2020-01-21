@@ -104,21 +104,30 @@ export class LayoutService implements ILayoutService {
         return true;
       }
 
-      if (
-        !ArrayExtensions.areArraysEqualWithOrder(
-          layoutEntity.Columns,
-          layoutEntity.AdaptableGridInfo.CurrentColumns
-        )
-      ) {
-        return true;
-      }
-      if (
-        !ArrayExtensions.areArraysEqualWithOrderandProperties(
-          layoutEntity.ColumnSorts,
-          layoutEntity.AdaptableGridInfo.CurrentColumnSorts
-        )
-      ) {
-        return true;
+      if (layoutEntity.AdaptableGridInfo) {
+        if (
+          layoutEntity.AdaptableGridInfo &&
+          ArrayExtensions.IsNotNull(layoutEntity.Columns) &&
+          ArrayExtensions.IsNotNull(layoutEntity.AdaptableGridInfo.CurrentColumns) &&
+          !ArrayExtensions.areArraysEqualWithOrder(
+            layoutEntity.Columns,
+            layoutEntity.AdaptableGridInfo.CurrentColumns
+          )
+        ) {
+          return true;
+        }
+
+        if (
+          layoutEntity.AdaptableGridInfo &&
+          ArrayExtensions.IsNotNull(layoutEntity.ColumnSorts) &&
+          ArrayExtensions.IsNotNull(layoutEntity.AdaptableGridInfo.CurrentColumnSorts) &&
+          !ArrayExtensions.areArraysEqualWithOrderandProperties(
+            layoutEntity.ColumnSorts,
+            layoutEntity.AdaptableGridInfo.CurrentColumnSorts
+          )
+        ) {
+          return true;
+        }
       }
     }
     return true;

@@ -47,25 +47,33 @@ import { IPushPullApi } from './IPushPullApi';
 import { ScheduleApi } from './ScheduleApi';
 
 /**
- * `AdaptableApi` provides developers with run-time access to AdapTable.
+ * The `AdaptableApi` provides developers with run-time access to AdapTable.
  *
- * It attempts to offer ALL the functionality provided by AdapTable UI in code form.
+ * It offers ALL the functionality provided by AdapTable UI in code form.
  *
- * This enables developers to access AdapTable Store at a run-time in a 'safe' way.
+ * This enables developers to access the AdapTable Store at run-time in a 'safe' way.
  *
- * It also allows them to access all the functionality in AdapTable while bypassing the UI screens altogether if they so wish.
+ * It also allows them to bypass the UI screens altogether if they so wish.
  *
- * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented please contact support@adaptabletools.com and we will add it*
+ * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented please contact [`support@adaptabletools.com`](mailto:support@adaptabletools.com) and we will add it*
  *
- * `AdaptableApi` consists of over 40 sets of properties grouped against a particular function.
+ * ### API functions
  *
- * Each of these properties is a class that contains a set of API method grouped either by AdapTable Function (e.g. `AdvancedSearchAPI`) or type (e.g. *`uditEventApi`)
+ * `AdaptableApi` consists of over 40 sets of properties.
+ *
+ * Each of these properties is a class that contains a set of Api methods grouped either by AdapTable Function (e.g. `AdvancedSearchAPI`) or type (e.g. `AuditEventApi`)
  *
  * The full list is:
  *
- *  | API Class  	                                        | Details                                     	                                                                                                                                 |
- *  |----------------	                                    |---------------------------------------------	                                                                                                                                 |
- *  | [actionColumnApi](#actioncolumnapi)                 | Provides access to Action Column Function and [State](https://api.adaptableblotter.com/interfaces/_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)  	             |
+ *  | API Class  	                                        | Details                                     	                                                                            |
+ *  |----------------	                                    |---------------------------------------------	                                                                            |
+ *  | [actionColumnApi](#actioncolumnapi)                 | Manages [Action Columns](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) which contain buttons with bespoke click logic	    |
+ *  | [advancedSearchApi](#advancedsearchapi)             | Functions relating to the saveable, cross-column [Advanced Searches](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
+ *  | [alertApi](#alertapi)                               | [Adaptable Alerts](_predefinedconfig_alertstate_.alertstate.html) provide bespoke notifications and messages                                 |
+ *  | [applicationApi](#applicationapi)                   | Use [Application Data Entries](_predefinedconfig_applicationstate_.applicationstate.html) to manage custom state and data |
+ *  | [auditEventApi](#auditeventapi)                     | Listen to the [Audit Events](_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
+ *  | [bulkUpdateApi](#bulkupdateapi)                     | Run Bulk Update so mutliple selected cells are given same value  |
+ *  | [calculatedColumnApi](#calculatedcolumnapi)         | Manages [Calculated Columns](_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
  *  |
  */
 
