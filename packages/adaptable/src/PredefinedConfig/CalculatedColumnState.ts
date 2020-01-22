@@ -16,7 +16,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [Calculated Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *
- * [Calculated Column Demo](https://demo.adaptableblotter.com/column/aggridcalculatedcolumndemo/)
+ * [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo/)
  *
  * [Calculated Column API](_api_calculatedcolumnapi_.calculatedcolumnpi.html)
  *

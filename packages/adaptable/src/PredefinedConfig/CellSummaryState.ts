@@ -11,7 +11,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_api_cellsummaryapi_.cellsummaryapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004550458-Cell-Summary-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_api_cellsummaryapi_.cellsummaryapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004550458-Cell-Summary-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  *  *Cell Summary Operations*
  *

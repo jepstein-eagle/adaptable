@@ -12,7 +12,7 @@ import { BaseSchedule } from './Common/Schedule';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/partners/ipushpulldemo/) | [iPushPull API](_api_ipushpullapi_.ipushpullapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
+ * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/) | [iPushPull API](_api_ipushpullapi_.ipushpullapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
  *
  * If iPushPull state is provided, then AdapTable will set the `IsIPushPullAvailable` property to true (you can get the value of this property through the iPushPullApi [isIPushPullAvailable](_api_ipushpullapi_.ipushpullapi.html#isipushpullavailable) function)
  *

@@ -13,7 +13,7 @@ import { Expression, QueryRange } from './Common/Expression';
  *
  * **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridalertdemo/) | [API](_api_alertapi_.alertapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895731-Alerts-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo/) | [API](_api_alertapi_.alertapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895731-Alerts-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  * **Alert Predefined Config Example**
  *

@@ -44,7 +44,7 @@ import { AdaptableReadyInfo } from './Events/AdaptableReady';
  *
  * Each event contains an *[EventName]EventArgs* object that wraps relevant information for the event as *[EventName]Info* and that object packages the actual data relevant to the event.
  *
- * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredinfo.html) object.
+ * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptabletools.com/interfaces/_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptabletools.com/interfaces/_api_events_alertfired_.alertfiredinfo.html) object.
  *
  * And that `AlertFiredInfo` object will contain the actual `AdaptableAlert` that was triggered.
  *

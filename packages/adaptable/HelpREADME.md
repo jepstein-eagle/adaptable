@@ -50,7 +50,7 @@ AdapTable's `api` provides full safe, run-time access to all the functionality a
 
 You can find further information about AdapTable at these sites:
 
-- [Demo Site](https://demo.adaptableblotter.com)
+- [Demo Site](https://demo.adaptabletools.com)
 - [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 - [Web Site](http://www.adaptabletools.com)
 

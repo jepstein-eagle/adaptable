@@ -6,7 +6,7 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/admin/aggridentitlementsdemo/) | [Entitlements State](_predefinedconfig_entitlementstate_.entitlementstate.html)
+ * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements State](_predefinedconfig_entitlementstate_.entitlementstate.html)
  *
  */
 export interface EntitlementsApi {

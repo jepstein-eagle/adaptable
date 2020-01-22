@@ -8,9 +8,9 @@ import { RunTimeState } from './/RunTimeState';
  *
  * [Bulk Update Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028638032-Bulk-Update-Videos)
  *
- * [Bulk Update Demo](https://demo.adaptableblotter.com/edit/aggridbulkupdatedemo/)
+ * [Bulk Update Demo](https://demo.adaptabletools.com/edit/aggridbulkupdatedemo/)
  *
- * [Bulk Update Adaptable API](https://api.adaptableblotter.com/interfaces/_api_bulkupdateapi_.bulkupdateapi.html)
+ * [Bulk Update Adaptable API](https://api.adaptabletools.com/interfaces/_api_bulkupdateapi_.bulkupdateapi.html)
  *
  * [Bulk Update FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029742872-Bulk-Update-FAQ)
  *

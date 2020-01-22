@@ -7,11 +7,11 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Advanced Search enables you to build saveable searches using *Queries* that can be run across multiple columns using a wide variety of *Search Criteria*.
  *
- * Advanced Search use an [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) (aka Queries) for evaluation.
+ * Advanced Search use an [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) (aka Queries) for evaluation.
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/) | [Advanced Search API](_api_advancedsearchapi_.advancedsearchapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/) | [Advanced Search API](_api_advancedsearchapi_.advancedsearchapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755137-Search-Functions)
  *
  * **Advanced Search Predefined Config Example**
  *

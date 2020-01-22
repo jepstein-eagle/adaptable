@@ -92,7 +92,7 @@ export interface Report extends AdaptableObject {
    *
    * - SelectedRows - all cells in all currently selected rows  (depending on the Grid being used, selected rows do not need to be contiguous)
    *
-   * - ExpressionRows - the Expression (or Query) that should be run to see which rows to include in the exported data.  See [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) for more details.
+   * - ExpressionRows - the Expression (or Query) that should be run to see which rows to include in the exported data.  See [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) for more details.
    */
   ReportRowScope:
     | 'AllRows'
@@ -109,7 +109,7 @@ export interface Report extends AdaptableObject {
   ColumnIds?: string[];
 
   /**
-   * Which [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) to run to get the rows for the Report
+   * Which [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) to run to get the rows for the Report
    *
    * This is only required if the `ReportRowScope` is 'ExpressionRows'
    */

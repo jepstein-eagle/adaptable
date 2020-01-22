@@ -20,14 +20,14 @@ export interface FormatColumnApi {
   /**
    * Adds a new Format Column
    * @param column The column to apply the Style to
-   * @param style The Style to apply - (see [Style Object](https://api.adaptableblotter.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
+   * @param style The Style to apply - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
    */
   addFormatColumn(column: string, style: AdaptableStyle): void;
 
   /**
    * Updates an existing Format Column
    * @param column The colunn to update the style for.
-   * @param style The Style to update - (see [Style Object](https://api.adaptableblotter.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
+   * @param style The Style to update - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
    */
   updateFormatColumn(column: string, style: AdaptableStyle): void;
 
