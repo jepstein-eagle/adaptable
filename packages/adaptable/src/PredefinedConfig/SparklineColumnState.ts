@@ -6,7 +6,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * A Sparkline Column is a column which contains an array of numbers as its value.
  *
- * As a result, each cell in the column can be represented as a sparkline chart.
+ * As a result, each cell in the column can be represented as a Sparkline chart.
  *
  *  **Further AdapTable Help Resources**
  *
@@ -14,7 +14,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * **Sparkline Column Predefined Config Example**
  *
- * * ```ts
+ * ```ts
  * export default {
  * SparklineColumn: {
  *  SparklineColumns: [
@@ -32,12 +32,19 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *  },
  * } as PredefinedConfig;
  * ```
+ *
+ *  In this example we have created 2 Sparkline Columns:
+ *
+ * - 'Prices' - which uses default settings
+ *
+ * - 'Values' - which sets a min and max value, makes the Sparkline type 'Line' and shows the tooltip
+ *
  */
 export interface SparklineColumnState extends DesignTimeState {
   /**
    * The list of columns you want to represent as `SparklineColumn`
    *
-   * Each SparklineColumn contains the following properties:
+   * Each Sparkline Column contains the following properties:
    *
    * - ColumnId: Name of the Column (will appear in the header)
    *
@@ -55,33 +62,36 @@ export interface SparklineColumnState extends DesignTimeState {
 }
 
 /**
- * The SparklineColumn object used in the Advanced Search function.
+ * The SparklineColumn object used in the Sparkline Column function.
+ *
+ * A Sparkline Column is a column which contains an array of numbers as its value.
+ *
+ * As a result, each cell in the column can be represented as a Sparkline chart.
  */
 export interface SparklineColumn extends AdaptableObject {
   /**
    * The id of the Column
    *
-   * If no value is set for the *FriendlyName* property, then this will be the name of the Column also (e.g. what appears in the Column Header)
    */
   ColumnId: string;
 
   /**
-   * The type of the sparkline chart to display
+   * The type of the Sparkline chart to display
    */
   SparklineType?: 'Line' | 'Column' | 'Area';
 
   /**
-   * The value to be considered the minimum value for the sparkline chart of the column
+   * The value to be considered the minimum value for the Sparkline chart of the column
    */
   MinimumValue?: number;
 
   /**
-   * The value to be considered the maximum value for the sparkline chart of the column
+   * The value to be considered the maximum value for the Sparkline chart of the column
    */
   MaximumValue?: number;
 
   /**
-   * Whether to show a tooltip which will display the underlying values in the Sparklne
+   * Whether to show a tooltip which will display the underlying values in the Sparkline
    */
   ShowToolTip?: boolean;
 
