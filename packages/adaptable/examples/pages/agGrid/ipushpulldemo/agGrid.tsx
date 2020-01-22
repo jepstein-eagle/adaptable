@@ -59,7 +59,7 @@ function InitAdaptableDemo() {
 
   adaptableApi.eventApi.on('AdaptableReady', ({ vendorGrid: gridOptions }) => {
     if (useTickingData) {
-      tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 3000, tradeCount);
+      tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, tradeCount);
     }
   });
 

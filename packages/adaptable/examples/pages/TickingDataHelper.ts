@@ -31,7 +31,7 @@ export class TickingDataHelper {
       let gridOptionsUpdateRowData: boolean = false;
 
       setInterval(() => {
-        let tradeId = 6; //this.generateRandomInt(1, tradeCount);
+        let tradeId = this.generateRandomInt(1, tradeCount);
         let rowNode: RowNode = gridOptions.api!.getRowNode(tradeId);
 
         const trade: ITrade = { ...gridOptions.rowData[tradeId] };
