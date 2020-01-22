@@ -21,12 +21,13 @@ import { SideBarModule } from '@ag-grid-enterprise/side-bar';
 import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
 
 import Adaptable from '../../../../agGrid';
+import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 10;
+  const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -51,8 +52,15 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
-  api.eventApi.on('AdaptableReady', () => {
+  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    let got: GridOptions = info.vendorGrid as GridOptions;
+    let trade15 = tradeData[5];
+    console.log(trade15);
+    got.api!.setPinnedTopRowData([trade15]);
     //  alert ('the blotter is ready')
+
+    let test: any = got.api!.getPinnedTopRow(0);
+    console.log(test);
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
