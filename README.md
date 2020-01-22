@@ -29,19 +29,19 @@ AdapTable comes in 3 variants:
   
   To use this install `@adaptabletools/adaptable` 
   
-  > For more info, see the [Adaptable Core 'readme'](./packages/adaptable/README.md)
+  > For more info, see the [Adaptable Core readme](./packages/adaptable/README.md)
   
   * **React Wrapper**
   
   To use this install `@adaptabletools/adaptable-react-aggrid`
   
-  > For more info, see the [React Wrapper 'readme'](./packages/adaptable-react-aggrid/README.md)
+  > For more info, see the [React Wrapper readme](./packages/adaptable-react-aggrid/README.md)
   
   * **Angular Wrapper**
   
   To use this, install `@adaptabletools/adaptable-angular-aggrid`
   
-  > For more info, see the [Angular Wrapper 'readme'](./packages/adaptable-ng-aggrid/README.md)
+  > For more info, see the [Angular Wrapper readme](./packages/adaptable-ng-aggrid/README.md)
   
   Each of these packages has its own initialisation requirements so please read the appropriate documentation
 
@@ -142,7 +142,7 @@ These include:
  
 * [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
   
-* [Parcel JS (quick build) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
+* [Core Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
    
 * [iPushPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
  
