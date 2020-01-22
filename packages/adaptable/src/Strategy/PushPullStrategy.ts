@@ -33,6 +33,8 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
     });
 
     // if a piece of data has updated then update any live reports except cell or row selected
+    // currently we DONT send deltas or even check if the updated cell is in the current report  - we should
+    // we simply send everything to ipushpull every time any cell ticks....
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
         let currentLiveIPushPullReport:
@@ -107,7 +109,6 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
     if (currentLiveIPushPullReport) {
       this.isSendingData = true;
-      //   let promises: Promise<any>[] = [];
       let report: Report = this.adaptable.api.exportApi.getReportByName(
         currentLiveIPushPullReport.ReportName
       );
