@@ -1,3 +1,7 @@
+## 6.0.3
+
+Fix bug in iPushPull where not updating cell selection when data inside selected cells ticks
+
 ## 6.0.2
 
 Fix bug in Layout Service which assumed a collection that might not be there.
