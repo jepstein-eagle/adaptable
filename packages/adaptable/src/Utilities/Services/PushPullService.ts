@@ -6,6 +6,7 @@ import env from '../../env';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { IPushPullDomain } from '../../PredefinedConfig/IPushPullState';
 import StringExtensions from '../Extensions/StringExtensions';
+import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 export enum ServiceStatus {
   Unknown = 'Unknown',
@@ -175,8 +176,13 @@ export class PushPullService implements IPushPullService {
 
   public pushData(page: string, data: any[]): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      const style: IPPStyle = this.adaptable.getIPPStyle();
-      var newData = data.map((row: any, i: number) =>
+      let newData: any = [];
+
+      const style: IPPStyle =
+        data && data.length > 1
+          ? this.adaptable.getCurrentIPPStyle()
+          : this.adaptable.getDefaultIPPStyle();
+      newData = data.map((row: any, i: number) =>
         row.map((cell: any, y: number) => {
           const col =
             i == 0

@@ -14,6 +14,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import ipushpull from 'ipushpull-js';
 import { MenuModule } from '@ag-grid-enterprise/menu';
 
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { TickingDataHelper } from '../../TickingDataHelper';
 import {
   LiveDataChangedEventArgs,
@@ -35,7 +36,7 @@ ipushpull.config.set({
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 25;
+  const tradeCount: number = 30;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
@@ -47,7 +48,7 @@ function InitAdaptableDemo() {
     adaptableId: 'iPushPull Demo',
     vendorGrid: {
       ...gridOptions,
-      modules: [MenuModule],
+      modules: [MenuModule, RangeSelectionModule],
     },
     predefinedConfig: demoConfig,
   };

@@ -126,6 +126,7 @@ export interface IAdaptable {
   _on(eventName: 'RowsSelected', callback: () => void): () => void;
   _on(eventName: 'SearchApplied', callback: () => void): () => void;
   _on(eventName: 'GridRefreshed', callback: () => void): () => void;
+  _on(eventName: 'GridFiltered', callback: () => void): () => void;
   _on(eventName: 'GridReloaded', callback: () => void): () => void;
   _on(eventName: 'ColumnResized', callback: (colId: string) => void): () => void;
   _on(eventName: 'KeyDown', callback: (keyDownEvent: any) => void): () => void;
@@ -239,7 +240,8 @@ export interface IAdaptable {
   clearColumnFiltering(columnIds: string[]): void;
 
   // TEMPORARY : JO
-  getIPPStyle(): IPPStyle;
+  getCurrentIPPStyle(): IPPStyle;
+  getDefaultIPPStyle(): IPPStyle;
 
   // info
   getRowCount(): number;

@@ -22,7 +22,6 @@ export class TickingDataHelper {
     tradeCount: number
   ) {
     if (gridOptions != null && gridOptions.api != null) {
-      console.log(1);
       const examplesHelper = new ExamplesHelper();
       let useadaptableApiUpdateGridData: boolean = false;
       let useadaptableApiUpdateGridDataBatch: boolean = true;
@@ -42,7 +41,7 @@ export class TickingDataHelper {
         const price = this.roundTo4Dp(trade.price + numberToAdd);
         const bidOfferSpread = trade.bidOfferSpread;
         const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
-        const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
+        const bid = this.generateRandomInt(1, 20000); //this.roundTo4Dp(price - bidOfferSpread / 2);
         const bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
         const bloombergBid = this.roundTo4Dp(bid - directionToAdd);
         const notional = this.getRandomItem(examplesHelper.getNotionals());
@@ -61,7 +60,7 @@ export class TickingDataHelper {
 
         if (useadaptableApiUpdateGridDataBatch) {
           let test = function resultCallback() {
-            console.log('batch occurred');
+            //  console.log('batch occurred');
           };
 
           trade.price = price;

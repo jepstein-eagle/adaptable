@@ -307,7 +307,7 @@ export class Adaptable implements IAdaptable {
     _staticInit?: boolean
   ) {
     if (!_staticInit) {
-      console.warn(`
+      LoggingHelper.LogAdaptableWarning(`
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!! You should not use the "Adaptable" constructor directly, as it is deprecated and will not work in a future version!
 !!!!!!!
@@ -602,7 +602,9 @@ export class Adaptable implements IAdaptable {
   public applyGridFiltering() {
     this.gridOptions.api!.onFilterChanged();
     this._emit('SearchApplied');
-    this._emit('GridRefreshed');
+    this._emit('GridFiltered');
+    this.setSelectedCells();
+    this.setSelectedRows();
   }
 
   private applyDataChange(rowNodes: RowNode[]) {
@@ -611,7 +613,6 @@ export class Adaptable implements IAdaptable {
     });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
       this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
-      this._emit('GridRefreshed');
     }
   }
 
@@ -934,9 +935,7 @@ export class Adaptable implements IAdaptable {
     }
     const selectedCellInfo: SelectedCellInfo = { Columns: columns, GridCells: selectedCells };
     this.api.internalApi.setSelectedCells(selectedCellInfo);
-
     this._emit('CellsSelected');
-
     this.agGridHelper.fireSelectionChangedEvent();
   }
 
@@ -1749,16 +1748,55 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  // really really need to do this properly but as a temp fix lets create a default style for when no data
+  public getDefaultIPPStyle(): IPPStyle {
+    return {
+      Header: {
+        headerColor: '#000000',
+        headerBackColor: '#f5f7f7',
+        headerFontFamily: 'sans-serif',
+        headerFontSize: '12px',
+        headerFontStyle: 'normal',
+        headerFontWeight: '400',
+        height: 65,
+        Columns: this.api.gridApi.getColumns().map(col => {
+          return {
+            columnFriendlyName: col.FriendlyName,
+            width: 200,
+            textAlign: 'start',
+          };
+        }),
+      },
+      Row: {
+        color: '#000000',
+        backColor: '#ffffff',
+        altBackColor: '#fcfdfe',
+        fontFamily: 'sans-serif',
+        fontSize: '12px',
+        fontStyle: 'normal',
+        fontWeight: '400',
+        height: 30,
+        Columns: this.api.gridApi.getColumns().map(col => {
+          return {
+            columnFriendlyName: col.FriendlyName,
+            width: 200,
+            textAlign: 'start',
+          };
+        }),
+      },
+    };
+  }
+
   // This horrible method is used to get the grid style for when we export to iPushPull
   // We need to find a better implementation
-  public getIPPStyle(): IPPStyle {
+  public getCurrentIPPStyle(): IPPStyle {
     const headerFirstCol: HTMLElement = document
       .querySelectorAll('.ag-header-cell')
       .item(0) as HTMLElement;
     const header: HTMLElement = document.querySelector('.ag-header') as HTMLElement;
-    const headerColStyle = window.getComputedStyle(header, null);
+    const headerColStyle = header ? window.getComputedStyle(header, null) : null;
     const firstRow: HTMLElement = document.querySelector('.ag-row-even') as HTMLElement;
-    const firstRowStyle = window.getComputedStyle(firstRow, null);
+    const firstRowStyle = firstRow ? window.getComputedStyle(firstRow, null) : null;
     const secondRow: HTMLElement = document.querySelector('.ag-row-odd') as HTMLElement;
     const secondRowStyle = secondRow
       ? window.getComputedStyle(secondRow, null)
@@ -1820,7 +1858,7 @@ export class Adaptable implements IAdaptable {
         let oldContainer = document.getElementById('adaptableBlotter');
 
         if (oldContainer) {
-          console.warn(`
+          LoggingHelper.LogAdaptableWarning(`
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!! The old default container element for Adaptable was "#adaptableBlotter", configured via 'containerOptions.adaptableContainer="adaptableBlotter"'.
 !!!!! Seems like you haven't updated your html container selector, so we're falling back to using that one.
@@ -2628,6 +2666,32 @@ export class Adaptable implements IAdaptable {
 
     if (applyFilter) {
       this.filterOnUserDataChange([dataChangedInfo.RowNode]);
+    }
+
+    this.checkChangedCellCurrentlySelected(dataChangedInfo);
+  }
+
+  private checkChangedCellCurrentlySelected(dataChangedInfo: DataChangedInfo): void {
+    let selectedCellInfo: SelectedCellInfo = this.api.gridApi.getSelectedCellInfo();
+    if (selectedCellInfo && ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.GridCells)) {
+      let matchingCell: GridCell = selectedCellInfo.GridCells.find(
+        (gc: GridCell) =>
+          gc.primaryKeyValue == dataChangedInfo.PrimaryKeyValue &&
+          gc.columnId == dataChangedInfo.ColumnId
+      );
+      if (matchingCell) {
+        this.setSelectedCells();
+      }
+    }
+
+    let selectedRowInfo: SelectedRowInfo = this.api.gridApi.getSelectedRowInfo();
+    if (selectedRowInfo && ArrayExtensions.IsNotNullOrEmpty(selectedRowInfo.GridRows)) {
+      let matchingRow: GridRow = selectedRowInfo.GridRows.find(
+        (gr: GridRow) => gr.primaryKeyValue == dataChangedInfo.PrimaryKeyValue
+      );
+      if (matchingRow) {
+        this.setSelectedRows();
+      }
     }
   }
 

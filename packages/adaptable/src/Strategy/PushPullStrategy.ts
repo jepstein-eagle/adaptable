@@ -8,10 +8,12 @@ import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import {
   SELECTED_CELLS_REPORT,
   DEFAULT_LIVE_REPORT_THROTTLE_TIME,
+  SELECTED_ROWS_REPORT,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IPushPullStrategy } from './Interface/IPushPullStrategy';
 import { IPushPullReport } from '../PredefinedConfig/IPushPullState';
+import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 
 export class PushPullStrategy extends AdaptableStrategyBase implements IPushPullStrategy {
   private isSendingData: boolean = false;
@@ -30,24 +32,58 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       }, 1000);
     });
 
-    // if a piece of data has updated then update any live reports
-    this.adaptable.DataService.on('DataChanged', () => {
-      // we currently always refresh - is that right??
-      this.refreshLiveData();
+    // if a piece of data has updated then update any live reports except cell or row selected
+    // currently we DONT send deltas or even check if the updated cell is in the current report  - we should
+    // we simply send everything to ipushpull every time any cell ticks....
+    this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
+      if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
+        let currentLiveIPushPullReport:
+          | IPushPullReport
+          | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+        if (
+          currentLiveIPushPullReport &&
+          currentLiveIPushPullReport.ReportName !== SELECTED_CELLS_REPORT &&
+          currentLiveIPushPullReport.ReportName !== SELECTED_ROWS_REPORT
+        ) {
+          this.throttledRecomputeAndSendLiveDataEvent();
+        }
+      }
     });
-    // if the grid has refreshed then update any live reports
+    // if the grid has refreshed then update all live reports
     this.adaptable._on('GridRefreshed', () => {
-      this.refreshLiveData();
-    });
-    // if cell selection has changed and the iPushPull Live report is 'Selected Cells' or 'Selected Rows' then send updated data
-    this.adaptable.api.eventApi.on('SelectionChanged', () => {
-      let liveIPushPullReport: IPushPullReport = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
-      if (
-        liveIPushPullReport &&
-        (liveIPushPullReport.ReportName === SELECTED_CELLS_REPORT ||
-          liveIPushPullReport.ReportName === SELECTED_CELLS_REPORT)
-      ) {
+      if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
         this.throttledRecomputeAndSendLiveDataEvent();
+      }
+    });
+    // if the grid filters have changed then update any live reports except cell or row selected
+    this.adaptable._on('GridFiltered', () => {
+      // Rerun all reports except selected cells / rows when filter changes
+      if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
+        let currentLiveIPushPullReport:
+          | IPushPullReport
+          | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+        if (
+          currentLiveIPushPullReport &&
+          currentLiveIPushPullReport.ReportName !== SELECTED_CELLS_REPORT &&
+          currentLiveIPushPullReport.ReportName !== SELECTED_ROWS_REPORT
+        ) {
+          this.throttledRecomputeAndSendLiveDataEvent();
+        }
+      }
+    });
+    // if grid selection has changed and the iPushPull Live report is 'Selected Cells' or 'Selected Rows' then send updated data
+    this.adaptable.api.eventApi.on('SelectionChanged', () => {
+      if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
+        let currentLiveIPushPullReport:
+          | IPushPullReport
+          | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+        if (
+          currentLiveIPushPullReport &&
+          (currentLiveIPushPullReport.ReportName === SELECTED_CELLS_REPORT ||
+            currentLiveIPushPullReport.ReportName === SELECTED_ROWS_REPORT)
+        ) {
+          this.throttledRecomputeAndSendLiveDataEvent();
+        }
       }
     });
   }
@@ -73,10 +109,10 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
     if (currentLiveIPushPullReport) {
       this.isSendingData = true;
-      //   let promises: Promise<any>[] = [];
       let report: Report = this.adaptable.api.exportApi.getReportByName(
         currentLiveIPushPullReport.ReportName
       );
+
       Promise.resolve()
         .then(() => {
           return new Promise<any>((resolve, reject) => {
@@ -172,11 +208,5 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       iPushPullThrottleTime = this.adaptable.api.iPushPullApi.getIPushPullThrottleTime();
     }
     return iPushPullThrottleTime ? iPushPullThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
-  }
-
-  private refreshLiveData(): void {
-    if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
-      this.throttledRecomputeAndSendLiveDataEvent();
-    }
   }
 }

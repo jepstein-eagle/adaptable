@@ -175,9 +175,9 @@ So your HTML should look like this:
 
 ## Instantiation
 
-You create an instance of AdapTable by providing a static constructor with an [AdaptableOptions](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) object.
+You create an instance of AdapTable by providing a static constructor with an [AdaptableOptions](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) object.
 
-The constructor will return an [Adaptable API](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
+The constructor will return an [Adaptable API](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
 
 ```ts
 const api: AdaptableApi = Adaptable.init(adaptableOptions)
@@ -286,13 +286,13 @@ Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for
  
 ## Demo
 
-To see AdapTable in action visit our [Demo Site](https://demo.adaptableblotter.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
+To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 
 ## Help
 
-Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
+Further information about AdapTable is available at our [Website](https://www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 
-Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
+Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 
 
 ## Support
 

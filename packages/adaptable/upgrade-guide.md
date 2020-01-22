@@ -316,7 +316,7 @@ To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com
 
 ## Help
 
-Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
+Further information about AdapTable is available at our [Website](https://www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 
 
