@@ -158,6 +158,9 @@ const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<Adaptab
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
   UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
 
+  // not sure
+  CellSummary: CellSummaryRedux.CellSummaryReducer,
+
   // Reducers for Persisted State
   AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
   Alert: AlertRedux.AlertReducer,
@@ -165,7 +168,6 @@ const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<Adaptab
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
   CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
   Calendar: CalendarRedux.CalendarReducer,
-  CellSummary: CellSummaryRedux.CellSummaryReducer,
   CellValidation: CellValidationRedux.CellValidationReducer,
   Chart: ChartRedux.ChartReducer,
   ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
@@ -332,6 +334,8 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.ACTION_COLUMN,
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
+      // think...
+      ConfigConstants.CELL_SUMMARY,
     ];
 
     // this is now VERY BADLY NAMED!
@@ -2577,7 +2581,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          // Not doing this for iPushPull and think we should not do the same for the others
+          // Not doing this for ipushpull and think we should not do the same for the others
           // when we come to update them
           // better to do it in the api for each
           case SystemRedux.REPORT_START_LIVE: {
@@ -2593,7 +2597,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             return ret;
           }
 
-          // Not doing this for iPushPull any more either
+          // Not doing this for ipushpull any more either
           case SystemRedux.REPORT_STOP_LIVE: {
             const actionTyped = action as SystemRedux.ReportStopLiveAction;
 

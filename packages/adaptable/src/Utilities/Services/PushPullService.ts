@@ -85,10 +85,10 @@ export class PushPullService implements IPushPullService {
     return this.ppInstance.__status as ServiceStatus;
   }
 
-  // Logs in to iPushpull
+  // Logs in to ipushpull
   public login(login: string, password: string): Promise<any> {
     if (!this.ppInstance) {
-      return Promise.reject('No iPushPull instance found!');
+      return Promise.reject('No ipushpull instance found!');
     }
     return this.ppInstance.auth
       .login(login, password)
@@ -107,15 +107,15 @@ export class PushPullService implements IPushPullService {
       });
   }
 
-  // Retrieves domain pages from iPushPull
+  // Retrieves domain pages from ipushpull
   public getDomainPages(): Promise<IPushPullDomain[]> {
     if (!this.ppInstance) {
-      return Promise.reject('No iPushPull instance found!');
+      return Promise.reject('No ipushpull instance found!');
     }
     return this.ppInstance.api
       .getDomainsAndPages(this.ppInstance.config.api_key)
       .then((response: any) => {
-        LoggingHelper.LogAdaptableSuccess('Retrieved iPushPull Folder/Page info');
+        LoggingHelper.LogAdaptableSuccess('Retrieved ipushpull Folder/Page info');
         return response.data.domains.map((domain: any) => ({
           Name: domain.name,
           FolderId: domain.id,
@@ -126,14 +126,14 @@ export class PushPullService implements IPushPullService {
       })
 
       .catch((error: any) => {
-        LoggingHelper.LogAdaptableError("Couldn't get Domain/Pages from iPushPull : ", error);
+        LoggingHelper.LogAdaptableError("Couldn't get Domain/Pages from ipushpull : ", error);
         throw error.message;
       });
   }
 
   public loadPage(folderIPP: string, pageIPP: string): Promise<any> {
     if (!this.ppInstance) {
-      return Promise.reject('No iPushPull instance found!');
+      return Promise.reject('No ipushpull instance found!');
     }
     return new Promise<any>((resolve: any, reject: any) => {
       const page: any = new this.ppInstance.Page(pageIPP, folderIPP);
@@ -159,13 +159,13 @@ export class PushPullService implements IPushPullService {
 
   public addNewPage(folderId: number, page: string): Promise<any> {
     if (!this.ppInstance) {
-      return Promise.reject('No iPushPull instance found!');
+      return Promise.reject('No ipushpull instance found!');
     }
 
     this.ppInstance.Page.create(folderId, page)
       .then((createdPage: any) => {
         let message: string = page + "' successfully created.";
-        this.adaptable.api.alertApi.showAlertSuccess('iPushPull Page', message);
+        this.adaptable.api.alertApi.showAlertSuccess('ipushpull Page', message);
         this.adaptable.api.internalApi.hidePopupScreen();
         this.adaptable.api.iPushPullApi.retrieveIPushPullDomainsFromIPushPull();
       })
@@ -246,11 +246,11 @@ export class PushPullService implements IPushPullService {
 
       pageIPP.push().then(
         () => {
-          LoggingHelper.LogAdaptableSuccess(`Data pushed for iPushPull page : ${page}`);
+          LoggingHelper.LogAdaptableSuccess(`Data pushed for ipushpull page : ${page}`);
           resolve();
         },
         (err: any) => {
-          LoggingHelper.LogAdaptableInfo(`Error pushing data for iPushPull page : ${page}`);
+          LoggingHelper.LogAdaptableInfo(`Error pushing data for ipushpull page : ${page}`);
           reject();
         }
       );

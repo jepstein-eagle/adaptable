@@ -22,6 +22,10 @@ import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
 
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { SelectedCellInfo } from '../../../../src/Utilities/Interface/Selection/SelectedCellInfo';
+import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
+import { DataType } from '../../../../src/PredefinedConfig/Common/Enums';
+import { GridCell } from '../../../../src/Utilities/Interface/Selection/GridCell';
 
 var api: AdaptableApi;
 
@@ -34,8 +38,8 @@ function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Basic Demo',
-
+    adaptableId: 'Cell Summary Demo',
+    //  plugins: [finance()],
     vendorGrid: {
       ...gridOptions,
       modules: [RangeSelectionModule, MenuModule, SideBarModule, RowGroupingModule],
@@ -54,10 +58,9 @@ function InitAdaptableDemo() {
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
     // to set a pinned row (in this case the 5th row in our data source)
-    let gridOptions: GridOptions = info.vendorGrid as GridOptions;
-    let tradeRow = tradeData[5];
-    gridOptions.api!.setPinnedTopRowData([tradeRow]);
-
+    //  let gridOptions: GridOptions = info.vendorGrid as GridOptions;
+    //  let tradeRow = tradeData[5];
+    //  gridOptions.api!.setPinnedTopRowData([tradeRow]);
     // to see which is the pinned row then do...
     //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
   });
@@ -70,50 +73,46 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
+    VisibleToolbars: ['Layout', 'Export', 'CellSummary'],
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
     }, //
   },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'Layout', 'CellSummary', 'ColumnFilter'],
   },
-  SystemStatus: {
-    // ShowAlert: false,
-    DefaultStatusMessage: 'This is default message and its quite long',
-    DefaultStatusType: 'Warning',
-    StatusMessage: 'overriding with this',
-    StatusType: 'Error',
-  },
-
-  ConditionalStyle: {
-    ConditionalStyles: [
+  CellSummary: {
+    CellSummaryOperationDefinitions: [
       {
-        ConditionalStyleScope: 'Column', // 'DataType',
-        ColumnId: 'moodysRating',
-        // DataType: 'Number',
-        Style: {
-          BackColor: '#32cd32',
-        },
-        Expression: {
-          FilterExpressions: [{ ColumnId: 'notional', Filters: ['Positive', 'Negative'] }],
+        OperationName: 'Oldest',
+        OperationFunction: (operationParam: {
+          selectedCellInfo: SelectedCellInfo;
+          allValues: any[];
+          numericColumns: string[];
+          numericValues: number[];
+          distinctCount: number;
+        }) => {
+          let dateValues: Date[] = [];
+          operationParam.selectedCellInfo.Columns.filter(c => c.DataType === DataType.Date).forEach(
+            dc => {
+              let gridCells = operationParam.selectedCellInfo.GridCells.filter(
+                gc => gc.columnId == dc.ColumnId
+              ).map(gc => gc.rawValue);
+              dateValues.push(...gridCells);
+            }
+          );
+          if (dateValues.length > 0) {
+            return dateValues
+              .sort((a, b) => {
+                return a.getTime() - b.getTime();
+              })[0]
+              .toLocaleDateString();
+          }
         },
       },
     ],
-  },
-
-  Layout: {
-    Layouts: [
-      {
-        ColumnSorts: [],
-        Columns: ['moodysRating', 'tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'fixing a bug',
-        // GroupedColumns: ['currency'],
-        GroupedColumns: [],
-      },
-    ],
-    CurrentLayout: 'fixing a bug',
+    //   SummaryOperation: 'Min',
   },
 };
 

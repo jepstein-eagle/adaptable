@@ -213,7 +213,7 @@ export interface AdaptableApi {
   gridApi: GridApi;
 
   /**
-   * Provides access to the *iPushPull* function, the *iPushPull* object and [iPushPull State](_predefinedconfig_ipushpullstate_.ipushpullstate.html).
+   * Provides access to *ipushpull* related functionality, the *ipushpull* object and [ipushpull State](_predefinedconfig_ipushpullstate_.ipushpullstate.html).
    */
   iPushPullApi: IPushPullApi;
 
@@ -253,7 +253,7 @@ export interface AdaptableApi {
   reminderApi: ReminderApi;
 
   /**
-   * Provides access to the *Schedule* function which allows you to create schedules for Reminders, Reports and iPushPull.
+   * Provides access to the *Schedule* function which allows you to create schedules for Reminders, Reports and ipushpull.
    */
   scheduleApi: ScheduleApi;
 

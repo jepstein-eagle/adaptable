@@ -9,7 +9,6 @@ import { ChartData } from './ChartState';
 import { Report } from './ExportState';
 import { LiveReport } from '../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
-import { CellSummaryOperationDefinition } from './CellSummaryState';
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 
@@ -35,5 +34,4 @@ export interface SystemState extends InternalState {
   ReportErrorMessage: string;
   QuickSearchRange: QueryRange;
   QuickSearchVisibleColumnExpressions: Expression[];
-  CellSummaryOperationDefinitions: CellSummaryOperationDefinition[];
 }

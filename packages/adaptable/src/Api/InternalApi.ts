@@ -14,7 +14,6 @@ import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInf
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { LiveReport } from './Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
-import { CellSummaryOperationDefinition } from '../PredefinedConfig/CellSummaryState';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
@@ -52,11 +51,6 @@ export interface InternalApi {
   ): void;
 
   hidePopupScreen(): void;
-
-  getCellSummaryOperationDefinitions(): CellSummaryOperationDefinition[];
-  addCellSummaryOperationDefinitions(
-    cellSummaryOperationDefinitions: CellSummaryOperationDefinition[]
-  ): void;
 
   setColumns(columns: AdaptableColumn[]): void;
 

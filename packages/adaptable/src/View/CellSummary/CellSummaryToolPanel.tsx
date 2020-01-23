@@ -119,11 +119,11 @@ class CellSummaryToolPanelComponent extends React.Component<
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__CellSummary__wrap">
           {!shouldDisable && (
             <>
-              {JSON.stringify(operationValue) != '""' && (
+              {operationValue && JSON.stringify(operationValue) != '""' && (
                 <Flex
                   flexDirection="row"
                   alignItems="stretch"
-                  className="ab-ToolPanel__SystemStatus__text"
+                  className="ab-ToolPanel__CellSummary__text"
                   style={{ borderRadius: 'var(--ab__border-radius)' }}
                   marginRight={2}
                   marginLeft={1}
@@ -198,7 +198,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SelectedCellInfo: state.Grid.SelectedCellInfo,
     CellSummaryOperation: state.CellSummary.SummaryOperation,
-    CellSummaryOperationDefinitions: state.System.CellSummaryOperationDefinitions,
+    CellSummaryOperationDefinitions: state.CellSummary.CellSummaryOperationDefinitions,
     CellSummary: state.Grid.CellSummary,
   };
 }

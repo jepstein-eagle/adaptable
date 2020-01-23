@@ -1017,7 +1017,7 @@ export class ExamplesHelper {
       filter: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
-      valueFormatter: this.twoDecimalPlaceFormatter,
+      // valueFormatter: this.twoDecimalPlaceFormatter,
       enableValue: true,
     });
     schema.push({

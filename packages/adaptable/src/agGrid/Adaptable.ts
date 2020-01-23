@@ -1787,7 +1787,7 @@ export class Adaptable implements IAdaptable {
     };
   }
 
-  // This horrible method is used to get the grid style for when we export to iPushPull
+  // This horrible method is used to get the grid style for when we export to ipushpull
   // We need to find a better implementation
   public getCurrentIPPStyle(): IPPStyle {
     const headerFirstCol: HTMLElement = document

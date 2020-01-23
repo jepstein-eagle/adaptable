@@ -19,7 +19,6 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 
 import { LiveReport } from '../../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
-import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -42,8 +41,6 @@ export const REPORT_START_LIVE = 'REPORT_START_LIVE';
 export const REPORT_STOP_LIVE = 'REPORT_STOP_LIVE';
 export const REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
 
-// iPushPull
-
 // Smart Edit
 export const SMARTEDIT_CHECK_CELL_SELECTION = 'SMARTEDIT_CHECK_CELL_SELECTION';
 export const SMARTEDIT_FETCH_PREVIEW = 'SMARTEDIT_FETCH_PREVIEW';
@@ -58,9 +55,6 @@ export const BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
 // Chart Managemet
 export const CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
 export const CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
-
-// Cell summary operations
-export const CELL_SUMMARY_OPERATION_DEFINITIONS_SET = 'CELL_SUMMARY_OPERATION_DEFINITIONS_SET';
 
 // Error Messages
 export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
@@ -165,10 +159,6 @@ export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Ac
 
 export interface SetNewColumnListOrderAction extends Redux.Action {
   VisibleColumnList: Array<AdaptableColumn>;
-}
-
-export interface CellSummaryOperationDefinitionssSetAction extends Redux.Action {
-  operationDefinitions: CellSummaryOperationDefinition[];
 }
 
 export const SystemAlertAdd = (Alert: AdaptableAlert, MaxAlerts: number): SystemAlertAddAction => ({
@@ -318,13 +308,6 @@ export const SetNewColumnListOrder = (
   VisibleColumnList,
 });
 
-export const CellSummaryOperationDefinitionsSet = (
-  operationDefinitions: CellSummaryOperationDefinition[]
-): CellSummaryOperationDefinitionssSetAction => ({
-  type: CELL_SUMMARY_OPERATION_DEFINITIONS_SET,
-  operationDefinitions,
-});
-
 const initialSystemState: SystemState = {
   AdaptableAlerts: EMPTY_ARRAY,
   UpdatedRowInfos: EMPTY_ARRAY,
@@ -341,7 +324,6 @@ const initialSystemState: SystemState = {
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
   QuickSearchVisibleColumnExpressions: EMPTY_ARRAY,
-  CellSummaryOperationDefinitions: EMPTY_ARRAY,
 };
 
 export const SystemReducer: Redux.Reducer<SystemState> = (
@@ -350,13 +332,6 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
 ): SystemState => {
   let alerts: AdaptableAlert[];
   switch (action.type) {
-    case CELL_SUMMARY_OPERATION_DEFINITIONS_SET: {
-      return {
-        ...state,
-        CellSummaryOperationDefinitions: (action as CellSummaryOperationDefinitionssSetAction)
-          .operationDefinitions,
-      };
-    }
     case SYSTEM_ALERT_ADD: {
       const actionTypedAdd = action as SystemAlertAddAction;
       alerts = [].concat(state.AdaptableAlerts);

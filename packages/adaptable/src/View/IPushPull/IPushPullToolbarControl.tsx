@@ -171,7 +171,7 @@ class IPushPullToolbarControlComponent extends React.Component<
           marginLeft={1}
           className="ab-DashboardToolbar__IPushPull__export"
           onClick={() => this.onIPushPullSendSnapshot()}
-          tooltip="Send Snapshot to iPushPull"
+          tooltip="Send Snapshot to ipushpull"
           disabled={isLiveIPushPullReport || !isCompletedReport}
           AccessLevel={this.props.AccessLevel}
         />
@@ -180,7 +180,7 @@ class IPushPullToolbarControlComponent extends React.Component<
             marginLeft={1}
             className="ab-DashboardToolbar__IPushPull__pause"
             onClick={() => this.props.onIPushPullStopLiveData()}
-            tooltip="Stop sync with iPushPull"
+            tooltip="Stop sync with ipushpull"
             disabled={!isLiveIPushPullReport}
             AccessLevel={this.props.AccessLevel}
           />
@@ -189,7 +189,7 @@ class IPushPullToolbarControlComponent extends React.Component<
             marginLeft={1}
             className="ab-DashboardToolbar__IPushPull__play"
             onClick={() => this.onIPushPullStartLiveData()}
-            tooltip="Start Sync with iPushPull"
+            tooltip="Start Sync with ipushpull"
             disabled={isLiveIPushPullReport || !isCompletedReport}
             AccessLevel={this.props.AccessLevel}
           />
@@ -236,7 +236,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         marginLeft={1}
         className="ab-DashboardToolbar__IPushPull__login"
         onClick={() => this.props.onShowIPushPullLogin()}
-        tooltip="Send to iPushPull"
+        tooltip="Send to ipushpull"
         AccessLevel={this.props.AccessLevel}
       >
         {' '}

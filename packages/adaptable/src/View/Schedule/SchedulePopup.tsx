@@ -86,7 +86,7 @@ class SchedulePopupComponent extends React.Component<
     let infoBody: any[] = [
       'Use schedules to ensure that actions happen at set times.',
       <br />,
-      'You can create schedules for Reminders, Exports (reports) or to send data to iPushPull.',
+      'You can create schedules for Reminders, Exports (reports) or to send data to ipushpull.',
     ];
 
     let colItems: IColItem[] = [
@@ -148,7 +148,7 @@ class SchedulePopupComponent extends React.Component<
     let iPushPullMenuItem = {
       disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
       onClick: () => this.onCreateSchedule(ScheduleType.iPushPull),
-      label: 'iPushPull',
+      label: 'ipushpull',
     };
 
     let scheduleMenuItems = [reminderMenuItem, reportMenuItem];
@@ -340,4 +340,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let SchedulePopup = connect(mapStateToProps, mapDispatchToProps)(SchedulePopupComponent);
+export let SchedulePopup = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SchedulePopupComponent);

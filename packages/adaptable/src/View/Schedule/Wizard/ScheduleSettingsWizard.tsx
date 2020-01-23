@@ -39,7 +39,7 @@ export interface ScheduleSettingsWizardState {
   ReportName: string;
   ExportDestination: 'CSV' | 'Clipboard' | 'JSON';
 
-  // iPushPull Related Settings
+  // ipushpull Related Settings
   IPushPullReportName: string; // not different name to avod a conflict...
   Page: string;
   Folder: string;
@@ -83,7 +83,7 @@ export class ScheduleSettingsWizard
           ? (this.props.Data as ReportSchedule)!.ExportDestination
           : undefined,
 
-      // iPushPull
+      // ipushpull
       IPushPullReportName:
         this.props.Data!.ScheduleType === ScheduleType.iPushPull
           ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.ReportName
@@ -138,7 +138,7 @@ export class ScheduleSettingsWizard
       };
     });
 
-    // iPushPull Stuff
+    // ipushpull Stuff
     let allFolders: IPushPullDomain[] = this.props.Adaptable.api.iPushPullApi.getIPushPullDomains();
     let availableFolders: any[] = allFolders.map((iPushPullDomain: IPushPullDomain) => {
       return {
@@ -262,7 +262,7 @@ export class ScheduleSettingsWizard
                 />
 
                 <HelpBlock marginBottom={1} marginTop={3}>
-                  Select an iPushPull Folder
+                  Select an ipushpull Folder
                 </HelpBlock>
 
                 <Dropdown
@@ -276,7 +276,7 @@ export class ScheduleSettingsWizard
                   marginRight={2}
                 />
                 <HelpBlock marginBottom={1} marginTop={3}>
-                  Select an iPushPull Page
+                  Select an ipushpull Page
                 </HelpBlock>
 
                 <Dropdown
@@ -292,7 +292,7 @@ export class ScheduleSettingsWizard
                 />
 
                 <HelpBlock marginBottom={1} marginTop={3}>
-                  Choose whether to send iPushPull Data as 'Snapshot' (One-off report) or 'Live
+                  Choose whether to send ipushpull Data as 'Snapshot' (One-off report) or 'Live
                   Data' (updating as Grid updates)
                 </HelpBlock>
 

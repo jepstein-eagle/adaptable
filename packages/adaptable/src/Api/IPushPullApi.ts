@@ -6,65 +6,65 @@ import {
 } from '../PredefinedConfig/IPushPullState';
 
 /**
- * Provides full and comprehensive run-time access to iPushPull state and associated methods.
+ * Provides full and comprehensive run-time access to ipushpull state and associated methods.
  *
- * Use the API to find out if iPushPull is available or running and much else.
+ * Use the API to find out if ipushpull is available or running and much else.
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/) | [iPushPull State](_predefinedconfig_ipushpullstate_.ipushpullstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
+ * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/) | [ipushpull State](_predefinedconfig_ipushpullstate_.ipushpullstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
  *
  * Note: Some of these methods are intended for internal use only - and have been noted as such.
  */
 export interface IPushPullApi {
   /**
    *
-   * Retrieves the iPushPull section from Adaptable State
+   * Retrieves the ipushpull section from Adaptable State
    */
   getIPushPullState(): IPushPullState | undefined;
 
   /**
-   * Retrieves the iPushPull `Username` from the iPushPull state.
+   * Retrieves the ipushpull `Username` from the ipushpull state.
    */
   getIPushPullUsername(): string | undefined;
 
   /**
-   * Retrieves the iPushPull `Password` from the iPushPull state.
+   * Retrieves the ipushpull `Password` from the ipushpull state.
    */
   getIPushPullPassword(): string | undefined;
 
   /**
-   * Retrieves the iPushPull `AutoLogin` from the iPushPull state.
+   * Retrieves the ipushpull `AutoLogin` from the ipushpull state.
    *
-   * If `true` then AdapTable will try to log in the user to iPushPull automatically at start-up
+   * If `true` then AdapTable will try to log in the user to ipushpull automatically at start-up
    */
   getAutoLogin(): boolean | undefined;
 
   /**
-   * Retrieves the current iPushPull Report (if there is one) from the iPushPull state.
+   * Retrieves the current ipushpull Report (if there is one) from the ipushpull state.
    *
-   * An iPushPull Report contains 3 properties:
+   * An ipushpull Report contains 3 properties:
    *
-   * -  **ReportName**: the name of the Report being exported to iPushPull
+   * -  **ReportName**: the name of the Report being exported to ipushpull
    *
-   * -  **Folder**: the iPushPull folder containing the page where the exported data is shown
+   * -  **Folder**: the ipushpull folder containing the page where the exported data is shown
    *
-   * -  **Page**: the iPushPull page which will show the exported data
+   * -  **Page**: the ipushpull page which will show the exported data
    *
    */
   getCurrentLiveIPushPullReport(): IPushPullReport | undefined;
 
   /**
-   * Publishes an iPushPull Report as a one-off export (i.e. with no live data)
+   * Publishes an ipushpull Report as a one-off export (i.e. with no live data)
    *
    * @param iPushPullReport the report to publish
    */
   sendSnapshot(iPushPullReport: IPushPullReport): void;
 
   /**
-   * Publishes an iPushPull Report as Live Data, so that any changes to the underlying data in the report will be sent to iPushPull
+   * Publishes an ipushpull Report as Live Data, so that any changes to the underlying data in the report will be sent to ipushpull
    *
-   * When this happens the 'play' button in the iPushPull toolbar changes to a red 'pause' button
+   * When this happens the 'play' button in the ipushpull toolbar changes to a red 'pause' button
    *
    * @param iPushPullReport the report to publish
    */
@@ -73,17 +73,17 @@ export interface IPushPullApi {
   /**
    * Pauses the current Live Data report.
    *
-   * When this happens the 'pause' button in the iPushPull toolbar changes back to a 'play' button
+   * When this happens the 'pause' button in the ipushpull toolbar changes back to a 'play' button
    */
   stopLiveData(): void;
 
   /**
-   * Retrieves the current iPushPull instance (if one has been provided by the User at design time in iPushPull state)
+   * Retrieves the current ipushpull instance (if one has been provided by the User at design time in ipushpull state)
    */
   getIPushPullInstance(): any;
 
   /**
-   * Retrieves all the iPushPull domain to which the current user has access
+   * Retrieves all the ipushpull domain to which the current user has access
    *
    * An `IPushPullDomain' contains 3 properties:
    *
@@ -96,36 +96,36 @@ export interface IPushPullApi {
   getIPushPullDomains(): IPushPullDomain[];
 
   /**
-   * Retrieves all the pages in a given iPushPull folder
-   * @param folderName the iPushPull folder which contains the pages
+   * Retrieves all the pages in a given ipushpull folder
+   * @param folderName the ipushpull folder which contains the pages
    */
   getPagesForIPushPullDomain(folderName: string): string[];
 
   /**
-   * Gets the Id of the iPushPull folder / Domain with the given name
+   * Gets the Id of the ipushpull folder / Domain with the given name
    *
-   * @param folderName the iPushPull folder name
+   * @param folderName the ipushpull folder name
    */
   getFolderIdForName(folderName: string): number;
 
   /**
-   * Adds a new page to iPushPull using given name in the supplied folder
+   * Adds a new page to ipushpull using given name in the supplied folder
    * @param folderName the name of the folder where the page will be added
    * @param pageName tbe name of the page to add
    */
   addNewIPushPullPage(folderName: string, pageName: string): void;
 
   /**
-   * Retrieves the Throttle Time from the iPushPull State
+   * Retrieves the Throttle Time from the ipushpull State
    *
-   * This is how often a Live Data report will update iPushPull (if the data has changed)
+   * This is how often a Live Data report will update ipushpull (if the data has changed)
    */
   getIPushPullThrottleTime(): number | undefined;
 
   /**
-   * Sets the Throttle time for iPushPull
+   * Sets the Throttle time for ipushpull
    *
-   * This is how often a Live Data report will update iPushPull (if the data has changed)
+   * This is how often a Live Data report will update ipushpull (if the data has changed)
    *
    * @param throttleTime the new throttle time to use
    */
@@ -141,7 +141,7 @@ export interface IPushPullApi {
   /**
    * Sets the given Domains as those to be used by the current User
    *
-   * @param IPushPullDomains the iPushPull Domains to set
+   * @param IPushPullDomains the ipushpull Domains to set
    */
   setIPushPullDomains(IPushPullDomains: IPushPullDomain[]): void;
 
@@ -153,13 +153,13 @@ export interface IPushPullApi {
   showIPushPullPopup(): void;
 
   /**
-   * Logins in the user to iPushPull with the given credentials
+   * Logins in the user to ipushpull with the given credentials
    *
-   * If successful the iPushPull toolbar will change from showing a login button to a full set of controls
+   * If successful the ipushpull toolbar will change from showing a login button to a full set of controls
    *
-   * @param userName the userName to send to iPushPull
+   * @param userName the userName to send to ipushpull
    *
-   * @param password the password to send to iPushPull
+   * @param password the password to send to ipushpull
    */
   loginToIPushPull(userName: string, password: string): void;
 
@@ -169,14 +169,14 @@ export interface IPushPullApi {
   retrieveIPushPullDomainsFromIPushPull(): void;
 
   /**
-   * Logs out the current user from iPushPull
+   * Logs out the current user from ipushpull
    *
-   * This will change the iPushPull toolbar to show a Login button
+   * This will change the ipushpull toolbar to show a Login button
    */
   logoutFromIPushPull(): void;
 
   /**
-   * Displays the given message in the iPushPull login page
+   * Displays the given message in the ipushpull login page
    *
    * This method is only intended to be used **internally** by AdapTable
    *
@@ -185,56 +185,56 @@ export interface IPushPullApi {
   setIPushPullLoginErrorMessage(loginErrorMessage: string): void;
 
   /**
-   * Gets any iPushPull schedules ie. iPushPull reports that have been set to run at particular times
+   * Gets any ipushpull schedules ie. ipushpull reports that have been set to run at particular times
    */
   getIPushPullSchedules(): IPushPullSchedule[];
 
   /**
-   * Sets that iPushPull is available to be **true**
+   * Sets that ipushpull is available to be **true**
    *
    * This method is only intended to be used **internally** by AdapTable
    */
   setIPushPullAvailableOn(): void;
 
   /**
-   * Sets that iPushPull is available to be **false**
+   * Sets that ipushpull is available to be **false**
    *
    * This method is only intended to be used **internally** by AdapTable
    */
   setIPushPullAvailableOff(): void;
 
   /**
-   * Checks to see if an iPushPull instance has been provided by the user
+   * Checks to see if an ipushpull instance has been provided by the user
    *
    */
   isIPushPullAvailable(): boolean | undefined;
 
   /**
-   * Sets that iPushPull is running to be **true**
+   * Sets that ipushpull is running to be **true**
    *
    * This method is only intended to be used **internally** by AdapTable
    */
   setIPushPullRunningOn(): void;
 
   /**
-   * Sets that iPushPull is running to be **false**
+   * Sets that ipushpull is running to be **false**
    *
    * This method is only intended to be used **internally** by AdapTable
    */
   setIPushPullRunningOff(): void;
 
   /**
-   * Checks to see if iPushPull is running (i.e. a user has successfully logged in)
+   * Checks to see if ipushpull is running (i.e. a user has successfully logged in)
    */
   isIPushPullRunning(): boolean | undefined;
 
   /**
-   * Checks to see there is currently a report sending Live Data to iPushPull
+   * Checks to see there is currently a report sending Live Data to ipushpull
    */
   isIPushPullLiveDataRunning(): boolean | undefined;
 
   /**
-   * Clears out the **internal** state of iPushPull
+   * Clears out the **internal** state of ipushpull
    *
    * This method is only intended to be used **internally** by AdapTable
    */

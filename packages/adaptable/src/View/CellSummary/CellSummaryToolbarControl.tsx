@@ -172,7 +172,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SelectedCellInfo: state.Grid.SelectedCellInfo,
     CellSummaryOperation: state.CellSummary.SummaryOperation,
-    CellSummaryOperationDefinitions: state.System.CellSummaryOperationDefinitions,
+    CellSummaryOperationDefinitions: state.CellSummary.CellSummaryOperationDefinitions,
     CellSummary: state.Grid.CellSummary,
   };
 }

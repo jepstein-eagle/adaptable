@@ -144,7 +144,7 @@ These include:
   
 * [Parcel JS (quick build) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
    
-* [iPushPull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
+* [ipushpull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
  
  
 ## Help

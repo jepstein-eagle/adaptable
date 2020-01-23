@@ -4,7 +4,7 @@ import { Report } from '../../PredefinedConfig/ExportState';
 /**
  * The Event Args used as part of the **on('LiveDataChanged')** event.
  *
- * This event is fired whenever OpenFin, Glue42 or iPushPull is connected or disconnected.
+ * This event is fired whenever OpenFin, Glue42 or ipushpull is connected or disconnected.
  *
  * It is also fired whenever a `Live Report` is started, stopped or updated.
  *
@@ -35,8 +35,8 @@ export interface LiveDataChangedEventData extends AdaptableEventData {
 
 /**
  * The main args object used in the **on('LiveDataChanged)** event.
- *
- * This event fires when any LiveData is being used (i.e. a report is being sent to Excel via Glue42 or OpenFin, or it is being sent to iPushPull)
+ *ipushpull
+ * This event fires when any LiveData is being used (i.e. a report is being sent to Excel via Glue42 or OpenFin, or it is being sent to ipushpull)
  *
  * The event fires when a partner which uses Live Data is connected or disconnected, or a LiveReport is started, stopped or updated.
  *
@@ -44,7 +44,7 @@ export interface LiveDataChangedEventData extends AdaptableEventData {
  *
  * - The `LiveDataTrigger` property defines **why** the event fired.
  *
- * - The `ReportDestination` property reflects which of Adaptable Partners is being used (i.e. OpenFin, iPushPull or Glue42).
+ * - The `ReportDestination` property reflects which of Adaptable Partners is being used (i.e. OpenFin, ipushpull or Glue42).
  *
  * - The `LiveReport` property provides details of the Report that has just been stopped / started / updated.
  *
@@ -86,7 +86,7 @@ export interface LiveDataChangedInfo {
  *
  * You can currently sent Live Reports to 3 Destinations:
  *
- * - iPushPull
+ * - ipushpull
  *
  * - OpenFin
  *

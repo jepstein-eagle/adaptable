@@ -169,7 +169,7 @@ export interface EventApi {
   /**
    * Event fired whenever **a change occurs relating to live reports / data**
    *
-   * Used in conjunction with AdapTable's partners OpenFin, iPushPull or Glue42
+   * Used in conjunction with AdapTable's partners OpenFin, ipushpull or Glue42
    *
    * @param eventName LiveDataChanged - use as: adaptableApi.eventApi.on('LiveDataChanged', (args: LiveDataChangedEventArgs) => { .....[do stuff]...})
    *

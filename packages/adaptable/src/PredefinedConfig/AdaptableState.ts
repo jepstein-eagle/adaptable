@@ -69,13 +69,16 @@ export interface AdaptableState {
   SystemStatus: SystemStatusState;
   UserInterface: UserInterfaceState;
 
+  // not sure yet about this one - was runtie but now design?
+  CellSummary: CellSummaryState;
+
   // Set at design time and / or run time => only state which is persisted
   AdvancedSearch: AdvancedSearchState;
   Alert: AlertState;
   BulkUpdate: BulkUpdateState;
   CalculatedColumn: CalculatedColumnState;
   Calendar: CalendarState;
-  CellSummary: CellSummaryState;
+
   CellValidation: CellValidationState;
   Chart: ChartState;
   ColumnCategory: ColumnCategoryState;

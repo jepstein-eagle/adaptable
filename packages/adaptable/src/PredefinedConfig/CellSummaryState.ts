@@ -1,6 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { CellSummaryOperation } from './Common/Enums';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { DesignTimeState } from './DesignTimeState';
 
 /**
  * The Predefined Configuration for the Cell Summary function
@@ -34,8 +35,10 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
  *
  *
  */
-export interface CellSummaryState extends RunTimeState {
+export interface CellSummaryState extends DesignTimeState {
   SummaryOperation?: CellSummaryOperation | string;
+
+  CellSummaryOperationDefinitions?: CellSummaryOperationDefinition[];
 }
 
 export interface CellSummaryOperationDefinition {
