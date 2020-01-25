@@ -552,6 +552,7 @@ export class Adaptable implements IAdaptable {
   debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
 
   private filterOnUserDataChange(rowNodes: RowNode[]): void {
+    console.log('filter user data change ');
     if (
       this.adaptableOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
@@ -566,6 +567,7 @@ export class Adaptable implements IAdaptable {
   }
 
   private filterOnExternalDataChange(rowNodes: RowNode[]): void {
+    console.log('filter external data change ');
     if (
       this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
@@ -608,12 +610,58 @@ export class Adaptable implements IAdaptable {
   }
 
   private applyDataChange(rowNodes: RowNode[]) {
-    let itemsToUpdate: any[] = rowNodes.map((rowNode: RowNode) => {
-      return rowNode.data;
-    });
+    console.log('apply data cahnge is called');
+    let itemsToUpdate: any[] = rowNodes
+      .filter((node: RowNode) => !this.isGroupRowNode(node))
+      .filter((rowNode: RowNode) => this.isDataInModel(rowNode))
+      .map((rowNode: RowNode) => {
+        console.log('returning node');
+        console.log(rowNode);
+        return rowNode.data;
+      });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
+      console.log('itemsToUpdate');
+      console.log(itemsToUpdate);
       this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
     }
+  }
+
+  public isGroupRowNode(rowNode: RowNode): boolean {
+    if (!rowNode) {
+      return false;
+    }
+    if (rowNode.isEmptyRowGroupNode()) {
+      return true;
+    }
+    if (rowNode.group && rowNode.group === true) {
+      return true;
+    }
+    if (rowNode.leafGroup && rowNode.leafGroup === true) {
+      return true;
+    }
+    return false;
+  }
+
+  private isDataInModel(rowNode: RowNode): boolean {
+    console.log('isDataInModel');
+    console.log(rowNode.data);
+    let data: any = rowNode.data[this.adaptableOptions.primaryKey];
+    if (!data) {
+      return false;
+    }
+    console.log(data);
+    console.log('here');
+    return true;
+  }
+
+  public isPinnedRowNode(rowNode: RowNode): boolean {
+    if (!rowNode) {
+      return false;
+    }
+    if (rowNode.isRowPinned()) {
+      return true;
+    }
+    return false;
   }
 
   public clearGridFiltering() {
@@ -861,7 +909,7 @@ export class Adaptable implements IAdaptable {
       const rowNode = this.gridOptions.api!.getModel().getRow(activeCell.rowIndex);
       // if the selected cell is from a group cell we don't return it
       // that's a design choice as this is used only when editing and you cant edit those cells
-      if (rowNode && !rowNode.group) {
+      if (rowNode && !this.isGroupRowNode(rowNode)) {
         return {
           columnId: activeCell.column.getColId(),
           primaryKeyValue: this.getPrimaryKeyValueFromRowNode(rowNode),
@@ -886,6 +934,7 @@ export class Adaptable implements IAdaptable {
   // If the selection mode is row it will returns nothing - use the setSelectedRows() method
   public setSelectedCells(): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
+
     const columns: AdaptableColumn[] = [];
     const selectedCells: GridCell[] = [];
 
@@ -899,6 +948,8 @@ export class Adaptable implements IAdaptable {
     if (selected) {
       // we iterate for each ranges
       selected.forEach((rangeSelection, index) => {
+        // if the rangeselection has a pinned row then we need to ignore it
+        console.log(rangeSelection);
         const y1 = Math.min(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
         const y2 = Math.max(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
         for (const column of rangeSelection.columns) {
@@ -908,15 +959,18 @@ export class Adaptable implements IAdaptable {
               colId,
               this.api.gridApi.getColumns()
             );
-            if (columns.find(c => c.ColumnId == selectedColumn.ColumnId) == null) {
+            if (
+              selectedColumn &&
+              columns.find(c => c.ColumnId == selectedColumn.ColumnId) == null
+            ) {
               columns.push(selectedColumn);
             }
 
             for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
               const rowNode = this.gridOptions.api!.getModel().getRow(rowIndex);
-              // if the selected cells are from a group cell we don't return it
-              // that's a design choice as this is used only when editing and you cant edit those cells
-              if (rowNode && !rowNode.group) {
+              // we used NOT to return grouped rows but I think that was wrong - if someone wants to return them then that is up to them...
+              // we definitely dont return pinned rows as they cannot be selected
+              if (rowNode && !this.isPinnedRowNode(rowNode)) {
                 const primaryKey = this.getPrimaryKeyValueFromRowNode(rowNode);
                 // const value = this.gridOptions.api!.getValue(column, rowNode);
 
@@ -1121,7 +1175,7 @@ export class Adaptable implements IAdaptable {
     const useRawValue: boolean = this.useRawValueForColumn(columnId);
 
     const eachFn = (rowNode: RowNode, columnId: string, useRawValue: boolean) => {
-      if (!rowNode.group) {
+      if (rowNode && !this.isGroupRowNode(rowNode)) {
         const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
         const displayValue = useRawValue
           ? Helper.StringifyValue(rawValue)
@@ -1161,7 +1215,7 @@ export class Adaptable implements IAdaptable {
     // we do not return the values of the aggregates when in grouping mode
     // otherwise they would appear in the filter dropdown etc....
 
-    if (!rowNode.group) {
+    if (rowNode && !this.isGroupRowNode(rowNode)) {
       const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
 
       const displayValue = useRawValue
@@ -1722,10 +1776,6 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public isGroupRowNode(rowNode: RowNode): boolean {
-    return rowNode.group;
-  }
-
   public getFirstRowNode() {
     // TODO: we can find a better way but its only used by Calccolumn on creation so not urgent
     let rowNode: RowNode;
@@ -2012,56 +2062,64 @@ export class Adaptable implements IAdaptable {
       // TODO: Jo: This is a workaround as we are accessing private members of agGrid.
       // I still wonder if we can do this nicer by using :   this.gridOptions.api!.getEditingCells();
       // must be a good reason why we don't use it
-      if (this.gridOptions.columnApi.isPivotMode()) {
+      if (this.gridOptions.columnApi!.isPivotMode()) {
         return;
       }
-      const editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex]
-        .cellComps[params.column.getColId()].cellEditor;
+      console.log(params);
+      let node: RowNode = params.node;
+      console.log(node);
+      const rowRenderer: any = (<any>this.gridOptions.api).rowRenderer;
+      if (rowRenderer) {
+        const index: any = rowRenderer.rowCompsByIndex[params.node.rowIndex];
+        if (index) {
+          const editor = index.cellComps[params.column.getColId()].cellEditor;
 
-      // editor might be type Popup like agPopupTextCellEditor or agPopupSelectCellEditor (see: https://www.ag-grid.com/javascript-grid-cell-editing/)
-      // if so then we need to get the inner editor
-      if (editor instanceof PopupEditorWrapper) {
-        this._currentEditor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[
-          params.node.rowIndex
-        ].cellComps[params.column.getColId()].cellEditor.cellEditor;
-      } else {
-        this._currentEditor = editor;
+          // editor might be type Popup like agPopupTextCellEditor or agPopupSelectCellEditor (see: https://www.ag-grid.com/javascript-grid-cell-editing/)
+          // if so then we need to get the inner editor
+          if (editor instanceof PopupEditorWrapper) {
+            this._currentEditor = (<any>editor).cellEditor;
+          } else {
+            this._currentEditor = editor;
+          }
+        }
       }
 
       // No need to register for the keydown on the editor since we already register on the main div
 
       // if there was already an implementation set by the dev we keep the reference to it and execute it at the end
-      const oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
+      if (this._currentEditor) {
+        const oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
 
-      this._currentEditor.isCancelAfterEnd = () => {
-        const dataChangedInfo: DataChangedInfo = {
-          OldValue: this.gridOptions.api!.getValue(params.column.getColId(), params.node),
-          NewValue: this._currentEditor.getValue(),
-          ColumnId: params.column.getColId(),
-          PrimaryKeyValue: this.getPrimaryKeyValueFromRowNode(params.node),
-          RowNode: params.node,
-        };
+        this._currentEditor.isCancelAfterEnd = () => {
+          const dataChangedInfo: DataChangedInfo = {
+            OldValue: this.gridOptions.api!.getValue(params.column.getColId(), params.node),
+            NewValue: this._currentEditor.getValue(),
+            ColumnId: params.column.getColId(),
+            PrimaryKeyValue: this.getPrimaryKeyValueFromRowNode(params.node),
+            RowNode: params.node,
+          };
 
-        if (!this.ValidationService.PerformCellValidation(dataChangedInfo)) {
-          return true;
-        }
-
-        const onServerValidationCompleted = () => {
-          const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
-          if (!whatToReturn) {
-            this.performPostEditChecks(dataChangedInfo, false);
+          if (!this.ValidationService.PerformCellValidation(dataChangedInfo)) {
+            return true;
           }
-          return whatToReturn;
+
+          const onServerValidationCompleted = () => {
+            const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
+            if (!whatToReturn) {
+              this.performPostEditChecks(dataChangedInfo, false);
+            }
+            return whatToReturn;
+          };
+
+          const isCancelAfterEnd = this.adaptableOptions.editOptions.validateOnServer
+            ? this.ValidationService.PerformServerValidation(dataChangedInfo, {
+                onServerValidationCompleted,
+              })
+            : onServerValidationCompleted;
+
+          return isCancelAfterEnd();
         };
-
-        const isCancelAfterEnd = this.adaptableOptions.editOptions.validateOnServer
-          ? this.ValidationService.PerformServerValidation(dataChangedInfo, {
-              onServerValidationCompleted,
-            })
-          : onServerValidationCompleted;
-
-        return isCancelAfterEnd();
-      };
+      }
     });
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
       // (<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
@@ -2072,6 +2130,7 @@ export class Adaptable implements IAdaptable {
 
       // if they have set to run filter after edit then lets do it
       if (params.node) {
+        console.log('cell editing stopped');
         this.filterOnUserDataChange([params.node]);
         this.debouncedSetSelectedCells();
       }
@@ -2626,6 +2685,11 @@ export class Adaptable implements IAdaptable {
       return;
     }
 
+    console.log('row data changed');
+    console.log(rowNode);
+    console.log(oldData);
+    console.log(newData);
+
     const identifierValue = this.getPrimaryKeyValueFromRowNode(rowNode);
 
     Object.keys(oldData).forEach((key: string) => {
@@ -2657,6 +2721,7 @@ export class Adaptable implements IAdaptable {
     dataChangedInfo: DataChangedInfo,
     applyFilter: boolean = true
   ): void {
+    console.log('perform post edit check');
     if (this.AuditLogService.isAuditCellEditsEnabled) {
       this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
     }

@@ -27,9 +27,13 @@ var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 100;
+  const tradeCount: number = 500;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  gridOptions.groupIncludeFooter = true;
+  gridOptions.groupIncludeTotalFooter = true;
+  gridOptions.suppressAggFuncInHeader = true;
+  const runReadyFunction: boolean = true;
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
@@ -52,15 +56,26 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
-  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    // to set a pinned row (in this case the 5th row in our data source)
-    let gridOptions: GridOptions = info.vendorGrid as GridOptions;
-    let tradeRow = tradeData[5];
-    gridOptions.api!.setPinnedTopRowData([tradeRow]);
+  if (runReadyFunction) {
+    api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+      // to set a pinned row (in this case the 5th row in our data source)
+      let gridOptions: GridOptions = info.vendorGrid as GridOptions;
+      let tradeRow = tradeData[5];
+      gridOptions.api!.setPinnedTopRowData([tradeRow]);
 
-    // to see which is the pinned row then do...
-    //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
-  });
+      // to see which is the pinned row then do...
+      let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
+      console.log('in readys');
+      // var pinnedData = event.api.getPinnedTopRow(0);
+
+      //   setTimeout(() => {
+      //     pinnedRowNode.updateData({
+      //       tradeId: '33333',
+      //       notional: Math.floor(Math.random() * 1000),
+      //     });
+      //   }, 2000);
+    });
+  }
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
     //  console.log('search changed');
@@ -113,7 +128,7 @@ let demoConfig: PredefinedConfig = {
         GroupedColumns: [],
       },
     ],
-    CurrentLayout: 'fixing a bug',
+    //   CurrentLayout: 'fixing a bug',
   },
 };
 
