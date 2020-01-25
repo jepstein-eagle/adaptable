@@ -15,10 +15,7 @@ import {
   SearchChangedEventArgs,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-import { MenuModule } from '@ag-grid-enterprise/menu';
-import { SideBarModule } from '@ag-grid-enterprise/side-bar';
-import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
@@ -38,7 +35,7 @@ function InitAdaptableDemo() {
 
     vendorGrid: {
       ...gridOptions,
-      modules: [RangeSelectionModule, MenuModule, SideBarModule, RowGroupingModule],
+      modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
   };
