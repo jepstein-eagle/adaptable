@@ -552,7 +552,6 @@ export class Adaptable implements IAdaptable {
   debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
 
   private filterOnUserDataChange(rowNodes: RowNode[]): void {
-    console.log('filter user data change ');
     if (
       this.adaptableOptions!.filterOptions.filterActionOnUserDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
@@ -567,7 +566,6 @@ export class Adaptable implements IAdaptable {
   }
 
   private filterOnExternalDataChange(rowNodes: RowNode[]): void {
-    console.log('filter external data change ');
     if (
       this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.RunFilter ==
       FilterOnDataChangeOptions.Always
@@ -610,18 +608,13 @@ export class Adaptable implements IAdaptable {
   }
 
   private applyDataChange(rowNodes: RowNode[]) {
-    console.log('apply data cahnge is called');
     let itemsToUpdate: any[] = rowNodes
       .filter((node: RowNode) => !this.isGroupRowNode(node))
       .filter((rowNode: RowNode) => this.isDataInModel(rowNode))
       .map((rowNode: RowNode) => {
-        console.log('returning node');
-        console.log(rowNode);
         return rowNode.data;
       });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
-      console.log('itemsToUpdate');
-      console.log(itemsToUpdate);
       this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
     }
   }
@@ -643,15 +636,11 @@ export class Adaptable implements IAdaptable {
   }
 
   private isDataInModel(rowNode: RowNode): boolean {
-    console.log('isDataInModel');
-    console.log(rowNode.data);
     let data: any = rowNode.data[this.adaptableOptions.primaryKey];
     if (!data) {
       return false;
     }
-    console.log(data);
-    console.log('here');
-    return true;
+    return this.getRowNodeForPrimaryKey(data) ? true : false;
   }
 
   public isPinnedRowNode(rowNode: RowNode): boolean {
@@ -838,9 +827,7 @@ export class Adaptable implements IAdaptable {
           const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
           if (range) {
             // not right but just checking...
-            if (
-              RangeHelper.IsColumnAppropriateForRange(range.Operator as LeafExpressionOperator, col)
-            ) {
+            if (RangeHelper.IsColumnAppropriateForRange(range, col)) {
               const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
                 columnId,
                 null,
@@ -949,7 +936,7 @@ export class Adaptable implements IAdaptable {
       // we iterate for each ranges
       selected.forEach((rangeSelection, index) => {
         // if the rangeselection has a pinned row then we need to ignore it
-        console.log(rangeSelection);
+        // currently we have a bug that we show the contents for the row below
         const y1 = Math.min(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
         const y2 = Math.max(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
         for (const column of rangeSelection.columns) {
@@ -2065,9 +2052,6 @@ export class Adaptable implements IAdaptable {
       if (this.gridOptions.columnApi!.isPivotMode()) {
         return;
       }
-      console.log(params);
-      let node: RowNode = params.node;
-      console.log(node);
       const rowRenderer: any = (<any>this.gridOptions.api).rowRenderer;
       if (rowRenderer) {
         const index: any = rowRenderer.rowCompsByIndex[params.node.rowIndex];
@@ -2130,7 +2114,6 @@ export class Adaptable implements IAdaptable {
 
       // if they have set to run filter after edit then lets do it
       if (params.node) {
-        console.log('cell editing stopped');
         this.filterOnUserDataChange([params.node]);
         this.debouncedSetSelectedCells();
       }
@@ -2685,11 +2668,6 @@ export class Adaptable implements IAdaptable {
       return;
     }
 
-    console.log('row data changed');
-    console.log(rowNode);
-    console.log(oldData);
-    console.log(newData);
-
     const identifierValue = this.getPrimaryKeyValueFromRowNode(rowNode);
 
     Object.keys(oldData).forEach((key: string) => {
@@ -2721,7 +2699,6 @@ export class Adaptable implements IAdaptable {
     dataChangedInfo: DataChangedInfo,
     applyFilter: boolean = true
   ): void {
-    console.log('perform post edit check');
     if (this.AuditLogService.isAuditCellEditsEnabled) {
       this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
     }
@@ -2917,12 +2894,7 @@ export class Adaptable implements IAdaptable {
           const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
 
           if (quickSearchRange != null) {
-            if (
-              RangeHelper.IsColumnAppropriateForRange(
-                quickSearchRange.Operator as LeafExpressionOperator,
-                column
-              )
-            ) {
+            if (RangeHelper.IsColumnAppropriateForRange(quickSearchRange, column)) {
               const quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
                 column.ColumnId,
                 null,

@@ -10,6 +10,7 @@ import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { DisplayAction, LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
+import quicksearchdemo from '../../examples/pages/agGrid/quicksearchdemo';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
   constructor(adaptable: IAdaptable) {
@@ -45,10 +46,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
       for (let column of this.adaptable.api.gridApi.getVisibleColumns()) {
         if (
           !column.IsExcludedFromQuickSearch &&
-          RangeHelper.IsColumnAppropriateForRange(
-            quickSearchRange.Operator as LeafExpressionOperator,
-            column
-          )
+          RangeHelper.IsColumnAppropriateForRange(quickSearchRange, column)
         ) {
           let quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
             column.ColumnId,

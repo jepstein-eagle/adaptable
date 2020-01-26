@@ -7,10 +7,16 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 
-import { GridOptions } from '@ag-grid-community/all-modules';
+import {
+  GridOptions,
+  RowNode,
+  IClientSideRowModel,
+  ModelUpdatedEvent,
+} from '@ag-grid-community/all-modules';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 
@@ -21,11 +27,15 @@ function InitAdaptableDemo() {
   const tradeCount: number = 200;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  gridOptions.groupIncludeFooter = true;
+  gridOptions.groupIncludeTotalFooter = true;
+  gridOptions.suppressAggFuncInHeader = true;
+  const runReadyFunction: boolean = true;
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Basic Demo',
+    adaptableId: 'Pinned Rows Demo',
 
     vendorGrid: {
       ...gridOptions,
@@ -43,57 +53,38 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
-  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    // to do
-  });
+  if (runReadyFunction) {
+    api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+      // to set a pinned row (in this case the 5th row in our data source)
+      let gridOptions: GridOptions = info.vendorGrid as GridOptions;
+
+      gridOptions.onModelUpdated = (event: ModelUpdatedEvent) => {
+        const pinnedData = event.api.getPinnedTopRow(0);
+        const model = event.api.getModel() as IClientSideRowModel;
+        const rootNode = model.getRootNode();
+        if (!pinnedData) {
+          event.api.setPinnedTopRowData([rootNode.aggData]);
+        } else {
+          pinnedData.updateData({
+            tradeId: Math.floor(Math.random() * 100000),
+            notional: Math.floor(Math.random() * 100),
+          });
+        }
+      };
+
+      setTimeout(() => {
+        //    pinnedRowNode.updateData({
+        //  tradeId: '33333',
+        //   notional: Math.floor(Math.random() * 1000),
+        //  });
+      }, 5000);
+    });
+  }
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
-    MinimisedHomeToolbarButtonStyle: {
-      Variant: 'text',
-      Tone: 'success',
-    }, //
-  },
-  ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
-  },
-  SystemStatus: {
-    // ShowAlert: false,
-    DefaultStatusMessage: 'This is default message and its quite long',
-    DefaultStatusType: 'Warning',
-    StatusMessage: 'overriding with this',
-    StatusType: 'Error',
-  },
-
-  ConditionalStyle: {
-    ConditionalStyles: [
-      {
-        ConditionalStyleScope: 'Column', // 'DataType',
-        ColumnId: 'moodysRating',
-        // DataType: 'Number',
-        Style: {
-          BackColor: '#32cd32',
-        },
-        Expression: {
-          FilterExpressions: [{ ColumnId: 'notional', Filters: ['Positive', 'Negative'] }],
-        },
-      },
-    ],
-  },
-
-  Layout: {
-    Layouts: [
-      {
-        ColumnSorts: [],
-        Columns: ['moodysRating', 'tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'fixing a bug',
-        // GroupedColumns: ['currency'],
-        GroupedColumns: [],
-      },
-    ],
-    //   CurrentLayout: 'fixing a bug',
+    VisibleToolbars: ['CellSummary'],
   },
 };
 

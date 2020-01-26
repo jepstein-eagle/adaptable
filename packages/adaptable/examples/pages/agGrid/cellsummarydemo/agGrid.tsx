@@ -43,7 +43,7 @@ function InitAdaptableDemo() {
     //  plugins: [finance()],
     vendorGrid: {
       ...gridOptions,
-      modules: [AllEnterpriseModules],
+      modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
   };
