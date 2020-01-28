@@ -32,15 +32,13 @@ import { ButtonLogout } from '../Components/Buttons/ButtonLogout';
 
 interface Glue42ToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<Glue42ToolbarControlComponent> {
-  onGlue42SendSnapshot: (glue42eport: Glue42Report) => Glue42Redux.Glue42SendSnapshotAction;
-  /*
-  onGlue42StartLiveData: (
-    Glue42eport: Glue42Report
-  ) => Glue42Redux.Glue42StartLiveDataAction;
+  onGlue42SendSnapshot: (glue42report: Glue42Report) => Glue42Redux.Glue42SendSnapshotAction;
+
+  onGlue42StartLiveData: (glue42report: Glue42Report) => Glue42Redux.Glue42StartLiveDataAction;
 
   onGlue42StopLiveData: () => Glue42Redux.Glue42StopLiveDataAction;
-*/
-  onNewGlue42Schedule: (Glue42Schedule: Glue42Schedule) => PopupRedux.PopupShowScreenAction;
+
+  onNewGlue42Schedule: (glue42Schedule: Glue42Schedule) => PopupRedux.PopupShowScreenAction;
 
   Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
@@ -129,7 +127,7 @@ class Glue42ToolbarControlComponent extends React.Component<
           <ButtonPause
             marginLeft={1}
             className="ab-DashboardToolbar__Glue42__pause"
-            // onClick={() => this.props.onGlue42StopLiveData()}
+            onClick={() => this.props.onGlue42StopLiveData()}
             tooltip="Stop sync with Glue42"
             disabled={!isLiveGlue42Report}
             AccessLevel={this.props.AccessLevel}
@@ -138,8 +136,8 @@ class Glue42ToolbarControlComponent extends React.Component<
           <ButtonPlay
             marginLeft={1}
             className="ab-DashboardToolbar__Glue42__play"
-            //  onClick={() => this.onGlue42StartLiveData()}
-            tooltip="Start Sync with Glue42"
+            onClick={() => this.onGlue42StartLiveData()}
+            tooltip="Start sync with Glue42"
             disabled={isLiveGlue42Report || !isCompletedReport}
             AccessLevel={this.props.AccessLevel}
           />
@@ -196,7 +194,7 @@ class Glue42ToolbarControlComponent extends React.Component<
   }
 
   private onGlue42StartLiveData() {
-    //  this.props.onGlue42StartLiveData(this.createGlue42ReportFromState());
+    this.props.onGlue42StartLiveData(this.createGlue42ReportFromState());
   }
 
   private onNewGlue42Schedule() {
@@ -226,13 +224,13 @@ function mapStateToProps(state: AdaptableState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onGlue42SendSnapshot: (glue42eport: Glue42Report) =>
-      dispatch(Glue42Redux.Glue42SendSnapshot(glue42eport)),
-    /*
-    onGlue42StartLiveData: (Glue42Report: Glue42Report) =>
-      dispatch(Glue42Redux.Glue42StartLiveData(Glue42Report)),
+    onGlue42SendSnapshot: (glue42report: Glue42Report) =>
+      dispatch(Glue42Redux.Glue42SendSnapshot(glue42report)),
+
+    onGlue42StartLiveData: (glue42report: Glue42Report) =>
+      dispatch(Glue42Redux.Glue42StartLiveData(glue42report)),
     onGlue42StopLiveData: () => dispatch(Glue42Redux.Glue42StopLiveData()),
-  */
+
     onNewGlue42Schedule: (Glue42Schedule: Glue42Schedule) =>
       dispatch(
         PopupRedux.PopupShowScreen(

@@ -2565,14 +2565,14 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          case IPushPullRedux.IPUSHPULL_ADD_PAGE: {
-            const actionTyped = action as IPushPullRedux.IPushPullAddPageAction;
-            adaptable.api.iPushPullApi.addNewIPushPullPage(actionTyped.folder, actionTyped.page);
+          case IPushPullRedux.IPUSHPULL_STOP_LIVE_DATA: {
+            adaptable.api.iPushPullApi.stopLiveData();
             return next(action);
           }
 
-          case IPushPullRedux.IPUSHPULL_STOP_LIVE_DATA: {
-            adaptable.api.iPushPullApi.stopLiveData();
+          case IPushPullRedux.IPUSHPULL_ADD_PAGE: {
+            const actionTyped = action as IPushPullRedux.IPushPullAddPageAction;
+            adaptable.api.iPushPullApi.addNewIPushPullPage(actionTyped.folder, actionTyped.page);
             return next(action);
           }
 
@@ -2618,6 +2618,21 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             const actionTyped = action as Glue42Redux.Glue42SendSnapshotAction;
             glue42Strategy.sendSnapshot(actionTyped.glue42Report);
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+            return next(action);
+          }
+
+          case Glue42Redux.GLUE42_START_LIVE_DATA: {
+            let glue42Strategy = <IGlue42Strategy>(
+              adaptable.strategies.get(StrategyConstants.Glue42StrategyId)
+            );
+            const actionTyped = action as Glue42Redux.Glue42StartLiveDataAction;
+            glue42Strategy.startLiveData(actionTyped.glue42Report);
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+            return next(action);
+          }
+
+          case Glue42Redux.GLUE42_STOP_LIVE_DATA: {
+            adaptable.api.glue42Api.stopLiveData();
             return next(action);
           }
 

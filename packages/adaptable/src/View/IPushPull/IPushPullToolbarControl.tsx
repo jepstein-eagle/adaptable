@@ -190,7 +190,7 @@ class IPushPullToolbarControlComponent extends React.Component<
             marginLeft={1}
             className="ab-DashboardToolbar__IPushPull__play"
             onClick={() => this.onIPushPullStartLiveData()}
-            tooltip="Start Sync with ipushpull"
+            tooltip="Start sync with ipushpull"
             disabled={isLiveIPushPullReport || !isCompletedReport}
             AccessLevel={this.props.AccessLevel}
           />
@@ -237,7 +237,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         marginLeft={1}
         className="ab-DashboardToolbar__IPushPull__login"
         onClick={() => this.props.onShowIPushPullLogin()}
-        tooltip="Send to ipushpull"
+        tooltip="Login to ipushpull"
         AccessLevel={this.props.AccessLevel}
       >
         {' '}

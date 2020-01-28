@@ -188,17 +188,17 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
   }
 
   public startLiveData(glue42Report: Glue42Report): void {
-    // need to get the full report from the glue42 report name
-    let report: Report = null;
-    let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
-    let reportData: any[] = this.ConvertReportToArray(report);
-    this.adaptable.Glue42Service.openSheet(reportData).then(() => {
-      // this is not right and should be done via Glue42 api better
-      this.adaptable.api.internalApi.startLiveReport(report, page, ExportDestination.Glue42);
-      setTimeout(() => {
-        this.throttledRecomputeAndSendLiveDataEvent();
-      }, 500);
-    });
+    let report: Report = this.adaptable.api.exportApi.getReportByName(glue42Report.ReportName);
+    if (report) {
+      let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
+      let reportData: any[] = this.ConvertReportToArray(report);
+      this.adaptable.Glue42Service.openSheet(reportData).then(() => {
+        this.adaptable.api.glue42Api.startLiveData(glue42Report);
+        setTimeout(() => {
+          this.throttledRecomputeAndSendLiveDataEvent();
+        }, 500);
+      });
+    }
   }
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values

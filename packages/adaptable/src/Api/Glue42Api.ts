@@ -25,4 +25,8 @@ export interface Glue42Api {
   setGlue42AvailableOff(): void;
 
   getGlue42Schedules(): Glue42Schedule[];
+
+  startLiveData(glue42Report: Glue42Report): void;
+
+  stopLiveData(): void;
 }

@@ -19,7 +19,11 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
   }
 
   public isGlue42Available(): boolean {
-    return this.getAdaptableState().Glue42.IsGlue42Available;
+    let glue42State: Glue42State = this.getGlue42State();
+    if (glue42State) {
+      return glue42State.IsGlue42Available;
+    }
+    return false;
   }
 
   public getGlue42ThrottleTime(): number | undefined {
@@ -31,7 +35,7 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
   }
 
   public getCurrentLiveGlue42Report(): Glue42Report | undefined {
-    return undefined;
+    return undefined; // need to do this
   }
 
   public setGlue42AvailableOn(): void {
@@ -44,6 +48,32 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
 
   public getGlue42Schedules(): Glue42Schedule[] {
     return this.getGlue42State()!.Glue42Schedules;
+  }
+
+  public startLiveData(glue42Report: Glue42Report): void {
+    if (this.checkItemExists(glue42Report, glue42Report.ReportName, 'Glue42 Report')) {
+      this.dispatchAction(Glue42Redux.Glue42LiveReportSet(glue42Report));
+
+      this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
+        'Glue42',
+        'LiveDataStarted',
+        glue42Report
+      );
+    }
+  }
+
+  public stopLiveData(): void {
+    let currentLiveReport: Glue42Report = this.getCurrentLiveGlue42Report();
+
+    // anything here to do with the Glue42Service should be done
+    //    this.adaptable.Glue42Service.stopLiveData()
+
+    // fire the Live Report event for Export Stopped
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
+      'Glue42',
+      'LiveDataStopped',
+      currentLiveReport
+    );
   }
 
   public showGlue42Popup(): void {

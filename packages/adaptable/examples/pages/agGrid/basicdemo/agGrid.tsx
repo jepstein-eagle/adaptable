@@ -8,7 +8,12 @@ import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  AdaptableApi,
+  SearchChangedEventArgs,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
@@ -44,7 +49,18 @@ function InitAdaptableDemo() {
   api = Adaptable.init(adaptableOptions);
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    // to do
+    // to set a pinned row (in this case the 5th row in our data source)
+    let gridOptions: GridOptions = info.vendorGrid as GridOptions;
+    let tradeRow = tradeData[5];
+    gridOptions.api!.setPinnedTopRowData([tradeRow]);
+
+    // to see which is the pinned row then do...
+    //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
+  });
+
+  api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
+    console.log('search changed');
+    console.log(searchChangedArgs.data[0].id);
   });
 }
 
