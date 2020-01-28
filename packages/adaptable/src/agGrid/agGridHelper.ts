@@ -72,6 +72,7 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { PushPullStrategy } from '../Strategy/PushPullStrategy';
+import { Glue42Strategy } from '../Strategy/Glue42Strategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -162,8 +163,9 @@ export class agGridHelper {
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
 
-    // should probably also be a plugin
+    // should probably both be plugins
     strategies.set(StrategyConstants.IPushPullStrategyId, new PushPullStrategy(adaptable));
+    strategies.set(StrategyConstants.Glue42StrategyId, new Glue42Strategy(adaptable));
     return strategies;
   }
 

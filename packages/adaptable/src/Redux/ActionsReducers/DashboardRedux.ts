@@ -212,6 +212,7 @@ const initialDashboardState: DashboardState = {
     'Chart',
     'ColumnFilter',
     'Export',
+    'Glue42',
     'IPushPull',
     'Layout',
     'SmartEdit',

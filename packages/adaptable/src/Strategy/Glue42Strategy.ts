@@ -11,17 +11,19 @@ import {
   SELECTED_ROWS_REPORT,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import { IPushPullStrategy } from './Interface/IPushPullStrategy';
-import { IPushPullReport } from '../PredefinedConfig/IPushPullState';
+import { IGlue42Strategy } from './Interface/IGlue42Strategy';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { Glue42Report } from '../PredefinedConfig/Glue42State';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
+import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 
-export class PushPullStrategy extends AdaptableStrategyBase implements IPushPullStrategy {
+export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Strategy {
   private isSendingData: boolean = false;
 
   private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.IPushPullStrategyId, adaptable);
+    super(StrategyConstants.Glue42StrategyId, adaptable);
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       setTimeout(() => {
@@ -34,16 +36,16 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
 
     // if a piece of data has updated then update any live reports except cell or row selected
     // currently we DONT send deltas or even check if the updated cell is in the current report  - we should
-    // we simply send everything to ipushpull every time any cell ticks....
+    // we simply send everything to iGlue42 every time any cell ticks....
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
-      if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
-        let currentLiveIPushPullReport:
-          | IPushPullReport
-          | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+      if (this.adaptable.api.glue42Api.isGlue42Running()) {
+        let currentLiveIGlue42Report:
+          | Glue42Report
+          | undefined = this.adaptable.api.glue42Api.getCurrentLiveGlue42Report();
         if (
-          currentLiveIPushPullReport &&
-          currentLiveIPushPullReport.ReportName !== SELECTED_CELLS_REPORT &&
-          currentLiveIPushPullReport.ReportName !== SELECTED_ROWS_REPORT
+          currentLiveIGlue42Report &&
+          currentLiveIGlue42Report.ReportName !== SELECTED_CELLS_REPORT &&
+          currentLiveIGlue42Report.ReportName !== SELECTED_ROWS_REPORT
         ) {
           this.throttledRecomputeAndSendLiveDataEvent();
         }
@@ -51,36 +53,36 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
     });
     // if the grid has refreshed then update all live reports
     this.adaptable._on('GridRefreshed', () => {
-      if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
+      if (this.adaptable.api.glue42Api.isGlue42Running()) {
         this.throttledRecomputeAndSendLiveDataEvent();
       }
     });
     // if the grid filters have changed then update any live reports except cell or row selected
     this.adaptable._on('GridFiltered', () => {
       // Rerun all reports except selected cells / rows when filter changes
-      if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
-        let currentLiveIPushPullReport:
-          | IPushPullReport
-          | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+      if (this.adaptable.api.glue42Api.isGlue42Running()) {
+        let currentLiveIGlue42Report:
+          | Glue42Report
+          | undefined = this.adaptable.api.glue42Api.getCurrentLiveGlue42Report();
         if (
-          currentLiveIPushPullReport &&
-          currentLiveIPushPullReport.ReportName !== SELECTED_CELLS_REPORT &&
-          currentLiveIPushPullReport.ReportName !== SELECTED_ROWS_REPORT
+          currentLiveIGlue42Report &&
+          currentLiveIGlue42Report.ReportName !== SELECTED_CELLS_REPORT &&
+          currentLiveIGlue42Report.ReportName !== SELECTED_ROWS_REPORT
         ) {
           this.throttledRecomputeAndSendLiveDataEvent();
         }
       }
     });
-    // if grid selection has changed and the ipushpull Live report is 'Selected Cells' or 'Selected Rows' then send updated data
+    // if grid selection has changed and the iGlue42 Live report is 'Selected Cells' or 'Selected Rows' then send updated data
     this.adaptable.api.eventApi.on('SelectionChanged', () => {
-      if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
-        let currentLiveIPushPullReport:
-          | IPushPullReport
-          | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
+      if (this.adaptable.api.glue42Api.isGlue42Running()) {
+        let currentLiveIGlue42Report:
+          | Glue42Report
+          | undefined = this.adaptable.api.glue42Api.getCurrentLiveGlue42Report();
         if (
-          currentLiveIPushPullReport &&
-          (currentLiveIPushPullReport.ReportName === SELECTED_CELLS_REPORT ||
-            currentLiveIPushPullReport.ReportName === SELECTED_ROWS_REPORT)
+          currentLiveIGlue42Report &&
+          (currentLiveIGlue42Report.ReportName === SELECTED_CELLS_REPORT ||
+            currentLiveIGlue42Report.ReportName === SELECTED_ROWS_REPORT)
         ) {
           this.throttledRecomputeAndSendLiveDataEvent();
         }
@@ -89,11 +91,11 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.adaptable.api.iPushPullApi.isIPushPullAvailable()) {
+    if (this.adaptable.api.glue42Api.isGlue42Available()) {
       return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.IPushPullStrategyFriendlyName,
-        ComponentName: ScreenPopups.IPushPullPopup,
-        Icon: StrategyConstants.IPushPullGlyph,
+        Label: StrategyConstants.Glue42StrategyFriendlyName,
+        ComponentName: ScreenPopups.Glue42Popup,
+        Icon: StrategyConstants.Glue42Glyph,
       });
     }
   }
@@ -104,13 +106,13 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       this.throttledRecomputeAndSendLiveDataEvent();
       return;
     }
-    let currentLiveIPushPullReport:
-      | IPushPullReport
-      | undefined = this.adaptable.api.iPushPullApi.getCurrentLiveIPushPullReport();
-    if (currentLiveIPushPullReport) {
+    let currentLiveIGlue42Report:
+      | Glue42Report
+      | undefined = this.adaptable.api.glue42Api.getCurrentLiveGlue42Report();
+    if (currentLiveIGlue42Report) {
       this.isSendingData = true;
       let report: Report = this.adaptable.api.exportApi.getReportByName(
-        currentLiveIPushPullReport.ReportName
+        currentLiveIGlue42Report.ReportName
       );
 
       Promise.resolve()
@@ -125,31 +127,32 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
           });
         })
         .then(reportAsArray => {
-          return this.adaptable.PushPullService.pushData(
-            currentLiveIPushPullReport.Page,
-            reportAsArray
-          );
+          return [];
+          // this.adaptable.Glue42Service.pushData(
+          //  currentLiveIGlue42Report.Page,
+          //  reportAsArray
+          //);
         })
         .then(() => {
           return this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-            'iPushPull',
+            'Glue42',
             'LiveDataUpdated',
-            currentLiveIPushPullReport
+            currentLiveIGlue42Report
           );
         })
         .catch(reason => {
           LoggingHelper.LogAdaptableWarning(
-            'Failed to send data to ipushpull for [' + currentLiveIPushPullReport.ReportName + ']',
+            'Failed to send data to iGlue42 for [' + currentLiveIGlue42Report.ReportName + ']',
             reason
           );
-          this.adaptable.api.iPushPullApi.stopLiveData();
+          //      this.adaptable.api.glue42Api.stopLiveData();
 
           let errorMessage: string = 'Export Failed';
           if (reason) {
             errorMessage += ': ' + reason;
           }
           errorMessage += '.  This live export has been cancelled.';
-          this.adaptable.api.alertApi.showAlertError('ipushpull Export Error', errorMessage);
+          this.adaptable.api.alertApi.showAlertError('iGlue42 Export Error', errorMessage);
         });
       Promise.resolve()
         .then(() => {
@@ -163,31 +166,39 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
     }
   }
 
-  public sendSnapshot(iPushPullReport: IPushPullReport): void {
-    this.adaptable.PushPullService.loadPage(iPushPullReport.Folder, iPushPullReport.Page).then(
-      () => {
-        let report: Report = this.adaptable.api.exportApi.getReportByName(
-          iPushPullReport.ReportName
-        );
-        if (report) {
-          let reportAsArray: any[] = this.ConvertReportToArray(report);
-          if (reportAsArray) {
-            this.adaptable.PushPullService.pushData(iPushPullReport.Page, reportAsArray);
-          }
+  public sendSnapshot(glue42Report: Glue42Report): void {
+    let report: Report = this.adaptable.api.exportApi.getReportByName(glue42Report.ReportName);
+    if (report) {
+      let data: any[] = this.ConvertReportToArray(report);
+      let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+      // for glue42 we need to pass in the pk values of the data also
+      let primaryKeyValues: any[] = this.adaptable.ReportService.GetPrimaryKeysForReport(report);
+      try {
+        if (data) {
+          this.adaptable.Glue42Service.exportData.apply(this.adaptable.Glue42Service, [
+            data,
+            gridColumns,
+            primaryKeyValues,
+          ]);
         }
+      } catch (error) {
+        LoggingHelper.LogAdaptableError(error);
       }
-    );
+    }
   }
 
-  public startLiveData(iPushPullReport: IPushPullReport): void {
-    this.adaptable.PushPullService.loadPage(iPushPullReport.Folder, iPushPullReport.Page).then(
-      () => {
-        this.adaptable.api.iPushPullApi.startLiveData(iPushPullReport);
-        setTimeout(() => {
-          this.throttledRecomputeAndSendLiveDataEvent();
-        }, 500);
-      }
-    );
+  public startLiveData(glue42Report: Glue42Report): void {
+    // need to get the full report from the glue42 report name
+    let report: Report = null;
+    let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
+    let reportData: any[] = this.ConvertReportToArray(report);
+    this.adaptable.Glue42Service.openSheet(reportData).then(() => {
+      // this is not right and should be done via Glue42 api better
+      this.adaptable.api.internalApi.startLiveReport(report, page, ExportDestination.Glue42);
+      setTimeout(() => {
+        this.throttledRecomputeAndSendLiveDataEvent();
+      }, 500);
+    });
   }
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
@@ -202,10 +213,10 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
   }
 
   private getThrottleTimeFromState(): number {
-    let iPushPullThrottleTime: number | undefined;
-    if (this.adaptable.api.iPushPullApi.isIPushPullRunning()) {
-      iPushPullThrottleTime = this.adaptable.api.iPushPullApi.getIPushPullThrottleTime();
+    let iGlue42ThrottleTime: number | undefined;
+    if (this.adaptable.api.glue42Api.isGlue42Running()) {
+      iGlue42ThrottleTime = this.adaptable.api.glue42Api.getGlue42ThrottleTime();
     }
-    return iPushPullThrottleTime ? iPushPullThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+    return iGlue42ThrottleTime ? iGlue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
   }
 }

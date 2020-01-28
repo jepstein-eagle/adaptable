@@ -16,7 +16,6 @@ import {
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
-
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 
@@ -24,7 +23,7 @@ var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 100;
+  const tradeCount: number = 200;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -110,7 +109,7 @@ let demoConfig: PredefinedConfig = {
         GroupedColumns: [],
       },
     ],
-    CurrentLayout: 'fixing a bug',
+    //   CurrentLayout: 'fixing a bug',
   },
 };
 

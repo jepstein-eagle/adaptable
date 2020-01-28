@@ -88,8 +88,9 @@ class IPushPullToolbarControlComponent extends React.Component<
         (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
           let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
           if (
-            liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
-            liveDataChangedInfo.LiveDataTrigger == 'Disconnected'
+            liveDataChangedInfo.ReportDestination == 'iPushPull' &&
+            (liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
+              liveDataChangedInfo.LiveDataTrigger == 'Disconnected')
           ) {
             this.forceUpdate();
           }

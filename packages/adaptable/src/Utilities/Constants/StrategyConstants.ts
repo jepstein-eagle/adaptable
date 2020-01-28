@@ -21,6 +21,7 @@ export const ExportStrategyId: AdaptableFunctionName = 'Export';
 export const FlashingCellsStrategyId: AdaptableFunctionName = 'FlashingCells';
 export const FormatColumnStrategyId: AdaptableFunctionName = 'FormatColumn';
 export const FreeTextColumnStrategyId: AdaptableFunctionName = 'FreeTextColumn';
+export const Glue42StrategyId: AdaptableFunctionName = 'Glue42';
 export const HomeStrategyId: AdaptableFunctionName = 'Home';
 export const IPushPullStrategyId: AdaptableFunctionName = 'IPushPull';
 export const LayoutStrategyId: AdaptableFunctionName = 'Layout';
@@ -64,6 +65,7 @@ export const FlashingCellsStrategyFriendlyName: string = 'Flashing Cells';
 export const UpdatedRowStrategyFriendlyName: string = 'Updated Row';
 export const FormatColumnStrategyFriendlyName: string = 'Format Column';
 export const FreeTextColumnStrategyFriendlyName: string = 'Free Text Column';
+export const Glue42StrategyFriendlyName: string = 'Glue42';
 export const IPushPullStrategyFriendlyName: string = 'ipushpull';
 export const LayoutStrategyFriendlyName: string = 'Layout';
 export const PercentBarStrategyFriendlyName: string = 'Percent Bar';
@@ -104,6 +106,7 @@ export const ExportGlyph: string = 'export';
 export const FlashingCellGlyph: string = 'flashing-cell';
 export const FormatColumnGlyph: string = 'format-column';
 export const FreeTextColumnGlyph: string = 'freetext-column';
+export const Glue42Glyph: string = 'ipushpull';
 export const IPushPullGlyph: string = 'ipushpull';
 export const FunctionsGlyph: string = 'home';
 export const LayoutGlyph: string = 'layout';
@@ -165,6 +168,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return FormatColumnStrategyId;
     case FreeTextColumnStrategyFriendlyName:
       return FreeTextColumnStrategyId;
+    case Glue42StrategyFriendlyName:
+      return Glue42StrategyId;
     case IPushPullStrategyFriendlyName:
       return IPushPullStrategyId;
     case LayoutStrategyFriendlyName:
@@ -246,6 +251,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return FormatColumnStrategyFriendlyName;
     case FreeTextColumnStrategyId:
       return FreeTextColumnStrategyFriendlyName;
+    case Glue42StrategyId:
+      return Glue42StrategyFriendlyName;
     case IPushPullStrategyId:
       return IPushPullStrategyFriendlyName;
     case LayoutStrategyId:
@@ -325,6 +332,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return FormatColumnGlyph;
     case FreeTextColumnStrategyId:
       return FreeTextColumnGlyph;
+    case Glue42StrategyId:
+      return Glue42Glyph;
     case IPushPullStrategyId:
       return IPushPullGlyph;
     case LayoutStrategyId:

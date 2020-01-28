@@ -586,14 +586,16 @@ export class ExamplesHelper {
       'Barcap',
       'Citi',
       'JP Morgan',
-      'Morgan Stanley',
-      'BNP',
-      'UBS',
-      'Credit Suisse',
-      'Nomura',
-      'Canada',
+      //  'Morgan Stanley',
+      //  'BNP',
+      //  'UBS',
+      //  'Credit Suisse',
+      //  'Nomura',
+      //  'Canada',
+      // '',
+
       (undefined as unknown) as string,
-      (null as unknown) as string,
+      //  null,
       //   "Lloyds TSB",
       //   "MUFJ",
       //   "Rabobank",
@@ -779,7 +781,7 @@ export class ExamplesHelper {
       suppressColumnVirtualisation: true,
       suppressMenuHide: true,
       rowHeight: 30,
-      sideBar: 'columns',
+      sideBar: true,
       rowSelection: 'multiple',
       columnTypes: {
         abColDefNumber: {},
@@ -1019,6 +1021,36 @@ export class ExamplesHelper {
       cellRenderer: 'agAnimateShowChangeCellRenderer',
     });
     schema.push({
+      headerName: 'Notional',
+      field: 'notional',
+      enableValue: true,
+      editable: true,
+      sortable: true,
+      aggFunc: 'sum',
+      //   agGroupCellRenderer
+      // valueFormatter: notionalFormatter,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+      filter: true,
+      resizable: true,
+      cellRenderer: 'agGroupCellRenderer',
+      cellRendererParams: {
+        footerValueGetter: '"All Notionals (" + x + ")"',
+      },
+    });
+    schema.push({
+      headerName: 'Ask',
+      field: 'ask',
+      columnGroupShow: 'closed',
+      filter: true,
+      resizable: true,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+      enableValue: true,
+      valueFormatter: this.fourDecimalPlaceFormatter,
+      aggFunc: 'sum',
+    });
+    schema.push({
       headerName: 'Bid',
       field: 'bid',
       columnGroupShow: 'closed',
@@ -1061,18 +1093,7 @@ export class ExamplesHelper {
       //  tooltipField: 'country',
       //  cellEditor: 'agLargeTextCellEditor',
     });
-    schema.push({
-      headerName: 'Notional',
-      field: 'notional',
-      enableValue: true,
-      editable: true,
-      sortable: true,
-      // valueFormatter: notionalFormatter,
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-      filter: true,
-      resizable: true,
-    });
+
     schema.push({
       headerName: 'Amount',
       field: 'amount',
@@ -1127,18 +1148,7 @@ export class ExamplesHelper {
       valueFormatter: this.twoDecimalPlaceFormatter,
       sortable: true,
     });
-    schema.push({
-      headerName: 'Ask',
-      field: 'ask',
-      columnGroupShow: 'closed',
-      filter: true,
-      resizable: true,
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-      enableValue: true,
-      valueFormatter: this.fourDecimalPlaceFormatter,
-      //  aggFunc: 'sum',
-    });
+
     schema.push({
       headerName: 'Bbg Ask',
       field: 'bloombergAsk',

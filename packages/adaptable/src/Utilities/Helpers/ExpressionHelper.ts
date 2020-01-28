@@ -309,6 +309,7 @@ export function IsSatisfied(
             adaptable,
             getOtherColumnValue
           );
+
           isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, adaptable);
           if (isColumnSatisfied) {
             break;
@@ -721,8 +722,9 @@ export function GetRangeEvaluation(
     case DataType.Object:
     case DataType.String:
       // might not be a string so make sure
-      rangeEvaluation.newValue = String(rangeEvaluation.newValue);
-
+      if (rangeEvaluation.newValue !== undefined && rangeEvaluation.newValue !== null) {
+        rangeEvaluation.newValue = String(rangeEvaluation.newValue);
+      }
       rangeEvaluation.operand1 =
         rangeExpression.Operand1Type == RangeOperandType.Column
           ? getOtherColumnValue(rangeExpression.Operand1)
@@ -753,6 +755,7 @@ export function TestRangeEvaluation(
   if (Helper.objectNotExists(rangeEvaluation.newValue)) {
     return false;
   }
+
   switch (rangeEvaluation.operator) {
     case LeafExpressionOperator.AnyChange:
       return true;

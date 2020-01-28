@@ -21,6 +21,7 @@ export const FlashingCellsPopup: string = 'FlashingCellsPopup';
 export const UpdatedRowPopup: string = 'UpdatedRowPopup';
 export const FormatColumnPopup: string = 'FormatColumnPopup';
 export const FreeTextColumnPopup: string = 'FreeTextColumnPopup';
+export const Glue42Popup: string = 'Glue42Popup';
 export const IPushPullPopup: string = 'IPushPullPopup';
 export const IPushPullLoginPopup: string = 'IPushPullLoginPopup';
 export const IPushPullAddPagePopup: string = 'IPushPullAddPagePopup';

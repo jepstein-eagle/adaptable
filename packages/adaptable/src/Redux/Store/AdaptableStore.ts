@@ -133,6 +133,7 @@ import { ServiceStatus } from '../../Utilities/Services/PushPullService';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { IPushPullDomain, IPushPullReport } from '../../PredefinedConfig/IPushPullState';
 import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
+import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -255,7 +256,8 @@ const rootReducerWithResetManagement = (state: AdaptableState, action: Redux.Act
       state.SmartEdit = undefined;
       state.CellSummary = undefined;
       state.Theme = undefined;
-      state.Partner = undefined;
+      state.IPushPull = undefined;
+      state.Glue42 = undefined;
       state.ToolPanel = undefined;
       break;
     case LOAD_STATE:
@@ -327,7 +329,6 @@ export class AdaptableStore implements IAdaptableStore {
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.APPLICATION,
       ConfigConstants.ENTITLEMENTS,
-      ConfigConstants.PARTNER,
       ConfigConstants.SYSTEM_FILTER,
       ConfigConstants.USER_INTERFACE,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
@@ -2359,9 +2360,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -2518,11 +2517,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             const actionTyped = action as ExportRedux.ExportApplyAction;
 
-            exportStrategy.export(
-              actionTyped.Report,
-              actionTyped.ExportDestination,
-              actionTyped.IsLiveReport
-            );
+            exportStrategy.export(actionTyped.Report, actionTyped.ExportDestination);
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
 
             return next(action);
@@ -2610,6 +2605,20 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             // set livereport off
             //   adaptable.api.internalApi.setLiveReportRunningOff();
             return ret;
+          }
+
+          /*******************
+           * GLUE42 ACTIONS
+           *******************/
+
+          case Glue42Redux.GLUE42_SEND_SNAPSHOT: {
+            let glue42Strategy = <IGlue42Strategy>(
+              adaptable.strategies.get(StrategyConstants.Glue42StrategyId)
+            );
+            const actionTyped = action as Glue42Redux.Glue42SendSnapshotAction;
+            glue42Strategy.sendSnapshot(actionTyped.glue42Report);
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+            return next(action);
           }
 
           /*******************
@@ -3127,8 +3136,6 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
     GridRedux.SET_MAIN_MENUITEMS,
-    GridRedux.SET_GLUE42_AVAILABLE_ON,
-    GridRedux.SET_GLUE42_AVAILABLE_OFF,
 
     GridRedux.SET_LIVE_REPORT_RUNNING_ON,
     GridRedux.SET_LIVE_REPORT_RUNNING_OFF,
