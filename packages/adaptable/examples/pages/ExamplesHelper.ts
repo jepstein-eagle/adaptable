@@ -345,8 +345,9 @@ export class ExamplesHelper {
     if (randomNumber == 3) {
       return 'Rejected';
     }
+    return '';
   }
-  protected getRandomHardcode(): number {
+  protected getRandomHardcode(): number | undefined {
     let randomNumber = this.generateRandomInt(1, 10);
     if (randomNumber == 1) {
       return undefined;
@@ -358,7 +359,7 @@ export class ExamplesHelper {
     let myValue = this.generateRandomDouble();
     const randomInt = this.generateRandomInt(1, 10);
     if (randomInt > 7) {
-      myValue = null;
+      myValue = (null as unknown) as number;
     }
 
     if (randomInt % 2 === 0 && myValue != null) {
@@ -541,7 +542,14 @@ export class ExamplesHelper {
   }
 
   public getNotionals(): number[] {
-    let notionals = [1000000, 2000000, 5000000, 7500000, 10000000, undefined];
+    let notionals = [
+      1000000,
+      2000000,
+      5000000,
+      7500000,
+      10000000,
+      (undefined as unknown) as number,
+    ];
     return notionals;
   }
 
@@ -584,8 +592,8 @@ export class ExamplesHelper {
       'Credit Suisse',
       'Nomura',
       'Canada',
-      undefined,
-      null,
+      (undefined as unknown) as string,
+      (null as unknown) as string,
       //   "Lloyds TSB",
       //   "MUFJ",
       //   "Rabobank",
@@ -733,6 +741,7 @@ export class ExamplesHelper {
       case 'NR':
         return 'NR';
     }
+    return '';
   }
 
   protected getNames(): string[] {

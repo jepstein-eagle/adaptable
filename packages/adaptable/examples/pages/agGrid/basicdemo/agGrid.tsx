@@ -7,7 +7,7 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 
-import { GridOptions, RowNode } from '@ag-grid-community/all-modules';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import {
   AdaptableOptions,
   PredefinedConfig,
@@ -60,8 +60,8 @@ function InitAdaptableDemo() {
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    //  console.log('search changed');
-    //  console.log(searchChangedArgs.data[0].id);
+    console.log('search changed');
+    console.log(searchChangedArgs.data[0].id);
   });
 }
 
