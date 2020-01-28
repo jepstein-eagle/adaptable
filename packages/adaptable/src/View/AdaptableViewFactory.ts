@@ -44,6 +44,7 @@ import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { SystemStatusToolbarControl } from './SystemStatus/SystemStatusToolbarControl';
 import { CustomToolbarControl } from './Dashboard/CustomToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
+import { Glue42Popup } from './Glue42/Glue42Popup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
@@ -65,6 +66,7 @@ import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
 import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { IPushPullToolbarControl } from './IPushPull/IPushPullToolbarControl';
+import { Glue42ToolbarControl } from './Glue42/Glue42ToolbarControl';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
@@ -86,6 +88,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   UpdatedRowPopup,
   FormatColumnPopup,
   FreeTextColumnPopup,
+  Glue42Popup,
   IPushPullPopup,
   IPushPullLoginPopup,
   IPushPullAddPagePopup,
@@ -124,6 +127,7 @@ export const AdaptableDashboardFactory = new Map<
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolbarControl],
   [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
   [StrategyConstants.IPushPullStrategyId, IPushPullToolbarControl],
+  [StrategyConstants.Glue42StrategyId, Glue42ToolbarControl],
   // this is special
   [StrategyConstants.DashboardStrategyId, CustomToolbarControl],
 ]);

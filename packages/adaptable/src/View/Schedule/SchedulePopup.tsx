@@ -6,13 +6,12 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
+import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import {
   EditableConfigEntityState,
@@ -24,21 +23,21 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-
 import { ScheduleEntityRow } from './ScheduleEntityRow';
 import { ScheduleWizard } from './Wizard/ScheduleWizard';
 import { AccessLevel, ScheduleType } from '../../PredefinedConfig/Common/Enums';
-import { ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import DropdownButton from '../../components/DropdownButton';
 import PlusIcon from '../../components/icons/plus';
 import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
 import { BaseSchedule } from '../../PredefinedConfig/Common/Schedule';
+import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 interface SchedulePopupProps extends StrategyViewPopupProps<SchedulePopupComponent> {
   Reminders: ReminderSchedule[];
   ReportSchedules: ReportSchedule[];
   IPushPullSchedules: IPushPullSchedule[];
+  Glue42Schedules: Glue42Schedule[];
 
   onAddReminderSchedule: (
     reminderchedule: ReminderSchedule
@@ -54,6 +53,8 @@ interface SchedulePopupProps extends StrategyViewPopupProps<SchedulePopupCompone
   onEditIPushPullSchedule: (
     iPushPullSchedule: IPushPullSchedule
   ) => IPushPullRedux.IPushPullScheduleEditAction;
+  onAddGlue42Schedule: (glue42Schedule: Glue42Schedule) => Glue42Redux.Glue42ScheduleAddAction;
+  onEditGlue42Schedule: (glue42Schedule: Glue42Schedule) => Glue42Redux.Glue42ScheduleEditAction;
   onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -86,7 +87,7 @@ class SchedulePopupComponent extends React.Component<
     let infoBody: any[] = [
       'Use schedules to ensure that actions happen at set times.',
       <br />,
-      'You can create schedules for Reminders, Exports (reports) or to send data to ipushpull.',
+      'You can create schedules for Reminders, Exports (reports) or to send data to ipushpull or Glue42.',
     ];
 
     let colItems: IColItem[] = [
@@ -103,6 +104,9 @@ class SchedulePopupComponent extends React.Component<
     if (this.props.Adaptable.api.iPushPullApi.isIPushPullRunning()) {
       allSchedules.push(...this.props.IPushPullSchedules);
     }
+    if (this.props.Adaptable.api.glue42Api.isGlue42Available()) {
+      allSchedules.push(...this.props.Glue42Schedules);
+    }
 
     let allScheduleRows = allSchedules.map((baseSchedule: BaseSchedule, index) => {
       let deleteAction: Redux.Action<any>;
@@ -115,6 +119,9 @@ class SchedulePopupComponent extends React.Component<
           break;
         case ScheduleType.iPushPull:
           deleteAction = IPushPullRedux.IPushPullScheduleDelete(baseSchedule as IPushPullSchedule);
+          break;
+        case ScheduleType.Glue42:
+          deleteAction = Glue42Redux.Glue42ScheduleDelete(baseSchedule as Glue42Schedule);
           break;
       }
 
@@ -151,9 +158,18 @@ class SchedulePopupComponent extends React.Component<
       label: 'ipushpull',
     };
 
+    let glue42MenuItem = {
+      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      onClick: () => this.onCreateSchedule(ScheduleType.Glue42),
+      label: 'Glue42',
+    };
+
     let scheduleMenuItems = [reminderMenuItem, reportMenuItem];
     if (this.props.Adaptable.api.iPushPullApi.isIPushPullRunning()) {
       scheduleMenuItems.push(iPushPullMenuItem);
+    }
+    if (this.props.Adaptable.api.glue42Api.isGlue42Available()) {
+      scheduleMenuItems.push(glue42MenuItem);
     }
 
     let dropdownButton = (
@@ -219,6 +235,9 @@ class SchedulePopupComponent extends React.Component<
       case ScheduleType.iPushPull:
         baseSchedule = ObjectFactory.CreateEmptyIPushPullSchedule();
         break;
+      case ScheduleType.Glue42:
+        baseSchedule = ObjectFactory.CreateEmptyGlue42Schedule();
+        break;
     }
     this.onNew(baseSchedule);
   }
@@ -278,6 +297,13 @@ class SchedulePopupComponent extends React.Component<
           this.props.onAddIPushPullSchedule(baseSchedule as IPushPullSchedule);
         }
         break;
+      case ScheduleType.Glue42:
+        if (this.state.WizardStatus == WizardStatus.Edit) {
+          this.props.onEditGlue42Schedule(baseSchedule as Glue42Schedule);
+        } else {
+          this.props.onAddGlue42Schedule(baseSchedule as Glue42Schedule);
+        }
+        break;
     }
 
     this.setState({
@@ -317,6 +343,7 @@ function mapStateToProps(state: AdaptableState) {
     Reminders: state.Reminder.Reminders,
     ReportSchedules: state.Export.ReportSchedules,
     IPushPullSchedules: state.IPushPull.IPushPullSchedules,
+    Glue42Schedules: state.Glue42.Glue42Schedules,
   };
 }
 
@@ -334,13 +361,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(IPushPullRedux.IPushPullScheduleAdd(iPushPullSchedule)),
     onEditIPushPullSchedule: (iPushPullSchedule: IPushPullSchedule) =>
       dispatch(IPushPullRedux.IPushPullScheduleEdit(iPushPullSchedule)),
+    onAddGlue42Schedule: (glue42Schedule: Glue42Schedule) =>
+      dispatch(Glue42Redux.Glue42ScheduleAdd(glue42Schedule)),
+    onEditGlue42Schedule: (glue42Schedule: Glue42Schedule) =>
+      dispatch(Glue42Redux.Glue42ScheduleEdit(glue42Schedule)),
 
     onShare: (entity: AdaptableObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ScheduleStrategyId)),
   };
 }
 
-export let SchedulePopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SchedulePopupComponent);
+export let SchedulePopup = connect(mapStateToProps, mapDispatchToProps)(SchedulePopupComponent);

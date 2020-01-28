@@ -12,6 +12,7 @@ import { ScheduleType } from '../../../PredefinedConfig/Common/Enums';
 import { ReminderSchedule } from '../../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../../PredefinedConfig/ExportState';
 import { IPushPullSchedule } from '../../../PredefinedConfig/IPushPullState';
+import { Glue42Schedule } from '../../../PredefinedConfig/Glue42State';
 
 export interface ScheduleSummaryWizardProps extends AdaptableWizardStepProps<BaseSchedule> {}
 
@@ -66,6 +67,19 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
           },
         ];
         keyValuePairs.push(...iPushPullKVP);
+        break;
+      case ScheduleType.Glue42:
+        let glue42KVP: KeyValuePair[] = [
+          {
+            Key: 'Report',
+            Value: (this.props.Data as Glue42Schedule)!.Glue42Report.ReportName,
+          },
+          {
+            Key: 'Export As',
+            Value: (this.props.Data as Glue42Schedule)!.Transmission,
+          },
+        ];
+        keyValuePairs.push(...glue42KVP);
         break;
     }
     keyValuePairs.push({

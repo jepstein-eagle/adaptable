@@ -17,9 +17,6 @@ export const REPORT_SCHEDULE_DELETE = 'REPORT_SCHEDULE_DELETE';
 export interface ExportApplyAction extends Redux.Action {
   Report: Report;
   ExportDestination: ExportDestination;
-  IsLiveReport: boolean;
-  Folder?: string;
-  Page?: string;
 }
 
 export interface ReportAction extends Redux.Action {
@@ -82,17 +79,11 @@ export const ReportScheduleDelete = (
 
 export const ExportApply = (
   Report: Report,
-  ExportDestination: ExportDestination,
-  IsLiveReport: boolean,
-  Folder?: string,
-  Page?: string
+  ExportDestination: ExportDestination
 ): ExportApplyAction => ({
   type: EXPORT_APPLY,
   Report,
   ExportDestination,
-  IsLiveReport,
-  Folder,
-  Page,
 });
 
 const initialExportState: ExportState = {

@@ -41,8 +41,7 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   CurrentReport: string;
   onApplyExport: (
     report: Report,
-    exportDestination: ExportDestination,
-    isLiveReport: boolean
+    exportDestination: ExportDestination
   ) => ExportRedux.ExportApplyAction;
   onAddReport: (report: Report) => ExportRedux.ReportAddAction;
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
@@ -235,11 +234,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   onApplyExport(report: Report, exportDestination: ExportDestination) {
-    let isLiveReport: boolean = this.props.Adaptable.ReportService.IsReportLiveReport(
-      report,
-      exportDestination
-    );
-    this.props.onApplyExport(report, exportDestination, isLiveReport);
+    this.props.onApplyExport(report, exportDestination);
   }
 }
 
@@ -255,7 +250,7 @@ function mapStateToProps(state: AdaptableState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onApplyExport: (report: Report, exportDestination: ExportDestination, isLiveReport: boolean) =>
-      dispatch(ExportRedux.ExportApply(report, exportDestination, isLiveReport)),
+      dispatch(ExportRedux.ExportApply(report, exportDestination)),
     onAddReport: (report: Report) => dispatch(ExportRedux.ReportAdd(report)),
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
     onReportStopLive: (
