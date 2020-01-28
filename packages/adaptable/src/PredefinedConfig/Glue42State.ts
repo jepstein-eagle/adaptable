@@ -18,7 +18,7 @@ export interface Glue42State extends DesignTimeState {
   ThrottleTime?: number;
 
   /**
-   * Any ipushpull Reports that should be sent according to Schedules sent by you.
+   * Any Glue42 Reports that should be sent according to Schedules sent by you.
    */
   Glue42Schedules?: Glue42Schedule[];
 

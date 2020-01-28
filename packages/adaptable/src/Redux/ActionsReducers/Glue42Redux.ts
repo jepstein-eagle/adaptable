@@ -1,11 +1,17 @@
 import * as Redux from 'redux';
 import { Glue42State, Glue42Report, Glue42Schedule } from '../../PredefinedConfig/Glue42State';
-import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const GLUE42_SET_THROTTLE_TIME = 'GLUE42_SET_THROTTLE_TIME';
 
 export const GLUE42_SEND_SNAPSHOT = 'GLUE42_SEND_SNAPSHOT';
+
+export const GLUE42_START_LIVE_DATA = 'GLUE42_START_LIVE_DATA';
+export const GLUE42_STOP_LIVE_DATA = 'GLUE42_STOP_LIVE_DATA';
+
+export const GLUE42_LIVE_REPORT_SET = 'GLUE42_LIVE_REPORT_SET';
+export const GLUE42_LIVE_REPORT_CLEAR = 'GLUE42_LIVE_REPORT_CLEAR';
 
 export const SET_GLUE42_AVAILABLE_ON = 'SET_GLUE42_AVAILABLE_ON';
 export const SET_GLUE42_AVAILABLE_OFF = 'SET_GLUE42_AVAILABLE_OFF';
@@ -21,6 +27,17 @@ export interface Glue42SetThrottleTimeAction extends Redux.Action {
 export interface Glue42SendSnapshotAction extends Redux.Action {
   glue42Report: Glue42Report;
 }
+
+export interface Glue42StartLiveDataAction extends Redux.Action {
+  glue42Report: Glue42Report;
+}
+
+export interface Glue42StopLiveDataAction extends Redux.Action {}
+
+export interface Glue42LiveReportSetAction extends Redux.Action {
+  glue42Report: Glue42Report;
+}
+export interface Glue42LiveReportClearAction extends Redux.Action {}
 
 export interface SetGlue42AvailableOnAction extends Redux.Action {}
 
@@ -41,6 +58,24 @@ export const Glue42SetThrottleTime = (throttleTime: number): Glue42SetThrottleTi
 export const Glue42SendSnapshot = (glue42Report: Glue42Report): Glue42SendSnapshotAction => ({
   type: GLUE42_SEND_SNAPSHOT,
   glue42Report,
+});
+
+export const Glue42StartLiveData = (glue42Report: Glue42Report): Glue42StartLiveDataAction => ({
+  type: GLUE42_START_LIVE_DATA,
+  glue42Report,
+});
+
+export const Glue42StopLiveData = (): Glue42StopLiveDataAction => ({
+  type: GLUE42_STOP_LIVE_DATA,
+});
+
+export const Glue42LiveReportSet = (glue42Report: Glue42Report): Glue42LiveReportSetAction => ({
+  type: GLUE42_LIVE_REPORT_SET,
+  glue42Report,
+});
+
+export const Glue42LiveReportClear = (): Glue42LiveReportClearAction => ({
+  type: GLUE42_LIVE_REPORT_CLEAR,
 });
 
 export const SetGlue42AvailableOn = (): SetGlue42AvailableOnAction => ({
@@ -71,6 +106,7 @@ const initialFilterState: Glue42State = {
   // Glue42: undefined,
   Glue42Schedules: EMPTY_ARRAY,
   IsGlue42Available: false,
+  CurrentLiveGlue42Report: undefined,
 };
 
 export const Glue42Reducer: Redux.Reducer<Glue42State> = (
@@ -83,6 +119,17 @@ export const Glue42Reducer: Redux.Reducer<Glue42State> = (
       const atctionType = action as Glue42SetThrottleTimeAction;
       return Object.assign({}, state, { ThrottleTime: atctionType.throttleTime });
     }
+
+    case GLUE42_LIVE_REPORT_SET: {
+      const atctionType = action as Glue42LiveReportSetAction;
+      return Object.assign({}, state, { CurrentLiveGlue42Report: atctionType.glue42Report });
+    }
+
+    case GLUE42_LIVE_REPORT_CLEAR: {
+      // const atctionType = action as Glue42LiveReportSetAction;
+      return Object.assign({}, state, { CurrentLiveGlue42Report: undefined });
+    }
+
     case SET_GLUE42_AVAILABLE_ON:
       return Object.assign({}, state, { IsGlue42Available: true });
     case SET_GLUE42_AVAILABLE_OFF:

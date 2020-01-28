@@ -3,13 +3,15 @@ import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
-import { Report, ReportSchedule } from '../../PredefinedConfig/ExportState';
+import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
+import { ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { Schedule } from '../../PredefinedConfig/Common/Schedule';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { IPushPullReport, IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
+import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
 import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import DateExtensions from '../Extensions/DateExtensions';
+import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 
 interface ScheduleJob {
   cancel: () => any;
@@ -56,12 +58,14 @@ export class ScheduleService implements IScheduleService {
   private reminderJobs: ScheduleJob[];
   private exportJobs: ScheduleJob[];
   private iPushPullJobs: ScheduleJob[];
+  private glue42Jobs: ScheduleJob[];
 
   constructor(private adaptable: IAdaptable) {
     this.adaptable = adaptable;
     this.reminderJobs = [];
     this.exportJobs = [];
     this.iPushPullJobs = [];
+    this.glue42Jobs = [];
 
     this.AddMidnightRefreshSchedule();
 
@@ -70,7 +74,7 @@ export class ScheduleService implements IScheduleService {
         this.updateReminderJobs();
         this.updateReportJobs();
         this.updateIPushPullJobs();
-      }, 1000);
+      }, 2000);
     });
 
     this.adaptable._on('GridReloaded', () => {
@@ -97,6 +101,12 @@ export class ScheduleService implements IScheduleService {
           eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_DELETE
         ) {
           this.updateIPushPullJobs();
+        } else if (
+          eventName == Glue42Redux.GLUE42_SCHEDULE_ADD ||
+          eventName == Glue42Redux.GLUE42_SCHEDULE_EDIT ||
+          eventName == Glue42Redux.GLUE42_SCHEDULE_DELETE
+        ) {
+          this.updateGlue42Jobs();
         }
       }
     });
@@ -129,6 +139,15 @@ export class ScheduleService implements IScheduleService {
       });
   }
 
+  private updateGlue42Jobs() {
+    this.clearAllGlue42Jobs();
+    this.adaptable.api.scheduleApi
+      .getAllGlue42Schedule()
+      .forEach((glue42Schedule: Glue42Schedule) => {
+        this.AddGlue42Schedule(glue42Schedule);
+      });
+  }
+
   public AddReminderSchedule(reminderSchedule: ReminderSchedule): void {
     const date: Date = this.getDateFromSchedule(reminderSchedule.Schedule);
     if (date != null) {
@@ -155,7 +174,7 @@ export class ScheduleService implements IScheduleService {
   public AddIPushPullSchedule(iPushPullSchedule: IPushPullSchedule): void {
     const date: Date = this.getDateFromSchedule(iPushPullSchedule.Schedule);
     if (date != null) {
-      var exportJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
+      var iPushPullJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
         // we need to go through Redux as the flow is always Redux => Adaptable Store => api
         if (iPushPullSchedule.Transmission == 'Snapshot') {
           this.adaptable.api.internalApi.dispatchReduxAction(
@@ -166,7 +185,29 @@ export class ScheduleService implements IScheduleService {
             IPushPullRedux.IPushPullStartLiveData(iPushPullSchedule.IPushPullReport)
           );
         }
-        this.exportJobs.push(exportJob);
+        this.iPushPullJobs.push(iPushPullJob);
+      });
+    }
+  }
+
+  public AddGlue42Schedule(glue42Schedule: Glue42Schedule): void {
+    const date: Date = this.getDateFromSchedule(glue42Schedule.Schedule);
+    if (date != null) {
+      var glue42Job: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
+        // we need to go through Redux as the flow is always Redux => Adaptable Store => api
+        if (glue42Schedule.Transmission == 'Snapshot') {
+          this.adaptable.api.internalApi.dispatchReduxAction(
+            Glue42Redux.Glue42SendSnapshot(glue42Schedule.Glue42Report)
+          );
+        } else if (glue42Schedule.Transmission == 'Live Data') {
+          console.log('we dont yet have live data for glue');
+          //   this.adaptable.api.internalApi.dispatchReduxAction(
+          //     Glue42Redux.Glue42SendSnapshot(glue42Schedule.Glue42Report)
+          //   );
+        }
+        console.log('adding job:');
+        console.log(glue42Job);
+        this.glue42Jobs.push(glue42Job);
       });
     }
   }
@@ -233,5 +274,14 @@ export class ScheduleService implements IScheduleService {
       }
     });
     this.iPushPullJobs = [];
+  }
+
+  private clearAllGlue42Jobs(): void {
+    this.glue42Jobs.forEach(j => {
+      if (j != null) {
+        j.cancel();
+      }
+    });
+    this.glue42Jobs = [];
   }
 }
