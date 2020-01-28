@@ -11,6 +11,5 @@ export const NAMED_FILTER = 'NamedFilter';
 export const ACTION_COLUMN = 'ActionColumn';
 export const SPARKLINE_COLUMN = 'SparklineColumn';
 export const CELL_SUMMARY = 'CellSummary';
-export const PARTNER = 'Partner';
 export const SYSTEM_FILTER = 'SystemFilter';
 export const PLUGINS = 'Plugins';

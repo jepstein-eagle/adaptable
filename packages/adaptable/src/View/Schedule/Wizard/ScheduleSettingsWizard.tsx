@@ -22,6 +22,7 @@ import { IPushPullSchedule, IPushPullDomain } from '../../../PredefinedConfig/IP
 import { EMPTY_STRING } from '../../../Utilities/Constants/GeneralConstants';
 import Radio from '../../../components/Radio';
 import HelpBlock from '../../../components/HelpBlock';
+import { Glue42Schedule } from '../../../PredefinedConfig/Glue42State';
 
 /**
  * The setttings page for the Base Schedule  - will vary based on what type of schedule it is  - but should only be 1 page to keep it simple
@@ -44,7 +45,11 @@ export interface ScheduleSettingsWizardState {
   Page: string;
   Folder: string;
   AvailablePages: string[];
-  Transmission?: 'Snapshot' | 'Live Data';
+  IPushPullTransmission?: 'Snapshot' | 'Live Data';
+
+  // Glue42 Related Settings
+  Glue42ReportName: string; // not different name to avod a conflict...
+  Glue42Transmission?: 'Snapshot' | 'Live Data';
 }
 
 export class ScheduleSettingsWizard
@@ -96,7 +101,7 @@ export class ScheduleSettingsWizard
         this.props.Data!.ScheduleType === ScheduleType.iPushPull
           ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
           : undefined,
-      Transmission:
+      IPushPullTransmission:
         this.props.Data!.ScheduleType === ScheduleType.iPushPull
           ? (this.props.Data as IPushPullSchedule)!.Transmission
           : undefined,
@@ -110,6 +115,15 @@ export class ScheduleSettingsWizard
               )
             : []
           : [],
+      // Glue42
+      Glue42ReportName:
+        this.props.Data!.ScheduleType === ScheduleType.Glue42
+          ? (this.props.Data as Glue42Schedule)!.Glue42Report.ReportName
+          : undefined,
+      Glue42Transmission:
+        this.props.Data!.ScheduleType === ScheduleType.Glue42
+          ? (this.props.Data as Glue42Schedule)!.Transmission
+          : undefined,
     };
   }
 
@@ -301,15 +315,59 @@ export class ScheduleSettingsWizard
                     marginRight={3}
                     marginLeft={2}
                     value="Snapshot"
-                    checked={this.state.Transmission === 'Snapshot'}
-                    onChange={(_, e: any) => this.onScheduleTypeChanged(e)}
+                    checked={this.state.IPushPullTransmission === 'Snapshot'}
+                    onChange={(_, e: any) => this.onIPushPullTransmissionChanged(e)}
                   >
                     Snapshot (one off report)
                   </Radio>
                   <Radio
                     value="Live Data"
-                    checked={this.state.Transmission === 'Live Data'}
-                    onChange={(_, e: any) => this.onScheduleTypeChanged(e)}
+                    checked={this.state.IPushPullTransmission === 'Live Data'}
+                    onChange={(_, e: any) => this.onIPushPullTransmissionChanged(e)}
+                  >
+                    Live Data (real-time updates)
+                  </Radio>
+                </Flex>
+              </Flex>
+            </>
+          )}
+          {this.props.Data!.ScheduleType === ScheduleType.Glue42 && (
+            <>
+              <Flex flexDirection="column" padding={1}>
+                <HelpBlock marginBottom={1}>Select a Report to Export</HelpBlock>
+                <Dropdown
+                  disabled={allReports.length == 0}
+                  style={{ minWidth: 300 }}
+                  options={availableReports}
+                  className="ab-DashboardToolbar__Export__select"
+                  placeholder="Select Report"
+                  onChange={(glue42ReportName: string) =>
+                    this.onGlue42SelectedReportChanged(glue42ReportName)
+                  }
+                  value={this.state.Glue42ReportName ? this.state.Glue42ReportName : null}
+                  showClearButton
+                  marginRight={2}
+                />
+
+                <HelpBlock marginBottom={1} marginTop={3}>
+                  Choose whether to send Glue42 Data as 'Snapshot' (One-off report) or 'Live Data'
+                  (updating as Grid updates)
+                </HelpBlock>
+
+                <Flex flex={7} flexDirection="row" alignItems="center">
+                  <Radio
+                    marginRight={3}
+                    marginLeft={2}
+                    value="Snapshot"
+                    checked={this.state.Glue42Transmission === 'Snapshot'}
+                    onChange={(_, e: any) => this.onGlue42TransmissionChanged(e)}
+                  >
+                    Snapshot (one off report)
+                  </Radio>
+                  <Radio
+                    value="Live Data"
+                    checked={this.state.Glue42Transmission === 'Live Data'}
+                    onChange={(_, e: any) => this.onGlue42TransmissionChanged(e)}
                   >
                     Live Data (real-time updates)
                   </Radio>
@@ -414,10 +472,28 @@ export class ScheduleSettingsWizard
     }
   }
 
-  private onScheduleTypeChanged(event: React.FormEvent<any>) {
+  private onIPushPullTransmissionChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
+    this.setState({ IPushPullTransmission: e.value } as ScheduleSettingsWizardState, () =>
+      this.props.UpdateGoBackState()
+    );
+  }
 
-    this.setState({ Transmission: e.value } as ScheduleSettingsWizardState, () =>
+  private onGlue42SelectedReportChanged(reportName: string) {
+    if (StringExtensions.IsNotNullOrEmpty(reportName) && reportName !== 'Select Report') {
+      this.setState({ Glue42ReportName: reportName } as ScheduleSettingsWizardState, () =>
+        this.props.UpdateGoBackState()
+      );
+    } else {
+      this.setState({ Glue42ReportName: EMPTY_STRING } as ScheduleSettingsWizardState, () =>
+        this.props.UpdateGoBackState()
+      );
+    }
+  }
+
+  private onGlue42TransmissionChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    this.setState({ Glue42Transmission: e.value } as ScheduleSettingsWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
@@ -437,6 +513,8 @@ export class ScheduleSettingsWizard
           StringExtensions.IsNotNullOrEmpty(this.state.Page) &&
           StringExtensions.IsNotNullOrEmpty(this.state.Folder)
         );
+      case ScheduleType.Glue42:
+        return StringExtensions.IsNotNullOrEmpty(this.state.Glue42ReportName);
     }
   }
 
@@ -452,20 +530,24 @@ export class ScheduleSettingsWizard
           .Data as ReminderSchedule)!.Alert.AlertDefinition.MessageType = this.state.MessageType;
         (this.props
           .Data as ReminderSchedule)!.Alert.AlertDefinition.AlertProperties.ShowPopup = this.state.ShowPopup;
-
         break;
+
       case ScheduleType.Report:
         (this.props.Data as ReportSchedule)!.ReportName = this.state.ReportName;
         (this.props.Data as ReportSchedule)!.ExportDestination = this.state.ExportDestination;
-
         break;
+
       case ScheduleType.iPushPull:
         (this.props
           .Data as IPushPullSchedule)!.IPushPullReport.ReportName = this.state.IPushPullReportName;
         (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder = this.state.Folder;
         (this.props.Data as IPushPullSchedule)!.IPushPullReport.Page = this.state.Page;
-        (this.props.Data as IPushPullSchedule)!.Transmission = this.state.Transmission;
+        (this.props.Data as IPushPullSchedule)!.Transmission = this.state.IPushPullTransmission;
+        break;
 
+      case ScheduleType.Glue42:
+        (this.props.Data as Glue42Schedule)!.Glue42Report.ReportName = this.state.Glue42ReportName;
+        (this.props.Data as Glue42Schedule)!.Transmission = this.state.Glue42Transmission;
         break;
     }
   }

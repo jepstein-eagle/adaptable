@@ -935,39 +935,50 @@ export class Adaptable implements IAdaptable {
     if (selected) {
       // we iterate for each ranges
       selected.forEach((rangeSelection, index) => {
-        // if the rangeselection has a pinned row then we need to ignore it
-        // currently we have a bug that we show the contents for the row below
-        const y1 = Math.min(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
-        const y2 = Math.max(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
-        for (const column of rangeSelection.columns) {
-          if (column != null) {
-            const colId: string = column.getColId();
-            const selectedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-              colId,
-              this.api.gridApi.getColumns()
-            );
-            if (
-              selectedColumn &&
-              columns.find(c => c.ColumnId == selectedColumn.ColumnId) == null
-            ) {
-              columns.push(selectedColumn);
-            }
+        let shouldIncludeRange: boolean = true;
+        let isStartRowPin: boolean = rangeSelection.startRow.rowPinned != null;
+        let isEndRowPin: boolean = rangeSelection.endRow.rowPinned != null;
+        // Warn user if trying to select pinned rows
+        // If only selecting pinned rows then stop
+        if (isStartRowPin) {
+          if (isEndRowPin) {
+            shouldIncludeRange = false;
+          }
+          LoggingHelper.LogWarning('Cannot select pinned rows in ag-Grid.');
+        }
+        if (shouldIncludeRange) {
+          const y1 = Math.min(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
+          const y2 = Math.max(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
+          for (const column of rangeSelection.columns) {
+            if (column != null) {
+              const colId: string = column.getColId();
+              const selectedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
+                colId,
+                this.api.gridApi.getColumns()
+              );
+              if (
+                selectedColumn &&
+                columns.find(c => c.ColumnId == selectedColumn.ColumnId) == null
+              ) {
+                columns.push(selectedColumn);
+              }
 
-            for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
-              const rowNode = this.gridOptions.api!.getModel().getRow(rowIndex);
-              // we used NOT to return grouped rows but I think that was wrong - if someone wants to return them then that is up to them...
-              // we definitely dont return pinned rows as they cannot be selected
-              if (rowNode && !this.isPinnedRowNode(rowNode)) {
-                const primaryKey = this.getPrimaryKeyValueFromRowNode(rowNode);
-                // const value = this.gridOptions.api!.getValue(column, rowNode);
+              for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
+                const rowNode = this.gridOptions.api!.getModel().getRow(rowIndex);
+                // we used NOT to return grouped rows but I think that was wrong - if someone wants to return them then that is up to them...
+                // we definitely dont return pinned rows as they cannot be selected
+                if (rowNode && !this.isPinnedRowNode(rowNode)) {
+                  const primaryKey = this.getPrimaryKeyValueFromRowNode(rowNode);
+                  // const value = this.gridOptions.api!.getValue(column, rowNode);
 
-                const selectedCell: GridCell = {
-                  columnId: colId,
-                  rawValue: this.getRawValueFromRowNode(rowNode, colId),
-                  displayValue: this.getDisplayValueFromRowNode(rowNode, colId),
-                  primaryKeyValue: primaryKey,
-                };
-                selectedCells.push(selectedCell);
+                  const selectedCell: GridCell = {
+                    columnId: colId,
+                    rawValue: this.getRawValueFromRowNode(rowNode, colId),
+                    displayValue: this.getDisplayValueFromRowNode(rowNode, colId),
+                    primaryKeyValue: primaryKey,
+                  };
+                  selectedCells.push(selectedCell);
+                }
               }
             }
           }
@@ -1232,7 +1243,10 @@ export class Adaptable implements IAdaptable {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
+    return ArrayExtensions.ContainsItem(
+      percentBars.map(pb => pb.ColumnId),
+      columnId
+    );
   }
 
   public getDisplayValue(id: any, columnId: string): string {

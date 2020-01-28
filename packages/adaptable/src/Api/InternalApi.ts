@@ -63,10 +63,6 @@ export interface InternalApi {
 
   showQuickFilterBar(): void;
 
-  setGlue42AvailableOn(): void;
-
-  setGlue42AvailableOff(): void;
-
   setPivotModeOn(): void;
 
   setPivotModeOff(): void;

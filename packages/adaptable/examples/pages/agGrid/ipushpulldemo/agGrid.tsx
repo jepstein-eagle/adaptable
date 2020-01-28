@@ -13,7 +13,6 @@ import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../sr
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ipushpull from 'ipushpull-js';
 import { MenuModule } from '@ag-grid-enterprise/menu';
-
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { TickingDataHelper } from '../../TickingDataHelper';
 import {

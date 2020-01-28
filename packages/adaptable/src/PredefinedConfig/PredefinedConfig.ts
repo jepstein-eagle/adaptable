@@ -76,7 +76,6 @@ import { ToolPanelState } from './ToolPanelState';
  *  | [FreeTextColumn](_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Speical free entry columns (e.g. Comments) saved with state   |
  *  | [Layout](_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
  *  | [NamedFilter](_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
- *  | [Partner](_predefinedconfig_partnerstate_.partnerstate.html)                            | No                  | State required for partners (e.g. ipushpull, OpenFin, Glue42) |
  *  | [QuickSearch](_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Reminder](_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
  *  | [Schedule](_predefinedconfig_schedulestate_.schedule.html)                              | Yes 	              | To do   |
@@ -318,6 +317,7 @@ export interface PredefinedConfig {
   NamedFilter?: NamedFilterState;
 
   Glue42?: Glue42State;
+
   IPushPull?: IPushPullState;
   /**
    * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart

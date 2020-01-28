@@ -116,22 +116,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(GridRedux.QuickFilterBarShow());
   }
 
-  public setGlue42AvailableOn(): void {
-    this.dispatchAction(GridRedux.SetGlue42AvailableOn());
-    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-      ExportDestination.Glue42,
-      'Connected'
-    );
-  }
-
-  public setGlue42AvailableOff(): void {
-    this.dispatchAction(GridRedux.SetGlue42AvailableOff());
-    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-      ExportDestination.Glue42,
-      'Disconnected'
-    );
-  }
-
   public setPivotModeOn(): void {
     this.dispatchAction(GridRedux.SetPivotModeOn());
   }

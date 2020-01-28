@@ -12,5 +12,5 @@ export interface Schedule extends AdaptableObject {
 
 export interface BaseSchedule extends AdaptableObject {
   Schedule: Schedule;
-  ScheduleType: 'Report' | 'iPushPull' | 'Reminder';
+  ScheduleType: 'Report' | 'iPushPull' | 'Glue42' | 'Reminder';
 }

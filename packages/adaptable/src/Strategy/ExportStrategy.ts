@@ -32,7 +32,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       setTimeout(() => {
         this.throttledRecomputeAndSendLiveDataEvent = _.throttle(
           () => this.sendNewLiveData(),
-          this.getThrottleTimeFromState()
+          DEFAULT_LIVE_REPORT_THROTTLE_TIME
         );
       }, 1000);
     });
@@ -183,49 +183,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 );
               })
           );
-        } else if (liveReport.ReportDestination == ExportDestination.Glue42) {
-          promises.push(
-            Promise.resolve()
-              .then(() => {
-                return new Promise<any>((resolve, reject) => {
-                  let reportAsArray: any[] = this.ConvertReportToArray(liveReport.Report);
-
-                  if (reportAsArray) {
-                    resolve(reportAsArray);
-                  } else {
-                    reject('no data in the report');
-                  }
-                });
-              })
-              .then(reportAsArray => {
-                let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-                let primaryKeyValues: any[] = this.adaptable.ReportService.GetPrimaryKeysForReport(
-                  liveReport.Report
-                );
-                return this.adaptable.Glue42Service.updateData(
-                  reportAsArray,
-                  gridColumns,
-                  primaryKeyValues
-                );
-              })
-              .catch(reason => {
-                LoggingHelper.LogAdaptableWarning(
-                  'Live Excel failed to send data for [' + liveReport.Report + ']',
-                  reason
-                );
-                this.adaptable.api.internalApi.stopLiveReport(
-                  liveReport.Report,
-                  ExportDestination.Glue42
-                );
-
-                let errorMessage: string = 'Export Failed';
-                if (reason) {
-                  errorMessage += ': ' + reason;
-                }
-                errorMessage += '.  This live export has been cancelled.';
-                this.adaptable.api.alertApi.showAlertError('Export Error', errorMessage);
-              })
-          );
         }
       });
       Promise.all(promises)
@@ -240,13 +197,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
   }
 
-  public export(
-    report: Report,
-    exportDestination: ExportDestination,
-    isLiveReport: boolean,
-    folder: string,
-    page: string
-  ): void {
+  public export(report: Report, exportDestination: ExportDestination): void {
     switch (exportDestination) {
       case ExportDestination.Clipboard:
         this.copyToClipboard(report);
@@ -270,38 +221,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }, 500);
           });
         break;
-
-      case ExportDestination.Glue42:
-        if (isLiveReport) {
-          let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
-          let reportData: any[] = this.ConvertReportToArray(report);
-          this.adaptable.Glue42Service.openSheet(reportData).then(() => {
-            this.adaptable.api.internalApi.startLiveReport(report, page, ExportDestination.Glue42);
-            setTimeout(() => {
-              this.throttledRecomputeAndSendLiveDataEvent();
-            }, 500);
-          });
-          break;
-        } else {
-          let data: any[] = this.ConvertReportToArray(report);
-          let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-          // for glue42 we need to pass in the pk values of the data also
-          let primaryKeyValues: any[] = this.adaptable.ReportService.GetPrimaryKeysForReport(
-            report
-          );
-          try {
-            if (data) {
-              this.adaptable.Glue42Service.exportData.apply(this.adaptable.Glue42Service, [
-                data,
-                gridColumns,
-                primaryKeyValues,
-              ]);
-            }
-          } catch (error) {
-            LoggingHelper.LogAdaptableError(error);
-          }
-          break;
-        }
     }
   }
 
@@ -355,30 +274,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       return null;
     }
     return actionReturnObj.ActionReturn;
-  }
-
-  private getThrottleTimeFromState(): number {
-    if (this.adaptable.api.glue42Api.isGlue42Available()) {
-      return this.getThrottleDurationForExportDestination(ExportDestination.Glue42);
-    }
-    if (this.adaptable.api.internalApi.isOpenFinAvailable()) {
-      return this.getThrottleDurationForExportDestination(ExportDestination.OpenfinExcel);
-    }
-    return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
-  }
-
-  private getThrottleDurationForExportDestination(exportDestination: ExportDestination): number {
-    switch (exportDestination) {
-      case ExportDestination.OpenfinExcel:
-        return DEFAULT_LIVE_REPORT_THROTTLE_TIME; // hardcoding this for now until we do properly
-      case ExportDestination.Glue42:
-        let glue42ThrottleTime:
-          | number
-          | undefined = this.adaptable.api.glue42Api.getGlue42ThrottleTime();
-        return glue42ThrottleTime ? glue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
-      default:
-        return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
-    }
   }
 
   // we assume that we are only ever sending to one destination so we just get the throttle time of the first live report
