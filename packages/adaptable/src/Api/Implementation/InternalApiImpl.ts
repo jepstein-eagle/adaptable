@@ -21,6 +21,8 @@ import Helper from '../../Utilities/Helpers/Helper';
 import { LiveReport } from '../Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
+import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
+import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(
@@ -173,6 +175,50 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public isOpenFinAvailable(): boolean {
     return false; // TODO
+  }
+
+  public setGridCells(
+    gridCells: GridCell[],
+    internalUpdate: boolean,
+    validateChange: boolean
+  ): void {
+    gridCells.forEach(gc => {
+      this.setGridCell(gc, internalUpdate, validateChange);
+    });
+  }
+
+  public setGridCell(gridCell: GridCell, internalUpdate: boolean, validateChange: boolean): void {
+    let dataChangedInfo: DataChangedInfo = this.createDataChangedInfoFromGridCell(gridCell);
+    if (validateChange) {
+      if (!this.adaptable.ValidationService.PerformCellValidation(dataChangedInfo)) {
+        return;
+      }
+    }
+
+    const onServerValidationCompleted = () => {
+      this.adaptable.setValue(dataChangedInfo, internalUpdate);
+    };
+
+    const mimicPromise = this.adaptable.adaptableOptions.editOptions!.validateOnServer
+      ? this.adaptable.ValidationService.PerformServerValidation(dataChangedInfo, {
+          onServerValidationCompleted,
+        })
+      : onServerValidationCompleted;
+
+    mimicPromise();
+  }
+
+  private createDataChangedInfoFromGridCell(gridCell: GridCell): DataChangedInfo {
+    let currentValue = this.adaptable.getDisplayValue(gridCell.primaryKeyValue, gridCell.columnId);
+    let currentRowNode = this.adaptable.getRowNodeForPrimaryKey(gridCell.primaryKeyValue);
+    let dataChangedInfo: DataChangedInfo = {
+      OldValue: currentValue,
+      NewValue: gridCell.rawValue,
+      ColumnId: gridCell.columnId,
+      PrimaryKeyValue: gridCell.primaryKeyValue,
+      RowNode: currentRowNode,
+    };
+    return dataChangedInfo;
   }
 
   // General way to get to store from inside Adaptable...

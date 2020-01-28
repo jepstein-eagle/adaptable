@@ -36,64 +36,14 @@ export class GridApiImpl extends ApiBase implements GridApi {
     }
   }
 
-  public setCellValue(
-    columnId: string,
-    newValue: any,
-    primaryKeyValue: any,
-    reselectSelectedCells: boolean,
-    validateChange: boolean = true
-  ): void {
+  public setCellValue(columnId: string, newValue: any, primaryKeyValue: any): void {
     let gridCell: GridCell = {
       primaryKeyValue: primaryKeyValue,
       columnId: columnId,
       rawValue: newValue,
       displayValue: newValue,
     };
-    this.setGridCell(gridCell, reselectSelectedCells, validateChange);
-  }
-
-  public setGridCell(
-    gridCell: GridCell,
-    reselectSelectedCells: boolean,
-    validateChange: boolean = true
-  ): void {
-    let dataChangedInfo: DataChangedInfo = this.createDataChangedInfoFromGridCell(gridCell);
-    if (validateChange) {
-      if (!this.adaptable.ValidationService.PerformCellValidation(dataChangedInfo)) {
-        return;
-      }
-    }
-
-    const onServerValidationCompleted = () => {
-      this.adaptable.setValue(dataChangedInfo, reselectSelectedCells);
-    };
-
-    const mimicPromise = this.adaptable.adaptableOptions.editOptions!.validateOnServer
-      ? this.adaptable.ValidationService.PerformServerValidation(dataChangedInfo, {
-          onServerValidationCompleted,
-        })
-      : onServerValidationCompleted;
-
-    mimicPromise();
-  }
-
-  private createDataChangedInfoFromGridCell(gridCell: GridCell): DataChangedInfo {
-    let currentValue = this.adaptable.getDisplayValue(gridCell.primaryKeyValue, gridCell.columnId);
-    let currentRowNode = this.adaptable.getRowNodeForPrimaryKey(gridCell.primaryKeyValue);
-    let dataChangedInfo: DataChangedInfo = {
-      OldValue: currentValue,
-      NewValue: gridCell.rawValue,
-      ColumnId: gridCell.columnId,
-      PrimaryKeyValue: gridCell.primaryKeyValue,
-      RowNode: currentRowNode,
-    };
-    return dataChangedInfo;
-  }
-
-  public setGridCells(gridCells: GridCell[], validateChange: boolean): void {
-    gridCells.forEach(gc => {
-      this.setGridCell(gc, validateChange);
-    });
+    this.adaptable.api.internalApi.setGridCell(gridCell, false, false);
   }
 
   public getColumns(): AdaptableColumn[] {

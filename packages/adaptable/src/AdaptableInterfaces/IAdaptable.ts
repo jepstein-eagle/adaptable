@@ -194,7 +194,7 @@ export interface IAdaptable {
   lookupPlugins(propertyName: string, ...args: any): any;
 
   // editing related
-  setValue(dataChangedInfo: DataChangedInfo, reselectSelectedCells: boolean): void;
+  setValue(dataChangedInfo: DataChangedInfo, internalUpdate: boolean): void;
   cancelEdit(): any;
   gridHasCurrentEditValue(): boolean;
   getCurrentCellEditValue(): any;

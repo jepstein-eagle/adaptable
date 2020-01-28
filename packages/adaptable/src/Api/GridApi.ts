@@ -1,7 +1,6 @@
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../PredefinedConfig/GridState';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
 import { DataType, SortOrder } from '../PredefinedConfig/Common/Enums';
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
@@ -65,26 +64,9 @@ export interface GridApi {
    * @param columnId the column to update
    * @param newValue the new value to use
    * @param primaryKeyValue the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Options)
-   * @param validateChange whether to perform validation on the cell edit; optional value which defaults to **true** if not supplied
    *
    */
-  setCellValue(
-    columnId: string,
-    newValue: any,
-    primaryKeyValue: any,
-    reselectSelectedCells: boolean,
-    validateChange?: boolean
-  ): void;
-
-  /**
-   * Replaces a batch of existing cell values in Adaptable with those contained in the inputted Grid Cells
-   * @param gridCells the new cells
-   */
-  setGridCells(
-    gridCells: GridCell[],
-    reselectSelectedCells: boolean,
-    validateChange: boolean
-  ): void;
+  setCellValue(columnId: string, newValue: any, primaryKeyValue: any): void;
 
   /** Returns all the columns in Adaptable
    *

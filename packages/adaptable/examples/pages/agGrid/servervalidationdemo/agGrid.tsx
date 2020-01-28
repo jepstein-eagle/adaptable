@@ -50,7 +50,7 @@ function InitAdaptableDemo() {
   adaptableApi = Adaptable.init(adaptableOptions);
 
   adaptableApi.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
-    adaptableApi.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue, false);
+    adaptableApi.gridApi.setCellValue('amount', 145, args.data[0].id.primaryKeyValue);
   });
 }
 

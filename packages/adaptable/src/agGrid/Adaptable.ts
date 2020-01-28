@@ -1013,7 +1013,7 @@ export class Adaptable implements IAdaptable {
     this.agGridHelper.fireSelectionChangedEvent();
   }
 
-  public setValue(dataChangedInfo: DataChangedInfo, reselectSelectedCells: boolean): void {
+  public setValue(dataChangedInfo: DataChangedInfo, internalUpdate: boolean): void {
     // if we have the row node then just update it
     if (dataChangedInfo.RowNode) {
       dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
@@ -1039,8 +1039,9 @@ export class Adaptable implements IAdaptable {
         });
       }
     }
-    this.performPostEditChecks(dataChangedInfo);
-    if (reselectSelectedCells) {
+    // its from a function so we want to update user filter but not external
+    this.performPostEditChecks(dataChangedInfo, internalUpdate, !internalUpdate);
+    if (internalUpdate) {
       this.agGridHelper.reselectSelectedCells();
     }
   }
@@ -2090,7 +2091,8 @@ export class Adaptable implements IAdaptable {
           const onServerValidationCompleted = () => {
             const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
             if (!whatToReturn) {
-              this.performPostEditChecks(dataChangedInfo, false);
+              // its from a user edit (I think!) but the filter is working anyway...
+              this.performPostEditChecks(dataChangedInfo, false, false);
             }
             return whatToReturn;
           };
@@ -2687,7 +2689,8 @@ export class Adaptable implements IAdaptable {
         // so we have to hope that its been done already - though currently we ONLY do it for direct edits and setCellValue() but not other api updates
         // if we have gone through AdaptableAPI we will be fine but not if they update ag-Grid directly
         // but we can perform the POST EDIT checks
-        this.performPostEditChecks(dataChangedInfo);
+        // probably wrong but seems agGrid is doing it for us
+        this.performPostEditChecks(dataChangedInfo, false, false);
       }
     });
   }
@@ -2697,7 +2700,8 @@ export class Adaptable implements IAdaptable {
    */
   private performPostEditChecks(
     dataChangedInfo: DataChangedInfo,
-    applyFilter: boolean = true
+    applyUserDataFilter: boolean,
+    applyExternalDataFilter: boolean
   ): void {
     if (this.AuditLogService.isAuditCellEditsEnabled) {
       this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
@@ -2705,9 +2709,11 @@ export class Adaptable implements IAdaptable {
 
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
     this.DataService.CreateDataChangedEvent(dataChangedInfo);
-
-    if (applyFilter) {
+    if (applyUserDataFilter) {
       this.filterOnUserDataChange([dataChangedInfo.RowNode]);
+    }
+    if (applyExternalDataFilter) {
+      this.filterOnExternalDataChange([dataChangedInfo.RowNode]);
     }
 
     this.checkChangedCellCurrentlySelected(dataChangedInfo);

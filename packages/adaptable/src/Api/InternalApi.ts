@@ -15,6 +15,7 @@ import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { LiveReport } from './Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
+import { GridCell } from '../Utilities/Interface/Selection/GridCell';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
  *
@@ -85,6 +86,10 @@ export interface InternalApi {
   isLiveReportRunning(): boolean;
 
   isOpenFinAvailable(): boolean;
+
+  setGridCells(gridCells: GridCell[], internalUpdate: boolean, validateChange: boolean): void;
+
+  setGridCell(gridCell: GridCell, internalUpdate: boolean, validateChange: boolean): void;
 
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;

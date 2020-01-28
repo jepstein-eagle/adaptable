@@ -24,8 +24,8 @@ export class TickingDataHelper {
     if (gridOptions != null && gridOptions.api != null) {
       const examplesHelper = new ExamplesHelper();
       let useadaptableApiUpdateGridData: boolean = false;
-      let useadaptableApiUpdateGridDataBatch: boolean = true;
-      let useadaptableApiSetCellValue: boolean = false;
+      let useadaptableApiUpdateGridDataBatch: boolean = false;
+      let useadaptableApiSetCellValue: boolean = true;
       let useRowNodeSetDataValue: boolean = false;
       let useRowNodeSetData: boolean = false;
       let gridOptionsUpdateRowData: boolean = false;
@@ -89,13 +89,13 @@ export class TickingDataHelper {
         }
 
         if (useadaptableApiSetCellValue) {
-          adaptableApi.gridApi.setCellValue('price', price, tradeId, false);
-          adaptableApi.gridApi.setCellValue('bid', bid, tradeId, false);
-          adaptableApi.gridApi.setCellValue('ask', ask, tradeId, false);
-          adaptableApi.gridApi.setCellValue('bloombergAsk', bloombergAsk, tradeId, false);
-          adaptableApi.gridApi.setCellValue('bloombergBid', bloombergBid, tradeId, false);
-          adaptableApi.gridApi.setCellValue('notional', notional, tradeId, false);
-          adaptableApi.gridApi.setCellValue('changeOnYear', changeOnYear, tradeId, false);
+          adaptableApi.gridApi.setCellValue('price', price, tradeId);
+          adaptableApi.gridApi.setCellValue('bid', bid, tradeId);
+          adaptableApi.gridApi.setCellValue('ask', ask, tradeId);
+          adaptableApi.gridApi.setCellValue('bloombergAsk', bloombergAsk, tradeId);
+          adaptableApi.gridApi.setCellValue('bloombergBid', bloombergBid, tradeId);
+          adaptableApi.gridApi.setCellValue('notional', notional, tradeId);
+          adaptableApi.gridApi.setCellValue('changeOnYear', changeOnYear, tradeId);
         }
 
         if (useRowNodeSetDataValue) {
