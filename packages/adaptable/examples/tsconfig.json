@@ -2,12 +2,33 @@
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "lib": ["dom", "es2017"],
-    "module": "commonjs",
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "module": "esnext",
     "target": "es6",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "isolatedModules": true
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "../src/**/*.ts", "../src/**/*.tsx"],
-  "exclude": ["node_modules", "lib", ".next"],
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../src/**/*.ts",
+    "../src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    ".next"
+  ],
   "awesomeTypescriptLoaderOptions": {}
 }
