@@ -29,7 +29,7 @@ export interface SearchOptions {
    *
    * - `Advanced`
    *
-   * **Note:  Stuff about Data Source***
+   * **SearchChanged Event**
    *
    * If an option is set to be run on the Server then AdapTable will not do any relevant searching or filtering, but it **will** fire the [`SearchChanged` event](_api_events_searchchanged_.searchchangedeventargs.html).
    *
@@ -37,9 +37,18 @@ export interface SearchOptions {
    *
    * Note; If you select server searching then you will need to perform any filtering and searching yourself and feed back the data to AdapTable, so you will need some way of 'translating' the JSON Adaptable Objects into a form meaningful to you, and then sending the data back to AdapTable.
    *
-   * There are a number of different api methods you can use but the most common is [setGridData](interfaces/_api_gridapi_.gridapi.html#setgriddata)
+   * There are a number of different api methods you can use but the most common is [setGridData](_api_gridapi_.gridapi.html#setgriddata)
    *
    * Once the data is sent to AdapTable, it will automatically make any changes to your sorting, styles etc as required.
+   *
+   *  **DataSource Trigger**
+   *
+   * If the `SearchChangedTrigger` is *DataSource* then you will not need to perform any JSON translation (though you will still, of course, need to provide AdapTable with the new dataset).
+   *
+   * This is because the DataSource property only contains the *name* of the selected [DataSource](_predefinedconfig_datasourcestate_.datasourcestate.html) which you have provided in your config (typically a StoredProcedure) or Server Filter name.
+   *
+   * > DataSources are a good way of running 'big' searches on the server which can be predicted in advance without having to do any dynamic conversion of AdapTable configuration.
+   *
    *
    * **Default Value: None**
    */
