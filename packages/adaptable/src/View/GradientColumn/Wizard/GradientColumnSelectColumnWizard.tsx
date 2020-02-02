@@ -8,7 +8,6 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { GradientColumn } from '../../../PredefinedConfig/GradientColumnState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 
 export interface GradientColumnSelectColumnWizardProps
@@ -17,6 +16,7 @@ export interface GradientColumnSelectColumnWizardState {
   ColumnId: string;
   NegativeValue: number;
   PositiveValue: number;
+  BaseValue: number;
 }
 
 export class GradientColumnSelectColumnWizard
@@ -31,6 +31,7 @@ export class GradientColumnSelectColumnWizard
       ColumnId: this.props.Data.ColumnId,
       NegativeValue: this.props.Data.NegativeValue,
       PositiveValue: this.props.Data.PositiveValue,
+      BaseValue: this.props.Data.BaseValue,
     };
   }
 
@@ -52,13 +53,29 @@ export class GradientColumnSelectColumnWizard
       let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
         columns[0].ColumnId
       );
-      let negativeValue = Math.min(...distinctColumnsValues);
-      let positiveValue = Math.max(...distinctColumnsValues);
+
+      let smallestValue = Math.min(...distinctColumnsValues);
+
+      let negativeValue = smallestValue < 0 ? smallestValue : undefined;
+
+      let largestValue = Math.max(...distinctColumnsValues);
+      let positiveValue = largestValue > 0 ? largestValue : undefined;
+
+      let baseValue: number;
+      // work out the base value
+      if (smallestValue > 0) {
+        baseValue = smallestValue;
+      } else {
+        let positiveValues: number[] = distinctColumnsValues.filter(f => f > 0);
+        baseValue = Math.min(...positiveValues);
+      }
+
       this.setState(
         {
           ColumnId: columns[0].ColumnId,
           NegativeValue: negativeValue,
           PositiveValue: positiveValue,
+          BaseValue: baseValue,
         } as GradientColumnSelectColumnWizardState,
         () => this.props.UpdateGoBackState()
       );
@@ -80,6 +97,13 @@ export class GradientColumnSelectColumnWizard
     this.props.Data.ColumnId = this.state.ColumnId;
     this.props.Data.NegativeValue = this.state.NegativeValue;
     this.props.Data.PositiveValue = this.state.PositiveValue;
+    this.props.Data.BaseValue = this.state.BaseValue;
+    if (!this.state.NegativeValue) {
+      this.props.Data!.NegativeColor = undefined;
+    }
+    if (!this.state.PositiveValue) {
+      this.props.Data!.PositiveColor = undefined;
+    }
   }
 
   public Back(): void {

@@ -22,48 +22,67 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
   }
 
   render(): any {
-    let positiveStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
-    positiveStyle.BackColor = this.props.Data.PositiveColor;
-    positiveStyle.ForeColor = this.props.Data.PositiveColor;
-    let negativeStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
-    negativeStyle.BackColor = this.props.Data.NegativeColor;
-    negativeStyle.ForeColor = this.props.Data.NegativeColor;
+    let keyValuePairs: KeyValuePair[] = [];
+    if (this.props.Data) {
+      let positiveStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
+      positiveStyle.BackColor = this.props.Data.PositiveColor;
+      positiveStyle.ForeColor = this.props.Data.PositiveColor;
+      let negativeStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
+      negativeStyle.BackColor = this.props.Data.NegativeColor;
+      negativeStyle.ForeColor = this.props.Data.NegativeColor;
 
-    let keyValuePairs: KeyValuePair[] = [
-      {
-        Key: 'Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
-        ),
-      },
-      {
-        Key: 'Minimum Value',
-        Value: StringExtensions.IsNullOrEmpty(this.props.Data.MinValueColumnId)
-          ? this.props.Data.MinValue
-          : '[' +
-            ColumnHelper.getFriendlyNameFromColumnId(
-              this.props.Data.MinValueColumnId,
-              this.props.Columns
-            ) +
-            ']',
-      },
-      {
-        Key: 'Maximum Value',
-        Value: StringExtensions.IsNullOrEmpty(this.props.Data.MaxValueColumnId)
-          ? this.props.Data.MaxValue
-          : '[' +
-            ColumnHelper.getFriendlyNameFromColumnId(
-              this.props.Data.MaxValueColumnId,
-              this.props.Columns
-            ) +
-            ']',
-      },
-      { Key: 'Positive Colour', Value: <StyleVisualItem Style={positiveStyle} /> },
-      { Key: 'Negative Colour', Value: <StyleVisualItem Style={negativeStyle} /> },
-      { Key: 'Show Cell Value', Value: this.props.Data.ShowValue ? 'Yes' : 'No' },
-      { Key: 'Show Tooltip', Value: this.props.Data.ShowToolTip ? 'Yes' : 'No' },
-    ];
+      keyValuePairs = [
+        {
+          Key: 'Column',
+          Value: ColumnHelper.getFriendlyNameFromColumnId(
+            this.props.Data.ColumnId,
+            this.props.Columns
+          ),
+        },
+
+        {
+          Key: 'Positive Value',
+          Value: StringExtensions.IsNullOrEmpty(this.props.Data.PositiveValueColumnId)
+            ? this.props.Data!.PositiveValue
+            : '[' +
+              ColumnHelper.getFriendlyNameFromColumnId(
+                this.props.Data.PositiveValueColumnId,
+                this.props.Columns
+              ) +
+              ']',
+        },
+        {
+          Key: 'Positive Colour',
+          Value:
+            StringExtensions.IsNotNullOrEmpty(this.props.Data!.PositiveValueColumnId) ||
+            this.props.Data.PositiveValue ? (
+              <StyleVisualItem Style={positiveStyle} />
+            ) : null,
+        },
+        {
+          Key: 'Negative Value',
+          Value: StringExtensions.IsNullOrEmpty(this.props.Data.NegativeValueColumnId)
+            ? this.props.Data!.NegativeValue
+            : '[' +
+              ColumnHelper.getFriendlyNameFromColumnId(
+                this.props.Data.NegativeValueColumnId,
+                this.props.Columns
+              ) +
+              ']',
+        },
+        {
+          Key: 'Negative Colour',
+          Value:
+            StringExtensions.IsNotNullOrEmpty(this.props.Data!.NegativeValueColumnId) ||
+            this.props.Data.NegativeValue ? (
+              <StyleVisualItem Style={negativeStyle} />
+            ) : null,
+        },
+
+        { Key: 'Show Cell Value', Value: this.props.Data.ShowValue ? 'Yes' : 'No' },
+        { Key: 'Show Tooltip', Value: this.props.Data.ShowToolTip ? 'Yes' : 'No' },
+      ];
+    }
 
     let summaryPage = (
       <WizardSummaryPage

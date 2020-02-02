@@ -37,18 +37,18 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
     colItems[1].Content = (
       <EntityRowItem
         Content={
-          StringExtensions.IsNullOrEmpty(PercentBar.MinValueColumnId) ? (
+          StringExtensions.IsNullOrEmpty(PercentBar.NegativeValueColumnId) ? (
             <Input
               type={'number'}
               style={{ width: '100%' }}
               placeholder="Min Value"
               onChange={(e: any) => this.onMinimumValueChanged(e)}
-              value={PercentBar.MinValue}
+              value={PercentBar.NegativeValue}
             />
           ) : (
             '[' +
             ColumnHelper.getFriendlyNameFromColumnId(
-              PercentBar.MinValueColumnId,
+              PercentBar.NegativeValueColumnId,
               this.props.Columns
             ) +
             ']'
@@ -59,18 +59,18 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
     colItems[2].Content = (
       <EntityRowItem
         Content={
-          StringExtensions.IsNullOrEmpty(PercentBar.MaxValueColumnId) ? (
+          StringExtensions.IsNullOrEmpty(PercentBar.PositiveValueColumnId) ? (
             <Input
               type={'number'}
               style={{ width: '100%' }}
               placeholder="Max Value"
               onChange={(e: React.SyntheticEvent) => this.onMaximumValueChanged(e)}
-              value={PercentBar.MaxValue}
+              value={PercentBar.PositiveValue}
             />
           ) : (
             '[' +
             ColumnHelper.getFriendlyNameFromColumnId(
-              PercentBar.MaxValueColumnId,
+              PercentBar.PositiveValueColumnId,
               this.props.Columns
             ) +
             ']'

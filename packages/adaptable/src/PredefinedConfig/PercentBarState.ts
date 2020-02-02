@@ -6,13 +6,13 @@ export interface PercentBarState extends RunTimeState {
 
 export interface PercentBar extends AdaptableObject {
   ColumnId: string;
-  MinValue?: number;
-  MaxValue?: number;
-  PositiveColor: string;
-  NegativeColor: string;
+  NegativeValue?: number;
+  PositiveValue?: number;
+  NegativeColor?: string;
+  PositiveColor?: string;
   ShowValue?: boolean;
-  MaxValueColumnId?: string;
-  MinValueColumnId?: string;
+  PositiveValueColumnId?: string;
+  NegativeValueColumnId?: string;
 
   /**
    * Whether to display a tooltip that will appear when you hover over the column showing the cell's numeric value.

@@ -21,11 +21,8 @@ import { IColItem } from '../UIInterfaces';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
-
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { GradientColumnWizard } from './Wizard/GradientColumnWizard';
 
 interface GradientColumnPopupProps extends StrategyViewPopupProps<GradientColumnPopupComponent> {
@@ -63,13 +60,25 @@ class GradientColumnPopupComponent extends React.Component<
 
           let newGradientColumn: GradientColumn = ObjectFactory.CreateEmptyGradientColumn();
           newGradientColumn.ColumnId = columnId;
-          newGradientColumn.NegativeValue = Math.min(...distinctColumnsValues);
-          newGradientColumn.PositiveValue = Math.max(...distinctColumnsValues);
+          let smallestValue = Math.min(...distinctColumnsValues);
+          newGradientColumn.NegativeValue = smallestValue < 0 ? smallestValue : undefined;
+          let positiveValue = Math.max(...distinctColumnsValues);
+          newGradientColumn.PositiveValue = positiveValue > 0 ? positiveValue : undefined;
+
+          // work out the base value
+          if (smallestValue > 0) {
+            newGradientColumn.BaseValue = smallestValue;
+            newGradientColumn.NegativeColor = undefined;
+          } else {
+            let positiveValues: number[] = distinctColumnsValues.filter(f => f > 0);
+            newGradientColumn.BaseValue = Math.min(...positiveValues);
+          }
+
           this.onNewFromColumn(newGradientColumn);
         }
         if (this.props.PopupParams.action == 'Edit') {
-          let editPercentRender = this.props.GradientColumns.find(x => x.ColumnId == columnId);
-          this.onEdit(editPercentRender);
+          let editGradientColumn = this.props.GradientColumns.find(x => x.ColumnId == columnId);
+          this.onEdit(editGradientColumn);
         }
       }
       this.shouldClosePopupOnFinishWizard =
@@ -79,10 +88,10 @@ class GradientColumnPopupComponent extends React.Component<
 
   render() {
     let infoBody: any[] = [
-      'Use Percent Bars to render numeric columns with a coloured bar, the length of which is dependent on the column value',
+      'Use Gradient Columns to render numeric columns according to the ratio of the cell value to a given start and maximum value.',
       <br />,
       <br />,
-      'For each Percent Bar you can select the colours and range boundaries.',
+      'For each Gradient Coumn you can select the colours and range boundaries, and choose whether to include negative numbers.',
     ];
 
     let colItems: IColItem[] = [
@@ -154,11 +163,12 @@ class GradientColumnPopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={GradientColumnItems} />
           ) : (
             <EmptyContent>
-              <p>Click 'New' to start creating Percent Bars.</p>
+              <p>Click 'New' to start creating Gradient Columns. </p>
               <p>
-                Visualise numeric columns as a bar (positive, negative or both) in order better to
-                see their contents.
+                Use Gradient Columns to render numeric columns according to the ratio of the cell
+                value to a given start and maximum value.
               </p>
+              <p>You can select the colours and range boundaries for each Gradient Column.</p>
             </EmptyContent>
           )}
 

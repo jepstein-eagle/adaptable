@@ -2262,14 +2262,14 @@ export class Adaptable implements IAdaptable {
             this.api.percentBarApi.getAllPercentBar().forEach(pb => {
               refreshColumnList.forEach(changedColId => {
                 if (
-                  StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) &&
-                  pb.MaxValueColumnId == changedColId
+                  StringExtensions.IsNotNullOrEmpty(pb.PositiveValueColumnId) &&
+                  pb.PositiveValueColumnId == changedColId
                 ) {
                   ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
                 }
                 if (
-                  StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) &&
-                  pb.MinValueColumnId == changedColId
+                  StringExtensions.IsNotNullOrEmpty(pb.NegativeValueColumnId) &&
+                  pb.NegativeValueColumnId == changedColId
                 ) {
                   ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
                 }
@@ -2813,16 +2813,16 @@ export class Adaptable implements IAdaptable {
         var gradientValue: number | undefined;
         let baseValue = gradientColumn.BaseValue;
         let isNegativeValue = params.value < 0;
-        if (!isNegativeValue) {
-          color = gradientColumn.PositiveColor;
-          gradientValue = gradientColumn.PositiveValue;
-        } else {
+        if (isNegativeValue) {
           color = gradientColumn.NegativeColor;
           gradientValue = gradientColumn.NegativeValue;
+        } else {
+          color = gradientColumn.PositiveColor;
+          gradientValue = gradientColumn.PositiveValue;
         }
-        if (gradientValue && baseValue) {
-          const hundredpercent = Math.abs(gradientValue - baseValue);
-          let percentage = (params.value * 100) / hundredpercent;
+        if (gradientValue && baseValue !== undefined) {
+          const increase: any = Math.abs(gradientValue - baseValue);
+          let percentage = ((params.value - baseValue) / increase) * 100;
           if (isNegativeValue) {
             percentage = percentage * -1;
           }

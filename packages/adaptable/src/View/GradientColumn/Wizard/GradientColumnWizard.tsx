@@ -4,7 +4,9 @@ import { GradientColumnSelectColumnWizard } from './GradientColumnSelectColumnWi
 import { GradientColumnSummaryWizard } from './GradientColumnSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { GradientColumnValuesWizard } from './GradientColumnValuesWizard';
+import { GradientColumnBaseValuesWizard } from './GradientColumnBaseValuesWizard';
+import { GradientColumnPositiveValuesWizard } from './GradientColumnPositiveValuesWizard';
+import { GradientColumnNegativeValuesWizard } from './GradientColumnNegativeValuesWizard';
 
 export interface GradientColumnWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<GradientColumnWizard> {
@@ -27,13 +29,28 @@ export class GradientColumnWizard extends React.Component<GradientColumnWizardPr
               Element: <GradientColumnSelectColumnWizard />,
             },
             {
-              StepName: 'Pos / Neg Values',
+              StepName: 'Base Value',
               Index: 1,
-              Element: <GradientColumnValuesWizard ColorPalette={this.props.ColorPalette} />,
+              Element: <GradientColumnBaseValuesWizard />,
             },
             {
-              StepName: 'Summary',
+              StepName: 'Positive Value',
               Index: 2,
+              Element: (
+                <GradientColumnPositiveValuesWizard ColorPalette={this.props.ColorPalette} />
+              ),
+            },
+            {
+              StepName: 'Negative Value',
+              Index: 3,
+              Element: (
+                <GradientColumnNegativeValuesWizard ColorPalette={this.props.ColorPalette} />
+              ),
+            },
+
+            {
+              StepName: 'Summary',
+              Index: 4,
               Element: <GradientColumnSummaryWizard />,
             },
           ]}

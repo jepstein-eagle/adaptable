@@ -8,14 +8,13 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 export interface PercentBarSelectColumnWizardState {
   ColumnId: string;
-  MinValue: number;
-  MaxValue: number;
+  PositiveValue: number | undefined;
+  NegativeValue: number | undefined;
 }
 
 export class PercentBarSelectColumnWizard
@@ -24,9 +23,9 @@ export class PercentBarSelectColumnWizard
   constructor(props: PercentBarSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: this.props.Data.ColumnId,
-      MinValue: this.props.Data.MinValue,
-      MaxValue: this.props.Data.MaxValue,
+      ColumnId: this.props.Data!.ColumnId,
+      PositiveValue: this.props.Data!.PositiveValue,
+      NegativeValue: this.props.Data!.NegativeValue,
     };
   }
 
@@ -35,7 +34,7 @@ export class PercentBarSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Adaptable.api.gridApi.getNumericColumns()}
+          ColumnList={this.props.Adaptable!.api.gridApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -45,7 +44,7 @@ export class PercentBarSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
+      let distinctColumnsValues: number[] = this.props.Adaptable!.StrategyService.getDistinctColumnValues(
         columns[0].ColumnId
       );
       let minValue = Math.min(...distinctColumnsValues);
@@ -53,8 +52,8 @@ export class PercentBarSelectColumnWizard
       this.setState(
         {
           ColumnId: columns[0].ColumnId,
-          MinValue: minValue,
-          MaxValue: maxValue,
+          PositiveValue: maxValue >= 0 ? maxValue : undefined,
+          NegativeValue: minValue < 0 ? minValue : undefined,
         } as PercentBarSelectColumnWizardState,
         () => this.props.UpdateGoBackState()
       );
@@ -73,9 +72,13 @@ export class PercentBarSelectColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.MinValue = this.state.MinValue;
-    this.props.Data.MaxValue = this.state.MaxValue;
+    this.props.Data!.ColumnId = this.state.ColumnId;
+    this.props.Data!.PositiveValue = this.state.PositiveValue;
+    this.props.Data!.NegativeValue = this.state.NegativeValue;
+
+    if (!this.state.NegativeValue) {
+      this.props.Data!.NegativeColor = undefined;
+    }
   }
 
   public Back(): void {

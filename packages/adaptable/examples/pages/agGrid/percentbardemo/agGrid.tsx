@@ -8,12 +8,7 @@ import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import {
-  AdaptableOptions,
-  PredefinedConfig,
-  AdaptableApi,
-  SearchChangedEventArgs,
-} from '../../../../src/types';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
@@ -30,7 +25,7 @@ function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Gradient Column Demo',
+    adaptableId: 'Percent Bar Demo',
 
     vendorGrid: {
       ...gridOptions,
@@ -65,15 +60,23 @@ let demoConfig: PredefinedConfig = {
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
   },
-  GradientColumn: {
-    GradientColumns: [
+
+  PercentBar: {
+    PercentBars: [
       {
         ColumnId: 'notional',
-        PositiveColor: '#ff2cff',
-        //  NegativeColor: 'yellow',
-        BaseValue: 1000,
-        PositiveValue: 1500,
-        // NegativeValue: 0,
+        PositiveValue: 100,
+        //  MinValue: 0,
+        PositiveColor: '#FFCCE5',
+        ShowValue: true,
+      },
+      {
+        ColumnId: 'changeOnYear',
+        NegativeValue: -200,
+        PositiveValue: 200,
+        PositiveColor: '#3333FF',
+        NegativeColor: '#FFFF33',
+        ShowValue: true,
       },
     ],
   },

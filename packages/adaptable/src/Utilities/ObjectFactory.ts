@@ -246,14 +246,14 @@ export function CreateEmptyPercentBar(): PercentBar {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
-    MaxValue: 100,
-    MinValue: 0,
+    PositiveValue: undefined,
+    NegativeValue: undefined,
     PositiveColor: getHexForName(DARK_GREEN),
-    NegativeColor: getHexForName(DARK_RED),
+    NegativeColor: getHexForName(RED),
     ShowValue: false,
     ShowToolTip: true,
-    MaxValueColumnId: undefined,
-    MinValueColumnId: undefined,
+    PositiveValueColumnId: undefined,
+    NegativeValueColumnId: undefined,
   };
 }
 
@@ -261,9 +261,9 @@ export function CreateEmptyGradientColumn(): GradientColumn {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
-    PositiveValue: 100,
+    PositiveValue: undefined,
     BaseValue: 0,
-    NegativeValue: -100,
+    NegativeValue: undefined,
     PositiveColor: getHexForName(DARK_GREEN),
     NegativeColor: getHexForName(RED),
   };

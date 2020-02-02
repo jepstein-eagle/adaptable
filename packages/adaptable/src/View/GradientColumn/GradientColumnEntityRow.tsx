@@ -41,9 +41,9 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
           <Input
             type={'number'}
             style={{ width: '100%' }}
-            placeholder="Negative Value"
-            onChange={(e: any) => this.onNegativeValueChanged(e)}
-            value={GradientColumn.NegativeValue}
+            placeholder="Positive Value"
+            onChange={(e: React.SyntheticEvent) => this.onPositiveValueChanged(e)}
+            value={GradientColumn.PositiveValue}
           />
         }
       />
@@ -54,9 +54,9 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
           <Input
             type={'number'}
             style={{ width: '100%' }}
-            placeholder="Positive Value"
-            onChange={(e: React.SyntheticEvent) => this.onPositiveValueChanged(e)}
-            value={GradientColumn.PositiveValue}
+            placeholder="Negative Value"
+            onChange={(e: any) => this.onNegativeValueChanged(e)}
+            value={GradientColumn.NegativeValue}
           />
         }
       />

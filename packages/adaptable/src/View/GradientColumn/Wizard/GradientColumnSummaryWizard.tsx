@@ -40,24 +40,26 @@ export class GradientColumnSummaryWizard
         ),
       },
       {
-        Key: 'Negative Value',
-        Value: this.props.Data.NegativeValue,
+        Key: 'Base Value',
+        Value: this.props.Data.BaseValue,
       },
       {
         Key: 'Positive Value',
         Value: this.props.Data.PositiveValue,
       },
-      {
-        Key: 'Base Value',
-        Value: this.props.Data.BaseValue,
-      },
+
       {
         Key: 'Positive Colour',
-        Value: this.props.Data.PositiveColor ? <StyleVisualItem Style={positiveStyle} /> : null,
+        Value: this.props.Data.PositiveValue ? <StyleVisualItem Style={positiveStyle} /> : null,
       },
       {
+        Key: 'Negative Value',
+        Value: this.props.Data.NegativeValue,
+      },
+
+      {
         Key: 'Negative Colour',
-        Value: this.props.Data.NegativeColor ? <StyleVisualItem Style={negativeStyle} /> : null,
+        Value: this.props.Data.NegativeValue ? <StyleVisualItem Style={negativeStyle} /> : null,
       },
     ];
 
