@@ -1244,7 +1244,10 @@ export class Adaptable implements IAdaptable {
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
-    return ArrayExtensions.ContainsItem(percentBars.map(pb => pb.ColumnId), columnId);
+    return ArrayExtensions.ContainsItem(
+      percentBars.map(pb => pb.ColumnId),
+      columnId
+    );
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -2062,9 +2065,7 @@ export class Adaptable implements IAdaptable {
       // TODO: Jo: This is a workaround as we are accessing private members of agGrid.
       // I still wonder if we can do this nicer by using :   this.gridOptions.api!.getEditingCells();
       // must be a good reason why we don't use it
-      if (1 === 1) {
-        return;
-      }
+
       if (this.gridOptions.columnApi!.isPivotMode()) {
         return;
       }
