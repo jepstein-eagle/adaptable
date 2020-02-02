@@ -23,6 +23,7 @@ import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup';
 import { ThemePopup } from './Theme/ThemePopup';
 import { ToolPanelPopup } from './Components/ToolPanel/ToolPanelPopup';
 import { CellValidationPopup } from './CellValidation/CellValidationPopup';
+import { GradientColumnPopup } from './GradientColumn/GradientColumnPopup';
 import { LayoutPopup } from './Layout/LayoutPopup';
 import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
@@ -95,6 +96,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   LayoutPopup,
   ColumnCategoryPopup,
   PercentBarPopup,
+  GradientColumnPopup,
   PlusMinusPopup,
   QuickSearchPopup,
   ReminderPopup,

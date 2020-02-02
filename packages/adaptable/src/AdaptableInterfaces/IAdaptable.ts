@@ -32,6 +32,7 @@ import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
+import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 
 /**
  *  The only interface for Adaptable
@@ -223,10 +224,15 @@ export interface IAdaptable {
   // actionColumn
   addActionColumnToGrid(actionColumn: ActionColumn): void;
 
-  // percentBar
+  // Percent Bar
   removePercentBar(percentBar: PercentBar): void;
   addPercentBar(percentBar: PercentBar): void;
   editPercentBar(percentBar: PercentBar): void;
+
+  // Gradient Column
+  removeGradientColumn(gradientColumn: GradientColumn): void;
+  addGradientColumn(gradientColumn: GradientColumn): void;
+  editGradientColumn(gradientColumn: GradientColumn): void;
 
   // sparklines
   addSparklineColumn(sparklineColumn: SparklineColumn): void;

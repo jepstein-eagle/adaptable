@@ -32,6 +32,7 @@ import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux';
 import * as ReminderRedux from '../ActionsReducers/ReminderRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
+import * as GradientColumnRedux from '../ActionsReducers/GradientColumnRedux';
 import * as ActionColumnRedux from '../ActionsReducers/ActionColumnRedux';
 import * as ApplicationRedux from '../ActionsReducers/ApplicationRedux';
 import * as SparklineColumnRedux from '../ActionsReducers/SparklineColumnRedux';
@@ -183,6 +184,7 @@ const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<Adaptab
   FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
   Layout: LayoutRedux.LayoutReducer,
   PercentBar: PercentBarRedux.PercentBarReducer,
+  GradientColumn: GradientColumnRedux.GradientColumnReducer,
   PlusMinus: PlusMinusRedux.PlusMinusReducer,
   QuickSearch: QuickSearchRedux.QuickSearchReducer,
   Reminder: ReminderRedux.ReminderReducer,
@@ -2360,7 +2362,9 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<
+              boolean
+            > = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)

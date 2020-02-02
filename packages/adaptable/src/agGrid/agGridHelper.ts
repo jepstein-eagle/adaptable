@@ -73,6 +73,7 @@ import { createUuid } from '../PredefinedConfig/Uuid';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { PushPullStrategy } from '../Strategy/PushPullStrategy';
 import { Glue42Strategy } from '../Strategy/Glue42Strategy';
+import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -137,6 +138,10 @@ export class agGridHelper {
     strategies.set(
       StrategyConstants.FreeTextColumnStrategyId,
       new FreeTextColumnStrategy(adaptable)
+    );
+    strategies.set(
+      StrategyConstants.GradientColumnStrategyId,
+      new GradientColumnStrategy(adaptable)
     );
     strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(adaptable));
     strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(adaptable));

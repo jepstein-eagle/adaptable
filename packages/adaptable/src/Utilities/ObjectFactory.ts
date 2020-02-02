@@ -63,12 +63,13 @@ import { CellSummmary } from './Interface/Selection/CellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
-import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
+import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED } from '../View/UIHelper';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { IPushPullReport, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 import { Glue42Report, Glue42Schedule } from '../PredefinedConfig/Glue42State';
+import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -253,6 +254,18 @@ export function CreateEmptyPercentBar(): PercentBar {
     ShowToolTip: true,
     MaxValueColumnId: undefined,
     MinValueColumnId: undefined,
+  };
+}
+
+export function CreateEmptyGradientColumn(): GradientColumn {
+  return {
+    Uuid: createUuid(),
+    ColumnId: EMPTY_STRING,
+    PositiveValue: 100,
+    BaseValue: 0,
+    NegativeValue: -100,
+    PositiveColor: getHexForName(DARK_GREEN),
+    NegativeColor: getHexForName(RED),
   };
 }
 
@@ -643,6 +656,7 @@ export const ObjectFactory = {
   CreateEmptyColumnSort,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,
+  CreateEmptyGradientColumn,
   CreateEmptySparklineColumn,
   CreateEmptyUserFilter,
   CreateEmptyReport,

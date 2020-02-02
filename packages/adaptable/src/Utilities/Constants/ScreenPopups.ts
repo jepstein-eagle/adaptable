@@ -27,6 +27,7 @@ export const IPushPullLoginPopup: string = 'IPushPullLoginPopup';
 export const IPushPullAddPagePopup: string = 'IPushPullAddPagePopup';
 export const LayoutPopup: string = 'LayoutPopup';
 export const PercentBarPopup: string = 'PercentBarPopup';
+export const GradientColumnPopup: string = 'GradientColumnPopup';
 export const SparklineColumnPopup: string = 'SparklineColumnPopup';
 export const ViewAsSparklinesPopup: string = 'ViewAsSparklinesPopup';
 export const PieChartPopup: string = 'PieChartPopup';

@@ -52,7 +52,7 @@ export class Color {
     return `rgb(${this.r}, ${this.g}, ${this.b})`;
   }
 
-  toRgba() {
-    return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
+  toRgba(a?: number) {
+    return `rgba(${this.r}, ${this.g}, ${this.b}, ${a == null ? this.a : a})`;
   }
 }

@@ -37,6 +37,7 @@ import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
+import { GradientColumnState } from './GradientColumnState';
 
 /**
  * This is the main Predefined Config interface which users will populate if they wish to ship their AdapTable instance with initial state.
@@ -73,12 +74,18 @@ import { ToolPanelState } from './ToolPanelState';
  *  | [DataSource](_predefinedconfig_datasourcestate.datasourcestate.html)                    | Yes 	              | Provide Data Sources that will populate Grid via the server   |
  *  | [Entitlements](_predefinedconfig_entitlementstate_.entitlementstate.html)               | No	                | Manage permissions so users only see relevant functions       |
  *  | [Export](_predefinedconfig_exportstate_.exportstate.html)                               | Yes 	              | Create reports to export data from grid to numerous loctions  |
- *  | [FreeTextColumn](_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Speical free entry columns (e.g. Comments) saved with state   |
+ *  | [FlashingCell](_predefinedconfig_flashingcellstate_.flashingcellstate.html)             | Yes 	              | Specify how cells will briefly flash as their values change   |
+ *  | [FormatColumn](_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)             | Yes 	              | Style a column so it always has a particular set of colours   |
+ *  | [FreeTextColumn](_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Special free entry columns (e.g. Comments) saved with state   |
+ *  | [Glue42](_predefinedconfig_glue42state_.glue42state.html)                               | Yes 	              | Specify how to send live 2-way data to / from excel via Glue42|
+ *  | [GradientColumn](_predefinedconfig_gradientcolumnstate_.gradientcolumnstate.html)       | Yes 	              | Style columns so that back colour is in ratio to cell contents|
+ *  | [ipushpull](_predefinedconfig_ipushpullstate_.ipushpullstate.html)                      | Yes 	              | Specify how to send live data to ipushpull (and Symphony)     |
  *  | [Layout](_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
  *  | [NamedFilter](_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
+ *  | [PercentBar](_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
+ *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)           | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
  *  | [QuickSearch](_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Reminder](_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
- *  | [Schedule](_predefinedconfig_schedulestate_.schedule.html)                              | Yes 	              | To do   |
  *  | [Shortcut](_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
  *  | [SmartEdit](_predefinedconfig_smarteditstate_.smarteditstate.html)                      | Yes 	              | Update multiple numeric cells with a single maths operation   |
  *  | [SparklineColumn](_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html)    | No                  | See columns containing ranges of data as a sparkline          |
@@ -284,67 +291,6 @@ export interface PredefinedConfig {
    * (Note: Action Column State can be updated via `AdaptableApi` but these updates **will not be persisted**).
    */
   ActionColumn?: ActionColumnState;
-  /**
-   * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of AdapTable state.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: Application State can be updated via `AdaptableApi` but these updates **will not be persisted**).
-   */
-  Application?: ApplicationState;
-  /**
-   * Defines which Functions are available to the User and whether as *Full*, *ReadOnly* or *Hidden*.
-   *
-   * The default is that all functions are fully availalbe so apply Entitlements Config if you wish to restrict access.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: Entitlement State can be updated via `AdaptableApi` but these updates **will not be persisted**).
-   */
-  Entitlements?: EntitlementState;
-
-  /**
-   * Manges the System Status function which allows messages to be sent to the User detailing the health of the running application.
-   */
-  SystemStatus?: SystemStatusState;
-  /**
-   *  Filters defined by Developers at Nowhich include a predicate function that is called by AdapTable each time the filter is evaluated.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: Named Filter State can be updated via A`daptableApi` but these updates **will not be persisted**).
-   */
-  NamedFilter?: NamedFilterState;
-
-  Glue42?: Glue42State;
-
-  IPushPull?: IPushPullState;
-  /**
-   * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: Sparkline Column State can be updated via `AdaptableApi`` but these updates **will not be persisted**).
-   */
-  SparklineColumn?: SparklineColumnState;
-  /**
-   * List of which System Filters should be available to users.
-   *
-   * If no values are listed, then **all System Filters** are available.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   */
-  SystemFilter?: SystemFilterState;
-  /**
-   * State that manages UI elements in AdapTable e.g. which colours to put in the default palette.
-   *
-   * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: User Interface State can be updated via `AdaptableApi` but these updates **will not be persisted**).
-   */
-  UserInterface?: UserInterfaceState;
 
   /**
    * Supplies a collection of *AdvancedSearch* objects, to provide saveable cross-column searching, and the selection of the Current Advanced Search.
@@ -355,6 +301,15 @@ export interface PredefinedConfig {
    * Supplies a collection of *Alert Definition* objects which will fire when their definition is triggered, and where Alerts are displayed.
    */
   Alert?: AlertState;
+
+  /**
+   * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of AdapTable state.
+   *
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
+   *
+   * (Note: Application State can be updated via `AdaptableApi` but these updates **will not be persisted**).
+   */
+  Application?: ApplicationState;
 
   /**
    * Provides an initial *BulkUpdateValue* to enable replacing multiple cells with a single value.
@@ -411,12 +366,21 @@ export interface PredefinedConfig {
    */
   Dashboard?: DashboardState;
 
-  ToolPanel?: ToolPanelState;
-
   /**
    * Supplies a collection of *DataSource* objects to facilitate replacing the DataSource in the Grid with an alternate set of data (e.g. a Book or Stored Proc name).
    */
   DataSource?: DataSourceState;
+
+  /**
+   * Defines which Functions are available to the User and whether as *Full*, *ReadOnly* or *Hidden*.
+   *
+   * The default is that all functions are fully availalbe so apply Entitlements Config if you wish to restrict access.
+   *
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
+   *
+   * (Note: Entitlement State can be updated via `AdaptableApi` but these updates **will not be persisted**).
+   */
+  Entitlements?: EntitlementState;
 
   /**
    * Supplies a collection of *Report* objects, together with name of the Current Report, as part of AdapTable export Function.
@@ -429,11 +393,6 @@ export interface PredefinedConfig {
   FlashingCell?: FlashingCellState;
 
   /**
-   * Sets whether rows should display differently when a value in the row updates.  A different color is used depending on the direction of the change.
-   */
-  UpdatedRow?: UpdatedRowState;
-
-  /**
    * Supplies a collection of *FormatColumn* objects that will style an entire column in a single way (and not subject to a rule like with Conditional Style).
    */
   FormatColumn?: FormatColumnState;
@@ -444,9 +403,37 @@ export interface PredefinedConfig {
   FreeTextColumn?: FreeTextColumnState;
 
   /**
+   * Contains the credentials required to integrate with Glue42 from inside AdapTable.
+   *
+   * Includes Glue42 config, object and, optionally, any Glue42 Reports (including schedules).
+   */
+  Glue42?: Glue42State;
+
+  /**
+   * Supplies a collection of `GradientColumn` objects that will style the cells in a column according to the proporation of its value tp a given maximum value.
+   */
+  GradientColumn: GradientColumnState;
+
+  /**
+   * Contains the objects required to export (snapshot or live) data to ipushpull from AdapTable.
+   *
+   * Includes ipushpull config and objects and, optionally, any ipushpull Reports (including schedules).
+   */
+  IPushPull?: IPushPullState;
+
+  /**
    * Supplies a collection of *Layout* objects to name and manage groups of column visibility, order and sorts.
    */
   Layout?: LayoutState;
+
+  /**
+   *  Filters defined by Developers at Nowhich include a predicate function that is called by AdapTable each time the filter is evaluated.
+   *
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
+   *
+   * (Note: Named Filter State can be updated via A`daptableApi` but these updates **will not be persisted**).
+   */
+  NamedFilter?: NamedFilterState;
 
   /**
    * Supplies a collection of *PercentBar* objects which will display numeric columns as a coloured bar, the fill of which is bassed on the cell value.
@@ -479,12 +466,56 @@ export interface PredefinedConfig {
   SmartEdit?: SmartEditState;
 
   /**
+   * Columns that contain sparklines - should be columns that have arrays of numbers as their values, so each cell in the column can be rendered as a sparkline chart
+   *
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
+   *
+   * (Note: Sparkline Column State can be updated via `AdaptableApi`` but these updates **will not be persisted**).
+   */
+  SparklineColumn?: SparklineColumnState;
+
+  /**
+   * List of which System Filters should be available to users.
+   *
+   * If no values are listed, then **all System Filters** are available.
+   *
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
+   */
+  SystemFilter?: SystemFilterState;
+
+  /**
+   * Manges the System Status function which allows messages to be sent to the User detailing the health of the running application.
+   */
+  SystemStatus?: SystemStatusState;
+
+  /**
    * Specifies the current Theme and lists the User and System themes available for selection.
    */
   Theme?: ThemeState;
 
   /**
+   * Sets the order and visibility of the Tool Panel controls in the AdapTable ToolPanel (on right of grid)
+   */
+  ToolPanel?: ToolPanelState;
+
+  /**
+   * Sets whether rows should display differently when a value in the row updates.  A different color is used depending on the direction of the change.
+   */
+  UpdatedRow?: UpdatedRowState;
+
+  /**
    * Supplies a collection of *UserFilter* objects which can be used to create Column Filters and in other Functions.
    */
   UserFilter?: UserFilterState;
+
+  /**
+   * State that manages UI elements in AdapTable e.g. which colours to put in the default palette.
+   *
+   * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
+   *
+   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
+   *
+   * (Note: User Interface State can be updated via `AdaptableApi` but these updates **will not be persisted**).
+   */
+  UserInterface?: UserInterfaceState;
 }

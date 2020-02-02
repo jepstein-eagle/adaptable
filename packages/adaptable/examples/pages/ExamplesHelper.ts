@@ -253,7 +253,7 @@ export class ExamplesHelper {
       history: [...new Array(this.generateRandomInt(5, 20))].map(_ =>
         this.generateRandomInt(1, 30)
       ),
-      notional: this.generateRandomInt(0, 100), // this.getRandomItem(this.getNotionals()),
+      notional: this.generateRandomInt(10, 120), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
@@ -1058,7 +1058,6 @@ export class ExamplesHelper {
       filter: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
-      // valueFormatter: this.twoDecimalPlaceFormatter,
       enableValue: true,
     });
     schema.push({
@@ -1086,6 +1085,7 @@ export class ExamplesHelper {
       editable: true,
       filter: true,
       sortable: true,
+      aggFunc: 'sum',
       enableRowGroup: true,
       enableValue: true, // what happerns
       type: 'abColDefString',

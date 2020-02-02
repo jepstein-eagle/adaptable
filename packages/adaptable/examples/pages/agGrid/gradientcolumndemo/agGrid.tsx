@@ -7,16 +7,15 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 
+import { GridOptions } from '@ag-grid-community/all-modules';
 import {
-  GridOptions,
-  RowNode,
-  IClientSideRowModel,
-  ModelUpdatedEvent,
-} from '@ag-grid-community/all-modules';
-import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
+  AdaptableOptions,
+  PredefinedConfig,
+  AdaptableApi,
+  SearchChangedEventArgs,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
-
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 
@@ -24,18 +23,14 @@ var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 10;
+  const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  gridOptions.groupIncludeFooter = true;
-  gridOptions.groupIncludeTotalFooter = true;
-  gridOptions.suppressAggFuncInHeader = true;
-  const runReadyFunction: boolean = true;
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Pinned Rows Demo',
+    adaptableId: 'Gradient Column Demo',
 
     vendorGrid: {
       ...gridOptions,
@@ -53,35 +48,34 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
-  if (runReadyFunction) {
-    api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-      // to set a pinned row (in this case the 5th row in our data source)
-      let gridOptions: GridOptions = info.vendorGrid as GridOptions;
-
-      gridOptions.onModelUpdated = (event: ModelUpdatedEvent) => {
-        const pinnedData = event.api.getPinnedTopRow(0);
-        const model = event.api.getModel() as IClientSideRowModel;
-        const rootNode = model.getRootNode();
-        if (!pinnedData) {
-          //    event.api.setPinnedTopRowData([rootNode.aggData]);
-        } else {
-          //     pinnedData.updateData(rootNode.aggData);
-        }
-      };
-
-      setTimeout(() => {
-        //    pinnedRowNode.updateData({
-        //  tradeId: '33333',
-        //   notional: Math.floor(Math.random() * 1000),
-        //  });
-      }, 5000);
-    });
-  }
+  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    // to see which is the pinned row then do...
+    //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
+  });
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['CellSummary'],
+    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
+    MinimisedHomeToolbarButtonStyle: {
+      Variant: 'text',
+      Tone: 'success',
+    }, //
+  },
+  ToolPanel: {
+    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
+  },
+  GradientColumn: {
+    GradientColumns: [
+      {
+        ColumnId: 'notional',
+        PositiveColor: '#ff2cff',
+        //  NegativeColor: 'yellow',
+        BaseValue: 20,
+        PositiveValue: 130,
+        // NegativeValue: 0,
+      },
+    ],
   },
 };
 
