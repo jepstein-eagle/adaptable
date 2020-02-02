@@ -63,9 +63,9 @@ function InitAdaptableDemo() {
         const model = event.api.getModel() as IClientSideRowModel;
         const rootNode = model.getRootNode();
         if (!pinnedData) {
-          //    event.api.setPinnedTopRowData([rootNode.aggData]);
+          event.api.setPinnedTopRowData([rootNode.aggData]);
         } else {
-          //     pinnedData.updateData(rootNode.aggData);
+          pinnedData.updateData(rootNode.aggData);
         }
       };
 

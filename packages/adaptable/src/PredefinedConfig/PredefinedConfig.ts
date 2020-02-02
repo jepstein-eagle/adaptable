@@ -412,7 +412,7 @@ export interface PredefinedConfig {
   /**
    * Supplies a collection of `GradientColumn` objects that will style the cells in a column according to the proporation of its value tp a given maximum value.
    */
-  GradientColumn: GradientColumnState;
+  GradientColumn?: GradientColumnState;
 
   /**
    * Contains the objects required to export (snapshot or live) data to ipushpull from AdapTable.
