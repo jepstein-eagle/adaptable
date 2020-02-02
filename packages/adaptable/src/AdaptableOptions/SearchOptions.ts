@@ -17,7 +17,9 @@ export interface SearchOptions {
   /**
    * Which searching and filtering options, if any, should take place on the server.
    *
-   * Leave unset (default is 'None') to perform everything on the client.
+   * Leave unset (default is 'None') to perform all searching and filtering on the client.
+   *
+   *  **Note: Modern browsers are very powerful and AdapTable is very powerful and performant so only perform server searching if you have more than 150-200,000 records that you need filtering.**
    *
    * This allows you to perform a mixture of client and server searching e.g. run Column Filters on the client but Advanced Search on the server.
    *
