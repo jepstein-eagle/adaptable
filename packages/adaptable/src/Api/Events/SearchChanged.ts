@@ -6,7 +6,7 @@ import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 /**
- * EventArgs sent as part of the onSearchChanged Event
+ * EventArgs sent as part of the on'SearchChanged' Event
  *
  * It includes full and comprehensive details of the state of **all the search and filter related functions** in Adaptable
  *
