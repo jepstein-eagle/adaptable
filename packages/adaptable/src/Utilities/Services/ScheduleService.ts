@@ -74,6 +74,7 @@ export class ScheduleService implements IScheduleService {
         this.updateReminderJobs();
         this.updateReportJobs();
         this.updateIPushPullJobs();
+        this.updateGlue42Jobs();
       }, 2000);
     });
 
@@ -205,8 +206,6 @@ export class ScheduleService implements IScheduleService {
           //     Glue42Redux.Glue42SendSnapshot(glue42Schedule.Glue42Report)
           //   );
         }
-        console.log('adding job:');
-        console.log(glue42Job);
         this.glue42Jobs.push(glue42Job);
       });
     }
