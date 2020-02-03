@@ -64,9 +64,10 @@ export interface GridApi {
    * @param columnId the column to update
    * @param newValue the new value to use
    * @param primaryKeyValue the primaryKeyValue of the row (i.e. the value in the PrimaryKeyColumn identified in Adaptable Options)
+   * @param forceFilter whether to refilter the Grid (and update aggregations) on data change - default is false
    *
    */
-  setCellValue(columnId: string, newValue: any, primaryKeyValue: any): void;
+  setCellValue(columnId: string, newValue: any, primaryKeyValue: any, forceFilter: boolean): void;
 
   /** Returns all the columns in Adaptable
    *

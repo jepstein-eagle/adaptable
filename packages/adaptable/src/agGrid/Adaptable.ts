@@ -1026,14 +1026,22 @@ export class Adaptable implements IAdaptable {
   }
 
   public setValue(dataChangedInfo: DataChangedInfo, internalUpdate: boolean): void {
-    // if we have the row node then just update it
+    let newValue: any;
+
+    let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
+      dataChangedInfo.ColumnId,
+      this.api.gridApi.getColumns()
+    );
+    newValue =
+      dataType == DataType.Number ? Number(dataChangedInfo.NewValue) : dataChangedInfo.NewValue;
+
     if (dataChangedInfo.RowNode) {
-      dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+      dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, newValue);
     } else {
       if (this.useRowNodeLookUp) {
         const rowNode: RowNode = this.gridOptions.api!.getRowNode(dataChangedInfo.PrimaryKeyValue);
         if (rowNode != null) {
-          rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+          rowNode.setDataValue(dataChangedInfo.ColumnId, newValue);
           dataChangedInfo.RowNode = rowNode;
         }
       } else {
@@ -1043,7 +1051,7 @@ export class Adaptable implements IAdaptable {
           if (!isUpdated) {
             if (dataChangedInfo.PrimaryKeyValue == this.getPrimaryKeyValueFromRowNode(rowNode)) {
               //  dataChangedInfo = this.updateValue(gridCell, rowNode);
-              rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+              rowNode.setDataValue(dataChangedInfo.ColumnId, newValue);
               dataChangedInfo.RowNode = rowNode;
               isUpdated = true;
             }

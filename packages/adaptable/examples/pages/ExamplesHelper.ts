@@ -548,7 +548,7 @@ export class ExamplesHelper {
       5000000,
       7500000,
       10000000,
-      (undefined as unknown) as number,
+      //  (undefined as unknown) as number,
     ];
     return notionals;
   }

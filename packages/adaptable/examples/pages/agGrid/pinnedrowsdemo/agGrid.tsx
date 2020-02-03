@@ -24,7 +24,7 @@ var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 10;
+  const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   gridOptions.groupIncludeFooter = true;
@@ -65,14 +65,14 @@ function InitAdaptableDemo() {
         const model = event.api.getModel() as IClientSideRowModel;
         const rootNode = model.getRootNode();
         if (!pinnedData) {
-          //     event.api.setPinnedTopRowData([rootNode.aggData]);
+          //    event.api.setPinnedTopRowData([rootNode.aggData]);
         } else {
-          //     pinnedData.updateData(rootNode.aggData);
+          //    pinnedData.updateData(rootNode.aggData);
         }
       };
 
       if (useTickingData) {
-        tickingDataHelper.useTickingDataagGrid(gridOptions, api, 200, tradeCount, true);
+        tickingDataHelper.useTickingDataagGrid(gridOptions, api, 200, tradeCount);
       }
 
       setTimeout(() => {

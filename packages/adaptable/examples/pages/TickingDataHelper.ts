@@ -103,15 +103,15 @@ export class TickingDataHelper {
 
         if (useadaptableApiSetCellValue) {
           if (notionalOnly) {
-            adaptableApi.gridApi.setCellValue('notional', notional, tradeId);
+            adaptableApi.gridApi.setCellValue('notional', notional, tradeId, true);
           } else {
-            adaptableApi.gridApi.setCellValue('price', price, tradeId);
-            adaptableApi.gridApi.setCellValue('bid', bid, tradeId);
-            adaptableApi.gridApi.setCellValue('ask', ask, tradeId);
-            adaptableApi.gridApi.setCellValue('bloombergAsk', bloombergAsk, tradeId);
-            adaptableApi.gridApi.setCellValue('bloombergBid', bloombergBid, tradeId);
-            adaptableApi.gridApi.setCellValue('notional', notional, tradeId);
-            adaptableApi.gridApi.setCellValue('changeOnYear', changeOnYear, tradeId);
+            adaptableApi.gridApi.setCellValue('price', price, tradeId, true);
+            adaptableApi.gridApi.setCellValue('bid', bid, tradeId, true);
+            adaptableApi.gridApi.setCellValue('ask', ask, tradeId, true);
+            adaptableApi.gridApi.setCellValue('bloombergAsk', bloombergAsk, tradeId, true);
+            adaptableApi.gridApi.setCellValue('bloombergBid', bloombergBid, tradeId, true);
+            adaptableApi.gridApi.setCellValue('notional', notional, tradeId, true);
+            adaptableApi.gridApi.setCellValue('changeOnYear', changeOnYear, tradeId, true);
           }
         }
 

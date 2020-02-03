@@ -36,14 +36,19 @@ export class GridApiImpl extends ApiBase implements GridApi {
     }
   }
 
-  public setCellValue(columnId: string, newValue: any, primaryKeyValue: any): void {
+  public setCellValue(
+    columnId: string,
+    newValue: any,
+    primaryKeyValue: any,
+    forceFilter: boolean = false
+  ): void {
     let gridCell: GridCell = {
       primaryKeyValue: primaryKeyValue,
       columnId: columnId,
       rawValue: newValue,
       displayValue: newValue,
     };
-    this.adaptable.api.internalApi.setGridCell(gridCell, false, false);
+    this.adaptable.api.internalApi.setGridCell(gridCell, forceFilter, false);
   }
 
   public getColumns(): AdaptableColumn[] {
