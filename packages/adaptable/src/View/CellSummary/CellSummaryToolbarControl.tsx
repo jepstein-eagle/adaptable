@@ -18,7 +18,6 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
@@ -172,7 +171,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     SelectedCellInfo: state.Grid.SelectedCellInfo,
     CellSummaryOperation: state.CellSummary.SummaryOperation,
-    CellSummaryOperationDefinitions: state.System.CellSummaryOperationDefinitions,
+    CellSummaryOperationDefinitions: state.CellSummary.CellSummaryOperationDefinitions,
     CellSummary: state.Grid.CellSummary,
   };
 }

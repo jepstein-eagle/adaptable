@@ -40,7 +40,7 @@ class IPushPullPopupComponent extends React.Component<
   }
 
   render() {
-    let infoBody: any[] = ['Create a report to send to iPushPull.', <br />, <br />];
+    let infoBody: any[] = ['Create a report to send to ipushpull.', <br />, <br />];
 
     //  let iPushPullDomainPages: IPushPullDomain[] = this.props.Adaptable.api.iPushPullApi.getIPushPullDomains();
 
@@ -78,4 +78,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let IPushPullPopup = connect(mapStateToProps, mapDispatchToProps)(IPushPullPopupComponent);
+export let IPushPullPopup = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IPushPullPopupComponent);

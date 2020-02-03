@@ -86,16 +86,18 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         Min: hasNumericColumns ? Helper.RoundNumberTo4dp(Math.min(...numericValues)) : '',
         Count: allValues.length,
       };
-      const operationDefinitions = this.adaptable.api.internalApi.getCellSummaryOperationDefinitions();
+      const operationDefinitions = this.adaptable.api.cellSummaryApi.getCellSummaryOperationDefinitions();
 
       operationDefinitions.forEach((operation: CellSummaryOperationDefinition) => {
-        selectedCellSummary[operation.OperationName] = operation.OperationFunction({
-          selectedCellInfo,
-          distinctCount,
-          allValues,
-          numericValues,
-          numericColumns,
-        });
+        if (operation.OperationFunction) {
+          selectedCellSummary[operation.OperationName] = operation.OperationFunction({
+            selectedCellInfo,
+            distinctCount,
+            allValues,
+            numericValues,
+            numericColumns,
+          });
+        }
       });
     }
     return selectedCellSummary;

@@ -362,20 +362,4 @@ export class ReportService implements IReportService {
     );
     this.adaptable.api.eventApi.emit('LiveDataChanged', liveDataChangedEventArgs);
   }
-
-  public IsReportLiveReport(report: Report, exportDestination: ExportDestination): boolean {
-    if (!report) {
-      return false;
-    }
-    switch (exportDestination) {
-      case ExportDestination.CSV:
-      case ExportDestination.Clipboard:
-      case ExportDestination.JSON:
-        return false;
-      case ExportDestination.OpenfinExcel:
-        return true;
-      case ExportDestination.Glue42:
-        return this.adaptable.api.glue42Api.isGlue42RunLiveData();
-    }
-  }
 }

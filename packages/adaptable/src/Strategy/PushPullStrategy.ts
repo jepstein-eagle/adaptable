@@ -71,7 +71,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
         }
       }
     });
-    // if grid selection has changed and the iPushPull Live report is 'Selected Cells' or 'Selected Rows' then send updated data
+    // if grid selection has changed and the ipushpull Live report is 'Selected Cells' or 'Selected Rows' then send updated data
     this.adaptable.api.eventApi.on('SelectionChanged', () => {
       if (this.adaptable.api.iPushPullApi.isIPushPullLiveDataRunning()) {
         let currentLiveIPushPullReport:
@@ -92,7 +92,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
     if (this.adaptable.api.iPushPullApi.isIPushPullAvailable()) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.IPushPullStrategyFriendlyName,
-        ComponentName: ScreenPopups.ExportPopup,
+        ComponentName: ScreenPopups.IPushPullPopup,
         Icon: StrategyConstants.IPushPullGlyph,
       });
     }
@@ -139,7 +139,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
         })
         .catch(reason => {
           LoggingHelper.LogAdaptableWarning(
-            'Failed to send data to iPushPull for [' + currentLiveIPushPullReport.ReportName + ']',
+            'Failed to send data to ipushpull for [' + currentLiveIPushPullReport.ReportName + ']',
             reason
           );
           this.adaptable.api.iPushPullApi.stopLiveData();
@@ -149,7 +149,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
             errorMessage += ': ' + reason;
           }
           errorMessage += '.  This live export has been cancelled.';
-          this.adaptable.api.alertApi.showAlertError('iPushPull Export Error', errorMessage);
+          this.adaptable.api.alertApi.showAlertError('ipushpull Export Error', errorMessage);
         });
       Promise.resolve()
         .then(() => {
@@ -166,7 +166,6 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
   public sendSnapshot(iPushPullReport: IPushPullReport): void {
     this.adaptable.PushPullService.loadPage(iPushPullReport.Folder, iPushPullReport.Page).then(
       () => {
-        // need to get the report from somewhere
         let report: Report = this.adaptable.api.exportApi.getReportByName(
           iPushPullReport.ReportName
         );

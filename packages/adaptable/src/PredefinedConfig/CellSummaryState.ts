@@ -1,6 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { CellSummaryOperation } from './Common/Enums';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { DesignTimeState } from './DesignTimeState';
 
 /**
  * The Predefined Configuration for the Cell Summary function
@@ -11,7 +12,7 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_api_cellsummaryapi_.cellsummaryapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004550458-Cell-Summary-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_api_cellsummaryapi_.cellsummaryapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004550458-Cell-Summary-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  *  *Cell Summary Operations*
  *
@@ -34,8 +35,10 @@ import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellI
  *
  *
  */
-export interface CellSummaryState extends RunTimeState {
+export interface CellSummaryState extends DesignTimeState {
   SummaryOperation?: CellSummaryOperation | string;
+
+  CellSummaryOperationDefinitions?: CellSummaryOperationDefinition[];
 }
 
 export interface CellSummaryOperationDefinition {

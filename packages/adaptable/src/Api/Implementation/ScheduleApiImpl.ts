@@ -7,6 +7,7 @@ import { BaseSchedule } from '../../PredefinedConfig/Common/Schedule';
 import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
+import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 
 export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
   public getAllSchedule(): BaseSchedule[] {
@@ -14,6 +15,7 @@ export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
     allSchedules.push(...this.getAllReminderSchedule());
     allSchedules.push(...this.getAllReportSchedule());
     allSchedules.push(...this.getAllIPushPullSchedule());
+    allSchedules.push(...this.getAllGlue42Schedule());
     return allSchedules;
   }
   public getAllReminderSchedule(): ReminderSchedule[] {
@@ -24,6 +26,9 @@ export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
   }
   public getAllIPushPullSchedule(): IPushPullSchedule[] {
     return this.adaptable.api.iPushPullApi.getIPushPullSchedules();
+  }
+  public getAllGlue42Schedule(): Glue42Schedule[] {
+    return this.adaptable.api.glue42Api.getGlue42Schedules();
   }
 
   public showSchedulePopup(): void {

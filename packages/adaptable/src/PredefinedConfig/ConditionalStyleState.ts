@@ -14,7 +14,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  *
  * [Conditional Style Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030602892-Conditional-Style-Videos)
  *
- * [Conditional Style Demo](https://demo.adaptableblotter.com/style/aggridconditionalstyledemo/)
+ * [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo/)
  *
  * [Conditional Style API](_api_conditionalstyleapi_.conditionalstyleapi.html)
  *

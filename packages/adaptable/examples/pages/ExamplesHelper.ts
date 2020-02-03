@@ -253,12 +253,12 @@ export class ExamplesHelper {
       history: [...new Array(this.generateRandomInt(5, 20))].map(_ =>
         this.generateRandomInt(1, 30)
       ),
-      notional: this.generateRandomInt(0, 100), // this.getRandomItem(this.getNotionals()),
+      notional: this.generateRandomInt(1000, 1500), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
       country: this.getRandomItem(this.getCountries()),
-      changeOnYear: this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
+      changeOnYear: this.generateRandomInt(-200, 200), //this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
       stars: this.generateRandomInt(1, 5),
       amount: this.generateRandomInt(20, 100), //this.getRandomItem(this.getAmounts()),
       price,
@@ -345,8 +345,9 @@ export class ExamplesHelper {
     if (randomNumber == 3) {
       return 'Rejected';
     }
+    return '';
   }
-  protected getRandomHardcode(): number {
+  protected getRandomHardcode(): number | undefined {
     let randomNumber = this.generateRandomInt(1, 10);
     if (randomNumber == 1) {
       return undefined;
@@ -358,7 +359,7 @@ export class ExamplesHelper {
     let myValue = this.generateRandomDouble();
     const randomInt = this.generateRandomInt(1, 10);
     if (randomInt > 7) {
-      myValue = null;
+      myValue = (null as unknown) as number;
     }
 
     if (randomInt % 2 === 0 && myValue != null) {
@@ -541,7 +542,14 @@ export class ExamplesHelper {
   }
 
   public getNotionals(): number[] {
-    let notionals = [1000000, 2000000, 5000000, 7500000, 10000000, undefined];
+    let notionals = [
+      1000000,
+      2000000,
+      5000000,
+      7500000,
+      10000000,
+      //  (undefined as unknown) as number,
+    ];
     return notionals;
   }
 
@@ -578,14 +586,16 @@ export class ExamplesHelper {
       'Barcap',
       'Citi',
       'JP Morgan',
-      'Morgan Stanley',
-      'BNP',
-      'UBS',
-      'Credit Suisse',
-      'Nomura',
-      'Canada',
-      undefined,
-      null,
+      //  'Morgan Stanley',
+      //  'BNP',
+      //  'UBS',
+      //  'Credit Suisse',
+      //  'Nomura',
+      //  'Canada',
+      // '',
+
+      (undefined as unknown) as string,
+      //  null,
       //   "Lloyds TSB",
       //   "MUFJ",
       //   "Rabobank",
@@ -733,6 +743,7 @@ export class ExamplesHelper {
       case 'NR':
         return 'NR';
     }
+    return '';
   }
 
   protected getNames(): string[] {
@@ -770,7 +781,7 @@ export class ExamplesHelper {
       suppressColumnVirtualisation: true,
       suppressMenuHide: true,
       rowHeight: 30,
-      sideBar: 'columns',
+      sideBar: true,
       rowSelection: 'multiple',
       columnTypes: {
         abColDefNumber: {},
@@ -1010,6 +1021,36 @@ export class ExamplesHelper {
       cellRenderer: 'agAnimateShowChangeCellRenderer',
     });
     schema.push({
+      headerName: 'Notional',
+      field: 'notional',
+      enableValue: true,
+      editable: true,
+      sortable: true,
+      aggFunc: 'sum',
+      //   agGroupCellRenderer
+      // valueFormatter: notionalFormatter,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+      filter: true,
+      resizable: true,
+      cellRenderer: 'agGroupCellRenderer',
+      cellRendererParams: {
+        footerValueGetter: '"All Notionals (" + x + ")"',
+      },
+    });
+    schema.push({
+      headerName: 'Ask',
+      field: 'ask',
+      columnGroupShow: 'closed',
+      filter: true,
+      resizable: true,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+      enableValue: true,
+      valueFormatter: this.fourDecimalPlaceFormatter,
+      aggFunc: 'sum',
+    });
+    schema.push({
       headerName: 'Bid',
       field: 'bid',
       columnGroupShow: 'closed',
@@ -1017,7 +1058,6 @@ export class ExamplesHelper {
       filter: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
-      valueFormatter: this.twoDecimalPlaceFormatter,
       enableValue: true,
     });
     schema.push({
@@ -1045,6 +1085,7 @@ export class ExamplesHelper {
       editable: true,
       filter: true,
       sortable: true,
+      aggFunc: 'sum',
       enableRowGroup: true,
       enableValue: true, // what happerns
       type: 'abColDefString',
@@ -1052,18 +1093,7 @@ export class ExamplesHelper {
       //  tooltipField: 'country',
       //  cellEditor: 'agLargeTextCellEditor',
     });
-    schema.push({
-      headerName: 'Notional',
-      field: 'notional',
-      enableValue: true,
-      editable: true,
-      sortable: true,
-      // valueFormatter: notionalFormatter,
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-      filter: true,
-      resizable: true,
-    });
+
     schema.push({
       headerName: 'Amount',
       field: 'amount',
@@ -1118,18 +1148,7 @@ export class ExamplesHelper {
       valueFormatter: this.twoDecimalPlaceFormatter,
       sortable: true,
     });
-    schema.push({
-      headerName: 'Ask',
-      field: 'ask',
-      columnGroupShow: 'closed',
-      filter: true,
-      resizable: true,
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-      enableValue: true,
-      valueFormatter: this.fourDecimalPlaceFormatter,
-      //  aggFunc: 'sum',
-    });
+
     schema.push({
       headerName: 'Bbg Ask',
       field: 'bloombergAsk',

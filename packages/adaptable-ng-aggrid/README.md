@@ -164,7 +164,7 @@ The standard ag-Grid *GridOptions* object used for building column schema and se
 - **adaptableOptions**
 
 The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
-See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
+See [Developer Documentation](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
 
 > Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
 
@@ -176,7 +176,7 @@ See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_adapt
 An Adaptable event giving you access to the *AdaptableApi* object.  
 The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
 Also gives access to the underlying ag-Grid instance object. 
-See [Developer Documentation](https://api.adaptableblotter.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
+See [Developer Documentation](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
 
 - **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
 
@@ -225,7 +225,7 @@ To find out how to your write your custom themes, provide custom icons - and abo
 
 For a standalone working example app of the Angular Wrapper, see the [Angular Demo](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
 
-To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptableblotter.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
+To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 
 
 ## Licences
@@ -242,7 +242,7 @@ Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for
 
 Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 
-Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptableblotter.com) 
+Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 
 
 ## Support
 

@@ -59,8 +59,14 @@ class PercentBarPopupComponent extends React.Component<
 
           let newPercentRender: PercentBar = ObjectFactory.CreateEmptyPercentBar();
           newPercentRender.ColumnId = columnId;
-          newPercentRender.MinValue = Math.min(...distinctColumnsValues);
-          newPercentRender.MaxValue = Math.max(...distinctColumnsValues);
+          let negativeValue = Math.min(...distinctColumnsValues);
+          newPercentRender.NegativeValue = negativeValue < 0 ? negativeValue : undefined;
+          if (negativeValue > 0) {
+            newPercentRender.NegativeColor = undefined;
+          }
+
+          let positiveValue = Math.max(...distinctColumnsValues);
+          newPercentRender.PositiveValue = positiveValue > 0 ? positiveValue : undefined;
           this.onNewFromColumn(newPercentRender);
         }
         if (this.props.PopupParams.action == 'Edit') {
@@ -176,12 +182,12 @@ class PercentBarPopupComponent extends React.Component<
 
   onMinimumValueChanged(percentBar: PercentBar, minimumValue: number): void {
     let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.MinValue = minimumValue;
+    clonedPercentBar.NegativeValue = minimumValue;
     this.props.onEditPercentBar(clonedPercentBar);
   }
   onMaximumValueChanged(percentBar: PercentBar, maximumValue: number): void {
     let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.MaxValue = maximumValue;
+    clonedPercentBar.PositiveValue = maximumValue;
     this.props.onEditPercentBar(clonedPercentBar);
   }
   onPositiveColorChanged(percentBar: PercentBar, positiveColor: string): void {
@@ -249,9 +255,11 @@ class PercentBarPopupComponent extends React.Component<
 
   canFinishWizard(): boolean {
     let percentBar = this.state.EditedAdaptableObject as PercentBar;
+    if (StringExtensions.IsNullOrEmpty(percentBar.ColumnId)) {
+      return false;
+    }
     if (
-      StringExtensions.IsNullOrEmpty(percentBar.ColumnId) ||
-      StringExtensions.IsNullOrEmpty(percentBar.PositiveColor) ||
+      StringExtensions.IsNullOrEmpty(percentBar.PositiveColor) &&
       StringExtensions.IsNullOrEmpty(percentBar.NegativeColor)
     ) {
       return false;

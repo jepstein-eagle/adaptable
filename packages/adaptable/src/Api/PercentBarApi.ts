@@ -32,18 +32,12 @@ export interface PercentBarApi {
   /**
    * Creates a new Percent Bar - using the given properties
    *
-   * @param columnId the Id of the column which will show the Percent Bar
-   * @param minValue
-   * @param maxValue
-   * @param positiveColor
-   * @param negativeColor
-   * @param showValue
    */
   createPercentBar(
     columnId: string,
-    minValue: number,
-    maxValue: number,
+    positiveValue: number,
     positiveColor: string,
+    negativeValue: number,
     negativeColor: string,
     showValue: boolean
   ): void;
@@ -58,17 +52,13 @@ export interface PercentBarApi {
 
   /**
    * Edits the Minimum Value in a Percent Bar
-   * @param minValue the Minimum Value to set for the Percent Bar
-   * @param columnId the Column Id which contains the Percent Bar
    */
-  editPercentBarMinValue(minValue: number, columnId: string): void;
+  editPercentBarNegativeValue(negativeValue: number, columnId: string): void;
 
   /**
    * Edits the Maximum Value in a Percent Bar
-   * @param maxValue the Maximum Value to set for the Percent Bar
-   * @param columnId the Column Id which contains the Percent Bar
    */
-  editPercentBarMaxValue(maxValue: number, columnId: string): void;
+  editPercentBarPostiiveValue(positiveValue: number, columnId: string): void;
 
   /**
    * Changes the Positive Colour of a Percent Bar

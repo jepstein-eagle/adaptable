@@ -5,7 +5,7 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  *  **Further AdapTable Help Resources**
  *
- * - [Action Column Demo](https://demo.adaptableblotter.com/column/aggridactioncolumnsdemo/)
+ * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
  *
  * - [Action Column State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
  *

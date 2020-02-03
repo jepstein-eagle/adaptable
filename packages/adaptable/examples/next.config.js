@@ -71,6 +71,12 @@ const withTypescript = (nextConfig = {}) => {
       config.resolve.alias['styled-components'] = path.resolve('../node_modules/styled-components');
       config.resolve.alias.redux = path.resolve('../node_modules/redux');
       config.resolve.alias['react-redux'] = path.resolve('../node_modules/react-redux');
+      config.resolve.alias['@ag-grid-community/all-modules'] = path.resolve(
+        '../node_modules/@ag-grid-community/all-modules'
+      );
+      config.resolve.alias['@ag-grid-community/core'] = path.resolve(
+        '../node_modules/@ag-grid-community/core'
+      );
 
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options);

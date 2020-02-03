@@ -90,7 +90,7 @@ class FinancePlugin extends AdaptablePlugin {
 
     adaptable.api!.pluginsApi.registerPlugin(this.pluginId, pluginData);
 
-    adaptable.api!.internalApi.addCellSummaryOperationDefinitions(
+    adaptable.api!.cellSummaryApi.addCellSummaryOperationDefinitions(
       pluginData.OptionalSummaryOperations
     );
   }

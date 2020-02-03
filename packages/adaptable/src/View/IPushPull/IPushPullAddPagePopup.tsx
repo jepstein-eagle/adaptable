@@ -88,7 +88,7 @@ const IPushPullAddPageComponent = (props: IPushPullAddPagePopupProps) => {
   );
   return (
     <PanelWithImage
-      header="Add iPushPull Page"
+      header="Add ipushpull Page"
       glyphicon="newpage"
       variant="primary"
       style={{ height: '100%' }}
@@ -134,7 +134,7 @@ const IPushPullAddPageComponent = (props: IPushPullAddPagePopupProps) => {
       >
         <Flex flexDirection="column" padding={2} margin={2}>
           <HelpBlock marginBottom={1}>
-            Select a folder and then choose the name of the new iPushPull page it should contain.
+            Select a folder and then choose the name of the new ipushpull page it should contain.
           </HelpBlock>
 
           <FormLayout margin={3}>

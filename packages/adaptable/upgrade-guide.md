@@ -232,7 +232,7 @@ There are far too many new features to list here but some of the headlines are:
 * [Column Menu bespoke items](https://api.adaptabletools.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#columnmenuitems)
 * [Context Menu bespoke items](https://api.adaptabletools.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#contextmenuitems)
 * [Quick Search exclude columns](https://api.adaptabletools.com/interfaces/_adaptableoptions_searchoptions_.searchoptions.html#excludecolumnfromquicksearch)
-* [iPushPull improvements](https://api.adaptabletools.com/interfaces/_predefinedconfig_ipushpullstate_.ipushpullstate.html)
+* [ipushpull improvements](https://api.adaptabletools.com/interfaces/_predefinedconfig_ipushpullstate_.ipushpullstate.html)
 
 
 ## Basic Installation Example

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import ResizeObserverPoly from 'resize-observer-polyfill';
 
-const globalObject = typeof global !== 'undefined' ? global : window;
+const globalObject = typeof globalThis !== 'undefined' ? globalThis : window;
 const RO = (globalObject as any).ResizeObserver || ResizeObserverPoly;
 
 export interface NotifyResizeProps {

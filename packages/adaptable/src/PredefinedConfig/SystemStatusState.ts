@@ -33,7 +33,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/alertsmessages/aggridsystemstatusdemo/) | [System Status API](_api_systemstatusapi_.systemstatusapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754957-Run-Time-Access)
+ * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridsystemstatusdemo/) | [System Status API](_api_systemstatusapi_.systemstatusapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754957-Run-Time-Access)
  *
  * **System Status Predefined Config Example**
  *

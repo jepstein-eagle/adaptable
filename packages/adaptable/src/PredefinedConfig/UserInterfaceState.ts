@@ -28,9 +28,9 @@ import { AdaptableColumn } from './Common/AdaptableColumn';
  *
  * **Further AdapTable Help Resources**
  *
- * - [Column Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcolumnmenudemo/)
+ * - [Column Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcolumnmenudemo/)
  *
- * - [Context Menu Demo](https://demo.adaptableblotter.com/userinterface/aggridcontextmenudemo/)
+ * - [Context Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcontextmenudemo/)
  *
  * - [User Interface API](_api_userinterfaceapi_.userinterfaceapi.html)
  *

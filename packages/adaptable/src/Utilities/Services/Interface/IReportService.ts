@@ -28,6 +28,4 @@ export interface IReportService {
       | 'LiveDataUpdated',
     liveReport?: any
   ): void;
-
-  IsReportLiveReport(report: Report, exportDestination: ExportDestination): boolean;
 }

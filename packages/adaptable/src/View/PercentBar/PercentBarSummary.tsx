@@ -111,8 +111,8 @@ export class PercentBarSummaryComponent extends React.Component<
       this.props.SummarisedColumn.ColumnId
     );
 
-    configEntity.MinValue = Math.min(...distinctColumnsValues);
-    configEntity.MaxValue = Math.max(...distinctColumnsValues);
+    configEntity.NegativeValue = Math.min(...distinctColumnsValues);
+    configEntity.PositiveValue = Math.max(...distinctColumnsValues);
 
     this.setState({
       EditedAdaptableObject: configEntity,

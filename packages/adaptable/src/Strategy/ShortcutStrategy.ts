@@ -127,13 +127,14 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     newValue: any,
     keyEventString: string
   ): void {
-    this.adaptable.api.gridApi.setCellValue(
-      activeCell.columnId,
-      newValue,
-      activeCell.primaryKeyValue,
-      true,
-      true
-    );
+    let newGridCell: GridCell = {
+      columnId: activeCell.columnId,
+      rawValue: newValue,
+      displayValue: newValue,
+      primaryKeyValue: activeCell.primaryKeyValue,
+    };
+
+    this.adaptable.api.internalApi.setGridCell(newGridCell, true, true);
 
     let functionAppliedDetails: FunctionAppliedDetails = {
       name: StrategyConstants.ShortcutStrategyId,

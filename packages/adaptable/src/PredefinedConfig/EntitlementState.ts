@@ -11,7 +11,7 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  *  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptableblotter.com/admin/aggridentitlementsdemo/) | [Entitlements API](_api_entitlementsapi_.entitlementsapi.html)
+ * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements API](_api_entitlementsapi_.entitlementsapi.html)
  *
  * **Entitlements Predefined Config Example**
  *

@@ -45,6 +45,7 @@ import { GridApi } from './GridApi';
 import { Glue42Api } from './Glue42Api';
 import { IPushPullApi } from './IPushPullApi';
 import { ScheduleApi } from './ScheduleApi';
+import { GradientColumnApi } from './GradientColumnApi';
 
 /**
  * The `AdaptableApi` provides developers with run-time access to AdapTable.
@@ -207,13 +208,15 @@ export interface AdaptableApi {
 
   glue42Api: Glue42Api;
 
+  gradientColumnApi: GradientColumnApi;
+
   /**
    * Provides methods for managing the Grid directly e.g. setGridData which will replace the current DataSource with the one provided.
    */
   gridApi: GridApi;
 
   /**
-   * Provides access to the *iPushPull* function, the *iPushPull* object and [iPushPull State](_predefinedconfig_ipushpullstate_.ipushpullstate.html).
+   * Provides access to *ipushpull* related functionality, the *ipushpull* object and [ipushpull State](_predefinedconfig_ipushpullstate_.ipushpullstate.html).
    */
   iPushPullApi: IPushPullApi;
 
@@ -253,7 +256,7 @@ export interface AdaptableApi {
   reminderApi: ReminderApi;
 
   /**
-   * Provides access to the *Schedule* function which allows you to create schedules for Reminders, Reports and iPushPull.
+   * Provides access to the *Schedule* function which allows you to create schedules for Reminders, Reports and ipushpull.
    */
   scheduleApi: ScheduleApi;
 

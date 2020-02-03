@@ -10,6 +10,6 @@ export const APPLICATION = 'Application';
 export const NAMED_FILTER = 'NamedFilter';
 export const ACTION_COLUMN = 'ActionColumn';
 export const SPARKLINE_COLUMN = 'SparklineColumn';
-export const PARTNER = 'Partner';
+export const CELL_SUMMARY = 'CellSummary';
 export const SYSTEM_FILTER = 'SystemFilter';
 export const PLUGINS = 'Plugins';

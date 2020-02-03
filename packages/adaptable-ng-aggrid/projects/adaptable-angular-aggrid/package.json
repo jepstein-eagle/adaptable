@@ -25,8 +25,8 @@
     "mathjs": "^5.1.1",
     "symlink-dir": "^3.1.1",
     "rimraf": "^2.6.3",
-    "@ag-grid-community/all-modules": "^22.1.1",
-    "@ag-grid-community/angular": "^22.1.1"
+    "@ag-grid-community/all-modules": "22.1.1",
+    "@ag-grid-community/angular": "22.1.1"
   },
   "scripts": {
     "link-core": "rimraf node_modules/@types/react-native && rimraf node_modules/@adaptabletools && symlink-dir ../../../adaptable ./node_modules/@adaptabletools/adaptable"

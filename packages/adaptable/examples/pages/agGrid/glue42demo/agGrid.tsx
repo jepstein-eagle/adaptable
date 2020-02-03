@@ -12,7 +12,8 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-
+import { MenuModule } from '@ag-grid-enterprise/menu';
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import glue42Desktop from '@glue42/desktop';
 import glue42office from '@glue42/office';
 import { TickingDataHelper } from '../../TickingDataHelper';
@@ -23,22 +24,24 @@ function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
-  const useTickingData: boolean = true;
+  const useTickingData: boolean = false;
 
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'glue42-demo'
-  );
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'glue42 Demo',
+    vendorGrid: {
+      ...gridOptions,
+      modules: [MenuModule, RangeSelectionModule],
+    },
+    predefinedConfig: demoConfig,
+  };
 
   adaptableOptions.predefinedConfig = demoConfig;
   adaptableOptions.auditOptions = {
     auditTickingDataUpdates: {
       auditToConsole: true,
     },
-  };
-
-  adaptableOptions.generalOptions = {
-    showAdaptableToolPanel: true,
   };
 
   const adaptableApi = Adaptable.init(adaptableOptions);
@@ -49,26 +52,23 @@ function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Partner: {
-    Glue42: {
-      RunLiveData: true,
-      Glue: glue42Desktop, // this is the glue object
-      Glue4Office: glue42office, // this is the Glue4Office object
-      Glue42Config: {
-        initialization: {
-          application: 'AdaptableBlotterDemo', // need to change?
-          gateway: {
-            protocolVersion: 3,
-            ws: 'ws://localhost:8385',
-          },
-          auth: {
-            username: 'jonny', // should get from .env file
-            password: 'demopassword', // put in .env file
-          },
+  Glue42: {
+    Glue: glue42Desktop, // this is the glue object
+    Glue4Office: glue42office, // this is the Glue4Office object
+    Glue42Config: {
+      initialization: {
+        application: 'AdaptableBlotterDemo', // need to change?
+        gateway: {
+          protocolVersion: 3,
+          ws: 'ws://localhost:8385',
         },
-        excelExport: {
-          timeoutMs: 30000,
+        auth: {
+          username: 'jonny', // should get from .env file
+          password: 'demopassword', // put in .env file
         },
+      },
+      excelExport: {
+        timeoutMs: 30000,
       },
     },
   },
@@ -112,7 +112,7 @@ export default () => {
       return;
     }
 
-    InitAdaptableDemo()();
+    InitAdaptableDemo();
   }, []);
 
   return null;

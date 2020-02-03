@@ -42,6 +42,7 @@ import { ApplicationState } from './ApplicationState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
+import { GradientColumnState } from './GradientColumnState';
 
 /**
  * The main state object that Adaptable persists
@@ -69,13 +70,16 @@ export interface AdaptableState {
   SystemStatus: SystemStatusState;
   UserInterface: UserInterfaceState;
 
+  // not sure yet about this one - was runtie but now design?
+  CellSummary: CellSummaryState;
+
   // Set at design time and / or run time => only state which is persisted
   AdvancedSearch: AdvancedSearchState;
   Alert: AlertState;
   BulkUpdate: BulkUpdateState;
   CalculatedColumn: CalculatedColumnState;
   Calendar: CalendarState;
-  CellSummary: CellSummaryState;
+
   CellValidation: CellValidationState;
   Chart: ChartState;
   ColumnCategory: ColumnCategoryState;
@@ -88,6 +92,7 @@ export interface AdaptableState {
   FlashingCell: FlashingCellState;
   FormatColumn: FormatColumnState;
   FreeTextColumn: FreeTextColumnState;
+  GradientColumn: GradientColumnState;
   Layout: LayoutState;
   PercentBar: PercentBarState;
   PlusMinus: PlusMinusState;

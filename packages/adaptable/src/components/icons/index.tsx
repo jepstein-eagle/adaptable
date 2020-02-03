@@ -60,6 +60,7 @@ import comment from './comment';
 import Layout from './layout';
 import StateManagement from './state-management';
 import PercentBar from './percent-bar';
+import GradientColumn from './gradient-column';
 import Sparkline from './spark-line';
 import PieChart from './pie-chart';
 import PlusMinus from './plus-minus';
@@ -119,6 +120,7 @@ const allIcons = {
   'format-column': FormatColumn, /// color-lens
   'freetext-column': FreetextColumn, //  short-text
   'percent-bar': PercentBar, // linear-scale
+  'gradient-column': GradientColumn, // gradient
   'spark-line': Sparkline, //    show-chart
   'pie-chart': PieChart,
   'plus-minus': PlusMinus, //add-circle

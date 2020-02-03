@@ -101,30 +101,32 @@ function getSingleOperatorFromOperandText(operandText: string): string {
   return returnOperand;
 }
 
-export function IsColumnAppropriateForRange(
-  operator: LeafExpressionOperator,
-  column: AdaptableColumn
-): boolean {
-  if (operator == LeafExpressionOperator.Contains) {
+export function IsColumnAppropriateForRange(range: QueryRange, column: AdaptableColumn): boolean {
+  if (!range) {
     return true;
   }
-
-  // if its a number operator check if its a number column
   if (column.DataType == DataType.Number) {
+    if (range.Operand1 && isNaN(Number(range.Operand1))) {
+      return false;
+    }
     let tet: LeafExpressionOperator[] = GetNumberOperatorPairs().map(kvp => {
       return kvp.Value;
     });
-    if (ArrayExtensions.ContainsItem(tet, operator)) {
+    if (ArrayExtensions.ContainsItem(tet, range.Operator)) {
       return true;
     }
-  }
-
-  // if its a string operator check if its a string column
-  if (column.DataType == DataType.String) {
+  } else if (column.DataType == DataType.Date) {
+    let tet: LeafExpressionOperator[] = GetDateOperatorPairs().map(kvp => {
+      return kvp.Value;
+    });
+    if (ArrayExtensions.ContainsItem(tet, range.Operator)) {
+      return true;
+    }
+  } else if (column.DataType == DataType.String) {
     let tet: LeafExpressionOperator[] = GetStringOperatorPairs().map(kvp => {
       return kvp.Value;
     });
-    if (ArrayExtensions.ContainsItem(tet, operator)) {
+    if (ArrayExtensions.ContainsItem(tet, range.Operator)) {
       return true;
     }
   }

@@ -72,6 +72,8 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { PushPullStrategy } from '../Strategy/PushPullStrategy';
+import { Glue42Strategy } from '../Strategy/Glue42Strategy';
+import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -137,6 +139,10 @@ export class agGridHelper {
       StrategyConstants.FreeTextColumnStrategyId,
       new FreeTextColumnStrategy(adaptable)
     );
+    strategies.set(
+      StrategyConstants.GradientColumnStrategyId,
+      new GradientColumnStrategy(adaptable)
+    );
     strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(adaptable));
     strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(adaptable));
     strategies.set(
@@ -162,8 +168,9 @@ export class agGridHelper {
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
 
-    // should probably also be a plugin
+    // should probably both be plugins
     strategies.set(StrategyConstants.IPushPullStrategyId, new PushPullStrategy(adaptable));
+    strategies.set(StrategyConstants.Glue42StrategyId, new Glue42Strategy(adaptable));
     return strategies;
   }
 
@@ -194,8 +201,8 @@ export class agGridHelper {
   }
 
   public createPercentBarCellRendererFunc(pcr: PercentBar, adaptableId: string): ICellRendererFunc {
-    const showNegatives: boolean = pcr.MinValue < 0;
-    const showPositives: boolean = pcr.MaxValue > 0;
+    const showNegatives: boolean = pcr.NegativeValue != undefined && pcr.NegativeValue < 0;
+    const showPositives: boolean = pcr.PositiveValue != undefined && pcr.PositiveValue >= 0;
 
     const cellRendererFunc: ICellRendererFunc = (params: ICellRendererParams) => {
       const isNegativeValue: boolean = params.value < 0;
@@ -204,18 +211,18 @@ export class agGridHelper {
         value = 0;
       }
 
-      const maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId)
-        ? this.adaptable.getRawValueFromRowNode(params.node, pcr.MaxValueColumnId)
-        : pcr.MaxValue;
-      const minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId)
-        ? this.adaptable.getRawValueFromRowNode(params.node, pcr.MinValueColumnId)
-        : pcr.MinValue;
+      const positiveValue = StringExtensions.IsNotNullOrEmpty(pcr.PositiveValueColumnId)
+        ? this.adaptable.getRawValueFromRowNode(params.node, pcr.PositiveValueColumnId)
+        : pcr.PositiveValue;
+      const negativeValue = StringExtensions.IsNotNullOrEmpty(pcr.NegativeValueColumnId)
+        ? this.adaptable.getRawValueFromRowNode(params.node, pcr.NegativeValueColumnId)
+        : pcr.NegativeValue;
 
       if (isNegativeValue) {
         value *= -1;
       }
-      let percentagePositiveValue = (100 / maxValue) * value;
-      let percentageNegativeValue = (100 / (minValue * -1)) * value;
+      let percentagePositiveValue = (100 / positiveValue) * value;
+      let percentageNegativeValue = (100 / (negativeValue * -1)) * value;
 
       if (showNegatives && showPositives) {
         // if need both then half the space

@@ -54,7 +54,7 @@ const IPushPullLoginComponent = (props: IPushPullLoginPopupProps) => {
   };
   return (
     <PanelWithImage
-      header="iPushPull Login Details"
+      header="ipushpull Login Details"
       glyphicon="login"
       variant="primary"
       style={{ height: '100%' }}
@@ -97,11 +97,11 @@ const IPushPullLoginComponent = (props: IPushPullLoginPopupProps) => {
       >
         <Flex flexDirection="column" padding={2} margin={2}>
           <HelpBlock marginBottom={1}>
-            Login to iPushPull using your login (email address) and password.
+            Login to ipushpull using your login (email address) and password.
           </HelpBlock>
 
           <FormLayout margin={3}>
-            <FormRow label="iPushPull login:">
+            <FormRow label="ipushpull login:">
               <Input
                 width="100%"
                 type="email"
@@ -110,7 +110,7 @@ const IPushPullLoginComponent = (props: IPushPullLoginPopupProps) => {
                 onChange={onLoginChange}
               />
             </FormRow>
-            <FormRow label="iPushPull password:">
+            <FormRow label="ipushpull password:">
               <Input
                 width="100%"
                 type="password"

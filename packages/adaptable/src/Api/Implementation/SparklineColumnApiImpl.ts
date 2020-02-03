@@ -16,7 +16,7 @@ export class SparklineColumnApiImpl extends ApiBase implements SparklineColumnAp
     return sparklineColumns;
   }
 
-  public isSparklineColumn(colId: string): boolean {
-    return this.getAllSparklineColumn().find(sc => sc.ColumnId === colId) != null;
+  public isSparklineColumn(columnId: string): boolean {
+    return this.getAllSparklineColumn().find(sc => sc.ColumnId === columnId) != null;
   }
 }

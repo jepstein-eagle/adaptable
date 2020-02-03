@@ -15,6 +15,7 @@ import {
   ReminderScheduleEditAction,
   ReminderScheduleAddAction,
 } from '../../Redux/ActionsReducers/ReminderRedux';
+import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 
 export class ScheduleEntityRow extends React.Component<
   SharedEntityExpressionRowProps<ScheduleEntityRow>,
@@ -47,6 +48,10 @@ export class ScheduleEntityRow extends React.Component<
           ' - ' +
           iPushPullSchedule.Transmission +
           ')';
+        break;
+      case ScheduleType.Glue42:
+        let glue42Schedule: Glue42Schedule = baseSchedule as Glue42Schedule;
+        details = glue42Schedule.Glue42Report.ReportName;
         break;
     }
 

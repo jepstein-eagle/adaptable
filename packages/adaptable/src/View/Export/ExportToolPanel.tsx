@@ -37,8 +37,7 @@ interface ExportToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<ExportToolPanelComponent> {
   onApplyExport: (
     report: Report,
-    exportDestination: ExportDestination,
-    isLiveReport: boolean
+    exportDestination: ExportDestination
   ) => ExportRedux.ExportApplyAction;
   onSelectReport: (Report: string) => ExportRedux.ReportSelectAction;
   onNewReport: () => PopupRedux.PopupShowScreenAction;
@@ -108,17 +107,17 @@ class ExportToolPanelComponent extends React.Component<
     });
 
     let csvMenuItem = {
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV, false),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV),
       label: 'CSV',
     };
 
     let jsonMenuItem = {
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.JSON, false),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.JSON),
       label: 'JSON',
     };
     let clipboardMenuItem = {
       label: 'Clipboard',
-      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Clipboard, false),
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Clipboard),
     };
 
     let openfinExcelMenuItem;
@@ -141,16 +140,6 @@ class ExportToolPanelComponent extends React.Component<
     }
 */
 
-    let isGlueLiveReport: boolean = this.props.Adaptable.ReportService.IsReportLiveReport(
-      currentReport,
-      ExportDestination.Glue42
-    );
-    let glue42MenuItem = {
-      onClick: () =>
-        this.props.onApplyExport(currentReport, ExportDestination.Glue42, isGlueLiveReport),
-      label: 'Export to Excel (via Glue42)',
-    };
-
     let deleteMessage: string = "Are you sure you want to delete '";
     if (savedReport != null) {
       deleteMessage = deleteMessage + savedReport.Name + "'?";
@@ -163,8 +152,6 @@ class ExportToolPanelComponent extends React.Component<
       this.props.Adaptable.ReportService.IsReportDestinationActive(
         ExportDestination.OpenfinExcel
       ) && openfinExcelMenuItem,
-      this.props.Adaptable.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
-        glue42MenuItem,
     ].filter(x => !!x);
 
     let content = (
@@ -285,8 +272,8 @@ function mapStateToProps(state: AdaptableState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onApplyExport: (report: Report, exportDestination: ExportDestination, isLiveReport: boolean) =>
-      dispatch(ExportRedux.ExportApply(report, exportDestination, isLiveReport)),
+    onApplyExport: (report: Report, exportDestination: ExportDestination) =>
+      dispatch(ExportRedux.ExportApply(report, exportDestination)),
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
     onReportStopLive: (
       Report: Report,
@@ -327,7 +314,4 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-export let ExportToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExportToolPanelComponent);
+export let ExportToolPanel = connect(mapStateToProps, mapDispatchToProps)(ExportToolPanelComponent);

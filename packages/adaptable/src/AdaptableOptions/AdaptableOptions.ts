@@ -44,7 +44,7 @@ import { ExportOptions } from './ExportOptions';
  *  | [filterOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in AdapTable      |
  *  | [generalOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)          | No	        | General set of Options (e.g. for managing Primary Keys        |
  *  | [layoutOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)            | No	        | Layout (Views) related Options                                |
- *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query ( [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html) ) in AdapTable |
+ *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query ( [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) ) in AdapTable |
  *  | [searchOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)            | No	        | Search-related options (e.g. for managing Server searching)   |
  *  | [stateOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage AdapTable State    |
  *  | [userInterfaceOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| No	      | User Interface related functions (e.g. menus, toolbars)       |
@@ -209,7 +209,7 @@ export interface AdaptableOptions {
   layoutOptions?: LayoutOptions;
 
   /**
-   * Options for running queries in AdapTable - known as an [Expression](https://api.adaptableblotter.com/modules/_predefinedconfig_common_expression_.html)
+   * Options for running queries in AdapTable - known as an [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html)
    *
    * Lets you specify how (and how many) values are returned when doing a column lookup, how to deal with case and what is in the Query.
    *

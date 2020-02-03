@@ -1,8 +1,6 @@
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-
 import { ApplicationApi } from '../ApplicationAPI';
 import { ApplicationApiImpl } from './ApplicationApiImpl';
-
 import { ActionColumnApiImpl } from './ActionColumnApiImpl';
 import { AdvancedSearchApiImpl } from './AdvancedSearchApiImpl';
 import { AlertApiImpl } from './AlertApiImpl';
@@ -95,6 +93,8 @@ import { GridApi } from '../GridApi';
 import { IPushPullApi } from '../IPushPullApi';
 import { ScheduleApi } from '../ScheduleApi';
 import { ScheduleApiImpl } from './ScheduleApiImpl';
+import { GradientColumnApi } from '../GradientColumnApi';
+import { GradientColumnApiImpl } from './GradientColumnApiImpl';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;
@@ -123,6 +123,7 @@ export class AdaptableApiImpl implements AdaptableApi {
   public updatedRowApi: UpdatedRowApi;
   public formatColumnApi: FormatColumnApi;
   public freeTextColumnApi: FreeTextColumnApi;
+  public gradientColumnApi: GradientColumnApi;
   public gridApi: GridApi;
   public internalApi: InternalApi;
   public layoutApi: LayoutApi;
@@ -171,6 +172,7 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.eventApi = new EventApiImpl(adaptable);
     this.exportApi = new ExportApiImpl(adaptable);
     this.flashingCellApi = new FlashingCellApiImpl(adaptable);
+    this.gradientColumnApi = new GradientColumnApiImpl(adaptable);
     this.updatedRowApi = new UpdatedRowApiImpl(adaptable);
     this.formatColumnApi = new FormatColumnApiImpl(adaptable);
     this.freeTextColumnApi = new FreeTextColumnApiImpl(adaptable);

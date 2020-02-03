@@ -10,7 +10,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [Custom Sort Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078431-Custom-Sort-Videos)
  *
- * [Custom Sort Demo](hhttps://demo.adaptableblotter.com/gridmanagement/aggridcustomsortdemo/)
+ * [Custom Sort Demo](hhttps://demo.adaptabletools.com/gridmanagement/aggridcustomsortdemo/)
  *
  * [Custom Sort API](_api_customsortapi_.customsortapi.html)
  *

@@ -44,7 +44,7 @@ import { AdaptableReadyInfo } from './Events/AdaptableReady';
  *
  * Each event contains an *[EventName]EventArgs* object that wraps relevant information for the event as *[EventName]Info* and that object packages the actual data relevant to the event.
  *
- * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptableblotter.com/interfaces/_api_events_alertfired_.alertfiredinfo.html) object.
+ * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptabletools.com/interfaces/_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptabletools.com/interfaces/_api_events_alertfired_.alertfiredinfo.html) object.
  *
  * And that `AlertFiredInfo` object will contain the actual `AdaptableAlert` that was triggered.
  *
@@ -169,7 +169,7 @@ export interface EventApi {
   /**
    * Event fired whenever **a change occurs relating to live reports / data**
    *
-   * Used in conjunction with AdapTable's partners OpenFin, iPushPull or Glue42
+   * Used in conjunction with AdapTable's partners OpenFin, ipushpull or Glue42
    *
    * @param eventName LiveDataChanged - use as: adaptableApi.eventApi.on('LiveDataChanged', (args: LiveDataChangedEventArgs) => { .....[do stuff]...})
    *

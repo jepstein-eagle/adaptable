@@ -27,16 +27,16 @@ export class PercentBarApiImpl extends ApiBase implements PercentBarApi {
 
   public createPercentBar(
     columnId: string,
-    minValue: number,
-    maxValue: number,
+    positiveValue: number,
     positiveColor: string,
+    negativeValue: number,
     negativeColor: string,
     showValue: boolean
   ): void {
     let percentBar: PercentBar = {
       ColumnId: columnId,
-      MinValue: minValue,
-      MaxValue: maxValue,
+      NegativeValue: negativeValue,
+      PositiveValue: positiveValue,
       PositiveColor: positiveColor,
       NegativeColor: negativeColor,
       ShowValue: showValue,
@@ -51,15 +51,15 @@ export class PercentBarApiImpl extends ApiBase implements PercentBarApi {
     this.dispatchAction(PercentBarRedux.PercentBarEdit(percentBar));
   }
 
-  public editPercentBarMinValue(minValue: number, columnId: string): void {
+  public editPercentBarNegativeValue(negativeValue: number, columnId: string): void {
     let percentBar = this.getPercentBarByColumn(columnId);
-    percentBar.MinValue = minValue;
+    percentBar.NegativeValue = negativeValue;
     this.editPercentBar(percentBar);
   }
 
-  public editPercentBarMaxValue(maxValue: number, columnId: string): void {
+  public editPercentBarPostiiveValue(positiveValue: number, columnId: string): void {
     let percentBar = this.getPercentBarByColumn(columnId);
-    percentBar.MaxValue = maxValue;
+    percentBar.PositiveValue = positiveValue;
     this.editPercentBar(percentBar);
   }
 

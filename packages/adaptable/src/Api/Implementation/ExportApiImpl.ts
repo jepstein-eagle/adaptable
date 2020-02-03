@@ -32,16 +32,10 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
     return this.getExportState().ReportSchedules;
   }
 
-  public sendReport(
-    reportName: string,
-    destination: ExportDestination,
-    folder?: string,
-    page?: string
-  ): void {
+  public sendReport(reportName: string, destination: ExportDestination): void {
     let report: Report = this.getReportByName(reportName);
-    let isLiveReport = this.adaptable.ReportService.IsReportLiveReport(report, destination);
     if (this.checkItemExists(report, reportName, 'Report')) {
-      this.dispatchAction(ExportRedux.ExportApply(report, destination, isLiveReport, folder, page));
+      this.dispatchAction(ExportRedux.ExportApply(report, destination));
     }
   }
 

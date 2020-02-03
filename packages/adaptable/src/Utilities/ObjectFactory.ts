@@ -63,11 +63,13 @@ import { CellSummmary } from './Interface/Selection/CellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
-import { DARK_GREEN, DARK_RED, getHexForName } from '../View/UIHelper';
+import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED } from '../View/UIHelper';
 import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { IPushPullReport, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
+import { Glue42Report, Glue42Schedule } from '../PredefinedConfig/Glue42State';
+import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -244,14 +246,26 @@ export function CreateEmptyPercentBar(): PercentBar {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
-    MaxValue: 100,
-    MinValue: 0,
+    PositiveValue: undefined,
+    NegativeValue: undefined,
     PositiveColor: getHexForName(DARK_GREEN),
-    NegativeColor: getHexForName(DARK_RED),
+    NegativeColor: getHexForName(RED),
     ShowValue: false,
     ShowToolTip: true,
-    MaxValueColumnId: undefined,
-    MinValueColumnId: undefined,
+    PositiveValueColumnId: undefined,
+    NegativeValueColumnId: undefined,
+  };
+}
+
+export function CreateEmptyGradientColumn(): GradientColumn {
+  return {
+    Uuid: createUuid(),
+    ColumnId: EMPTY_STRING,
+    PositiveValue: undefined,
+    BaseValue: 0,
+    NegativeValue: undefined,
+    PositiveColor: getHexForName(DARK_GREEN),
+    NegativeColor: getHexForName(RED),
   };
 }
 
@@ -335,12 +349,28 @@ export function CreateEmptyIPushPullReport(): IPushPullReport {
     Page: EMPTY_STRING,
   };
 }
+export function CreateEmptyGlue42Report(): Glue42Report {
+  return {
+    Uuid: createUuid(),
+    ReportName: EMPTY_STRING,
+  };
+}
 export function CreateEmptyIPushPullSchedule(): IPushPullSchedule {
   return {
     Uuid: createUuid(),
     ScheduleType: ScheduleType.iPushPull,
     Schedule: CreateEmptySchedule(),
     IPushPullReport: CreateEmptyIPushPullReport(),
+    Transmission: 'Snapshot',
+  };
+}
+
+export function CreateEmptyGlue42Schedule(): Glue42Schedule {
+  return {
+    Uuid: createUuid(),
+    ScheduleType: ScheduleType.Glue42,
+    Schedule: CreateEmptySchedule(),
+    Glue42Report: CreateEmptyGlue42Report(),
     Transmission: 'Snapshot',
   };
 }
@@ -360,6 +390,16 @@ export function CreateIPushPullSchedule(iPushPullReport: IPushPullReport): IPush
     ScheduleType: ScheduleType.iPushPull,
     Schedule: CreateEmptySchedule(),
     IPushPullReport: iPushPullReport,
+    Transmission: 'Snapshot',
+  };
+}
+
+export function CreateGlue42Schedule(glue42Report: Glue42Report): Glue42Schedule {
+  return {
+    Uuid: createUuid(),
+    ScheduleType: ScheduleType.Glue42,
+    Schedule: CreateEmptySchedule(),
+    Glue42Report: glue42Report,
     Transmission: 'Snapshot',
   };
 }
@@ -616,6 +656,7 @@ export const ObjectFactory = {
   CreateEmptyColumnSort,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,
+  CreateEmptyGradientColumn,
   CreateEmptySparklineColumn,
   CreateEmptyUserFilter,
   CreateEmptyReport,
@@ -627,6 +668,7 @@ export const ObjectFactory = {
   CreateEmptyIPushPullSchedule,
   CreateEmptyIPushPullReport,
   CreateIPushPullSchedule,
+  CreateGlue42Schedule,
   CreateReportSchedule,
   CreateEmptySchedule,
   CreateEmptyShortcut,
@@ -644,5 +686,7 @@ export const ObjectFactory = {
   CreateEmptyStyle,
   CreateEmptyCellSummmary,
   CreateSystemReports,
+  CreateEmptyGlue42Schedule,
+  CreateEmptyGlue42Report,
 };
 export default ObjectFactory;

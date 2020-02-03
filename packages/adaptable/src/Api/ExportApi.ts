@@ -36,12 +36,7 @@ export interface ExportApi {
    *
    * @param destination the destination to which the report should be sent
    */
-  sendReport(
-    reportName: string,
-    destination: ExportDestination,
-    folder?: string,
-    page?: string
-  ): void;
+  sendReport(reportName: string, destination: ExportDestination): void;
 
   /**
    * Opens the Export popup screen

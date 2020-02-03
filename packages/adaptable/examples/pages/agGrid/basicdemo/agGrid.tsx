@@ -15,18 +15,15 @@ import {
   SearchChangedEventArgs,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-import { MenuModule } from '@ag-grid-enterprise/menu';
-import { SideBarModule } from '@ag-grid-enterprise/side-bar';
-import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
-
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
+import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 10;
+  const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -37,7 +34,7 @@ function InitAdaptableDemo() {
 
     vendorGrid: {
       ...gridOptions,
-      modules: [RangeSelectionModule, MenuModule, SideBarModule, RowGroupingModule],
+      modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
   };
@@ -51,13 +48,14 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
-  api.eventApi.on('AdaptableReady', () => {
-    //  alert ('the blotter is ready')
+  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    // to see which is the pinned row then do...
+    //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    //  console.log('search changed');
-    //  console.log(searchChangedArgs.data[0].id);
+    console.log('search changed');
+    console.log(searchChangedArgs.data[0].id);
   });
 }
 
@@ -106,7 +104,7 @@ let demoConfig: PredefinedConfig = {
         GroupedColumns: [],
       },
     ],
-    CurrentLayout: 'fixing a bug',
+    //   CurrentLayout: 'fixing a bug',
   },
 };
 
