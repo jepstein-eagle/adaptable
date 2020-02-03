@@ -1,4 +1,8 @@
-## 6.0.3-canary
+## 6.0.4-canary-1
+
+Bumping build to use latest code!
+
+## 6.0.4-canary-0
 
 Fixing bug when using pinning that throws an error if the row is not financial 
 
