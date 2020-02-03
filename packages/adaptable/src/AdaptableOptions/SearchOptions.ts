@@ -62,19 +62,21 @@ export interface SearchOptions {
    *
    * However, it **will** fire the [`SearchChanged` event](_api_events_searchchanged_.searchchangedeventargs.html).
    *
-   * This event provides the full current search and filter state in AdapTable, together with a `SearchChangedTrigger` property detailing which function caused the event to fire.
+   * This event provides the full current search and filter state in AdapTable, together with a `SearchChangedTrigger` property detailing which AdapTable function caused the event to fire.
    *
-   * Note; If you select server searching then you will need to perform any filtering and searching yourself and feed back the data to AdapTable, so you will need some way of 'translating' the JSON Adaptable Objects into a form meaningful to you, and then sending the data back to AdapTable.
+   * Note; If you select server searching then you will need to perform any filtering and searching yourself and feed back the data to AdapTable. So you will need some way of 'translating' AdapTable's JSON Objects into a form meaningful to you, and then sending the return result set back to AdapTable.
    *
    * There are a number of different api methods you can use but the most common is [setGridData](_api_gridapi_.gridapi.html#setgriddata)
    *
    * Once the data is sent to AdapTable, it will automatically make any changes to your sorting, styles etc as required.
    *
-   *  **DataSource Trigger**
+   *  **DataSource Selector**
    *
    * If the `SearchChangedTrigger` is *DataSource* then you will not need to perform any JSON translation (though you will still, of course, need to provide AdapTable with the new dataset).
    *
-   * This is because the DataSource property only contains the *name* of the selected [DataSource](_predefinedconfig_datasourcestate_.datasourcestate.html) which you have provided in your config (typically a StoredProcedure) or Server Filter name.
+   * This is because the DataSource property only contains the *name* of the selected [DataSource](_predefinedconfig_datasourcestate_.datasourcestate.html) which you have provided in your Predefined Config.  (This will typically be a Stored Procedure name or something recognisable to you).
+   *
+   * DataSources can be parametised so you can include variables to improve the search.
    *
    * > DataSources are a good way of running 'big' searches on the server which can be predicted in advance without having to do any dynamic conversion of AdapTable configuration.
    *
