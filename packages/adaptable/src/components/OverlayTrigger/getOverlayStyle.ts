@@ -10,7 +10,7 @@ interface OverlayStyleParam {
   targetOffset?: number;
 }
 
-const globalObject = typeof global !== 'undefined' ? global : window;
+const globalObject = typeof globalThis !== 'undefined' ? globalThis : window;
 
 const getWindowSize = (): { width: number; height: number } => ({
   width: (globalObject as any).innerWidth,

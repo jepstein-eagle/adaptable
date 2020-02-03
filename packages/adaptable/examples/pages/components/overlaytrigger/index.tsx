@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Button, Box } from 'rebass';
 
 export default () => {
-  if (!(global as any).document) {
+  if (!(globalThis as any).document) {
     return null;
   }
   const [visible, setVisible] = useState(false);
