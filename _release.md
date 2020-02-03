@@ -1,3 +1,7 @@
+## 6.0.3-canary
+
+Fixing bug when using pinning that throws an error if the row is not financial 
+
 ## 6.0.3
 
 Fix bug in iPushPull where not updating cell selection when data inside selected cells ticks
