@@ -5,6 +5,7 @@ import { SelectionMode, SortOrder } from '../../../PredefinedConfig/Common/Enums
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
+import { Box } from 'rebass';
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
   ColumnList: AdaptableColumn[];
@@ -37,7 +38,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
       this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
     return (
-      <div style={{ flex: 1, ...this.props.style }}>
+      <Box style={this.props.style}>
         <Dropdown
           style={{ maxWidth: 'none' }}
           showClearButton={this.props.showClearButton}
@@ -58,7 +59,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
             }
           }}
         />
-      </div>
+      </Box>
     );
   }
 

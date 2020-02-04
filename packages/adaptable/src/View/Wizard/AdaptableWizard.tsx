@@ -104,6 +104,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             borderRadius="none"
             variant="primary"
             style={{ flex: 'none' }}
+            bodyProps={{
+              backgroundColor: 'primary',
+            }}
           >
             <WizardLegend
               StepNames={wizardStepNames}

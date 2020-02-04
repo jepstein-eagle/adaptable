@@ -11,6 +11,7 @@ import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {
   UserFilters: UserFilter[];
@@ -59,13 +60,14 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       },
     ];
 
-    let summaryPage = (
-      <WizardSummaryPage
-        KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.AlertStrategyFriendlyName}
-      />
+    return (
+      <WizardPanel>
+        <WizardSummaryPage
+          KeyValuePairs={keyValuePairs}
+          header={StrategyConstants.AlertStrategyFriendlyName}
+        />
+      </WizardPanel>
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

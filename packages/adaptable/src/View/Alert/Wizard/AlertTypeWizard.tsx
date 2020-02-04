@@ -27,59 +27,57 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
 
   render(): any {
     return (
-      <>
-        <WizardPanel border="none">
-          <Flex flexDirection="column" padding={2}>
-            <HelpBlock>
-              {'Define what type of message will be shown when the Alert is triggered.'}
-            </HelpBlock>
-            <Box>
-              <Radio
-                marginLeft={1}
-                value="Info"
-                name="type"
-                checked={this.state.MessageType == MessageType.Info}
-                onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
-              >
-                Info
-              </Radio>
-            </Box>
-            <Box>
-              <Radio
-                marginLeft={1}
-                value="Success"
-                name="type"
-                checked={this.state.MessageType == MessageType.Success}
-                onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
-              >
-                Success
-              </Radio>{' '}
-            </Box>
-            <Box>
-              <Radio
-                marginLeft={1}
-                name="type"
-                value="Warning"
-                checked={this.state.MessageType == MessageType.Warning}
-                onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
-              >
-                Warning
-              </Radio>{' '}
-            </Box>
-            <Box>
-              <Radio
-                marginLeft={1}
-                value="Error"
-                name="type"
-                checked={this.state.MessageType == MessageType.Error}
-                onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
-              >
-                Error
-              </Radio>
-            </Box>
-          </Flex>
-        </WizardPanel>
-      </>
+      <WizardPanel>
+        <Flex flexDirection="column">
+          <HelpBlock>
+            {'Define what type of message will be shown when the Alert is triggered.'}
+          </HelpBlock>
+          <Box>
+            <Radio
+              marginLeft={1}
+              value="Info"
+              name="type"
+              checked={this.state.MessageType == MessageType.Info}
+              onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
+            >
+              Info
+            </Radio>
+          </Box>
+          <Box>
+            <Radio
+              marginLeft={1}
+              value="Success"
+              name="type"
+              checked={this.state.MessageType == MessageType.Success}
+              onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
+            >
+              Success
+            </Radio>{' '}
+          </Box>
+          <Box>
+            <Radio
+              marginLeft={1}
+              name="type"
+              value="Warning"
+              checked={this.state.MessageType == MessageType.Warning}
+              onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
+            >
+              Warning
+            </Radio>{' '}
+          </Box>
+          <Box>
+            <Radio
+              marginLeft={1}
+              value="Error"
+              name="type"
+              checked={this.state.MessageType == MessageType.Error}
+              onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
+            >
+              Error
+            </Radio>
+          </Box>
+        </Flex>
+      </WizardPanel>
     );
   }
 

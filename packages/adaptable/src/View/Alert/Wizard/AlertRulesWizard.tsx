@@ -57,7 +57,7 @@ export class AlertRulesWizard
 
     return (
       <WizardPanel>
-        <Flex flexDirection="column" padding={2}>
+        <Flex flexDirection="column">
           <Box>
             <HelpBlock>
               {'Show Alerts for any data change to the ' + columnFriendlyName + ' column.'}
@@ -70,7 +70,7 @@ export class AlertRulesWizard
               onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
             >
               Show Alert for ALL changes
-            </Radio>{' '}
+            </Radio>
           </Box>
           <Box marginTop={2}>
             <HelpBlock>
