@@ -33,7 +33,9 @@ export function MergeState(oldState: any, newState: any) {
     const oldValue = (<any>result)[key];
 
     if (_.isObject(value) && !Array.isArray(value)) {
-      result[key] = _.mergeWith({}, oldValue, value, customizer);
+      // use both lodash functions so that we can merge from State onto Predefined Config where it exists but from the former where it doesnt.
+      result[key] = _.defaultsDeep(_.mergeWith({}, oldValue, value, customizer), oldValue);
+      //   result[key] = _.mergeWith({}, oldValue, value, customizer);
     } else {
       result[key] = value;
     }

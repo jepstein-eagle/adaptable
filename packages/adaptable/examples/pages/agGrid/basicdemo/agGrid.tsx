@@ -61,7 +61,7 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
+    VisibleToolbars: ['QuickSearch', 'Layout', 'SystemStatus'],
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
@@ -99,7 +99,7 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnSorts: [],
         Columns: ['moodysRating', 'tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'fixing a bug',
+        Name: 'design-time layout',
         // GroupedColumns: ['currency'],
         GroupedColumns: [],
       },

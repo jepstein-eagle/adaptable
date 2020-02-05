@@ -63,8 +63,6 @@ export interface CellSummaryOperationDefinition {
   OperationName: string;
 
   /**
-   * **[Non-Persisted AdapTable State]**
-   *
    * ### [Non-Persisted AdapTable State]
    *
    * The fucnction that will be run each time the summary result is required.
