@@ -52,6 +52,10 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * - **Run-Time**: Can be overriden & saved by user's actions (and persisted through State Management)
  *
+ * Note.  Some objects are designed as 'Run-Time' but have properties which are **not** persisted (e.g. if its a function to be run - as functions cannot be 'stringified').
+ *
+ * Any property in RunTime state that is not persisted is marked with  **[Non-Persisted AdapTable State]** in the docs and comments.
+ *
  *
  *
  *  | State Property 	                                                                        | Saveable            | Details                                     	                |
