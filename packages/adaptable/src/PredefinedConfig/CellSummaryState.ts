@@ -65,6 +65,8 @@ export interface CellSummaryOperationDefinition {
   /**
    * **[Non-Persisted AdapTable State]**
    *
+   * ### [Non-Persisted AdapTable State]
+   *
    * The fucnction that will be run each time the summary result is required.
    *
    * The function receives all the currently selected values, the numeric columns, the numeric values and much else and is expected to return a single value to be displayed in the dropdown.
