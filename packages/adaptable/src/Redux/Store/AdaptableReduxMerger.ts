@@ -2,11 +2,19 @@ import * as _ from 'lodash';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
-function customizer(objValue: any, srcValue: any) {
+function customizer(objValue: any, srcValue: any): any {
   if (_.isArray(objValue)) {
-    if (srcValue) {
-      return srcValue;
+    const length = srcValue ? srcValue.length : null;
+    const result: any = _.mergeWith(objValue, srcValue, customizer);
+
+    if (length != null) {
+      // when merging arrays, lodash result has the length of the
+      // longest array, but we don't want that to happen
+      // so we restrict to the current length
+      result.length = length;
     }
+
+    return result;
   }
 }
 
@@ -34,8 +42,7 @@ export function MergeState(oldState: any, newState: any) {
 
     if (_.isObject(value) && !Array.isArray(value)) {
       // use both lodash functions so that we can merge from State onto Predefined Config where it exists but from the former where it doesnt.
-      result[key] = _.defaultsDeep(_.mergeWith({}, oldValue, value, customizer), oldValue);
-      //   result[key] = _.mergeWith({}, oldValue, value, customizer);
+      result[key] = _.mergeWith({}, oldValue, value, customizer);
     } else {
       result[key] = value;
     }
