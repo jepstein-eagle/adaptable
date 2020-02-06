@@ -10,7 +10,8 @@ import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { Glue42State } from '../../PredefinedConfig/Glue42State';
-import { IGlue42Service } from './Interface/IGlue42Service';
+import { IGlue42Service, Glue42Config } from './Interface/IGlue42Service';
+import StringExtensions from '../Extensions/StringExtensions';
 
 export interface Glue42ExportError {
   row: number;
@@ -53,20 +54,46 @@ export class Glue42Service implements IGlue42Service {
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       if (!this.glueInstance) {
         let glue42State: Glue42State | undefined = this.adaptable.api.glue42Api.getGlue42State();
-        if (glue42State && glue42State.Glue42Config) {
-          this.init(glue42State);
+        if (glue42State) {
+          this.adaptable.api.glue42Api.setGlue42AvailableOn();
+          if (
+            StringExtensions.IsNotNullOrEmpty(glue42State.Username) &&
+            StringExtensions.IsNotNullOrEmpty(glue42State.Password)
+          ) {
+            this.login(glue42State.Username, glue42State.Password, glue42State.GatewayURL);
+          }
         } else {
           this.adaptable.api.glue42Api.setGlue42AvailableOff();
+          this.adaptable.api.glue42Api.setGlue42RunningOff();
         }
       }
     });
   }
 
-  async init(glue42State: Glue42State): Promise<void> {
+  async login(username: string, password: string, gatewayURL: string): Promise<void> {
     try {
-      const glue42Config = glue42State.Glue42Config;
+      let ws = StringExtensions.IsNotNullOrEmpty(gatewayURL) ? gatewayURL : 'ws://localhost:8385';
+      const glue42Config: any = {
+        initialization: {
+          application: 'Adaptable',
+          gateway: {
+            protocolVersion: 3,
+            ws: ws,
+          },
+          auth: {
+            username: username,
+            password: password,
+          },
+        },
+        excelExport: {
+          timeoutMs: 30000,
+        },
+      };
+
+      const glue42State: Glue42State = this.adaptable.api.glue42Api.getGlue42State();
       const glue = glue42State.Glue;
       const glue4Office = glue42State.Glue4Office;
+
       if (glue42Config && glue42Config.excelExport && glue42Config.excelExport.timeoutMs) {
         this.excelSyncTimeout = glue42Config.excelExport.timeoutMs;
       }
@@ -75,13 +102,15 @@ export class Glue42Service implements IGlue42Service {
       // Avoid a circular assignment:
       const glue4OfficeConfig: any = cloneDeep(glue42Config.initialization);
       glue4OfficeConfig.glue = this.glueInstance;
+
       const glue4OfficeInstance = await glue4Office(glue4OfficeConfig);
       this.glue4ExcelInstance = glue4OfficeInstance.excel; // as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
-      this.adaptable.api.glue42Api.setGlue42AvailableOn();
+      this.adaptable.api.glue42Api.setGlue42RunningOn();
     } catch (error) {
+      console.log(error);
       LogAdaptableError(error);
-      this.adaptable.api.glue42Api.setGlue42AvailableOff();
+      this.adaptable.api.glue42Api.setGlue42RunningOff();
     }
   }
 

@@ -24,6 +24,7 @@ export const FreeTextColumnPopup: string = 'FreeTextColumnPopup';
 export const Glue42Popup: string = 'Glue42Popup';
 export const IPushPullPopup: string = 'IPushPullPopup';
 export const IPushPullLoginPopup: string = 'IPushPullLoginPopup';
+export const Glue42LoginPopup: string = 'Glue42LoginPopup';
 export const IPushPullAddPagePopup: string = 'IPushPullAddPagePopup';
 export const LayoutPopup: string = 'LayoutPopup';
 export const PercentBarPopup: string = 'PercentBarPopup';

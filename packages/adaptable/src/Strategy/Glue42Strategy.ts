@@ -54,7 +54,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     // if the grid has refreshed then update all live reports
     this.adaptable._on('GridRefreshed', () => {
       if (this.adaptable.api.glue42Api.isGlue42Running()) {
-        this.throttledRecomputeAndSendLiveDataEvent();
+        //   this.throttledRecomputeAndSendLiveDataEvent();
       }
     });
     // if the grid filters have changed then update any live reports except cell or row selected

@@ -26,6 +26,27 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
     return false;
   }
 
+  public async loginToGlue42(userName: string, password: string): Promise<void> {
+    await this.adaptable.Glue42Service.login(userName, password, this.getGlue42State().GatewayURL);
+    this.adaptable.api.internalApi.hidePopupScreen();
+    this.setGlue42LoginErrorMessage('');
+  }
+
+  public logoutFromGlue42(): void {
+    this.clearGlue42InternalState();
+    this.adaptable.api.internalApi.hidePopupScreen();
+  }
+
+  public clearGlue42InternalState(): void {
+    this.setGlue42RunningOff();
+    this.setGlue42LoginErrorMessage('');
+    this.dispatchAction(Glue42Redux.Glue42LiveReportClear());
+  }
+
+  public setGlue42LoginErrorMessage(loginErrorMessage: string): void {
+    this.dispatchAction(Glue42Redux.Glue42SetLoginErrorMessage(loginErrorMessage));
+  }
+
   public getGlue42ThrottleTime(): number | undefined {
     return this.getGlue42State().ThrottleTime;
   }
@@ -44,6 +65,14 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
 
   public setGlue42AvailableOff(): void {
     this.dispatchAction(Glue42Redux.SetGlue42AvailableOff());
+  }
+
+  public setGlue42RunningOn(): void {
+    this.dispatchAction(Glue42Redux.SetGlue42RunningOn());
+  }
+
+  public setGlue42RunningOff(): void {
+    this.dispatchAction(Glue42Redux.SetGlue42RunningOff());
   }
 
   public getGlue42Schedules(): Glue42Schedule[] {

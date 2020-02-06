@@ -2606,6 +2606,11 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
           /*******************
            * GLUE42 ACTIONS
            *******************/
+          case Glue42Redux.GLUE42_LOGIN: {
+            const actionTyped = action as Glue42Redux.Glue42LoginAction;
+            adaptable.api.glue42Api.loginToGlue42(actionTyped.username, actionTyped.password);
+            return next(action);
+          }
 
           case Glue42Redux.GLUE42_SEND_SNAPSHOT: {
             let glue42Strategy = <IGlue42Strategy>(

@@ -29,6 +29,7 @@ import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
+import { Glue42LoginPopup } from './Glue42/Glue42LoginPopup';
 import { IPushPullLoginPopup } from './IPushPull/IPushPullLoginPopup';
 import { IPushPullAddPagePopup } from './IPushPull/IPushPullAddPagePopup';
 import { HomeToolbarControl } from './Home/HomeToolbarControl';
@@ -90,6 +91,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   FormatColumnPopup,
   FreeTextColumnPopup,
   Glue42Popup,
+  Glue42LoginPopup,
   IPushPullPopup,
   IPushPullLoginPopup,
   IPushPullAddPagePopup,

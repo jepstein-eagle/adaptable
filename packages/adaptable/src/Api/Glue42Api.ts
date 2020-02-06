@@ -14,6 +14,12 @@ export interface Glue42Api {
 
   isGlue42Running(): boolean;
 
+  loginToGlue42(userName: string, password: string): void;
+
+  logoutFromGlue42(): void;
+
+  setGlue42LoginErrorMessage(loginErrorMessage: string): void;
+
   getGlue42ThrottleTime(): number | undefined;
 
   setGlue42ThrottleTime(throttleTime: number): void;
@@ -24,9 +30,15 @@ export interface Glue42Api {
 
   setGlue42AvailableOff(): void;
 
+  setGlue42RunningOn(): void;
+
+  setGlue42RunningOff(): void;
+
   getGlue42Schedules(): Glue42Schedule[];
 
   startLiveData(glue42Report: Glue42Report): void;
 
   stopLiveData(): void;
+
+  clearGlue42InternalState(): void;
 }
