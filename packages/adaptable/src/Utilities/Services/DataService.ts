@@ -1,6 +1,6 @@
 import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import Emitter, { EmitterCallback } from '../../Utilities/Emitter';
 
 // Used to be the Audit Service - now much reduced

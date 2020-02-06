@@ -6,7 +6,7 @@ import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';

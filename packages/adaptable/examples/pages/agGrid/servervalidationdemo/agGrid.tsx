@@ -14,9 +14,9 @@ import {
   PredefinedConfig,
   AdaptableApi,
   ActionColumnClickedEventArgs,
+  DataChangedInfo,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { DataChangedInfo } from '../../../../src/AdaptableOptions/CommonObjects/DataChangedInfo';
 import { ValidationResult } from '../../../../src/AdaptableOptions/EditOptions';
 
 var adaptableApi: AdaptableApi;

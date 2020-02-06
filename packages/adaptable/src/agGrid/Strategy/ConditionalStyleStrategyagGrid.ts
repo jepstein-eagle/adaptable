@@ -5,7 +5,7 @@ import { Adaptable } from '../Adaptable';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';

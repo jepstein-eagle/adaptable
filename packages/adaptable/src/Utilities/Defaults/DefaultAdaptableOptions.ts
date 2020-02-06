@@ -92,6 +92,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   generalOptions: {
     showMissingPrimaryKeyWarning: true,
     preventDuplicatePrimaryKeyValues: true,
+    showGroupingTotalsAsHeader: false,
   },
   searchOptions: {
     serverSearchOption: 'None',

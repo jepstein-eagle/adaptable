@@ -47,12 +47,17 @@ export { AdaptablePlugin } from './AdaptableOptions/AdaptablePlugin';
 
 // Common Objects
 export { AdaptableColumn } from './PredefinedConfig/Common/AdaptableColumn';
+export { DataChangedInfo } from './PredefinedConfig/Common/DataChangedInfo';
 export { AdaptableMenuItem, MenuInfo } from './PredefinedConfig/Common/Menu';
+
+// State Objects
 export { RowStyle } from './PredefinedConfig/UserInterfaceState';
 
 // Adaptable Options Objects
 export { IServerColumnValues } from './AdaptableOptions/QueryOptions';
+export { ValidationResult } from './AdaptableOptions/EditOptions';
 
+// Events
 export {
   EventApi,
   AdaptableReadyInfo,

@@ -1,4 +1,4 @@
-import { DataChangedInfo } from '../../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../../PredefinedConfig/Common/DataChangedInfo';
 import { StateChangedDetails, FunctionAppliedDetails } from '../../../Api/Events/AuditEvents';
 
 export interface IAuditLogService {

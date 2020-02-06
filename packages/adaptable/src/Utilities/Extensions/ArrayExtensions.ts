@@ -1,7 +1,7 @@
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 
 export function GetLength(arrayToCheck: any[]): number {
-  return arrayToCheck.length;
+  return IsNotNull(arrayToCheck) ? arrayToCheck.length : 0;
 }
 
 export function CorrectLength(arrayToCheck: any[], requiredLength: number): boolean {

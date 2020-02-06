@@ -17,7 +17,7 @@ import {
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { LiveReport } from '../Api/Events/LiveDataChanged';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private isSendingData: boolean = false;

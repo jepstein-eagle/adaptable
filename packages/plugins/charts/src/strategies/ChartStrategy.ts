@@ -15,7 +15,7 @@ import {
 
 import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 import { ArrayExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
-import { DataChangedInfo } from '@adaptabletools/adaptable/src/AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/DataChangedInfo';
 
 import {
   ChartVisibility,

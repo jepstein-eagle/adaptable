@@ -12,7 +12,7 @@ import {
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IGlue42Strategy } from './Interface/IGlue42Strategy';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { Glue42Report } from '../PredefinedConfig/Glue42State';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';

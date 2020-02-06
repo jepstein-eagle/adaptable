@@ -6,7 +6,7 @@ import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';

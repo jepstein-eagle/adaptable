@@ -13,6 +13,8 @@ import {
   Events,
   Module,
   RowNodeTransaction,
+  ModelUpdatedEvent,
+  IClientSideRowModel,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -91,7 +93,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableApiImpl } from '../Api/Implementation/AdaptableApiImpl';
 import {
   DEFAULT_LAYOUT,
@@ -156,6 +158,7 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
 import check from '../components/icons/check';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
+import { info } from 'console';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -637,6 +640,9 @@ export class Adaptable implements IAdaptable {
   }
 
   private isDataInModel(rowNode: RowNode): boolean {
+    if (!rowNode) {
+      return false;
+    }
     let data: any = rowNode.data[this.adaptableOptions.primaryKey];
     if (!data) {
       return false;
@@ -2196,8 +2202,18 @@ export class Adaptable implements IAdaptable {
     });
 
     this.gridOptions.api!.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
-      // not sure about this - doing it to make sure that we set the columns properly at least once!
-
+      if (this.adaptableOptions.generalOptions.showGroupingTotalsAsHeader) {
+        if (params && params.api) {
+          const pinnedData = params.api.getPinnedTopRow(0);
+          const model = params.api.getModel() as IClientSideRowModel;
+          const rootNode = model.getRootNode();
+          if (!pinnedData) {
+            params.api.setPinnedTopRowData([rootNode.aggData]);
+          } else {
+            pinnedData.updateData(rootNode.aggData);
+          }
+        }
+      }
       this.checkColumnsDataTypeSet();
     });
 
