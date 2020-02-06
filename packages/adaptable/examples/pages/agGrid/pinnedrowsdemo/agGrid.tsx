@@ -16,21 +16,23 @@ import {
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
-
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { TickingDataHelper } from '../../TickingDataHelper';
 
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 200;
+  const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   gridOptions.groupIncludeFooter = true;
   gridOptions.groupIncludeTotalFooter = true;
   gridOptions.suppressAggFuncInHeader = true;
   const runReadyFunction: boolean = true;
+  const tickingDataHelper = new TickingDataHelper();
+  const useTickingData: boolean = true;
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
@@ -63,14 +65,15 @@ function InitAdaptableDemo() {
         const model = event.api.getModel() as IClientSideRowModel;
         const rootNode = model.getRootNode();
         if (!pinnedData) {
-          event.api.setPinnedTopRowData([rootNode.aggData]);
+          //    event.api.setPinnedTopRowData([rootNode.aggData]);
         } else {
-          pinnedData.updateData({
-            tradeId: Math.floor(Math.random() * 100000),
-            notional: Math.floor(Math.random() * 100),
-          });
+          //    pinnedData.updateData(rootNode.aggData);
         }
       };
+
+      if (useTickingData) {
+        tickingDataHelper.useTickingDataagGrid(gridOptions, api, 200, tradeCount);
+      }
 
       setTimeout(() => {
         //    pinnedRowNode.updateData({

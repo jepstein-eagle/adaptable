@@ -27,6 +27,7 @@ import { SelectedCellInfo } from '../../../../src/Utilities/Interface/Selection/
 import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../../../src/PredefinedConfig/Common/Enums';
 import { GridCell } from '../../../../src/Utilities/Interface/Selection/GridCell';
+import Helper from '../../../../src/Utilities/Helpers/Helper';
 
 var api: AdaptableApi;
 
@@ -56,6 +57,7 @@ function InitAdaptableDemo() {
   };
 
   api = Adaptable.init(adaptableOptions);
+  (global as any).api = api;
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
     // to set a pinned row (in this case the 5th row in our data source)
@@ -112,8 +114,24 @@ let demoConfig: PredefinedConfig = {
           }
         },
       },
+      {
+        OperationName: '5 Biggest',
+        OperationFunction: (operationParam: {
+          selectedCellInfo: SelectedCellInfo;
+          allValues: any[];
+          numericColumns: string[];
+          numericValues: number[];
+          distinctCount: number;
+        }) => {
+          if (operationParam.numericValues.length >= 5) {
+            return Helper.sumNumberArray(
+              operationParam.numericValues.sort((a, b) => b - a).slice(0, 5)
+            );
+          }
+        },
+      },
     ],
-    //   SummaryOperation: 'Min',
+    SummaryOperation: 'Min',
   },
 };
 

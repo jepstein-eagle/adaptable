@@ -32,6 +32,7 @@ import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux';
 import * as ReminderRedux from '../ActionsReducers/ReminderRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
+import * as GradientColumnRedux from '../ActionsReducers/GradientColumnRedux';
 import * as ActionColumnRedux from '../ActionsReducers/ActionColumnRedux';
 import * as ApplicationRedux from '../ActionsReducers/ApplicationRedux';
 import * as SparklineColumnRedux from '../ActionsReducers/SparklineColumnRedux';
@@ -183,6 +184,7 @@ const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<Adaptab
   FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
   Layout: LayoutRedux.LayoutReducer,
   PercentBar: PercentBarRedux.PercentBarReducer,
+  GradientColumn: GradientColumnRedux.GradientColumnReducer,
   PlusMinus: PlusMinusRedux.PlusMinusReducer,
   QuickSearch: QuickSearchRedux.QuickSearchReducer,
   Reminder: ReminderRedux.ReminderReducer,
@@ -335,8 +337,6 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.ACTION_COLUMN,
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
-      // think...
-      ConfigConstants.CELL_SUMMARY,
     ];
 
     // this is now VERY BADLY NAMED!

@@ -102,8 +102,11 @@ function getSingleOperatorFromOperandText(operandText: string): string {
 }
 
 export function IsColumnAppropriateForRange(range: QueryRange, column: AdaptableColumn): boolean {
+  if (!range) {
+    return true;
+  }
   if (column.DataType == DataType.Number) {
-    if (isNaN(Number(range.Operand1))) {
+    if (range.Operand1 && isNaN(Number(range.Operand1))) {
       return false;
     }
     let tet: LeafExpressionOperator[] = GetNumberOperatorPairs().map(kvp => {

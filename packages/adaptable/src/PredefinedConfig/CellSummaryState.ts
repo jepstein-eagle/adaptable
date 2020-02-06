@@ -1,7 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { CellSummaryOperation } from './Common/Enums';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { DesignTimeState } from './DesignTimeState';
 
 /**
  * The Predefined Configuration for the Cell Summary function
@@ -35,14 +34,41 @@ import { DesignTimeState } from './DesignTimeState';
  *
  *
  */
-export interface CellSummaryState extends DesignTimeState {
+export interface CellSummaryState extends RunTimeState {
+  /**
+   * The Current Summary Operation being used
+   */
   SummaryOperation?: CellSummaryOperation | string;
 
+  /**
+   * Array of `CellSummaryOperationDefinition` - to be provided by at Design Time
+   *
+   * Each CellSummaryOperationDefinition contains a name and an `OperationFunction` which is run when selected cells need to be summarised
+   */
   CellSummaryOperationDefinitions?: CellSummaryOperationDefinition[];
 }
 
+/**
+ * **[Non-Persisted AdapTable State]**
+ *
+ * Additional Cell Summary Operations that can be provided by Users at Design Time
+ *
+ */
 export interface CellSummaryOperationDefinition {
+  /**
+   * The name of the Operation
+   *
+   * This is what will be displayed in the Cell Summary dropdowns.
+   */
   OperationName: string;
+
+  /**
+   * ### [Non-Persisted AdapTable State]
+   *
+   * The fucnction that will be run each time the summary result is required.
+   *
+   * The function receives all the currently selected values, the numeric columns, the numeric values and much else and is expected to return a single value to be displayed in the dropdown.
+   */
   OperationFunction: (operationParam: {
     selectedCellInfo: SelectedCellInfo;
     allValues: any[];

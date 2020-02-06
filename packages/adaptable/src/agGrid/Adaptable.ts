@@ -155,6 +155,7 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
 import check from '../components/icons/check';
+import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -259,7 +260,7 @@ export class Adaptable implements IAdaptable {
 
   private emitter: Emitter;
 
-  private _currentEditor: ICellEditor;
+  private _currentEditor: ICellEditor | undefined;
 
   // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
@@ -1024,15 +1025,23 @@ export class Adaptable implements IAdaptable {
     this.agGridHelper.fireSelectionChangedEvent();
   }
 
-  public setValue(dataChangedInfo: DataChangedInfo, reselectSelectedCells: boolean): void {
-    // if we have the row node then just update it
+  public setValue(dataChangedInfo: DataChangedInfo, internalUpdate: boolean): void {
+    let newValue: any;
+
+    let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
+      dataChangedInfo.ColumnId,
+      this.api.gridApi.getColumns()
+    );
+    newValue =
+      dataType == DataType.Number ? Number(dataChangedInfo.NewValue) : dataChangedInfo.NewValue;
+
     if (dataChangedInfo.RowNode) {
-      dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+      dataChangedInfo.RowNode.setDataValue(dataChangedInfo.ColumnId, newValue);
     } else {
       if (this.useRowNodeLookUp) {
         const rowNode: RowNode = this.gridOptions.api!.getRowNode(dataChangedInfo.PrimaryKeyValue);
         if (rowNode != null) {
-          rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+          rowNode.setDataValue(dataChangedInfo.ColumnId, newValue);
           dataChangedInfo.RowNode = rowNode;
         }
       } else {
@@ -1042,7 +1051,7 @@ export class Adaptable implements IAdaptable {
           if (!isUpdated) {
             if (dataChangedInfo.PrimaryKeyValue == this.getPrimaryKeyValueFromRowNode(rowNode)) {
               //  dataChangedInfo = this.updateValue(gridCell, rowNode);
-              rowNode.setDataValue(dataChangedInfo.ColumnId, dataChangedInfo.NewValue);
+              rowNode.setDataValue(dataChangedInfo.ColumnId, newValue);
               dataChangedInfo.RowNode = rowNode;
               isUpdated = true;
             }
@@ -1050,8 +1059,9 @@ export class Adaptable implements IAdaptable {
         });
       }
     }
-    this.performPostEditChecks(dataChangedInfo);
-    if (reselectSelectedCells) {
+    // its from a function so we want to update user filter but not external
+    this.performPostEditChecks(dataChangedInfo, internalUpdate, !internalUpdate);
+    if (internalUpdate) {
       this.agGridHelper.reselectSelectedCells();
     }
   }
@@ -2063,6 +2073,7 @@ export class Adaptable implements IAdaptable {
       // TODO: Jo: This is a workaround as we are accessing private members of agGrid.
       // I still wonder if we can do this nicer by using :   this.gridOptions.api!.getEditingCells();
       // must be a good reason why we don't use it
+
       if (this.gridOptions.columnApi!.isPivotMode()) {
         return;
       }
@@ -2097,6 +2108,9 @@ export class Adaptable implements IAdaptable {
             RowNode: params.node,
           };
 
+          if (dataChangedInfo.OldValue === dataChangedInfo.NewValue) {
+            return true;
+          }
           if (!this.ValidationService.PerformCellValidation(dataChangedInfo)) {
             return true;
           }
@@ -2104,7 +2118,8 @@ export class Adaptable implements IAdaptable {
           const onServerValidationCompleted = () => {
             const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
             if (!whatToReturn) {
-              this.performPostEditChecks(dataChangedInfo, false);
+              // its from a user edit (I think!) but the filter is working anyway...
+              this.performPostEditChecks(dataChangedInfo, false, false);
             }
             return whatToReturn;
           };
@@ -2122,12 +2137,23 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
       // (<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
 
-      this._currentEditor = null;
       // We refresh the filter so we get live search/filter when editing.
       // Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
+      this._currentEditor = undefined;
 
-      // if they have set to run filter after edit then lets do it
-      if (params.node) {
+      if (params && params.node) {
+        let column = params.column;
+        // for numeric columns we want to make sure its a numeric update in case they have aggregation
+        if (column) {
+          let abColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
+            column.colId,
+            this.api.gridApi.getColumns()
+          );
+          if (abColumn && abColumn.DataType == DataType.Number) {
+            params.node.setDataValue(column.colId, Number(params.value));
+          }
+        }
+        // if they have set to run filter after edit then lets do it
         this.filterOnUserDataChange([params.node]);
         this.debouncedSetSelectedCells();
       }
@@ -2244,14 +2270,14 @@ export class Adaptable implements IAdaptable {
             this.api.percentBarApi.getAllPercentBar().forEach(pb => {
               refreshColumnList.forEach(changedColId => {
                 if (
-                  StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) &&
-                  pb.MaxValueColumnId == changedColId
+                  StringExtensions.IsNotNullOrEmpty(pb.PositiveValueColumnId) &&
+                  pb.PositiveValueColumnId == changedColId
                 ) {
                   ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
                 }
                 if (
-                  StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) &&
-                  pb.MinValueColumnId == changedColId
+                  StringExtensions.IsNotNullOrEmpty(pb.NegativeValueColumnId) &&
+                  pb.NegativeValueColumnId == changedColId
                 ) {
                   ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
                 }
@@ -2575,6 +2601,9 @@ export class Adaptable implements IAdaptable {
     this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
       this.addPercentBar(pcr);
     });
+    this.api.gradientColumnApi.getAllGradientColumn().forEach(gc => {
+      this.addGradientColumn(gc);
+    });
     this.api.sparklineColumnApi.getAllSparklineColumn().forEach(sparklineColumn => {
       this.addSparklineColumn(sparklineColumn);
     });
@@ -2701,7 +2730,8 @@ export class Adaptable implements IAdaptable {
         // so we have to hope that its been done already - though currently we ONLY do it for direct edits and setCellValue() but not other api updates
         // if we have gone through AdaptableAPI we will be fine but not if they update ag-Grid directly
         // but we can perform the POST EDIT checks
-        this.performPostEditChecks(dataChangedInfo);
+        // probably wrong but seems agGrid is doing it for us
+        this.performPostEditChecks(dataChangedInfo, false, false);
       }
     });
   }
@@ -2711,7 +2741,8 @@ export class Adaptable implements IAdaptable {
    */
   private performPostEditChecks(
     dataChangedInfo: DataChangedInfo,
-    applyFilter: boolean = true
+    applyUserDataFilter: boolean,
+    applyExternalDataFilter: boolean
   ): void {
     if (this.AuditLogService.isAuditCellEditsEnabled) {
       this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
@@ -2719,11 +2750,12 @@ export class Adaptable implements IAdaptable {
 
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
     this.DataService.CreateDataChangedEvent(dataChangedInfo);
-
-    if (applyFilter) {
+    if (applyUserDataFilter) {
       this.filterOnUserDataChange([dataChangedInfo.RowNode]);
     }
-
+    if (applyExternalDataFilter) {
+      this.filterOnExternalDataChange([dataChangedInfo.RowNode]);
+    }
     this.checkChangedCellCurrentlySelected(dataChangedInfo);
   }
 
@@ -2772,6 +2804,48 @@ export class Adaptable implements IAdaptable {
   public editPercentBar(pcr: PercentBar): void {
     this.removePercentBar(pcr);
     this.addPercentBar(pcr);
+  }
+
+  public removeGradientColumn(gradientColumn: GradientColumn): void {
+    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
+    if (agGridColDef && agGridColDef.cellStyle) {
+      agGridColDef.cellStyle = undefined;
+    }
+  }
+
+  public addGradientColumn(gradientColumn: GradientColumn): void {
+    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
+    if (agGridColDef) {
+      agGridColDef.cellStyle = (params: any) => {
+        var color: any;
+        var gradientValue: number | undefined;
+        let baseValue = gradientColumn.BaseValue;
+        let isNegativeValue = params.value < 0;
+        if (isNegativeValue) {
+          color = gradientColumn.NegativeColor;
+          gradientValue = gradientColumn.NegativeValue;
+        } else {
+          color = gradientColumn.PositiveColor;
+          gradientValue = gradientColumn.PositiveValue;
+        }
+        if (gradientValue && baseValue !== undefined) {
+          const increase: any = Math.abs(gradientValue - baseValue);
+          let percentage = ((params.value - baseValue) / increase) * 100;
+          if (isNegativeValue) {
+            percentage = percentage * -1;
+          }
+          let alpha = Number((percentage / 100).toPrecision(2)); //params.
+          return {
+            'background-color': new Color(color).toRgba(alpha),
+          };
+        }
+      };
+    }
+  }
+
+  public editGradientColumn(gradientColumn: GradientColumn): void {
+    this.removeGradientColumn(gradientColumn);
+    this.addGradientColumn(gradientColumn);
   }
 
   public editSparklineColumn(sparklineColumn: SparklineColumn): void {

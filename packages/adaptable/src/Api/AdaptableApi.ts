@@ -45,6 +45,7 @@ import { GridApi } from './GridApi';
 import { Glue42Api } from './Glue42Api';
 import { IPushPullApi } from './IPushPullApi';
 import { ScheduleApi } from './ScheduleApi';
+import { GradientColumnApi } from './GradientColumnApi';
 
 /**
  * The `AdaptableApi` provides developers with run-time access to AdapTable.
@@ -206,6 +207,8 @@ export interface AdaptableApi {
   freeTextColumnApi: FreeTextColumnApi;
 
   glue42Api: Glue42Api;
+
+  gradientColumnApi: GradientColumnApi;
 
   /**
    * Provides methods for managing the Grid directly e.g. setGridData which will replace the current DataSource with the one provided.

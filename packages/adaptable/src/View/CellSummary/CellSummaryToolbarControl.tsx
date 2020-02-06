@@ -18,7 +18,6 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';

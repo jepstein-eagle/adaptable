@@ -12,26 +12,55 @@ import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../sr
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
 import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+import { TickingDataHelper } from '../../TickingDataHelper';
 
-var api: AdaptableApi;
+var adaptableApi: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 10000;
+  const tradeCount: number = 100000;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  const tickingDataHelper = new TickingDataHelper();
+  const useTickingData: boolean = true;
 
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  gridOptions.statusBar = {
+    statusPanels: [
+      { statusPanel: 'agTotalRowCountComponent', align: 'left' },
+      { statusPanel: 'agFilteredRowCountComponent' },
+      // { statusPanel: 'agSelectedRowCountComponent' },
+      //  { statusPanel: 'agAggregationComponent' },
+    ],
+  };
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Quick Search Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
+  adaptableOptions.filterOptions = {
+    filterActionOnExternalDataChange: {
+      RunFilter: 'Throttle',
+      ThrottleDelay: 5000,
+    },
+  };
+
+  adaptableApi = Adaptable.init(adaptableOptions);
+
+  adaptableApi.eventApi.on('AdaptableReady', ({ vendorGrid: gridOptions }) => {
+    if (useTickingData) {
+      tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, 50);
+    }
+  });
 
   adaptableOptions.searchOptions = {
     excludeColumnFromQuickSearch: (column: AdaptableColumn) => {
@@ -41,8 +70,6 @@ function InitAdaptableDemo() {
       return false;
     },
   };
-
-  api = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {};

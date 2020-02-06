@@ -42,6 +42,7 @@ import { ApplicationState } from './ApplicationState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
+import { GradientColumnState } from './GradientColumnState';
 
 /**
  * The main state object that Adaptable persists
@@ -91,6 +92,7 @@ export interface AdaptableState {
   FlashingCell: FlashingCellState;
   FormatColumn: FormatColumnState;
   FreeTextColumn: FreeTextColumnState;
+  GradientColumn: GradientColumnState;
   Layout: LayoutState;
   PercentBar: PercentBarState;
   PlusMinus: PlusMinusState;

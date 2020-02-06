@@ -16,8 +16,8 @@ import {
   ActionColumnClickedEventArgs,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { DataChangedInfo } from '../../../../src/adaptableOptions/CommonObjects/DataChangedInfo';
-import { ValidationResult } from '../../../../App_Scrip../AdaptableOptions/EditOptions';
+import { DataChangedInfo } from '../../../../src/AdaptableOptions/CommonObjects/DataChangedInfo';
+import { ValidationResult } from '../../../../src/AdaptableOptions/EditOptions';
 
 var adaptableApi: AdaptableApi;
 

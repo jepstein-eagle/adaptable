@@ -253,12 +253,12 @@ export class ExamplesHelper {
       history: [...new Array(this.generateRandomInt(5, 20))].map(_ =>
         this.generateRandomInt(1, 30)
       ),
-      notional: this.generateRandomInt(0, 100), // this.getRandomItem(this.getNotionals()),
+      notional: this.generateRandomInt(1000, 1500), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
       country: this.getRandomItem(this.getCountries()),
-      changeOnYear: this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
+      changeOnYear: this.generateRandomInt(-200, 200), //this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
       stars: this.generateRandomInt(1, 5),
       amount: this.generateRandomInt(20, 100), //this.getRandomItem(this.getAmounts()),
       price,
@@ -548,7 +548,7 @@ export class ExamplesHelper {
       5000000,
       7500000,
       10000000,
-      (undefined as unknown) as number,
+      //  (undefined as unknown) as number,
     ];
     return notionals;
   }
@@ -1058,7 +1058,6 @@ export class ExamplesHelper {
       filter: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
-      // valueFormatter: this.twoDecimalPlaceFormatter,
       enableValue: true,
     });
     schema.push({
@@ -1086,6 +1085,7 @@ export class ExamplesHelper {
       editable: true,
       filter: true,
       sortable: true,
+      aggFunc: 'sum',
       enableRowGroup: true,
       enableValue: true, // what happerns
       type: 'abColDefString',

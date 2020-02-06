@@ -70,7 +70,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       };
       this.adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
-    this.adaptable.api.gridApi.setGridCells(newValues, true, false);
+    this.adaptable.api.internalApi.setGridCells(newValues, true, true);
   }
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
