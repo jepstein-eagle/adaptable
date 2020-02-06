@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { CustomSort } from '../PredefinedConfig/CustomSortState';
+import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { ICustomSortStrategy } from './Interface/ICustomSortStrategy';
@@ -60,12 +60,15 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
 
   applyCustomSorts() {
     this.CustomSorts.forEach(customSort => {
-      this.adaptable.setCustomSort(customSort.ColumnId, this.getComparerFunction(customSort));
+      const customSortComparerFunction: CustomSortComparerFunction = customSort.CustomSortComparerFunction
+        ? customSort.CustomSortComparerFunction
+        : this.getComparerFunction(customSort);
+      this.adaptable.setCustomSort(customSort.ColumnId, customSortComparerFunction);
     });
   }
 
   // make this an abstract function?
-  public getComparerFunction(customSort: CustomSort): Function {
+  public getComparerFunction(customSort: CustomSort): CustomSortComparerFunction {
     let theadaptable = this.adaptable as IAdaptable;
     return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
       let firstElementValueString = theadaptable.getDisplayValue(

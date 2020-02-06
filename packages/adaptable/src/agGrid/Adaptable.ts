@@ -115,7 +115,7 @@ import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
-import { CustomSort } from '../PredefinedConfig/CustomSortState';
+import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
@@ -154,11 +154,8 @@ import {
 } from '../AdaptableInterfaces/IAdaptableNoCodeWizard';
 import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
-
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
-import check from '../components/icons/check';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
-import { info } from 'console';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2870,46 +2867,20 @@ export class Adaptable implements IAdaptable {
   }
 
   private onSortChanged(): void {
-    const sortModel: any[] = this.gridOptions.api!.getSortModel();
+    const sortModel: { colId: string; sort: string }[] = this.gridOptions.api!.getSortModel();
 
     const columnSorts: ColumnSort[] = [];
-    if (sortModel != null) {
-      if (sortModel.length > 0) {
-        sortModel.forEach(sm => {
-          if (ColumnHelper.isSpecialColumn(sm.colId)) {
-            const groupedColumn: Column = this.gridOptions.columnApi
-              .getAllColumns()
-              .find(c => c.isRowGroupActive() == true);
-            if (groupedColumn) {
-              const customSort: CustomSort = this.api.customSortApi
-                .getAllCustomSort()
-                .find(cs => cs.ColumnId == groupedColumn.getColId());
-              if (customSort) {
-                // check that not already applied
-                if (
-                  !this.api.gridApi
-                    .getColumnSorts()
-                    .find((gs: ColumnSort) => ColumnHelper.isSpecialColumn(gs.Column))
-                ) {
-                  const customSortStrategy: CustomSortStrategyagGrid = this.strategies.get(
-                    StrategyConstants.CustomSortStrategyId
-                  ) as CustomSortStrategyagGrid;
-                  const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
-                  groupCustomSort.ColumnId = sm.colId;
-                  groupCustomSort.SortedValues = customSort.SortedValues;
-                  const comparator: any = customSortStrategy.getComparerFunction(groupCustomSort);
-                  this.setCustomSort(sm.colId, comparator);
-                }
-              }
-            }
-          }
-          const columnSort: ColumnSort = {
-            Column: sm.colId,
-            SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
-          };
-          columnSorts.push(columnSort);
-        });
-      }
+    if (ArrayExtensions.IsNotNullOrEmpty(sortModel)) {
+      sortModel.forEach(sm => {
+        if (ColumnHelper.isSpecialColumn(sm.colId)) {
+          this.agGridHelper.createGroupedColumnCustomSort(sm.colId);
+        }
+        const columnSort: ColumnSort = {
+          Column: sm.colId,
+          SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
+        };
+        columnSorts.push(columnSort);
+      });
     }
     this.api.internalApi.setColumnSorts(columnSorts);
   }
