@@ -168,7 +168,7 @@ However, you might want to style icons differently - in this case, you can custo
 
 ## Demo
 
-To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
+Visit our [Demo Site](https://demo.adaptabletools.com/theme/aggridcustomthemedemo) to see AdapTable with a custom theme.
 
 ## Help
 
