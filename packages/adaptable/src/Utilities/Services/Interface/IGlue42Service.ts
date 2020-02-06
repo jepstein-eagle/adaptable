@@ -1,7 +1,7 @@
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { Glue42State } from '../../../PredefinedConfig/Glue42State';
 export interface IGlue42Service {
-  login(username: string, password: string): void;
+  login(username: string, password: string, gatewayURL: string): void;
 
   // this is the non-live data way of doing export which works and is the default
   exportData(data: any[], gridColumns: AdaptableColumn[], primaryKeys: any[]): void;

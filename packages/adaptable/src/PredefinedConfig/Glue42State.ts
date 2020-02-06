@@ -3,13 +3,9 @@ import { AdaptableObject } from './Common/AdaptableObject';
 import { BaseSchedule } from './Common/Schedule';
 
 export interface Glue42State extends DesignTimeState {
-  /**
-   *  A Glue42 object - pre-populated with the user's Glue42 credentials
-   */
-  // Glue42Config?: any;
-
   Username?: string;
   Password?: string;
+  GatewayURL?: string;
   Glue?: any; // this is the glue object
   Glue4Office?: any; // this is the Glue4Office object
 
@@ -24,9 +20,7 @@ export interface Glue42State extends DesignTimeState {
    * Any Glue42 Reports that should be sent according to Schedules sent by you.
    */
   Glue42Schedules?: Glue42Schedule[];
-
   Glue42LoginErrorMessage?: string;
-
   CurrentLiveGlue42Report?: Glue42Report;
   IsGlue42Available?: boolean;
   IsGlue42Running?: boolean;
