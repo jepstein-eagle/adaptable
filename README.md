@@ -142,7 +142,7 @@ These include:
  
 * [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
   
-* [Core Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
+* [Building Minifed File (with parcel.js) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
    
 * [ipushpull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
  
