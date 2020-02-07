@@ -40,11 +40,16 @@ export class PieChartSecondaryColumnWizard
   }
 
   render(): any {
-    let secondaryColumnDataType: DataType = StringExtensions.IsNotNullOrEmpty(
-      this.state.SecondaryColumnId
-    )
+    let secondaryColumnDataType:
+      | 'String'
+      | 'Number'
+      | 'NumberArray'
+      | 'Boolean'
+      | 'Date'
+      | 'Object'
+      | 'Unknown' = StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId)
       ? ColumnHelper.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId, this.props.Columns)
-      : DataType.Unknown;
+      : 'Unknown';
 
     return (
       <WizardPanel>
