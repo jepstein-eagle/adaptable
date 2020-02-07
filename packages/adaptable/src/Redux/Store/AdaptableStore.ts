@@ -326,7 +326,6 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.PLUGINS,
 
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
-      ConfigConstants.APPLICATION,
       ConfigConstants.ENTITLEMENTS,
       ConfigConstants.SYSTEM_FILTER,
       ConfigConstants.USER_INTERFACE,

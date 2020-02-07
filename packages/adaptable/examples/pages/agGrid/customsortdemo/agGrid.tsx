@@ -7,27 +7,14 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 
-import { GridOptions, RowNode } from '@ag-grid-community/all-modules';
-import {
-  AdaptableOptions,
-  PredefinedConfig,
-  AdaptableApi,
-  SearchChangedEventArgs,
-} from '../../../../src/types';
+import { GridOptions } from '@ag-grid-community/all-modules';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-import { MenuModule } from '@ag-grid-enterprise/menu';
-import { SideBarModule } from '@ag-grid-enterprise/side-bar';
-import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 import Adaptable from '../../../../agGrid';
-import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
-import { SelectedCellInfo } from '../../../../src/Utilities/Interface/Selection/SelectedCellInfo';
-import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
-import { DataType } from '../../../../src/PredefinedConfig/Common/Enums';
-import { GridCell } from '../../../../src/Utilities/Interface/Selection/GridCell';
-import Helper from '../../../../src/Utilities/Helpers/Helper';
+import { ApplicationDataEntry } from '../../../../src/PredefinedConfig/ApplicationState';
+import { CustomToolbar } from '../../../../src/PredefinedConfig/DashboardState';
 
 var api: AdaptableApi;
 
@@ -50,17 +37,48 @@ function InitAdaptableDemo() {
   };
 
   api = Adaptable.init(adaptableOptions);
+
+  api.eventApi.on('AdaptableReady', () => {
+    let entries: ApplicationDataEntry[] = api.applicationApi.getApplicationDataEntries();
+    let existingEntry = entries.find(e => e.Key == 'ClearedCache');
+    if (existingEntry) {
+      console.log('nothing to do as we have an entry');
+      console.log(existingEntry);
+    } else {
+      console.log('no entry so need to create one');
+      let applicationDataEntry: ApplicationDataEntry = {
+        Key: 'ClearedCache',
+        Value: new Date(),
+      };
+      api.applicationApi.addApplicationDataEntry(applicationDataEntry);
+    }
+  });
+  /*
+  api.eventApi.on('AdaptableReady', () => {
+    let statusMessage: string | undefined = api.systemStatusApi.getSystemStatusState()
+      .StatusMessage;
+    if (statusMessage === 'No issues') {
+      console.log('nothing to do as we have the right message so we cleared config already');
+    } else {
+      alert('dont have the message so need to set it and then clear config');
+      api.configApi.configDeleteLocalStorage();
+      api.systemStatusApi.setInfoSystemStatus('No issues');
+    }
+  }); */
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Layout', 'Export', 'CellSummary'],
   },
+  Calendar: {
+    CurrentCalendar: 'United Kingdom',
+  },
   CustomSort: {
     CustomSorts: [
       {
         ColumnId: 'country',
-        CustomSortComparerFunction: (valueA: any, valueB: any, nodeA?: any, nodeB?: any) => {
+        CustomSortComparerFunction: (valueA: any, valueB: any, nodeA: any, nodeB: any) => {
           if (valueA === 'United Kingdom') {
             return -1;
           }
