@@ -1,6 +1,6 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { IAdaptable } from '../../types';
 import { FreeTextColumn, FreeTextStoredValue } from '../../PredefinedConfig/FreeTextColumnState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';

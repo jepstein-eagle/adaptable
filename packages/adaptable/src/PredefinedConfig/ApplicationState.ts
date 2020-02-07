@@ -1,4 +1,5 @@
 import { DesignTimeState } from './DesignTimeState';
+import { RunTimeState } from './RunTimeState';
 
 /**
  * The Predefined Configuration for the Application function
@@ -45,7 +46,7 @@ import { DesignTimeState } from './DesignTimeState';
  * ```
  *
  **/
-export interface ApplicationState extends DesignTimeState {
+export interface ApplicationState extends RunTimeState {
   /**
    * An array of Application Data Entries (essentially Key / Value pairs) enabling you to provide Adaptable with your own data.
    *

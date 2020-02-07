@@ -6,7 +6,7 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IUpdatedRowStrategy } from './Interface/IUpdatedRowStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';

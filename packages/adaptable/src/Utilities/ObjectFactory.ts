@@ -64,7 +64,7 @@ import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
 import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED } from '../View/UIHelper';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { IPushPullReport, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';

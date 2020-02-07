@@ -52,25 +52,14 @@ function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['Glue42'],
+  },
   Glue42: {
     Glue: glue42Desktop, // this is the glue object
     Glue4Office: glue42office, // this is the Glue4Office object
-    Glue42Config: {
-      initialization: {
-        application: 'AdaptableBlotterDemo', // need to change?
-        gateway: {
-          protocolVersion: 3,
-          ws: 'ws://localhost:8385',
-        },
-        auth: {
-          username: 'jonny', // should get from .env file
-          password: 'demopassword', // put in .env file
-        },
-      },
-      excelExport: {
-        timeoutMs: 30000,
-      },
-    },
+    Username: 'jonny',
+    Password: 'demopassword', // put in .env file
   },
   FlashingCell: {
     FlashingCells: [

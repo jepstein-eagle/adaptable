@@ -22,7 +22,7 @@ import { LiveReport } from '../Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(

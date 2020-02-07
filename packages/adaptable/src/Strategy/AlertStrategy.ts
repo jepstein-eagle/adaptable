@@ -8,7 +8,7 @@ import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/Express
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';

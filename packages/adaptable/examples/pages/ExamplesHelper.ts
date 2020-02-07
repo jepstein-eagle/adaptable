@@ -631,7 +631,6 @@ export class ExamplesHelper {
       'Belgium',
       'Brazil',
       'Canada',
-      /*
       'China',
       'Denmark',
       //   'Egypt',
@@ -649,8 +648,7 @@ export class ExamplesHelper {
       //   'Qatar',
       //   'Russia',
       'Spain',
-      //   'Thailand',
-      */
+      'United Kingdom',
     ];
     return countries;
   }

@@ -1,6 +1,6 @@
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy';
 import { RowNode } from '@ag-grid-community/all-modules';
-import { CustomSort } from '../../PredefinedConfig/CustomSortState';
+import { CustomSort, CustomSortComparerFunction } from '../../PredefinedConfig/CustomSortState';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 
 export class CustomSortStrategyagGrid extends CustomSortStrategy {
@@ -8,7 +8,7 @@ export class CustomSortStrategyagGrid extends CustomSortStrategy {
     super(adaptable);
   }
 
-  public getComparerFunction(customSort: CustomSort): Function {
+  public getComparerFunction(customSort: CustomSort): CustomSortComparerFunction {
     let theadaptable = this.adaptable as IAdaptable;
     return function compareItemsOfCustomSort(
       valueA: any,

@@ -38,4 +38,5 @@ export interface GeneralOptions {
    * **Default Value: false**
    */
   // checkIfLatestVersionOnStartup?: boolean;
+  showGroupingTotalsAsHeader?: boolean;
 }

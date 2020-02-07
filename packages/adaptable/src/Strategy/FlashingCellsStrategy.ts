@@ -8,7 +8,7 @@ import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux
 import { FlashingCellState, FlashingCell } from '../PredefinedConfig/FlashingCellState';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase

@@ -63,7 +63,7 @@ import { SharedEntity } from '../../Utilities/Interface/SharedEntity';
 import { IAdaptableStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
-import { LayoutState, VendorGridInfo } from '../../PredefinedConfig/LayoutState';
+import { LayoutState } from '../../PredefinedConfig/LayoutState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
@@ -126,13 +126,10 @@ import {
 import Emitter from '../../Utilities/Emitter';
 import { ChartDefinition } from '../../PredefinedConfig/ChartState';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
-import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { ServiceStatus } from '../../Utilities/Services/PushPullService';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IPushPullDomain, IPushPullReport } from '../../PredefinedConfig/IPushPullState';
 import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
 import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
 
@@ -329,7 +326,6 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.PLUGINS,
 
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
-      ConfigConstants.APPLICATION,
       ConfigConstants.ENTITLEMENTS,
       ConfigConstants.SYSTEM_FILTER,
       ConfigConstants.USER_INTERFACE,
@@ -337,8 +333,6 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.ACTION_COLUMN,
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
-      // think...
-      ConfigConstants.CELL_SUMMARY,
     ];
 
     // this is now VERY BADLY NAMED!
@@ -865,7 +859,6 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             return ret;
           }
           case ColumnFilterRedux.COLUMN_FILTER_CLEAR: {
-            const actionTyped = action as ColumnFilterRedux.ColumnFilterClearAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ColumnFilterStrategyId,
               actionType: action.type,
@@ -2362,9 +2355,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             );
             let state = middlewareAPI.getState();
             let returnAction = next(action);
-            let apiReturn: IStrategyActionReturn<
-              boolean
-            > = SmartEditStrategy.CheckCorrectCellSelection();
+            let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
             if (apiReturn.Alert) {
               // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
@@ -2614,6 +2605,11 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
           /*******************
            * GLUE42 ACTIONS
            *******************/
+          case Glue42Redux.GLUE42_LOGIN: {
+            const actionTyped = action as Glue42Redux.Glue42LoginAction;
+            adaptable.api.glue42Api.loginToGlue42(actionTyped.username, actionTyped.password);
+            return next(action);
+          }
 
           case Glue42Redux.GLUE42_SEND_SNAPSHOT: {
             let glue42Strategy = <IGlue42Strategy>(
@@ -2824,9 +2820,6 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
                 shortcuts = middlewareAPI.getState().Shortcut.Shortcuts;
                 if (shortcuts) {
                   if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
-                    let index: number = shortcuts.findIndex(
-                      si => si.ShortcutKey == shortcut.ShortcutKey
-                    );
                     middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut));
                   }
                   importAction = ShortcutRedux.ShortcutAdd(shortcut);

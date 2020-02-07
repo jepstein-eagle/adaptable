@@ -1,4 +1,4 @@
-import { DataChangedInfo } from './CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 
 /**
  * Options related to Editing in Adaptable.

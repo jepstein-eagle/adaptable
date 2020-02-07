@@ -22,7 +22,7 @@ import {
   CellValidationState,
   CellValidationRule,
 } from '../../PredefinedConfig/CellValidationState';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 import { IUIConfirmation, AdaptableAlert } from '../Interface/IMessage';
 import { ValidationResult } from '../../AdaptableOptions/EditOptions';

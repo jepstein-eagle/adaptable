@@ -1,7 +1,7 @@
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 
 export function GetLength(arrayToCheck: any[]): number {
-  return arrayToCheck.length;
+  return IsNotNull(arrayToCheck) ? arrayToCheck.length : 0;
 }
 
 export function CorrectLength(arrayToCheck: any[], requiredLength: number): boolean {
@@ -13,7 +13,7 @@ export function NotCorrectLength(arrayToCheck: any[], requiredLength: number): b
 }
 
 export function AddItem(array: any[], itemToAdd: any): void {
-  if (ArrayExtensions.NotContainsItem(array, itemToAdd)) {
+  if (NotContainsItem(array, itemToAdd)) {
     array.push(itemToAdd);
   }
 }
@@ -53,7 +53,7 @@ export function IsNull(arrayToCheck: any[] | undefined | null): boolean {
 }
 
 export function IsNotNull(arrayToCheck: any[] | undefined | null): boolean {
-  return !ArrayExtensions.IsNull(arrayToCheck);
+  return !IsNull(arrayToCheck);
 }
 
 export function IsEmpty(arrayToCheck: any[]): boolean {
@@ -61,15 +61,15 @@ export function IsEmpty(arrayToCheck: any[]): boolean {
 }
 
 export function IsNotEmpty(arrayToCheck: any[]): boolean {
-  return !ArrayExtensions.IsEmpty(arrayToCheck);
+  return !IsEmpty(arrayToCheck);
 }
 
 export function IsNullOrEmpty(arrayToCheck: any[] | undefined | null): boolean {
-  return ArrayExtensions.IsNull(arrayToCheck) || ArrayExtensions.IsEmpty(arrayToCheck);
+  return IsNull(arrayToCheck) || IsEmpty(arrayToCheck);
 }
 
 export function IsNotNullOrEmpty(arrayToCheck: any[] | undefined | null): boolean {
-  return ArrayExtensions.IsNotNull(arrayToCheck) && ArrayExtensions.IsNotEmpty(arrayToCheck);
+  return IsNotNull(arrayToCheck) && IsNotEmpty(arrayToCheck);
 }
 
 export function hasOneItem(arrayToCheck: any[]): boolean {

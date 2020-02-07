@@ -74,6 +74,9 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { PushPullStrategy } from '../Strategy/PushPullStrategy';
 import { Glue42Strategy } from '../Strategy/Glue42Strategy';
 import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
+import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
+import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
+import ObjectFactory from '../Utilities/ObjectFactory';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -720,5 +723,36 @@ export class agGridHelper {
       `@ag-grid-enterprise/${moduleName}`,
       '@ag-grid-enterprise/all-modules',
     ]);
+  }
+
+  public createGroupedColumnCustomSort(colId: string): void {
+    const groupedColumn: Column = this.gridOptions.columnApi
+      .getAllColumns()
+      .find(c => c.isRowGroupActive() == true);
+    if (groupedColumn) {
+      const customSort: CustomSort = this.adaptable.api.customSortApi
+        .getAllCustomSort()
+        .find(cs => cs.ColumnId == groupedColumn.getColId());
+      if (customSort) {
+        // check that not already applied
+        if (
+          !this.adaptable.api.gridApi
+            .getColumnSorts()
+            .find((gs: ColumnSort) => ColumnHelper.isSpecialColumn(gs.Column))
+        ) {
+          const customSortStrategy: CustomSortStrategyagGrid = this.adaptable.strategies.get(
+            StrategyConstants.CustomSortStrategyId
+          ) as CustomSortStrategyagGrid;
+          const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
+          groupCustomSort.ColumnId = colId;
+          groupCustomSort.SortedValues = customSort.SortedValues;
+
+          const customSortComparerFunction: CustomSortComparerFunction = customSort.CustomSortComparerFunction
+            ? customSort.CustomSortComparerFunction
+            : customSortStrategy.getComparerFunction(groupCustomSort);
+          this.adaptable.setCustomSort(colId, customSortComparerFunction);
+        }
+      }
+    }
   }
 }

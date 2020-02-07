@@ -40,6 +40,8 @@ interface Glue42ToolbarControlComponentProps
 
   onNewGlue42Schedule: (glue42Schedule: Glue42Schedule) => PopupRedux.PopupShowScreenAction;
 
+  onShowGlue42Login: () => PopupRedux.PopupShowScreenAction;
+
   Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
@@ -102,7 +104,7 @@ class Glue42ToolbarControlComponent extends React.Component<
       this.props.CurrentLiveGlue42Report &&
       this.state.ReportName == this.props.CurrentLiveGlue42Report.ReportName;
 
-    let content = this.props.IsGlue42Available ? (
+    let content = this.props.IsGlue42Running ? (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__Glue42__wrap">
         <Dropdown
           disabled={allReports.length == 0 || isLiveGlue42Report}
@@ -162,9 +164,26 @@ class Glue42ToolbarControlComponent extends React.Component<
             />
           </Flex>
         )}{' '}
+        <ButtonLogout
+          marginLeft={1}
+          className="ab-DashboardToolbar__Glue42_logout"
+          onClick={() => this.props.Adaptable.api.glue42Api.logoutFromGlue42()}
+          tooltip="Logout"
+          disabled={isLiveGlue42Report}
+          AccessLevel={this.props.AccessLevel}
+        />
       </Flex>
     ) : (
-      <span>some kind of login button?</span>
+      <ButtonLogin
+        marginLeft={1}
+        className="ab-DashboardToolbar__IPushPull__login"
+        onClick={() => this.props.onShowGlue42Login()}
+        tooltip="Login to ipushpull"
+        AccessLevel={this.props.AccessLevel}
+      >
+        {' '}
+        Login
+      </ButtonLogin>
     );
 
     return (
@@ -240,6 +259,18 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
             action: 'New',
             source: 'Toolbar',
             value: Glue42Schedule,
+          }
+        )
+      ),
+
+    onShowGlue42Login: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(
+          StrategyConstants.Glue42StrategyId,
+          ScreenPopups.Glue42LoginPopup,
+          null,
+          {
+            footer: false,
           }
         )
       ),

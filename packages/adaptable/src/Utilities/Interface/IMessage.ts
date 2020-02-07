@@ -2,7 +2,7 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 

@@ -5,7 +5,7 @@ import { DataType, MessageType } from '../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IBulkUpdateStrategy, BulkUpdateValidationResult } from './Interface/IBulkUpdateStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
