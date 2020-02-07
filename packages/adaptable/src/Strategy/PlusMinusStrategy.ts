@@ -14,9 +14,9 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 

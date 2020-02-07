@@ -1,7 +1,7 @@
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../PredefinedConfig/GridState';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
+import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { DataType, SortOrder } from '../PredefinedConfig/Common/Enums';
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';

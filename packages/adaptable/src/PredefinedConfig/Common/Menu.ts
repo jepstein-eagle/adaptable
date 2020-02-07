@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../Selection/GridCell';
 import { AdaptableColumn } from './AdaptableColumn';
 import { AdaptableFunctionName } from './Types';
 

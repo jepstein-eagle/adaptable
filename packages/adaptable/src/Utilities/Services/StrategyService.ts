@@ -41,10 +41,14 @@ export class StrategyService implements IStrategyService {
     alertDefinition: AlertDefinition,
     columns: AdaptableColumn[]
   ): string {
-    let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
-      alertDefinition.ColumnId,
-      columns
-    );
+    let dataType:
+      | 'String'
+      | 'Number'
+      | 'NumberArray'
+      | 'Boolean'
+      | 'Date'
+      | 'Object'
+      | 'Unknown' = ColumnHelper.getColumnDataTypeFromColumnId(alertDefinition.ColumnId, columns);
     let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
       alertDefinition.Range.Operator as LeafExpressionOperator,
       dataType

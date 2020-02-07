@@ -9,13 +9,13 @@ import { Action } from 'redux';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
+import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { LiveReport } from './Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
  *

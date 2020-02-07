@@ -77,8 +77,8 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
@@ -121,8 +121,8 @@ import { TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
-import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
-import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import { GridRow, RowInfo } from '../PredefinedConfig/Selection/GridRow';
+import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
@@ -1031,7 +1031,14 @@ export class Adaptable implements IAdaptable {
   public setValue(dataChangedInfo: DataChangedInfo, internalUpdate: boolean): void {
     let newValue: any;
 
-    let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
+    let dataType:
+      | 'String'
+      | 'Number'
+      | 'NumberArray'
+      | 'Boolean'
+      | 'Date'
+      | 'Object'
+      | 'Unknown' = ColumnHelper.getColumnDataTypeFromColumnId(
       dataChangedInfo.ColumnId,
       this.api.gridApi.getColumns()
     );
@@ -1542,7 +1549,7 @@ export class Adaptable implements IAdaptable {
       cols
     );
 
-    const dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
+    const dataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
       cleanedExpression
     );
 
@@ -1642,7 +1649,7 @@ export class Adaptable implements IAdaptable {
       cols
     );
 
-    const dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
+    const dataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
       cleanedExpression
     );
 
@@ -1758,7 +1765,11 @@ export class Adaptable implements IAdaptable {
     this.addSpecialColumnToState(actionColumn.Uuid, actionColumn.ColumnId, DataType.String);
   }
 
-  private addSpecialColumnToState(uuid: TypeUuid, columnId: string, dataType: DataType): void {
+  private addSpecialColumnToState(
+    uuid: TypeUuid,
+    columnId: string,
+    dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
+  ): void {
     const vendorColumn: Column | undefined = this.gridOptions
       .columnApi!.getAllColumns()
       .find(vc => vc.getColId() == columnId);

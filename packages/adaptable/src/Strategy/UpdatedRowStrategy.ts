@@ -97,7 +97,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
       return ChangeDirection.Neutral;
     }
 
-    let columnDataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
+    let columnDataType = ColumnHelper.getColumnDataTypeFromColumnId(
       dataChangedInfo.ColumnId,
       this.adaptable.api.gridApi.getColumns()
     );

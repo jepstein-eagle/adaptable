@@ -1,6 +1,6 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { Expression } from '../../PredefinedConfig/Common/Expression';
-import { SelectedCellInfo } from '../Interface/Selection/SelectedCellInfo';
+import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
   ReportColumnScope,
@@ -11,14 +11,14 @@ import {
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Report } from '../../PredefinedConfig/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
-import { SelectedRowInfo } from '../Interface/Selection/SelectedRowInfo';
-import { GridRow } from '../Interface/Selection/GridRow';
+import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
+import { GridRow } from '../../PredefinedConfig/Selection/GridRow';
 import ObjectFactory from '../ObjectFactory';
 import { IReportService } from './Interface/IReportService';
 import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
-import { GridCell } from '../Interface/Selection/GridCell';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
 import { LiveDataChangedEventArgs } from '../../types';

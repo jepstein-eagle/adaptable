@@ -1,8 +1,8 @@
 import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
 
-import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
+import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 
-import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 
 /**
  * Event Args used as part of the **on('SelectionChanged')** event.

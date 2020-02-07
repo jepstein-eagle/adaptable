@@ -59,7 +59,7 @@ import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
-import { CellSummmary } from './Interface/Selection/CellSummmary';
+import { CellSummmary } from '../PredefinedConfig/Selection/CellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';

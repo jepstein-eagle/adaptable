@@ -99,7 +99,7 @@ import {
 } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
-import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
+import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';

@@ -209,7 +209,14 @@ export class AlertRulesWizard
     );
   }
 
-  private getColumnDataTypeFromState(): DataType {
+  private getColumnDataTypeFromState():
+    | 'String'
+    | 'Number'
+    | 'NumberArray'
+    | 'Boolean'
+    | 'Date'
+    | 'Object'
+    | 'Unknown' {
     return ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns);
   }
 

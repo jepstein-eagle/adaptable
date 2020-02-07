@@ -64,8 +64,8 @@ import Helper from '../Utilities/Helpers/Helper';
 import { SelectionChangedInfo, SelectionChangedEventArgs } from '../Api/Events/SelectionChanged';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { iconToString } from '../components/icons';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
@@ -601,13 +601,15 @@ export class agGridHelper {
     return colDef != null && colDef.filter != null && colDef.filter != false;
   }
 
-  public getColumnDataType(column: Column): DataType {
+  public getColumnDataType(
+    column: Column
+  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
     // Some columns can have no ID or Title. we return string as a consequence but it needs testing
     if (!column) {
       LoggingHelper.LogAdaptableWarning('column is undefined returning String for Type');
       return DataType.String;
     }
-    let dataType: DataType = DataType.Unknown;
+    let dataType: any = DataType.Unknown;
     // get the column type if already in store (and not unknown)
     const existingColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
       column.getId(),
@@ -691,7 +693,9 @@ export class agGridHelper {
     return dataType;
   }
 
-  private getabColDefValue(colType: string): DataType {
+  private getabColDefValue(
+    colType: string
+  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
     if (colType == 'numericColumn') {
       return DataType.Number;
     }

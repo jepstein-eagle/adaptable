@@ -11,7 +11,7 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
@@ -45,7 +45,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       this.adaptable.api.gridApi.getColumns()
     );
     if (activeCell && !selectedColumn.ReadOnly) {
-      let columnDataType: DataType = selectedColumn.DataType;
+      let columnDataType = selectedColumn.DataType;
       let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
       let activeShortcut: Shortcut;
       let valueToReplace: any;
