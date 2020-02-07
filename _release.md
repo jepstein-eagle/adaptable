@@ -1,3 +1,7 @@
+## 6.0.4
+
+Fix bug in state management preventing changes to Application Data Entries at run-time
+
 ## 6.0.4-canary-1
 
 Bumping build to use latest code!
