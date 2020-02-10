@@ -9,7 +9,7 @@ import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interf
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { DistinctCriteriaPairValue, SortOrder } from '../PredefinedConfig/Common/Enums';
@@ -26,7 +26,7 @@ import { IPushPullService } from '../Utilities/Services/Interface/IPushPullServi
 
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';

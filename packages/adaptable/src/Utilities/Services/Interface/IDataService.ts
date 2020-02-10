@@ -1,4 +1,4 @@
-import { DataChangedInfo } from '../../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../../PredefinedConfig/Common/DataChangedInfo';
 
 export enum ChangeDirection {
   Up = 'Up',

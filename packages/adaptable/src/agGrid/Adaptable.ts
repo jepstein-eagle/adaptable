@@ -13,6 +13,8 @@ import {
   Events,
   Module,
   RowNodeTransaction,
+  ModelUpdatedEvent,
+  IClientSideRowModel,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -75,8 +77,8 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
@@ -91,7 +93,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableApiImpl } from '../Api/Implementation/AdaptableApiImpl';
 import {
   DEFAULT_LAYOUT,
@@ -113,14 +115,14 @@ import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
-import { CustomSort } from '../PredefinedConfig/CustomSortState';
+import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
-import { GridRow, RowInfo } from '../Utilities/Interface/Selection/GridRow';
-import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import { GridRow, RowInfo } from '../PredefinedConfig/Selection/GridRow';
+import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
@@ -152,9 +154,7 @@ import {
 } from '../AdaptableInterfaces/IAdaptableNoCodeWizard';
 import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
-
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
-import check from '../components/icons/check';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 
 ModuleRegistry.registerModules(AllCommunityModules);
@@ -637,6 +637,9 @@ export class Adaptable implements IAdaptable {
   }
 
   private isDataInModel(rowNode: RowNode): boolean {
+    if (!rowNode) {
+      return false;
+    }
     let data: any = rowNode.data[this.adaptableOptions.primaryKey];
     if (!data) {
       return false;
@@ -1028,7 +1031,14 @@ export class Adaptable implements IAdaptable {
   public setValue(dataChangedInfo: DataChangedInfo, internalUpdate: boolean): void {
     let newValue: any;
 
-    let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
+    let dataType:
+      | 'String'
+      | 'Number'
+      | 'NumberArray'
+      | 'Boolean'
+      | 'Date'
+      | 'Object'
+      | 'Unknown' = ColumnHelper.getColumnDataTypeFromColumnId(
       dataChangedInfo.ColumnId,
       this.api.gridApi.getColumns()
     );
@@ -1539,7 +1549,7 @@ export class Adaptable implements IAdaptable {
       cols
     );
 
-    const dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
+    const dataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
       cleanedExpression
     );
 
@@ -1639,7 +1649,7 @@ export class Adaptable implements IAdaptable {
       cols
     );
 
-    const dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
+    const dataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
       cleanedExpression
     );
 
@@ -1755,7 +1765,11 @@ export class Adaptable implements IAdaptable {
     this.addSpecialColumnToState(actionColumn.Uuid, actionColumn.ColumnId, DataType.String);
   }
 
-  private addSpecialColumnToState(uuid: TypeUuid, columnId: string, dataType: DataType): void {
+  private addSpecialColumnToState(
+    uuid: TypeUuid,
+    columnId: string,
+    dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
+  ): void {
     const vendorColumn: Column | undefined = this.gridOptions
       .columnApi!.getAllColumns()
       .find(vc => vc.getColId() == columnId);
@@ -2196,8 +2210,18 @@ export class Adaptable implements IAdaptable {
     });
 
     this.gridOptions.api!.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
-      // not sure about this - doing it to make sure that we set the columns properly at least once!
-
+      if (this.adaptableOptions.generalOptions.showGroupingTotalsAsHeader) {
+        if (params && params.api) {
+          const pinnedData = params.api.getPinnedTopRow(0);
+          const model = params.api.getModel() as IClientSideRowModel;
+          const rootNode = model.getRootNode();
+          if (!pinnedData) {
+            params.api.setPinnedTopRowData([rootNode.aggData]);
+          } else {
+            pinnedData.updateData(rootNode.aggData);
+          }
+        }
+      }
       this.checkColumnsDataTypeSet();
     });
 
@@ -2854,46 +2878,20 @@ export class Adaptable implements IAdaptable {
   }
 
   private onSortChanged(): void {
-    const sortModel: any[] = this.gridOptions.api!.getSortModel();
+    const sortModel: { colId: string; sort: string }[] = this.gridOptions.api!.getSortModel();
 
     const columnSorts: ColumnSort[] = [];
-    if (sortModel != null) {
-      if (sortModel.length > 0) {
-        sortModel.forEach(sm => {
-          if (ColumnHelper.isSpecialColumn(sm.colId)) {
-            const groupedColumn: Column = this.gridOptions.columnApi
-              .getAllColumns()
-              .find(c => c.isRowGroupActive() == true);
-            if (groupedColumn) {
-              const customSort: CustomSort = this.api.customSortApi
-                .getAllCustomSort()
-                .find(cs => cs.ColumnId == groupedColumn.getColId());
-              if (customSort) {
-                // check that not already applied
-                if (
-                  !this.api.gridApi
-                    .getColumnSorts()
-                    .find((gs: ColumnSort) => ColumnHelper.isSpecialColumn(gs.Column))
-                ) {
-                  const customSortStrategy: CustomSortStrategyagGrid = this.strategies.get(
-                    StrategyConstants.CustomSortStrategyId
-                  ) as CustomSortStrategyagGrid;
-                  const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
-                  groupCustomSort.ColumnId = sm.colId;
-                  groupCustomSort.SortedValues = customSort.SortedValues;
-                  const comparator: any = customSortStrategy.getComparerFunction(groupCustomSort);
-                  this.setCustomSort(sm.colId, comparator);
-                }
-              }
-            }
-          }
-          const columnSort: ColumnSort = {
-            Column: sm.colId,
-            SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
-          };
-          columnSorts.push(columnSort);
-        });
-      }
+    if (ArrayExtensions.IsNotNullOrEmpty(sortModel)) {
+      sortModel.forEach(sm => {
+        if (ColumnHelper.isSpecialColumn(sm.colId)) {
+          this.agGridHelper.createGroupedColumnCustomSort(sm.colId);
+        }
+        const columnSort: ColumnSort = {
+          Column: sm.colId,
+          SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
+        };
+        columnSorts.push(columnSort);
+      });
     }
     this.api.internalApi.setColumnSorts(columnSorts);
   }

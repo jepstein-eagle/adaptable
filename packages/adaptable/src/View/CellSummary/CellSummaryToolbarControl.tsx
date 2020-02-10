@@ -10,12 +10,12 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
+import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { AccessLevel, CellSummaryOperation } from '../../PredefinedConfig/Common/Enums';
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
+import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
 import DropdownButton from '../../components/DropdownButton';

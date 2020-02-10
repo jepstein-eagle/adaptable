@@ -355,7 +355,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.setState({ SelectedTab: tab } as FilterFormState);
   }
 
-  getLeafExpressionOperatorsForDataType(dataType: DataType): LeafExpressionOperator[] {
+  getLeafExpressionOperatorsForDataType(
+    dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
+  ): LeafExpressionOperator[] {
     return ExpressionHelper.GetOperatorsForDataType(dataType);
   }
 

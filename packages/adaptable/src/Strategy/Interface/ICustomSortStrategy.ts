@@ -1,6 +1,6 @@
 import { IStrategy } from './IStrategy';
-import { CustomSort } from '../../PredefinedConfig/CustomSortState';
+import { CustomSort, CustomSortComparerFunction } from '../../PredefinedConfig/CustomSortState';
 
 export interface ICustomSortStrategy extends IStrategy {
-  getComparerFunction(customSort: CustomSort): Function;
+  getComparerFunction(customSort: CustomSort): CustomSortComparerFunction;
 }

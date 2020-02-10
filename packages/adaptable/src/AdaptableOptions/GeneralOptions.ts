@@ -38,4 +38,15 @@ export interface GeneralOptions {
    * **Default Value: false**
    */
   // checkIfLatestVersionOnStartup?: boolean;
+
+  /**
+   * Whether to show an aggregated totals rows at the top of the Grid when running row grouping.
+   *
+   * This is primarily for ag-Grid users who want to see totals, as currently that option is only available as a footer.
+   *
+   * Setting this property to true wil display a pinned grouped total row at the top of the Grid. [See this demo](https://demo.adaptabletools.com/aggridfeatures/aggridrowgroupingdemo)
+   *
+   * **Default Value: false**
+   */
+  showGroupingTotalsAsHeader?: boolean;
 }

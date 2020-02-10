@@ -52,37 +52,17 @@ function InitAdaptableDemo() {
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
+  adaptableOptions.generalOptions = {
+    showGroupingTotalsAsHeader: true,
+  };
 
   api = Adaptable.init(adaptableOptions);
 
-  if (runReadyFunction) {
-    api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-      // to set a pinned row (in this case the 5th row in our data source)
-      let gridOptions: GridOptions = info.vendorGrid as GridOptions;
-
-      gridOptions.onModelUpdated = (event: ModelUpdatedEvent) => {
-        const pinnedData = event.api.getPinnedTopRow(0);
-        const model = event.api.getModel() as IClientSideRowModel;
-        const rootNode = model.getRootNode();
-        if (!pinnedData) {
-          //    event.api.setPinnedTopRowData([rootNode.aggData]);
-        } else {
-          //    pinnedData.updateData(rootNode.aggData);
-        }
-      };
-
-      if (useTickingData) {
-        tickingDataHelper.useTickingDataagGrid(gridOptions, api, 200, tradeCount);
-      }
-
-      setTimeout(() => {
-        //    pinnedRowNode.updateData({
-        //  tradeId: '33333',
-        //   notional: Math.floor(Math.random() * 1000),
-        //  });
-      }, 5000);
-    });
-  }
+  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    if (useTickingData) {
+      tickingDataHelper.useTickingDataagGrid(info.vendorGrid, api, 500, tradeCount, true);
+    }
+  });
 }
 
 let demoConfig: PredefinedConfig = {

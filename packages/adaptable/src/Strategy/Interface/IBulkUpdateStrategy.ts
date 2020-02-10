@@ -1,6 +1,6 @@
 import { IStrategy } from './IStrategy';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 

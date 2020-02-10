@@ -12,7 +12,7 @@ import {
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IGlue42Strategy } from './Interface/IGlue42Strategy';
-import { DataChangedInfo } from '../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { Glue42Report } from '../PredefinedConfig/Glue42State';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
@@ -54,7 +54,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     // if the grid has refreshed then update all live reports
     this.adaptable._on('GridRefreshed', () => {
       if (this.adaptable.api.glue42Api.isGlue42Running()) {
-        this.throttledRecomputeAndSendLiveDataEvent();
+        //   this.throttledRecomputeAndSendLiveDataEvent();
       }
     });
     // if the grid filters have changed then update any live reports except cell or row selected

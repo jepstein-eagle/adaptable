@@ -1,5 +1,5 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AuditLogEntry, AuditTrigger } from '../Interface/AuditLogEntry';
 import { IAuditLogService } from './Interface/IAuditLogService';
 import { IAdaptable } from '../../types';

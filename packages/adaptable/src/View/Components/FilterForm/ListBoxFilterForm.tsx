@@ -36,7 +36,7 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
   onUserFilterSelectedChange: (SelectedValues: Array<any>) => void;
   onCustomRangeExpressionChange: (rangeExpression: QueryRange) => void;
   Operators: Array<LeafExpressionOperator>;
-  DataType: DataType;
+  DataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown';
   DistinctCriteriaPairValue: DistinctCriteriaPairValue;
 }
 

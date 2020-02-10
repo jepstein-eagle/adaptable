@@ -1,12 +1,12 @@
 import * as Redux from 'redux';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
-import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
+import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
+import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';

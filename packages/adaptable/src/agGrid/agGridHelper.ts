@@ -64,8 +64,8 @@ import Helper from '../Utilities/Helpers/Helper';
 import { SelectionChangedInfo, SelectionChangedEventArgs } from '../Api/Events/SelectionChanged';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { iconToString } from '../components/icons';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
@@ -74,6 +74,9 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { PushPullStrategy } from '../Strategy/PushPullStrategy';
 import { Glue42Strategy } from '../Strategy/Glue42Strategy';
 import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
+import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
+import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
+import ObjectFactory from '../Utilities/ObjectFactory';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -598,13 +601,15 @@ export class agGridHelper {
     return colDef != null && colDef.filter != null && colDef.filter != false;
   }
 
-  public getColumnDataType(column: Column): DataType {
+  public getColumnDataType(
+    column: Column
+  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
     // Some columns can have no ID or Title. we return string as a consequence but it needs testing
     if (!column) {
       LoggingHelper.LogAdaptableWarning('column is undefined returning String for Type');
       return DataType.String;
     }
-    let dataType: DataType = DataType.Unknown;
+    let dataType: any = DataType.Unknown;
     // get the column type if already in store (and not unknown)
     const existingColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
       column.getId(),
@@ -688,7 +693,9 @@ export class agGridHelper {
     return dataType;
   }
 
-  private getabColDefValue(colType: string): DataType {
+  private getabColDefValue(
+    colType: string
+  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
     if (colType == 'numericColumn') {
       return DataType.Number;
     }
@@ -720,5 +727,36 @@ export class agGridHelper {
       `@ag-grid-enterprise/${moduleName}`,
       '@ag-grid-enterprise/all-modules',
     ]);
+  }
+
+  public createGroupedColumnCustomSort(colId: string): void {
+    const groupedColumn: Column = this.gridOptions.columnApi
+      .getAllColumns()
+      .find(c => c.isRowGroupActive() == true);
+    if (groupedColumn) {
+      const customSort: CustomSort = this.adaptable.api.customSortApi
+        .getAllCustomSort()
+        .find(cs => cs.ColumnId == groupedColumn.getColId());
+      if (customSort) {
+        // check that not already applied
+        if (
+          !this.adaptable.api.gridApi
+            .getColumnSorts()
+            .find((gs: ColumnSort) => ColumnHelper.isSpecialColumn(gs.Column))
+        ) {
+          const customSortStrategy: CustomSortStrategyagGrid = this.adaptable.strategies.get(
+            StrategyConstants.CustomSortStrategyId
+          ) as CustomSortStrategyagGrid;
+          const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
+          groupCustomSort.ColumnId = colId;
+          groupCustomSort.SortedValues = customSort.SortedValues;
+
+          const customSortComparerFunction: CustomSortComparerFunction = customSort.CustomSortComparerFunction
+            ? customSort.CustomSortComparerFunction
+            : customSortStrategy.getComparerFunction(groupCustomSort);
+          this.adaptable.setCustomSort(colId, customSortComparerFunction);
+        }
+      }
+    }
   }
 }

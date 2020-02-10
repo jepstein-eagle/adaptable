@@ -1,8 +1,8 @@
 import { AdaptableColumn } from './Common/AdaptableColumn';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
-import { CellSummmary } from '../Utilities/Interface/Selection/CellSummmary';
+import { SelectedCellInfo } from './Selection/SelectedCellInfo';
+import { CellSummmary } from './Selection/CellSummmary';
 import { InternalState } from './InternalState';
-import { SelectedRowInfo } from '../Utilities/Interface/Selection/SelectedRowInfo';
+import { SelectedRowInfo } from './Selection/SelectedRowInfo';
 import { AdaptableMenuItem } from './Common/Menu';
 import { ColumnSort } from './Common/ColumnSort';
 

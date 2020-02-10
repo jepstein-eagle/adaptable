@@ -4,7 +4,7 @@ import { PlusMinusApi } from '../PlusMinusApi';
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 
 export class PlusMinusApiImpl extends ApiBase implements PlusMinusApi {
   public getPlusMinusState(): PlusMinusState {

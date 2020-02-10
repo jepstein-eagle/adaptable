@@ -8,13 +8,13 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
+import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { AccessLevel, CellSummaryOperation } from '../../PredefinedConfig/Common/Enums';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
+import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
 import { Flex } from 'rebass';

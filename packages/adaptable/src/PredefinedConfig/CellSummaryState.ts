@@ -1,6 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { CellSummaryOperation } from './Common/Enums';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { SelectedCellInfo } from './Selection/SelectedCellInfo';
 
 /**
  * The Predefined Configuration for the Cell Summary function

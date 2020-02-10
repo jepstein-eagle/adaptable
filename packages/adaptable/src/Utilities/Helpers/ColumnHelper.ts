@@ -19,7 +19,7 @@ export function isNumericColumn(column: AdaptableColumn): boolean {
 export function getColumnDataTypeFromColumnId(
   columnId: string,
   columns: AdaptableColumn[]
-): DataType {
+): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
   return columns.find(c => c.ColumnId == columnId).DataType;
 }
 

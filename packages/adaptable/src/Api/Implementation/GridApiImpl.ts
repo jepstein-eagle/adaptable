@@ -3,10 +3,10 @@ import { GridApi } from '../GridApi';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
-import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
-import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
+import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableOptions } from '../../types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 

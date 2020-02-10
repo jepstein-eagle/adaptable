@@ -14,15 +14,15 @@ import { Action } from 'redux';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
-import { SelectedCellInfo } from '../../Utilities/Interface/Selection/SelectedCellInfo';
-import { SelectedRowInfo } from '../../Utilities/Interface/Selection/SelectedRowInfo';
+import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
+import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
 import { LiveReport } from '../Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
-import { DataChangedInfo } from '../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
+import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(

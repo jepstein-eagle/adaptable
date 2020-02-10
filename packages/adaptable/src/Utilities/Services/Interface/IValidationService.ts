@@ -1,4 +1,4 @@
-import { DataChangedInfo } from '../../../AdaptableOptions/CommonObjects/DataChangedInfo';
+import { DataChangedInfo } from '../../../PredefinedConfig/Common/DataChangedInfo';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import * as Redux from 'redux';
