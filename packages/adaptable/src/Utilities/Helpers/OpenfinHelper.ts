@@ -1,5 +1,5 @@
 import { LoggingHelper } from './LoggingHelper';
-import { ExcelWorkbook } from '../Services/OpenfinLiveExcel/ExcelWorkbook';
+/*import { ExcelWorkbook } from '../Services/OpenfinLiveExcel/ExcelWorkbook';*/
 
 // putting this here as we dont use it elswhere - so keeping it here until we redo the OpenFin one day...
 export interface IEvent<TSender, TArgs> {
@@ -43,9 +43,9 @@ enum ExcelServiceStatus {
 }
 let excelStatus: ExcelServiceStatus = ExcelServiceStatus.Unknown;
 let _onExcelDisconnected: EventDispatcher<any, any> = new EventDispatcher<any, any>();
-let _onWorkbookDisconnected: EventDispatcher<any, ExcelWorkbook> = new EventDispatcher<
+let _onWorkbookDisconnected: EventDispatcher<any, any /*ExcelWorkbook*/> = new EventDispatcher<
   any,
-  ExcelWorkbook
+  any /*ExcelWorkbook*/
 >();
 let _onWorkbookSaved: EventDispatcher<
   any,
@@ -56,7 +56,7 @@ export function OnExcelDisconnected(): IEvent<any, any> {
   return _onExcelDisconnected;
 }
 
-export function OnWorkbookDisconnected(): IEvent<any, ExcelWorkbook> {
+export function OnWorkbookDisconnected(): IEvent<any, any /*ExcelWorkbook*/> {
   return _onWorkbookDisconnected;
 }
 
@@ -73,7 +73,7 @@ export function isExcelOpenfinLoaded() {
 function addWorkbook(): Promise<string> {
   return new Promise<string>((resolve: any, reject: any) => {
     LoggingHelper.LogAdaptableInfo('Creating new workbook');
-    fin.desktop.Excel.addWorkbook(function(workbook: ExcelWorkbook) {
+    fin.desktop.Excel.addWorkbook(function(workbook: any /*ExcelWorkbook*/) {
       LoggingHelper.LogAdaptableSuccess('workbook created:' + workbook.name);
       resolve(workbook.name);
       // workbook.addEventListener("workbookActivated", (event) => onWorkbookActivated(event, resolve));
