@@ -1,3 +1,7 @@
+## 6.0.5
+
+Fix OpenFinHelper so it doesn't break tsc build
+
 ## 6.0.4
 
 Fix bug in state management preventing changes to Application Data Entries at run-time
