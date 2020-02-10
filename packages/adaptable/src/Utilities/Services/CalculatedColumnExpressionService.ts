@@ -15,7 +15,9 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
     this.colFunctionValue = colFunctionValue;
   }
 
-  public GetCalculatedColumnDataType(expression: string): DataType {
+  public GetCalculatedColumnDataType(
+    expression: string
+  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
     try {
       let firstRecord = this.adaptable.getFirstRowNode();
       let firstRowValue: any = math.eval(expression, {

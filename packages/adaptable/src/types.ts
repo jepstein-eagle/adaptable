@@ -49,6 +49,10 @@ export { AdaptablePlugin } from './AdaptableOptions/AdaptablePlugin';
 export { AdaptableColumn } from './PredefinedConfig/Common/AdaptableColumn';
 export { DataChangedInfo } from './PredefinedConfig/Common/DataChangedInfo';
 export { AdaptableMenuItem, MenuInfo } from './PredefinedConfig/Common/Menu';
+export { SelectedCellInfo } from './PredefinedConfig/Selection/SelectedCellInfo';
+export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
+export { GridCell } from './PredefinedConfig/Selection/GridCell';
+export { GridRow } from './PredefinedConfig/Selection/GridRow';
 
 // State Objects
 export { RowStyle } from './PredefinedConfig/UserInterfaceState';

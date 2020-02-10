@@ -153,7 +153,9 @@ export function getExpressionBuilderStateWithColumn(
   };
 }
 
-export function getDescriptionForDataType(dataType: DataType) {
+export function getDescriptionForDataType(
+  dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
+) {
   switch (dataType) {
     case DataType.String:
       return 'string';
@@ -164,7 +166,9 @@ export function getDescriptionForDataType(dataType: DataType) {
   }
 }
 
-export function getPlaceHolderforDataType(dataType: DataType) {
+export function getPlaceHolderforDataType(
+  dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
+) {
   switch (dataType) {
     case DataType.String:
       return 'Enter Value';

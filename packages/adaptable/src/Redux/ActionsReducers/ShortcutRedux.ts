@@ -2,7 +2,7 @@ import { ShortcutState, Shortcut } from '../../PredefinedConfig/ShortcutState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { GridCell } from '../../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';

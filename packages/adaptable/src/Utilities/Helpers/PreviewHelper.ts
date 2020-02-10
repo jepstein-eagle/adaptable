@@ -2,7 +2,7 @@ import { ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 
 import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from '../Interface/IPreview';
-import { GridCell } from '../Interface/Selection/GridCell';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 
 export function GetPreviewValidationSummary(
   previewResults: IPreviewResult[]

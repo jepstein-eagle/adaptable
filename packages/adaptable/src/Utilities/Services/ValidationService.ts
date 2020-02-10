@@ -27,7 +27,7 @@ import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 import { IUIConfirmation, AdaptableAlert } from '../Interface/IMessage';
 import { ValidationResult } from '../../AdaptableOptions/EditOptions';
 import LoggingHelper from '../Helpers/LoggingHelper';
-import { GridCell } from '../Interface/Selection/GridCell';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import StringExtensions from '../Extensions/StringExtensions';
 import { EMPTY_STRING } from '../Constants/GeneralConstants';
 
@@ -296,10 +296,7 @@ export class ValidationService implements IValidationService {
     if (!ExpressionHelper.OperatorRequiresValue(operator)) {
       return valueDescription;
     }
-    let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
-      cellValidationRule.ColumnId,
-      columns
-    );
+    let dataType = ColumnHelper.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId, columns);
     let operand1Text: string =
       dataType == DataType.Boolean || dataType == DataType.Number
         ? cellValidationRule.Range.Operand1

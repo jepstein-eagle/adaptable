@@ -7,13 +7,13 @@ import { IBulkUpdateStrategy, BulkUpdateValidationResult } from './Interface/IBu
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
-import { SelectedCellInfo } from '../Utilities/Interface/Selection/SelectedCellInfo';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { GridCell } from '../Utilities/Interface/Selection/GridCell';
+import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';

@@ -3,7 +3,7 @@ import { IColItem } from '../UIInterfaces';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { CellSummmary } from '../../Utilities/Interface/Selection/CellSummmary';
+import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
 import EmptyContent from '../../components/EmptyContent';
 
 interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetails> {
@@ -12,7 +12,10 @@ interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetai
 
 export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps, {}> {
   render() {
-    let colItems: IColItem[] = [{ Content: 'Operation', Size: 5 }, { Content: 'Value', Size: 7 }];
+    let colItems: IColItem[] = [
+      { Content: 'Operation', Size: 5 },
+      { Content: 'Value', Size: 7 },
+    ];
 
     let rowElements: any[] = [];
     if (this.props.CellSummary != null) {

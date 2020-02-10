@@ -456,7 +456,7 @@ export function OperatorToShortFriendlyString(operator: LeafExpressionOperator):
 
 export function OperatorToLongFriendlyString(
   leafExpressionOperator: LeafExpressionOperator,
-  dataType: DataType
+  dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
 ): string {
   switch (leafExpressionOperator) {
     case LeafExpressionOperator.None:
@@ -526,7 +526,9 @@ export function OperatorToLongFriendlyString(
   }
 }
 
-export function GetOperatorsForDataType(dataType: DataType): LeafExpressionOperator[] {
+export function GetOperatorsForDataType(
+  dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
+): LeafExpressionOperator[] {
   switch (dataType) {
     case DataType.Boolean:
       return null;
