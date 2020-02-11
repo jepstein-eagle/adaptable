@@ -1,6 +1,6 @@
 'use strict';
 
-var proto = Element.prototype as any;
+var proto = typeof Element === 'undefined' ? {} : (Element.prototype as any);
 
 var nativeMatches =
   proto.matches ||
