@@ -77,6 +77,7 @@ import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
 import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import ObjectFactory from '../Utilities/ObjectFactory';
+import { GridInfoStrategy } from '../Strategy/GridInfoStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -168,6 +169,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(adaptable));
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(adaptable));
 
+    strategies.set(StrategyConstants.GridInfoStrategyId, new GridInfoStrategy(adaptable));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
 

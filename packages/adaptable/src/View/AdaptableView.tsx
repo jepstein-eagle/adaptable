@@ -18,7 +18,6 @@ import { AdaptablePopupAlert } from './Components/Popups/AdaptablePopupAlert';
 import { AdaptableChart } from './Components/Popups/AdaptableChart';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
-import { AdaptableGridInfo } from './Components/Popups/AdaptableGridInfo';
 import { AdaptableLoadingScreen } from './Components/Popups/AdaptableLoadingScreen';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
@@ -41,7 +40,6 @@ interface AdaptableViewProps extends React.ClassAttributes<AdaptableView> {
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
   onCloseChartPopup: () => SystemRedux.ChartSetChartVisibiityAction;
   onCloseLoadingPopup: () => PopupRedux.PopupHideLoadingAction;
-  onCloseGridInfoPopup: () => PopupRedux.PopupHideGridInfoAction;
 }
 
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
@@ -64,11 +62,6 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
         )}
 
         {/*  These are all popups that we show at different times */}
-        <AdaptableGridInfo
-          Adaptable={this.props.Adaptable}
-          onClose={this.props.onCloseGridInfoPopup}
-          showAbout={this.props.PopupState.GridInfoPopup.ShowGridInfoPopup}
-        />
 
         <AdaptableLoadingScreen
           Adaptable={this.props.Adaptable}
@@ -136,7 +129,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
     onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
-    onCloseGridInfoPopup: () => dispatch(PopupRedux.PopupHideGridInfo()),
     onCloseChartPopup: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden)),
     onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
     onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),

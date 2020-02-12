@@ -73,7 +73,7 @@ let demoConfig: PredefinedConfig = {
   SystemStatus: {
     // ShowAlert: false,
     DefaultStatusMessage: 'This is default message and its quite long',
-    DefaultStatusType: 'Warning',
+    DefaultStatusType: 'Success',
     StatusMessage: 'overriding with this',
     StatusType: 'Error',
   },

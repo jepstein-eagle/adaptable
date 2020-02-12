@@ -83,6 +83,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     ) {
       for (let column of columns) {
         let cellClassRules: any = {};
+        let rowClassRules: any = {};
         conditionalStyles.forEach((cs, index) => {
           let styleName: string = StringExtensions.IsNullOrEmpty(cs.Style.ClassName)
             ? theadaptable.StyleService.CreateUniqueStyleName(
@@ -133,7 +134,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             }
             */
           } else if (cs.ConditionalStyleScope == 'Row') {
-            cellClassRules[styleName] = function(params: any) {
+            rowClassRules[styleName] = function(params: any) {
               return ExpressionHelper.checkForExpressionFromRowNode(
                 cs.Expression,
                 params.node,
@@ -141,6 +142,17 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
                 theadaptable
               );
             };
+
+            theadaptable.gridOptions.rowClassRules = rowClassRules;
+
+            //  cellClassRules[styleName] = function(params: any) {
+            //    return ExpressionHelper.checkForExpressionFromRowNode(
+            //     cs.Expression,
+            //     params.node,
+            //     columns,
+            //     theadaptable
+            //   );
+            // };
           }
         });
         theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');

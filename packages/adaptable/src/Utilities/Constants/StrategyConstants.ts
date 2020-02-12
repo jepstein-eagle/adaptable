@@ -27,6 +27,7 @@ export const IPushPullStrategyId: AdaptableFunctionName = 'IPushPull';
 export const LayoutStrategyId: AdaptableFunctionName = 'Layout';
 export const PercentBarStrategyId: AdaptableFunctionName = 'PercentBar';
 export const GradientColumnStrategyId: AdaptableFunctionName = 'GradientColumn';
+export const GridInfoStrategyId: AdaptableFunctionName = 'GridInfo';
 export const SparklineColumnStrategyId: AdaptableFunctionName = 'SparklineColumn';
 export const SparklineStrategyId: AdaptableFunctionName = 'Sparkline';
 export const PieChartStrategyId: AdaptableFunctionName = 'PieChart';
@@ -71,6 +72,7 @@ export const IPushPullStrategyFriendlyName: string = 'ipushpull';
 export const LayoutStrategyFriendlyName: string = 'Layout';
 export const PercentBarStrategyFriendlyName: string = 'Percent Bar';
 export const GradientColumnStrategyFriendlyName: string = 'Gradient Column';
+export const GridInfoStrategyFriendlyName: string = 'Grid Info';
 export const SparklineColumnStrategyFriendlyName: string = 'Sparkline Column';
 export const SparklineStrategyFriendlyName: string = 'Sparkline';
 export const PieChartStrategyFriendlyName: string = 'Pie Chart';
@@ -114,6 +116,7 @@ export const FunctionsGlyph: string = 'home';
 export const LayoutGlyph: string = 'layout';
 export const PercentBarGlyph: string = 'percent-bar';
 export const GradientColumnGlyph: string = 'gradient-column';
+export const GridInfoGlyph: string = 'info';
 export const SparklineColumnGlyph: string = 'spark-line';
 export const SparklinesGlyph: string = 'spark-line';
 export const PieChartGlyph: string = 'pie-chart';
@@ -181,6 +184,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return PercentBarStrategyId;
     case GradientColumnStrategyFriendlyName:
       return GradientColumnStrategyId;
+    case GridInfoStrategyFriendlyName:
+      return GridInfoStrategyId;
     case SparklineColumnStrategyFriendlyName:
       return SparklineColumnStrategyId;
     case SparklineStrategyFriendlyName:
@@ -266,6 +271,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return PercentBarStrategyFriendlyName;
     case GradientColumnStrategyId:
       return GradientColumnStrategyFriendlyName;
+    case GridInfoStrategyId:
+      return GridInfoStrategyFriendlyName;
     case SparklineStrategyId:
       return SparklineStrategyFriendlyName;
     case SparklineColumnStrategyId:
@@ -349,6 +356,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return PercentBarGlyph;
     case GradientColumnStrategyId:
       return GradientColumnGlyph;
+    case GridInfoStrategyId:
+      return GridInfoGlyph;
     case SparklineStrategyId:
       return SparklinesGlyph;
     case SparklineColumnStrategyId:
