@@ -41,8 +41,6 @@ interface ToolPanelPopupComponentProps extends StrategyViewPopupProps<ToolPanelP
   onToolPanelHideColumnsDropdown: () => ToolPanelRedux.ToolPanelHideColumnsDropdownAction;
   onToolPanelShowToolPanelsDropdown: () => ToolPanelRedux.ToolPanelShowToolPanelsDropdownAction;
   onToolPanelHideToolPanelsDropdown: () => ToolPanelRedux.ToolPanelHideToolPanelsDropdownAction;
-  onToolPanelShowGridInfoButton: () => ToolPanelRedux.ToolPanelShowGridInfoButtonAction;
-  onToolPanelHideGridInfoButton: () => ToolPanelRedux.ToolPanelHideGridInfoButtonAction;
 }
 
 export enum ToolPanelConfigView {
@@ -113,13 +111,6 @@ class ToolPanelPopupComponent extends React.Component<
           checked={this.props.ToolPanelState.ShowColumnsDropdown}
         >
           Columns Dropdown
-        </Checkbox>
-
-        <Checkbox
-          onChange={checked => this.onShowGridInfoButtonChanged(checked)}
-          checked={this.props.ToolPanelState.ShowGridInfoButton}
-        >
-          About (Grid) Button
         </Checkbox>
       </Flex>
     );
@@ -218,14 +209,6 @@ class ToolPanelPopupComponent extends React.Component<
     }
   }
 
-  onShowGridInfoButtonChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onToolPanelShowGridInfoButton();
-    } else {
-      this.props.onToolPanelHideGridInfoButton();
-    }
-  }
-
   onToolPanelButtonsChanged(selectedValues: AdaptableFunctionButtons) {
     let selectedFunctions: AdaptableFunctionButtons = selectedValues.map(
       sv => StrategyConstants.getIdForStrategyFriendlyName(sv) as AdaptableFunctionButton
@@ -273,8 +256,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ToolPanelRedux.ToolPanelShowToolPanelsDropdown()),
     onToolPanelHideToolPanelsDropdown: () =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanelsDropdown()),
-    onToolPanelShowGridInfoButton: () => dispatch(ToolPanelRedux.ToolPanelShowGridInfoButton()),
-    onToolPanelHideGridInfoButton: () => dispatch(ToolPanelRedux.ToolPanelHideGridInfoButton()),
     onToolPanelSetToolPanels: (toolPanels: AdaptableToolPanels) =>
       dispatch(ToolPanelRedux.ToolPanelSetToolPanels(toolPanels)),
   };

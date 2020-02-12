@@ -22,8 +22,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * export default {
  * Dashboard: {
  *   VisibleToolbars: ['Theme', 'Export', 'Layout', 'Chart'],
- *   VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
- *   ShowGridInfoButton: false,
+ *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
  *   ShowToolbarsDropdown: false,
  *   DashboardVisibility: 'Minimised',
  *   MinimisedHomeToolbarButtonStyle: {

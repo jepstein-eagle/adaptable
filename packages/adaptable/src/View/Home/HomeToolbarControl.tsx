@@ -172,20 +172,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       />
     );
 
-    // gridInfo button - now dead
-    /*
-    let gridInfoButton = (
-      <SimpleButton
-        tooltip="Grid Info"
-        icon={'info'}
-        variant="text"
-        className="ab-DashboardToolbar__Home__info"
-        onClick={() => this.onClickGridInfo()}
-        AccessLevel={AccessLevel.Full}
-      />
-    );
-    */
-
     // functions dropdown
     let functionsDropdown = (
       <DropdownButton
