@@ -38,8 +38,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - set 4 Function Buttons to be visible
  *
- * - hidden the GridInfo button
- *
  * - hidden the Toolbars dropdown
  *
  * - set the Dashboard to be minimised at start-up
@@ -104,8 +102,6 @@ export interface DashboardState extends RunTimeState {
    * This is now deprecated and no longer used
    *
    * Instead please make sure that 'SystemStatus' is included in the Visible Buttons collection
-   *
-   * **Default Value**: true
    */
   ShowSystemStatusButton?: boolean;
 
@@ -113,8 +109,6 @@ export interface DashboardState extends RunTimeState {
    * This is now deprecated and no longer used
    *
    * Instead please make sure that 'GridInfo' is included in Visible Buttons collection
-   *
-   * **Default Value**: true
    */
   ShowGridInfoButton?: boolean;
 
