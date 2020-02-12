@@ -3,7 +3,7 @@ import HomeIcon from "../../src/components/icons/home"
 import SimpleButton from "../../src/components/SimpleButton"
 import { Box, Flex } from "rebass"
 
-export function Dashboard() {
+export default function() {
   return (
     <>
       <Flex bg="accent" color="white" p={2} alignItems="center">
