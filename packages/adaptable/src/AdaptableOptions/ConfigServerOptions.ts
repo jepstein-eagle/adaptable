@@ -2,6 +2,12 @@
  * Options for managing Config Server.
  *
  * This is used for saving state **remotely** (the default is to save state in local storage).
+ *
+ * Note that AdapTable also provides [state lifecycle management functions](_adaptableoptions_stateoptions_.stateoptions.html).
+ *
+ * These allow you full control over managing state hydration, rehydration and persisttence and are now generally preferred by advanced users.
+ *
+ *
  * ```ts
  * configServerOptions = {
  *  enableConfigServer: true,
