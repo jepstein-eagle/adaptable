@@ -17,40 +17,69 @@ function useProxyState<S>(
 }
 
 type DashboardProps = {
-  activeTab?: number
-  setActiveTab?: Dispatch<SetStateAction<number>>
+  title: string
+  activeTab?: number | null
+  setActiveTab?: Dispatch<SetStateAction<number | null>>
+  floating?: boolean
+  setFloating?: Dispatch<SetStateAction<boolean>>
   children: ReactElement<DashboardTabProps>[]
 }
-function Dashboard({ children, activeTab, setActiveTab }: DashboardProps) {
-  const [activeTabProxy, setActiveTabProxy] = useProxyState<number>(activeTab, setActiveTab, 0)
+function Dashboard({
+  title,
+  activeTab,
+  setActiveTab,
+  floating,
+  setFloating,
+  children
+}: DashboardProps) {
+  const [activeTabProxy, setActiveTabProxy] = useProxyState(activeTab, setActiveTab, 0)
+  const [floatingProxy, setFloatingProxy] = useProxyState(floating, setFloating, false)
+
   return (
     <>
-      <Flex bg="accent" color="white" p={2} alignItems="center">
+      <Flex
+        bg="accent"
+        color="white"
+        p={2}
+        alignItems="center"
+        style={{
+          position: floatingProxy ? "absolute" : "static"
+        }}
+      >
         <Flex flex={1} justifyContent="flex-start">
           <SimpleButton
             icon="home"
             variant="text"
             style={{ color: "white", fill: "currentColor" }}
           />
-          {Children.map(children, (child, index) => (
-            <button key={index} onClick={() => setActiveTabProxy(index)}>
-              {child.props.title} {activeTabProxy === index && "(x)"}
-            </button>
-          ))}
+          {floatingProxy === false &&
+            Children.map(children, (child, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setActiveTabProxy(activeTabProxy !== index ? index : null)
+                }}
+              >
+                {child.props.title} {activeTabProxy === index && "(x)"}
+              </button>
+            ))}
         </Flex>
-        <Box>Center</Box>
+        <Box mx={2}>{title}</Box>
         <Flex flex={1} justifyContent="flex-end">
           <Input placeholder="Quick Search" mr={2} />
           <SimpleButton
             icon="arrow-left"
             variant="text"
             style={{ color: "white", fill: "currentColor" }}
+            onClick={() => setFloatingProxy(!floatingProxy)}
           />
         </Flex>
       </Flex>
-      <Flex bg="primary" p={2}>
-        {children[activeTabProxy].props.children}
-      </Flex>
+      {activeTabProxy !== null && floatingProxy === false && (
+        <Flex bg="primary" p={2}>
+          {children[activeTabProxy].props.children}
+        </Flex>
+      )}
     </>
   )
 }
@@ -77,10 +106,9 @@ function DashboardToolbar(props: DashboardToolbarProps) {
 }
 
 export default function() {
-  const [activeTab, setActiveTab] = useState(2)
   return (
     <>
-      <Dashboard activeTab={activeTab} setActiveTab={setActiveTab}>
+      <Dashboard title="Playground">
         <DashboardTab title="Tab 1">
           <DashboardToolbar title="Toolbar 1-1">Content 1-1</DashboardToolbar>
           <DashboardToolbar title="Toolbar 1-2">Content 1-2</DashboardToolbar>
