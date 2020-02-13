@@ -59,7 +59,7 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
         source: 'ContextMenu',
       };
       menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'Edit Percent Bar',
+        Label: 'Edit Gradient Column',
         ComponentName: ScreenPopups.GradientColumnPopup,
         Icon: StrategyConstants.GradientColumnGlyph,
         PopupParams: popUpParams,
