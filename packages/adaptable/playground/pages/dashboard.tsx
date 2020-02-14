@@ -4,7 +4,6 @@ import SimpleButton from "../../src/components/SimpleButton"
 import { Box, Flex } from "rebass"
 import React, {
   useState,
-  Children,
   ReactNode,
   ReactElement,
   Dispatch,
@@ -29,13 +28,21 @@ function usePropState<S>(
 
 function useDraggable(onDrop: (dx: number, dy: number) => void) {
   const startRef = useRef({ x: 0, y: 0 })
-  const targetRef = useRef<HTMLElement>(null)
+  const handleRef = useRef<HTMLElement>()
+  const targetRef = useRef<HTMLElement>()
 
-  const handleRef = useCallback(handleElement => {
-    handleElement?.addEventListener("mousedown", handleMouseDown)
-    return () => {
-      handleElement?.removeEventListener("mousedown", handleMouseDown)
+  const handleRefCallback = useCallback(newNode => {
+    const oldNode = handleRef.current
+
+    if (oldNode) {
+      oldNode.removeEventListener("mousedown", handleMouseDown)
     }
+
+    if (newNode) {
+      newNode.addEventListener("mousedown", handleMouseDown)
+    }
+
+    handleRef.current = newNode
   }, [])
 
   const applyTransform = (dx: number, dy: number) => {
@@ -61,7 +68,7 @@ function useDraggable(onDrop: (dx: number, dy: number) => void) {
     applyTransform(event.pageX - startRef.current.x, event.pageY - startRef.current.y)
   }
 
-  return { handleRef, targetRef }
+  return { handleRef: handleRefCallback, targetRef }
 }
 
 type DashboardPosition = {
@@ -140,7 +147,7 @@ function Dashboard({
             style={{ color: "white", fill: "currentColor" }}
           />
           {!floating &&
-            Children.map(children, (child, index) => (
+            React.Children.map(children, (child, index) => (
               <button
                 key={index}
                 onClick={() => {
