@@ -2,9 +2,20 @@ import Input from "../../src/components/Input"
 import HomeIcon from "../../src/components/icons/home"
 import SimpleButton from "../../src/components/SimpleButton"
 import { Box, Flex } from "rebass"
-import React, { useState, Children, ReactNode, ReactElement, Dispatch, SetStateAction } from "react"
+import React, {
+  useState,
+  Children,
+  ReactNode,
+  ReactElement,
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useEffect,
+  useCallback,
+  CSSProperties
+} from "react"
 
-function useProxyState<S>(
+function usePropState<S>(
   state: S | undefined,
   setState: Dispatch<SetStateAction<S>> | undefined,
   initialState: S | (() => S)
@@ -16,35 +27,111 @@ function useProxyState<S>(
   ]
 }
 
+function useDraggable(onDrop: (dx: number, dy: number) => void) {
+  const startRef = useRef({ x: 0, y: 0 })
+  const targetRef = useRef<HTMLElement>(null)
+
+  const handleRef = useCallback(handleElement => {
+    handleElement?.addEventListener("mousedown", handleMouseDown)
+    return () => {
+      handleElement?.removeEventListener("mousedown", handleMouseDown)
+    }
+  }, [])
+
+  const applyTransform = (dx: number, dy: number) => {
+    if (!targetRef.current) return
+    targetRef.current.style.transform = `translate3d(${dx}px, ${dy}px, 0)`
+  }
+
+  const handleMouseDown = (event: MouseEvent) => {
+    startRef.current.x = event.pageX
+    startRef.current.y = event.pageY
+    document.addEventListener("mouseup", handleMouseUp)
+    document.addEventListener("mousemove", handleMouseMove)
+  }
+
+  const handleMouseUp = (event: MouseEvent) => {
+    applyTransform(0, 0)
+    onDrop(event.pageX - startRef.current.x, event.pageY - startRef.current.y)
+    document.removeEventListener("mouseup", handleMouseUp)
+    document.removeEventListener("mousemove", handleMouseMove)
+  }
+
+  const handleMouseMove = (event: MouseEvent) => {
+    applyTransform(event.pageX - startRef.current.x, event.pageY - startRef.current.y)
+  }
+
+  return { handleRef, targetRef }
+}
+
+type DashboardPosition = {
+  x: number
+  y: number
+}
+
 type DashboardProps = {
   title: string
-  activeTab?: number | null
-  setActiveTab?: Dispatch<SetStateAction<number | null>>
+  activeTab?: number
+  onActiveTabChange?: Dispatch<SetStateAction<number>>
+  collapsed?: boolean
+  onCollapsedChange?: Dispatch<SetStateAction<boolean>>
   floating?: boolean
-  setFloating?: Dispatch<SetStateAction<boolean>>
+  onFloatingChange?: Dispatch<SetStateAction<boolean>>
+  position?: DashboardPosition
+  onPositionChange?: Dispatch<SetStateAction<DashboardPosition>>
   children: ReactElement<DashboardTabProps>[]
 }
 function Dashboard({
   title,
-  activeTab,
-  setActiveTab,
-  floating,
-  setFloating,
+  activeTab: controlledActiveTab,
+  onActiveTabChange: onControlledActiveTabChange,
+  collapsed: controlledCollapsed,
+  onCollapsedChange: onControlledCollapsedChange,
+  floating: controlledFloating,
+  onFloatingChange: onControlledFloatingChange,
+  position: controlledPosition,
+  onPositionChange: onControlledPositionChange,
   children
 }: DashboardProps) {
-  const [activeTabProxy, setActiveTabProxy] = useProxyState(activeTab, setActiveTab, 0)
-  const [floatingProxy, setFloatingProxy] = useProxyState(floating, setFloating, false)
+  const [activeTab, setActiveTab] = usePropState(
+    controlledActiveTab,
+    onControlledActiveTabChange,
+    0
+  )
+  const [collapsed, setCollapsed] = usePropState(
+    controlledCollapsed,
+    onControlledCollapsedChange,
+    false
+  )
+  const [floating, setFloating] = usePropState(
+    controlledFloating,
+    onControlledFloatingChange,
+    false
+  )
+  const [position, setPosition] = usePropState(controlledPosition, onControlledPositionChange, {
+    x: 0,
+    y: 0
+  })
+
+  const { handleRef, targetRef } = useDraggable((dx, dy) => {
+    setPosition(position => ({ x: position.x + dx, y: position.y + dy }))
+  })
+
+  const floatingStyle: CSSProperties = {
+    position: "absolute",
+    left: position.x,
+    top: position.y
+  }
 
   return (
     <>
       <Flex
+        ref={targetRef}
         bg="accent"
         color="white"
         p={2}
         alignItems="center"
-        style={{
-          position: floatingProxy ? "absolute" : "static"
-        }}
+        style={floating ? floatingStyle : undefined}
       >
         <Flex flex={1} justifyContent="flex-start">
           <SimpleButton
@@ -52,32 +139,46 @@ function Dashboard({
             variant="text"
             style={{ color: "white", fill: "currentColor" }}
           />
-          {floatingProxy === false &&
+          {!floating &&
             Children.map(children, (child, index) => (
               <button
                 key={index}
                 onClick={() => {
-                  setActiveTabProxy(activeTabProxy !== index ? index : null)
+                  if (activeTab === index) {
+                    setCollapsed(!collapsed)
+                  } else {
+                    setActiveTab(index)
+                    setCollapsed(false)
+                  }
                 }}
               >
-                {child.props.title} {activeTabProxy === index && "(x)"}
+                {child.props.title} {!collapsed && activeTab === index && "(x)"}
               </button>
             ))}
         </Flex>
-        <Box mx={2}>{title}</Box>
+        {floating ? (
+          <Box mx={2} ref={handleRef} key="title-drag" style={{ cursor: "move" }}>
+            {title}
+          </Box>
+        ) : (
+          <Box mx={2} key="title">
+            {title}
+          </Box>
+        )}
         <Flex flex={1} justifyContent="flex-end">
           <Input placeholder="Quick Search" mr={2} />
           <SimpleButton
-            icon="arrow-left"
+            icon={floating ? "arrow-right" : "arrow-left"}
             variant="text"
             style={{ color: "white", fill: "currentColor" }}
-            onClick={() => setFloatingProxy(!floatingProxy)}
+            onClick={() => setFloating(!floating)}
           />
         </Flex>
       </Flex>
-      {activeTabProxy !== null && floatingProxy === false && (
+      {!floating && !collapsed && (
         <Flex bg="primary" p={2}>
-          {children[activeTabProxy].props.children}
+          <Flex flex={1}>{children[activeTab].props.children}</Flex>
+          <SimpleButton icon="triangle-up" variant="text" onClick={() => setCollapsed(true)} />
         </Flex>
       )}
     </>
