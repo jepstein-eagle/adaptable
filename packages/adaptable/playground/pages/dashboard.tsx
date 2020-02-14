@@ -78,49 +78,48 @@ type DashboardPosition = {
 
 type DashboardProps = {
   title: string
-  activeTab?: number
-  onActiveTabChange?: Dispatch<SetStateAction<number>>
-  collapsed?: boolean
-  onCollapsedChange?: Dispatch<SetStateAction<boolean>>
-  floating?: boolean
-  onFloatingChange?: Dispatch<SetStateAction<boolean>>
-  position?: DashboardPosition
-  onPositionChange?: Dispatch<SetStateAction<DashboardPosition>>
   snapThreshold?: number
   children: ReactElement<DashboardTabProps>[]
+  // activeTab
+  activeTab?: number
+  defaultActiveTab?: number
+  onActiveTabChange?: Dispatch<SetStateAction<number>>
+  // collapsed
+  collapsed?: boolean
+  defaultCollapsed?: boolean
+  onCollapsedChange?: Dispatch<SetStateAction<boolean>>
+  // floating
+  floating?: boolean
+  defaultFloating?: boolean
+  onFloatingChange?: Dispatch<SetStateAction<boolean>>
+  // position
+  position?: DashboardPosition
+  defaultPosition?: DashboardPosition
+  onPositionChange?: Dispatch<SetStateAction<DashboardPosition>>
 }
-function Dashboard({
-  title,
-  activeTab: controlledActiveTab,
-  onActiveTabChange: onControlledActiveTabChange,
-  collapsed: controlledCollapsed,
-  onCollapsedChange: onControlledCollapsedChange,
-  floating: controlledFloating,
-  onFloatingChange: onControlledFloatingChange,
-  position: controlledPosition,
-  onPositionChange: onControlledPositionChange,
-  snapThreshold = 20,
-  children
-}: DashboardProps) {
+function Dashboard(props: DashboardProps) {
+  const { title, snapThreshold = 20, children } = props
+
   const [activeTab, setActiveTab] = usePropState(
-    controlledActiveTab,
-    onControlledActiveTabChange,
-    0
+    props.activeTab,
+    props.onActiveTabChange,
+    props.defaultActiveTab || 0
   )
   const [collapsed, setCollapsed] = usePropState(
-    controlledCollapsed,
-    onControlledCollapsedChange,
-    false
+    props.collapsed,
+    props.onCollapsedChange,
+    props.defaultCollapsed || false
   )
   const [floating, setFloating] = usePropState(
-    controlledFloating,
-    onControlledFloatingChange,
-    false
+    props.floating,
+    props.onFloatingChange,
+    props.defaultFloating || false
   )
-  const [position, setPosition] = usePropState(controlledPosition, onControlledPositionChange, {
-    x: 0,
-    y: 0
-  })
+  const [position, setPosition] = usePropState(
+    props.position,
+    props.onPositionChange,
+    props.defaultPosition || { x: 0, y: 0 }
+  )
 
   const { handleRef, targetRef } = useDraggable((dx, dy) => {
     setPosition(oldPosition => {
