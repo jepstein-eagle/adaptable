@@ -185,7 +185,7 @@ function Dashboard({
             {title}
           </Box>
         ) : (
-          <Box mx={2} key="title">
+          <Box mx={2} key="title" onDoubleClick={() => setFloating(true)}>
             {title}
           </Box>
         )}
