@@ -65,7 +65,6 @@
  * We have selected different Audit Destinations for each type (sometimes choosing more than one destination).
  */
 export interface AuditOptions {
-  httpChannel?: string;
   /**
    * Whether to audit cell edits (changes to cell data directy by user action).
    *
@@ -116,7 +115,16 @@ export interface AuditOptions {
   auditTickingDataUpdates?: AuditDestinationOptions;
 
   /**
-   * How often (in seconds) the Audit Log should ping to check that the listening service is up and running (if its been set).
+   *  The name of the channnel to use if auditing to an Http Channel.
+   *
+   * **Note: the Audit Log will only send audit updates to the Http Channel if one of the 4 audit options has *auditToHttpChannel* as set to true.**
+   *
+   *  **Default Value: '/auditlog' **
+   */
+  httpChannel?: string;
+
+  /**
+   * How often (in seconds) the Audit Log should ping to check that the Http Channel is up and running (if its been set).
    *
    * **Note: the Audit Log will only ping if at least one of the 4 audit options has *auditToHttpChannel* as set to true.**
    *

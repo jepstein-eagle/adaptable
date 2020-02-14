@@ -38,6 +38,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
       auditAsEvent: false,
       auditAsAlert: false,
     },
+    httpChannel: '/auditlog',
     pingInterval: 60,
     auditLogsSendInterval: 1,
     alertMessageType: 'Info',

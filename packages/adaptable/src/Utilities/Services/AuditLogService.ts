@@ -336,7 +336,7 @@ export class AuditLogService implements IAuditLogService {
         }
       }
     };
-    var url = this.adaptable.adaptableOptions.auditOptions.httpChannel || '/auditlog';
+    var url = this.adaptable.adaptableOptions.auditOptions.httpChannel;
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send(JSON.stringify(pingMessage));
@@ -373,7 +373,7 @@ export class AuditLogService implements IAuditLogService {
           }
         }
       };
-      var url = this.adaptable.adaptableOptions.auditOptions.httpChannel || '/auditlog';
+      var url = this.adaptable.adaptableOptions.auditOptions.httpChannel;
       //we make the request async
       xhr.open('POST', url, true);
       xhr.setRequestHeader('Content-type', 'application/json');
