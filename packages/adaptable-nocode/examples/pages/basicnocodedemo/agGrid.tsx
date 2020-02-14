@@ -7,7 +7,10 @@ import '@ag-grid-community/core/dist/styles/ag-theme-balham-dark.css';
 import '../../../src/index.scss'; // from '@adaptabletools/adaptable-nocode/index.css'
 import '../../../src/themes/dark.scss'; // from '@adaptabletools/adaptable-nocode/themes/dark.css'
 
+import AdaptableNoCodeWizard from '../../../src';
+
 import './index.css';
+import { AdaptableOptions, PredefinedConfig } from '@adaptabletools/adaptable/types';
 
 /*
 Basic demo of wizard that allow d&d of a json with an array contents

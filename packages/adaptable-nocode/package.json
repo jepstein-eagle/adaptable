@@ -98,7 +98,7 @@
     "@adaptabletools/adaptable": ">=5.1.1"
   },
   "scripts": {
-    "link-core": "rimraf node_modules/@adaptabletools && symlink-dir ../adaptable ./node_modules/@adaptabletools/adaptable",
+    "link-core": "rimraf node_modules/@types/react-native && rimraf node_modules/@adaptabletools && symlink-dir ../adaptable ./node_modules/@adaptabletools/adaptable",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
     "registry-publish": "npm run build-package-json && npm publish dist",
     "registry-publish-canary": "npm run build-package-json && npm publish --tag canary dist",
