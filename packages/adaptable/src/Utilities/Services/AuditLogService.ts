@@ -336,7 +336,7 @@ export class AuditLogService implements IAuditLogService {
         }
       }
     };
-    var url = '/auditlog';
+    var url = this.adaptable.adaptableOptions.auditOptions.httpChannel || '/auditlog';
     xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-type', 'application/json');
     xhr.send(JSON.stringify(pingMessage));
@@ -373,7 +373,7 @@ export class AuditLogService implements IAuditLogService {
           }
         }
       };
-      var url = '/auditlog';
+      var url = this.adaptable.adaptableOptions.auditOptions.httpChannel || '/auditlog';
       //we make the request async
       xhr.open('POST', url, true);
       xhr.setRequestHeader('Content-type', 'application/json');
@@ -451,7 +451,7 @@ export class AuditLogService implements IAuditLogService {
       Header: header,
       Msg: message,
       AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-        MessageType.Error,
+        MessageType.Info,
         this.adaptable.adaptableOptions.auditOptions!.alertShowAsPopup as boolean
       ),
     };

@@ -30,6 +30,14 @@ import {
   ToolbarButtonClickedInfo,
 } from './Api/Events/ToolbarButtonClicked';
 import { AdaptableReadyInfo } from './Api/Events/AdaptableReady';
+import {
+  AuditLogEventArgs,
+  StateChangedDetails,
+  StatePropertyChangedDetails,
+  StateObjectChangedDetails,
+  FunctionAppliedDetails,
+  DataChangedDetails,
+} from './Api/Events/AuditEvents';
 
 // Base Types
 export {
@@ -103,4 +111,10 @@ export {
   ThemeChangedEventArgs,
   ToolbarVisibilityChangedInfo,
   ToolbarVisibilityChangedEventArgs,
+  AuditLogEventArgs,
+  StateChangedDetails,
+  StatePropertyChangedDetails,
+  StateObjectChangedDetails,
+  FunctionAppliedDetails,
+  DataChangedDetails,
 };

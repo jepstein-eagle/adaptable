@@ -65,6 +65,7 @@
  * We have selected different Audit Destinations for each type (sometimes choosing more than one destination).
  */
 export interface AuditOptions {
+  httpChannel?: string;
   /**
    * Whether to audit cell edits (changes to cell data directy by user action).
    *
