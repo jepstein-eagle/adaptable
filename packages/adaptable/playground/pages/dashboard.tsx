@@ -86,6 +86,7 @@ type DashboardProps = {
   onFloatingChange?: Dispatch<SetStateAction<boolean>>
   position?: DashboardPosition
   onPositionChange?: Dispatch<SetStateAction<DashboardPosition>>
+  snapThreshold?: number
   children: ReactElement<DashboardTabProps>[]
 }
 function Dashboard({
@@ -98,6 +99,7 @@ function Dashboard({
   onFloatingChange: onControlledFloatingChange,
   position: controlledPosition,
   onPositionChange: onControlledPositionChange,
+  snapThreshold = 20,
   children
 }: DashboardProps) {
   const [activeTab, setActiveTab] = usePropState(
@@ -121,7 +123,16 @@ function Dashboard({
   })
 
   const { handleRef, targetRef } = useDraggable((dx, dy) => {
-    setPosition(position => ({ x: position.x + dx, y: position.y + dy }))
+    setPosition(oldPosition => {
+      const newPosition = { x: oldPosition.x + dx, y: oldPosition.y + dy }
+
+      if (newPosition.y < snapThreshold) {
+        setFloating(false)
+        return oldPosition
+      }
+
+      return newPosition
+    })
   })
 
   const floatingStyle: CSSProperties = {
