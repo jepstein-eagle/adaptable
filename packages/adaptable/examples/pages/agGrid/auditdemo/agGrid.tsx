@@ -30,7 +30,7 @@ function InitAdaptableDemo() {
     adaptableId: 'audit demo',
 
     auditOptions: {
-      httpChannel: '/auditlog',
+      httpChannel: 'https://adaptable-auditlog.netlify.com/.netlify/functions/auditlog',
       auditInternalStateChanges: {
         //  auditAsEvent: true,
         //  auditToConsole: true,
