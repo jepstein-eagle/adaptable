@@ -5,7 +5,7 @@
  *
  * Likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
  *
- * Each Audit message is essentially a combination of an `AuditMessage, an `AuditTrigger` and an `AuditDestination`, packaged as a simple JSON object.
+ * Each Audit message is essentially a combination of an `AuditMessage`, an `AuditTrigger` and an `AuditDestination`, packaged as a simple JSON object.
  *
  * There are 5 AuditTriggers and 4 AuditDestinations.
  *
@@ -25,7 +25,7 @@
  *
  * The 4 available Audit Destinations are:
  *
- * - **Http Channel**: If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. the Elastic Stack).  You can also, otpionally, set the name of the Http Channel (or use the default of '/auditlog').
+ * - **Http Channel**: If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. the Elastic Stack).  You can also, optionally, set the name of the Http Channel (or use the default of '/auditlog').
  *
  * - **Console**: Audits messages to the console - useful for testing, support and debug purposes
  *
