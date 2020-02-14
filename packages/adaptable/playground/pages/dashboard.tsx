@@ -164,7 +164,13 @@ function Dashboard({
             ))}
         </Flex>
         {floating ? (
-          <Box mx={2} ref={handleRef} key="title-drag" style={{ cursor: "move" }}>
+          <Box
+            mx={2}
+            ref={handleRef}
+            key="title-drag"
+            style={{ cursor: "move" }}
+            onDoubleClick={() => setFloating(false)}
+          >
             {title}
           </Box>
         ) : (
