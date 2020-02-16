@@ -89,6 +89,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  **/
 export interface ConditionalStyleState extends RunTimeState {
   ConditionalStyles?: ConditionalStyle[];
+  ExcludeGroupedRows?: boolean;
 }
 
 /**
@@ -121,6 +122,15 @@ export interface ConditionalStyle extends AdaptableObject {
    * The Style object defines fore and back colours, font size and other basic style properties.  See [Style](_predefinedconfig_common_istyle_.istyle.html) for more details.
    */
   Style?: AdaptableStyle;
+
+  /**
+   * Whether to show the Style for Grouped Rows
+   *
+   * Only applies where the `ConditionalStyleScope` is Row.
+   *
+   * If unset, will default to false.
+   */
+  ExcludeGroupedRows?: boolean;
 
   //  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }

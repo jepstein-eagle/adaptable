@@ -1458,6 +1458,22 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  public setRowClassRules(
+    rowClassRules: any,
+
+    type: 'ConditionalStyle'
+  ) {
+    const localRowClassRules = this.gridOptions.rowClassRules;
+    // do we need to remove stuff or test?  Im not sure...
+    if (localRowClassRules) {
+      // do something?
+      if (type == 'ConditionalStyle') {
+        console.log(localRowClassRules);
+      }
+    }
+    this.gridOptions.rowClassRules = rowClassRules;
+  }
+
   public forAllRowNodesDo(func: (rowNode: any) => any) {
     this.gridOptions.api!.getModel().forEachNode(rowNode => {
       func(rowNode);

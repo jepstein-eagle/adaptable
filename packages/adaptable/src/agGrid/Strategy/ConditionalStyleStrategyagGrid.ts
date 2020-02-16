@@ -9,6 +9,7 @@ import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
+import conditionalStyle from '../../components/icons/conditional-style';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -135,24 +136,20 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             */
           } else if (cs.ConditionalStyleScope == 'Row') {
             rowClassRules[styleName] = function(params: any) {
-              return ExpressionHelper.checkForExpressionFromRowNode(
-                cs.Expression,
-                params.node,
-                columns,
-                theadaptable
-              );
+              let shouldStyleRow: boolean = true;
+              if (cs.ExcludeGroupedRows && theadaptable.isGroupRowNode(params.node)) {
+                shouldStyleRow = false;
+              }
+              if (shouldStyleRow) {
+                return ExpressionHelper.checkForExpressionFromRowNode(
+                  cs.Expression,
+                  params.node,
+                  columns,
+                  theadaptable
+                );
+              }
             };
-
-            theadaptable.gridOptions.rowClassRules = rowClassRules;
-
-            //  cellClassRules[styleName] = function(params: any) {
-            //    return ExpressionHelper.checkForExpressionFromRowNode(
-            //     cs.Expression,
-            //     params.node,
-            //     columns,
-            //     theadaptable
-            //   );
-            // };
+            theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
           }
         });
         theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');

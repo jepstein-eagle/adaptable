@@ -74,10 +74,10 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
             Key: 'Report',
             Value: (this.props.Data as Glue42Schedule)!.Glue42Report.ReportName,
           },
-          {
-            Key: 'Export As',
-            Value: (this.props.Data as Glue42Schedule)!.Transmission,
-          },
+          //   {
+          //     Key: 'Export As',
+          //     Value: (this.props.Data as Glue42Schedule)!.Transmission,
+          //   },
         ];
         keyValuePairs.push(...glue42KVP);
         break;
