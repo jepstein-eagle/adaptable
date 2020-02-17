@@ -1,26 +1,32 @@
-// import App from 'next/app'
-import { ThemeProvider } from 'styled-components';
-import theme from '../../src/theme';
-import '../../src/index.scss';
+import { ThemeProvider } from "styled-components"
+import theme from "../../src/theme"
+import "../../src/index.scss"
+import Navigation from "../components/navigation"
 
-function MyApp({ Component, pageProps }) {
+const NAV_WIDTH = 240
+const PADDING = 10
+
+export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
+      <div
+        style={{
+          width: NAV_WIDTH,
+          height: "100vh",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          background: "#eee",
+          overflow: "auto",
+          padding: PADDING,
+          boxSizing: "border-box"
+        }}
+      >
+        <Navigation />
+      </div>
+      <div style={{ padding: PADDING, paddingLeft: NAV_WIDTH + PADDING }}>
+        <Component {...pageProps} />
+      </div>
     </ThemeProvider>
-  );
+  )
 }
-
-// Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
-//
-//   return { ...appProps }
-// }
-
-export default MyApp;

@@ -27,6 +27,9 @@ function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
+  adaptableOptions.filterOptions = {
+    clearFiltersOnStartUp: true,
+  };
 
   const adaptableApi = Adaptable.init(adaptableOptions);
 }

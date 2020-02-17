@@ -45,6 +45,12 @@ function InitAdaptableDemo() {
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
+  adaptableOptions.filterOptions = {
+    clearFiltersOnStartUp: true,
+  };
+  adaptableOptions.searchOptions = {
+    clearSearchesOnStartUp: true,
+  };
 
   api = Adaptable.init(adaptableOptions);
 

@@ -125,6 +125,9 @@ class Glue42ToolbarControlComponent extends React.Component<
           disabled={isLiveGlue42Report || !isCompletedReport}
           AccessLevel={this.props.AccessLevel}
         />
+        {/*
+     
+   
         {isLiveGlue42Report ? (
           <ButtonPause
             marginLeft={1}
@@ -144,6 +147,7 @@ class Glue42ToolbarControlComponent extends React.Component<
             AccessLevel={this.props.AccessLevel}
           />
         )}
+          */}
         {isCompletedReport && (
           <Flex
             className={join(

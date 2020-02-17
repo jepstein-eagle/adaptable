@@ -443,6 +443,7 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
     ColumnCategoryId: undefined,
     Style: CreateEmptyStyle(),
     ConditionalStyleScope: 'Row',
+    ExcludeGroupedRows: false,
     Expression: ExpressionHelper.CreateEmptyExpression(),
   };
 }

@@ -14,12 +14,7 @@ export type InputProps = HTMLProps<HTMLInputElement> & {
 } & BoxProps;
 
 const Input = (props: InputProps) => {
-  const {
-    disabled,
-
-    className,
-    ...inputProps
-  } = props;
+  const { disabled, className, ...inputProps } = props;
 
   let type = 'text';
 
@@ -30,6 +25,7 @@ const Input = (props: InputProps) => {
   if (type === 'string') {
     type = 'text';
   }
+
   return (
     <Box
       as="input"

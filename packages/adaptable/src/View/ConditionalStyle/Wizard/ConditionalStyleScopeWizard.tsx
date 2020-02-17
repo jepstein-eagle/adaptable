@@ -18,6 +18,7 @@ import Dropdown from '../../../components/Dropdown';
 
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
+import CheckBox from '../../../components/CheckBox';
 
 export interface ConditionalStyleScopeWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
@@ -28,6 +29,7 @@ export interface ConditionalStyleScopeWizardState {
   ColumnId: string;
   ColumnCategoryId: string;
   ConditionalStyleScope: 'Column' | 'Row' | 'ColumnCategory'; //| 'DataType';
+  ExcludeGroupedRows: boolean;
   // DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
 
@@ -42,6 +44,7 @@ export class ConditionalStyleScopeWizard
         ? ''
         : this.props.Data.ColumnCategoryId,
       ConditionalStyleScope: this.props.Data.ConditionalStyleScope,
+      ExcludeGroupedRows: this.props.Data.ExcludeGroupedRows,
       //  DataType: this.props.Data.DataType,
     };
   }
@@ -76,6 +79,16 @@ export class ConditionalStyleScopeWizard
           >
             Whole Row
           </Radio>
+          {this.state.ConditionalStyleScope == 'Row' && (
+            <CheckBox
+              marginRight={3}
+              marginLeft={5}
+              onChange={(checked: boolean) => this.onExludeGroupedRowsChanged(checked)}
+              checked={this.state.ExcludeGroupedRows}
+            >
+              Exclude Grouped Rows
+            </CheckBox>
+          )}
 
           <HelpBlock marginBottom={1}>Apply the Conditional Style to a single Column</HelpBlock>
 
@@ -273,6 +286,12 @@ export class ConditionalStyleScopeWizard
     }
   }
 
+  private onExludeGroupedRowsChanged(checked: boolean) {
+    this.setState({ ExcludeGroupedRows: checked } as ConditionalStyleScopeWizardState, () =>
+      this.props.UpdateGoBackState()
+    );
+  }
+
   public canNext(): boolean {
     if (!this.state.ConditionalStyleScope == null) {
       return false;
@@ -305,6 +324,7 @@ export class ConditionalStyleScopeWizard
     this.props.Data.ColumnId = this.state.ColumnId;
     this.props.Data.ColumnCategoryId = this.state.ColumnCategoryId;
     this.props.Data.ConditionalStyleScope = this.state.ConditionalStyleScope;
+    this.props.Data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
     //  this.props.Data.DataType =
     //    this.state.ConditionalStyleScope == 'DataType' ? this.state.DataType : undefined;
   }

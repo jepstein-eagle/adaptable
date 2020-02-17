@@ -60,7 +60,8 @@ export class Glue42Service implements IGlue42Service {
             StringExtensions.IsNotNullOrEmpty(glue42State.Username) &&
             StringExtensions.IsNotNullOrEmpty(glue42State.Password)
           ) {
-            this.login(glue42State.Username, glue42State.Password, glue42State.GatewayURL);
+            this.adaptable.api.glue42Api.setGlue42RunningOn();
+            // this.login(glue42State.Username, glue42State.Password, glue42State.GatewayURL);
           }
         } else {
           this.adaptable.api.glue42Api.setGlue42AvailableOff();

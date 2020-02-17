@@ -84,4 +84,15 @@ export interface SearchOptions {
    * **Default Value: None**
    */
   serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort';
+
+  /**
+   * Whether to clear all searches when AdapTable loads.
+   *
+   * Used in the rare scenario when the user wants no previous searches to be re-applied at startup
+   *
+   * Note: a neater implementation would be to use the state management functions
+   *
+   * **Default Value: False**
+   */
+  clearSearchesOnStartUp?: boolean;
 }
