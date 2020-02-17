@@ -1,3 +1,7 @@
+## 6.0.8
+
+Doing a proper merge of recent changes in Dev
+
 ## 6.0.7
 
 More Audit Log related types exported
