@@ -31,6 +31,7 @@ function InitAdaptableDemo() {
 
     auditOptions: {
       httpChannel: 'https://adaptable-auditlog.netlify.com/.netlify/functions/auditlog',
+      alertShowAsPopup: true,
       auditInternalStateChanges: {
         //  auditAsEvent: true,
         //  auditToConsole: true,
@@ -48,9 +49,9 @@ function InitAdaptableDemo() {
         //  auditToConsole: true,
       },
       auditCellEdits: {
-        // auditAsEvent: true,
+        auditAsAlert: true,
         //  auditToConsole: true,
-        auditToHttpChannel: true,
+        //  auditToHttpChannel: true,
       },
     },
   };

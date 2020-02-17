@@ -188,7 +188,7 @@ export function CreateInternalAlertDefinitionForMessages(
     Expression: null,
     MessageType: messageType,
     AlertProperties: {
-      ShowPopup: showPopup ? showPopup : ALERT_DEFAULT_SHOW_POPUP,
+      ShowPopup: showPopup != null && showPopup != undefined ? showPopup : ALERT_DEFAULT_SHOW_POPUP,
     },
   };
 }
