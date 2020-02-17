@@ -59,7 +59,7 @@ export class GradientColumnSummaryComponent extends React.Component<
         <StrategyHeader
           key={StrategyConstants.GradientColumnStrategyFriendlyName}
           FunctionName={StrategyConstants.GradientColumnStrategyId}
-          StrategySummary={'No Percent Bar'}
+          StrategySummary={'No Gradient Column'}
           onNew={() => this.onNew()}
           NewButtonTooltip={StrategyConstants.GradientColumnStrategyFriendlyName}
           AccessLevel={this.props.AccessLevel}
@@ -70,7 +70,7 @@ export class GradientColumnSummaryComponent extends React.Component<
         <StrategyDetail
           key={StrategyConstants.GradientColumnStrategyFriendlyName}
           Item1={<StrategyProfile FunctionName={StrategyConstants.GradientColumnStrategyId} />}
-          Item2={'Percent Bar set'}
+          Item2={'Gradient Column set'}
           ConfigEnity={GradientColumn}
           showShare={this.props.TeamSharingActivated}
           EntityType={StrategyConstants.GradientColumnStrategyFriendlyName}

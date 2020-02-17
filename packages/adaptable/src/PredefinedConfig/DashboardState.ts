@@ -22,8 +22,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * export default {
  * Dashboard: {
  *   VisibleToolbars: ['Theme', 'Export', 'Layout', 'Chart'],
- *   VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
- *   ShowGridInfoButton: false,
+ *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
  *   ShowToolbarsDropdown: false,
  *   DashboardVisibility: 'Minimised',
  *   MinimisedHomeToolbarButtonStyle: {
@@ -38,8 +37,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * - set 5 Toolbars to be visible
  *
  * - set 4 Function Buttons to be visible
- *
- * - hidden the GridInfo button
  *
  * - hidden the Toolbars dropdown
  *
@@ -102,24 +99,16 @@ export interface DashboardState extends RunTimeState {
   DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
 
   /**
-   * Whether to show the System Status button in the Home Toolbar.
+   * This is now deprecated and no longer used
    *
-   * If 'true' then the button will be visible; clicking the button will open the System Status popup showing any System Status messages.
-   *
-   * The colour of the button will reflect the `StatusType` of the last System Status message received.
-   *
-   * **Default Value**: true
+   * Instead please make sure that 'SystemStatus' is included in the Visible Buttons collection
    */
   ShowSystemStatusButton?: boolean;
 
   /**
-   * Whether to show the Grid Info button in the Home Toolbar.
+   * This is now deprecated and no longer used
    *
-   * If 'true' then the button will be visible; clicking the button will open the GridInfo screen giving details of the Current Grid, version, row count etc.
-   *
-   * The GridInfo screen also a tab allowing you to see the currently selected set of Adaptable Options.
-   *
-   * **Default Value**: true
+   * Instead please make sure that 'GridInfo' is included in Visible Buttons collection
    */
   ShowGridInfoButton?: boolean;
 

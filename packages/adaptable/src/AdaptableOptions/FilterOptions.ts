@@ -10,6 +10,7 @@
  *  useVendorFilterFormStyle: true,
  *  useAdaptableQuickFilter: false,
  *  autoApplyFilter: false,
+ *  clearFiltersOnStartUp: true,
  *  filterActionOnUserDataChange: {
  *   RunFilter: 'Throttle',
  *   ThrottleDelay: 50
@@ -86,6 +87,17 @@ export interface FilterOptions {
    * **Default Value: true**
    */
   autoApplyFilter?: boolean;
+
+  /**
+   * Whether to clear all applied filters when AdapTable loads.
+   *
+   * Used in the rare scenario when the user wants no filtering to be re-applied at startup
+   *
+   * Note: a neater implementation would be to use the state management functions
+   *
+   * **Default Value: False**
+   */
+  clearFiltersOnStartUp?: boolean;
 }
 
 /**

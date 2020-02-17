@@ -35,10 +35,6 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
   onDashboardHideColumnsDropdown: () => DashboardRedux.DashboardHideColumnsDropdownAction;
   onDashboardShowToolbarsDropdown: () => DashboardRedux.DashboardShowToolbarsDropdownAction;
   onDashboardHideToolbarsDropdown: () => DashboardRedux.DashboardHideToolbarsDropdownAction;
-  onDashboardShowSystemStatusButton: () => DashboardRedux.DashboardShowSystemStatusButtonAction;
-  onDashboardHideSystemStatusButton: () => DashboardRedux.DashboardHideSystemStatusButtonAction;
-  onDashboardShowGridInfoButton: () => DashboardRedux.DashboardShowGridInfoButtonAction;
-  onDashboardHideGridInfoButton: () => DashboardRedux.DashboardHideGridInfoButtonAction;
 
   onDashboardSetToolbars: (
     StrategyConstants: string[]
@@ -126,20 +122,6 @@ class DashboardPopupComponent extends React.Component<
           checked={this.props.DashboardState.ShowToolbarsDropdown}
         >
           Toolbars Dropdown
-        </Checkbox>
-
-        <Checkbox
-          onChange={checked => this.onShowSystemStatusButtonChanged(checked)}
-          checked={this.props.DashboardState.ShowSystemStatusButton}
-        >
-          System Status Button
-        </Checkbox>
-
-        <Checkbox
-          onChange={checked => this.onShowGridInfoButtonChanged(checked)}
-          checked={this.props.DashboardState.ShowGridInfoButton}
-        >
-          About (Grid) Button
         </Checkbox>
       </Flex>
     );
@@ -238,22 +220,6 @@ class DashboardPopupComponent extends React.Component<
     }
   }
 
-  onShowSystemStatusButtonChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardShowSystemStatusButton();
-    } else {
-      this.props.onDashboardHideSystemStatusButton();
-    }
-  }
-
-  onShowGridInfoButtonChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardShowGridInfoButton();
-    } else {
-      this.props.onDashboardHideGridInfoButton();
-    }
-  }
-
   onDashboardButtonsChanged(selectedValues: string[]) {
     let selectedFunctions = selectedValues.map(sv =>
       StrategyConstants.getIdForStrategyFriendlyName(sv)
@@ -302,12 +268,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onDashboardHideColumnsDropdown: () => dispatch(DashboardRedux.DashboardHideColumnsDropdown()),
     onDashboardShowToolbarsDropdown: () => dispatch(DashboardRedux.DashboardShowToolbarsDropdown()),
     onDashboardHideToolbarsDropdown: () => dispatch(DashboardRedux.DashboardHideToolbarsDropdown()),
-    onDashboardShowSystemStatusButton: () =>
-      dispatch(DashboardRedux.DashboardShowSystemStatusButton()),
-    onDashboardHideSystemStatusButton: () =>
-      dispatch(DashboardRedux.DashboardHideSystemStatusButton()),
-    onDashboardShowGridInfoButton: () => dispatch(DashboardRedux.DashboardShowGridInfoButton()),
-    onDashboardHideGridInfoButton: () => dispatch(DashboardRedux.DashboardHideGridInfoButton()),
     onDashboardSetToolbars: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
   };

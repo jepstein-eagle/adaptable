@@ -61,22 +61,6 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     this.setVisibility(Visibility.Minimised);
   }
 
-  public showSystemStatusButton(): void {
-    this.dispatchAction(DashboardRedux.DashboardShowSystemStatusButton());
-  }
-
-  public hideSystemStatusButton(): void {
-    this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton());
-  }
-
-  public showGridInfoButton(): void {
-    this.dispatchAction(DashboardRedux.DashboardShowGridInfoButton());
-  }
-
-  public hideGridInfoButton(): void {
-    this.dispatchAction(DashboardRedux.DashboardHideGridInfoButton());
-  }
-
   public showFunctionsDropdown(): void {
     this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdown());
   }

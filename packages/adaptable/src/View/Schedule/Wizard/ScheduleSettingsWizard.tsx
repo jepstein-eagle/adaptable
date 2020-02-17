@@ -349,6 +349,9 @@ export class ScheduleSettingsWizard
                   marginRight={2}
                 />
 
+                {/*
+
+
                 <HelpBlock marginBottom={1} marginTop={3}>
                   Choose whether to send Glue42 Data as 'Snapshot' (One-off report) or 'Live Data'
                   (updating as Grid updates)
@@ -372,6 +375,8 @@ export class ScheduleSettingsWizard
                     Live Data (real-time updates)
                   </Radio>
                 </Flex>
+
+                */}
               </Flex>
             </>
           )}

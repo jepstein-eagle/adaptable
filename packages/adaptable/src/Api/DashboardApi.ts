@@ -82,30 +82,6 @@ export interface DashboardApi {
   minimise(): void;
 
   /**
-   * Makes the System Status button visible.
-   */
-  showSystemStatusButton(): void;
-
-  /**
-   * Hides the System Status button
-   */
-  hideSystemStatusButton(): void;
-
-  /**
-   * Shows the Grid Info button - which opens the GridInfo screen.
-   *
-   * The GridInfo Screen shows information about the current Blotter (e.g. visible rows and columns, any calculated columns etc.)
-   */
-  showGridInfoButton(): void;
-
-  /**
-   * Hides the Grid Info button - which opens the GridInfo screen.
-   *
-   * The GridInfo Screen shows information about the current Blotter (e.g. visible rows and columns, any calculated columns etc.)
-   */
-  hideGridInfoButton(): void;
-
-  /**
    * Shows the Functions Dropdown.
    *
    * The Functions dropdown appears on the left of the Home Toolbar and lists all the functions available to the user.

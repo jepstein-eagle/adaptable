@@ -32,6 +32,7 @@ import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { GradientColumnSummary } from '../GradientColumn/GradientColumnSummary';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;
@@ -277,14 +278,40 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             }
           >
             <PercentBarSummary
-              key={StrategyConstants.FormatColumnStrategyId}
+              key={StrategyConstants.PercentBarStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
               Adaptable={this.props.Adaptable}
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={
                 this.props.Adaptable.getColumnValueDisplayValuePairDistinctList
               }
-              AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+              AccessLevel={this.getAccessLevel(StrategyConstants.PercentBarStrategyId)}
+            />
+          </div>
+        );
+      }
+      if (
+        this.isStrategyVisible(StrategyConstants.GradientColumnStrategyId) &&
+        this.state.SelectedColumn.DataType == DataType.Number
+      ) {
+        summaries.push(
+          <div
+            key={StrategyConstants.GradientColumnStrategyId}
+            className={
+              this.isStrategyReadOnly(StrategyConstants.GradientColumnStrategyId)
+                ? GeneralConstants.READ_ONLY_STYLE
+                : ''
+            }
+          >
+            <GradientColumnSummary
+              key={StrategyConstants.GradientColumnStrategyId}
+              SummarisedColumn={this.state.SelectedColumn}
+              Adaptable={this.props.Adaptable}
+              TeamSharingActivated={this.props.TeamSharingActivated}
+              getColumnValueDisplayValuePairDistinctList={
+                this.props.Adaptable.getColumnValueDisplayValuePairDistinctList
+              }
+              AccessLevel={this.getAccessLevel(StrategyConstants.GradientColumnStrategyId)}
             />
           </div>
         );

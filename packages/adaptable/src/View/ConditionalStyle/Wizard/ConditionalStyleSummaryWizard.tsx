@@ -28,6 +28,7 @@ export class ConditionalStyleSummaryWizard
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Scope', Value: this.getScope() },
+      { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
       { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
       {
         Key: 'Query',
@@ -52,9 +53,9 @@ export class ConditionalStyleSummaryWizard
       case 'Row':
         return 'Row';
       case 'Column':
-        return ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
+        return (
+          'Column:' +
+          ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns)
         );
       //  case 'DataType':
       //     return this.props.Data.DataType + ' Columns';
@@ -62,6 +63,17 @@ export class ConditionalStyleSummaryWizard
       case 'ColumnCategory':
         return 'Category: ' + this.props.Data.ColumnCategoryId;
     }
+  }
+
+  private getExcludedGroupedRows(): string {
+    if (this.props.Data.ConditionalStyleScope !== 'Row') {
+      return 'N/A';
+    }
+    return this.props.Data.ExcludeGroupedRows != null &&
+      this.props.Data.ExcludeGroupedRows != undefined &&
+      this.props.Data.ExcludeGroupedRows == true
+      ? 'True'
+      : 'False';
   }
 
   public canNext(): boolean {

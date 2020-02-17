@@ -65,7 +65,6 @@ let demoConfig: PredefinedConfig = {
   ToolPanel: {
     //   VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
     //ToolPanelTitle: 'Hello',
-    ShowGridInfoButton: false,
   },
 };
 

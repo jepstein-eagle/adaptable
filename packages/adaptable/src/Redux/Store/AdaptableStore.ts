@@ -3158,8 +3158,6 @@ export function getNonPersistedReduxActions(): string[] {
     PopupRedux.POPUP_HIDE_SCREEN,
     PopupRedux.POPUP_SHOW_LOADING,
     PopupRedux.POPUP_HIDE_LOADING,
-    PopupRedux.POPUP_SHOW_GRID_INFO,
-    PopupRedux.POPUP_HIDE_GRID_INFO,
     PopupRedux.POPUP_SHOW_ALERT,
     PopupRedux.POPUP_HIDE_ALERT,
     PopupRedux.POPUP_SHOW_PROMPT,

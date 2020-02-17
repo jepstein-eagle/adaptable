@@ -46,7 +46,6 @@ interface AdaptableToolPanelProps {
   ShowFunctionsDropdown: boolean;
   ShowColumnsDropdown: boolean;
   ShowToolPanelsDropdown: boolean;
-  ShowGridInfoButton: boolean;
   FunctionEntitlements: Entitlement[];
   MainMenuItems: AdaptableMenuItem[];
   Columns: AdaptableColumn[];
@@ -58,7 +57,6 @@ interface AdaptableToolPanelProps {
   onSetToolPanelVisibility: (
     toolPanels: AdaptableToolPanels
   ) => ToolPanelRedux.ToolPanelSetToolPanelsAction;
-  onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
 
 export interface AdaptableToolPanelState {}
@@ -164,18 +162,6 @@ class AdaptableToolPanelComponent extends React.Component<
         label: menuItem.Label,
       };
     });
-
-    // gridInfo button
-    let gridInfoButton = (
-      <SimpleButton
-        tooltip="Grid Info"
-        icon={'info'}
-        variant="text"
-        className="ab-ToolPanel__info"
-        onClick={() => this.onClickGridInfo()}
-        AccessLevel={AccessLevel.Full}
-      />
-    );
 
     let functionsDropdown = (
       <DropdownButton
@@ -325,17 +311,12 @@ class AdaptableToolPanelComponent extends React.Component<
           {this.props.ShowFunctionsDropdown && functionsDropdown}
           {this.props.ShowToolPanelsDropdown && toolPanelsDropDown}
           {this.props.ShowColumnsDropdown && columnsDropDown}
-          {this.props.ShowGridInfoButton && gridInfoButton}
           {configureButton}
         </Flex>
         {ArrayExtensions.IsNotNullOrEmpty(shortcuts) ? <div>{grouped_shortcut_rows}</div> : null}
         {visibleToolPanelControls}
       </Flex>
     );
-  }
-
-  onClickGridInfo() {
-    this.props.onShowGridInfo();
   }
 
   onSetColumnVisibility(name: string) {
@@ -371,7 +352,6 @@ function mapStateToProps(state: AdaptableState) {
     ShowFunctionsDropdown: state.ToolPanel.ShowFunctionsDropdown,
     ShowColumnsDropdown: state.ToolPanel.ShowColumnsDropdown,
     ShowToolPanelsDropdown: state.ToolPanel.ShowToolPanelsDropdown,
-    ShowGridInfoButton: state.ToolPanel.ShowGridInfoButton,
     FunctionEntitlements: state.Entitlements.FunctionEntitlements,
     MainMenuItems: state.Grid.MainMenuItems,
     Columns: state.Grid.Columns,
@@ -385,7 +365,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetToolPanelVisibility: (toolPanels: AdaptableToolPanels) =>
       dispatch(ToolPanelRedux.ToolPanelSetToolPanels(toolPanels)),
-    onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };
 }
 

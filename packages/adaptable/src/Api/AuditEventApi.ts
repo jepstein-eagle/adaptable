@@ -76,12 +76,11 @@ export interface AuditEventApi {
    * @param eventName
    * @param data
    */
-  emit(
-    eventName:
-      | 'AuditStateChanged'
-      | 'AuditCellEdited'
-      | 'AuditFunctionApplied'
-      | 'AuditTickingDataUpdated',
-    data?: any
-  ): Promise<any>;
+  emit(eventName: AuditEventName, data?: any): Promise<any>;
 }
+
+export type AuditEventName =
+  | 'AuditStateChanged'
+  | 'AuditCellEdited'
+  | 'AuditFunctionApplied'
+  | 'AuditTickingDataUpdated';

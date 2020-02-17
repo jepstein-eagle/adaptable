@@ -9,6 +9,7 @@ import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
+import conditionalStyle from '../../components/icons/conditional-style';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -83,6 +84,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     ) {
       for (let column of columns) {
         let cellClassRules: any = {};
+        let rowClassRules: any = {};
         conditionalStyles.forEach((cs, index) => {
           let styleName: string = StringExtensions.IsNullOrEmpty(cs.Style.ClassName)
             ? theadaptable.StyleService.CreateUniqueStyleName(
@@ -133,14 +135,21 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             }
             */
           } else if (cs.ConditionalStyleScope == 'Row') {
-            cellClassRules[styleName] = function(params: any) {
-              return ExpressionHelper.checkForExpressionFromRowNode(
-                cs.Expression,
-                params.node,
-                columns,
-                theadaptable
-              );
+            rowClassRules[styleName] = function(params: any) {
+              let shouldStyleRow: boolean = true;
+              if (cs.ExcludeGroupedRows && theadaptable.isGroupRowNode(params.node)) {
+                shouldStyleRow = false;
+              }
+              if (shouldStyleRow) {
+                return ExpressionHelper.checkForExpressionFromRowNode(
+                  cs.Expression,
+                  params.node,
+                  columns,
+                  theadaptable
+                );
+              }
             };
+            theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
           }
         });
         theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');

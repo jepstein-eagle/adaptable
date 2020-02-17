@@ -54,7 +54,6 @@ interface HomeToolbarComponentProps
   onSetToolbarVisibility: (
     toolbars: AdaptableDashboardToolbars
   ) => DashboardRedux.DashboardSetToolbarsAction;
-  onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
 
 class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
@@ -173,18 +172,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       />
     );
 
-    // gridInfo button
-    let gridInfoButton = (
-      <SimpleButton
-        tooltip="Grid Info"
-        icon={'info'}
-        variant="text"
-        className="ab-DashboardToolbar__Home__info"
-        onClick={() => this.onClickGridInfo()}
-        AccessLevel={AccessLevel.Full}
-      />
-    );
-
     // functions dropdown
     let functionsDropdown = (
       <DropdownButton
@@ -241,7 +228,20 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           y => y.IsVisible && y.FunctionName == x
         );
         if (menuItem) {
-          return (
+          return menuItem.FunctionName === 'SystemStatus' ? (
+            <SimpleButton
+              key={menuItem.Label}
+              variant="text"
+              className={`ab-DashboardToolbar__Home__SystemStatus`}
+              tooltip={menuItem.Label}
+              disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
+              onClick={() => this.onClick(menuItem!)}
+              AccessLevel={AccessLevel.Full}
+              // icon={UIHelper.getGlyphForMessageType(this.props.StatusType as MessageType)}
+              icon={menuItem.Icon}
+              style={UIHelper.getStyleForMessageType(this.props.StatusType as MessageType)}
+            />
+          ) : (
             <SimpleButton
               key={menuItem.Label}
               icon={menuItem.Icon}
@@ -279,8 +279,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       >
         <Flex flexDirection="row">
           {this.props.DashboardState.ShowFunctionsDropdown && functionsDropdown}
-          {this.props.DashboardState.ShowSystemStatusButton && statusButton}
-          {this.props.DashboardState.ShowGridInfoButton && gridInfoButton}
 
           {shortcuts}
 
@@ -325,10 +323,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
   onShowSystemStatus() {
     this.props.Adaptable.api.systemStatusApi.showSystemStatusPopup();
-  }
-
-  onClickGridInfo() {
-    this.props.onShowGridInfo();
   }
 
   onSetColumnVisibility(name: string) {
@@ -381,7 +375,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
     onSetToolbarVisibility: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
-    onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };
 }
 
