@@ -15,8 +15,6 @@ import ColumnHelper from '../Helpers/ColumnHelper';
 import ObjectFactory from '../ObjectFactory';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 
-// const sendRequest =
-
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<AuditLogEntry>;
   private canSendLog: boolean = true;

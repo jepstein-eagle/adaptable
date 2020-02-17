@@ -123,9 +123,9 @@ export interface AuditOptions {
   /**
    *  The name of the channnel to use if auditing to an Http Channel.
    *
-   * **Note: the Audit Log will only send audit updates to the Http Channel if one of the 4 audit options has *auditToHttpChannel* as set to true.**
+   * **Note: the Audit Log will only send audit updates to the Http Channel if at least one of the 4 audit options has *auditToHttpChannel* as set to true.**
    *
-   *  **Default Value: '/auditlog' **
+   *  **Default Value: '/auditlog'**
    */
   httpChannel?: string;
 
