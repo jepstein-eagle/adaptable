@@ -9,7 +9,8 @@ import React, {
   SetStateAction,
   useRef,
   useCallback,
-  CSSProperties
+  CSSProperties,
+  SyntheticEvent
 } from "react"
 
 function usePropState<S>(
@@ -237,7 +238,12 @@ function Dashboard(props: DashboardProps) {
         p={2}
         alignItems="center"
         style={floating ? floatingStyle : undefined}
-        onDoubleClick={() => setFloating(!floating)}
+        onDoubleClick={event => {
+          const target = event.target as HTMLElement
+          // ignore double clicks on buttons, inputs and their children
+          if (target.closest("button, input")) return
+          setFloating(!floating)
+        }}
       >
         <Flex flex={1} justifyContent="flex-start">
           {left}
