@@ -67,7 +67,7 @@
  *
  * We have selected different Audit Destinations for each type (sometimes choosing more than one destination).
  *
- * We have also changed the default values so that, when using the Http Channel, Audit Log will ping to test the connection every 2 minutes, will send messages every 3 seconds, and provided our own channel name.
+ * We have also changed the default values so that Audit Log will send messages every 3 seconds, and - when using the Http Channel - will ping to test the connection every 2 minutes, using the the channel name that we provided.
  *
  */
 export interface AuditOptions {
@@ -169,16 +169,16 @@ export interface AuditOptions {
  */
 export interface AuditDestinationOptions {
   /**
-   * Sends the Audit Messages to an (internal) HTTP channel for you to listen to.
+   * Sends the Audit Log Message to an (internal) HTTP channel for you to listen to.
    *
-   * This is the most popular option though requires you to use your internal, listening software (like the Elastic stack) to wire it up.
+   * This is the most popular option, though it requires you to use your internal, listening software (like the Elastic stack) to wire it up.
    *
    * **Default Value: false**
    */
   auditToHttpChannel?: boolean;
 
   /**
-   * Sends the Audit Message to the Console.
+   * Sends the Audit Log Message to the Console.
    *
    * Primarily used by developers as a useful design-time or debugging tool when building the application.
    *
@@ -189,7 +189,7 @@ export interface AuditDestinationOptions {
   auditToConsole?: boolean;
 
   /**
-   * Fires the Audit Message as an Audit Log (AuditLogEventArgs) event.
+   * Fires the Audit Log Message as an Audit Log (AuditLogEventArgs) event.
    *
    * You listen to this Event the same way that you do all other Adaptable events.
    *
@@ -198,7 +198,7 @@ export interface AuditDestinationOptions {
   auditAsEvent?: boolean;
 
   /**
-   * Fires the Audit Message as an Alert.
+   * Fires the Audit Log Message as an Alert.
    *
    * This Alert will appear in the Alert toolbar and, optionally, also as a popup (based on the value of the *alertShowAsPopup* property).
    *
