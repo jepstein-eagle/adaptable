@@ -1,6 +1,6 @@
 ## 6.0.6
 
-Update to Audit Log so user can specify name of server to run audit log
+Update to Audit Log so user can specify name of server to run audit log and more types exported
 
 ## 6.0.5
 
