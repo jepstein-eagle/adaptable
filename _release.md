@@ -1,6 +1,6 @@
 ## 6.0.6
 
-Changes to Audit Log so user can specify name of server
+Changes to Audit Log so user can specify name of server to run audit log
 
 ## 6.0.5
 
