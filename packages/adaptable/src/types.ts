@@ -1,50 +1,8 @@
-// Event Types
-import { EventApi } from './Api/EventApi';
-import {
-  SearchChangedInfo,
-  AdaptableSearchState,
-  SearchChangedEventArgs,
-} from './Api/Events/SearchChanged';
-import { AlertFiredEventArgs, AlertFiredInfo } from './Api/Events/AlertFired';
-import {
-  ColumnStateChangedEventArgs,
-  ColumnStateChangedInfo,
-} from './Api/Events/ColumnStateChanged';
-import { ThemeChangedEventArgs, ThemeChangedInfo } from './Api/Events/ThemeChanged';
-import {
-  ActionColumnClickedEventArgs,
-  ActionColumnClickedInfo,
-} from './Api/Events/ActionColumnClicked';
-import {
-  ToolbarVisibilityChangedEventArgs,
-  ToolbarVisibilityChangedInfo,
-} from './Api/Events/ToolbarVisibilityChanged';
-import {
-  LiveDataChangedEventArgs,
-  LiveDataChangedInfo,
-  LiveReport,
-} from './Api/Events/LiveDataChanged';
-import { SelectionChangedEventArgs, SelectionChangedInfo } from './Api/Events/SelectionChanged';
-import {
-  ToolbarButtonClickedEventArgs,
-  ToolbarButtonClickedInfo,
-} from './Api/Events/ToolbarButtonClicked';
-import { AdaptableReadyInfo } from './Api/Events/AdaptableReady';
-import {
-  AuditLogEventArgs,
-  StateChangedDetails,
-  StatePropertyChangedDetails,
-  StateObjectChangedDetails,
-  FunctionAppliedDetails,
-  DataChangedDetails,
-} from './Api/Events/AuditEvents';
-
 // Base Types
 export {
   IAdaptableNoCodeWizard,
   IAdaptableNoCodeWizardOptions,
 } from './AdaptableInterfaces/IAdaptableNoCodeWizard';
-
 export { IAdaptable } from './AdaptableInterfaces/IAdaptable';
 export { IAdaptableStore } from './Redux/Store/Interface/IAdaptableStore';
 export { AdaptableApi } from './Api/AdaptableApi';
@@ -88,33 +46,46 @@ export { IServerColumnValues } from './AdaptableOptions/QueryOptions';
 export { ValidationResult } from './AdaptableOptions/EditOptions';
 
 // Events
+export { EventApi } from './Api/EventApi';
 export {
-  EventApi,
-  AdaptableReadyInfo,
-  AdaptableSearchState,
   SearchChangedInfo,
+  AdaptableSearchState,
   SearchChangedEventArgs,
-  ActionColumnClickedInfo,
-  ActionColumnClickedEventArgs,
-  AlertFiredInfo,
-  AlertFiredEventArgs,
-  ToolbarButtonClickedInfo,
-  ToolbarButtonClickedEventArgs,
-  ColumnStateChangedInfo,
+} from './Api/Events/SearchChanged';
+export { AlertFiredEventArgs, AlertFiredInfo } from './Api/Events/AlertFired';
+export {
   ColumnStateChangedEventArgs,
-  LiveReport,
-  LiveDataChangedInfo,
-  LiveDataChangedEventArgs,
-  SelectionChangedInfo,
-  SelectionChangedEventArgs,
-  ThemeChangedInfo,
-  ThemeChangedEventArgs,
-  ToolbarVisibilityChangedInfo,
+  ColumnStateChangedInfo,
+} from './Api/Events/ColumnStateChanged';
+export { ThemeChangedEventArgs, ThemeChangedInfo } from './Api/Events/ThemeChanged';
+export {
+  ActionColumnClickedEventArgs,
+  ActionColumnClickedInfo,
+} from './Api/Events/ActionColumnClicked';
+export {
   ToolbarVisibilityChangedEventArgs,
+  ToolbarVisibilityChangedInfo,
+} from './Api/Events/ToolbarVisibilityChanged';
+export {
+  LiveDataChangedEventArgs,
+  LiveDataChangedInfo,
+  LiveReport,
+} from './Api/Events/LiveDataChanged';
+export { SelectionChangedEventArgs, SelectionChangedInfo } from './Api/Events/SelectionChanged';
+export {
+  ToolbarButtonClickedEventArgs,
+  ToolbarButtonClickedInfo,
+} from './Api/Events/ToolbarButtonClicked';
+export { AdaptableReadyInfo } from './Api/Events/AdaptableReady';
+
+// Audit Events
+export { AuditEventApi, AuditEventName } from './Api/AuditEventApi';
+export {
   AuditLogEventArgs,
   StateChangedDetails,
   StatePropertyChangedDetails,
   StateObjectChangedDetails,
   FunctionAppliedDetails,
   DataChangedDetails,
-};
+  StateObjectChangeType,
+} from './Api/Events/AuditEvents';
