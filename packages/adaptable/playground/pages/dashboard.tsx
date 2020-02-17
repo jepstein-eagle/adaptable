@@ -147,6 +147,8 @@ type DashboardProps = {
   title: string
   snapThreshold?: number
   children: ReactElement<DashboardTabProps>[]
+  left: ReactNode
+  right: ReactNode
   // activeTab
   activeTab?: number
   defaultActiveTab?: number
@@ -165,7 +167,7 @@ type DashboardProps = {
   onPositionChange?: Dispatch<SetStateAction<DashboardPosition>>
 }
 function Dashboard(props: DashboardProps) {
-  const { title, snapThreshold = 20, children } = props
+  const { title, snapThreshold = 20, children, left, right } = props
 
   const [activeTab, setActiveTab] = usePropState(
     props.activeTab,
@@ -209,6 +211,23 @@ function Dashboard(props: DashboardProps) {
     top: position.y
   }
 
+  const renderTabs = () =>
+    React.Children.map(children, (child, index) => (
+      <button
+        key={index}
+        onClick={() => {
+          if (activeTab === index) {
+            setCollapsed(!collapsed)
+          } else {
+            setActiveTab(index)
+            setCollapsed(false)
+          }
+        }}
+      >
+        {child.props.title} {!collapsed && activeTab === index && "(x)"}
+      </button>
+    ))
+
   return (
     <>
       <Flex
@@ -221,27 +240,8 @@ function Dashboard(props: DashboardProps) {
         onDoubleClick={() => setFloating(!floating)}
       >
         <Flex flex={1} justifyContent="flex-start">
-          <SimpleButton
-            icon="home"
-            variant="text"
-            style={{ color: "white", fill: "currentColor" }}
-          />
-          {!floating &&
-            React.Children.map(children, (child, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  if (activeTab === index) {
-                    setCollapsed(!collapsed)
-                  } else {
-                    setActiveTab(index)
-                    setCollapsed(false)
-                  }
-                }}
-              >
-                {child.props.title} {!collapsed && activeTab === index && "(x)"}
-              </button>
-            ))}
+          {left}
+          {!floating && renderTabs()}
         </Flex>
         {floating ? (
           <Box mx={2} ref={handleRef} key="title-drag" style={{ cursor: "move" }}>
@@ -253,7 +253,7 @@ function Dashboard(props: DashboardProps) {
           </Box>
         )}
         <Flex flex={1} justifyContent="flex-end">
-          <Input placeholder="Quick Search" mr={2} />
+          {right}
           <SimpleButton
             icon={floating ? "arrow-right" : "arrow-left"}
             variant="text"
@@ -294,9 +294,29 @@ function DashboardToolbar(props: DashboardToolbarProps) {
 }
 
 export default function() {
+  const left = (
+    <SimpleButton
+      icon="home"
+      variant="text"
+      style={{ color: "white", fill: "currentColor" }}
+      mr={2}
+    />
+  )
+  const right = (
+    <>
+      <SimpleButton
+        icon="alert"
+        variant="text"
+        style={{ color: "white", fill: "currentColor" }}
+        mr={2}
+      />
+      <Input placeholder="Quick Search" mr={2} />
+    </>
+  )
+
   return (
     <>
-      <Dashboard title="Playground">
+      <Dashboard title="Playground" left={left} right={right}>
         <DashboardTab title="Tab 1">
           <DashboardToolbar title="Toolbar 1-1">Content 1-1</DashboardToolbar>
           <DashboardToolbar title="Toolbar 1-2">Content 1-2</DashboardToolbar>
