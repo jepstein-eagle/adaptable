@@ -1,3 +1,7 @@
+## 6.0.6
+
+Changes to Audit Log so user can specify name of server
+
 ## 6.0.5
 
 Fix OpenFinHelper so it doesn't break tsc build
