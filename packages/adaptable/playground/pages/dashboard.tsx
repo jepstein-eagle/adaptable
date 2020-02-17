@@ -26,8 +26,24 @@ function usePropState<S>(
   ]
 }
 
-function useDraggable(onDrop: (dx: number, dy: number) => void) {
-  const startRef = useRef({ x: 0, y: 0 })
+function clamp(num: number, min: number, max: number) {
+  return num <= min ? min : num >= max ? max : num
+}
+
+function useDraggable({
+  onMove,
+  onDrop,
+  getBoundingRect = () => document.body.getBoundingClientRect()
+}: {
+  onMove?: (event: MouseEvent) => void
+  onDrop?: (dx: number, dy: number) => void
+  getBoundingRect?: () => DOMRect
+}) {
+  const startRef = useRef<{
+    pageX: number
+    pageY: number
+    bounds: { left: number; right: number; top: number; bottom: number }
+  }>()
   const handleRef = useRef<HTMLElement>()
   const targetRef = useRef<HTMLElement>()
 
@@ -40,6 +56,7 @@ function useDraggable(onDrop: (dx: number, dy: number) => void) {
 
     if (newNode) {
       newNode.addEventListener("mousedown", handleMouseDown)
+      boundInitialPosition()
     }
 
     handleRef.current = newNode
@@ -50,22 +67,74 @@ function useDraggable(onDrop: (dx: number, dy: number) => void) {
     targetRef.current.style.transform = `translate3d(${dx}px, ${dy}px, 0)`
   }
 
+  const getTranslation = (event: MouseEvent) => {
+    if (!startRef.current) return { dx: 0, dy: 0 }
+
+    const { pageX, pageY, bounds } = startRef.current
+
+    return {
+      dx: clamp(event.pageX - pageX, bounds.left, bounds.right),
+      dy: clamp(event.pageY - pageY, bounds.top, bounds.bottom)
+    }
+  }
+
+  const getTranslationBounds = (targetRect: DOMRect, boundingRect: DOMRect) => {
+    const left = boundingRect.x - targetRect.x
+    const right = left + boundingRect.width - targetRect.width
+    const top = boundingRect.y - targetRect.y
+    const bottom = top + boundingRect.height - targetRect.height
+
+    return { left, right, top, bottom }
+  }
+
   const handleMouseDown = (event: MouseEvent) => {
-    startRef.current.x = event.pageX
-    startRef.current.y = event.pageY
+    if (!targetRef.current) return
+
+    event.preventDefault()
     document.addEventListener("mouseup", handleMouseUp)
     document.addEventListener("mousemove", handleMouseMove)
+
+    const targetRect = targetRef.current.getBoundingClientRect()
+    const boundingRect = getBoundingRect()
+
+    startRef.current = {
+      pageX: event.pageX,
+      pageY: event.pageY,
+      bounds: getTranslationBounds(targetRect, boundingRect)
+    }
   }
 
   const handleMouseUp = (event: MouseEvent) => {
-    applyTransform(0, 0)
-    onDrop(event.pageX - startRef.current.x, event.pageY - startRef.current.y)
+    event.preventDefault()
     document.removeEventListener("mouseup", handleMouseUp)
     document.removeEventListener("mousemove", handleMouseMove)
+
+    const { dx, dy } = getTranslation(event)
+
+    applyTransform(0, 0)
+    onDrop && onDrop(dx, dy)
   }
 
   const handleMouseMove = (event: MouseEvent) => {
-    applyTransform(event.pageX - startRef.current.x, event.pageY - startRef.current.y)
+    event.preventDefault()
+
+    const { dx, dy } = getTranslation(event)
+
+    applyTransform(dx, dy)
+    onMove && onMove(event)
+  }
+
+  const boundInitialPosition = () => {
+    if (!targetRef.current) return
+
+    const targetRect = targetRef.current.getBoundingClientRect()
+    const boundingRect = getBoundingRect()
+
+    const bounds = getTranslationBounds(targetRect, boundingRect)
+    const dx = clamp(0, bounds.left, bounds.right)
+    const dy = clamp(0, bounds.top, bounds.bottom)
+
+    if (onDrop && (dx !== 0 || dy !== 0)) onDrop(dx, dy)
   }
 
   return { handleRef: handleRefCallback, targetRef }
@@ -103,35 +172,37 @@ function Dashboard(props: DashboardProps) {
   const [activeTab, setActiveTab] = usePropState(
     props.activeTab,
     props.onActiveTabChange,
-    props.defaultActiveTab || 0
+    props.defaultActiveTab ?? 0
   )
   const [collapsed, setCollapsed] = usePropState(
     props.collapsed,
     props.onCollapsedChange,
-    props.defaultCollapsed || false
+    props.defaultCollapsed ?? false
   )
   const [floating, setFloating] = usePropState(
     props.floating,
     props.onFloatingChange,
-    props.defaultFloating || false
+    props.defaultFloating ?? false
   )
   const [position, setPosition] = usePropState(
     props.position,
     props.onPositionChange,
-    props.defaultPosition || { x: 0, y: 0 }
+    props.defaultPosition ?? { x: 0, y: 0 }
   )
 
-  const { handleRef, targetRef } = useDraggable((dx, dy) => {
-    setPosition(oldPosition => {
-      const newPosition = { x: oldPosition.x + dx, y: oldPosition.y + dy }
+  const { handleRef, targetRef } = useDraggable({
+    onDrop(dx, dy) {
+      setPosition(oldPosition => {
+        const newPosition = { x: oldPosition.x + dx, y: oldPosition.y + dy }
 
-      if (newPosition.y < snapThreshold) {
-        setFloating(false)
-        return oldPosition
-      }
+        if (newPosition.y < snapThreshold) {
+          setFloating(false)
+          return oldPosition
+        }
 
-      return newPosition
-    })
+        return newPosition
+      })
+    }
   })
 
   const floatingStyle: CSSProperties = {

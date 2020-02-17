@@ -24,7 +24,14 @@ export default function App({ Component, pageProps }) {
       >
         <Navigation />
       </div>
-      <div style={{ padding: PADDING, paddingLeft: NAV_WIDTH + PADDING }}>
+      <div
+        style={{
+          padding: PADDING,
+          paddingLeft: NAV_WIDTH + PADDING,
+          minHeight: "100vh",
+          boxSizing: "border-box"
+        }}
+      >
         <Component {...pageProps} />
       </div>
     </ThemeProvider>
