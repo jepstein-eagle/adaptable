@@ -1,5 +1,4 @@
 import Input from "../../src/components/Input"
-import HomeIcon from "../../src/components/icons/home"
 import SimpleButton from "../../src/components/SimpleButton"
 import { Box, Flex } from "rebass"
 import React, {
@@ -9,7 +8,6 @@ import React, {
   Dispatch,
   SetStateAction,
   useRef,
-  useEffect,
   useCallback,
   CSSProperties
 } from "react"
@@ -220,6 +218,7 @@ function Dashboard(props: DashboardProps) {
         p={2}
         alignItems="center"
         style={floating ? floatingStyle : undefined}
+        onDoubleClick={() => setFloating(!floating)}
       >
         <Flex flex={1} justifyContent="flex-start">
           <SimpleButton
@@ -245,17 +244,11 @@ function Dashboard(props: DashboardProps) {
             ))}
         </Flex>
         {floating ? (
-          <Box
-            mx={2}
-            ref={handleRef}
-            key="title-drag"
-            style={{ cursor: "move" }}
-            onDoubleClick={() => setFloating(false)}
-          >
+          <Box mx={2} ref={handleRef} key="title-drag" style={{ cursor: "move" }}>
             {title}
           </Box>
         ) : (
-          <Box mx={2} key="title" onDoubleClick={() => setFloating(true)}>
+          <Box mx={2} key="title">
             {title}
           </Box>
         )}
