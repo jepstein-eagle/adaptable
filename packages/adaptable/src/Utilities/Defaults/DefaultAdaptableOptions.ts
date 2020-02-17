@@ -65,6 +65,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     useAdaptableFilterForm: true,
     useVendorFilterFormStyle: true,
     useAdaptableQuickFilter: true,
+    clearFiltersOnStartUp: false,
     filterActionOnUserDataChange: {
       RunFilter: GeneralConstants.FILTER_ALWAYS,
       ThrottleDelay: 0,
@@ -97,6 +98,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   },
   searchOptions: {
     serverSearchOption: 'None',
+    clearSearchesOnStartUp: false,
   },
   userInterfaceOptions: {
     useDefaultVendorGridThemes: true,

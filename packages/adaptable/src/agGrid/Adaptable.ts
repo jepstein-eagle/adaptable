@@ -1468,7 +1468,7 @@ export class Adaptable implements IAdaptable {
     if (localRowClassRules) {
       // do something?
       if (type == 'ConditionalStyle') {
-        console.log(localRowClassRules);
+        //  console.log(localRowClassRules);
       }
     }
     this.gridOptions.rowClassRules = rowClassRules;
@@ -3392,6 +3392,8 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     ) {
       this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
     }
+
+    this.agGridHelper.checkShouldClearExistingFiltersOrSearches();
 
     // at the end so load the current layout
     this.api.layoutApi.setLayout(currentlayout);

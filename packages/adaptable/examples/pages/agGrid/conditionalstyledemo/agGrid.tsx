@@ -106,7 +106,7 @@ let demoConfig: PredefinedConfig = {
               ColumnId: 'notional',
               Ranges: [
                 {
-                  Operand1: '21400',
+                  Operand1: '1400',
                   Operand1Type: 'Value',
                   Operand2: '',
                   Operand2Type: 'Value',
@@ -116,6 +116,16 @@ let demoConfig: PredefinedConfig = {
             },
           ],
         },
+      },
+    ],
+  },
+  Layout: {
+    CurrentLayout: 'Grouping Layout',
+    Layouts: [
+      {
+        GroupedColumns: ['country'],
+        Columns: ['notional', 'country', 'currency', 'tradeId', 'counterparty'],
+        Name: 'Grouping Layout',
       },
     ],
   },
