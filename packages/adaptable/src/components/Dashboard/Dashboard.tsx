@@ -1,10 +1,9 @@
-import { ReactElement, ReactNode, Dispatch, SetStateAction, CSSProperties } from 'react';
+import React, { ReactElement, ReactNode, Dispatch, SetStateAction, CSSProperties } from 'react';
 import usePropState from '../utils/usePropState';
 import useDraggable from '../utils/useDraggable';
-import React from 'react';
-import { Flex, Box } from 'rebass';
 import SimpleButton from '../SimpleButton';
 import { DashboardTabProps } from './DashboardTab';
+import join from '../utils/join';
 
 export type DashboardPosition = {
   x: number;
@@ -98,13 +97,17 @@ export function Dashboard(props: DashboardProps) {
     ));
 
   return (
-    <>
-      <Flex
+    <div
+      className={join(
+        'ab-Dashboard',
+        collapsed ? 'ab-Dashboard--collapsed' : '',
+        floating ? 'ab-Dashboard--floating' : ''
+      )}
+    >
+      <div
+        // @ts-ignore
         ref={targetRef}
-        bg="accent"
-        color="white"
-        p={2}
-        alignItems="center"
+        className="ab-Dashboard__bar"
         style={floating ? floatingStyle : undefined}
         onDoubleClick={event => {
           const target = event.target as HTMLElement;
@@ -113,20 +116,25 @@ export function Dashboard(props: DashboardProps) {
           setFloating(!floating);
         }}
       >
-        <Flex flex={1} justifyContent="flex-start">
+        <div className="ab-Dashboard__bar-left">
           {left}
           {!floating && renderTabs()}
-        </Flex>
+        </div>
         {floating ? (
-          <Box mx={2} ref={handleRef} key="title-drag" style={{ cursor: 'move' }}>
+          <div
+            className="ab-Dashboard__title"
+            ref={handleRef}
+            key="title-drag"
+            style={{ cursor: 'move' }}
+          >
             {title}
-          </Box>
+          </div>
         ) : (
-          <Box mx={2} key="title">
+          <div className="ab-Dashboard__title" key="title">
             {title}
-          </Box>
+          </div>
         )}
-        <Flex flex={1} justifyContent="flex-end">
+        <div className="ab-Dashboard__bar-right">
           {right}
           <SimpleButton
             icon={floating ? 'arrow-right' : 'arrow-left'}
@@ -134,14 +142,14 @@ export function Dashboard(props: DashboardProps) {
             style={{ color: 'white', fill: 'currentColor' }}
             onClick={() => setFloating(!floating)}
           />
-        </Flex>
-      </Flex>
+        </div>
+      </div>
       {!floating && !collapsed && (
-        <Flex bg="primary" p={2}>
-          <Flex flex={1}>{children[activeTab].props.children}</Flex>
+        <div className="ab-Dashboard__content">
+          <div className="ab-Dashboard__content-inner">{children[activeTab].props.children}</div>
           <SimpleButton icon="triangle-up" variant="text" onClick={() => setCollapsed(true)} />
-        </Flex>
+        </div>
       )}
-    </>
+    </div>
   );
 }

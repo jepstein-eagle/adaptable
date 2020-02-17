@@ -18,8 +18,8 @@ export default function useDraggable({
     pageY: number;
     bounds: { left: number; right: number; top: number; bottom: number };
   }>();
-  const handleRef = useRef<HTMLElement>();
-  const targetRef = useRef<HTMLElement>();
+  const handleRef = useRef<HTMLElement>(null);
+  const targetRef = useRef<HTMLElement>(null);
 
   const handleRefCallback = useCallback(newNode => {
     const oldNode = handleRef.current;

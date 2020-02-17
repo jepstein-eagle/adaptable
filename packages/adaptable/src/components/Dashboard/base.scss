@@ -1,3 +1,40 @@
 .ab-Dashboard {
-  //
+
+  user-select: none;
+
+  &__bar {
+    display: flex;
+    align-items: center;
+    color: var(--ab-color-text-on-secondary);
+    background-color: var(--ab-color-secondary);
+    padding: var(--ab-space-2);
+  }
+
+  &__bar-left, &__bar-right {
+    display: flex;
+    flex: 1;
+  }
+
+  &__bar-left {
+    justify-content: flex-start;
+  }
+
+  &__bar-right {
+    justify-content: flex-end;
+  }
+
+  &__title {
+    margin: 0 var(--ab-space-2);
+  }
+
+  &__content {
+    display: flex;
+    padding: var(--ab-space-2);
+    background-color: var(--ab-color-primary);
+  }
+
+  &__content-inner {
+    display: flex;
+    flex: 1;
+  }
 }
