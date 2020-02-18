@@ -1,17 +1,19 @@
 .ab-Dashboard {
-
   user-select: none;
 
   &__bar {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     color: var(--ab-color-text-on-secondary);
-    background-color: var(--ab-color-secondary);
-    padding: var(--ab-space-2);
+    background: var(--ab-color-secondary);
+    height: 40px;
+    padding: 0 var(--ab-space-2);
   }
 
-  &__bar-left, &__bar-right {
+  &__bar-left,
+  &__bar-right {
     display: flex;
+    align-items: center;
     flex: 1;
   }
 
@@ -24,17 +26,66 @@
   }
 
   &__title {
-    margin: 0 var(--ab-space-2);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--ab-space-3);
+    font-weight: bold;
+    font-size: var(--ab-font-size-4);
+  }
+
+  &__tabs {
+    align-self: flex-end;
+    margin-left: var(--ab-space-2);
+  }
+
+  &__tab {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: var(--ab-font-size-3);
+    // font-weight: bold;
+    border-radius: var(--ab__border-radius) var(--ab__border-radius) 0 0;
+    padding: 8px 12px 12px 12px;
+    color: var(--ab-color-text-on-secondary);
+    background: var(--ab-color-secondary);
+
+    &--active {
+      color: var(--ab-color-secondary);
+      background: var(--ab-color-primary);
+    }
   }
 
   &__content {
     display: flex;
-    padding: var(--ab-space-2);
+    align-items: flex-start;
     background-color: var(--ab-color-primary);
   }
 
   &__content-inner {
     display: flex;
     flex: 1;
+  }
+
+  &__toolbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--ab-color-primarydark);
+    padding: var(--ab-space-2);
+  }
+
+  &__toolbar-content {
+    //
+  }
+
+  &__toolbar-title {
+    font-size: var(--ab-font-size-2);
+    color: var(--ab-color-text-on-primary);
+    text-align: center;
+    padding-top: var(--ab-space-2);
+  }
+
+  .ab-Input {
+    border: none;
   }
 }

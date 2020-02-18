@@ -79,36 +79,43 @@ export function Dashboard(props: DashboardProps) {
     top: position.y,
   };
 
-  const renderTabs = () =>
-    React.Children.map(children, (child, index) => (
-      <button
-        key={index}
-        onClick={() => {
-          if (activeTab === index) {
-            setCollapsed(!collapsed);
-          } else {
-            setActiveTab(index);
-            setCollapsed(false);
-          }
-        }}
-      >
-        {child.props.title} {!collapsed && activeTab === index && '(x)'}
-      </button>
-    ));
+  const renderTabs = () => (
+    <div className="ab-Dashboard__tabs">
+      {React.Children.map(children, (child, index) => (
+        <button
+          className={join(
+            'ab-Dashboard__tab',
+            !collapsed && activeTab === index ? 'ab-Dashboard__tab--active' : ''
+          )}
+          key={index}
+          onClick={() => {
+            if (activeTab === index) {
+              setCollapsed(!collapsed);
+            } else {
+              setActiveTab(index);
+              setCollapsed(false);
+            }
+          }}
+        >
+          {child.props.title}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <div
+      // @ts-ignore
+      ref={targetRef}
       className={join(
         'ab-Dashboard',
         collapsed ? 'ab-Dashboard--collapsed' : '',
         floating ? 'ab-Dashboard--floating' : ''
       )}
+      style={floating ? floatingStyle : undefined}
     >
       <div
-        // @ts-ignore
-        ref={targetRef}
         className="ab-Dashboard__bar"
-        style={floating ? floatingStyle : undefined}
         onDoubleClick={event => {
           const target = event.target as HTMLElement;
           // ignore double clicks on buttons, inputs and their children
@@ -141,13 +148,19 @@ export function Dashboard(props: DashboardProps) {
             variant="text"
             style={{ color: 'white', fill: 'currentColor' }}
             onClick={() => setFloating(!floating)}
+            ml={2}
           />
         </div>
       </div>
       {!floating && !collapsed && (
         <div className="ab-Dashboard__content">
           <div className="ab-Dashboard__content-inner">{children[activeTab].props.children}</div>
-          <SimpleButton icon="triangle-up" variant="text" onClick={() => setCollapsed(true)} />
+          <SimpleButton
+            icon="triangle-up"
+            variant="text"
+            onClick={() => setCollapsed(true)}
+            m={2}
+          />
         </div>
       )}
     </div>

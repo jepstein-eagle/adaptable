@@ -2,6 +2,7 @@ import { ThemeProvider } from "styled-components"
 import theme from "../../src/theme"
 import "../../src/index.scss"
 import Navigation from "../components/navigation"
+import "./style.scss"
 
 const NAV_WIDTH = 240
 const PADDING = 10

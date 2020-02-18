@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { Flex } from 'rebass';
 
 export type DashboardToolbarProps = {
   title: string;
@@ -8,9 +7,9 @@ export type DashboardToolbarProps = {
 
 export function DashboardToolbar(props: DashboardToolbarProps) {
   return (
-    <Flex flexDirection="column" mr={4}>
-      {props.children}
-      <b>{props.title}</b>
-    </Flex>
+    <div className="ab-Dashboard__toolbar">
+      <div className="ab-Dashboard__toolbar-content">{props.children}</div>
+      <div className="ab-Dashboard__toolbar-title">{props.title}</div>
+    </div>
   );
 }
