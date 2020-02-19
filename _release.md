@@ -1,3 +1,7 @@
+## 6.0.9
+
+Fixing alert bug in Object Factory
+
 ## 6.0.8
 
 Doing a proper merge of recent changes in Dev
