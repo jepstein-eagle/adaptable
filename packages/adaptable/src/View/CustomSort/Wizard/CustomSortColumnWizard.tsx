@@ -10,9 +10,11 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
 import WizardPanel from '../../../components/WizardPanel';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<CustomSort> {
   SortedColumns: AdaptableColumn[];
+  CustomSorts: CustomSort[];
 }
 
 export interface CustomSortColumnWizardState {
@@ -27,7 +29,10 @@ export class CustomSortColumnWizard
     this.state = { SelectedColumnId: this.props.Data.ColumnId };
   }
   render(): any {
-    let sortableCols = ColumnHelper.getSortableColumns(this.props.Columns);
+    let existingCols = this.props.CustomSorts.map(cs => cs.ColumnId);
+    let sortableCols = ColumnHelper.getSortableColumns(this.props.Columns).filter(c =>
+      ArrayExtensions.NotContainsItem(existingCols, c.ColumnId)
+    );
     return (
       <WizardPanel>
         <ColumnSelector
