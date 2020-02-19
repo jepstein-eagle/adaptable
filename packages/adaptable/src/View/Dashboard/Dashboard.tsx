@@ -33,14 +33,7 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
   render() {
-    // this logic is repeated from Home Toolbar where we get the Title  - perhaps put it one place?
-    let instanceName = this.props.DashboardState.HomeToolbarTitle;
-    if (StringExtensions.IsNullOrEmpty(instanceName)) {
-      instanceName = this.props.Adaptable.adaptableOptions.adaptableId;
-      if (instanceName == GeneralConstants.USER_NAME) {
-        instanceName = 'Adaptable ';
-      }
-    }
+    let instanceName = this.props.Adaptable.api.internalApi.setToolbarTitle();
 
     let showInstanceName: string = 'Show ' + instanceName + ' Dashboard';
     let hiddenEntitlements: Entitlement[] = this.props.EntitlementState.FunctionEntitlements.filter(

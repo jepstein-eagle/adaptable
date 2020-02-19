@@ -13,11 +13,13 @@ import {
   PredefinedConfig,
   AdaptableApi,
   SearchChangedEventArgs,
+  MenuInfo,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var api: AdaptableApi;
 
@@ -76,6 +78,25 @@ let demoConfig: PredefinedConfig = {
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
   },
+  UserInterface: {
+    ContextMenuBuilderFunction: (menuinfo: MenuInfo) => {
+      return [
+        {
+          Label: 'Sort Column',
+          Icon:
+            '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+          UserMenuItemClickedFunction: () => {
+            let customSort: ColumnSort = {
+              Column: menuinfo.Column.ColumnId,
+              SortOrder: 'Ascending',
+            };
+            api.gridApi.sortAdaptable([customSort]);
+          },
+        },
+      ];
+    },
+  },
+
   SystemStatus: {
     // ShowAlert: false,
     DefaultStatusMessage: 'This is default message and its quite long',

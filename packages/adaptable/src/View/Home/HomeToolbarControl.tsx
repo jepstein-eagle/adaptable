@@ -257,13 +257,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       });
     }
 
-    let toolbarTitle = this.props.DashboardState.HomeToolbarTitle;
-    if (StringExtensions.IsNullOrEmpty(toolbarTitle)) {
-      toolbarTitle = this.props.Adaptable.adaptableOptions.adaptableId;
-      if (toolbarTitle == GeneralConstants.USER_NAME) {
-        toolbarTitle = 'Adaptable ';
-      }
-    }
+    let toolbarTitle = this.props.Adaptable.api.internalApi.setToolbarTitle();
 
     return (
       <PanelDashboard
