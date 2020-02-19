@@ -2511,12 +2511,12 @@ export class Adaptable implements IAdaptable {
         });
       }
       let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
-      console.log(userColumnMenuItems);
       if (typeof userColumnMenuItems === 'function') {
         userColumnMenuItems = userColumnMenuItems(menuInfo);
       }
 
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
+        colMenuItems.push('separator');
         userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
           let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
             userMenuItem,
@@ -2591,12 +2591,9 @@ export class Adaptable implements IAdaptable {
 
           // here we add any User defined Context Menu Items
           let state: any = this.api.userInterfaceApi.getUserInterfaceState();
-          console.log(state);
           let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
             .ContextMenuItems;
-          console.log(userContextMenuItems);
           if (typeof userContextMenuItems === 'function') {
-            alert('yes');
             userContextMenuItems = userContextMenuItems(menuInfo);
           }
 

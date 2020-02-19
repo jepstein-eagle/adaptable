@@ -109,7 +109,6 @@ export class Glue42Service implements IGlue42Service {
       this.subscribeToAddinStatusChanges();
       this.adaptable.api.glue42Api.setGlue42RunningOn();
     } catch (error) {
-      console.log(error);
       LogAdaptableError(error);
       this.adaptable.api.glue42Api.setGlue42RunningOff();
     }

@@ -21,6 +21,7 @@ import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { UserMenuItem } from '../../../../src/PredefinedConfig/UserInterfaceState';
 
 var adaptableApi: AdaptableApi;
 function InitAdaptableDemo() {
@@ -65,24 +66,34 @@ let demoConfig: PredefinedConfig = {
   },
   UserInterface: {
     ContextMenuItems: (menuinfo: MenuInfo) => {
-      console.log('in the function');
-      console.log(menuinfo);
-      return menuinfo.Column.Sortable
-        ? [
-            {
-              Label: 'Sort Column',
-              Icon:
-                '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-              UserMenuItemClickedFunction: () => {
-                let customSort: ColumnSort = {
-                  Column: menuinfo.Column.ColumnId,
-                  SortOrder: 'Ascending',
-                };
-                adaptableApi.gridApi.sortAdaptable([customSort]);
-              },
-            },
-          ]
-        : [];
+      let menuItems: UserMenuItem[] = [];
+
+      if (menuinfo.Column.Sortable) {
+        let sortMenuItem = {
+          Label: 'Sort Column',
+          Icon:
+            '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+          UserMenuItemClickedFunction: () => {
+            let customSort: ColumnSort = {
+              Column: menuinfo.Column.ColumnId,
+              SortOrder: 'Ascending',
+            };
+            adaptableApi.gridApi.sortAdaptable([customSort]);
+          },
+        };
+        menuItems.push(sortMenuItem);
+      }
+      if (menuinfo.IsGroupedNode) {
+        let groupMenuItem = {
+          Label: 'Announce Grouping',
+
+          UserMenuItemClickedFunction: () => {
+            alert('this is a grouped row');
+          },
+        };
+        menuItems.push(groupMenuItem);
+      }
+      return menuItems;
     },
   },
 };
