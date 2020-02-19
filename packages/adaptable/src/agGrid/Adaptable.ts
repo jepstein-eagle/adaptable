@@ -2488,6 +2488,7 @@ export class Adaptable implements IAdaptable {
         Column: adaptableColumn,
         IsSelectedCell: false,
         IsSingleSelectedColumn: false,
+        IsGroupedNode: false,
         RowNode: undefined,
         PrimaryKeyValue: undefined,
       };
@@ -2510,7 +2511,7 @@ export class Adaptable implements IAdaptable {
         });
       }
       let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
-
+      console.log(userColumnMenuItems);
       if (typeof userColumnMenuItems === 'function') {
         userColumnMenuItems = userColumnMenuItems(menuInfo);
       }
@@ -2544,72 +2545,73 @@ export class Adaptable implements IAdaptable {
       }
       let menuInfo: MenuInfo;
 
-      // keep it simple for now - if its a grouped cell then do nothing
-      if (!params.node.group) {
-        const AdaptableMenuItems: AdaptableMenuItem[] = [];
-        const agGridColumn: Column = params.column;
-        if (agGridColumn) {
-          const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-            agGridColumn.getColId(),
-            this.api.gridApi.getColumns()
-          );
+      const AdaptableMenuItems: AdaptableMenuItem[] = [];
+      const agGridColumn: Column = params.column;
+      if (agGridColumn) {
+        const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
+          agGridColumn.getColId(),
+          this.api.gridApi.getColumns()
+        );
 
-          if (adaptableColumn != null) {
-            menuInfo = this.agGridHelper.createMenuInfo(params, adaptableColumn);
+        if (adaptableColumn != null) {
+          menuInfo = this.agGridHelper.createMenuInfo(params, adaptableColumn);
+          // keep it simple for now - if its a grouped cell then don't add the shipped menu items
+          if (!params.node.group) {
             this.strategies.forEach(s => {
               let menuItem: AdaptableMenuItem | undefined = s.addContextMenuItem(menuInfo);
               if (menuItem) {
                 AdaptableMenuItems.push(menuItem);
               }
             });
-
-            // here we create Adaptable adaptable Menu items from OUR internal collection
-            // user has ability to decide whether to show or not
-            if (ArrayExtensions.IsNotNullOrEmpty(AdaptableMenuItems)) {
-              let showAdaptableContextMenu = this.adaptableOptions.userInterfaceOptions!
-                .showAdaptableContextMenu;
-              if (showAdaptableContextMenu == null || showAdaptableContextMenu !== false) {
-                contextMenuItems.push('separator');
-                AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
-                  let addContextMenuItem: boolean = true;
-                  if (
-                    showAdaptableContextMenu != null &&
-                    typeof showAdaptableContextMenu === 'function'
-                  ) {
-                    addContextMenuItem = showAdaptableContextMenu(AdaptableMenuItem, menuInfo);
-                  }
-                  if (addContextMenuItem) {
-                    let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-                      AdaptableMenuItem
-                    );
-                    contextMenuItems.push(menuItem);
-                  }
-                });
-              }
-            }
-
-            // here we add any User defined Context Menu Items
-            let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
-              .ContextMenuItems;
-
-            if (typeof userContextMenuItems === 'function') {
-              userContextMenuItems = userContextMenuItems(menuInfo);
-            }
-
-            if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
+          }
+          // here we create Adaptable adaptable Menu items from OUR internal collection
+          // user has ability to decide whether to show or not
+          if (ArrayExtensions.IsNotNullOrEmpty(AdaptableMenuItems)) {
+            let showAdaptableContextMenu = this.adaptableOptions.userInterfaceOptions!
+              .showAdaptableContextMenu;
+            if (showAdaptableContextMenu == null || showAdaptableContextMenu !== false) {
               contextMenuItems.push('separator');
-              userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
-                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-                  userMenuItem,
-                  menuInfo
-                );
-                contextMenuItems.push(menuItem);
+              AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
+                let addContextMenuItem: boolean = true;
+                if (
+                  showAdaptableContextMenu != null &&
+                  typeof showAdaptableContextMenu === 'function'
+                ) {
+                  addContextMenuItem = showAdaptableContextMenu(AdaptableMenuItem, menuInfo);
+                }
+                if (addContextMenuItem) {
+                  let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+                    AdaptableMenuItem
+                  );
+                  contextMenuItems.push(menuItem);
+                }
               });
             }
           }
+
+          // here we add any User defined Context Menu Items
+          let state: any = this.api.userInterfaceApi.getUserInterfaceState();
+          console.log(state);
+          let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
+            .ContextMenuItems;
+          console.log(userContextMenuItems);
+          if (typeof userContextMenuItems === 'function') {
+            alert('yes');
+            userContextMenuItems = userContextMenuItems(menuInfo);
+          }
+
+          if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
+            contextMenuItems.push('separator');
+            userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
+              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                userMenuItem,
+                menuInfo
+              );
+              contextMenuItems.push(menuItem);
+            });
+          }
         }
       }
-
       return contextMenuItems;
     };
   }

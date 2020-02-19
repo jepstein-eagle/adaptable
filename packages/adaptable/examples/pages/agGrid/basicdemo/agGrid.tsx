@@ -75,6 +75,31 @@ let demoConfig: PredefinedConfig = {
       Tone: 'success',
     }, //
   },
+  UserInterface: {
+    ColumnMenuItems: (menuinfo: MenuInfo) => {
+      console.log('in the function');
+      console.log(menuinfo);
+      return [];
+    },
+    ContextMenuItems: (menuinfo: MenuInfo) => {
+      //  console.log('in the function');
+      //   console.log(menuinfo);
+      return [
+        {
+          Label: 'Sort Column',
+          Icon:
+            '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+          UserMenuItemClickedFunction: () => {
+            let customSort: ColumnSort = {
+              Column: menuinfo.Column.ColumnId,
+              SortOrder: 'Ascending',
+            };
+            //      adaptableApi.gridApi.sortAdaptable([customSort]);
+          },
+        },
+      ];
+    },
+  },
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
   },

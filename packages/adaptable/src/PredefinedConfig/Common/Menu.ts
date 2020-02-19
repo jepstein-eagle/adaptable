@@ -88,6 +88,11 @@ export interface MenuInfo {
   RowNode: any;
 
   /**
+   * Whether the current row node is grouped
+   */
+  IsGroupedNode: boolean;
+
+  /**
    * The value of the primary key column in the current row
    */
   PrimaryKeyValue: any;

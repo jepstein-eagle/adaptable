@@ -528,6 +528,7 @@ export class agGridHelper {
       GridCell: clickedCell,
       Column: column,
       RowNode: params.node,
+      IsGroupedNode: params.node ? params.node.group : false,
       IsSingleSelectedColumn: isSingleSelectedColumn,
       PrimaryKeyValue: primaryKeyValue,
     };
