@@ -15,7 +15,6 @@ import {
   DistinctCriteriaPairValue,
   LeafExpressionOperator,
   ColumnMenuTab,
-  AccessLevel,
 } from '../../../PredefinedConfig/Common/Enums';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
@@ -258,11 +257,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     let hasUserFilter: boolean = uiSelectedUserFilters.length > 0;
 
     let closeButton = (
-      <ButtonClose
-        onClick={() => this.onCloseForm()}
-        tooltip={null}
-        AccessLevel={AccessLevel.Full}
-      />
+      <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} AccessLevel={'Full'} />
     );
 
     let clearFilterButton = (
@@ -270,7 +265,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         onClick={() => this.onClearFilter()}
         disabled={isEmptyFilter}
         tooltip={null}
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       ></ButtonClear>
     );
 
@@ -279,7 +274,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         onClick={() => this.onSaveFilter()}
         disabled={isEmptyFilter || hasUserFilter}
         tooltip={'Save as User Filter'}
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       ></ButtonSave>
     );
 

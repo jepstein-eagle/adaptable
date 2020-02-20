@@ -16,12 +16,6 @@ export enum ExpressionMode {
   MultiColumn = 'MultiColumn',
 }
 
-export enum AccessLevel {
-  ReadOnly = 'ReadOnly',
-  Hidden = 'Hidden',
-  Full = 'Full',
-}
-
 export enum LeafExpressionOperator {
   // Still not sure about this tbh
   None = 'None',

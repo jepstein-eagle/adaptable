@@ -150,7 +150,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Columns: state.Grid.Columns,
     FreeTextColumns: state.FreeTextColumn.FreeTextColumns,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 

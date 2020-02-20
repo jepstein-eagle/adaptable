@@ -3,30 +3,22 @@ import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
-
 import {
   AdaptableDashboardFactory,
   AdaptableDashboardPermanentToolbarFactory,
 } from '../AdaptableViewFactory';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { Visibility, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-
+import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { EntitlementState, Entitlement } from '../../PredefinedConfig/EntitlementState';
-import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';
-import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
-  EntitlementState: EntitlementState;
   onClick: (action: Redux.Action) => Redux.Action;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
 }
@@ -36,22 +28,24 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     let instanceName = this.props.Adaptable.api.internalApi.setToolbarTitle();
 
     let showInstanceName: string = 'Show ' + instanceName + ' Dashboard';
-    let hiddenEntitlements: Entitlement[] = this.props.EntitlementState.FunctionEntitlements.filter(
-      e => e.AccessLevel == 'Hidden'
+    let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(
+      vt =>
+        // will this break for custom toolbars????
+        !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(
+          vt as AdaptableFunctionName
+        )
     );
-    let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt =>
-      ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
-    );
-    let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
+
+    let visibleDashboardElements = visibleDashboardControls.map(control => {
       let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
         ct => ct.Name == control
       );
       if (customToolbar) {
-        let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
-          this.props.EntitlementState.FunctionEntitlements,
+        let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
           StrategyConstants.DashboardStrategyId
         );
-        if (accessLevel != AccessLevel.Hidden) {
+
+        if (accessLevel != 'Hidden') {
           let customToolbarControl = AdaptableDashboardFactory.get(
             StrategyConstants.DashboardStrategyId
           );
@@ -84,11 +78,11 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         }
       } else {
         let shippedToolbar = control as AdaptableFunctionName;
-        let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
-          this.props.EntitlementState.FunctionEntitlements,
+        let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
           shippedToolbar
         );
-        if (accessLevel != AccessLevel.Hidden) {
+
+        if (accessLevel != 'Hidden') {
           let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
           if (dashboardControl) {
             let dashboardElememt = React.createElement(dashboardControl, {
@@ -167,7 +161,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     DashboardState: state.Dashboard,
-    EntitlementState: state.Entitlements,
     // need to get these props so we can 'feed' the toolbars...
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,

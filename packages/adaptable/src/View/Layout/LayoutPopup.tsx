@@ -21,7 +21,6 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { Layout } from '../../PredefinedConfig/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';

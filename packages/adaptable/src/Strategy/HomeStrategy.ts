@@ -9,6 +9,7 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 // This is a special strategy that the user can never remove but which is useful to us
 // We use it to manage internal state changes and menu items that are not directly strategy related
+// But dont really like it and think we can do this better...
 export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy {
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.HomeStrategyId, adaptable);
@@ -16,6 +17,12 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     this.adaptable._on('GridReloaded', () => {
       this.adaptable.applyGridFiltering();
     });
+  }
+
+  public setStrategyEntitlement(): void {
+    alert('here for ' + this.Id);
+    this.isReadOnly = false;
+    this.isFull = true;
   }
 
   public addBaseColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] {

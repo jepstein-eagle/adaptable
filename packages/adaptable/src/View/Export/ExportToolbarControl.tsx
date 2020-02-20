@@ -18,7 +18,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report, ReportSchedule } from '../../PredefinedConfig/ExportState';
-import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import DropdownButton from '../../components/DropdownButton';
@@ -169,7 +169,7 @@ class ExportToolbarControlComponent extends React.Component<
         </DropdownButton>
         <Flex
           className={join(
-            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : '',
+            this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
             'ab-DashboardToolbar__Export__controls'
           )}
           alignItems="stretch"

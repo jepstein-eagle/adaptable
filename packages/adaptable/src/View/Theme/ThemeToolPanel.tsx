@@ -9,7 +9,6 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 import DropdownButton from '../../components/DropdownButton';
 import join from '../../components/utils/join';
@@ -63,9 +62,7 @@ class ThemeToolPanelComponent extends React.Component<
         {!this.state.IsMinimised && (
           <div
             className={join(
-              this.props.AccessLevel == AccessLevel.ReadOnly
-                ? GeneralConstants.READ_ONLY_STYLE
-                : '',
+              this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
               'ab-ToolPanel__Theme__wrap'
             )}
           >
@@ -99,7 +96,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
     SystemThemes: state.Theme.SystemThemes,
     CurrentTheme: state.Theme.CurrentTheme,
     UserThemes: state.Theme.UserThemes,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 

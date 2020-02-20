@@ -13,7 +13,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/ExportState';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import join from '../../components/utils/join';
@@ -198,9 +197,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         {isCompletedReport && (
           <Flex
             className={join(
-              this.props.AccessLevel == AccessLevel.ReadOnly
-                ? GeneralConstants.READ_ONLY_STYLE
-                : '',
+              this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
               'ab-DashboardToolbar__IPushPull__controls'
             )}
             alignItems="stretch"

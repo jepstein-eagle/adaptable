@@ -17,7 +17,7 @@ import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary';
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary';
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary';
 import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSummary';
-import { DataType, SelectionMode, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { DataType, SelectionMode } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
@@ -29,14 +29,13 @@ import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
-import { Entitlement } from '../../PredefinedConfig/EntitlementState';
+import { Entitlement, AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { GradientColumnSummary } from '../GradientColumn/GradientColumnSummary';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;
-  FunctionEntitlements: Entitlement[];
   ColumnCategory: ColumnCategory[];
 }
 
@@ -435,16 +434,15 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   private isStrategyVisible(functionName: AdaptableFunctionName): boolean {
-    return this.getAccessLevel(functionName) == AccessLevel.Full;
+    return this.getAccessLevel(functionName) == 'Full';
   }
 
   private isStrategyReadOnly(functionName: AdaptableFunctionName): boolean {
-    return this.getAccessLevel(functionName) == AccessLevel.ReadOnly;
+    return this.getAccessLevel(functionName) == 'ReadOnly';
   }
 
   private getAccessLevel(functionName: AdaptableFunctionName): AccessLevel {
-    return AdaptableHelper.getEntitlementAccessLevelForStrategy(
-      this.props.FunctionEntitlements,
+    return this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
       functionName
     );
   }
@@ -454,7 +452,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
     ColumnCategory: state.ColumnCategory.ColumnCategories,
-    FunctionEntitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 

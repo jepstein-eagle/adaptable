@@ -14,12 +14,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import {
-  Visibility,
-  AccessLevel,
-  DashboardSize,
-  MessageType,
-} from '../../PredefinedConfig/Common/Enums';
+import { Visibility, DashboardSize, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -72,11 +67,10 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
-
     // function menu items
     let menuItems = allowedMenuItems.map(menuItem => {
       return {
-        disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+        disabled: this.props.AccessLevel == 'ReadOnly',
         onClick: () => this.onClick(menuItem),
         icon: <Icon name={menuItem.Icon} />,
         label: menuItem.Label,
@@ -157,21 +151,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       toolbarItems.push(toolbarItem);
     });
 
-    // status button
-    let statusButton = (
-      <SimpleButton
-        variant="text"
-        className="ab-DashboardToolbar__Home__status"
-        key={'systemstatus'}
-        icon={UIHelper.getGlyphForMessageType(this.props.StatusType as MessageType)}
-        style={UIHelper.getStyleForMessageType(this.props.StatusType as MessageType)}
-        tooltip={'Status: ' + this.props.StatusMessage}
-        disabled={false}
-        onClick={() => this.onShowSystemStatus()}
-        AccessLevel={AccessLevel.Full}
-      />
-    );
-
     // functions dropdown
     let functionsDropdown = (
       <DropdownButton
@@ -234,9 +213,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
               variant="text"
               className={`ab-DashboardToolbar__Home__SystemStatus`}
               tooltip={menuItem.Label}
-              disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
+              disabled={this.props.AccessLevel == 'ReadOnly'}
               onClick={() => this.onClick(menuItem!)}
-              AccessLevel={AccessLevel.Full}
+              AccessLevel={'Full'}
               // icon={UIHelper.getGlyphForMessageType(this.props.StatusType as MessageType)}
               icon={menuItem.Icon}
               style={UIHelper.getStyleForMessageType(this.props.StatusType as MessageType)}
@@ -248,9 +227,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
               variant="text"
               className={`ab-DashboardToolbar__Home__${kebabCase(menuItem.Label)}`}
               tooltip={menuItem.Label}
-              disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
+              disabled={this.props.AccessLevel == 'ReadOnly'}
               onClick={() => this.onClick(menuItem!)}
-              AccessLevel={AccessLevel.Full}
+              AccessLevel={'Full'}
             />
           );
         }
@@ -268,7 +247,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         headerText={toolbarTitle}
         glyphicon={'home'}
         showGlyphIcon={false}
-        onClose={() => this.props.onClose(StrategyConstants.HomeStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         <Flex flexDirection="row">
@@ -359,10 +337,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onClick: (action: Redux.Action) => dispatch(action),
     onClose: (toolbar: AdaptableDashboardToolbar) =>
       dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
-    onConfigure: () =>
-      dispatch(
-        PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.DashboardPopup)
-      ),
     onNewColumnListOrder: (VisibleColumnList: AdaptableColumn[]) =>
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetDashboardVisibility: (visibility: Visibility) =>
