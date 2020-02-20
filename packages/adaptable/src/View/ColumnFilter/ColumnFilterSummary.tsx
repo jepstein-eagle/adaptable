@@ -74,7 +74,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,
     NamedFilters: state.NamedFilter.NamedFilters,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 

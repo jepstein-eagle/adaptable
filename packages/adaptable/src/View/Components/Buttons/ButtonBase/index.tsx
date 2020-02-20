@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Button, ButtonProps as BtnProps } from 'rebass';
 
 import join from '../../../../components/utils/join';
-import { AccessLevel } from '../../../../PredefinedConfig/Common/Enums';
+import { AccessLevel } from '../../../../PredefinedConfig/EntitlementState';
 
 const Glyphicon = ({ glyph, style }: { style?: any; glyph: string }) => {
   return <span style={style} className={`glyphicon glyphicon-${glyph}`} />;
@@ -58,12 +58,12 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
     glyph: '',
     DisplayMode: 'Glyph+Text',
     transformGlyph: false,
-    AccessLevel: AccessLevel.Full,
+    AccessLevel: 'Full',
     showDefaultStyle: false,
   };
   render() {
     let isDisabled: boolean;
-    isDisabled = this.props.AccessLevel == AccessLevel.Hidden;
+    isDisabled = this.props.AccessLevel == 'Hidden';
 
     if (this.props.overrideDisableButton || this.props.disabled) {
       isDisabled = true;

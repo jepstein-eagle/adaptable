@@ -5,8 +5,6 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { Entitlement } from '../../PredefinedConfig/EntitlementState';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
@@ -151,21 +149,6 @@ export function CheckadaptableOptions(adaptableOptions: AdaptableOptions): void 
   }
 }
 
-export function getEntitlementAccessLevelForStrategy(
-  entitlements: Entitlement[],
-  functionName: AdaptableFunctionName
-): AccessLevel {
-  if (ArrayExtensions.IsNotNullOrEmpty(entitlements)) {
-    let entitlement: Entitlement | undefined = entitlements.find(
-      e => e.FunctionName == functionName
-    );
-    if (entitlement) {
-      return entitlement.AccessLevel as AccessLevel;
-    }
-  }
-  return AccessLevel.Full;
-}
-
 export function createFDC3Message(type: string, id: any): AdaptableEventArgs {
   let eventData: AdaptableEventData = {
     name: 'Adaptable Event',
@@ -187,7 +170,6 @@ export const AdaptableHelper = {
   isConfigServerEnabled,
   AdaptableObjectExistsInState,
   CheckadaptableOptions,
-  getEntitlementAccessLevelForStrategy,
   createFDC3Message,
 };
 export default AdaptableHelper;

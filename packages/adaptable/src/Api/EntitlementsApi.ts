@@ -1,4 +1,4 @@
-import { EntitlementState, Entitlement } from '../PredefinedConfig/EntitlementState';
+import { EntitlementState, Entitlement, AccessLevel } from '../PredefinedConfig/EntitlementState';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
@@ -10,29 +10,19 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  *
  */
 export interface EntitlementsApi {
-  /**
-   * Retrieves the Entitlements section from Adaptable State
-   */
-  getEntitlementsState(): EntitlementState;
+  getEntitlementState(): EntitlementState;
 
-  /**
-   * Retrieves all the Entitlements in the Entitlement state
-   */
-  getAllEntitlements(): Entitlement[];
-
-  /**
-   * Retrieves the Entitlement for a given Adaptable Function
-   * @param adaptableFunctionName Adaptable Function for which to get the Entitlement
-   */
-  getEntitlementByAdaptableFunctionName(adaptableFunctionName: AdaptableFunctionName): Entitlement;
+  isFunctionHiddenEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
+  isFunctionFullEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
+  isFunctionReadOnlyEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
 
   /**
    * Retrieves the Entitlement Access Level for a given Adaptable Function
    * @param adaptableFunctionName Adaptable Function for which to get the Entitlement Access Level
    */
-  getEntitlementAccessLevelForAdaptableFunctionName(
+  getEntitlementAccessLevelByAdaptableFunctionName(
     adaptableFunctionName: AdaptableFunctionName
-  ): string;
+  ): AccessLevel;
 
   /**
    * Adds an array of Entitlements to the Entitlement section of Adaptable State

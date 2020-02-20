@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -128,7 +127,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               variant="text"
               onClick={() => this.props.onHide()}
               tooltip="Close wizard"
-              AccessLevel={AccessLevel.Full}
+              AccessLevel={'Full'}
             >
               CLOSE
             </SimpleButton>
@@ -138,7 +137,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               disabled={!this.ActiveStep.canBack() || this.isFirstStep()}
               onClick={() => this.handleClickBack()}
               icon="arrow-left"
-              AccessLevel={AccessLevel.Full}
+              AccessLevel={'Full'}
             >
               Back
             </SimpleButton>
@@ -148,7 +147,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               onClick={() => this.handleClickNext()}
               icon="arrow-right"
               iconPosition="end"
-              AccessLevel={AccessLevel.Full}
+              AccessLevel={'Full'}
               marginLeft={2}
               marginRight={2}
             >
@@ -160,7 +159,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               disabled={!this.canFinishWizard()}
               onClick={() => this.handleClickFinish()}
               icon={'check'}
-              AccessLevel={AccessLevel.Full}
+              AccessLevel={'Full'}
             >
               Finish
             </SimpleButton>

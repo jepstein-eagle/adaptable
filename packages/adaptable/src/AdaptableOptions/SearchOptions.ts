@@ -92,7 +92,7 @@ export interface SearchOptions {
    *
    * Note: a neater implementation would be to use the state management functions
    *
-   * **Default Value: False**
+   * **Default Value: false**
    */
   clearSearchesOnStartUp?: boolean;
 }

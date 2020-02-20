@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
-import { AccessLevel, CellSummaryOperation } from '../../PredefinedConfig/Common/Enums';
+import { CellSummaryOperation } from '../../PredefinedConfig/Common/Enums';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
@@ -87,7 +87,7 @@ class CellSummaryToolPanelComponent extends React.Component<
     let cellSummaryPopover = <CellSummaryPopover CellSummary={this.props.CellSummary} />;
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == AccessLevel.ReadOnly ||
+      this.props.AccessLevel == 'ReadOnly' ||
       this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
       this.props.CellSummary == null;
 

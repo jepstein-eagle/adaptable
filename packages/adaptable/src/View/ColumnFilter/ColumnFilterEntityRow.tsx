@@ -8,9 +8,9 @@ import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 import { EntityRowItem } from '../Components/EntityRowItem';
+import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow>
   extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {

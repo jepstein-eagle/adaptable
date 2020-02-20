@@ -99,18 +99,18 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     });
 
     let categoryChartMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.CategoryChart),
       label: 'Category Chart',
     };
     let pieChartMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.PieChart),
       label: 'Pie Chart',
     };
 
     let sparklinesChartMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.SparklinesChart),
       label: 'Sparklines Chart',
     };

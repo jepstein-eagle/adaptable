@@ -50,6 +50,25 @@ export interface EntitlementState extends DesignTimeState {
    * A collection of `Entitlement` objects.
    */
   FunctionEntitlements?: Entitlement[];
+
+  /**
+   * Function to run instead of providing a full list of Entitlements
+   *
+   * Allows you to call a Permission Service externally
+   */
+  EntitlementLookUpFunction?: (
+    functionName: AdaptableFunctionName,
+    userName: string
+  ) => AccessLevel | undefined;
+
+  /**
+   * The AccessLevel to use for any Entitlement when its not explicitly set.
+   *
+   * If this property is not set then any non-specified Entitlements will be 'Full'
+   *
+   * **Default Value: 'Full'**
+   */
+  DefaultAccessLevel?: AccessLevel;
 }
 
 /**
@@ -74,5 +93,7 @@ export interface Entitlement {
    *
    * - **Hidden** - The Function is invisible to the User.
    */
-  AccessLevel: 'ReadOnly' | 'Hidden' | 'Full';
+  AccessLevel: AccessLevel;
 }
+
+export type AccessLevel = 'ReadOnly' | 'Hidden' | 'Full';

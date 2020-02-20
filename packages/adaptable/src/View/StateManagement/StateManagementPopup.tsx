@@ -8,7 +8,6 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 
 import { UIHelper } from '../UIHelper';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex, Box } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
 import HelpBlock from '../../components/HelpBlock';
@@ -33,7 +32,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
         tone="error"
         variant="raised"
         marginTop={2}
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       >
         Clear User Data
       </SimpleButton>
@@ -47,7 +46,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
         variant="raised"
         marginTop={2}
         marginRight={3}
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       >
         Copy All Data to Clipboard
       </SimpleButton>
@@ -61,7 +60,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
         variant="raised"
         marginTop={2}
         marginRight={3}
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       >
         Copy User Data to Clipboard
       </SimpleButton>

@@ -6,21 +6,30 @@ import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
-
 import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+import { AdaptableFunctionName } from '../../../../src/PredefinedConfig/Common/Types';
+import { Entitlement, AccessLevel } from '../../../../src/PredefinedConfig/EntitlementState';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(5000);
+  const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'entitlements demo'
-  );
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Entitlements Demo',
+
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
+  };
 
   adaptableOptions.filterOptions = {
     // useAdaptableFilterForm: false,
@@ -34,7 +43,50 @@ function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: [
+      'SmartEdit',
+      'Export',
+      'SystemStatus',
+      'BulkUpdate',
+      'QuickSearch',
+      'AdvancedSearch',
+    ],
+    VisibleButtons: [
+      'SmartEdit',
+      'Export',
+      'SystemStatus',
+      'BulkUpdate',
+      'QuickSearch',
+      'AdvancedSearch',
+    ],
+  },
   Entitlements: {
+    DefaultAccessLevel: 'Hidden',
+    EntitlementLookUpFunction: (functionName: AdaptableFunctionName, userName: string) => {
+      // In this case the rules are
+      // 1. Editing is always 'Hidden'
+      // 2. Filtering is done based on an enitlement server
+      // 3. Everything else is 'Visible' so no need to do as that is the default
+
+      // Everyything is h
+      switch (functionName) {
+        // We want a readonly grid so lets hide all editing functions
+        case 'BulkUpdate':
+        case 'CellValidation':
+        case 'PlusMinus':
+        case 'SmartEdit':
+        case 'Shortcut':
+          return 'ReadOnly';
+        case 'AdvancedSearch':
+        case 'ColumnFilter':
+        case 'UserFilter':
+        case 'DataSource':
+        case 'QuickSearch':
+          return getMockPermissionServerResult(functionName, userName);
+      }
+    },
+
     FunctionEntitlements: [
       {
         FunctionName: 'ColumnCategory',
@@ -75,6 +127,13 @@ let demoConfig: PredefinedConfig = {
     CurrentReport: 'Test',
   },
 };
+
+function getMockPermissionServerResult(
+  functionName: AdaptableFunctionName,
+  userName: string
+): AccessLevel {
+  return 'Full';
+}
 
 export default () => {
   useEffect(() => {

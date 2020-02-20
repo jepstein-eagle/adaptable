@@ -190,7 +190,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
     NamedFilters: state.NamedFilter.NamedFilters,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 

@@ -22,7 +22,7 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
@@ -104,7 +104,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     );
 
     let startWizardText =
-      this.props.AccessLevel == AccessLevel.ReadOnly
+      this.props.AccessLevel == 'ReadOnly'
         ? 'You have no Alert Definitions.'
         : "Click 'New' to start creating Alert Definitions.  An alert will be triggered whenever an edit - or external data change - matches the condition in the Alert Definition.";
 

@@ -1,6 +1,6 @@
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import * as React from 'react';
-import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
+
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { StrategyViewPopupProps, StrategyParams } from '../SharedProps/StrategyViewPopupProps';
@@ -14,6 +14,7 @@ import { PopupWithFooter } from '../../../components/PopupWithFooter';
 
 import PopupContext from './PopupContext';
 import { AdaptableFunctionName } from '../../../PredefinedConfig/Common/Types';
+import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 
 /**
  * This is the main popup that we use - so all function popups will appear here.
@@ -36,8 +37,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
       this.props.Adaptable.adaptableOptions,
       document
     );
-    let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
-      this.props.Adaptable.api.entitlementsApi.getAllEntitlements(),
+    let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
       this.props.ComponentStrategy
     );
 
@@ -107,7 +107,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
           <Flex
             flexDirection="column"
             flex={1}
-            className={accessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''}
+            className={accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : ''}
           >
             {body}
           </Flex>

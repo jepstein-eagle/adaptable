@@ -11,7 +11,7 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { StatusColour, MathOperation, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { StatusColour, MathOperation } from '../../PredefinedConfig/Common/Enums';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
@@ -101,7 +101,7 @@ class SmartEditToolPanelComponent extends React.Component<
     };
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == AccessLevel.ReadOnly ||
+      this.props.AccessLevel == 'ReadOnly' ||
       !this.props.IsValidSelection ||
       this.props.Adaptable.api.internalApi.isGridInPivotMode();
 

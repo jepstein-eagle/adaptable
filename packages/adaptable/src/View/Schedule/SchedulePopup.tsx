@@ -25,7 +25,7 @@ import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { ScheduleEntityRow } from './ScheduleEntityRow';
 import { ScheduleWizard } from './Wizard/ScheduleWizard';
-import { AccessLevel, ScheduleType } from '../../PredefinedConfig/Common/Enums';
+import { ScheduleType } from '../../PredefinedConfig/Common/Enums';
 import DropdownButton from '../../components/DropdownButton';
 import PlusIcon from '../../components/icons/plus';
 import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
@@ -142,24 +142,24 @@ class SchedulePopupComponent extends React.Component<
     });
 
     let reminderMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onCreateSchedule(ScheduleType.Reminder),
       label: 'Reminder',
     };
     let reportMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onCreateSchedule(ScheduleType.Report),
       label: 'Report',
     };
 
     let iPushPullMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onCreateSchedule(ScheduleType.iPushPull),
       label: 'ipushpull',
     };
 
     let glue42MenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onCreateSchedule(ScheduleType.Glue42),
       label: 'Glue42',
     };

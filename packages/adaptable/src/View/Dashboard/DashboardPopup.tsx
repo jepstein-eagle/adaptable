@@ -252,7 +252,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     DashboardState: state.Dashboard,
     GridState: state.Grid,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 

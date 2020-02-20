@@ -3,8 +3,6 @@ import { Action } from 'redux';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-
-import { Entitlement } from '../PredefinedConfig/EntitlementState';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import {
   MenuItemShowPopup,
@@ -25,8 +23,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     this.adaptable = adaptable;
   }
 
-  private isVisible: boolean;
-  private isReadOnly: boolean;
+  protected isFull: boolean;
+  protected isReadOnly: boolean;
 
   public initializeWithRedux() {
     this.InitState();
@@ -34,8 +32,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   public setStrategyEntitlement(): void {
-    this.isVisible = this.isVisibleStrategy();
-    this.isReadOnly = this.isReadOnlyStrategy();
+    this.isReadOnly = this.adaptable.api.entitlementsApi.isFunctionReadOnlyEntitlement(this.Id);
+    this.isFull =
+      this.adaptable.api.entitlementsApi.isFunctionFullEntitlement(this.Id) || this.isReadOnly;
   }
 
   protected InitState(): void {
@@ -65,28 +64,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     return undefined;
   }
 
-  private getStrategyEntitlement(): Entitlement {
-    let functionEntitlements: Entitlement[] = this.adaptable.api.entitlementsApi.getEntitlementsState()
-      .FunctionEntitlements;
-    return functionEntitlements.find(x => x.FunctionName == this.Id);
-  }
-
-  private isVisibleStrategy(): boolean {
-    let entitlement: Entitlement = this.getStrategyEntitlement();
-    if (entitlement) {
-      return entitlement.AccessLevel != 'Hidden';
-    }
-    return true;
-  }
-
-  private isReadOnlyStrategy(): boolean {
-    let entitlement: Entitlement = this.getStrategyEntitlement();
-    if (entitlement) {
-      return entitlement.AccessLevel == 'ReadOnly';
-    }
-    return false;
-  }
-
   // creates the menu items in the main dropdown
   createMainMenuItemShowPopup({
     Label,
@@ -104,15 +81,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         source: 'FunctionMenu',
       };
     }
-    if (this.isVisible && !this.isReadOnly) {
-      return new MenuItemShowPopup(
-        Label,
-        this.Id,
-        ComponentName,
-        Icon,
-        this.isVisible,
-        PopupParams
-      );
+    // are we sure that we want to stop readonly strategies appearing?
+    if (this.isFull && !this.isReadOnly) {
+      return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, this.isFull, PopupParams);
     }
   }
 
@@ -122,7 +93,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     ClickFunction: () => void
   ): MenuItemDoClickFunction {
-    if (this.isVisible && !this.isReadOnly) {
+    if (this.isFull && !this.isReadOnly) {
       return new MenuItemDoClickFunction(Label, this.Id, ClickFunction, Icon, true);
     }
   }
@@ -132,7 +103,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     Action: Action
   ): MenuItemDoReduxAction {
-    if (this.isVisible && !this.isReadOnly) {
+    if (this.isFull && !this.isReadOnly) {
       return new MenuItemDoReduxAction(Label, this.Id, Action, Icon, true);
     }
   }
@@ -144,7 +115,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     PopupParams?: StrategyParams
   ): MenuItemShowPopup {
-    if (this.isVisible && !this.isReadOnly) {
+    if (this.isFull && !this.isReadOnly) {
       return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
     }
   }

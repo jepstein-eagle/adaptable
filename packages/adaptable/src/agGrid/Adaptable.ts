@@ -114,7 +114,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
-import { VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
 import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid } from '../PredefinedConfig/Uuid';
@@ -2453,7 +2453,7 @@ export class Adaptable implements IAdaptable {
       // couldnt find a way to listen for menu close. There is a Menu Item Select, but you can also close menu from filter and clicking outside menu....
       const colId: string = params.column.getColId();
 
-      const AdaptableMenuItems: AdaptableMenuItem[] = [];
+      const adaptableMenuItems: AdaptableMenuItem[] = [];
 
       const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
         colId,
@@ -2463,14 +2463,14 @@ export class Adaptable implements IAdaptable {
         this.strategies.forEach(s => {
           let menuItem: AdaptableMenuItem = s.addColumnMenuItem(adaptableColumn);
           if (menuItem) {
-            AdaptableMenuItems.push(menuItem);
+            adaptableMenuItems.push(menuItem);
           }
         });
         // add the column menu items from Home Strategy
         const homeStrategy: IHomeStrategy = this.strategies.get(
           StrategyConstants.HomeStrategyId
         ) as IHomeStrategy;
-        AdaptableMenuItems.push(...homeStrategy.addBaseColumnMenuItems(adaptableColumn));
+        adaptableMenuItems.push(...homeStrategy.addBaseColumnMenuItems(adaptableColumn));
       }
 
       let colMenuItems: (string | MenuItemDef)[];
@@ -2497,26 +2497,28 @@ export class Adaptable implements IAdaptable {
         .showAdaptableColumnMenu;
 
       if (showAdaptableColumnMenu == null || showAdaptableColumnMenu !== false) {
-        AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
-          let addContextMenuItem: boolean = true;
-          if (showAdaptableColumnMenu != null && typeof showAdaptableColumnMenu === 'function') {
-            addContextMenuItem = showAdaptableColumnMenu(AdaptableMenuItem, menuInfo);
-          }
-          if (addContextMenuItem) {
-            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-              AdaptableMenuItem
-            );
-            colMenuItems.push(menuItem);
+        adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+          if (adaptableMenuItem) {
+            let addColumnMenuItem: boolean = true;
+            if (showAdaptableColumnMenu != null && typeof showAdaptableColumnMenu === 'function') {
+              addColumnMenuItem = showAdaptableColumnMenu(adaptableMenuItem, menuInfo);
+            }
+            if (addColumnMenuItem) {
+              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+                adaptableMenuItem
+              );
+              colMenuItems.push(menuItem);
+            }
           }
         });
       }
       let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
+
       if (typeof userColumnMenuItems === 'function') {
         userColumnMenuItems = userColumnMenuItems(menuInfo);
       }
 
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
-        colMenuItems.push('separator');
         userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
           let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
             userMenuItem,
@@ -2545,7 +2547,7 @@ export class Adaptable implements IAdaptable {
       }
       let menuInfo: MenuInfo;
 
-      const AdaptableMenuItems: AdaptableMenuItem[] = [];
+      const adaptableMenuItems: AdaptableMenuItem[] = [];
       const agGridColumn: Column = params.column;
       if (agGridColumn) {
         const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
@@ -2560,30 +2562,32 @@ export class Adaptable implements IAdaptable {
             this.strategies.forEach(s => {
               let menuItem: AdaptableMenuItem | undefined = s.addContextMenuItem(menuInfo);
               if (menuItem) {
-                AdaptableMenuItems.push(menuItem);
+                adaptableMenuItems.push(menuItem);
               }
             });
           }
           // here we create Adaptable adaptable Menu items from OUR internal collection
           // user has ability to decide whether to show or not
-          if (ArrayExtensions.IsNotNullOrEmpty(AdaptableMenuItems)) {
+          if (ArrayExtensions.IsNotNullOrEmpty(adaptableMenuItems)) {
             let showAdaptableContextMenu = this.adaptableOptions.userInterfaceOptions!
               .showAdaptableContextMenu;
             if (showAdaptableContextMenu == null || showAdaptableContextMenu !== false) {
               contextMenuItems.push('separator');
-              AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
-                let addContextMenuItem: boolean = true;
-                if (
-                  showAdaptableContextMenu != null &&
-                  typeof showAdaptableContextMenu === 'function'
-                ) {
-                  addContextMenuItem = showAdaptableContextMenu(AdaptableMenuItem, menuInfo);
-                }
-                if (addContextMenuItem) {
-                  let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-                    AdaptableMenuItem
-                  );
-                  contextMenuItems.push(menuItem);
+              adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+                if (adaptableMenuItem) {
+                  let addContextMenuItem: boolean = true;
+                  if (
+                    showAdaptableContextMenu != null &&
+                    typeof showAdaptableContextMenu === 'function'
+                  ) {
+                    addContextMenuItem = showAdaptableContextMenu(adaptableMenuItem, menuInfo);
+                  }
+                  if (addContextMenuItem) {
+                    let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+                      adaptableMenuItem
+                    );
+                    contextMenuItems.push(menuItem);
+                  }
                 }
               });
             }
@@ -2594,6 +2598,7 @@ export class Adaptable implements IAdaptable {
           let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
             .ContextMenuItems;
           if (typeof userContextMenuItems === 'function') {
+            alert('yes');
             userContextMenuItems = userContextMenuItems(menuInfo);
           }
 
@@ -2616,14 +2621,17 @@ export class Adaptable implements IAdaptable {
   private postSpecialColumnEditDelete(doReload: boolean) {
     if (this.isInitialised) {
       //  reload the existing layout if its not default
-      let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
-      if (currentlayout != DEFAULT_LAYOUT) {
-        if (doReload) {
-          this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
-          this.api.layoutApi.setLayout(currentlayout);
-          this.setColumnIntoStore();
-        } else {
-          this.api.layoutApi.setLayout(currentlayout);
+      let currentlayout: Layout = this.api.layoutApi.getCurrentLayout();
+      if (currentlayout) {
+        let currentlayoutName: string = this.api.layoutApi.getCurrentLayout().Name;
+        if (currentlayoutName != DEFAULT_LAYOUT) {
+          if (doReload) {
+            this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
+            this.api.layoutApi.setLayout(currentlayoutName);
+            this.setColumnIntoStore();
+          } else {
+            this.api.layoutApi.setLayout(currentlayoutName);
+          }
         }
       }
     }

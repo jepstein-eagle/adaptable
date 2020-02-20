@@ -2,7 +2,7 @@ import * as React from 'react';
 import { UIHelper } from '../UIHelper';
 import ButtonPreviewDelete from '../Components/Buttons/ButtonPreviewDelete';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AccessLevel, MessageType } from '../../PredefinedConfig/Common/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { Flex, Text } from 'rebass';
@@ -60,7 +60,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
               tooltip="Clear Alert"
               disabled={false}
               style={{ float: 'left' }}
-              AccessLevel={AccessLevel.Full}
+              AccessLevel={'Full'}
             />
           </Flex>
 
@@ -76,7 +76,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
         onClick={() => this.props.onClearAllAlerts(this.props.Alerts)}
         variant="raised"
         tone="neutral"
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       >
         Clear All
       </SimpleButton>

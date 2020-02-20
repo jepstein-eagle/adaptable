@@ -27,7 +27,6 @@ import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 interface ToolPanelPopupComponentProps extends StrategyViewPopupProps<ToolPanelPopupComponent> {
   ToolPanelState: ToolPanelState;
   GridState: GridState;
-  Entitlements: Entitlement[] | undefined;
 
   onToolPanelSetFunctionButtons: (
     functionButtons: AdaptableFunctionButtons
@@ -80,13 +79,13 @@ class ToolPanelPopupComponent extends React.Component<
     ).map(x => x.Label);
 
     let availableToolPanelNames: string[] = this.props.ToolPanelState.AvailableToolPanels!.filter(
-      at => this.isVisibleStrategy(at)
+      at => this.isFullStrategy(at)
     ).map(at => {
       return StrategyConstants.getFriendlyNameForStrategyId(at);
     });
 
     let visibleToolPanels: string[] = this.props.ToolPanelState.VisibleToolPanels!.filter(at =>
-      this.isVisibleStrategy(at)
+      this.isFullStrategy(at)
     ).map(at => {
       return StrategyConstants.getFriendlyNameForStrategyId(at);
     });
@@ -223,14 +222,8 @@ class ToolPanelPopupComponent extends React.Component<
     this.props.onToolPanelSetToolPanels(selectedToolPanels);
   }
 
-  isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
-    let entitlement: Entitlement | undefined = this.props.Entitlements!.find(
-      x => x.FunctionName == functionName
-    );
-    if (entitlement) {
-      return entitlement.AccessLevel != 'Hidden';
-    }
-    return true;
+  isFullStrategy(functionName: AdaptableFunctionName): boolean {
+    return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
 }
 
@@ -238,7 +231,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ToolPanelState: state.ToolPanel,
     GridState: state.Grid,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 

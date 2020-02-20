@@ -5,12 +5,7 @@ import { Flex } from 'rebass';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview';
-import {
-  ExpressionMode,
-  QueryBuildStatus,
-  QueryTab,
-  AccessLevel,
-} from '../../PredefinedConfig/Common/Enums';
+import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../PredefinedConfig/Common/Enums';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
@@ -59,7 +54,7 @@ export class ExpressionBuilderPage
         kind="success"
         icon="plus"
         tone="accent"
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       >
         Add Column Condition
       </SimpleButton>
