@@ -66,21 +66,26 @@ class Glue42ToolbarControlComponent extends React.Component<
 
   public componentDidMount() {
     if (this.props.Adaptable) {
-      this.props.Adaptable.api.eventApi.on(
-        'LiveDataChanged',
-        (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
-          let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
-          if (
-            liveDataChangedInfo.ReportDestination == 'Glue42' &&
-            (liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
-              liveDataChangedInfo.LiveDataTrigger == 'Disconnected')
-          ) {
-            this.forceUpdate();
-          }
-        }
-      );
+      this.props.Adaptable.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
     }
   }
+
+  public componentWillUnmount() {
+    if (this.props.Adaptable) {
+      this.props.Adaptable.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
+    }
+  }
+
+  onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
+    let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
+    if (
+      liveDataChangedInfo.ReportDestination == 'Glue42' &&
+      (liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
+        liveDataChangedInfo.LiveDataTrigger == 'Disconnected')
+    ) {
+      this.forceUpdate();
+    }
+  };
 
   render(): any {
     let allReports: Report[] = this.props
@@ -125,8 +130,8 @@ class Glue42ToolbarControlComponent extends React.Component<
           AccessLevel={this.props.AccessLevel}
         />
         {/*
-     
-   
+
+
         {isLiveGlue42Report ? (
           <ButtonPause
             marginLeft={1}

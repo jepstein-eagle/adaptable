@@ -82,21 +82,26 @@ class IPushPullToolbarControlComponent extends React.Component<
 
   public componentDidMount() {
     if (this.props.Adaptable) {
-      this.props.Adaptable.api.eventApi.on(
-        'LiveDataChanged',
-        (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
-          let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
-          if (
-            liveDataChangedInfo.ReportDestination == 'iPushPull' &&
-            (liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
-              liveDataChangedInfo.LiveDataTrigger == 'Disconnected')
-          ) {
-            this.forceUpdate();
-          }
-        }
-      );
+      this.props.Adaptable.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
     }
   }
+
+  public componentWillUnmount() {
+    if (this.props.Adaptable) {
+      this.props.Adaptable.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
+    }
+  }
+
+  onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
+    let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
+    if (
+      liveDataChangedInfo.ReportDestination == 'iPushPull' &&
+      (liveDataChangedInfo.LiveDataTrigger == 'Connected' ||
+        liveDataChangedInfo.LiveDataTrigger == 'Disconnected')
+    ) {
+      this.forceUpdate();
+    }
+  };
 
   render(): any {
     let allReports: Report[] = this.props
