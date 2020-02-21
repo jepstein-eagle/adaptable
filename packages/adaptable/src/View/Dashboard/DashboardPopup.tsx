@@ -238,13 +238,7 @@ class DashboardPopupComponent extends React.Component<
   }
 
   isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
-    let entitlement: Entitlement = this.props.Entitlements.find(
-      x => x.FunctionName == functionName
-    );
-    if (entitlement) {
-      return entitlement.AccessLevel != 'Hidden';
-    }
-    return true;
+    return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
 }
 
