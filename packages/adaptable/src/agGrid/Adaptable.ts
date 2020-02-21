@@ -272,7 +272,6 @@ export class Adaptable implements IAdaptable {
   // new static constructor which takes an Adaptable adaptable object and returns the api object
   // going forward this should be the only way that we instantiate and use Adaptable and everything should be accessible via the API
   public static init(adaptableOptions: AdaptableOptions): AdaptableApi {
-    alert('start constructor');
     const extraOptions = {
       renderGrid: undefined as boolean,
       runtimeConfig: null as RuntimeConfig,
@@ -450,7 +449,6 @@ export class Adaptable implements IAdaptable {
         this.api.internalApi.hideLoadingScreen();
       });
 
-    alert('end load store');
     // render Adaptable - might be false because for example the react wrapper will skip rendering
     // as it will do rendering by itself
     if (renderGrid) {
@@ -2629,7 +2627,6 @@ export class Adaptable implements IAdaptable {
           let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
             .ContextMenuItems;
           if (typeof userContextMenuItems === 'function') {
-            alert('yes');
             userContextMenuItems = userContextMenuItems(menuInfo);
           }
 

@@ -56,6 +56,8 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
+  (globalThis as any).api = api;
+
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
     // to see which is the pinned row then do...
     //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
