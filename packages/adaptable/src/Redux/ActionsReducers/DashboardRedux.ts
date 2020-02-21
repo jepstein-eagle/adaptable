@@ -7,7 +7,11 @@ import {
   AdaptableDashboardToolbar,
   AdaptableFunctionButtons,
 } from '../../PredefinedConfig/Common/Types';
-import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
+import {
+  DashboardState,
+  CustomToolbar,
+  DashboardFloatingPosition,
+} from '../../PredefinedConfig/DashboardState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
@@ -31,6 +35,10 @@ const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
 const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE =
   'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE';
 const DASHBOARD_CUSTOM_TOOLBAR_EDIT = 'DASHBOARD_CUSTOM_TOOLBAR_EDIT';
+const DASHBOARD_SET_ACTIVE_TAB = 'DASHBOARD_SET_ACTIVE_TAB';
+const DASHBOARD_SET_IS_COLLAPSED = 'DASHBOARD_SET_IS_COLLAPSED';
+const DASHBOARD_SET_IS_FLOATING = 'DASHBOARD_SET_IS_FLOATING';
+const DASHBOARD_SET_FLOATING_POSITION = 'DASHBOARD_SET_FLOATING_POSITION';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
   toolbars: AdaptableDashboardToolbars;
@@ -82,6 +90,22 @@ export interface DashboardSetMinimisedHomeToolbarButtonStyleAction extends Redux
 
 export interface DashboardCustomToolbarEditAction extends Redux.Action {
   customToolbar: CustomToolbar;
+}
+
+export interface DashboardSetActiveTabAction extends Redux.Action {
+  ActiveTab: number | null;
+}
+
+export interface DashboardSetIsCollapsedAction extends Redux.Action {
+  IsCollapsed: boolean;
+}
+
+export interface DashboardSetIsFloatingAction extends Redux.Action {
+  IsFloating: boolean;
+}
+
+export interface DashboardSetFloatingPositionAction extends Redux.Action {
+  FloatingPosition: DashboardFloatingPosition;
 }
 
 export const DashboardSetAvailableToolbars = (
@@ -179,6 +203,28 @@ export const DashboardCustomToolbarEdit = (
   customToolbar,
 });
 
+export const DashboardSetActiveTab = (ActiveTab: number | null): DashboardSetActiveTabAction => ({
+  type: DASHBOARD_SET_ACTIVE_TAB,
+  ActiveTab,
+});
+
+export const DashboardSetIsCollapsed = (IsCollapsed: boolean): DashboardSetIsCollapsedAction => ({
+  type: DASHBOARD_SET_IS_COLLAPSED,
+  IsCollapsed,
+});
+
+export const DashboardSetIsFloating = (IsFloating: boolean): DashboardSetIsFloatingAction => ({
+  type: DASHBOARD_SET_IS_FLOATING,
+  IsFloating,
+});
+
+export const DashboardSetFloatingPosition = (
+  FloatingPosition: DashboardFloatingPosition
+): DashboardSetFloatingPositionAction => ({
+  type: DASHBOARD_SET_FLOATING_POSITION,
+  FloatingPosition,
+});
+
 const initialDashboardState: DashboardState = {
   AvailableToolbars: [
     'AdvancedSearch',
@@ -197,6 +243,14 @@ const initialDashboardState: DashboardState = {
     'Theme',
   ],
   VisibleToolbars: ['QuickSearch', 'Layout', 'Export', 'ColumnFilter'],
+  VisibleTabs: [
+    { Name: 'Edit', Toolbars: ['BulkUpdate', 'SmartEdit'] },
+    { Name: 'Search', Toolbars: ['QuickSearch', 'AdvancedSearch', 'ColumnFilter', 'DataSource'] },
+  ],
+  ActiveTab: 0,
+  IsCollapsed: false,
+  IsFloating: false,
+  FloatingPosition: { x: 100, y: 100 },
   VisibleButtons: ['SystemStatus', 'GridInfo', 'Dashboard', 'ColumnChooser', 'ConditionalStyle'],
   CustomToolbars: EMPTY_ARRAY,
   DashboardVisibility: Visibility.Visible,
@@ -308,6 +362,28 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
       return Object.assign({}, state, {
         CustomToolbars: customToolbars,
       });
+    }
+
+    case DASHBOARD_SET_ACTIVE_TAB: {
+      const { ActiveTab } = action as DashboardSetActiveTabAction;
+      return { ...state, ActiveTab };
+    }
+
+    case DASHBOARD_SET_IS_COLLAPSED: {
+      const { IsCollapsed } = action as DashboardSetIsCollapsedAction;
+      return { ...state, IsCollapsed };
+    }
+
+    case DASHBOARD_SET_IS_FLOATING: {
+      const { IsFloating } = action as DashboardSetIsFloatingAction;
+      console.log('redux', IsFloating);
+
+      return { ...state, IsFloating };
+    }
+
+    case DASHBOARD_SET_FLOATING_POSITION: {
+      const { FloatingPosition } = action as DashboardSetFloatingPositionAction;
+      return { ...state, FloatingPosition };
     }
 
     default:

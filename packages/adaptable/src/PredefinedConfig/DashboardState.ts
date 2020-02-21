@@ -78,6 +78,13 @@ export interface DashboardState extends RunTimeState {
    */
   VisibleToolbars?: AdaptableDashboardToolbars | string[];
 
+  VisibleTabs?: DashboardTab[];
+
+  ActiveTab?: number;
+  IsCollapsed?: boolean;
+  IsFloating?: boolean;
+  FloatingPosition?: DashboardFloatingPosition;
+
   /**
    * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
    *
@@ -337,4 +344,14 @@ export interface CustomToolbar extends AdaptableObject {
    * When one of these buttons is clicked the on('ToolbarButtonClicked') event is fired.
    */
   ToolbarButtons?: ToolbarButton[];
+}
+
+export interface DashboardTab extends AdaptableObject {
+  Name: string;
+  Toolbars: AdaptableDashboardToolbars | string[];
+}
+
+export interface DashboardFloatingPosition extends AdaptableObject {
+  x: number;
+  y: number;
 }

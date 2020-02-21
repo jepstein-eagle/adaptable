@@ -1,4 +1,5 @@
 .ab-Dashboard {
+  z-index: 1000;
   user-select: none;
 
   &__bar {
@@ -79,6 +80,7 @@
   }
 
   &__toolbar-title {
+    flex: 1;
     font-size: var(--ab-font-size-2);
     color: var(--ab-color-text-on-primary);
     text-align: center;

@@ -9,6 +9,7 @@ import { ButtonMinimise } from '../../Buttons/ButtonMinimise';
 import { Flex } from 'rebass';
 import join from '../../../../components/utils/join';
 import { Icon } from '../../../../components/icons';
+import { DashboardToolbar as DashboardToolbarUI } from '../../../../components/Dashboard';
 
 export interface PanelDashboardProps extends PanelProps {
   headerText: string;
@@ -50,8 +51,15 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
       showCloseButton,
       onClose,
       onConfigure,
+      children,
       ...props
     } = this.props;
+
+    return (
+      <DashboardToolbarUI title={headerText} onConfigure={onConfigure}>
+        {children}
+      </DashboardToolbarUI>
+    );
 
     let header = (
       <>

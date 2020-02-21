@@ -72,10 +72,17 @@ function InitAdaptableDemo() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['QuickSearch', 'Layout', 'SystemStatus'],
+    HomeToolbarTitle: 'Test',
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
     }, //
+  },
+  Entitlements: {
+    FunctionEntitlements: [
+      { FunctionName: 'AdvancedSearch', AccessLevel: 'ReadOnly' },
+      { FunctionName: 'QuickSearch', AccessLevel: 'Hidden' },
+    ],
   },
   UserInterface: {
     ColumnMenuItems: (menuinfo: MenuInfo) => {

@@ -63,10 +63,10 @@ export function Dashboard(props: DashboardProps) {
       setPosition(oldPosition => {
         const newPosition = { x: oldPosition.x + dx, y: oldPosition.y + dy };
 
-        if (newPosition.y < snapThreshold) {
-          setFloating(false);
-          return oldPosition;
-        }
+        // if (newPosition.y < snapThreshold) {
+        //   setFloating(false);
+        //   return oldPosition;
+        // }
 
         return newPosition;
       });
