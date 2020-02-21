@@ -15,5 +15,8 @@ export class EventApiImpl extends ApiBase implements EventApi {
   on = (eventName: string, callback: EmitterCallback): (() => void) =>
     this.emitter.on(eventName, callback);
 
+  off = (eventName: string, callback: EmitterCallback): void =>
+    this.emitter.off(eventName, callback);
+
   public emit = (eventName: string, data?: any): Promise<any> => this.emitter.emit(eventName, data);
 }

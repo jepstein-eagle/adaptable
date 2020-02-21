@@ -20,7 +20,6 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
   }
 
   public setStrategyEntitlement(): void {
-    alert('here for ' + this.Id);
     this.isReadOnly = false;
     this.isFull = true;
   }
